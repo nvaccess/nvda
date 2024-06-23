@@ -1,11 +1,8 @@
-# -*- coding: UTF-8 -*-
-# brailleInput.py
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2019 NV Access Limited, Rui Batista, Babbage B.V.
+# Copyright (C) 2012-2024 NV Access Limited, Rui Batista, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
-import os.path
 import time
 from typing import Optional, List, Set
 
@@ -30,8 +27,9 @@ Normally, all that is required is to create and execute a L{BrailleInputGesture}
 as there are built-in gesture bindings for braille input.
 """
 
-#: Table to use if the input table configuration is invalid.
-FALLBACK_TABLE = "en-ueb-g1.ctb"
+FALLBACK_TABLE = config.conf.getConfigValidation(("braille", "inputTable")).default
+"""Table to use if the input table configuration is invalid."""
+
 DOT7 = 1 << 6
 DOT8 = 1 << 7
 #: This bit flag must be added to all braille cells when using liblouis with dotsIO.
@@ -57,17 +55,8 @@ class BrailleInputHandler(AutoPropertyObject):
 	currentModifiers: Set[str]
 
 	def __init__(self):
-		super(BrailleInputHandler,self).__init__()
-		# #6140: Migrate to new table names as smoothly as possible.
-		tableName = config.conf["braille"]["inputTable"]
-		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
-		if newTableName:
-			tableName = config.conf["braille"]["inputTable"] = newTableName
-		try:
-			self._table = brailleTables.getTable(tableName)
-		except LookupError:
-			log.error("Invalid table: %s" % tableName)
-			self._table = brailleTables.getTable(FALLBACK_TABLE)
+		super().__init__()
+		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		#: A buffer of entered braille cells so that state set by previous cells can be maintained;
 		#: e.g. capital and number signs.
 		self.bufferBraille = []
@@ -92,14 +81,14 @@ class BrailleInputHandler(AutoPropertyObject):
 		self._uncontSentTime = None
 		#: The modifiers currently being held virtually to be part of the next braille input gesture.
 		self.currentModifiers = set()
+		self.handlePostConfigProfileSwitch()
 		config.post_configProfileSwitch.register(self.handlePostConfigProfileSwitch)
 
-	# Provided by auto property: L{_get_table} and L{_set_table}
 	table: brailleTables.BrailleTable
+	"""Type definition for auto prop '_get_table/_set_table'"""
 
-	def _get_table(self):
+	def _get_table(self) -> brailleTables.BrailleTable:
 		"""The translation table to use for braille input.
-		@rtype: L{brailleTables.BrailleTable}
 		"""
 		return self._table
 
@@ -135,10 +124,9 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in self.bufferBraille[:pos]])
 		mode = louis.dotsIO | louis.noUndefinedDots
 		if (not self.currentFocusIsTextObj or self.currentModifiers) and self._table.contracted:
-			mode |=  louis.partialTrans
+			mode |= louis.partialTrans
 		self.bufferText = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=mode)[0]
 		newText = self.bufferText[oldTextLen:]
 		if newText:
@@ -156,7 +144,7 @@ class BrailleInputHandler(AutoPropertyObject):
 				if len(newText)>1:
 					# Emulation of multiple characters at once is unsupported
 					# Clear newText, so this function returns C{False} if not at end of word
-					newText = u""
+					newText = ""
 				else:
 					self.emulateKey(newText)
 			else:
@@ -166,7 +154,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			# We only need to buffer one word.
 			# Clear the previous word (anything before the cursor) from the buffer.
 			del self.bufferBraille[:pos]
-			self.bufferText = u""
+			self.bufferText = ""
 			self.cellsWithText.clear()
 			self.currentModifiers.clear()
 			self.untranslatedStart = 0
@@ -187,8 +175,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		data = u"".join([chr(cell | LOUIS_DOTS_IO_START) for cell in cells])
 		oldText = self.bufferText
 		text = louis.backTranslate(
-			[os.path.join(brailleTables.TABLES_DIR, self._table.fileName),
-			"braille-patterns.cti"],
+			[self._table.fileName, "braille-patterns.cti"],
 			data, mode=louis.dotsIO | louis.noUndefinedDots | louis.partialTrans)[0]
 		self.bufferText = text
 		return oldText
@@ -253,7 +240,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			if self._translate(endWord):
 				if not endWord:
 					self.cellsWithText.add(pos)
-			elif self.bufferText and not self.useContractedForCurrentFocus:
+			elif self.bufferText and not self.useContractedForCurrentFocus and self._table.contracted:
 				# Translators: Reported when translation didn't succeed due to unsupported input.
 				speech.speakMessage(_("Unsupported input"))
 				self.flushBuffer()
@@ -264,20 +251,30 @@ class BrailleInputHandler(AutoPropertyObject):
 			self._reportUntranslated(pos)
 
 	def toggleModifier(self, modifier: str):
+		self.toggleModifiers([modifier])
+
+	def toggleModifiers(self, modifiers: List[str]):
 		# Check modifier validity
-		isModifier: bool = keyboardHandler.KeyboardInputGesture.fromName(modifier).isModifier
-		if not isModifier:
-			raise ValueError("%r is not a valid modifier"%modifier)
-		if modifier in self.currentModifiers:
-			self.currentModifiers.discard(modifier)
+		validModifiers: bool = all(
+			keyboardHandler.KeyboardInputGesture.fromName(m).isModifier
+			for m in modifiers)
+		if not validModifiers:
+			raise ValueError("%r contains unknown modifiers" % modifiers)
+
+		# Ensure input buffer is clear for the modified key
+		if self.bufferText:
+			self._translate(True)
+
+		toToggle: frozenset[str] = frozenset(modifiers)
+		added = toToggle - self.currentModifiers
+		removed = toToggle & self.currentModifiers
+		self.currentModifiers.difference_update(toToggle)
+		self.currentModifiers.update(added)
+		for modifier in added:
+			speech.speakMessage(keyLabels.getKeyCombinationLabel(modifier))
+		for modifier in removed:
 			# Translators: Reported when a braille input modifier is released.
 			speech.speakMessage(_("{modifier} released").format(
-				modifier=keyLabels.getKeyCombinationLabel(modifier)
-			))
-		else: # modifier not in self.currentModifiers
-			self.currentModifiers.add(modifier)
-			# Translators: Reported when a braille input modifier is pressed.
-			speech.speakMessage(_("{modifier} pressed").format(
 				modifier=keyLabels.getKeyCombinationLabel(modifier)
 			))
 
@@ -306,7 +303,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		"""
 		region = braille.handler.mainBuffer.regions[-1] if braille.handler.mainBuffer.regions else None
 		if isinstance(region, braille.TextInfoRegion):
-			braille.handler._doCursorMove(region)
+			braille.handler._regionsPendingUpdate.add(region)
+			braille.handler._handlePendingUpdate()
 
 	def eraseLastCell(self):
 		# Get the index of the cell being erased.
@@ -439,13 +437,26 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.flushBuffer()
 
 	def handlePostConfigProfileSwitch(self):
+		# #6140: Migrate to new table names as smoothly as possible.
+		tableName = config.conf["braille"]["inputTable"]
+		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
+		if newTableName:
+			tableName = config.conf["braille"]["inputTable"] = newTableName
 		table = config.conf["braille"]["inputTable"]
 		if table != self._table.fileName:
-			self._table = brailleTables.getTable(table)
+			try:
+				self._table = brailleTables.getTable(tableName)
+			except LookupError:
+				log.error(
+					f"Invalid input table ({tableName}), "
+					f"falling back to default ({FALLBACK_TABLE})."
+				)
+				self._table = brailleTables.getTable(FALLBACK_TABLE)
 
 
 #: The singleton BrailleInputHandler instance.
 handler: Optional[BrailleInputHandler] = None
+
 
 def initialize():
 	global handler

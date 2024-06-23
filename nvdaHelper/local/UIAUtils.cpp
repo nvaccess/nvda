@@ -1,6 +1,8 @@
 #include "UIAUtils.h"
 #include <common/log.h>
 
+using namespace winrt::Windows::UI::UIAutomation::Core;
+
 PROPERTYID registerUIAProperty(GUID* guid, LPCWSTR programmaticName, UIAutomationType propertyType) {
 	HRESULT res;
 	IUIAutomationRegistrar* registrar=NULL;
@@ -17,4 +19,13 @@ PROPERTYID registerUIAProperty(GUID* guid, LPCWSTR programmaticName, UIAutomatio
 	}
 	registrar->Release();
 	return propertyId;
+}
+
+int registerUIAAnnotationType(GUID* guid) {
+	if(!guid) {
+		LOG_DEBUGWARNING(L"NULL GUID given");
+		return 0;
+	}
+	auto res = CoreAutomationRegistrar::RegisterAnnotationType(*guid);
+	return res.LocalId;
 }

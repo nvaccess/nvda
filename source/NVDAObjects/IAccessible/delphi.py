@@ -8,7 +8,7 @@ class TRichView(IAccessible):
 		pass
 
 	def _get_role(self):
-		return controlTypes.ROLE_STATICTEXT
+		return controlTypes.Role.STATICTEXT
 
 class TRichViewEdit(IAccessible):
 
@@ -16,20 +16,20 @@ class TRichViewEdit(IAccessible):
 		pass
 
 	def _get_role(self):
-		return controlTypes.ROLE_EDITABLETEXT
+		return controlTypes.Role.EDITABLETEXT
 
 class TGroupBox(IAccessible):
 
 	def _get_role(self):
-		return controlTypes.ROLE_GROUPING
+		return controlTypes.Role.GROUPING
 
 class Form(behaviors.Dialog):
 
-	role=controlTypes.ROLE_DIALOG
+	role=controlTypes.Role.DIALOG
 
 class TabSheet(behaviors.Dialog):
 
-	role=controlTypes.ROLE_PROPERTYPAGE
+	role=controlTypes.Role.PROPERTYPAGE
 
 class TRxRichEdit(IAccessible):
 

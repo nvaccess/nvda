@@ -1,13 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2021 NV Access Limited
+# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 import sys
 import os
-import traceback
 import time
+from time import perf_counter as _timer
 import threading
+from typing import (
+	Any,
+)
 import inspect
 from ctypes import windll, oledll
 import ctypes.wintypes
@@ -16,53 +19,53 @@ import comtypes
 import winUser
 import winKernel
 from logHandler import log
+import logHandler
 import globalVars
 import core
-from core import CallCancelled
+import exceptions
 import NVDAHelper
+import NVDAState
 
-#settings
-#: The minimum time to wait for the core to be alive.
-MIN_CORE_ALIVE_TIMEOUT=0.5
-#: How long to wait for the core to be alive under normal circumstances.
-#: This must be a multiple of MIN_CORE_ALIVE_TIMEOUT.
-NORMAL_CORE_ALIVE_TIMEOUT=10
-#: How long to wait between recovery attempts
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "getFormattedStacksForAllThreads" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing getFormattedStacksForAllThreads from here is deprecated. "
+			"getFormattedStacksForAllThreads should be imported from logHandler instead.",
+			stack_info=True,
+		)
+		return logHandler.getFormattedStacksForAllThreads
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
+
+MIN_CORE_ALIVE_TIMEOUT = 0.5
+"""The minimum time (seconds) to wait for the core to be alive.
+"""
+NORMAL_CORE_ALIVE_TIMEOUT = 10
+""" Seconds to wait for the core to be alive under normal circumstances.
+"""
 RECOVER_ATTEMPT_INTERVAL = 0.05
-#: The amount of time before the core should be considered severely frozen and a warning logged.
+""" Seconds to wait between recovery attempts
+"""
 FROZEN_WARNING_TIMEOUT = 15
+""" Seconds before the core should be considered severely frozen and a warning logged.
+"""
 
-safeWindowClassSet=set([
+safeWindowClassSet = {
 	'Internet Explorer_Server',
 	'_WwG',
 	'EXCEL7',
-])
+}
 
 isRunning=False
-isAttemptingRecovery = False
+isAttemptingRecovery: bool = False
 _coreIsAsleep = False
 
 _coreDeadTimer = windll.kernel32.CreateWaitableTimerW(None, True, None)
 _suspended = False
 _watcherThread=None
 _cancelCallEvent = None
-
-
-def getFormattedStacksForAllThreads():
-	"""
-	Generates a string containing a call stack for every Python thread in this process, suitable for logging.
-	"""
-	# First collect the names of all threads that have actually been started by Python itself.
-	threadNamesByID = {x.ident: x.name for x in threading.enumerate()}
-	stacks = []
-	# If a Python function is entered by a thread that was not started by Python itself,
-	# It will have a frame, but won't be tracked by Python's threading module and therefore will have no name.
-	for ident, frame in sys._current_frames().items():
-		# The strings in the formatted stack all end with \n, so no join separator is necessary.
-		stack = "".join(traceback.format_stack(frame))
-		name = threadNamesByID.get(ident, "Unknown")
-		stacks.append(f"Python stack for thread {ident} ({name}):\n{stack}")
-	return "\n".join(stacks)
 
 
 def alive():
@@ -74,9 +77,22 @@ def alive():
 	windll.kernel32.ResetEvent(_cancelCallEvent)
 	# Set the timer so the watcher will take action in MIN_CORE_ALIVE_TIMEOUT
 	# if this function or asleep() isn't called.
-	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
-		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(-int(10000000 * MIN_CORE_ALIVE_TIMEOUT))),
+	SECOND_TO_100_NANOSECOND = 10 ** 7  # nanosecond is 10^9, 10^7 is hundreds of nanoseconds
+	windll.kernel32.SetWaitableTimer(
+		_coreDeadTimer,
+		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(
+			# The time after which the state of the timer is to be set to signaled,
+			# in 100 nanosecond intervals.
+			# Use the format described by the FILETIME structure.
+			# Positive values indicate absolute time.
+			# Be sure to use a UTC-based absolute time, as the system uses UTC-based time internally.
+			# Negative values indicate relative time.
+			# The actual timer accuracy depends on the capability of your hardware.
+			# For more information about UTC-based time, see System Time.
+			-int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT)
+		)),
 		0, None, None, False)
+
 
 def asleep():
 	"""Inform the watchdog that the core is going to sleep.
@@ -104,47 +120,78 @@ def _isAlive():
 	# This will stop recovery if it has started and allow the watcher to terminate.
 	return not isRunning or winKernel.waitForSingleObject(_coreDeadTimer, 0) != 0
 
+
+def _waitUntilNormalCoreAliveTimeout(waitedSince: float):
+	logged = False
+	while (
+		_timer() - waitedSince < NORMAL_CORE_ALIVE_TIMEOUT
+		and not _isAlive()
+		and not _shouldRecoverAfterMinTimeout()
+	):
+		if not logged:
+			logged = True
+			log.debug(f"Potential freeze, waiting up to {NORMAL_CORE_ALIVE_TIMEOUT} seconds.")
+		# The core is still dead and fast recovery doesn't apply.
+		# Wait up to NORMAL_ALIVE_TIMEOUT in increments of MIN_CORE_ALIVE_TIMEOUT
+		time.sleep(MIN_CORE_ALIVE_TIMEOUT)
+
+	if logged and _isAlive():
+		log.debug(f"Recovered from potential freeze after {_timer() - waitedSince} seconds.")
+
+
 def _watcher():
 	global isAttemptingRecovery
 	while True:
 		# Wait for the core to die.
 		winKernel.waitForSingleObject(_coreDeadTimer, winKernel.INFINITE)
+
 		if not isRunning:
+			# NVDA has shutdown, exit the watcher.
 			return
+
 		# The core hasn't reported alive for MIN_CORE_ALIVE_TIMEOUT.
-		waited = MIN_CORE_ALIVE_TIMEOUT
-		while not _isAlive() and not _shouldRecoverAfterMinTimeout():
-			# The core is still dead and fast recovery doesn't apply.
-			# Wait up to NORMAL_ALIVE_TIMEOUT.
-			time.sleep(MIN_CORE_ALIVE_TIMEOUT)
-			waited += MIN_CORE_ALIVE_TIMEOUT
-			if waited >= NORMAL_CORE_ALIVE_TIMEOUT:
-				break
+		waitedSince = _timer() - MIN_CORE_ALIVE_TIMEOUT  # already waiting this long via _coreDeadTimer
+		_waitUntilNormalCoreAliveTimeout(waitedSince)
 		if _isAlive():
 			continue
-		if log.isEnabledFor(log.DEBUGWARNING):
-			stacks = getFormattedStacksForAllThreads()
-			log.debugWarning(f"Trying to recover from freeze. Listing stacks for Python threads:\n{stacks}")
-		lastTime=time.time()
-		isAttemptingRecovery = True
-		# Cancel calls until the core is alive.
-		# This event will be reset by alive().
-		windll.kernel32.SetEvent(_cancelCallEvent)
-		# Some calls have to be killed individually.
-		while True:
-			curTime=time.time()
-			if curTime-lastTime>FROZEN_WARNING_TIMEOUT:
-				lastTime=curTime
-				# Core is completely frozen.
-				# Collect formatted stacks for all Python threads.
-				log.error("Core frozen in stack!")
-				stacks = getFormattedStacksForAllThreads()
-				log.info(f"Listing stacks for Python threads:\n{stacks}")
-			_recoverAttempt()
-			time.sleep(RECOVER_ATTEMPT_INTERVAL)
-			if _isAlive():
-				break
-		isAttemptingRecovery = False
+		else:
+			isAttemptingRecovery = True
+			waitForFreezeRecovery(waitedSince)
+			isAttemptingRecovery = False
+
+
+def waitForFreezeRecovery(waitedSince: float):
+	log.info(f"Starting freeze recovery after {_timer() - waitedSince} seconds.")
+	if log.isEnabledFor(log.DEBUGWARNING):
+		stacks = logHandler.getFormattedStacksForAllThreads()
+		log.debugWarning(
+			f"Listing stacks for Python threads:\n{stacks}"
+		)
+
+	# After every FROZEN_WARNING_TIMEOUT seconds have elapsed
+	# log each threads stack trace
+	lastTime = _timer()
+
+	# Cancel calls until the core is alive.
+	# This event will be reset by alive().
+	windll.kernel32.SetEvent(_cancelCallEvent)
+
+	# Some calls have to be killed individually.
+	while not _isAlive():
+		curTime = _timer()
+		if curTime - lastTime > FROZEN_WARNING_TIMEOUT:
+			lastTime = curTime
+			# Core is completely frozen.
+			# Collect formatted stacks for all Python threads.
+			log.error(f"Core frozen in stack! ({curTime - waitedSince} seconds)")
+			stacks = logHandler.getFormattedStacksForAllThreads()
+			log.info(f"Listing stacks for Python threads:\n{stacks}")
+		_recoverAttempt()
+		time.sleep(RECOVER_ATTEMPT_INTERVAL)
+
+	log.info(
+		f"Recovered from freeze after {_timer() - waitedSince} seconds."
+	)
 
 def _shouldRecoverAfterMinTimeout():
 	info=winUser.getGUIThreadInfo(0)
@@ -153,17 +200,19 @@ def _shouldRecoverAfterMinTimeout():
 		return True
 	# Import late to avoid circular import.
 	import api
+	from NVDAObjects.window import Window
 	#If a system menu has been activated but NVDA's focus is not yet in the menu then use min timeout
 	if info.flags&winUser.GUI_SYSTEMMENUMODE and info.hwndMenuOwner and api.getFocusObject().windowClassName!='#32768':
 		return True 
 	if winUser.getClassName(info.hwndFocus) in safeWindowClassSet:
 		return False
-	if not winUser.isDescendantWindow(info.hwndActive, api.getFocusObject().windowHandle):
+	focus = api.getFocusObject()
+	if (not isinstance(focus, Window)) or (not winUser.isDescendantWindow(info.hwndActive, focus.windowHandle)):
 		# The foreground window has changed.
 		return True
 	newHwnd=info.hwndFocus
 	newThreadID=winUser.getWindowThreadProcessID(newHwnd)[1]
-	return newThreadID!=api.getFocusObject().windowThreadID
+	return newThreadID != focus.windowThreadID
 
 def _recoverAttempt():
 	try:
@@ -194,8 +243,8 @@ def _crashHandler(exceptionInfo):
 			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
 				ExceptionPointers=exceptionInfo, ClientPointers=False)
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
-				ctypes.windll.kernel32.GetCurrentProcess(),
-				os.getpid(),
+				winKernel.kernel32.GetCurrentProcess(),
+				globalVars.appPid,
 				msvcrt.get_osfhandle(mdf.fileno()),
 				0, # MiniDumpNormal
 				ctypes.byref(mdExc),
@@ -209,7 +258,7 @@ def _crashHandler(exceptionInfo):
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)
 
 	# Log Python stacks for every thread.
-	stacks = getFormattedStacksForAllThreads()
+	stacks = logHandler.getFormattedStacksForAllThreads()
 	log.info(f"Listing stacks for Python threads:\n{stacks}")
 
 	log.info("Restarting due to crash")
@@ -226,7 +275,7 @@ def _notifySendMessageCancelled():
 	def sendMessageCallCanceller(frame, event, arg):
 		if frame == caller:
 			# Raising an exception will also cause the profile function to be deactivated.
-			raise CallCancelled
+			raise exceptions.CallCancelled
 	sys.setprofile(sendMessageCallCanceller)
 
 def initialize():
@@ -246,7 +295,8 @@ def initialize():
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	_watcherThread = threading.Thread(
 		name=__name__,
-		target=_watcher
+		target=_watcher,
+		daemon=True,
 	)
 	alive()
 	_watcherThread.start()
@@ -296,7 +346,7 @@ class CancellableCallThread(threading.Thread):
 		self.name = f"{self.__class__.__module__}.{self.execute.__qualname__}({fname})"
 		# Don't even bother making the call if the core is already dead.
 		if isAttemptingRecovery:
-			raise CallCancelled
+			raise exceptions.CallCancelled
 
 		self._func = func
 		self._args = args
@@ -315,7 +365,7 @@ class CancellableCallThread(threading.Thread):
 		if waitIndex.value == 1:
 			# Cancelled.
 			self.isUsable = False
-			raise CallCancelled
+			raise exceptions.CallCancelled
 
 		exc = self._exc_info
 		if exc:
@@ -350,7 +400,11 @@ def cancellableExecute(func, *args, ccPumpMessages=True, **kwargs):
 	@raise CallCancelled: If the call was cancelled.
 	"""
 	global cancellableCallThread
-	if not isRunning or _suspended or not isinstance(threading.currentThread(), threading._MainThread):
+	if (
+		not isRunning
+		or _suspended
+		or threading.current_thread() is not threading.main_thread()
+	):
 		# Watchdog is not running or this is a background thread,
 		# so just execute the call.
 		return func(*args, **kwargs)
@@ -370,3 +424,10 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	result = ctypes.wintypes.DWORD()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(hwnd, msg, wParam, lParam, flags, timeout, ctypes.byref(result))
 	return result.value
+
+
+class WatchdogObserver:
+	@property
+	def isAttemptingRecovery(self) -> bool:
+		global isAttemptingRecovery
+		return isAttemptingRecovery

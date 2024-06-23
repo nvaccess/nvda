@@ -1,26 +1,31 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2021-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
 """Unit tests for the speech module.
 """
-import unittest
 import gettext
 import typing
+import unittest
+
 import config
 from speech import (
-	_getSpellingSpeechAddCharMode,
 	_getSpellingCharAddCapNotification,
+	_getSpellingSpeechAddCharMode,
 	_getSpellingSpeechWithoutCharMode,
+	cancelSpeech,
+	speechCanceled,
 )
 from speech.commands import (
-	EndUtteranceCommand,
-	CharacterModeCommand,
-	PitchCommand,
 	BeepCommand,
-	LangChangeCommand
+	CharacterModeCommand,
+	EndUtteranceCommand,
+	LangChangeCommand,
+	PitchCommand,
 )
+
+from .extensionPointTestHelpers import actionTester
 
 
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
@@ -112,8 +117,11 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	@classmethod
 	def setUpClass(cls):
-		from . import translations as originalTranslationClass
-		cls.translationsFake = Translation_Fake(originalTranslationClass)
+		# Initialize fake translation,
+		# providing translation installed by `languageHandler` as an original one.
+		# To retrieve it we just get an gettext instance bound to the `_` function.
+		orig_translation = _.__self__
+		cls.translationsFake = Translation_Fake(orig_translation)
 		cls.translationsFake.install()
 
 	@classmethod
@@ -122,7 +130,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def tearDown(self) -> None:
 		self.translationsFake.translationResults.clear()
-	
+
 	def test_noNotifications(self):
 		expected = repr([
 			'A',
@@ -186,12 +194,27 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		)
 		self.assertEqual(repr(list(output)), expected)
 
+	def test_normalizedNotifications(self):
+		expected = repr([
+			'A',
+			' normalized'
+		])
+		output = _getSpellingCharAddCapNotification(
+			speakCharAs='A',
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			reportNormalized=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
 	def test_allNotifications(self):
 		expected = repr([
 			PitchCommand(offset=30),
 			BeepCommand(2000, 50, left=50, right=50),
 			'cap ',
 			'A',
+			' normalized',
 			PitchCommand()
 		])
 		output = _getSpellingCharAddCapNotification(
@@ -199,6 +222,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 			sayCapForCapitals=True,
 			capPitchChange=30,
 			beepForCapitals=True,
+			reportNormalized=True,
 		)
 		self.assertEqual(repr(list(output)), expected)
 
@@ -213,7 +237,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		config.conf['speech']['autoLanguageSwitching'] = config.conf.getConfigValidation(
 			['speech', 'autoLanguageSwitching']
 		).default
-	
+
 	def test_simpleSpelling(self):
 		expected = repr([
 			'a',
@@ -344,3 +368,119 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			beepForCapitals=False,
 		)
 		self.assertEqual(repr(list(output)), expected)
+
+	def test_ligature_normalizeOff(self):
+		expected = repr([
+			'ĳ',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='ĳ',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_ligature_normalizeOnDontReport(self):
+		expected = repr([
+			'i j',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='ĳ',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_ligature_normalizeOnReport(self):
+		expected = repr([
+			'i j',
+			' normalized',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='ĳ',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOff(self):
+		expected = repr([
+			'E',
+			EndUtteranceCommand(),
+			'́',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='É',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOnDontReport(self):
+		expected = repr([
+			'É',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='É',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOnReport(self):
+		expected = repr([
+			'É',
+			' normalized',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='É',
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+
+class SpeechExtensionPoints(unittest.TestCase):
+
+	def test_speechCanceledExtensionPoint(self):
+		with actionTester(
+			self,
+			speechCanceled,
+		):
+			cancelSpeech()

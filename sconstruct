@@ -1,12 +1,15 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2021 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
-# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt
+# Copyright (C) 2010-2023 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt,
+# Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import sys
+import multiprocessing
 import os
 import platform
+import sys
+
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -21,8 +24,8 @@ if nvdaVenv != virtualEnv:
 	print("Warning: SCons launched within a custom Python virtual environment.")
 
 # Variables for storing required version of Python, and the version which is used to run this script.
-requiredPythonMajor ="3"
-requiredPythonMinor = "7"
+requiredPythonMajor = "3"
+requiredPythonMinor = "11"
 requiredPythonArchitecture = "32bit"
 installedPythonMajor = str(sys.version_info.major)
 installedPythonMinor = str(sys.version_info.minor)
@@ -52,7 +55,6 @@ sys.path.append(sourceEnvPath)
 import sourceEnv
 sys.path.remove(sourceEnvPath)
 import time
-from glob import glob
 import importlib.util
 import winreg
 
@@ -77,25 +79,11 @@ sys.path.append("source")
 import versionInfo
 del sys.path[-1]
 
-makensis = "miscDeps\\tools\\NSIS\\makensis"
+makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
 
 # Get the path to xgettext.
 XGETTEXT = os.path.abspath(os.path.join("miscDeps", "tools", "xgettext.exe"))
 
-def keyCommandsDocTool(env):
-	import keyCommandsDoc
-	kcdAction=env.Action(
-		lambda target,source,env: not keyCommandsDoc.KeyCommandsMaker(source[0].path,target[0].path).make(),
-		lambda target,source,env: 'Generating %s'%target[0],
-	)
-	kcdBuilder=env.Builder(
-		action=kcdAction,
-		suffix='.t2t',
-		src_suffix='.t2t',
-	)
-	env['BUILDERS']['keyCommandsDoc']=kcdBuilder
-
-keyCommandsLangBlacklist=set([])
 
 vars = Variables()
 vars.Add("version", "The version of this build", versionInfo.version)
@@ -115,14 +103,26 @@ vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see
 env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"textfile",
 	"gettextTool",
-	"t2t"
-	,keyCommandsDocTool,
+	"md2html",
 	"doxygen",
-	"recursiveInstall"
+	"recursiveInstall",
+	"m4",
 ])
 
-# speed up subsiquent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
+# speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider('MD5-timestamp')
+
+# Warn to run the build on multiple threads so it runs faster
+numJobs = env.GetOption('num_jobs')
+numCores = multiprocessing.cpu_count()
+if numJobs < numCores:
+	print(
+		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+		f"while {numCores} CPU threads are available. "
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+	)
+else:
+	print(f"Building with {numJobs} concurrent jobs")
 
 #Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
@@ -234,43 +234,31 @@ envArm64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':envArm64,'c
 for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
 	env.gettextMoFile(po)
 
-#Allow all key command t2t files to be generated from their userGuide t2t sources
-for lang in os.listdir(userDocsDir.path):
-	if lang in keyCommandsLangBlacklist: continue
-	for ug in glob(os.path.join(userDocsDir.path,lang,'userGuide.t2t')):
-		env.keyCommandsDoc(File(ug).File('keyCommands.t2t'),ug)
-
-t2tBuildConf = env.Textfile(userDocsDir.File("build.t2tConf"), [
-	# We need to do this one as PostProc so it gets converted for the title.
-	r"%!PostProc: NVDA_VERSION {}".format(version),
-	r"%!PreProc: NVDA_URL {}".format(versionInfo.url),
-	r"%!PreProc: NVDA_COPYRIGHT_YEARS {}".format(versionInfo.copyrightYears),
-])
-
-userGuideConf = os.path.join(userDocsDir.path, 'userGuide.t2tconf')
-globalConf = os.path.join(userDocsDir.path, 'global.t2tconf')
-changesConf = os.path.join(userDocsDir.path, 'changes.t2tconf')
 styles = os.path.join(userDocsDir.path, 'styles.css')
+numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
-#Allow all t2t files to be converted to html in user_docs
-#As we use scons Glob this will also include the keyCommands.t2t files
-for t2tFile in env.Glob(os.path.join(userDocsDir.path,'*','*.t2t')):
-	htmlFile=env.txt2tags(t2tFile)
-	#txt2tags can not be run in parallel so make sure scons knows this
-	env.SideEffect('_txt2tags',htmlFile)
-	# All of our t2t files require build.t2tConf.
-	styleInstallPath = os.path.dirname(t2tFile.abspath)
+# Allow all markdown files to be converted to html in user_docs
+for mdFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.md')):
+	htmlFile = env.md2html(mdFile)
+	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
+	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
 	env.Depends(
 		htmlFile,
 		[
-			t2tBuildConf,
-			userGuideConf,
-			globalConf,
-			changesConf,
 			styles,
-			installedStyle
-		])
+			installedStyle,
+			numberedHeadingsStyle,
+			installedHeadingsStyle,
+		]
+	)
+	env.Depends(htmlFile, mdFile)
+
+# Create key commands files
+for userGuideFile in env.Glob(os.path.join(userDocsDir.path, '*', 'userGuide.md')):
+	keyCommandsHtmlFile = env.md2html(userGuideFile.abspath.replace("userGuide.md", "keyCommands.html"), userGuideFile)
+	env.Depends(keyCommandsHtmlFile, userGuideFile)
+
 # Build unicode CLDR dictionaries
 env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
 
@@ -293,16 +281,12 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# which scons treats as an error code.	
 	and None]
 
-	buildCmd = ["cd", source[0].path, "&&",
-		sys.executable]
+	buildCmd = ["cd", source[0].path, "&&", sys.executable]
 	if release:
 		buildCmd.append("-O")
 	# Issue errors about str(bytes_instance), str(bytearray_instance)
 	buildCmd.append("-bb")
-	buildCmd.extend(("setup.py", "-vv", "build", "--build-base", buildDir.abspath,
-		"py2exe", "--dist-dir", target[0].abspath))
-	if release:
-		buildCmd.append("-O1")
+	buildCmd.append("setup.py")
 	if env.get("uiAccess"):
 		buildCmd.append("--enable-uiAccess")
 
@@ -331,7 +315,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 				action.append(Copy(target[0], file.path))
 
 	if certFile:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "nvda_eoaProxy.exe":
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
 			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
 
 	action.extend((
@@ -398,6 +382,8 @@ if certFile:
 
 dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
 env.Depends(dist,uninstaller)
+# dist will always be considered obsolete
+AlwaysBuild(dist)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
 env.Clean(dist, dist)
 # Clean the intermediate build directory.
@@ -415,14 +401,44 @@ env.Alias("launcher", launcher)
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
 env.Alias("client", clientArchive)
 
-outputStylesFile=env.Command(outputDir.File("styles.css"),userDocsDir.File('styles.css'),Copy('$TARGET','$SOURCE'))
+outputStylesFile = env.Command(
+	outputDir.File("styles.css"),
+	userDocsDir.File("styles.css"),
+	Copy("$TARGET", "$SOURCE")
+)
+outputHeadingStylesFile = env.Command(
+	outputDir.File("numberedHeadings.css"),
+	userDocsDir.File("numberedHeadings.css"),
+	Copy("$TARGET", "$SOURCE")
+)
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
+changesMDFile = env.Command(
+	outputDir.File("changes.md"),
+	userDocsDir.File('en/changes.md'),
+	Copy('$TARGET', '$SOURCE')
+)
+env.Depends(changesFile, changesMDFile)
 env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
-userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
-env.Depends(userGuideFile, outputStylesFile)
-env.Alias('userGuide',userGuideFile)
 
+userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+userGuideMDFile = env.Command(
+	outputDir.File("userGuide.md"),
+	userDocsDir.File('en/userGuide.md'),
+	Copy('$TARGET', '$SOURCE')
+)
+env.Depends(userGuideFile, userGuideMDFile)
+env.Depends(userGuideFile, outputStylesFile)
+env.Alias('userGuide', userGuideFile)
+
+keyCommandsFile = env.Command(
+	outputDir.File("keyCommands.html"),
+	userDocsDir.File('en/keyCommands.html'),
+	Copy('$TARGET', '$SOURCE')
+)
+env.Depends(keyCommandsFile, outputStylesFile)
+env.Depends(keyCommandsFile, userGuideFile)
+env.Alias('keyCommands', keyCommandsFile)
 
 def makePotSourceFileList(target, sourceFiles, env):
 	potSourceFiles = [
@@ -445,6 +461,7 @@ def makePot(target, source, env):
 			"--foreign-user",
 			"--add-comments=Translators:",
 			"--keyword=pgettext:1c,2",
+			"--keyword=npgettext:1c,2,3",
 			"--from-code", "utf-8",
 			# Needed because xgettext doesn't recognise the .pyw extension.
 			"--language=python",
@@ -457,7 +474,7 @@ def makePot(target, source, env):
 	# Tweak the headers.
 	potFn = str(target[0])
 	tmpFn = "%s.tmp" % potFn
-	with open(potFn, "rt") as inp, open(tmpFn, "wt") as out:
+	with open(potFn, "rt", encoding="utf-8") as inp, open(tmpFn, "wt", encoding="utf-8") as out:
 		for lineNum, line in enumerate(inp):
 			if lineNum == 1:
 				line = "# %s\n" % versionInfo.copyright
@@ -471,7 +488,7 @@ def makePot(target, source, env):
 	os.rename(tmpFn, potFn)
 
 
-env.SConscript("devDocs/sconscript", exports=["env", "outputDir", "sourceDir", "t2tBuildConf"])
+env.SConscript("projectDocs/dev/developerGuide/sconscript", exports=["env", "outputDir", "sourceDir"])
 
 
 def getSubDirs(path):
@@ -485,17 +502,22 @@ potSourceFiles = [
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
 	f for recurseDirs in getSubDirs(sourceDir.path)
+	if not (
+		# Exclude comInterfaces, since these don't contain translatable strings
+		# and they cause unknown encoding warnings.
+		recurseDirs.startswith(r"source\comInterfaces")
+		# Exclude userConfig folder which does not contain NVDA code but may contain gettext call without
+		# translator comments in add-ons or scratchpad, triggering false positive for checkpot script.
+		or recurseDirs.startswith(r"source\userConfig")
+	)	
 	for pattern in ("*.py", "*.pyw")
 	for f in env.Glob(
 		os.path.join(recurseDirs, pattern),
-		# Exclude comInterfaces, since these don't contain translatable strings
-		# and they cause unknown encoding warnings.
-		exclude="source/comInterfaces/*"
 	)
 ]
 
 pot = env.Command(
-	outputDir.File("%s.pot" % outFilePrefix),
+	outputDir.File("nvda.pot"),
 	potSourceFiles,
 	makePot
 )
@@ -517,3 +539,11 @@ env.Alias('appx',[installed_appx_storeSubmission,installed_appx_sideLoadable])
 env.Default(dist)
 
 env.SConscript("tests/sconscript", exports=["env", "sourceDir", "pot"])
+
+
+# Generate a list of Python modules from compiled '.pyc' files in library.zip
+env.Tool("listModules")
+source = env.Dir(os.path.join(os.getcwd(), "dist"))
+# Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
+target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
+env.Alias("moduleList", env.GenerateModuleList(target, source))

@@ -1,8 +1,7 @@
-#gui/logViewer.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
 
 """Provides functionality to view the NVDA log.
 """
@@ -11,6 +10,8 @@ import wx
 import globalVars
 import gui
 import gui.contextHelp
+from gui import blockAction
+
 
 #: The singleton instance of the log viewer UI.
 logViewer = None
@@ -32,6 +33,10 @@ class LogViewer(
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		font = self.outputCtrl.GetFont()
+		# Set a fixed width font so that the error is correctly pointed in Python tracebacks.
+		font.SetFaceName('Consolas')
+		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
@@ -102,15 +107,15 @@ class LogViewer(
 			return
 		evt.Skip()
 
+
+# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
+@blockAction.when(blockAction.Context.SECURE_MODE)
 def activate():
 	"""Activate the log viewer.
 	If the log viewer has not already been created and opened, this will create and open it.
 	Otherwise, it will be brought to the foreground if possible.
 	"""
 	global logViewer
-	if globalVars.appArgs.secure:
-		# The log might expose sensitive information and the Save As dialog in the Log Viewer is a security risk.
-		return
 	if not logViewer:
 		logViewer = LogViewer(gui.mainFrame)
 	# Check if log was properly initialized

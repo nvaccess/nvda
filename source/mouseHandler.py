@@ -1,8 +1,10 @@
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2023 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+from dataclasses import dataclass
+from typing import Optional
 import time
 import wx
 import gui
@@ -13,7 +15,6 @@ import queueHandler
 import api
 import screenBitmap
 import speech
-import globalVars
 import eventHandler
 from logHandler import log
 import config
@@ -23,6 +24,8 @@ import ui
 from math import floor
 from contextlib import contextmanager
 import threading
+from winAPI.winUser.constants import SystemMetrics
+
 
 WM_MOUSEMOVE=0x0200
 WM_LBUTTONDOWN=0x0201
@@ -198,19 +201,18 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	return (totalWidth, totalHeight, wx.Point(smallestX, smallestY))
 
 def executeMouseMoveEvent(x,y):
-	global currentMouseWindow
 	desktopObject=api.getDesktopObject()
 	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
+	oldMouseObject = api.getMouseObject()
+	mouseObject = desktopObject.objectFromPoint(x, y)
 
-	if config.conf["mouse"]["audioCoordinatesOnMouseMove"]:
+	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.sleepMode:
 		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
 			config.conf['mouse']['audioCoordinates_detectBrightness'],
 			config.conf['mouse']['audioCoordinates_blurFactor'])
 
-	oldMouseObject=api.getMouseObject()
-	mouseObject=desktopObject.objectFromPoint(x, y)
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
 	if not mouseObject:
@@ -218,7 +220,8 @@ def executeMouseMoveEvent(x,y):
 	if oldMouseObject==mouseObject:
 		mouseObject=oldMouseObject
 	else:
-		api.setMouseObject(mouseObject)
+		if not api.setMouseObject(mouseObject):
+			return
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
@@ -258,7 +261,150 @@ def pumpAll():
 
 def terminate():
 	global scrBmpObj, _shapeTimer
+	if isLeftMouseButtonLocked():
+		unlockLeftMouseButton()
+	if isRightMouseButtonLocked():
+		unlockRightMouseButton()
 	scrBmpObj=None
 	winInputHook.terminate()
 	_shapeTimer.Stop()
 	_shapeTimer = None
+
+
+@dataclass
+class LogicalButtonFlags:
+	"""
+	A container for holding the flags denoting the primary and secondary buttons on a mouse.
+	See L{GetLogicalButtonFlags}.
+	"""
+	primaryDown: int
+	primaryUp: int
+	secondaryDown: int
+	secondaryUp: int
+
+
+def getLogicalButtonFlags() -> LogicalButtonFlags:
+	"""
+	Fills and returns a LogicalButtonFlags object with the appropriate MOUSEEVENTF_* button flags
+	taking into account the Windows user setting
+	for which button (left or right) is primary and which is secondary.
+	"""
+	swappedButtons = ctypes.windll.user32.GetSystemMetrics(SystemMetrics.SWAP_BUTTON)
+	if not swappedButtons:
+		return LogicalButtonFlags(
+			primaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
+			primaryUp=winUser.MOUSEEVENTF_LEFTUP,
+			secondaryDown=winUser.MOUSEEVENTF_RIGHTDOWN,
+			secondaryUp=winUser.MOUSEEVENTF_RIGHTUP,
+		)
+	else:
+		return LogicalButtonFlags(
+			primaryDown=winUser.MOUSEEVENTF_RIGHTDOWN,
+			primaryUp=winUser.MOUSEEVENTF_RIGHTUP,
+			secondaryDown=winUser.MOUSEEVENTF_LEFTDOWN,
+			secondaryUp=winUser.MOUSEEVENTF_LEFTUP,
+		)
+
+
+def _doClick(
+		downFlag: int,
+		upFlag: int,
+		releaseDelay: Optional[float] = None
+):
+	executeMouseEvent(downFlag, 0, 0)
+	if releaseDelay:
+		time.sleep(releaseDelay)
+	executeMouseEvent(upFlag, 0, 0)
+
+
+def doPrimaryClick(releaseDelay: Optional[float] = None):
+	"""
+	Performs a primary mouse click at the current mouse pointer location.
+	The primary button is the one that usually activates or selects an item.
+	This function honors the Windows user setting
+	for which button (left or right) is classed as the primary button.
+	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
+	between pressing down and then releasing up the primary button.
+	"""
+	buttonFlags = getLogicalButtonFlags()
+	_doClick(buttonFlags.primaryDown, buttonFlags.primaryUp, releaseDelay)
+
+
+def doSecondaryClick(releaseDelay: Optional[float] = None):
+	"""
+	Performs a secondary mouse click at the current mouse pointer location.
+	The secondary button is the one that usually displays a context menu for an item when clicked.
+	This function honors the Windows user setting
+	for which button (left or right) is classed as the secondary button.
+	@ param releaseDelay: optional float in seconds of how long NVDA should sleep
+	between pressing down and then releasing up the primary button.
+	"""
+	buttonFlags = getLogicalButtonFlags()
+	_doClick(buttonFlags.secondaryDown, buttonFlags.secondaryUp, releaseDelay)
+
+
+def isLeftMouseButtonLocked():
+	""" Tests if the left mouse button is locked """
+	return winUser.getKeyState(winUser.VK_LBUTTON) & 1 << 15
+
+
+def lockLeftMouseButton():
+	""" Locks the left mouse button """
+	# Translators: This is presented when the left mouse button is locked down (used for drag and drop).
+	ui.message(_("Left mouse button lock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN, 0, 0)
+
+
+def unlockLeftMouseButton():
+	""" Unlocks the left mouse button """
+	# Translators: This is presented when the left mouse button lock is released (used for drag and drop).
+	ui.message(_("Left mouse button unlock"))
+	executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP, 0, 0)
+
+
+def isRightMouseButtonLocked():
+	""" Tests if the right mouse button is locked """
+	return winUser.getKeyState(winUser.VK_RBUTTON) & 1 << 15
+
+
+def lockRightMouseButton():
+	""" Locks the right mouse button """
+	# Translators: This is presented when the right mouse button is locked down (used for drag and drop).
+	ui.message(_("Right mouse button locked"))
+	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTDOWN, 0, 0)
+
+
+def unlockRightMouseButton():
+	""" Unlocks the right mouse button """
+	# Translators: This is presented when the right mouse button lock is released (used for drag and drop).
+	ui.message(_("Right mouse button unlocked"))
+	executeMouseEvent(winUser.MOUSEEVENTF_RIGHTUP, 0, 0)
+
+
+def scrollMouseWheel(scrollSteps: int, isVertical: bool = True) -> None:
+	"""
+	Scrolls the mouse wheel either vertically or horizontally, controlling the direction and amount of scrolling.
+	More details on mouse events can be found at:
+	https://learn.microsoft.com/en-us/windows/win32/inputdev/wm-mousewheel
+
+	:param scrollSteps: The number of steps to scroll. Each step should correspond to a fraction or multiple
+		of WHEEL_DELTA, which is typically set to 120. This defines the standard increment
+		or decrement in scrolling position.
+	:param isVertical: Determines the direction of the scrolling; vertical if True, horizontal if False.
+	:return: None
+	"""
+	if not isinstance(scrollSteps, int):
+		raise TypeError(f"'scrollSteps' should be an integer. Type received: {type(scrollSteps).__name__}")
+	if scrollSteps == 0:
+		return
+	scrollEvent = winUser.MOUSEEVENTF_WHEEL if isVertical else winUser.MOUSEEVENTF_HWHEEL
+	sign = -1 if scrollSteps < 0 else 1
+	totalSteps = abs(scrollSteps)
+	maxSteps = winUser.WHEEL_DELTA
+	# Decompose the scroll operation into smaller deltas to accommodate applications
+	# that may not process deltas larger than the standard efficiently.
+	for _ in range(0, totalSteps, maxSteps):
+		scrollStep = min(maxSteps, totalSteps)
+		scrollData = sign * scrollStep
+		executeMouseEvent(scrollEvent, 0, 0, scrollData)
+		totalSteps -= scrollStep

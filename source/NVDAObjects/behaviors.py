@@ -1,8 +1,8 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler
+# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd.
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -26,9 +26,10 @@ from scriptHandler import script
 import api
 import ui
 import braille
+import core
 import nvwave
 import globalVars
-from typing import List
+from typing import List, Union
 import diffHandler
 
 
@@ -39,7 +40,7 @@ class ProgressBar(NVDAObject):
 	def event_valueChange(self):
 		pbConf=config.conf["presentation"]["progressBarUpdates"]
 		states=self.states
-		if pbConf["progressBarOutputMode"]=="off" or controlTypes.STATE_INVISIBLE in states or controlTypes.STATE_OFFSCREEN in states:
+		if pbConf["progressBarOutputMode"]=="off" or controlTypes.State.INVISIBLE in states or controlTypes.State.OFFSCREEN in states:
 			return super(ProgressBar,self).event_valueChange()
 		val=self.value
 		try:
@@ -62,7 +63,12 @@ class ProgressBar(NVDAObject):
 			self.progressValueCache["beep,%d,%d"%(x,y)]=percentage
 		lastSpeechProgressValue=self.progressValueCache.get("speech,%d,%d"%(x,y),None)
 		if pbConf["progressBarOutputMode"] in ("speak","both") and (lastSpeechProgressValue is None or abs(percentage-lastSpeechProgressValue)>=pbConf["speechPercentageInterval"]):
-			queueHandler.queueFunction(queueHandler.eventQueue,speech.speakMessage,_("%d percent")%percentage)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				speech.speakMessage,
+				# Translators: This is presented to inform the user of a progress bar percentage.
+				_("%d percent") % percentage,
+			)
 			self.progressValueCache["speech,%d,%d"%(x,y)]=percentage
 
 class Dialog(NVDAObject):
@@ -85,19 +91,20 @@ class Dialog(NVDAObject):
 			childStates=child.states
 			childRole=child.role
 			#We don't want to handle invisible or unavailable objects
-			if controlTypes.STATE_INVISIBLE in childStates or controlTypes.STATE_UNAVAILABLE in childStates: 
+			if controlTypes.State.INVISIBLE in childStates or controlTypes.State.UNAVAILABLE in childStates: 
 				continue
 			#For particular objects, we want to descend in to them and get their children's message text
 			if childRole in (
-					controlTypes.ROLE_PROPERTYPAGE,
-					controlTypes.ROLE_PANE,
-					controlTypes.ROLE_PANEL,
-					controlTypes.ROLE_WINDOW,
-					controlTypes.ROLE_GROUPING,
-					controlTypes.ROLE_PARAGRAPH,
-					controlTypes.ROLE_SECTION,
-					controlTypes.ROLE_TEXTFRAME,
-					controlTypes.ROLE_UNKNOWN
+				controlTypes.Role.OPTIONPANE,
+				controlTypes.Role.PROPERTYPAGE,
+				controlTypes.Role.PANE,
+				controlTypes.Role.PANEL,
+				controlTypes.Role.WINDOW,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.PARAGRAPH,
+				controlTypes.Role.SECTION,
+				controlTypes.Role.TEXTFRAME,
+				controlTypes.Role.UNKNOWN
 			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
@@ -108,27 +115,27 @@ class Dialog(NVDAObject):
 					return None
 				continue
 			#If the child is focused  we should just stop and return None
-			if not allowFocusedDescendants and controlTypes.STATE_FOCUSED in child.states:
+			if not allowFocusedDescendants and controlTypes.State.FOCUSED in child.states:
 				return None
 			# We only want text from certain controls.
 			if not (
 				 # Static text, labels and links
-				 childRole in (controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_LABEL,controlTypes.ROLE_LINK)
+				 childRole in (controlTypes.Role.STATICTEXT,controlTypes.Role.LABEL,controlTypes.Role.LINK)
 				# Read-only, non-multiline edit fields
-				or (childRole==controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_READONLY in childStates and controlTypes.STATE_MULTILINE not in childStates)
+				or (childRole==controlTypes.Role.EDITABLETEXT and controlTypes.State.READONLY in childStates and controlTypes.State.MULTILINE not in childStates)
 			):
 				continue
 			#We should ignore a text object directly after a grouping object, as it's probably the grouping's description
-			if index>0 and children[index-1].role==controlTypes.ROLE_GROUPING:
+			if index>0 and children[index-1].role==controlTypes.Role.GROUPING:
 				continue
 			#Like the last one, but a graphic might be before the grouping's description
-			if index>1 and children[index-1].role==controlTypes.ROLE_GRAPHIC and children[index-2].role==controlTypes.ROLE_GROUPING:
+			if index>1 and children[index-1].role==controlTypes.Role.GRAPHIC and children[index-2].role==controlTypes.Role.GROUPING:
 				continue
 			childName=child.name
-			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.ROLE_GRAPHIC,controlTypes.ROLE_STATICTEXT,controlTypes.ROLE_SEPARATOR,controlTypes.ROLE_WINDOW,controlTypes.ROLE_PANE,controlTypes.ROLE_BUTTON) and children[index+1].name==childName:
+			if childName and index<(childCount-1) and children[index+1].role not in (controlTypes.Role.GRAPHIC,controlTypes.Role.STATICTEXT,controlTypes.Role.SEPARATOR,controlTypes.Role.WINDOW,controlTypes.Role.PANE,controlTypes.Role.BUTTON) and children[index+1].name==childName:
 				# This is almost certainly the label for the next object, so skip it.
 				continue
-			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.ROLE_LABEL,controlTypes.ROLE_STATICTEXT)
+			isNameIncluded=child.TextInfo is NVDAObjectTextInfo or childRole in (controlTypes.Role.LABEL,controlTypes.Role.STATICTEXT)
 			childText=child.makeTextInfo(textInfos.POSITION_ALL).text
 			if not childText or childText.isspace() and child.TextInfo is not NVDAObjectTextInfo:
 				childText=child.basicText
@@ -156,7 +163,42 @@ class Dialog(NVDAObject):
 		self.isPresentableFocusAncestor = res = super(Dialog, self).isPresentableFocusAncestor
 		return res
 
-class EditableText(editableText.EditableText, NVDAObject):
+
+class InputFieldWithSuggestions(NVDAObject):
+	"""Allows NVDA to announce appearance/disappearance of suggestions as content is entered.
+	This is used in various places, including Windows 10 search edit fields and others.
+	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
+	These events are fired when suggestions appear and disappear, respectively.
+	"""
+
+	def event_suggestionsOpened(self):
+		"""Called when suggestions appear when text is entered e.g. search suggestions.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
+		"""
+		# Translators: Announced in braille when suggestions appear when search term is entered
+		# in various search fields such as Start search box in Windows 10.
+		braille.handler.message(_("Suggestions"))
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
+
+	def event_suggestionsClosed(self):
+		"""Called when suggestions list or container is closed.
+		Subclasses should provide custom implementations if possible.
+		By default NVDA will announce this via speech, braille or via a sound.
+		"""
+		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
+
+	def event_controllerForChange(self):
+		# Report when suggestions appear and disappear.
+		if self is api.getFocusObject() and len(self.controllerFor) > 0:
+			self.event_suggestionsOpened()
+		else:
+			self.event_suggestionsClosed()
+
+
+class EditableTextBase(editableText.EditableText, NVDAObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
 	This does not handle selection changes.
 	To handle selection changes, use either L{EditableTextWithAutoSelectDetection} or L{EditableTextWithoutAutoSelectDetection}.
@@ -166,8 +208,9 @@ class EditableText(editableText.EditableText, NVDAObject):
 
 	def initOverlayClass(self):
 		# #4264: the caret_newLine script can only be bound for processes other than NVDA's process
-		# As Pressing enter on an edit field can cause modal dialogs to appear, yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze. 
-		if self.announceNewLineText and self.processID!=os.getpid():
+		# As Pressing enter on an edit field can cause modal dialogs to appear,
+		# yet gesture.send and api.processPendingEvents may call.wx.yield which ends in a freeze.
+		if self.announceNewLineText and self.processID != globalVars.appPid:
 			self.bindGesture("kb:enter","caret_newLine")
 			self.bindGesture("kb:numpadEnter","caret_newLine")
 
@@ -175,6 +218,72 @@ class EditableText(editableText.EditableText, NVDAObject):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
 		super()._caretScriptPostMovedHelper(speakUnit, gesture, info)
+
+	def _reportErrorInPreviousWord(self):
+		try:
+			# self might be a descendant of the text control; e.g. Symphony.
+			# We want to deal with the entire text, so use the caret object.
+			info = api.getCaretObject().makeTextInfo(textInfos.POSITION_CARET)
+			# This gets called for characters which might end a word; e.g. space.
+			# The character before the caret is the word end.
+			# The one before that is the last of the word, which is what we want.
+			info.move(textInfos.UNIT_CHARACTER, -2)
+			info.expand(textInfos.UNIT_CHARACTER)
+		except Exception:
+			# Focus probably moved.
+			log.debugWarning("Error fetching last character of previous word", exc_info=True)
+			return
+
+		# Fetch the formatting for the last word to see if it is marked as a spelling error,
+		# However perform the fetch and check in a future core cycle
+		# To give the content control more time to detect and mark the error itself.
+		# #12161: MS Word's UIA implementation certainly requires this delay.
+		def _delayedDetection():
+			try:
+				fields = info.getTextWithFields()
+			except Exception:
+				log.debugWarning("Error fetching formatting for last character of previous word", exc_info=True)
+				return
+			for command in fields:
+				if (
+					isinstance(command, textInfos.FieldCommand)
+					and command.command == "formatChange"
+					and command.field.get("invalid-spelling")
+				):
+					break
+			else:
+				# No error.
+				return
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "textError.wav"))
+		core.callLater(50, _delayedDetection)
+
+	def event_typedCharacter(self, ch: str):
+		if(
+			config.conf["documentFormatting"]["reportSpellingErrors"]
+			and config.conf["keyboard"]["alertForSpellingErrors"]
+			and (
+				# Not alpha, apostrophe or control.
+				ch.isspace() or (ch >= " " and ch not in "'\x7f" and not ch.isalpha())
+			)
+		):
+			# Reporting of spelling errors is enabled and this character ends a word.
+			self._reportErrorInPreviousWord()
+		super().event_typedCharacter(ch)
+
+
+class EditableTextWithSuggestions(InputFieldWithSuggestions, EditableTextBase):
+	""" Represents an editable text field that shows suggestions as you type.
+	This is an empty class as functionality has been moved to the base InputFieldWithSuggestions class.
+	"""
+
+
+class EditableText(EditableTextWithSuggestions, EditableTextBase):
+	""" Represents an editable text field.
+	This is an empty class as functionality has been moved to the base EditableTextBase class.
+	This class also supports reporting of the appearance and disappearance of suggestions
+	by inheriting from the EditableTextWithSuggestions class.
+	"""
+
 
 class EditableTextWithAutoSelectDetection(EditableText):
 	"""In addition to L{EditableText}, handles reporting of selection changes for objects which notify of them.
@@ -241,9 +350,9 @@ class LiveText(NVDAObject):
 			return
 		thread = self._monitorThread = threading.Thread(
 			name=f"{self.__class__.__qualname__}._monitorThread",
-			target=self._monitor
+			target=self._monitor,
+			daemon=True,
 		)
-		thread.daemon = True
 		self._keepMonitoring = True
 		self._event.clear()
 		thread.start()
@@ -265,17 +374,20 @@ class LiveText(NVDAObject):
 		"""
 		self._event.set()
 
-	def _get_diffAlgo(self):
+	def _get_diffAlgo(self) -> Union[diffHandler.prefer_difflib, diffHandler.prefer_dmp]:
 		"""
 			This property controls which diffing algorithm should be used by
-			this object. Most subclasses should simply use the base
-			implementation, which returns DMP (character-based diffing).
+			this object. If the object contains a strictly contiguous
+			span of text (i.e. textInfos.POSITION_ALL refers to the entire
+			contents of the object and not just one visible screen of text),
+			then diffHandler.prefer_dmp (character-based diffing) is suitable.
+			Otherwise, use diffHandler.prefer_difflib.
 			
-			@Note: DMP is experimental, and can be disallowed via user
-			preference. In this case, the prior stable implementation, Difflib
-			(line-based diffing), will be used.
+			@Note: Return either diffHandler.prefer_dmp() or
+			diffHandler.prefer_difflib() so that the diffAlgo user
+			preference can override this choice.
 		"""
-		return diffHandler.get_dmp_algo()
+		return diffHandler.prefer_dmp()
 
 	def _get_devInfo(self):
 		info = super().devInfo
@@ -334,7 +446,7 @@ class LiveText(NVDAObject):
 						# so ignore it.
 						del outLines[0]
 					if outLines:
-						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines)
+						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines, _immediate=True)
 				oldText = newText
 			except:
 				log.exception("Error getting or calculating new text")
@@ -348,7 +460,7 @@ class Terminal(LiveText, EditableText):
 	This is an L{EditableText} object,
 	as well as a L{liveText} object for which monitoring is automatically enabled and disabled based on whether it has focus.
 	"""
-	role = controlTypes.ROLE_TERMINAL
+	role = controlTypes.Role.TERMINAL
 
 	def event_gainFocus(self):
 		super(Terminal, self).event_gainFocus()
@@ -362,6 +474,13 @@ class Terminal(LiveText, EditableText):
 		"""Using caret events in consoles sometimes causes the last character of the
 		prompt to be read when quickly deleting text."""
 		return False
+
+	def event_textChange(self) -> None:
+		"""Fired when the text changes.
+		@note: Updates also braille.
+		"""
+		super().event_textChange()
+		braille.handler.handleUpdate(self)
 
 
 class EnhancedTermTypedCharSupport(Terminal):
@@ -507,12 +626,12 @@ class CandidateItem(NVDAObject):
 	def _get_visibleCandidateItemsText(self):
 		obj=self
 		textList=[]
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.previous
 		textList.reverse()
 		obj=self.next
-		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.STATE_INVISIBLE not in obj.states:
+		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
 		if len(textList)<=1: return None
@@ -533,8 +652,8 @@ class RowWithFakeNavigation(NVDAObject):
 		if obj is not self:
 			# Use the focused copy of the row as the parent for all cells to make comparison faster.
 			obj.parent = self
-		api.setNavigatorObject(obj)
-		speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
+		if api.setNavigatorObject(obj):
+			speech.speakObject(obj, reason=controlTypes.OutputReason.FOCUS)
 
 	def _moveToColumnNumber(self, column):
 		child = column - 1
@@ -543,6 +662,12 @@ class RowWithFakeNavigation(NVDAObject):
 		cell = self.getChild(child)
 		self._moveToColumn(cell)
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the next column"),
+		gesture="kb:control+alt+rightArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -555,10 +680,13 @@ class RowWithFakeNavigation(NVDAObject):
 		while new and new.location and new.location.width == 0:
 			new = new.next
 		self._moveToColumn(new)
-	script_moveToNextColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextColumn.__doc__ = _("Moves the navigator object to the next column")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object to the previous column"),
+		gesture="kb:control+alt+leftArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousColumn(self, gesture):
 		cur = api.getNavigatorObject()
 		if cur == self:
@@ -570,9 +698,6 @@ class RowWithFakeNavigation(NVDAObject):
 			while new and new.location and new.location.width == 0:
 				new = new.previous
 		self._moveToColumn(new)
-	script_moveToPreviousColumn.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousColumn.__doc__ = _("Moves the navigator object to the previous column")
 
 	def reportFocus(self):
 		col = self._savedColumnNumber
@@ -589,24 +714,77 @@ class RowWithFakeNavigation(NVDAObject):
 			self.__class__._savedColumnNumber = nav.columnNumber
 		row.setFocus()
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the next row"),
+		gesture="kb:control+alt+downArrow",
+		canPropagate=True,
+	)
 	def script_moveToNextRow(self, gesture):
 		self._moveToRow(self.next)
-	script_moveToNextRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToNextRow.__doc__ = _("Moves the navigator object and focus to the next row")
 
+	@script(
+		# Translators: The description of an NVDA command.
+		description=_("Moves the navigator object and focus to the previous row"),
+		gesture="kb:control+alt+upArrow",
+		canPropagate=True,
+	)
 	def script_moveToPreviousRow(self, gesture):
 		self._moveToRow(self.previous)
-	script_moveToPreviousRow.canPropagate = True
-	# Translators: The description of an NVDA command.
-	script_moveToPreviousRow.__doc__ = _("Moves the navigator object and focus to the previous row")
 
-	__gestures = {
-		"kb:control+alt+rightArrow": "moveToNextColumn",
-		"kb:control+alt+leftArrow": "moveToPreviousColumn",
-		"kb:control+alt+downArrow": "moveToNextRow",
-		"kb:control+alt+upArrow": "moveToPreviousRow",
-	}
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the first column"
+		),
+		gesture="kb:Control+Alt+Home",
+		canPropagate=True,
+	)
+	def script_moveToFirstColumn(self, gesture):
+		new = self.firstChild
+		while new and new.location and new.location.width == 0:
+			new = new.next
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object to the last column"
+		),
+		gesture="kb:Control+Alt+End",
+		canPropagate=True,
+	)
+	def script_moveToLastColumn(self, gesture):
+		new = self.lastChild
+		# In some cases, e.g. in NVDA symbol pronounciation llist view lastChild returns none.
+		if not new and len(self.children) > 0:
+			new = self.children[-1]
+		while new and new.location and new.location.width == 0:
+			new = new.previous
+		self._moveToColumn(new)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object and focus to the first row"
+		),
+		gesture="kb:Control+Alt+PageUp",
+		canPropagate=True,
+	)
+	def script_moveToFirstRow(self, gesture):
+		self._moveToRow(self.parent.firstChild)
+
+	@script(
+		description=_(
+			# Translators: The description of an NVDA command.
+			"Moves the navigator object and focus to the last row"
+		),
+		gesture="kb:Control+Alt+PageDown",
+		canPropagate=True,
+	)
+	def script_moveToLastRow(self, gesture):
+		self._moveToRow(self.parent.lastChild)
+
 
 class RowWithoutCellObjects(NVDAObject):
 	"""An abstract class which creates cell objects for table rows which don't natively expose them.
@@ -661,7 +839,7 @@ class RowWithoutCellObjects(NVDAObject):
 
 class _FakeTableCell(NVDAObject):
 
-	role = controlTypes.ROLE_TABLECELL
+	role = controlTypes.Role.TABLECELL
 
 	def __init__(self, parent=None, column=None):
 		super(_FakeTableCell, self).__init__()
@@ -706,10 +884,16 @@ class _FakeTableCell(NVDAObject):
 	def _get_states(self):
 		states = self.parent.states.copy()
 		if self.location and self.location.width == 0:
-			states.add(controlTypes.STATE_INVISIBLE)
-		states.discard(controlTypes.STATE_CHECKED)
+			states.add(controlTypes.State.INVISIBLE)
+		states.discard(controlTypes.State.CHECKED)
 		return states
 
+	def _isEqual(self, other: "_FakeTableCell") -> bool:
+		return (
+			self.parent == other.parent
+			and self.columnNumber == other.columnNumber
+			and self.rowNumber == other.rowNumber
+		)
 
 class FocusableUnfocusableContainer(NVDAObject):
 	"""Makes an unfocusable container focusable using its first focusable descendant.
@@ -727,7 +911,7 @@ class ToolTip(NVDAObject):
 	"""Provides information about an item over which the user is hovering a cursor.
 	The object should fire a show event when it appears.
 	"""
-	role = controlTypes.ROLE_TOOLTIP
+	role = controlTypes.Role.TOOLTIP
 
 	def event_show(self):
 		if not config.conf["presentation"]["reportTooltips"]:
@@ -751,30 +935,6 @@ class Notification(NVDAObject):
 
 	event_show = event_alert
 
-class EditableTextWithSuggestions(NVDAObject):
-	"""Allows NvDA to announce appearance/disappearance of suggestions as text is entered.
-	This is used in various places, including Windows 10 search edit fields and others.
-	Subclasses should provide L{event_suggestionsOpened} and can optionally override L{event_suggestionsClosed}.
-	These events are fired when suggestions appear and disappear, respectively.
-	"""
-
-	def event_suggestionsOpened(self):
-		"""Called when suggestions appear when text is entered e.g. search suggestions.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce appearance of suggestions using speech, braille or a sound will be played.
-		"""
-		# Translators: Announced in braille when suggestions appear when search term is entered in various search fields such as Start search box in Windows 10.
-		braille.handler.message(_("Suggestions"))
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsOpened.wav"))
-
-	def event_suggestionsClosed(self):
-		"""Called when suggestions list or container is closed.
-		Subclasses should provide custom implementations if possible.
-		By default NVDA will announce this via speech, braille or via a sound.
-		"""
-		if config.conf["presentation"]["reportAutoSuggestionsWithSound"]:
-			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", "suggestionsClosed.wav"))
 
 class WebDialog(NVDAObject):
 	"""

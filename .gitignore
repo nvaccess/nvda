@@ -1,5 +1,9 @@
 *.mo
 source/comInterfaces/*.py
+!source/comInterfaces/__init__.py
+# These are manually generated and updated, so don't delete them
+!source/comInterfaces/UIAutomationClient.py
+!source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
 *.log
 source/userConfig
 build
@@ -25,8 +29,6 @@ dlldata.c
 .sconsign.dblite
 user_docs/*/*.html
 user_docs/*/*.css
-user_docs/*/keyCommands.t2t
-user_docs/build.t2tConf
 extras/controllerClient/x86/nvdaController.h
 extras/controllerClient/x64
 extras/controllerClient/arm64
@@ -39,9 +41,13 @@ uninstaller/UAC.nsh
 *.pyo
 *.dmp
 tests/unit/nvda.ini
+tests/unit/brailleTables
 tests/system/settingsCache/*
 !tests/system/settingsCache/2020.4/*.txt
+source/locale/en/LC_MESSAGES/nvda.po
 source/locale/*/cldr.dic
 .vscode
 .vs
 .venv
+nvdaHelper/docs/
+*.pfx

@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
-# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,6 +10,7 @@ In addition, this module provides three actions: profile switch notifier, an act
 For the latter two actions, one can perform actions prior to and/or after they take place.
 """
 
+from enum import Enum
 import globalVars
 import winreg
 import ctypes
@@ -26,14 +27,31 @@ from configobj.validate import Validator
 from logHandler import log
 import logging
 from logging import DEBUG
-import shlobj
+from shlobj import FolderId, SHGetKnownFolderPath
 import baseObject
 import easeOfAccess
 from fileUtils import FaultTolerantFile
 import extensionPoints
+
 from . import profileUpgrader
+from . import aggregatedSection
 from .configSpec import confspec
-from typing import Any, Dict, List, Optional, Set
+from .featureFlag import (
+	_transformSpec_AddFeatureFlagDefault,
+	_validateConfig_featureFlag,
+	FeatureFlag,
+)
+from typing import (
+	Any,
+	Dict,
+	List,
+	Optional,
+	Set,
+	Tuple,
+)
+import NVDAState
+from NVDAState import WritePaths
+
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -42,7 +60,7 @@ isAppX=False
 #: @type: ConfigManager
 conf = None
 
-#: Notifies when the configuration profile is switched.
+#: Notifies after the configuration profile has been switched.
 #: This allows components and add-ons to apply changes required by the new configuration.
 #: For example, braille switches braille displays if necessary.
 #: Handlers are called with no arguments.
@@ -57,6 +75,33 @@ post_configSave = extensionPoints.Action()
 #: Handlers are called with a boolean argument indicating whether this is a factory reset (True) or just reloading from disk (False).
 pre_configReset = extensionPoints.Action()
 post_configReset = extensionPoints.Action()
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	if attrName == "NVDA_REGKEY" and NVDAState._allowDeprecatedAPI():
+		log.warning("NVDA_REGKEY is deprecated, use RegistryKey.NVDA instead.")
+		return RegistryKey.NVDA.value
+	if attrName == "RUN_REGKEY" and NVDAState._allowDeprecatedAPI():
+		log.warning("RUN_REGKEY is deprecated, use RegistryKey.RUN instead.")
+		return RegistryKey.RUN.value
+	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"addConfigDirsToPythonPackagePath is deprecated, "
+			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
+		)
+		from addonHandler.packaging import addDirsToPythonPackagePath
+		return addDirsToPythonPackagePath
+	if attrName == "CONFIG_IN_LOCAL_APPDATA_SUBKEY" and NVDAState._allowDeprecatedAPI():
+		# Note: this should only log in situations where it will not be excessively noisy.
+		log.warning(
+			"CONFIG_IN_LOCAL_APPDATA_SUBKEY is deprecated. "
+			"Instead use RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY. ",
+			stack_info=True,
+		)
+		return RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
+
 
 def initialize():
 	global conf
@@ -73,46 +118,103 @@ def saveOnExit():
 		except:
 			pass
 
-def isInstalledCopy():
+
+class RegistryKey(str, Enum):
+	INSTALLED_COPY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA"
+	RUN = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
+	NVDA = r"SOFTWARE\NVDA"
+	r"""
+	The name of the registry key stored under HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
+	Note that NVDA is a 32-bit application, so on X64 systems,
+	this will evaluate to `r"SOFTWARE\WOW6432Node\nvda"`
+	"""
+	CONFIG_IN_LOCAL_APPDATA_SUBKEY = "configInLocalAppData"
+	"""
+	#6864: The name of the subkey stored under RegistryKey.NVDA where the value is stored
+	which will make an installed NVDA load the user configuration either from the local or from
+	the roaming application data profile.
+	The registry value is unset by default.
+	When setting it manually, a DWORD value is preferred.
+	A value of 0 will evaluate to loading the configuration from the roaming application data (default).
+	A value of 1 means loading the configuration from the local application data folder.
+	"""
+	FORCE_SECURE_MODE_SUBKEY = "forceSecureMode"
+	SERVICE_DEBUG_SUBKEY = "serviceDebug"
+
+
+def isInstalledCopy() -> bool:
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k=winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE,r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA")
-		instDir=winreg.QueryValueEx(k,"UninstallDirectory")[0]
-	except WindowsError:
+		k = winreg.OpenKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			RegistryKey.INSTALLED_COPY.value
+		)
+	except FileNotFoundError:
+		log.debug(
+			f"Unable to find isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}"
+			"- this is not an installed copy."
+		)
 		return False
+	except WindowsError:
+		log.error(
+			f"Unable to open isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}",
+			exc_info=True
+		)
+		return False
+
+	try:
+		instDir = winreg.QueryValueEx(k, "UninstallDirectory")[0]
+	except FileNotFoundError:
+		log.debug(
+			f"Unable to find UninstallDirectory value for {RegistryKey.INSTALLED_COPY}"
+			"- this may not be an installed copy."
+		)
+		return False
+	except WindowsError:
+		log.error("Unable to query isInstalledCopy registry key", exc_info=True)
+		return False
+
 	winreg.CloseKey(k)
 	try:
 		return os.stat(instDir) == os.stat(globalVars.appDir)
-	except WindowsError:
+	except (WindowsError, FileNotFoundError):
+		log.error(
+			"Failed to access the installed NVDA directory,"
+			"or, a portable copy failed to access the current NVDA app directory",
+			exc_info=True
+		)
 		return False
 
 
-#: #6864: The name of the subkey stored under NVDA_REGKEY where the value is stored
-#: which will make an installed NVDA load the user configuration either from the local or from the roaming application data profile.
-#: The registry value is unset by default.
-#: When setting it manually, a DWORD value is prefered.
-#: A value of 0 will evaluate to loading the configuration from the roaming application data (default).
-#: A value of 1 means loading the configuration from the local application data folder.
-#: @type: str
-CONFIG_IN_LOCAL_APPDATA_SUBKEY=u"configInLocalAppData"
-
-def getInstalledUserConfigPath():
+def getInstalledUserConfigPath() -> Optional[str]:
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		configInLocalAppData = bool(winreg.QueryValueEx(k, CONFIG_IN_LOCAL_APPDATA_SUBKEY)[0])
+		winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+	except FileNotFoundError:
+		log.debug("Could not find nvda registry key, NVDA is not currently installed")
+		return None
 	except WindowsError:
-		configInLocalAppData=False
-	configParent=shlobj.SHGetFolderPath(0, shlobj.CSIDL_LOCAL_APPDATA if configInLocalAppData else shlobj.CSIDL_APPDATA)
+		log.error("Could not open nvda registry key", exc_info=True)
+		return None
+
+	if NVDAState._configInLocalAppDataEnabled():
+		configFolder = FolderId.LOCAL_APP_DATA
+	else:
+		configFolder = FolderId.ROAMING_APP_DATA
+
+	configParent = SHGetKnownFolderPath(configFolder)
 	try:
 		return os.path.join(configParent, "nvda")
 	except WindowsError:
+		# (#13242) There is some uncertainty as to how this could be caused
+		log.debugWarning("Installed user config is not in local app data", exc_info=True)
 		return None
+
 
 def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	"""Get the default path for the user configuration directory.
 	This is the default path and doesn't reflect overriding from the command line,
 	which includes temporary copies.
-	Most callers will want the C{globalVars.appArgs.configPath variable} instead.
+	Most callers will want the C{NVDAState.WritePaths.configDir variable} instead.
 	"""
 	installedUserConfigPath=getInstalledUserConfigPath()
 	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
@@ -126,27 +228,20 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 		return installedUserConfigPath
 	return os.path.join(globalVars.appDir, 'userConfig')
 
-def getSystemConfigPath():
-	if isInstalledCopy():
-		try:
-			return os.path.join(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA), "nvda")
-		except WindowsError:
-			pass
-	return None
-
 
 SCRATCH_PAD_ONLY_DIRS = (
 	'appModules',
 	'brailleDisplayDrivers',
+	'brailleTables',
 	'globalPlugins',
 	'synthDrivers',
 	'visionEnhancementProviders',
 )
 
 
-def getScratchpadDir(ensureExists=False):
+def getScratchpadDir(ensureExists: bool = False) -> str:
 	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
-	path=os.path.join(globalVars.appArgs.configPath,'scratchpad')
+	path = WritePaths.scratchpadDir
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
@@ -156,14 +251,14 @@ def getScratchpadDir(ensureExists=False):
 				os.makedirs(subpath)
 	return path
 
-def initConfigPath(configPath=None):
+
+def initConfigPath(configPath: Optional[str] = None) -> None:
 	"""
 	Creates the current configuration path if it doesn't exist. Also makes sure that various sub directories also exist.
 	@param configPath: an optional path which should be used instead (only useful when being called from outside of NVDA)
-	@type configPath: str
 	"""
 	if not configPath:
-		configPath=globalVars.appArgs.configPath
+		configPath = WritePaths.configDir
 	if not os.path.isdir(configPath):
 		os.makedirs(configPath)
 	else:
@@ -187,64 +282,138 @@ def initConfigPath(configPath=None):
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
 
-RUN_REGKEY = r"SOFTWARE\Microsoft\Windows\CurrentVersion\Run"
 
-def getStartAfterLogon():
-	if (
-		easeOfAccess.canConfigTerminateOnDesktopSwitch
-		and easeOfAccess.willAutoStart(winreg.HKEY_CURRENT_USER)
-	):
+def getStartAfterLogon() -> bool:
+	"""Not to be confused with getStartOnLogonScreen.
+
+	Checks if NVDA is set to start after a logon.
+	Checks related easeOfAccess current user registry keys on Windows 8 or newer.
+	Then, checks the registry run key to see if NVDA
+	has been registered to start after logon on Windows 7
+	or by earlier NVDA versions.
+	"""
+	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON):
 		return True
 	try:
-		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY)
-		val = winreg.QueryValueEx(k, u"nvda")[0]
-		return os.stat(val) == os.stat(sys.argv[0])
-	except (WindowsError, OSError):
+		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value)
+	except FileNotFoundError:
+		log.debugWarning(
+			f"Unable to find run registry key {RegistryKey.RUN}",
+			exc_info=True
+		)
+		return False
+	except WindowsError:
+		log.error(
+			f"Unable to open run registry key {RegistryKey.RUN}",
+			exc_info=True
+		)
 		return False
 
-def setStartAfterLogon(enable):
+	try:
+		val = winreg.QueryValueEx(k, "nvda")[0]
+	except FileNotFoundError:
+		log.debug("NVDA is not set to start after logon")
+		return False
+	except WindowsError:
+		log.error("Failed to query NVDA key to set start after logon", exc_info=True)
+		return False
+
+	try:
+		startAfterLogonPath = os.stat(val)
+	except WindowsError:
+		log.error(
+			"Failed to access the start after logon directory.",
+			exc_info=True
+		)
+		return False
+	
+	try:
+		currentSourcePath = os.stat(sys.argv[0])
+	except FileNotFoundError:
+		log.debug("Failed to access the current running NVDA directory.")
+		return False
+	except WindowsError:
+		log.error(
+			"Failed to access the current running NVDA directory.",
+			exc_info=True
+		)
+		return False
+
+	return currentSourcePath == startAfterLogonPath
+
+
+def setStartAfterLogon(enable: bool) -> None:
+	"""Not to be confused with setStartOnLogonScreen.
+	
+	Toggle if NVDA automatically starts after a logon.
+	Sets easeOfAccess related registry keys.
+
+	When toggling off, always delete the registry run key
+	in case it was set by an earlier version of NVDA.
+	"""
 	if getStartAfterLogon() == enable:
 		return
-	if easeOfAccess.canConfigTerminateOnDesktopSwitch:
-		easeOfAccess.setAutoStart(winreg.HKEY_CURRENT_USER, enable)
-		if enable:
-			return
-		# We're disabling, so ensure the run key is cleared,
-		# as it might have been set by an old version.
-		run = False
-	else:
-		run = enable
-	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RUN_REGKEY, 0, winreg.KEY_WRITE)
-	if run:
-		winreg.SetValueEx(k, u"nvda", None, winreg.REG_SZ, sys.argv[0])
-	else:
-		try:
-			winreg.DeleteValue(k, u"nvda")
-		except WindowsError:
-			pass
-
+	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.AFTER_LOGON, enable)
+	if enable:
+		return
+	# We're disabling, so ensure the run key is cleared,
+	# as it might have been set by an old version.
+	k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value, 0, winreg.KEY_WRITE)
+	try:
+		winreg.QueryValue(k, "nvda")
+	except FileNotFoundError:
+		log.debug(
+			"The run registry key is not set for setStartAfterLogon."
+			"This is expected since ease of access is used"
+		)
+		return
+	try:
+		winreg.DeleteValue(k, "nvda")
+	except WindowsError:
+		log.error(
+			"Couldn't unset registry key for nvda to start after logon.",
+			exc_info=True
+		)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
 
-#: The name of the registry key stored under  HKEY_LOCAL_MACHINE where system wide NVDA settings are stored.
-#: Note that NVDA is a 32-bit application, so on X64 systems, this will evaluate to "SOFTWARE\WOW6432Node\nvda"
-NVDA_REGKEY = r"SOFTWARE\NVDA"
 
-def getStartOnLogonScreen():
-	if easeOfAccess.willAutoStart(winreg.HKEY_LOCAL_MACHINE):
+def getStartOnLogonScreen() -> bool:
+	"""Not to be confused with getStartAfterLogon.
+
+	Checks if NVDA is set to start on the logon screen.
+
+	Checks related easeOfAccess local machine registry keys.
+	Then, checks a NVDA registry key to see if NVDA
+	has been registered to start on logon by earlier NVDA versions.
+	"""
+	if easeOfAccess.willAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN):
 		return True
 	try:
-		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, NVDA_REGKEY)
-		return bool(winreg.QueryValueEx(k, u"startOnLogonScreen")[0])
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
+	except FileNotFoundError:
+		log.debugWarning(f"Could not find NVDA reg key {RegistryKey.NVDA}", exc_info=True)
 	except WindowsError:
-		return False
+		log.error(f"Failed to open NVDA reg key {RegistryKey.NVDA}", exc_info=True)
+	else:
+		try:
+			return bool(winreg.QueryValueEx(k, "startOnLogonScreen")[0])
+		except FileNotFoundError:
+			log.debug(f"Could not find startOnLogonScreen value for {RegistryKey.NVDA} - likely unset.")
+			return False
+		except WindowsError:
+			log.error(f"Failed to query startOnLogonScreen value for {RegistryKey.NVDA}", exc_info=True)
+			return False
+	return False
 
-def _setStartOnLogonScreen(enable):
-	easeOfAccess.setAutoStart(winreg.HKEY_LOCAL_MACHINE, enable)
+
+def _setStartOnLogonScreen(enable: bool) -> None:
+	easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, enable)
+
 
 def setSystemConfigToCurrentConfig():
-	fromPath = globalVars.appArgs.configPath
+	fromPath = WritePaths.configDir
 	if ctypes.windll.shell32.IsUserAnAdmin():
 		_setSystemConfig(fromPath)
 	else:
@@ -285,13 +454,23 @@ def _setSystemConfig(fromPath):
 			destFilePath=os.path.join(curDestDir,f)
 			installer.tryCopyFile(sourceFilePath,destFilePath)
 
-def setStartOnLogonScreen(enable):
+
+def setStartOnLogonScreen(enable: bool) -> None:
+	"""
+	Not to be confused with setStartAfterLogon.
+
+	Toggle whether NVDA starts on the logon screen automatically.
+	On failure to set, retries with escalated permissions.
+
+	Raises a RuntimeError on failure.
+	"""
 	if getStartOnLogonScreen() == enable:
 		return
 	try:
 		# Try setting it directly.
 		_setStartOnLogonScreen(enable)
 	except WindowsError:
+		log.debugWarning("Failed to set start on logon screen's config.")
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		import systemUtils
 		if systemUtils.execElevated(
@@ -302,33 +481,18 @@ def setStartOnLogonScreen(enable):
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 
-def addConfigDirsToPythonPackagePath(module, subdir=None):
-	"""Add the configuration directories to the module search path (__path__) of a Python package.
-	C{subdir} is added to each configuration directory. It defaults to the name of the Python package.
-	@param module: The root module of the package.
-	@type module: module
-	@param subdir: The subdirectory to be used, C{None} for the name of C{module}.
-	@type subdir: str
+def _transformSpec(spec: ConfigObj):
+	"""To make the spec less verbose, transform the spec:
+	- Add default="default" to all featureFlag items. This is required so that the key can be read,
+	even if it is missing from the config.
 	"""
-	if isAppX or globalVars.appArgs.disableAddons:
-		return
-	# FIXME: this should not be coupled to the config module....
-	import addonHandler
-	for addon in addonHandler.getRunningAddons():
-		addon.addToPackagePath(module)
-	if globalVars.appArgs.secure or not conf['development']['enableScratchpadDir']:
-		return
-	if not subdir:
-		subdir = module.__name__
-	fullPath=os.path.join(getScratchpadDir(),subdir)
-	# Ensure this directory exists otherwise pkgutil.iter_importers may emit None for missing paths.
-	if not os.path.isdir(fullPath):
-		os.makedirs(fullPath)
-	# Insert this path at the beginning  of the module's search paths.
-	# The module's search paths may not be a mutable  list, so replace it with a new one 
-	pathList=[fullPath]
-	pathList.extend(module.__path__)
-	module.__path__=pathList
+	spec.configspec = spec
+	spec.validate(
+		Validator({
+			"featureFlag": _transformSpec_AddFeatureFlagDefault,
+		}), preserve_errors=True,
+	)
+
 
 class ConfigManager(object):
 	"""Manages and provides access to configuration.
@@ -340,33 +504,35 @@ class ConfigManager(object):
 	Changed settings are written to the most recently activated profile.
 	"""
 
-	#: Sections that only apply to the base configuration;
-	#: i.e. they cannot be overridden in profiles.
 	BASE_ONLY_SECTIONS = {
-	"general", 
-	"update", 
-	"upgrade",
-	"development",
-}
+		"general",
+		"update",
+		"upgrade",
+		"development",
+		"addonStore",
+	}
+	"""
+	Sections that only apply to the base configuration;
+	i.e. they cannot be overridden in profiles.
+	Note this set may be extended by add-ons.
+	"""
 
 	def __init__(self):
 		self.spec = confspec
+		_transformSpec(self.spec)
 		#: All loaded profiles by name.
 		self._profileCache: Optional[Dict[Optional[str], ConfigObj]] = {}
 		#: The active profiles.
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
-		self.validator: Validator = Validator()
+		self.validator: Validator = Validator({
+			"_featureFlag": _validateConfig_featureFlag
+		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
 		self._suspendedTriggers: Optional[List[ProfileTrigger]] = None
-		# Never save the config if running securely or if running from the launcher.
-		# When running from the launcher we don't save settings because the user may decide not to
-		# install this version, and these settings may not be compatible with the already
-		# installed version. See #7688
-		self._shouldWriteProfile: bool = not (globalVars.appArgs.secure or globalVars.appArgs.launcher)
 		self._initBaseConf()
 		#: Maps triggers to profiles.
 		self.triggersToProfiles: Optional[Dict[ProfileTrigger, ConfigObj]] = None
@@ -389,7 +555,7 @@ class ConfigManager(object):
 			post_configProfileSwitch.notify(prevConf=currentRootSection.dict())
 
 	def _initBaseConf(self, factoryDefaults=False):
-		fn = os.path.join(globalVars.appArgs.configPath, "nvda.ini")
+		fn = WritePaths.nvdaConfigFile
 		if factoryDefaults:
 			profile = self._loadConfig(None)
 			profile.filename = fn
@@ -398,7 +564,18 @@ class ConfigManager(object):
 				profile = self._loadConfig(fn) # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:
-				log.error("Error loading base configuration", exc_info=True)
+				backupFileName = fn + '.corrupted.bak'
+				log.error(
+					"Error loading base configuration; the base configuration file will be reinitialized."
+					f" A copy of your previous configuration file will be saved at {backupFileName}",
+					exc_info=True,
+				)
+				try:
+					if os.path.exists(backupFileName):
+						os.unlink(backupFileName)
+					os.rename(fn, backupFileName)
+				except Exception:
+					log.error(f"Unable to save a copy of the corrupted configuration to {backupFileName}", exc_info=True)
 				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 
@@ -424,7 +601,10 @@ class ConfigManager(object):
 		profile.newlines = "\r\n"
 		profileCopy = deepcopy(profile)
 		try:
-			writeProfileFunc = self._writeProfileToFile if self._shouldWriteProfile else None
+			if NVDAState.shouldWriteToDisk() and profile.filename is not None:
+				writeProfileFunc = self._writeProfileToFile
+			else:
+				writeProfileFunc = None
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
@@ -460,13 +640,18 @@ class ConfigManager(object):
 		return self.rootSection.dict()
 
 	def listProfiles(self):
-		for name in os.listdir(os.path.join(globalVars.appArgs.configPath, "profiles")):
+		try:
+			profileFiles = os.listdir(WritePaths.profilesDir)
+		except FileNotFoundError:
+			log.debugWarning("Profiles directory does not exist.")
+			profileFiles = []
+		for name in profileFiles:
 			name, ext = os.path.splitext(name)
 			if ext == ".ini":
 				yield name
 
-	def _getProfileFn(self, name):
-		return os.path.join(globalVars.appArgs.configPath, "profiles", name + ".ini")
+	def _getProfileFn(self, name: str) -> str:
+		return WritePaths.getProfileConfigFile(name)
 
 	def _getProfile(self, name, load=True):
 		try:
@@ -528,7 +713,7 @@ class ConfigManager(object):
 		"""
 		# #7598: give others a chance to either save settings early or terminate tasks.
 		pre_configSave.notify()
-		if not self._shouldWriteProfile:
+		if not NVDAState.shouldWriteToDisk():
 			log.info("Not writing profile, either --secure or --launcher args present")
 			return
 		try:
@@ -538,9 +723,8 @@ class ConfigManager(object):
 				self._writeProfileToFile(self._profileCache[name].filename, self._profileCache[name])
 				log.info("Saved configuration profile %s" % name)
 			self._dirtyProfiles.clear()
-		except Exception as e:
-			log.warning("Error saving configuration; probably read only file system")
-			log.debugWarning("", exc_info=True)
+		except PermissionError as e:
+			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
 		post_configSave.notify()
 
@@ -552,6 +736,7 @@ class ConfigManager(object):
 		pre_configReset.notify(factoryDefaults=factoryDefaults)
 		self.profiles = []
 		self._profileCache.clear()
+		self._dirtyProfiles.clear()
 		# Signal that we're initialising.
 		self.rootSection = None
 		self._initBaseConf(factoryDefaults=factoryDefaults)
@@ -606,6 +791,12 @@ class ConfigManager(object):
 			for trigSpec in delTrigs:
 				del allTriggers[trigSpec]
 			self.saveProfileTriggers()
+		# Remove the profile from the dirty profile list
+		try:
+			self._dirtyProfiles.remove(name)
+		except KeyError:
+			# The profile wasn't dirty.
+			pass
 		# Check if this profile was active.
 		delProfile = None
 		for index in range(len(self.profiles) - 1, -1, -1):
@@ -792,7 +983,7 @@ class ConfigManager(object):
 		self.profileTriggersEnabled = True
 
 	def _loadProfileTriggers(self):
-		fn = os.path.join(globalVars.appArgs.configPath, "profileTriggers.ini")
+		fn = WritePaths.profileTriggersFile
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
 		except:
@@ -867,19 +1058,36 @@ class ConfigValidationData(object):
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 
-class AggregatedSection(object):
+
+class AggregatedSection:
 	"""A view of a section of configuration which aggregates settings from all active profiles.
 	"""
+	# TODO: move to config.aggregatedSection
 
-	def __init__(self, manager, path, spec, profiles):
+	def __init__(
+			self,
+			manager: ConfigManager,
+			path: Tuple[str],
+			spec: ConfigObj,
+			profiles: List[ConfigObj]
+	):
 		self.manager = manager
 		self.path = path
 		self._spec = spec
 		#: The relevant section in all of the profiles.
 		self.profiles = profiles
-		self._cache = {}
+		self._cache: aggregatedSection._cacheT = {}
 
-	def __getitem__(self, key, checkValidity=True):
+	@staticmethod
+	def _isSection(val: Any) -> bool:
+		"""Checks if a given value or spec is a section of a config profile."""
+		return isinstance(val, dict)
+
+	def __getitem__(
+			self,
+			key: aggregatedSection._cacheKeyT,
+			checkValidity: bool = True
+	):
 		# Try the cache first.
 		try:
 			val = self._cache[key]
@@ -893,7 +1101,7 @@ class AggregatedSection(object):
 
 		spec = self._spec.get(key)
 		foundSection = False
-		if isinstance(spec, dict):
+		if self._isSection(spec):
 			foundSection = True
 
 		# Walk through the profiles looking for the key.
@@ -906,7 +1114,7 @@ class AggregatedSection(object):
 				# Indicate that this key doesn't exist in this profile.
 				subProfiles.append(None)
 				continue
-			if isinstance(val, dict):
+			if self._isSection(val):
 				foundSection = True
 				subProfiles.append(val)
 			else:
@@ -1017,13 +1225,16 @@ class AggregatedSection(object):
 			newdict[key] = value
 		return newdict
 
-	def __setitem__(self, key, val):
+	def __setitem__(
+			self,
+			key: aggregatedSection._cacheKeyT,
+			val: aggregatedSection._cacheValueT
+	):
 		spec = self._spec.get(key) if self.spec else None
-		if isinstance(spec, dict) and not isinstance(val, dict):
+		if self._isSection(spec) and not self._isSection(val):
 			raise ValueError("Value must be a section")
 
-		if isinstance(spec, dict) or isinstance(val, dict):
-			# The value is a section.
+		if self._isSection(spec) or self._isSection(val):
 			# Update the profile.
 			updateSect = self._getUpdateSection()
 			updateSect[key] = val
@@ -1054,8 +1265,17 @@ class AggregatedSection(object):
 		except KeyError:
 			pass
 		else:
-			if val == curVal:
-				# The value isn't different, so there's nothing to do.
+			if (
+				# Feature flags override __eq__.
+				# Check str comparison as this is what is written to the config.
+				# If the value is unchanged, do not update
+				# or mark the profile as dirty.
+				(
+					isinstance(val, FeatureFlag)
+					or isinstance(curVal, FeatureFlag)
+				)
+				and str(val) == str(curVal)
+			):
 				return
 
 		# Set this value in the most recently activated profile.
@@ -1158,3 +1378,30 @@ class ProfileTrigger(object):
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
 
+
+class AllowUiaInChromium(Enum):
+	_DEFAULT = 0  # maps to 'when necessary'
+	WHEN_NECESSARY = 1  # the current default
+	YES = 2
+	NO = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInChromium':
+		allow = AllowUiaInChromium(conf['UIA']['allowInChromium'])
+		if allow == AllowUiaInChromium._DEFAULT:
+			return AllowUiaInChromium.WHEN_NECESSARY
+		return allow
+
+
+class AllowUiaInMSWord(Enum):
+	_DEFAULT = 0  # maps to 'where suitable'
+	WHEN_NECESSARY = 1
+	WHERE_SUITABLE = 2
+	ALWAYS = 3
+
+	@staticmethod
+	def getConfig() -> 'AllowUiaInMSWord':
+		allow = AllowUiaInMSWord(conf['UIA']['allowInMSWord'])
+		if allow == AllowUiaInMSWord._DEFAULT:
+			return AllowUiaInMSWord.WHERE_SUITABLE
+		return allow

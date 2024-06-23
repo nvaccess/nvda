@@ -1,6 +1,0 @@
-%!includeconf: global.t2tconf
-
-% Make ticket references into links.
-%!PreProc: "#([0-9]+)" "[#\1 https://github.com/nvaccess/nvda/issues/\1]"
-% Make links open in a new tab/window.
-%!PostProc(html): '(<A HREF=".*?")>' '\1 target="_blank">'

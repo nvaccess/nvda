@@ -1,15 +1,23 @@
-#XMLFormatting.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2021 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
+import typing
 from xml.parsers import expat
 import textInfos
+import textUtils
 from logHandler import log
 from textUtils import WCHAR_ENCODING, isLowSurrogate
 
+CommandsT = typing.Union[textInfos.FieldCommand, typing.Optional[str]]
+CommandListT = typing.List[CommandsT]
+
+
 class XMLTextParser(object): 
+
+	def __init__(self) -> None:
+		self._controlFieldStack: list[textInfos.ControlField] = []
 
 	def _startElementHandler(self,tagName,attrs):
 		if tagName=='unich':
@@ -18,11 +26,12 @@ class XMLTextParser(object):
 				try:
 					data=chr(int(data))
 				except ValueError:
-					data=u'\ufffd'
+					data = textUtils.REPLACEMENT_CHAR
 				self._CharacterDataHandler(data, processBufferedSurrogates=isLowSurrogate(data))
 			return
 		elif tagName=='control':
 			newAttrs=textInfos.ControlField(attrs)
+			self._controlFieldStack.append(newAttrs)
 			self._commandList.append(textInfos.FieldCommand("controlStart",newAttrs))
 		elif tagName=='text':
 			newAttrs=textInfos.FormatField(attrs)
@@ -39,17 +48,29 @@ class XMLTextParser(object):
 			newAttrs["_endOfNode"] = newAttrs["_endOfNode"] == "1"
 		except KeyError:
 			pass
+		try:
+			newAttrs["_offsetFromStartOfNode"] = int(newAttrs["_offsetFromStartOfNode"])
+		except KeyError:
+			pass
+		try:
+			newAttrs["_offsetFromEndOfNode"] = int(newAttrs["_offsetFromEndOfNode"])
+		except KeyError:
+			pass
 
 	def _EndElementHandler(self,tagName):
 		if tagName=="control":
-			self._commandList.append(textInfos.FieldCommand("controlEnd",None))
+			attrs = self._controlFieldStack.pop()
+			self._commandList.append(textInfos.FieldCommand("controlEnd", attrs))
 		elif tagName in ("text","unich"):
 			pass
 		else:
 			raise ValueError("unknown tag name: %s"%tagName)
 
-	def _CharacterDataHandler(self,data, processBufferedSurrogates=False):
+	def _CharacterDataHandler(self, data: typing.Optional[str], processBufferedSurrogates=False):
 		cmdList=self._commandList
+		if not isinstance(data, str):
+			dataStr = repr(data)
+			log.warning(f"unknown type for data: {dataStr}")
 		if cmdList and isinstance(cmdList[-1],str):
 			cmdList[-1] += data
 			if processBufferedSurrogates:
@@ -57,12 +78,12 @@ class XMLTextParser(object):
 		else:
 			cmdList.append(data)
 
-	def parse(self,XMLText):
+	def parse(self, XMLText) -> CommandListT:
 		parser = expat.ParserCreate('utf-8')
 		parser.StartElementHandler = self._startElementHandler
 		parser.EndElementHandler = self._EndElementHandler
 		parser.CharacterDataHandler = self._CharacterDataHandler
-		self._commandList = []
+		self._commandList: XMLTextParser.CommandListT = []
 		try:
 			parser.Parse(XMLText)
 		except Exception:

@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2020 NV Access Limited, Leonard de Ruijter, Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
 import watchdog
 
@@ -63,9 +63,63 @@ consoleUI = None
 
 class Completer(rlcompleter.Completer):
 
+	def attr_matches(self, text: str) -> list[str]:
+		"""attr_matches implementation as used in Python 3.9.
+		In Python 3.10, attr_matches was changed in a way that filtered out property descriptors,
+		but more importantly, no longer catches exceptions when calling getattr.
+		This causes serious issues for baseObject.Getter descriptors
+		when a getter raises NotImplementedError, for example (#15872).
+		"""
+		import re
+
+		m = re.match(r"(\w+(\.\w+)*)\.(\w*)", text)
+		if not m:
+			return []
+		expr, attr = m.group(1, 3)
+		try:
+			thisobject = eval(expr, self.namespace)
+		except Exception:
+			return []
+
+		# get the content of the object, except __builtins__
+		words = set(dir(thisobject))
+		words.discard("__builtins__")
+
+		if hasattr(thisobject, "__class__"):
+			words.add("__class__")
+			words.update(rlcompleter.get_class_members(thisobject.__class__))
+		matches = []
+		n = len(attr)
+		if attr == "":
+			noprefix = "_"
+		elif attr == "_":
+			noprefix = "__"
+		else:
+			noprefix = None
+		while True:
+			for word in words:
+				if word[:n] == attr and not (noprefix and word[: n + 1] == noprefix):
+					match = f"{expr}.{word}"
+					try:
+						val = getattr(thisobject, word)
+					except Exception:
+						pass  # Include even if attribute not set
+					else:
+						match = self._callable_postfix(val, match)
+					matches.append(match)
+			if matches or not noprefix:
+				break
+			if noprefix == "_":
+				noprefix = "__"
+			else:
+				noprefix = None
+		matches.sort()
+		return matches
+
 	def _callable_postfix(self, val, word):
 		# Just because something is callable doesn't always mean we want to call it.
 		return word
+
 
 class CommandCompiler(codeop.CommandCompiler):
 	"""
@@ -191,7 +245,15 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 	def updateNamespaceSnapshotVars(self):
 		"""Update the console namespace with a snapshot of NVDA's current state.
 		This creates/updates variables for the current focus, navigator object, etc.
+		Typically, used before the NVDA python console is opened, after which, calls
+		to the 'api' module will refer to this new focus.
 		"""
+		try:
+			caretPos = api.getCaretPosition()
+		except RuntimeError:
+			log.debug("Unable to set caretPos snapshot variable for python console.")
+			caretPos = None
+
 		self._namespaceSnapshotVars = {
 			"focus": api.getFocusObject(),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
@@ -199,7 +261,9 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 			"fdl": api.getFocusDifferenceLevel(),
 			"fg": api.getForegroundObject(),
 			"nav": api.getNavigatorObject(),
-			"review":api.getReviewPosition(),
+			"caretObj": api.getCaretObject(),
+			"caretPos": caretPos,
+			"review": api.getReviewPosition(),
 			"mouse": api.getMouseObject(),
 			"brlRegions": braille.handler.buffer.regions,
 		}
@@ -234,6 +298,9 @@ class ConsoleUI(
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		font = self.outputCtrl.GetFont()
+		font.SetFaceName('Consolas')
+		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		self.outputCtrl.Bind(wx.EVT_CHAR, self.onOutputChar)
 		mainSizer.Add(self.outputCtrl, proportion=2, flag=wx.EXPAND)
@@ -241,8 +308,13 @@ class ConsoleUI(
 		self.promptLabel = wx.StaticText(self, wx.ID_ANY)
 		inputSizer.Add(self.promptLabel, flag=wx.EXPAND)
 		self.inputCtrl = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_DONTWRAP | wx.TE_PROCESS_TAB)
+		font = self.inputCtrl.GetFont()
+		font.SetFaceName('Consolas')
+		self.inputCtrl.SetFont(font)
 		self.inputCtrl.Bind(wx.EVT_CHAR, self.onInputChar)
 		self.inputCtrl.Bind(wx.EVT_TEXT_PASTE, self.onInputPaste)
+		self.inputCtrl.Bind(wx.EVT_TEXT, self.onInputTextChange)
+		self.inputTextModified = False
 		inputSizer.Add(self.inputCtrl, proportion=1, flag=wx.EXPAND)
 		mainSizer.Add(inputSizer, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
@@ -304,15 +376,17 @@ class ConsoleUI(
 			self.outputPositions.append(self.outputCtrl.GetInsertionPoint())
 
 	def historyMove(self, movement):
+		if self.inputTextModified:
+			self.inputHistoryPos = len(self.inputHistory) - 1
+			self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		newIndex = self.inputHistoryPos + movement
 		if not (0 <= newIndex < len(self.inputHistory)):
 			# No more lines in this direction.
 			return False
-		# Update the content of the history at the current position.
-		self.inputHistory[self.inputHistoryPos] = self.inputCtrl.GetValue()
 		self.inputHistoryPos = newIndex
 		self.inputCtrl.ChangeValue(self.inputHistory[newIndex])
 		self.inputCtrl.SetInsertionPointEnd()
+		self.inputTextModified = False
 		return True
 
 	RE_COMPLETE_UNIT = re.compile(r"[\w.]*$")
@@ -409,8 +483,8 @@ class ConsoleUI(
 			self.execute()
 			return
 		elif key in (wx.WXK_UP, wx.WXK_DOWN):
-			if self.historyMove(-1 if key == wx.WXK_UP else 1):
-				return
+			self.historyMove(-1 if key == wx.WXK_UP else 1)
+			return
 		elif key == wx.WXK_F6:
 			self.outputCtrl.SetFocus()
 			return
@@ -447,6 +521,10 @@ class ConsoleUI(
 				# reading of output errors.
 				self.inputCtrl.ChangeValue(suffix)
 				break
+
+	def onInputTextChange(self, evt: wx.CommandEvent):
+		self.inputTextModified = True
+		evt.Skip()
 
 	def onOutputKeyDown(self, evt):
 		key = evt.GetKeyCode()

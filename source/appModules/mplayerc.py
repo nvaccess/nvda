@@ -11,4 +11,4 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
 		if obj.windowClassName=="#32770" and obj.windowControlID==10021:
-			obj.role = controlTypes.ROLE_STATUSBAR
+			obj.role = controlTypes.Role.STATUSBAR

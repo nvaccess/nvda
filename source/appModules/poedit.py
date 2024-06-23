@@ -1,154 +1,341 @@
-#appModules/poedit.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2012-2013 Mesar Hameed, NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes, Cyrille Bougot
 
-"""App module for Poedit.
+"""App module for Poedit 3.4+.
 """
 
+from enum import IntEnum
+
+import ctypes
 import api
 import appModuleHandler
 import controlTypes
-import displayModel
-import textInfos
+import NVDAObjects.IAccessible
 import tones
 import ui
-from NVDAObjects.IAccessible import sysListView32
 import windowUtils
-import NVDAObjects.IAccessible
 import winUser
+from NVDAObjects import NVDAObject
+from NVDAObjects.window import Window
+from scriptHandler import getLastScriptRepeatCount, script
+from logHandler import log
 
 
-def getPath(obj, ancestor):
-	"""Gets the path of the object with respect to its ancestor.
-	the ancestor is typically the forground object.
+LEFT_TO_RIGHT_EMBEDDING = "\u202a"
+"""Character often found in translator comments."""
 
-	@returns: A list of coordinates relative to the ansestor.
-	@rtype: L{list}
+# Translators: The name of a category of NVDA commands.
+SCRCAT_POEDIT = _("Poedit")
+
+
+class _WindowControlIdOffsetFromDataView(IntEnum):
+	"""Window control ID's are not static, however, the order of ids stays the same.
+	Therefore, using a wxDataView control in the translations list as a reference,
+	we can safely calculate control ids accross releases or instances.
+	This class contains window control id offsets relative to the wxDataView window.
 	"""
-	path = []
-	cancel = 0
-	if obj == stopObj: return []
-	p = obj
-	while p != stopObj:
-		counter = 0
-		while p.previous:
-			p = p.previous
-			counter += 1
-			cancel += 1
-			# Looks like we have an infinite ancestry, so get out
-			if cancel == 50: return [-1]
-		path.append(counter)
-		p = p.parent
-	path.reverse()
-	return path
 
-def fetchObject(obj, path):
-	"""Fetch the child object  described by path.
-	@returns: requested object if found, or None
-	@rtype: L{NVDAObjects.NVDAObject}
+	PRO_IDENTIFIER = -10  # This is a button in the free version
+	MAIN_SPLITTER_IDENTIFIER = -2  # The splitter that holds the translation list
+	TRANSLATION_WARNING = 17
+	NEEDS_WORK_SWITCH = 21
+
+
+class _WindowControlIdOffsetFromSidebar(IntEnum):
+	"""Window control ID's are not static, however, the order of ids stays the same.
+	Therefore, using the Sidebar window as a reference,
+	we can safely calculate control ids accross releases or instances.
+	This class contains window control id offsets relative to the Sidebar window.
+	Note that this Sidebar window itself is found relative to the dataview's ancestor splitter control.
 	"""
-	path.reverse()
-	p = obj
-	while len(path) and p.firstChild:
-		p = p.firstChild
-		steps = path.pop()
-		i=0
-		while i<steps and p.next: 
-			p = p.next
-			i += 1
-		# the path requests us to look for further siblings, but none found.
-		if i<steps: return None
-	# the path requests us to look for further children, but none found.
-	if len(path): return None
-	return p
+
+	PRO_OFFSET = -5
+	OLD_SOURCE_TEXT = 36
+	TRANSLATOR_NOTES = 39
+	COMMENT = 42
+
+
+def _findDescendantObject(
+		parentWindowHandle: int,
+		controlId: int | None = None,
+		className: str | None = None,
+) -> Window | None:
+	"""
+	Finds a window with the given controlId or class name,
+	starting from the window belonging to the given parentWindowHandle,
+	and returns the object belonging to it.
+	"""
+	try:
+		obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+			windowUtils.findDescendantWindow(parentWindowHandle, controlID=controlId, className=className),
+			winUser.OBJID_CLIENT,
+			0,
+		)
+	except LookupError:
+		obj = None
+	return obj
 
 
 class AppModule(appModuleHandler.AppModule):
+	cachePropertiesByDefault = True
 
-	def script_reportAutoCommentsWindow(self,gesture):
-		obj = fetchObject(api.getForegroundObject(), [2, 0, 1, 0, 1, 0, 1])
-		if obj and obj.windowControlID != 101:
-			try:
-				obj = obj.next.firstChild
-			except AttributeError:
-				obj = None
-		elif obj:
-			obj = obj.firstChild
-		if obj:
-			try:
-				ui.message(obj.name + " " + obj.value)
-			except:
-				# Translators: this message is reported when there are no 
-				# notes for translators to be presented to the user in Poedit.
-				ui.message(_("No notes for translators."))
-		else:
-			# Translators: this message is reported when NVDA is unable to find 
-			# the 'Notes for translators' window in poedit.
-			ui.message(_("Could not find Notes for translators window."))
-	# Translators: The description of an NVDA command for Poedit.
-	script_reportAutoCommentsWindow.__doc__ = _("Reports any notes for translators")
+	_dataViewControlId: int | None
+	"""Type definition for auto prop '_get__dataViewControlId'"""
 
-	def script_reportCommentsWindow(self,gesture):
-		try:
-			obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
-				windowUtils.findDescendantWindow(api.getForegroundObject().windowHandle, visible=True, controlID=104),
-				winUser.OBJID_CLIENT, 0)
-		except LookupError:
-			# Translators: this message is reported when NVDA is unable to find
-			# the 'comments' window in poedit.
-			ui.message(_("Could not find comment window."))
+	def _get__dataViewControlId(self) -> int | None:
+		fg = api.getForegroundObject()
+		dataView = _findDescendantObject(fg.windowHandle, className="wxDataView")
+		if not dataView:
 			return None
-		try:
-			ui.message(obj.name + " " + obj.value)
-		except:
-			# Translators: this message is reported when there are no
-			# comments to be presented to the user in the translator
-			# comments window in poedit.
-			ui.message(_("No comment."))
-	# Translators: The description of an NVDA command for Poedit.
-	script_reportCommentsWindow.__doc__ = _("Reports any comments in the comments window")
+		return dataView.windowControlID
 
-	__gestures = {
-		"kb:control+shift+c": "reportCommentsWindow",
-		"kb:control+shift+a": "reportAutoCommentsWindow",
-	}
+	_sidebarControlId: int | None
+	"""Type definition for auto prop '_get__sidebarControlId'"""
+
+	def _get__sidebarControlId(self) -> int | None:
+		dataViewControlId = self._dataViewControlId
+		splitterControlID = dataViewControlId + _WindowControlIdOffsetFromDataView.MAIN_SPLITTER_IDENTIFIER
+		fg = api.getForegroundObject()
+		splitterHwnd = windowUtils.findDescendantWindow(fg.windowHandle, controlID=splitterControlID)
+		sidebarHwnd = winUser.getWindow(splitterHwnd, winUser.GW_HWNDNEXT)
+		while sidebarHwnd and not ctypes.windll.user32.IsWindowVisible(sidebarHwnd):
+			sidebarHwnd = winUser.getWindow(sidebarHwnd, winUser.GW_HWNDNEXT)
+		if not sidebarHwnd:
+			return None
+		return winUser.getControlID(sidebarHwnd)
+
+	_isPro: bool
+	"""Type definition for auto prop '_get__isPro'"""
+
+	def _get__isPro(self) -> bool:
+		"""Returns whether this instance of Poedit is a pro version."""
+		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.PRO_IDENTIFIER
+		)
+		return obj is None
+
+	def _getNVDAObjectForWindowControlIdOffsetFromDataView(
+			self,
+			windowControlIdOffset: _WindowControlIdOffsetFromDataView
+	) -> Window | None:
+		fg = api.getForegroundObject()
+		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
+
+	def _getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			self,
+			windowControlIdOffset: _WindowControlIdOffsetFromSidebar
+	) -> Window | None:
+		fg = api.getForegroundObject()
+		sidebarControlId = self._sidebarControlId
+		if sidebarControlId is None:
+			log.error("Sidebar can not be found")
+			return None
+		extraOffset = 0
+		if self._isPro:
+			extraOffset = _WindowControlIdOffsetFromSidebar.PRO_OFFSET
+		return _findDescendantObject(fg.windowHandle, sidebarControlId + extraOffset + windowControlIdOffset)
+
+	_translatorNotesObj: Window | None
+	"""Type definition for auto prop '_get__translatorNotesObj'"""
+
+	def _get__translatorNotesObj(self) -> Window | None:
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.TRANSLATOR_NOTES
+		)
+
+	def _reportControlScriptHelper(self, obj: Window, description: str):
+		if obj:
+			if not obj.hasIrrelevantLocation and not obj.parent.parent.hasIrrelevantLocation:
+				message = obj.name.replace(LEFT_TO_RIGHT_EMBEDDING, "")
+				repeats = getLastScriptRepeatCount()
+				if repeats == 0:
+					ui.message(message)
+				else:
+					ui.browseableMessage(message, description.title())
+			else:
+				ui.message(
+					# Translators: this message is reported when there is nothing
+					# to be presented to the user in Poedit.
+					# {description} is replaced by the description of the window to be reported,
+					# e.g. translator notes
+					pgettext("poedit", "No {description}").format(description=description)
+				)
+		else:
+			ui.message(
+				# Translators: this message is reported when NVDA is unable to find
+				# a requested window in Poedit.
+				# {description} is replaced by the description of the window to be reported, e.g. translator notes
+				pgettext("poedit", "Could not find {description} window.").format(description=description)
+			)
+
+	@script(
+		description=pgettext(
+			"poedit",
+			# Translators: The description of an NVDA command for Poedit.
+			"Reports any notes for translators. If pressed twice, presents the notes in browse mode",
+		),
+		gesture="kb:control+shift+a",
+		category=SCRCAT_POEDIT,
+		speakOnDemand=True,
+	)
+	def script_reportAutoCommentsWindow(self, gesture):
+		self._reportControlScriptHelper(
+			self._translatorNotesObj,
+			# Translators: The description of the "Translator notes" window in poedit.
+			# This text is reported when the given window contains no item to report or could not be found.
+			pgettext("poedit", "notes for translators"),
+		)
+
+	_commentObj: Window | None
+	"""Type definition for auto prop '_get__commentObj'"""
+
+	def _get__commentObj(self) -> Window | None:
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.COMMENT
+		)
+
+	@script(
+		description=pgettext(
+			"poedit",
+			# Translators: The description of an NVDA command for Poedit.
+			"Reports any comment in the comments window. "
+			"If pressed twice, presents the comment in browse mode",
+		),
+		gesture="kb:control+shift+c",
+		category=SCRCAT_POEDIT,
+		speakOnDemand=True,
+	)
+	def script_reportCommentsWindow(self, gesture):
+		self._reportControlScriptHelper(
+			self._commentObj,
+			# Translators: The description of the "comment" window in poedit.
+			# This text is reported when the given window contains no item to report or could not be found.
+			pgettext("poedit", "comment"),
+		)
+
+	_oldSourceTextObj: Window | None
+	"""Type definition for auto prop '_get__oldSourceTextObj'"""
+
+	def _get__oldSourceTextObj(self) -> Window | None:
+		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
+			_WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT
+		)
+
+	@script(
+		description=pgettext(
+			"poedit",
+			# Translators: The description of an NVDA command for Poedit.
+			"Reports the old source text, if any. If pressed twice, presents the text in browse mode",
+		),
+		gesture="kb:control+shift+o",
+		category=SCRCAT_POEDIT,
+		speakOnDemand=True,
+	)
+	def script_reportOldSourceText(self, gesture):
+		self._reportControlScriptHelper(
+			self._oldSourceTextObj,
+			# Translators: The description of the "old source text" window in poedit.
+			# This text is reported when the given window contains no item to report or could not be found.
+			pgettext("poedit", "old source text"),
+		)
+
+	_translationWarningObj: Window | None
+	"""Type definition for auto prop '_get__translationWarningObj'"""
+
+	def _get__translationWarningObj(self) -> Window | None:
+		return self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.TRANSLATION_WARNING
+		)
+
+	@script(
+		description=pgettext(
+			"poedit",
+			# Translators: The description of an NVDA command for Poedit.
+			"Reports a translation warning, if any. If pressed twice, presents the warning in browse mode",
+		),
+		gesture="kb:control+shift+w",
+		category=SCRCAT_POEDIT,
+		speakOnDemand=True,
+	)
+	def script_reportTranslationWarning(self, gesture):
+		self._reportControlScriptHelper(
+			self._translationWarningObj,
+			# Translators: The description of the "translation warning" window in poedit.
+			# This text is reported when the given window contains no item to report or could not be found.
+			pgettext("poedit", "translation warning"),
+		)
+
+	_needsWorkObj: Window | None
+	"""Type definition for auto prop '_get__needsWorkObj'"""
+
+	def _get__needsWorkObj(self) -> Window | None:
+		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
+			_WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH
+		)
+		if obj and obj.role == controlTypes.Role.CHECKBOX:
+			return obj
+		return None
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if "SysListView32" in obj.windowClassName and obj.role==controlTypes.ROLE_LISTITEM:
-			clsList.insert(0,PoeditListItem)
+		if obj.role == controlTypes.Role.LISTITEM and obj.windowClassName == "wxWindowNR":
+			clsList.insert(0, PoeditListItem)
+		elif (
+			obj.role in (controlTypes.Role.EDITABLETEXT, controlTypes.Role.DOCUMENT)
+			and obj.windowClassName == "RICHEDIT50W"
+		):
+			clsList.insert(0, PoeditRichEdit)
 
-	def event_NVDAObject_init(self, obj):
-		if obj.role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE in obj.states and obj.isInForeground:
-			# Oleacc often gets the name wrong.
-			# The label object is positioned just above the field on the screen.
-			l, t, w, h = obj.location
-			try:
-				obj.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
-			except AttributeError:
-				pass
-			return
 
-class PoeditListItem(sysListView32.ListItem):
-
-	def _get_isBold(self):
-		info=displayModel.DisplayModelTextInfo(self,position=textInfos.POSITION_FIRST)
-		info.expand(textInfos.UNIT_CHARACTER)
-		fields=info.getTextWithFields()
+class PoeditRichEdit(NVDAObject):
+	def _get_name(self) -> str:
+		# These rich edit controls are incorrectly labeled.
+		# Oleacc doesn't return any name, and UIA defaults to RichEdit Control.
+		# The label object is positioned just above the field on the screen.
+		l, t, w, h = self.location
 		try:
-			return fields[0].field['bold']
-		except:
-			return False
+			self.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
+		except AttributeError:
+			return super().name
+		return self.name
+
+
+class PoeditListItem(NVDAObject):
+	_warningControlToReport: _WindowControlIdOffsetFromDataView | None
+	appModule: AppModule
+
+	def _get__warningControlToReport(self) -> int | None:
+		obj = self.appModule._needsWorkObj
+		if obj and controlTypes.State.CHECKED in obj.states:
+			return _WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH
+		obj = self.appModule._oldSourceTextObj
+		if obj and not obj.hasIrrelevantLocation:
+			return _WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT
+		obj = self.appModule._translationWarningObj
+		if obj and obj.parent and obj.parent.parent and not obj.parent.parent.hasIrrelevantLocation:
+			return _WindowControlIdOffsetFromDataView.TRANSLATION_WARNING
+		return None
 
 	def _get_name(self):
-		# If this item is untranslated or fuzzy, then it will be bold.
-		# Other info on the web says that the background color of 
-		# the item changes, but this doesn't seem to be true while testing.
-		name = super(PoeditListItem,self).name
-		return "* " + name if self.isBold else name
+		name = super().name
+		if self._warningControlToReport or not self.description:
+			# This translation has a warning.
+			# Prepend an asterix (*) to the name
+			name = f"* {name}"
+		self.name = name
+		return self.name
 
-	def event_gainFocus(self):
-		super(sysListView32.ListItem, self).event_gainFocus()
-		if self.isBold:
-			tones.beep(550, 50)
+	def reportFocus(self):
+		super().reportFocus()
+		if not self.description:
+			# This item is untranslated
+			tones.beep(440, 50)
+			return
+		match self._warningControlToReport:
+			case _WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT:
+				tones.beep(495, 50)
+			case _WindowControlIdOffsetFromDataView.TRANSLATION_WARNING:
+				tones.beep(550, 50)
+			case _WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH:
+				tones.beep(660, 50)

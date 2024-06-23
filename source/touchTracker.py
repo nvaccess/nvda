@@ -1,8 +1,7 @@
-#touchTracker.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2012 NV Access Limited
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2012-2023 NV Access Limited
 
 import threading
 import time
@@ -126,44 +125,71 @@ class SingleTouchTracker(object):
 		if complete:
 			self.endTime=curTime
 
-class MultiTouchTracker(object):
-	"""Represents an action jointly performed by 1 or more fingers.
-	@ivar action: the action this finger has performed (one of the action_* constants,E.g. tap, flickRight, hover etc).
-	@type action: string
-	@ivar x: the x screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
-	@type x: int
-	@ivar y: the y screen coordinate where the action was performed. For multi-finger actions it is the average position of each of the fingers. For plural actions it is based on the first occurence
-	@type y: int
-	@ivar startTime: the time the action began
-	@type startTime: float
-	@ivar endTime: the time the action was complete 
-	@type endTime: float
-	@ivar numFingers: the number of fingers that performed this action
-	@type numFingers: int
-	@ivar actionCount: the number of times this action was performed in quick succession (E.g. 2 for a double tap)
-	@ivar childTrackers: a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action. E.g. a 2-finger tripple tap's childTrackers will contain 3 2-finger taps. Each of the 2-finger taps' childTrackers will contain 2 taps.
-	@type childTrackers: list of L{MultiTouchTracker} objeccts
-	@ivar rawSingleTouchTracker: if this tracker represents a 1-fingered non-plural action then this will be the L{SingleTouchTracker} object for that 1 finger. If not then it is None.
-	@type rawSingleTouchTracker: L{SingleTouchTracker}
-	@ivar pluralTimeout: the time at which this tracker could no longer possibly be merged with another to be pluralized, thus it is aloud to be emitted
-	@type pluralTimeout: float
-	"""
-	__slots__=['action','x','y','startTime','endTime','numFingers','actionCount','childTrackers','rawSingleTouchTracker','pluralTimeout']
 
-	def __init__(self,action,x,y,startTime,endTime,numFingers=1,actionCount=1,rawSingleTouchTracker=None,pluralTimeout=None):
-		self.action=action
-		self.x=x
-		self.y=y
-		self.startTime=startTime
-		self.endTime=endTime
-		self.numFingers=numFingers
-		self.actionCount=actionCount
-		self.childTrackers=[]
-		self.rawSingleTouchTracker=rawSingleTouchTracker
+class MultiTouchTracker:
+	__slots__ = [
+		"action",
+		"x",
+		"y",
+		"startTime",
+		"endTime",
+		"numFingers",
+		"actionCount",
+		"childTrackers",
+		"rawSingleTouchTracker",
+		"pluralTimeout"
+	]
+
+	def __init__(
+			self,
+			action: str,
+			x: int,
+			y: int,
+			startTime: float,
+			endTime: float,
+			numFingers: int = 1,
+			actionCount: int = 1,
+			rawSingleTouchTracker: SingleTouchTracker | None = None,
+			pluralTimeout: float | None = None
+	):
+		"""Represents an action jointly performed by 1 or more fingers.
+
+		:param action: the action this finger has performed.
+		One of the action_* constants, e.g. tap, flickRight, hover etc.
+		:param x: the x screen coordinate where the action was performed.
+		For multi-finger actions it is the average position of each of the fingers.
+		For plural actions it is based on the first occurrence
+		:param y: the y screen coordinate where the action was performed.
+		For multi-finger actions it is the average position of each of the fingers.
+		For plural actions it is based on the first occurrence
+		:param startTime: the time the action began
+		:param endTime: the time the action was complete
+		:param numFingers: the number of fingers that performed this action
+		:param actionCount: the number of times this action was performed in quick succession
+		(e.g. 2 for a double tap)
+		:param rawSingleTouchTracker: if this tracker represents a 1-fingered non-plural action,
+		then this will be the L{SingleTouchTracker} object for that 1 finger.
+		If not then it is None.
+		:param pluralTimeout: the time at which this tracker could no longer possibly be merged
+		with another to be pluralized, thus it is allowed to be emitted
+		"""
+		self.action = action
+		self.x = x
+		self.y = y
+		self.startTime = startTime
+		self.endTime = endTime
+		self.numFingers = numFingers
+		self.actionCount = actionCount
+		self.childTrackers: list["MultiTouchTracker"] = []
+		"""a list of L{MultiTouchTracker} objects which represent the direct sub-actions of this action.
+		e.g. a 2-finger triple tap's childTrackers will contain 3 2-finger taps.
+		Each of the 2-finger taps' childTrackers will contain 2 taps.
+		"""
+		self.rawSingleTouchTracker = rawSingleTouchTracker
 		# We only allow pluralizing of taps, no other action.
-		if pluralTimeout is None and action==action_tap:
-			pluralTimeout=startTime+multitouchTimeout
-		self.pluralTimeout=pluralTimeout
+		if pluralTimeout is None and action == action_tap:
+			pluralTimeout = startTime + multitouchTimeout
+		self.pluralTimeout = pluralTimeout
 
 	def iterAllRawSingleTouchTrackers(self):
 		if self.rawSingleTouchTracker: yield self.rawSingleTouchTracker
@@ -190,7 +216,7 @@ class TrackerManager(object):
 
 	def __init__(self):
 		self.singleTouchTrackersByID=OrderedDict()
-		self.multiTouchTrackers=[]
+		self.multiTouchTrackers: list[MultiTouchTracker] = []
 		self.curHoverStack=[]
 		self.numUnknownTrackers=0
 		self._lock=threading.Lock()
@@ -293,7 +319,9 @@ class TrackerManager(object):
 		else:
 			self.multiTouchTrackers.append(tracker)
 
-	pendingEmitInterval=None #: If set: how long to wait before calling emitTrackers again as trackers are still in the queue 
+	pendingEmitInterval: float | None = None
+	"""If set: how long to wait before calling emitTrackers again as trackers are still in the queue"""
+
 	def emitTrackers(self):
 		"""
 		Yields queued trackers that have existed in the queue for long enough to not be connected with other trackers.
@@ -313,7 +341,7 @@ class TrackerManager(object):
 			#Only emit trackers if there are not unknown actions
 			hasUnknownTrackers=self.numUnknownTrackers
 			if not hasUnknownTrackers:
-				for tracker in list(self.multiTouchTrackers):
+				for tracker in self.multiTouchTrackers.copy():
 					# isolated holds can be dropped as we only care when they are tapAndHolds (and preheld is handled later)
 					#All trackers can be emitted with no delay except for tap which must wait for the timeout (to detect plural taps)
 					trackerTimeout=tracker.pluralTimeout-t if tracker.pluralTimeout is not None else 0 

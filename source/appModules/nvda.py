@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2021 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
+# Copyright (C) 2008-2024 NV Access Limited, James Teh, Michael Curran, Leonard de Ruijter, Reef Turner,
 # Julien Cochuyt
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -17,15 +17,16 @@ import gui
 from scriptHandler import script
 import speech
 import textInfos
-import braille
 import config
 from logHandler import log
+import ui
 
 if typing.TYPE_CHECKING:
 	import inputCore
 
 
 nvdaMenuIaIdentity = None
+
 
 class NvdaDialog(IAccessible):
 	"""Fix to ensure NVDA message dialogs get reported when they pop up.
@@ -73,6 +74,8 @@ class NvdaPythonConsoleUIOutputClear(ScriptableObject):
 	def script_clearOutput(self, gesture: "inputCore.InputGesture"):
 		from pythonConsole import consoleUI
 		consoleUI.clear()
+		# Translators: Description of a message spoken when clearing the Python Console output pane
+		ui.message(_("Output pane cleared"))
 
 
 class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
@@ -191,7 +194,7 @@ class AppModule(appModuleHandler.AppModule):
 		if nvdaMenuIaIdentity is not True:
 			return False
 		# nvdaMenuIaIdentity is True, so the next menu we encounter is the NVDA menu.
-		if obj.role == controlTypes.ROLE_POPUPMENU:
+		if obj.role == controlTypes.Role.POPUPMENU:
 			nvdaMenuIaIdentity = obj.IAccessibleIdentity
 			return True
 		return False
@@ -203,7 +206,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.name=versionInfo.name
 
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.ROLE_UNKNOWN and controlTypes.STATE_INVISIBLE in obj.states:
+		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.State.INVISIBLE in obj.states:
 			return
 		nextHandler()
 
@@ -243,7 +246,7 @@ class AppModule(appModuleHandler.AppModule):
 		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "#32770" and obj.role == controlTypes.ROLE_DIALOG:
+		if obj.windowClassName == "#32770" and obj.role == controlTypes.Role.DIALOG:
 			clsList.insert(0, NvdaDialog)
 			if self.isNvdaSettingsDialog(obj):
 				clsList.insert(0, NvdaDialogEmptyDescription)

@@ -10,8 +10,12 @@ EXPORTS
 	nvdaInProcUtils_unregisterNVDAProcess
 	nvdaInProcUtils_sysListView32_getGroupInfo
 	nvdaInProcUtils_sysListView32_getColumnContent
+	nvdaInProcUtils_sysListView32_getColumnLocation
+	nvdaInProcUtils_sysListView32_getColumnHeader
+	nvdaInProcUtils_sysListView32_getColumnOrderArray
 	nvdaInProcUtils_dumpOnCrash
 	nvdaInProcUtils_IA2Text_findContentDescendant
+	nvdaInProcUtils_getTextFromIAccessible
 	nvdaInProcUtils_getActiveObject
 	nvdaInProcUtils_winword_expandToLine
 	nvdaInProcUtils_winword_getTextInRange
@@ -46,6 +50,8 @@ EXPORTS
 	_nvdaController_brailleMessage
 	_nvdaController_cancelSpeech
 	_nvdaController_speakText
+	_nvdaController_speakSsml
+	nvdaController_onSsmlMarkReached
 	_nvdaControllerInternal_vbufChangeNotify
 	displayModel_getWindowTextInRect
 	displayModel_getFocusRect
@@ -53,11 +59,30 @@ EXPORTS
 	displayModel_requestTextChangeNotificationsForWindow
 	calculateWordOffsets
 	calculateCharacterOffsets
+	calculateCharacterBoundaries
 	findWindowWithClassInThread
 	registerUIAProperty
+	registerUIAAnnotationType
 	dllImportTableHooks_hookSingle
 	dllImportTableHooks_unhookSingle
 	audioDucking_shouldDelay
 	logMessage
 	getOleClipboardText
 	_nvdaControllerInternal_reportLiveRegion
+	_nvdaControllerInternal_openConfigDirectory
+	rateLimitedUIAEventHandler_create
+	rateLimitedUIAEventHandler_terminate
+	wasPlay_create
+	wasPlay_destroy
+	wasPlay_open
+	wasPlay_feed
+	wasPlay_stop
+	wasPlay_sync
+	wasPlay_idle
+	wasPlay_pause
+	wasPlay_resume
+	wasPlay_setChannelVolume
+	wasPlay_startup
+	wasSilence_init
+	wasSilence_playFor
+	wasSilence_terminate

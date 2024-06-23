@@ -1,8 +1,7 @@
-#versionInfo.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2024 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """
 This module contains localizable version information such as description, copyright and About messages etc.
@@ -10,19 +9,18 @@ As there are localizable strings at module level, this can only be imported once
 To access version information for programmatic version checks before languageHandler.initialize, use the buildVersion module which contains all the non-localizable version information such as major and minor version, and version string etc.
 """
 
-import os
 from buildVersion import *
 
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
-url = "https://www.nvaccess.org/"
-copyrightYears = "2006-2021"
+url = "https://www.nvaccess.org"
+copyrightYears = "2006-2024"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears)
 aboutMessage = _(
 	# Translators: "About NVDA" dialog box message
-	u"""{longName} ({name})
-Version: {version}
+	"""{longName} ({name})
+Version: {version} ({version_detailed})
 URL: {url}
 {copyright}
 

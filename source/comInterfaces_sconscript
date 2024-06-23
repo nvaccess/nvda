@@ -12,7 +12,6 @@
 #http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 from typing import List
-import fileinput
 import re
 from SCons.Node.FS import File
 
@@ -45,15 +44,18 @@ except ModuleNotFoundError:
 """)
 
 	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
-	for line in fileinput.input(path, inplace=True):
-		# Note: The fileinput module temporarily redirects stdout to the file.
-		# So print is used to write the file.
-		match = importPattern.match(line)
-		if match:
-			libId = match.group(1)
-			print(importTemplate.format(libIdentifier=libId), end='')
-		else:
-			print(line, end='')
+	IDEFriendlyContent = list()
+	with open(path, "r") as interfaceFile:
+		for line in interfaceFile:
+			match = importPattern.match(line)
+			if match:
+				libId = match.group(1)
+				IDEFriendlyContent.append(importTemplate.format(libIdentifier=libId))
+			else:
+				IDEFriendlyContent.append(line)
+	with open(path, "w") as interfaceFile:
+		interfaceFile.writelines(IDEFriendlyContent)
+
 
 def interfaceAction(target:List[File], source, env):
 	clsid = env.get('clsid')
@@ -114,8 +116,9 @@ for k,v in COM_INTERFACES.items():
 
 
 # When cleaning comInterfaces get rid of everything
-# except for things starting with __ (e.g. __init__.py)
+# except for things starting with __ (e.g. __init__.py), and files tracked by Git
 env.Clean(
 	Dir('comInterfaces'),
-	Glob('comInterfaces/[!_]*') + Glob('comInterfaces/_[!_]*')
+	Glob('comInterfaces/[!_]*', exclude=['comInterfaces/readme.md', 'comInterfaces/UIAutomationClient.py'])
+	+ Glob('comInterfaces/_[!_]*', exclude='comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py')
 )

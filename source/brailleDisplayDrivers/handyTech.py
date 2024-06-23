@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2021 NV Access Limited, Bram Duvigneau, Babbage B.V.,
+# Copyright (C) 2008-2023 NV Access Limited, Bram Duvigneau, Babbage B.V.,
 # Felix Grützmacher (Handy Tech Elektronik GmbH), Leonard de Ruijter
 
 """
@@ -9,6 +9,13 @@ Braille display driver for Handy Tech braille displays.
 """
 
 from collections import OrderedDict
+from typing import (
+	Dict,
+	List,
+	Optional,
+	Union,
+)
+
 from io import BytesIO
 import serial
 import weakref
@@ -28,7 +35,6 @@ from ctypes import windll
 import windowUtils
 
 import wx
-from typing import List, Any, Union, Optional
 
 
 class InvisibleDriverWindow(windowUtils.CustomWindow):
@@ -103,6 +109,9 @@ MODEL_BRAILLE_STAR_80 = b"\x78"
 MODEL_MODULAR_20 = b"\x80"
 MODEL_MODULAR_80 = b"\x88"
 MODEL_MODULAR_40 = b"\x89"
+MODEL_ACTIVATOR = b"\xA4"
+MODEL_ACTIVATOR_PRO_64 = b"\xA6"
+MODEL_ACTIVATOR_PRO_80 = b"\xA8"
 
 # Key constants
 KEY_B1 = 0x03
@@ -162,8 +171,8 @@ class Model(AutoPropertyObject):
 	def postInit(self):
 		"""Executed after model initialisation.
 
-		Subclasses may extend this method to perform actions on initialization 
-		of the display. Don't use __init__ for this, since the model ID has 
+		Subclasses may extend this method to perform actions on initialization
+		of the display. Don't use __init__ for this, since the model ID has
 		not been set, which is needed for sending packets to the display.
 		"""
 
@@ -366,6 +375,15 @@ class StatusCellMixin(AutoPropertyObject):
 		super(StatusCellMixin, self).display(cells)
 
 
+class ActiveSplitMixin:
+	"""Mixin for displays supporting ActiveSplit, i.e. dynamic adjustment of number of cells"""
+
+	def postInit(self):
+		super().postInit()
+		log.debug("Prevent disconnect/reconnect activity for dynamic length adjustment")
+		self._display.sendExtendedPacket(HT_EXTPKT_NO_RECONNECT)
+
+
 class ModularConnect88(TripleActionKeysMixin, Model):
 	deviceId = MODEL_MODULAR_CONNECT_88
 	genericName = "Modular Connect"
@@ -524,6 +542,58 @@ class Modular80(Modular):
 	numCells = 80
 
 
+class Activator(
+		ActiveSplitMixin,
+		TimeSyncFirmnessMixin,
+		AtcMixin,
+		JoystickMixin,
+		TripleActionKeysMixin,
+		Model
+):
+	deviceId = MODEL_ACTIVATOR
+	numCells = 40
+	genericName = name = 'Activator'
+
+	def _get_keys(self) -> Dict[int, str]:
+		keys = super().keys
+		keys.update({
+			0x7A: "escape",
+			0x7B: "return",
+		})
+		return keys
+
+
+class ActivatorPro(
+		ActiveSplitMixin,
+		TimeSyncFirmnessMixin,
+		AtcMixin,
+		TripleActionKeysMixin,
+		Model
+):
+	genericName = 'Activator Pro'
+
+	def _get_name(self):
+		return '{name} {cells}'.format(name=self.genericName, cells=self.numCells)
+
+	def _get_keys(self) -> Dict[int, str]:
+		keys = super().keys
+		keys.update({
+			0x7A: "escape",
+			0x7B: "return",
+		})
+		return keys
+
+
+class ActivatorPro64(ActivatorPro):
+	deviceId = MODEL_ACTIVATOR_PRO_64
+	numCells = 64
+
+
+class ActivatorPro80(ActivatorPro):
+	deviceId = MODEL_ACTIVATOR_PRO_80
+	numCells = 80
+
+
 def _allSubclasses(cls):
 	"""List all direct and indirect subclasses of cls
 
@@ -548,6 +618,7 @@ HT_PKT_EXTENDED = b"\x79"
 HT_PKT_NAK = b"\x7D"
 HT_PKT_ACK = b"\x7E"
 HT_PKT_OK = b"\xFE"
+HT_PKT_OK_WITH_LENGTH = b"\xFD"
 HT_PKT_RESET = b"\xFF"
 HT_EXTPKT_BRAILLE = HT_PKT_BRAILLE
 HT_EXTPKT_KEY = b"\x04"
@@ -568,6 +639,7 @@ HT_EXTPKT_SET_FIRMNESS = b"\x60"
 HT_EXTPKT_GET_FIRMNESS = b"\x61"
 HT_EXTPKT_GET_PROTOCOL_PROPERTIES = b"\xC1"
 HT_EXTPKT_GET_FIRMWARE_VERSION = b"\xC2"
+HT_EXTPKT_NO_RECONNECT = b"\xAE"
 
 # HID specific constants
 HT_HID_RPT_OutData = b"\x01" # receive data from device
@@ -584,11 +656,61 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	# Translators: The name of a series of braille displays.
 	description = _("Handy Tech braille displays")
 	isThreadSafe = True
+	supportsAutomaticDetection = True
 	receivesAckPackets = True
 	timeout = 0.2
 	_sleepcounter = 0
 	_messageWindow = None
 	_instances = weakref.WeakSet()
+
+	@classmethod
+	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
+			"VID_0403&PID_6001",  # FTDI chip
+			"VID_0921&PID_1200",  # GoHubs chip
+		})
+
+		# Newer Handy Tech displays have a native HID processor
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_1FE4&PID_0054",  # Active Braille
+			"VID_1FE4&PID_0055",  # Connect Braille
+			"VID_1FE4&PID_0061",  # Actilino
+			"VID_1FE4&PID_0064",  # Active Star 40
+			"VID_1FE4&PID_0081",  # Basic Braille 16
+			"VID_1FE4&PID_0082",  # Basic Braille 20
+			"VID_1FE4&PID_0083",  # Basic Braille 32
+			"VID_1FE4&PID_0084",  # Basic Braille 40
+			"VID_1FE4&PID_008A",  # Basic Braille 48
+			"VID_1FE4&PID_0086",  # Basic Braille 64
+			"VID_1FE4&PID_0087",  # Basic Braille 80
+			"VID_1FE4&PID_008B",  # Basic Braille 160
+			"VID_1FE4&PID_008C",  # Basic Braille 84
+			"VID_1FE4&PID_0093",  # Basic Braille Plus 32
+			"VID_1FE4&PID_0094",  # Basic Braille Plus 40
+			"VID_1FE4&PID_00A4",  # Activator
+			"VID_1FE4&PID_00A6",  # Activator Pro 64
+			"VID_1FE4&PID_00A8",  # Activator Pro 80
+		})
+
+		# Some older HT displays use a HID converter and an internal serial interface
+		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
+			"VID_1FE4&PID_0003",  # USB-HID adapter
+			"VID_1FE4&PID_0074",  # Braille Star 40
+			"VID_1FE4&PID_0044",  # Easy Braille
+		})
+
+		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
+			"Actilino AL",
+			"Active Braille AB",
+			"Active Star AS",
+			"Basic Braille BB",
+			"Basic Braille Plus BP",
+			"Braille Star 40 BS",
+			"Braillino BL",
+			"Braille Wave BW",
+			"Easy Braille EBR",
+			"Activator",
+		)))
 
 	@classmethod
 	def getManualPorts(cls):
@@ -615,7 +737,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.KEY_HID
+			self.isHid = portType == bdDetect.DeviceType.HID
 			self.isHidSerial = portId in USB_IDS_HID_CONVERTER
 			self.port = port
 			try:
@@ -643,6 +765,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			if self.numCells:
 				# A display responded.
+				if not isinstance(self._model, OldProtocolMixin):
+					self.sendExtendedPacket(HT_EXTPKT_GET_PROTOCOL_PROPERTIES)
+					self._dev.waitForRead(self.timeout)
 				self._model.postInit()
 				log.info("Found {device} connected via {type} ({port})".format(
 					device=self._model.name, type=portType, port=port))
@@ -854,7 +979,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._handleInputStream(data, self._dev)
 
 	def _handleInputStream(self, htPacketType: bytes, stream):
-		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED):
+		if htPacketType in (HT_PKT_OK, HT_PKT_EXTENDED, HT_PKT_OK_WITH_LENGTH):
 			modelId: bytes = stream.read(1)
 			if not self._model:
 				if modelId not in MODELS:
@@ -862,9 +987,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					raise RuntimeError(
 						"The model with ID %r is not supported by this driver" % modelId)
 				self._model = MODELS.get(modelId)(self)
-				self.numCells = self._model.numCells
+				if htPacketType == HT_PKT_OK_WITH_LENGTH:
+					self.numCells = ord(stream.read(1))
+				else:
+					self.numCells = self._model.numCells
 			elif self._model.deviceId != modelId:
-				# Somehow the model ID of this display changed, probably another display 
+				# Somehow the model ID of this display changed, probably another display
 				# plugged in the same (already open) serial port.
 				self.terminate()
 
@@ -893,7 +1021,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				# Ignore ATC packets for now
 				pass
 			elif extPacketType == HT_EXTPKT_GET_PROTOCOL_PROPERTIES:
-				pass
+				self.numCells = packet[3]
 			elif isinstance(self._model, TimeSyncFirmnessMixin):
 				if extPacketType == HT_EXTPKT_GET_RTC:
 					self._model.handleTime(packet[1:])

@@ -21,9 +21,9 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <shlwapi.h>
 #include <sddl.h>
 #include <common/log.h>
-#include "apiHook.h"
-#include "nvdaController.h"
-#include "nvdaControllerInternal.h"
+#include <common/apiHook.h>
+#include <remote/nvdaController.h>
+#include <remote/nvdaControllerInternal.h>
 #include <common/lock.h>
 #include <common/winIPCUtils.h>
 #include "dllmain.h"
@@ -45,7 +45,6 @@ map<long,HHOOK> callWndProcHooksByThread;
 map<long,HHOOK> getMessageHooksByThread;
 long tlsIndex_inThreadInjectionID=0;
 bool isProcessExiting=false;
-bool isSecureModeNVDAProcess=false;
 SetWindowsHookEx_funcType real_SetWindowsHookExA=NULL;
 
 //Code executed in-process
@@ -128,14 +127,6 @@ void killRunningWindowsHooks() {
 	}
 }
 
-//A replacement OpenClipboard function to disable the use of the clipboard in a secure mode NVDA process
-//Simply returns false without calling the original OpenClipboard
-typedef BOOL(WINAPI *OpenClipboard_funcType)(HWND);
-OpenClipboard_funcType real_OpenClipboard=NULL;
-BOOL WINAPI fake_OpenClipboard(HWND hwndOwner) {
-	return false;
-}
-
 //A thread function that runs while  NVDA is injected in a process.
 //Note that a mutex is used to make sure that there is never more than one copy of this thread in a given process at any given time.
 //I.e. Another copy of NVDA is started  while the first is still running.
@@ -169,26 +160,21 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	if(inprocWinEventHookID==0) {
 		LOG_ERROR(L"SetWinEventHook failed");
 	}
-#ifndef _M_ARM64
-	//Initialize API hooking
-	apiHook_initialize();
-	//Hook SetWindowsHookExA so that we can juggle hooks around a bit.
-	//Fixes #2411
-	real_SetWindowsHookExA=apiHook_hookFunction_safe("USER32.dll",SetWindowsHookExA,fake_SetWindowsHookExA);
-	//Fore secure mode NVDA process, hook OpenClipboard to disable usage of the clipboard
-	if(isSecureModeNVDAProcess) real_OpenClipboard=apiHook_hookFunction_safe("USER32.dll",OpenClipboard,fake_OpenClipboard);
-#endif // #ifndef _M_ARM64
-	//Initialize in-process subsystems
+
+	// Begin API hooking transaction
+	apiHook_beginTransaction();
+	// Hook SetWindowsHookExA so that we can juggle hooks around a bit.
+	// Fixes #2411
+	apiHook_hookFunction_safe(SetWindowsHookExA, fake_SetWindowsHookExA, &real_SetWindowsHookExA);
+	// Initialize in-process subsystems
 	inProcess_initialize();
-#ifndef _M_ARM64
-	//Enable all registered API hooks
-	apiHook_enableHooks();
-#endif
-	//Initialize our rpc server interfaces and request registration with NVDA
+	// Enable all registered API hooks by committing the transaction
+	apiHook_commitTransaction();
+	// Initialize our rpc server interfaces and request registration with NVDA
 	rpcSrv_initialize();
-	//Notify injection_winEventCallback (who started our thread) that we're past initialization
+	// Notify injection_winEventCallback (who started our thread) that we're past initialization
 	SetEvent((HANDLE)data);
-	//Wait until nvda unregisters
+	// Wait until nvda unregisters
 	#ifndef NDEBUG
 	Beep(660,75);
 	#endif
@@ -229,25 +215,23 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 	#ifndef NDEBUG
 	Beep(1320,75);
 	#endif
-	//Terminate our RPC server interfaces
+	// Terminate our RPC server interfaces
 	rpcSrv_terminate();
-#ifndef _M_ARM64
-	//Unregister and terminate API hooks
+	// Unregister and terminate API hooks
 	apiHook_terminate();
-#endif
-	//Terminate all in-process subsystems.
+	// Terminate all in-process subsystems.
 	inProcess_terminate();
-	//Unregister any windows hooks registered so far
+	// Unregister any windows hooks registered so far
 	killRunningWindowsHooks();
 	// Unregister inproc winEvent callback
 	UnhookWinEvent(inprocWinEventHookID);
 	inprocWinEventHookID=0;
 	// Flush any remaining log messages to NVDA
 	log_flushQueue();
-	//Release and close the thread mutex
+	// Release and close the thread mutex
 	ReleaseMutex(threadMutex);
 	CloseHandle(threadMutex);
-	//Allow this dll to unload if necessary, and exit the thread.
+	// Allow this dll to unload if necessary, and exit the thread.
 	FreeLibraryAndExitThread(dllHandle,0);
 	return 0;
 }
@@ -342,10 +326,8 @@ BOOL outprocInitialized=FALSE;
 
 /**
  * Initializes the out-of-process code for NVDAHelper 
- * @param secureMode 1 specifies that NVDA is running in seucre mode, 0 says not.
  */ 
-BOOL injection_initialize(int secureMode) {
-	if(secureMode) isSecureModeNVDAProcess=true;
+BOOL injection_initialize() {
 	if(outprocInitialized) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (injection_initialize)",0);
 		return FALSE;
@@ -403,10 +385,8 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 				#ifndef NDEBUG
 				Beep(2500,75);
 				#endif
-#ifndef _M_ARM64
 				//Unregister and terminate API hooks
 				apiHook_terminate();
-#endif
 				//Unregister any current windows hooks
 				killRunningWindowsHooks();
 				//Unregister winEvents for this process

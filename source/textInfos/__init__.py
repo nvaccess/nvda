@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2020 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -10,8 +10,10 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 """
 
 from abc import abstractmethod
+from enum import Enum
 import weakref
 import re
+import typing
 from typing import (
 	Any,
 	Union,
@@ -19,6 +21,7 @@ from typing import (
 	Optional,
 	Dict,
 	Tuple,
+	Self,
 )
 
 import baseObject
@@ -27,6 +30,10 @@ import controlTypes
 from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
+
+if typing.TYPE_CHECKING:
+	import documentBase  # noqa: F401 used for type checking only
+	import NVDAObjects
 
 
 SpeechSequence = List[Union[Any, str]]
@@ -62,20 +69,20 @@ class ControlField(Field):
 			reason=OutputReason.CARET,
 			extraDetail=False
 	):
-		role = self.get("role", controlTypes.ROLE_UNKNOWN)
+		role = self.get("role", controlTypes.Role.UNKNOWN)
 		states = self.get("states", set())
 
 		# Honour verbosity configuration.
-		if role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER):
+		if role in (controlTypes.Role.TABLE, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER):
 			# The user doesn't want layout tables.
 			# Find the nearest table.
-			if role == controlTypes.ROLE_TABLE:
+			if role == controlTypes.Role.TABLE:
 				# This is the nearest table.
 				table = self
 			else:
 				# Search ancestors for the nearest table.
 				for anc in reversed(ancestors):
-					if anc.get("role") == controlTypes.ROLE_TABLE:
+					if anc.get("role") == controlTypes.Role.TABLE:
 						table = anc
 						break
 				else:
@@ -85,95 +92,101 @@ class ControlField(Field):
 
 		name = self.get("name")
 		landmark = self.get("landmark")
-		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS) and (
-			(role == controlTypes.ROLE_LINK and not formatConfig["reportLinks"])
-			or (role == controlTypes.ROLE_GRAPHIC and not formatConfig["reportGraphics"])
-			or (role == controlTypes.ROLE_HEADING and not formatConfig["reportHeadings"])
-			or (role == controlTypes.ROLE_BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
-			or (role == controlTypes.ROLE_GROUPING and (not name or not formatConfig["reportGroupings"]))
-			or (role in (controlTypes.ROLE_TABLE, controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLEROWHEADER, controlTypes.ROLE_TABLECOLUMNHEADER) and not formatConfig["reportTables"])
-			or (role in (controlTypes.ROLE_LIST, controlTypes.ROLE_LISTITEM) and controlTypes.STATE_READONLY in states and not formatConfig["reportLists"])
-			or (role == controlTypes.ROLE_ARTICLE and not formatConfig["reportArticles"])
-			or (role == controlTypes.ROLE_MARKED_CONTENT and not formatConfig["reportHighlight"])
-			or (role in (controlTypes.ROLE_FRAME, controlTypes.ROLE_INTERNALFRAME) and not formatConfig["reportFrames"])
-			or (role in (controlTypes.ROLE_DELETED_CONTENT,controlTypes.ROLE_INSERTED_CONTENT) and not formatConfig["reportRevisions"])
+		if reason in (OutputReason.CARET, OutputReason.SAYALL, OutputReason.FOCUS, OutputReason.QUICKNAV) and (
+			(role == controlTypes.Role.LINK and not formatConfig["reportLinks"])
+			or (role == controlTypes.Role.GRAPHIC and not formatConfig["reportGraphics"])
+			or (role == controlTypes.Role.HEADING and not formatConfig["reportHeadings"])
+			or (role == controlTypes.Role.BLOCKQUOTE and not formatConfig["reportBlockQuotes"])
+			or (role == controlTypes.Role.GROUPING and (not name or not formatConfig["reportGroupings"]))
+			or (role in (controlTypes.Role.TABLE, controlTypes.Role.TABLECELL, controlTypes.Role.TABLEROWHEADER, controlTypes.Role.TABLECOLUMNHEADER) and not formatConfig["reportTables"])
+			or (role in (controlTypes.Role.LIST, controlTypes.Role.LISTITEM) and controlTypes.State.READONLY in states and not formatConfig["reportLists"])
+			or (role == controlTypes.Role.ARTICLE and not formatConfig["reportArticles"])
+			or (role == controlTypes.Role.MARKED_CONTENT and not formatConfig["reportHighlight"])
+			or (role in (controlTypes.Role.FRAME, controlTypes.Role.INTERNALFRAME) and not formatConfig["reportFrames"])
+			or (role in (controlTypes.Role.DELETED_CONTENT,controlTypes.Role.INSERTED_CONTENT) and not formatConfig["reportRevisions"])
 			or (
-				(role == controlTypes.ROLE_LANDMARK or landmark)
+				(role == controlTypes.Role.LANDMARK or landmark)
 				and not formatConfig["reportLandmarks"]
 			)
-			or (role == controlTypes.ROLE_REGION and (not name or not formatConfig["reportLandmarks"]))
+			or (role == controlTypes.Role.REGION and (not name or not formatConfig["reportLandmarks"]))
+			or (
+				role in {controlTypes.Role.FIGURE, controlTypes.Role.CAPTION}
+				and not formatConfig["reportFigures"]
+			)
 		):
 			# This is just layout as far as the user is concerned.
 			return self.PRESCAT_LAYOUT
 
 		if (
 			role in (
-				controlTypes.ROLE_DELETED_CONTENT,
-				controlTypes.ROLE_INSERTED_CONTENT,
-				controlTypes.ROLE_LINK, 
-				controlTypes.ROLE_HEADING, 
-				controlTypes.ROLE_BUTTON, 
-				controlTypes.ROLE_RADIOBUTTON, 
-				controlTypes.ROLE_CHECKBOX, 
-				controlTypes.ROLE_GRAPHIC, 
-				controlTypes.ROLE_CHART, 
-				controlTypes.ROLE_MENUITEM, 
-				controlTypes.ROLE_TAB, 
-				controlTypes.ROLE_COMBOBOX, 
-				controlTypes.ROLE_SLIDER, 
-				controlTypes.ROLE_SPINBUTTON, 
-				controlTypes.ROLE_PROGRESSBAR, 
-				controlTypes.ROLE_TOGGLEBUTTON, 
-				controlTypes.ROLE_MENUBUTTON, 
-				controlTypes.ROLE_TREEVIEW, 
-				controlTypes.ROLE_CHECKMENUITEM, 
-				controlTypes.ROLE_RADIOMENUITEM,
-				controlTypes.ROLE_CAPTION,
+				controlTypes.Role.DELETED_CONTENT,
+				controlTypes.Role.INSERTED_CONTENT,
+				controlTypes.Role.LINK, 
+				controlTypes.Role.HEADING, 
+				controlTypes.Role.BUTTON, 
+				controlTypes.Role.RADIOBUTTON, 
+				controlTypes.Role.CHECKBOX, 
+				controlTypes.Role.SWITCH,
+				controlTypes.Role.GRAPHIC, 
+				controlTypes.Role.CHART, 
+				controlTypes.Role.MENUITEM, 
+				controlTypes.Role.TAB, 
+				controlTypes.Role.COMBOBOX, 
+				controlTypes.Role.SLIDER, 
+				controlTypes.Role.SPINBUTTON, 
+				controlTypes.Role.PROGRESSBAR,
+				controlTypes.Role.BUSY_INDICATOR,
+				controlTypes.Role.TOGGLEBUTTON, 
+				controlTypes.Role.MENUBUTTON, 
+				controlTypes.Role.TREEVIEW, 
+				controlTypes.Role.CHECKMENUITEM, 
+				controlTypes.Role.RADIOMENUITEM,
 			)
-			or (role == controlTypes.ROLE_EDITABLETEXT and controlTypes.STATE_MULTILINE not in states and (controlTypes.STATE_READONLY not in states or controlTypes.STATE_FOCUSABLE in states))
-			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY not in states)
+			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE not in states and (controlTypes.State.READONLY not in states or controlTypes.State.FOCUSABLE in states))
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY not in states)
 		):
 			return self.PRESCAT_SINGLELINE
 		elif (
 			role in (
-				controlTypes.ROLE_SEPARATOR,
-				controlTypes.ROLE_FOOTNOTE,
-				controlTypes.ROLE_ENDNOTE,
-				controlTypes.ROLE_EMBEDDEDOBJECT,
-				controlTypes.ROLE_MATH
+				controlTypes.Role.SEPARATOR,
+				controlTypes.Role.FOOTNOTE,
+				controlTypes.Role.ENDNOTE,
+				controlTypes.Role.EMBEDDEDOBJECT,
+				controlTypes.Role.MATH
 			)
 			or (
-				extraDetail and role == controlTypes.ROLE_LISTITEM
+				extraDetail and role == controlTypes.Role.LISTITEM
 			)
 		):
 			return self.PRESCAT_MARKER
-		elif role in (controlTypes.ROLE_APPLICATION, controlTypes.ROLE_DIALOG):
+		elif role in (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG):
 			# Applications and dialogs should be reported as markers when embedded within content, but not when they themselves are the root
 			return self.PRESCAT_MARKER if ancestors else self.PRESCAT_LAYOUT 
-		elif role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+		elif role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER):
 			return self.PRESCAT_CELL
 		elif (
 			role in (
-				controlTypes.ROLE_BLOCKQUOTE,
-				controlTypes.ROLE_GROUPING,
-				controlTypes.ROLE_FIGURE,
-				controlTypes.ROLE_REGION,
-				controlTypes.ROLE_FRAME,
-				controlTypes.ROLE_INTERNALFRAME,
-				controlTypes.ROLE_TOOLBAR,
-				controlTypes.ROLE_MENUBAR,
-				controlTypes.ROLE_POPUPMENU,
-				controlTypes.ROLE_TABLE,
-				controlTypes.ROLE_ARTICLE,
-				controlTypes.ROLE_MARKED_CONTENT,
+				controlTypes.Role.BLOCKQUOTE,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.FIGURE,
+				controlTypes.Role.CAPTION,
+				controlTypes.Role.REGION,
+				controlTypes.Role.FRAME,
+				controlTypes.Role.INTERNALFRAME,
+				controlTypes.Role.TOOLBAR,
+				controlTypes.Role.MENUBAR,
+				controlTypes.Role.POPUPMENU,
+				controlTypes.Role.TABLE,
+				controlTypes.Role.ARTICLE,
+				controlTypes.Role.MARKED_CONTENT,
 			)
-			or (role == controlTypes.ROLE_EDITABLETEXT and (
-				controlTypes.STATE_READONLY not in states
-				or controlTypes.STATE_FOCUSABLE in states
-			) and controlTypes.STATE_MULTILINE in states)
-			or (role == controlTypes.ROLE_LIST and controlTypes.STATE_READONLY in states)
-			or (role == controlTypes.ROLE_LANDMARK or landmark)
-			or (controlTypes.STATE_FOCUSABLE in states and controlTypes.STATE_EDITABLE in states)
+			or (role == controlTypes.Role.EDITABLETEXT and (
+				controlTypes.State.READONLY not in states
+				or controlTypes.State.FOCUSABLE in states
+			) and controlTypes.State.MULTILINE in states)
+			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY in states)
+			or (role == controlTypes.Role.LANDMARK or landmark)
+			or (controlTypes.State.FOCUSABLE in states and controlTypes.State.EDITABLE in states)
 		):
 			return self.PRESCAT_CONTAINER
 
@@ -199,7 +212,6 @@ class FieldCommand(object):
 			"controlEnd", indicating the end of a L{ControlField}; or
 			"formatChange", indicating a L{FormatField} change.
 		@param field: The field associated with this command; may be C{None} for controlEnd.
-		@type field: L{Field}
 		"""
 		if command not in ("controlStart","controlEnd","formatChange"):
 			raise ValueError("Unknown command: %s"%command)
@@ -303,11 +315,14 @@ class TextInfo(baseObject.AutoPropertyObject):
 	@type bookmark: L{Bookmark}
 	"""
 
-	def __init__(self,obj,position):
+	def __init__(
+			self,
+			obj: "documentBase.TextContainerObject",
+			position: Union[int, Tuple, str],
+	):
 		"""Constructor.
 		Subclasses must extend this, calling the superclass method first.
 		@param position: The initial position of this range; one of the POSITION_* constants or a position object supported by the implementation.
-		@type position: int, tuple or string
 		@param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo,self).__init__()
@@ -333,29 +348,37 @@ class TextInfo(baseObject.AutoPropertyObject):
 	def _set_end(self, otherEndpoint: "TextInfoEndpoint"):
 		self.end.moveTo(otherEndpoint)
 
-	def _get_obj(self):
+	#: Typing information for auto-property: _get_obj
+	obj: "documentBase.TextContainerObject"
+
+	def _get_obj(self) -> "documentBase.TextContainerObject":
 		"""The object containing the range of text being represented."""
 		return self._obj()
 
 	def _get_unit_mouseChunk(self):
 		return config.conf["mouse"]["mouseTextUnit"]
 
+	#: Typing information for auto-property: _get_text
+	text: str
+
 	_abstract_text = True
-	def _get_text(self):
+
+	def _get_text(self) -> str:
 		"""The text with in this range.
 		Subclasses must implement this.
 		@return: The text.
-		@rtype: str
 		@note: The text is not guaranteed to be the exact length of the range in offsets.
 		"""
 		raise NotImplementedError
 
-	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> List[Union[str, FieldCommand]]:
+	TextOrFieldsT = Union[str, FieldCommand]
+	TextWithFieldsT = List[TextOrFieldsT]
+
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> "TextInfo.TextWithFieldsT":
 		"""Retrieves the text in this range, as well as any control/format fields associated therewith.
 		Subclasses may override this. The base implementation just returns the text.
 		@param formatConfig: Document formatting configuration, useful if you wish to force a particular
 			configuration for a particular task.
-		@type formatConfig: dict
 		@return: A sequence of text strings interspersed with associated field commands.
 		""" 
 		return [self.text]
@@ -378,13 +401,11 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
-	def unitIndex(self,unit):
+	def unitIndex(self, unit: str) -> int:
 		"""
-@param unit: a unit constant for which you want to retreave an index
-@type: string
-@returns: The 1-based index of this unit, out of all the units of this type in the object
-@rtype: int
-"""  
+		@param unit: a unit constant for which you want to retrieve an index
+		@returns: The 1-based index of this unit, out of all the units of this type in the object
+		"""
 		raise NotImplementedError
 
 	def unitCount(self,unit):
@@ -497,8 +518,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 		""" 
 		raise NotImplementedError
 
-	def _get_NVDAObjectAtStart(self):
-		"""retreaves the NVDAObject related to the start of the range. Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
+	#: Typing information for auto-property: _get_NVDAObjectAtStart
+	NVDAObjectAtStart: "NVDAObjects.NVDAObject"
+
+	def _get_NVDAObjectAtStart(self) -> "NVDAObjects.NVDAObject":
+		"""Get the NVDAObject related to the start of the range.
+		Usually it is just the owner NVDAObject, but in the case of virtualBuffers it may be a descendant object.
 		@returns: the NVDAObject at the start
 		"""
 		return self.obj
@@ -621,16 +646,217 @@ class TextInfo(baseObject.AutoPropertyObject):
 		p=self.pointAtStart
 		oldX,oldY=winUser.getCursorPos()
 		winUser.setCursorPos(p.x,p.y)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTDOWN,0,0)
-		mouseHandler.executeMouseEvent(winUser.MOUSEEVENTF_LEFTUP,0,0)
+		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX,oldY)
 
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
-		This will only be called for control fields with a role of L{controlTypes.ROLE_MATH}.
+		This will only be called for control fields with a role of L{controlTypes.Role.MATH}.
 		@raise LookupError: If MathML can't be retrieved for this field.
 		"""
 		raise NotImplementedError
+	
+	def moveToCodepointOffset(
+			self,
+			codepointOffset: int,
+	) -> Self:
+		"""
+			This function moves textInfos by codepoint characters. A codepoint character represents exactly 1 character
+			in a Pythonic string.
+
+			Illustration:
+				Suppose we have TextInfo that represents a paragraph of text:
+				```
+				> s = paragraphInfo.text
+				> s
+				'Hello, world!\r'
+				```
+				Suppose that we would like to put the cursor at the first letter of the word 'world'.
+				That means jumping to index 7:
+				```
+				> s[7:]
+				'world!\r'
+				```
+				Here is how this can be done:
+				```
+				> info = paragraphInfo.moveToCodepointOffset(7)
+				> info.setEndPoint(paragraphInfo, "endToEnd")
+				> info.text
+				'world!\r'
+				```
+
+			Background:
+				In many applications there is no one-to-one mapping of codepoint characters and TextInfo characters,
+				e.g. when calling TextInfo.move(UNIT_CHARACTER, n).
+				There are a couple of reasons for this discrepancy:
+				1. In Wide character encoding, some 4-byte unicode characters are represented as two surrogate characters,
+				whereas in Pythonic string they would be represented by a single character.
+				2. In non-offset TextInfos (e.g. UIATextInfo)
+				there is no guarantee on the fact that TextInfos.move(UNIT_CHARACTER, 1)would actually move by
+				exactly 1 character.
+				A good illustration of this is in Microsoft Word with UIA enabled always,
+				the first character of a bullet list item would be represented by three pythonic codepoint characters:
+				* Bullet character "•"
+				* Tab character \t
+				* And the first character of of list item per se.
+
+				In many use cases (e.g., sentence navigation, style navigation),
+				we identify pythonic codepoint character that we would like to move our TextInfo to.
+				TextInfos.move(UNIT_CHARACTER, n) would cause many side effects.
+				This function provides a clean and reliable way to jump to a given codepoint offset.
+
+			Assumptions:
+				1. This function operates on a non-collapsed TextInfo only. In a typical scenario, we might want
+				to jump to a certain offset within a paragraph or a line. In this case this function
+				should be called on TextInfo representing said paragraph or line.
+				The reason for that is that for some implementations we might
+				need to access text of paragraph/line in order to accurately compute result offset.
+				2. It assumes that 1 character of application-specific TextInfo representation
+				maps to 1 or more characters of codepoint representation.
+				3. This function is also written with an assumption that a character
+				in application-specific TextInfo representation might not map to any pythonic characters,
+				although this scenario has never been observed in any applications.
+				4. Also this function assumes that most characters have 1:1 mapping between codepoint
+				and application-specific representations.
+				This assumption is not required, however if this assumption is True, the function will converge faster.
+				If this assumption is false, then it might take many iterations to find the right TextInfo.
+
+			Algorithm:
+				This generic implementation essentially a biased binary search.
+				On every iteration we operate on a pythonic string and its TextInfo counterpart stored in info variable.
+				We would like to reach a certain offset within that pythonic string,
+				that is stored in codepointOffsetLeft variable.
+				In every iteration of the loop:
+				1. We try to either move from the left end of info by codepointOffsetLeft  characters
+				or from the right end by -codepointOffsetRight characters - depending which move is shorter.
+				We store destination point as collapsed TextInfo tmpInfo.
+				2. We compute number of pythonic characters from the beginning of info until tmpInfo
+				and store it in actualCodepointOffset variable.
+				3. We will compare actualCodepointOffset with codepointOffsetLeft  : if they are equal,
+				then we just found desired TextInfo.
+				Otherwise we use tmpInfo as the middle point of binary search and we recurse either to the left
+				or to the right, depending where desired offset lies.
+
+				One extra part of the algorithm serves to prevent certain conditions:
+				if we happen to move on the step 1 from the same point twice
+				in two consecutive iterations of the loop, then on the second time we will move tmpInfo
+				exactly to the opposite end of info,
+				and the algorithm will fail on sanity check condition in the for loop.
+				To avoid this situation we track last move and the direction of last divide
+				in variables lastMove and lastRecursed.
+				If we detect that we are about to move from the same endpoint for the second time,
+				we reduce the count of characters in order to make sure
+				the algorithm makes some progress on each iteration.
+		"""
+		text = self.text
+		if codepointOffset < 0 or codepointOffset > len(text):
+			raise ValueError
+		if codepointOffset == 0 or codepointOffset == len(text):
+			result = self.copy()
+			result.collapse(end=codepointOffset > 0)
+			return result
+		
+		info = self.copy()
+		# Total codepoint Length represents length in python characters of Current TextInfo we're workoing with.
+		# We start with self, and then gradually divide and conquer in order to find desired offset.
+		totalCodepointOffset = len(text)
+
+		# codepointOffsetLeft and codepointOffsetRight represent distance in pythonic characters
+		# from left and right ends of info correspondingly to the desired location.
+		codepointOffsetLeft = codepointOffset
+		codepointOffsetRight = totalCodepointOffset - codepointOffsetLeft
+
+		# We store lastMove - by how many characters we moved last time, and
+		# lastRecursed - whether last recursion happened to the left (-1), right(1) or failed due to overshooting(0)
+		# in order to avoid certain corner cases.
+		lastMove: int | None = None
+		lastRecursed: int | None = None
+		
+		MAX_BINARY_SEARCH_ITERATIONS = 1000
+		for __ in range(MAX_BINARY_SEARCH_ITERATIONS):
+			tmpInfo = info.copy()
+			if codepointOffsetLeft <= codepointOffsetRight:
+				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
+				moveFromLeft = True
+				tmpInfo.collapse()
+				if (
+					lastRecursed is not None and (
+						lastRecursed == 0 or (
+							lastRecursed < 0 and lastMove > 0
+						)
+					)
+				):
+					# Here we check that last time we also attempted to move from the same left end.
+					# And apparently we overshot last time. In order to avoid infinite loop
+					# or overshooting again, reduce movement by half.
+					moveCharacters = lastMove // 2
+					if moveCharacters == 0 or moveCharacters >= lastMove:
+						raise RuntimeError("Unable to find desired offset in TextInfo.")
+				else:
+					moveCharacters = codepointOffsetLeft
+				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="end")
+				lastMove = moveCharacters
+				tmpText = tmpInfo.text
+				actualCodepointOffset = len(tmpText)
+				if not text.startswith(tmpText):
+					raise RuntimeError(f"Inner textInfo text '{tmpText}' doesn't match outer textInfo text '{text}'")
+				tmpInfo.collapse(end=True)
+			else:
+				# Move from the right end of info.
+				moveFromLeft = False
+				tmpInfo.collapse(end=True)
+				if (
+					lastRecursed is not None and (
+						lastRecursed == 0 or (
+							lastRecursed > 0 and lastMove < 0
+						)
+					)
+				):
+					# lastMove was negative, inverting it since modular division of negative numbers works weird.
+					moveCharacters = -((-lastMove) // 2)
+					if moveCharacters == 0 or moveCharacters <= lastMove:
+						raise RuntimeError("Unable to find desired offset in TextInfo.")
+				else:
+					moveCharacters = -codepointOffsetRight
+				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="start")
+				lastMove = moveCharacters
+				tmpText = tmpInfo.text
+				actualCodepointOffset = totalCodepointOffset - len(tmpText)
+				if not text.endswith(tmpText):
+					raise RuntimeError(f"Inner textInfo text '{tmpText}' doesn't match outer textInfo text '{text}'")
+				tmpInfo.collapse()
+			if code == 0:
+				raise RuntimeError("Move by character operation unexpectedly failed.")
+			if (
+				(not moveFromLeft and actualCodepointOffset <= 0)
+				or (moveFromLeft and actualCodepointOffset >= totalCodepointOffset)
+			):
+				# We overshot, call this recursion attempt failed and try again lower movement
+				lastRecursed = 0
+				continue
+			if actualCodepointOffset < 0 or actualCodepointOffset > totalCodepointOffset:
+				raise RuntimeError(f"{actualCodepointOffset=} went out of the boundaries; {totalCodepointOffset=}")
+			if actualCodepointOffset == codepointOffsetLeft:
+				return tmpInfo
+			elif actualCodepointOffset < codepointOffsetLeft:
+				# Recursing right
+				lastRecursed = 1
+				text = text[actualCodepointOffset:]
+				codepointOffsetLeft -= actualCodepointOffset
+				totalCodepointOffset = codepointOffsetLeft + codepointOffsetRight
+				info.setEndPoint(tmpInfo, which="startToStart")
+			else:  # actualCodepointOffset > codepointOffsetLeft
+				# Recursing left
+				lastRecursed = -1
+				text = text[:actualCodepointOffset]
+				totalCodepointOffset = actualCodepointOffset
+				codepointOffsetRight = totalCodepointOffset - codepointOffsetLeft
+				info.setEndPoint(tmpInfo, which="endToEnd")
+		raise RuntimeError("Infinite loop during binary search.")
+
+	def _get_location(self) -> locationHelper.RectLTWH:
+		return self.NVDAObjectAtStart.location
+
 
 RE_EOL = re.compile("\r\n|[\n\r]")
 def convertToCrlf(text):
@@ -726,3 +952,12 @@ class TextInfoEndpoint:
 	def __repr__(self):
 		endpointLabel = "start" if self.isStart else "end"
 		return f"{endpointLabel} endpoint of {self.textInfo}"
+
+
+class CommentType(Enum):
+	"""
+	a value exposed by the 'comment' key of a L{Formatfield}.
+	"""
+	GENERAL = "general"
+	DRAFT = "draft"
+	RESOLVED = "resolved"

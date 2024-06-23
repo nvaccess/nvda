@@ -30,11 +30,11 @@ class AppModule(appModuleHandler.AppModule):
 					obj.parentUsesSuperOnWindowRootIAccessible=False
 				else:
 					obj.hasEncodedAccDescription=True
-			elif obj.role==controlTypes.ROLE_BUTTON:
+			elif obj.role==controlTypes.Role.BUTTON:
 				# iTunes seems to put some controls inside a button.
 				# Don't report this weirdness to the user.
 				obj.isPresentableFocusAncestor=False
-			elif obj.windowClassName=="iTunesWebViewControl" and obj.role==controlTypes.ROLE_DOCUMENT:
+			elif obj.windowClassName=="iTunesWebViewControl" and obj.role==controlTypes.Role.DOCUMENT:
 				# This wrapper should never be seen by the user.
 				obj.shouldAllowIAccessibleFocusEvent = False
 				obj.presentationType = obj.presType_layout
@@ -46,7 +46,7 @@ class AppModule(appModuleHandler.AppModule):
 			return
 		windowClassName=obj.windowClassName
 		role=obj.role
-		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.ROLE_LISTITEM,controlTypes.ROLE_TREEVIEWITEM):
+		if windowClassName in ('iTunesList','iTunesSources','iTunesTrackList') and role in (controlTypes.Role.LISTITEM,controlTypes.Role.TREEVIEWITEM):
 			clsList.insert(0, ITunesItem)
 		elif webKit.Document in clsList:
 			clsList.insert(0, WebKitDocument)

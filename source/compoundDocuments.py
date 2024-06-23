@@ -1,9 +1,15 @@
-#compoundDocuments.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2018 NV Access Limited, Bram Duvigneau
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2024 NV Access Limited, Bram Duvigneau
 
+from typing import (
+	Optional,
+	Dict,
+	Self,
+)
+
+import textUtils
 import winUser
 import textInfos
 import controlTypes
@@ -125,36 +131,51 @@ class CompoundTextInfo(textInfos.TextInfo):
 	def _get_pointAtStart(self):
 		return self._start.pointAtStart
 
-	def _isObjectEditableText(self, obj):
-		return obj.role in (controlTypes.ROLE_PARAGRAPH, controlTypes.ROLE_EDITABLETEXT)
+	def _isObjectEditableText(self, obj: NVDAObject) -> bool:
+		return obj.role in (
+			controlTypes.Role.PARAGRAPH,
+			controlTypes.Role.EDITABLETEXT,
+		)
 
-	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
+	def _isNamedlinkDestination(self, obj: NVDAObject) -> bool:
+		return (  # Named link destination, not a link that can be activated.
+			obj.role == controlTypes.Role.LINK
+			and controlTypes.State.LINKED not in obj.states
+		)
+
+	def _getControlFieldForObject(self, obj: NVDAObject, ignoreEditableText=True):
 		if ignoreEditableText and self._isObjectEditableText(obj):
 			# This is basically just a text node.
 			return None
 		role = obj.role
 		states = obj.states
-		if role == controlTypes.ROLE_LINK and controlTypes.STATE_LINKED not in states:
+		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# Named link destination, not a link that can be activated.
 			return None
 		field = textInfos.ControlField()
 		field["role"] = role
 		field['roleText'] = obj.roleText
+		field['description'] = obj.description
+		field['_description-from'] = obj.descriptionFrom
+		field['hasDetails'] = bool(obj.annotations)
+		field["detailsRoles"] = obj.annotations.roles if obj.annotations else tuple()
 		# The user doesn't care about certain states, as they are obvious.
-		states.discard(controlTypes.STATE_EDITABLE)
-		states.discard(controlTypes.STATE_MULTILINE)
-		states.discard(controlTypes.STATE_FOCUSED)
+		states.discard(controlTypes.State.EDITABLE)
+		states.discard(controlTypes.State.MULTILINE)
+		states.discard(controlTypes.State.FOCUSED)
 		field["states"] = states
 		field["_childcount"] = obj.childCount
 		field["level"] = obj.positionInfo.get("level")
-		if role == controlTypes.ROLE_TABLE:
+		if role == controlTypes.Role.TABLE:
 			field["table-id"] = 1 # FIXME
 			field["table-rowcount"] = obj.rowCount
 			field["table-columncount"] = obj.columnCount
-		if role in (controlTypes.ROLE_TABLECELL, controlTypes.ROLE_TABLECOLUMNHEADER, controlTypes.ROLE_TABLEROWHEADER):
+		if role in (controlTypes.Role.TABLECELL, controlTypes.Role.TABLECOLUMNHEADER, controlTypes.Role.TABLEROWHEADER):
 			field["table-id"] = 1 # FIXME
 			field["table-rownumber"] = obj.rowNumber
 			field["table-columnnumber"] = obj.columnNumber
+			field["table-rowheadertext"] = obj.rowHeaderText
+			field["table-columnheadertext"] = obj.columnHeaderText
 			# Row/column span is not supported by all implementations (e.g. LibreOffice)
 			try:
 				field['table-rowsspanned']=obj.rowSpan
@@ -182,6 +203,22 @@ class CompoundTextInfo(textInfos.TextInfo):
 
 	def __ne__(self, other):
 		return not self == other
+	
+	def moveToCodepointOffset(
+			self,
+			codepointOffset: int,
+	) -> Self:
+		if self._start == self._end:
+			# This is an optimization: if nested TextInfo is an OffsetsTextInfo,
+			# it will do the job faster.
+			nested = self._start.moveToCodepointOffset(codepointOffset)
+			result = self.copy()
+			result._start = result._end = nested
+			return result
+		else:
+			return super().moveToCodepointOffset(codepointOffset)
+
+
 
 class TreeCompoundTextInfo(CompoundTextInfo):
 	#: Units contained within a single TextInfo.
@@ -220,11 +257,11 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			self._startObj = self._endObj = self.obj.caretObject
 			# Find the objects which start and end the selection.
 			tempObj = self._startObj
-			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+			while tempObj and controlTypes.State.SELECTED in tempObj.states:
 				self._startObj = tempObj
 				tempObj = tempObj.flowsFrom
 			tempObj = self._endObj
-			while tempObj and controlTypes.STATE_SELECTED in tempObj.states:
+			while tempObj and controlTypes.State.SELECTED in tempObj.states:
 				self._endObj = tempObj
 				tempObj = tempObj.flowsTo
 			self._start = self._startObj.makeTextInfo(position)
@@ -236,7 +273,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 			raise NotImplementedError
 
 	def _findContentDescendant(self, obj):
-		while obj and controlTypes.STATE_FOCUSABLE not in obj.states:
+		while obj and controlTypes.State.FOCUSABLE not in obj.states:
 			obj = obj.firstChild
 		return obj
 
@@ -259,9 +296,9 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 		# Get the number of embeds before the start.
 		# The index is 0 based, so this is the index of the first embed after start.
 		text = info._getTextRange(0, info._startOffset)
-		return text.count(u"\uFFFC")
+		return text.count(textUtils.OBJ_REPLACEMENT_CHAR)
 
-	def getTextWithFields(self, formatConfig=None):
+	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		# Get the initial control fields.
 		fields = []
 		rootObj = self.obj.rootNVDAObject
@@ -274,22 +311,24 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 
 		embedIndex = None
 		for ti in self._getTextInfos():
-			for field in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
-				if isinstance(field, str):
-					fields.append(field)
-				elif isinstance(field, int): # Embedded object
+			for textWithEmbeddedObjectsItem in ti._iterTextWithEmbeddedObjects(True, formatConfig=formatConfig):
+				if isinstance(textWithEmbeddedObjectsItem, int):  # Embedded object
 					if embedIndex is None:
 						embedIndex = self._getFirstEmbedIndex(ti)
 					else:
 						embedIndex += 1
-					field = ti.obj.getChild(embedIndex)
-					controlField = self._getControlFieldForObject(field, ignoreEditableText=False)
-					controlField["content"] = field.name
-					fields.extend((textInfos.FieldCommand("controlStart", controlField),
-						u"\uFFFC",
-						textInfos.FieldCommand("controlEnd", None)))
-				else:
-					fields.append(field)
+					childObject: NVDAObject = ti.obj.getChild(embedIndex)
+					controlField = self._getControlFieldForObject(childObject, ignoreEditableText=False)
+					controlField["content"] = childObject.name
+					fields.extend((
+						textInfos.FieldCommand("controlStart", controlField),
+						textUtils.OBJ_REPLACEMENT_CHAR,
+						textInfos.FieldCommand("controlEnd", None)
+					))
+				else:  # str or fieldCommand
+					if not isinstance(textWithEmbeddedObjectsItem, (str, textInfos.FieldCommand)):
+						log.error(f"Unexpected type: {textWithEmbeddedObjectsItem!r}")
+					fields.append(textWithEmbeddedObjectsItem)
 		return fields
 
 	def _findNextContent(self, origin, moveBack=False):

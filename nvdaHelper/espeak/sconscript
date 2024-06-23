@@ -31,7 +31,8 @@ class espeak_ERROR(enum.IntEnum):
 	EE_BUFFER_FULL = 1
 	EE_NOT_FOUND = 2
 
-class espeak_ng_STATUS(enum.IntEnum):
+
+class espeak_ng_STATUS(enum.IntFlag):
 	ENS_GROUP_MASK = 0x70000000
 	ENS_GROUP_ERRNO = 0x00000000  # Values 0 - 255 map to errno error codes.
 	ENS_GROUP_ESPEAK_NG = 0x10000000  # eSpeak NG error codes.
@@ -92,7 +93,7 @@ env.Append(
 		# Ignore all warnings as the code is not ours.
 		'/W0',
 		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
-		'/DPACKAGE_VERSION=\\"1.51-dev\\"',  # See 'include/espeak/src/windows/config.h'
+		'/DPACKAGE_VERSION=\\"1.52-dev 54ee11a7\\"',  # See 'include/espeak/src/windows/config.h'
 		'/DHAVE_STDINT_H=1',
 		'/D__WIN32__#1',
 		'/DLIBESPEAK_NG_EXPORT',
@@ -100,9 +101,9 @@ env.Append(
 		# errors when winsock2 is included by espeak\src\include\compat\endian.h
 		'/DWIN32_LEAN_AND_MEAN',
 		# Preprocessor definitions. Espeak Features
-		'/DINCLUDE_SPEECHPLAYER=1',
-		'/DINCLUDE_KLATT=1',
-		'/DHAVE_SONIC_H=1',
+		'/DUSE_SPEECHPLAYER=1',
+		'/DUSE_KLATT=1',
+		'/DUSE_LIBSONIC=1',
 	])
 
 env.Append(
@@ -135,6 +136,38 @@ def espeak_compilePhonemeData_buildAction(target,source,env):
 	espeak.espeak_ng_CompilePhonemeData(22050,None,None)
 	espeak.espeak_Terminate()
 
+
+def removeEmoji():
+	"""
+	Remove emoji files before compiling dictionaries.
+	Currently many of these simply crash eSpeak at runtime.
+	Also, our own emoji processing using CLDR data is preferred.
+	"""
+	emojiGlob = os.path.join(espeakRepo.abspath, 'dictsource', '*_emoji')
+	for f in glob(emojiGlob):
+		print(f"Removing emoji file: {f}")
+		os.remove(f)
+
+
+def cleanFiles_preBuildAction(target, source, env):
+	"""
+	Before compiling eSpeak, removes:
+	 - emoji files
+	 - dictionary artifacts listed in CLEANFILES
+	"""
+	removeEmoji()
+	# refer to CLEANFILES in include\espeak\Makefile.am 
+	for f in (
+			# These files are created when we moved them from espeak/dictsource/extra/*_*.
+			os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
+			os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
+			os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
+		):
+		if os.path.exists(f):
+			print(f"Removing listx file: {f}")
+			os.remove(f)
+
+
 env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
 
 #: See dictionaries section of /include/espeak/Makefile.am
@@ -149,6 +182,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"as_dict": ("as", ["as_list", "as_rules", ]),
 	"az_dict": ("az", ["az_list", "az_rules", ]),
 	"ba_dict": ("ba", ["ba_list", "ba_rules", ]),
+	"be_dict": ("be", ["be_list", "be_rules", ]),
 	"bg_dict": ("bg", ["bg_listx", "bg_list", "bg_rules"]),
 	"bn_dict": ("bn", ["bn_list", "bn_rules", ]),
 	"bpy_dict": ("bpy", ["bpy_list", "bpy_rules", ]),
@@ -191,6 +225,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ja_dict": ("ja", ["ja_list", "ja_rules", ]),
 	"jbo_dict": ("jbo", ["jbo_list", "jbo_rules", ]),
 	"ka_dict": ("ka", ["ka_list", "ka_rules", ]),
+	"kaa_dict": ("kaa", ["kaa_list", "kaa_rules", ]),
 	"kk_dict": ("kk", ["kk_list", "kk_rules", ]),
 	"kl_dict": ("kl", ["kl_list", "kl_rules", ]),
 	"kn_dict": ("kn", ["kn_list", "kn_rules", ]),
@@ -199,6 +234,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ku_dict": ("ku", ["ku_list", "ku_rules", ]),
 	"ky_dict": ("ky", ["ky_list", "ky_rules", ]),
 	"la_dict": ("la", ["la_list", "la_rules", ]),
+	"lb_dict": ("lb", ["lb_list", "lb_rules", ]),
 	"lfn_dict": ("lfn", ["lfn_list", "lfn_rules", ]),
 	"lt_dict": ("lt", ["lt_list", "lt_rules", ]),
 	"lv_dict": ("lv", ["lv_list", "lv_rules", ]),
@@ -208,6 +244,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"mr_dict": ("mr", ["mr_list", "mr_rules", ]),
 	"ms_dict": ("ms", ["ms_list", "ms_rules", ]),
 	"mt_dict": ("mt", ["mt_list", "mt_rules", ]),
+	"mto_dict": ("mto", ["mto_list", "mto_rules", ]),
 	"my_dict": ("my", ["my_list", "my_rules", ]),
 	"nci_dict": ("nci", ["nci_list", "nci_rules", ]),
 	"ne_dict": ("ne", ["ne_list", "ne_rules", ]),
@@ -224,12 +261,14 @@ espeakDictionaryCompileList: typing.Dict[
 	"py_dict": ("py", ["py_list", "py_rules", ]),
 	"qdb_dict": ("qdb", ["qdb_list", "qdb_rules", ]),
 	"quc_dict": ("quc", ["quc_list", "quc_rules", ]),
+	"qya_dict": ("qya", ["qya_list", "qya_rules", ]),
 	"qu_dict": ("qu", ["qu_list", "qu_rules", ]),
 	"ro_dict": ("ro", ["ro_list", "ro_rules", ]),
 	"ru_dict": ("ru", ["ru_listx", "ru_list", "ru_rules"]),
 	"sd_dict": ("sd", ["sd_list", "sd_rules", ]),
 	"shn_dict": ("shn", ["shn_list", "shn_rules", ]),
 	"si_dict": ("si", ["si_list", "si_rules", ]),
+	"sjn_dict": ("sjn", ["sjn_list", "sjn_rules", ]),
 	"sk_dict": ("sk", ["sk_list", "sk_rules", ]),
 	"sl_dict": ("sl", ["sl_list", "sl_rules", ]),
 	"smj_dict": ("smj", ["smj_list", "smj_rules", ]),
@@ -240,6 +279,7 @@ espeakDictionaryCompileList: typing.Dict[
 	"ta_dict": ("ta", ["ta_list", "ta_rules", ]),
 	"te_dict": ("te", ["te_list", "te_rules", ]),
 	"th_dict": ("th", ["th_list", "th_rules", ]),
+	"ti_dict": ("ti", ["ti_list", "ti_rules", ]),
 	"tk_dict": ("tk", ["tk_listx", "tk_list", "tk_rules"]),
 	"tn_dict": ("tn", ["tn_list", "tn_rules", ]),
 	"tr_dict": ("tr", ["tr_listx", "tr_list", "tr_rules"]),
@@ -313,7 +353,7 @@ def espeak_compileDict_buildAction(
 		# returns: espeak_ng_STATUS
 		compileDictResult = espeak.espeak_ng_CompileDictionary(
 			rulesPathEncoded,  # const char *dsource
-			None,  # const char *dict_name
+			bytes(lang, encoding="ascii"),  # const char *dict_name
 			None,  # FILE *log
 			0,  # int flags
 			None,  # espeak_ng_ERROR_CONTEXT *context
@@ -347,6 +387,7 @@ espeakLib=env.SharedLibrary(
 		"../ucd-tools/src/proplist.c",
 		"../ucd-tools/src/scripts.c",
 		"../ucd-tools/src/tostring.c",
+		"common.c",
 		"compiledata.c",
 		"compiledict.c",
 #		"compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
@@ -356,6 +397,7 @@ espeakLib=env.SharedLibrary(
 		"espeak_api.c",
 		"ieee80.c",
 		"intonation.c",
+		"langopts.c",
 		"klatt.c", # we do use KLATT, this is a compile option in espeak
 #		"mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
 		"mnemonics.c",
@@ -372,6 +414,7 @@ espeakLib=env.SharedLibrary(
 		"synthesize.c",
 		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
 		"translate.c",
+		"translateword.c",
 		"tr_languages.c",
 		"voices.c",
 		"wavegen.c",
@@ -396,7 +439,11 @@ espeakLib=env.SharedLibrary(
 	LIBS=['advapi32'],
 )
 
-phonemeData=env.espeak_compilePhonemeData(espeakRepo.Dir('espeak-ng-data'),espeakRepo.Dir('phsource'))
+
+phonemeData = env.espeak_compilePhonemeData(
+	espeakRepo.Dir('espeak-ng-data'),
+	espeakRepo.Dir('phsource')
+)
 env.Depends(phonemeData,espeakLib)
 for i in phonemeData:
 	iDir = espeakRepo.Dir('espeak-ng-data').abspath
@@ -404,20 +451,24 @@ for i in phonemeData:
 	fileName = i.abspath[l:]
 	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
 
-# Move any extra dictionaries into dictsource for compilation
-env.Install(espeakRepo.Dir('dictsource'),env.Glob(os.path.join(espeakRepo.abspath,'dictsource','extra','*_*')))
 
-#Compile all dictionaries
-excludeLangs: typing.List[str] = [] # Use to exclude languages which don't compile.
+# Removes files that are created when installing from dictsource/extra/*_* to dictsource.
+# Also removes emoji files from dictsource compilation, refer to cleanEmoji for justification.
+env.AddPreAction(espeakLib, env.Action(cleanFiles_preBuildAction))
+# Move any extra dictionaries into dictsource for compilation
+env.Install(
+	espeakRepo.Dir('dictsource'),
+	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*_*'))
+)
+
+excludeLangs: typing.List[str] = [
+]
+"""Used to exclude languages which don't compile.
+"""
+
+# Compile all dictionaries
 dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
 
-# Remove emoji files before compiling dictionaries.
-# Currently many of these simply crash eSpeak at runtime.
-# Also, our own emoji processing using CLDR data is preferred.
-emojiGlob = os.path.join(espeakRepo.abspath,'dictsource','*_emoji')
-for f in glob(emojiGlob):
-	print("Removing emoji file: %s"%f)
-	os.remove(f)
 
 # Create compile commands for all languages
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():

@@ -1,10 +1,15 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2013 Michael Curran <mick@nvaccess.org>
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2013-2022 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from collections import OrderedDict
+from typing import (
+	Optional,
+	Union,
+)
+
 import api
+from baseObject import ScriptableObject
 import winUser
 from logHandler import log
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
@@ -83,13 +88,12 @@ modes=[
 
 _currentMode=0
 
-def getPositionForCurrentMode(obj):
+
+def getPositionForCurrentMode(obj: NVDAObject) -> Union[textInfos.TextInfo, ScriptableObject]:
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode. 
 	@param obj: the NVDAObject to review
-	@type obj: L{NVDAObject}
 	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
-	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	mode=_currentMode
 	while mode>=0:
@@ -98,17 +102,20 @@ def getPositionForCurrentMode(obj):
 			return pos
 		mode-=1
 
+
 def getCurrentMode():
 	"""Fetches the ID of the current mode"""
 	return modes[_currentMode][0]
 
-def setCurrentMode(mode,updateReviewPosition=True):
+
+def setCurrentMode(
+		mode: Union[int, str],
+		updateReviewPosition: bool = True
+) -> Optional[str]:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
 	@param mode: either a 0-based index into the modes list, or one of the mode IDs (first item of a tuple in the modes list).
-	@type mode: int or string
-	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
-	@rtype: string
+	@return: a presentable label for the new current mode (suitable for speaking or braille)
 	"""
 	global _currentMode
 	if isinstance(mode,int):
@@ -124,8 +131,10 @@ def setCurrentMode(mode,updateReviewPosition=True):
 	pos=func(obj)
 	if pos:
 		_currentMode=mode
-		if updateReviewPosition: api.setReviewPosition(pos[0],clearNavigatorObject=False)
+		if updateReviewPosition:
+			api.setReviewPosition(pos[0], clearNavigatorObject=False)
 		return label
+
 
 def nextMode(prev=False,startMode=None):
 	"""

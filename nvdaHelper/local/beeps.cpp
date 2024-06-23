@@ -11,10 +11,13 @@ Copyright 2006-2015 NVDA contributers.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-
 #define _USE_MATH_DEFINES
 #include <cmath>
 #include "beeps.h"
+
+
+using std::min;
+using std::max;
 
 const int sampleRate=44100;
 const int amplitude=14000;

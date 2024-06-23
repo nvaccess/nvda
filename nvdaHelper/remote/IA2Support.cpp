@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2023 NV Access Limited, Leonard de Ruijter
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -14,37 +14,48 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #include <cstdio>
 #include <cwchar>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <objbase.h>
+#include <wil/resource.h>
+#include <wil/win32_helpers.h>
 #include <ia2.h>
-#include "nvdaControllerInternal.h"
+#include <remote/nvdaControllerInternal.h>
 #include <common/log.h>
 #include "nvdaHelperRemote.h"
 #include "dllmain.h"
 #include "inProcess.h"
-#include "nvdaInProcUtils.h"
-#include "COMProxyRegistration.h"
+#include <remote/nvdaInProcUtils.h>
 #include "IA2Support.h"
+#include <atlcomcli.h>
+#include "textFromIAccessible.h"
 
 using namespace std;
 
 #define APPLICATION_USER_MODEL_ID_MAX_LENGTH 131
-typedef LONG(WINAPI *GetCurrentApplicationUserModelId_funcType)(UINT32*,PWSTR);
-typedef ULONG(*LPFNDLLCANUNLOADNOW)();
+// Forward declare GetCurrentApplicationUserModelId for later lookup in kernel32.dll
+// Used in isSuspendableProcess.
+LONG WINAPI GetCurrentApplicationUserModelId(UINT32* pBufSize,PWSTR buf);
 
-bool isIA2Installed=FALSE;
-COMProxyRegistration_t* IA2ProxyRegistration;
-COMProxyRegistration_t* ISimpleDOMProxyRegistration;
-HANDLE IA2UIThreadHandle=NULL;
-DWORD IA2UIThreadID=0;
-HANDLE IA2UIThreadUninstalledEvent=NULL;
-UINT wm_uninstallIA2Support=0;
-bool isIA2Initialized=FALSE;
+
+UINT wm_uninstallIA2Support = 0;
 bool isIA2SupportDisabled=false;
 
 bool installIA2Support() {
-	if(isIA2Installed) return FALSE;
+	return installIA2SupportForThread(GetCurrentThreadId()).second;
+}
+
+map<DWORD, IA2InstallData> IA2InstallMap;
+
+pair<map<DWORD, IA2InstallData>::iterator, bool> installIA2SupportForThread(DWORD threadID) {
+	if (wm_uninstallIA2Support == 0) {
+		// Register our window message the first time we initialize IA2 support in a process
+		wm_uninstallIA2Support = RegisterWindowMessage(L"wm_uninstallIA2Support");
+	}
+	if (IA2InstallMap.find(threadID) != IA2InstallMap.end()) {
+		// Support already installed for this thread
+		return {IA2InstallMap.end(), false};
+	}
 	APTTYPE appType;
 	APTTYPEQUALIFIER aptQualifier;
 	HRESULT res;
@@ -52,108 +63,161 @@ bool installIA2Support() {
 		if(res!=CO_E_NOTINITIALIZED) {
 			LOG_ERROR(L"Error getting apartment type, code "<<res);
 		}
-		return false;
+		return {IA2InstallMap.end(), false};
 	}
-	IA2ProxyRegistration=registerCOMProxy(L"IAccessible2Proxy.dll");
-	if(!IA2ProxyRegistration) {
-		LOG_ERROR(L"Error registering IAccessible2 proxy");
+	IA2InstallData data{};
+	data.IA2ProxyRegistration = registerCOMProxy(L"IAccessible2Proxy.dll");
+	if (!data.IA2ProxyRegistration) {
+		LOG_ERROR(L"Error registering IAccessible2 proxy for thread " << threadID);
 	}
-		ISimpleDOMProxyRegistration=registerCOMProxy(L"ISimpleDOM.dll");
-	if(!ISimpleDOMProxyRegistration) {
-		LOG_ERROR(L"Error registering ISimpleDOM proxy");
+	data.ISimpleDOMProxyRegistration = registerCOMProxy(L"ISimpleDOM.dll");
+	if (!data.ISimpleDOMProxyRegistration) {
+		LOG_ERROR(L"Error registering ISimpleDOM proxy for thread " << threadID);
 	}
-	isIA2Installed=TRUE;
-	return isIA2Installed;
+	return IA2InstallMap.insert(make_pair(threadID, data));
 }
 
 bool uninstallIA2Support() {
-	if(!isIA2Installed) return false;
-	if(ISimpleDOMProxyRegistration&&!unregisterCOMProxy(ISimpleDOMProxyRegistration)) {
-		LOG_ERROR(L"Error unregistering ISimpleDOM proxy");
-	} else {
-		ISimpleDOMProxyRegistration=nullptr;
-	}
-	if(IA2ProxyRegistration&&!unregisterCOMProxy(IA2ProxyRegistration)) {
-		LOG_ERROR(L"Error unregistering IAccessible2 proxy");
-	} else {
-		IA2ProxyRegistration=nullptr;
-	}
-	isIA2Installed=FALSE;
-	return TRUE;
+	return uninstallIA2SupportForThread(GetCurrentThreadId());
 }
 
-void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) { 
-	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS)
+bool uninstallIA2SupportForThread(DWORD threadID) {
+	if (wm_uninstallIA2Support == 0) {
+		// IA2 support was never installed
+		return false;
+	}
+	auto it = IA2InstallMap.find(threadID);
+	if (it == IA2InstallMap.end()) {
+		return false;
+	}
+	auto& data = it->second;
+	if (data.ISimpleDOMProxyRegistration && !unregisterCOMProxy(data.ISimpleDOMProxyRegistration)) {
+		LOG_ERROR(L"Error unregistering ISimpleDOM proxy for thread " << threadID);
+	} else {
+		data.ISimpleDOMProxyRegistration = nullptr;
+	}
+	if (data.IA2ProxyRegistration && !unregisterCOMProxy(data.IA2ProxyRegistration)) {
+		LOG_ERROR(L"Error unregistering IAccessible2 proxy for thread " << threadID);
+	} else {
+		data.IA2ProxyRegistration = nullptr;
+	}
+	return true;
+}
+
+void CALLBACK IA2Support_winEventProcHook(HWINEVENTHOOK hookID, DWORD eventID, HWND hwnd, long objectID, long childID, DWORD threadID, DWORD time) {
+	if (eventID != EVENT_SYSTEM_FOREGROUND && eventID != EVENT_OBJECT_FOCUS) {
 		return;
-	if (installIA2Support()) {
-		IA2UIThreadHandle=OpenThread(SYNCHRONIZE,false,threadID);
-		IA2UIThreadID=threadID;
-		// IA2 support successfully installed, so this hook isn't needed anymore.
-		unregisterWinEventHook(IA2Support_winEventProcHook);
+	}
+	auto installRes = installIA2SupportForThread(threadID);
+	if (installRes.second) {
+		auto& data = installRes.first->second;
+		data.uiThreadHandle = OpenThread(SYNCHRONIZE, false, threadID);
 	}
 }
 
 LRESULT CALLBACK IA2Support_uninstallerHook(int code, WPARAM wParam, LPARAM lParam) {
 	MSG* pmsg=(MSG*)lParam;
 	if(pmsg->message==wm_uninstallIA2Support) {
-		uninstallIA2Support();
-		SetEvent(IA2UIThreadUninstalledEvent);
+		auto threadId = GetCurrentThreadId();
+		uninstallIA2SupportForThread(threadId);
+		auto it = IA2InstallMap.find(threadId);
+		if (it != IA2InstallMap.end()) {
+			auto& data = it->second;
+			SetEvent(data.uiThreadUninstalledEvent);
+		}
 	}
 	return 0;
 }
 
-void IA2Support_inProcess_initialize() {
-	if (isIA2Installed||isIA2SupportDisabled)
-		return;
-	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
-	HMODULE kernel32Handle=LoadLibrary(L"kernel32.dll");
+bool isSuspendableProcess() {
+	wil::unique_hmodule kernel32Handle {LoadLibrary(L"kernel32.dll")};
 	if(!kernel32Handle) {
 		LOG_ERROR(L"Can't load kernel32.dll");
-		return; 
+		return false;
 	}
-	GetCurrentApplicationUserModelId_funcType GetCurrentApplicationUserModelId_fp=(GetCurrentApplicationUserModelId_funcType)GetProcAddress(kernel32Handle,"GetCurrentApplicationUserModelId");
-	if(GetCurrentApplicationUserModelId_fp) {
-		UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
-		wchar_t* buf=(wchar_t*)malloc(bufSize*sizeof(wchar_t));
-		LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf);
-		if(res==ERROR_SUCCESS) {
-			isIA2SupportDisabled=true;
-			LOG_DEBUGWARNING(L"disabling IA2 support");
-		} else if(res==ERROR_INSUFFICIENT_BUFFER) {
-			LOG_ERROR(L"string not long enough");
-		}
-		free(buf);
+	// Macro from wil/win32_helpers.h
+	auto GetCurrentApplicationUserModelId_fp = GetProcAddressByFunctionDeclaration(kernel32Handle.get(), GetCurrentApplicationUserModelId);
+	if(!GetCurrentApplicationUserModelId_fp) {
+		LOG_DEBUGWARNING(L"getCurrentApplicationUserModelID function not available");
+		return false;
 	}
-	FreeLibrary(kernel32Handle);
-	if(isIA2SupportDisabled) return;
+	UINT32 bufSize=APPLICATION_USER_MODEL_ID_MAX_LENGTH+1;
+	std::wstring buf(bufSize, L'\0');
+	LONG res=GetCurrentApplicationUserModelId_fp(&bufSize,buf.data());
+	if(res != ERROR_SUCCESS) {
+		return false;
+	}
+	return true;
+}
+
+bool isAppContainerProcess() {
+	wil::unique_handle tokenHandle{nullptr};
+	if(!OpenProcessToken(GetCurrentProcess(), TOKEN_READ, &tokenHandle) || !tokenHandle) {
+		LOG_DEBUGWARNING(L"Could not open process token");
+		return false;
+	}
+	// TokenIsAppContainer only requires a return buffer the size of a DWORD
+	// See https://docs.microsoft.com/en-us/windows/win32/api/winnt/ne-winnt-token_information_class
+	DWORD isAppContainer=0;
+	DWORD return_length = 0;
+	if(!GetTokenInformation(tokenHandle.get(), TokenIsAppContainer, &isAppContainer, sizeof(isAppContainer), &return_length)) {
+		LOG_DEBUGWARNING(L"GetTokenInformation for Token_isAppContainer failed");
+		return false;
+	}
+	return isAppContainer != 0;
+}
+
+void IA2Support_inProcess_initialize() {
+	if (IA2InstallMap.size() > 0 || isIA2SupportDisabled) {
+		return;
+	}
+	// #5417: disable IAccessible2 support for suspendable processes to work around a deadlock in NVDAHelperRemote (specifically seen in Win10 searchUI)
+	isIA2SupportDisabled = isSuspendableProcess();
+	if(isIA2SupportDisabled) {
+		LOG_DEBUGWARNING(L"Not installing IA2 support as  process is suspendable");
+		return;
+	}
+	// #12920: Registering COM interfaces in an appContainer can cause memory corruption,
+	// such as in Adobe Reader.
+	isIA2SupportDisabled = isAppContainerProcess();
+	if(isIA2SupportDisabled) {
+		LOG_DEBUGWARNING(L"Not installing IA2 support as process is an app container");
+		return;
+	}
 	// Try to install IA2 support on focus/foreground changes.
-	// This hook will be unregistered by the callback once IA2 support is successfully installed.
 	registerWinEventHook(IA2Support_winEventProcHook);
 }
 
 void IA2Support_inProcess_terminate() {
 	// This will do nothing if the hook isn't registered.
 	unregisterWinEventHook(IA2Support_winEventProcHook);
-	if(!isIA2Installed||!IA2UIThreadHandle) {
+	if (IA2InstallMap.size()  == 0) {
 		return;
 	}
-	//Check if the UI thread is still alive, if not there's nothing for us to do
-	if(WaitForSingleObject(IA2UIThreadHandle,0)==0) {
-		return;
-	}
-	//Instruct the UI thread to uninstall IA2
-	IA2UIThreadUninstalledEvent=CreateEvent(NULL,true,false,NULL);
-	registerWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
-	wm_uninstallIA2Support=RegisterWindowMessage(L"wm_uninstallIA2Support");
-	PostThreadMessage(IA2UIThreadID,wm_uninstallIA2Support,0,0);
-	HANDLE waitHandles[2]={IA2UIThreadUninstalledEvent,IA2UIThreadHandle};
-	int res=WaitForMultipleObjects(2,waitHandles,false,10000);
-	if(res!=WAIT_OBJECT_0&&res!=WAIT_OBJECT_0+1) {
-		LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
+	registerWindowsHook(WH_GETMESSAGE, IA2Support_uninstallerHook);
+	for (auto& [threadId, data] : IA2InstallMap) {
+		//Check if the UI thread is still alive, if not there's nothing for us to do
+		if (WaitForSingleObject(data.uiThreadHandle, 0) == 0) {
+			continue;
+		}
+		//Instruct the UI thread to uninstall IA2
+		data.uiThreadUninstalledEvent = CreateEvent(NULL, true, false, NULL);
+		if (data.uiThreadUninstalledEvent == 0) {
+			// unable to create the event, can't continue
+			continue;
+		}
+		PostThreadMessage(threadId, wm_uninstallIA2Support, 0, 0);
+		const UINT WAIT_HANDLE_COUNT = 2;
+		HANDLE waitHandles[WAIT_HANDLE_COUNT] = {data.uiThreadUninstalledEvent, data.uiThreadHandle};
+		const UINT MAX_WAIT_TIME = 10000; // 10 seconds
+		int res = WaitForMultipleObjects(WAIT_HANDLE_COUNT, waitHandles, false, MAX_WAIT_TIME);
+		if (res != WAIT_OBJECT_0 && res != WAIT_OBJECT_0 + 1) {
+			LOG_DEBUGWARNING(L"WaitForMultipleObjects returned "<<res);
+		}
+		CloseHandle(data.uiThreadUninstalledEvent);
+		CloseHandle(data.uiThreadHandle);
 	}
 	unregisterWindowsHook(WH_GETMESSAGE,IA2Support_uninstallerHook);
-	CloseHandle(IA2UIThreadUninstalledEvent);
-	CloseHandle(IA2UIThreadHandle);
 }
 
 const long FINDCONTENTDESCENDANT_FIRST=0;
@@ -196,7 +260,7 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 				break;
 		}
 		paccText->Release();
-		if(offset==-1) return false; 
+		if(offset==-1) return false;
 		IAccessibleHypertext* paccHypertext=NULL;
 		pacc2->QueryInterface(IID_IAccessibleHypertext,(void**)&paccHypertext);
 		if(paccHypertext) {
@@ -247,26 +311,106 @@ bool findContentDescendant(IAccessible2* pacc2, long what, long* descendantID, l
 	return foundDescendant;
 }
 
-error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, const unsigned long windowHandle, long parentID, long what, long* descendantID, long* descendantOffset) {
-	HWND hwnd=(HWND)UlongToHandle(windowHandle);
-	auto func=[&] {
-		IAccessible* pacc=NULL;
-		VARIANT varChild;
-		AccessibleObjectFromEvent((HWND)hwnd,OBJID_CLIENT,parentID,&pacc,&varChild);
-		if(!pacc) return;
-		IAccessible2* pacc2=NULL;
-		IServiceProvider* pserv=NULL;
-		pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv);
-		pacc->Release();
-		if(!pserv) return; 
-		pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
-		pserv->Release();
-		if(!pacc2) return;
-		findContentDescendant(pacc2,what,descendantID,descendantOffset);
-		pacc2->Release();
+
+CComPtr<IAccessible2> getIA2(const HWND hwnd, const long parentID) {
+	VARIANT varChild;
+	CComPtr<IAccessible> pacc;
+	AccessibleObjectFromEvent(
+		hwnd,
+		OBJID_CLIENT,
+		parentID,
+		&pacc.p,
+		&varChild
+	);
+
+	if (!pacc) {
+		return nullptr;
 	};
-	if(!execInThread(GetWindowThreadProcessId(hwnd,NULL),func)) {
-			LOG_DEBUGWARNING(L"Could not execute findContentDescendant in UI thread");
+
+	CComQIPtr<IServiceProvider, &IID_IServiceProvider> pserv(pacc);
+	if (!pserv) {
+		return nullptr;
+	}
+
+	CComPtr<IAccessible2> pacc2;
+	{ // scoping for: ppvObject
+		void** ppvObject = reinterpret_cast<void**>(&pacc2.p);
+		pserv->QueryService(IID_IAccessible, IID_IAccessible2, ppvObject);
+	}
+
+	return pacc2;
+}
+
+error_status_t nvdaInProcUtils_IA2Text_findContentDescendant(handle_t bindingHandle, const unsigned long windowHandle, long parentID, long what, long* descendantID, long* descendantOffset) {
+	HWND hwnd = static_cast<HWND>(UlongToHandle(windowHandle));
+	auto func=[&] {
+		auto pacc2 = getIA2(hwnd, parentID);
+		if (!pacc2) {
+			return;
+		}
+		findContentDescendant(pacc2, what, descendantID, descendantOffset);
+	};
+
+	auto windowThreadProcId = GetWindowThreadProcessId(hwnd, nullptr);
+	auto res = execInThread(windowThreadProcId, func);
+	if(!res) {
+		LOG_DEBUGWARNING(L"Could not execute findContentDescendant in UI thread");
+	}
+	return 0;
+}
+
+
+error_status_t nvdaInProcUtils_getTextFromIAccessible(
+	handle_t bindingHandle,
+	const unsigned long windowHandle,
+	long parentID,
+	// Params for getTextFromIAccessible
+	BSTR* outBuf,
+	const boolean recurse,
+	const boolean includeTopLevelText
+) {
+	LOG_DEBUG(L"Called nvdaInProcUtils_getTextFromIAccessible");
+	if (outBuf == nullptr) {
+		LOG_ERROR(L"outBuff is null.");
+		return 0;
+	}
+	HWND hwnd = static_cast<HWND>(UlongToHandle(windowHandle));
+	auto func = [&] () -> void{
+		auto pacc2 = getIA2(hwnd, parentID);
+		if (!pacc2) {
+			return;
+		}
+		wstring textBuf;
+		const auto gotText = getTextFromIAccessible(
+			textBuf,
+			pacc2,
+			false,  // useNewText, only valid in response to an event (indicating changing text)
+			recurse,
+			includeTopLevelText
+		);
+		if (!gotText) {
+			LOG_DEBUGWARNING(L"Unable to get text.");
+			return;
+		}
+		if (textBuf.empty()) {
+			LOG_DEBUGWARNING(L"textBuf empty.");
+			return;
+		}
+		auto copySize = size_t(std::numeric_limits<UINT>::max);
+		if (copySize < textBuf.size()) {
+			LOG_ERROR(L"Size of buffer larger than can be allocated with SysAllocStringLen, buffer will be truncated.");
+		}
+		else {
+			copySize = textBuf.size();
+		}
+		*outBuf = SysAllocStringLen(textBuf.data(), UINT(copySize));
+		return;
+	};
+
+	auto windowThreadProcId = GetWindowThreadProcessId(hwnd, nullptr);
+	auto res = execInThread(windowThreadProcId, func);
+	if (!res) {
+		LOG_DEBUGWARNING(L"Could not execute getTextFromIAccessible in UI thread");
 	}
 	return 0;
 }

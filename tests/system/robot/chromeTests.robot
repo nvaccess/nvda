@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2019 NV Access Limited
+# Copyright (C) 2019-2022 NV Access Limited, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 *** Settings ***
@@ -17,13 +17,20 @@ Test Teardown	default teardown
 
 *** Keywords ***
 default teardown
+	logForegroundWindowTitle
 	${screenshotName}=	create_preserved_test_output_filename	failedTest.png
 	Run Keyword If Test Failed	Take Screenshot	${screenShotName}
-	exit chrome
+	dump_speech_to_log
+	dump_braille_to_log
+	# leaving the chrome tabs open may slow down / cause chrome to crash on appveyor
+	close_chrome_tab
 	quit NVDA
 
 default setup
-	start NVDA	standard-dontShowWelcomeDialog.ini	chrome-gestures.ini
+	logForegroundWindowTitle
+	start NVDA	standard-dontShowWelcomeDialog.ini
+	logForegroundWindowTitle
+	enable_verbose_debug_logging_if_requested
 
 *** Test Cases ***
 
@@ -41,22 +48,124 @@ pr11606
 	test_pr11606
 ARIA treegrid
 	[Documentation]	Ensure that ARIA treegrids are accessible as a standard table in browse mode.
-	# Excluded due to regular failures.
 	test_ariaTreeGrid_browseMode
 ARIA invalid spelling and grammar
 	[Documentation]	Tests ARIA invalid values of "spelling", "grammar" and "spelling, grammar".
+	[Tags]	excluded_from_build
 	ARIAInvalid_spellingAndGrammar
 ARIA checkbox
 	[Documentation]	Navigate to an unchecked checkbox in reading mode.
 	[Tags]	aria-at
 	test_ariaCheckbox_browseMode
+Marked Browse mode
+	[Documentation]	Ensure that Marked content is read in browse mode
+	test_mark_browse
+Marked Focus mode
+	[Documentation]	Ensure that Marked content is read in Focus mode
+	test_mark_focus
 ARIA details
-	[Documentation]	Ensure a summary of aria-details is read on command.
+	[Documentation]	Ensure a summary of aria-details is read on command from a mark element
 	[Tags]	annotations
-	test aria details
+	test_mark_aria_details
+ARIA details with free review and nav
+	[Documentation]	Variation on the ARIA details test with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_mark_aria_details_FreeReviewCursor
+ARIA details noVbuf
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
+ARIA details noVbuf with free review and nav
+	[Documentation]	Test for retrieving ARIA details from a button inside a role=application with the config changed so the review cursor does not follow the caret and the nav object doesn't follow focus.
+	[Tags]	annotations
+	test_aria_details_noVBufNoTextInterface
 i12147
 	[Documentation]	New focus target should be announced if the triggering element is removed when activated
 	test_i12147
 Table in style display: table
 	[Documentation]	Properly announce table row/column count and working table navigation for a HTML table in a div with style display: table
 	test_tableInStyleDisplayTable
+ARIA roleDescription focus
+	[Documentation]	report focusing an element with a custom role	
+	test_ariaRoleDescription_focus
+ARIA roleDescription inline browse mode
+	[Documentation]	Read an inline element with a custom role in browse mode
+	test_ariaRoleDescription_inline_browseMode
+	# Disabled due to chrome message "To get missing image descriptions, open the context menu."
+	[Tags]	excluded_from_build
+ARIA roleDescription block browse mode
+	[Documentation]	Read a block element with a custom role in browse mode
+	test_ariaRoleDescription_block_browseMode
+	# Disabled due to chrome message "To get missing image descriptions, open the context menu."
+ARIA roleDescription inline content editable
+	[Documentation]	Read an inline element with a custom role in content editables 
+	test_ariaRoleDescription_inline_contentEditable
+	[Tags]	excluded_from_build
+ARIA roleDescription block content editable
+	[Documentation]	Read an block element with a custom role in content editables 
+	test_ariaRoleDescription_block_contentEditable
+ARIA description Focus Mode
+	[Documentation]	Navigate to a span with aria-description in focus mode
+	test_ariaDescription_focusMode
+ARIA description Browse Mode
+	[Documentation]	Navigate (down arrow, in browse mode) aria-description is read, other sources of description are not.
+	test_ariaDescription_browseMode
+ARIA description Say All
+	[Documentation]	Say all, contents includes aria-description
+	test_ariaDescription_sayAll
+i10840
+	[Documentation]	The name of table header cells should only be conveyed once when navigating directly to them in browse mode (chrome self-references a header cell as its own header, which used to cause the name to be announced twice)
+	test_i10840
+Prevent Duplicate Speech From Description while in Focus mode
+	preventDuplicateSpeechFromDescription_focus
+Prevent Duplicate Speech From Description while in Browse mode with tab nav
+	test_preventDuplicateSpeechFromDescription_browse_tab
+Only report description in focus mode due to reportObjectDescriptions
+	[Documentation]	The term object in reportObjectDescriptions (essentially) means focus mode.
+	test_ensureNoBrowseModeDescription
+Quick Nav reports target first
+	[Documentation]	Quick Nav target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_quickNavTargetReporting
+Focus reports target first
+	[Documentation]	Focus target should always be reported before ancestors. Ancestors should be reported from inner to outer.
+	test_focusTargetReporting
+Table navigation with merged columns
+	[Documentation]	When navigating through a merged cell, preserve the column/row position from the previous cell.
+	test_tableNavigationWithMergedColumns
+Table sayAll commands
+	[Documentation]	Table sayAll commands
+	test_tableSayAllCommands
+Table Speak All commands
+	[Documentation]	Table speak entire row/column commands
+	test_tableSpeakAllCommands
+Table sayAll axis caching for merged cells
+	[Documentation]	Tests that axis caching for merged cells in table sayAll commands works.
+	test_tableSayAllAxisCachingForMergedCells
+focus mode is turned on on focused read-only list item
+	[Documentation]	Focused list items with a focusable list container should cause focus mode to be turned on automatically.
+	test_focus_mode_on_focusable_read_only_lists
+ARIA details role
+	[Documentation]	Test aria details roles being announced on discovery
+	test_mark_aria_details_role
+multiple ARIA details targets
+	[Documentation]	Test multiple aria details targets being announced
+	test_annotations_multi_target
+i10890
+	[Documentation]	Test sort state is announced on column header when changed with inner button
+	[Tags]	excluded_from_build
+	test_i10890
+ARIA switch role
+	[Documentation]	Test aria switch control has appropriate role and states in browse mode and when focused
+	test_ARIASwitchRole
+i13307
+	[Documentation]	ensure aria-labelledby on a landmark or region is automatically spoken when jumping inside from outside using focus in browse mode
+	test_i13307
+textParagraphNavigation
+	[Documentation]	Text paragraph navigation
+	test_textParagraphNavigation
+styleNav
+	[Documentation]	Same style navigation
+	test_styleNav
+aria-errormessage
+	[Documentation]	Test that aria-errormessage is reported correctly in focus and browse mode
+	test_ariaErrorMessage

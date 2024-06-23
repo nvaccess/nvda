@@ -1,18 +1,15 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
-# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
 import os
-import sys
-import threading
 import ctypes
-import weakref
 import wx
 import wx.adv
+
 import globalVars
 import tones
 import ui
@@ -23,15 +20,64 @@ import versionInfo
 import speech
 import queueHandler
 import core
-from . import guiHelper
-from .settingsDialogs import SettingsDialog
-from .settingsDialogs import *
+from typing import (
+	Any,
+	Optional,
+	Type,
+)
+import systemUtils
+from .message import (
+	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
+	# be cautious when removing
+	messageBox,
+)
+from . import blockAction
+from .speechDict import (
+	DefaultDictionaryDialog,
+	VoiceDictionaryDialog,
+	TemporaryDictionaryDialog,
+)
+# ExitDialog is accessed through `import gui.ExitDialog` as opposed to `gui.exit.ExitDialog`.
+# Be careful when removing, and only do in a compatibility breaking release.
+from .exit import ExitDialog
+from .settingsDialogs import (
+	AudioPanel,
+	BrailleDisplaySelectionDialog,
+	BrailleSettingsPanel,
+	BrowseModePanel,
+	DocumentFormattingPanel,
+	GeneralSettingsPanel,
+	InputCompositionPanel,
+	KeyboardSettingsPanel,
+	MouseSettingsPanel,
+	MultiCategorySettingsDialog,
+	NVDASettingsDialog,
+	ObjectPresentationPanel,
+	SettingsDialog,
+	SpeechSettingsPanel,
+	SpeechSymbolsDialog,
+	SynthesizerSelectionDialog,
+	TouchInteractionPanel,
+	ReviewCursorPanel,
+	UwpOcrPanel,
+)
+from .startupDialogs import WelcomeDialog
 from .inputGestures import InputGesturesDialog
-import speechDictHandler
 from . import logViewer
 import speechViewer
 import winUser
 import api
+import NVDAState
+
+
+if NVDAState._allowDeprecatedAPI():
+	def quit():
+		"""
+		Deprecated, use `wx.CallAfter(mainFrame.onExitCommand, None)` directly instead.
+		"""
+		log.debugWarning("Deprecated function called: gui.quit", stack_info=True)
+		wx.CallAfter(mainFrame.onExitCommand, None)
+
 
 try:
 	import updateCheck
@@ -41,15 +87,48 @@ except RuntimeError:
 ### Constants
 NVDA_PATH = globalVars.appDir
 ICON_PATH=os.path.join(NVDA_PATH, "images", "nvda.ico")
-DONATE_URL = "http://www.nvaccess.org/donate/"
+DONATE_URL = f"{versionInfo.url}/donate/"
 
 ### Globals
-mainFrame = None
-isInMessageBox = False
+mainFrame: Optional["MainFrame"] = None
+"""Set by initialize. Should be used as the parent for "top level" dialogs.
+"""
+
+
+def __getattr__(attrName: str) -> Any:
+	"""Module level `__getattr__` used to preserve backward compatibility."""
+	from gui.settingsDialogs import AutoSettingsMixin, SettingsPanel
+	if attrName == "AutoSettingsMixin" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing AutoSettingsMixin from here is deprecated. "
+			"Import AutoSettingsMixin from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return AutoSettingsMixin
+	if attrName == "SettingsPanel" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing SettingsPanel from here is deprecated. "
+			"Import SettingsPanel from gui.settingsDialogs instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		return SettingsPanel
+	if attrName == "ExecAndPump" and NVDAState._allowDeprecatedAPI():
+		log.warning(
+			"Importing ExecAndPump from here is deprecated. "
+			"Import ExecAndPump from systemUtils instead. ",
+			# Include stack info so testers can report warning to add-on author.
+			stack_info=True,
+		)
+		import systemUtils
+		return systemUtils.ExecAndPump
+	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
 class MainFrame(wx.Frame):
-
+	"""A hidden window, intended to act as the parent to all dialogs.
+	"""
 	def __init__(self):
 		style = wx.DEFAULT_FRAME_STYLE ^ wx.MAXIMIZE_BOX ^ wx.MINIMIZE_BOX | wx.FRAME_NO_TASKBAR
 		super(MainFrame, self).__init__(None, wx.ID_ANY, versionInfo.name, size=(1,1), style=style)
@@ -64,7 +143,6 @@ class MainFrame(wx.Frame):
 		#: @type: list of L{NVDAObject}
 		self.prevFocusAncestors = None
 		# If NVDA has the uiAccess privilege, it can always set the foreground window.
-		import systemUtils
 		if not systemUtils.hasUiAccess():
 			# This makes Windows return to the previous foreground window and also seems to allow NVDA to be brought to the foreground.
 			self.Show()
@@ -82,17 +160,17 @@ class MainFrame(wx.Frame):
 		L{postPopup} should be called after the dialog or menu has been shown.
 		@postcondition: A dialog or menu may be shown.
 		"""
-		nvdaPid = os.getpid()
 		focus = api.getFocusObject()
 		# Do not set prevFocus if the focus is on a control rendered by NVDA itself, such as the NVDA menu.
 		# This allows to refer to the control that had focus before opening the menu while still using NVDA
-		# on its own controls. The L{nvdaPid} check can be bypassed by setting the optional attribute
+		# on its own controls.
+		# The check for NVDA process ID can be bypassed by setting the optional attribute
 		# L{isPrevFocusOnNvdaPopup} to L{True} when a NVDA dialog offers customizable bound gestures,
 		# eg. the NVDA Python Console.
-		if focus.processID != nvdaPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
+		if focus.processID != globalVars.appPid or getattr(focus, "isPrevFocusOnNvdaPopup", False):
 			self.prevFocus = focus
 			self.prevFocusAncestors = api.getFocusAncestors()
-		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != nvdaPid:
+		if winUser.getWindowThreadProcessID(winUser.getForegroundWindow())[0] != globalVars.appPid:
 			# This process is not the foreground process, so bring it to the foreground.
 			self.Raise()
 
@@ -113,7 +191,6 @@ class MainFrame(wx.Frame):
 		# Therefore, move the mouse to the center of the screen so that the menu will always pop up there.
 		location = api.getDesktopObject().location
 		winUser.setCursorPos(*location.center)
-		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		self.sysTrayIcon.onActivate(None)
 
 	def onRevertToSavedConfigurationCommand(self,evt):
@@ -126,29 +203,26 @@ class MainFrame(wx.Frame):
 		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration restored to factory defaults"))
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.RUNNING_LAUNCHER,
+	)
 	def onSaveConfigurationCommand(self,evt):
-		if globalVars.appArgs.secure:
-			# Translators: Reported when current configuration cannot be saved while NVDA is running in secure mode such as in Windows login screen.
-			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Cannot save configuration - NVDA in secure mode"))
-			return
 		try:
 			config.conf.save()
 			# Translators: Reported when current configuration has been saved.
 			queueHandler.queueFunction(queueHandler.eventQueue,ui.message,_("Configuration saved"))
-		except:
+		except PermissionError:
 			# Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 			messageBox(_("Could not save configuration - probably read only file system"),_("Error"),wx.OK | wx.ICON_ERROR)
 
-	def _popupSettingsDialog(self, dialog, *args, **kwargs):
-		if isInMessageBox:
-			return
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
+	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
 		self.prePopup()
 		try:
 			dialog(self, *args, **kwargs).Show()
-		except SettingsDialog.MultiInstanceError:
-			# Translators: Message shown when attempting to open another NVDA settings dialog when one is already open
-			# (example: when trying to open keyboard settings when general settings dialog is open).
-			messageBox(_("An NVDA settings dialog is already open. Please close it first."),_("Error"),style=wx.OK | wx.ICON_ERROR)
+		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
+			errorWithDialog.dialog.SetFocus()
 		except MultiCategorySettingsDialog.CategoryUnavailableError:
 			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
 			# (example: when trying to open touch interaction settings on an unsupported system).
@@ -156,43 +230,52 @@ class MainFrame(wx.Frame):
 
 		self.postPopup()
 
-	def onDefaultDictionaryCommand(self,evt):
-		# Translators: Title for default speech dictionary dialog.
-		self._popupSettingsDialog(DictionaryDialog,_("Default dictionary"),speechDictHandler.dictionaries["default"])
+	if NVDAState._allowDeprecatedAPI():
+		def _popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):
+			log.warning(
+				"_popupSettingsDialog is deprecated, use popupSettingsDialog instead.",
+				stack_info=True,
+			)
+			self.popupSettingsDialog(dialog, *args, **kwargs)
 
-	def onVoiceDictionaryCommand(self,evt):
-		# Translators: Title for voice dictionary for the current voice such as current eSpeak variant.
-		self._popupSettingsDialog(DictionaryDialog,_("Voice dictionary (%s)")%speechDictHandler.dictionaries["voice"].fileName,speechDictHandler.dictionaries["voice"])
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onDefaultDictionaryCommand(self, evt):
+		self.popupSettingsDialog(DefaultDictionaryDialog)
 
-	def onTemporaryDictionaryCommand(self,evt):
-		# Translators: Title for temporary speech dictionary dialog (the voice dictionary that is active as long as NvDA is running).
-		self._popupSettingsDialog(DictionaryDialog,_("Temporary dictionary"),speechDictHandler.dictionaries["temp"])
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onVoiceDictionaryCommand(self, evt):
+		self.popupSettingsDialog(VoiceDictionaryDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
+	def onTemporaryDictionaryCommand(self, evt):
+		self.popupSettingsDialog(TemporaryDictionaryDialog)
+
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onExecuteUpdateCommand(self, evt):
 		if updateCheck and updateCheck.isPendingUpdate():
 			destPath, version, apiVersion, backCompatToAPIVersion = updateCheck.getPendingUpdate()
 			from addonHandler import getIncompatibleAddons
 			if any(getIncompatibleAddons(apiVersion, backCompatToAPIVersion)):
 				confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
-					parent=gui.mainFrame,
+					parent=mainFrame,
 					destPath=destPath,
 					version=version,
 					apiVersion=apiVersion,
 					backCompatTo=backCompatToAPIVersion
 				)
-				gui.runScriptModalDialog(confirmUpdateDialog)
+				runScriptModalDialog(confirmUpdateDialog)
 			else:
 				updateCheck.executePendingUpdate()
 
 	def evaluateUpdatePendingUpdateMenuItemCommand(self):
-		try:
-			self.sysTrayIcon.menu.Remove(self.sysTrayIcon.installPendingUpdateMenuItem)
-		except:
-			log.debug("Error while removing  pending update menu item", exc_info=True)
-			pass
-		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
-			self.sysTrayIcon.menu.Insert(self.sysTrayIcon.installPendingUpdateMenuItemPos,self.sysTrayIcon.installPendingUpdateMenuItem)
-
+		log.warning(
+			"MainFrame.evaluateUpdatePendingUpdateMenuItemCommand is deprecated. "
+			"Use SysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand instead.",
+			stack_info=True,
+		)
+		self.sysTrayIcon.evaluateUpdatePendingUpdateMenuItemCommand()
+	
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onExitCommand(self, evt):
 		if config.conf["general"]["askToExit"]:
 			self.prePopup()
@@ -205,60 +288,66 @@ class MainFrame(wx.Frame):
 				log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 	def onNVDASettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog)
+		self.popupSettingsDialog(NVDASettingsDialog)
 
 	def onGeneralSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, GeneralSettingsPanel)
 
 	def onSelectSynthesizerCommand(self,evt):
-		self._popupSettingsDialog(SynthesizerSelectionDialog)
+		self.popupSettingsDialog(SynthesizerSelectionDialog)
 
 	def onSpeechSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, SpeechSettingsPanel)
 
 	def onSelectBrailleDisplayCommand(self,evt):
-		self._popupSettingsDialog(BrailleDisplaySelectionDialog)
+		self.popupSettingsDialog(BrailleDisplaySelectionDialog)
 
 	def onBrailleSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrailleSettingsPanel)
+
+	def onAudioSettingsCommand(self, evt: wx.CommandEvent):
+		self.popupSettingsDialog(NVDASettingsDialog, AudioPanel)
 
 	def onKeyboardSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, KeyboardSettingsPanel)
 
 	def onMouseSettingsCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, MouseSettingsPanel)
 
 	def onTouchInteractionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, TouchInteractionPanel)
 
 	def onReviewCursorCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ReviewCursorPanel)
 
 	def onInputCompositionCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, InputCompositionPanel)
 
 	def onObjectPresentationCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, ObjectPresentationPanel)
 
 	def onBrowseModeCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
+		self.popupSettingsDialog(NVDASettingsDialog, BrowseModePanel)
 
 	def onDocumentFormattingCommand(self,evt):
-		self._popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, DocumentFormattingPanel)
 
 	def onUwpOcrCommand(self, evt):
-		self._popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
+		self.popupSettingsDialog(NVDASettingsDialog, UwpOcrPanel)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onSpeechSymbolsCommand(self, evt):
-		self._popupSettingsDialog(SpeechSymbolsDialog)
+		self.popupSettingsDialog(SpeechSymbolsDialog)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onInputGesturesCommand(self, evt):
-		self._popupSettingsDialog(InputGesturesDialog)
+		self.popupSettingsDialog(InputGesturesDialog)
 
 	def onAboutCommand(self,evt):
 		# Translators: The title of the dialog to show about info for NVDA.
 		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
 		updateCheck.UpdateChecker().check()
 
@@ -270,6 +359,7 @@ class MainFrame(wx.Frame):
 		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleSpeechViewer:
 			self.sysTrayIcon.menu_tools_toggleSpeechViewer.Check(isEnabled)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onToggleSpeechViewerCommand(self, evt):
 		if not speechViewer.isActive:
 			speechViewer.activate()
@@ -281,6 +371,7 @@ class MainFrame(wx.Frame):
 		if self.sysTrayIcon and self.sysTrayIcon.menu_tools_toggleBrailleViewer:
 			self.sysTrayIcon.menu_tools_toggleBrailleViewer.Check(created)
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onToggleBrailleViewerCommand(self, evt):
 		import brailleViewer
 		if brailleViewer.isBrailleViewerActive():
@@ -288,20 +379,49 @@ class MainFrame(wx.Frame):
 		else:
 			brailleViewer.createBrailleViewerTool()
 
+	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onPythonConsoleCommand(self, evt):
 		import pythonConsole
 		if not pythonConsole.consoleUI:
 			pythonConsole.initialize()
 		pythonConsole.activate()
 
-	def onAddonsManagerCommand(self,evt):
-		if isInMessageBox:
-			return
-		self.prePopup()
-		from .addonGui import AddonsDialog
-		d=AddonsDialog(gui.mainFrame)
-		d.Show()
-		self.postPopup()
+	if NVDAState._allowDeprecatedAPI():
+		def onAddonsManagerCommand(self, evt: wx.MenuEvent):
+			log.warning(
+				"onAddonsManagerCommand is deprecated, use onAddonStoreCommand instead.",
+				stack_info=True,
+			)
+			self.onAddonStoreCommand(evt)
+
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.WINDOWS_LOCKED,
+		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
+	)
+	def onAddonStoreCommand(self, evt: wx.MenuEvent):
+		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui.viewModels.store import AddonStoreVM
+		_storeVM = AddonStoreVM()
+		_storeVM.refresh()
+		self.popupSettingsDialog(AddonStoreDialog, _storeVM)
+
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+		blockAction.Context.WINDOWS_LOCKED,
+		blockAction.Context.WINDOWS_STORE_VERSION,
+		blockAction.Context.RUNNING_LAUNCHER,
+	)
+	def onAddonStoreUpdatableCommand(self, evt: wx.MenuEvent | None):
+		from .addonStoreGui import AddonStoreDialog
+		from .addonStoreGui.viewModels.store import AddonStoreVM
+		from addonStore.models.status import _StatusFilterKey
+		_storeVM = AddonStoreVM()
+		_storeVM.refresh()
+		self.popupSettingsDialog(AddonStoreDialog, _storeVM, openToTab=_StatusFilterKey.UPDATE)
 
 	def onReloadPluginsCommand(self, evt):
 		import appModuleHandler, globalPluginHandler
@@ -310,25 +430,31 @@ class MainFrame(wx.Frame):
 		globalPluginHandler.reloadGlobalPlugins()
 		NVDAObject.clearDynamicClassCache()
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onCreatePortableCopyCommand(self,evt):
-		if isInMessageBox:
-			return
 		self.prePopup()
-		import gui.installerGui
-		d=gui.installerGui.PortableCreaterDialog(gui.mainFrame)
+		from . import installerGui
+		d = installerGui.PortableCreaterDialog(mainFrame)
 		d.Show()
 		self.postPopup()
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onInstallCommand(self, evt):
-		if isInMessageBox:
-			return
-		from gui import installerGui
+		from . import installerGui
 		installerGui.showInstallGui()
 
+	@blockAction.when(
+		blockAction.Context.SECURE_MODE,
+		blockAction.Context.MODAL_DIALOG_OPEN,
+	)
 	def onRunCOMRegistrationFixesCommand(self, evt):
-		if isInMessageBox:
-			return
-		if gui.messageBox(
+		if messageBox(
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
 			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
 			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
@@ -342,7 +468,6 @@ class MainFrame(wx.Frame):
 			_("Please wait while NVDA tries to fix your system's COM registrations.")
 		)
 		try:
-			import systemUtils
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
 		except:
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
@@ -359,17 +484,17 @@ class MainFrame(wx.Frame):
 			wx.OK
 		)
 
+	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def onConfigProfilesCommand(self, evt):
-		if isInMessageBox:
-			return
 		self.prePopup()
 		from .configProfiles import ProfilesDialog
-		ProfilesDialog(gui.mainFrame).Show()
+		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
+
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 
-	def __init__(self, frame):
+	def __init__(self, frame: MainFrame):
 		super(SysTrayIcon, self).__init__()
 		icon=wx.Icon(ICON_PATH,wx.BITMAP_TYPE_ICO)
 		self.SetIcon(icon, versionInfo.name)
@@ -382,39 +507,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The description for the menu item to open NVDA Settings dialog.
 			_("NVDA settings"))
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
-		subMenu_speechDicts = wx.Menu()
 		if not globalVars.appArgs.secure:
-			item = subMenu_speechDicts.Append(
-				wx.ID_ANY,
-				# Translators: The label for the menu item to open Default speech dictionary dialog.
-				_("&Default dictionary..."),
-				# Translators: The help text for the menu item to open Default speech dictionary dialog.
-				_("A dialog where you can set default dictionary by adding dictionary entries to the list")
-			)
-			self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
-			item = subMenu_speechDicts.Append(
-				wx.ID_ANY,
-				# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
-				_("&Voice dictionary..."),
-				_(
-					# Translators: The help text for the menu item
-					# to open Voice specific speech dictionary dialog.
-					"A dialog where you can set voice-specific dictionary by adding"
-					" dictionary entries to the list"
-				)
-			)
-			self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
-		item = subMenu_speechDicts.Append(
-			wx.ID_ANY,
-			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
-			_("&Temporary dictionary..."),
-			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
-		)
-		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
-		# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
-		menu_preferences.AppendSubMenu(subMenu_speechDicts,_("Speech &dictionaries"))
-		if not globalVars.appArgs.secure:
+			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
+			menu_preferences.AppendSubMenu(self._createSpeechDictsSubMenu(frame), _("Speech &dictionaries"))
 			# Translators: The label for the menu item to open Punctuation/symbol pronunciation dialog.
 			item = menu_preferences.Append(wx.ID_ANY, _("&Punctuation/symbol pronunciation..."))
 			self.Bind(wx.EVT_MENU, frame.onSpeechSymbolsCommand, item)
@@ -427,34 +522,39 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		menu_tools = self.toolsMenu = wx.Menu()
 		if not globalVars.appArgs.secure:
 			# Translators: The label for the menu item to open NVDA Log Viewer.
-			item = menu_tools.Append(wx.ID_ANY, _("View log"))
+			item = menu_tools.Append(wx.ID_ANY, _("View &log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
-		# Translators: The label for the menu item to toggle Speech Viewer.
-		item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("Speech viewer"))
-		item.Check(speechViewer.isActive)
-		self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
 
-		self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
-			wx.ID_ANY,
-			# Translators: The label for the menu item to toggle Braille Viewer.
-			_("Braille viewer")
-		)
-		item = self.menu_tools_toggleBrailleViewer
-		self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
-		import brailleViewer
-		self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
-		brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+			# Translators: The label for the menu item to toggle Speech Viewer.
+			item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(wx.ID_ANY, _("&Speech viewer"))
+			item.Check(speechViewer.isActive)
+			self.Bind(wx.EVT_MENU, frame.onToggleSpeechViewerCommand, item)
+
+			self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to toggle Braille Viewer.
+				_("&Braille viewer")
+			)
+
+			item = self.menu_tools_toggleBrailleViewer
+			self.Bind(wx.EVT_MENU, frame.onToggleBrailleViewerCommand, item)
+			import brailleViewer
+			self.menu_tools_toggleBrailleViewer.Check(brailleViewer.isBrailleViewerActive())
+			brailleViewer.postBrailleViewerToolToggledAction.register(frame.onBrailleViewerChangedState)
+
+		if not config.isAppX and NVDAState.shouldWriteToDisk():
+			# Translators: The label of a menu item to open the Add-on store
+			item = menu_tools.Append(wx.ID_ANY, _("&Add-on store..."))
+			self.Bind(wx.EVT_MENU, frame.onAddonStoreCommand, item)
 
 		if not globalVars.appArgs.secure and not config.isAppX:
 			# Translators: The label for the menu item to open NVDA Python Console.
-			item = menu_tools.Append(wx.ID_ANY, _("Python console"))
+			item = menu_tools.Append(wx.ID_ANY, _("&Python console"))
 			self.Bind(wx.EVT_MENU, frame.onPythonConsoleCommand, item)
-			# Translators: The label of a menu item to open the Add-ons Manager.
-			item = menu_tools.Append(wx.ID_ANY, _("Manage &add-ons..."))
-			self.Bind(wx.EVT_MENU, frame.onAddonsManagerCommand, item)
-		if not globalVars.appArgs.secure and not config.isAppX and getattr(sys,'frozen',None):
+
+		if not globalVars.appArgs.secure and not config.isAppX and not NVDAState.isRunningAsSource():
 			# Translators: The label for the menu item to create a portable copy of NVDA from an installed or another portable version.
-			item = menu_tools.Append(wx.ID_ANY, _("Create portable copy..."))
+			item = menu_tools.Append(wx.ID_ANY, _("&Create portable copy..."))
 			self.Bind(wx.EVT_MENU, frame.onCreatePortableCopyCommand, item)
 			if not config.isInstalledCopy():
 				# Translators: The label for the menu item to install NVDA on the computer.
@@ -468,75 +568,37 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("Reload plugins"))
 			self.Bind(wx.EVT_MENU, frame.onReloadPluginsCommand, item)
 		# Translators: The label for the Tools submenu in NVDA menu.
-		self.menu.AppendSubMenu(menu_tools,_("Tools"))
+		self.menu.AppendSubMenu(menu_tools, _("&Tools"))
 
-		menu_help = self.helpMenu = wx.Menu()
+		self._appendHelpSubMenu(frame)
+
+		self._appendConfigManagementSection(frame)
+
 		if not globalVars.appArgs.secure:
-			# Translators: The label of a menu item to open NVDA user guide.
-			item = menu_help.Append(wx.ID_ANY, _("&User Guide"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
-			# Translators: The label of a menu item to open the Commands Quick Reference document.
-			item = menu_help.Append(wx.ID_ANY, _("Commands &Quick Reference"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
-			# Translators: The label for the menu item to open What's New document.
-			item = menu_help.Append(wx.ID_ANY, _("What's &new"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
-			item = menu_help.Append(wx.ID_ANY, _("NVDA &web site"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile("http://www.nvda-project.org/"), item)
-			# Translators: The label for the menu item to view NVDA License document.
-			item = menu_help.Append(wx.ID_ANY, _("L&icense"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("copying.txt", False)), item)
-			# Translators: The label for the menu item to view NVDA Contributors list document.
-			item = menu_help.Append(wx.ID_ANY, _("C&ontributors"))
-			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("contributors.txt", False)), item)
-			# Translators: The label for the menu item to open NVDA Welcome Dialog.
-			item = menu_help.Append(wx.ID_ANY, _("We&lcome dialog..."))
-			from .startupDialogs import WelcomeDialog
-			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
-			menu_help.AppendSeparator()
-		if updateCheck:
-			# Translators: The label of a menu item to manually check for an updated version of NVDA.
-			item = menu_help.Append(wx.ID_ANY, _("&Check for update..."))
-			self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
-		# Translators: The label for the menu item to open About dialog to get information about NVDA.
-		item = menu_help.Append(wx.ID_ABOUT, _("About..."), _("About NVDA"))
-		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
-		# Translators: The label for the Help submenu in NVDA menu.
-		self.menu.AppendSubMenu(menu_help,_("&Help"))
-		self.menu.AppendSeparator()
-		# Translators: The label for the menu item to open the Configuration Profiles dialog.
-		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
-		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
-		# Translators: The label for the menu item to revert to saved configuration.
-		item = self.menu.Append(wx.ID_ANY, _("&Revert to saved configuration"),_("Reset all settings to saved state"))
-		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
-		if not globalVars.appArgs.secure:
-			# Translators: The label for the menu item to reset settings to default settings.
-			# Here, default settings means settings that were there when the user first used NVDA.
-			item = self.menu.Append(wx.ID_ANY, _("&Reset configuration to factory defaults"),_("Reset all settings to default state"))
-			self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
-			# Translators: The label for the menu item to save current settings.
-			item = self.menu.Append(wx.ID_SAVE, _("&Save configuration"), _("Write the current configuration to nvda.ini"))
-			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 			self.menu.AppendSeparator()
 			# Translators: The label for the menu item to open donate page.
-			item = self.menu.Append(wx.ID_ANY, _("Donate"))
+			item = self.menu.Append(wx.ID_ANY, _("&Donate"))
 			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(DONATE_URL), item)
-			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
-			item = self.installPendingUpdateMenuItem = self.menu.Append(wx.ID_ANY,
-				# Translators: The label for the menu item to run a pending update.
-				_("Install pending &update"),
-				# Translators: The description for the menu item to run a pending update.
-				_("Execute a previously downloaded NVDA update"))
-			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
+
+		self._appendPendingUpdateSection(frame)
+
 		self.menu.AppendSeparator()
 		item = self.menu.Append(wx.ID_EXIT, _("E&xit"),_("Exit NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
-
+	
+	def evaluateUpdatePendingUpdateMenuItemCommand(self):
+		try:
+			self.menu.Remove(self.installPendingUpdateMenuItem)
+		except Exception:
+			log.debug("Error while removing pending update menu item", exc_info=True)
+		if not globalVars.appArgs.secure and updateCheck and updateCheck.isPendingUpdate():
+			self.menu.Insert(self.installPendingUpdateMenuItemPos, self.installPendingUpdateMenuItem)
+	
 	def onActivate(self, evt):
+		self.evaluateUpdatePendingUpdateMenuItemCommand()
 		mainFrame.prePopup()
 		import appModules.nvda
 		if not appModules.nvda.nvdaMenuIaIdentity:
@@ -548,6 +610,145 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# The NVDA menu didn't actually appear for some reason.
 			appModules.nvda.nvdaMenuIaIdentity = None
 		mainFrame.postPopup()
+
+	def _createSpeechDictsSubMenu(self, frame: MainFrame) -> wx.Menu:
+		subMenu_speechDicts = wx.Menu()
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Default speech dictionary dialog.
+			_("&Default dictionary..."),
+			# Translators: The help text for the menu item to open Default speech dictionary dialog.
+			_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+		)
+		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Voice specific speech dictionary dialog.
+			_("&Voice dictionary..."),
+			_(
+				# Translators: The help text for the menu item
+				# to open Voice specific speech dictionary dialog.
+				"A dialog where you can set voice-specific dictionary by adding"
+				" dictionary entries to the list"
+			)
+		)
+		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
+		item = subMenu_speechDicts.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
+			_("&Temporary dictionary..."),
+			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+		)
+		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
+		return subMenu_speechDicts
+
+	def _appendConfigManagementSection(self, frame: MainFrame) -> None:
+		self.menu.AppendSeparator()
+		# Translators: The label for the menu item to open the Configuration Profiles dialog.
+		item = self.menu.Append(wx.ID_ANY, _("&Configuration profiles..."))
+		self.Bind(wx.EVT_MENU, frame.onConfigProfilesCommand, item)
+		item = self.menu.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to revert to saved configuration.
+			_("&Revert to saved configuration"),
+			# Translators: The help text for the menu item to revert to saved configuration.
+			_("Reset all settings to saved state")
+		)
+		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
+		item = self.menu.Append(
+			wx.ID_ANY,
+			# Translators: The label for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
+			_("Reset configuration to &factory defaults"),
+			# Translators: The help text for the menu item to reset settings to default settings.
+			# Here, default settings means settings that were there when the user first used NVDA.
+			_("Reset all settings to default state")
+		)
+		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
+		if NVDAState.shouldWriteToDisk():
+			item = self.menu.Append(
+				wx.ID_SAVE,
+				# Translators: The label for the menu item to save current settings.
+				_("&Save configuration"),
+				# Translators: The help text for the menu item to save current settings.
+				_("Write the current configuration to nvda.ini")
+			)
+			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
+
+	def _appendHelpSubMenu(self, frame: MainFrame) -> None:
+		self.helpMenu = wx.Menu()
+
+		if not globalVars.appArgs.secure:
+			# Translators: The label of a menu item to open NVDA user guide.
+			item = self.helpMenu.Append(wx.ID_ANY, _("&User Guide"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("userGuide.html")), item)
+			# Translators: The label of a menu item to open the Commands Quick Reference document.
+			item = self.helpMenu.Append(wx.ID_ANY, _("Commands &Quick Reference"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("keyCommands.html")), item)
+			# Translators: The label for the menu item to open What's New document.
+			item = self.helpMenu.Append(wx.ID_ANY, _("What's &new"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(getDocFilePath("changes.html")), item)
+
+			self.helpMenu.AppendSeparator()
+
+			# Translators: The label for the menu item to view the NVDA website
+			item = self.helpMenu.Append(wx.ID_ANY, _("NV Access &web site"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(versionInfo.url), item)
+			# Translators: The label for the menu item to view the NVDA website's get help section
+			item = self.helpMenu.Append(wx.ID_ANY, _("&Help, training and support"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/get-help/"), item)
+			# Translators: The label for the menu item to view the NVDA website's get help section
+			item = self.helpMenu.Append(wx.ID_ANY, _("NV Access &shop"))
+			self.Bind(wx.EVT_MENU, lambda evt: os.startfile(f"{versionInfo.url}/shop/"), item)
+
+			self.helpMenu.AppendSeparator()
+
+			# Translators: The label for the menu item to view NVDA License document.
+			item = self.helpMenu.Append(wx.ID_ANY, _("L&icense"))
+			self.Bind(
+				wx.EVT_MENU,
+				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
+				item
+			)
+			# Translators: The label for the menu item to view NVDA Contributors list document.
+			item = self.helpMenu.Append(wx.ID_ANY, _("C&ontributors"))
+			self.Bind(
+				wx.EVT_MENU,
+				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
+				item
+			)
+
+			self.helpMenu.AppendSeparator()
+
+			# Translators: The label for the menu item to open NVDA Welcome Dialog.
+			item = self.helpMenu.Append(wx.ID_ANY, _("We&lcome dialog..."))
+			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
+
+			if updateCheck:
+				# Translators: The label of a menu item to manually check for an updated version of NVDA.
+				item = self.helpMenu.Append(wx.ID_ANY, _("&Check for update..."))
+				self.Bind(wx.EVT_MENU, frame.onCheckForUpdateCommand, item)
+
+		# Translators: The label for the menu item to open About dialog to get information about NVDA.
+		item = self.helpMenu.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
+		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
+
+		# Translators: The label for the Help submenu in NVDA menu.
+		self.menu.AppendSubMenu(self.helpMenu, _("&Help"))
+
+	def _appendPendingUpdateSection(self, frame: MainFrame) -> None:
+		if not globalVars.appArgs.secure and updateCheck:
+			# installPendingUpdateMenuItemPos is later toggled based on if an update is available.
+			self.installPendingUpdateMenuItemPos = self.menu.GetMenuItemCount()
+			item = self.installPendingUpdateMenuItem = self.menu.Append(
+				wx.ID_ANY,
+				# Translators: The label for the menu item to run a pending update.
+				_("Install pending &update"),
+				# Translators: The description for the menu item to run a pending update.
+				_("Execute a previously downloaded NVDA update")
+			)
+			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
 
 
 def initialize():
@@ -571,35 +772,6 @@ def terminate():
 def showGui():
  	wx.CallAfter(mainFrame.showGui)
 
-def quit():
-	wx.CallAfter(mainFrame.onExitCommand, None)
-
-def messageBox(message, caption=wx.MessageBoxCaptionStr, style=wx.OK | wx.CENTER, parent=None):
-	"""Display a message dialog.
-	This should be used for all message dialogs
-	rather than using C{wx.MessageDialog} and C{wx.MessageBox} directly.
-	@param message: The message text.
-	@type message: str
-	@param caption: The caption (title) of the dialog.
-	@type caption: str
-	@param style: Same as for wx.MessageBox.
-	@type style: int
-	@param parent: The parent window (optional).
-	@type parent: C{wx.Window}
-	@return: Same as for wx.MessageBox.
-	@rtype: int
-	"""
-	global isInMessageBox
-	wasAlready = isInMessageBox
-	isInMessageBox = True
-	if not parent:
-		mainFrame.prePopup()
-	res = wx.MessageBox(message, caption, style, parent or mainFrame)
-	if not parent:
-		mainFrame.postPopup()
-	if not wasAlready:
-		isInMessageBox = False
-	return res
 
 def runScriptModalDialog(dialog, callback=None):
 	"""Run a modal dialog from a script.
@@ -621,140 +793,15 @@ def runScriptModalDialog(dialog, callback=None):
 	wx.CallAfter(run)
 
 
-class ExitDialog(wx.Dialog):
-	_instance = None
-
-	def __new__(cls, parent):
-		# Make this a singleton.
-		inst = cls._instance() if cls._instance else None
-		if not inst:
-			return super(cls, cls).__new__(cls, parent)
-		return inst
-
-	def __init__(self, parent):
-		inst = ExitDialog._instance() if ExitDialog._instance else None
-		if inst:
-			return
-		# Use a weakref so the instance can die.
-		ExitDialog._instance = weakref.ref(self)
-		# Translators: The title of the dialog to exit NVDA
-		super(ExitDialog, self).__init__(parent, title=_("Exit NVDA"))
-		dialog = self
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-
-		contentSizerHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-
-		if globalVars.appArgs.disableAddons:
-			# Translators: A message in the exit Dialog shown when all add-ons are disabled.
-			addonsDisabledText = _("All add-ons are now disabled. They will be re-enabled on the next restart unless you choose to disable them again.")
-			contentSizerHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=addonsDisabledText))
-
-		# Translators: The label for actions list in the Exit dialog.
-		labelText=_("What would you like to &do?")
-		self.actions = [
-			# Translators: An option in the combo box to choose exit action.
-			_("Exit"),
-			# Translators: An option in the combo box to choose exit action.
-			_("Restart")
-		]
-		# Windows Store version of NVDA does not support add-ons yet.
-		if not config.isAppX:
-			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Restart with add-ons disabled"))
-		# Translators: An option in the combo box to choose exit action.
-		self.actions.append(_("Restart with debug logging enabled"))
-		if updateCheck and updateCheck.isPendingUpdate():
-			# Translators: An option in the combo box to choose exit action.
-			self.actions.append(_("Install pending update"))
-		self.actionsList = contentSizerHelper.addLabeledControl(labelText, wx.Choice, choices=self.actions)
-		self.actionsList.SetSelection(0)
-
-		contentSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL)
-
-		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
-
-		mainSizer.Add(contentSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		mainSizer.Fit(self)
-		self.Sizer = mainSizer
-		self.actionsList.SetFocus()
-		self.CentreOnScreen()
-
-	def onOk(self, evt):
-		action=self.actionsList.GetSelection()
-		# Because Windows Store version of NVDA does not support add-ons yet, add 1 if action is 2 or above if this is such a case.
-		if action >= 2 and config.isAppX:
-			action += 1
-		if action == 0:
-			if not core.triggerNVDAExit():
-				log.error("NVDA already in process of exiting, this indicates a logic error.")
-			return  # there's no need to destroy ExitDialog in this instance as triggerNVDAExit will do this
-		elif action == 1:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart)
-		elif action == 2:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,disableAddons=True)
-		elif action == 3:
-			queueHandler.queueFunction(queueHandler.eventQueue,core.restart,debugLogging=True)
-		elif action == 4:
-			if updateCheck:
-				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
-				from addonHandler import getIncompatibleAddons
-				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
-					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
-						parent=gui.mainFrame,
-						destPath=destPath,
-						version=version,
-						apiVersion=apiVersion,
-						backCompatTo=backCompatTo
-					)
-					confirmUpdateDialog.ShowModal()
-				else:
-					updateCheck.executePendingUpdate()
-		wx.CallAfter(self.Destroy)
-
-	def onCancel(self, evt):
-		self.Destroy()
-
-class ExecAndPump(threading.Thread):
-	"""Executes the given function with given args and kwargs in a background thread while blocking and pumping in the current thread."""
-
-	def __init__(self,func,*args,**kwargs):
-		self.func=func
-		self.args=args
-		self.kwargs=kwargs
-		fname = repr(func)
-		super().__init__(
-			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
-		)
-		self.threadExc=None
-		self.start()
-		time.sleep(0.1)
-		threadHandle=ctypes.c_int()
-		threadHandle.value=ctypes.windll.kernel32.OpenThread(0x100000,False,self.ident)
-		msg=ctypes.wintypes.MSG()
-		while ctypes.windll.user32.MsgWaitForMultipleObjects(1,ctypes.byref(threadHandle),False,-1,255)==1:
-			while ctypes.windll.user32.PeekMessageW(ctypes.byref(msg),None,0,0,1):
-				ctypes.windll.user32.TranslateMessage(ctypes.byref(msg))
-				ctypes.windll.user32.DispatchMessageW(ctypes.byref(msg))
-		if self.threadExc:
-			raise self.threadExc
-
-	def run(self):
-		try:
-			self.func(*self.args,**self.kwargs)
-		except Exception as e:
-			self.threadExc=e
-			log.debugWarning("task had errors",exc_info=True)
-
 class IndeterminateProgressDialog(wx.ProgressDialog):
 
-	def __init__(self, parent, title, message):
-		super(IndeterminateProgressDialog, self).__init__(title, message, parent=parent)
+	def __init__(self, parent: wx.Window, title: str, message: str):
+		super().__init__(title, message, parent=parent)
 		self._speechCounter = -1
 		self.timer = wx.PyTimer(self.Pulse)
 		self.timer.Start(1000)
-		self.Raise()
 		self.CentreOnScreen()
+		self.Raise()
 
 	def Pulse(self):
 		super(IndeterminateProgressDialog, self).Pulse()

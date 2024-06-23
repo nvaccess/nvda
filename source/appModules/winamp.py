@@ -121,7 +121,7 @@ class winampPlaylistEditor(winampMainWindow):
 		return "%d.\t%s\t%s"%(curIndex+1,fileTitle,info.filelength)
 
 	def _get_role(self):
-		return controlTypes.ROLE_LISTITEM
+		return controlTypes.Role.LISTITEM
 
 	def script_changeItem(self,gesture):
 		gesture.send()

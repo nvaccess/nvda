@@ -1,24 +1,40 @@
-#synthDrivers/oneCore.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2019 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2021 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """Synth driver for Windows OneCore voices.
 """
 
 import os
-import sys
+from typing import (
+	Any,
+	Callable,
+	Generator,
+	List,
+	Optional,
+	Set,
+	Tuple,
+	Union
+)
 from collections import OrderedDict
 import ctypes
 import winreg
 import wave
-from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
-from synthDriverHandler import isDebugForSynthDriver
+from synthDriverHandler import (
+	findAndSetNextSynth,
+	isDebugForSynthDriver,
+	SynthDriver,
+	synthDoneSpeaking,
+	synthIndexReached,
+	VoiceInfo,
+)
 import io
 from logHandler import log
 import config
 import nvwave
+import queueHandler
+from speech.types import SpeechSequence
 import speech
 import speechXml
 import languageHandler
@@ -38,9 +54,28 @@ from speech.commands import (
 
 #: The number of 100-nanosecond units in 1 second.
 HUNDRED_NS_PER_SEC = 10000000 # 1000000000 ns per sec / 100 ns
+WAVE_HEADER_LENGTH = 46
 ocSpeech_Callback = ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.c_int, ctypes.c_wchar_p)
 
 class _OcSsmlConverter(speechXml.SsmlConverter):
+	def __init__(
+			self,
+			defaultLanguage: str,
+			availableLanguages: Set[str],
+	):
+		"""
+		Used for newer OneCore installations (OneCore API > 5)
+		where supportsProsodyOptions is True.
+		This allows for changing rate, volume and pitch after initialization.
+
+		@param defaultLanguage: language with locale, installed by OneCore (e.g. 'en_US')
+		@param availableLanguages: languages with locale, installed by OneCore (e.g. 'zh_HK', 'en_US')
+		"""
+		self.lowerCaseAvailableLanguages = {language.lower() for language in availableLanguages}
+		self.availableLanguagesWithoutLocale = {
+			language.split("_")[0] for language in self.lowerCaseAvailableLanguages
+		}
+		super().__init__(defaultLanguage)
 
 	def _convertProsody(self, command, attr, default, base=None):
 		if base is None:
@@ -68,23 +103,52 @@ class _OcSsmlConverter(speechXml.SsmlConverter):
 		# Therefore, we don't use it.
 		return None
 
-	def convertLangChangeCommand(self, command):
+	def convertLangChangeCommand(self, command: LangChangeCommand) -> Optional[speechXml.SetAttrCommand]:
 		lcid = languageHandler.localeNameToWindowsLCID(command.lang)
 		if lcid is languageHandler.LCID_NONE:
-			log.debugWarning("Invalid language: %s" % command.lang)
+			log.debugWarning(f"Invalid language: {command.lang}")
 			return None
-		return super(_OcSsmlConverter, self).convertLangChangeCommand(command)
+
+		normalizedLanguage = command.lang.lower().replace("-", "_")
+		normalizedLanguageWithoutLocale = normalizedLanguage.split("_")[0]
+		if (
+			normalizedLanguage not in self.lowerCaseAvailableLanguages
+			and normalizedLanguageWithoutLocale not in self.availableLanguagesWithoutLocale
+		):
+			log.warning(f"Language {command.lang} not supported ({self.lowerCaseAvailableLanguages})")
+			return None
+
+		return super().convertLangChangeCommand(command)
 
 class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 
-	def __init__(self, defaultLanguage, rate, pitch, volume):
-		super(_OcPreAPI5SsmlConverter, self).__init__(defaultLanguage)
+	def __init__(
+			self,
+			defaultLanguage: str,
+			availableLanguages: Set[str],
+			rate: float,
+			pitch: float,
+			volume: float,
+	):
+		"""
+		Used for older OneCore installations (OneCore API < 5),
+		where supportsProsodyOptions is False.
+		This means we must initially set a good default for rate, volume and pitch,
+		as this can't be changed after initialization.
+
+		@param defaultLanguage: language with locale, installed by OneCore (e.g. 'en_US')
+		@param availableLanguages: languages with locale, installed by OneCore (e.g. 'zh_HK', 'en_US')
+		@param rate: from 0-100
+		@param pitch: from 0-100
+		@param volume: from 0-100
+		"""
+		super().__init__(defaultLanguage, availableLanguages)
 		self._rate = rate
 		self._pitch = pitch
 		self._volume = volume
 
-	def generateBalancerCommands(self, speechSequence):
-		commands = super(_OcPreAPI5SsmlConverter, self).generateBalancerCommands(speechSequence)
+	def generateBalancerCommands(self, speechSequence: SpeechSequence) -> Generator[Any, None, None]:
+		commands = super().generateBalancerCommands(speechSequence)
 		# The EncloseAllCommand from SSML must be first.
 		yield next(commands)
 		# OneCore didn't provide a way to set base prosody values before API version 5.
@@ -104,13 +168,15 @@ class _OcPreAPI5SsmlConverter(_OcSsmlConverter):
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume", 100, self._volume)
 
-class SynthDriver(SynthDriver):
+
+class OneCoreSynthDriver(SynthDriver):
 
 	MIN_PITCH = 0.0
 	MAX_PITCH = 2.0
 	MIN_RATE = 0.5
 	DEFAULT_MAX_RATE = 1.5
 	BOOSTED_MAX_RATE = 6.0
+	MAX_CONSECUTIVE_SPEECH_FAILURES = 5
 
 	name = "oneCore"
 	# Translators: Description for a speech synthesizer.
@@ -150,15 +216,15 @@ class SynthDriver(SynthDriver):
 		return settings
 
 	def __init__(self):
-		super(SynthDriver, self).__init__()
+		super().__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
 		# When prosody is supported, the values are used for cachign reasons.
-		self._rate = 50
-		self._pitch = 50
-		self._volume = 100
+		self._rate: int = 50
+		self._pitch: int = 50
+		self._volume: int = 100
 
 		if self.supportsProsodyOptions:
 			self._dll.ocSpeech_getPitch.restype = ctypes.c_double
@@ -166,18 +232,21 @@ class SynthDriver(SynthDriver):
 			self._dll.ocSpeech_getRate.restype = ctypes.c_double
 		else:
 			log.debugWarning("Prosody options not supported")
-		self._handle = self._dll.ocSpeech_initialize()
+
+		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
-		self._dll.ocSpeech_setCallback(self._handle, self._callbackInst)
+		self._ocSpeechToken: Optional[ctypes.POINTER] = self._dll.ocSpeech_initialize(self._callbackInst)
 		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player= None
 		# Initialize state.
-		self._queuedSpeech = []
+		self._queuedSpeech: List[Union[str, Tuple[Callable[[ctypes.POINTER, float], None], float]]] = []
+
 		self._wasCancelled = False
 		self._isProcessing = False
 		# Initialize the voice to a sane default
 		self.voice=self._getDefaultVoice()
+		self._consecutiveSpeechFailures = 0
 
 	def _maybeInitPlayer(self, wav):
 		"""Initialize audio playback based on the wave header provided by the synthesizer.
@@ -200,10 +269,14 @@ class SynthDriver(SynthDriver):
 		)
 
 	def terminate(self):
-		super(SynthDriver, self).terminate()
-		self._dll.ocSpeech_terminate(self._handle)
-		# Drop the ctypes function instance for the callback,
+		# prevent any pending callbacks from interacting further with the synth.
+		self._earlyExitCB = True
+		super().terminate()
+		# Terminate the synth, the callback function should no longer be called after this returns.
+		self._dll.ocSpeech_terminate(self._ocSpeechToken)
+		# Drop the ctypes function instance for the callback and handle,
 		# as it is holding a reference to an instance method, which causes a reference cycle.
+		self._ocSpeechToken = None
 		self._callbackInst = None
 
 	def cancel(self):
@@ -221,11 +294,17 @@ class SynthDriver(SynthDriver):
 		if self._player:
 			self._player.stop()
 
-	def speak(self, speechSequence):
+	def speak(self, speechSequence: SpeechSequence) -> None:
 		if self.supportsProsodyOptions:
-			conv = _OcSsmlConverter(self.language)
+			conv = _OcSsmlConverter(self.language, self.availableLanguages)
 		else:
-			conv = _OcPreAPI5SsmlConverter(self.language, self._rate, self._pitch, self._volume)
+			conv = _OcPreAPI5SsmlConverter(
+				self.language,
+				self.availableLanguages,
+				self._rate,
+				self._pitch,
+				self._volume
+			)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
 		# when the SSML includes marks.
@@ -235,7 +314,7 @@ class SynthDriver(SynthDriver):
 			self._player.open()
 		self._queueSpeech(text)
 
-	def _queueSpeech(self, item):
+	def _queueSpeech(self, item: str) -> None:
 		self._queuedSpeech.append(item)
 		# We only process the queue here if it isn't already being processed.
 		if not self._isProcessing:
@@ -250,7 +329,7 @@ class SynthDriver(SynthDriver):
 	def _get_pitch(self):
 		if not self.supportsProsodyOptions:
 			return self._pitch
-		rawPitch = self._dll.ocSpeech_getPitch(self._handle)
+		rawPitch = self._dll.ocSpeech_getPitch(self._ocSpeechToken)
 		return self._paramToPercent(rawPitch, self.MIN_PITCH, self.MAX_PITCH)
 
 	def _set_pitch(self, pitch):
@@ -260,13 +339,13 @@ class SynthDriver(SynthDriver):
 		rawPitch = self._percentToParam(pitch, self.MIN_PITCH, self.MAX_PITCH)
 		self._queuedSpeech.append((self._dll.ocSpeech_setPitch, rawPitch))
 
-	def _get_volume(self):
+	def _get_volume(self) -> int:
 		if not self.supportsProsodyOptions:
 			return self._volume
-		rawVolume = self._dll.ocSpeech_getVolume(self._handle)
+		rawVolume = self._dll.ocSpeech_getVolume(self._ocSpeechToken)
 		return int(rawVolume * 100)
 
-	def _set_volume(self, volume):
+	def _set_volume(self, volume: int):
 		self._volume = volume
 		if not self.supportsProsodyOptions:
 			return
@@ -276,7 +355,7 @@ class SynthDriver(SynthDriver):
 	def _get_rate(self):
 		if not self.supportsProsodyOptions:
 			return self._rate
-		rawRate = self._dll.ocSpeech_getRate(self._handle)
+		rawRate = self._dll.ocSpeech_getRate(self._ocSpeechToken)
 		maxRate = self.BOOSTED_MAX_RATE if self._rateBoost else self.DEFAULT_MAX_RATE
 		return self._paramToPercent(rawRate, self.MIN_RATE, maxRate)
 
@@ -303,6 +382,11 @@ class SynthDriver(SynthDriver):
 		self.rate = rate
 
 	def _processQueue(self):
+		if not self._queuedSpeech and self._player is None:
+			# If oneCore speech has not been successful yet the player will not have initialised. (#11544)
+			# We can't sync the player in this instance.
+			log.debugWarning("Cannot process speech queue as player not set and no speech queued")
+			return
 		if not self._queuedSpeech:
 			# There are no more queued utterances at this point, so call sync.
 			# This blocks while waiting for the final chunk to play,
@@ -329,7 +413,7 @@ class SynthDriver(SynthDriver):
 				# Note that, if prosody otions aren't supported, this code will never be executed.
 				func, value = item
 				value = ctypes.c_double(value)
-				func(self._handle, value)
+				func(self._ocSpeechToken, value)
 				continue
 			self._wasCancelled = False
 			if isDebugForSynthDriver():
@@ -338,23 +422,41 @@ class SynthDriver(SynthDriver):
 			# ocSpeech_speak is async.
 			# It will call _callback in a background thread once done,
 			# which will eventually process the queue again.
-			self._dll.ocSpeech_speak(self._handle, item)
+			self._dll.ocSpeech_speak(self._ocSpeechToken, item)
 			return
 		if isDebugForSynthDriver():
 			log.debug("Queue empty, done processing")
 		self._isProcessing = False
 
-	def _callback(self, bytes, len, markers):
-		if len == 0:
-			# The C++ code will log an error with details.
-			log.debugWarning("ocSpeech_speak failed!")
+	def _handleSpeechFailure(self):
+		# The C++ code will log an error with details.
+		log.error("OneCore synthesizer failed to speak")  # so a warning beep is played when speech fails
+		try:
 			self._processQueue()
+		finally:
+			self._consecutiveSpeechFailures += 1
+			if self._consecutiveSpeechFailures >= self.MAX_CONSECUTIVE_SPEECH_FAILURES:
+				log.debugWarning("Too many consecutive speech failures, changing synth")
+				queueHandler.queueFunction(queueHandler.eventQueue, findAndSetNextSynth, self.name)
+				self._consecutiveSpeechFailures = 0
+
+	def _callback(self, bytes, len, markers):
+		if self._earlyExitCB:
+			# prevent any pending callbacks from interacting further with the synth.
+			# used during termination.
 			return
+		if len == 0:
+			# Speech failed
+			self._handleSpeechFailure()
+			return
+		else:
+			self._consecutiveSpeechFailures = 0
 		# This gets called in a background thread.
-		stream = io.BytesIO(ctypes.string_at(bytes, len))
+		stream = io.BytesIO(ctypes.string_at(bytes, WAVE_HEADER_LENGTH))
 		wav = wave.open(stream, "r")
 		self._maybeInitPlayer(wav)
-		data = wav.readframes(wav.getnframes())
+		data = bytes + WAVE_HEADER_LENGTH
+		dataLen = wav.getnframes() * wav.getnchannels() * wav.getsampwidth()
 		if markers:
 			markers = markers.split('|')
 		else:
@@ -373,14 +475,17 @@ class SynthDriver(SynthDriver):
 			# Order the equation so we don't have to do floating point.
 			pos = pos * self._bytesPerSec // HUNDRED_NS_PER_SEC
 			# Push audio up to this marker.
-			self._player.feed(data[prevPos:pos],
-				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index))
+			self._player.feed(
+				ctypes.c_void_p(data + prevPos),
+				size=pos - prevPos,
+				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index)
+			)
 			prevPos = pos
 		if self._wasCancelled:
 			if isDebugForSynthDriver():
 				log.debug("Cancelled, stopped pushing audio")
 		else:
-			self._player.feed(data[prevPos:])
+			self._player.feed(ctypes.c_void_p(data + prevPos), size=dataLen - prevPos)
 			if isDebugForSynthDriver():
 				log.debug("Done pushing audio")
 		self._processQueue()
@@ -396,9 +501,10 @@ class SynthDriver(SynthDriver):
 
 	def _getAvailableVoices(self):
 		voices = OrderedDict()
-		# Fetch the full list of voices that Onecore speech knows about.
-		# Note that it may give back voices that are uninstalled or broken. 
-		voicesStr = self._dll.ocSpeech_getVoices(self._handle).split('|')
+		# Fetch the full list of voices that OneCore speech knows about.
+		# Note that it may give back voices that are uninstalled or broken.
+		# Refer to _isVoiceValid for information on uninstalled or broken voices.
+		voicesStr = self._dll.ocSpeech_getVoices(self._ocSpeechToken).split('|')
 		for index,voiceStr in enumerate(voicesStr):
 			voiceInfo=self._getVoiceInfoFromOnecoreVoiceString(voiceStr)
 			# Filter out any invalid voices.
@@ -408,14 +514,33 @@ class SynthDriver(SynthDriver):
 			voices[voiceInfo.id] =  voiceInfo
 		return voices
 
-	def _isVoiceValid(self,ID):
-		"""
+	def _isVoiceValid(self, ID: str) -> bool:
+		r"""
 		Checks that the given voice actually exists and is valid.
 		It checks the Registry, and also ensures that its data files actually exist on this machine.
 		@param ID: the ID of the requested voice.
-		@type ID: string
-		@returns: True if the voice is valid, false otherwise.
-		@rtype: boolean
+		@returns: True if the voice is valid, False otherwise.
+
+		OneCore keeps specific registry caches of OneCore for AT applications.
+		Installed copies of NVDA have a OneCore cache in:
+		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4`.
+		The caches contain a subtree which is meant to mirror the path:
+		`HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\*`.
+
+		For example:
+		`HKEY_CURRENT_USER\Software\Microsoft\Speech_OneCore\Isolated\Ny37kw9G-o42UiJ1z6Qc_sszEKkCNywTlrTOG0QKVB4\
+		HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`
+		refers to `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\Voices\Tokens\MSTTS_V110_enUS_MarkM`.
+
+		Languages which have been used by an installed copy of NVDA,
+		but uninstalled from the system are kept in the cache.
+		For installed copies of NVDA, OneCore will still attempt to use these languages,
+		so we must check if they are valid first.
+		For portable copies, the cache is bypassed and `HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech_OneCore\`
+		is read directly.
+
+		For more information, refer to:
+		https://github.com/nvaccess/nvda/issues/13732#issuecomment-1149386711
 		"""
 		IDParts = ID.split('\\')
 		rootKey = getattr(winreg, IDParts[0])
@@ -450,45 +575,61 @@ class SynthDriver(SynthDriver):
 		return True
 
 	def _get_voice(self):
-		return self._dll.ocSpeech_getCurrentVoiceId(self._handle)
+		return self._dll.ocSpeech_getCurrentVoiceId(self._ocSpeechToken)
 
 	def _set_voice(self, id):
 		voices = self.availableVoices
 		# Try setting the requested voice
 		for voice in voices.values():
 			if voice.id == id:
-				self._dll.ocSpeech_setVoice(self._handle, voice.onecoreIndex)
+				self._dll.ocSpeech_setVoice(self._ocSpeechToken, voice.onecoreIndex)
 				return
 		raise LookupError("No such voice: %s"%id)
 
-	def _getDefaultVoice(self):
+	def _getDefaultVoice(self, pickAny: bool = True) -> str:
 		"""
 		Finds the best available voice that can be used as a default.
-		It first tries finding a voice with the same language and country as the user's configured Windows language (E.g. en_AU), 
-		else one that matches just the language (E.g. en), 
-		else simply the first available.
+		It first tries finding a voice with the same language as the user's configured NVDA language
+		else one that matches the system language.
+		else any voice if pickAny is True.
+		Uses the Windows locale (eg en_AU) to provide country information for the voice where possible.
 		@returns: the ID of the voice, suitable for passing to self.voice for setting.
-		@rtype: string
 		"""
 		voices = self.availableVoices
-		# Try matching to NVDA language
-		fullLanguage=languageHandler.getWindowsLanguage()
+		fullWindowsLanguage = languageHandler.getWindowsLanguage()
+		baseWindowsLanguage = fullWindowsLanguage.split('_')[0]
+		NVDALanguage = languageHandler.getLanguage()
+		if NVDALanguage.startswith(baseWindowsLanguage):
+			# add country information if it matches
+			NVDALanguage = fullWindowsLanguage
+		# Try matching to the NVDA language
 		for voice in voices.values():
-			if voice.language==fullLanguage:
+			if voice.language.startswith(NVDALanguage):
 				return voice.id
-		baseLanguage=fullLanguage.split('_')[0]
-		if baseLanguage!=fullLanguage:
+		# Try matching to the system language and country
+		if fullWindowsLanguage != NVDALanguage:
 			for voice in voices.values():
-				if voice.language.startswith(baseLanguage):
+				if voice.language == fullWindowsLanguage:
 					return voice.id
-		# Just use the first available
-		for voice in voices.values():
-			return voice.id
-		raise RuntimeError("No voices available")
-
-	def _get_language(self):
-		return self._dll.ocSpeech_getCurrentVoiceLanguage(self._handle)
+		# Try matching to the system language
+		if baseWindowsLanguage not in {fullWindowsLanguage, NVDALanguage}:
+			for voice in voices.values():
+				if voice.language.startswith(baseWindowsLanguage):
+					return voice.id
+		if pickAny:
+			for voice in voices.values():
+				return voice.id
+			raise VoiceUnsupportedError("No voices available")
+		raise VoiceUnsupportedError("No voices available that match the user language")
 
 	def pause(self, switch):
 		if self._player:
 			self._player.pause(switch)
+
+
+# Alias to allow look up by name "SynthDriver"
+SynthDriver = OneCoreSynthDriver
+
+
+class VoiceUnsupportedError(RuntimeError):
+	pass

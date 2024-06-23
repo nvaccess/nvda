@@ -1,44 +1,39 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited
+# Copyright (C) 2018-2021 NV Access Limited, Leonard de Ruijter
 
 from typing import Optional, Tuple
+from comtypes import COMError
+import winVersion
 import UIAHandler
-import _UIAHandler
-import _UIAConstants
-from _UIAConstants import (
+import UIAHandler.constants
+from UIAHandler.constants import (
 	UIAutomationType,
 )
+import speech
+import api
 import colors
 import locationHelper
 import controlTypes
-from _UIACustomProps import (
+from UIAHandler.customProps import (
 	CustomPropertyInfo,
+)
+from UIAHandler.customAnnotations import (
+	CustomAnnotationTypeInfo,
 )
 from comtypes import GUID
 from scriptHandler import script
 import ui
 from logHandler import log
 from . import UIA
+import re
 
 
 class ExcelCustomProperties:
 	""" UIA 'custom properties' specific to Excel.
 	Once registered, all subsequent registrations will return the same ID value.
-	This class should be used as a singleton via ExcelCustomProperties.get()
-	to prevent unnecessary work by repeatedly interacting with UIA.
 	"""
-	#: Singleton instance
-	_instance: "Optional[ExcelCustomProperties]" = None
-
-	@classmethod
-	def get(cls) -> "ExcelCustomProperties":
-		"""Get the singleton instance or initialise it.
-		"""
-		if cls._instance is None:
-			cls._instance = cls()
-		return cls._instance
 
 	def __init__(self):
 		self.cellFormula = CustomPropertyInfo(
@@ -90,21 +85,37 @@ class ExcelCustomProperties:
 		)
 
 
+class ExcelCustomAnnotationTypes:
+	""" UIA 'custom annotation types' specific to Excel.
+	Once registered, all subsequent registrations will return the same ID value.
+	"""
+	
+	def __init__(self):
+		#  Available custom Annotations list at https://docs.microsoft.com/en-us/office/uia/excel/excelannotations
+		# Note annotation:
+		# Represents an old-style comment (now known as a note)
+		# which contains non-threaded plain text content.
+		self.note = CustomAnnotationTypeInfo(
+			guid=GUID("{4E863D9A-F502-4A67-808F-9E711702D05E}"),
+		)
+
+
 class ExcelObject(UIA):
 	"""Common base class for all Excel UIA objects
 	"""
-	_UIAExcelCustomProps = ExcelCustomProperties.get()
+	_UIAExcelCustomProps = ExcelCustomProperties()
+	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes()
 
 
 class ExcelCell(ExcelObject):
+
+	_coordinateRegEx = re.compile("([A-Z]+)([0-9]+)", re.IGNORECASE)
 
 	# selecting cells causes duplicate focus events
 	shouldAllowDuplicateUIAFocusEvent = True
 
 	name = ""
-	role = controlTypes.ROLE_TABLECELL
-	rowHeaderText = None
-	columnHeaderText = None
+	role = controlTypes.Role.TABLECELL
 
 	#: Typing information for auto-property: _get_areGridlinesVisible
 	areGridlinesVisible: bool
@@ -113,7 +124,7 @@ class ExcelCell(ExcelObject):
 		parent = self.parent
 		# There will be at least one grid element between the cell and the sheet.
 		# There could be multiple as there might be a data table defined on the sheet.
-		while parent and parent.role == controlTypes.ROLE_TABLE:
+		while parent and parent.role == controlTypes.Role.TABLE:
 			parent = parent.parent
 		if parent:
 			return parent._getUIACacheablePropertyValue(self._UIAExcelCustomProps.areGridLinesVisible.id)
@@ -125,7 +136,7 @@ class ExcelCell(ExcelObject):
 	outlineColor: Optional[Tuple[colors.RGB]]
 
 	def _get_outlineColor(self) -> Optional[Tuple[colors.RGB]]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_OutlineColorPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineColorPropertyId, True)
 		if isinstance(val, tuple):
 			return tuple(colors.RGB.fromCOLORREF(v) for v in val)
 		return None
@@ -134,7 +145,7 @@ class ExcelCell(ExcelObject):
 	outlineThickness: Optional[Tuple[float]]
 
 	def _get_outlineThickness(self) -> Optional[Tuple[float]]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_OutlineThicknessPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_OutlineThicknessPropertyId, True)
 		if isinstance(val, tuple):
 			return val
 		return None
@@ -143,19 +154,19 @@ class ExcelCell(ExcelObject):
 	fillColor: Optional[colors.RGB]
 
 	def _get_fillColor(self) -> Optional[colors.RGB]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_FillColorPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillColorPropertyId, True)
 		if isinstance(val, int):
 			return colors.RGB.fromCOLORREF(val)
 		return None
 
 	#: Typing information for auto-property: _get_fillType
-	fillType: Optional[_UIAConstants.FillType]
+	fillType: Optional[UIAHandler.constants.FillType]
 
-	def _get_fillType(self) -> Optional[_UIAConstants.FillType]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_FillTypePropertyId, True)
+	def _get_fillType(self) -> Optional[UIAHandler.constants.FillType]:
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_FillTypePropertyId, True)
 		if isinstance(val, int):
 			try:
-				return _UIAConstants.FillType(val)
+				return UIAHandler.constants.FillType(val)
 			except ValueError:
 				pass
 		return None
@@ -164,7 +175,7 @@ class ExcelCell(ExcelObject):
 	rotation: Optional[float]
 
 	def _get_rotation(self) -> Optional[float]:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_RotationPropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_RotationPropertyId, True)
 		if isinstance(val, float):
 			return val
 		return None
@@ -173,7 +184,7 @@ class ExcelCell(ExcelObject):
 	cellSize: locationHelper.Point
 
 	def _get_cellSize(self) -> locationHelper.Point:
-		val = self._getUIACacheablePropertyValue(_UIAHandler.UIA_SizePropertyId, True)
+		val = self._getUIACacheablePropertyValue(UIAHandler.UIA_SizePropertyId, True)
 		x = val[0]
 		y = val[1]
 		return locationHelper.Point(x, y)
@@ -204,12 +215,13 @@ class ExcelCell(ExcelObject):
 		infoList.append(tmpl.format(self.cellSize))
 
 		if self.rotation is not None:
-			tmpl = pgettext(
+			infoList.append(npgettext(
 				"excel-UIA",
 				# Translators: The rotation in degrees of an Excel cell
-				"Rotation: {0} degrees"
-			)
-			infoList.append(tmpl.format(self.rotation))
+				"Rotation: {0} degree",
+				"Rotation: {0} degrees",
+				self.rotation,
+			).format(self.rotation))
 
 		if self.outlineColor is not None:
 			tmpl = pgettext(
@@ -241,7 +253,7 @@ class ExcelCell(ExcelObject):
 				# Translators: The fill type (pattern, gradient etc) of an Excel Cell
 				"Fill type: {0}"
 			)
-			infoList.append(tmpl.format(_UIAConstants.FillTypeLabels[self.fillType]))
+			infoList.append(tmpl.format(UIAHandler.constants.FillTypeLabels[self.fillType]))
 		numberFormat = self._getUIACacheablePropertyValue(
 			self._UIAExcelCustomProps.cellNumberFormat.id
 		)
@@ -350,16 +362,67 @@ class ExcelCell(ExcelObject):
 
 	def _get_states(self):
 		states = super().states
+		if controlTypes.State.FOCUSED in states and self.selectionContainer.getSelectedItemsCount() == 0:
+			# #12530: In some versions of Excel, the selection pattern reports 0 selected items,
+			# even though the focused UIA element reports as selected.
+			# NVDA only silences the positive SELECTED state when one item is selected.
+			# Therefore, by discarding both the SELECTED and SELECTABLE states,
+			# we eliminate the redundant selection announcement.
+			states.discard(controlTypes.State.SELECTED)
+			states.discard(controlTypes.State.SELECTABLE)
 		if self._isContentTooLargeForCell:
 			if not self._nextCellHasContent:
-				states.add(controlTypes.STATE_OVERFLOWING)
+				states.add(controlTypes.State.OVERFLOWING)
 			else:
-				states.add(controlTypes.STATE_CROPPED)
+				states.add(controlTypes.State.CROPPED)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.cellFormula.id):
-			states.add(controlTypes.STATE_HASFORMULA)
+			states.add(controlTypes.State.HASFORMULA)
 		if self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidationDropdown.id):
-			states.add(controlTypes.STATE_HASPOPUP)
+			states.add(controlTypes.State.HASPOPUP)
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			try:
+				annotationTypes = self._getUIACacheablePropertyValue(UIAHandler.UIA_AnnotationTypesPropertyId)
+			except COMError:
+				# annotationTypes cannot be fetched on older Operating Systems such as Windows 7.
+				annotationTypes = None
+			if annotationTypes:
+				if self._UIAExcelCustomAnnotationTypes.note.id in annotationTypes:
+					states.add(controlTypes.State.HASNOTE)
 		return states
+
+	@staticmethod
+	def _getColumnRepresentationForNumber(n: int) -> str:
+		"""
+		Convert a decimal number to its base alphabet representation.
+		See https://codereview.stackexchange.com/questions/182733/base-26-letters-and-base-10-using-recursion
+		for more details about the approach used.
+		"""
+		def modGenerator(x: int) -> Tuple[int, int]:
+			"""Generate digits from L{x} in base alphabet, least significants
+			bits first.
+
+			Since A is 1 rather than 0 in base alphabet, we are dealing with
+			L{x} - 1 at each iteration to be able to extract the proper digits.
+			"""
+			while x:
+				x, y = divmod(x - 1, 26)
+				yield y
+		return ''.join(
+			chr(ord("A") + i)
+			for i in modGenerator(n)
+		)[::-1]
+
+	@staticmethod
+	def _getNumberRepresentationForColumn(column: str) -> int:
+		"""
+		Convert an alphabet number to its decimal representation.
+		See https://codereview.stackexchange.com/questions/182733/base-26-letters-and-base-10-using-recursion
+		for more details about the approach used.
+		"""
+		return sum(
+			(ord(letter) - ord("A") + 1) * (26 ** i)
+			for i, letter in enumerate(reversed(column.upper()))
+		)
 
 	def _get_cellCoordsText(self):
 		if self._hasSelection():
@@ -373,7 +436,7 @@ class ExcelCell(ExcelObject):
 
 			firstAddress = firstSelected.GetCurrentPropertyValue(
 				UIAHandler.UIA_NamePropertyId
-			).replace('"', '')
+			).replace('"', '').replace(' ', '')
 
 			firstValue = firstSelected.GetCurrentPropertyValue(
 				UIAHandler.UIA_ValueValuePropertyId
@@ -385,7 +448,7 @@ class ExcelCell(ExcelObject):
 
 			lastAddress = lastSelected.GetCurrentPropertyValue(
 				UIAHandler.UIA_NamePropertyId
-			).replace('"', '')
+			).replace('"', '').replace(' ', '')
 
 			lastValue = lastSelected.GetCurrentPropertyValue(
 				UIAHandler.UIA_ValueValuePropertyId
@@ -393,7 +456,7 @@ class ExcelCell(ExcelObject):
 
 			cellCoordsTemplate = pgettext(
 				"excel-UIA",
-				# Translators: Excel, report range of cell coordinates
+				# Translators: Excel, report selected range of cell coordinates
 				"{firstAddress} {firstValue} through {lastAddress} {lastValue}"
 			)
 			return cellCoordsTemplate.format(
@@ -402,17 +465,50 @@ class ExcelCell(ExcelObject):
 				lastAddress=lastAddress,
 				lastValue=lastValue
 			)
-		name = super().name
-		# Later builds of Excel 2016 quote the letter coordinate.
-		# We don't want the quotes.
-		name = name.replace('"', '')
-		return name
+		else:
+			name = super().name
+			# Later builds of Excel 2016 quote the letter coordinate.
+			# We don't want the quotes and also strip the space between column and row.
+			name = name.replace('"', '').replace(' ', '')
+			if self.rowSpan > 1 or self.columnSpan > 1:
+				# Excel does not offer information about merged cells
+				# but merges all merged cells into one UIA element named as the first cell in the merged range.
+				# We have to calculate the last address name manually.
+				firstAddress = name
+				firstColumn, firstRow = self._coordinateRegEx.match(firstAddress).groups()
+				firstRow = int(firstRow)
+				lastColumn = firstColumn if self.columnSpan == 1 else self._getColumnRepresentationForNumber(
+					self._getNumberRepresentationForColumn(firstColumn) + (self.columnSpan - 1)
+				)
+				lastRow = firstRow + (self.rowSpan - 1)
+				lastAddress = f"{lastColumn}{lastRow}"
+				cellCoordsTemplate = pgettext(
+					"excel-UIA",
+					# Translators: Excel, report merged range of cell coordinates
+					"{firstAddress} through {lastAddress}"
+				)
+				return cellCoordsTemplate.format(
+					firstAddress=firstAddress,
+					lastAddress=lastAddress,
+				)
+			return name
 
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note or comment thread on the current cell"),
 		gesture="kb:NVDA+alt+c")
 	def script_reportComment(self, gesture):
+		if winVersion.getWinVer() >= winVersion.WIN11:
+			noteElement = self.UIAAnnotationObjects.get(self._UIAExcelCustomAnnotationTypes.note.id)
+			if noteElement:
+				name = noteElement.CurrentName
+				desc = noteElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
+				# Translators: a note on a cell in Microsoft excel.
+				text = _("{name}: {desc}").format(name=name, desc=desc)
+				ui.message(text)
+			else:
+				# Translators: message when a cell in Excel contains no note
+				ui.message(_("No note on this cell"))
 		commentsElement = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Comment)
 		if commentsElement:
 			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
@@ -420,25 +516,25 @@ class ExcelCell(ExcelObject):
 			numReplies = commentsElement.GetCurrentPropertyValue(self._UIAExcelCustomProps.commentReplyCount.id)
 			if numReplies == 0:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author}").format(
+				text = _("Comment thread: {comment}  by {author}").format(
 					comment=comment,
 					author=author
 				)
 			else:
-				# Translators: a comment on a cell in Microsoft excel.
-				text = _("{comment}  by {author} with {numReplies} replies").format(
-					comment=comment,
-					author=author,
-					numReplies=numReplies
-				)
+				text = ngettext(
+					# Translators: a comment on a cell in Microsoft excel.
+					"Comment thread: {comment}  by {author} with {numReplies} reply",
+					"Comment thread: {comment}  by {author} with {numReplies} replies",
+					numReplies,
+				).format(comment=comment, author=author, numReplies=numReplies)
 			ui.message(text)
 		else:
-			# Translators: A message in Excel when there is no note
-			ui.message(_("No note or comment thread on this cell"))
+			# Translators: A message in Excel when there is no comment thread
+			ui.message(_("No comment thread on this cell"))
 
 
 class ExcelWorksheet(ExcelObject):
-	role = controlTypes.ROLE_TABLE
+	role = controlTypes.Role.TABLE
 
 	# The grid UIAElement dies each time the sheet is scrolled.
 	# Therefore this grid would be announced in the focus ancestory each time which is bad.
@@ -454,7 +550,7 @@ class ExcelWorksheet(ExcelObject):
 		# and identifying it by one of its children would be more costly than the current approach.
 		parent.isPresentableFocusAncestor = True
 		# However, the selection state on the sheet is not useful, so remove it.
-		parent.states.discard(controlTypes.STATE_SELECTED)
+		parent.states.discard(controlTypes.State.SELECTED)
 		return parent
 
 
@@ -472,3 +568,18 @@ class BadExcelFormulaEdit(ExcelObject):
 	"""
 
 	shouldAllowUIAFocusEvent = False
+
+
+class ExcelTable(UIA):
+	""" Represents a table within an Excel spreadsheet."""
+
+	def event_focusExited(self):
+		# Generally, NVDA would not announce when focus exits an ancestor control.
+		# However, it is very common for focus to enter and exit tables within a spreadsheet,
+		# Thus we specifically announce exiting tables here,
+		# But only when focus is on an Excel cell,
+		# As we don't want to announce exiting the table when focus moves out of the spreadsheet entirely.
+		newFocus = api.getFocusObject()
+		if isinstance(newFocus, ExcelCell):
+			# Translators: announced when moving outside of a table in an Excel spreadsheet.
+			speech.speakMessage(_("Out of table"))

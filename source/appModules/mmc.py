@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2015-2020 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
+# Copyright (C) 2015-2023 NV Access Limited, David Parduhn, Bill Dengler, Leonard de Ruijter, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,12 +9,15 @@ import controlTypes
 import eventHandler
 from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.behaviors import ToolTip
+import NVDAObjects.window
+import winUser
+
 
 class MMCTable(IAccessible):
 	def _get_focusRedirect(self):
 		# #1486: workaround to read tables in MMC, such as the disk management graphical view.
 		for child in self.children:
-			if controlTypes.STATE_SELECTED in child.states:
+			if controlTypes.State.SELECTED in child.states:
 				return child
 		return None
 
@@ -22,7 +25,7 @@ class MMCTable(IAccessible):
 class MMCTableCell(IAccessible):
 	""" Cell and rowheader makes no sense for these controls. Mapping them to list items has added benefit
 	of suppressing selected. """
-	role = controlTypes.ROLE_LISTITEM
+	role = controlTypes.Role.LISTITEM
 
 	def event_selection(self):
 		if self.parent.hasFocus and api.getFocusObject() != self:
@@ -54,10 +57,23 @@ class toolTipWithEmptyName(ToolTip):
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "AfxWnd42u":
-			if obj.role == controlTypes.ROLE_TABLE:
+			if obj.role == controlTypes.Role.TABLE:
 				clsList.insert(0, MMCTable)
-			elif obj.role in (controlTypes.ROLE_TABLECELL,
-			controlTypes.ROLE_TABLEROWHEADER):
+			elif obj.role in (
+				controlTypes.Role.TABLECELL,
+				controlTypes.Role.TABLEROWHEADER
+			):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:
 			clsList.insert(0, toolTipWithEmptyName)
+
+	def isBadUIAWindow(self, hwnd):
+		windowClassName = winUser.getClassName(hwnd)
+		normalizedClassName = NVDAObjects.window.Window.normalizeWindowClassName(windowClassName)
+		if normalizedClassName in (
+			# #15333: SysListView32 controls in mmc are known to have an incomplete UIA implementation.
+			# Revert back to the MSAA implementation instead.
+			'SysListView32'
+		):
+			return True
+		return False
