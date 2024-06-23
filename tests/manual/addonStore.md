@@ -209,7 +209,7 @@ Full automatic updating is not currently supported.
 
 ### Check for new add-ons
 
-1. Remove `source/userConfig/addonStore/_cachedCompatibleAddons-old.json`, or edit this file removing some entries corresponding to cached add-ons
+1. Remove `source/userConfig/addonStore/_cachedCompatibleAddons-old.json`, or edit this file removing some entries corresponding to cached add-ons, or changing version number
 1. Start NVDA
 1. Open the store to the New available add-ons tab
 1. Ensure Show new add-ons notifications are enabled in the Add-on Store panel
