@@ -1452,7 +1452,7 @@ class WordDocument(Window):
 			curTime=time.time()
 		return curVal
 
-	@script(gestures=["kb:control+b", "kb:control+shift+b"])
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1467,7 +1467,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
-	@script(gestures=["kb:control+i", "kb:control+shift+i"])
+	@script(gesture="kb:control+i")
 	def script_toggleItalic(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1482,7 +1482,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
-	@script(gestures=["kb:control+u", "kb:control+shift+u", "kb:control+shift+d", "kb:control+shift+w"])
+	@script(gestures=["kb:control+u", "kb:control+shift+d", "kb:control+shift+w"])
 	def script_toggleUnderline(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
