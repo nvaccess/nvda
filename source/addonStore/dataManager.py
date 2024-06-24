@@ -301,13 +301,14 @@ class _DataManager:
 	def _checkForNewAddons(self) -> bool:
 		oldAddons = self._getOldAddons()
 		compatibleAddons = self.getLatestCompatibleAddons()
+		installedAddons = self._installedAddonsCache._get_installedAddons()
 		for channel in compatibleAddons:
 			for addonId in compatibleAddons[channel]:
 				compatibleAddon = compatibleAddons[channel][addonId]
 				if (
 					addonId not in oldAddons[channel]
 					or compatibleAddon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
-				):
+				) and addonId not in installedAddons:
 					return True
 		return False
 
