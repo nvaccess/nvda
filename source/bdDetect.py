@@ -106,6 +106,11 @@ DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
 
 _driverDevices = OrderedDict[str, DriverDictT]()
 
+fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
+"""This class is used to store fallback devices.
+When registered as a fallback device, it will be yielded last among the connected USB devices.
+"""
+
 scanForDevices = extensionPoints.Chain[Tuple[str, DeviceMatch]]()
 """
 A Chain that can be iterated to scan for devices.
@@ -161,7 +166,7 @@ def getDriversForConnectedUsbDevices(
 				continue
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+					if (driver, match.type, match.id) in fallBackDevices:
 						fallbackDriversAndMatches.append({driver, match})
 					else:
 						yield driver, match
@@ -174,7 +179,7 @@ def getDriversForConnectedUsbDevices(
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
-			if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+			if (driver, match.type, match.id) in fallBackDevices:
 				fallbackDriversAndMatches.append({hidName, match})
 			else:
 				yield hidName, match
@@ -458,7 +463,7 @@ class _Detector:
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
 		# Clear the fallback devices
-		FallbackDevicesStore.fallBackDevices.clear()
+		fallBackDevices.clear()
 		# Clear the cache of bluetooth devices so new devices can be picked up with a new instance.
 		deviceInfoFetcher.btDevsCache = None
 		self._executor.shutdown(wait=False)
@@ -490,7 +495,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
-				if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+				if (driver, match.type, match.id) in fallBackDevices:
 					fallbackMatches.append(match)
 				else:
 					yield match
@@ -498,7 +503,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					if (driver, match.type, match.id) in FallbackDevicesStore.fallBackDevices:
+					if (driver, match.type, match.id) in fallBackDevices:
 						fallbackMatches.append(match)
 					else:
 						yield match
@@ -651,7 +656,7 @@ class DriverRegistrar:
 				f"{', '.join(malformedIds)}"
 			)
 		if useAsFallBack:
-			FallbackDevicesStore.fallBackDevices.update((self._driver, type, id) for id in ids)
+			fallBackDevices.update((self._driver, type, id) for id in ids)
 		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
@@ -690,10 +695,3 @@ class DriverRegistrar:
 		scanForDevices.register(scanFunc)
 		if moveToStart:
 			scanForDevices.moveToEnd(scanFunc, last=False)
-
-
-class FallbackDevicesStore:
-	"""This class is used to store fallback devices.
-	When registered as a fallback device, it will be yielded last among the connected USB devices.
-	"""
-	fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
