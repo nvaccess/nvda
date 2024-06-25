@@ -528,10 +528,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _accumulateSerialData(self, data: bytes) -> bool:
 		if self._serialData:
 			self._serialData += data
-			if len(self._serialData) == 10:
-				return True
-			else:
-				return False
+			return len(self._serialData) == 10
+
 		return True
 
 	def _processSerialData(self, firstByte: bytes, stream):
