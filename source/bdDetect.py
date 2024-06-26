@@ -106,8 +106,9 @@ DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
 
 _driverDevices = OrderedDict[str, DriverDictT]()
 
-fallBackDevices: set[Tuple[str, DeviceType, str]] = set()
-"""This class is used to store fallback devices.
+fallBackDevices: set[tuple[str, DeviceType, str]] = set()
+"""
+Used to store fallback devices.
 When registered as a fallback device, it will be yielded last among the connected USB devices.
 """
 
