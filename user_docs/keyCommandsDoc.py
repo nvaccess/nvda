@@ -37,9 +37,6 @@ class Command(StrEnum):
 	SETTING = "setting"
 	SETTINGS_SECTION = "settingsSection"
 
-	def t2tRegex(self) -> re.Pattern:
-		return re.compile(rf"%kc:({self.value}.*)")
-
 
 class Regex(Enum):
 	COMMAND = re.compile(r"^<!-- KC:(?P<cmd>[^:\s]+)(?:: (?P<arg>.*))? -->$")
@@ -120,7 +117,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 		if cmd == Command.TITLE.value:
 			if self._kcSect > Section.HEADER:
 				raise KeyCommandsError(f"{self._lineNum}, title command is not valid here")
-			# Write the title and two blank lines to complete the txt2tags header section.
+			# Write the title and two blank lines to complete the header section.
 			self._kcLines.append("# " + arg + LINE_END * 2)
 			# Add table of contents marker
 			self._kcLines.append("[TOC]" + LINE_END * 2)
@@ -139,7 +136,10 @@ class KeyCommandsPreprocessor(Preprocessor):
 
 		elif cmd == Command.SETTINGS_SECTION.value:
 			# The argument is the table header row for the settings section.
-			# Replace t2t header syntax with markdown syntax.
+			# Replace legacy t2t header syntax with markdown syntax.
+			# TODO: when migrating all userGuide translations to po files,
+			# update the base userGuide to replace the legacy syntax with markdown syntax
+			# and remove this.
 			self._settingsHeaderRow = arg.replace("||", "|")
 			# There are name and description columns.
 			# Each of the remaining columns provides keystrokes for one layout.
