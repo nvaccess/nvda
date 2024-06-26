@@ -312,7 +312,7 @@ class Gecko_ia2(VirtualBuffer):
 
 	def getNVDAObjectFromIdentifier(self, docHandle, ID):
 		try:
-			pacc=self.rootNVDAObject.IAccessibleObject.accChild(ID)
+			pacc = self.rootNVDAObject.IAccessibleObject.accChild(ID)
 		except COMError:
 			return None
 		return NVDAObjects.IAccessible.IAccessible(
