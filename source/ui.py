@@ -131,6 +131,10 @@ def browseableMessage(
 		return
 	d.add("title", title)
 	d.add("message", message)
+	# Translators: A notice to the user that the copy operation succeeded.
+	d.add("copySuccessfulAlertText", _("Text copied."))
+	# Translators: Notice to the user that the copy operation failed.
+	d.add("copyFailedAlertText", _("Couldn't copy to clipboard."))
 	if closeButton:
 		# Translators: The text of a button which closes the window.
 		d.add("closeButtonText", _("Close"))
