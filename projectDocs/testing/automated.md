@@ -9,16 +9,6 @@ Then, run:
 scons tests
 ```
 
-### Unit tests
-To run only specific unit tests, specify them using the `unitTests` variable on the command line.
-The tests should be provided as a comma-separated list.
-Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
-For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
-
-```cmd
-scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
-```
-
 ### Translatable string checks
 To run only the translatable string checks (which check that all translatable strings have translator comments), run:
 
