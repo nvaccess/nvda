@@ -91,7 +91,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 
 def browseableMessage(
 		message: str,
-		title: Optional[str] = None,
+		title: str | None = None,
 		isHtml: bool = False,
 		closeButton: bool = False,
 		copyButton: bool = False

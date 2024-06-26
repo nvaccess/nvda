@@ -2391,7 +2391,8 @@ class GlobalCommands(ScriptableObject):
 				message,
 				# Translators: title for formatting information dialog.
 				_("Formatting"),
-				copyButton=True, closeButton=True
+				copyButton=True,
+				closeButton=True,
 			)
 
 	@staticmethod
@@ -4090,7 +4091,8 @@ class GlobalCommands(ScriptableObject):
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
 					title=_("Destination of: {name}").format(name=obj.name),
-					closeButton=True, copyButton=True
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(linkDestination)  # Speak the link

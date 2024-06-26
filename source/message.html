@@ -4,7 +4,7 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
-var args = window.dialogArguments;
+const args = window.dialogArguments;
 
 function handleKeyPress(e) {
 	e = e || window.event;
@@ -17,11 +17,11 @@ function handleKeyPress(e) {
 
 function onCopyButtonPress() {
 	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
-	var rng = document.body.createTextRange();
+	const rng = document.body.createTextRange();
 	rng.moveToElementText(messageID);
 	rng.scrollIntoView();
 	rng.select();
-	var success = rng.execCommand("Copy");
+	const success = rng.execCommand("Copy");
 	rng.collapse(false);
 	rng.select();
 	if (args) {  // Notify the user about the copy result
@@ -59,7 +59,7 @@ function windowOnLoad() {
 //-->
 </SCRIPT>
 </HEAD>
-<BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
+<body tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
 <div id=messageID></div>
 <div id="buttonDiv" style="display: none;"><hr>
 <span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>

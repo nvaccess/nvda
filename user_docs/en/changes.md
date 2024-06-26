@@ -43,7 +43,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
-* The Report link destination,  Character formatting information, and Speak selection windows, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
 
 ### Bug Fixes
 * Windows 11 fixes:
