@@ -382,9 +382,9 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
 	"""Convert reportFontAttributes from a boolean to a choice of speech and/or braille."""
 	try:
-		fontAttributesSetting: bool = profile["documentFormatting"]["reportFontAttributes"]
+		reportFontAttributes: bool = profile["documentFormatting"].as_bool("reportFontAttributes")
 	except KeyError:
 		log.debug("reportFontAttributes not present in config, no action taken.")
 		return
-	profile['documentFormatting']['reportFontAttributes'] = OutputMode.SPEECH_AND_BRAILLE if fontAttributesSetting == True else OutputMode.OFF
+	profile['documentFormatting']['reportFontAttributes'] = OutputMode.SPEECH_AND_BRAILLE if reportFontAttributes else OutputMode.OFF
 	log.debug(f"documentFormatting.reportFontAttributes converted to {profile['documentFormatting']['reportFontAttributes']}.")
