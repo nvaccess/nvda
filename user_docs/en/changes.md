@@ -68,6 +68,7 @@ Unicode CLDR has also been updated.
 * When navigating with the cursor keys in text boxes in applications which use UI Automation, NVDA no longer sometimes reports the wrong character, word, etc. (#16711, @jcsteh)
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
+* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 
 ### Changes for Developers
 
