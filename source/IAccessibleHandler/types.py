@@ -26,3 +26,5 @@ class RelationType(str, enum.Enum):
 	DETAILS = "details"
 	DETAILS_FOR = "detailsFor"
 	CONTROLLER_FOR = "controllerFor"
+	ERROR = "error"
+	ERROR_FOR = "errorFor"

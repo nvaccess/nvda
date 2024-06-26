@@ -105,7 +105,8 @@ env = Environment(variables=vars,HOST_ARCH='x86',tools=[
 	"gettextTool",
 	"md2html",
 	"doxygen",
-	"recursiveInstall"
+	"recursiveInstall",
+	"m4",
 ])
 
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
@@ -411,22 +412,10 @@ outputHeadingStylesFile = env.Command(
 	Copy("$TARGET", "$SOURCE")
 )
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
-changesMDFile = env.Command(
-	outputDir.File("changes.md"),
-	userDocsDir.File('en/changes.md'),
-	Copy('$TARGET', '$SOURCE')
-)
-env.Depends(changesFile, changesMDFile)
 env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
 
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
-userGuideMDFile = env.Command(
-	outputDir.File("userGuide.md"),
-	userDocsDir.File('en/userGuide.md'),
-	Copy('$TARGET', '$SOURCE')
-)
-env.Depends(userGuideFile, userGuideMDFile)
 env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide', userGuideFile)
 

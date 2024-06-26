@@ -39,8 +39,17 @@ Major highlights include:
 
 ### System Requirements {#SystemRequirements}
 
+#### Recommended System Requirements {#MinimumSystemRequirements}
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+  * both AMD64 and ARM64 variants of Windows are supported.
+* at least 150 MB of storage space.
+* at least 4 GB of RAM.
+
+#### Minimum System Requirements {#MinimumSystemRequirements}
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
+  * Note 32-bit operating systems are no longer under active support.
+  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 150 MB of storage space.
 
 ### Internationalization {#Internationalization}
@@ -352,6 +361,9 @@ The status of the add-on will be listed as "Update available".
 The list will display the currently installed version and the available version.
 Press `enter` on the add-on to open the actions list; choose "Update".
 
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+
 ### Community {#Community}
 
 NVDA has a vibrant user community.
@@ -430,10 +442,16 @@ This option is only available when installing from a portable copy, not when ins
 If creating a portable copy directly from the NVDA download package, press the Create Portable Copy button.
 If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
-The Dialog that appears allows you to choose where the portable copy should be created.
+The dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+By default, a new directory is created for the portable copy.
+You can also choose to use an existing directory, this will overwrite files in the directory.
+If the existing directory is a portable copy of NVDA, that copy will be updated.
+
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use with the newly created portable copy.
+This also includes add-ons.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -493,8 +511,7 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 
 #### Data usage statistics dialog {#UsageStatsDialog}
 
-Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future.
-When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
+When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA, in order to help improve NVDA in the future.
 You can read more info about the data gathered by NV Access in the general settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
 Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
@@ -505,8 +522,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the numpad Insert, Extended Insert and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the numpad Insert and Extended Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
+By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
@@ -900,6 +917,7 @@ These extra mouse features are not turned on by default in NVDA.
 If you wish to take advantage of them, you can configure them from the [Mouse settings](#MouseSettings) category of the [NVDA Settings](#NVDASettings) dialog, found in the NVDA Preferences menu.
 
 Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
+
 <!-- KC:beginInclude -->
 
 | Name |Desktop key |Laptop key |Touch |Description|
@@ -908,6 +926,10 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Left mouse button lock |shift+numpadDivide |NVDA+control+[ |none |Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands|
 |Right mouse click |numpadMultiply |NVDA+] |tap and hold |Clicks the right mouse button once, mostly used to open context menu at the location of the mouse.|
 |Right mouse button lock |shift+numpadMultiply |NVDA+control+] |none |Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands|
+|Scroll up at the mouse position |none |none |none |Scrolls the mouse wheel up at the current mouse position|
+|Scroll down at the mouse position|none |none |none |Scrolls the mouse wheel down at the current mouse position|
+|Scroll left at the mouse position |none |none |none |Scrolls the mouse wheel left at the current mouse position|
+|Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
 
@@ -1781,10 +1803,11 @@ The following information is always sent:
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
-If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
+If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
 
+* A unique ID for the current NVDA user, this changes once a month
 * NVDA interface language
 * Whether this copy of NVDA is portable or installed
 * Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
@@ -1877,6 +1900,39 @@ This option applies to all synthesizers, not just the currently active synthesiz
 
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
+
+##### Unicode normalization {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+This is beneficial when speaking characters that can be represented in several forms.
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
+
+1. Normalization to composed characters.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+  1. One stand alone unicode character (ü)
+  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+
+1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
+
+This setting is a checkbox that, when checked, tells NVDA to explicitly report that a character is normalized when spoken as an individual character such as when spelling.
+For example, when this option is enabled, spelling the character "ĳ" will pronounce it as "i j normalized".
+
+Note that this setting is only available when "[Unicode normalization](#SpeechUnicodeNormalization)" is enabled.
 
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
@@ -2116,6 +2172,18 @@ If this is disabled, as much of the word as possible will be displayed, but the 
 When you scroll the display, you will then be able to read the rest of the word.
 
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+##### Unicode normalization {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2925,27 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
+#### Add-on Store Settings {#AddonStoreSettings}
+
+This category allows you to adjust the behaviour of the Add-on Store.
+
+##### Update Notifications {#AutomaticAddonUpdates}
+
+When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
+This check is performed every 24 hours.
+Notifications will only occur for add-ons with updates available within the same channel.
+For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notify (Default), Disabled |
+|Default |Notify |
+
+|Option |Behaviour |
+|---|---|
+|Enabled |Notify when updates are available to add-ons within the same channel |
+|Disabled |Do not automatically check for updates to add-ons |
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3442,6 +3531,9 @@ If NVDA is installed and running on your system, you can also open an add-on fil
 When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
 
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
+
 #### Removing Add-ons {#AddonStoreRemoving}
 
 To remove an add-on, select the add-on from the list and use the Remove action.
@@ -3564,14 +3656,10 @@ For more information, read the in-depth section: [Add-ons and the Add-on Store](
 ### Create portable copy {#CreatePortableCopy}
 
 This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
 
 The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
 
-In this dialog you can enable or disable the following:
-
-* Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and also includes add-ons and other modules)
-* Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4089,7 @@ The following extra devices are also supported (and do not require any special d
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Note that the Zoomax is currently not supported without external drivers
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -4995,8 +5084,8 @@ Following are the command line options for NVDA:
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
 |None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)|
 |None |`--copy-portable-config` |When installing, copy the portable configuration from the provided path (`--config-path`, `-c`) to the current user account|
-|None |`--create-portable` |Creates a portable copy of NVDA (starting the newly created copy). Requires `--portable-path` to be specified|
-|None |`--create-portable-silent` |Creates a portable copy of NVDA (does not start the newly installed copy). Requires `--portable-path` to be specified|
+|None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
+|None |`--create-portable-silent` |Creates a portable copy of NVDA  (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
 |None |`--portable-path=PORTABLEPATH` |The path where a portable copy will be created|
 
 ### System Wide Parameters {#SystemWideParameters}

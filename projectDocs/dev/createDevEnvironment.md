@@ -62,6 +62,12 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
+* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
+	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
+
+	```sh
+	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
+	```
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
@@ -71,11 +77,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `cb62d93fd7b61d8593b9ae432e6e2a78e3711a77`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `54ee11a79c66c8ecb9a48a7084163beff3bd6075`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.29.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 44.0
+* [liblouis](http://www.liblouis.io/), version 3.30.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 45.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`
@@ -85,24 +91,15 @@ For reference, the following run time dependencies are included in Git submodule
 * [Nullsoft Install System](https://nsis.sourceforge.io), version 3.08
 * [Java Access Bridge 32 bit, from Zulu Community OpenJDK build 17.0.9+8Zulu (17.46.19)](https://github.com/nvaccess/javaAccessBridge32-bin)
 * [wil](https://github.com/microsoft/wil/)
-* [Microsoft UI Automation Remote Operations Library, forked from @microsoft by @michaeldcurran](https://www.github.com/michaeldcurran/microsoft-ui-uiautomation/)
-	* Commit 224b22f3bf9e
-	* The fork specifically adds support for CallExtension / IsExtensionSupported to the high-level API, see pr microsoft/microsoft-ui-uiautomation#84 and #95.
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 
 Additionally, the following build time dependencies are included in the miscDeps git submodule: 
 
-* [txt2tags](https://txt2tags.org/), version 2.5
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
-* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
-	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
 
-	```sh
-	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
-	```
 
 ### Python dependencies
 NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.

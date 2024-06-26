@@ -11,6 +11,7 @@ from typing import (
 from comtypes import COMError
 import comtypes.client
 import oleacc
+import time
 from IAccessibleHandler import IA2, splitIA2Attribs
 import appModuleHandler
 import controlTypes
@@ -22,11 +23,13 @@ from NVDAObjects import NVDAObject
 from NVDAObjects.IAccessible import IAccessible, IA2TextTextInfo
 from NVDAObjects.behaviors import EditableText
 from logHandler import log
+from scriptHandler import script
 import speech
 import api
 import braille
 import inputCore
 import languageHandler
+import ui
 import vision
 
 
@@ -350,6 +353,40 @@ class SymphonyTable(IAccessible):
 			curFocus.announceSelectionChange()
 
 
+class SymphonyButton(IAccessible):
+
+    def event_stateChange(self) -> None:
+        # announce new state of toggled toolbar button to indicate formatting change
+        # if registered gesture resulted in button state change
+        if (
+            SymphonyDocument.announceToolbarButtonToggle
+            and self.parent
+            and self.parent.role == controlTypes.Role.TOOLBAR
+            and time.time()
+            < (
+                SymphonyDocument.lastFormattingGestureEventTime
+                + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
+            )
+        ):
+            states = self.states
+            enabled = (
+                controlTypes.State.PRESSED in states
+                or controlTypes.State.CHECKED in states
+            )
+            # button's accessible name is the font attribute, e.g. "Bold", "Italic"
+            if enabled:
+                # Translators: a message when toggling formatting (e.g. bold, italic) in LibreOffice
+                message = _("{textAttribute} on").format(textAttribute=self.name)
+            else:
+                # Translators: a message when toggling formatting (e.g. bold, italic) in LibreOffice
+                message = _("{textAttribute} off").format(textAttribute=self.name)
+            ui.message(message)
+            # disable announcement until next registered keypress enables it again
+            SymphonyDocument.announceToolbarButtonToggle = False
+
+        return super().event_stateChange()
+
+
 class SymphonyParagraph(SymphonyText):
 	"""Removes redundant information that can be retreaved in other ways."""
 	value=None
@@ -399,6 +436,11 @@ class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
 class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
+	# variables used for handling announcements resulting from gestures
+	GESTURE_ANNOUNCEMENT_TIMEOUT = 0.15
+	announceToolbarButtonToggle = False
+	lastFormattingGestureEventTime = 0
+
 	# override base class implementation because that one assumes
 	# that the text retrieved from the text info for the text unit
 	# is the same as the text that actually gets removed, which at
@@ -433,6 +475,37 @@ class SymphonyDocument(CompoundDocument):
 		else:
 			log.warning('Backspace did not remove text as expected.')
 
+	@script(
+		gestures=[
+			# bold
+			"kb:control+b",
+			# italic
+			"kb:control+i",
+			# underline
+			"kb:control+u",
+			# superscript
+			"kb:control+shift+p",
+			# subscript
+			"kb:control+shift+b",
+			# align left
+			"kb:control+l",
+			# align center
+			"kb:control+e",
+			# align right
+			"kb:control+r",
+			# justified
+			"kb:control+j",
+		]
+	)
+	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
+		"""Reset time and enable announcement of toggled toolbar buttons.
+		See :func:`SymphonyButton.event_stateChange`
+		"""
+		SymphonyDocument.announceToolbarButtonToggle = True
+		SymphonyDocument.lastFormattingGestureEventTime = time.time()
+		# send gesture
+		gesture.send()
+
 
 class AppModule(appModuleHandler.AppModule):
 
@@ -445,6 +518,8 @@ class AppModule(appModuleHandler.AppModule):
 					clsList.insert(0, SymphonyIATableCell)
 				else:
 					clsList.insert(0, SymphonyTableCell)
+			elif role in {controlTypes.Role.BUTTON, controlTypes.Role.DROPDOWNBUTTON}:
+				clsList.insert(0, SymphonyButton)
 			elif role == controlTypes.Role.TABLE and (
 				hasattr(obj, "IAccessibleTable2Object")
 				or hasattr(obj, "IAccessibleTableObject")

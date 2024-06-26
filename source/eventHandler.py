@@ -23,6 +23,7 @@ import extensionPoints
 import oleacc
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import winVersion
+from comInterfaces import IAccessible2Lib as IA2
 
 if typing.TYPE_CHECKING:
 	import NVDAObjects
@@ -239,7 +240,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 	def isMenuItemOfCurrentFocus(self) -> bool:
 		"""
 		Checks if the current object is a menu item of the current focus.
-		The only known case where this returns True is the following (see #12624):
+		The only known case where this returns True is the following (see #12624, #14550):
 		
 		When opening a submenu in certain applications (like Thunderbird 78.12),
 		NVDA can process a menu start event after the first item in the menu is focused.
@@ -250,24 +251,41 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 		The focus event order after activating the menu item's sub menu is (submenu item, submenu).
 		"""
 		from NVDAObjects import IAccessible
+
 		lastFocus = api.getFocusObject()
-		_isMenuItemOfCurrentFocus = (
-			self._obj.parent
-			and isinstance(self._obj, IAccessible.IAccessible)
+		
+		# This case can only occur when:
+		# 1. the old and new focus targets are instances of IAccessible; and
+		# 2. the old focus is a menuitem, menuitemradio or menuitemcheckbox; and
+		# 3. the new focus is a menu; and
+		# 4. the old focus has a parent.
+		if not (
+			isinstance(self._obj, IAccessible.IAccessible)
 			and isinstance(lastFocus, IAccessible.IAccessible)
-			and self._obj.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUITEM
-			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
-			and self._obj.parent == lastFocus
-		)
-		if _isMenuItemOfCurrentFocus:
-			# Change this to log.error for easy debugging
-			log.debugWarning(
-				"This parent menu was not announced properly, "
-				"and should have been focused before the submenu item.\n"
-				f"Object info: {self._obj.devInfo}\n"
-				f"Object parent info: {self._obj.parent.devInfo}\n"
+			and self._obj.IAccessibleRole in (
+				oleacc.ROLE_SYSTEM_MENUITEM,
+				IA2.IA2_ROLE_CHECK_MENU_ITEM,
+				IA2.IA2_ROLE_RADIO_MENU_ITEM
 			)
-		return _isMenuItemOfCurrentFocus
+			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
+			and self._obj.parent
+		):
+			return False
+
+		# Check that the old focus is a descendant of the new focus.
+		ancestor = self._obj.parent
+		while ancestor is not None:
+			if ancestor == lastFocus:
+				log.debugWarning(
+					"This ancestor menu was not announced properly, and should have been focused before the submenu item.\n"
+					f"Object info: {self._obj.devInfo}\n"
+					f"Ancestor info: {ancestor.devInfo}"
+				)
+				return True
+			
+			ancestor = ancestor.parent
+		
+		return False
 
 
 def _getFocusLossCancellableSpeechCommand(
