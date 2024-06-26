@@ -40,6 +40,8 @@ Unicode CLDR has also been updated.
   * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
     * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
   * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
+  * Updated python markdown 3.5.1 to 3.6(#16725, @dpy013)
+  * Updated nh3 0.2.15 to 0.2.17(#16725, @dpy013)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
