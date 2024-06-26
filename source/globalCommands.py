@@ -44,6 +44,7 @@ from config.configFlags import (
 	TetherTo,
 	ShowMessages,
 	BrailleMode,
+	OutputMode,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -558,19 +559,26 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report font attributes command.
-		description=_("Toggles on and off the reporting of font attributes"),
+		description=_("Toggles between speaking, brailling, speaking and brailling, and not reporting font attributes."),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportFontAttributes(self,gesture):
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
-			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes off")
-			config.conf["documentFormatting"]["reportFontAttributes"]=False
-		else:
-			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes on")
-			config.conf["documentFormatting"]["reportFontAttributes"]=True
-		ui.message(state)
+		currentValue = config.conf["documentFormatting"]["reportFontAttributes"]
+		nextValue = OutputMode((currentValue + 1) % len(OutputMode))
+		if nextValue == OutputMode.OFF:
+			# Translators: A state in which font attributes are not reported.
+			status = _("Do not report font attributes")
+		if nextValue == OutputMode.SPEECH:
+			# Translators: A state in which font attributes are only spoken.
+			status = _("Speak font attributes")
+		if nextValue == OutputMode.BRAILLE:
+			# Translators: A state in which font attributes are only brailled.
+			status = _("Braille font attributes")
+		if nextValue == OutputMode.SPEECH_AND_BRAILLE:
+			# Translators: A state in which font attributes are both spoken and brailled.
+			status = _("Speak and braille font attributes")
+		config.conf["documentFormatting"]["reportFontAttributes"]=nextValue
+		ui.message(status)
 
 	@script(
 		# Translators: Input help mode message for toggle superscripts and subscripts command.
