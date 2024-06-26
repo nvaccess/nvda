@@ -22,6 +22,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import configobj.validate
 from configobj import ConfigObj
@@ -376,3 +377,16 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 			"hidBrailleStandard added to braille display auto detection excluded displays. "
 			f"List is now: {profile['braille']['auto']['excludedDisplays']}"
 		)
+
+
+def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
+	"""Convert reportFontAttributes from a boolean to a choice of speech and/or braille.
+	"""
+	try:
+		fontAttributesSetting: bool = profile["documentFormatting"]["reportFontAttributes"]
+		log.info(f"Font attributes: {fontAttributesSetting}")
+	except KeyError:
+		log.debug("reportFontAttributes not present in config, no action taken.")
+		return
+	profile['documentFormatting']['reportFontAttributes'] = OutputMode.SPEECH_AND_BRAILLE if fontAttributesSetting == True else OutputMode.OFF
+	log.debug(f"documentFormatting.reportFontAttributes converted to {profile['documentFormatting']['reportFontAttributes']}.")
