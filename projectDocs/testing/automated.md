@@ -29,10 +29,20 @@ To be warned about linting errors faster, you may wish to integrate Flake8 with 
 For more details, see `tests/lint/readme.md`
 
 ### Unit Tests
+
 Unit tests can be run with the `rununittests.bat` script.
-Internally this script uses the Nose Python test framework to execute the tests.
-Any arguments given to `rununittests.bat` are forwarded onto Nose.
-Please refer to Nose's own documentation on how to filter tests etc.
+Internally this script uses the [xmlrunner](https://github.com/pycontribs/xmlrunner) wrapper around the [unittest](https://docs.python.org/3/library/unittest.html) framework to execute the tests.
+Any arguments given to `rununittests.bat` are forwarded onto xmlrunner, and thence to unittest.
+
+To run only specific unit tests, specify a pattern to match against using the `-k` option on the command line.
+The `-k` option can be provided multiple times to provide multiple patterns to match against.
+For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
+
+```cmd
+rununittests -k test_cursorManager.TestMove -k test_cursorManager.TestSelection
+```
+
+Please refer to xmlrunner's and unittest's own documentation for further information on how to filter tests etc.
 
 ### System Tests
 System tests can be run with the `runsystemtests.bat --include <TAG>` script.
