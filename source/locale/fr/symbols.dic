@@ -1,5 +1,5 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (c) 2011-2023 NVDA contributors.
+# Copyright (c) 2011-2024 NVDA contributors.
 # This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -13,6 +13,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;])\s?;(?=[\"'”’);\s]|$)
 : phrase ending	(?<=[^\s:])\s?:(?=[\"'”’);\s]|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\,(?=\d)
 thousands separator	(?<![^\d -])\.(?=\d{3}(\D|$))
@@ -37,6 +39,7 @@ symbols:
 … sentence ending	points de suspension	all	always	# … fin de phrase
 ; phrase ending	point virgule	# ; fin de phrase
 : phrase ending	deux points	# : fin de phrase
+multiple .	points multiples
 
 decimal point		# virgule décimale
 thousands separator		# point des mille
@@ -61,6 +64,7 @@ n°	\1 \2 	most	norep	# numéro
 
 # Standard punctuation/symbols
 !	point d'exclamation
+！	point d'exclamation pleine chasse
 "	guillemet
 \#	dièse	none
 $	dollar
@@ -80,17 +84,21 @@ $	dollar
 ،	virgule arabe	all	always
 -	tiret
 .	point
+．	point pleine chasse
 |	bar	most
 ·	point médian	most
 /	barre oblique
 :	deux points
+：	deux points pleine chasse
 ;	point virgule
 ؛	point-virgule arabe	most
+；	point virgule pleine chasse
 <	inférieur
 =	égal
 ?	point d'interrogation
 ⸮	point d'interrogation réfléchi	some
 ؟	point d’interrogation arabe
+？	point d'interrogation pleine chasse
 @	arobase	none
 [	crochet gauche
 ]	crochet droit
@@ -210,9 +218,9 @@ _	souligné
 #operations sur les ensembles
 ∖	différence d'ensembles
 ⊍	multiplication de multiensemble
-𝒫	ensemble de pouvoirs de l'ensemble
-𝔓	ensemble de pouvoirs de l'ensemble
-℘	ensemble de pouvoirs de l'ensemble
+𝒫	ensemble des parties de l'ensemble
+𝔓	ensemble des parties de l'ensemble
+℘	ensemble des parties de l'ensemble
 ∁	complément
 
 #Définir les relations et définir les constructions

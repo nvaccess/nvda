@@ -286,8 +286,7 @@ freeze(
 		excludes=tuple(
 			f"*{ext}" for ext in importlib.machinery.all_suffixes()
 			) + (
-		"*.t2t",
-		"*.t2tconf",
+		"__pycache__",
 		"*.md",
 		"*/user_docs/styles.css",
 		"*/user_docs/numberedHeadings.css",

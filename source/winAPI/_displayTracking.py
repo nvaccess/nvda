@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited
+# Copyright (C) 2022–2024 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -64,7 +64,7 @@ def getPrimaryDisplayOrientation() -> OrientationState:
 	return OrientationState(
 		width,
 		height,
-		_getOrientationStyle(width, height)
+		_getOrientationStyle(width=width, height=height)
 	)
 
 

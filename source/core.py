@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
-# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -270,6 +270,7 @@ def resetConfiguration(factoryDefaults=False):
 	import config
 	import braille
 	import brailleInput
+	import brailleTables
 	import speech
 	import vision
 	import inputCore
@@ -283,6 +284,8 @@ def resetConfiguration(factoryDefaults=False):
 	braille.terminate()
 	log.debug("Terminating brailleInput")
 	brailleInput.terminate()
+	log.debug("Terminating brailleTables")
+	brailleTables.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
 	log.debug("terminating tones")
@@ -325,6 +328,8 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("initializing speech")
 	speech.initialize()
 	#braille
+	log.debug("Initializing brailleTables")
+	brailleTables.initialize()
 	log.debug("Initializing brailleInput")
 	brailleInput.initialize()
 	log.debug("Initializing braille")
@@ -656,6 +661,8 @@ def main():
 	log.info(f"Windows version: {winVersion.getWinVer()}")
 	log.info("Using Python version %s"%sys.version)
 	log.info("Using comtypes version %s"%comtypes.__version__)
+	from utils import schedule
+	schedule.initialize()
 	import configobj
 	log.info("Using configobj version %s with validate version %s"%(configobj.__version__,configobj.validate.__version__))
 	# Set a reasonable timeout for any socket connections NVDA makes.
@@ -665,6 +672,8 @@ def main():
 	from addonStore import dataManager
 	dataManager.initialize()
 	addonHandler.initialize()
+	from gui import addonStoreGui
+	addonStoreGui.initialize()
 	if globalVars.appArgs.disableAddons:
 		log.info("Add-ons are disabled. Restart NVDA to enable them.")
 	import appModuleHandler
@@ -700,6 +709,9 @@ def main():
 	import wx
 	app = _setUpWxApp()
 
+	log.debug("Initializing brailleTables")
+	import brailleTables
+	brailleTables.initialize()
 	log.debug("Initializing braille input")
 	import brailleInput
 	brailleInput.initialize()
@@ -794,8 +806,13 @@ def main():
 		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
-		wx.CallAfter(gui.installerGui.doCreatePortable,portableDirectory=globalVars.appArgs.portablePath,
-			silent=globalVars.appArgs.createPortableSilent,startAfterCreate=not globalVars.appArgs.createPortableSilent)
+		wx.CallAfter(
+			gui.installerGui.doCreatePortable,
+			portableDirectory=globalVars.appArgs.portablePath,
+			silent=globalVars.appArgs.createPortableSilent,
+			startAfterCreate=not globalVars.appArgs.createPortableSilent,
+			warnForNonEmptyDirectory=not globalVars.appArgs.createPortableSilent,
+		)
 	elif not globalVars.appArgs.minimal:
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
@@ -890,6 +907,7 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+		log.debug(f"NVDA user ID {updateCheck.state['id']}")
 
 	from winAPI import sessionTracking
 	sessionTracking.initialize()
@@ -944,12 +962,14 @@ def main():
 	_terminate(vision)
 	_terminate(brailleInput)
 	_terminate(braille)
+	_terminate(brailleTables)
 	_terminate(speech)
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
 	_terminate(dataManager, name="addon dataManager")
 	_terminate(garbageHandler)
+	_terminate(schedule, name="task scheduler")
 	# DMP is only started if needed.
 	# Terminate manually (and let it write to the log if necessary)
 	# as core._terminate always writes an entry.

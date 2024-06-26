@@ -141,7 +141,6 @@ class ControlField(Field):
 				controlTypes.Role.TREEVIEW, 
 				controlTypes.Role.CHECKMENUITEM, 
 				controlTypes.Role.RADIOMENUITEM,
-				controlTypes.Role.CAPTION,
 			)
 			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE not in states and (controlTypes.State.READONLY not in states or controlTypes.State.FOCUSABLE in states))
 			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY not in states)
@@ -170,6 +169,7 @@ class ControlField(Field):
 				controlTypes.Role.BLOCKQUOTE,
 				controlTypes.Role.GROUPING,
 				controlTypes.Role.FIGURE,
+				controlTypes.Role.CAPTION,
 				controlTypes.Role.REGION,
 				controlTypes.Role.FRAME,
 				controlTypes.Role.INTERNALFRAME,
@@ -777,6 +777,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			tmpInfo = info.copy()
 			if codepointOffsetLeft <= codepointOffsetRight:
 				# Move from the left end of info. Let's compute by how many characters in moveCharacters variable.
+				moveFromLeft = True
 				tmpInfo.collapse()
 				if (
 					lastRecursed is not None and (
@@ -802,6 +803,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 				tmpInfo.collapse(end=True)
 			else:
 				# Move from the right end of info.
+				moveFromLeft = False
 				tmpInfo.collapse(end=True)
 				if (
 					lastRecursed is not None and (
@@ -825,10 +827,15 @@ class TextInfo(baseObject.AutoPropertyObject):
 				tmpInfo.collapse()
 			if code == 0:
 				raise RuntimeError("Move by character operation unexpectedly failed.")
-			if actualCodepointOffset <= 0 or actualCodepointOffset >= totalCodepointOffset:
+			if (
+				(not moveFromLeft and actualCodepointOffset <= 0)
+				or (moveFromLeft and actualCodepointOffset >= totalCodepointOffset)
+			):
 				# We overshot, call this recursion attempt failed and try again lower movement
 				lastRecursed = 0
 				continue
+			if actualCodepointOffset < 0 or actualCodepointOffset > totalCodepointOffset:
+				raise RuntimeError(f"{actualCodepointOffset=} went out of the boundaries; {totalCodepointOffset=}")
 			if actualCodepointOffset == codepointOffsetLeft:
 				return tmpInfo
 			elif actualCodepointOffset < codepointOffsetLeft:
@@ -847,8 +854,8 @@ class TextInfo(baseObject.AutoPropertyObject):
 				info.setEndPoint(tmpInfo, which="endToEnd")
 		raise RuntimeError("Infinite loop during binary search.")
 
-
-
+	def _get_location(self) -> locationHelper.RectLTWH:
+		return self.NVDAObjectAtStart.location
 
 
 RE_EOL = re.compile("\r\n|[\n\r]")

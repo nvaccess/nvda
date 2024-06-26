@@ -14,6 +14,7 @@ from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
 	LangChangeCommand,
+	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
 	BaseCallbackCommand,
 	ConfigProfileTriggerCommand,
@@ -363,6 +364,8 @@ class SpeechManager(object):
 				continue
 			if isinstance(command, SynthParamCommand):
 				paramTracker.update(command)
+			if isinstance(command, SuppressUnicodeNormalizationCommand):
+				continue  # Not handled by speech manager
 			outSeq.append(command)
 		# Add the last sequence and make sure the sequence ends the utterance.
 		self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)

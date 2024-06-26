@@ -1,4 +1,8 @@
-﻿complexSymbols:
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (c) 2011-2024 NVDA Contributors
+# This file is covered by the GNU General Public License.
+
+complexSymbols:
 # identifier	regexp
 # Sentence endings.
 . sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
@@ -7,6 +11,8 @@
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Serija tačaka koja se koristi za vizuelnu prezentaciju, na primer u sadržaju
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -21,6 +27,7 @@ symbols:
 ? sentence ending	Upitnik	all	always
 ; phrase ending	tačkazarez	most	always
 : phrase ending	Dve tačke	most	always
+multiple .	više tačaka	all	always
 decimal point		none	always
 in-word '	Apostrof	all	norep
 negative number	minus	none	norep
@@ -36,6 +43,7 @@ negative number	minus	none	norep
 
 # Standard punctuation/symbols
 !	Uzvičnik	all
+！	Prošireni uzvičnik	all
 "	Navodnik	most
 \#	Taraba	some
 $	dolar	all	norep
@@ -57,12 +65,17 @@ $	dolar	all	norep
 、	ideografski zarez	all	always
 ،	arapski zarez	all	always
 -	Crtica	most	always
+.	Tačka	some
+．	proširena tačka	some
 /	Kosa crta	some
 :	Dve tačke	most	norep
+：	proširene dve tačke	most	norep
 ;	Tačkazarez	most
 ؛	arapski tačkazarez	most
+；	proširena tačkazarez	most
 ?	Upitnik	all
-؟	arapski znak pitanja	all
+؟	arapski upitnik	all
+？	prošireni upitnik	all
 @	Et	some
 [	Leva uglasta	most
 ]	Desna uglasta	most
@@ -166,7 +179,6 @@ _	Donja crta	most
 ‡	Dvostruki bodež	some
 ‣	Trouglasto nabrajanje	none
 ✗	Nabrajanje u X obliku	none
-.	Tačka	some
 ⇒	Dvostruka strelica desno	some
 ⊕	Zaokruženi plus	none
 ⊖	Zaokruženi minus	none

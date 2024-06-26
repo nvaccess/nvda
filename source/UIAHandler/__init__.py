@@ -1204,7 +1204,9 @@ class UIAHandler(COMObject):
 				# As their IA2 implementation is still better at the moment.
 				# However, in cases where Chromium is running under another logon session,
 				# the IAccessible2 implementation is unavailable.
-				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession
+				# 'brchrome' is part of HP SureClick, a chromium-based browser which runs webpages to run in separate
+				# virtual machines - it supports UIA remoting but not IAccessible2 remoting.
+				hasAccessToIA2 = not appModule.isRunningUnderDifferentLogonSession and not appModule.appName == "brchrome"
 				if (
 					AllowUiaInChromium.getConfig() == AllowUiaInChromium.NO
 					# Disabling is only useful if we can inject in-process (and use our older code)

@@ -665,10 +665,11 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		m=re.search(re.escape(text),inText,(0 if caseSensitive else re.IGNORECASE)|re.UNICODE)
 		if not m:
 			return False
+		converter = textUtils.getOffsetConverter(self.encoding)(inText)
 		if reverse:
-			offset=self._startOffset-m.end()
+			offset = self._startOffset - converter.strToEncodedOffsets(m.end())
 		else:
-			offset=self._startOffset+1+m.start()
+			offset = self._startOffset + 1 + converter.strToEncodedOffsets(m.start())
 		self._startOffset=self._endOffset=offset
 		return True
 
@@ -709,6 +710,6 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			codepointOffset: int,
 	) -> Self:
 		result = self.copy()
-		encodedOffset = self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
+		encodedOffset = self._startOffset + self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)
 		result._startOffset = result._endOffset = encodedOffset
 		return result

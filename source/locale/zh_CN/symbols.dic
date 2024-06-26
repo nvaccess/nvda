@@ -1,16 +1,30 @@
 ﻿# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2023 NVDA Simplified Chinese team All volunteers
-# This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
-# For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
+# Copyright (C) 2010-2024 NVDA Simplified Chinese team All volunteers
+# This file is covered by the GNU General Public License.
 
 symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+# 符号	替换文本[[	级别][	传递][	# 显示名称]]
+
 # Complex symbols（复杂符号）
 . sentence ending	句点
 ! sentence ending	感叹号
 ? sentence ending	问号
 ; phrase ending	分号
 : phrase ending	冒号
+multiple .	多点
 in-word '	撇
+negative number	负
+
+# Whitespace（空白符）
+\0	空白	char
+\t	制表符
+\n	航首
+\f	分页符
+\r	航尾
+ 	空格	char
+# 	不间断空格	all	# no-break space
+　	全角空格	all
 
 $	美元
 /	斜杠
@@ -22,12 +36,6 @@ $	美元
 ¿	倒置问号	some
 .	点
 :	冒号
-\0	空白	char
-\r	航尾
-\n	航首
-\t	制表符
-\f	分页符
- 	空格	char
 ,	逗号
 ，	全角逗号	most	always
 。	句号	most	always
@@ -51,12 +59,13 @@ _	下划线
 〗	右空方头括号	most	always
 {	左花括号	some
 }	右花括号	some
-　	全角空格	all
 ₹	卢比	some	norep
-negative number	负
 ✔	粗对钩
 ✓	对钩
 # Other characters
+©	版权所有
+™	商标	some
+®	注册
 µ	百万分之一	some
 »	右双尖括号
 «	左双尖括号
@@ -167,6 +176,7 @@ negative number	负
 ■	实心方形	most
 ▽	空心下三角形	most
 ▼	实心下三角形	most
+⇏	右双前頭連斜線	most
 ⇍	左双前頭連斜線	most
 ⇎	左右双箭头連斜線	most
 ⋄	菱形	most
@@ -180,6 +190,9 @@ negative number	负
 ㊣	正字标记	none
 ＋	全角加号	most
 －	全角減号	most
+×	乘号	most
+÷	除号	most
+±	正负号	most
 ＜	全角小于号	most
 ＞	全角大于号	most
 ＝	全角等号	most
@@ -396,27 +409,27 @@ negative number	负
 ١	1	none
 
 # 罗马字母
-α	alpha	none
+α	Alpha	none
 Α	Alpha	none
-β	beta	none
+β	Beta	none
 Β	Beta	none
-γ	gamma	none
+γ	Gamma	none
 Γ	Gamma	none
-δ	delta	none
+δ	Delta	none
 Δ	Delta	none
-ε	epsilon	none
-Ε	Epsilon	none
-ζ	zeta	none
+ε	Eepsilon	none
+Ε	Eepsilon	none
+ζ	Zeta	none
 Ζ	Zeta	none
 η	eta	none
-Η	Eta	none
+Η	eta	none
 θ	theta	none
-Θ	Theta	none
+Θ	theta	none
 ι	iota	none
-Ι	Iota	none
+Ι	iota	none
 κ	kappa	none
-Κ	Kappa	none
-λ	lambda	none
+Κ	kappa	none
+λ	lanmd	none
 μ	mu	none
 Μ	mu	none
 ν	nu	none
@@ -461,12 +474,13 @@ negative number	负
 ℥	盎司	most
 
 #补充
+⇒	双线右箭头	some
 ⇨	空心右箭头	some
 ♣	黑桃	some
 ❖	四个菱形	some
 ♦	实心方块	some
 
-# Unicode 盲文点位 (Add 256braille symbols BY 陈福)
+# Unicode 盲文点位（Add 256braille symbols BY 陈福）
 ⠀	空方	some
 ⠁	一点	some
 ⠂	二点	some
@@ -864,7 +878,7 @@ negative number	负
 ℵ	aleph数	none
 ℶ	beth数	none
 
-# Vulgar Fractions U+2150 to U+215E
+# Vulgur Fractions U+2150 to U+215E
 ⅐	七分之一	none
 ⅑	九分之一	none
 ⅒	十分之一	none

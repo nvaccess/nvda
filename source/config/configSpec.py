@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka
 # This file is covered by the GNU General Public License.
@@ -35,6 +35,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
+	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	reportNormalizedForCharacterNavigation = boolean(default=true)
 	includeCLDR = boolean(default=True)
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
@@ -63,6 +65,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 # Braille settings
 [braille]
 	display = string(default=auto)
+	mode = option("followCursors", "speechOutput", default="followCursors")
 	translationTable = string(default=en-ueb-g1.ctb)
 	inputTable = string(default=en-ueb-g1.ctb)
 	expandAtCursor = boolean(default=true)
@@ -81,6 +84,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
 	wordWrap = boolean(default=true)
+	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
@@ -321,6 +325,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 [addonStore]
 	showWarning = boolean(default=true)
+	automaticUpdates = option("notify", "disabled", default="notify")
 """
 
 #: The configuration specification

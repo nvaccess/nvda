@@ -23,6 +23,7 @@ import textInfos
 import controlTypes
 from inputCore import InputGesture
 from logHandler import log
+from comtypes import COMError
 
 class EditableText(TextContainerObject,ScriptableObject):
 	"""Provides scripts to report appropriately when moving the caret in editable text fields.
@@ -84,27 +85,34 @@ class EditableText(TextContainerObject,ScriptableObject):
 			if eventHandler.isPendingEvents("gainFocus"):
 				log.debug("Focus event. Elapsed %g sec" % elapsed)
 				return (True,None)
+			# Caret events are unreliable in some controls.
+			# Only use them if we consider them safe to rely on for a particular control,
+			# and only if they arrive within C{_useEvents_maxTimeoutSec} seconds
+			# after causing the event to occur.
+			if (
+				elapsed <= self._useEvents_maxTimeoutSec
+				and self.caretMovementDetectionUsesEvents
+				and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+			):
+				log.debug(
+					"Caret move detected using event. Elapsed %g sec, retries %d"
+					% (elapsed, retries)
+				)
+				# We must fetch the caret here rather than above the isPendingEvents check
+				# to avoid a race condition where an event is queued from a background
+				# thread just after we query the caret. In that case, the caret info we
+				# retrieved might be stale.
+				try:
+					newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+				except (RuntimeError, NotImplementedError):
+					newInfo = None
+				return (True, newInfo)
 			# If the focus changes after this point, fetching the caret may fail,
 			# but we still want to stay in this loop.
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			except (RuntimeError,NotImplementedError):
+			except (RuntimeError, NotImplementedError):
 				newInfo = None
-			else:
-				# Caret events are unreliable in some controls.
-				# Only use them if we consider them safe to rely on for a particular control,
-				# and only if they arrive within C{_useEvents_maxTimeoutSec} seconds
-				# after causing the event to occur.
-				if (
-					elapsed <= self._useEvents_maxTimeoutSec
-					and self.caretMovementDetectionUsesEvents
-					and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
-				):
-					log.debug(
-						"Caret move detected using event. Elapsed %g sec, retries %d"
-						% (elapsed, retries)
-					)
-					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:
@@ -261,7 +269,12 @@ class EditableText(TextContainerObject,ScriptableObject):
 			return
 		oldBookmark=oldInfo.bookmark
 		testInfo=oldInfo.copy()
-		res=testInfo.move(textInfos.UNIT_CHARACTER,-1)
+		try:
+			res = testInfo.move(textInfos.UNIT_CHARACTER, -1)
+		except COMError:
+			log.exception("Error in testInfo.move")
+			gesture.send()
+			return
 		if res<0:
 			testInfo.expand(unit)
 			delChunk=testInfo.text
@@ -395,7 +408,11 @@ class EditableText(TextContainerObject,ScriptableObject):
 			# There's nothing we can do, but at least the last selection will be right next time.
 			self.isTextSelectionAnchoredAtStart=True
 			return
-		self._updateSelectionAnchor(oldInfo,newInfo)
+		try:
+			self._updateSelectionAnchor(oldInfo, newInfo)
+		except COMError:
+			log.exception("Error in _updateSelectionAnchor")
+			return
 		hasContentChanged=getattr(self,'hasContentChangedSinceLastSelection',False)
 		self.hasContentChangedSinceLastSelection=False
 		speech.speakSelectionChange(oldInfo,newInfo,generalize=hasContentChanged)
