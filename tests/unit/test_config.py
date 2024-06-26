@@ -29,6 +29,7 @@ from config.profileUpgradeSteps import (
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
 	upgradeConfigFrom_9_to_10,
+	upgradeConfigFrom_11_to_12,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -36,6 +37,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportCellBorders,
 	TetherTo,
+	OutputMode,
 )
 from utils.displayString import (
 	DisplayStringEnum
@@ -781,6 +783,33 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_9_to_10(unittest.TestCase):
 			profile['keyboard']['NVDAModifierKeys'],
 			NVDAKey.CAPS_LOCK.value,
 		)
+
+class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
+	def test_DefaultProfile_Unmodified(self):
+		"""Braille output mode option not modified in default profile."""
+		configString = "[documentFormatting]"
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_11_to_12(profile)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportFontAttributes']
+	
+	def test_defaultProfile_reportFontAttributes_false(self):
+		configString = """
+		[documentFormatting]
+		reportFontAttributes = False
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_11_to_12(profile)
+		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.OFF.value)
+	
+	def test_defaultProfile_reportFontAttributes_true(self):
+		configString = """
+		[documentFormatting]
+		reportFontAttributes = True
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_11_to_12(profile)
+		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.SPEECH_AND_BRAILLE.value)
 
 
 class Config_AggregatedSection_getitem(unittest.TestCase):
