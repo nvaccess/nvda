@@ -386,5 +386,9 @@ def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
 	except KeyError:
 		log.debug("reportFontAttributes not present in config, no action taken.")
 		return
+	except ValueError:
+		log.debug("reportFontAttributes is not a boolean, deleting from config.")
+		del profile["documentFormatting"]["reportFontAttributes"]
+		return
 	profile['documentFormatting']['reportFontAttributes'] = OutputMode.SPEECH_AND_BRAILLE if reportFontAttributes else OutputMode.OFF
 	log.debug(f"documentFormatting.reportFontAttributes converted to {profile['documentFormatting']['reportFontAttributes']}.")

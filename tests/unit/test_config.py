@@ -786,7 +786,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_9_to_10(unittest.TestCase):
 
 class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 	def test_DefaultProfile_Unmodified(self):
-		"""Braille output mode option not modified in default profile."""
+		"""reportFontAttributes unmodified."""
 		configString = "[documentFormatting]"
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
@@ -794,6 +794,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 			profile['documentFormatting']['reportFontAttributes']
 	
 	def test_defaultProfile_reportFontAttributes_false(self):
+		"""reportFontAttributes unmodified set to False."""
 		configString = """
 		[documentFormatting]
 		reportFontAttributes = False
@@ -803,6 +804,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.OFF.value)
 	
 	def test_defaultProfile_reportFontAttributes_true(self):
+		"""reportFontAttributes set to True."""
 		configString = """
 		[documentFormatting]
 		reportFontAttributes = True
@@ -810,6 +812,17 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
 		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.SPEECH_AND_BRAILLE.value)
+
+	def test_defaultProfile_reportFontAttributes_invalid(self):
+		"""reportFontAttributes set to a non-boolean value."""
+		configString = """
+		[documentFormatting]
+		reportFontAttributes = notABool
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_11_to_12(profile)
+		with self.assertRaises(KeyError):
+			profile['documentFormatting']['reportFontAttributes']
 
 
 class Config_AggregatedSection_getitem(unittest.TestCase):
