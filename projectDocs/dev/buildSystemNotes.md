@@ -30,6 +30,7 @@ These are the only files expected to be executed directly by a user/developer:
 - `rununittests.bat`
 - `runsystemtests.bat`
 - `runlint.bat`
+- `runlicensecheck.bat`
 
 **Note:** The `runnvda.bat` script intentionally uses `pyw.exe` to run NVDA as
 this is the more common and expected way to run NVDA.

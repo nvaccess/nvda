@@ -1,3 +1,24 @@
 [build-system]
 requires = ["setuptools<70", "wheel"]
 build-backend = "setuptools.build_meta"
+
+[tool.licensecheck]
+using = "requirements:requirements.txt"
+only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]
+ignore_packages = [
+	# Incompatible Apache license dependencies.
+	# These are current license violations.
+	"fast-diff-match-patch",
+	"requests",
+	"importlib-metadata",  # bundled with python, hard to remove
+	# Compatible licenses:
+	"certifi",  # Mozilla Public License 2.0
+	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
+	"pycaw",  # MIT license, but not in PyPI
+	"wxPython",  # wxWindows Library License
+	"pillow",  # PIL Software License
+	# test frameworks not bundled with NVDA
+	"robotframework",
+	"robotframework-screencaplibrary",
+	"robotremoteserver",
+]

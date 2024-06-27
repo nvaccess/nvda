@@ -1,0 +1,2 @@
+# Pillow is an implicit dependency and requires zlib and jpeg by default, but we don't need it
+Pillow==10.3.0 -C "zlib=disable" -C "jpeg=disable"
