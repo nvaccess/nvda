@@ -1,5 +1,5 @@
 @echo off
-rem runlint
+rem runlint [<output file>]
 rem Lints the entire repository
 set hereOrig=%~dp0
 set here=%hereOrig%
