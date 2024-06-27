@@ -792,16 +792,18 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		upgradeConfigFrom_11_to_12(profile)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportFontAttributes']
+			profile['documentFormatting']['fontAttributeReporting']
 	
 	def test_defaultProfile_reportFontAttributes_false(self):
-		"""reportFontAttributes unmodified set to False."""
+		"""reportFontAttributes set to False."""
 		configString = """
 		[documentFormatting]
 		reportFontAttributes = False
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
-		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.OFF.value)
+		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'False')
+		self.assertEqual(profile['documentFormatting']['fontAttributeReporting'], OutputMode.OFF.value)
 	
 	def test_defaultProfile_reportFontAttributes_true(self):
 		"""reportFontAttributes set to True."""
@@ -811,7 +813,8 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
-		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], OutputMode.SPEECH_AND_BRAILLE.value)
+		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'True')
+		self.assertEqual(profile['documentFormatting']['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE.value)
 
 	def test_defaultProfile_reportFontAttributes_invalid(self):
 		"""reportFontAttributes set to a non-boolean value."""
@@ -821,8 +824,9 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
+		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'notABool')
 		with self.assertRaises(KeyError):
-			profile['documentFormatting']['reportFontAttributes']
+			profile['documentFormatting']['fontAttributeReporting']
 
 
 class Config_AggregatedSection_getitem(unittest.TestCase):
