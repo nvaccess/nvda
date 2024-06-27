@@ -32,7 +32,7 @@ For more details, see `tests/lint/readme.md`
 
 Unit tests can be run with the `rununittests.bat` script.
 Internally this script uses the [xmlrunner](https://github.com/pycontribs/xmlrunner) wrapper around the [unittest](https://docs.python.org/3/library/unittest.html) framework to execute the tests.
-Any arguments given to `rununittests.bat` are forwarded onto xmlrunner, and thence to unittest.
+Any arguments given to `rununittests.bat` are forwarded onto xmlrunner, and then to unittest.
 
 To run only specific unit tests, specify a pattern to match against using the `-k` option on the command line.
 The `-k` option can be provided multiple times to provide multiple patterns to match against.
