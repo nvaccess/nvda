@@ -850,6 +850,47 @@ class Config_AggregatedSection_getitem(unittest.TestCase):
 			self.testSection["foo"]
 
 
+class Config_getitem_alias(unittest.TestCase):
+	def setUp(self):
+		self.config = ConfigManager()["documentFormatting"]
+
+	def test_set_reportFontAttributes_false(self):
+		config = self.config
+		config['reportFontAttributes'] = False
+		self.assertEqual(config['reportFontAttributes'], False)
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.OFF)
+	
+	def test_set_reportFontAttributes_true(self):
+		config = self.config
+		config['reportFontAttributes'] = True
+		self.assertEqual(config['reportFontAttributes'], True)
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
+
+	def test_set_fontAttributeReporting_off(self):
+		config = self.config
+		config['fontAttributeReporting'] = OutputMode.OFF
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.OFF)
+		self.assertEqual(config['reportFontAttributes'], False)
+
+	def test_set_fontAttributeReporting_speech(self):
+		config = self.config
+		config['fontAttributeReporting'] = OutputMode.SPEECH
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH)
+		self.assertEqual(config['reportFontAttributes'], True)
+
+	def test_set_fontAttributeReporting_braille(self):
+		config = self.config
+		config['fontAttributeReporting'] = OutputMode.BRAILLE
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.BRAILLE)
+		self.assertEqual(config['reportFontAttributes'], True)
+
+	def test_set_fontAttributeReporting_speechAndBraille(self):
+		config = self.config
+		config['fontAttributeReporting'] = OutputMode.SPEECH_AND_BRAILLE
+		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
+		self.assertEqual(config['reportFontAttributes'], True)
+
+
 class Config_AggregatedSection_setitem(unittest.TestCase):
 	def setUp(self):
 		manager = MagicMock(ConfigManager())
