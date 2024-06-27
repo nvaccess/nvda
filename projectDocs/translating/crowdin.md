@@ -16,7 +16,7 @@ Please include your Crowdin username and the languages you wish to translate.
 ### Setup PoEdit
 
 It is recommended that you use the latest version of PoEdit and NVDA for translating.
-Alternatively, you can use the [Crowdin web interface directly(https://support.crowdin.com/online-editor/).
+Alternatively, you can use the [Crowdin web interface](https://support.crowdin.com/online-editor/) directly.
 As PoEdit only supports viewing approved strings, large translators team need to co-ordinate submitting unapproved strings to prevent conflicts.
 Using Crowdin's interface avoids this problem.
 
