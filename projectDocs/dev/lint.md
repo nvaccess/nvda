@@ -10,7 +10,7 @@ For faster lint results, or greater integration with your tools you may want to 
 
 ## Pre-commit hooks
 
-[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting.
+[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting on files staged for commit.
 From a shell, perform:
 
 1. `venvUtils\ensureAndActivate.bat`
