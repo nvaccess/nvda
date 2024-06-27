@@ -75,6 +75,7 @@ Unicode CLDR has also been updated.
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* NVDA now uses Ruff instead of flake8 for linting. (#14817)
 * Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
 * A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
 It is especially useful to read the error location markers in tracebacks. (#16321,  @CyrilleB79)
