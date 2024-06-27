@@ -42,7 +42,7 @@ For example, to run only methods in the `TestMove` and `TestSelection` classes i
 rununittests -k test_cursorManager.TestMove -k test_cursorManager.TestSelection
 ```
 
-Please refer to xmlrunner's and unittest's own documentation for further information on how to filter tests etc.
+Please refer to [unittest's documentation](https://docs.python.org/3/library/unittest.html#command-line-interface) for further information on how to filter tests etc.
 
 ### System Tests
 System tests can be run with the `runsystemtests.bat --include <TAG>` script.
