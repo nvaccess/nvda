@@ -40,6 +40,21 @@ Proofreaders approve strings using the [Crowdin web interface](https://support.c
 PoEdit only supports viewing approved strings.
 When submitting to Crowdin from PoEdit, proofreaders are able to auto-approve all submitted strings.
 
+## Translation workflows
+
+There are 3 common workflows for translating with Crowdin:
+
+1. Only on Crowdin's web interface, either with:
+    - only one proofreader approving their own translations,
+    - or with many translators making suggestions and a proofreader approving them.
+1. Multiple translators translating on PoEdit.
+    - Using Crowdin cloud synchronization.
+    - Proofreaders approve the translations on Crowdin's web interface.
+1. Translating on PoEdit without cloud synchronization and performing manual uploads to Crowdin.
+    - Translators with proofreader status can upload strings manually with automatic approval.
+    As such, this may be a preference for single or small-team translators using PoEdit.
+    - Manual uploads without cloud synchronization means conflicts can occur, translator teams must be co-ordinated if following this approach.
+
 ## Translating using PoEdit
 
 After opening a .po file you will be placed on a list with all of the strings to translate.
