@@ -4,11 +4,11 @@
 
 The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
 
-Support has been added for Unicode Normalization to speech and braille output.
+Unicode Normalization is now supported in speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
 
-Support has been added for Help Tech Activator Pro displays.
+Help Tech Activator Pro braille displays are now supported.
 
 Unassigned commands have been added to scroll the mouse wheel vertically and horizontally.
 
