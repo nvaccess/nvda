@@ -10,4 +10,10 @@ For faster lint results, or greater integration with your tools you may want to 
 
 ## Pre-commit hooks
 
-TODO:
+[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting.
+From a shell, perform:
+
+1. `venvUtils\ensureAndActivate.bat`
+1. `pre-commit install`
+
+Future commits will automatically apply linting.
