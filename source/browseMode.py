@@ -2210,7 +2210,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		reportFormattingOptions = (
 			"reportFontName",
 			"reportFontSize",
-			"reportFontAttributes",
+			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
 			"reportHighlight",
 			"reportColor",

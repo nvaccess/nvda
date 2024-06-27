@@ -563,7 +563,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportFontAttributes(self,gesture):
-		currentValue = config.conf["documentFormatting"]["reportFontAttributes"]
+		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]
 		nextValue = OutputMode((currentValue + 1) % len(OutputMode))
 		if nextValue == OutputMode.OFF:
 			# Translators: A state in which font attributes are not reported.
@@ -577,7 +577,7 @@ class GlobalCommands(ScriptableObject):
 		if nextValue == OutputMode.SPEECH_AND_BRAILLE:
 			# Translators: A state in which font attributes are both spoken and brailled.
 			status = _("Speak and braille font attributes")
-		config.conf["documentFormatting"]["reportFontAttributes"]=nextValue
+		config.conf["documentFormatting"]["fontAttributeReporting"]=nextValue
 		ui.message(status)
 
 	@script(
@@ -2335,7 +2335,7 @@ class GlobalCommands(ScriptableObject):
 		reportFormattingOptions = (
 			"reportFontName",
 			"reportFontSize",
-			"reportFontAttributes",
+			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
 			"reportHighlight",
 			"reportColor",

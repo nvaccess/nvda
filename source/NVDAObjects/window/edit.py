@@ -267,7 +267,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			fontSize = charFormat.yHeight // 20
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			if charFormat is None: charFormat=self._getCharFormat(offset)
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
 			formatField["italic"]=bool(charFormat.dwEffects&CFE_ITALIC)
@@ -543,7 +543,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				fontObj = textRange.font
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontObj.size
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			if not fontObj:
 				fontObj = textRange.font
 			formatField["bold"]=bool(fontObj.bold)
