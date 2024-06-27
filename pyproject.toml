@@ -16,6 +16,8 @@ builtins = [
 	"npgettext",
 ]
 
+logger-objects = ["logHandler.log"]
+
 include = [
 	"*.py",
 	"*.pyw",
@@ -39,6 +41,7 @@ exclude = [
 
 [tool.ruff.format]
 indent-style = "tab"
+line-ending = "lf"
 
 [tool.ruff.lint.mccabe]
 max-complexity = 15
