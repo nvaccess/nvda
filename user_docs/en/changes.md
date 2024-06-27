@@ -29,6 +29,7 @@ Unicode CLDR has also been updated.
   * This can be disabled in the "Add-on Store" category of settings.
   * NVDA checks daily for add-on updates.
   * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
+* NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
 
 ### Changes
 
@@ -90,9 +91,21 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 * It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
+* A new configuration key, `documentFormatting.fontAttributeReporting`, has been created. Possible values are:
+
+  - 0: Off
+  - 1: Speech
+  - 2: Braille
+  - 3: Speech and braille
+
+  To maintain backwards compatibility, `documentFormatting.reportFontAttributes` is retained until 2025.1, with the following implementation:
+
+  - `documentFormatting.reportFormatting` will be set to `True` if `documentFormatting.fontAttributeReporting` is set to `SPEECH`, `BRAILLE`, or `SPEECH_AND_BRAILLE`, and `False` if it is set to `OFF`.
+  - `documentFormatting.fontAttributeReporting` will be set to `SPEECH_AND_BRAILLE` if `documentFormatting.reportFontAttributes` is set to `True`, or `OFF` if it is set to `False`.
 
 #### Deprecations
 
+* The configuration key `documentFormatting.reportFontAttributes` is deprecated for removal in NVDA 2025.1.
 
 ## 2024.2
 
