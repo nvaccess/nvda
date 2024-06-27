@@ -6,12 +6,14 @@
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
+from datetime import datetime
 from typing import (
 	Any,
 	Dict,
 	Optional,
 	Tuple,
 )
+from uuid import uuid4
 import garbageHandler
 import globalVars
 import config
@@ -145,7 +147,8 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
 		# Following are parameters sent purely for stats gathering.
 		#  If new parameters are added here, they must be documented in the userGuide for transparency.
-		extraParams={
+		extraParams = {
+			"id": state["id"],
 			"language": languageHandler.getLanguage(),
 			"installed": config.isInstalledCopy(),
 			"synthDriver":getQualifiedDriverClassNameForStats(synthDriverClass) if synthDriverClass else None,
@@ -266,8 +269,13 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		t.start()
 
 	def _bg(self):
+		assert state is not None
+		lastCheckDate = datetime.fromtimestamp(state["lastCheck"])
+		nowDate = datetime.now()
+		if (lastCheckDate.year, lastCheckDate.month) != (nowDate.year, nowDate.month):
+			# reset unique ID once a month
+			state["id"] = uuid4().hex
 		try:
-			assert state is not None
 			info = checkForUpdate(self.AUTO)
 		except:
 			log.debugWarning("Error checking for update", exc_info=True)
@@ -814,6 +822,10 @@ def initialize():
 			"dontRemindVersion": None,
 		}
 		_setStateToNone(state)
+
+	if "id" not in state:
+		# ID was introduced in 2024.3
+		state["id"] = uuid4().hex
 
 	# check the pending version against the current version
 	# and make sure that pendingUpdateFile and pendingUpdateVersion are part of the state dictionary.

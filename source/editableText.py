@@ -85,27 +85,34 @@ class EditableText(TextContainerObject,ScriptableObject):
 			if eventHandler.isPendingEvents("gainFocus"):
 				log.debug("Focus event. Elapsed %g sec" % elapsed)
 				return (True,None)
+			# Caret events are unreliable in some controls.
+			# Only use them if we consider them safe to rely on for a particular control,
+			# and only if they arrive within C{_useEvents_maxTimeoutSec} seconds
+			# after causing the event to occur.
+			if (
+				elapsed <= self._useEvents_maxTimeoutSec
+				and self.caretMovementDetectionUsesEvents
+				and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
+			):
+				log.debug(
+					"Caret move detected using event. Elapsed %g sec, retries %d"
+					% (elapsed, retries)
+				)
+				# We must fetch the caret here rather than above the isPendingEvents check
+				# to avoid a race condition where an event is queued from a background
+				# thread just after we query the caret. In that case, the caret info we
+				# retrieved might be stale.
+				try:
+					newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
+				except (RuntimeError, NotImplementedError):
+					newInfo = None
+				return (True, newInfo)
 			# If the focus changes after this point, fetching the caret may fail,
 			# but we still want to stay in this loop.
 			try:
 				newInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			except (RuntimeError,NotImplementedError):
+			except (RuntimeError, NotImplementedError):
 				newInfo = None
-			else:
-				# Caret events are unreliable in some controls.
-				# Only use them if we consider them safe to rely on for a particular control,
-				# and only if they arrive within C{_useEvents_maxTimeoutSec} seconds
-				# after causing the event to occur.
-				if (
-					elapsed <= self._useEvents_maxTimeoutSec
-					and self.caretMovementDetectionUsesEvents
-					and (eventHandler.isPendingEvents("caret") or eventHandler.isPendingEvents("textChange"))
-				):
-					log.debug(
-						"Caret move detected using event. Elapsed %g sec, retries %d"
-						% (elapsed, retries)
-					)
-					return (True,newInfo)
 			# Try to detect with bookmarks.
 			newBookmark = None
 			if newInfo:

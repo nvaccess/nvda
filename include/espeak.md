@@ -40,7 +40,7 @@ Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak
       - [`nvdaHelper/espeak/config.h`](../nvdaHelper/espeak/config.h) must exist (despite being empty) since a "config.h" is included within eSpeak.
       - Compare to eSpeak source config: [`include/espeak/src/windows/config.h`](./espeak/src/windows/config.h).
       - Diff `src/windows/config.h` with the previous commit.
-   1. Update NVDA [documentation](../projectDocs/dev/createDevEnvironment.md#git-submodules) and [changelog](../user_docs/en/changes.t2t) with eSpeak version and commit.
+   1. Update NVDA [documentation](../projectDocs/dev/createDevEnvironment.md#git-submodules) and [changelog](../user_docs/en/changes.md) with eSpeak version and commit.
    1. Build NVDA: `scons source`
       - Expected warnings from eSpeak compilation:
          - On the first build after changes, all languages may show this warning.

@@ -472,12 +472,13 @@ As with other examples in this guide, remember to delete the created app module 
 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
-Some executables host various apps inside.
-These include javaw.exe for running various Java programs and wwahost.exe for some apps in Windows 8 and later.
+Some executables host various apps inside or are employed by an app to display their interfaces.
+These include javaw.exe for running various Java programs, wwahost.exe for some apps in Windows 8 and later, and msedgewebview2.exe for displaying web-like interface on apps employing Edge WebView2 runtime.
 
-If an app runs inside a host executable, the name of the app module must be the name as defined by the host executable, which can be found through AppModule.appName property.
+If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
 For example, an app module for a Java app named "test" hosted inside javaw.exe must be named test.py.
 For apps hosted inside wwahost, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
+By default, apps employing Edge WebView2 such as modern Outlook (olk.exe) are displayed as a webpage.
 
 ### Example 2: an app module for an app hosted by wwahost.exe {#example2}
 
@@ -503,6 +504,22 @@ As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
 
 Another difference is how the app module class is defined.
 As wwahost app module provides necessary infrastructure for apps hosted inside, you just need to subclass the wwahost AppModule class.
+
+### Example 3: an app module for an app employing Edge WebView2 (msedgewebview2.exe) {#example3}
+
+The following example is an app module employing Edge WebView2 runtime with browse mode disabled by default, using modern Outlook (olk.exe) as an example.
+
+```py
+# msedgewebview2 example (modern Outlook/olk.py)
+
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+	disableBrowseModeByDefault: bool = True
+```
+
+Browse mode is disabled for this example because apps employing WebView2 display their interfaces as webpages.
+You can remove the "disableBrowseModeByDefault" line if you would like to let users navigate the app using browse mode commands.
 
 ### Basics of a Global Plugin {#globalPluginBasics}
 
