@@ -122,10 +122,11 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 		pairings used in the NVDA GUI.
 		Currently handles:
-			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
-			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
-			wx.Button and wx.CheckBox - Horizontal layout
-			wx.TextCtrl and wx.Button - Horizontal layout
+			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.SpinCtrl, wx.SpinCtrlDouble, wx.Slider or wx.Button)
+			-> Horizontal layout
+			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) -> Vertical layout
+			wx.Button and wx.CheckBox -> Horizontal layout
+			wx.TextCtrl and wx.Button -> Horizontal layout
 	"""
 	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
 		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
@@ -139,6 +140,7 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 		wx.Choice,
 		wx.Slider,
 		wx.SpinCtrl,
+		wx.SpinCtrlDouble,
 		wx.TextCtrl,
 	)):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
