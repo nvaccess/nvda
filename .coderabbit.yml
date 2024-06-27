@@ -41,9 +41,7 @@ reviews:
     github-checks:
       enabled: true
     ruff:
-      # Should become true if we switch linters, 
-      # right now linting is done by a flake8 check (#14817).
-      enabled: false
+      enabled: true
     markdownlint:
       # We use custom markdown syntax such as {#Anchor} for anchors.
       # This is not supported by markdownlint.

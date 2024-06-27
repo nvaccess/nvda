@@ -1,7 +1,7 @@
 if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("try-")) {
 	$lintOutput = (Resolve-Path .\testOutput\lint\)
 	$lintSource = (Resolve-Path .\tests\lint\)
-	$flake8Output = "$lintOutput\Flake8.txt"
+	$lintOutput = "$lintOutput\lint.txt"
 	# When Appveyor runs for a pr,
 	# the build is made from a new temporary commit,
 	# resulting from the pr branch being merged into its base branch.
@@ -16,16 +16,16 @@ if ($env:APPVEYOR_PULL_REQUEST_NUMBER -or $env:APPVEYOR_REPO_BRANCH.StartsWith("
 		git fetch -q origin master:master
 		$msgBaseLabel = "Branch"
 	}
-	.\runlint.bat FETCH_HEAD "$flake8Output" 
+	.\runlint.bat "$lintOutput" 
 	if($LastExitCode -ne 0) {
 		Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
 		Add-AppveyorMessage "FAIL: Lint check. See test results for more information."
 	} else {
 		Add-AppveyorMessage "PASS: Lint check."
 	}
-	Push-AppveyorArtifact $flake8Output
-	$junitXML = "$lintOutput\PR-Flake8.xml"
-	py "$lintSource\createJunitReport.py" "$flake8Output" "$junitXML"
+	Push-AppveyorArtifact $lintOutput
+	$junitXML = "$lintOutput\PR-lint.xml"
+	py "$lintSource\createJunitReport.py" "$lintOutput" "$junitXML"
 	Push-AppveyorArtifact $junitXML
 	$wc = New-Object 'System.Net.WebClient'
 	$wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", $junitXML)
