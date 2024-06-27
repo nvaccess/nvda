@@ -29,15 +29,14 @@ scons checkPot
 ### Linting your changes
 
 In order to ensure your changes comply with NVDA's coding style you can run the Ruff linter locally.
-Some developers have found certain linting error messages misleading, these are clarified the [linting readme](../../tests/lint/readme.md).
-`runlint.bat` will use ruff to lint and where possible, fix the code you have written.
+`runlint.bat` will use Ruff to lint and where possible, fix the code you have written.
 
 ```cmd
 runlint.bat
 ```
 
 To be warned about linting errors faster, you may wish to integrate Ruff with other development tools you are using.
-For more details, see the [linting readme](../../tests/lint/readme.md).
+For more details, see the [linting docs](../dev/lint.md).
 
 ### Unit Tests
 Unit tests can be run with the `rununittests.bat` script.
