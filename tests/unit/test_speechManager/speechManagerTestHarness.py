@@ -570,7 +570,7 @@ class SpeechManagerInteractions:
 		self._testCase.assertEqual(
 			expectedToBecomeIndex,
 			indexCommandIndex,
-			msg=f"Did you forget to update the 'expectedToBecomeIndex' argument?"
+			msg="Did you forget to update the 'expectedToBecomeIndex' argument?"
 		)
 
 	def _filterAndSendSpeech(self, seq, priority):

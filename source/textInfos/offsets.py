@@ -13,7 +13,6 @@ import config
 import textInfos
 import locationHelper
 from treeInterceptorHandler import TreeInterceptor
-import api
 import textUtils
 from dataclasses import dataclass
 from typing import (
@@ -609,7 +608,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 
 	def move(self,unit,direction,endPoint=None):
 		if direction==0:
-			return 0;
+			return 0
 		if endPoint=="end":
 			offset=self._endOffset
 		elif endPoint=="start":

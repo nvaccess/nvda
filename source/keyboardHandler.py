@@ -264,7 +264,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			# And we only want to do this if the gesture did not result in an executed action 
 			and not gestureExecuted 
 			# and not if this gesture is a modifier key
-			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
+			and not isNVDAModifierKey(vkCode,extended) and vkCode not in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
 		):
 			keyStates=(ctypes.c_byte*256)()
 			for k in range(256):

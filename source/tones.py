@@ -8,9 +8,8 @@
 import atexit
 import nvwave
 import config
-import globalVars
 from logHandler import log
-from ctypes import create_string_buffer, byref
+from ctypes import create_string_buffer
 import extensionPoints
 
 SAMPLE_RATE = 44100

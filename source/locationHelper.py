@@ -6,7 +6,6 @@
 """Classes and helper functions for working with rectangles and coordinates."""
 
 from collections import namedtuple
-from collections.abc import Sequence
 import windowUtils
 import winUser
 from ctypes.wintypes import RECT, POINT, DWORD

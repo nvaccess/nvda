@@ -19,7 +19,6 @@ from SystemTestSpy import (
 from SystemTestSpy.windows import (
 	CloseWindow,
 	GetWindowWithTitle,
-	GetForegroundWindowTitle,
 	Window,
 )
 import _chromeArgs

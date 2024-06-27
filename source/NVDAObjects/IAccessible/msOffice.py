@@ -8,7 +8,6 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 import winUser
-import api
 from . import IAccessible, getNVDAObjectFromEvent
 import eventHandler
 import re

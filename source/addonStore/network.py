@@ -133,7 +133,7 @@ class AddonFileDownloader:
 			cacheFilePath = None
 			from gui.message import DisplayableError
 			if not isinstance(downloadAddonFutureException, DisplayableError):
-				log.error(f"Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
+				log.error("Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
 			else:
 				callLater(
 					delay=0,

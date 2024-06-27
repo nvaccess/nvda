@@ -7,10 +7,9 @@
 """Unit tests for the baseObject module, its classes and their derivatives."""
 
 import unittest
-from baseObject import AutoPropertyObject, ScriptableObject
+from baseObject import AutoPropertyObject
 from .objectProvider import PlaceholderNVDAObject
 from scriptHandler import script
-from abc import abstractmethod
 
 class NVDAObjectWithDecoratedScript(PlaceholderNVDAObject):
 	"""An object with a decorated script."""

@@ -81,7 +81,7 @@ class _PendingGesture:
 	canRemove = False
 
 	def __repr__(self):
-		return f"Pending Gesture"
+		return "Pending Gesture"
 
 
 class _ScriptVM:
@@ -165,7 +165,7 @@ class _EmulatedGestureVM(_ScriptVM):
 
 	def __init__(self, emuGestureInfo: inputCore.AllGesturesScriptInfo):
 		if not isinstance(emuGestureInfo, inputCore.KbEmuScriptInfo):
-			raise ValueError(f"Unexpected script type.")
+			raise ValueError("Unexpected script type.")
 		# Translators: An gesture that will be emulated by some other new gesture. The token {emulateGesture}
 		# will be replaced by the gesture that can be triggered by a mapped gesture.
 		# E.G. Emulate key press: NVDA+b
@@ -705,7 +705,7 @@ class InputGesturesDialog(SettingsDialog):
 
 			inputCore.manager._captureFunc = addGestureCaptor
 		else:
-			log.error(f"unable to do 'add' action for selected item")
+			log.error("unable to do 'add' action for selected item")
 
 	def _addCaptured(self, catVM: _CategoryVMTypes, scriptVM: _ScriptVMTypes, gesture):
 		gids = gesture.normalizedIdentifiers

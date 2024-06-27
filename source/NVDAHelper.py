@@ -208,7 +208,7 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	pid=pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")
-		return -1;
+		return -1
 	bindingHandle=c_long()
 	bindingHandle.value=localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle: 
@@ -275,7 +275,7 @@ def nvdaControllerInternal_drawFocusRectNotify(hwnd, left, top, right, bottom):
 	focus=api.getFocusObject()
 	if isinstance(focus,Window) and hwnd==focus.windowHandle:
 		eventHandler.queueEvent("displayModel_drawFocusRectNotify",focus,rect=(left,top,right,bottom))
-	return 0;
+	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(level,pid,message):
@@ -373,7 +373,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	candidateStrings=candidatesString.split('\n')
 	import speech
-	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
+	from NVDAObjects.inputComposition import CandidateItem
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):

@@ -20,12 +20,9 @@ from treeInterceptorHandler import DocumentTreeInterceptor
 import speech
 import braille
 from NVDAObjects import behaviors
-import api
-import config
 import review
 import vision
 from logHandler import log
-from locationHelper import RectLTWH
 
 class CompoundTextInfo(textInfos.TextInfo):
 

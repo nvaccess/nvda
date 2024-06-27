@@ -11,9 +11,7 @@ import wincon
 from colors import RGB
 import eventHandler
 from logHandler import log
-import speech
 import textInfos
-import api
 import config
 import locationHelper
 from typing import (

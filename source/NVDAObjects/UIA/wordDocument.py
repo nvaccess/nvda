@@ -11,7 +11,6 @@ from typing import (
 
 import enum
 from comtypes import COMError
-import winVersion
 import mathPres
 from scriptHandler import isScriptWaiting
 import textInfos

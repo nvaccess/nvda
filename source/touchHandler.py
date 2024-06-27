@@ -14,7 +14,6 @@ from ctypes import windll
 from ctypes.wintypes import *
 import re
 import gui
-import winVersion
 import config
 import winUser
 import inputCore

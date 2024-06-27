@@ -8,7 +8,6 @@ import config
 import api
 import gui
 from logHandler import log
-import appModuleHandler
 import globalVars
 from . import guiHelper
 import gui.contextHelp

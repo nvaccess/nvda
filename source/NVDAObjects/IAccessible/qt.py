@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-from comtypes import COMError
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler

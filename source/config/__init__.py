@@ -614,7 +614,7 @@ class ConfigManager(object):
 		# if debug level logging is enabled.
 		try:
 			logLevelName = profile["general"]["loggingLevel"]
-		except KeyError as e:
+		except KeyError:
 			logLevelName = None
 		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
 			# Log at level info to ensure that the profile is logged.

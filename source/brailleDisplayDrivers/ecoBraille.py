@@ -4,16 +4,14 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 #Copyright (C) 2014-2015 ONCE-CIDAT <cidat.id@once.es>
-from typing import List, Tuple
+from typing import List
 
 import inputCore
 import braille
 import hwPortUtils
-from hwIo import intToByte
 from collections import OrderedDict
 from logHandler import log
 import serial
-import struct
 import wx
 
 ECO_KEY_F1 = 0x01

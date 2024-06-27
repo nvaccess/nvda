@@ -6,7 +6,6 @@
 import threading
 import time
 from collections import OrderedDict
-from logHandler import log
 
 #Possible actions (single trackers)
 action_tap="tap"

@@ -37,9 +37,6 @@ from controlTypes import TextPosition
 from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
-import review
-from cursorManager import CursorManager, ReviewCursorManager
-from tableUtils import HeaderCellInfo, HeaderCellTracker
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart

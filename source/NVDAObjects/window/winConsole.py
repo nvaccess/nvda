@@ -5,7 +5,7 @@
 
 import winConsoleHandler
 from . import Window
-from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection, KeyboardHandlerBasedTypedCharSupport
+from ..behaviors import Terminal, EditableTextWithoutAutoSelectDetection
 import api
 import core
 from scriptHandler import script

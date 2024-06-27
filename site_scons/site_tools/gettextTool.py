@@ -13,7 +13,6 @@
 ###
 
 import os
-import sys
 
 # Get the path to msgfmt.
 MSGFMT = os.path.abspath(os.path.join("miscDeps", "tools", "msgfmt.exe"))

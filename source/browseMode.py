@@ -47,7 +47,6 @@ import vision
 import speech
 from speech import sayAll
 import treeInterceptorHandler
-import inputCore
 import api
 import gui.guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit

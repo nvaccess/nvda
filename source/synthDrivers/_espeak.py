@@ -4,7 +4,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
 import nvwave
 import threading
 import queue
@@ -14,7 +13,6 @@ import config
 import globalVars
 from logHandler import log
 import os
-import codecs
 
 isSpeaking = False
 onIndexReached = None

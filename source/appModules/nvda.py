@@ -18,7 +18,6 @@ from scriptHandler import script
 import speech
 import textInfos
 import config
-from logHandler import log
 import ui
 
 if typing.TYPE_CHECKING:

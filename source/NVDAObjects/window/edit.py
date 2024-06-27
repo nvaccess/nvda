@@ -640,7 +640,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		# Outlook >=2007 exposes MSAA on its embedded objects thus we can use accName as the label
 		import oleacc
 		try:
-			label=o.QueryInterface(oleacc.IAccessible).accName(0);
+			label=o.QueryInterface(oleacc.IAccessible).accName(0)
 		except comtypes.COMError:
 			pass
 		if label:
@@ -666,7 +666,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			dataObj=None
 		if dataObj:
 			text=comtypes.BSTR()
-			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text));
+			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text))
 			label=text.value
 		if label:
 			return label

@@ -179,7 +179,7 @@ class _DataManager:
 			with open(cacheFilePath, 'r', encoding='utf-8') as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
-			log.exception(f"Invalid add-on store cache")
+			log.exception("Invalid add-on store cache")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(cacheFilePath)
 			return None

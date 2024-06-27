@@ -3,10 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ctypes
-import typing
 
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
+from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
@@ -15,7 +13,6 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
-import NVDAHelper
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 

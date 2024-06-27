@@ -11,7 +11,6 @@ from NVDAObjects.IAccessible.adobeAcrobat import normalizeStdName, AcrobatNode
 import winUser
 import IAccessibleHandler
 import oleacc
-from logHandler import log
 import textInfos
 import languageHandler
 
