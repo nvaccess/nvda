@@ -69,6 +69,7 @@ Unicode CLDR has also been updated.
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
+* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 
 ### Changes for Developers
 
