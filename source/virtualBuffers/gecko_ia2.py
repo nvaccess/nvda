@@ -24,6 +24,7 @@ from comtypes.gen.IAccessible2Lib import IAccessible2
 from comInterfaces import IAccessible2Lib as IA2
 from comInterfaces.IAccessible2Lib import IAccessibleTextSelectionContainer, IA2TextSelection, IAccessibleText
 from comtypes import COMError
+from comtypes.hresult import E_INVALIDARG
 import aria
 import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
@@ -284,7 +285,15 @@ class Gecko_ia2(VirtualBuffer):
 			return True
 		try:
 			self.rootNVDAObject.IAccessibleObject.accChild(accId)
-		except COMError:
+		except COMError as e:
+			if e.hresult == E_INVALIDARG:
+				# This indicates that this id is not a child of this document. We should
+				# not treat it as an error.
+				return False
+			# This shouldn't happen, so log it. However, don't raise it because we
+			# don't want the caller to be impacted. As far as the caller is concerned,
+			# this object just isn't in this buffer.
+			log.exception("Error checking if obj in buffer")
 			return False
 		return not self._isNVDAObjectInApplication(obj)
 
@@ -310,7 +319,9 @@ class Gecko_ia2(VirtualBuffer):
 			isDefunct=True
 		return not isDefunct
 
-	def getNVDAObjectFromIdentifier(self, docHandle, ID):
+	def getNVDAObjectFromIdentifier(
+			self, docHandle: int, ID: int
+	) -> NVDAObjects.IAccessible.IAccessible:
 		try:
 			pacc = self.rootNVDAObject.IAccessibleObject.accChild(ID)
 		except COMError:
