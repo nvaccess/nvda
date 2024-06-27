@@ -135,7 +135,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	)
 	try:
 		bundle = addonHandler.AddonBundle(addonPath)
-	except:
+	except:  # noqa: E722
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
 			# Translators: The message displayed when an error occurs when opening an add-on package for adding.
@@ -227,7 +227,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 				addonDataManager._deleteCacheInstalledAddon(prevAddon.name)
 				prevAddon.requestRemove()
 			return True
-	except:
+	except:  # noqa: E722
 		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
 			# Translators: The message displayed when an error occurs when installing an add-on package.
@@ -383,7 +383,7 @@ class IncompatibleAddonsDialog(
 
 	def onAbout(self, evt: wx.EVT_BUTTON):
 		index: int = self.addonsList.GetFirstSelected()
-		if index<0: return
+		if index<0: return  # noqa: E701
 		addon = self.curAddons[index]
 		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 		_showAddonInfo(addon._addonGuiModel)

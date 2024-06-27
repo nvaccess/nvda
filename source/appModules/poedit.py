@@ -293,7 +293,7 @@ class PoeditRichEdit(NVDAObject):
 		# These rich edit controls are incorrectly labeled.
 		# Oleacc doesn't return any name, and UIA defaults to RichEdit Control.
 		# The label object is positioned just above the field on the screen.
-		l, t, w, h = self.location
+		l, t, w, h = self.location  # noqa: E741
 		try:
 			self.name = NVDAObjects.NVDAObject.objectFromPoint(l + 10, t - 10).name
 		except AttributeError:

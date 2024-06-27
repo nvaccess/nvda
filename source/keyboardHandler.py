@@ -251,7 +251,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Never pass the NVDA modifier key to the OS.
 				trappedKeys.add(keyCode)
 				return False
-	except:
+	except:  # noqa: E722
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
 		if _watchdogObserver.isAttemptingRecovery:
@@ -321,7 +321,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		if keyCode in trappedKeys:
 			trappedKeys.remove(keyCode)
 			return False
-	except:
+	except:  # noqa: E722
 		log.error("", exc_info=True)
 	return True
 

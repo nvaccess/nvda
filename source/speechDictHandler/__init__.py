@@ -41,7 +41,7 @@ class SpeechDictEntry:
 	def __init__(self, pattern, replacement,comment,caseSensitive=True,type=ENTRY_TYPE_ANYWHERE):
 		self.pattern = pattern
 		flags = re.U
-		if not caseSensitive: flags|=re.IGNORECASE
+		if not caseSensitive: flags|=re.IGNORECASE  # noqa: E701
 		if type == ENTRY_TYPE_REGEXP:
 			tempPattern = pattern
 		elif type == ENTRY_TYPE_WORD:
@@ -149,7 +149,7 @@ It handles case when the synthesizer doesn't support voice setting.
 """
 	try:
 		dictFormatUpgrade.doAnyUpgrades(synth)
-	except:
+	except:  # noqa: E722
 		log.error("error trying to upgrade dictionaries", exc_info=True)
 		pass
 	if synth.isSupported("voice"):

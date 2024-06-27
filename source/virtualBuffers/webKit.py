@@ -117,11 +117,11 @@ class WebKit(VirtualBuffer):
 		try:
 			obj.doAction()
 			return
-		except:
+		except:  # noqa: E722
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l=obj.location
+		l=obj.location  # noqa: E741
 		if not l:
 			log.debugWarning("no location for field")
 			return

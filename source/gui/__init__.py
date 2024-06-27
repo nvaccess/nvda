@@ -470,7 +470,7 @@ class MainFrame(wx.Frame):
 		)
 		try:
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
-		except:
+		except:  # noqa: E722
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
 		del progressDialog

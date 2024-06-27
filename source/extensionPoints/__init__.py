@@ -11,7 +11,7 @@ or allow modification of spoken messages before they are passed to the synthesiz
 See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
 from logHandler import log
-from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref  # noqa: F401
 from typing import (
 	Callable,
 	Generator,
@@ -53,7 +53,7 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 		for handler in self.handlers:
 			try:
 				callWithSupportedKwargs(handler, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 
 	def notifyOnce(self, **kwargs):
@@ -114,7 +114,7 @@ class Filter(
 		for handler in self.handlers:
 			try:
 				value = callWithSupportedKwargs(handler, value, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 		return value
 
@@ -162,7 +162,7 @@ class Decider(HandlerRegistrar[Callable[..., bool]]):
 		for handler in self.handlers:
 			try:
 				decision = callWithSupportedKwargs(handler, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 				continue
 			if not decision:

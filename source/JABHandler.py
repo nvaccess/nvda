@@ -390,7 +390,7 @@ def internal_getWindowHandleFromAccContext(vmID,accContext):
 			return bridgeDll.getHWNDFromAccessibleContext(vmID,topAC)
 		finally:
 			bridgeDll.releaseJavaObject(vmID,topAC)
-	except:
+	except:  # noqa: E722
 		return None
 
 def getWindowHandleFromAccContext(vmID,accContext):
@@ -421,7 +421,7 @@ class JABContext(object):
 		if isRunning:
 			try:
 				bridgeDll.releaseJavaObject(self.vmID,self.accContext)
-			except:
+			except:  # noqa: E722
 				log.debugWarning("Error releasing java object",exc_info=True)
 
 
@@ -795,7 +795,7 @@ def enterJavaWindow_helper(hwnd):
 	while time.time()<timeout and not eventHandler.isPendingEvents("gainFocus"):
 		try:
 			bridgeDll.getAccessibleContextWithFocus(hwnd,byref(vmID),byref(accContext))
-		except:
+		except:  # noqa: E722
 			pass
 		if vmID and accContext:
 			break
@@ -803,7 +803,7 @@ def enterJavaWindow_helper(hwnd):
 	if not vmID or not accContext: 
 		try:
 			bridgeDll.getAccessibleContextFromHWND(hwnd,byref(vmID),byref(accContext))
-		except:
+		except:  # noqa: E722
 			return
 	vmID=vmID.value
 	vmIDsToWindowHandles[vmID]=hwnd

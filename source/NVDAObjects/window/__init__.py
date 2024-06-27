@@ -8,12 +8,12 @@ import ctypes
 import ctypes.wintypes
 import winKernel
 import winUser
-from logHandler import log
+from logHandler import log  # noqa: F401
 import controlTypes
-import api
-import config
+import api  # noqa: F401
+import config  # noqa: F401
 import displayModel
-import eventHandler
+import eventHandler  # noqa: F401
 from NVDAObjects import NVDAObject
 from NVDAObjects.behaviors import EditableText, EditableTextWithoutAutoSelectDetection, LiveText
 import watchdog
@@ -148,11 +148,11 @@ An NVDAObject for a window
 		windowHandle=None
 		if relation in ('focus','foreground'):
 			windowHandle=winUser.getForegroundWindow()
-			if not windowHandle: windowHandle=winUser.getDesktopWindow()
+			if not windowHandle: windowHandle=winUser.getDesktopWindow()  # noqa: E701
 			if windowHandle and relation=="focus":
 				threadID=winUser.getWindowThreadProcessID(windowHandle)[1]
 				threadInfo=winUser.getGUIThreadInfo(threadID)
-				if threadInfo.hwndFocus: windowHandle=threadInfo.hwndFocus
+				if threadInfo.hwndFocus: windowHandle=threadInfo.hwndFocus  # noqa: E701
 		elif isinstance(relation,tuple):
 			windowHandle=_windowFromPoint(ctypes.wintypes.POINT(relation[0],relation[1]))
 		if not windowHandle:

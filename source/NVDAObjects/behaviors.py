@@ -53,7 +53,7 @@ class ProgressBar(NVDAObject):
 			return
 		try:
 			left,top,width,height=self.location
-		except:
+		except:  # noqa: E722
 			left=top=width=height=0
 		x = left + (width // 2)
 		y = top+ (height // 2)
@@ -420,7 +420,7 @@ class LiveText(NVDAObject):
 	def _monitor(self):
 		try:
 			oldText = self._getText()
-		except:
+		except:  # noqa: E722
 			log.exception("Error getting initial text")
 			oldText = ""
 
@@ -448,7 +448,7 @@ class LiveText(NVDAObject):
 					if outLines:
 						queueHandler.queueFunction(queueHandler.eventQueue, self._reportNewLines, outLines, _immediate=True)
 				oldText = newText
-			except:
+			except:  # noqa: E722
 				log.exception("Error getting or calculating new text")
 
 	def _calculateNewText(self, newText: str, oldText: str) -> List[str]:
@@ -602,9 +602,9 @@ class CandidateItem(NVDAObject):
 		return _(u"{number} {candidate}").format(number=number,candidate=candidate)
 
 	def getFormattedCandidateDescription(self,candidate):
-		descriptions=[]
+		descriptions=[]  # noqa: F841
 		numSymbols=len(candidate) if candidate else 0
-		if numSymbols!=1: return u""
+		if numSymbols!=1: return u""  # noqa: E701
 		symbol=candidate[0]
 		try:
 			symbolDescriptions=characterProcessing.getCharacterDescription(speech.getCurrentLanguage(),symbol) or []
@@ -612,11 +612,11 @@ class CandidateItem(NVDAObject):
 			symbolDescriptions=[]
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
 			symbolDescriptions=symbolDescriptions[1:]
-		if len(symbolDescriptions)<1: return u""
+		if len(symbolDescriptions)<1: return u""  # noqa: E701
 		return u", ".join(symbolDescriptions)
 
 	def reportFocus(self):
-		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return
+		if not config.conf["inputComposition"]["announceSelectedCandidate"]: return  # noqa: E701
 		text=self.name
 		desc=self.description
 		if desc:
@@ -634,7 +634,7 @@ class CandidateItem(NVDAObject):
 		while isinstance(obj,CandidateItem) and isinstance(obj.candidateNumber,int) and controlTypes.State.INVISIBLE not in obj.states:
 			textList.append(obj.name)
 			obj=obj.next
-		if len(textList)<=1: return None
+		if len(textList)<=1: return None  # noqa: E701
 		self.visibleCandidateItemsText=(u", ".join(textList))+u", "
 		return self.visibleCandidateItemsText
 

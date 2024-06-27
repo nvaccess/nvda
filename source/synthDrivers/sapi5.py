@@ -115,7 +115,7 @@ class SynthDriver(SynthDriver):
 			r=winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
 			r.Close()
 			return True
-		except:
+		except:  # noqa: E722
 			return False
 
 	ttsAudioStream=None #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio

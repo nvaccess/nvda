@@ -31,7 +31,7 @@ def _updateVersionFromVCS():
 		version = "source-%s-%s" % (
 			os.path.basename(ref),
 			commit[:7])
-	except:
+	except:  # noqa: E722
 		pass
 
 
@@ -73,7 +73,7 @@ version=_formatDevVersionString()
 publisher="unknown"
 updateVersionType=None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build
+	from _buildVersion import version, publisher, updateVersionType, version_build  # noqa: F401
 except ImportError:
 	_updateVersionFromVCS()
 

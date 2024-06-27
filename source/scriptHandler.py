@@ -49,7 +49,7 @@ def _makeKbEmulateScript(scriptName):
 	import keyboardHandler
 	keyName = scriptName[3:]
 	emuGesture = keyboardHandler.KeyboardInputGesture.fromName(keyName)
-	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)
+	func = lambda gesture: inputCore.manager.emulateGesture(emuGesture)  # noqa: E731
 	func.__name__ = "script_%s" % scriptName
 	func.__doc__ = _("Emulates pressing %s on the system keyboard") % emuGesture.displayName
 	return func
@@ -293,7 +293,7 @@ def executeScript(script,gesture):
 		_lastScriptRef=scriptRef
 		_lastScriptTime=scriptTime
 		script(gesture)
-	except:
+	except:  # noqa: E722
 		log.exception("error executing script: %s with gesture %r"%(script,gesture.displayName))
 	finally:
 		_isScriptRunning=False

@@ -10,8 +10,8 @@ from ctypes import (
 	oledll,
 	windll,
 	POINTER,
-	CFUNCTYPE,
-	c_voidp,
+	CFUNCTYPE,  # noqa: F401
+	c_voidp,  # noqa: F401
 )
 
 import comtypes.client
@@ -145,45 +145,45 @@ NVDAUnitsToUIAUnits: Dict[str, int] = {
 }
 
 UIAControlTypesToNVDARoles={
-	UIA_ButtonControlTypeId:controlTypes.Role.BUTTON,
-	UIA_CalendarControlTypeId:controlTypes.Role.CALENDAR,
-	UIA_CheckBoxControlTypeId:controlTypes.Role.CHECKBOX,
-	UIA_ComboBoxControlTypeId:controlTypes.Role.COMBOBOX,
-	UIA_EditControlTypeId:controlTypes.Role.EDITABLETEXT,
-	UIA_HyperlinkControlTypeId:controlTypes.Role.LINK,
-	UIA_ImageControlTypeId:controlTypes.Role.GRAPHIC,
-	UIA_ListItemControlTypeId:controlTypes.Role.LISTITEM,
-	UIA_ListControlTypeId:controlTypes.Role.LIST,
-	UIA_MenuControlTypeId:controlTypes.Role.POPUPMENU,
-	UIA_MenuBarControlTypeId:controlTypes.Role.MENUBAR,
-	UIA_MenuItemControlTypeId:controlTypes.Role.MENUITEM,
-	UIA_ProgressBarControlTypeId:controlTypes.Role.PROGRESSBAR,
-	UIA_RadioButtonControlTypeId:controlTypes.Role.RADIOBUTTON,
-	UIA_ScrollBarControlTypeId:controlTypes.Role.SCROLLBAR,
-	UIA_SliderControlTypeId:controlTypes.Role.SLIDER,
-	UIA_SpinnerControlTypeId:controlTypes.Role.SPINBUTTON,
-	UIA_StatusBarControlTypeId:controlTypes.Role.STATUSBAR,
-	UIA_TabControlTypeId:controlTypes.Role.TABCONTROL,
-	UIA_TabItemControlTypeId:controlTypes.Role.TAB,
-	UIA_TextControlTypeId:controlTypes.Role.STATICTEXT,
-	UIA_ToolBarControlTypeId:controlTypes.Role.TOOLBAR,
-	UIA_ToolTipControlTypeId:controlTypes.Role.TOOLTIP,
-	UIA_TreeControlTypeId:controlTypes.Role.TREEVIEW,
-	UIA_TreeItemControlTypeId:controlTypes.Role.TREEVIEWITEM,
-	UIA_CustomControlTypeId:controlTypes.Role.UNKNOWN,
-	UIA_GroupControlTypeId:controlTypes.Role.GROUPING,
-	UIA_ThumbControlTypeId:controlTypes.Role.THUMB,
-	UIA_DataGridControlTypeId:controlTypes.Role.DATAGRID,
-	UIA_DataItemControlTypeId:controlTypes.Role.DATAITEM,
-	UIA_DocumentControlTypeId:controlTypes.Role.DOCUMENT,
-	UIA_SplitButtonControlTypeId:controlTypes.Role.SPLITBUTTON,
-	UIA_WindowControlTypeId:controlTypes.Role.WINDOW,
-	UIA_PaneControlTypeId:controlTypes.Role.PANE,
-	UIA_HeaderControlTypeId:controlTypes.Role.HEADER,
-	UIA_HeaderItemControlTypeId:controlTypes.Role.HEADERITEM,
-	UIA_TableControlTypeId:controlTypes.Role.TABLE,
-	UIA_TitleBarControlTypeId:controlTypes.Role.TITLEBAR,
-	UIA_SeparatorControlTypeId:controlTypes.Role.SEPARATOR,
+	UIA_ButtonControlTypeId:controlTypes.Role.BUTTON,  # noqa: F405
+	UIA_CalendarControlTypeId:controlTypes.Role.CALENDAR,  # noqa: F405
+	UIA_CheckBoxControlTypeId:controlTypes.Role.CHECKBOX,  # noqa: F405
+	UIA_ComboBoxControlTypeId:controlTypes.Role.COMBOBOX,  # noqa: F405
+	UIA_EditControlTypeId:controlTypes.Role.EDITABLETEXT,  # noqa: F405
+	UIA_HyperlinkControlTypeId:controlTypes.Role.LINK,  # noqa: F405
+	UIA_ImageControlTypeId:controlTypes.Role.GRAPHIC,  # noqa: F405
+	UIA_ListItemControlTypeId:controlTypes.Role.LISTITEM,  # noqa: F405
+	UIA_ListControlTypeId:controlTypes.Role.LIST,  # noqa: F405
+	UIA_MenuControlTypeId:controlTypes.Role.POPUPMENU,  # noqa: F405
+	UIA_MenuBarControlTypeId:controlTypes.Role.MENUBAR,  # noqa: F405
+	UIA_MenuItemControlTypeId:controlTypes.Role.MENUITEM,  # noqa: F405
+	UIA_ProgressBarControlTypeId:controlTypes.Role.PROGRESSBAR,  # noqa: F405
+	UIA_RadioButtonControlTypeId:controlTypes.Role.RADIOBUTTON,  # noqa: F405
+	UIA_ScrollBarControlTypeId:controlTypes.Role.SCROLLBAR,  # noqa: F405
+	UIA_SliderControlTypeId:controlTypes.Role.SLIDER,  # noqa: F405
+	UIA_SpinnerControlTypeId:controlTypes.Role.SPINBUTTON,  # noqa: F405
+	UIA_StatusBarControlTypeId:controlTypes.Role.STATUSBAR,  # noqa: F405
+	UIA_TabControlTypeId:controlTypes.Role.TABCONTROL,  # noqa: F405
+	UIA_TabItemControlTypeId:controlTypes.Role.TAB,  # noqa: F405
+	UIA_TextControlTypeId:controlTypes.Role.STATICTEXT,  # noqa: F405
+	UIA_ToolBarControlTypeId:controlTypes.Role.TOOLBAR,  # noqa: F405
+	UIA_ToolTipControlTypeId:controlTypes.Role.TOOLTIP,  # noqa: F405
+	UIA_TreeControlTypeId:controlTypes.Role.TREEVIEW,  # noqa: F405
+	UIA_TreeItemControlTypeId:controlTypes.Role.TREEVIEWITEM,  # noqa: F405
+	UIA_CustomControlTypeId:controlTypes.Role.UNKNOWN,  # noqa: F405
+	UIA_GroupControlTypeId:controlTypes.Role.GROUPING,  # noqa: F405
+	UIA_ThumbControlTypeId:controlTypes.Role.THUMB,  # noqa: F405
+	UIA_DataGridControlTypeId:controlTypes.Role.DATAGRID,  # noqa: F405
+	UIA_DataItemControlTypeId:controlTypes.Role.DATAITEM,  # noqa: F405
+	UIA_DocumentControlTypeId:controlTypes.Role.DOCUMENT,  # noqa: F405
+	UIA_SplitButtonControlTypeId:controlTypes.Role.SPLITBUTTON,  # noqa: F405
+	UIA_WindowControlTypeId:controlTypes.Role.WINDOW,  # noqa: F405
+	UIA_PaneControlTypeId:controlTypes.Role.PANE,  # noqa: F405
+	UIA_HeaderControlTypeId:controlTypes.Role.HEADER,  # noqa: F405
+	UIA_HeaderItemControlTypeId:controlTypes.Role.HEADERITEM,  # noqa: F405
+	UIA_TableControlTypeId:controlTypes.Role.TABLE,  # noqa: F405
+	UIA_TitleBarControlTypeId:controlTypes.Role.TITLEBAR,  # noqa: F405
+	UIA_SeparatorControlTypeId:controlTypes.Role.SEPARATOR,  # noqa: F405
 }
 
 UIALiveSettingtoNVDAAriaLivePoliteness: Dict[str, aria.AriaLivePoliteness] = {
@@ -257,7 +257,7 @@ if winVersion.getWinVer() >= winVersion.WIN10:
 globalEventHandlerGroupUIAEventIds = set(UIAEventIdsToNVDAEventNames) - localEventHandlerGroupUIAEventIds
 
 ignoreWinEventsMap = {
-	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),
+	UIA_AutomationPropertyChangedEventId: list(UIAPropertyIdsToNVDAEventNames.keys()),  # noqa: F405
 }
 for id in UIAEventIdsToNVDAEventNames.keys():
 	ignoreWinEventsMap[id] = [0]
@@ -511,15 +511,15 @@ class UIAHandler(COMObject):
 				self.clientObject.CoalesceEvents = UIA.CoalesceEventsOptions_Enabled
 				self.clientObject.ConnectionRecoveryBehavior = UIA.ConnectionRecoveryBehaviorOptions_Enabled
 			log.info(f"UIAutomation: {self.clientObject.__class__.__mro__[1].__name__}")
-			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))
+			self.windowTreeWalker=self.clientObject.createTreeWalker(self.clientObject.CreateNotCondition(self.clientObject.CreatePropertyCondition(UIA_NativeWindowHandlePropertyId,0)))  # noqa: F405
 			self.windowCacheRequest=self.clientObject.CreateCacheRequest()
-			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)
+			self.windowCacheRequest.AddProperty(UIA_NativeWindowHandlePropertyId)  # noqa: F405
 			self.UIAWindowHandleCache={}
 			self.baseTreeWalker=self.clientObject.RawViewWalker
 			self.baseCacheRequest=self.windowCacheRequest.Clone()
 			for propertyId in baseCachePropertyIDs:
 				self.baseCacheRequest.addProperty(propertyId)
-			self.baseCacheRequest.addPattern(UIA_TextPatternId)
+			self.baseCacheRequest.addPattern(UIA_TextPatternId)  # noqa: F405
 			self.rootElement=self.clientObject.getRootElementBuildCache(self.baseCacheRequest)
 			self.reservedNotSupportedValue=self.clientObject.ReservedNotSupportedValue
 			self.ReservedMixedAttributeValue=self.clientObject.ReservedMixedAttributeValue
@@ -731,7 +731,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug("HandleAutomationEvent: event received while not fully initialized")
 			return
-		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):
+		if eventID==UIA_MenuOpenedEventId and eventHandler.isPendingEvents("gainFocus"):  # noqa: F405
 			# We don't need the menuOpened event if focus has been fired,
 			# as focus should be more correct.
 			if _isDebug():

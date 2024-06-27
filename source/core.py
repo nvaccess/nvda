@@ -185,7 +185,7 @@ def doStartupDialogs():
 				if ID in (wx.ID_YES,wx.ID_NO):
 					try:
 						config.conf.save()
-					except:
+					except:  # noqa: E722
 						pass
 			# Ask the user if usage stats can be collected.
 			gui.runScriptModalDialog(gui.startupDialogs.AskAllowUsageStatsDialog(None), onResult)
@@ -357,7 +357,7 @@ def _setInitialFocus():
 		focus = api.getDesktopObject().objectWithFocus()
 		if focus:
 			eventHandler.queueEvent('gainFocus', focus)
-	except:
+	except:  # noqa: E722
 		log.exception("Error retrieving initial focus")
 
 
@@ -744,7 +744,7 @@ def main():
 	if wxLang:
 		try:
 			wxLocaleObj.Init(wxLang.Language)
-		except:
+		except:  # noqa: E722
 			log.error("Failed to initialize wx locale",exc_info=True)
 		finally:
 			# Revert wx's changes to the python locale
@@ -762,7 +762,7 @@ def main():
 		log.info("Java Access Bridge support initialized")
 	except NotImplementedError:
 		log.warning("Java Access Bridge not available")
-	except:
+	except:  # noqa: E722
 		log.error("Error initializing Java Access Bridge support", exc_info=True)
 	import winConsoleHandler
 	log.debug("Initializing legacy winConsole support")
@@ -773,7 +773,7 @@ def main():
 		UIAHandler.initialize()
 	except RuntimeError:
 		log.warning("UIA disabled in configuration")
-	except:
+	except:  # noqa: E722
 		log.error("Error initializing UIA support", exc_info=True)
 	import IAccessibleHandler
 	log.debug("Initializing IAccessible support")
@@ -817,7 +817,7 @@ def main():
 		try:
 			# Translators: This is shown on a braille display (if one is connected) when NVDA starts.
 			braille.handler.message(_("NVDA started"))
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 		if globalVars.appArgs.launcher:
 			from gui.startupDialogs import LauncherDialog
@@ -944,7 +944,7 @@ def main():
 
 	try:
 		speech.cancelSpeech()
-	except:
+	except:  # noqa: E722
 		pass
 
 	import treeInterceptorHandler
@@ -985,7 +985,7 @@ def main():
 				os.path.join(globalVars.appDir, "waves", "exit.wav"),
 				asynchronous=False
 			)
-		except:
+		except:  # noqa: E722
 			pass
 	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
 	_terminate(nvwave)
@@ -1001,7 +1001,7 @@ def _terminate(module, name=None):
 	log.debug("Terminating %s" % name)
 	try:
 		module.terminate()
-	except:
+	except:  # noqa: E722
 		log.exception("Error terminating %s" % name)
 
 

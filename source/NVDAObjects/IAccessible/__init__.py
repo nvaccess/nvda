@@ -31,18 +31,18 @@ import importlib
 from comInterfaces.tom import ITextDocument
 from comInterfaces import Accessibility as IA
 from comInterfaces import IAccessible2Lib as IA2
-import tones
+import tones  # noqa: F401
 import languageHandler
 import textInfos.offsets
 import textUtils
 import colors
-import time
+import time  # noqa: F401
 import displayModel
 import IAccessibleHandler
 import oleacc
 import JABHandler
 import winUser
-import globalVars
+import globalVars  # noqa: F401
 from logHandler import log
 import speech
 import braille
@@ -52,10 +52,10 @@ import controlTypes
 from controlTypes import TextPosition
 from controlTypes.formatFields import FontSize, TextAlign
 from NVDAObjects.window import Window
-from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject
+from NVDAObjects import NVDAObject, NVDAObjectTextInfo, InvalidNVDAObject  # noqa: F401
 import NVDAObjects.JAB
 import eventHandler
-from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification
+from NVDAObjects.behaviors import ProgressBar, Dialog, EditableTextWithAutoSelectDetection, FocusableUnfocusableContainer, ToolTip, Notification  # noqa: F401
 from locationHelper import RectLTWH
 import NVDAHelper
 
@@ -2139,7 +2139,7 @@ class SysLink(IAccessible):
 		if name: 
 			#Remove any data after the null character
 			i=name.find('\0')
-			if i>=0: name=name[:i]
+			if i>=0: name=name[:i]  # noqa: E701
 		return name
 
 class TaskList(IAccessible):

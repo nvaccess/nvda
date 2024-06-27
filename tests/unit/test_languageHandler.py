@@ -28,7 +28,7 @@ def generateUnsupportedWindowsLocales():
 
 LCID_ENGLISH_US = 0x0409
 UNSUPPORTED_WIN_LANGUAGES = generateUnsupportedWindowsLocales()
-TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}
+TRANSLATABLE_LANGS = set(l[0] for l in languageHandler.getAvailableLanguages()) - {"Windows"}  # noqa: E741
 WINDOWS_LANGS = set(locale.windows_locale.values()).union(LCIDS_TO_TRANSLATED_LOCALES.values())
 
 

@@ -7,35 +7,35 @@
 import time
 import threading
 import ctypes
-import collections
-import itertools
+import collections  # noqa: F401
+import itertools  # noqa: F401
 from typing import (
 	Optional,
 	Dict,
 )
 import weakref
 import wx
-import review
+import review  # noqa: F401
 import NVDAHelper
 import XMLFormatting
 import scriptHandler
 from scriptHandler import script
-import speech
-import NVDAObjects
+import speech  # noqa: F401
+import NVDAObjects  # noqa: F401
 import api
 import controlTypes
 import textInfos.offsets
 import config
-import cursorManager
+import cursorManager  # noqa: F401
 import browseMode
-import gui
-import eventHandler
+import gui  # noqa: F401
+import eventHandler  # noqa: F401
 import braille
 import queueHandler
 from logHandler import log
 import ui
-import aria
-import treeInterceptorHandler
+import aria  # noqa: F401
+import treeInterceptorHandler  # noqa: F401
 import watchdog
 from abc import abstractmethod
 import documentBase
@@ -61,7 +61,7 @@ FINDBYATTRIBS_ESCAPE_TABLE = {
 FINDBYATTRIBS_ESCAPE_TABLE.update({(ord(s), u"\\" + s) for s in u"^$.*+?()[]{}|"})
 def _prepareForFindByAttributes(attribs):
 	# A lambda that coerces a value to a string and escapes characters suitable for a regular expression. 
-	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)
+	escape = lambda val: str(val).translate(FINDBYATTRIBS_ESCAPE_TABLE)  # noqa: E731
 	reqAttrs = []
 	regexp = []
 	if isinstance(attribs, dict):
@@ -480,7 +480,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
 			return
@@ -632,7 +632,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			try:
 				node=VBufRemote_nodeHandle_t()
 				NVDAHelper.localLib.VBuf_findNodeByAttributes(self.VBufHandle,offset,direction,reqAttrs,regexp,ctypes.byref(startOffset),ctypes.byref(endOffset),ctypes.byref(node))
-			except:
+			except:  # noqa: E722
 				return
 			if not node:
 				return
@@ -736,7 +736,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			if field.getPresentationCategory(controlFields,formatConfig)==field.PRESCAT_CONTAINER or field.get("landmark"):
 				containerField=field
 				break
-		if not containerField: return None
+		if not containerField: return None  # noqa: E701
 		docHandle=int(containerField['controlIdentifier_docHandle'])
 		ID=int(containerField['controlIdentifier_ID'])
 		offsets = textRange._getOffsetsFromFieldIdentifier(docHandle,ID)
@@ -778,7 +778,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		# If the object is in the buffer, it's definitely not in an application.
 		try:
 			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("getIdentifierFromNVDAObject failed. "
 				"Object probably died while walking ancestors.", exc_info=True)
 			return None

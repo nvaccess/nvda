@@ -395,7 +395,7 @@ def _getAvailableAddonsFromPath(
 						log.debugWarning("Add-on %s is considered incompatible", name)
 						state[AddonStateCategory.BLOCKED].add(a.name)
 					yield a
-				except:
+				except:  # noqa: E722
 					log.error("Error loading Addon from path: %s", addon_path, exc_info=True)
 
 _availableAddons = collections.OrderedDict()
@@ -568,7 +568,7 @@ class Addon(AddonBase):
 				# translations can be used in installTasks module.
 				_availableAddons[self.path] = self
 				self.runInstallTask("onUninstall")
-			except:
+			except:  # noqa: E722
 				log.error("task 'onUninstall' on addon '%s' failed"%self.name,exc_info=True)
 			finally:
 				del _availableAddons[self.path]
@@ -1027,9 +1027,9 @@ docFileName = string(default=None)
 		self._errors = None
 		val = Validator({"apiVersion":validate_apiVersionString})
 		result = self.validate(val, copy=True, preserve_errors=True)
-		if result != True:
+		if result != True:  # noqa: E712
 			self._errors = result
-		elif True != self._validateApiVersionRange():
+		elif True != self._validateApiVersionRange():  # noqa: E712
 			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
 				self.get("minimumNVDAVersion"),
 				self.get("lastTestedNVDAVersion")

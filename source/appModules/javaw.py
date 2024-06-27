@@ -48,5 +48,5 @@ def getAppNameFromHost(processId):
 		raise LookupError
 	try:
 		return "javaw_" + _getEntryPoint(cmd).replace(".", "_")
-	except:
+	except:  # noqa: E722
 		raise LookupError

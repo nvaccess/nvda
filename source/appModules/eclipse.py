@@ -39,7 +39,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		try:
 			if self.appModule.selectedItem and not self.appModule.selectedItem.name:
 				self.event_suggestionsClosed()
-		except:
+		except:  # noqa: E722
 			pass
 
 	@script(
@@ -194,5 +194,5 @@ class AppModule(appModuleHandler.AppModule):
 				)
 			):
 				clsList.insert(0, AutocompletionListItem)
-		except:
+		except:  # noqa: E722
 			pass

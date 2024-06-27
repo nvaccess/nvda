@@ -168,7 +168,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 			yield obj
 			try:
 				objHt = obj.iaHypertext
-			except:
+			except:  # noqa: E722
 				# This is a graphic, etc. which doesn't support text.
 				continue
 			log.debug("Object has hypertext. Recursing")

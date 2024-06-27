@@ -217,7 +217,7 @@ def _shouldRecoverAfterMinTimeout():
 def _recoverAttempt():
 	try:
 		oledll.ole32.CoCancelCall(core.mainThreadId,0)
-	except:
+	except:  # noqa: E722
 		pass
 
 class MINIDUMP_EXCEPTION_INFORMATION(ctypes.Structure):
@@ -252,7 +252,7 @@ def _crashHandler(exceptionInfo):
 				None
 			):
 				raise ctypes.WinError()
-	except:
+	except:  # noqa: E722
 		log.critical("NVDA crashed! Error writing minidump", exc_info=True)
 	else:
 		log.critical("NVDA crashed! Minidump written to %s" % dumpPath)

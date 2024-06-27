@@ -313,7 +313,7 @@ class DocumentWindow(PaneClassDC):
 		return label
 
 	def _get_currentSlide(self):
-		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails,ppViewMasterThumbnails): return None
+		if self.ppActivePaneViewType in (ppViewSlideSorter,ppViewThumbnails,ppViewMasterThumbnails): return None  # noqa: E701
 		return super(DocumentWindow,self).currentSlide
 
 	def _get_ppSelection(self):
@@ -530,8 +530,8 @@ class Shape(PpObject):
 				self.role = controlTypes.Role.MATH
 
 	def _get__overlapInfo(self):
-		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth
-		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight
+		slideWidth=self.appModule._ppApplication.activePresentation.pageSetup.slideWidth  # noqa: F841
+		slideHeight=self.appModule._ppApplication.activePresentation.pageSetup.slideHeight  # noqa: F841
 		left=self.ppObject.left
 		top=self.ppObject.top
 		right=left+self.ppObject.width
@@ -886,14 +886,14 @@ class Shape(PpObject):
 	def _get_mathMl(self):
 		try:
 			import mathType
-		except:
+		except:  # noqa: E722
 			raise LookupError("MathType not installed")
 		obj = self.ppObject.OLEFormat
 		try:
 			# Don't call RunForConversion, as this seems to make focus bounce.
 			# We don't seem to need it for PowerPoint anyway.
 			return mathType.getMathMl(obj, runForConversion=False)
-		except:
+		except:  # noqa: E722
 			raise LookupError("Couldn't get MathML from MathType")
 
 	__gestures={
@@ -1134,13 +1134,13 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 	def getMathMl(self, field):
 		try:
 			import mathType
-		except:
+		except:  # noqa: E722
 			raise LookupError("MathType not installed")
 		try:
 			# Don't call RunForConversion, as this seems to make focus bounce.
 			# We don't seem to need it for PowerPoint anyway.
 			return mathType.getMathMl(field["oleFormat"], runForConversion=False)
-		except:
+		except:  # noqa: E722
 			raise LookupError("Couldn't get MathML from MathType")
 
 class SlideShowTreeInterceptor(DocumentTreeInterceptor):
@@ -1240,7 +1240,7 @@ class SlideShowWindow(PaneClassDC):
 				if text and not text.isspace():
 					yield text
 			return
-		if cellShape: return
+		if cellShape: return  # noqa: E701
 		shapeType=shape.type
 		if shapeType==msoGroup:
 			for childShape in shape.groupItems:
@@ -1360,7 +1360,7 @@ class AppModule(appModuleHandler.AppModule):
 		try:
 			pDispatch=oleacc.AccessibleObjectFromWindow(windowHandle,winUser.OBJID_NATIVEOM,interface=comtypes.automation.IDispatch)
 			return comtypes.client.dynamic.Dispatch(pDispatch)
-		except: 
+		except:  # noqa: E722
 			log.debugWarning("Could not get MS Powerpoint object model",exc_info=True)
 			return None
 
@@ -1370,7 +1370,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not self._ppApplicationFromROT:
 			try:
 				self._ppApplicationFromROT=comHelper.getActiveObject(u'powerPoint.application',dynamic=True,appModule=self if useRPC else None)
-			except:
+			except:  # noqa: E722
 				log.debugWarning("Could not get active object via RPC")
 				return None
 		try:

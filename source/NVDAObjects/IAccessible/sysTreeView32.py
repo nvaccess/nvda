@@ -39,7 +39,7 @@ class TreeView(IAccessible):
 	def _get_firstChild(self):
 		try:
 			return super(TreeView, self).firstChild
-		except:
+		except:  # noqa: E722
 			# Broken commctrl 5 tree view.
 			return BrokenCommctrl5Item.getFirstItem(self)
 
@@ -273,7 +273,7 @@ class BrokenCommctrl5Item(IAccessible):
 			kwargs = {"windowHandle": treeObj.windowHandle}
 			UIA.kwargsFromSuper(kwargs)
 			uiaObj = UIA(**kwargs)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Error retrieving UIA object for tree view", exc_info=True)
 			return None
 		# Get the first tree item.

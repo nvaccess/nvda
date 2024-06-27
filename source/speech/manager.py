@@ -326,7 +326,7 @@ class SpeechManager(object):
 		enteredTriggers = []
 		outSeqs = []
 		paramsToReplay = []
-		currentSynth = getSynth()
+		currentSynth = getSynth()  # noqa: F841
 
 		outSeq = []
 		for command in inSeq:
@@ -722,13 +722,13 @@ class SpeechManager(object):
 		if command.enter:
 			try:
 				command.trigger.enter()
-			except:
+			except:  # noqa: E722
 				log.exception("Error entering new trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.append(command.trigger)
 		else:
 			try:
 				command.trigger.exit()
-			except:
+			except:  # noqa: E722
 				log.exception("Error exiting active trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
@@ -737,7 +737,7 @@ class SpeechManager(object):
 		for trigger in reversed(triggers):
 			try:
 				trigger.exit()
-			except:
+			except:  # noqa: E722
 				log.exception("Error exiting profile trigger %r" % trigger.spec)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
@@ -745,7 +745,7 @@ class SpeechManager(object):
 		for trigger in triggers:
 			try:
 				trigger.enter()
-			except:
+			except:  # noqa: E722
 				log.exception("Error entering profile trigger %r" % trigger.spec)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 

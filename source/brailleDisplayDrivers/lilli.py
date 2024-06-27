@@ -15,7 +15,7 @@ import braille
 
 try:
 	lilliDll = windll.LoadLibrary(os.path.join(globalVars.appDir, "brailleDisplayDrivers", "lilli.dll"))
-except:
+except:  # noqa: E722
 	lilliDll=None
 
 lilliCellsMap: List[int] = []
@@ -67,7 +67,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:
+		except:  # noqa: E722
 			pass
 		lilliDll.Close408USB()
 
@@ -82,7 +82,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# The code seems to assume this returns an int.
 				# I haven't confirmed this.
 				key = lilliDll.ReadBuf()
-			except:
+			except:  # noqa: E722
 				log.debug("", exc_info=True)
 				pass
 			if not key:
