@@ -140,7 +140,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# the insertion point at the end of a line.
 				self._isEndOfLineInsertionPoint = start == end
 			except COMError:
-				pass
+				# We already set self._isEndOfLineInsertionPoint to False above and that's
+				# what we should assume on failure.
+				log.debugWarning(
+					"Couldn't determine if caret is at end of line insertion point",
+					exc_info=True
+				)
 			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
@@ -425,6 +430,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
+	def _adjustIfEndOfLine(self, expandTi, unit, obj):
+		if (
+			self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER
+			and obj is self._startObj and expandTi._startOffset > 0
+		):
+			# #3156: This is the insertion point at the end of a line. If we use
+			# this offset, we'll get the unit at the start of the next line.
+			# Subtract 1 so that we get the unit on the current line.
+			expandTi._startOffset -= 1
+			expandTi._endOffset = expandTi._startOffset
+
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
 		start = startObj = end = endObj = None
 		baseTi.collapse()
@@ -436,15 +452,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				expandTi = self._makeRawTextInfo(obj, unit)
 			else:
 				expandTi = baseTi.copy()
-				if (
-					self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER
-					and obj is self._startObj and expandTi._startOffset > 0
-				):
-					# #3156: This is the insertion point at the end of a line. If we use
-					# this offset, we'll get the unit at the start of the next line.
-					# Subtract 1 so that we get the unit on the current line.
-					expandTi._startOffset -= 1
-					expandTi._endOffset -= 1
+				self._adjustIfEndOfLine(expandTi, unit, obj)
 				expandTi.expand(unit)
 				if expandTi.isCollapsed:
 					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
