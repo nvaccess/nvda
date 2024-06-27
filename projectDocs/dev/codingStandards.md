@@ -15,7 +15,7 @@ Python code style is enforced with the flake8 linter, see [`tests/lint/readme.md
   * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
     This is particularly relevant for braille display drivers.
     This is due to a `gettext` bug; see [comment on #2592](https://github.com/nvaccess/nvda/issues/2592#issuecomment-155299911).
-* Most files should be committed with `LF` line endings.
+* Text files should be committed with `LF` line endings.
 Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
 ### Indentation
