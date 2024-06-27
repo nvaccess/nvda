@@ -284,8 +284,8 @@ However, there are several things that these scripts do, that are inappropriate 
 Those features could be made to work, through significant modifications to the build scripts; but that is beyond the scope of this how-to.
 Therefore, these sections should be "turned off", or your builds will fail.
 
-In the environment section, after a couple lines of comment about what these variables do, you will find a set of variable names starting with the word "feature", and including a value of "True".
-You should comment out each of the following lines, by putting a hash symbol (#) right before the first text on each line:
+In the environment section, you will find several "feature" variables set to "configured", following a brief comment explaining their purpose.
+Make sure the following lines are commented out by putting a hash symbol (#) right before the first text on each line:
 * `feature_uploadSymbolsToMozilla`
 * `feature_buildAppx`
 * `feature_crowdinSync`
