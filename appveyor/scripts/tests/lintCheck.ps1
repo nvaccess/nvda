@@ -1,7 +1,7 @@
 $lintOutput = (Resolve-Path .\testOutput\lint\)
 $lintOutput = "$lintOutput\PR-lint.xml"
 .\runlint.bat "$lintOutput"
-if($LastExitCode -ne 0) {
+if ($LastExitCode -ne 0) {
 	Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
 	Add-AppveyorMessage "FAIL: Lint check. See test results for more information."
 } else {
