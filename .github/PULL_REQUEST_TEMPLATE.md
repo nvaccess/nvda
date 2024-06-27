@@ -49,3 +49,6 @@ https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/githubPullRequestTe
   - Localization in other languages / culture than English
 - [ ] API is compatible with existing add-ons.
 - [ ] Security precautions taken.
+
+<!-- Please keep the following -->
+@coderabbitai summary

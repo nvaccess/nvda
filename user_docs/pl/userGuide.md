@@ -82,7 +82,7 @@ Dla szczegółowych informacji dotyczących wyjątków, skonsultuj się z dokume
 ## NVDA szybki start {#NVDAQuickStartGuide}
 
 Ten szybki start zawiera trzy główne rozdziały: pobieranie, podstawowe konfigurowanie, i uruchamianie NVDA.
-W tych rozdziałach zawarta jest informacja o zmianie ustawień, uczestnictwie w społeczeństwie, a także informacje o tym, jak dostać pomoc.
+W tych rozdziałach zawarta jest informacja o zmianie ustawień, używaniu dodatków, uczestnictwie w społeczeństwie, a także informacje o tym, jak dostać pomoc.
 Informacja w tym szybkim starcie jest zebrana z innych rozdziałów podręcznika użytkownika NVDA.
 Prosimy zajrzeć do kompletnego podręcznika użytkownika po więcej informacji o każdym temacie.
 
@@ -100,7 +100,7 @@ Sprawdź [Wymagania systemowe](#SystemRequirements) dla więcej szczegółów.
 
 Ta procedura wymaga wiedzy poruszania się po stronach internetowych.
 
-* Otwórz swoją przeglądarkę internetową (naciśnij klawisz `windows`, napisz słowo "internet" bez cudzysłówów, i naciśnij `enter`)
+* Otwórz swoją przeglądarkę internetową, (naciśnij klawisz `windows`, napisz słowo "internet" bez cudzysłówów, i naciśnij `enter`)
 * Otwórz stronę pobierania NV Access (naciśnij `alt+d`, wpisz następujący adres i naciśnij `enter`): 
 https://www.nvaccess.org/download 
 * Aktywuj przycisk "download"
@@ -135,7 +135,7 @@ Dostępne opcje to:
 * "Utwórz kopię przenośną": ta opcja umożliwia ustawianie NVDA w jakimkolwiek folderze bez instalacji.
 Ta opcja jest użyteczna na komputerze bez praw administratora, lub na USB stickach w celu noszenia ze sobą.
 Kiedy ta opcja jest zaznaczona, NVDA kieruje użytkownika  w procesie tworzenia przenośnej kopii.
-Główną rzeczą o której NVDA powinien wiedzieć, to folder do przechowywania konfiguracji przenośnej kopii. 
+Główną rzecz o której NVDA powinien wiedzieć, to folder do przechowywania konfiguracji przenośnej kopii. 
 * "Kontynuuj uruchamianie tymczasowej kopii": ta opcja trzyma uruchomioną tymczasową kopię.
 To jest użyteczne w celu testowania funkcji w nowej wersji przed jej instalacją.
 Kiedy ta opcja jest wybrana, okno programu uruchamiającego zamyka się, a tymczasowa kopia nadal działa dopóki nie zostanie zamknięta albo komputer zostanie wyłączone.
@@ -158,7 +158,7 @@ Po więcej opcji dostępnych podczas instalacji, prosimy zajrzeć do rozdziału 
 1. Naciskaj klawisz `Tab` i aktywuj przycisk "Zainstaluj NVDA na tym komputerze".
 1. Dalej, mamy opcje używaj NVDA podczas logowania a także opcje do tworzenia kopii przenośnej.
 Te opcje są domyślnie wybrane.
-Jeżeli chcesz naciśnij `tab` i `spacje` na jakiejkolwiek z tych opcji, lub pozostaw wartości domyślne.
+Jeżeli chcesz, naciśnij `tab` i `spacje` na jakiejkolwiek z tych opcji, lub pozostaw wartości domyślne.
 1. Naciśnij `enter` aby kontynuować.
 1. Pojawi się dialog "kontrola konta użytkownika (UAC)" w którym decydujesz "Czy chcesz, żeby ta aplikacja wykonała zmiany na tym komputerze?".
 1. Naciśnij `alt+t` aby zaakceptować.
@@ -278,7 +278,79 @@ Większość funkcji NVDA mogą być włączone lub zmienione za pomocą ustawie
 Ustawienia i inne opcje dostępne są w menu programu NVDA.
 Aby otworzyć menu programu NVDA, naciśnij `NVDA+n`.
 Aby bezpośrednio otworzyć dialog ustawień ogólnych programu NVDA, naciśnij `NVDA+control+g`.
-Wielu ekranów ustawień mają skróty do bezpośredniego otwierania, takie jak na przykład `NVDA+control+s` do zmiany syntezatora, lub `NVDA+control+v` do zmiany innych ustawień głosu.
+Wielu ekranów ustawień posiada skróty do bezpośredniego otwierania, takie jak na przykład `NVDA+control+s` do zmiany syntezatora, lub `NVDA+control+v` do zmiany innych ustawień głosu.
+
+### Dodatki {#Addons}
+Dodatki to programy, dodające nową lub zmienioną funkcjonalność do czytnika ekranu NVDA.
+Dodatki są rozwijane przez społeczność NVDA oraz firmy trzecie i nie są powiązane z NV access.
+Ważne jest zaufanie do dewelopera dodatku przed jego używaniem, tak jak i z innymi programami.
+Prosimy zajrzeć do rozdziału [Instalowanie dodatków](#AddonStoreInstalling) aby się dowiedzieć, o sposobach weryfikacji dodatków.
+
+Po pierwszym otwarciu NVDA add-ons store, komunikat o dodatkach zostanie wyświetlony.
+Dodatki nie są sprawdzane przez NV Access  i mogą posiadać nieograniczony dostęp do informacji i danych.
+Naciśnij `spację`, jeśli przeczytałeś ostrzeżenie i nie chcesz go widzieć następnym razem.
+Naciśnij `tab` aby dotrzeć do przycisku "OK" a potem naciśnij `enter` w celu zaakceptowania ostrzeżenia i kontynuowania do add-on store.
+Rozdział "[Dodatki i Add-ons store](#AddonsManager)" podręcznika użytkownika zawiera informacje o każdej funkcji add-on storu.
+
+Add-on Store jest dostępne w w meni Narzędzia.
+Naciśnij `NVDA+n` aby otworzyć NVDA meni, potem `n` dla narzędzi, a potem `a` dla add-on storu.
+Po opwarciu Add-on storu, zostanie wyświetlona karta właściwości "otkryj dodatki", jeżeli nie ma zainstalowanych dodatków.
+Gdy dodatki są zainstalowane, Add-on Store otworzy się na karcie właściwości "zainstalowane dodatki".
+
+#### Otkrywaj dodatki {#AvailableAddons}
+Gdy okno otworzy się pierwszy raz,  trzeba poczekać pare sekund, aby dodatki wczytały się.
+NVDA przeczyta nazwę pierwszego dodatku po wczytaniu listy dodatków.
+Dostępne dodatki są wylistowane alfabetycznie w wielokolumnowej liście.
+Aby przeglądać listę i znaleźć informacje o określonym dodatku:
+
+1. Używaj klawiszy strzałek oraz naciśnij pierwszą literę nazwy dodatku, aby się przemieszczać po liście.
+1. Naciśnij jeden raz klawisz `tab` aby dotrzeć do opisu zaznaczonego dodatku.
+1. Używaj [klawiszy do odczytu](#ReadingText) lub strzałek, aby przeczytać cały opis.
+1. Naciśnij `tab` aby dojść do przycisku "działania", który wspośród innych działań umożliwi instalację dodatku.
+1. Naciśnij `tab` aby dojść do części okna "więcej szczegółów", w którym podane są takie informacje jak wydawca, wersja i strona internetowa.
+1. Aby wrócić do listy dodatków, naciśnij `alt+a`, lub `shift+tab`, dopóki nie wrócisz na listę.
+
+#### Szukanie dodatków {#SearchingForAddons}
+Możliwe jest filtrowanie dodatków w taki sam sposób, jak i ich przeglądanie.
+Aby wyszukiwać dodatki, naciśnij `alt+s` aby przejść do pola "szukaj" i wpisz szukany tekst.
+Pole wyszukiwania może zawierać takie informacje jak: identifikator dodatku, nazwę wyświetlaną, wydawcę, autora lub opis.
+Lista się zmienia podczas wpisywania słów kluczowych.
+Po zakonczeniu, naciśnij `tab` aby przejść do listy filtrowanej dodatków i przeglądaj wyniki.
+
+#### Instalowanie dodatków {#InstallingAddons}
+
+Aby zainstalować dodatek:
+
+1. Gdy zaznaczyłeś dodatek, którego chcesz zainstalować, naciśnij `enter`.
+1. Meni Działania otwiera się z listą działań. Pierwsze działanie to "zainstaluj".
+1. Aby zainstalować dodatek, naciśnij `z` lub `Strzałkę w dół` zaznaczyć opcję "zainstaluj" i naciśnij `enter`.
+1. Fokus powróci do listy dodatków a NVDA przeczyta szczegóły dodatku.
+1. Informacja o "Stanie" przeczytana przez NVDA zmieni się z "dostępny" na "pobieranie".
+1. Gdy pobieranie dodatku zostanie zakończone, stan zmieni się na "Pobrany, oczekujący na instalację".
+1. Powtórz te kroki z każdym dodatkiem, które chcesz zainstalować.
+1. Gdy zakończysz, naciśnij `tab` gdy przejdziesz do przycisku "zamknij", a potem naciśnij `enter`.
+1. Proces instalacji pobranych dodatków rozpocznie się po zamknięciu Add-on store.
+Podczas instalacji, pokażą się okna dialogowe, które trzeba zatwierdzić.
+1. Po instalacji dodatków, pokaże się okno dialogowe, które informuje o koniecznosci ponownego uruchomienia NVDA po wykonanych zmiana i zakończonej instalacji NVDA.
+1. Naciśnij `enter` aby ponownie uruchomić NVDA.
+
+#### Zarządzanie zainstalowanymi didatkami {#ManagingInstalledAddons}
+Naciśnij `control+tab` aby przemieszczać się pomiędzy kartami właściwości lub częściami Add-on Stora.
+Istnieją następujące karty właściwości: "zainstalowane dodatki", "dodatki do zaktualizowania", "otkryj dodatki" i "zainstalowane niezgodne dodatki".
+Każda z tych kart właściwości ułożona jest w podobny sposób: jako lista z dodatkami, panel zawierający więcej informacji o wybranym dodatku, i z możliwością wykonania działania na konkretnym dodatku.
+Meni "działania umożliwia włączanie i wyłączanie dodatków, a także ich instalację.
+Wyłączanie dodatków uniemożliwia ich wczytywanie przez NVDA, ale je pozostawia zainstalowane.
+Aby ponownie włączyć wyłączony dodatek, trzeba nacisnąć "włącz" z meni działania.
+Po włączeniu, wyłączeniu, oraz usunięciu dodatków, pokaże się komunikat o ponownym uruchomieniu po zamknięciu Add-on store.
+Te zmiany zostaną wprowadzone tylko po ponownym uruchomieniu NVDA.
+Miewaj na uwadzę, że klawisz `escape` w Add-on store działa w ten sam sposób jak i przycisk zamknij.
+
+#### Aktualizowanie dodatków {#UpdatingAddons}
+Gdy aktualizacja zainstalowanego dodatku zostanie wydana, ta pojawi się na karcie właściwości "dodatki do zaktualizowania".
+Naciśnij `control+tab` aby się do niej dostać z jakiejkolwiek części Add-on storu.
+Stan dodatku w Add-on store zostanie wyświetlony jako "aktualizacja jest dostępna".
+Na liście pokaże się informacja o bieżącej i dostępnej wersji.
+Naciśnij `enter` na dodatku, aby otworzyć spis działań. Wybierz "Zaktualizuj".
 
 ### Społeczność {#Community}
 
@@ -468,7 +540,7 @@ Przesuwaj palec po ekranie, by usłyszeć inne kontrolki lub tekst pod nim.
 Ilekroć w tym podręczniku zostanie wymieniona komenda klawiaturowa NVDA, zostanie podany gest dotykowy, który jest jej odpowiednikiem. 
 Poniżej wyjaśnienie, jak wykonywać te gesty.
 
-##### Stuknięcia {#toc45}
+##### Stuknięcia {#Taps}
 
 Stuknij szybko w ekran jednym lub wieloma palcami.
 
@@ -480,7 +552,7 @@ Stuknięcie dwukrotne będzie podwójnym stuknięciem.
 Stuknięcie 3 razy będzie potrójnym stuknięciem. I tak dalej.
 Te wielokrotne gesty również uwzględniają ilość użytych palców, więc możliwe są gesty takie jak potrójne stuknięcie dwoma palcami, pojedyncze stuknięcie czterema palcami itd. 
 
-##### Machnięcia {#toc46}
+##### Machnięcia {#Flicks}
 
 Przesuń szybko palcem po ekranie.
 
@@ -1052,13 +1124,13 @@ Jednakże, w przypadkach, w których musisz skopiować calą tabele lub akapit z
 
 NVDA może czytać treść matematyczną w internecie i w innych aplikacjach, umożliwiając jej odczyt zarówno mową, jak i brajlem. 
 Jednakże, aby NVDA mogła czytać treść matematyczna, musisz zainstalować komponent matematyczny.
-Istneje kilka dostępnych dodatków dla NVDA v NVDA addon store, które umożliwiają odczyt treści matematycznej, włączając w to [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) i [Access8Math](https://github.com/tsengwoody/Access8Math). 
+Istnieje kilka dostępnych dodatków dla NVDA w NVDA addon store, które umożliwiają odczyt treści matematycznej, włączając w to [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) i [Access8Math](https://github.com/tsengwoody/Access8Math). 
 Prosimy przeczytać [rozdział add-on store](#AddonsManager) aby się dowiedzieć, jak instalować i przeglądac dodatki dla  NVDA.
 NVDA także może używać starszego program [MathPlayer](https://info.wiris.com/mathplayer-info) firmy Wiris jeżeli jest zainstalowany w systemie, choć ten program już nie jest wspieranyd.
 
 ### Wspierana treść matematyczna {#SupportedMathContent}
 
-Z odpowiednio zainstalowanym komponentem matematycznym, NVDA wspeira następujące typy treści matematycznej:
+Z odpowiednio zainstalowanym komponentem matematycznym, NVDA wspiera następujące typy treści matematycznej:
 
 * MathML w Mozilla Firefox, Microsoft Internet Explorer i Google Chrome.
 * Microsoft Word 365 współczesne matematyczne równania używając UI automation:
@@ -1189,8 +1261,8 @@ Aby zmieścić jak najwięcej informacji na monitorze brajlowskim, zdefiniowano 
 |tv |Widok drzewa|
 |tvbtn |przycisk widoku drzewa|
 |tv |element drzewa|
-|lv N |Widok drzewa ma hierarchiczny poziom N||
-|okn |okno|
+|lv N |Widok drzewa ma hierarchiczny poziom N|
+|wnd |okno|
 |⠤⠤⠤⠤⠤ |separator|
 |mrkd |Treść oznaczona|
 
@@ -1634,7 +1706,7 @@ Kategorie w oknie ustawień NVDA zostaną opisane poniżej.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia ogólne {#toc110}
+##### Otwiera ustawienia ogólne {#OpenGeneralSettings}
 
 Skrót: `NVDA+control+g`
 
@@ -1730,7 +1802,7 @@ Można ręcznie zainstalować oczekującą aktualizację w oknie opcji wyjścia 
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia mowy {#toc123}
+##### Otwiera ustawienia mowy {#OpenSpeechSettings}
 
 Skrót: `NVDA+control+v`
 
@@ -1873,7 +1945,7 @@ Miewaj na uwadze, że powinieneś zaznaczyć dwa tryby.
 
 <!-- KC:setting -->
 
-##### Otwiera okno dialogowe wybór syntezatora {#toc144}
+##### Otwiera okno dialogowe wybór syntezatora {#OpenSelectSynthesizer}
 
 Skrót: `NVDA+control+s`
 
@@ -2105,7 +2177,7 @@ Aby włączać i wyłączać pokazywanei zaznaczenia z jakiegokolwiek miejsca, s
 
 <!-- KC:setting -->
 
-##### Otwiera okno dialogowe wybor monitora brajlowskiego {#toc168}
+##### Otwiera okno dialogowe wybor monitora brajlowskiego {#OpenSelectBrailleDisplay}
 
 Skrót: `NVDA+control+a`
 
@@ -2157,7 +2229,7 @@ Czyli zaleca się podłączać monitor brajlowski określonego typu/producenta n
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia dźwięku {#toc173}
+##### Otwiera ustawienia dźwięku {#OpenAudioSettings}
 
 Skrót: `NVDA+control+u`
 
@@ -2200,23 +2272,11 @@ Ten suwak umożliwia ustawienie głośności dźwięków NVDA razem z sygnałami
 To ustawienie odnosi skutek gdy opcja "Używaj WASAPI do wyjścia audio" jest włączona, a opcja "Głośność dźwięków NVDA jest spójna z głośnością  NVDA" jest wyłączona.
 Ta opcja nie jest dostępna jeżeli uruchomiłeś NVDA z wyłączonym [WASAPI do wyjścia audio](#WASAPI) z poziomu ustawień zaawansowanych.
 
-##### Czas podtrzymywania urządzenia audio podczas nieaktywności {#AudioAwakeTime}
-
-To pole edycji określa, jak długo  NVDA będzie trzymała otwarte urządzenie audio po ostatniej wypowiedzi.
-To umożliwia zapobieganie problemów z mową, takich jak odcięte części słów.
-To jest skutkowane tym, że w większości urządzenia Bluetoot wchodzą do trybu uśpienia.
-Ta opcja także może być pomocna w innych przypadkach, takich jak podczas uruchamiania NVDA w wirtualnej maszynie (na przykład Citrix Virtual Desktop), lub na niektórych komputerach przenośnych.
-
-Mniejsze ustawione wartosci mogą spowodować przycinanie mowy częściej, ponieważ urządzenie wchodzi do trybu uśpienia częściej.
-Ustawienie tej wartości na wyższe wartości może spowodować szybsze rozładowanie baterii urządzenia audio, ponieważ dłużej zostaje aktywne, a żaden dźwięk nie jest wysyłany.
-
-Aby wyłączyć tę funkcję, ustaw wartość na zero.
-
 ##### Tryb podzielonego dźwięku {#SelectSoundSplitMode}
 
 Funkcja podzielonego dźwięku umożliwia użytkownikom używanie pełnej funkcjonalności ich stereourządzeń.
 Ta funkcja umożliwia  separowanie dźwięku i mowy NVDA w jeden kanał (na przykład lewy) i innych programów w  inny kanał (na przykład prawy).
-Domyślnie funkcja podzielonego dźwięku jest wyłączona, co oznacza, że NVDA i inne programy będą odtwarzały dźwięki w obu kanałach, lweym i prawym.
+Domyślnie funkcja podzielonego dźwięku jest wyłączona.
 Skrótem klawiszowym można przełączać się między brybami mowy:
 <!-- KC:beginInclude -->
 
@@ -2228,18 +2288,21 @@ Skrótem klawiszowym można przełączać się między brybami mowy:
 
 Domyślnie, ty skrótem można przełączać się pomiędzy następujacymi trybami:
 
-* Wyłączony podział dźwiękowy: NVDA i inne programy będą w obu kanałąch.
+* Wyłączony podział dźwięku: NVDA nie dzieli dźwięk na kanały.
 * NVDA w lewym kanale, a inne programy w prawym: NVDA będzie mówiłą w lewym kanale, gdy inne dźwięki będą odtwarzane w prawym kanale.
-* NVDA NVDA w prawym, a inne programy w lewym: NVDA będzie mówiła w prawym kanale, gdy inne programy będą odtwarzały dźwięki w lewym kanale.
+* NVDA w lewym a programy w obu kanałach: NVDA będzie mówiła w lewym kanale, gdy programy będą odtwarzały dźwięk w obu kanałąch.
 
 Istnieje więcej dostępnych zaawansowanych trybów podziału dźwięku dostępnych w liście rozwijanej ustawień.
+Wspośród tych trybów, tryby "NVDA w obu kanałach i programy w obu kanałach" wymusza przekierowanie wszystkich dźwięków w obu kanałach.
+Ten tryb różni się od trybu "podział dźwięku wyłączony" w przypadku zakłóceń innych trybów.
+
 Miewaj na uwadze,, że tryb podzielonego dźwięku nie działa jako mikser.
 Na przykład, jeżeli program odtwarza utwór w stereo, a tryb podziału dźwięku jest ustawiony na "NVDA w lewym a aplikacje w prawym", wtedy usłyszysz tylko prawy kanał utworu, a lewy kanał utworu będzie wyciszony.
 
 Ta opcja nie jest dostępna, jeżeli [wasapi](#WASAPI) w zaawansowanych ustawieniach jest wyłączony.
 
 Miewaj na uwadze, jeżeli NVDA się zawiesi, głośność dźwięków dla poszczególnych programów nie będzie można przywrócić, a te programy będa nadal odtwarzały dźwięki w jednym kanale po zawieszeniu się NVDA.
-Aby rozwiązać ten program, uruchom ponownie NVDA.
+Aby rozwiązać ten problem, uruchom ponownie NVDA i wybierz tryb "NVDA w obu kanałąch i programy w obu kanałach".
 
 ##### Dostosowywanie trybów mowy {#CustomizeSoundSplitModes}
 
@@ -2247,12 +2310,24 @@ Ta lista z polami wyboru umożliwia zaznaczenie które tryby mowy są dostępne 
 Tryby, które są odznaczone nie są dostępne do przełączania.
 Domyślnie, tylko trzy tryby są dostępne.
 
-* Tryb podziału mowy wyłączony: Dźwięki innych programów i NVDA będą odtworzone w obu kanałach.
-* NVDA w lewym kanale a programy w prawym  kanale.
-* NVDA w prawym kanale a inne programy w lewym.
+* Podział dźwięku wyłączony.
+* NVDA w lewym kanale a programy w prawym.
+* NVDA w lewym kanale a programy w obu kanałach.
 
 Miewaj na uwadze, że musisz zaznaczyć conajmniej jeden tryb.
 Ta opcja nie jest dostępna gdy [Wasapi](#WASAPI) jest wyłączony w ustawieniach zaawansowanych.
+
+##### Czas podtrzymywania urządzenia audio podczas nieaktywności {#AudioAwakeTime}
+
+To pole edycji określa, jak długo  NVDA będzie trzymała otwarte urządzenie audio po ostatniej wypowiedzi.
+To umożliwia zapobieganie problemów z mową, takich jak odcięte części słów.
+To jest skutkowane tym, że w większości urządzenia Bluetoot wchodzą do trybu uśpienia.
+Ta opcja także może być pomocna w innych przypadkach, takich jak podczas uruchamiania NVDA w wirtualnej maszynie (na przykład Citrix Virtual Desktop), lub na niektórych komputerach przenośnych.
+
+Mniejsze ustawione wartosci mogą spowodować przycinanie mowy częściej, ponieważ urządzenie wchodzi do trybu uśpienia częściej.
+Ustawienie tej wartości na wyższe wartości może spowodować szybsze rozładowanie baterii urządzenia audio, ponieważ dłużej zostaje aktywne, a żaden dźwięk nie jest wysyłany.
+
+Aby wyłączyć tę funkcję, ustaw wartość na zero.
 
 #### Ustawienia widoczności {#VisionSettings}
 
@@ -2297,7 +2372,7 @@ Po więcej informacji prosimy zajrzeć do pomocy danego rozszerzenia.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia klawiatury {#toc188}
+##### Otwiera ustawienia klawiatury {#OpenKeyboardSettings}
 
 Skrót: `NVDA+control+k`
 
@@ -2374,7 +2449,7 @@ Opcja jest domyślnie włączona, aczkolwiek niektórzy użytkownicy mogą chcie
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia myszy {#toc201}
+##### Otwiera ustawienia myszy {#OpenMouseSettings}
 
 skrót: `NVDA+control+m`
 
@@ -2477,7 +2552,7 @@ Aby móc przełączać ten tryb z każdego miejsca, proszę przypisać własne z
 
 <!-- KC:setting -->
 
-##### Otwiera opcje prezentacji obiektów {#toc218}
+##### Otwiera opcje prezentacji obiektów {#OpenObjectPresentationSettings}
 
 Skrót: `NVDA+control+o`
 
@@ -2592,7 +2667,7 @@ Opcja jest domyślnie włączona.
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia trybu czytania {#toc236}
+##### Otwiera ustawienia trybu czytania {#OpenBrowseModeSettings}
 
 Skrót: `NVDA+control+b`
 
@@ -2684,7 +2759,7 @@ Włączenie tej opcji może spowodować, że wsparcie pewnych stron internetowyc
 
 <!-- KC:setting -->
 
-##### Otwiera ustawienia formatowania dokumentów {#toc250}
+##### Otwiera ustawienia formatowania dokumentów {#OpenDocumentFormattingSettings}
 
 Skrót: `NVDA+control+d`
 
@@ -3139,8 +3214,7 @@ Uwaga:
 
 * W celu zachowania emulowanych skrótów klawiszowych, należy najpierw przypisać do nich polecenie NVDA.
 * Przypisanie polecenia NVDA korzystającego z klawiszy modyfikujących do emulowanego skrótu pozbawionego  modyfikatorów. 
-Na przykład, przypisanie emulowanego polecenia `a` do polecenia `CTRL+M` może skończyć się 
-W aplikacji która dostaje `ctrl+a`.
+Na przykład, przypisanie emulowanego polecenia `a` do polecenia `CTRL+M` może skończyć się  W aplikacji która dostaje `ctrl+a`.
 
 Po zakończeniu wprowadzania zmian, naciśnij przycisk OK aby je zachować albo przycisk Anuluj, aby odrzucić.
 
@@ -3482,7 +3556,7 @@ Aby się dostać do przeglądu brajla z każdego miejsca, prosimy przydzielić z
 Konsola Pythona NVDA znajduje się w menu Narzędzia  w NVDA. Jest narzędziem dla programistów i jest używana do debugowania, przeglądania wewnątrz NVDA lub sprawdzania hierarchii dostępności aplikacji.
 Więcej informacji znajduje się w [podręczniku dla twórców](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 Ta opcja otworzy [NVDA Add-on Store](#AddonsManager).
 Aby się dowiedzieć więcej, przeczytaj szczegółowy rozdział: [Dodatki i Add-on Store](#AddonsManager).
@@ -3931,7 +4005,7 @@ Następujące urządzenia również nie wymagają instalacji dodatkowych sterown
 Poniżej skróty klawiszowe dla Brailliant BI/B i BrailleNote touch, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
-#### Przypisania klawiszy dla wszystkich modeli {#toc334}
+#### Przypisania klawiszy dla wszystkich modeli {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -3960,7 +4034,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
 <!-- KC:endInclude -->
 
-#### Przypisania klawiszy dla Brailliant BI 32, BI 40 and B 80 {#toc335}
+#### Przypisania klawiszy dla Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -3972,7 +4046,7 @@ Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
 
 <!-- KC:endInclude -->
 
-#### Przypisania klawiszowe dla Brailliant BI 14 {#toc336}
+#### Przypisania klawiszy dla Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

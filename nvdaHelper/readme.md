@@ -43,11 +43,6 @@ It provides the following features:
 This dll is loaded by NVDA, providing utility functions that perform certain tasks or batch procedures on Microsoft UI Automation elements.
 It makes use of the UI Automation Remote Operations capabilities in Windows 11, allowing to declaratively define code  to  access and manipulate UI Automation elements, that will be Just-In-Time compiled by Windows and executed in the process providing the UI Automation elements.
 
-##### microsoft-ui-uiAutomation remote ops library
-As a dependency of UIARemote.dll, the open source [Microsoft-UI-UIAutomation Remote Operations library](https://github.com/microsoft/microsoft-ui-uiautomation)  is also built.
-This library contains both a low-level winrt API, and a higher-level pure C++ API which depends on the lower-level winrt API. UIARemote.dll tends to use the higher-level Operations abstraction API for its work.
-In order for the winrt API to be available, UIARemote must register it with the Windows winrt platform. this involves loading a manifest file (See `microsoft-ui-uiautomation/Microsoft.UI.UIAutomation.dll.manifest`) and activating an activation context.
-
 ### Configuring Visual Studio
 The following steps won't prepare a buildable solution, but it will enable intellisense.
 You should still build on the command line to verify errors.

@@ -25,7 +25,7 @@ If you are new to the project, or looking for some way to help take a look at:
 
 ### Overview of contribution process:
 1. [Setup your development environment](./createDevEnvironment.md).
-        - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
+    - Alternatively, you can use [AppVeyor](https://appveyor.com/) to build NVDA for you, without setting up a local development environment, by following [this how-to](./buildingNVDAOnAppVeyor.md).
 1. Ensure the issue you plan to fix is [triaged](../issues/triage.md)
 1. Create a branch for the contribution, to be used for a pull request.
 	- Pull requests should be based on the latest commit in the official master branch.
@@ -59,6 +59,12 @@ If you are new to the project, or looking for some way to help take a look at:
 	- When the PR is approved it will be merged, and the change will be active in the next alpha build.
 	- If issues are raised with your PR, it may be marked as a draft.
 	Please mark it as ready for review when you have addressed the review comments.
+	- CodeRabbit AI will review your code.
+	  - Please participate in the review process, the AI can respond to review comments, questions and feedback.
+	  - Some comments may not be helpful due to the nature of AI, and some might be useful.
+	  Please indicate comments which you intend to ignore and why.
+	  For large numbers of unhelpful comments, please mark them as resolved or comment `@coderabbitai resolve` to resolve all comments.
+	  - To request another review from CodeRabbit, comment `@coderabbitai review`
 1. Feedback from alpha users
 	- After a PR is merged, watch for feedback from alpha users / testers.
 	You may have to follow up to address bugs or missed use-cases.

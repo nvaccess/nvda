@@ -70,7 +70,7 @@ if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("
 TARGET_ARCH=env['TARGET_ARCH']
 debug=env['nvdaHelperDebugFlags']
 release=env['release']
-signExec=env['signExec'] if env['certFile'] else None
+signExec = env['signExec'] if (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
 
 #Some defines and includes for the environment
 env.Append(
@@ -206,9 +206,6 @@ if TARGET_ARCH=='x86':
 	if signExec:
 		env.AddPostAction(win10localLib[0],[signExec])
 	env.Install(libInstallDir,win10localLib)
-	MSUIA_lib_outDir,MSUIA_include_outDir = thirdPartyEnv.SConscript('microsoft-ui-uiautomation/sconscript')
-	Export('MSUIA_lib_outDir')
-	Export('MSUIA_include_outDir')
 	UIARemoteLib=env.SConscript('UIARemote/sconscript')
 	if signExec:
 		env.AddPostAction(UIARemoteLib[0],[signExec])

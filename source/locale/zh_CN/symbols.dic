@@ -1,8 +1,31 @@
-﻿symbols:
-# A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2020 NVDA Simplified Chinese team All volunteers
-# This file may be used under the terms of the GNU Lesser General Public License, version 2.1.
-# For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
+﻿# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2010-2024 NVDA Simplified Chinese team All volunteers
+# This file is covered by the GNU General Public License.
+
+symbols:
+# identifier	replacement[[	level][	preserve]][	# display name]
+# 符号	替换文本[[	级别][	传递][	# 显示名称]]
+
+# Complex symbols（复杂符号）
+. sentence ending	句点
+! sentence ending	感叹号
+? sentence ending	问号
+; phrase ending	分号
+: phrase ending	冒号
+multiple .	多点
+in-word '	撇
+negative number	负
+
+# Whitespace（空白符）
+\0	空白	char
+\t	制表符
+\n	航首
+\f	分页符
+\r	航尾
+ 	空格	char
+# 	不间断空格	all	# no-break space
+　	全角空格	all
+
 $	美元
 /	斜杠
 ;	分号
@@ -13,12 +36,6 @@ $	美元
 ¿	倒置问号	some
 .	点
 :	冒号
-\0	空白	char
-\r	航尾
-\n	航首
-\t	制表符
-\f	分页符
- 	空格	char
 ,	逗号
 ，	全角逗号	most	always
 。	句号	most	always
@@ -42,9 +59,7 @@ _	下划线
 〗	右空方头括号	most	always
 {	左花括号	some
 }	右花括号	some
-　	全角空格	all
 ₹	卢比	some	norep
-negative number	负
 ✔	粗对钩
 ✓	对钩
 # Other characters
@@ -465,7 +480,7 @@ negative number	负
 ❖	四个菱形	some
 ♦	实心方块	some
 
-# Unicode 盲文点位 (Add 256braille symbols BY 陈福) 
+# Unicode 盲文点位（Add 256braille symbols BY 陈福）
 ⠀	空方	some
 ⠁	一点	some
 ⠂	二点	some

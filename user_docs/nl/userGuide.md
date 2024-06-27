@@ -82,7 +82,7 @@ Voor details betreffende uitzonderingen kunt u het licentiedocument raadplegen i
 ## Snel aan de Slag met NVDA {#NVDAQuickStartGuide}
 
 Deze snelstartgids heeft drie hoofdrubrieken: downloaden, instellen voor gebruik en NVDA draaien.
-Daarna volgt informatie over het wijzigen van Voorkeuren, participeren in de (NVDA-)gemeenschap en over het verkrijgen van hulp.
+Daarna volgt informatie over het wijzigen van Voorkeuren, gebruiken van Add-ons, participeren in de (NVDA-)gemeenschap en over het verkrijgen van hulp.
 De informatie in deze snelstartgids is de beknopte weergave van wat elders in de gebruikershandleiding van NVDA uitgebreid aan bod komt.
 Raadpleeg de volledige gebruikershandleiding voor meer gedetailleerde informatie over de afzonderlijke onderwerpen.
 
@@ -278,7 +278,80 @@ De meeste NVDA-functies kunnen via de NVDA-instellingen worden geactiveerd of aa
 Instellingen, en andere opties, zijn via het NVDA-menu te bereiken.
 Om het NVDA-menu, te openen drukt u op `NVDA+n`.
 Om het dialoogvenster met de algemene instellingen van NVDA rechtstreeks te openen drukt u op `NVDA+control+g`.
-Veel schermen  met instellingen kunnen met toetscombinaties rechtstreeks geopend worden, bijvoorbeeld `NVDA+control+s` voor een synthesizer, of  `NVDA+control+v` for andere stemmen met bijbehorende opties.
+Veel schermen  met instellingen kunnen met toetscombinaties rechtstreeks geopend worden, bijvoorbeeld `NVDA+control+s` voor een synthesizer, of  `NVDA+control+v` voor andere stemmen met bijbehorende opties.
+
+### Add-ons {#Addons}
+Add-ons zijn programmaatjes  die nieuwe of gewijzigde functionaliteit voor NVDA bieden.
+Add-ons worden door de NVDA-gemeenschap ontwikkeld , of door externe bedrijven die niet aan NV Access gelieerd zijn.
+Wat voor alle software geldt, geldt ook hier; je vertrouwen kunnen stellen in de ontwikkelaar van een add-on voordat je die gaat gebruiken is belangrijk.
+Raadpleeg [Add-ons installeren](#AddonStoreInstalling) om na te gaan hoe je de kwaliteit van  add-ons kunt verifiëren voordat je ze installeert.
+
+Bij eerste opening van de Add-on Store zal NVDA een waarschuwing tonen over add-ons.
+Add-ons worden door NV Access niet doorgelicht en hebben mogelijk mbt de functionaliteit en toegang tot informatie geen restricties.
+Druk op de `spatiebalk` als je de waarschuwing hebt gelezen en je deze een volgende keer niet meer wilt zien.
+Druk op `tab` om naar de "OK-knop" te gaan dan `enter` om de waarschuwing te accepteren en verder naar de Add-on Store te gaan.
++In de rubriek   "[Add-ons en de Add-on Store](#AddonsManager)" van de gebruikershandleiding vind je informatie over alle aspecten van de Add-on Store.
+
+Je bereikt de Add-on Store via het menu Extra.
+Druk op `NVDA+n` om het NVDA-menu te openen, dan op `e` voor extra, dan op `a` voor Add-on Store.
+Wanneer de Add-on Store open gaat, worden beschikbare add-ons" getoond als er geen add-ons geïnstalleerd zijn.
+Als er al  add-ons geïnstalleerd zijn, gaat de Add-on Store open op het  tabblad "Geïnstalleerde add-ons".
+
+#### Beschikbare add-ons {#AvailableAddons}
+Bij eerste opening van het venster kan het enkele seconden duren voordat de add-ons geladen zijn.
+NVDA zal de naam van de eerste add-on voorlezen zodra het laden van de  lijst met add-ons voltooid is.
+Beschikbare add-ons worden alfabetisch gerankschikt in de lijstweergave die uit meer kolommen bestaat.
+Zo ga je door de lijst om meer te weten te komen over een specifieke add-on:
+
+
+1. Gebruik de pijltjestoetsen of druk de eerste letter in van de naam van een add-on om de lijst te doorlopen.
+1. Druk eenmaal op `tab` om naar de beschrijving van de op dat moment geselecteerde add-on te gaan.
+1. Gebruik de [Leestoetsen](#ReadingText) of de pijltjestoetsen om de volledige beschrijving te lezen.
+1. Druk op `tab` om bij de knop "Acties" te komen, waarmee je o.a. de add-on kunt installeren.
+1. Druk op `tab` voor meer Details", zoals naam van de uitgever, versie en homepage.
+1. Om terug te gaan naar de  lijst met beschikbare add-ons, druk je op  `alt+a`, dan wel op  `shift+tab`.
+
+#### Naar add-onszoeken  {#SearchingForAddons}
+Naast bladeren door alle beschikbare add-ons, is het ook mogelijk getoonde add-ons te sorteren.
+Om te zoeken druk je op `alt+s` om naar het "zoekveld" te springen en typ daarin dan de tekst waarmee je wilt zoeken.
+Je zoekopdracht zal proberen overeenkomsten te vinden in het veld   add-on ID, schermnaam, uitgever, auteur en beschrijving.
+Tijdens het typen van de zoektermen past de lijst zich steeds aan.
+Eenmaal gereed, druk je op `tab` om naar de gesorteerde lijst met add-ons te gaan waar je de zoekresultaten kunt bekijken.
+
+#### Add-ons installeren {#InstallingAddons}
+
+Zo installeer je een add-on:
+
+1. Terwijl de focus op een add-on staat die je wilt installeren druk je op enter`.
+1. Het menu  acties opent zich en er verschijnt een lijst met mogelijke acties; de eerste actie is "Installeren".
+1. Om de add-on te installeren druk je op `i`, of op `pijlOmlaag` tot bij `Installeren` en druk je op `enter`.
+1. De focus gaat terug naar de add-on in de lijst en NVDA zal de details over de add-on voorlezen.
+1. Betreffende de  "Status" meldt NVDA dat deze verandert van "Beschikbaar " in "Downloading".
+1. Als het downloaden van de add-on voltooid is, verandert deze in "Gedownload. In afwachting van installatie".
+1. Herhaal het voorafgaande bij elke add-on die je verder tegelijkertijd  wilt installeren.
+1. Als je klaar bent, druk je op `tab` totdat de focus op de knop "Sluiten" staat, waarna je op  `enter` drukt.
+1. Het installeren van de gedownloade add-ons begint zodra de Add-on Store is afgesloten.
+Er kunnen mogelijk dialoogvensters tijdens het installatieproces verschijnen waarop je dan wel moet reageren.
+1. Als de add-ons eenmaal geïnstalleerd zijn,verschijnt er een dialoogvenster waarin wordt gemeld dat er wijzigingen zijn aangebracht, en dat NVDA opnieuw gestart moet worden om de installatie van de add-on(s) volledig af te ronden.
+1. Druk op `enter` om NVDA te herstarten.
+
+#### Geïnstalleerde add-ons beheren {#ManagingInstalledAddons}
+Druk op `control+tab` om tussen de tabbladen van de Add-on Store te wisselen.
+De tabbladen omvatten "Geïnstalleerde add-ons", "Bij te werken add-ons", "Beschikbare add-ons" en "Geïnstalleerde incompatibele add-ons".
+De verschillende tabbladen zijn hetzelfde ingedeeld als lijst met add-ons, een paneel voor meer details over de geselecteerde add-on, en een knop waarmee acties uitgevoerd kunnen worden mbt de geselecteerde add-on.
+Het actiemenu voor geïnstalleerde add-ons omvat "Uitschakelen" en "Verwijderen" ipv "Installeren".
+Het uitschakelen van een add-on zorgt ervoor dat NVDA deze niet meer laadt maar de installatie ervan wordt niet ongedaan gemaakt.
+Om een uitgeschakelde add-on, opnieuw in te schakelen kun je Inschakelen" activeren in het actiemenu.
+Na het in- of uitschakelen dan wel verwijderen van add-ons, word je gevraagd NVDA te herstarten  bij het afsluiten van de Add-on Store.
+Deze wijzigingen worden pas van kracht zodra NVDA herstart is.
+Merk op dat in dit vemster van de Add-on Store `escape` hetzelfde werkt als de knop `Sluiten`.
+
+#### Add-ons bijwerken {#UpdatingAddons}
+Als er een update beschikbaar is voor een add-on die je geïnstalleerd hebt, tref je die aan in het tabblad met "Bij te werken add-ons".
+Druk op  `control+tab` om naar dit tabblad te gaan vanuit elke willekeurige plaats in de Add-on Store.
+De status van de add-on is voor zien van het predikaat "Update beschikbaar".
+De lijst  toont de momenteel geïnstalleerde versie en de beschikbare versie.
+Druk `enter` in op de add-on om de actie lijst te openen; kies "Bijwerken".
 
 ### Community {#Community}
 
@@ -469,7 +542,7 @@ Als u uw vinger op het scherm houdt en hem over het scherm beweegt, zullen knopp
 Bij de beschrijving van NVDA-commando's verderop in deze handleiding kunnen ook aanraakgebaren voorkomen die het bijbehorende commando via aanraking activeert.
 Hier volgen wat aanwijzingen voor het maken van de aanraakgebaren.
 
-##### Tikken {#toc45}
+##### Tikken {#tikken}
 
 Met de top / toppen van één of meer vingers snel op het scherm tikken.
 
@@ -481,7 +554,7 @@ Twee tikken snel achter elkaar heet een dubbele tik (double-tap),
 drie tikken snel achter elkaar is een driedubbele tik (triple-tap), enzovoorts.
 Bij deze multi-tikgebaren wordt ook herkend met hoeveel vingers de tikbeweging wordt gemaakt zodat er driedubbele tikken met twee vingers kunnen zijn, maar ook een tik met vier vingers.
 
-##### Veegbewegingen {#toc46}
+##### Veegbewegingen {#Flicks}
 
 Met de vinger of vingers snel over het scherm bewegen / vegen.
 
@@ -1636,7 +1709,7 @@ De categorieën instellingen die te vinden zijn in het dialoogvenster Instelling
 
 <!-- KC:setting -->
 
-##### Algemene instellingen openen {#toc109}
+##### Algemene instellingen openen {#Algemeneinstellingenopenen}
 
 Toets: `NVDA+control+g`
 
@@ -1732,7 +1805,7 @@ Een beschikbare update kan ook handmatig worden geïnstalleerd vanuit het dialoo
 
 <!-- KC:setting -->
 
-##### Spraakinstellingen openen {#toc122}
+##### Spraakinstellingen openen {#Spraakinstellingenopenen}
 
 Toets:`NVDA+control+v` 
 
@@ -1877,7 +1950,7 @@ Merk op dat ten minste twee modi aangevinkt moeten zijn.
 
 <!-- KC:setting -->
 
-##### Dialoogvenster synthesizer selecteren openen {#toc143}
+##### Dialoogvenster synthesizer selecteren openen {#synthesizerselecterenOpenen}
 
 Toets: `NVDA+control+s`
 
@@ -2115,7 +2188,7 @@ Om "Toon selectie' van elke willekeurige plek in of uit te schakelen kunt u desg
 
 <!-- KC:setting -->
 
-##### Dialoogvenster brailleleesregel selecteren openen {#toc167}
+##### Dialoogvenster brailleleesregel selecteren openen {#OpenSelectBrailleDisplay}
 
 Toets: `NVDA+control+a`
 
@@ -2167,7 +2240,7 @@ Het verdient dan ook aanbeveling slechts één leesregel van een bepaald type / 
 
 <!-- KC:setting -->
 
-##### Audio-instellingen openen {#toc172}
+##### Audio-instellingen openen {#OpenAudioSettings}
 
 Toets: `NVDA+control+u`
 
@@ -2216,7 +2289,7 @@ Deze optie is niet beschikbaar als u NVDA gestart hebt  terwijll [WASAPI voor au
 
 tereosplitsing (sound split) stelt gebruikers in staat te werken met stereo geluidsapparatuur zoals koptelefoons en speakers.
 Met stereosplitsing kun je de spraak van NVDA via het ene kanaal horen (bijv llinks) en het geluid van alle overige toepassingen wordt dan afgespeeld via het andere kanaal (rechts).
-Stereosplitsing staat standaard UIT, wat inhoudt dat het geluid van alle toepassingen met inbegrip van NVDA via beide kanalen wordt afgespeeld.
+Stereosplitsing staat standaard UIT.
 Er is een commando waarmee je de modi voor stereosplitsing kunt doorlopen :
 <!-- KC:beginInclude -->
 
@@ -2228,18 +2301,22 @@ Er is een commando waarmee je de modi voor stereosplitsing kunt doorlopen :
 
 Standaard doorloop je met dit commando de volgende modi:
 
-* Uitgeschakeld stereosplitsing: zowel NVDA en andere toepassingen sturen hun geluid over het linker  alsmede  het rechter kanaal.
+* stereosplitsing uitgeschakeld : NVDA past geen stereo-splitsing toe.
 * NVDA via het linker en toepassingen via het rechter: spraak van NVDA komt via linker kanaal, terwijl andere toepassingen te horen zijn via het rechter kanaal.
 * NVDA via het linker en toepassingen via beide kanalen: spraak van NVDA komt via linker kanaal, terwijl andere toepassingen te horen zijn zowel via het linker als rechter kanaal.
 
-Er zijn meer geavanceerde modi voor stereosplitsing beschikbaar in vervolgkeuzemenu instellingen van NVDA.
+Er zijn meer geavanceerde modi voor stereosplitsing beschikbaar in het vervolgkeuzemenu instellingen van NVDA.
+
+een van deze modi, "NVDA in beide kanalen en toepassingen in beide kanalen" zorgt ervoor dat alhet geluid naar beide kanalen wordt geleid.
+Deze modus kan afwijken van de modus "stereo-splitsing uitgeschakeld" in het geval dat andere audio-bewerking interfereert met kanaalvolumes.
+
 Merk op dat stereosplitsing (sound split) niet als mixer te gebruiken is.
 Als een bepaalde toepassing bijv een stereo track afspeelt terwijl stereosplitsing is ingesteld op  "NVDA via het linker  en toepassingen via het rechter kanaal", zul je alleen het rechter kanaal van de sound track horen terwijl het linker kanaal van de sound track onderdrukt wordt.
 
 Deze optie is niet beschikbaar  als bij het opstarten van NVDA  [WASAPI voor audiouitvoer in Geavanceerde Instellingen uitgeschakeld was](#WASAPI).
 
 Merk op dat bij een crash van NVDA het geluidsvolume van de toepassingen niet hersteld kan worden en die toepassingen blijven mogelijk geluid via een enkel kanaall afspelen na een crash van NVDA.
-Om dit te verhelpen is het het beste om NVDA opnieuw te starten.
+Om dit te verhelpen is het het beste om NVDA opnieuw te starten en de modus "NVDA in beide kanalen en toepassingen in beide kanalen" te selecteren.
 
 ##### Stereosplitsingsmodi aanpassen {#CustomizeSoundSplitModes}
 
@@ -2309,7 +2386,7 @@ Voor de ondersteunde instellingen per element kunt u de documentatie voor dat el
 
 <!-- KC:setting -->
 
-##### Toetsenbordinstellingen openen {#toc187}
+##### Toetsenbordinstellingen openen {#OpenKeyboardSettings}
 
 Toets: `NVDA+control+k`
 
@@ -2386,7 +2463,7 @@ Deze optie is standaard ingeschakeld, maar bepaalde gebruikers,zoals mensen die 
 
 <!-- KC:setting -->
 
-##### Muisinstellingen openen {#toc200}
+##### Muisinstellingen openen {#OpenMouseSettings}
 
 Toets: `NVDA+control+m`
 
@@ -2489,7 +2566,7 @@ Om de eenvoudige leesoverzichtmodus vanaf een willekeurige plaats aan- of uit te
 
 <!-- KC:setting -->
 
-##### Objectweergaveinstellingen openen {#toc217}
+##### Objectweergaveinstellingen openen {#OpenObjectPresentationSettings}
 
 Toets: `NVDA+control+o`
 
@@ -2603,7 +2680,7 @@ Deze optie is standaard aangevinkt.
 
 <!-- KC:setting -->
 
-##### Bladermodusinstellingen openen {#toc234}
+##### Bladermodusinstellingen openen {#OpenBrowseModeSettings}
 
 Toets: `NVDA+control+b`
 
@@ -2695,7 +2772,7 @@ Het inschakelen van deze optie kan ondersteuing voor sommige websites verbeteren
 
 <!-- KC:setting -->
 
-##### Documentopmaakinstellingen openen {#toc248}
+##### Documentopmaakinstellingen openen {#OpenDocumentFormattingSettings}
 
 Toets: `NVDA+control+d`
 
@@ -3163,8 +3240,7 @@ Merk op:
 
 * Aan geëmuleerde toetsen moeten handelingen zijn toegewezen om ze van kracht telaten blijven wanneer het dialoogvenster wordt opgeslagen / gesloten.
 * Een invoerhandeling met  zogenaamde 'modifier'-toetsen kan mogelijk niet ingesteld (mapped) worden als geëmuleerde invoerhandeling zonder 'modifier' toetsen.
-Het instellen van de geëmuleerde invoer `a` bij voorbeeld en het configureren van een ivoerhandeling `ctrl+m`, kan tot gevolg hebben dat
-de toepassing `ctrl+a` krijgt.
+Het instellen van de geëmuleerde invoer `a` bij voorbeeld en het configureren van een ivoerhandeling `ctrl+m`, kan tot gevolg hebben dat de toepassing `ctrl+a` krijgt.
 
 Als u klaar bent met het aanbrengen van de wijzigingen drukt u op de knop OK om de wijzigingen op te slaan of op de knop Annuleren als u geen wijzigingen wilt doorvoeren.
 
@@ -3506,7 +3582,7 @@ Als u het Brailleweergavevenster altijd en overal wilt kunnen in- of uischakelen
 Het NVDA Python-console, dat u aantreft in het NVDA-menu onder Extra, is een ontwikkelinstrument dat goed van pas komt bij het oplossen van bugs, algemene inspectie van het inwendige van NVDA  of het inspecteren van  de toegankelijkheidsopbouw van een toepassing.
 Voor meer informatie gaat u naar de [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on-store {#toc311}
+### Add-on-store {#AddonStoreMenuItem}
 
 Hiermee opent u de Add-on-store #AddonsManager].
 Hierover vindt u meer informatie in de uitgebreide rubriek: [Add-ons en de Add-on Store](#AddonsManager).
@@ -3956,7 +4032,7 @@ Aanvullend worden ook de volgende  toestellen  ondersteund en hiervoor hoeven ge
 Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volgende toetscombinaties van toepassing:
 (Voor meer details kunt u de documentatie bij deze leesregels raadplegen.)
 
-#### Toegewezen toetsen die gelden voor Alle modellen {#toc331}
+#### Toegewezen toetsen die gelden voor Alle modellen {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -3985,7 +4061,7 @@ Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volg
 
 <!-- KC:endInclude -->
 
-#### Toegewezen toetsen voor de Brailliant BI 32, BI 40 en B 80 {#toc332}
+#### Toegewezen toetsen voor de Brailliant BI 32, BI 40 en B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -3997,7 +4073,7 @@ Bij gebruik van de Brailliant BI/B en de BrailleNote touch met NVDA zijn de volg
 |Alles lezen | c1+c2+c3+c4+c5+c6 |
 <!-- KC:endInclude -->
 
-#### Toegewezen toetsen voor de Brailliant BI 14 {#toc333}
+#### Toegewezen toetsen voor de Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 

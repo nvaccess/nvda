@@ -254,11 +254,11 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
 	def test_normalizedOffsetsMixed(self):
-		text = "Ééĳo"
+		text = "Ééĳo\xa0 "
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
-		expectedStrToEncoded = (0, 0, 1, 1, 2, 4)
+		expectedStrToEncoded = (0, 0, 1, 1, 2, 4, 5, 6)
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
-		expectedEncodedToStr = (0, 2, 4, 4, 5)
+		expectedEncodedToStr = (0, 2, 4, 4, 5, 6, 7)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
 	def test_normalizedOffsetsDifferentOrder(self):
@@ -270,9 +270,17 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 
 	def test_normalizedOffsetsMixedSpaces(self):
-		text = "\xa0 "
+		text = "\xa0 \xa0 \xa0"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
-		expectedStrToEncoded = (0, 1)
+		expectedStrToEncoded = (0, 1, 2, 3, 4)
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
-		expectedEncodedToStr = (0, 1)
+		expectedEncodedToStr = (0, 1, 2, 3, 4)
+		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
+
+	def test_normalizedOffsetsMixedIJ(self):
+		text = "ĳijĳijĳ"
+		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
+		expectedStrToEncoded = (0, 2, 3, 4, 6, 7, 8)
+		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
+		expectedEncodedToStr = (0, 0, 1, 2, 3, 3, 4, 5, 6, 6)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
