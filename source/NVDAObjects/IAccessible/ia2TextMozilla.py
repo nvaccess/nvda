@@ -430,7 +430,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
-	def _adjustIfEndOfLine(self, expandTi, unit, obj):
+	def _adjustIfEndOfLine(
+			self,
+			expandTi: offsets.OffsetsTextInfo,
+			unit: str,
+			obj: IAccessible
+	) -> None:
 		if (
 			self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER
 			and obj is self._startObj and expandTi._startOffset > 0
