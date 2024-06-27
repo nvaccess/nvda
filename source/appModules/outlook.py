@@ -633,6 +633,12 @@ class BaseOutlookWordDocument(BaseWordDocument):
 			return
 		self.reportTab()
 
+	__gestures = {
+		"kb:control+shift+w": None,  # Shortcut existing in Word but not in Outlook
+		"kb:control+shift+b": None,  # Shortcut existing in Word but opens address book in Outlook
+		"kb:control+shift+a": "changeCase",  # In Outlook Ctrl+Shift+A is equivalent to Shift+F3
+	}
+
 
 class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 

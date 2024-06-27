@@ -81,6 +81,28 @@ wdStartOfRangeRowNumber=13
 wdMaximumNumberOfRows=15
 wdStartOfRangeColumnNumber=16
 wdMaximumNumberOfColumns=18
+
+# Underline style
+# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
+wdUnderlineNone = 0
+wdUnderlineSingle = 1
+wdUnderlineWords = 2
+wdUnderlineDouble = 3
+wdUnderlineDotted = 4
+wdUnderlineThick = 6
+wdUnderlineDash = 7
+wdUnderlineDotDash = 9
+wdUnderlineDotDotDash = 10
+wdUnderlineWavy = 11
+wdUnderlineDottedHeavy = 20
+wdUnderlineDashHeavy = 23
+wdUnderlineDotDashHeavy = 25
+wdUnderlineDotDotDashHeavy = 26
+wdUnderlineWavyHeavy = 27
+wdUnderlineDashLong = 39
+wdUnderlineWavyDouble = 43
+wdUnderlineDashLongHeavy = 55
+
 #Horizontal alignment
 wdAlignParagraphLeft=0
 wdAlignParagraphCenter=1
@@ -203,6 +225,19 @@ wdThemeColorMainLight2=3
 wdThemeColorText1=13
 wdThemeColorText2=15
 
+# WdCharacterCase enumeration
+# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
+wdNextCase = -1
+wdLowerCase = 0
+wdUpperCase = 1
+wdTitleWord = 2
+wdTitleSentence = 4
+wdToggleCase = 5
+wdHalfWidth = 6
+wdFullWidth = 7
+wdKatakana = 8
+wdHiragana = 9
+
 # Word Field types
 FIELD_TYPE_REF = 3 # cross reference field
 FIELD_TYPE_HYPERLINK = 88 # hyperlink field
@@ -316,6 +351,43 @@ wdRevisionTypeLabels={
 	wdRevisionCellMerge:_("cell merge"),
 }
 
+wdUnderlineTypeDescriptions = {
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineSingle: _("Single"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineWords: _("Words only"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDouble: _("Double"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDotted: _("Dotted"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineThick: _("Thick"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDash: _("Dash"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDotDash: _("Dot dash"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDotDotDash: _("Dot dot dash"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineWavy: _("Wave"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDottedHeavy: _("Dotted heavy"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDashHeavy: _("Dashed heavy"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDotDashHeavy: _("Dot dash heavy"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDotDotDashHeavy: _("Dot dot dash heavy"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineWavyHeavy: _("Wave heavy"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDashLong: _("Dashed long"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineWavyDouble: _("Wave double"),
+	# Translators: an underline style in Microsoft Word as announced in the font window.
+	wdUnderlineDashLongHeavy: _("Dashed long heavy"),
+}
+
 storyTypeLocalizedLabels={
 	wdCommentsStory:_("Comments"),
 	wdEndnotesStory:_("Endnotes"),
@@ -327,6 +399,29 @@ storyTypeLocalizedLabels={
 	wdPrimaryFooterStory:_("Primary footer"),
 	wdPrimaryHeaderStory:_("Primary header"),
 	wdTextFrameStory:_("Text frame"),
+}
+
+wdCharacterCaseTypeLabels = {
+	# Translators: a Microsoft Word character case type
+	wdNextCase: _("No case"),  # Returned when selection range contains only case-insensitive characters
+	# Translators: a Microsoft Word character case type
+	wdLowerCase: _("Lowercase"),
+	# Translators: a Microsoft Word character case type
+	wdUpperCase: _("Uppercase"),
+	# Translators: a Microsoft Word character case type
+	wdTitleWord: _("Each word capitalized"),
+	# Translators: a Microsoft Word character case type
+	wdTitleSentence: _("Sentence case"),
+	# Translators: a Microsoft Word character case type
+	wdToggleCase: _("Mixed case"),
+	# Translators: a Microsoft Word character case type
+	wdHalfWidth: _("Half width:"),
+	# Translators: a Microsoft Word character case type
+	wdFullWidth: _("Full width"),
+	# Translators: a Microsoft Word character case type
+	wdKatakana: _("Katakana"),
+	# Translators: a Microsoft Word character case type
+	wdHiragana: _("Hiragana"),
 }
 
 wdFieldTypesToNVDARoles={
@@ -1357,6 +1452,7 @@ class WordDocument(Window):
 			curTime=time.time()
 		return curVal
 
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1371,6 +1467,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
+	@script(gesture="kb:control+i")
 	def script_toggleItalic(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1385,16 +1482,24 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
-	def script_toggleUnderline(self,gesture):
+	@script(gestures=["kb:control+u", "kb:control+shift+d", "kb:control+shift+w"])
+	def script_toggleUnderline(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
-			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
 			return gesture.send()
-		val=self._WaitForValueChangeForAction(lambda: gesture.send(),lambda: self.WinwordSelectionObject.font.underline)
-		if val:
-			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("Underline on"))
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.font.underline
+		)
+		if val != wdUnderlineNone:
+			msg = wdUnderlineTypeDescriptions.get(val)
+			if msg:
+				# Translators: a message when toggling formatting in Microsoft word
+				ui.message(_("Underline {style}").format(style=msg))
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
@@ -1420,22 +1525,50 @@ class WordDocument(Window):
 		if msg:
 			ui.message(msg)
 
-	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
-	def script_changeParagraphLeftIndent(self, gesture):
+	@script(gestures=["kb:control+shift+a", "kb:control+shift+k"])
+	def script_toggleCaps(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
-			# or it's within Windows Defender Application Guard.
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
 			# For now, just let the gesture through and don't report anything.
 			return gesture.send()
-		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
-			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+			lambda: (self.WinwordSelectionObject.font.allcaps, self.WinwordSelectionObject.font.smallcaps)
 		)
-		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
-		ui.message(msg)
+		if val[0]:
+			# Translators: a message when toggling formatting to 'all capital' in Microsoft word
+			ui.message(_("All caps on"))
+		elif val[1]:
+			# Translators: a message when toggling formatting to 'small capital' in Microsoft word
+			ui.message(_("Small caps on"))
+		else:
+			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
+			ui.message(_("Caps off"))
 
+	@script(gesture="kb:shift+f3")
+	def script_changeCase(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.Range.Case
+		)
+		# Translators: a message when changing case in Microsoft Word
+		ui.message(wdCharacterCaseTypeLabels.get(val))
+
+	@script(gestures=[
+		"kb:control+=",
+		"kb:control+shift+=",
+		"kb:control+plus",
+		"kb:control+shift+plus",
+	])
 	def script_toggleSuperscriptSubscript(self,gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1452,6 +1585,22 @@ class WordDocument(Window):
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
+
+	@script(gestures=["kb:control+m", "kb:control+shift+m", "kb:control+t", "kb:control+shift+t"])
+	def script_changeParagraphLeftIndent(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+		)
+		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
+		ui.message(msg)
 
 	def script_moveParagraphDown(self,gesture):
 		oldBookmark=self.makeTextInfo(textInfos.POSITION_CARET).bookmark
@@ -1647,11 +1796,6 @@ class WordDocument(Window):
 		"kb:control+]":"increaseDecreaseFontSize",
 		"kb:control+shift+,":"increaseDecreaseFontSize",
 		"kb:control+shift+.":"increaseDecreaseFontSize",
-		"kb:control+b":"toggleBold",
-		"kb:control+i":"toggleItalic",
-		"kb:control+u":"toggleUnderline",
-		"kb:control+=":"toggleSuperscriptSubscript",
-		"kb:control+shift+=":"toggleSuperscriptSubscript",
 		"kb:control+l":"toggleAlignment",
 		"kb:control+e":"toggleAlignment",
 		"kb:control+r":"toggleAlignment",
