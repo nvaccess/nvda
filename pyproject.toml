@@ -6,20 +6,26 @@ build-backend = "setuptools.build_meta"
 using = "requirements:requirements.txt"
 only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]
 ignore_packages = [
-	# Incompatible Apache license dependencies.
-	# These are current license violations.
-	"fast-diff-match-patch",
+	# Incompatible Apache licenses.
+	# These are current license violations and are bundled with NVDA.
+	"fast-diff-match-patch",  # See also #16633
 	"requests",
-	"importlib-metadata",  # bundled with another dependency, not bundled with NVDA
-	"opencv-python",  # bundled with another dependency, not bundled with NVDA
+
+	# Incompatible Apache licenses.
+	# Bundled with a dependency, but not bundled with NVDA.
+	"importlib-metadata",
+	"opencv-python",
+
+	# Incompatible Apache licenses.
+	# System testing frameworks, not bundled with NVDA.
+	"robotframework",
+	"robotframework-screencaplibrary",
+	"robotremoteserver",
+
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
 	"wxPython",  # wxWindows Library License
 	"pillow",  # PIL Software License
-	# test frameworks not bundled with NVDA
-	"robotframework",
-	"robotframework-screencaplibrary",
-	"robotremoteserver",
 ]
