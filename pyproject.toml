@@ -8,7 +8,6 @@ only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]
 ignore_packages = [
 	# Incompatible Apache license dependencies.
 	# These are current license violations.
-	"fast-diff-match-patch",
 	"requests",
 	"importlib-metadata",  # bundled with another dependency, not bundled with NVDA
 	"opencv-python",  # bundled with another dependency, not bundled with NVDA
