@@ -10,7 +10,8 @@ ignore_packages = [
 	# These are current license violations.
 	"fast-diff-match-patch",
 	"requests",
-	"importlib-metadata",  # bundled with python, hard to remove
+	"importlib-metadata",  # bundled with another dependency, not bundled with NVDA
+	"opencv-python",  # bundled with another dependency, not bundled with NVDA
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
