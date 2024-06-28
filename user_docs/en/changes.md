@@ -15,7 +15,7 @@ Unassigned commands have been added to scroll the mouse wheel vertically and hor
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-LibLouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, and Turkish.
 eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
 
@@ -40,8 +40,12 @@ Unicode CLDR has also been updated.
     * Added new language Karakalpak.
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
-  * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
-    * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+  * Updated LibLouis braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * New braille tables:
+      * Cyrillic Serbian.
+      * Yiddish.
+      * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
+      * Turkish grade 2. (#16735)
   * Updated NSIS to 3.10 (#16674, @dpy013)
   * Updated markdown to 3.6 (#16725, @dpy013)
   * Updated nh3 to 0.2.17 (#16725, @dpy013)
