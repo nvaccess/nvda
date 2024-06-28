@@ -23,5 +23,5 @@ Alternatively, set up pre-commit scripts globally:
 1. `pip install pre-commit`
 1. `pre-commit install --allow-missing-config`
 
-To avoid pre-commit hooks from triggering use the `--no-verify` CLI option.
+To avoid pre-commit hooks from triggering, use the `--no-verify` CLI option.
 Example: `git commit -m "message" --no-verify`.
