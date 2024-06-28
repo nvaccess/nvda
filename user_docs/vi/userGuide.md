@@ -11,7 +11,7 @@
 Chào mừng bạn đến với NVDA!
 
 NonVisual Desktop Access (NVDA), (tạm dịch: tiếp cận máy tính không cần thị giác), là một phần mềm đọc màn hình miễn phí, mã nguồn mở trên hệ điều hành windows.
-Cung cấp các phản hồi qua tiếng nói và màn hình nổi, giúp người mù và nhìn kém có thể sử dụng được máy tính chạy hệ điều hành Windows mà không tốn chi phí nhiều hơn một người sáng mắt.
+Cung cấp các phản hồi qua tiếng nói và màn hình chữ nổi, giúp người mù và nhìn kém có thể sử dụng được máy tính chạy hệ điều hành Windows mà không tốn chi phí nhiều hơn một người sáng mắt.
 NVDA được phát triển bởi công ty [NV Access](https://www.nvaccess.org/), với	 sự đóng góp và hỗ trợ từ cộng đồng.
 
 ### Các tính năng chung {#GeneralFeatures}
@@ -58,10 +58,10 @@ Có thể xem thêm thông tin về các bộ đọc được NVDA hỗ trợ tr
 
 ### Hỗ Trợ Màn Hình Chữ Nổi {#BrailleSupport}
 
-Nếu người dùng có sử dụng màn hình nổi, NVDA có thể gửi thông tin  ra màn hình dưới dạng chữ nổi.
+Nếu người dùng có sử dụng màn hình chữ nổi, NVDA có thể gửi thông tin  ra màn hình dưới dạng chữ nổi.
 NVDA sử dụng thư viện phiên dịch chữ nổi mã nguồn mở [LibLouis](https://liblouis.io/) để tạo ra chữ nổi từ văn bản.
-Hỗ trợ nhập liệu bằng chữ nổi đầy đủ và viết tắt với bàn phím của màn hình nổi.
-Hơn thế nữa, mặc định, NVDA sẽ tự nhận nhiều màn hình nổi.
+Hỗ trợ nhập liệu bằng chữ nổi đầy đủ và viết tắt với bàn phím của màn hình chữ nổi.
+Hơn thế nữa, mặc định, NVDA sẽ tự nhận nhiều màn hình chữ nổi.
 Vui lòng xem phần [các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays) để biết thêm thông tin về các màn hình được hỗ trợ.
 
 NVDA hỗ trợ các bảng mã chữ nổi cho nhiều ngôn ngữ khác nhau, bao gồm bảng mã chữ đủ, chữ tắt và chữ nổi máy tính.
@@ -82,7 +82,7 @@ Bạn có thể chia sẻ hoặc thay đổi phần mềm này theo ý mình, mi
 ## Hướng dẫn sử dụng nhanh NVDA {#NVDAQuickStartGuide}
 
 Hướng dẫn nhanh này gồm ba phần chính: tải phần mềm, bắt đầu cài đặt, và gọi chạy NVDA.
-Các phần này dựa trên thông tin về thiết lập trong tùy chỉnh, tham gia vào cộng đồng và nhận trợ giúp.
+Các phần này dựa trên thông tin về thiết lập trong tùy chỉnh, sử dụng add-on, tham gia vào cộng đồng và nhận trợ giúp.
 Thông tin trong phần này được tổng hợp từ các phần khác của hướng dẫn sử dụng NVDA.
 Vui lòng xem hướng dẫn đầy đủ để biết thêm thông tin chi tiết cho mỗi chủ đề.
 
@@ -278,7 +278,79 @@ Hầu hết các chức năng của NVDA đều có thể được bật lên ho
 Cấu hình và các tùy chọn khác đều có trong trình đơn NVDA.
 Để mở trình đơn NVDA, bấm `NVDA+n`.
 Để mở trực tiếp hộp thoại cài đặt chung của NVDA, bấm `NVDA+control+g`.
-Còn nhiều hộp thoại cấu hình khác có phím tắt để mở trực tiếp, chẳng hạn như `NVDA+control+s` để chọn bộ đọc, hay `NVDA+control+v` để tùy chỉnh cho giọng đọc.
+Nhiều hộp thoại cấu hình khác có phím tắt để mở trực tiếp, chẳng hạn như `NVDA+control+s` để chọn bộ đọc, hay `NVDA+control+v` để tùy chỉnh cho giọng đọc.
+
+### Add-ons {#Addons}
+Add-on (tiện ích mở rộng) là các gói phần mềm, cung cấp mới hoặc thay đổi chức năng của NVDA.
+Các add-on được phát triển bởi cộng đồng NVDA, hoặc các công ty bên ngoài và không liên kết với NV Access.
+Giống như bất kỳ phần mềm nào, điều quan trọng là phải tin tưởng nhà phát triển add-on trước khi sử dụng.
+Vui lòng tham khảo phần [Cài đặt add-on](#AddonStoreInstalling) để biết cách xác minh các add-on trước khi cài đặt.
+
+Ở lần khởi chạy đầu tiên của cửa hàng add-on, NVDA sẽ hiển thị một cảnh báo về các add-on.
+Các add-on không được NV Access kiểm tra và có thể có chức năng cũng như quyền truy cập thông tin không bị hạn chế.
+Bấm `khoảng trắng` nếu bạn đã đọc cảnh báo và không cần xem lại ở lần sau.
+Bấm `tab` để đến nút "Đồng ý", sau đó `enter` để chấp nhận cảnh báo và tiếp tục đến Cửa hàng add-on.
+Phần "[Add-on và cửa hàng Add-on](#AddonsManager)" trong hướng dẫn sử dụng chứa tất cả thông tin về tính năng của cửa hàng add-on.
+
+Có thể mở cửa hàng add-on từ trình đơn Công cụ.
+Bấm `NVDA+n` để mở trình đơn NVDA, rồi `c` mở công cụ, rồi `c` mở cửa hàng Add-on.
+Khi mở cửa hàng add-on, nó hiển thị "các add-on hiện có" nếu chưa cài đặt add-on nào.
+Nếu đã cài đật add-on, cửa hàng add-on sẽ đi đến thẻ  "Các add-on đã cài đặt".
+
+#### Các add-on hiện có {#AvailableAddons}
+Khi cửa sổ lần đầu mở ra, có thể mất vài giây để tải các add-on.
+NVDA sẽ đọc tên của add-on đầu tiên ngay khi hoàn thành việc tải danh sách các add-on.
+Các add-on hiện có được liệt kê theo thứ tự abc trong một danh sách nhiều cột.
+Để duyệt qua danh sách và tìm hiểu về một add-on cụ thể:
+
+1. Dùng phím mũi tên hoặc bấm chữ cái đầu tiên của tên add-on để di chuyển trong danh sách.
+1. Bấm `tab` một lần để chuyển đến phần mô tả của add-on đang được chọn.
+1. Dùng [các phím đọc văn bản](#ReadingText) hoặc các phím mũi tên để đọc toàn bộ mô tả.
+1. Bấm `tab` đến nút "Hành động", có thể được dùng để cài đặt add-on, cùng với các hành động khác.
+1. Bấm `tab` đến "Các chi tiết khác", trong đó liệt kê các chi tiết như nhà phát triển, phiên bản và trang chủ.
+1. Để trở về danh sách các add-on, bấm `alt+a`, hoặc `shift+tab` trở về mục "Các add-on hiện có".
+
+#### Tìm kiếm add-on {#SearchingForAddons}
+Ngoài việc duyệt qua tất cả các add-on hiện có, bạn còn có thể lọc các add-on được hiển thị.
+Để tìm kiếm, bấm `alt+t` để đi đến trường "tìm kiếm" và nhập văn bản muốn tìm kiếm.
+Việc tìm kiếm sẽ kiểm tra các kết quả trùng khớp trong các trường Add-on ID, tên hiển thị, nhà phát triển, tác giả hoặc mô tả.
+Danh sách sẽ được cập nhật trong khi nhập cụm từ tìm kiếm.
+Khi nhập xong, bấm `tab` để đi đến danh sách các add-on đã lọc và duyệt qua kết quả.
+
+#### Cài đặt add-on {#InstallingAddons}
+
+Để cài đặt một add-on:
+
+1. Đứng tại một add-on bạn muốn cài đặt, bấm `enter`.
+1. Trình đơn tác vụ sẽ mở ra với danh sách tác vụ; hành động đầu tiên là "Cài đặt".
+1. Để cài đặt add-on, bấm `c` hoặc `mũi tên xuống` đến "cài đặt" và bấm `enter`.
+1. Focus quay trở lại add-on trong danh sách và NVDA sẽ đọc chi tiết về add-on đó.
+1. Thông tin "Trạng thái" được NVDA thông báo thay đổi từ "Đang có" thành "Đang tải về".
+1. Khi một add-on được tải về hoàn tất, trạng thái sẽ đổi thành "Đã tải về. Đang chờ cài đặt".
+1. Lặp lại điều này với bất kì add-on nào bạn muốn cài đặt cùng lúc.
+1. Khi hoàn tất, bấm `tab` đến khi focus ở tại nút "Đóng", rồi bấm `enter`.
+1. Các add-on đã tải về sẽ bắt đầu quá trình cài đặt ngay khi Cửa hàng add-on được đóng lại.
+Trong quá trình cài đặt, các add-on có thể tạo ra các hộp thoại mà bạn cần phải đưa ra phản hồi.
+1. Khi các add-on được cài đặt, một hộp thoại xuất hiện thông báo rằng các thay đổi đã được thực hiện và bạn phải khởi động lại NVDA để hoàn tất quá trình cài đặt add-on.
+1. Bấm `enter` để khởi động lại NVDA.
+
+#### Quản lý các add-on đã cài đặt {#ManagingInstalledAddons}
+Bấm `control+tab` để chuyển giữa các thẻ của Cửa hàng add-on.
+các thẻ bao gồm: "Các add-on đã cài đặt", "Các add-on có bản cập nhật", "Các add-on hiện có" và "Các add-on không tương thích đã cài đặt".
+Mỗi thẻ đều được thiết kế tương tự nhau, danh sách các add-on, bảng điều khiển để biết thêm chi tiết về add-on đã chọn và khả năng thực hiện các hành động cho add-on.
+Trình đơn hành động của các add-on đã cài đặt bao gồm "Tắt" và "Gỡ" thay vì "Cài đặt".
+Việc tắt một add-on làm cho NVDA ngừng gọi nó, nhưng vẫn để nó ở trạng thái đã cài đặt.
+Để bật lại một add-on đã tắt, kích hoạt mục "Bật" từ trình đơn hành động.
+Sau khi bật, tắt, hoặc gỡ bỏ các add-on, bạn sẽ được yêu cầu khởi động lại NVDA khi đóng Cửa hàng Add-on.
+Các thay đổi này chỉ có hiệu lực khi khởi động lại NVDA.
+Lưu ý là trong Cửa hàng add-on, phím `escape` hoạt động giống như nút Đóng.
+
+#### Cập nhật add-on {#UpdatingAddons}
+Khi có bản cập nhật cho một add-on bạn đã cài đặt, nó sẽ được liệt kê trong thẻ "Các add-on có bản cập nhật".
+Bấm `control+tab` để đi đến thẻ này từ bất cứ đâu trong Cửa hàng add-on.
+Trạng thái của add-on sẽ được liệt kê là "Có bản cập nhật".
+Danh sách sẽ liệt kê phiên bản hiện được cài đặt và bản cập nhật.
+Bấm `enter` trên add-on để mở danh sách hành động; chọn "Cập nhật".
 
 ### Cộng đồng {#Community}
 
@@ -468,7 +540,7 @@ Bạn cũng có thể giữ và di chuyển ngón tay trên màn hình để đ�
 Khi các lệnh của NVDA được mô tả ở những phần sau của tài liệu này, chúng có thể sẽ được liệt kê kèm theo một thao tác để kích hoạt lệnh đó với các màn hình cảm ứng.
 Dưới đây là hướng dẫn cho một số thao tác cảm ứng.
 
-##### Hành động chạm {#toc45}
+##### Hành động chạm {#Taps}
 
 Chạm nhẹ và nhanh một hoặc nhiều ngón tay vào màn hình.
 
@@ -480,7 +552,7 @@ Chạm nhanh hai lần liên tiếp gọi là hai chạm (double-tap).
 Chạm nhanh ba lần gọi là ba chạm (triple-tap) và tương tự như vậy.
 Dĩ nhiên, những thao tác đa chạm cũng nhận biết được số ngón tay chạm vào màn hình. Do đó, có thể có những thao tác như 2-ngón ba chạm, chạm 4-ngón, v...v....
 
-##### Hành động vuốt {#toc46}
+##### Hành động vuốt {#Flicks}
 
 Đó là hành động vuốt nhanh ngón tay của bạn trên màn hình.
 
@@ -548,7 +620,7 @@ Khi trình đơn mở ra, bạn có thể dùng các phím mũi tên để di ch
 |bật tắt chế độ trợ giúp nhập |NVDA+1 |NVDA+1 |không có |Bật tắt chế độ thông báo mô tả các phím tắt trong NVDA|
 |Tắt NVDA |NVDA+q |NVDA+q |không có |Tắt NVDA|
 |Chuyển phím tới hệ thống |NVDA+f2 |NVDA+f2 |không có |chuyển phím được bấm tiếp theo trực tiếp tới ứng dụng hiện tại và hệ thống mà không thông qua NVDA|
-|Bật tắt chế độ ngủ cho ứng dụng |NVDA+shift+s |NVDA+shift+z |không có |Bật tắt chế độ ngủ cho ứng dụng hiện tại. Chức năng này hữu ích khi bạn dùng một ứng dụng tự hỗ trợ giọng nói. Mọi lệnh đọc và chức năng hiển thị thông tin trên màn hình nổi của NVDA đều không hoạt động khi ở chế độ ngủ. Bấm một lần nữa để tắt chế độ ngủ nếu đang bật, và ngược lại - lưu ý rằng NVDA sẽ chỉ giữ thiết lập chế độ ngủ cho tới khi nó bị khởi động lại nó.|
+|Bật tắt chế độ ngủ cho ứng dụng |NVDA+shift+s |NVDA+shift+z |không có |Bật tắt chế độ ngủ cho ứng dụng hiện tại. Chức năng này hữu ích khi bạn dùng một ứng dụng tự hỗ trợ giọng nói. Mọi lệnh đọc và chức năng hiển thị thông tin trên màn hình chữ nổi của NVDA đều không hoạt động khi ở chế độ ngủ. Bấm một lần nữa để tắt chế độ ngủ nếu đang bật, và ngược lại - lưu ý rằng NVDA sẽ chỉ giữ thiết lập chế độ ngủ cho tới khi nó bị khởi động lại nó.|
 
 <!-- KC:endInclude -->
 
@@ -943,7 +1015,7 @@ Bạn có thể di chuyển đến đoạn văn bản kế hoặc đoạn trư�
 * Các diễn đàn
 * Các bài viết dạng blog
 
-Các lệnh này cũng có thể hữu ích để bỏ qua một số thứ lộn xộn nhất định, chẳng hạn như:
+Các lệnh này cũng có thể hữu ích để bỏ qua một số nội dung lộn xộn nhất định, chẳng hạn như:
 
 * Quảng cáo
 * Trình đơn
@@ -1079,7 +1151,7 @@ Lưu ý là đây vẫn chưa phải chuẩn chính thức. Vì vậy, hiện v�
 NVDA có thể đọc và duyệt nội dung toán trong Kindle cho PC với các sách có nội dung toán tiếp cận.
 
 Khi đọc tài liệu, NVDA sẽ đọc bất kỳ nội dung toán học  nào được hỗ trợ khi nó xuất hiện.
-Nếu bạn dùng màn hình nổi, nó sẽ hiển thị dưới dạng chữ  nổi.
+Nếu bạn dùng màn hình chữ nổi, nó sẽ hiển thị dưới dạng chữ  nổi.
 
 ### Duyệt và Tương Tác {#InteractiveNavigation}
 
@@ -1127,17 +1199,17 @@ Xin lưu ý rằng những thông tin về MathPlayer có thể nói là chỉ d
 
 ## Chữ Nổi {#Braille}
 
-Nếu bạn sử dụng màn hình nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
-Nếu màn hình nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
+Nếu bạn sử dụng màn hình chữ nổi, NVDA có thể hiển thị thông tin dạng chữ nổi.
+Nếu màn hình chữ nổi của bạn có bàn phím kiểu Perkins, bạn có thể nhập liệu chữ nổi dưới dạng đầy đủ và viết tắt.
 Chữ nổi cũng có thể hiển thị trên màn hình bằng [Trình xem chữ nổi](#BrailleViewer) để thay thế, hay dùng cùng lúc với màn hình chữ nổi.
 
-Vui lòng xem phần [các màn hình nổi được hỗ trợ](#SupportedBrailleDisplays) để biết thêm thông tin về các mẫu màn hình được hỗ trợ.
+Vui lòng xem phần [các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays) để biết thêm thông tin về các mẫu màn hình được hỗ trợ.
 Phần này cũng có các thông tin về các màn hình được hỗ trợ tính năng ngầm tự dò tìm của NVDA.
-Bạn có thể cấu hình màn hình nổi với phân loại [Chữ nổi](#BrailleSettings) trong [hộp thoại cấu hình NVDA](#NVDASettings).
+Bạn có thể cấu hình màn hình chữ nổi với phân loại [Chữ nổi](#BrailleSettings) trong [hộp thoại cấu hình NVDA](#NVDASettings).
 
 ### Quy ước viết tắt cho loại điều khiển, trạng thái và cột mốc {#BrailleAbbreviations}
 
-Để giúp hiển thị thông tin một cách đầy đủ nhất có thể trên màn hình nổi, các quy ước sau đây đã được đặt ra để xác định các loại điều khiển, trạng thái và cột mốc.
+Để giúp hiển thị thông tin một cách đầy đủ nhất có thể trên màn hình chữ nổi, các quy ước sau đây đã được đặt ra để xác định các loại điều khiển, trạng thái và cột mốc.
 
 | Viết tắt |Loại điều khiển|
 |---|---|
@@ -1316,7 +1388,7 @@ Do một thay đổi trong Windows Magnification API, tính năng Che Màn Hình
 Hãy dùng NVDA 2021.2 để bật tính năng Che Màn Hình với Windows 10 21H2 (10.0.19044) trở lên.
 Vì mục tiêu bảo mật, khi sử dụng một phiên bản mới của Windows, hãy tìm sự xác nhận trực quan rằng tính năng Che Màn Hình có làm cho màn hình đen toàn bộ.
 
-Xin lưu ý rằng trong khi Windows Magnifier đang chạy và đang dùng chế độ đảo màu màn hình, tính năng che màn hình sẽ không thể bật lên được.
+Xin lưu ý rằng trong khi Windows Magnifier đang chạy và đang dùng chế độ đảo màu màn hình (inverted screen colors), tính năng che màn hình sẽ không thể bật lên được.
 
 ## Nhận Dạng Nội Dung {#ContentRecognition}
 
@@ -1634,7 +1706,7 @@ Dưới đây là các phân loại trong hộp thoại cấu hình NVDA:
 
 <!-- KC:setting -->
 
-##### Mở Cài Đặt Chung {#toc110}
+##### Mở Cài Đặt Chung {#OpenGeneralSettings}
 
 Phím tắt: `NVDA+control+g`
 
@@ -1675,7 +1747,7 @@ Các mức độ log bao gồm:
 * Tắt: ngoài một thông điệp ngắn gọn lúc khởi động, NVDA sẽ không ghi lại bất cứ cái gì khi nó được gọi chạy.
 * Thông tin: NVDA sẽ ghi các thông tin cơ bản như thông điệp lúc khởi động và các thông tin hữu ích cho nhà phát triển.
 * cảnh báo gỡ lỗi: các thông điệp cảnh báo không tạo ra từ các lỗi nghiêm trọng sẽ được ghi lại.
-* Đầu vào / đầu ra: đầu vào từ bàn phím, và các màn hình nổi cũng như đầu ra tiếng nói và chữ nổi sẽ được ghi lại.
+* Đầu vào / đầu ra: đầu vào từ bàn phím, và các màn hình chữ nổi cũng như đầu ra tiếng nói và chữ nổi sẽ được ghi lại.
 Nếu quan ngại về sự riêng tư thì đừng chọn cấp độ log này.
 * Gỡ lỗi: ngoài các thông tin, cảnh báo và thông điệp  đầu vào / đầu ra, các thông điệp gỡ lỗi bổ sung cũng sẽ được ghi lại.
 Cũng giống như đầu vào / đầu ra, Nếu quan ngại về sự riêng tư thì đừng nên chọn cấp độ log này.
@@ -1717,7 +1789,7 @@ Ngoài những thông tin bắt buộc cho việc kiểm tra cập nhật, các 
 * NVDA được cài đặt hay chạy trực tiếp
 * Tên bộ đọc đang dùng (bao gồm tên add-on và trình điều khiển (driver) của nó)
 * Tên màn hình chữ nổi đang dùng (bao gồm tên driver của nó)
-* Đầu ra chữ nổi (nếu đang dùng màn hình nổi)
+* Đầu ra chữ nổi (nếu đang dùng màn hình chữ nổi)
 
 Đây là những thông tin hữu ích để NV Access ưu tiên phát triển tính năng mới cho các bản NVDA trong tương lai.
 
@@ -1730,7 +1802,7 @@ Bạn cũng có thể cài đặt  cập nhật thủ công từ hộp thoại t
 
 <!-- KC:setting -->
 
-##### Mở cài đặt thiết lập bộ đọc {#toc123}
+##### Mở cài đặt thiết lập bộ đọc {#OpenSpeechSettings}
 
 Phím tắt: `NVDA+control+v`
 
@@ -1873,7 +1945,7 @@ Lưu ý là cần chọn ít nhất hai chế độ.
 
 <!-- KC:setting -->
 
-##### Mở hộp thoại chọn bộ đọc {#toc144}
+##### Mở hộp thoại chọn bộ đọc {#OpenSelectSynthesizer}
 
 Phím tắt: `NVDA+control+s`
 
@@ -1888,7 +1960,7 @@ Tùy chọn này cho phép bạn chọn bộ đọc để dùng với NVDA.
 Để biết thêm thông tin về danh sách các bộ tổng hợp tiếng nói mà NVDA hỗ trợ, vui lòng xem phần [Các bộ tổng hợp tiếng nói được hỗ trợ](#SupportedSpeechSynths).
 
 Trong danh sách các bộ đọc trên, có một mục là "Không đọc", cho phép NVDA hoạt động nhưng không đọc gì cả.
-chức năng này có thể hữu ích cho những người chỉ muốn  dùng NVDA với màn hình nổi hay các lập trình viên chỉ muốn dùng trình hiển thị nội dung đọc.
+chức năng này có thể hữu ích cho những người chỉ muốn  dùng NVDA với màn hình chữ nổi hay các lập trình viên chỉ muốn dùng trình hiển thị nội dung đọc.
 
 #### Vòng thiết lập tham số cho giọng đọc {#SynthSettingsRing}
 
@@ -1911,9 +1983,9 @@ Ngoài việc thay đổi các tham số cho giọng đọc trong phân loại t
 Phân loại chữ nổi trong hộp thoại cấu hình của NVDA có các tùy chọn cho phép  bạn thực hiện một vài thay đổi liên quan đến đầu vào và đầu ra chữ nổi.
 Phân loại này có các tùy chọn sau:
 
-##### Thay đổi màn hình nổi {#BrailleSettingsChange}
+##### Thay đổi màn hình chữ nổi {#BrailleSettingsChange}
 
-Nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA kích hoạt [hộp thoại chọn màn hình nổi](#SelectBrailleDisplay) để lựa chọn màn hình sẽ dùng.
+Nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA kích hoạt [hộp thoại chọn màn hình chữ nổi](#SelectBrailleDisplay) để lựa chọn màn hình sẽ dùng.
 Hộp thoại này được mở đè lên hộp thoại cấu hình NVDA.
 Lưu hay hủy bỏ các thiết lập trong hộp thoại này sẽ đưa bạn trở về hộp thoại cấu hình NVDA.
 
@@ -1921,7 +1993,7 @@ Lưu hay hủy bỏ các thiết lập trong hộp thoại này sẽ đưa bạn
 
 Tùy chọn kế tiếp trong phân loại này là một hộp xổ chọn bảng mã đầu ra.
 Trong hộp xổ này, bạn sẽ tìm thấy bảng mã chữ nổi cho các ngôn ngữ khác nhau, phiên bản chuẩn và các cấp độ.
-Bảng mã được chọn sẽ dùng để chuyển đổi nội dung và hiển thị trên màn hình nổi.
+Bảng mã được chọn sẽ dùng để chuyển đổi nội dung và hiển thị trên màn hình chữ nổi.
 Bạn có thể dùng các phím mũi tên để duyệt qua danh sách các bảng mã..
 
 ##### Bảng Mã Đầu Vào {#BrailleSettingsInputTable}
@@ -1930,8 +2002,8 @@ Tiếp theo với tùy chọn trước đó là hộp xổ chọn bảng mã ch�
 Bảng mã được chọn sẽ dùng để chuyển đổi nội dung được nhập bằng kiểu bàn phím Perkins sang dạng văn bản.
 Bạn có thể dùng các phím mũi tên để duyệt qua danh sách các bảng mã..
 
-Lưu ý, tùy chọn này chỉ có ý nghĩa khi màn hình nổi của bạn có bàn phím kiểu Perkins và trình điều khiển của nó có hỗ trợ tính năng này.
-Nếu màn hình nổi có bàn phím Perkins nhưng không hỗ trợ phần nhập liệu, nó sẽ được lưu ý trong phần [Các màn hình nổi được hỗ trợ](#SupportedBrailleDisplays).
+Lưu ý, tùy chọn này chỉ có ý nghĩa khi màn hình chữ nổi của bạn có bàn phím kiểu Perkins và trình điều khiển của nó có hỗ trợ tính năng này.
+Nếu màn hình chữ nổi có bàn phím Perkins nhưng không hỗ trợ phần nhập liệu, nó sẽ được lưu ý trong phần [Các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays).
 
 <!-- KC:setting -->
 
@@ -1953,7 +2025,7 @@ Tùy chọn này cho phép từ dưới vị trí con trỏ được hiển th�
 
 ##### Hiển Thị Con Trỏ {#BrailleSettingsShowCursor}
 
-Tùy chọn này cho phép hiển thị hoặc không hiển thị con trỏ trên màn hình nổi.
+Tùy chọn này cho phép hiển thị hoặc không hiển thị con trỏ trên màn hình chữ nổi.
 Nó có hiệu lực đối với dấu nháy hệ thống và con trỏ duyệt nhưng không có tác dụng với dấu báo vùng chọn.
 
 ##### Nhấp Nháy Con Trỏ {#BrailleSettingsBlinkCursor}
@@ -1984,7 +2056,7 @@ Dấu báo vùng chọn vẫn sử dụng chấm 7 và 8 và không nháy. Nó k
 
 ##### Thời Gian Kết Thúc Thông Điệp (giây) {#BrailleSettingsMessageTimeout}
 
-Tùy chọn này kiểm soát thời gian kết thúc hiển thị các thông điệp trên màn hình nổi.
+Tùy chọn này kiểm soát thời gian kết thúc hiển thị các thông điệp trên màn hình chữ nổi.
 Thông điệp của NVDA sẽ bị loại bỏ ngay lập tức khi bấm một phím routing trên màn hình chữ nổi, nhưng sẽ xuất hiện lại khi bấm một phím tương ứng để kích hoạt thông điệp.
 Tùy chọn này chỉ xuất hiện khi tùy chọn "Hiện thông điệp" được thiết lập là "Dùng thời gian chờ".
 
@@ -2026,19 +2098,19 @@ Tùy chọn này chỉ hiển thị khi "[chữ nổi đi theo](#BrailleTether)"
 
 ##### Đọc Theo Đoạn {#BrailleSettingsReadByParagraph}
 
-Khi bật, nội dung sẽ được hiển thị trên màn hình nổi theo đoạn thay vì dòng.
+Khi bật, nội dung sẽ được hiển thị trên màn hình chữ nổi theo đoạn thay vì dòng.
 Lệnh chuyển về dòng trước và dòng kế cũng sẽ chuyển qua đoạn tương ứng.
-Điều này có nghĩa là bạn không cần cuộn màn hình ở cuối mỗi dòng, khi nội dung có thể hiển thị đầy đủ trên màn hình nổi.
+Điều này có nghĩa là bạn không cần cuộn màn hình ở cuối mỗi dòng, khi nội dung có thể hiển thị đầy đủ trên màn hình chữ nổi.
 Nó có thể giúp bạn đọc xuyên suốt một đoạn nội dung dài.
 Tùy chọn này mặc định không được bật.
 
 ##### Tránh Tách Từ {#BrailleSettingsWordWrap}
 
-Nếu được bật, một từ quá dài nằm cuối màn hình nổi sẽ không bị tách ra.
+Nếu được bật, một từ quá dài nằm cuối màn hình chữ nổi sẽ không bị tách ra.
 Thay vào đó, nó sẽ chừa ra vài ô trắng ở cuối màn hình.
 Khi cuộn màn hình, bạn có thể đọc toàn bộ từ đó.
 Tính năng này đôi khi được gọi là "Word wrap".
-Lưu ý, nếu một từ quá dài và không thể hiển thị trên màn hình nổi, từ đó vẫn phải bị tách.
+Lưu ý, nếu một từ quá dài và không thể hiển thị trên màn hình chữ nổi, từ đó vẫn phải bị tách.
 
 Nếu tùy chọn được tắt, phần lớn của một từ sẽ được hiển thị, trong khi phần còn lại sẽ bị cắt.
 Khi cuộn màn hình, bạn sẽ đọc được phần còn lại của từ.
@@ -2047,28 +2119,28 @@ Bật tùy chọn này có thể giúp bạn đọc trôi chảy hơn, nhưng c�
 
 ##### Trình Bày Ngữ Cảnh tại Focus {#BrailleSettingsFocusContextPresentation}
 
-Tùy chọn này cho phép chọn những thông tin ngữ cảnh nào sẽ hiển thị trên màn hình nổi khi một đối tượng có focus.
+Tùy chọn này cho phép chọn những thông tin ngữ cảnh nào sẽ hiển thị trên màn hình chữ nổi khi một đối tượng có focus.
 Thông tin ngữ cảnh là những thông tin của những đối tượng liên quan theo cấp nằm trong đối tượng hiện tại.
 Ví dụ, khi đứng ở một mục trong danh sách, mục đó là một phần nằm trong đối tượng danh sách.
 Và danh sách là có thể nằm trong một hộp thoại, v...v...
 Vui lòng xem phần [Duyệt đối tượng](#ObjectNavigation) để nắm rõ khái niệm về mối quan hệ giữa các đối tượng.
 
 Nếu chọn điền trên màn hình các thay đổi ngữ cảnh, NVDA sẽ hiển thị đầy đủ thông tin ngữ cảnh trên màn hình, nhưng lưu ý là nó chỉ hiển thị những phần ngữ cảnh thay đổi.
-Ví dụ như với trường hợp ở trên, khi đổi focus đến danh sách, màn hình nổi sẽ hiển thị mục trong danh sách đó.
-Nếu màn hình nổi còn ô trống, NVDA sẽ hiển thị thông tin báo mục đó thuộc danh sách.
+Ví dụ như với trường hợp ở trên, khi đổi focus đến danh sách, màn hình chữ nổi sẽ hiển thị mục trong danh sách đó.
+Nếu màn hình chữ nổi còn ô trống, NVDA sẽ hiển thị thông tin báo mục đó thuộc danh sách.
 Và nếu bạn di chuyển giữa các mục trong danh sách với mũi tên, nó sẽ cho rằng  bạn vẫn đang ở trong danh sách.
 Vì vậy, khi focus chuyển đến những mục còn lại trong danh sách, nó sẽ chỉ hiển thị mục đang có focus.
-Để đọc lại những thông tin ngữ cảnh trước đó, bạn cần phải cuộn màn hình nổi về trước.
+Để đọc lại những thông tin ngữ cảnh trước đó, bạn cần phải cuộn màn hình chữ nổi về trước.
 
-Nếu chọn là Luôn luôn điền trên màn hình, NVDA sẽ hiển thị đầy đủ thông tin ngữ cảnh trên màn hình nổi nếu còn ô trống cho dù những thông tin này vẫn như trước đó.
+Nếu chọn là Luôn luôn điền trên màn hình, NVDA sẽ hiển thị đầy đủ thông tin ngữ cảnh trên màn hình chữ nổi nếu còn ô trống cho dù những thông tin này vẫn như trước đó.
 Lựa chọn này có một điểm lợi là NVDA sẽ hiển thị mọi thông tin trên toàn bộ màn hình nếu có thể.
 Tuy nhiên, vị trí bắt đầu có focus trên màn hình luôn luôn khác nhau.
 Nó có thể bất tiện cho bạn khi duyệt một danh sách có nhiều mục trong đó, ví dụ như cần phải di chuyển ngón tay để tìm phần bắt đầu của một mục.
 Đây là lựa chọn mặc định cho NVDA 2017.2 trở về trước.
 
-Nếu chọn chỉ hiển thị thông tin ngữ cảnh khi cuộn lại thì mặc định NVDA sẽ không hiển thị thông tin ngữ cảnh trên màn hình nổi.
+Nếu chọn chỉ hiển thị thông tin ngữ cảnh khi cuộn lại thì mặc định NVDA sẽ không hiển thị thông tin ngữ cảnh trên màn hình chữ nổi.
 Vì vậy, nó chỉ hiển thị bạn đang đứng tại mục có focus.
-Để đọc thông tin ngữ cảnh, bạn cần cuộn màn hình nổi về trước.
+Để đọc thông tin ngữ cảnh, bạn cần cuộn màn hình chữ nổi về trước.
 
 Để chuyển đổi giữa các chế độ trình bày ngữ cảnh, bạn có thể gán phím tắt / thao tác tùy chỉnh cho nó trong [hộp thoại quản lý thao tác](#InputGestures).
 
@@ -2094,62 +2166,62 @@ Tắt tùy chọn này cho phép bạn nghe đọc nội dung song song với đ
 |Các tùy chọn |Mặc định (Bật), Bật, Tắt|
 |Mặc định |Bật|
 
-Thiết lập này giúp nhận biết khi chỉ báo vùng chọn (các chấm 7 và 8) hiện trên màn hình nổi.
+Thiết lập này giúp nhận biết khi chỉ báo vùng chọn (các chấm 7 và 8) hiện trên màn hình chữ nổi.
 Mặc định thì tùy chọn này được bật nên chỉ báo vùng chọn sẽ được hiển thị.
 Việc hiện chỉ báo vùng chọn có thể gây mất tập trung trong khi đọc.
 Tắt tùy chọn này có thể cải thiện khả năng đọc.
 
 Để bật / tắt việc  hiện vùng chọn ở bất cứ đâu, hãy gán một thao tác / phím tắt thông qua [Hộp thoại quản lý thao tác](#InputGestures).
 
-#### Chọn màn hình nổi {#SelectBrailleDisplay}
+#### Chọn màn hình chữ nổi {#SelectBrailleDisplay}
 
 <!-- KC:setting -->
 
-##### Mở hộp thoại chọn màn hình nổi {#toc168}
+##### Mở hộp thoại chọn màn hình chữ nổi {#OpenSelectBrailleDisplay}
 
 Phím tắt: `NVDA+control+a`
 
-Hộp thoại chọn màn hình nổi, có thể mở bằng cách kích hoạt nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA,cho phép bạn chọn màn hình để hiển thị đầu ra chữ nổi trong NVDA.
+Hộp thoại chọn màn hình chữ nổi, có thể mở bằng cách kích hoạt nút Thay đổi... trong phân loại chữ nổi của hộp thoại cấu hình NVDA,cho phép bạn chọn màn hình để hiển thị đầu ra chữ nổi trong NVDA.
 Khi chọn được màn hình mong muốn, bạn có thể bấm Đồng ý và NVDA sẽ gọi màn hình đã chọn.
 Nếu có  lỗi khi gọi các trình điều khiển của màn hình, NVDA sẽ thông báo và tiếp tục dùng màn hình trước đó nếu có.
 
-##### Màn Hình Nổi {#SelectBrailleDisplayDisplay}
+##### Màn Hình Chữ Nổi {#SelectBrailleDisplayDisplay}
 
-Hộp xổ này có  vài tùy chọn, phụ thuộc vào driver màn hình nổi nào đang được cài trên máy bạn.
+Hộp xổ này có  vài tùy chọn, phụ thuộc vào driver màn hình chữ nổi nào đang được cài trên máy bạn.
 Dùng phím mũi tên để di chuyển qua các tùy chọn này.
 
-Tùy chọn tự động sẽ cho phép NVDA ngầm tìm kiếm nhiều màn hình nổi được hỗ trợ.
+Tùy chọn tự động sẽ cho phép NVDA ngầm tìm kiếm nhiều màn hình chữ nổi được hỗ trợ.
 Khi bật tính năng này và bạn kết nối một màn hình được hỗ trợ thông qua USB hay bluetooth, NVDA sẽ tự kết nối với màn hình.
 
-Không có Braille nghĩa là máy bạn không dùng màn hình nổi.
+Không có Braille nghĩa là máy bạn không dùng màn hình chữ nổi.
 
-Vui lòng xem phần [Các màn hình nổi được hỗ trợ](#SupportedBrailleDisplays) để biết thêm thông tin về các màn hình được hỗ trợ và những màn hình nào trong số đó có hỗ trợ việc ngầm tự nhận biết.
+Vui lòng xem phần [Các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays) để biết thêm thông tin về các màn hình được hỗ trợ và những màn hình nào trong số đó có hỗ trợ việc ngầm tự nhận biết.
 
 ##### Các màn hình tự động dò tìm {#SelectBrailleDisplayAutoDetect}
 
-Khi tùy chọn màn hình nổi được thiết lập là "Tự động", các hộp kiểm trong danh sách điều khiển này cho phép bạn bật hoặc tắt các trình điều khiển màn hình sẽ tham gia vào quá trình dò tìm tự động.
+Khi tùy chọn màn hình chữ nổi được thiết lập là "Tự động", các hộp kiểm trong danh sách điều khiển này cho phép bạn bật hoặc tắt các trình điều khiển màn hình sẽ tham gia vào quá trình dò tìm tự động.
 Điều này cho phép loại bỏ trình điều khiển của các màn hình chữ nổi mà bạn không dùng thường xuyên.
 Ví dụ như bạn chỉ sở hữu một màn hình chữ nổi yêu cầu trình điều khiển của Baum để hoạt động, bạn có thể bật trình điều khiển của Baum, trong khi tắt các trình điều khiển khác.
 
 Mặc định, tất cả các trình điều khiển có hỗ trợ tự dò tìm đều được bật.
 Ví dụ như  mọi trình điều khiển được thêm vào trong các phiên bản sau này của NVDA hay  trong một  add-on, mặc định cũng sẽ được bật lên.
 
-Bạn có thể tham khảo tài liệu dành cho màn hình chữ nổi của mình trong phần [Các màn hình nổi được hỗ trợ](#SupportedBrailleDisplays) để kiểm tra việc hỗ trợ tự dò tìm của trình điều khiển cho các màn hình.
+Bạn có thể tham khảo tài liệu dành cho màn hình chữ nổi của mình trong phần [Các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays) để kiểm tra việc hỗ trợ tự dò tìm của trình điều khiển cho các màn hình.
 
 ##### Cổng {#SelectBrailleDisplayPort}
 
-Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình nổi được chọn.
-Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình nổi đó.
+Tùy chọn này, nếu có, cho phép bạn chọn cổng hoặc loại kết nối sử dụng để giao tiếp với màn hình chữ nổi được chọn.
+Nó là một hộp xổ gồm các lựa chọn có sẵn cho màn hình chữ nổi đó.
 
-Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình nổi với máy tính sẽ được tự động thiết lập bằng việc tự quét cổng USB và bluetooth trên hệ thống.
-Tuy nhiên, với một số màn hình nổi, bạn có thể chỉ định cổng kết nối cho nó.
-Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình nổi bạn có hỗ trợ kiểu giao tiếp này.
+Mặc định, NVDA sẽ tự động nhận dạng cổng. Nghĩa là việc kết nối màn hình chữ nổi với máy tính sẽ được tự động thiết lập bằng việc tự quét cổng USB và bluetooth trên hệ thống.
+Tuy nhiên, với một số màn hình chữ nổi, bạn có thể chỉ định cổng kết nối cho nó.
+Một số lựa chọn thường gặp là: "tự động" (yêu cầu NVDA tự động hóa quá trình nhận dạng và kết nối), "USB", "bluetooth" và giao tiếp qua cổng serial nếu màn hình chữ nổi bạn có hỗ trợ kiểu giao tiếp này.
 
-Tùy chọn này sẽ không hiển thị nếu màn hình nổi của bạn chỉ hỗ trợ tự động nhận dạng cổng.
+Tùy chọn này sẽ không hiển thị nếu màn hình chữ nổi của bạn chỉ hỗ trợ tự động nhận dạng cổng.
 
-Bạn nên tham khảo tài liệu của màn hình nổi tại phần [Các màn hình nổi được hỗ trợ](#SupportedBrailleDisplays) để kiểm tra các phương thức nào được hỗ trợ cho dòng màn hình chữ nổi của bạn.
+Bạn nên tham khảo tài liệu của màn hình chữ nổi tại phần [Các màn hình chữ nổi được hỗ trợ](#SupportedBrailleDisplays) để kiểm tra các phương thức nào được hỗ trợ cho dòng màn hình chữ nổi của bạn.
 
-Lưu ý: nếu kết nối cùng lúc nhiều màn hình nổi với cùng trình điều khiển vào máy tính (kết nối hai màn hình của Seika chẳng hạn),
+Lưu ý: nếu kết nối cùng lúc nhiều màn hình chữ nổi với cùng trình điều khiển vào máy tính (kết nối hai màn hình của Seika chẳng hạn),
 hiện không thể khai báo với NVDA là màn hình nào đang được dùng.
 Vậy nên chúng tôi khuyến khích kết nối một loại màn hình của một nhà sản xuất ở một thời điểm.
 
@@ -2157,7 +2229,7 @@ Vậy nên chúng tôi khuyến khích kết nối một loại màn hình của
 
 <!-- KC:setting -->
 
-##### Mở cài đặt âm thanh {#toc173}
+##### Mở cài đặt âm thanh {#OpenAudioSettings}
 
 Phím tắt: `NVDA+control+u`
 
@@ -2200,42 +2272,45 @@ Thanh trượt này cho phép bạn điều chỉnh âm lượng cho âm thanh v
 Thiết lập này chỉ có tác dụng khi tắt "Âm lượng âm thanh NVDA đi theo âm lượng giọng đọc".
 Tùy chọn này không phát huy tác dụng nếu bạn chạy NVDA với [WASAPI bị vô hiệu cho đầu ra âm thanh](#WASAPI) trong cài đặt nâng cao.
 
-##### Chia âm thanh {#SelectSoundSplitMode}
+##### Tách âm thanh {#SelectSoundSplitMode}
 
-Tính năng chia âm thanh cho phép người dùng sử dụng các thiết bị đầu ra âm thanh nổi của họ, chẳng hạn như tai nghe và loa.
-Tính năng chia âm thanh giúp cho giọng đọc NVDA có thể ở một kênh (ví dụ: bên trái) và để tất cả các ứng dụng khác phát âm thanh của chúng ở kênh kia (ví dụ: bên phải).
-Theo mặc định, tính năng chia âm thanh bị tắt, có nghĩa là tất cả các ứng dụng bao gồm NVDA sẽ phát âm thanh ở cả kênh trái và phải.
-Một thao tác cho phép chuyển qua các chế độ chia âm thanh khác nhau:
+Tính năng tách âm thanh cho phép người dùng sử dụng các thiết bị đầu ra âm thanh nổi của họ, chẳng hạn như tai nghe và loa.
+Tính năng tách âm thanh giúp cho giọng đọc NVDA có thể ở một kênh (ví dụ: bên trái) và để tất cả các ứng dụng khác phát âm thanh của chúng ở kênh còn lại (ví dụ: bên phải).
+Theo mặc định, tính năng tách âm thanh bị tắt.
+Một thao tác cho phép chuyển qua các chế độ tách âm thanh khác nhau:
 <!-- KC:beginInclude -->
 
 | Tên |Phím |Mô tả|
 |---|---|---|
-|Chuyển đổi chế độ chia âm thanh |`NVDA+alt+s` |Chuyển giữa các chế độ âm thanh.|
+|Chuyển đổi chế độ tách âm thanh |`NVDA+alt+s` |Chuyển giữa các chế độ âm thanh.|
 
 <!-- KC:endInclude -->
 
-Theo mặc định, lệnh này sẽ chuyển đổi giữa các chế độ sau:
+Theo mặc định, lệnh này sẽ luân chuyển giữa các chế độ sau:
 
-* Tắt chia âm thanh: cả NVDA và các ứng dụng khác đều cho âm thanh sang cả kênh trái và phải.
+* Tắt tách âm thanh: NVDA không áp dụng kiểu tách âm thanh nào.
 * NVDA bên trái và các ứng dụng bên phải: NVDA sẽ đọc ở kênh bên trái, trong khi các ứng dụng khác sẽ phát âm thanh ở kênh bên phải.
 * NVDA bên trái và các ứng dụng ở hai kênh: NVDA sẽ đọc ở kênh trái, trong khi các ứng dụng khác sẽ phát âm thanh ở cả kênh trái và phải.
 
-Có nhiều chế độ chia âm thanh nâng cao hơn trong hộp xổ cài đặt NVDA.
-Xin lưu ý rằng tính năng chia âm thanh không hoạt động như một bộ trộn (mixer).
+Có nhiều chế độ tách âm thanh nâng cao hơn trong hộp xổ cài đặt NVDA.
+Trong số các chế độ này, "NVDA ở hai kênh và ứng dụng ở hai kênh" buộc tất cả âm thanh phải được định hướng trong cả hai kênh.
+Chế độ này có thể khác với chế độ "Đã tắt tách âm thanh" trong trường hợp quá trình xử lý âm thanh khác cản trở âm lượng kênh.
+
+Xin lưu ý rằng tính năng tách âm thanh không hoạt động như một bộ trộn (mixer).
 Ví dụ, nếu một ứng dụng đang phát một bản âm thanh nổi trong khi phần tách âm thanh được đặt thành "NVDA ở bên trái và các ứng dụng ở bên phải", thì bạn sẽ chỉ nghe thấy kênh bên phải của bản nhạc đó, trong khi kênh bên trái của âm thanh bài hát sẽ bị tắt tiếng.
 
 Tùy chọn này không phát huy tác dụng nếu bạn chạy NVDA với [WASAPI bị vô hiệu cho đầu ra âm thanh](#WASAPI) trong cài đặt nâng cao.
 
 Xin lưu ý rằng nếu NVDA gặp sự cố thì nó sẽ không thể khôi phục âm lượng ứng dụng và các ứng dụng đó có thể vẫn chỉ phát ra âm thanh ở một kênh sau khi NVDA gặp sự cố.
-Để giảm thiểu điều này, vui lòng khởi động lại NVDA.
+Để giảm thiểu điều này, vui lòng khởi động lại NVDA và chọn chế độ "NVDA ở hai kênh và ứng dụng ở hai kênh".
 
-##### Tùy chỉnh các chế độ chia âm thanh {#CustomizeSoundSplitModes}
+##### Tùy chỉnh các chế độ tách âm thanh {#CustomizeSoundSplitModes}
 
-Danh sách chọn bằng hộp kiểm này cho phép chọn chế độ phân chia âm thanh nào được đưa vào khi luân chuyển giữa chúng bằng cách sử dụng `NVDA+alt+s`.
+Danh sách chọn dạng hộp kiểm này cho phép chọn chế độ tách âm thanh nào được đưa vào khi luân chuyển giữa chúng bằng cách sử dụng `NVDA+alt+s`.
 Các chế độ không được chọn sẽ bị loại bỏ.
 Theo mặc định, chỉ có ba chế độ được bao gồm.
 
-* Tắt chia âm thanh.
+* Đã tắt tách âm thanh.
 * NVDA bên trái và các ứng dụng bên phải.
 * NVDA bên trái và các ứng dụng ở hai kênh.
 
@@ -2297,7 +2372,7 @@ Khi các trình hỗ trợ tồn tại các cài đặt có thể thiết lập,
 
 <!-- KC:setting -->
 
-##### Mở cài đặt bàn phím {#toc188}
+##### Mở cài đặt bàn phím {#OpenKeyboardSettings}
 
 Phím tắt: `NVDA+control+k`
 
@@ -2374,7 +2449,7 @@ Nó được bật mặc định. Do vậy, một số người dùng nhất đ�
 
 <!-- KC:setting -->
 
-##### Mở  thiết lập chuột {#toc201}
+##### Mở  thiết lập chuột {#OpenMouseSettings}
 
 Phím tắt: `NVDA+control+m`
 
@@ -2477,7 +2552,7 @@ Nếu được chọn thì NVDA sẽ lọc bớt một số đối tượng như
 
 <!-- KC:setting -->
 
-##### Mở cài đặt trình bày đối tượng {#toc218}
+##### Mở cài đặt trình bày đối tượng {#OpenObjectPresentationSettings}
 
 Phím tắt: `NVDA+control+o`
 
@@ -2592,7 +2667,7 @@ Tùy chọn này mặc định được bật.
 
 <!-- KC:setting -->
 
-##### Mở cài đặt chế độ duyệt {#toc236}
+##### Mở cài đặt chế độ duyệt {#OpenBrowseModeSettings}
 
 Phím tắt: `NVDA+control+b`
 
@@ -2684,7 +2759,7 @@ Bật tùy chọn này có thể cải thiện hỗ trợ cho vài trang web vì
 
 <!-- KC:setting -->
 
-##### Mở cài đặt định dạng tài liệu {#toc250}
+##### Mở cài đặt định dạng tài liệu {#OpenDocumentFormattingSettings}
 
 Phím tắt: `NVDA+control+d`
 
@@ -3021,7 +3096,7 @@ Tắt WASAPI sẽ vô hiệu hóa các tùy chọn sau:
 
 Các hộp kiểm trong danh sách này cho phép bạn bật một số kiểu thông điệp dò lỗi nhất định trong log của NVDA.
 Kết quả của việc ghi các thông điệp này có thể làm giảm hiệu năng vận hành và tạo các tập tin log dung lượng lớn.
-Chỉ nên bật một trong số chúng nếu được  hướng dẫn cụ thể bởi một lập trình viên NVDA. Ví dụ: khi tìm hiểu xem tại sao một màn hình nổi không hoạt động như mong muốn.
+Chỉ nên bật một trong số chúng nếu được  hướng dẫn cụ thể bởi một lập trình viên NVDA. Ví dụ: khi tìm hiểu xem tại sao một màn hình chữ nổi không hoạt động như mong muốn.
 
 ##### Phát âm thanh báo lỗi ghi vào log {#PlayErrorSound}
 
@@ -3122,7 +3197,7 @@ Bạn có thể tìm bằng cách gõ vào tên lệnh trong ô lọc theo.
 Thao tác / phím tắt tìm thấy sẽ hiển thị ngay dưới mỗi lệnh.
 
 Để thêm thao tác / phím tắt cho một lệnh,  chọn lệnh đó rồi bấm nút Thêm.
-Sau đó, thực hiện thao tác muốn gán. Ví dụ: bấm phím trên bàn phím hay nút trên màn hình nổi.
+Sau đó, thực hiện thao tác muốn gán. Ví dụ: bấm phím trên bàn phím hay nút trên màn hình chữ nổi.
 Thông thường thì một thao tác có thể được thực hiện theo nhiều cách.
 Ví dụ như khi bạn bấm một phím trên bàn phím, bạn có thể thiết lập để  nó áp  dụng cho kiểu bàn phím Desktop hay Laptop hoặc tất cả.
 Một trình đơn sẽ xuất hiện cho phép bạn chọn các kiểu bàn phím đó.
@@ -3274,7 +3349,7 @@ Chúng được phát triển bởi cộng đồng NVDA, và các tổ chức b�
 Các Add-on có thể làm được một trong những việc sau:
 
 * Thêm hoặc cải thiện hỗ trợ cho một số ứng dụng nhất định.
-* Cung cấp hỗ trợ thêm cho màn hình nổi hoặc các bộ đọc.
+* Cung cấp hỗ trợ thêm cho màn hình chữ nổi hoặc các bộ đọc.
 * Thêm hoặc thay đổi tính năng của NVDA.
 
 Cửa hàng add-on của NVDA (NVDA's Add-on Store) cho phép bạn duyệt và quản lý các gói add-on.
@@ -3460,7 +3535,7 @@ Khi bật trình xem chữ nổi, nó sẽ  liên tục cập nhật để hiể
 Để bật trình xem chữ nổi,  chọn  mục "Trình xem chữ nổi" ở trình đơn Công cụ trong trình đơn NVDA.
 Bỏ chọn để tắt nó.
 
-Các màn hình chữ nổi thường có các nút cuộn tới / lui. Để có thể cuộn với trình xem chữ nổi, hãy dùng [Hộp thoại quản lý thao tác](#InputGestures) để gán phím tắt cho các lệnh "Cuộn màn hình nổi về trước" và "Cuộn màn hình nổi tới"
+Các màn hình chữ nổi thường có các nút cuộn tới / lui. Để có thể cuộn với trình xem chữ nổi, hãy dùng [Hộp thoại quản lý thao tác](#InputGestures) để gán phím tắt cho các lệnh "Cuộn màn hình chữ nổi về trước" và "Cuộn màn hình chữ nổi tới"
 
 Cửa sổ trình xem chữ nổi có một hộp kiểm tên "Hiển thị trình xem chữ nổi khi khởi động".
 Nếu chọn, trình xem chữ nổi sẽ được mở khi khởi động NVDA.
@@ -3481,7 +3556,7 @@ Phải giữ chuột đến khi ô chữ nổi chuyển sang màu xanh lá.
 Python console được tìm thấy trong trình đơn công cụ của trình đơn NVDA, là một công cụ phát triển, hữu dụng trong việc sửa lỗi, kiểm tra tổng quan cấu trúc lõi của NVDA hay kiểm tra cấp bậc của tính tiếp cận cho một ứng dụng.
 Để biết thêm thông tin chi tiết, xin xem tại phần  [Phát triển NVDA](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Cửa hàng Add-on {#toc314}
+### Cửa hàng Add-on {#AddonStoreMenuItem}
 
 Mục này sẽ mở [Cửa Hàng Add-on của NVDA](#AddonsManager).
 Để có thêm thông tin, đọc trong phần chuyên sâu: [Add-on và Cửa Hàng Add-on](#AddonsManager).
@@ -3590,35 +3665,35 @@ Khi hoàn tất, khởi động lại NVDA.
 
 Vui lòng xem trang [Các ngôn ngữ và giọng đọc được hỗ trợ](https://support.microsoft.com/en-us/windows/appendix-a-supported-languages-and-voices-4486e345-7730-53da-fcfe-55cc64300f01) để biết các giọng đọc hiện có.
 
-## Các màn hình nổi (Braille Displays) được hỗ trợ {#SupportedBrailleDisplays}
+## Các màn hình chữ nổi được hỗ trợ {#SupportedBrailleDisplays}
 
-Phần này gồm thông tin về các dòng màn hình nổi được hỗ trợ bởi NVDA.
+Phần này gồm thông tin về các dòng màn hình chữ nổi được hỗ trợ bởi NVDA.
 
 ### Các màn hình được hỗ trợ tự dò  tìm ngầm {#AutomaticDetection}
 
-NVDA có khả năng tự nhận biết ngầm nhiều màn hình nổi qua USB hay bluetooth.
-Tính năng này được bật bằng cách chọn tùy chọn tự động trong màn hình ưa thích từ [hộp thoại cài đặt màn hình nổi](#BrailleSettings).
+NVDA có khả năng tự nhận biết ngầm nhiều màn hình chữ nổi qua USB hay bluetooth.
+Tính năng này được bật bằng cách chọn tùy chọn tự động trong màn hình ưa thích từ [hộp thoại cài đặt màn hình chữ nổi](#BrailleSettings).
 Mặc định, tùy chọn này được bật.
 
-Các màn hình nổi sau đây có hỗ trợ chức năng tự nhận biết.
+Các màn hình chữ nổi sau đây có hỗ trợ chức năng tự nhận biết.
 
 * Các màn hình Handy Tech
-* Màn hình nổi Baum/Humanware/APH/Orbit
+* Màn hình chữ nổi Baum/Humanware/APH/Orbit
 * HumanWare Brailliant dòng BI/B
 * HumanWare BrailleNote
 * SuperBraille
 * Optelec ALVA dòng 6
 * HIMS Braille các dòng Sense/Braille EDGE/Smart Beetle/Sync Braille
-* Các màn hình nổi Eurobraille Esys/Esytime/Iris
-* Các màn hình nổi của Nattiq nBraille
+* Các màn hình chữ nổi Eurobraille Esys/Esytime/Iris
+* Các màn hình chữ nổi của Nattiq nBraille
 * Seika Notetaker: MiniSeika (16, 24 ô), V6 và V6Pro (40 ô)
 * Các màn hình Tivomatic Caiku Albatross 46/80
-* Mọi màn hình nổi có hỗ trợ giao thức HID Braille tiêu chuẩn
+* Mọi màn hình chữ nổi có hỗ trợ giao thức HID Braille tiêu chuẩn
 
 ### Freedom Scientific dòng Focus / PAC Mate {#FreedomScientificFocus}
 
 Tất cả màn hình Focus và PAC Mate của hãng [Freedom Scientific](https://www.freedomscientific.com/) đều được hỗ  trợ khi kết nối qua cổng USB hay bluetooth.
-Máy tính của bạn cần phải cài trình điều khiển màn hình nổi của Freedom Scientific.
+Máy tính của bạn cần phải cài trình điều khiển màn hình chữ nổi của Freedom Scientific.
 Bạn có thể tải chúng về từ trang [Focus Blue Braille Display Driver](https://support.freedomscientific.com/Downloads/Focus/FocusBlueBrailleDisplayDriver).
 Trên trang này chỉ thông báo cho dòng Focus Blue nhưng trình điều khiển có thể sử dụng cho cả dòng Focus và Pacmate của Freedom Scientific.
 
@@ -3627,16 +3702,16 @@ Tuy nhiên, khi cấu hình màn hình, bạn hoàn toàn có thể chọn cổn
 Điều này sẽ hữu ích khi bạn kết nối màn hình Focus với NVDA qua bluetooth nhưng vẫn muốn sạc bin bằng cáp USB từ máy tính.
 Chức năng tự nhận màn hình chữ nổi của NVDA cũng sẽ nhận dạng màn hình qua USB hay Bluetooth.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |topRouting1 (ô đầu tiên trên màn hình)|
-|Cuộn màn hình nổi tới |topRouting20/40/80 (ô cuối trên màn hình)|
-|Cuộn màn hình nổi về trước back |leftAdvanceBar|
-|Cuộn màn hình nổi tới |rightAdvanceBar|
+|Cuộn màn hình chữ nổi về trước |topRouting1 (ô đầu tiên trên màn hình)|
+|Cuộn màn hình chữ nổi tới |topRouting20/40/80 (ô cuối trên màn hình)|
+|Cuộn màn hình chữ nổi về trước back |leftAdvanceBar|
+|Cuộn màn hình chữ nổi tới |rightAdvanceBar|
 |Bật/tắt con trỏ nổi đi theo |leftGDFButton+rightGDFButton|
 |Bật/tắt thao tác bánh cuộn trái |leftWizWheelPress|
 |Về trước với thao tác bánh cuộn trái |leftWizWheelUp|
@@ -3690,8 +3765,8 @@ Dành cho Focus 80:
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |leftBumperBarUp, rightBumperBarUp|
-|Cuộn màn hình nổi tới |leftBumperBarDown, rightBumperBarDown|
+|Cuộn màn hình chữ nổi về trước |leftBumperBarUp, rightBumperBarUp|
+|Cuộn màn hình chữ nổi tới |leftBumperBarDown, rightBumperBarDown|
 
 <!-- KC:endInclude -->
 
@@ -3709,8 +3784,8 @@ Lưu ý: trong khi một số trong các màn hình này có bàn phím chữ n�
 Điều này có nghĩa là hệ thống đầu vào chữ nổi của NVDA không được dùng mặc định (thiết lập đầu vào chữ nổi không có tác dụng).
 Với các màn hình ALVA dùng các firmware gần đây, đã có thể vô hiệu hóa điều này thông qua một thao tác.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -3756,14 +3831,14 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 NVDA hỗ trợ hầu hết màn hình của [Handy Tech](https://www.handytech.de/) khi kết nối qua cổng USB, cổng serial hay bluetooth.
 Bạn cần phải cài trình điều khiển của Handy Tech cho những mẫu màn hình dùng cổng USB cũ.
 
-Các màn hình nổi sau đây không còn được hỗ trợ, nhưng có thể sử dụng thông qua [trình điều khiển chung của Handy Tech](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) và NVDA add-on:
+Các màn hình chữ nổi sau đây không còn được hỗ trợ, nhưng có thể sử dụng thông qua [trình điều khiển chung của Handy Tech](https://handytech.de/en/service/downloads-and-manuals/handy-tech-software/braille-display-drivers) và NVDA add-on:
 
 * Braillino
 * Bookworm
 * Màn hình Modular với firmware phiên bản 1.13 hay thấp hơn. Lưu ý rằng firmware của màn hình này có thể cập nhật được.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -3792,14 +3867,14 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 ### MDV Lilli {#MDVLilli}
 
-Màn hình nổi Lilli của [MDV](https://www.mdvbologna.it/) đã được hỗ trợ.
-Bạn không cần cài bất kỳ trình điều khiển nào khi sử dụng màn hình nổi này với NVDA.
+Màn hình chữ nổi Lilli của [MDV](https://www.mdvbologna.it/) đã được hỗ trợ.
+Bạn không cần cài bất kỳ trình điều khiển nào khi sử dụng màn hình chữ nổi này với NVDA.
 Chỉ kết nối và cấu hình NVDA để sử dụng.
 
 Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -3816,9 +3891,9 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 <!-- KC:endInclude -->
 
-### Màn Hình Nổi Baum/Humanware/APH/Orbit {#Baum}
+### Màn Hình Chữ Nổi Baum/Humanware/APH/Orbit {#Baum}
 
-NVDA đã hỗ trợ một số màn hình nổi [Baum](https://www.visiobraille.de/index.php?article_id=1&clang=2), [HumanWare](https://www.humanware.com/), [APH](https://www.aph.org/) và [Orbit](https://www.orbitresearch.com/) khi kết nối qua cổng USB, bluetooth hay serial.
+NVDA đã hỗ trợ một số màn hình chữ nổi [Baum](https://www.visiobraille.de/index.php?article_id=1&clang=2), [HumanWare](https://www.humanware.com/), [APH](https://www.aph.org/) và [Orbit](https://www.orbitresearch.com/) khi kết nối qua cổng USB, bluetooth hay serial.
 Các mẫu màn hình này bao gồm:
 
 * Baum: SuperVario, PocketVario, VarioUltra, Pronto!, SuperVario2, Vario 340
@@ -3835,16 +3910,16 @@ Nếu cấu hình đúng, mẫu  Refreshabraille và Orbit Reader 20 có thể d
 Chế độ serial USB của mẫu Orbit Reader 20 hiện chỉ hỗ trợ trên Windows 10 trở lên.
 Nên sử dụng USB HID để thay thế.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |`d2`|
-|Cuộn màn hình nổi về sau |`d5`|
-|Chuyển màn hình nổi về dòng trước |`d1`|
-|Chuyển màn hình nổi đến dòng kế |`d3`|
+|Cuộn màn hình chữ nổi về trước |`d2`|
+|Cuộn màn hình chữ nổi về sau |`d5`|
+|Chuyển màn hình chữ nổi về dòng trước |`d1`|
+|Chuyển màn hình chữ nổi đến dòng kế |`d3`|
 |Đưa đến ô chữ nổi |`routing`|
 |Phím `shift+tab` |`space+dot1+dot3`|
 |Phím `tab` |`space+dot4+dot6`|
@@ -3875,8 +3950,8 @@ Trước tiên, bạn cần phải cài trình điều khiển USB của nhà s�
 
 Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -3898,8 +3973,8 @@ Trước tiên, bạn phải cài trình điều khiển được cung cấp b�
 
 Màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -3927,10 +4002,10 @@ Các thiết bị thêm vào sau đây cũng được hỗ trợ, và không yê
 * Humanware BrailleOne
 * NLS eReader
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 
-#### Các phím được gán cho tất cả sản phẩm {#toc334}
+#### Các phím được gán cho tất cả sản phẩm {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -3959,7 +4034,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 <!-- KC:endInclude -->
 
-#### Các phím gán cho màn hình Brailliant BI 32, BI 40 và B 80 {#toc335}
+#### Các phím gán cho màn hình Brailliant BI 32, BI 40 và B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -3971,7 +4046,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 <!-- KC:endInclude -->
 
-#### Phím gán cho Brailliant BI 14 {#toc336}
+#### Phím gán cho Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -3990,8 +4065,8 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 NVDA hỗ trợ các màn hình Braille Sense, Braille EDGE, Smart Beetle và Sync của [Hims](https://www.hims-inc.com/) khi kết nối qua cổng USB hay bluetooth.
 Nếu kết nối qua USB, bạn cần cài  đặt [trình điều khiển USB của HIMS](http://www.himsintl.com/upload/HIMS_USB_Driver_v25.zip) vào hệ thống.
 
-Sau đây là danh sách các phím được gán của mẫu màn hình nổi này trong NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -4060,7 +4135,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 <!-- KC:endInclude -->
 
-### Màn hình nổi Seika {#Seika}
+### Màn hình chữ nổi Seika {#Seika}
 
 Các màn hình chữ nổi Seika sau đây từ Nippon Telesoft đã được hỗ trợ theo hai nhóm với các chức năng khác nhau:
 
@@ -4077,7 +4152,7 @@ Bạn có thể tìm thêm thông tin về các màn hình này trên [Trang bi�
 Trình điều khiển [được cung cấp bởi nhà sản xuất](https://en.seika-braille.com/down/index.html).
 
 Sau đây là danh sách các phím tắt được gán cho màn hình chữ nổi  Seika .
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -4098,12 +4173,12 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 #### MiniSeika (16, 24 ô), V6 và V6Pro (40 ô) {#SeikaNotetaker}
 
-* Tính năng tự nhận dạng màn hình nổi của NVDA đã hỗ trợ thông qua USB và Bluetooth.
+* Tính năng tự nhận dạng màn hình chữ nổi của NVDA đã hỗ trợ thông qua USB và Bluetooth.
 * Chọn "Seika Notetaker" hoặc "tự động" để cấu hình.
 * Không cần cài thêm trình điều khiển khi dùng màn hình chữ nổi Seika Notetaker.
 
 Sau đây là danh sách các phím tắt được gán cho  Seika Notetaker.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -4140,7 +4215,7 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 ### Các Mẫu Papenmeier BRAILLEX Mới {#Papenmeier}
 
-Hiện đã hỗ trợ các màn hình nổi sau: 
+Hiện đã hỗ trợ các màn hình chữ nổi sau: 
 
 * BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 * BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
@@ -4166,13 +4241,13 @@ Hầu hết các sản phẩm đều có thanh tiện ích giúp truy xuất nha
 EAB có thể di chuyển qua bốn chiều và mỗi chiều có hai switch.
 Chỉ có dòng C và Live là ngoại lệ cho nguyên tắc này.
 
-Dòng C và một vài màn hình nổi khác có hai dòng nút routing; dòng phía trên dùng để thông báo thông tin định dạng.
+Dòng C và một vài màn hình chữ nổi khác có hai dòng nút routing; dòng phía trên dùng để thông báo thông tin định dạng.
 Giữ một phím routing ở dòng trên và bấm EAB ở dòng sản phẩm C mô phỏng tình trạng của switch thứ hai.
 Dòng sản phẩm Live chỉ có một dòng phím routing và mỗi chiều của EAB chỉ có một bước.
 Bước thứ hai có thể thực hiện bằng cách bấm một phím routing và bấm EAB theo chiều tương ứng.
 Bấm, giữ phím lên, xuống, trái, phải (hoặc EAB) sẽ lập lại thao tác tương ứng. 
 
-Sau đây là các phím có trên những màn hình nổi này:
+Sau đây là các phím có trên những màn hình chữ nổi này:
 
 | Tên |Phím|
 |---|---|
@@ -4241,21 +4316,21 @@ Cả hai phím bên trong đều được gán cho phím khoảng trắng.
 
 ### Các Mẫu Papenmeier Braille BRAILLEX Cũ {#PapenmeierOld}
 
-Các màn hình nổi sau đây được hỗ trợ:
+Các màn hình chữ nổi sau đây được hỗ trợ:
 
 * BRAILLEX EL 80, EL 2D-80, EL 40 P
 * BRAILLEX Tiny, 2D Screen
 
 Lưu ý, những màn hình này chỉ kết nối qua cổng serial.
 Vì vậy, các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
-Bạn cần phải chọn đúng cổng trong [hộp thoại chọn màn hình nổi](#SelectBrailleDisplay) sau khi cài trình điều khiển.
+Bạn cần phải chọn đúng cổng trong [hộp thoại chọn màn hình chữ nổi](#SelectBrailleDisplay) sau khi cài trình điều khiển.
 
 Một số mẫu màn hình sẽ có thanh tiện ích (EAB) giúp truy xuất tiện lợi và nhanh hơn.
 EAB có thể di chuyển qua 4 chiều và mỗi chiều có hai switch.
 Bấm và giữ phím lên, xuống, trái, phải (hoặc EAB) sẽ lặp lại thao tác tương ứng.
 Những dòng cũ hơn không có EAB, dùng các phím phía trên bàn phím chữ nổi để thay thế.
 
-Sau đây là các phím lệnh trên màn hình nổi:
+Sau đây là các phím lệnh trên màn hình chữ nổi:
 
 | Tên |Phím|
 |---|---|
@@ -4334,7 +4409,7 @@ BRAILLEX 2D Screen:
 
 ### HumanWare BrailleNote {#HumanWareBrailleNote}
 
-NVDA hỗ trợ các máy tính màn hình nổi (note takers) BrailleNote tại [Humanware](https://www.humanware.com) khi chức năng của nó được kết nối như một màn hình cho trình đọc màn hình.
+NVDA hỗ trợ các máy tính màn hình chữ nổi (note takers) BrailleNote tại [Humanware](https://www.humanware.com) khi chức năng của nó được kết nối như một màn hình cho trình đọc màn hình.
 Sau đây là các dòng sản phẩm được hỗ trợ:
 
 * BrailleNote Classic (chỉ kết nối qua cổng serial)
@@ -4342,16 +4417,16 @@ Sau đây là các dòng sản phẩm được hỗ trợ:
 * BrailleNote MPower (kết nối qua bluetooth và serial)
 * BrailleNote Apex (kết nối qua bluetoothe và USB)
 
-Với BrailleNote Touch, vui lòng xem phần [các dòng màn hình nổi Brailliant BI / BrailleNote Touch](#HumanWareBrailliant).
+Với BrailleNote Touch, vui lòng xem phần [các dòng màn hình chữ nổi Brailliant BI / BrailleNote Touch](#HumanWareBrailliant).
 
 Trừ BrailleNote PK, cả  bàn phím chữ nổi  (BT) và  QWERTY (QT) đều được hỗ trợ.
 Với BrailleNote QT,  PC keyboard emulation không được hỗ trợ.
 Bạn cũng có thể nhập chấm nổi bằng bàn phím QT.
 Vui lòng xem phần cổng kết nối  chữ nổi trong tài liệu hướng dẫn sử dụng của BrailleNote để biết thêm thông tin.
 
-Nếu thiết bị của bạn hỗ trợ nhiều hơn một phương thức kết nối, khi kết nối máy BrailleNote của bạn với NVDA, cần khai báo cổng kết nối trong phần tùy chọn terminal màn hình nổi.
+Nếu thiết bị của bạn hỗ trợ nhiều hơn một phương thức kết nối, khi kết nối máy BrailleNote của bạn với NVDA, cần khai báo cổng kết nối trong phần tùy chọn terminal màn hình chữ nổi.
 Vui lòng xem tài liệu hướng dẫn sử dụng của BrailleNote để biết thêm chi tiết.
-Trong NVDA, bạn cũng phải khai báo cổng tương ứng trong [hộp thoại chọn màn hình nổi](#SelectBrailleDisplay).
+Trong NVDA, bạn cũng phải khai báo cổng tương ứng trong [hộp thoại chọn màn hình chữ nổi](#SelectBrailleDisplay).
 Bạn cũng có thể chọn "tự động", "USB" hoặc "bluetooth" nếu bạn kết nối qua một trong hai cổng đó.
 Còn nếu bạn kết nối qua cổng serial (hoặc từ cáp chuyển USB sang serial), bạn cần phải chọn cổng giao tiếp từ danh sách các cổng của phần cứng.
 
@@ -4440,10 +4515,10 @@ Sau đây là các mẫu màn hình được hỗ trợ:
 * EcoBraille 80
 * EcoBraille Plus
 
-Ở [hộp thoại chọn màn hình nổi](#SelectBrailleDisplay) của NVDA, bạn có thể thiết lập cổng serial cho màn hình được kết nối.
+Ở [hộp thoại chọn màn hình chữ nổi](#SelectBrailleDisplay) của NVDA, bạn có thể thiết lập cổng serial cho màn hình được kết nối.
 Các màn hình này không hỗ trợ tính năng ngầm tự nhận biết của NVDA.
 
-Sau đây là các lệnh cho màn hình nổi EcoBraille.
+Sau đây là các lệnh cho màn hình chữ nổi EcoBraille.
 Vui lòng xem [Tài Liệu của EcoBraille](ftp://ftp.once.es/pub/utt/bibliotecnia/Lineas_Braille/ECO/) cho phần mô tả vị trí các phím. 
 
 <!-- KC:beginInclude -->
@@ -4568,8 +4643,8 @@ Các chức năng của bàn phím chữ nổi được mô tả dưới đây l
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |`backward`|
-|Cuộn màn hình nổi về sau |`forward`|
+|Cuộn màn hình chữ nổi về trước |`backward`|
+|Cuộn màn hình chữ nổi về sau |`forward`|
 |Chuyển đến focus hiện tại |`backward+forward`|
 |Đưa về ô chữ nổi |`routing`|
 |Phím `mũi tên trái` |`joystick2Left`|
@@ -4594,8 +4669,8 @@ Các chức năng của bàn phím chữ nổi được mô tả dưới đây l
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |`leftKeypadLeft`|
-|Cuộn màn hình nổi về sau |`leftKeypadRight`|
+|Cuộn màn hình chữ nổi về trước |`leftKeypadLeft`|
+|Cuộn màn hình chữ nổi về sau |`leftKeypadRight`|
 |Đưa về ô chữ nổi |`routing`|
 |Thông báo định dạng văn bản dưới con trỏ nổi |`doubleRouting`|
 |Chuyển đến dòng kế trong chế độ duyệt |`leftKeypadDown`|
@@ -4616,8 +4691,8 @@ Các chức năng của bàn phím chữ nổi được mô tả dưới đây l
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |`switch1Left`|
-|Cuộn màn hình nổi về sau |`switch1Right`|
+|Cuộn màn hình chữ nổi về trước |`switch1Left`|
+|Cuộn màn hình chữ nổi về sau |`switch1Right`|
 |Chuyển đến focus hiện tại |`switch1Center`|
 |Đưa về ô chữ nổi |`routing`|
 |Thông báo định dạng văn bản dưới ô chữ nổi |`doubleRouting`|
@@ -4639,8 +4714,8 @@ Các chức năng của bàn phím chữ nổi được mô tả dưới đây l
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |`l1`|
-|Cuộn màn hình nổi tới |`l8`|
+|Cuộn màn hình chữ nổi về trước |`l1`|
+|Cuộn màn hình chữ nổi tới |`l8`|
 |Chuyển đến focus hiện tại |`l1+l8`|
 |Đưa đến ô chữ nổi |`routing`|
 |Thông báo định dạng văn bản dưới con trỏ nổi |`doubleRouting`|
@@ -4687,10 +4762,10 @@ Vui lòng xem Tài Liệu của màn hình cho phần mô tả vị trí các ph
 
 ### BRLTTY {#BRLTTY}
 
-[BRLTTY](https://www.brltty.com/) là một chương trình đọc lập, có thể sử dụng để hỗ trợ nhiều dòng màn hình nổi hơn.
+[BRLTTY](https://www.brltty.com/) là một chương trình đọc lập, có thể sử dụng để hỗ trợ nhiều dòng màn hình chữ nổi hơn.
 Để sử dụng, bạn phải cài đặt [BRLTTY for Windows](https://www.brltty.com/download.html).
 Bạn nên tải và cài phiên bản mới nhất. Tập tin cài đặt sẽ có tên đại khái brltty-win-4.2-2.exe.
-Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ hướng dẫn, đặc biệt khi bạn dùng màn hình nổi với kết nối USB và trình điều khiển đã được cài trên máy trước đó.
+Khi cấu hình cổng và màn hình để sử dụng, bạn hãy đọc kỹ hướng dẫn, đặc biệt khi bạn dùng màn hình chữ nổi với kết nối USB và trình điều khiển đã được cài trên máy trước đó.
 
 Đối với những màn hình có bàn phím chữ nổi, bản thân BRLTTY hiện cũng hỗ trợ nhập liệu kiểu chữ nổi.
 Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
@@ -4698,7 +4773,7 @@ Vì vậy, sẽ không cần bảng mã chữ nổi đầu vào của NVDA.
 BRLTTY không được bao gồm trong tính năng  ngầm tự nhận biết màn hình của NVDA.
 
 Sau đây là các lệnh của BRLTTY được gán cho NVDA.
-Vui lòng xem [Danh sách phím kết hợp của BRLTTY](http://mielke.cc/brltty/doc/KeyBindings/) để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình nổi.
+Vui lòng xem [Danh sách phím kết hợp của BRLTTY](http://mielke.cc/brltty/doc/KeyBindings/) để biết thêm thông tin về cách thức các lệnh của BRLTTY kết hợp với các điều khiển trên màn hình chữ nổi.
 <!-- KC:beginInclude -->
 
 | Tên |Lệnh BRLTTY|
@@ -4725,13 +4800,13 @@ bạn không cần cài thêm bất cứ trình điều khiển nào để dùng
 Chỉ cần cắm màn hình vào và cấu hình NVDA để sử dụng.
 
 Lưu ý: tốc độ truyền 19200 được khuyến khích mạnh mẽ.
-Nếu được yêu cầu, hãy chuyển giá trị của thiết lập tốc độ truyền là 19200 từ trình đơn của màn hình nổi.
+Nếu được yêu cầu, hãy chuyển giá trị của thiết lập tốc độ truyền là 19200 từ trình đơn của màn hình chữ nổi.
 Dù rằng trình điều khiển có hỗ trợ tốc độ truyền 9600 , nhưng nó không có cách để điều khiển tốc độ nào mà màn hình sử dụng.
 Vì 19200 là tốc độ truyền mặc định của màn hình nên trình điều khiển sẽ thử dùng nó trước tiên.
 Nếu tốc độ truyền không giống nhau, trình điều khiển có thể không hoạt động như mong muốn.
 
 Sau đây là các phím được gán cho những màn hình này với NVDA.
-Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết các phím tương ứng.
+Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
@@ -4744,10 +4819,10 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 |Đưa đối tượng điều hướng đến đối tượng hiện có dưới vị trí chuột và đọc nó lên |`end1+end2`|
 |Đưa tiêu điểm đến đối tượng điều hướng hiện tại |`eCursor1+eCursor2`|
 |Bật / tắt con trỏ nổi đi theo |`cursor1+cursor2`|
-|Chuyển màn hình nổi về dòng trước |`up1`, `up2`, `up3`|
-|Chuyển màn hình nổi về dòng kế |`down1`, `down2`, `down3`|
-|Cuộn màn hình nổi về trước |`left`, `lWheelLeft`, `rWheelLeft`|
-|Cuộn màn hình nổi về sau |`right`, `lWheelRight`, `rWheelRight`|
+|Chuyển màn hình chữ nổi về dòng trước |`up1`, `up2`, `up3`|
+|Chuyển màn hình chữ nổi về dòng kế |`down1`, `down2`, `down3`|
+|Cuộn màn hình chữ nổi về trước |`left`, `lWheelLeft`, `rWheelLeft`|
+|Cuộn màn hình chữ nổi về sau |`right`, `lWheelRight`, `rWheelRight`|
 |Đưa đến ô chữ nổi |`routing`|
 |Thông báo định dạng văn bản dưới ô chữ nổi |`secondary routing`|
 |Bật / tắt thông tin ngữ cảnh được trình bày trong chữ nổi |`attribute1+attribute3`|
@@ -4786,20 +4861,20 @@ Vui lòng xem tài liệu hướng dẫn của màn hình nổi để biết cá
 
 <!-- KC:endInclude -->
 
-### Các màn hình nổi tiêu chuẩn {#HIDBraille}
+### Các màn hình chữ nổi tiêu chuẩn {#HIDBraille}
 
 Đây là một trình điều khiển thử nghiệm cho chuẩn kết nối (HID) màn hình chữ nổi mới, được cho phép vào năm 2018 bởi Microsoft, Google, Apple và vài công ty về công nghệ trợ giúp bao gồm NV Access.
-Niềm hi vọng là tất cả các mẫu màn hình nổi trong tương lai tạo bởi bất kì nhà sản xuất nào, đều dùng giao thức tiêu chuẩn này, sẽ gỡ bỏ các trình điều khiển nhất định của nhà sản xuất.
+Niềm hi vọng là tất cả các mẫu màn hình chữ nổi trong tương lai tạo bởi bất kì nhà sản xuất nào, đều dùng giao thức tiêu chuẩn này, sẽ gỡ bỏ các trình điều khiển nhất định của nhà sản xuất.
 
-Tính năng tự nhận màn hình nổi của NVDA cũng sẽ nhận các màn hình có hỗ trợ giao thức này.
+Tính năng tự nhận màn hình chữ nổi của NVDA cũng sẽ nhận các màn hình có hỗ trợ giao thức này.
 
-Sau đây là các phím hiện được gán cho những màn hình nổi nói trên.
+Sau đây là các phím hiện được gán cho những màn hình chữ nổi nói trên.
 <!-- KC:beginInclude -->
 
 | Tên |Phím|
 |---|---|
-|Cuộn màn hình nổi về trước |pan left hoặc rocker up|
-|Cuộn màn hình nổi về sau |pan right hoặc rocker down|
+|Cuộn màn hình chữ nổi về trước |pan left hoặc rocker up|
+|Cuộn màn hình chữ nổi về sau |pan right hoặc rocker down|
 |Đưa về ô chữ nổi |routing set 1|
 |Bật / tắt chữ nổi đi theo |lên+xuống|
 |phím mũi tên lên |joystick up, dpad up or space+dot1|
@@ -4849,7 +4924,7 @@ Bản NVDA được cài đặt sẽ lưu cấu hình, bao gồm add-on tại `%
 
 Chế độ bảo vệ không có tác dụng đối với các bản chạy trực tiếp của NVDA.
 Hạn chế này cũng áp dụng cho bản tạm thời của NVDA chạy khi khởi chạy trình cài đặt.
-Trong môi trường bảo mật, việc người dùng có thể chạy tệp thực thi di động đều có cùng rủi ro bảo mật bất kể chế độ bảo mật nào.
+Trong môi trường bảo mật, việc người dùng có thể chạy tập tin thực thi di động đều có cùng rủi ro bảo mật bất kể chế độ bảo mật nào.
 Quản trị viên hệ thống nên hạn chế phần mềm trái phép chạy trên hệ thống của họ, bao gồm cả các bản chạy trực tiếp của NVDA.
 
 Người dùng NVDA thường dựa vào việc cấu hình hồ sơ cho phù hợp với nhu cầu của họ.

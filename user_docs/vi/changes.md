@@ -3,7 +3,7 @@
 
 ## 2024.2
 
-Một tính năng mới, tên gọi chia âm thanh.
+Một tính năng mới, tên gọi tách âm thanh.
 Tính năng này cho phép đặt âm thanh NVDA vào một kênh (ví dụ như bên trái) trong khi âm thanh từ tất cả ứng dụng khác sẽ được đặt ở một kênh khác (ví dụ như bên phải).
 
 Có thêm lệnh mới để tùy chỉnh vòng thiết lập cho giọng đọc, cho phép người dùng đi đến cài đặt đầu tiên hay cuối cùng, và để tăng hoặc giảm giá trị của cài đặt hiện tại bằng các bước nhảy dài hơn.
@@ -43,8 +43,8 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
   * Thêm chế độ chữ nổi mới gọi là "hiển thị đầu ra giọng đọc". (#15898, @Emil-18)
     * Khi kích hoạt, các màn hình chữ nổi sẽ hiển thị chính xác những gì NVDA đọc.
     * Có thể bật / tắt bằng cách bấm `NVDA+alt+t`, hoặc bật / tắt trong hộp thoại cài đặt chữ nổi.
-* Chia âm thanh: (#12985, @mltony)
-  * Cho phép chia âm thanh NVDA vào một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
+* Tách âm thanh: (#12985, @mltony)
+  * Cho phép tách âm thanh NVDA ra một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
   * Bật / tắt bằng lệnh `NVDA+alt+s`.
 * Đã hỗ trợ thông báo tiêu đề cột và dòng  trong các phần tử HTML có thể chỉnh sửa nội dung. (#14113)
 * Đã thêm tùy chọn để vô hiệu hóa thông báo nhóm hình ảnh và phụ đề trong cài đặt định dạng tài liệu. (#10826, #14349)

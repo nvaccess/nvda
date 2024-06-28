@@ -204,25 +204,25 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 
 #### NVDA starten und beenden {#StartingAndStoppingNVDA}
 
-| Name |Desktop key |Laptop key |Description|
+| Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
-|Start NVDA |`control+alt+n` |`control+alt+n` |Starts or restarts NVDA|
-|Exit NVDA |`NVDA+q`, then `enter` |`NVDA+q`, then `enter` |Exits NVDA|
-|Pause or restart speech |`shift` |`shift` |Instantly pauses speech. Pressing it again will continue speaking where it left off|
-|Stop speech |`control` |`control` |Instantly stops speaking|
+|NVDA starten |`Strg+Alt+N` |`Strg+Alt+N` |Startet NVDA oder bei Bedarf auch neu.|
+|NVDA beenden |`NVDA+Q`, dann `Eingabetaste` |`NVDA+Q`, dann `Eingabetaste` |Beendet NVDA.|
+|Die Sprachausgabe beim Vorlesen pausieren oder fortfahren |`Umschalt-Taste` |`Umschalt-Taste` |Pausiert die Sprachausgabe beim Vorlesen. Wird die Taste erneut gedrückt, liest NVDA an der zuvor aufgehörten Stelle weiter vor.|
+|Sprachausgabe unterbrechen |`Strg-Taste` |`Strg-Taste` |Unterbricht die Sprachausgabe beim Vorlesen.|
 
 #### Text vorlesen {#ReadingText}
 
-| Name |Desktop key |Laptop key |Description|
+| Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
-|Alles Lesen |`NVDA+Pfeiltaste nach unten` |`NVDA+A` |Beginnt an der aktuellen Position mit dem Lesen und zieht  den Fokus dabei mit.|
+|Alles vorlesen |`NVDA+Pfeiltaste nach unten` |`NVDA+A` |Beginnt an der aktuellen Position mit dem Lesen und zieht  den Fokus dabei mit.|
 |Aktuelle Zeile vorlesen |`NVDA+Pfeiltaste nach oben` |`NVDA+L` |Liest die Zeile vor. Zweimaliges Drücken buchstabiert die Zeile. Dreimaliges Drücken buchstabiert die Zeile unter Verwendung von Zeichenbeschreibungen (Alpha, Bravo, Charlie, etc.).|
 |Auswahl vorlesen |`NVDA+Umschalt+Pfeiltaste nach oben` |`NVDA+Umschalt+S` |Liest markierten Text vor. Zweimaliges Drücken buchstabiert diesen und dreimaliges Drücken buchstabiert ihn phonetisch.|
 |Text aus der Zwischenablage vorlesen |`NVDA+C` |`NVDA+C` |Liest beliebigen Text aus der Zwischenablage vor. Zweimaliges Drücken buchstabiert diesen und dreimaliges Drücken buchstabiert ihn phonetisch.|
 
 #### Meldung des Standorts und weiterer Informationen {#ReportingLocation}
 
-| Name |Desktop-Taste |Laptop-Taste |Beschreibung|
+| Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
 |Fenstertitel mitteilen |`NVDA+T` |`NVDA+T` |Zeigt den Titel des derzeit aktiven Fensters an. Durch zweimaliges Drücken wird die Information buchstabiert. Durch dreimaliges Drücken wird die Information in die Zwischenablage kopiert.|
 |Focus mitteilen |`NVDA+Tab` |`NVDA+Tab` |Teilt das aktuelle Steuerelement mit, welches den Fokus hat. Zweimaliges Drücken buchstabiert die Informationen und dreimaliges Drücken buchstabiert diese phonetisch.|
@@ -234,7 +234,7 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 
 #### Umschalten, welche Informationen NVDA vorliest {#ToggleWhichInformationNVDAReads}
 
-| Name |Desktop-Taste |Laptop-Taste |Beschreibung|
+| Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
 |Zeichen während der Eingabe ansagen |`NVDA+2` |`NVDA+2` |Wenn diese Funktion aktiviert ist, liest NVDA alle Zeichen vor, die Sie auf der Tastatur eingeben.|
 |Wörter während der Eingabe ansagen |`NVDA+3` |`NVDA+3` |Wenn diese Funktion aktiviert ist, liest NVDA das Wort vor, das Sie auf der Tastatur eingeben.|
@@ -243,7 +243,7 @@ Die eigentlichen Befehle werden im Eingabehilfemodus nicht ausgeführt.
 
 #### Der Sprachausgaben-Einstellungsring {#TheSynthSettingsRing}
 
-| Name |Desktop-Taste |Laptop-Taste |Beschreibung|
+| Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
 |Zur nächsten Sprachausgaben-Einstellung wechseln |`NVDA+Strg+Pfeiltaste nach rechts` |`NVDA+Umschalt+Strg+Pfeiltaste nach rechts` |Wechselt zur nächsten verfügbaren Spracheinstellung nach der aktuellen und kehrt nach der letzten Einstellung wieder zur ersten Einstellung zurück.|
 |Zur vorherigen Sprachausgaben-Einstellung wechseln |`NVDA+Strg+Pfeiltaste nach links` |`NVDA+Umschalt+Strg+Pfeiltaste nach links` |Wechselt zur nächsten verfügbaren Spracheinstellung vor der aktuellen und geht zur letzten Einstellung nach der ersten.|
@@ -491,7 +491,7 @@ Mit dem ersten Kontrollkästchen können Sie steuern, ob NVDA die Dauergroßschr
 Mit dem zweiten Kontrollkästchen können Sie bestimmen, ob NVDA nach der Anmeldung automatisch gestartet werden soll. Diese Option steht nur bei installierten NVDA-Versionen zur Verfügung.
 Mit dem dritten Kontrollkästchen legen Sie fest, ob bei jedem Start das Willkommensfenster angezeigt werden soll.
 
-#### Dialogfeld zur Datennutzungsstatistik {#UsageStatsDialog}
+#### Das Dialogfeld zur Datennutzungsstatistik {#UsageStatsDialog}
 
 Seit NVDA 2018.3 wird der Benutzer gefragt, ob Nutzungsdaten an NV Access gesendet werden sollen, um in Zukunft zur Verbesserung von NVDA beizutragen.
 Beim ersten Start von NVDA erscheint ein Dialogfeld, in dem Sie gefragt werden, ob Sie das Senden der Nutzungsdaten an NV Access während der Verwendung von NVDA akzeptieren möchten.
@@ -630,7 +630,7 @@ Wenn das Menü erscheint, können Sie mit den Pfeiltasten durch das Menü navigi
 
 | Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Datum/Uhrzeit ausgeben |NVDA+F12 |Bei einmal Drücken wird das Datum und bei zweimal Drücken wird die Uhrzeit ausgegeben.|
+|Datum und Uhrzeit mitteilen |NVDA+F12 |Bei einmal Drücken wird das Datum und bei zweimal Drücken wird die Uhrzeit ausgegeben.|
 |Akku-Status ansagen |NVDA+Umschalt+B |Sagt den Ladezustand des Akkus an, sofern ein Akkumulator angeschlossen ist.|
 |Text der Zwischenablage ansagen |NVDA+C |Liest den Inhalt der Zwischenablage vor.|
 
@@ -679,7 +679,7 @@ Ein Objekt ist ein einzelner Eintrag, wie z. B.: eine Textpassage, ein Schalter,
 Der System-Fokus, auch Fokus genannt, ist dasjenige [Objekt](#Objects), welches die Tastendrücke von der Tastatur entgegennimmt.
 Ein Beispiel: Wenn Sie einen Text in einem Eingabefeld eingeben, wird dieses hervorgehoben.
 
-Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der System-Fokus bewegt wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie alt+Tab zum Wechseln zwischen laufenden Anwendungen
+Die gebräuchlichste Art, sich in einer Windows-Anwendung zu bewegen sind Windows-Standard-Tastenkombinationen, mit denen der System-Fokus bewegt wird. Beispiele für solche Standard-Tastenkombinationen sind Tab und Umschalt+Tab-Taste zum Wechseln zwischen Elementen in einem Dialogfeld, Alt-Taste oder F10 zum Aufrufen der Menüleiste und die Pfeiltasten zur Navigation innerhalb eines Menüs sowie Alt+Tab-Taste zum Wechseln zwischen laufenden Anwendungen
 Wenn Sie auf diese Weise navigieren, wird NVDA verschiedene Informationen über das Objekt ausgeben, welches den Fokus erhält. Hierzu zählen: Name, Beschreibung (erscheint meist als Sprechblase, wenn der Anwender die Maus über das betreffende Objekt zieht), Typ (Schalter, Kontrollkästchen, Eingabefeld, etc.), Wert (z. B., der aktuelle Inhalt eines Eingabefeldes), Positionsangabe (z. B. "1 von 5" in einer Liste oder "1 von 1 Ebene 0" in einer Baumansicht), den Status des Objektes (z. B. aktiviert, hervorgehoben, ausgewählt, etc.).
 Wenn [Visuell hervorheben](#VisionFocusHighlight) aktiviert ist, wird die Position des aktuellen System-Fokus auch visuell dargestellt.
 
@@ -691,8 +691,8 @@ Einige nützliche Tastenkombinationen zum Navigieren mit dem System-Fokus sind:
 |Aktuellen Fokus ansagen |NVDA+Tab-Taste |NVDA+Tab-Taste |Spricht das aktuell hervorgehobene Objekt. Bei zweimal Drücken werden die Informationen buchstabiert.|
 |Titelleiste ansagen |NVDA+T |NVDA+T |Liest die Titelleiste der aktuellen Anwendung vor. Bei zweimal Drücken, werden die Informationen buchstabiert. Bei dreimal Drücken wird der Text in die Zwischenablage kopiert. Diese Information wird auch in Braille angezeigt.|
 |Aktives Fenster vorlesen |NVDA+B |NVDA+B |Liest alle Steuerelemente im aktiven Fenster vor (hilfreich für Dialogfelder).|
-|Statuszeile ausgeben |NVDA+Ende |NVDA+Umschalt+Ende |Liest die Statusleiste vor, falls vorhanden. Durch zweimaliges Drücken werden die Informationen buchstabiert. Durch dreimaliges Drücken werden die Informationen in die Zwischenablage kopiert.|
-|Kurztaste ausgeben |`Umschalt+Nummernblock 2` |`NVDA+Strg+Umschalt+Punkt` |Gibt das Tastenkürzel (Taste) des aktuell fokussierten Objekts aus.|
+|Statuszeile mitteilen |NVDA+Ende |NVDA+Umschalt+Ende |Liest die Statusleiste vor, falls vorhanden. Durch zweimaliges Drücken werden die Informationen buchstabiert. Durch dreimaliges Drücken werden die Informationen in die Zwischenablage kopiert.|
+|Kurztaste mitteilen |`Umschalt+Nummernblock 2` |`NVDA+Strg+Umschalt+Punkt` |Gibt das Tastenkürzel (Taste) des aktuell fokussierten Objekts aus.|
 
 <!-- KC:endInclude -->
 
@@ -709,14 +709,14 @@ Folgende Tastenkombinationen stehen im Zusammenhang mit dem System-Cursor zur Ve
 
 | Name |Desktop-Tastenkombination |Laptop-Tastenkombination |Beschreibung|
 |---|---|---|---|
-|Alles Lesen |NVDA+Pfeil nach unten |NVDA+A |Liest von der aktuellen Position des System-Cursors bis zum Textende und bewegt dabei den System-Cursor mit.|
-|Aktuelle Zeile lesen |NVDA+Pfeil nach oben |NVDA+L |Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert.|
-|Markierten Text lesen |NVDA+Umschalt+Pfeil nach oben |NVDA+Umschalt+S |Liest den markierten Text, sofern vorhanden.|
-|Textformatierungen ausgeben |NVDA+F |NVDA+F |Gibt die Textformatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt.|
-|Linkziel ausgeben |`NVDA+K` |`NVDA+K` |Durch einmaliges Drücken wird die Ziel-Adresse des Links an der aktuellen Cursor- oder Fokusposition ausgegeben. Durch zweimaliges Drücken wird ein Fenster zur genaueren Überprüfung angezeigt|
+|Alles vorlesen |NVDA+Pfeiltaste nach unten |NVDA+A |Liest von der aktuellen Position des System-Cursors bis zum Textende und zieht dabei den System-Cursor mit.|
+|Aktuelle Zeile vorlesen |NVDA+Pfeiltaste nach oben |NVDA+L |Liest die Zeile, auf der sich der System-Cursor befindet. Wird diese Tastenkombination zweimal gedrückt, wird die Zeile buchstabiert, wird die Tastenkombination 3-mal gedrückt, wird die Zeile phonetisch buchstabiert.|
+|Markierten Text vorlesen |NVDA+Umschalt+Pfeiltaste nach oben |NVDA+Umschalt+S |Liest den markierten Text vor, sofern vorhanden.|
+|Textformatierungen mitteilen |NVDA+F |NVDA+F |Gibt die Textformatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt.|
+|Linkziel mitteilen |`NVDA+K` |`NVDA+K` |Durch einmaliges Drücken wird die Ziel-Adresse des Links an der aktuellen Cursor- oder Fokusposition ausgegeben. Durch zweimaliges Drücken wird ein Fenster zur genaueren Überprüfung angezeigt|
 |Position des System-Cursors mitteilen |NVDA+Nummernblock Entfernen |NVDA+Entf |Meldet Informationen über die Position des Textes oder des Objekts an der Position des System-Cursors. Dies kann z. B. der Prozentsatz im Dokument, der Abstand zum Seitenrand oder die genaue Position auf dem Bildschirm sein. Durch zweimaliges Drücken können weitere Details angezeigt werden.|
-|Nächsten Satz lesen |Alt+Pfeiltaste nach unten |Alt+Pfeiltaste nach unten |Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt).|
-|Vorherigen Satz lesen |Alt+Pfeiltaste nach oben |Alt+Pfeiltaste nach oben |Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt).|
+|Nächsten Satz vorlesen |Alt+Pfeiltaste nach unten |Alt+Pfeiltaste nach unten |Zieht die Schreibmarke zum nächsten Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt).|
+|Vorherigen Satz vorlesen |Alt+Pfeiltaste nach oben |Alt+Pfeiltaste nach oben |Zieht die Schreibmarke zum vorherigen Satz und gibt ihn aus (nur in Microsoft Word und Microsoft Outlook unterstützt).|
 
 Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügung:
 
@@ -726,12 +726,12 @@ Für die Navigation in Tabellen stehen folgende Tastenkombinationen zur Verfügu
 |Zur nächsten Spalte navigieren |Strg+Alt+Pfeiltaste nach rechts |Zieht den System-Cursor zur nächsten Spalte in der gleichen Zeile.|
 |Zur vorherigen Zeile navigieren |Strg+Alt+Pfeiltaste nach oben |Zieht den System-Cursor zur vorherigen Zeile in der gleichen Spalte.|
 |Zur nächsten Zeile navigieren |Strg+Alt+Pfeiltaste nach unten |Zieht den System-Cursor zur nächsten Zeile in der gleichen Spalte.|
-|Zur ersten Spalte springen |Strg+Alt+Pos1 |Zieht den System-Cursor in die erste Spalte (bleibt in der gleichen Zeile)|
-|Zur letzten Spalte springen |Strg+Alt+Ende |Zieht den System-Cursor in die letzte Spalte (bleibt in der gleichen Zeile)|
-|Zur ersten Zeile springen |Strg+Alt+Seite nach oben |Zieht den System-Cursor in die erste Zeile (bleibt in gleichen Spalte)|
-|Zur letzten Zeile springen |Strg+Alt+Seite nach unten |Zieht den System-Cursor in die letzte Zeile (bleibt in gleichen  Spalte)|
-|Alles Lesen in Spalte |`NVDA+Strg+Alt+Pfeiltaste nach unten` |Liest die Spalte vertikal von der aktuellen Zelle abwärts bis zur letzten Zelle der Spalte vor.|
-|Alles Lesen in Zeile |`NVDA+Strg+Alt+Pfeiltaste nach rehcts` |Liest die Zeile horizontal von der aktuellen Zelle nach rechts bis zur letzten Zelle der Zeile vor.|
+|Zur ersten Spalte navigieren |Strg+Alt+Pos1 |Zieht den System-Cursor in die erste Spalte (bleibt in der gleichen Zeile)|
+|Zur letzten Spalte navigieren |Strg+Alt+Ende |Zieht den System-Cursor in die letzte Spalte (bleibt in der gleichen Zeile)|
+|Zur ersten Zeile navigieren |Strg+Alt+Seite nach oben |Zieht den System-Cursor in die erste Zeile (bleibt in gleichen Spalte)|
+|Zur letzten Zeile navigieren |Strg+Alt+Seite nach unten |Zieht den System-Cursor in die letzte Zeile (bleibt in gleichen  Spalte)|
+|Alles in Spalte vorlesen |`NVDA+Strg+Alt+Pfeiltaste nach unten` |Liest die Spalte vertikal von der aktuellen Zelle abwärts bis zur letzten Zelle der Spalte vor.|
+|Alles in Zeile vorlesen |`NVDA+Strg+Alt+Pfeiltaste nach rechts` |Liest die Zeile horizontal von der aktuellen Zelle nach rechts bis zur letzten Zelle der Zeile vor.|
 |Gesamte Spalte vorlesen |`NVDA+Strg+Alt+Pfeiltaste nach oben` |Liest die aktuelle Spalte vertikal von oben nach unten vor, ohne den System-Cursor zu bewegen.|
 |Gesamte Zeile vorlesen |`NVDA+Strg+Alt+Pfeiltaste nach links` |Liest die aktuelle Zeile horizontal von links nach rechts vor, ohne den System-Cursor zu bewegen.|
 
@@ -815,7 +815,7 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 |Zur nächsten Zeile navigieren |Nummernblock 9 |NVDA+Pfeiltaste nach unten |Nach unten streichen (Textmodus) |Zieht den NVDA-Cursor zur nächsten Zeile des Textes.|
 |Zur untersten Zeile navigieren |Umschalt+Nummernblock 9 |NVDA+Strg+Ende |Keine |Zieht den NVDA-Cursor in die letzte Zeile des Textes.|
 |Zum vorherigen Wort navigieren |Nummernblock 4 |NVDA+Strg+Pfeiltaste nach links |Nach links streichen mit zwei Fingern (Textmodus) |Zieht den NVDA-Cursor zum vorherigen Wort im Text.|
-|Aktuelles Wort unter dem NVDA-Cursor ansagen |Nummernblock 5 |NVDA+Strg+Punkt |Keine |Sagt das aktuelle Wort im Text an, in dem sich der NVDA-Cursor befindet. Bei zweimal Drücken wird es buchstabiert, bei dreimal Drücken wird das Wort phonetisch buchstabiert.|
+|Aktuelles Wort unter dem NVDA-Cursor mitteilen |Nummernblock 5 |NVDA+Strg+Punkt |Keine |Gibt das aktuelle Wort im Text, welches sich beim NVDA-Cursor befindet, aus. Bei zweimaliges Drücken wird es buchstabiert, bei dreimaliges Drücken wird das Wort phonetisch buchstabiert.|
 |Zum nächsten Wort navigieren |Nummernblock 6 |NVDA+Strg+Pfeiltaste nach rechts |Nach rechts streichen mit zwei Fingern (Textmodus) |Zieht den NVDA-Cursor zum nächsten Wort im Text.|
 |Zum Zeilenanfang navigieren |Umschalt+Nummernblock 1 |NVDA+Pos1 |Keine |Zieht den NVDA-Cursor zum Zeilenanfang im Text.|
 |Zum vorherigen Zeichen navigieren |Nummernblock 1 |NVDA+Pfeiltaste nach links |Nach links streichen (Textmodus) |Zieht den NVDA-Cursor zum vorherigen Zeichen der aktuellen Zeile im Text.|
@@ -824,12 +824,12 @@ Die folgenden Tastenkombinationen zum Text betrachten sind verfügbar:
 |Zum Zeilenende navigieren |Umschalt+Nummernblock 3 |NVDA+Ende |Keine |Zieht den NVDA-Cursor zum Zeilenende im Text.|
 |Zur vorherigen Seite in der Übersicht wechseln |`NVDA+Seite nach oben` |`NVDA+Umschalt+Pfeiltaste nach oben` |Keine |Zieht den NVDA-Cursor auf die vorherige Textseite, sofern dies von der Anwendung unterstützt wird.|
 |Zur nächsten  Seite in der Übersicht wechseln |`NVDA+Seite nach unten` |`NVDA+Umschalt+Seite nach unten` |Keine |Zieht den NVDA-Cursor auf die nächste Textseite, sofern dies von der Anwendung unterstützt wird.|
-|Alles Lesen |Nummernblock Plus |NVDA+Umschalt+A |Nach unten streichen mit drei Fingern (Textmodus) |Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit.|
+|Alles vorlesen |Nummernblock Plus |NVDA+Umschalt+A |Nach unten streichen mit drei Fingern (Textmodus) |Liest von der aktuellen Cursor-Position des NVDA-Cursors den Text vor und bewegt ihn mit.|
 |Vom NVDA-Cursor markieren und kopieren |NVDA+F9 |NVDA+F9 |Keine |Setzt eine Startmarke an der aktuellen Position des NVDA-Cursors ab, der markiert oder kopiert werden soll. Die Aktion (Markieren/Kopieren) wird nicht ausgeführt, bis Sie NVDA den Textende mitgeteilt haben.|
 |Bis zum NVDA-Cursor markieren und kopieren |NVDA+F10 |NVDA+F10 |Keine |Wird die Tastenkombination einmal gedrückt, markiert NVDA den Text zwischen der zuvor gesetzten Startmarke und der aktuellen Position des NVDA-Cursors. Ist die Startmarke mit dem System-Cursor erreichbar, wird der Fokus dorthin verschoben. Wird die Tastenkombination zweimal gedrückt, wird der markierte Text in die Zwischenablage kopiert.|
-|Springt zum markierten Start für die Kopie in der Ansicht |NVDA+Umschalt+F9 |NVDA+Umschalt+F9 |Keine |Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren.|
-|Text-Formatting ausgeben |NVDA+Umschalt+F |NVDA+Umschalt+F |Keine |Gibt die Textformatierungen unter dem System-Cursor aus. Bei zweimal Drücken werden diese Informationen im Lesemodus angezeigt.|
-|Ansage des aktuellen Symbol-Ersatzes |Keine |Keine |Keine |Spricht das Symbol, an dem sich der NVDA-Cursor befindet. Zweimaliges Drücken zeigt das Symbol und den ausgesprochenen Text in einem virtuellen Fenster an.|
+|Zum markierten Start für die Kopie in der Ansicht navigieren |NVDA+Umschalt+F9 |NVDA+Umschalt+F9 |Keine |Zieht den NVDA-Cursor an die zuvor eingestellte Startmarkierung für das Kopieren.|
+|Textformatierungen mitteilen |NVDA+Umschalt+F |NVDA+Umschalt+F |Keine |Gibt die Textformatierungen unter dem System-Cursor aus. Bei zweimaliges Drücken werden diese Informationen im Lesemodus angezeigt.|
+|Aktuellen Symbol-Ersatz mitteilen |Keine |Keine |Keine |Gibt das Symbol, an dem sich der NVDA-Cursor befindet aus. Zweimaliges Drücken zeigt das Symbol und den dazugehörigen Text in einem virtuellen Fenster an.|
 
 <!-- KC:endInclude -->
 
@@ -931,7 +931,7 @@ Dies betrifft folgende Anwendungen:
 Der Lesemodus ist optional auch in Microsoft Word- und Microsoft Excel-Dokumenten verfügbar.
 
 Im Lesemodus wird der Inhalt von Dokumenten in einer flächenähnlichen Struktur dargestellt, sodass Sie sich mit den Pfeiltasten durch den Text navigieren können. Dabei wird ein virtueller, nicht sichtbarer Cursor verwendet.
-Alle [Befehle zum Navigieren mit dem System-Cursor](#SystemCaret) sind im Lesemodus verfügbar. So z. B. Alles Lesen, Formatierung ansagen, Befehle zur Tabellen-Navigation, etc.
+Alle [Befehle zum Navigieren mit dem System-Cursor](#SystemCaret) sind im Lesemodus verfügbar, z. B. Alles vorlesen, Formatierungen mitteilen, Befehle zur Tabellen-Navigation, etc.
 Wenn [Visuell hervorheben](#VisionFocusHighlight) aktiviert ist, wird die Position des virtuellen Cursors im Lesemodus visuell dargestellt.
 Informationen darüber, ob der Text beispielsweise ein Link, eine Überschrift, o. ä. ist, wird Ihnen beim Navigieren unmittelbar mitgeteilt.
 
@@ -1564,9 +1564,9 @@ Weitere Informationen über den Lesemodus und die Schnellnavigationstasten finde
 
 | Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Verbleibende Zeit ausgeben |Strg+Umschalt+R |Falls grade ein Titel abgespielt wird, wird die verbleibende Zeit ausgegeben.|
-|Verstrichene Zeit ausgeben |Strg+Umschalt+E |Gibt die verstrichene Zeit des aktuellen Titels aus, sofern ein Titel abgespielt wird.|
-|Länge des Titels ausgeben |Strg+Umschalt+T |Gibt die Länge des aktuellen Titels aus, sofern ein Titel abgespielt wird.|
+|Verbleibende Zeit mitteilen |Strg+Umschalt+R |Gibt die verbleibende Zeit aus, sofern ein Titel abgespielt wird.|
+|Verstrichene Zeit mitteilen |Strg+Umschalt+E |Gibt die verstrichene Zeit des aktuellen Titels aus, sofern ein Titel abgespielt wird.|
+|Titellänge mitteilen |Strg+Umschalt+T |Gibt die Länge des aktuellen Titels aus, sofern ein Titel abgespielt wird.|
 
 <!-- KC:endInclude -->
 
@@ -1578,7 +1578,7 @@ Hinweis: die obigen Tastenkombinationen funktionieren nur, wenn die Standard-Ein
 
 | Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Letzte Nachricht ausgeben |NVDA+Strg+1 bis 4 |Gibt die zur Nummer passende Nachricht aus; NVDA+Strg+2 gibt beispielsweise die vorletzte Nachricht aus.|
+|Letzte Nachricht mitteilen |NVDA+Strg+1 bis 4 |Gibt die zur Nummer passende Nachricht aus; NVDA+Strg+2 gibt beispielsweise die vorletzte Nachricht aus.|
 
 <!-- KC:endInclude -->
 
@@ -1590,10 +1590,10 @@ NVDA bietet erweiterte Unterstützung für Poedit 3.4 oder neuer.
 
 | Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Anmerkungen für Übersetzer ausgeben |`Strg+Umschalt+A` |Gibt alle Anmerkungen für Übersetzer aus. Bei zweimaligem Drücken werden die Anmerkungen im Lesemodus angezeigt.|
-|Kommentare ausgeben |`Strg+Umschalt+C` |Gibt alle Kommentare im Kommmentarbereich aus. Zweimaliges Drücken zeigt die Kommentare im Lesemodus.|
-|Alten Quelltext ausgeben |`Strg+Umschalt+O` |Gibt den alten Quelltext aus, falls vorhanden. Bei zweimaligem Drücken wird der Text im Lesemodus angezeigt.|
-|Übersetzungswarnung ausgeben |`Strg+Umschalt+W` |Gibt evtl. vorhandene Übersetzungswarnung aus. Bei zweimaligem Drücken wird die Warnung im Lesemodus angezeigt|
+|Anmerkungen für Übersetzer mitteilen |`Strg+Umschalt+A` |Gibt alle Anmerkungen für Übersetzer aus. Bei zweimaligem Drücken werden die Anmerkungen im Lesemodus angezeigt.|
+|Kommentare mitteilen |`Strg+Umschalt+C` |Gibt alle Kommentare im Kommmentarbereich aus. Zweimaliges Drücken zeigt die Kommentare im Lesemodus.|
+|Alten Quelltext mitteilen |`Strg+Umschalt+O` |Gibt den alten Quelltext aus, falls vorhanden. Bei zweimaligem Drücken wird der Text im Lesemodus angezeigt.|
+|Übersetzungswarnung mitteilen |`Strg+Umschalt+W` |Gibt evtl. vorhandene Übersetzungswarnung aus. Bei zweimaligem Drücken wird die Warnung im Lesemodus angezeigt|
 
 <!-- KC:endInclude -->
 
@@ -1685,7 +1685,7 @@ Einige Einstellungen können auch durch Kurztasten geändert werden. Diese Kurzt
 
 ### Die NVDA-Einstellungen {#NVDASettings}
 
-<!-- KC:settingsSection: || Name | Desktop-Taste | Laptop-Taste | Beschreibung | -->
+<!-- KC:settingsSection: || Name | Desktop-Tastenkombination | Laptop-Tastenkombination | Beschreibung | -->
 NVDA bietet viele Konfigurationsparameter, die über das Dialogfeld für die Einstellungen geändert werden können.
 Um die Art der Einstellungen, die Sie ändern möchten, leichter zu finden, zeigt das Dialogfeld eine Liste von Konfigurationskategorien zur Auswahl an.
 Wenn Sie eine Kategorie auswählen, werden alle zugehörigen Einstellungen im Dialogfeld dazu angezeigt.
@@ -1969,12 +1969,12 @@ Wenn Sie rasch durch die verschiedenen Sprachausgabeneinstellungen schalten möc
 
 | Name |"Desktop"-Tastenkombination |"Laptop"-Tastenkombination |Beschreibung|
 |---|---|---|---|
-|Zur nächsten Sprachausgabeneinstellung springen |NVDA+Strg+Pfeiltaste nach rechts |NVDA+Strg+Umschalt+Pfeiltaste nach rechts |Springt zur nächsten verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; beginnt von vorne, nach dem letzten Eintrag.|
-|Zur vorherigen Sprachausgabeneinstellung springen |NVDA+Strg+Pfeiltaste nach links |NVDA+Strg+Umschalt+Pfeiltaste nach links |Springt zur vorherigen verfügbaren Sprachausgabeneinstellung ausgehend von der aktuellen Einstellung; beginnt von hinten, nach dem ersten Eintrag.|
+|Zur nächsten Sprachausgaben-Einstellung navigieren |NVDA+Strg+Pfeiltaste nach rechts |NVDA+Strg+Umschalt+Pfeiltaste nach rechts |Geht zur nächsten verfügbaren Sprachausgaben-Einstellung, ausgehend von der aktuellen Einstellung; beginnt von vorne, nach dem letzten Eintrag.|
+|Zur vorherigen Sprachausgaben-Einstellung springen |NVDA+Strg+Pfeiltaste nach links |NVDA+Strg+Umschalt+Pfeiltaste nach links |Geht zur vorherigen verfügbaren Sprachausgaben-Einstellung, ausgehend von der aktuellen Einstellung; beginnt von hinten, nach dem ersten Eintrag.|
 |Aktuelle Sprachausgaben-Einstellung erhöhen |NVDA+Strg+Pfeiltaste nach oben |NVDA+Strg+Umschalt+Pfeiltaste nach oben |Erhöht die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit erhöhen, die nächste Stimme auswählen, die Lautstärke erhöhen).|
-|Erhöhen der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach oben` |`NVDA+Umschalt+Strg+Seite nach oben` |Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten, z. B. wenn Sie sich auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen vorwärts; wenn Sie sich auf Schieberegler-Einstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % vorwärts.|
+|In Größeren Schritten die aktuellen Sprachausgaben-Einstellung erhöhen |`NVDA+Strg+Seite nach oben` |`NVDA+Umschalt+Strg+Seite nach oben` |Erhöht den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten, z. B. wenn Sie sich auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen vorwärts; wenn Sie sich auf Schieberegler-Einstellungen (Geschwindigkeit, Tonhöhe, etc.) befinden, springt der Wert um bis zu 20 % vorwärts.|
 |Aktuelle Sprachausgaben-Einstellung verringern |NVDA+Strg+Pfeiltaste nach unten |NVDA+Strg+Umschalt+Pfeiltaste nach unten |Verringert die aktuelle Einstellung (z. B. die Sprechgeschwindigkeit verringern, wählt die vorherige Stimme aus, verringert die Lautstärke).|
-|Verringern der aktuellen Sprachausgaben-Einstellung in größeren Schritten |`NVDA+Strg+Seite nach unten` |`NVDA+Umschalt+Strg+Seite nach unten` |Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen rückwärts; wenn Sie sich auf einer Schieberegler-Einstellung befinden, springt der Wert um bis zu 20 % rückwärts.|
+|In größeren Schritten die aktuellen Sprachausgaben-Einstellung verringern |`NVDA+Strg+Seite nach unten` |`NVDA+Umschalt+Strg+Seite nach unten` |Verringert den Wert der aktuellen Sprachausgaben-Einstellung, auf der Sie sich befinden, in größeren Schritten. Wenn Sie sich z. B. auf einer Stimmen-Einstellung befinden, springt der Wert alle 20 Stimmen rückwärts; wenn Sie sich auf einer Schieberegler-Einstellung befinden, springt der Wert um bis zu 20 % rückwärts.|
 
 <!-- KC:endInclude -->
 
@@ -2417,7 +2417,7 @@ Wenn diese Option aktiviert ist, wird die Sprachausgabe beim Vorlesen jedes Mal 
 
 Ist diese Option aktiviert, so wird die Sprachausgabe beim Vorlesen jedes Mal unterbrochen, sobald  Sie die Eingabetaste drücken. Diese Option ist standardmäßig aktiviert.
 
-##### Navigation während "Alles Lesen" erlauben {#KeyboardSettingsSkimReading}
+##### Navigation während "Alles vorlesen" erlauben {#KeyboardSettingsSkimReading}
 
 Wenn diese Option aktiviert ist, wird hierbei bestimmter Navigationsbefehlen (z. B. Schnellnavigation im Lesemodus oder zeilen- oder absatzweises navigieren) nicht angehalten, sondern springt an die neue Position und liest weiter vor.
 
@@ -3296,7 +3296,7 @@ Mit diesem Schalter können Sie einen Trigger bestimmen, über den ein Profil au
 Folgende Trigger stehen zur Verfügung:
 
 * Aktuelle Anwendung; wird ausgelöst, wenn Sie in die aktuelle Anwendung wechseln
-* Alles Lesen; wird ausgelöst, sobald Sie den Befehl "Alles Lesen" verwenden.
+* Alles vorlesen; wird ausgelöst, sobald Sie den Befehl "Alles vorlesen" verwenden.
 
 Um das Profil zu bestimmen, das durch einen bestimmten Trigger aktiviert werden soll, wählen Sie zunächst den Trigger und anschließend das Profil aus.
 Wenn Sie nicht möchten, dass ein bestimmtes Profil ausgewählt wird, wählen Sie "Standardkonfiguration" aus.
@@ -3310,7 +3310,7 @@ Anderenfalls werden alle Einstellungen in jenem Profil gespeichert, das zuletzt 
 Wenn Sie beispielsweise ein Profil für den Editor erstellt haben und sich momentan im Editor befinden, werden alle Einstellungen in diesem Profil gespeichert.
 Wenn Sie weder ein manuell aktiviertes noch ein durch einen Trigger aktiviertes Profil erstellt haben, werden alle Einstellungen in der Standardkonfiguration gespeichert.
 
-Um ein Profil zu bearbeiten, das an den Trigger "Alles Lesen" gekoppelt ist, müssen Sie dieses Profil zuvor [Manuell aktivieren](#ConfigProfileManual).
+Um ein Profil zu bearbeiten, das an den Trigger "Alles vorlesen" gekoppelt ist, müssen Sie dieses Profil zuvor [Manuell aktivieren](#ConfigProfileManual).
 
 #### Trigger eines Konfigurationsprofils vorübergehend abschalten {#ConfigProfileDisablingTriggers}
 
@@ -3505,8 +3505,8 @@ Sie können auch nur einen Teil der aktuellen Protokolldatei in die Zwischenabla
 
 | Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Protokoll-Betrachter öffnen |`NVDA+f1` |Öffnet den Protokoll-Betrachter und zeigt Entwicklerinformationen zum aktuellen Navigatorobjekt an.|
-|Teil des Protokolls in die Zwischenablage kopieren |`NVDA+control+Umschalt+f1` |Wenn dieser Befehl einmal gedrückt wird, wird ein Startpunkt zum erfassen des Protokollinhalts festgelegt. Wenn Sie  die Tastenkombination ein zweites Mal drücken, wird der Protokollinhalt seit dem Startpunkt in Ihre Zwischenablage kopiert.|
+|Protokoll-Betrachter öffnen |`NVDA+F1` |Öffnet den Protokoll-Betrachter und zeigt Entwickler-Informationen zum aktuellen Navigator-Objekt an.|
+|Teil des Protokolls in die Zwischenablage kopieren |`NVDA+Strg+Umschalt+F1` |Wenn diese Tastenkombination einmal gedrückt wird, wird ein Startpunkt zum Erfassen des Protokollinhalts festgelegt. Wenn Sie  die Tastenkombination ein zweites Mal drücken, wird der Protokollinhalt ausgehend vom Startpunkt in die Zwischenablage kopiert.|
 
 <!-- KC:endInclude -->
 
@@ -3598,10 +3598,10 @@ Globale Plugins verwalten, wie NVDA mit allen Anwendungen interagiert.
 Die folgenden NVDA-Befehle können ebenfalls nützlich sein:
 <!-- KC:beginInclude -->
 
-| Name |Tastenkombinationen |Beschreibung|
+| Name |Tastenkombination |Beschreibung|
 |---|---|---|
-|Plugins neu laden |`NVDA+control+f3` |Lädt die globalen Plugins und Anwendungsmodule von NVDA neu.|
-|Geladenes Anwendungsmodul und Programm ausgeben |`NVDA+control+f1` |Gibt (falls vorhanden) den Namen des Anwendungsmoduls sowie den Namen der ausführbaren Datei aus, die fokusierten der Anwendung zugeordnet ist.|
+|Plugins neu laden |`NVDA+Strg+F3` |Lädt die globalen Plugins und Anwendungsmodule in NVDA neu.|
+|Geladenes Anwendungsmodul und Programm mitteilen |`NVDA+Strg+F1` |Gibt (falls vorhanden) den Namen des Anwendungsmoduls sowie den Namen der ausführbaren Datei aus, die der fokussierten Anwendung zugeordnet ist.|
 
 <!-- KC:endInclude -->
 
@@ -3719,27 +3719,27 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Informationen
 |Umschalten der Aktion am rechten Rollrädchen |Rechtes Rollrädchen drücken|
 |Rückwärtsnavigieren des verwendeten rechten Rollrädchens |Rechtes Rollrädchen nach oben|
 |Vorwärtsnavigieren des verwendeten rechten Rollrädchens |Rechtes Rollrädchen nach unten|
-|Zum aktuellen Modul auf der Braillezeile springen |Routing-Taste|
-|Umschalt+Tab |Leertaste+Punkt1+Punkt2|
-|Tab |Leertaste+Punkt4+Punkt5|
-|Pfeil nach oben |Leertaste+Punkt1|
-|Pfeil nach unten |Leertaste+Punkt4|
-|Strg+Pfeil nach links |Leertaste+Punkt2|
-|Strg+Pfeil nach rechts |Leertaste+Punkt5|
-|Pfeil nach links |Leertaste+Punkt3|
-|Pfeil nach rechts |Leertaste+Punkt6|
+|Zum aktuellen Braille-Modul navigieren |Routing-Taste|
+|Umschalt+Tab-Taste |Leertaste+Punkt1+Punkt2|
+|Tab-Taste |Leertaste+Punkt4+Punkt5|
+|Pfeiltaste nach oben |Leertaste+Punkt1|
+|Pfeiltaste nach unten |Leertaste+Punkt4|
+|Strg+Pfeiltaste nach links |Leertaste+Punkt2|
+|Strg+Pfeiltaste nach rechts |Leertaste+Punkt5|
+|Pfeiltaste nach links |Leertaste+Punkt3|
+|Pfeiltaste nach rechts |Leertaste+Punkt6|
 |Pos1 |Leertaste+Punkt1+Punkt3|
 |Ende |Leertaste+Punkt4+Punkt6|
 |Strg+Pos1 |Leertaste+Punkt1+Punkt2+Punkt3|
 |Strg+Ende |Leertaste+Punkt4+Punkt5+Punkt6|
 |Alt-Taste |Leertaste+Punkt1+Punkt3+Punkt4|
-|Alt+Tab |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5|
-|Alt+Umschalt+Tab |Leertaste+Punkt1+Punkt2+Punkt5+Punkt6|
-|Windows-Taste+Tab |Leertaste+Punkt2+Punkt3+Punkt4|
+|Alt+Tab-Taste |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5|
+|Alt+Umschalt+Tab-Taste |Leertaste+Punkt1+Punkt2+Punkt5+Punkt6|
+|Windows-Taste+Tab-Taste |Leertaste+Punkt2+Punkt3+Punkt4|
 |Escape-Taste |Leertaste+Punkt1+Punkt5|
 |Windows-Taste |Leertaste+Punkt2+Punkt4+Punkt5+Punkt6|
 |Leertaste |Leertaste|
-|Strg+Taste umschalten |Leertaste+Punkt3+Punkt8|
+|Strg-Taste umschalten |Leertaste+Punkt3+Punkt8|
 |Alt-Taste umschalten |Leertaste+Punkt6+Punkt8|
 |Windows-Taste umschalten |Leertaste+Punkt4+Punkt8|
 |NVDA-Taste umschalten |Leertaste+Punkt5+Punkt8|
@@ -3750,16 +3750,16 @@ Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Informationen
 |NVDA- und Umschalt-Tasten umschalten |Leertaste+Punkt5+Punkt7+Punkt8|
 |Strg- und Alt-Tasten umschalten |Leertaste+Punkt3+Punkt6+Punkt8|
 |Strg-, Alt- und Umschalt-Tasten umschalten |Leertaste+Punkt3+Punkt6+Punkt7+Punkt8|
-|Windows-Taste+M (Alle Anwendungen minimieren) |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
-|Aktuelle Zeile ausgeben |Leertaste+Punkt1+Punkt4|
+|Windows-Taste+M (Alle Fenster minimieren) |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
+|Aktuelle Zeile mitteilen |Leertaste+Punkt1+Punkt4|
 |NVDA-Menü anzeigen |Leertaste+Punkt1+Punkt3+Punkt4+Punkt5|
 
 Für neuere Modelle, die Kippschalter besitzen (Focus 40, Focus 80 und Focus Blue) sind folgende Tastenzuweisungen verfügbar:
 
 | Name |Tastenkombination|
 |---|---|
-|Braillezeile zur vorherigen Zeile bewegen |linker Kippschalter oben, rechter Kippschalter oben|
-|Braillezeile zur nächsten Zeile bewegen |linker Kippschalter unten, rechter Kippschalter unten|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |linker Kippschalter oben, rechter Kippschalter oben|
+|Auf der Braillezeile zur nächsten Zeile navigieren |linker Kippschalter unten, rechter Kippschalter unten|
 
 Nur für Focus 80:
 
@@ -3795,15 +3795,15 @@ Bitte lesen Sie in der Dokumentation der Braillezeilen für weitere Details nach
 |Zum Fokus wechseln |T3|
 |Zur nächsten Zeile auf der Braillezeile navigieren |T4|
 |Auf der Braillezeile vorwärts navigieren |T5, eTouch3|
-|Zum aktuellen Modul auf der Braillezeile springen |Routing-Taste|
-|Textformatierung am aktuellen Modul ausgeben |Obere Routing-Taste|
+|Zum aktuellen Braille-Modul navigieren |Routing-Taste|
+|Textformatierung am aktuellen Braille-Modul mitteilen |Obere Routing-Taste|
 |HID-Tastatursimulation ein- oder ausschalten |T1+spEingabe|
-|NVDA-Cursor zur ersten Zeile bewegen |T1+T2|
-|NVDA-Cursor zur letzten Zeile bewegen |T4+T5|
+|NVDA-Cursor zur ersten Zeile navigieren |T1+T2|
+|NVDA-Cursor zur letzten Zeile navigieren |T4+T5|
 |Kopplung der Braillezeile konfigurieren |T1+T3|
-|Titelzeile anzeigen |etouch2|
-|Statuszeile anzeigen |etouch4|
-|Umschalt+Tab |Sp1|
+|Titelzeile mitteilen |etouch2|
+|Statuszeile mitteilen |etouch4|
+|Umschalt+Tab-Taste |Sp1|
 |Alt-Taste |Sp2, Alt|
 |Escape-Taste |Sp3|
 |Tab-Taste |Sp4|
@@ -3812,12 +3812,12 @@ Bitte lesen Sie in der Dokumentation der Braillezeilen für weitere Details nach
 |Pfeiltaste nach links |SpLeft|
 |Pfeiltaste nach rechts |SpRight|
 |Eingabetaste |SpEingabe, Eingabe|
-|Datum/Uhrzeit anzeigen |Sp2+Sp3|
+|Datum und Uhrzeit mitteilen |Sp2+Sp3|
 |NVDA-Menü |Sp1+Sp3|
-|Windows-Taste+M (alle Anwendungen minimieren) |Sp1+Sp4|
+|Windows-Taste+M (Alle Fenster minimieren) |Sp1+Sp4|
 |Windows-Taste+B (Infobereich anzeigen) |Sp3+Sp4|
 |Windows-Taste |Sp1+Sp2, Windows|
-|Alt+Tab |Sp2+Sp4|
+|Alt+Tab-Taste |Sp2+Sp4|
 |Strg+Pos1 |T3+SpUp|
 |Strg+Ende |T3+SpDown|
 |Pos1 |T3+SpLeft|
@@ -3828,16 +3828,16 @@ Bitte lesen Sie in der Dokumentation der Braillezeilen für weitere Details nach
 
 ### HandyTech-Braillezeilen {#HandyTech}
 
-Die meisten Braillezeilen der Firma [HandyTech GmbH](https://www.handytech.de/) werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
-bei älteren USB-Braillezeilen werden Sie den Universaltreiber von handy Tech installieren müssen.
+Die meisten Braillezeilen von [HandyTech](https://www.handytech.de/) werden von NVDA via seriellem Port, USB und Bluetooth unterstützt.
+Bei älteren USB-Braillezeilen werden Sie den Universaltreiber installieren müssen.
 
-Die folgenden Braillezeilenmodelle werden nicht ohne weiteres unterstützt; sie können Sie jedoch unter Zuhilfenahme des [universaltreibers](https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber) und der NVDA-Erweiterung verwenden:
+Die folgenden Braillezeilenmodelle werden nicht ohne Weiteres unterstützt; sie können Sie jedoch unter Zuhilfenahme des [universaltreibers](https://handytech.de/de/service/kundenservice/service-software/universeller-braillezeilentreiber) und der NVDA-Erweiterung verwenden:
 
 * Braillino
 * Buchwurm
 * Modular-Zeilen mit firmware-version 1.13 oder niedriger. Bitte beachten Sie, dass die Firmware dieser Braillezeilen aktualisiert werden kann.
 
-Folgende Tastenkombinationen bei diesen Braillezeilen sind für NVDA zugeordnet.
+Folgende Tastenkombinationen bei diesen Braillezeilen sind in NVDA zugeordnet.
 Bitte lesen Sie in der Dokumentation der Braillezeile für weitere Details.
 <!-- KC:beginInclude -->
 
@@ -3881,9 +3881,9 @@ Bitte lesen Sie in der Dokumentation zu ihrer Braillezeile nach, wo die entsprec
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |LF|
 |Auf der Braillezeile vorwärts navigieren |RG|
-|Braillezeile zur vorherigen Zeile bewegen |UP|
-|Braillezeile zur nächsten Zeile bewegen |DN|
-|Cursor zum Braille-Modul ziehen |Route|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |UP|
+|Auf der Braillezeile zur nächsten Zeile navigieren |DN|
+|Cursor zum aktuellen Braille-Modul ziehen |Route|
 |Umschalt+Tab-Taste |SLF|
 |Tab-Taste |SRG|
 |Alt+Tab-Taste |SDN|
@@ -3958,11 +3958,11 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |K1|
 |Auf der Braillezeile vorwärts navigieren |K3|
-|Braillezeile zur vorherigen Zeile bewegen |B2|
-|Braillezeile zur nächsten Zeile bewegen |B5|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |B2|
+|Auf der Braillezeile zur nächsten Zeile navigieren |B5|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Kopplung der Braillezeile umschalten |K2|
-|Alles Lesen |B6|
+|Alles vorlesen |B6|
 
 <!-- KC:endInclude -->
 
@@ -3981,11 +3981,11 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |K1|
 |Auf der Braillezeile vorwärts navigieren |K3|
-|Braillezeile zur vorherigen Zeile bewegen |B2|
-|Braillezeile zur nächsten Zeile bewegen |B5|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |B2|
+|Auf der Braillezeile zur nächsten Zeile navigieren |B5|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Kopplung der Braillezeile umschalten |K2|
-|Alles Lesen |B6|
+|Alles vorlesen |B6|
 
 <!-- KC:endInclude -->
 
@@ -4013,24 +4013,24 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur vorherigen Zeile bewegen |Auf|
-|Braillezeile zur nächsten Zeile bewegen |Ab|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |Auf|
+|Auf der Braillezeile zur nächsten Zeile navigieren |Ab|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Braillezeile koppeln an |Auf+Ab|
-|Taste Pfeil nach oben |Leertaste+Punkt1|
-|Taste Pfeil nach unten |Leertaste+Punkt4|
-|Taste Pfeil nach links |Leertaste+Punkt3|
-|Taste Pfeil nach rechts |Leertaste+Punkt6|
-|Umschalt+Tab |Leertaste+Punkt1+Punkt3|
+|Pfeiltaste nach oben |Leertaste+Punkt1|
+|Pfeiltaste nach unten |Leertaste+Punkt4|
+|Pfeiltaste nach links |Leertaste+Punkt3|
+|Pfeiltaste nach rechts |Leertaste+Punkt6|
+|Umschalt+Tab-Taste |Leertaste+Punkt1+Punkt3|
 |Tab-Taste |Leertaste+Punkt4+Punkt6|
 |Alt-Taste |Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+M)|
 |Escape-Taste |Leertaste+Punkt1+Punkt5 (Leertaste+E)|
 |Eingabetaste |Punkt8|
 |Windows-Taste |Leertaste+Punkt3+Punkt4|
-|Alt+Tab |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T)|
-|NVDA-Menü |Lertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leerttaste+N)|
-|Windows-Taste+M (Alle Anwendungen minimieren) |Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D)|
-|Alles Lesen |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
+|Alt+Tab-Taste |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T)|
+|NVDA-Menü |Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leerttaste+N)|
+|Windows-Taste+M (Alle Fenster minimieren) |Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D)|
+|Alles vorlesen |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
 
 <!-- KC:endInclude -->
 
@@ -4041,8 +4041,8 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 | Name |Taste|
 |---|---|
 |NVDA-Menü |C1+C3+C4+C5 (Befehl N)|
-|Windows-Taste+M (Alle Anwendungen minimieren) |C1+C4+C5 (Befehl D)|
-|Alles Lesen |C1+C2+C3+C4+C5+C6|
+|Windows-Taste+M (Alle Fenster minimieren) |C1+C4+C5 (Befehl D)|
+|Alles vorlesen |C1+C2+C3+C4+C5+C6|
 
 <!-- KC:endInclude -->
 
@@ -4071,15 +4071,15 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 
 | Name |Taste|
 |---|---|
-|Cursor zum Braille-Modul ziehen |Routing-Taste|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Auf der Braillezeile rückwärts navigieren |Rollen oben auf der linken Seite, rollen oben auf der rechten Seite, rollen auf der linken Seite|
 |Auf der Braillezeile vorwärts navigieren |Rollen unten auf der linken Seite, rollen unten auf der rechten Seite, rollen auf der rechten Seite|
-|Zur vorherigen Zeile bewegen |Rollen oben auf der linken Seite und rollen oben auf der rechten Seite|
-|Zur nächsten Zeile bewegen |Rollen unten auf der linken Seite und rollen unten auf der rechten Seite|
-|NVDA-Cursor zur vorherigen Zeile bewegen |Pfeil nach oben auf der rechten Seite|
-|NVDA-Cursor zur nächsten Zeile bewegen |Pfeil nach unten auf der rechten Seite|
-|NVDA-Cursor zum vorherigen Zeichen bewegen |Pfeil nach links auf der rechten Seite|
-|NVDA-Cursor zum nächsten Zeichen bewegen |Pfeil nach rechts auf der rechten Seite|
+|Zur vorherigen Zeile navigieren |Rollen oben auf der linken Seite und rollen oben auf der rechten Seite|
+|Zur nächsten Zeile navigieren |Rollen unten auf der linken Seite und rollen unten auf der rechten Seite|
+|NVDA-Cursor zur vorherigen Zeile navigieren |Pfeiltaste nach oben auf der rechten Seite|
+|NVDA-Cursor zur nächsten Zeile navigieren |Pfeiltaste nach unten auf der rechten Seite|
+|NVDA-Cursor zum vorherigen Zeichen navigieren |Pfeiltaste nach links auf der rechten Seite|
+|NVDA-Cursor zum nächsten Zeichen navigieren |Pfeiltaste nach rechts auf der rechten Seite|
 |Zum Fokus wechseln |Scroll oben auf der linken Seite+Scroll unten auf der linken Seite, rollen oben auf der rechten Seite und rollen unten auf der rechten Seite, rollen auf der linken Seite und rollen auf der rechten Seite|
 |Strg-Taste |smartbeetle:f1, brailleedge:f3|
 |Windows-Taste |F7, smartbeetle:f2|
@@ -4097,7 +4097,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |Pos1 |Punkt1+Punkt3+Leertaste, smartbeetle:f4|
 |Strg+Pos1 |Punkt1+Punkt2+Punkt3+Leertaste|
 |Alt+F4 |Punkt1+Punkt3+Punkt5+Punkt6+Leertaste|
-|Pfeiltaste nach links |Punkt3+Leertaste, Pfeil nach links auf der linken Seite|
+|Pfeiltaste nach links |Punkt3+Leertaste, Pfeiltaste nach links auf der linken Seite|
 |Strg+Umschalt+Pfeiltaste nach links |Punkt2+Punkt8+Leertaste+F1|
 |Strg+Pfeiltaste nach links |Punkt2+Leertaste|
 |Umschalt+Alt+Pfeiltaste nach links |Punkt2+Punkt7+F1|
@@ -4109,7 +4109,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |`Alt+Pfeiltaste nach rechts` |`Punkt5+Punkt7+Leertaste`|
 |Seite nach oben |Punkt1+Punkt2+Punkt6+Leertaste|
 |Strg+Seite nach oben |Punkt1+Punkt2+Punkt6+Punkt8+Leertaste|
-|Pfeiltaste nach oben |Punkt1+Leertaste, Pfeil nach oben auf der linken Seite|
+|Pfeiltaste nach oben |Punkt1+Leertaste, Pfeiltaste nach oben auf der linken Seite|
 |Strg+Umschalt+Pfeiltaste nach oben |Punkt2+Punkt3+Punkt8+Leertaste+F1|
 |Strg+Pfeiltaste nach oben |Punkt2+Punkt3+Leertaste|
 |Umschalt+Alt+Pfeiltaste nach oben |Punkt2+Punkt3+Punkt7+F1|
@@ -4159,15 +4159,15 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo die entsprechen
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur vorherigen Zeile bewegen |B3|
-|Braillezeile zur nächsten Zeile bewegen |B4|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |B3|
+|Auf der Braillezeile zur nächsten Zeile navigieren |B4|
 |Kopplung der Braillezeile umschalten |B5|
-|Alles Lesen |B6|
+|Alles vorlesen |B6|
 |Tab-Taste |B1|
 |Umschalt+Tab-Taste |B2|
 |Alt+Tab-Taste |B1+B2|
 |NVDA-Menü |Links+Rechts|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 
 <!-- KC:endInclude -->
 
@@ -4183,20 +4183,20 @@ Wo sich diese Tasten befinden, entnehmen Sie bitte der Dokumentation der Braille
 
 | Name |Taste|
 |---|---|
-|Braillezeile rückwärts scrollen |Links|
-|Braillezeile vorwärts scrollen |Rechts|
-|Alles Lesen |Leertaste+Rücktaste|
+|Auf der Braillezeile rückwärts navigieren |Links|
+|Auf der Braillezeile vorwärts navigieren |Rechts|
+|Alles vorlesen |Leertaste+Rücktaste|
 |NVDA-Menü |Links+Rechts|
-|Braillezeile zur vorherigen Zeile ziehen |LJ oben|
-|Braillezeile zur nächsten Zeile ziehen |LJ unten|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |LJ oben|
+|Auf der Braillezeile zur nächsten Zeile navigieren |LJ unten|
 |Braillezeile koppeln umschalten |LJ mittig|
-|Tab |LJ rechts|
-|Umschalt+Tab |LJ links|
+|Tab-Taste |LJ rechts|
+|Umschalt+Tab-Taste |LJ links|
 |Pfeiltaste nach oben |RJ oben|
 |Pfeiltaste nach unten |RJ unten|
 |Pfeiltaste nach links |RJ links|
 |Pfeiltaste nach rechts |RJ rechts|
-|Zum braille-Modul navigieren |Routing-Taste|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Umschalt+Pfeiltaste nach oben |Leertaste+RJ oben, Rücktaste+RJ oben|
 |Umschalt+Pfeiltaste nach unten |Leertaste+RJ unten, Rücktaste+RJ unten|
 |Umschalt+Pfeiltaste nach links |Leertaste+RJ links, Rücktaste+RJ links|
@@ -4206,10 +4206,10 @@ Wo sich diese Tasten befinden, entnehmen Sie bitte der Dokumentation der Braille
 |Windows-Taste |Rücktaste+RJ mittig|
 |Leertaste |Leertaste, Rücktaste|
 |Rücktaste |Punkt7|
-|Taste Seite nach oben |Leertaste+LJ rechts|
-|Taste Seite nach unten |Leertaste+LJ links|
-|Taste Pos1 |Leertaste+LJ oben|
-|Taste Ende |Leertaste+LJ unten|
+|Seite nach oben |Leertaste+LJ rechts|
+|Seite nach unten |Leertaste+LJ links|
+|Pos1 |Leertaste+LJ oben|
+|Ende |Leertaste+LJ unten|
 |Strg+Pos1 |Rücktaste+LJ oben|
 |Strg+Ende |Rücktaste+LJ unten|
 
@@ -4226,7 +4226,7 @@ Diese Braillezeilen unterstützen nicht die automatische Braillezeilenerkennung 
 Es gibt eine Option im USB-Treiber der Braillezeilen, die zu Problemen beim Laden der Braillezeile führen kann.
 Bitte versuchen Sie folgendes:
 
-1. Bitte stellen Sie sicher, dass Sie den [neuesten Treiber https://www.papenmeier-rehatechnik.de/service/downloadcenter/software/artikel/software-braille-geräte.html] installiert haben.
+1. Bitte stellen Sie sicher, dass Sie den [neuesten Treiber](https://www.papenmeier-rehatechnik.de/de/service/downloadcenter/aktuelle-treiber/articles/treiber_braillezeilen.html) installiert haben.
 1. Öffnen Sie den Windows-Geräte-Manager.
 1. Scrollen Sie in der Liste nach unten zu „USB-Controller“ oder „USB-Geräte“.
 1. Wählen Sie „Papenmeier Braillex USB-Gerät“ o. ä..
@@ -4271,19 +4271,19 @@ Folgende Tastenkombinationen sind bei Papenmeier-Braillezeilen in Kombination mi
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur vorherigen Zeile bewegen |Auf|
-|Braillezeile zur nächsten Zeile bewegen |Ab|
-|Cursor zum Braille-Modul ziehen |Routing-Taste|
-|Liest das Zeichen unter dem Cursor vor |L1|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |Auf|
+|Auf der Braillezeile zur nächsten Zeile navigieren |Ab|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
+|Zeichen unter dem Cursor vorlesen |L1|
 |Führt die Standardaktion aus |L2|
 |Koppelt Braillezeile wahlweise an Fokus oder Anzeige |R2|
-|Liest die Titelzeile des aktiven Fensters vor |L1+Auf|
-|Liest die Statusleiste des aktiven Fensters vor |L2+Ab|
-|Zieht das Navigator-Objekt zum übergeordneten Objekt |Auf2|
-|Zieht das Navigator-Objekt zum ersten beinhaltenden Objekt |Ab2|
-|Zieht das Navigator-Objekt zum nächsten Objekt |Rechts2|
-|Zieht das Navigator-Objekt zum vorherigen Objekt |Links2|
-|Textformatierungen auf dem aktuellen Modul ausgeben |Obere Routing-Taste|
+|Titelleiste des aktiven Fensters vorlesen |L1+Auf|
+|Statusleiste des aktiven Fensters vorlesen |L2+Ab|
+|Das Navigator-Objekt zum übergeordneten Objekt ziehen |Auf2|
+|Das Navigator-Objekt zum ersten beinhaltenden Objekt ziehen |Ab2|
+|Das Navigator-Objekt zum nächsten Objekt ziehen |Rechts2|
+|Das Navigator-Objekt zum vorherigen Objekt ziehen |Links2|
+|Textformatierungen am aktuellen Braille-Modul mitteilen |Obere Routing-Taste|
 
 <!-- KC:endInclude -->
 
@@ -4303,10 +4303,10 @@ Die inneren Tasten sind als Leertasten belegt.
 | Name |Taste|
 |---|---|
 |Escape-Taste |Leertaste+Punkt7|
-|Pfeil nach oben |Leertaste+Punkt2|
-|Pfeil nach links |Leertaste+Punkt1|
-|Pfeil nach rechts |Leertaste+Punkt4|
-|Pfeil nach unten |Leertaste+Punkt5|
+|Pfeiltaste nach oben |Leertaste+Punkt2|
+|Pfeiltaste nach links |Leertaste+Punkt1|
+|Pfeiltaste nach rechts |Leertaste+Punkt4|
+|Pfeiltaste nach unten |Leertaste+Punkt5|
 |Strg |LT+Punkt2|
 |Alt-Taste |LT+Punkt3|
 |Strg+Escape-Taste |Leertaste+Punkte 1 2 3 4 5 6|
@@ -4356,54 +4356,54 @@ Geräte mit Navigationsleiste
 |---|---|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur vorherigen Zeile bewegen |Auf|
-|Braillezeile zur nächsten Zeile bewegen |Ab|
-|Cursor zum ausgewählten Braille-Modul bewegen |Routing-Taste|
-|Aktuelles Zeichen am NVDA-Cursor ausgeben |L1|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |Auf|
+|Auf der Braillezeile zur nächsten Zeile navigieren |Ab|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
+|Zeichen unter dem NVDA-Cursor mitteilen |L1|
 |Aktuelles Navigator-Objekt aktivieren |L2|
-|Titelzeile ausgeben |L1+Auf|
-|Statuszeile ausgeben |L2+Ab|
-|Zum übergeordneten Objekt springen |Auf2|
-|Zum ersten untergeordneten Objekt springen |Ab2|
-|Zum vorherigen Objekt bewegen |Links2|
-|Zum nächsten Objekt bewegen |Rechts2|
-|Textformatierung am Modul ausgeben |Obere Routing-Taste|
+|Titelleiste mitteilen |L1+Auf|
+|Statusleiste mitteilen |L2+Ab|
+|Zum übergeordneten Objekt navigieren |Auf2|
+|Zum ersten untergeordneten Objekt navigieren |Ab2|
+|Zum vorherigen Objekt navigieren |Links2|
+|Zum nächsten Objekt navigieren |Rechts2|
+|Textformatierungen am Braille-Modul mitteilen |Obere Routing-Taste|
 
 BRAILLEX Tiny
 
 | Name |Taste|
 |---|---|
-|Aktuelles Zeichen am NVDA-Cursor ausgeben |L1|
+|Aktuelles Zeichen am NVDA-Cursor mitteilen |L1|
 |Aktuelles Navigator-Objekt aktivieren |L2|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur vorherigen Zeile bewegen |Auf|
-|Braillezeile zur nächsten Zeile bewegen |Ab|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |Auf|
+|Auf der Braillezeile zur nächsten Zeile navigieren |Ab|
 |Kopplung der Braillezeile konfigurieren |R2|
-|Zum übergeordneten Objekt bewegen |R1+Auf|
-|Zum ersten untergeordneten Objekt bewegen |R1+Ab|
-|Zum vorherigen Objekt bewegen |R1+Links|
-|Zum nächsten Objekt bewegen |R1+Rechts|
-|Textformatierung am Modul ausgeben |obere Routing-Taste|
-|Titelzeile der aktuellen Anwendung anzeigen |L1+Auf|
-|Statuszeile anzeigen |L2+Ab|
+|Zum übergeordneten Objekt navigieren |R1+Auf|
+|Zum ersten untergeordneten Objekt navigieren |R1+Ab|
+|Zum vorherigen Objekt navigieren |R1+Links|
+|Zum nächsten Objekt navigieren |R1+Rechts|
+|Textformatierungen am Braille-Modul mitteilen |obere Routing-Taste|
+|Titelleiste mitteilen |L1+Auf|
+|Statusleiste mitteilen |L2+Ab|
 
 BRAILLEX 2D Screen
 
 | Name |Taste|
 |---|---|
-|Aktuelles Zeichen am NVDA-Cursor ausgeben |L1|
+|Aktuelles Zeichen am NVDA-Cursor mitteilen |L1|
 |Aktuelles Navigator-Objekt aktivieren |L2|
 |Kopplung der Braillezeile konfigurieren |R2|
-|Textformatierung am Braille-Modul ausgeben |Obere Routing-Taste|
-|Braillezeile zur vorherigen Zeile bewegen |Auf|
+|Textformatierungen am Braille-Modul mitteilen |Obere Routing-Taste|
+|Auf der Braillezeile zur vorherigen Zeile navigieren |Auf|
 |Auf der Braillezeile rückwärts navigieren |Links|
 |Auf der Braillezeile vorwärts navigieren |Rechts|
-|Braillezeile zur nächsten Zeile bewegen |Ab|
-|Zum nächsten Objekt bewegen |Links2|
-|Zum übergeordneten Objekt bewegen |Auf2|
-|Zum ersten untergeordneten Objekt bewegen |Ab2|
-|Zum vorherigen Objekt bewegen |Rechts2|
+|Auf der Braillezeile zur nächsten Zeile navigieren |Ab|
+|Zum nächsten Objekt navigieren |Links2|
+|Zum übergeordneten Objekt navigieren |Auf2|
+|Zum ersten untergeordneten Objekt navigieren |Ab2|
+|Zum vorherigen Objekt navigieren |Rechts2|
 
 <!-- KC:endInclude -->
 
@@ -4446,7 +4446,7 @@ Bitte sehen Sie in der Dokumentation Ihrer Braillezeile nach, wo sich die entspr
 |Auf der Braillezeile vorwärts navigieren |Advance|
 |Zur vorherigen Zeile navigieren |Previous|
 |Zur nächsten Zeile navigieren |Next|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |NVDA-Menü |Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leertaste+N)|
 |Kopplung der Braillezeile ändern |Previous+Next|
 |Pfeiltaste nach oben |Leertaste+Punkt1|
@@ -4495,13 +4495,13 @@ Die folgenden Befehle können mit dem Scrollrad ausgeführt werden:
 
 | Name |Taste|
 |---|---|
-|Pfeil nach oben |Pfeil auf|
-|Pfeil nach unten |Pfeil ab|
-|Pfeil nach links |Pfeil links|
-|Pfeil nach rechts |Pfeil rechts|
+|Pfeiltaste nach oben |Pfeil auf|
+|Pfeiltaste nach unten |Pfeil ab|
+|Pfeiltaste nach links |Pfeil links|
+|Pfeiltaste nach rechts |Pfeil rechts|
 |Eingabetaste |mittlere Taste|
 |Tab-Taste |Rad im Uhrzeigersinn drehen|
-|Umschalt+Tab |Rad gegen den Uhrzeigersinn drehen|
+|Umschalt+Tab-Taste |Rad gegen den Uhrzeigersinn drehen|
 
 <!-- KC:endInclude -->
 
@@ -4529,18 +4529,18 @@ Bitte sehen Sie in der [Dokumentation zur Ecobraille](ftp://ftp.once.es/pub/utt/
 |Auf der Braillezeile vorwärts navigieren |T4|
 |Auf der Braillezeile zur vorherigen Zeile navigieren |T1|
 |Auf der Braillezeile zur nächsten Zeile navigieren |T5|
-|Cursor zum ausgewählten Braille-Modul bewegen |Routing-Taste|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 |Aktuelles Navigator-Objekt aktivieren |T3|
 |Zum nächsten Betrachter wechseln |F1|
 |Zum übergeordneten Objekt navigieren |F2|
 |Zum vorherigen Betrachter wechseln |F3|
 |Zum vorherigen Objekt navigieren |F4|
-|Aktuelles Objekt ausgeben |F5|
+|Aktuelles Objekt mitteilen |F5|
 |Zum nächsten Objekt navigieren |F6|
 |Zum Fokus wechseln |F7|
 |Zum ersten untergeordneten Objekt navigieren |F8|
 |System-Fokus oder Cursor zum aktuellen Navigator-Objekt navigieren |F9|
-|Position des NVDA-Cursors angeben |F0|
+|Position des NVDA-Cursors mitteilen |F0|
 |Kopplung der Braillezeile umschalten |A|
 
 <!-- KC:endInclude -->
@@ -4672,7 +4672,7 @@ Die im Folgenden beschriebenen Funktionen der Braille-Tastatur gelten, wenn die 
 |Auf der braillezeile rückwärts navigieren |`leftKeypadLeft`|
 |Auf der Braillezeile vorwärts navigieren |`leftKeypadRight`|
 |Zum aktuellen Braille-Modul wechseln |`routing`|
-|Textformatierungen unter dem Braille-Modul ausgeben |`doubleRouting`|
+|Textformatierungen am Braille-Modul mitteilen |`doubleRouting`|
 |Zur nächsten Zeile in der Übersicht wechseln |`leftKeypadDown`|
 |Zum vorherigen Darstellungsmodus wechseln |`leftKeypadLeft+leftKeypadUp`|
 |Zum nächsten Darstellungsmodus wechseln |`leftKeypadRight+leftKeypadDown`|
@@ -4695,7 +4695,7 @@ Die im Folgenden beschriebenen Funktionen der Braille-Tastatur gelten, wenn die 
 |Braillezeile vorwärts navigieren |`switch1Right`|
 |Zum aktuellen Fokus wechseln |`switch1Center`|
 |Zum aktuellen Braille-Modul wechseln |`routing`|
-|Textformatierungen unter dem Braille-Modul ausgeben |`doubleRouting`|
+|Textformatierungen am Braille-Modul mitteilen |`doubleRouting`|
 |Zur vorherigen Zeile in der Übersicht wechseln |`joystick1Up`|
 |Zur nächsten Zeile in der Übersicht wechseln |`joystick1Down`|
 |Zum vorherigen Zeichen in der Übersicht wechseln |`joystick1Left`|
@@ -4718,7 +4718,7 @@ Die im Folgenden beschriebenen Funktionen der Braille-Tastatur gelten, wenn die 
 |Auf der braillezeile vorwärts navigieren |`l8`|
 |Zum aktuellen Fokus wechseln |`l1+l8`|
 |Zum aktuellen Braille-Modul wechseln |`routing`|
-|Textformatierungen auf dem Braille-Modul ausgeben |`doubleRouting`|
+|Textformatierungen am Braille-Modul mitteilen |`doubleRouting`|
 |Zur vorherigen Zeile in der Übersicht wechseln |`joystick1Up`|
 |Zur nächsten Zeile in der Übersicht wechseln |`joystick1Down`|
 |Zum vorherigen Zeichen in der Übersicht wechseln |`joystick1Left`|
@@ -4752,11 +4752,11 @@ Wo diese Tasten zu finden sind, entnehmen Sie bitte der Dokumentation der Braill
 
 | Name |Taste|
 |---|---|
-|Braillezeile rückwärts navigieren |Aufwärts|
-|Braillezeile vorwärts navigieren |Abwärts|
-|Braillezeile zur vorherigen zeile navigieren |Nach links|
-|Braillezeile zur nächsten Zeile navigieren |nach rechts|
-|Cursor zum Braille-Modul bewegen |Routing-Taste|
+|Auf der Braillezeile rückwärts navigieren |Aufwärts|
+|Auf der Braillezeile vorwärts navigieren |Abwärts|
+|Auf der Braillezeile zur vorherigen zeile navigieren |Nach links|
+|Auf der Braillezeile zur nächsten Zeile navigieren |nach rechts|
+|Cursor zum aktuellen Braille-Modul ziehen |Routing-Taste|
 
 <!-- KC:endInclude -->
 
@@ -4843,7 +4843,7 @@ Wo diese Tasten zu finden sind, entnehmen Sie bitte der Dokumentation der Braill
 |Auswahl der Anzeige auf der Braillezeile wechseln |`f1+f5`, `f9+f14`|
 |Wechseln der Zustände für System-Cursor auf der Braillezeile verschieben, sobald der NVDA-Cursor weitergeleitet wird |`f1+f3`, `f9+f11`|
 |Die Standardaktion für das aktuelle Navigator-Objekt ausführen |`f7+f8`|
-|Datum/Uhrzeit mitteilen |`f9`|
+|Datum und Uhrzeit mitteilen |`f9`|
 |Den Batterie-Status und die verbleibende Zeit anzeigen, sofern der Netzstecker nicht eingesteckt ist |`f10`|
 |Titelleiste mitteilen |`f11`|
 |Statuszeile mitteilen |`f12`|
@@ -4881,16 +4881,16 @@ Im Folgenden sind die aktuellen Tastenbelegungen für diese Braillezeilen aufgef
 |Pfeiltaste nach unten |Joystick nach unten, D-Pad nach unten oder Leerzeichen+Punkt4|
 |Pfeiltaste nach links |Leerzeichen+Punkt3, Joystick nach links oder D-Pad nach links|
 |Pfeiltaste nach rechts |Leerzeichen+Punkt6, Joystick nach rechts oder D-Pad nach rechts|
-|Umschalt+Tab |Leertaste+Punkt1+Punkt3|
-|Tab |Leertaste+Punkt4+Punkt6|
-|Alt |Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+M)|
-|Escape |Leertaste+Punkt1+Punkt5 (Leertaste+E)|
+|Umschalt+Tab-Taste |Leertaste+Punkt1+Punkt3|
+|Tab-Taste |Leertaste+Punkt4+Punkt6|
+|Alt-Taste |Leertaste+Punkt1+Punkt3+Punkt4 (Leertaste+M)|
+|Escape-Taste |Leertaste+Punkt1+Punkt5 (Leertaste+E)|
 |Eingabetaste |Punkt8, Joystick mittig oder D-Pad mittig|
 |Windows-Taste |Leertaste+Punkt3+Punkt4|
-|Alt+Tab |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T)|
+|Alt+Tab-Taste |Leertaste+Punkt2+Punkt3+Punkt4+Punkt5 (Leertaste+T)|
 |NVDA-Menü |Leertaste+Punkt1+Punkt3+Punkt4+Punkt5 (Leertaste+N)|
-|Windows-Taste+D (Desktop in den Vordergrund holen) |Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+d)|
-|Alles Vorlesen |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
+|Windows-Taste+D (Desktop in den Vordergrund holen) |Leertaste+Punkt1+Punkt4+Punkt5 (Leertaste+D)|
+|Alles vorlesen |Leertaste+Punkt1+Punkt2+Punkt3+Punkt4+Punkt5+Punkt6|
 
 <!-- KC:endInclude -->
 
