@@ -6,8 +6,8 @@
 
 import ui
 import config
-from ctypes import *
-from ctypes.wintypes import *
+from ctypes import *  # noqa: F403
+from ctypes.wintypes import *  # noqa: F403
 import winKernel
 from NVDAObjects.IAccessible import IAccessible, ContentGenericClient
 from NVDAObjects.behaviors import Dialog
@@ -17,7 +17,6 @@ import braille
 import controlTypes
 from scriptHandler import isScriptWaiting, script
 import api
-import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog
@@ -134,12 +133,12 @@ class mirandaIMContactList(IAccessible):
 		internalBuf=winKernel.virtualAllocEx(self.processHandle,None,MAXITEMTEXTLEN,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 		try:
 			watchdog.cancellableSendMessage(self.windowHandle,CLM_GETITEMTEXT,hItem,internalBuf)
-			buf=create_unicode_buffer(MAXITEMTEXTLEN)
+			buf=create_unicode_buffer(MAXITEMTEXTLEN)  # noqa: F405
 			winKernel.readProcessMemory(self.processHandle,internalBuf,buf,MAXITEMTEXTLEN,None)
 			text=buf.value
 			statusMsgPtr=watchdog.cancellableSendMessage(self.windowHandle,CLM_GETSTATUSMSG,hItem,0)
 			if statusMsgPtr>0:
-				buf2=create_unicode_buffer(MAXSTATUSMSGLEN)
+				buf2=create_unicode_buffer(MAXSTATUSMSGLEN)  # noqa: F405
 				winKernel.readProcessMemory(self.processHandle,statusMsgPtr,buf2,MAXSTATUSMSGLEN,None)
 				text="%s %s"%(text,buf2.value)
 		finally:

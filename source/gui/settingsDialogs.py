@@ -77,7 +77,6 @@ import touchHandler
 import winVersion
 import weakref
 import time
-import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
 #: The size that settings panel text descriptions should be wrapped at.
@@ -106,7 +105,7 @@ class SettingsDialog(
 	@type title: str
 	"""
 
-	class MultiInstanceError(RuntimeError): pass
+	class MultiInstanceError(RuntimeError): pass  # noqa: E701
 
 	class MultiInstanceErrorWithDialog(MultiInstanceError):
 		dialog: 'SettingsDialog'
@@ -492,7 +491,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	title=""
 	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
-	class CategoryUnavailableError(RuntimeError): pass
+	class CategoryUnavailableError(RuntimeError): pass  # noqa: E701
 
 	def __init__(self, parent, initialCategory=None):
 		"""
@@ -967,7 +966,7 @@ class GeneralSettingsPanel(SettingsPanel):
 					continue
 				res=False
 				break
-			except:
+			except:  # noqa: E722
 				log.debugWarning("Error when copying settings to system config",exc_info=True)
 				res=False
 				break
@@ -1161,7 +1160,7 @@ class SynthesizerSelectionDialog(SettingsDialog):
 		try:
 			index=self.synthNames.index(getSynth().name)
 			self.synthList.SetSelection(index)
-		except:
+		except:  # noqa: E722
 			pass
 
 	def onOk(self, evt):
@@ -1812,7 +1811,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		try:
 			index=self.kbdNames.index(config.conf['keyboard']['keyboardLayout'])
 			self.kbdList.SetSelection(index)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Could not set Keyboard layout list to current layout",exc_info=True)
 
 		#Translators: This is the label for a list of checkboxes
@@ -1959,7 +1958,7 @@ class MouseSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("MouseSettingsTextUnit", self.textUnitComboBox)
 		try:
 			index=self.textUnits.index(config.conf["mouse"]["mouseTextUnit"])
-		except:
+		except:  # noqa: E722
 			index=0
 		self.textUnitComboBox.SetSelection(index)
 
@@ -3383,7 +3382,7 @@ class AdvancedPanelControls(
 		# Advanced settings panel
 		label = _("Audio")
 		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		audioBox = audio.GetStaticBox()
+		audioBox = audio.GetStaticBox()  # noqa: F841
 		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
 		sHelper.addItem(audioGroup)
 
@@ -3811,7 +3810,7 @@ class BrailleDisplaySelectionDialog(SettingsDialog):
 			else:
 				selection = self.displayNames.index(braille.handler.display.name)
 			self.displayList.SetSelection(selection)
-		except:
+		except:  # noqa: E722
 			pass
 
 		import bdDetect
@@ -3928,7 +3927,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.outTables.index(braille.handler.table)
 			self.outTableList.SetSelection(selection)
-		except:
+		except:  # noqa: E722
 			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
@@ -3945,7 +3944,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.inTables.index(brailleInput.handler.table)
 			self.inTableList.SetSelection(selection)
-		except:
+		except:  # noqa: E722
 			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
@@ -4027,7 +4026,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeFocus"])
 			self.cursorShapeFocusList.SetSelection(selection)
-		except:
+		except:  # noqa: E722
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeFocusList.Disable()
@@ -4043,7 +4042,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		try:
 			selection = self.cursorShapes.index(config.conf["braille"]["cursorShapeReview"])
 			self.cursorShapeReviewList.SetSelection(selection)
-		except:
+		except:  # noqa: E722
 			pass
 		if not self.showCursorCheckBox.GetValue():
 			self.cursorShapeReviewList.Disable()
@@ -4142,7 +4141,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSettingsFocusContextPresentation", self.focusContextPresentationList)
 		try:
 			index=self.focusContextPresentationValues.index(config.conf["braille"]["focusContextPresentation"])
-		except:
+		except:  # noqa: E722
 			index=0
 		self.focusContextPresentationList.SetSelection(index)
 
@@ -4647,7 +4646,7 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onDiscard()
 
 	def onSave(self):
-		log.debug(f"calling VisionProviderSubPanel_Wrapper")
+		log.debug("calling VisionProviderSubPanel_Wrapper")
 		if self._providerSettings:
 			self._providerSettings.onSave()
 

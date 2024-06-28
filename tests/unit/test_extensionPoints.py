@@ -476,7 +476,7 @@ class TestAction(unittest.TestCase):
 		Note: the lambda must be kept alive, since register uses a weak reference to it.
 		"""
 		calledKwargs = {}
-		l = lambda a: calledKwargs.update({'a': a})
+		l = lambda a: calledKwargs.update({'a': a})  # noqa: E731, E741
 		self.action.register(l)
 		self.action.notify(a='a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
@@ -604,7 +604,7 @@ class TestFilter(unittest.TestCase):
 			calledKwargs.update({'a': a})
 			return 'lambda value'
 
-		l = lambda a: recordKwarg(a)
+		l = lambda a: recordKwarg(a)  # noqa: E731, E741
 		self.filter.register(l)
 		self.filter.apply('a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})
@@ -714,7 +714,7 @@ class TestDecider(unittest.TestCase):
 		Note: the lambda must be kept alive, since register uses a weak reference to it.
 		"""
 		calledKwargs = {}
-		l = lambda a: calledKwargs.update({'a': a})
+		l = lambda a: calledKwargs.update({'a': a})  # noqa: E731, E741
 		self.decider.register(l)
 		self.decider.decide(a='a value')
 		self.assertEqual(calledKwargs, {'a': 'a value'})

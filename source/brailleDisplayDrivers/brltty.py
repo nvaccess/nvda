@@ -70,13 +70,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			self._keyCheckTimer.Stop()
 			self._keyCheckTimer = None
-		except:
+		except:  # noqa: E722
 			pass
 		try:
 			# Give BRLTTY a chance to write the last piece of data to the display.
 			time.sleep(0.05)
 			self._con.leaveTtyMode()
-		except:
+		except:  # noqa: E722
 			pass
 
 	def _get_numCols(self) -> int:
@@ -99,7 +99,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		while True:
 			try:
 				key = self._con.readKey(False)
-			except:
+			except:  # noqa: E722
 				log.error("Error reading key press from brlapi", exc_info=True)
 				return
 			if not key:

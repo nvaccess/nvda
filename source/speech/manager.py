@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2006-2021 NV Access Limited
 import typing
-from languageHandler import normalizeLanguage
 
 import queueHandler
 import synthDriverHandler
@@ -13,7 +12,6 @@ from .types import SpeechSequence, _IndexT
 from .commands import (
 	# Commands that are used in this file.
 	EndUtteranceCommand,
-	LangChangeCommand,
 	SuppressUnicodeNormalizationCommand,
 	SynthParamCommand,
 	BaseCallbackCommand,
@@ -50,7 +48,7 @@ def _speechManagerDebug(msg, *args, **kwargs) -> None:
 	"""
 	if not log.isEnabledFor(log.DEBUG) or not _shouldDoSpeechManagerLogging():
 		return
-	log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
+	log._log(log.DEBUG, "SpeechManager- " + msg, args, **kwargs)
 
 
 #: Turns on unit test logging, logs the key interactions that happen with speech manager. When False,
@@ -69,9 +67,9 @@ def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
 		# one stack higher. The codepath argument for _log could also be used to resolve this, but duplication
 		# simpler.
 		if log.isEnabledFor(log.DEBUG) and _shouldDoSpeechManagerLogging():
-			log._log(log.DEBUG, f"SpeechManager- " + msg, args, **kwargs)
+			log._log(log.DEBUG, "SpeechManager- " + msg, args, **kwargs)
 		return
-	log._log(log.INFO, f"SpeechManUnitTest- " + msg, args, **kwargs)
+	log._log(log.INFO, "SpeechManUnitTest- " + msg, args, **kwargs)
 
 # Install the custom log handlers.
 #: For extra debug level logging, this is a category that must be enabled in the advanced settings panel.
@@ -328,7 +326,7 @@ class SpeechManager(object):
 		enteredTriggers = []
 		outSeqs = []
 		paramsToReplay = []
-		currentSynth = getSynth()
+		currentSynth = getSynth()  # noqa: F841
 
 		outSeq = []
 		for command in inSeq:
@@ -563,7 +561,7 @@ class SpeechManager(object):
 		latestCancelledUtteranceIndex = self._getMostRecentlyCancelledUtterance()
 		log._speechManagerDebug(f"Last index: {latestCancelledUtteranceIndex}")
 		if latestCancelledUtteranceIndex is not None:
-			log._speechManagerDebug(f"Cancel and push speech")
+			log._speechManagerDebug("Cancel and push speech")
 			# Minimise the number of calls to _removeCompletedFromQueue by using the most recently cancelled
 			# utterance index. This will remove all older queued speech also.
 			self._removeCompletedFromQueue(latestCancelledUtteranceIndex)
@@ -724,13 +722,13 @@ class SpeechManager(object):
 		if command.enter:
 			try:
 				command.trigger.enter()
-			except:
+			except:  # noqa: E722
 				log.exception("Error entering new trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.append(command.trigger)
 		else:
 			try:
 				command.trigger.exit()
-			except:
+			except:  # noqa: E722
 				log.exception("Error exiting active trigger %r" % command.trigger.spec)
 			self._curPriQueue.enteredProfileTriggers.remove(command.trigger)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
@@ -739,7 +737,7 @@ class SpeechManager(object):
 		for trigger in reversed(triggers):
 			try:
 				trigger.exit()
-			except:
+			except:  # noqa: E722
 				log.exception("Error exiting profile trigger %r" % trigger.spec)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
@@ -747,7 +745,7 @@ class SpeechManager(object):
 		for trigger in triggers:
 			try:
 				trigger.enter()
-			except:
+			except:  # noqa: E722
 				log.exception("Error entering profile trigger %r" % trigger.spec)
 		synthDriverHandler.handlePostConfigProfileSwitch(resetSpeechIfNeeded=False)
 
