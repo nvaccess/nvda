@@ -2,9 +2,9 @@
 
 ## 2024.3
 
-The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
+The Add-on Store will now notify you if any add-on updates are available on NVDA start-up.
 
-Unicode Normalization is now supported in speech and braille output.
+There are now options to apply Unicode normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
 
@@ -51,7 +51,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy.
-Warnings have been added when writing to a non-empty directory. (#16684)
+A warning message will inform you if you try writing to a non-empty directory. (#16684)
 
 ### Bug Fixes
 
