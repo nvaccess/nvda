@@ -148,7 +148,7 @@ def setAudioDuckingMode(mode):
 	with _duckingRefCountLock:
 		oldMode=_audioDuckingMode
 		_audioDuckingMode=mode
-		if _modeChangeEvent: windll.kernel32.SetEvent(_modeChangeEvent)
+		if _modeChangeEvent: windll.kernel32.SetEvent(_modeChangeEvent)  # noqa: E701
 		_modeChangeEvent=AutoEvent()
 		if _isDebug():
 			log.debug("Switched modes from %s, to %s"%(oldMode,mode))

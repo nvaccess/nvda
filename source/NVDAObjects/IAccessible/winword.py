@@ -365,7 +365,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			ui.message(_("Not in table"))
 			return False
 		_cell=table.cell
-		getCell=lambda thisIndex,otherIndex: _cell(thisIndex,otherIndex) if row else _cell(otherIndex,thisIndex)
+		getCell=lambda thisIndex,otherIndex: _cell(thisIndex,otherIndex) if row else _cell(otherIndex,thisIndex)  # noqa: E731
 		thisIndex=rowNumber if row else columnNumber
 		otherIndex=columnNumber if row else rowNumber
 		thisLimit=(rowCount if row else columnCount) if forward else 1
@@ -380,9 +380,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 					foundCell=getCell(curThisIndex,curOtherIndex).range
 				except COMError:
 					pass
-				if foundCell: break
+				if foundCell: break  # noqa: E701
 				curThisIndex=incdecFunc(curThisIndex,1)
-			if foundCell: break
+			if foundCell: break  # noqa: E701
 			curOtherIndex-=1
 		if not foundCell:
 			ui.message(_("Edge of table"))
@@ -489,7 +489,7 @@ class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 		textList=[]
 		for field in fields:
 			if isinstance(field,str):
-				if inBold: textList.append(field)
+				if inBold: textList.append(field)  # noqa: E701
 			elif field.field:
 				inBold=field.field.get('bold',False)
 			if not inBold and len(textList)>0:

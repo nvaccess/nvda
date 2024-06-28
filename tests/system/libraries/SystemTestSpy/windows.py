@@ -6,7 +6,7 @@
 """This module provides functions to interact with the Windows system.
 """
 
-from ctypes.wintypes import HWND, LPARAM
+from ctypes.wintypes import LPARAM
 from ctypes import (
 	c_bool,
 	c_int,

@@ -439,7 +439,8 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(AddonStoreDialog, _storeVM, openToTab=_StatusFilterKey.NEW)
 
 	def onReloadPluginsCommand(self, evt):
-		import appModuleHandler, globalPluginHandler
+		import appModuleHandler
+		import globalPluginHandler
 		from NVDAObjects import NVDAObject
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()
@@ -484,7 +485,7 @@ class MainFrame(wx.Frame):
 		)
 		try:
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
-		except:
+		except:  # noqa: E722
 			log.error("Could not execute fixCOMRegistrations command",exc_info=True) 
 		progressDialog.done()
 		del progressDialog

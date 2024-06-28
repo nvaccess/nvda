@@ -24,7 +24,7 @@ class AppModule(appModuleHandler.AppModule):
 				try:
 					# The document loading status is contained in the second field of the status bar.
 					statusText = statusBar.firstChild.next.name
-				except:
+				except:  # noqa: E722
 					# Fall back to reading the entire status bar.
 					statusText = api.getStatusBarText(statusBar)
 				speech.speakMessage(controlTypes.State.BUSY.displayString)

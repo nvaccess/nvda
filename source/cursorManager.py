@@ -20,7 +20,6 @@ from speech import sayAll
 import review
 from scriptHandler import willSayAllResume, script
 import textInfos
-import api
 import speech
 import config
 import braille
