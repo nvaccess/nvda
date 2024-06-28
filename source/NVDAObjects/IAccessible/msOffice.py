@@ -8,7 +8,6 @@ import oleacc
 import IAccessibleHandler
 import controlTypes
 import winUser
-import api
 from . import IAccessible, getNVDAObjectFromEvent
 import eventHandler
 import re
@@ -66,7 +65,7 @@ class SDM(IAccessible):
 			hwndFocus=winUser.getGUIThreadInfo(0).hwndFocus
 			if hwndFocus and hwndFocus!=self.windowHandle and winUser.isDescendantWindow(self.windowHandle,hwndFocus) and not winUser.getClassName(hwndFocus).startswith('bosa_sdm'):
 				obj=getNVDAObjectFromEvent(hwndFocus,winUser.OBJID_CLIENT,0)
-				if not obj: return None
+				if not obj: return None  # noqa: E701
 				if getattr(obj,'parentSDMCanOverrideName',True):
 					obj.name=self.name
 				obj.keyboardShortcut=self.keyboardShortcut
@@ -150,7 +149,7 @@ class CommandBarListItem(IAccessible):
 		name, matchRGB = self.rgbNameAndMatch
 		if matchRGB:
 			import colors
-			rgb=colors.RGB.fromString(name)
+			rgb=colors.RGB.fromString(name)  # noqa: F841
 			# Translators: a color, broken down into its RGB red, green, blue parts.
 			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(rgb=colors.RGB.fromString(name))
 		else:

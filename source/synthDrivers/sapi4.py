@@ -103,7 +103,7 @@ class SynthDriver(SynthDriver):
 			fetched=c_ulong()
 			try:
 				self._ttsEngines.Next(1,byref(mode),byref(fetched))
-			except:
+			except:  # noqa: E722
 				log.error("can't get next engine",exc_info=True)
 				break
 			if fetched.value==0:
@@ -224,7 +224,7 @@ class SynthDriver(SynthDriver):
 	def _set_voice(self,val):
 		try:
 			val=GUID(val)
-		except:
+		except:  # noqa: E722
 			val=self._enginesList[0].gModeID
 		mode=None
 		for mode in self._enginesList:

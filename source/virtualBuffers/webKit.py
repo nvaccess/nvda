@@ -3,10 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import ctypes
-import typing
 
-from . import VirtualBuffer, VirtualBufferTextInfo, VBufRemote_nodeHandle_t
+from . import VirtualBuffer, VirtualBufferTextInfo
 import controlTypes
 import NVDAObjects.IAccessible
 import winUser
@@ -15,7 +13,6 @@ import IAccessibleHandler
 import oleacc
 from logHandler import log
 import textInfos
-import NVDAHelper
 
 class WebKit_TextInfo(VirtualBufferTextInfo):
 
@@ -120,11 +117,11 @@ class WebKit(VirtualBuffer):
 		try:
 			obj.doAction()
 			return
-		except:
+		except:  # noqa: E722
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l=obj.location
+		l=obj.location  # noqa: E741
 		if not l:
 			log.debugWarning("no location for field")
 			return

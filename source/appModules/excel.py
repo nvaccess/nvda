@@ -17,7 +17,6 @@ import appModuleHandler
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.window.edit import UnidentifiedEdit
 from NVDAObjects.window import Window
-from NVDAObjects.window.excel import ExcelCell
 from NVDAObjects.IAccessible import IAccessible
 
 

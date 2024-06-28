@@ -10,8 +10,6 @@ import comtypes.client
 import comtypes.automation
 import ctypes
 import winVersion
-from hwPortUtils import SYSTEMTIME
-import scriptHandler
 from scriptHandler import script
 import winKernel
 import comHelper
@@ -218,7 +216,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0,OutlookWordDocument)
-		states=obj.states
+		states=obj.states  # noqa: F841
 		controlID=obj.windowControlID
 		# Support the date picker in Outlook Meeting / Appointment creation forms 
 		if controlID==4352 and role==controlTypes.Role.BUTTON:
@@ -457,7 +455,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			except COMError:
 				unread=False
 			# Translators: when an email is unread
-			if unread: textList.append(_("unread"))
+			if unread: textList.append(_("unread"))  # noqa: E701
 			try:
 				mapiObject=selection.mapiObject
 			except COMError:
@@ -480,13 +478,13 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			except COMError:
 				attachmentCount=0
 			# Translators: when an email has attachments
-			if attachmentCount>0: textList.append(_("has attachment"))
+			if attachmentCount>0: textList.append(_("has attachment"))  # noqa: E701
 			try:
 				importance=selection.importance
 			except COMError:
 				importance=1
 			importanceLabel=importanceLabels.get(importance)
-			if importanceLabel: textList.append(importanceLabel)
+			if importanceLabel: textList.append(importanceLabel)  # noqa: E701
 			try:
 				messageClass=selection.messageClass
 			except COMError:
@@ -515,14 +513,14 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 			# Stops us from reporting "unflagged" which is too verbose.
 			if selection and UIAClassName=="FlagField":
 				try:
-					if not selection.flagIcon and not selection.flagStatus: continue
+					if not selection.flagIcon and not selection.flagStatus: continue  # noqa: E701
 				except COMError:
 					continue
 			# the category field should only be reported if the objectModel's categories property actually contains a valid string.
 			# Stops us from reporting "no categories" which is too verbose.
 			elif selection and UIAClassName=="CategoryField":
 				try:
-					if not selection.categories: continue
+					if not selection.categories: continue  # noqa: E701
 				except COMError:
 					continue
 			# And we don't care about anything else that is not a text element. 
@@ -559,7 +557,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 
 	def _get_positionInfo(self):
 		info=super(UIAGridRow,self).positionInfo
-		if info is None: info={}
+		if info is None: info={}  # noqa: E701
 		UIAClassName=self.UIAElement.cachedClassName
 		if UIAClassName=="ThreadHeader":
 			info['level']=1

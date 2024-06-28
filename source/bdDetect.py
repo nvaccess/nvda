@@ -27,10 +27,8 @@ from typing import (
 	NamedTuple,
 	Optional,
 	OrderedDict,
-	Set,
 	Tuple,
 	Type,
-	Union,
 )
 import hwPortUtils
 import NVDAState
