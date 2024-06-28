@@ -16,7 +16,6 @@ from typing import (
 )
 
 import core
-import extensionPoints
 import globalPluginHandler
 import threading
 from .blockUntilConditionMet import (

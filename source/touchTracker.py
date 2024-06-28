@@ -6,7 +6,6 @@
 import threading
 import time
 from collections import OrderedDict
-from logHandler import log
 
 #Possible actions (single trackers)
 action_tap="tap"
@@ -192,7 +191,7 @@ class MultiTouchTracker:
 		self.pluralTimeout = pluralTimeout
 
 	def iterAllRawSingleTouchTrackers(self):
-		if self.rawSingleTouchTracker: yield self.rawSingleTouchTracker
+		if self.rawSingleTouchTracker: yield self.rawSingleTouchTracker  # noqa: E701
 		for child in self.childTrackers:
 			for i in child.iterAllRawSingleTouchTrackers():
 				yield i
@@ -224,8 +223,8 @@ class TrackerManager(object):
 	def makePreheldTrackerFromSingleTouchTrackers(self,trackers):
 		childTrackers=[MultiTouchTracker(action_hold,tracker.x,tracker.y,tracker.startTime,time.time()) for tracker in trackers if tracker.action==action_hover]
 		numFingers=len(childTrackers)
-		if numFingers==0: return
-		if numFingers==1: return childTrackers[0]
+		if numFingers==0: return  # noqa: E701
+		if numFingers==1: return childTrackers[0]  # noqa: E701
 		avgX: int = sum(t.x for t in childTrackers) // numFingers
 		avgY: int = sum(t.y for t in childTrackers) // numFingers
 		tracker=MultiTouchTracker(action_hold,avgX,avgY,childTrackers[0].startTime,time.time(),numFingers)

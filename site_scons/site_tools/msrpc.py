@@ -75,7 +75,7 @@ def exists(env):
 	return midl.exists(env)
 
 def generate(env):
-	if not 'MIDL' in env:
+	if 'MIDL' not in env:
 		from SCons.Tool import midl
 		midl.generate(env)
 	env['BUILDERS']['MSRPCStubs']=MSRPCStubs_builder
