@@ -10,7 +10,7 @@ It also allows reading of equations in the Microsoft Word equation editor.
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic)  transliterated Cuneiform text, and Turkish grade 2.
 eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
 
@@ -39,6 +39,7 @@ Unicode CLDR has also been updated.
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
   * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
     * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
+    * New braille table for Turkish grade 2. (#16735)
   * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
   * Updated python markdown 3.5.1 to 3.6(#16725, @dpy013)
   * Updated nh3 0.2.15 to 0.2.17(#16725, @dpy013)
