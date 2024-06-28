@@ -11,22 +11,19 @@ repos:
     - id: trailing-whitespace
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
+  # Matches Ruff version in requirements.
   rev: v0.5.0
   hooks:
-    # Run the linter.
     - id: ruff
       name: lint with ruff
       args: [ --fix ]
-    # Run the formatter.
     - id: ruff-format
       name: format with ruff
 
 - repo: local
   hooks:
-    # Run translation comment checks
     - id: checkPot
-      name: Translation string check
+      name: translation string check
       entry: cmd.exe /c "scons checkPot -j 4"
       language: system
       pass_filenames: false
