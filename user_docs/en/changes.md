@@ -2,7 +2,7 @@
 
 ## 2024.3
 
-The Add-on Store will now notify you if any add-on updates are available on NVDA start-up.
+The Add-on Store will now notify you if any add-on updates are available on NVDA startup.
 
 There are now options to apply Unicode normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
