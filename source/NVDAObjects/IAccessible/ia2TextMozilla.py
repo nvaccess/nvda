@@ -82,6 +82,32 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			controlField["uniqueID"] = uniqueID
 		return controlField
 
+	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
+		# #3156: Even though the insertion point at the end of a line might have
+		# the same offset as the start of the next, some implementations
+		# support IA2_TEXT_OFFSET_CARET to take this into account. Use this to
+		# determine whether we are at this position.
+		try:
+			start, end, text = caretObj.IAccessibleTextObject.textAtOffset(
+				IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR
+			)
+			# If the offsets are different, this means there is a character, which
+			# means this is not the insertion point at the end of a line.
+			if start != end:
+				return False
+			# If there is a line feed before us, this is an empty line. We don't want
+			# to do any special adjustment in this case. Otherwise, we will report the
+			# previous line instead of the empty one.
+			if start > 0 and caretObj.IAccessibleTextObject.text(start - 1, start) == "\n":
+				return False
+			return True
+		except COMError:
+			log.debugWarning(
+				"Couldn't determine if caret is at end of line insertion point",
+				exc_info=True
+			)
+		return False
+
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
 		# #3156: The position when the caret is at the end of a wrapped line (e.g.
@@ -128,24 +154,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				caretTi, caretObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			except LookupError:
 				raise RuntimeError("No caret")
-			# #3156: Even though the insertion point at the end of a line might have
-			# the same offset as the start of the next, some implementations
-			# support IA2_TEXT_OFFSET_CARET to take this into account. Use this to
-			# determine whether we are at this position.
-			try:
-				start, end, text = caretObj.IAccessibleTextObject.textAtOffset(
-					IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR
-				)
-				# If the offsets are the same, this means no character, which means this is
-				# the insertion point at the end of a line.
-				self._isEndOfLineInsertionPoint = start == end
-			except COMError:
-				# We already set self._isEndOfLineInsertionPoint to False above and that's
-				# what we should assume on failure.
-				log.debugWarning(
-					"Couldn't determine if caret is at end of line insertion point",
-					exc_info=True
-				)
+			self._isEndOfLineInsertionPoint = self._isCaretAtEndOfLine(caretObj)
 			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.

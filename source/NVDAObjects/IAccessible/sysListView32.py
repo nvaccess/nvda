@@ -4,9 +4,9 @@
 # See the file COPYING for more details.
 
 import time
-from ctypes import *
+from ctypes import *  # noqa: F403
 import ctypes
-from ctypes.wintypes import *
+from ctypes.wintypes import *  # noqa: F403
 from comtypes import BSTR
 import NVDAHelper
 import watchdog
@@ -87,72 +87,72 @@ CBEMAXSTRLEN=512
 HDM_FIRST=0x1200
 HDM_GETITEMCOUNT=HDM_FIRST
 
-class LVITEM(Structure):
+class LVITEM(Structure):  # noqa: F405
 	_fields_=[
-		('mask',c_uint),
-		('iItem',c_int),
-		('iSubItem',c_int),
-		('state',c_uint),
-		('stateMask',c_uint),
-		('pszText',c_void_p),
-		('cchTextMax',c_int),
-		('iImage',c_int),
-		('lParam',LPARAM),
-		('iIndent',c_int),
-		('iGroupID',c_int),
-		('cColumns',c_uint),
-		('puColumns',c_uint),
-		('piColFmt',POINTER(c_int)),
-		('iGroup',c_int),
+		('mask',c_uint),  # noqa: F405
+		('iItem',c_int),  # noqa: F405
+		('iSubItem',c_int),  # noqa: F405
+		('state',c_uint),  # noqa: F405
+		('stateMask',c_uint),  # noqa: F405
+		('pszText',c_void_p),  # noqa: F405
+		('cchTextMax',c_int),  # noqa: F405
+		('iImage',c_int),  # noqa: F405
+		('lParam',LPARAM),  # noqa: F405
+		('iIndent',c_int),  # noqa: F405
+		('iGroupID',c_int),  # noqa: F405
+		('cColumns',c_uint),  # noqa: F405
+		('puColumns',c_uint),  # noqa: F405
+		('piColFmt',POINTER(c_int)),  # noqa: F405
+		('iGroup',c_int),  # noqa: F405
 	]
 
-class LVITEM64(Structure):
+class LVITEM64(Structure):  # noqa: F405
 	_fields_=[
-		('mask',c_uint),
-		('iItem',c_int),
-		('iSubItem',c_int),
-		('state',c_uint),
-		('stateMask',c_uint),
-		('pszText',c_ulonglong),
-		('cchTextMax',c_int),
-		('iImage',c_int),
-		('lParam',c_ulonglong),
-		('iIndent',c_int),
-		('iGroupID',c_int),
-		('cColumns',c_uint),
-		('puColumns',c_uint),
-		('piColFmt',c_ulonglong),
-		('iGroup',c_int),
+		('mask',c_uint),  # noqa: F405
+		('iItem',c_int),  # noqa: F405
+		('iSubItem',c_int),  # noqa: F405
+		('state',c_uint),  # noqa: F405
+		('stateMask',c_uint),  # noqa: F405
+		('pszText',c_ulonglong),  # noqa: F405
+		('cchTextMax',c_int),  # noqa: F405
+		('iImage',c_int),  # noqa: F405
+		('lParam',c_ulonglong),  # noqa: F405
+		('iIndent',c_int),  # noqa: F405
+		('iGroupID',c_int),  # noqa: F405
+		('cColumns',c_uint),  # noqa: F405
+		('puColumns',c_uint),  # noqa: F405
+		('piColFmt',c_ulonglong),  # noqa: F405
+		('iGroup',c_int),  # noqa: F405
 	]
 
-class LVCOLUMN(Structure):
+class LVCOLUMN(Structure):  # noqa: F405
 	_fields_=[
-		('mask',c_uint),
-		('fmt',c_int),
-		('cx',c_int),
-		('pszText',c_void_p),
-		('cchTextMax',c_int),
-		('iSubItem',c_int),
-		('iImage',c_int),
-		('iOrder',c_int),
-		('cxMin',c_int),
-		('cxDefault',c_int),
-		('cxIdeal',c_int),
+		('mask',c_uint),  # noqa: F405
+		('fmt',c_int),  # noqa: F405
+		('cx',c_int),  # noqa: F405
+		('pszText',c_void_p),  # noqa: F405
+		('cchTextMax',c_int),  # noqa: F405
+		('iSubItem',c_int),  # noqa: F405
+		('iImage',c_int),  # noqa: F405
+		('iOrder',c_int),  # noqa: F405
+		('cxMin',c_int),  # noqa: F405
+		('cxDefault',c_int),  # noqa: F405
+		('cxIdeal',c_int),  # noqa: F405
 	]
 
-class LVCOLUMN64(Structure):
+class LVCOLUMN64(Structure):  # noqa: F405
 	_fields_=[
-		('mask',c_uint),
-		('fmt',c_int),
-		('cx',c_int),
-		('pszText',c_ulonglong),
-		('cchTextMax',c_int),
-		('iSubItem',c_int),
-		('iImage',c_int),
-		('iOrder',c_int),
-		('cxMin',c_int),
-		('cxDefault',c_int),
-		('cxIdeal',c_int),
+		('mask',c_uint),  # noqa: F405
+		('fmt',c_int),  # noqa: F405
+		('cx',c_int),  # noqa: F405
+		('pszText',c_ulonglong),  # noqa: F405
+		('cchTextMax',c_int),  # noqa: F405
+		('iSubItem',c_int),  # noqa: F405
+		('iImage',c_int),  # noqa: F405
+		('iOrder',c_int),  # noqa: F405
+		('cxMin',c_int),  # noqa: F405
+		('cxDefault',c_int),  # noqa: F405
+		('cxIdeal',c_int),  # noqa: F405
 	]
 
 
@@ -178,8 +178,8 @@ class List(List):
 	def getListGroupInfo(self,groupIndex):
 		header=AutoFreeBSTR()
 		footer=AutoFreeBSTR()
-		state=c_int()
-		if watchdog.cancellableExecute(NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getGroupInfo,self.appModule.helperLocalBindingHandle,self.windowHandle,groupIndex,byref(header),byref(footer),byref(state))!=0:
+		state=c_int()  # noqa: F405
+		if watchdog.cancellableExecute(NVDAHelper.localLib.nvdaInProcUtils_sysListView32_getGroupInfo,self.appModule.helperLocalBindingHandle,self.windowHandle,groupIndex,byref(header),byref(footer),byref(state))!=0:  # noqa: F405
 			return None
 		return dict(header=header.value,footer=footer.value,state=state.value,groupIndex=groupIndex)
 
@@ -258,9 +258,9 @@ class List(List):
 		"""
 		coa = (ctypes.c_int * columnCount)()
 		processHandle=self.processHandle
-		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalCoa=winKernel.virtualAllocEx(processHandle,None,sizeof(coa),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
-			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+			winKernel.writeProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)  # noqa: F405
 			# The meaning of the return value depends on the message sent, for LVM_GETCOLUMNORDERARRAY,
 			# it returns nonzero if successful, or 0 otherwise.
 			# https://docs.microsoft.com/en-us/windows/win32/controls/lvm-getcolumnorderarray#return-value
@@ -271,7 +271,7 @@ class List(List):
 				internalCoa
 			)
 			if res:
-				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)
+				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)  # noqa: F405
 			else:
 				coa = None
 				log.debugWarning(
@@ -422,16 +422,16 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		"""
 		processHandle=self.processHandle
 		# LVM_GETSUBITEMRECT requires a pointer to a RECT structure that will receive the subitem bounding rectangle information.
-		localRect=RECT(
+		localRect=RECT(  # noqa: F405
 			# Returns the bounding rectangle of the entire item, including the icon and label.
 			left=LVIR_LABEL,
 			# According to Microsoft, top should be the one-based index of the subitem.
 			# However, indexes coming from LVM_GETCOLUMNORDERARRAY are zero based.
 			top=index
 		)
-		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
-			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)
+			winKernel.writeProcessMemory(processHandle,internalRect,byref(localRect),sizeof(localRect),None)  # noqa: F405
 			res = watchdog.cancellableSendMessage(
 				self.windowHandle,
 				LVM_GETSUBITEMRECT,
@@ -508,17 +508,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		"""
 		buffer=None
 		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
 			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
 				item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_TEXT|LVIF_COLUMNS,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
-				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+				winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)  # noqa: F405
 				len = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMTEXTW, (self.IAccessibleChildID-1), internalItem)
 				if len:
-					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
-					buffer=create_unicode_buffer(len)
-					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)
+					winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)  # noqa: F405
+					buffer=create_unicode_buffer(len)  # noqa: F405
+					winKernel.readProcessMemory(processHandle,item.pszText,buffer,sizeof(buffer),None)  # noqa: F405
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
 		finally:
@@ -538,14 +538,14 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 
 	def _getColumnImageIDRaw(self, index):
 		processHandle=self.processHandle
-		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalItem=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVITEM),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
 			item=self.LVITEM(iItem=self.IAccessibleChildID-1,mask=LVIF_IMAGE|LVIF_COLUMNS,iSubItem=index)
-			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)  # noqa: F405
 			item.mask=LVIF_IMAGE|LVIF_COLUMNS
-			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)
+			winKernel.writeProcessMemory(processHandle,internalItem,byref(item),sizeof(self.LVITEM),None)  # noqa: F405
 			watchdog.cancellableSendMessage(self.windowHandle,LVM_GETITEMW, 0, internalItem)
-			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(item),None)
+			winKernel.readProcessMemory(processHandle,internalItem,byref(item),sizeof(item),None)  # noqa: F405
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalItem,0,winKernel.MEM_RELEASE)
 		return item.iImage
@@ -565,17 +565,17 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 		"""
 		buffer=None
 		processHandle=self.processHandle
-		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
+		internalColumn=winKernel.virtualAllocEx(processHandle,None,sizeof(self.LVCOLUMN),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
 			internalText=winKernel.virtualAllocEx(processHandle,None,CBEMAXSTRLEN*2,winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)
 			try:
 				column=self.LVCOLUMN(mask=LVCF_TEXT,iSubItem=index,pszText=internalText,cchTextMax=CBEMAXSTRLEN)
-				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
+				winKernel.writeProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)  # noqa: F405
 				res = watchdog.cancellableSendMessage(self.windowHandle,LVM_GETCOLUMNW, index, internalColumn)
 				if res:
-					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)
-					buffer=create_unicode_buffer(column.cchTextMax)
-					winKernel.readProcessMemory(processHandle,column.pszText,buffer,sizeof(buffer),None)
+					winKernel.readProcessMemory(processHandle,internalColumn,byref(column),sizeof(self.LVCOLUMN),None)  # noqa: F405
+					buffer=create_unicode_buffer(column.cchTextMax)  # noqa: F405
+					winKernel.readProcessMemory(processHandle,column.pszText,buffer,sizeof(buffer),None)  # noqa: F405
 			finally:
 				winKernel.virtualFreeEx(processHandle,internalText,0,winKernel.MEM_RELEASE)
 		finally:

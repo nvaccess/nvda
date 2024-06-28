@@ -371,7 +371,7 @@ class FileHandler(logging.FileHandler):
 		if record.levelno>=logging.CRITICAL:
 			try:
 				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
-			except:
+			except:  # noqa: E722
 				pass
 		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			getOnErrorSoundRequested().notify()

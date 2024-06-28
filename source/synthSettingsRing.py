@@ -204,9 +204,9 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 			if self._current is not None and hasattr(self,'settings')
 			else None
 		)
-		list: list[SynthSetting] = []
+		list: list[SynthSetting] = []  # noqa: F823
 		for s in synth.supportedSettings:
-			if not s.availableInSettingsRing: continue
+			if not s.availableInSettingsRing: continue  # noqa: E701
 			if prevID == s.id: #restore the last setting
 				self._current=len(list)
 			if isinstance(s, NumericDriverSetting):

@@ -12,8 +12,7 @@ import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
-import textInfos
-from virtualBuffers import VirtualBufferTextInfo
+from virtualBuffers import VirtualBufferTextInfo  # noqa: F811
 
 class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):
 
@@ -80,11 +79,11 @@ class LotusNotesRichText(VirtualBuffer):
 		try:
 			obj.doAction()
 			return
-		except:
+		except:  # noqa: E722
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l=obj.location
+		l=obj.location  # noqa: E741
 		if not l:
 			log.debugWarning("no location for field")
 			return

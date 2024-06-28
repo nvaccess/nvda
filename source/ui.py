@@ -11,10 +11,8 @@ See L{gui} for the graphical user interface.
 """
 
 import os
-import sys
 from ctypes import (
 	windll,
-	oledll,
 	byref,
 	POINTER
 )

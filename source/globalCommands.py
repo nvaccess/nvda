@@ -9,7 +9,6 @@
 
 import itertools
 from typing import (
-	List,
 	Optional,
 	Tuple,
 	Union,
@@ -1146,7 +1145,7 @@ class GlobalCommands(ScriptableObject):
 
 			try:
 				(left, top, width, height) = navigatorObject.location
-			except:
+			except:  # noqa: E722
 				# Translators: Reported when the object has no location for the mouse to move to it.
 				ui.message(_("Object has no location"))
 				return
@@ -1625,7 +1624,7 @@ class GlobalCommands(ScriptableObject):
 			realActionName=actionName
 			try:
 				realActionName=obj.getActionName()
-			except:
+			except:  # noqa: E722
 				pass
 			try:
 				obj.doAction()
@@ -2234,7 +2233,7 @@ class GlobalCommands(ScriptableObject):
 			for obj in itertools.chain((api.getFocusObject(),), reversed(api.getFocusAncestors())):
 				try:
 					obj.treeInterceptorClass
-				except:
+				except:  # noqa: E722
 					continue
 				break
 			else:
@@ -2513,7 +2512,7 @@ class GlobalCommands(ScriptableObject):
 
 		if objAtStart.annotations:
 			if _isDebugLogCatEnabled:
-				log.debug(f"NVDAObjectAtStart of caret has details")
+				log.debug("NVDAObjectAtStart of caret has details")
 			return objAtStart
 		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object
@@ -3505,7 +3504,7 @@ class GlobalCommands(ScriptableObject):
 		labels = [x[1] for x in braille.focusContextPresentations]
 		try:
 			index = values.index(config.conf["braille"]["focusContextPresentation"])
-		except:
+		except:  # noqa: E722
 			index=0
 		newIndex = (index+1) % len(values)
 		config.conf["braille"]["focusContextPresentation"] = values[newIndex]
@@ -3553,7 +3552,7 @@ class GlobalCommands(ScriptableObject):
 			cursorShape = "cursorShapeReview"
 		try:
 			index = shapes.index(config.conf["braille"][cursorShape]) + 1
-		except:
+		except:  # noqa: E722
 			index = 1
 		if index >= len(braille.CURSOR_SHAPES):
 			index = 0
@@ -3650,7 +3649,7 @@ class GlobalCommands(ScriptableObject):
 	def script_reportClipboardText(self,gesture):
 		try:
 			text = api.getClipData()
-		except:
+		except:  # noqa: E722
 			text = None
 		if not text or not isinstance(text,str) or text.isspace():
 			# Translators: Presented when there is no text on the clipboard.
@@ -4662,7 +4661,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 		@param name: The name of the profile to add a script for.
 		@type name: str
 		"""
-		script = lambda self, gesture: cls._profileScript(name)
+		script = lambda self, gesture: cls._profileScript(name)  # noqa: E731
 		funcName = script.__name__ = "script_%s" % cls._getScriptNameForProfile(name)
 		# Just set the doc string of the script, using the decorator is overkill here.
 		# Translators: The description shown in input help for a script that
@@ -4701,7 +4700,7 @@ class ConfigProfileActivationCommands(ScriptableObject):
 				gestureMap.add(gesture, moduleName, className, newScriptName)
 		try:
 			gestureMap.save()
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Couldn't save user gesture map after renaming profile script", exc_info=True)
 
 	@classmethod

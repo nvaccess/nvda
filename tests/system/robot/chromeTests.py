@@ -1020,18 +1020,18 @@ def test_i12147():
 	New focus target should be announced if the triggering element is removed when activated.
 	"""
 	_chrome.prepareChrome(
-		f"""
+		"""
 			<div>
 			  <button id='trigger0'>trigger 0</button>
 			  <h4 id='target0' tabindex='-1'>target 0</h4>
 			</div>
 			<script>
 				let trigger0 = document.querySelector('#trigger0');
-				trigger0.addEventListener('click', e => {{
+				trigger0.addEventListener('click', e => {
 				  let focusTarget = document.querySelector('#target0');
 				  trigger0.remove();
 				  focusTarget.focus();
-				}})
+				})
 			</script>
 		"""
 	)
@@ -1472,7 +1472,7 @@ def test_i10840():
 	Chrome self-references a header cell as its own header, which used to cause the name to be announced twice
 	"""
 	_chrome.prepareChrome(
-		f"""
+		"""
 			<table>
 				<thead>
 					<tr>
