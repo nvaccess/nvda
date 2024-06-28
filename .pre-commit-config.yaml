@@ -8,3 +8,18 @@ repos:
       args: [ --fix ]
     # Run the formatter.
     - id: ruff-format
+
+- repo: local
+  hooks:
+    # Run translation comment checks
+    - id: checkPot
+      name: checkPot
+      entry: cmd.exe /c "scons checkPot -j 4"
+      language: system
+      pass_filenames: false
+    - id: unitTest
+      name: unitTest
+      # Use buffer option to minimize stream output
+      entry: ./rununittests.bat
+      language: script
+      pass_filenames: false
