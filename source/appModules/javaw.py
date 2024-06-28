@@ -10,7 +10,6 @@
 import os
 import shlex
 import appModuleHandler
-from appModuleHandler import AppModule
 
 def _getEntryPoint(cmd):
 	cmd = iter(shlex.split(cmd))
@@ -49,5 +48,5 @@ def getAppNameFromHost(processId):
 		raise LookupError
 	try:
 		return "javaw_" + _getEntryPoint(cmd).replace(".", "_")
-	except:
+	except:  # noqa: E722
 		raise LookupError

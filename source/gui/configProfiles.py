@@ -8,7 +8,6 @@ import config
 import api
 import gui
 from logHandler import log
-import appModuleHandler
 import globalVars
 from . import guiHelper
 import gui.contextHelp
@@ -170,7 +169,7 @@ class ProfilesDialog(
 			profile = None
 		try:
 			config.conf.manualActivateProfile(profile)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when activating a configuration profile fails.
 			gui.messageBox(_("Error activating profile."),
@@ -196,7 +195,7 @@ class ProfilesDialog(
 			return
 		try:
 			config.conf.deleteProfile(name)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when deleting a configuration profile fails.
 			gui.messageBox(_("Error deleting profile."),
@@ -263,7 +262,7 @@ class ProfilesDialog(
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
-		except:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			gui.messageBox(_("Error renaming profile."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
@@ -299,7 +298,7 @@ class ProfilesDialog(
 	def saveTriggers(self, parentWindow=None):
 		try:
 			config.conf.saveProfileTriggers()
-		except:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving configuration profile triggers fails.
 			gui.messageBox(_("Error saving configuration profile triggers - probably read only file system."),
@@ -417,7 +416,7 @@ class NewProfileDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.HORIZONTAL)  # noqa: F841
 		# Translators: The label of a field to enter the name of a new configuration profile.
 		profileNameText = _("Profile name:")
 		self.profileName = sHelper.addLabeledControl(profileNameText, wx.TextCtrl)
@@ -478,7 +477,7 @@ class NewProfileDialog(
 			gui.messageBox(_("That profile already exists. Please choose a different name."),
 				_("Error"), wx.OK | wx.ICON_ERROR, self)
 			return
-		except:
+		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when creating a configuration profile fails.
 			gui.messageBox(_("Error creating profile - probably read only file system."),
