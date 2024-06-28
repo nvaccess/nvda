@@ -334,9 +334,8 @@ class GlobalCommands(ScriptableObject):
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
-
 			elif scriptCount == 3:
-				ui.browseableMessage(info.text)
+				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
 
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
@@ -2159,7 +2158,7 @@ class GlobalCommands(ScriptableObject):
 			languageDescription = languageHandler.getLanguageDescription(curLanguage)
 			# Translators: title for expanded symbol dialog. Example: "Expanded symbol (English)"
 			title = _("Expanded symbol ({})").format(languageDescription)
-			ui.browseableMessage(message, title)
+			ui.browseableMessage(message, title, closeButton=True)
 
 	@script(
 		description=_(
@@ -2390,7 +2389,9 @@ class GlobalCommands(ScriptableObject):
 			ui.browseableMessage(
 				message,
 				# Translators: title for formatting information dialog.
-				_("Formatting")
+				_("Formatting"),
+				copyButton=True,
+				closeButton=True,
 			)
 
 	@staticmethod
@@ -4051,7 +4052,7 @@ class GlobalCommands(ScriptableObject):
 	) -> None:
 		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
 		positioned on a link, or an element with an included link such as a graphic.
-		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
+		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
@@ -4088,7 +4089,9 @@ class GlobalCommands(ScriptableObject):
 					linkDestination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(name=obj.name)
+					title=_("Destination of: {name}").format(name=obj.name),
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(linkDestination)  # Speak the link

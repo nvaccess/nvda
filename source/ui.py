@@ -87,12 +87,20 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 	)
 
 
-def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = False) -> None:
+def browseableMessage(
+		message: str,
+		title: str | None = None,
+		isHtml: bool = False,
+		closeButton: bool = False,
+		copyButton: bool = False
+) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
-	@param message: The message in either html or text.
-	@param title: The title for the message.
-	@param isHtml: Whether the message is html
+	:param message: The message in either html or text.
+	:param title: The title for the message, defaults to "NVDA Message".
+	:param isHtml: Whether the message is html, defaults to False.
+	:param closeButton: Whether to include a "close" button, defaults to False.
+	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
 	"""
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
@@ -104,7 +112,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		raise LookupError(htmlFileName )
 	moniker = POINTER(IUnknown)()
 	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
-	if not title:
+	if title is None:
 		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
 		title = _("NVDA Message")
 	if not isHtml:
@@ -121,6 +129,16 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		return
 	d.add("title", title)
 	d.add("message", message)
+	# Translators: A notice to the user that the copy operation succeeded.
+	d.add("copySuccessfulAlertText", _("Text copied."))
+	# Translators: Notice to the user that the copy operation failed.
+	d.add("copyFailedAlertText", _("Couldn't copy to clipboard."))
+	if closeButton:
+		# Translators: The text of a button which closes the window.
+		d.add("closeButtonText", _("Close"))
+	if copyButton:
+		# Translators: The text of a button to copy the text of the window to the clipboard.
+		d.add("copyButtonText", _("Copy"))
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup() 
 	windll.mshtml.ShowHTMLDialogEx( 

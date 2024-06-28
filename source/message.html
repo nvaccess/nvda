@@ -4,24 +4,66 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
-function escapeKeyPress(e) {
+const args = window.dialogArguments;
+
+function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
+	} else if (e.altKey && e.keyCode === 67) {  // Code for Alt+c for copy button
+		onCopyButtonPress();
 	}
-};
+}
+
+function onCopyButtonPress() {
+	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
+	const rng = document.body.createTextRange();
+	rng.moveToElementText(messageID);
+	rng.scrollIntoView();
+	rng.select();
+	const success = rng.execCommand("Copy");
+	rng.collapse(false);
+	rng.select();
+	if (args) {  // Notify the user about the copy result
+		if (success) {
+			alert(args.item('copySuccessfulAlertText'));
+		} else {
+			alert(args.item('copyFailedAlertText'));
+		}
+	}
+}
+
+function onCloseButtonPress() {
+	//window.open('', '_self', '');  // Only enable if window.close() stops working in a future version, may fix.
+	window.close();
+}
 
 function windowOnLoad() {
-	var args = window.dialogArguments;
 	if (args) {
 		document.title = args.item('title');
 		messageID.innerHTML = args.item('message');
+		// If caller wants a close button
+		if (args.item('closeButtonText') != null) {
+			closeButton.innerHTML = args.item('closeButtonText');  // Assign the (translated) label
+			closeButton.style.display = 'inline';  // Display the button
+			buttonDiv.style.display = 'block';  // Display the div
+		}
+		// If caller wants a copy to clip button
+		if (args.item('copyButtonText') != null) {
+			copyButton.innerHTML = args.item('copyButtonText');  // Assign the (translated) label
+			copyButtonSpan.style.display = 'inline';  // Display the button
+			buttonDiv.style.display = 'block';  // Display the div
+		}
 	}
 } 
 //-->
 </SCRIPT>
 </HEAD>
-<BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
+<body tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
 <div id=messageID></div>
+<div id="buttonDiv" style="display: none;"><hr>
+<span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>
+<span><button id="closeButton" style="display: none;" onclick="onCloseButtonPress();"></button></span>
+</div>
 </body>
 </html>
