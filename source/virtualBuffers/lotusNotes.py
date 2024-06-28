@@ -12,7 +12,6 @@ import mouseHandler
 import IAccessibleHandler
 import oleacc
 from logHandler import log
-import textInfos
 from virtualBuffers import VirtualBufferTextInfo
 
 class LotusNotesRichText_TextInfo(VirtualBufferTextInfo):

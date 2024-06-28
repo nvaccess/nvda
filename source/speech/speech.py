@@ -28,7 +28,7 @@ import languageHandler
 from textUtils import unicodeNormalize
 from . import manager
 from .extensions import speechCanceled, pre_speechCanceled, pre_speech
-from .extensions import filter_speechSequence, speechCanceled
+from .extensions import filter_speechSequence
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -2124,7 +2124,7 @@ def _shouldSpeakContentFirst(
 			presCat != attrs.PRESCAT_CONTAINER
 			or role == controlTypes.Role.ARTICLE
 		)
-		and not (role in _neverSpeakContentFirstRoles)
+		and role not in _neverSpeakContentFirstRoles
 		and not tableID
 		and controlTypes.State.EDITABLE not in states
 	)

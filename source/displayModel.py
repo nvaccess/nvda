@@ -24,7 +24,6 @@ import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
 from typing import (
-	Union,
 	List,
 	Tuple,
 	Optional,

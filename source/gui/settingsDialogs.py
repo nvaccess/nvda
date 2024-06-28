@@ -77,7 +77,6 @@ import touchHandler
 import winVersion
 import weakref
 import time
-import keyLabels
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
 #: The size that settings panel text descriptions should be wrapped at.
@@ -4647,7 +4646,7 @@ class VisionProviderSubPanel_Wrapper(
 			self._providerSettings.onDiscard()
 
 	def onSave(self):
-		log.debug(f"calling VisionProviderSubPanel_Wrapper")
+		log.debug("calling VisionProviderSubPanel_Wrapper")
 		if self._providerSettings:
 			self._providerSettings.onSave()
 

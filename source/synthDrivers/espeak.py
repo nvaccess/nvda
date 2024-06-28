@@ -19,7 +19,6 @@ from languageHandler import (
 	stripLocaleFromLangCode,
 )
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
-import speech
 from logHandler import log
 
 from speech.types import SpeechSequence

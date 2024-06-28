@@ -6,7 +6,6 @@
 
 import types
 from queue import SimpleQueue
-import globalVars
 from logHandler import log
 import watchdog
 import core

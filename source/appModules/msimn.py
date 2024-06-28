@@ -14,7 +14,6 @@ from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, sysListView32
 import watchdog
-from NVDAObjects.behaviors import _FakeTableCell
 
 messageListImageLabels={
 	# Translators: This Outlook Express message has an attachment

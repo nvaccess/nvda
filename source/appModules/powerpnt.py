@@ -15,12 +15,10 @@ import ctypes
 import oleacc
 import comHelper
 import ui
-import queueHandler
 import colors
 import api
 import speech
 from speech import sayAll
-import NVDAHelper
 import winUser
 import msoAutoShapeTypes
 from treeInterceptorHandler import DocumentTreeInterceptor
@@ -29,7 +27,7 @@ from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
-from NVDAObjects.IAccessible import IAccessible, getNVDAObjectFromEvent
+from NVDAObjects.IAccessible import IAccessible
 from NVDAObjects.window import Window
 from NVDAObjects.behaviors import EditableTextWithoutAutoSelectDetection, EditableText
 import braille

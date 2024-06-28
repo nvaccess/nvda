@@ -5,7 +5,6 @@
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 import itertools
-import os
 import typing
 from typing import (
 	TYPE_CHECKING,

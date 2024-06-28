@@ -36,7 +36,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR
+from comtypes import HRESULT
 from comtypes.hresult import S_OK
 import atexit
 import weakref
@@ -343,11 +343,11 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 				self._handleWinmmError(message="Error opening")
 				if lastOutputDeviceID != WAVE_MAPPER:
 					if _isDebugForNvWave():
-						log.debug(f"Falling back to WAVE_MAPPER")
+						log.debug("Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
 				else:
-					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
+					log.warning("Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					WavePlayer.audioDeviceError_static = True
 					raise  # can't open the default device.
 				return

@@ -12,7 +12,7 @@ from logHandler import log
 import inputCore
 import brailleInput
 import hwIo
-from hwIo import intToByte, boolToByte, Serial
+from hwIo import intToByte, boolToByte
 from globalCommands import SCRCAT_BRAILLE
 import ui
 from baseObject import ScriptableObject

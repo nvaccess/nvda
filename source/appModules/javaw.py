@@ -10,7 +10,6 @@
 import os
 import shlex
 import appModuleHandler
-from appModuleHandler import AppModule
 
 def _getEntryPoint(cmd):
 	cmd = iter(shlex.split(cmd))

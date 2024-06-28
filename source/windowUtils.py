@@ -12,7 +12,7 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import weakref
 import winUser
-from winUser import WNDCLASSEXW, WNDPROC, LRESULT
+from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject

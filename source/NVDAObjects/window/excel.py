@@ -20,12 +20,11 @@ import time
 import winsound
 import re
 import uuid
-import collections
 import NVDAHelper
 import oleacc
 import ui
 import speech
-from tableUtils import HeaderCellInfo, HeaderCellTracker
+from tableUtils import HeaderCellTracker
 import config
 from config.configFlags import ReportCellBorders
 import textInfos
@@ -47,8 +46,6 @@ from .. import NVDAObjectTextInfo
 import scriptHandler
 from scriptHandler import script
 import browseMode
-import inputCore
-import ctypes
 import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState

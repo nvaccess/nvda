@@ -10,8 +10,6 @@ import comtypes.client
 import comtypes.automation
 import ctypes
 import winVersion
-from hwPortUtils import SYSTEMTIME
-import scriptHandler
 from scriptHandler import script
 import winKernel
 import comHelper

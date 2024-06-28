@@ -7,7 +7,6 @@
 import sys
 import pkgutil
 import importlib
-import config
 import baseObject
 from logHandler import log
 import globalPlugins

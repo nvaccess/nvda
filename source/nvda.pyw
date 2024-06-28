@@ -45,7 +45,6 @@ if NVDAState.isRunningAsSource():
 		)
 		sys.exit(1)
 	customVenvDetected = nvdaVenv != virtualEnv
-	import sourceEnv
 	#We should always change directory to the location of this module (nvda.pyw), don't rely on sys.path[0]
 	appDir = os.path.normpath(os.path.dirname(__file__))
 else:
@@ -423,7 +422,7 @@ except Exception as e:
 	_log.error(f"Unable to acquire mutex: {e}")
 	sys.exit(1)
 if mutex is None:
-	_log.error(f"Unknown mutex acquisition error. Exiting")
+	_log.error("Unknown mutex acquisition error. Exiting")
 	sys.exit(1)
 
 

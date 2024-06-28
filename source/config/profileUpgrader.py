@@ -67,7 +67,7 @@ def _ensureVersionProperty(profile):
 	if isEmptyProfile:
 		log.debug("Empty profile, triggering default schema version")
 		profile[SCHEMA_VERSION_KEY] = latestSchemaVersion
-	elif not SCHEMA_VERSION_KEY in profile:
+	elif SCHEMA_VERSION_KEY not in profile:
 		# this must be a "before schema versions" config file.
 		log.debug("No schema version found, setting to zero.")
 		profile[SCHEMA_VERSION_KEY] = 0

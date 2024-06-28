@@ -17,7 +17,6 @@ import braille
 import controlTypes
 from scriptHandler import isScriptWaiting, script
 import api
-import mouseHandler
 import oleacc
 from keyboardHandler import KeyboardInputGesture
 import watchdog

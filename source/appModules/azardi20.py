@@ -6,7 +6,6 @@
 
 import appModuleHandler
 import controlTypes
-import winUser
 import mouseHandler
 import api
 from NVDAObjects.IAccessible.mozilla import Document

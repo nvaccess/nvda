@@ -9,7 +9,6 @@
 import unittest
 import speechXml
 from speechXml import REPLACEMENT_CHAR
-import speech
 
 from speech.commands import (
 	PitchCommand,

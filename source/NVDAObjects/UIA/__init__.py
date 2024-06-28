@@ -1355,8 +1355,8 @@ class UIA(Window):
 		if not windowHandle:
 			if UIAHandler._isDebug():
 				log.debug(
-					f"No windowHandle for UIA NvDAObject. "
-					f"Searching UIA element ancestry for nearest windowHandle"
+					"No windowHandle for UIA NvDAObject. "
+					"Searching UIA element ancestry for nearest windowHandle"
 				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:

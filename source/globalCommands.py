@@ -9,7 +9,6 @@
 
 import itertools
 from typing import (
-	List,
 	Optional,
 	Tuple,
 	Union,
@@ -2512,7 +2511,7 @@ class GlobalCommands(ScriptableObject):
 
 		if objAtStart.annotations:
 			if _isDebugLogCatEnabled:
-				log.debug(f"NVDAObjectAtStart of caret has details")
+				log.debug("NVDAObjectAtStart of caret has details")
 			return objAtStart
 		elif api.getFocusObject():
 			# If fetching from the caret position fails, try via the focus object

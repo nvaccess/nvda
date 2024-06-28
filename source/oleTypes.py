@@ -5,19 +5,10 @@ WSTRING = c_wchar_p
 from comtypes import IUnknown
 LONG_PTR = c_int
 from comtypes import GUID
-from comtypes import IUnknown
 from ctypes import HRESULT
-from comtypes import helpstring
 from comtypes import COMMETHOD
-from comtypes import dispid
-from comtypes.persist import IPersist
 from comtypes import wireHWND
-from comtypes import GUID
-from comtypes import _COAUTHIDENTITY
 UINT_PTR = c_ulong
-from comtypes import _COSERVERINFO
-from comtypes import _COAUTHINFO
-from comtypes import tagBIND_OPTS2
 from objidl import IBindCtx, IMoniker
 
 class tagDVTARGETDEVICE(Structure):

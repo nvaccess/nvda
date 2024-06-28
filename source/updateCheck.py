@@ -26,10 +26,9 @@ elif config.isAppX:
 import versionInfo
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
-import addonAPIVersion
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import gui.contextHelp  # noqa: E402
-from gui.dpiScalingHelper import DpiScalingHelperMixin, DpiScalingHelperMixinWithoutInit  # noqa: E402
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
 import sys  # noqa: E402
 import os
 import inspect
@@ -58,10 +57,7 @@ from addonStore.models.version import (  # noqa: E402
 )
 from logHandler import log, isPathExternalToNVDA
 import config
-import shellapi
-import winUser
 import winKernel
-import fileUtils
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.

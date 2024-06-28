@@ -15,7 +15,6 @@ from typing import (
 
 import config
 from synthDriverHandler import getSynth
-from logHandler import log
 
 class SpeechCommand(object):
 	"""The base class for objects that can be inserted between strings of text to perform actions,

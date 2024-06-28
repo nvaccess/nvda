@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation

@@ -424,7 +424,8 @@ class MainFrame(wx.Frame):
 		self.popupSettingsDialog(AddonStoreDialog, _storeVM, openToTab=_StatusFilterKey.UPDATE)
 
 	def onReloadPluginsCommand(self, evt):
-		import appModuleHandler, globalPluginHandler
+		import appModuleHandler
+		import globalPluginHandler
 		from NVDAObjects import NVDAObject
 		appModuleHandler.reloadAppModules()
 		globalPluginHandler.reloadGlobalPlugins()

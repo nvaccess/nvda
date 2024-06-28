@@ -1,10 +1,8 @@
-import time
 from ctypes import *
 from ctypes.wintypes import *
 from comtypes import *
 from comtypes.automation import *
 import comtypes.client
-import winKernel
 import winUser
 # Include functions from oleacc.dll in the module namespace.
 m=comtypes.client.GetModule('oleacc.dll')
