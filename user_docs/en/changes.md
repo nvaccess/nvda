@@ -63,7 +63,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * Web browser fixes:
   * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
   * If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
-  * NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
+  * NVDA will correctly announce radio and checkbox menu items when first entering sub-menus in Google Chrome and Mozilla Firefox. (#14550)
   * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
@@ -74,8 +74,6 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 
 ### Changes for Developers
-
-Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
 * A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
