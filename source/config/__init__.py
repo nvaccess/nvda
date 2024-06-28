@@ -115,7 +115,7 @@ def saveOnExit():
 	if conf["general"]["saveConfigurationOnExit"]:
 		try:
 			conf.save()
-		except:
+		except:  # noqa: E722
 			pass
 
 
@@ -563,7 +563,7 @@ class ConfigManager(object):
 			try:
 				profile = self._loadConfig(fn) # a blank config returned if fn does not exist
 				self.baseConfigError = False
-			except:
+			except:  # noqa: E722
 				backupFileName = fn + '.corrupted.bak'
 				log.error(
 					"Error loading base configuration; the base configuration file will be reinitialized."
@@ -986,7 +986,7 @@ class ConfigManager(object):
 		fn = WritePaths.profileTriggersFile
 		try:
 			cobj = ConfigObj(fn, indent_type="\t", encoding="UTF-8")
-		except:
+		except:  # noqa: E722
 			log.error("Error loading profile triggers", exc_info=True)
 			cobj = ConfigObj(None, indent_type="\t", encoding="UTF-8")
 			cobj.filename = fn
@@ -1358,7 +1358,7 @@ class ProfileTrigger(object):
 			return
 		try:
 			conf._triggerProfileEnter(self)
-		except:
+		except:  # noqa: E722
 			log.error("Error entering trigger %s, profile %s"
 				% (self.spec, self.profileName), exc_info=True)
 	__enter__ = enter
@@ -1371,7 +1371,7 @@ class ProfileTrigger(object):
 			return
 		try:
 			conf._triggerProfileExit(self)
-		except:
+		except:  # noqa: E722
 			log.error("Error exiting trigger %s, profile %s"
 				% (self.spec, self.profileName), exc_info=True)
 

@@ -58,12 +58,12 @@ globalVars.appDir = appDir
 globalVars.appPid = os.getpid()
 
 
-import argparse
-import config
-import logHandler
-from logHandler import log
-import winUser
-import winKernel
+import argparse  # noqa: E402
+import config  # noqa: E402
+import logHandler  # noqa: E402
+from logHandler import log  # noqa: E402
+import winUser  # noqa: E402
+import winKernel  # noqa: E402
 
 # Find out if NVDA is running as a Windows Store application
 bufLen=ctypes.c_int()
@@ -120,7 +120,7 @@ NVDAState._initializeStartTime()
 
 
 # Check OS version requirements
-import winVersion
+import winVersion  # noqa: E402
 if not winVersion.isSupportedOS():
 	winUser.MessageBox(0, ctypes.FormatError(winUser.ERROR_OLD_WIN_VERSION), None, winUser.MB_ICONERROR)
 	sys.exit(1)
@@ -447,7 +447,7 @@ _log = None
 logHandler.initialize()
 if logHandler.log.getEffectiveLevel() is log.DEBUG:
 	log.debug("Provided arguments: {}".format(sys.argv[1:]))
-import buildVersion
+import buildVersion  # noqa: E402
 log.info(f"Starting NVDA version {buildVersion.version} {os.environ['PROCESSOR_ARCHITECTURE']}")
 log.debug("Debug level logging enabled")
 if customVenvDetected:
@@ -467,7 +467,7 @@ if not isRunningOnSecureDesktop() and not config.isAppX:
 try:
 	import core
 	core.main()
-except:
+except:  # noqa: E722
 	log.critical("core failure",exc_info=True)
 	sys.exit(1)
 finally:

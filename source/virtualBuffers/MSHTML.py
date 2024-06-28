@@ -150,7 +150,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 				if descNode:
 					try:
 						description=description+" "+self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
-					except:
+					except:  # noqa: E722
 						pass
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)

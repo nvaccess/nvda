@@ -94,7 +94,7 @@ def disconnectConsole():
 	#Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
-	consoleEventHookHandles=[]
+	consoleEventHookHandles=[]  # noqa: F841
 	consoleObject.stopMonitoring()
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle=None
@@ -122,7 +122,7 @@ def _checkDead():
 		if isConsoleDead():
 			# We must disconnect NVDA from this console so it can close.
 			disconnectConsole()
-	except:
+	except:  # noqa: E722
 		log.exception()
 
 def getConsoleVisibleLines():

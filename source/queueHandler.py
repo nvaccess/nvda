@@ -61,7 +61,7 @@ def flushQueue(queue):
 			watchdog.alive()
 			try:
 				func(*args,**kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception(f"Error in func {func.__qualname__}")
 
 def isPendingItems(queue):
@@ -86,7 +86,7 @@ def pumpAll():
 		except StopIteration:
 			log.debug("generator %s finished"%ID)
 			del generators[ID]
-		except:
+		except:  # noqa: E722
 			log.exception("error in generator %d"%ID)
 			del generators[ID]
 		# Lose our reference so Python can destroy the generator if appropriate.

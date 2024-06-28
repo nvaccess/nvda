@@ -430,7 +430,7 @@ class SynthDriver(SynthDriver):
 	def _getAvailableVoices(self):
 		voices=OrderedDict()
 		for v in _espeak.getVoiceList():
-			l=_espeak.decodeEspeakString(v.languages[1:])
+			l=_espeak.decodeEspeakString(v.languages[1:])  # noqa: E741
 			# #7167: Some languages names contain unicode characters EG: Norwegian Bokmål
 			name=_espeak.decodeEspeakString(v.name)
 			# #5783: For backwards compatibility, voice identifies should always be lowercase
@@ -440,7 +440,7 @@ class SynthDriver(SynthDriver):
 
 	def _get_voice(self):
 		curVoice=getattr(self,'_voice',None)
-		if curVoice: return curVoice
+		if curVoice: return curVoice  # noqa: E701
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
 			return ""

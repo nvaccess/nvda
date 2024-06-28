@@ -255,7 +255,7 @@ def cleanup():
 		eventHandler.handleAppTerminate(deadMod)
 		try:
 			deadMod.terminate()
-		except:
+		except:  # noqa: E722
 			log.exception("Error terminating app module %r" % deadMod)
 
 
@@ -346,7 +346,7 @@ def terminate():
 	for processID, app in runningTable.items():
 		try:
 			app.terminate()
-		except:
+		except:  # noqa: E722
 			log.exception("Error terminating app module %r" % app)
 	runningTable.clear()
 
@@ -813,6 +813,6 @@ def getWmiProcessInfo(processId):
 			"where ProcessId = %d" % processId)
 		for result in results:
 			return result
-	except:
+	except:  # noqa: E722
 		raise LookupError("Couldn't get process information using WMI")
 	raise LookupError("No such process")

@@ -145,7 +145,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			timeBytes: bytes = self._dev.getFeature(ALVA_RTC_REPORT)[1:ALVA_RTC_STR_LENGTH+1]
 			try:
 				self._handleTime(timeBytes)
-			except:
+			except:  # noqa: E722
 				log.debugWarning("Getting time from ALVA display failed", exc_info=True)
 			keySettings = self._dev.getFeature(ALVA_KEY_SETTINGS_REPORT)[ALVA_KEY_SETTINGS_POS]
 			self._rawKeyboardInput = bool(keySettings & ALVA_KEY_RAW_INPUT_MASK)

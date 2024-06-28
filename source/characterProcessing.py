@@ -53,14 +53,14 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		localeList=[locale]
 		if fallback and '_' in locale:
 			localeList.append(locale.split('_')[0])
-		for l in localeList:
+		for l in localeList:  # noqa: E741
 			data=self._dataMap.get(l)
-			if data: return data
+			if data: return data  # noqa: E701
 			try:
 				data=self._localeDataFactory(l)
 			except LookupError:
 				data=None
-			if not data: continue
+			if not data: continue  # noqa: E701
 			self._dataMap[l]=data
 			return data
 		raise LookupError(locale)
@@ -127,7 +127,7 @@ def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 	@return: the found description for the given character
 	"""
 	try:
-		l=_charDescLocaleDataMap.fetchLocaleData(locale)
+		l=_charDescLocaleDataMap.fetchLocaleData(locale)  # noqa: E741
 	except LookupError:
 		if not locale.startswith('en'):
 			return getCharacterDescription('en',character)

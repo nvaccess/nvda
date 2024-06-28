@@ -59,7 +59,7 @@ class XPPasswordField(IAccessible):
 		try:
 			self.parent.invalidateCache()
 			return self.parent.name
-		except:
+		except:  # noqa: E722
 			return super(XPPasswordField, self).name
 
 	def script_changeUser(self, gesture):

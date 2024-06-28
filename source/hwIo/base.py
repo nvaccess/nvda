@@ -201,7 +201,7 @@ class IoBase(object):
 			log.debug("Read: %r" % data)
 		try:
 			self._onReceive(data)
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 
 

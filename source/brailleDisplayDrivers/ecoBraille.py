@@ -93,7 +93,7 @@ def eco_in_init(dev: serial.Serial) -> int:
 def eco_in(dev: serial.Serial) -> int:
 	try:
 		msg: bytes = dev.read(9)
-	except:
+	except:  # noqa: E722
 		log.debug("unpacking error", exc_info=True)
 		return 0
 	# Command message from EcoBraille is something like that:
@@ -210,7 +210,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def display(self, cells: List[int]):
 		try:
 			self._dev.write(eco_out(cells))
-		except:
+		except:  # noqa: E722
 			log.debug("error writing to the display", exc_info=True)
 
 	def _handleResponses(self):
@@ -230,7 +230,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Routing
 			try:
 				inputCore.manager.executeGesture(InputGestureRouting(((command - ECO_START_ROUTING) >> 24) + 1))
-			except:
+			except:  # noqa: E722
 				log.debug("EcoBraille: No function associated with this routing key {key}".format(key=command))
 		elif command > 0:
 			# Button
