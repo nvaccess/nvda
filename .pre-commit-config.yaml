@@ -13,13 +13,14 @@ repos:
   hooks:
     # Run translation comment checks
     - id: checkPot
-      name: checkPot
+      name: Translation string check
       entry: cmd.exe /c "scons checkPot -j 4"
       language: system
       pass_filenames: false
+      types: [python, pofile]
     - id: unitTest
-      name: unitTest
-      # Use buffer option to minimize stream output
+      name: unit tests
       entry: ./rununittests.bat
       language: script
       pass_filenames: false
+      types: [python, c, c++, batch]
