@@ -75,9 +75,8 @@ class VolumeSetter(AudioSessionCallback):
 		try:
 			simpleVolume.SetMasterVolume(originalVolumeAndMute.volume, None)
 			simpleVolume.SetMute(originalVolumeAndMute.mute, None)
-		except Exception:
-			log.exception(f"Could not restore master volume of process {pid} upon exit.")
-
+		except (COMError, RuntimeError) as e:
+			log.exception(f"Could not restore master volume of process {pid} upon exit: {e}")
 
 def _updateAppsVolumeImpl(
 		volume: float,
