@@ -14,6 +14,7 @@ from threading import Lock
 from config.featureFlagEnums import AppsVolumeAdjusterFlag
 from typing import NamedTuple
 from .utils import AudioSessionCallback, DummyAudioSessionCallback
+from comtypes import COMError
 
 
 class VolumeAndMute(NamedTuple):
@@ -78,6 +79,7 @@ class VolumeSetter(AudioSessionCallback):
 			simpleVolume.SetMute(originalVolumeAndMute.mute, None)
 		except (COMError, RuntimeError) as e:
 			log.exception(f"Could not restore master volume of process {pid} upon exit: {e}")
+
 
 def _updateAppsVolumeImpl(
 		volume: float,

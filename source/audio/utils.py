@@ -60,6 +60,7 @@ class _AudioSessionEventsListener(AudioSessionEvents):
 			self.unregister()
 		with self.callback()._lock:
 			self.callback()._audioSessionEventListeners.remove(self)
+
 	def unregister(self):
 		try:
 			self.audioSession.unregister_notification()
