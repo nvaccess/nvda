@@ -2414,6 +2414,7 @@ The following keyboard command can also be used from anywhere:
 | Name | Key | Description |
 |---|---|---|
 | Toggle Applications volume adjuster status | `NVDA+alt+delete` | Cycles through options of Applications volume adjuster status. |
+If this option is set to Muted, then its value will not be stored and it will be restored to Enabled upon next restart of NVDA.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 

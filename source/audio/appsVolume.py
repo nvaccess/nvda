@@ -29,6 +29,7 @@ _activeCallback: DummyAudioSessionCallback | None = None
 def initialize() -> None:
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state == AppsVolumeAdjusterFlag.MUTED:
+		# As per user request, muted state shouldn't be persistent, so unmuting upon restart.
 		state = AppsVolumeAdjusterFlag.ENABLED
 		config.conf["audio"]["applicationsVolumeMode"] = state
 	volume = config.conf["audio"]["applicationsSoundVolume"]
