@@ -54,11 +54,12 @@ class _AudioSessionEventsListener(AudioSessionEvents):
 
 	def onSessionTerminated(self):
 		log.debug(f"Audio session for pid {self.pid} terminated")
-		self.callback().onSessionTerminated(self.audioSession)
-		self.unregister()
+		try:
+			self.callback().onSessionTerminated(self.audioSession)
+		finally:
+			self.unregister()
 		with self.callback()._lock:
 			self.callback()._audioSessionEventListeners.remove(self)
-
 	def unregister(self):
 		try:
 			self.audioSession.unregister_notification()
