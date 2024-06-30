@@ -29,6 +29,7 @@ import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
 	ShowNewAddons,
+	ResetNewAddons,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -2916,17 +2917,29 @@ class AddonStorePanel(SettingsPanel):
 		self.showNewAddonsComboBox = sHelper.addLabeledControl(
 			showNewAddonsLabelText,
 			wx.Choice,
-			choices=[mode.displayString for mode in AddonsAutomaticUpdate]
+			choices=[mode.displayString for mode in ShowNewAddons]
 		)
 		self.bindHelpEvent("ShowNewAddons", self.showNewAddonsComboBox)
-		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["showNewAddons"])
+		index = [x.value for x in ShowNewAddons].index(config.conf["addonStore"]["showNewAddons"])
 		self.showNewAddonsComboBox.SetSelection(index)
+		# Translators: This is a label for the reset new add-ons combo box in the Add-on Store Settings dialog.
+		resetNewAddonsLabelText = _("&Reset new add-ons:")
+		self.resetNewAddonsComboBox = sHelper.addLabeledControl(
+			resetNewAddonsLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in ResetNewAddons]
+		)
+		self.bindHelpEvent("ResetNewAddons", self.resetNewAddonsComboBox)
+		index = [x.value for x in ResetNewAddons].index(config.conf["addonStore"]["resetNewAddons"])
+		self.resetNewAddonsComboBox.SetSelection(index)
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 		index = self.showNewAddonsComboBox.GetSelection()
 		config.conf["addonStore"]["showNewAddons"] = [x.value for x in ShowNewAddons][index]
+		index = self.resetNewAddonsComboBox.GetSelection()
+		config.conf["addonStore"]["resetNewAddons"] = [x.value for x in ResetNewAddons][index]
 
 
 class TouchInteractionPanel(SettingsPanel):

@@ -223,15 +223,35 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 
 
 class ShowNewAddons(DisplayStringStrEnum):
-	NOTIFY = "notify"
 	DISABLED = "disabled"
+	NOTIFY = "notify"
 
 	@property
 	def _displayStringLabels(self):
 		return {
 			# Translators: This is a label for the show new add-ons at startup behavior.
+			self.DISABLED: _("Disabled"),
+			# Translators: This is a label for the show new add-ons at startup behavior.
 			# It will notify the user when new add-ons are available.
 			self.NOTIFY: _("Notify"),
-			# Translators: This is a label for the show new add-ons at startup behavior.
-			self.DISABLED: _("Disabled"),
+		}
+
+
+class ResetNewAddons(DisplayStringStrEnum):
+	MONTHLY = "monthly"
+	WEEKLY = "weekly"
+	STARTUP = "startup"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for the reset new add-ons behavior.
+			# It will determine the period for an add-on to be considered as new.
+			self.MONTHLY: _("Monthly"),
+			# Translators: This is a label for the reset new add-ons behavior.
+			# It will determine the period for an add-on to be considered as new.
+			self.WEEKLY: _("Weekly"),
+			# Translators: This is a label for the reset new add-ons behavior.
+			# It will determine the period for an add-on to be considered as new.
+			self.STARTUP: _("At startup"),
 		}

@@ -224,6 +224,16 @@ Full automatic updating is not currently supported.
         schedule.jobs[i].run()
         ```
 
+### Reset new add-ons
+1. Ensure Reset new add-ons is set to monthly or weekly in the Add-on store panel
+1. Check the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file
+1. Restart NVDA
+1. Check that the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file is the same
+1. Ensure Reset new add-ons is set to At startup in the Add-on store panel
+1. Restart NVDA
+1. Check that the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file has been changed
+
+
 ## Other add-on actions
 
 ### Disabling an add-on

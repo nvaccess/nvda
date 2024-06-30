@@ -2953,13 +2953,28 @@ You can check this at any moment moving to the Available new add-ons tab of the 
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Notify (Default), Disabled |
-|Default |Notify |
+|Options |Disabled (Default), Notify |
+|Default |Disabled |
 
 |Option |Behaviour |
 |---|---|
-|Enabled |Notify when new add-ons are available |
 |Disabled |Do not automatically check for new add-ons |
+|Enabled |Notify when new add-ons are available |
+
+##### Reset New Add-ons {#ResetNewAddons}
+
+This option determines the period of time to reset new add-ons.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Monthly (Default), Weekly, At startup |
+|Default |Monthly |
+
+|Option |Behaviour |
+|---|---|
+|Monthly |Add-ons will be considered as new for a month (30 days) |
+|Weekly | Add-ons will be considered as new for a week (7 days) |
+|At startup | Add-ons will be considered as new until NVDA is restarted |
 
 #### Windows OCR Settings {#Win10OcrSettings}
 

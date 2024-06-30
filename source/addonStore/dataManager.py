@@ -8,6 +8,7 @@ import json
 import os
 import pathlib
 import threading
+from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Optional,
@@ -115,7 +116,8 @@ class _DataManager:
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
-		self._cacheCompatibleAddonsBackup()
+		if self._shouldCacheCompatibleAddonsBackup():
+			self._cacheCompatibleAddonsBackup()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
@@ -163,6 +165,22 @@ class _DataManager:
 		}
 		with open(self._cacheCompatibleFile, 'w', encoding='utf-8') as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
+
+	def _shouldCacheCompatibleAddonsBackup(self) -> bool:
+		if not os.path.exists(self._cacheCompatibleOldFile):
+			return True
+		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
+		if resetNewAddons == "startup":
+			return True
+		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
+		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
+		nowDate = datetime.now()
+		diffDate = nowDate - lastBackupDate
+		if resetNewAddons == "weekly" and diffDate.days >= 7:
+			return True
+		if resetNewAddons == "monthly" and diffDate.days >= 30:
+			return True
+		return False
 
 	def _cacheCompatibleAddonsBackup(self):
 		if not NVDAState.shouldWriteToDisk():
