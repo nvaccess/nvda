@@ -14,7 +14,6 @@ from keyboardHandler import KeyboardInputGesture
 from NVDAObjects.window import Window
 from NVDAObjects.IAccessible import IAccessible, sysListView32
 import watchdog
-from NVDAObjects.behaviors import _FakeTableCell
 
 messageListImageLabels={
 	# Translators: This Outlook Express message has an attachment
@@ -58,7 +57,7 @@ envelopeNames={
 class AppModule(appModuleHandler.AppModule):
 
 	def event_NVDAObject_init(self,obj):
-		if not isinstance(obj,Window): return
+		if not isinstance(obj,Window): return  # noqa: E701
 		controlID=obj.windowControlID
 		windowHandle=obj.windowHandle
 		parentWindow=winUser.getAncestor(windowHandle,winUser.GA_PARENT)
@@ -111,7 +110,7 @@ class MessageListItem(sysListView32.ListItem):
 		fields=info.getTextWithFields()
 		try:
 			isUnread=fields[0].field['bold']
-		except:
+		except:  # noqa: E722
 			isUnread=False
 		return isUnread
 

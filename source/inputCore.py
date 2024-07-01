@@ -341,7 +341,7 @@ class GlobalGestureMap:
 		for locationName, location in entries.items():
 			try:
 				module, className = locationName.rsplit(".", 1)
-			except:
+			except:  # noqa: E722
 				log.error("Invalid module/class specification: %s" % locationName)
 				self.lastUpdateContainedError = True
 				continue
@@ -355,7 +355,7 @@ class GlobalGestureMap:
 				for gesture in gestures:
 					try:
 						self.add(gesture, module, className, script)
-					except:
+					except:  # noqa: E722
 						log.error("Invalid gesture: %s" % gesture)
 						self.lastUpdateContainedError = True
 						continue
@@ -555,7 +555,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			try:
 				if self._captureFunc(gesture) is False:
 					return
-			except:
+			except:  # noqa: E722
 				log.error("Error in capture function, disabling", exc_info=True)
 				self._captureFunc = None
 
@@ -575,7 +575,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		# #2953: if an intercepted command Script (script that sends a gesture) is queued
 		# then queue all following gestures (that don't have a script) with a fake script so that they remain in order.
 		if not script and scriptHandler._numIncompleteInterceptedCommandScripts:
-			script=lambda gesture: gesture.send()
+			script=lambda gesture: gesture.send()  # noqa: E731
 
 
 		if script:

@@ -4,7 +4,6 @@
 #This file is covered by the GNU General Public License.
 #See the file COPYING for more details.
 
-import time
 from comtypes import COMError
 import comtypes.client
 import comtypes.automation
@@ -194,7 +193,7 @@ def locateHTMLElementByID(document,ID):
 		else: #probably IE 10 in standards mode (#3151)
 			try:
 				element=document.all.item(ID)
-			except:
+			except:  # noqa: E722
 				element=None
 		if element is None: #getElementsByName doesn't return element with specified ID in IE11 (#5784)
 			try:
@@ -230,7 +229,7 @@ def locateHTMLElementByID(document,ID):
 		if not childElement:
 			continue
 		childElement=locateHTMLElementByID(childElement.document,ID)
-		if not childElement: continue
+		if not childElement: continue  # noqa: E701
 		return childElement
 
 def getChildHTMLNodeFromFrame(frame):
@@ -241,7 +240,7 @@ def getChildHTMLNodeFromFrame(frame):
 		# In this case, just skip this frame.
 		return
 	res=IAccessibleHandler.accChild(pacc,1)
-	if not res: return
+	if not res: return  # noqa: E701
 	return HTMLNodeFromIAccessible(res[0])
 
 class MSHTMLTextInfo(textInfos.TextInfo):
@@ -298,7 +297,7 @@ class MSHTMLTextInfo(textInfos.TextInfo):
 			return
 		try:
 			editableBody=self.obj.HTMLNodeName=="BODY" and self.obj.isContentEditable
-		except:
+		except:  # noqa: E722
 			editableBody=False
 		if editableBody:
 			self._rangeObj=self.obj.HTMLNode.document.selection.createRange()
@@ -443,7 +442,7 @@ class MSHTML(IAccessible):
 		self._ignoreCaretEvents=oldVal
 
 	def event_caret(self):
-		if self._ignoreCaretEvents: return
+		if self._ignoreCaretEvents: return  # noqa: E701
 		if self.TextInfo is not MSHTMLTextInfo and not self._UIAControl:
 			return
 		try:
@@ -475,7 +474,7 @@ class MSHTML(IAccessible):
 			while True:
 				try:
 					HTMLNode=HTMLNode.document.activeElement
-				except:
+				except:  # noqa: E722
 					log.exception("Error getting activeElement")
 					break
 				nodeName=HTMLNode.nodeName or ""
@@ -496,7 +495,7 @@ class MSHTML(IAccessible):
 			xFactor,yFactor=getZoomFactorsFromHTMLDocument(HTMLNode.document)
 			try:
 				HTMLNode=HTMLNode.document.elementFromPoint(p.x // xFactor, p.y // yFactor)
-			except:
+			except:  # noqa: E722
 				HTMLNode=None
 			if not HTMLNode:
 				log.debugWarning("Error getting HTMLNode with elementFromPoint")
@@ -847,7 +846,7 @@ class MSHTML(IAccessible):
 	def _get_isContentEditable(self):
 		try:
 			return bool(self.HTMLNode.isContentEditable)
-		except:
+		except:  # noqa: E722
 			return False
 
 	def _get_parent(self):
@@ -936,7 +935,7 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 		try:
 			return self.HTMLNode.cellIndex+1
-		except:
+		except:  # noqa: E722
 			raise NotImplementedError
 
 	def _get_rowNumber(self):
@@ -946,7 +945,7 @@ class MSHTML(IAccessible):
 		while HTMLNode:
 			try:
 				return HTMLNode.rowIndex+1
-			except:
+			except:  # noqa: E722
 				pass
 			HTMLNode=HTMLNode.parentNode
 		raise NotImplementedError
@@ -956,7 +955,7 @@ class MSHTML(IAccessible):
 			raise NotImplementedError
 		try:
 			return len([x for x in self.HTMLNode.rows])
-		except:
+		except:  # noqa: E722
 			raise NotImplementedError
 
 	def scrollIntoView(self):
@@ -1008,7 +1007,7 @@ class MSHTML(IAccessible):
 			nodeName=HTMLNode.nodeName
 			if nodeName:
 				nodeName=nodeName.upper()
-			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)
+			if nodeName=="TABLE": return MSHTML(HTMLNode=HTMLNode)  # noqa: E701
 			HTMLNode=HTMLNode.parentNode
 		return None
 

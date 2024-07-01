@@ -82,8 +82,41 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			controlField["uniqueID"] = uniqueID
 		return controlField
 
+	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
+		# #3156: Even though the insertion point at the end of a line might have
+		# the same offset as the start of the next, some implementations
+		# support IA2_TEXT_OFFSET_CARET to take this into account. Use this to
+		# determine whether we are at this position.
+		try:
+			start, end, text = caretObj.IAccessibleTextObject.textAtOffset(
+				IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR
+			)
+			# If the offsets are different, this means there is a character, which
+			# means this is not the insertion point at the end of a line.
+			if start != end:
+				return False
+			# If there is a line feed before us, this is an empty line. We don't want
+			# to do any special adjustment in this case. Otherwise, we will report the
+			# previous line instead of the empty one.
+			if start > 0 and caretObj.IAccessibleTextObject.text(start - 1, start) == "\n":
+				return False
+			return True
+		except COMError:
+			log.debugWarning(
+				"Couldn't determine if caret is at end of line insertion point",
+				exc_info=True
+			)
+		return False
+
 	def __init__(self, obj, position):
 		super(MozillaCompoundTextInfo, self).__init__(obj, position)
+		# #3156: The position when the caret is at the end of a wrapped line (e.g.
+		# when you press the end key) has the same offset as the start of the next
+		# line. We need to handle this specially so that the correct units are
+		# retrieved when at this position. This gets set to True if appropriate when
+		# handling POSITION_CARET or a copy below. It must be reset to False whenever
+		# this TextInfo is adjusted.
+		self._isEndOfLineInsertionPoint = False
 		if isinstance(position, NVDAObject):
 			try:
 				self._start, self._startObj = self._findContentDescendant(position, textInfos.POSITION_FIRST)
@@ -106,6 +139,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			else:
 				self._end = position._end.copy()
 			self._endObj = position._endObj
+			self._isEndOfLineInsertionPoint = position._isEndOfLineInsertionPoint
 		elif position in (textInfos.POSITION_FIRST, textInfos.POSITION_LAST):
 			self._start, self._startObj = self._findContentDescendant(obj, position)
 			self._end = self._start
@@ -120,6 +154,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				caretTi, caretObj = self._findContentDescendant(obj, textInfos.POSITION_CARET)
 			except LookupError:
 				raise RuntimeError("No caret")
+			self._isEndOfLineInsertionPoint = self._isCaretAtEndOfLine(caretObj)
 			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
@@ -404,6 +439,22 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self._getText(True, formatConfig)
 
+	def _adjustIfEndOfLine(
+			self,
+			expandTi: offsets.OffsetsTextInfo,
+			unit: str,
+			obj: IAccessible
+	) -> None:
+		if (
+			self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER
+			and obj is self._startObj and expandTi._startOffset > 0
+		):
+			# #3156: This is the insertion point at the end of a line. If we use
+			# this offset, we'll get the unit at the start of the next line.
+			# Subtract 1 so that we get the unit on the current line.
+			expandTi._startOffset -= 1
+			expandTi._endOffset = expandTi._startOffset
+
 	def _findUnitEndpoints(self, baseTi, unit, findStart=True, findEnd=True):
 		start = startObj = end = endObj = None
 		baseTi.collapse()
@@ -415,6 +466,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				expandTi = self._makeRawTextInfo(obj, unit)
 			else:
 				expandTi = baseTi.copy()
+				self._adjustIfEndOfLine(expandTi, unit, obj)
 				expandTi.expand(unit)
 				if expandTi.isCollapsed:
 					# This shouldn't happen, but can due to server implementation bugs; e.g. MozillaBug:1149415.
@@ -528,6 +580,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
 			self._end = self._start
 			self._endObj = self._startObj
+			if self._isEndOfLineInsertionPoint:
+				# #3156: Report no character rather than the character at the start of the
+				# next line.
+				self._start._endOffset = self._start._startOffset
+				return
 			self._start.expand(unit)
 			return
 
@@ -540,6 +597,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		self._startObj = startObj
 		self._end = end
 		self._endObj = endObj
+		self._isEndOfLineInsertionPoint = False
 
 	def _findNextContent(self, origin, moveBack=False, limitToInline=False):
 		if isinstance(origin, textInfos.TextInfo):
@@ -658,6 +716,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		if not endPoint or endPoint == "end":
 			self._end = moveTi
 			self._endObj = moveObj
+		self._isEndOfLineInsertionPoint = False
 		self._normalizeStartAndEnd()
 		return direction - remainingMovement
 
@@ -690,7 +749,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 		if selfObj == otherObj:
 			# Same object, so just compare the two TextInfos normally.
-			return selfTi.compareEndPoints(otherTi, which)
+			result = selfTi.compareEndPoints(otherTi, which)
+			if result == 0:
+				# #3156: If one of the TextInfos is at the insertion point at the end of
+				# a line but the other isn't, these are actually different positions.
+				if self._isEndOfLineInsertionPoint and not other._isEndOfLineInsertionPoint:
+					return -1
+				elif other._isEndOfLineInsertionPoint and not self._isEndOfLineInsertionPoint:
+					return 1
+			return result
 
 		# Different objects, so we have to compare ancestors.
 		selfAncs = self._getAncestors(selfTi, selfObj)
@@ -740,3 +807,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# while the ti for self._endObj might contain text that is after the current range.
 				ti = copy._end
 		return rects
+
+	def setEndPoint(self, other, which):
+		super().setEndPoint(other, which)
+		self._isEndOfLineInsertionPoint = False

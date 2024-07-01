@@ -64,7 +64,7 @@ class RequestHandler(socketserver.StreamRequestHandler):
 				self._execDoneEvt.wait()
 				self._execDoneEvt.clear()
 
-		except:
+		except:  # noqa: E722
 			log.exception("Error handling remote Python console request")
 		finally:
 			# Clean up the console.

@@ -440,7 +440,7 @@ def setLocale(localeName: str) -> None:
 	if originalLocaleName == getLanguage():
 		# reset to system locale default if we can't set the current lang's locale
 		locale.setlocale(locale.LC_ALL, "")
-		log.debugWarning(f"set python locale to system default")
+		log.debugWarning("set python locale to system default")
 	else:
 		log.debugWarning(f"setting python locale to the current language {getLanguage()}")
 		# fallback and try to reset the locale to the current lang

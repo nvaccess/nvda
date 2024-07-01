@@ -4,7 +4,6 @@
 # See the file COPYING for more details.
 
 from collections import namedtuple
-import math
 import colorsys
 from ctypes.wintypes import COLORREF
 import re

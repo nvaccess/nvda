@@ -9,7 +9,7 @@ As there are localizable strings at module level, this can only be imported once
 To access version information for programmatic version checks before languageHandler.initialize, use the buildVersion module which contains all the non-localizable version information such as major and minor version, and version string etc.
 """
 
-from buildVersion import *
+from buildVersion import *  # noqa: F403
 
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")

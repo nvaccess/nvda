@@ -115,7 +115,7 @@ def internal_mouseEvent(msg,x,y,injected):
 			core.requestPump()
 		elif msg in (WM_LBUTTONDOWN,WM_RBUTTONDOWN):
 			queueHandler.queueFunction(queueHandler.eventQueue,speech.cancelSpeech)
-	except:
+	except:  # noqa: E722
 		log.error("", exc_info=True)
 	return True
 
@@ -165,7 +165,7 @@ def getMouseRestrictedToScreens(x, y, displays):
 			max(min(scrCenterToMouse.y, halfWidth.y), -halfWidth.y))
 		edgeToMouse = mpos - mouseLimitedToScreen
 		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
-		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:
+		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:  # noqa: E711
 			closestDistValue = distFromRectToMouseSqd
 			newXY = mouseLimitedToScreen
 
@@ -189,10 +189,10 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	smallestX, smallestY, largestX, largestY = (None, None, None, None)
 	for screenRect in displays:
 		(screenMin, screenMax) = getMinMaxPoints(screenRect)
-		if smallestX == None or screenMin.x < smallestX: smallestX = screenMin.x
-		if smallestY == None or screenMin.y < smallestY: smallestY = screenMin.y
-		if largestX == None or screenMax.x > largestX: largestX = screenMax.x
-		if largestY == None or screenMax.y > largestY: largestY = screenMax.y
+		if smallestX == None or screenMin.x < smallestX: smallestX = screenMin.x  # noqa: E701, E711
+		if smallestY == None or screenMin.y < smallestY: smallestY = screenMin.y  # noqa: E701, E711
+		if largestX == None or screenMax.x > largestX: largestX = screenMax.x  # noqa: E701, E711
+		if largestY == None or screenMax.y > largestY: largestY = screenMax.y  # noqa: E701, E711
 
 	# get full range, including any "blank space" between monitors
 	totalWidth = largestX - smallestX
@@ -225,7 +225,7 @@ def executeMouseMoveEvent(x,y):
 	try:
 		eventHandler.executeEvent("mouseMove",mouseObject,x=x,y=y)
 		oldMouseObject=mouseObject
-	except:
+	except:  # noqa: E722
 		log.error("api.notifyMouseMoved", exc_info=True)
 
 #Register internal mouse event
@@ -237,7 +237,7 @@ def initialize():
 	desktopObject=api.getDesktopObject()
 	try:
 		mouseObject=desktopObject.objectFromPoint(x,y)
-	except:
+	except:  # noqa: E722
 		log.exception("Error retrieving initial mouse object")
 		mouseObject=None
 	if not mouseObject:

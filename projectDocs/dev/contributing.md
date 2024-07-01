@@ -37,7 +37,8 @@ If you are new to the project, or looking for some way to help take a look at:
 1. [Run automated tests](../testing/automated.md)
 	- Run `rununittests` (`rununittests.bat`) before you open your Pull Request, and make sure all the unit tests pass.
 	- If possible for your PR, please consider creating a set of unit or system tests to test your changes.
-	- The lint check ensures your changes comply with our code style expectations. Use `runlint nvaccess/master` (`runlint.bat`)
+	- The lint check ensures your changes comply with our code style expectations.
+	Use `runlint.bat`.
 	- Run `scons checkPot` to ensure translatable strings have comments for the translators
 1. [Create a change log entry](#change-log-entry)
 1. [Create a Pull Request (PR)](./githubPullRequestTemplateExplanationAndExamples.md)

@@ -341,7 +341,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if cultureVal and isinstance(cultureVal,int):
 			try:
 				formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
-			except:
+			except:  # noqa: E722
 				log.debugWarning("language error",exc_info=True)
 				pass
 		return textInfos.FieldCommand("formatChange",formatField)
@@ -460,7 +460,7 @@ class UIATextInfo(textInfos.TextInfo):
 			except COMError:
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
-			if not self._rangeObj: raise LookupError
+			if not self._rangeObj: raise LookupError  # noqa: E701
 		elif isinstance(position,locationHelper.Point):
 			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(position.toPOINT())
 		elif isinstance(position, UIAHandler.IUIAutomationTextRange):
@@ -470,8 +470,8 @@ class UIATextInfo(textInfos.TextInfo):
 			raise ValueError("Unknown position %s"%position)
 
 	def __eq__(self, other: "UIATextInfo"):
-		if self is other: return True
-		if self.__class__ is not other.__class__: return False
+		if self is other: return True  # noqa: E701
+		if self.__class__ is not other.__class__: return False  # noqa: E701
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
@@ -1355,8 +1355,8 @@ class UIA(Window):
 		if not windowHandle:
 			if UIAHandler._isDebug():
 				log.debug(
-					f"No windowHandle for UIA NvDAObject. "
-					f"Searching UIA element ancestry for nearest windowHandle"
+					"No windowHandle for UIA NvDAObject. "
+					"Searching UIA element ancestry for nearest windowHandle"
 				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
@@ -1374,7 +1374,7 @@ class UIA(Window):
 			return False
 		try:
 			return UIAHandler.handler.clientObject.CompareElements(self.UIAElement,other.UIAElement)
-		except:
+		except:  # noqa: E722
 			return False
 
 	def event_gainFocus(self):
@@ -2294,7 +2294,7 @@ class UIItem(UIA):
 			info['indexInGroup']=itemIndex
 			try:
 				e=self._getUIACacheablePropertyValue(UIAHandler.UIA_SelectionItemSelectionContainerPropertyId)
-				if e: e=e.QueryInterface(UIAHandler.IUIAutomationElement)
+				if e: e=e.QueryInterface(UIAHandler.IUIAutomationElement)  # noqa: E701
 			except COMError:
 				e=None
 			if e:
@@ -2328,7 +2328,7 @@ class ControlPanelLink(UIA):
 		desc = self.UIAHelpText
 		try:
 			i=desc.find('\n')
-		except:
+		except:  # noqa: E722
 			i=None
 		if i:
 			desc=desc[i+1:]
