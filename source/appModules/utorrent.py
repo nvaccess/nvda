@@ -48,7 +48,7 @@ class TorrentContentsListItem(ListItem):
 			left, top, width, height = self._getColumnLocation(column)
 			return displayModel.DisplayModelTextInfo(self, locationHelper.RectLTRB(
 				left, top, left + width, top + height)).text
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Error retrieving name using display model", exc_info=True)
 			return superContent
 

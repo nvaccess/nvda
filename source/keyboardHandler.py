@@ -251,7 +251,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 				# Never pass the NVDA modifier key to the OS.
 				trappedKeys.add(keyCode)
 				return False
-	except:
+	except:  # noqa: E722
 		log.error("internal_keyDownEvent", exc_info=True)
 	finally:
 		if _watchdogObserver.isAttemptingRecovery:
@@ -264,7 +264,7 @@ def internal_keyDownEvent(vkCode,scanCode,extended,injected):
 			# And we only want to do this if the gesture did not result in an executed action 
 			and not gestureExecuted 
 			# and not if this gesture is a modifier key
-			and not isNVDAModifierKey(vkCode,extended) and not vkCode in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
+			and not isNVDAModifierKey(vkCode,extended) and vkCode not in KeyboardInputGesture.NORMAL_MODIFIER_KEYS
 		):
 			keyStates=(ctypes.c_byte*256)()
 			for k in range(256):
@@ -321,7 +321,7 @@ def internal_keyUpEvent(vkCode,scanCode,extended,injected):
 		if keyCode in trappedKeys:
 			trappedKeys.remove(keyCode)
 			return False
-	except:
+	except:  # noqa: E722
 		log.error("", exc_info=True)
 	return True
 

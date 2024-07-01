@@ -27,16 +27,16 @@ scons checkPot
 ```
 
 ### Linting your changes
-In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
-Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-runlint.bat will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
-If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
+
+In order to ensure your changes comply with NVDA's coding style you can run the Ruff linter locally.
+`runlint.bat` will use Ruff to lint and where possible, fix the code you have written.
+
 ```cmd
-runlint origin/master
+runlint.bat
 ```
 
-To be warned about linting errors faster, you may wish to integrate Flake8 with other development tools you are using.
-For more details, see `tests/lint/readme.md`
+To be warned about linting errors faster, you may wish to integrate Ruff with other development tools you are using.
+For more details, see the [linting docs](../dev/lint.md).
 
 ### Unit Tests
 Unit tests can be run with the `rununittests.bat` script.

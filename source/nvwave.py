@@ -36,7 +36,7 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR
+from comtypes import HRESULT
 from comtypes.hresult import S_OK
 import atexit
 import weakref
@@ -343,11 +343,11 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 				self._handleWinmmError(message="Error opening")
 				if lastOutputDeviceID != WAVE_MAPPER:
 					if _isDebugForNvWave():
-						log.debug(f"Falling back to WAVE_MAPPER")
+						log.debug("Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
 				else:
-					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
+					log.warning("Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					WavePlayer.audioDeviceError_static = True
 					raise  # can't open the default device.
 				return
@@ -468,7 +468,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			if self._prevOnDone not in (None, self.STOPPING):
 				try:
 					self._prevOnDone()
-				except:
+				except:  # noqa: E722
 					log.exception("Error calling onDone")
 				self._prevOnDone = None
 
@@ -524,12 +524,12 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
-			if self._audioDucker: self._audioDucker.disable()
+			if self._audioDucker: self._audioDucker.disable()  # noqa: E701
 
 	def stop(self):
 		"""Stop playback.
 		"""
-		if self._audioDucker: self._audioDucker.disable()
+		if self._audioDucker: self._audioDucker.disable()  # noqa: E701
 		if self._minBufferSize:
 			self._buffer = b""
 		with self._waveout_lock:
@@ -685,7 +685,7 @@ def playWaveFile(
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
-	if f is None: raise RuntimeError("can not open file %s"%fileName)
+	if f is None: raise RuntimeError("can not open file %s"%fileName)  # noqa: E701
 	if fileWavePlayer is not None:
 		# There are several race conditions where the background thread might feed
 		# audio after we call stop here in the main thread. Some of these are

@@ -1096,8 +1096,8 @@ These tables can either replace standard tables shipped with NVDA or be complete
 When adding a table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
 When an add-on ships with tables, this information is included in its manifest in the optional brailleTables section.
 For example:
+
 ```
---- start ---
 [brailleTables]
 [[fr-bfu-tabmod-comp8.utb]]
 displayName = French (unified) 8 dot computer braille - Addition
@@ -1110,7 +1110,6 @@ displayName = Norwegian 8 dot computer braille - Replacement
 contracted = False
 output = True
 input = True
---- end ---
 ```
 
 In the above example, `fr-bfu-tabmod-comp8.utb` is a new table,  while `no-no-8dot.utb` replaces a table that is already included in NVDA.

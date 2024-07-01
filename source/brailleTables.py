@@ -628,6 +628,9 @@ addTable("th-g0.utb", _("Thai 6 dot"), input=False)
 addTable("tr.ctb", _("Turkish grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("tr-g2.ctb", _("Turkish grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("tsn-za-g1.ctb", _("Setswana grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
