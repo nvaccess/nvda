@@ -37,7 +37,7 @@ from ctypes.wintypes import (
 	LPUINT
 )
 from comtypes import HRESULT
-from comtypes.hresult import S_OK
+from comtypes.hresult import E_INVALIDARG
 import atexit
 import weakref
 import time
@@ -753,11 +753,6 @@ def isInError() -> bool:
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
 
 
-def _wasPlay_errcheck(res, func, args):
-	if res != S_OK:
-		raise WindowsError(res)
-
-
 class WasapiWavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio using WASAPI.
 	To use, construct an instance and feed it waveform audio using L{feed}.
@@ -1006,7 +1001,14 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				raise ValueError("all specified, so left and right must not be specified")
 			left = right = all
 		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 0, c_float(left))
-		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
+		try:
+			NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
+		except WindowsError as e:
+			# E_INVALIDARG indicates that the audio device doesn't support this channel.
+			# If we're trying to set all channels, that's fine; we've already set the
+			# single channel that this device supports.
+			if not (all and e.winerror == E_INVALIDARG):
+				raise
 
 	def _setVolumeFromConfig(self):
 		if self._purpose is not AudioPurpose.SOUNDS:
@@ -1095,7 +1097,6 @@ def initialize():
 		NVDAHelper.localLib.wasSilence_init,
 	):
 		func.restype = HRESULT
-		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
 	getOnErrorSoundRequested().register(playErrorSound)
 
