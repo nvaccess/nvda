@@ -7,8 +7,10 @@ import winVersion
 import enum
 
 
-IS_64_BIT: bool = winVersion.getWinVer().processorArchitecture.endswith("64")
-"""True if the system is 64bit"""
+IS_64_BIT_WINDOWS: bool = winVersion.getWinVer().processorArchitecture.endswith("64")
+"""True if the Windows copy is 64bit"""
+
+IS_64_BIT_NVDA = os.environ.get("PROCESSOR_ARCHITECTURE") == "AMD64"
 
 
 class HResult(enum.IntEnum):
