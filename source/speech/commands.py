@@ -1,4 +1,3 @@
-#  -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -201,6 +200,25 @@ class EndUtteranceCommand(SpeechCommand):
 
 	def __repr__(self):
 		return "EndUtteranceCommand()"
+
+
+class SuppressUnicodeNormalizationCommand(SpeechCommand):
+	"""Suppresses Unicode normalization at a point in a speech sequence.
+	For any text after this, Unicode normalization will be suppressed when state is True.
+	When state is False, original behavior of normalization will be restored.
+	This command is a no-op when normalization is disabled.
+	"""
+	state: bool
+
+	def __init__(self, state: bool = True):
+		"""
+		:param state: Suppress normalization if True, don't suppress when False
+		"""
+		self.state = state
+
+	def __repr__(self):
+		return f"SuppressUnicodeNormalizationCommand({self.state!r})"
+
 
 class BaseProsodyCommand(SynthParamCommand):
 	"""Base class for commands which change voice prosody; i.e. pitch, rate, etc.

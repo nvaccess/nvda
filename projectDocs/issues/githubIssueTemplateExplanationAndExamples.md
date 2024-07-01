@@ -7,15 +7,20 @@ The template uses github markdown, to provide formatting for headings, lists, qu
 If you are not familiar, please take some time to learn about 
 [Github markdown](https://guides.github.com/features/mastering-markdown/)
 
-**Warning**: In all but exceptional circumstances we require this template to be completed.
-Your issue will likely be closed if this template has not been followed.
+**Warning**: In all but exceptional circumstances we require one of these templates to be completed.
+Your issue will likely be closed if a template has not been followed.
 
-We currently have two templates, both are described on this page:
-- for bug reports
-- for feature requests.
+We currently have four templates:
+
+- For [feature requests](#feature-request-template)
+- For [bug reports](#bug-report-template)
+- For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
+- For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
+
 
 ## General information
-The following information applies to all issues (bug reports, new features, even pull requests).
+The following information applies to all issues and pull requests.
+
 At the start of the template there is an HTML comment block which points to this wiki page, it can
 be left in place and will not appear once the issue is saved.
 Feel free to delete it.
@@ -191,7 +196,7 @@ In case the issue is caused by an add-on, it is recommended to contact the autho
 
 #### Does the issue still occur after you run the COM Registration Fixing Tool in NVDA's tools menu?
 
-COM DLL files, which i.e. the IAccessible COM interface depends on, can get unregistered after
+COM DLL files, which the IAccessible COM interface depends on, can get unregistered after
 installing and uninstalling different programs on a computer.
 The consequence is that NVDA in certain cases does not work properly.
 Specifically, it reports "unknown" when trying to navigate websites or fails to switch between focus
@@ -201,3 +206,38 @@ In any case, re-registering those DLL files does not have any negative impact on
 functionality.
 Thus, it is recommended to run the fixing tool whenever focus problems, performance problems on
 websites or navigation problems in focus or browse mode on different interfaces are encountered.
+
+
+## Special Case Issue template
+
+### Detailed description of the issue
+Provide a detailed description of the issue you are reporting.
+Include specific details to help us understand the context.
+
+### Why are the other templates not appropriate in this case?
+Explain why this issue cannot be addressed using the standard bug report or feature request templates.
+
+### Have you asked for advice on how to report this issue via a community discussion? If so, please link to the discussion
+Mention if you have sought advice or shared this issue in community discussions before creating this issue ticket.
+Include links to discussion threads if applicable, for example:
+- https://github.com/nvaccess/nvda/discussions
+- https://nvda.groups.io/g/nvda
+
+### Steps to reproduce or illustrate the issue (if applicable)
+If possible, provide steps to demonstrate or reproduce the issue. 
+Refer to [Steps to reproduce](#steps-to-reproduce) for more information.
+If this or the following sections are not applicable, write "N/A."
+
+### Expected outcome or behaviour (if applicable)
+Describe what you expected to happen or how you expect the project to handle this kind of issue.
+
+### Logs, screenshots and other attachments (if applicable)
+Attach any relevant logs or files that would help in diagnosing or understanding the issue.
+Refer to [Attachments / Images](#attachments--images) for more information.
+
+### System configuration or software environment (if applicable)
+Include details about your environment where relevant (e.g., operating system, NVDA version, other relevant software).
+Refer to [System configuration](#system-configuration) for more information.
+
+### Additional information (if applicable)
+Provide any additional context or information that you think may be helpful for understanding or resolving the issue.

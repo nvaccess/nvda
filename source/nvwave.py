@@ -907,7 +907,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param size: The size of the data in bytes if data is a ctypes pointer.
 			If data is a Python bytes object, size should be None.
 		@param onDone: Function to call when this chunk has finished playing.
-		@raise WindowsError: If there was an error playing the audio.
+		@raise WindowsError: If there was an error initially opening the device.
 		"""
 		self.open()
 		if self._audioDucker:
@@ -915,12 +915,23 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
-		NVDAHelper.localLib.wasPlay_feed(
-			self._player,
-			data,
-			size if size is not None else len(data),
-			byref(feedId) if onDone else None
-		)
+		try:
+			NVDAHelper.localLib.wasPlay_feed(
+				self._player,
+				data,
+				size if size is not None else len(data),
+				byref(feedId) if onDone else None
+			)
+		except WindowsError:
+			# #16722: This might occur on a Remote Desktop server when a client session
+			# disconnects without exiting NVDA. That will cause audio to become
+			# unavailable with an unexpected error code. In any case, the C++
+			# WasapiPlayer code will reopen the device when we next try to feed, so
+			# just log the error here and return without raising it. Otherwise, we
+			# might break code which isn't expecting to handle exceptions from feed
+			# such as the oneCore synth driver.
+			log.debugWarning("Error feeding audio", exc_info=True)
+			return
 		if onDone:
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()

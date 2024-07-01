@@ -141,7 +141,6 @@ class ControlField(Field):
 				controlTypes.Role.TREEVIEW, 
 				controlTypes.Role.CHECKMENUITEM, 
 				controlTypes.Role.RADIOMENUITEM,
-				controlTypes.Role.CAPTION,
 			)
 			or (role == controlTypes.Role.EDITABLETEXT and controlTypes.State.MULTILINE not in states and (controlTypes.State.READONLY not in states or controlTypes.State.FOCUSABLE in states))
 			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY not in states)
@@ -170,6 +169,7 @@ class ControlField(Field):
 				controlTypes.Role.BLOCKQUOTE,
 				controlTypes.Role.GROUPING,
 				controlTypes.Role.FIGURE,
+				controlTypes.Role.CAPTION,
 				controlTypes.Role.REGION,
 				controlTypes.Role.FRAME,
 				controlTypes.Role.INTERNALFRAME,

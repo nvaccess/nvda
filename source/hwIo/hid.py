@@ -180,6 +180,7 @@ class Hid(IoBase):
 		self._writeSize = caps.OutputReportByteLength
 		self._readSize = caps.InputReportByteLength
 		# Reading any less than caps.InputReportByteLength is an error.
+		self._isClosed = False
 		super().__init__(
 			handle,
 			onReceive,
@@ -318,7 +319,11 @@ class Hid(IoBase):
 			raise ctypes.WinError()
 
 	def close(self):
+		if self._isClosed:
+			log.debug("Attempted to close an already closed device.")
+			return
 		super(Hid, self).close()
 		winKernel.closeHandle(self._file)
 		self._file = None
 		hidDll.HidD_FreePreparsedData(self._pd)
+		self._isClosed = True
