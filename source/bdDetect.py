@@ -27,10 +27,8 @@ from typing import (
 	NamedTuple,
 	Optional,
 	OrderedDict,
-	Set,
 	Tuple,
 	Type,
-	Union,
 )
 import hwPortUtils
 import NVDAState
@@ -106,6 +104,12 @@ DriverDictT = defaultdict[DeviceType, set[str] | MatchFuncT]
 
 _driverDevices = OrderedDict[str, DriverDictT]()
 
+fallBackDevices: set[tuple[str, DeviceType, str]] = set()
+"""
+Used to store fallback devices.
+When registered as a fallback device, it will be yielded last among the connected USB devices.
+"""
+
 scanForDevices = extensionPoints.Chain[Tuple[str, DeviceMatch]]()
 """
 A Chain that can be iterated to scan for devices.
@@ -153,13 +157,18 @@ def getDriversForConnectedUsbDevices(
 		for port in deviceInfoFetcher.hidDevices
 		if port["provider"] == "usb"
 	))
+
+	fallbackDriversAndMatches: list[set[str, DeviceMatch]] = []
 	for match in itertools.chain(usbCustomDeviceMatches, usbHidDeviceMatchesForCustom, usbComDeviceMatches):
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
 				continue
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					yield driver, match
+					if (driver, match.type, match.id) in fallBackDevices:
+						fallbackDriversAndMatches.append({driver, match})
+					else:
+						yield driver, match
 
 	hidName = _getStandardHidDriverName()
 	if limitToDevices and hidName not in limitToDevices:
@@ -169,7 +178,13 @@ def getDriversForConnectedUsbDevices(
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
-			yield (hidName, match)
+			if (driver, match.type, match.id) in fallBackDevices:
+				fallbackDriversAndMatches.append({hidName, match})
+			else:
+				yield hidName, match
+
+	for driver, match in fallbackDriversAndMatches:
+		yield driver, match
 
 
 def _getStandardHidDriverName() -> str:
@@ -446,6 +461,8 @@ class _Detector:
 		appModuleHandler.post_appSwitch.unregister(self.pollBluetoothDevices)
 		messageWindow.pre_handleWindowMessage.unregister(self.handleWindowMessage)
 		self._stopBgScan()
+		# Clear the fallback devices
+		fallBackDevices.clear()
 		# Clear the cache of bluetooth devices so new devices can be picked up with a new instance.
 		deviceInfoFetcher.btDevsCache = None
 		self._executor.shutdown(wait=False)
@@ -471,15 +488,27 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			for port in deviceInfoFetcher.usbComPorts
 		)
 	)
+
+	fallbackMatches: list[DeviceMatch] = []
+
 	for match in usbDevs:
 		if driver == _getStandardHidDriverName():
 			if _isHIDBrailleMatch(match):
-				yield match
+				if (driver, match.type, match.id) in fallBackDevices:
+					fallbackMatches.append(match)
+				else:
+					yield match
 		else:
 			devs = _driverDevices[driver]
 			for type, ids in devs.items():
 				if match.type == type and match.id in ids:
-					yield match
+					if (driver, match.type, match.id) in fallBackDevices:
+						fallbackMatches.append(match)
+					else:
+						yield match
+
+	for match in fallbackMatches:
+		yield match
 
 
 def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
@@ -605,11 +634,18 @@ class DriverRegistrar:
 			ret = _driverDevices[self._driver] = DriverDictT(set)
 			return ret
 
-	def addUsbDevices(self, type: DeviceType, ids: Set[str]):
+	def addUsbDevices(self, type: DeviceType, ids: set[str], useAsFallBack: bool = False):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
 		:param ids: A set of USB IDs in the form C{"VID_xxxx&PID_XXXX"}.
 			Note that alphabetical characters in hexadecimal numbers should be uppercase.
+		:param useAsFallBack: A boolean flag to determine how USB devices are associated with the driver.
+
+			If False (default), the devices are added directly to the primary driver list for the specified type,
+			meaning they are immediately available for use with the driver.
+			If True, the devices are added to a fallback list and are used only if the primary driver cannot use
+			the initial devices, serving as a backup option in case of compatibility issues.
+			This provides flexibility and robustness in managing driver-device connections.
 		:raise ValueError: When one of the provided IDs is malformed.
 		"""
 		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
@@ -618,6 +654,9 @@ class DriverRegistrar:
 				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
 				f"{', '.join(malformedIds)}"
 			)
+		if useAsFallBack:
+			fallBackDevices.update((self._driver, type, id) for id in ids)
+		
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
 		driverUsb.update(ids)

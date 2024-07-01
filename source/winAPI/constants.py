@@ -1,10 +1,12 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import winVersion
 import enum
+import os
+
+import winVersion
 
 
 IS_64_BIT_WINDOWS: bool = winVersion.getWinVer().processorArchitecture.endswith("64")

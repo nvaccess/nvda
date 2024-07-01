@@ -36,8 +36,8 @@ from ctypes.wintypes import (
 	UINT,
 	LPUINT
 )
-from comtypes import HRESULT, BSTR
-from comtypes.hresult import S_OK
+from comtypes import HRESULT
+from comtypes.hresult import E_INVALIDARG
 import atexit
 import weakref
 import time
@@ -343,11 +343,11 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 				self._handleWinmmError(message="Error opening")
 				if lastOutputDeviceID != WAVE_MAPPER:
 					if _isDebugForNvWave():
-						log.debug(f"Falling back to WAVE_MAPPER")
+						log.debug("Falling back to WAVE_MAPPER")
 					self._setCurrentDevice(WAVE_MAPPER)
 					self.open()
 				else:
-					log.warning(f"Unable to open WAVE_MAPPER device, there may be no audio devices.")
+					log.warning("Unable to open WAVE_MAPPER device, there may be no audio devices.")
 					WavePlayer.audioDeviceError_static = True
 					raise  # can't open the default device.
 				return
@@ -468,7 +468,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			if self._prevOnDone not in (None, self.STOPPING):
 				try:
 					self._prevOnDone()
-				except:
+				except:  # noqa: E722
 					log.exception("Error calling onDone")
 				self._prevOnDone = None
 
@@ -524,12 +524,12 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 							self._close()  # Idle so no need to call stop.
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
-			if self._audioDucker: self._audioDucker.disable()
+			if self._audioDucker: self._audioDucker.disable()  # noqa: E701
 
 	def stop(self):
 		"""Stop playback.
 		"""
-		if self._audioDucker: self._audioDucker.disable()
+		if self._audioDucker: self._audioDucker.disable()  # noqa: E701
 		if self._minBufferSize:
 			self._buffer = b""
 		with self._waveout_lock:
@@ -685,7 +685,7 @@ def playWaveFile(
 	"""
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName,"r")
-	if f is None: raise RuntimeError("can not open file %s"%fileName)
+	if f is None: raise RuntimeError("can not open file %s"%fileName)  # noqa: E701
 	if fileWavePlayer is not None:
 		# There are several race conditions where the background thread might feed
 		# audio after we call stop here in the main thread. Some of these are
@@ -751,11 +751,6 @@ def isInError() -> bool:
 
 
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
-
-
-def _wasPlay_errcheck(res, func, args):
-	if res != S_OK:
-		raise WindowsError(res)
 
 
 class WasapiWavePlayer(garbageHandler.TrackedObject):
@@ -907,7 +902,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param size: The size of the data in bytes if data is a ctypes pointer.
 			If data is a Python bytes object, size should be None.
 		@param onDone: Function to call when this chunk has finished playing.
-		@raise WindowsError: If there was an error playing the audio.
+		@raise WindowsError: If there was an error initially opening the device.
 		"""
 		self.open()
 		if self._audioDucker:
@@ -915,12 +910,23 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
-		NVDAHelper.localLib.wasPlay_feed(
-			self._player,
-			data,
-			size if size is not None else len(data),
-			byref(feedId) if onDone else None
-		)
+		try:
+			NVDAHelper.localLib.wasPlay_feed(
+				self._player,
+				data,
+				size if size is not None else len(data),
+				byref(feedId) if onDone else None
+			)
+		except WindowsError:
+			# #16722: This might occur on a Remote Desktop server when a client session
+			# disconnects without exiting NVDA. That will cause audio to become
+			# unavailable with an unexpected error code. In any case, the C++
+			# WasapiPlayer code will reopen the device when we next try to feed, so
+			# just log the error here and return without raising it. Otherwise, we
+			# might break code which isn't expecting to handle exceptions from feed
+			# such as the oneCore synth driver.
+			log.debugWarning("Error feeding audio", exc_info=True)
+			return
 		if onDone:
 			self._doneCallbacks[feedId.value] = onDone
 		self._lastActiveTime = time.time()
@@ -995,7 +1001,14 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				raise ValueError("all specified, so left and right must not be specified")
 			left = right = all
 		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 0, c_float(left))
-		NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
+		try:
+			NVDAHelper.localLib.wasPlay_setChannelVolume(self._player, 1, c_float(right))
+		except WindowsError as e:
+			# E_INVALIDARG indicates that the audio device doesn't support this channel.
+			# If we're trying to set all channels, that's fine; we've already set the
+			# single channel that this device supports.
+			if not (all and e.winerror == E_INVALIDARG):
+				raise
 
 	def _setVolumeFromConfig(self):
 		if self._purpose is not AudioPurpose.SOUNDS:
@@ -1084,7 +1097,6 @@ def initialize():
 		NVDAHelper.localLib.wasSilence_init,
 	):
 		func.restype = HRESULT
-		func.errcheck = _wasPlay_errcheck
 	NVDAHelper.localLib.wasPlay_startup()
 	getOnErrorSoundRequested().register(playErrorSound)
 

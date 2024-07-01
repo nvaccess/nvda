@@ -67,7 +67,7 @@ def doInstall(
 			wait=True,
 			handleAlreadyElevated=True
 		)
-		if res==2: raise installer.RetriableFailure
+		if res==2: raise installer.RetriableFailure  # noqa: E701
 		if copyPortableConfig:
 			installedUserConfigPath=config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
@@ -307,7 +307,7 @@ class InstallingOverNewerVersionDialog(
 		contentSizer.addItem(text)
 
 		buttonHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
-		okButton = buttonHelper.addButton(
+		okButton = buttonHelper.addButton(  # noqa: F841
 			parent=self,
 			id=wx.ID_OK,
 			# Translators: The label of a button to proceed with installation,

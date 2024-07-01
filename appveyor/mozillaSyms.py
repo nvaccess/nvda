@@ -6,7 +6,6 @@ It expects the crash-stats auth token to be placed in the mozillaSymsAuthToken e
 To update the list of symbols uploaded to Mozilla, see the DLL_NAMES constant below.
 """
 
-import argparse
 import os
 import subprocess
 import sys

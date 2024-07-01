@@ -4,7 +4,7 @@
 # Copyright (C) 2010-2023 Gianluca Casalino, NV Access Limited, Babbage B.V., Leonard de Ruijter,
 # Bram Duvigneau
 
-from typing import List
+from typing import List, Iterator
 
 import serial
 from io import BytesIO
@@ -247,22 +247,31 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		# Hid device
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_045E&PID_940A",  # Braille Edge3S 40
-		})
+		deviceTypes = {
+			bdDetect.DeviceType.HID: (
+				{
+					"VID_045E&PID_940A"  # Braille Edge3S 40
+				},
+				True
+			),
+			bdDetect.DeviceType.CUSTOM: (
+				{
+					"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
+					"VID_045E&PID_930B"  # Braille EDGE 40
+				},
+				False
+			),
+			bdDetect.DeviceType.SERIAL: (
+				{
+					"VID_0403&PID_6001",
+					"VID_1A86&PID_55D3"  # Braille Edge2S 40
+				},
+				False
+			)
+		}
 
-		# Bulk devices
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
-			"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
-			"VID_045E&PID_930B",  # Braille EDGE 40
-		})
-
-		# Sync Braille, serial device
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_0403&PID_6001",
-			"VID_1A86&PID_55D3",  # Braille Edge2S 40
-		})
+		for deviceType, (ids, useAsFallback) in deviceTypes.items():
+			driverRegistrar.addUsbDevices(deviceType, ids, useAsFallback)
 
 		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
 			"BrailleSense",
@@ -271,13 +280,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)))
 
 	@classmethod
-	def getManualPorts(cls):
-		return braille.getSerialPorts(filterFunc=lambda info: "bluetoothName" in info)
+	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
+		return braille.getSerialPorts()
 
 	def __init__(self, port="auto"):
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
 		self._model = None
+		self._serialData = b''
 
 		for match in self._getTryPorts(port):
 			portType, portId, port, portInfo = match
@@ -291,7 +301,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					case bdDetect.DeviceType.CUSTOM:
 						# onReceiveSize based on max packet size according to USB endpoint information.
 						self._dev = hwIo.Bulk(port, 0, 1, self._onReceive, onReceiveSize=64)
-					case _:
+					case bdDetect.DeviceType.SERIAL:
 						self._dev = hwIo.Serial(
 							port,
 							baudrate=BAUD_RATE,
@@ -300,6 +310,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							writeTimeout=self.timeout,
 							onReceive=self._onReceive
 						)
+					case _:
+						log.error(f"No matching case for portType found: {portType}")
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -489,36 +501,60 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _onReceive(self, data: bytes):
 		if self.isBulk:
-			# data contains the entire packet.
 			stream = BytesIO(data)
-			firstByte:bytes = data[0:1]
+			firstByte: bytes = data[0:1]
 			stream.seek(1)
 		else:
 			firstByte = data
-			# data only contained the first byte. Read the rest from the device.
 			stream = self._dev
-		if firstByte == b"\x1c":
+
+		# sometimes serial data is received in fragments.
+		# so accumulate data until it reaches 10 bytes.
+		if not self._accumulateSerialData(data):
+			return
+
+		if firstByte == b"\xfa":
+			self._processSerialData(firstByte, stream)
+		elif firstByte == b"\x1c":
 			# A device is identifying itself
 			deviceId: bytes = stream.read(2)
 			# When a device identifies itself, the packets ends with 0x1f
 			assert stream.read(1) == b"\x1f"
 			self._handleIdentification(deviceId)
-		elif firstByte == b"\xfa":
-			# Command packets are ten bytes long
-			packet = firstByte + stream.read(9)
-			assert packet[2] == 0x01 # Fixed value
-			CHECKSUM_INDEX = 8
-			checksum: int = packet[CHECKSUM_INDEX]
-			assert packet[9] == 0xfb # Command End
-			calcCheckSum: int = 0xff & sum(
-				c for index, c in enumerate(packet) if(
-					index != CHECKSUM_INDEX)
-			)
-			assert(calcCheckSum == checksum)
-			self._handlePacket(packet)
 		else:
-			log.debug("Unknown first byte received: 0x%x"%ord(firstByte))
+			log.debug(f"Unknown first byte received: 0x{ord(firstByte):x}")
 			return
+
+	def _accumulateSerialData(self, data: bytes) -> bool:
+		if self._serialData:
+			self._serialData += data
+			return len(self._serialData) == 10
+
+		return True
+
+	def _processSerialData(self, firstByte: bytes, stream):
+		# serial data first received
+		if not self._serialData:
+			try:
+				# Command packets are ten bytes long
+				packet = firstByte + stream.read(9)
+			except IOError:
+				# remaining data will be received next onReceive
+				self._serialData = firstByte
+				return
+		else:
+			packet = self._serialData
+			self._serialData = b""
+		
+		assert packet[2] == 0x01  # Fixed value
+		CHECKSUM_INDEX = 8
+		checksum: int = packet[CHECKSUM_INDEX]
+		assert packet[9] == 0xfb  # Command End
+		calcCheckSum: int = 0xff & sum(
+			c for index, c in enumerate(packet) if index != CHECKSUM_INDEX
+		)
+		assert calcCheckSum == checksum
+		self._handlePacket(packet)
 
 	def _sendPacket(
 			self,

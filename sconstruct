@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2010-2023 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
+# Copyright (C) 2010-2024 NV Access Limited, James Teh, Michael Curran, Peter Vágner, Joseph Lee,
 # Reef Turner, Babbage B.V., Leonard de Ruijter, Łukasz Golonka, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
@@ -95,6 +95,7 @@ vars.Add(PathVariable("certFile", "The certificate file with which to sign execu
 	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
 vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
+vars.Add("apiSigningToken", "The API key for the signing service", "")
 vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
 vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
 vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
@@ -147,6 +148,7 @@ publisher = env["publisher"]
 certFile = env["certFile"]
 certPassword = env["certPassword"]
 certTimestampServer = env["certTimestampServer"]
+apiSigningToken = env["apiSigningToken"]
 userDocsDir=Dir('user_docs')
 sourceDir = env.Dir("source")
 Export('sourceDir')
@@ -166,26 +168,41 @@ Export('outFilePrefix')
 outputDir=Dir(env['outputDir'])
 Export('outputDir')
 
-# An action to sign an executable with certFile.
-# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
-signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
-if certPassword:
-	signExecCmd.extend(("/p", certPassword))
-if certTimestampServer:
-	signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
-def signExec(target,source,env):
-	print([str(x) for x in target])
-	#sys.exit(1)
-	# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
-	res=0
-	for count in range(3):
-		res=env.Execute([signExecCmd+[target[0].abspath]])
-		if not res:
-			return 0 # success
-		time.sleep(1)
-	return res # failed
-#Export via scons environment so other libraries can be signed
-env['signExec']=signExec
+assert not (apiSigningToken and certFile), "Cannot specify signing with both API token (cloud) and local certificate"
+if apiSigningToken:
+	# Code signing with SignPath HSM 
+	def signExecApi(target, source, env):
+		if len(target) > 1:
+			print(f"Iterating through {len(target)} files passed to signExecApi")
+		retval = 1 # error value
+		for targetFile in target:
+			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
+				ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
+				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
+					print(f"Error signing file: {abspath}")
+		return retval
+	# Export via scons environment so other libraries can be signed
+	env["signExec"] = signExecApi
+elif certFile:
+	# Local code signing with a certFile
+	def signExecCert(target,source,env):
+		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
+		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
+		if certPassword:
+			signExecCmd.extend(("/p", certPassword))
+		if certTimestampServer:
+			signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
+		print([str(x) for x in target])
+		# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
+		res=0
+		for count in range(3):
+			res=env.Execute([signExecCmd+[target[0].abspath]])
+			if not res:
+				return 0 # success
+			time.sleep(1)
+		return res # failed
+	#Export via scons environment so other libraries can be signed
+	env["signExec"] = signExecCert	
 
 #architecture-specific environments
 archTools=['default','midl','msrpc']
@@ -314,9 +331,9 @@ def NVDADistGenerator(target, source, env, for_signature):
 			if file.name.endswith(".dll") and file.is_file():
 				action.append(Copy(target[0], file.path))
 
-	if certFile:
+	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
-			action.append(lambda target,source,env, progByVal=prog: signExec([target[0].File(progByVal)],source,env))
+			action.append(lambda target, source, env, progByVal=prog: env['signExec']([target[0].File(progByVal)], source, env))
 
 	action.extend((
 		Delete(buildVersionFn),
@@ -377,10 +394,10 @@ uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.n
 	"/DINSTEXE=${TARGET.abspath}",
 	"$SOURCE"]])
 uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
-if certFile:
-	env.AddPostAction(uninstaller, [signExec])
+if certFile or apiSigningToken:
+	env.AddPostAction(uninstaller, [env['signExec']])
 
-dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile))
+dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
 env.Depends(dist,uninstaller)
 # dist will always be considered obsolete
 AlwaysBuild(dist)
@@ -394,8 +411,8 @@ launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvda
 	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
 	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
 	"$SOURCE"]])
-if certFile:
-	env.AddPostAction(launcher, [signExec])
+if certFile or apiSigningToken:
+	env.AddPostAction(launcher, [env['signExec']])
 env.Alias("launcher", launcher)
 
 clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
@@ -412,22 +429,10 @@ outputHeadingStylesFile = env.Command(
 	Copy("$TARGET", "$SOURCE")
 )
 changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
-changesMDFile = env.Command(
-	outputDir.File("changes.md"),
-	userDocsDir.File('en/changes.md'),
-	Copy('$TARGET', '$SOURCE')
-)
-env.Depends(changesFile, changesMDFile)
 env.Depends(changesFile, outputStylesFile)
 env.Alias('changes',changesFile)
 
 userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
-userGuideMDFile = env.Command(
-	outputDir.File("userGuide.md"),
-	userDocsDir.File('en/userGuide.md'),
-	Copy('$TARGET', '$SOURCE')
-)
-env.Depends(userGuideFile, userGuideMDFile)
 env.Depends(userGuideFile, outputStylesFile)
 env.Alias('userGuide', userGuideFile)
 

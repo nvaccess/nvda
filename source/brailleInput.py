@@ -381,7 +381,7 @@ class BrailleInputHandler(AutoPropertyObject):
 			gesture = key
 		try:
 			inputCore.manager.emulateGesture(keyboardHandler.KeyboardInputGesture.fromName(gesture))
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Unable to emulate %r, falling back to sending unicode characters"%gesture, exc_info=True)
 			self.sendChars(key)
 
