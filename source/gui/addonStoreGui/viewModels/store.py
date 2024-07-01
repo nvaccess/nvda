@@ -605,17 +605,20 @@ class AddonStoreVM:
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
 		elif self._filteredStatusKey == _StatusFilterKey.NEW:
-			oldAddons = addonDataManager._getOldAddons()
-			newAddons = _createAddonGUICollection()
-			for channel in availableAddons:
-				for addonId in availableAddons[channel]:
-					availableAddon = availableAddons[channel][addonId]
-					if (
-						addonId not in oldAddons[channel]
-						or availableAddon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
-					):
-						newAddons[channel][addonId] = availableAddons[channel][addonId]
-			availableAddons = newAddons
+			if addonDataManager._oldAddonCache is None:
+				availableAddons = _createAddonGUICollection()
+			else:
+				oldAddons = addonDataManager._getOldAddons()
+				newAddons = _createAddonGUICollection()
+				for channel in availableAddons:
+					for addonId in availableAddons[channel]:
+						availableAddon = availableAddons[channel][addonId]
+						if (
+							addonId not in oldAddons[channel]
+							or availableAddon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+						):
+							newAddons[channel][addonId] = availableAddons[channel][addonId]
+				availableAddons = newAddons
 		log.debug("completed getting addons in the background")
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
