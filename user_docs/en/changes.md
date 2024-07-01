@@ -1,5 +1,19 @@
 # What's New in NVDA
 
+## 2024.4
+
+### Important notes
+
+### New Features
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
 ## 2024.3
 
 The Add-on Store will now notify you if any add-on updates are available on NVDA startup.
