@@ -334,9 +334,9 @@ class AddonStoreDialog(SettingsDialog):
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()
 			self.includeIncompatibleCtrl.Show()
-			if self._storeVM._filteredStatusKey != _StatusFilterKey.NEW:
+			if self._storeVM._filteredStatusKey == _StatusFilterKey.NEW:
 				self.includeIncompatibleCtrl.Disable()
-			self.includeIncompatibleCtrl.Hide()
+				self.includeIncompatibleCtrl.Hide()
 		else:
 			self.channelFilterCtrl.Append(Channel.EXTERNAL.displayString)
 			self._storeVM._filterChannelKey = Channel.ALL
