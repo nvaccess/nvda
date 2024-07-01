@@ -50,3 +50,10 @@ To run all tests standard tests for developers use `runsystemtests.bat --include
 Internally this script uses the Robot test framework to execute the tests.
 Any arguments given to `runsystemtests.bat` are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
+
+### License checks
+
+NVDA uses GPLv2 which is incompatible with certain licenses like Apache.
+Run `runlicensecheck.bat` to check that you don't introduce any new python dependencies with incompatible licenses.
+
+This is configured in [pyproject.toml](../../pyproject.toml) using the [licensecheck pip package](https://github.com/FHPythonUtils/LicenseCheck).
