@@ -1,4 +1,4 @@
-# ﻿Podręcznik użytkownika - NVDA NVDA_VERSION
+# Podręcznik użytkownika - NVDA NVDA_VERSION
 
 [TOC]
 
@@ -4864,7 +4864,7 @@ Prisimy zajrzeć do dokumentacji monitora brajlowskiego w celu sprawdzienia opis
 ### Standardowe monitory brajlowskie HID {#HIDBraille}
 
 Jest to eksperymentalny sterownik dla monitorów brajlowskich zrobionych według specyfikacji HID, którą przyjeli w roku 2018 Microsoft, Google, Apple i niektóre inne firmy produkujące technologie wspomagające włączając w to NV Access. 
-Mamy nadzieję, że przyszłe monitory brajlowskie stworzone przez jakiegokolwiek producenta będą wspierane będą używali ten protokół co wyeliminuje potrzebę dla specyficznych sterowników.
+Mamy nadzieję, że przyszłe monitory brajlowskie stworzone przez jakiegokolwiek producenta będą wspierać ten protokół, co wyeliminuje potrzebę dla specyficznych sterowników.
 
 Wykrywanie automatyczne brajlowskich monitorów NVDA będzie automatycznie wykrywało monitory brajlowskie według tego standartu.
 
@@ -4933,7 +4933,7 @@ Tryb bezpieczny zamarza konfigurację NVDA. Przed włączaniem trybu bezpieczneg
 
 ### Bezpieczne ekrany {#SecureScreens}
 
-NVDA jest uruchomiony w [trybie bezpiecznym](#SecureMode) gdy jest uruchomiony na bezpiecznym ekranie chyba że parametr `serviceDebug` [ogólnosystemowy](#SystemWideParameters) jest włączony.
+NVDA jest uruchomiony w [trybie bezpiecznym](#SecureMode) gdy jest uruchomiony na bezpiecznym ekranie, chyba że parametr `serviceDebug` [ogólnosystemowy](#SystemWideParameters) jest włączony.
 
 Gdy jest uruchomiony z ekranów bezpiecznych, NVDA używa profilu systemowego dla ustawień.
 Ustawienia użytkownika NVDA mogą być skopiowane [do użytku na bezpiecznych ekranach](#GeneralSettingsCopySettings).
@@ -4947,7 +4947,7 @@ Ekrany bezpieczne to:
 ### Parametry linii komend {#CommandLineOptions}
 
 NVDA  akceptuje jeden lub więcej przełączników startowych, zmieniających jego zachowanie.
-Możesz podać tak wiele opcji, jak to jest potrzebne.
+Możesz podać tyle opcji, ile jest potrzebne.
 Te opcje mogą być wpisane podczas uruchamiania ze skrótu  (we właściwościach skrótu), w oknie dialogowym "Uruchom"  (Menu start-> Uruchom lub Windows+R) lub w konsoli wiersza poleceń Windows.
 Opcje powinny być oddzielone spacjami od nazwy pliku wykonywalnego NVDA, oraz od innych opcji.
 Dla przykładu, przełącznik `--disable-addons` pozwala uruchomić NVDA z wyłączonymi dodatkami.
@@ -4982,7 +4982,7 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 |`-q` |`--quit` |Zakończ aktualnie uruchomioną kopię NVDA|
 |`-k` |`--check-running` |Poinformuj kodem wyjścia, czy NVDA jest uruchomiony; 0 jeśli uruchomiony, 1 jeśli nie uruchomiony|
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |Plik, do którego powinny być zapisywane informacje logu. Logowanie jest zawsze wyłączone gdy tryb bezpieczny jest włączony.|
-|`-l PożiomLogowania` |`--log-level=LOGLEVEL` |Najniższy poziom zapisywanych zdarzeń do podglądu logu (debugowanie 10, wejście/wyjście 12, debugowanie powiadomienie 15, info 20, wyłączone 100). Logowanie jest zawsze wyłączone gdy tryb bezpieczny jest włączony.|
+|`-l PoziomLogowania` |`--log-level=LOGLEVEL` |Najniższy poziom zapisywanych zdarzeń do podglądu logu (debugowanie 10, wejście/wyjście 12, debugowanie powiadomienie 15, info 20, wyłączone 100). Logowanie jest zawsze wyłączone gdy tryb bezpieczny jest włączony.|
 |`-c ścieżka` |`--config-path=ścieżka` |Ścieżka folderu, w którym zapisane są wszystkie ustawienia NVDA. Domyślna wartość to wyłączone gdy tryb bezpieczny jest włączony.|
 |Brak |`--lang=LANGUAGE` |Nadpisuje domyślny język NVDA. Ustawiony na "Windows" dla bieżacego użytkownika, "en" dla angielskiego, itd.|
 |`-m` |`--minimal` |Bez dźwięku, interfejsu, informacji początkowej etc|
@@ -5017,6 +5017,6 @@ Następujące wartości mogą zostać ustawione w tym kluczu rejestru:
 
 ## Dodatkowe informacje {#FurtherInformation}
 
-Jeżeli potrzebujesz więcej informacji odnośnie programu  NVDA lub dodatkowej pomocy, oddwiedź stronę [Projektu NVDA](NVDA_URL).
+Jeżeli potrzebujesz więcej informacji odnośnie programu  NVDA lub dodatkowej pomocy, odwiedź stronę [Projektu NVDA](NVDA_URL).
 Tutaj można znaleźć dodatkowe dokumenty, jak również wsparcie techniczne i zasoby społecznościowe.
 Ta strona zawiera również informacje i materiały dotyczące rozwoju NVDA. Zachęcamy również do odwiedzenia polskiej strony społeczności użytkowników NVDA pod adresem: [www.nvda.pl](http://www.nvda.pl)
