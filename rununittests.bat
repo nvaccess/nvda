@@ -7,4 +7,4 @@ set unitTestsPath=%here%\tests\unit
 set testOutput=%here%\testOutput\unit
 md %testOutput%
 
-call "%scriptsDir%\venvCmd.bat" py -m xmlrunner discover -v -s "%unitTestsPath%" -t "%here%" --output-file "%testOutput%\unitTests.xml" %*
+call "%scriptsDir%\venvCmd.bat" py -m xmlrunner discover -b -s "%unitTestsPath%" -t "%here%" --output-file "%testOutput%\unitTests.xml" %*
