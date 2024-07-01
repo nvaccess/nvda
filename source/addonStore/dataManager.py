@@ -8,7 +8,7 @@ import json
 import os
 import pathlib
 import threading
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import (
 	TYPE_CHECKING,
 	Optional,
@@ -181,6 +181,21 @@ class _DataManager:
 		if resetNewAddons == "monthly" and diffDate.days >= 30:
 			return True
 		return False
+
+	def _getResetNewAddonsDate(self) -> str:
+		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
+		if resetNewAddons == "startup":
+			return _("Will be reset at startup")
+		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
+		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
+		formattedLastBackupDate = lastBackupDate.strftime("%d/%m/%Y")
+		if resetNewAddons == "monthly":
+			timedeltaDays = 30
+		else:  # weekly
+			timedeltaDays = 7
+		nextResetDate = lastBackupDate+timedelta(days=timedeltaDays)
+		formattedNextResetDate = nextResetDate.strftime("%d/%m/%Y")
+		return f"{formattedLastBackupDate}-{formattedNextResetDate}"
 
 	def _cacheCompatibleAddonsBackup(self):
 		if not NVDAState.shouldWriteToDisk():

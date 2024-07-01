@@ -161,6 +161,7 @@ class _StatusFilterKey(DisplayStringEnum):
 
 	@property
 	def _displayStringLabels(self) -> Dict["_StatusFilterKey", str]:
+		resetNewAddonsDate = getResetNewAddonsDate()
 		return {
 			# Translators: The label of a tab to display installed add-ons in the add-on store.
 			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -176,7 +177,7 @@ class _StatusFilterKey(DisplayStringEnum):
 			self.INCOMPATIBLE: pgettext("addonStore", "Installed incompatible add-ons"),
 			# Translators: The label of a tab to display new add-ons in the add-on store.
 			# Ensure the translation matches the label for the add-on list which includes an accelerator key.
-			self.NEW: pgettext("addonStore", "Available new add-ons"),
+			self.NEW: pgettext("addonStore", "Available new add-ons (%s)" % resetNewAddonsDate),
 		}
 
 	@property
@@ -431,6 +432,11 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 """A dictionary where the keys are a status to filter by,
 and the values are which statuses should be shown for a given filter.
 """
+
+
+def getResetNewAddonsDate() -> str:
+		from ..dataManager import addonDataManager
+		return addonDataManager._getResetNewAddonsDate()
 
 
 class SupportsAddonState(SupportsVersionCheck, Protocol):
