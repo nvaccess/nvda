@@ -185,6 +185,7 @@ class _DataManager:
 	def _getResetNewAddonsDate(self) -> str:
 		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
 		if resetNewAddons == "startup":
+			# Translators: Message presented in the new add-ons tab, informing that new add-ons will be reset at startup
 			return _("Will be reset at startup")
 		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
 		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
