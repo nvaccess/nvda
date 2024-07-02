@@ -26,29 +26,8 @@ import locationHelper
 from logHandler import log
 
 
-class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
-	encoding = None
-
-	def _getStoryLength(self):
-		return self.obj.childCount
-
-	def _iterTextWithEmbeddedObjects(
-			self,
-			withFields,
-			formatConfig=None
-	) -> typing.Generator[int, None, None]:
-		yield from range(self._startOffset, self._endOffset)
-
-	def _getUnitOffsets(self,unit,offset):
-		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			unit=textInfos.UNIT_CHARACTER
-		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
-
-
 def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
-	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
-		return FakeEmbeddingTextInfo
-	elif obj.TextInfo is NVDAObjectTextInfo:
+	if obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
@@ -236,10 +215,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return None
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		info = self._makeRawTextInfo(parent, textInfos.POSITION_FIRST)
-		if isinstance(info, FakeEmbeddingTextInfo):
-			info._startOffset = obj.indexInParent
-			info._endOffset = info._startOffset + 1
-			return info
 		try:
 			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
@@ -510,9 +485,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				embedTi = None
 			else:
 				embedTi = self._getEmbedding(obj)
-				if isinstance(embedTi, FakeEmbeddingTextInfo):
-					# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
-					embedTi = None
 			if not embedTi:
 				# There is no embedding object.
 				# The unit starts and/or ends at the start and/or end of this last object.
