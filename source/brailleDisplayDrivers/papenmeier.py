@@ -7,7 +7,7 @@
 #minor changes by Halim Sahin (nvda@lists.thm.de), Ali-Riza Ciftcioglu <aliminator83@googlemail.com>, James Teh and Davy Kager
 
 import time
-from typing import List, Union, Tuple, Optional
+from typing import List, Union, Optional
 
 import wx
 import braille
@@ -19,7 +19,7 @@ import keyboardHandler
 
 try:
 	import ftdi2
-except:
+except:  # noqa: E722
 	ftdi2 = None
 #for bluetooth
 import hwPortUtils
@@ -54,14 +54,14 @@ def brl_auto_id() -> bytes:
 def _swapDotBits(d: int) -> List[int]:
 	# swap dot bits
 	d2 = 0
-	if(d & 1): d2|=128
-	if(d & 2): d2|=64
-	if(d & 4): d2|=32
-	if(d & 8): d2|=16
-	if(d & 16): d2|=8
-	if(d & 32): d2|=4
-	if(d & 64): d2|=2
-	if(d & 128): d2|=1
+	if(d & 1): d2|=128  # noqa: E701
+	if(d & 2): d2|=64  # noqa: E701
+	if(d & 4): d2|=32  # noqa: E701
+	if(d & 8): d2|=16  # noqa: E701
+	if(d & 16): d2|=8  # noqa: E701
+	if(d & 32): d2|=4  # noqa: E701
+	if(d & 64): d2|=2  # noqa: E701
+	if(d & 128): d2|=1  # noqa: E701
 	a = 0x30|(d2 & 0x0F)
 	b = 0x30|(d2 >> 4)
 	return [b, a]
@@ -129,13 +129,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if(self._baud == 0 and self._dev is None):
 			for portInfo in sorted(hwPortUtils.listComPorts(onlyAvailable=True), key=lambda item: "bluetoothName" in item):
 				port = portInfo["port"]
-				hwID = portInfo["hardwareID"]
+				hwID = portInfo["hardwareID"]  # noqa: F841
 				if "bluetoothName" in portInfo:
 					if portInfo["bluetoothName"][0:14] == "braillex trio " or  portInfo["bluetoothName"][0:13] == "braillex live":
 						try:
 							self._dev = serial.Serial(port, baudrate = 57600,timeout = BLUETOOTH_TIMEOUT, writeTimeout = BLUETOOTH_TIMEOUT)
 							log.info("connectBluetooth success")
-						except:
+						except:  # noqa: E722
 							log.debugWarning("connectBluetooth failed")
 
 	def connectUSB(self, devlist: List[bytes]):
@@ -146,7 +146,7 @@ connection could not be established"""
 			self._dev.set_baud_rate(self._baud)
 			self._dev.inWaiting = self._dev.get_queue_status
 			log.info("connectUSB success")
-		except:
+		except:  # noqa: E722
 			log.debugWarning("connectUSB failed")
 
 	def __init__(self):
@@ -276,9 +276,9 @@ connection could not be established"""
 					else:
 						log.debugWarning('UNKNOWN BRAILLE')
 
-			except:
+			except:  # noqa: E722
 				log.debugWarning('BROKEN PIPE - THIS SHOULD NEVER HAPPEN')
-		if(self.numCells == 0): raise Exception('no device found')
+		if(self.numCells == 0): raise Exception('no device found')  # noqa: E701
 
 		#start keycheck timer
 		self.startTimer()
@@ -298,7 +298,7 @@ connection could not be established"""
 		try:
 			self._keyCheckTimer.Stop()
 			self._bluetoothTimer.Stop()
-		except:
+		except:  # noqa: E722
 			pass
 
 		self._keyCheckTimer = None
@@ -321,23 +321,23 @@ connection could not be established"""
 		try:
 			super(BrailleDisplayDriver, self).terminate()
 			self.stopTimer()
-			if(self._dev is not None): self._dev.close()
+			if(self._dev is not None): self._dev.close()  # noqa: E701
 			self._dev=None
-		except:
+		except:  # noqa: E722
 			self._dev=None
 
 	def display(self, cells: List[int]):
 		"""write to braille display"""
-		if(self._dev is None): return
+		if(self._dev is None): return  # noqa: E701
 		try:
 			self._dev.write(brl_out(cells, self._nlk, self._nrk, self._voffset))
-		except:
+		except:  # noqa: E722
 			self._dev.close()
 			self._dev=None
 
 	def executeGesture(self,gesture):
 		"""executes a gesture"""
-		if gesture.id or (gesture.dots or gesture.space): inputCore.manager.executeGesture(gesture)
+		if gesture.id or (gesture.dots or gesture.space): inputCore.manager.executeGesture(gesture)  # noqa: E701
 
 	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
@@ -347,7 +347,7 @@ connection could not be established"""
 					devlist: List[bytes] = ftdi2.list_devices()
 					if(len(devlist)>0):
 						self.connectUSB(devlist)
-				except:
+				except:  # noqa: E722
 					return
 			s: bytes = brl_poll(self._dev)
 			if s:
@@ -358,8 +358,8 @@ connection could not be established"""
 				if(len(self.decodedkeys)):
 					ig = InputGesture(None,self)
 					self.executeGesture(ig)
-		except:
-			if(self._dev!=None): self._dev.close()
+		except:  # noqa: E722
+			if(self._dev!=None): self._dev.close()  # noqa: E701, E711
 			self._dev=None
 
 	#global gestures
@@ -452,10 +452,10 @@ def brl_decode_trio(keys: bytes)->List[int]:
 		for k in keys:
 			a = k & 0x0F
 			#convert bitstream to list of indexes
-			if(a & 1): j.append(i+3)
-			if(a & 2): j.append(i+2)
-			if(a & 4): j.append(i+1)
-			if(a & 8): j.append(i)
+			if(a & 1): j.append(i+3)  # noqa: E701
+			if(a & 2): j.append(i+2)  # noqa: E701
+			if(a & 4): j.append(i+1)  # noqa: E701
+			if(a & 8): j.append(i)  # noqa: E701
 			i +=4
 		return j
 	return []
@@ -470,15 +470,15 @@ def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
 			a = value & 0x0F  # n+4,n+3
 			b = data[i+1] & 0x0F  # n+2,n+1
 			#convert bitstream to list of indexes
-			if(n > 26): shift=voffset
-			if(b & 1): j.append(n+0-shift)
-			if(b & 2): j.append(n+1-shift)
-			if(b & 4): j.append(n+2-shift)
-			if(b & 8): j.append(n+3-shift)
-			if(a & 1): j.append(n+4-shift)
-			if(a & 2): j.append(n+5-shift)
-			if(a & 4): j.append(n+6-shift)
-			if(a & 8): j.append(n+7-shift)
+			if(n > 26): shift=voffset  # noqa: E701
+			if(b & 1): j.append(n+0-shift)  # noqa: E701
+			if(b & 2): j.append(n+1-shift)  # noqa: E701
+			if(b & 4): j.append(n+2-shift)  # noqa: E701
+			if(b & 8): j.append(n+3-shift)  # noqa: E701
+			if(a & 1): j.append(n+4-shift)  # noqa: E701
+			if(a & 2): j.append(n+5-shift)  # noqa: E701
+			if(a & 4): j.append(n+6-shift)  # noqa: E701
+			if(a & 8): j.append(n+7-shift)  # noqa: E701
 			n+=8
 	return j
 
@@ -493,7 +493,7 @@ def brl_decode_key_names_repeat(driver: BrailleDisplayDriver) -> List[str]:
 	for key in driver.decodedkeys:
 		try:
 			dec.append(driver._keynamesrepeat[key])
-		except:
+		except:  # noqa: E722
 			pass
 	return dec
 
@@ -504,17 +504,17 @@ def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
 	for key in keys:
 		try:
 			dec.append(driver._keynames[key])
-		except:
+		except:  # noqa: E722
 			pass
 	return dec
 
 def brl_join_keys(dec: List[str]) -> str:
 	"""join key names with comma, this is used for key combinations"""
-	if(len(dec) == 1): return dec[0]
-	elif(len(dec) == 3 and dec[0] == dec[1]): return dec[0] + "," + dec[2]
-	elif(len(dec) == 3 and dec[0] == dec[2]): return dec[0] + "," + dec[1]
-	elif(len(dec) == 2): return dec[1] + "," + dec[0]
-	else: return ''
+	if(len(dec) == 1): return dec[0]  # noqa: E701
+	elif(len(dec) == 3 and dec[0] == dec[1]): return dec[0] + "," + dec[2]  # noqa: E701
+	elif(len(dec) == 3 and dec[0] == dec[2]): return dec[0] + "," + dec[1]  # noqa: E701
+	elif(len(dec) == 2): return dec[1] + "," + dec[0]  # noqa: E701
+	else: return ''  # noqa: E701
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -556,8 +556,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				self.id = "d7"
 			elif dots == 128:
 				self.id = "d8"
-			elif thumbs == 2: self.space = True
-			else:self.dots = dots
+			elif thumbs == 2: self.space = True  # noqa: E701
+			else:self.dots = dots  # noqa: E701
 			return
 
 		if(driver._proto == 'A'):#non trio

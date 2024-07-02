@@ -348,7 +348,7 @@ class SynthDriver(driverHandler.Driver):
 			if not onlyChanged or self.voice != voice:
 				try:
 					changeVoice(self, voice)
-				except:
+				except:  # noqa: E722
 					log.warning("Invalid voice: %s" % voice)
 					# Update the configuration with the correct voice.
 					c["voice"] = self.voice

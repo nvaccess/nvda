@@ -4,17 +4,15 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import time
 import nvwave
 import threading
 import queue
 from ctypes import cdll, CFUNCTYPE, c_int, c_void_p, POINTER, sizeof, c_short
-from ctypes import *
+from ctypes import *  # noqa: F403
 import config
 import globalVars
 from logHandler import log
 import os
-import codecs
 
 isSpeaking = False
 onIndexReached = None
@@ -88,17 +86,17 @@ EE_OK=0
 # eSpeak initialization flags
 espeakINITIALIZE_DONT_EXIT = 0x8000
 
-class espeak_EVENT_id(Union):
+class espeak_EVENT_id(Union):  # noqa: F405
 	_fields_=[
 		('number',c_int),
-		('name',c_char_p),
-		('string',c_char*8),
+		('name',c_char_p),  # noqa: F405
+		('string',c_char*8),  # noqa: F405
 	]
 
-class espeak_EVENT(Structure):
+class espeak_EVENT(Structure):  # noqa: F405
 	_fields_=[
 		('type',c_int),
-		('unique_identifier',c_uint),
+		('unique_identifier',c_uint),  # noqa: F405
 		('text_position',c_int),
 		('length',c_int),
 		('audio_position',c_int),
@@ -107,21 +105,21 @@ class espeak_EVENT(Structure):
 		('id',espeak_EVENT_id),
 	]
 
-class espeak_VOICE(Structure):
+class espeak_VOICE(Structure):  # noqa: F405
 	_fields_=[
-		('name',c_char_p),
-		('languages',c_char_p),
-		('identifier',c_char_p),
-		('gender',c_byte),
-		('age',c_byte),
-		('variant',c_byte),
-		('xx1',c_byte),
+		('name',c_char_p),  # noqa: F405
+		('languages',c_char_p),  # noqa: F405
+		('identifier',c_char_p),  # noqa: F405
+		('gender',c_byte),  # noqa: F405
+		('age',c_byte),  # noqa: F405
+		('variant',c_byte),  # noqa: F405
+		('xx1',c_byte),  # noqa: F405
 		('score',c_int),
 		('spare',c_void_p),
 	]
 
 	def __eq__(self, other):
-		return isinstance(other, type(self)) and addressof(self) == addressof(other)
+		return isinstance(other, type(self)) and addressof(self) == addressof(other)  # noqa: F405
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
 	# The default hash implementation is fine for  our purposes.
@@ -187,7 +185,7 @@ def callback(wav,numsamples,event):
 		player.feed(c_void_p(wav + prevByte), size=length - prevByte)
 		_numBytesPushed += length
 		return CALLBACK_CONTINUE_SYNTHESIS
-	except:
+	except:  # noqa: E722
 		log.error("callback", exc_info=True)
 
 class BgThread(threading.Thread):
@@ -203,7 +201,7 @@ class BgThread(threading.Thread):
 				break
 			try:
 				func(*args, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.error("Error running function from queue", exc_info=True)
 			bgQueue.task_done()
 
@@ -229,7 +227,7 @@ def _speak(text):
 	# eSpeak can only process compound emojis  when using a UTF8 encoding
 	text=text.encode('utf8',errors='ignore')
 	flags = espeakCHARS_UTF8 | espeakSSML | espeakPHONEMES
-	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)
+	return espeakDLL.espeak_Synth(text,0,0,0,0,flags,byref(uniqueID),0)  # noqa: F405
 
 def speak(text):
 	global bgQueue
@@ -268,7 +266,7 @@ def getVoiceList():
 	voices=espeakDLL.espeak_ListVoices(None)
 	voiceList=[]
 	for voice in voices:
-		if not voice: break
+		if not voice: break  # noqa: E701
 		voiceList.append(voice.contents)
 	return voiceList
 
@@ -301,7 +299,7 @@ def _setVoiceAndVariant(voice=None, variant=None):
 	else:
 		try:
 			espeakDLL.espeak_SetVoiceByName(encodeEspeakString("%s+%s" % (voice, variant)))
-		except:
+		except:  # noqa: E722
 			espeakDLL.espeak_SetVoiceByName(encodeEspeakString(voice))
 
 def setVoiceAndVariant(voice=None, variant=None):
@@ -312,10 +310,10 @@ def _setVoiceByLanguage(lang):
 	lang=lang.replace('_','-')
 	v.languages=encodeEspeakString(lang)
 	try:
-		espeakDLL.espeak_SetVoiceByProperties(byref(v))
-	except:
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))  # noqa: F405
+	except:  # noqa: E722
 		v.languages=encodeEspeakString("en")
-		espeakDLL.espeak_SetVoiceByProperties(byref(v))
+		espeakDLL.espeak_SetVoiceByProperties(byref(v))  # noqa: F405
 
 def setVoiceByLanguage(lang):
 	_execWhenDone(_setVoiceByLanguage, lang)
@@ -333,7 +331,7 @@ def initialize(indexCallback=None):
 	"""
 	global espeakDLL, bgThread, bgQueue, player, onIndexReached
 	espeakDLL = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "espeak.dll"))
-	espeakDLL.espeak_Info.restype=c_char_p
+	espeakDLL.espeak_Info.restype=c_char_p  # noqa: F405
 	espeakDLL.espeak_Synth.errcheck=espeak_errcheck
 	espeakDLL.espeak_SetVoiceByName.errcheck=espeak_errcheck
 	espeakDLL.espeak_SetVoiceByProperties.errcheck=espeak_errcheck
@@ -341,7 +339,7 @@ def initialize(indexCallback=None):
 	espeakDLL.espeak_Terminate.errcheck=espeak_errcheck
 	espeakDLL.espeak_ListVoices.restype=POINTER(POINTER(espeak_VOICE))
 	espeakDLL.espeak_GetCurrentVoice.restype=POINTER(espeak_VOICE)
-	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)
+	espeakDLL.espeak_SetVoiceByName.argtypes=(c_char_p,)  # noqa: F405
 	eSpeakPath = os.path.join(globalVars.appDir, "synthDrivers")
 	sampleRate = espeakDLL.espeak_Initialize(
 		AUDIO_OUTPUT_SYNCHRONOUS, 300,
@@ -401,7 +399,7 @@ def getVariantDict():
 								name=temp[1].rstrip()
 								break
 						name=None
-			except:
+			except:  # noqa: E722
 				log.error("Couldn't parse espeak variant file %s" % fileName, exc_info=True)
 				continue
 		if name is not None:

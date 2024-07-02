@@ -9,12 +9,11 @@ In order to use touch features, NVDA must be installed on a touchscreen computer
 """
 
 import threading
-from ctypes import *
+from ctypes import *  # noqa: F403
 from ctypes import windll
-from ctypes.wintypes import *
+from ctypes.wintypes import *  # noqa: F403
 import re
 import gui
-import winVersion
 import config
 import winUser
 import inputCore
@@ -66,34 +65,34 @@ POINTER_MESSAGE_FLAG_PRIMARY=0x100
 POINTER_MESSAGE_FLAG_CONFIDENCE=0x200
 POINTER_MESSAGE_FLAG_CANCELED=0x400
 
-class POINTER_INFO(Structure):
+class POINTER_INFO(Structure):  # noqa: F405
 	_fields_=[
-		('pointerType',DWORD),
-		('pointerId',c_uint32),
-		('frameId',c_uint32),
-		('pointerFlags',c_uint32),
-		('sourceDevice',HANDLE),
-		('hwndTarget',HWND),
-		('ptPixelLocation',POINT),
-		('ptHimetricLocation',POINT),
-		('ptPixelLocationRaw',POINT),
-		('ptHimetricLocationRaw',POINT),
-		('dwTime',DWORD),
-		('historyCount',c_uint32),
-		('inputData',c_int),
-		('dwKeyStates',DWORD),
-		('PerformanceCount',c_uint64),
+		('pointerType',DWORD),  # noqa: F405
+		('pointerId',c_uint32),  # noqa: F405
+		('frameId',c_uint32),  # noqa: F405
+		('pointerFlags',c_uint32),  # noqa: F405
+		('sourceDevice',HANDLE),  # noqa: F405
+		('hwndTarget',HWND),  # noqa: F405
+		('ptPixelLocation',POINT),  # noqa: F405
+		('ptHimetricLocation',POINT),  # noqa: F405
+		('ptPixelLocationRaw',POINT),  # noqa: F405
+		('ptHimetricLocationRaw',POINT),  # noqa: F405
+		('dwTime',DWORD),  # noqa: F405
+		('historyCount',c_uint32),  # noqa: F405
+		('inputData',c_int),  # noqa: F405
+		('dwKeyStates',DWORD),  # noqa: F405
+		('PerformanceCount',c_uint64),  # noqa: F405
 	]
 
-class POINTER_TOUCH_INFO(Structure):
+class POINTER_TOUCH_INFO(Structure):  # noqa: F405
 	_fields_=[
 		('pointerInfo',POINTER_INFO),
-		('touchFlags',c_uint32),
-		('touchMask',c_uint32),
-		('rcContact',RECT),
-		('rcContactRaw',RECT),
-		('orientation',c_uint32),
-		('pressure',c_uint32),
+		('touchFlags',c_uint32),  # noqa: F405
+		('touchMask',c_uint32),  # noqa: F405
+		('rcContact',RECT),  # noqa: F405
+		('rcContactRaw',RECT),  # noqa: F405
+		('orientation',c_uint32),  # noqa: F405
+		('pressure',c_uint32),  # noqa: F405
 	]
 
 ANRUS_TOUCH_MODIFICATION_ACTIVE=2
@@ -135,7 +134,7 @@ class TouchInputGesture(inputCore.InputGesture):
 	}
 
 	def _get_speechEffectWhenExecuted(self):
-		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None
+		if self.tracker.action in (touchTracker.action_hover,touchTracker.action_hoverUp): return None  # noqa: E701
 		return super(TouchInputGesture,self).speechEffectWhenExecuted
 
 	def _get_reportInInputHelp(self):
@@ -232,11 +231,11 @@ class TouchHandler(threading.Thread):
 		try:
 			self._appInstance=windll.kernel32.GetModuleHandleW(None)
 			self._cInputTouchWindowProc=winUser.WNDPROC(self.inputTouchWndProc)
-			self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")
-			self._wca=windll.user32.RegisterClassExW(byref(self._wc))
+			self._wc=winUser.WNDCLASSEXW(cbSize=sizeof(winUser.WNDCLASSEXW),lpfnWndProc=self._cInputTouchWindowProc,hInstance=self._appInstance,lpszClassName="inputTouchWindowClass")  # noqa: F405
+			self._wca=windll.user32.RegisterClassExW(byref(self._wc))  # noqa: F405
 			self._touchWindow=windll.user32.CreateWindowExW(0,self._wca,u"NVDA touch input",0,0,0,0,0,HWND_MESSAGE,None,self._appInstance,None)
 			windll.user32.RegisterPointerInputTarget(self._touchWindow,PT_TOUCH)
-			oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)
+			oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,ANRUS_TOUCH_MODIFICATION_ACTIVE)  # noqa: F405
 			self.trackerManager=touchTracker.TrackerManager()
 			self.screenExplorer=screenExplorer.ScreenExplorer()
 			self.screenExplorer.updateReview=True
@@ -244,11 +243,11 @@ class TouchHandler(threading.Thread):
 			self.threadExc=e
 		finally:
 			self.initializedEvent.set()
-		msg=MSG()
-		while windll.user32.GetMessageW(byref(msg),None,0,0):
-			windll.user32.TranslateMessage(byref(msg))
-			windll.user32.DispatchMessageW(byref(msg))
-		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)
+		msg=MSG()  # noqa: F405
+		while windll.user32.GetMessageW(byref(msg),None,0,0):  # noqa: F405
+			windll.user32.TranslateMessage(byref(msg))  # noqa: F405
+			windll.user32.DispatchMessageW(byref(msg))  # noqa: F405
+		oledll.oleacc.AccSetRunningUtilityState(self._touchWindow,ANRUS_TOUCH_MODIFICATION_ACTIVE,0)  # noqa: F405
 		windll.user32.UnregisterPointerInputTarget(self._touchWindow,PT_TOUCH)
 		windll.user32.DestroyWindow(self._touchWindow)
 		windll.user32.UnregisterClassW(self._wca,self._appInstance)
@@ -295,7 +294,7 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,
+		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,  # noqa: F405
 			obj.location.center.toPOINT())
 
 handler=None

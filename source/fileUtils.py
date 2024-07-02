@@ -85,7 +85,7 @@ def getFileVersionInfo(name, *attributes):
 	# Load file informations into buffer res
 	ctypes.windll.version.GetFileVersionInfoW(name, None, size, res)
 	r = ctypes.c_uint()
-	l = ctypes.c_uint()
+	l = ctypes.c_uint()  # noqa: E741
 	# Look for codepages
 	ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
 		ctypes.byref(r), ctypes.byref(l))
