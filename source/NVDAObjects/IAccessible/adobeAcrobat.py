@@ -135,6 +135,11 @@ class AcrobatNode(IAccessible):
 		yield "</%s>" % tag
 
 	def _get_mathMl(self):
+		# Support Microsoft Word specific mathml attribute
+		import tones; tones.beep(550, 50)
+		math = self.pdDomNode.GetAttribute("MSFT_MathML", "MSFT_Office")
+		if math:
+			return math
 		# There could be other stuff before the math element. Ug.
 		for childNum in range(self.pdDomNode.GetChildCount()):
 			try:
