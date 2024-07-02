@@ -65,7 +65,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the installed addon's version string.
 		pgettext("addonStore", "Installed version"),
 		100,
-		frozenset({_StatusFilterKey.AVAILABLE}),
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.NEW}),
 	)
 	availableAddonVersionName = (
 		# Translators: The name of the column that contains the available addon's version string.
@@ -88,7 +88,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the addon's author.
 		pgettext("addonStore", "Author"),
 		100,
-		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE, _StatusFilterKey.NEW})
 	)
 
 

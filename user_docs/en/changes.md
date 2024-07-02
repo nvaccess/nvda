@@ -45,6 +45,8 @@ Unicode CLDR has also been updated.
   * This can be disabled in the "Add-on Store" category of settings.
   * NVDA checks daily for add-on updates.
   * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
+* You can check for new add-ons from the New available add-ons tab of the store. (#16681, @nvdaes)
+  * From the Add-on store settings panel, new options are available to determine if the presence of new add-ons should be notified at startup, and the period of time to reset new add-ons.
 * Added support for the Help Tech Activator Pro displays. (#16668)
 
 ### Changes
