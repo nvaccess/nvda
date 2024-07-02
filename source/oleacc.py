@@ -1,10 +1,8 @@
-import time
-from ctypes import *
-from ctypes.wintypes import *
-from comtypes import *
-from comtypes.automation import *
+from ctypes import *  # noqa: F403
+from ctypes.wintypes import *  # noqa: F403
+from comtypes import *  # noqa: F403
+from comtypes.automation import *  # noqa: F403
 import comtypes.client
-import winKernel
 import winUser
 # Include functions from oleacc.dll in the module namespace.
 m=comtypes.client.GetModule('oleacc.dll')
@@ -132,27 +130,27 @@ SELFLAG_VALID=32
 # GUIDS for IAccessible properties that can be overridden by means of annotation.
 #Use these to look up the GUID needed when implementing a server.
 #Number of digits Format: "{8-4-4-4-12}"
-PROPID_ACC_NAME = GUID("{608d3df8-8128-4aa7-a428-f55e49267291}")
-PROPID_ACC_VALUE = GUID("{123fe443-211a-4615-9527-c45a7e93717a}")
-PROPID_ACC_DESCRIPTION = GUID("{4d48dfe4-bd3f-491f-a648-492d6f20c588}")
-PROPID_ACC_ROLE = GUID("{CB905FF2-7BD1-4C05-B3C8-E6C241364D70}")
-PROPID_ACC_STATE = GUID("{A8D4D5B0-0A21-42D0-A5C0-514E984F457B}")
-PROPID_ACC_HELP = GUID("{c831e11f-44db-4a99-9768-cb8f978b7231}")
-PROPID_ACC_KEYBOARDSHORTCUT = GUID("{7d9bceee-7d1e-4979-9382-5180f4172c34}")
-PROPID_ACC_DEFAULTACTION = GUID("{180c072b-c27f-43c7-9922-f63562a4632b}")
-PROPID_ACC_VALUEMAP = GUID("{da1c3d79-fc5c-420e-b399-9d1533549e75}")
-PROPID_ACC_ROLEMAP = GUID("{f79acda2-140d-4fe6-8914-208476328269}")
-PROPID_ACC_STATEMAP = GUID("{43946c5e-0ac0-4042-b525-07bbdbe17fa7}")
-PROPID_ACC_FOCUS = GUID("{6eb335df-1c29-4127-b12c-dee9fd157f2b}")
-PROPID_ACC_SELECTION = GUID("{b99d073c-d731-405b-9061-d95e8f842984}")
-PROPID_ACC_PARENT = GUID("{474c22b6-ffc2-467a-b1b5-e958b4657330}")
-PROPID_ACC_NAV_UP = GUID("{016e1a2b-1a4e-4767-8612-3386f66935ec}")
-PROPID_ACC_NAV_LEFT = GUID("{228086cb-82f1-4a39-8705-dcdc0fff92f5}")
-PROPID_ACC_NAV_RIGHT = GUID("{cd211d9f-e1cb-4fe5-a77c-920b884d095b}")
-PROPID_ACC_NAV_PREV = GUID("{776d3891-c73b-4480-b3f6-076a16a15af6}")
-PROPID_ACC_NAV_NEXT = GUID("{1cdc5455-8cd9-4c92-a371-3939a2fe3eee}")
-PROPID_ACC_NAV_FIRSTCHILD = GUID("{cfd02558-557b-4c67-84f9-2a09fce40749}")
-PROPID_ACC_NAV_LASTCHILD = GUID("{302ecaa5-48d5-4f8d-b671-1a8d20a77832}")
+PROPID_ACC_NAME = GUID("{608d3df8-8128-4aa7-a428-f55e49267291}")  # noqa: F405
+PROPID_ACC_VALUE = GUID("{123fe443-211a-4615-9527-c45a7e93717a}")  # noqa: F405
+PROPID_ACC_DESCRIPTION = GUID("{4d48dfe4-bd3f-491f-a648-492d6f20c588}")  # noqa: F405
+PROPID_ACC_ROLE = GUID("{CB905FF2-7BD1-4C05-B3C8-E6C241364D70}")  # noqa: F405
+PROPID_ACC_STATE = GUID("{A8D4D5B0-0A21-42D0-A5C0-514E984F457B}")  # noqa: F405
+PROPID_ACC_HELP = GUID("{c831e11f-44db-4a99-9768-cb8f978b7231}")  # noqa: F405
+PROPID_ACC_KEYBOARDSHORTCUT = GUID("{7d9bceee-7d1e-4979-9382-5180f4172c34}")  # noqa: F405
+PROPID_ACC_DEFAULTACTION = GUID("{180c072b-c27f-43c7-9922-f63562a4632b}")  # noqa: F405
+PROPID_ACC_VALUEMAP = GUID("{da1c3d79-fc5c-420e-b399-9d1533549e75}")  # noqa: F405
+PROPID_ACC_ROLEMAP = GUID("{f79acda2-140d-4fe6-8914-208476328269}")  # noqa: F405
+PROPID_ACC_STATEMAP = GUID("{43946c5e-0ac0-4042-b525-07bbdbe17fa7}")  # noqa: F405
+PROPID_ACC_FOCUS = GUID("{6eb335df-1c29-4127-b12c-dee9fd157f2b}")  # noqa: F405
+PROPID_ACC_SELECTION = GUID("{b99d073c-d731-405b-9061-d95e8f842984}")  # noqa: F405
+PROPID_ACC_PARENT = GUID("{474c22b6-ffc2-467a-b1b5-e958b4657330}")  # noqa: F405
+PROPID_ACC_NAV_UP = GUID("{016e1a2b-1a4e-4767-8612-3386f66935ec}")  # noqa: F405
+PROPID_ACC_NAV_LEFT = GUID("{228086cb-82f1-4a39-8705-dcdc0fff92f5}")  # noqa: F405
+PROPID_ACC_NAV_RIGHT = GUID("{cd211d9f-e1cb-4fe5-a77c-920b884d095b}")  # noqa: F405
+PROPID_ACC_NAV_PREV = GUID("{776d3891-c73b-4480-b3f6-076a16a15af6}")  # noqa: F405
+PROPID_ACC_NAV_NEXT = GUID("{1cdc5455-8cd9-4c92-a371-3939a2fe3eee}")  # noqa: F405
+PROPID_ACC_NAV_FIRSTCHILD = GUID("{cfd02558-557b-4c67-84f9-2a09fce40749}")  # noqa: F405
+PROPID_ACC_NAV_LASTCHILD = GUID("{302ecaa5-48d5-4f8d-b671-1a8d20a77832}")  # noqa: F405
 
 def LresultFromObject(wParam,obj):
 	"""
@@ -166,7 +164,7 @@ def LresultFromObject(wParam,obj):
 	@rtype: int
 	""" 
 	objIID=obj._iid_
-	return oledll.oleacc.LresultFromObject(byref(objIID),wParam,obj)
+	return oledll.oleacc.LresultFromObject(byref(objIID),wParam,obj)  # noqa: F405
 
 def ObjectFromLresult(res,wParam,interface):
 	"""
@@ -181,11 +179,11 @@ def ObjectFromLresult(res,wParam,interface):
 	@return: the object.
 	@rtype: COMObject
 	"""
-	p=POINTER(interface)()
-	oledll.oleacc.ObjectFromLresult(res,byref(interface._iid_),wParam,byref(p))
+	p=POINTER(interface)()  # noqa: F405
+	oledll.oleacc.ObjectFromLresult(res,byref(interface._iid_),wParam,byref(p))  # noqa: F405
 	return p
 
-def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):
+def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):  # noqa: F405
 	"""
 	creates an accessible object using a specific window class, with the methods and properties 
 	of the specified type of system-provided user interface element.
@@ -200,11 +198,11 @@ def CreateStdAccessibleProxy(hwnd,className,objectID,interface=IAccessible):
 	@return: the created object.
 	@rtype: COMObject
 	"""
-	p=POINTER(interface)()
-	oledll.oleacc.CreateStdAccessibleProxyW(hwnd,className,objectID,byref(interface._iid_),byref(p))
+	p=POINTER(interface)()  # noqa: F405
+	oledll.oleacc.CreateStdAccessibleProxyW(hwnd,className,objectID,byref(interface._iid_),byref(p))  # noqa: F405
 	return p
 
-def CreateStdAccessibleObject(hwnd,objectID,interface=IAccessible):
+def CreateStdAccessibleObject(hwnd,objectID,interface=IAccessible):  # noqa: F405
 	"""
 	creates an accessible object with the methods and properties 
 	of the specified type of system-provided user interface element.
@@ -217,11 +215,11 @@ def CreateStdAccessibleObject(hwnd,objectID,interface=IAccessible):
 	@return: the created object.
 	@rtype: COMObject
 	""" 
-	p=POINTER(interface)()
-	oledll.oleacc.CreateStdAccessibleObject(hwnd,objectID,byref(interface._iid_),byref(p))
+	p=POINTER(interface)()  # noqa: F405
+	oledll.oleacc.CreateStdAccessibleObject(hwnd,objectID,byref(interface._iid_),byref(p))  # noqa: F405
 	return p
 
-def AccessibleObjectFromWindow(hwnd,objectID,interface=IAccessible):
+def AccessibleObjectFromWindow(hwnd,objectID,interface=IAccessible):  # noqa: F405
 	"""
 	Retreaves a COM object from the given window, with the given object ID.
 	@param hwnd: the handle of the window to retreave the object from.
@@ -233,15 +231,15 @@ def AccessibleObjectFromWindow(hwnd,objectID,interface=IAccessible):
 	@return: the retreaved object.
 	@rtype: COMObject
 	"""
-	p=POINTER(interface)()
-	oledll.oleacc.AccessibleObjectFromWindow(hwnd,objectID,byref(p._iid_),byref(p))
+	p=POINTER(interface)()  # noqa: F405
+	oledll.oleacc.AccessibleObjectFromWindow(hwnd,objectID,byref(p._iid_),byref(p))  # noqa: F405
 	return p
 
-def AccessibleObjectFromWindow_safe(hwnd,objectID,interface=IAccessible,timeout=2):
+def AccessibleObjectFromWindow_safe(hwnd,objectID,interface=IAccessible,timeout=2):  # noqa: F405
 	if not hwnd:
 		raise ValueError("Invalid window")
-	wmResult=c_long()
-	res=windll.user32.SendMessageTimeoutW(hwnd,winUser.WM_GETOBJECT,0,objectID,winUser.SMTO_ABORTIFHUNG,int(timeout*1000),byref(wmResult))==0
+	wmResult=c_long()  # noqa: F405
+	res=windll.user32.SendMessageTimeoutW(hwnd,winUser.WM_GETOBJECT,0,objectID,winUser.SMTO_ABORTIFHUNG,int(timeout*1000),byref(wmResult))==0  # noqa: F405
 	if res:
 		raise OSError("WM_GETOBJECT failed")
 	if wmResult.value:
@@ -260,10 +258,10 @@ def AccessibleObjectFromEvent(hwnd,objectID,childID):
 	@return: the retreaved object.
 	@rtype: COMObject
 	"""
-	p=POINTER(IAccessible)()
-	varChild=VARIANT()
-	oledll.oleacc.AccessibleObjectFromEvent(hwnd,objectID,childID,byref(p),byref(varChild))
-	if varChild.vt==VT_I4:
+	p=POINTER(IAccessible)()  # noqa: F405
+	varChild=VARIANT()  # noqa: F405
+	oledll.oleacc.AccessibleObjectFromEvent(hwnd,objectID,childID,byref(p),byref(varChild))  # noqa: F405
+	if varChild.vt==VT_I4:  # noqa: F405
 		childID=varChild.value
 	return (p,childID)
 
@@ -274,7 +272,7 @@ def AccessibleObjectFromEvent_safe(hwnd,objectID,childID,timeout=2):
 	if childID!=0:
 		try:
 			childObj=obj.accChild(childID)
-		except COMError:
+		except COMError:  # noqa: F405
 			childObj=None
 		if childObj:
 			obj=childObj
@@ -289,15 +287,15 @@ def WindowFromAccessibleObject(pacc):
 	@return: the window handle.
 	@rtype: int
 	"""
-	hwnd=c_int()
-	oledll.oleacc.WindowFromAccessibleObject(pacc,byref(hwnd))
+	hwnd=c_int()  # noqa: F405
+	oledll.oleacc.WindowFromAccessibleObject(pacc,byref(hwnd))  # noqa: F405
 	return hwnd.value
 
 def AccessibleObjectFromPoint(x,y):
-	point=POINT(x,y)
-	pacc=POINTER(IAccessible)()
-	varChild=VARIANT()
-	oledll.oleacc.AccessibleObjectFromPoint(point,byref(pacc),byref(varChild))
+	point=POINT(x,y)  # noqa: F405
+	pacc=POINTER(IAccessible)()  # noqa: F405
+	varChild=VARIANT()  # noqa: F405
+	oledll.oleacc.AccessibleObjectFromPoint(point,byref(pacc),byref(varChild))  # noqa: F405
 	if not isinstance(varChild.value,int):
 		child=0
 	else:
@@ -305,9 +303,9 @@ def AccessibleObjectFromPoint(x,y):
 	return (pacc,child)
 
 def AccessibleChildren(pacc,iChildStart,cChildren):
-	varChildren=(VARIANT*cChildren)()
-	pcObtained=c_int()
-	oledll.oleacc.AccessibleChildren(pacc,iChildStart,cChildren,byref(varChildren),byref(pcObtained))
+	varChildren=(VARIANT*cChildren)()  # noqa: F405
+	pcObtained=c_int()  # noqa: F405
+	oledll.oleacc.AccessibleChildren(pacc,iChildStart,cChildren,byref(varChildren),byref(pcObtained))  # noqa: F405
 	return [x.value for x in varChildren[0:pcObtained.value]]
 
 def GetProcessHandleFromHwnd(windowHandle):
@@ -318,22 +316,22 @@ def GetProcessHandleFromHwnd(windowHandle):
 	@returns: a process handle with read, write and operation access
 	@rtype: integer
 	"""
-	return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)
+	return oledll.oleacc.GetProcessHandleFromHwnd(windowHandle)  # noqa: F405
 
 def GetRoleText(role):
-	textLen=oledll.oleacc.GetRoleTextW(role,0,0)
+	textLen=oledll.oleacc.GetRoleTextW(role,0,0)  # noqa: F405
 	if textLen:
-		buf=create_unicode_buffer(textLen+2)
-		oledll.oleacc.GetRoleTextW(role,buf,textLen+1)
+		buf=create_unicode_buffer(textLen+2)  # noqa: F405
+		oledll.oleacc.GetRoleTextW(role,buf,textLen+1)  # noqa: F405
 		return buf.value
 	else:
 		return None
 
 def GetStateText(state):
-	textLen=oledll.oleacc.GetStateTextW(state,0,0)
+	textLen=oledll.oleacc.GetStateTextW(state,0,0)  # noqa: F405
 	if textLen:
-		buf=create_unicode_buffer(textLen+2)
-		oledll.oleacc.GetStateTextW(state,buf,textLen+1)
+		buf=create_unicode_buffer(textLen+2)  # noqa: F405
+		oledll.oleacc.GetStateTextW(state,buf,textLen+1)  # noqa: F405
 		return buf.value
 	else:
 		return None

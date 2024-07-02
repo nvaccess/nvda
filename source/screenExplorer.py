@@ -61,7 +61,7 @@ class ScreenExplorer(object):
 				pos=obj.makeTextInfo(locationHelper.Point(x,y))
 			except (NotImplementedError,LookupError):
 				pass
-			if pos: pos.expand(unit)
+			if pos: pos.expand(unit)  # noqa: E701
 		if pos and self.updateReview:
 			api.setReviewPosition(pos)
 		speechCanceled=False

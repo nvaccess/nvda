@@ -137,7 +137,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self.isSerial = match.type == bdDetect.DeviceType.SERIAL
 			try:
 				if self.isHid:
-					log.info(f"Trying Seika notetaker on USB-HID")
+					log.info("Trying Seika notetaker on USB-HID")
 					self._dev = dev = hwIo.Hid(
 						path=match.port,  # for a Hid match type 'port' is actually 'path'.
 						onReceive=self._onReceiveHID

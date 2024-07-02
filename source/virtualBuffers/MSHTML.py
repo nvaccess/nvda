@@ -4,21 +4,17 @@
 # Copyright (C) 2009-2023 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 from comtypes import COMError
-import eventHandler
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
 import controlTypes
 from controlTypes import TextPosition, TextAlign
 from controlTypes.formatFields import FontSize
 import NVDAObjects.IAccessible.MSHTML
 import winUser
-import NVDAHelper
-import ctypes
 import IAccessibleHandler
 import languageHandler
 import oleacc
 from logHandler import log
 import textInfos
-import api
 import aria
 import config
 import exceptions
@@ -154,7 +150,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 				if descNode:
 					try:
 						description=description+" "+self.obj.makeTextInfo(NVDAObjects.IAccessible.MSHTML.MSHTML(HTMLNode=descNode)).text
-					except:
+					except:  # noqa: E722
 						pass
 		ariaSort=attrs.get('HTMLAttrib::aria-sort')
 		state=aria.ariaSortValuesToNVDAStates.get(ariaSort)
