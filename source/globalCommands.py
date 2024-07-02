@@ -567,13 +567,13 @@ class GlobalCommands(ScriptableObject):
 		if nextValue == OutputMode.OFF:
 			# Translators: A state in which font attributes are not reported.
 			status = _("Do not report font attributes")
-		if nextValue == OutputMode.SPEECH:
+		elif nextValue == OutputMode.SPEECH:
 			# Translators: A state in which font attributes are only spoken.
 			status = _("Speak font attributes")
-		if nextValue == OutputMode.BRAILLE:
+		elif nextValue == OutputMode.BRAILLE:
 			# Translators: A state in which font attributes are only brailled.
 			status = _("Braille font attributes")
-		if nextValue == OutputMode.SPEECH_AND_BRAILLE:
+		elif nextValue == OutputMode.SPEECH_AND_BRAILLE:
 			# Translators: A state in which font attributes are both spoken and brailled.
 			status = _("Speak and braille font attributes")
 		config.conf["documentFormatting"]["fontAttributeReporting"]=nextValue
