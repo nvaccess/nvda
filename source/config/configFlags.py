@@ -220,3 +220,23 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 			# Translators: This is a label for the automatic update behaviour for add-ons.
 			self.DISABLED: _("Disabled"),
 		}
+
+@unique
+class OutputMode(DisplayStringIntEnum):
+	OFF = 0
+	SPEECH = 1
+	BRAILLE = 2
+	SPEECH_AND_BRAILLE = 3
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a way of reporting information.
+			self.OFF: _("Off"),
+			# Translators: This is a way of reporting information.
+			self.SPEECH: _("Speech"),
+			# Translators: This is a way of reporting information.
+			self.BRAILLE: _("Braille"),
+			# Translators: This is a way of reporting information.
+			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
+		}

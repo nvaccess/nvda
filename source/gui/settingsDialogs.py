@@ -2391,8 +2391,10 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		fontAttributesText = _("Font attrib&utes")
-		self.fontAttrsCheckBox = fontGroup.addItem(wx.CheckBox(fontGroupBox, label=fontAttributesText))
-		self.fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
+		from config.configFlags import OutputMode
+		fontAttributesOptions = [i.displayString for i in OutputMode]
+		self.fontAttrsList = fontGroup.addLabeledControl(fontAttributesText, wx.Choice, choices=fontAttributesOptions)
+		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2656,7 +2658,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFontAttributes"]=self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["fontAttributeReporting"]=self.fontAttrsList.GetSelection()
 		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)

@@ -36,6 +36,7 @@ import extensionPoints
 from . import profileUpgrader
 from . import aggregatedSection
 from .configSpec import confspec
+from .configFlags import OutputMode
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
@@ -1282,6 +1283,22 @@ class AggregatedSection:
 		self._getUpdateSection()[key] = val
 		self.manager._markWriteProfileDirty()
 		self._cache[key] = val
+
+		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
+		# Todo: Remove in 2025.1.
+		if self.path == ("documentFormatting",):
+			aliasing = False
+			if key == "fontAttributeReporting":
+				key = "reportFontAttributes"
+				val = bool(val)
+				aliasing = True
+			elif key == "reportFontAttributes":
+				key = "fontAttributeReporting"
+				val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
+				aliasing = True
+			if aliasing:
+				self._getUpdateSection()[key] = val
+				self._cache[key] = val
 
 	def _getUpdateSection(self):
 		profile = self.profiles[-1]
