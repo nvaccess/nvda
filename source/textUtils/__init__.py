@@ -1,30 +1,32 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2021 NV Access Limited, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Łukasz Golonka
 
 """
 Classes and utilities to deal with offsets variable width encodings, particularly utf_16.
 """
 
-import encodings
-import sys
 import ctypes
-from collections.abc import ByteString
-from typing import Tuple, Optional, Type
+import encodings
 import locale
+import unicodedata
+from abc import ABCMeta, abstractmethod, abstractproperty
+from functools import cached_property
+from typing import Generator, Optional, Tuple, Type
+
 from logHandler import log
-from abc import abstractmethod
+
+from .uniscribe import splitAtCharacterBoundaries
 
 WCHAR_ENCODING = "utf_16_le"
 UTF8_ENCODING = "utf-8"
 USER_ANSI_CODE_PAGE = locale.getpreferredencoding()
 
 
-class OffsetConverter:
+class OffsetConverter(metaclass=ABCMeta):
 	decoded: str
-	
+
 	def __init__(self, text: str):
 		if not isinstance(text, str):
 			raise TypeError("Value must be of type str")
@@ -33,7 +35,7 @@ class OffsetConverter:
 	def __repr__(self):
 		return f"{self.__class__.__name__}({repr(self.decoded)})"
 
-	@property
+	@abstractproperty
 	def encodedStringLength(self) -> int:
 		"""Returns the length of the string in itssubclass-specific encoded representation."""
 		raise NotImplementedError
@@ -385,8 +387,6 @@ class IdentityOffsetConverter(OffsetConverter):
 		This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
 	"""
 
-	_encoding: str = UTF8_ENCODING
-
 	def __init__(self, text: str):
 		super().__init__(text)
 
@@ -415,6 +415,106 @@ class IdentityOffsetConverter(OffsetConverter):
 		if encodedEnd is None:
 			return encodedStart
 		return (encodedStart, encodedEnd)
+
+
+DEFAULT_UNICODE_NORMALIZATION_ALGORITHM = "NFKC"
+
+
+class UnicodeNormalizationOffsetConverter(OffsetConverter):
+	"""
+	Object that holds a string in both its decoded and its unicode normalized form.
+	The object allows for easy conversion between offsets in strings which may or may not be normalized,
+
+	For example, when using the NFKC algorithm, the "ĳ" ligature normalizes to "ij",
+	which takes two characters instead of one.
+	"""
+	normalizationForm: str
+	computedStrToEncodedOffsets: list[int]
+	computedEncodedToStrOffsets: list[int]
+
+	def __init__(self, text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM):
+		super().__init__(text)
+		self.normalizationForm = normalizationForm
+		self.computedStrToEncodedOffsets = computedStrToEncodedOffsets = []
+		self.computedEncodedToStrOffsets = computedEncodedToStrOffsets = []
+		origOffset = normOffset = 0
+		normalized = ""
+		for origPart in splitAtCharacterBoundaries(text):
+			normPart = unicodedata.normalize(normalizationForm, origPart)
+			normalized += normPart
+			isReorder = all(c in normPart for c in origPart)
+			if origPart == normPart:
+				computedStrToEncodedOffsets.extend(normOffset + i for i in range(len(origPart)))
+				computedEncodedToStrOffsets.extend(origOffset + i for i in range(len(normPart)))
+			elif isReorder:
+				computedStrToEncodedOffsets.extend(normOffset + i for i in self._processReordered(origPart, normPart))
+				computedEncodedToStrOffsets.extend(origOffset + i for i in self._processReordered(normPart, origPart))
+			else:
+				computedStrToEncodedOffsets.extend(normOffset for origChar in origPart)
+				computedEncodedToStrOffsets.extend(origOffset for normChar in normPart)
+			origOffset += len(origPart)
+			normOffset += len(normPart)
+		self.encoded = normalized
+
+	def _processReordered(self, a: str, b: str) -> Generator[int, None, None]:
+		""""Yields the offset in b of every character in a"""
+		for char in a:
+			index = b.find(char)
+			yield index
+			b = f"{b[:index]}\0{b[index + 1 :]}"
+
+	@cached_property
+	def encodedStringLength(self) -> int:
+		"""Returns the length of the string in its normalized representation."""
+		return len(self.encoded)
+
+	def strToEncodedOffsets(
+			self,
+			strStart: int,
+			strEnd: int | None = None,
+			raiseOnError: bool = False,
+	) -> int | Tuple[int]:
+		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
+		if strStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedStrToEncodedOffsets[strStart]
+		if strEnd is None:
+			return resultStart
+		elif strStart == strEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedStrToEncodedOffsets[strEnd]
+			return (resultStart, resultEnd)
+
+	def encodedToStrOffsets(
+			self,
+			encodedStart: int,
+			encodedEnd: int | None = None,
+			raiseOnError: bool = False
+	) -> int | Tuple[int]:
+		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
+		if encodedStart == 0:
+			resultStart = 0
+		else:
+			resultStart = self.computedEncodedToStrOffsets[encodedStart]
+		if encodedEnd is None:
+			return resultStart
+		elif encodedStart == encodedEnd:
+			return (resultStart, resultStart)
+		else:
+			resultEnd = self.computedEncodedToStrOffsets[encodedEnd]
+			return (resultStart, resultEnd)
+
+
+def isUnicodeNormalized(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> bool:
+	"""Convenience function to wrap unicodedata.is_normalized with a default normalization form."""
+	return unicodedata.is_normalized(normalizationForm, text)
+
+
+def unicodeNormalize(text: str, normalizationForm: str = DEFAULT_UNICODE_NORMALIZATION_ALGORITHM) -> str:
+	"""Convenience function to wrap unicodedata.normalize with a default normalization form."""
+	return unicodedata.normalize(normalizationForm, text)
 
 
 ENCODINGS_TO_CONVERTERS: dict[str, Type[OffsetConverter]] = {

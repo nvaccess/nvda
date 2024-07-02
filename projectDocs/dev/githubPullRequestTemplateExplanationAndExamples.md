@@ -3,6 +3,11 @@
 This page is meant to serve as an explanation for how to fill out
 [our Github pull request template](https://github.com/nvaccess/nvda/blob/master/.github/PULL_REQUEST_TEMPLATE.md)
 
+### The title
+Please use a descriptive title of the changes.
+Avoid relying on references to issues or PRs, ensure the title is self-descriptive.
+To automatically generate a title, set the title to `@coderabbitai title`.
+
 ## The template
 At the start of the template there is a HTML comment block (starting with `<!--`),
 which points to this wiki page, it can be left in place and will not appear once the issue is saved.

@@ -13,6 +13,7 @@ import queueHandler
 import ui
 import scriptHandler
 import braille
+import speech
 import UIAHandler
 from comtypes import COMError
 
@@ -112,6 +113,17 @@ class AppModule(appModuleHandler.AppModule):
 				and doNotAnnounceCalculatorResults
 			):
 				return
+			# #16573: when pasting, calculator sends a truncated UIA displayString
+			# (for example "Display is 1" when it should be "Display is 12.34").
+			# To fix this, we ignore the displayString sent via the UIA notification,
+			# and fetch the value directly from the UI element.
+			for child in resultElement.children:
+				if child.UIAAutomationId in ("CalculatorResults", "CalculatorAlwaysOnTopResults"):
+					# When pasting, we get two UIA notification events. Cancel the first
+					# one once we receive the second.
+					speech.cancelSpeech()
+					ui.message(child.name)
+					return
 		nextHandler()
 
 	# A list of native commands to handle calculator result announcement.

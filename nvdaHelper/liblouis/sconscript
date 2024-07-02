@@ -1,7 +1,7 @@
 ###
 #This file is a part of the NVDA project.
 #URL: https://www.nvaccess.org/
-#Copyright 2011-2018 NV Access Limited, Joseph Lee, Babbage B.V.
+#Copyright 2011-2024 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter
 #This program is free software: you can redistribute it and/or modify
 #it under the terms of the GNU General Public License version 2.0, as published by
 #the Free Software Foundation.
@@ -24,14 +24,16 @@ Import([
 	"thirdPartyEnv",
 	"sourceDir",
 ])
-sourceDir:Base = sourceDir
+sourceDir: Base = sourceDir
 thirdPartyEnv: Environment = thirdPartyEnv
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())
 
 louisRootDir = env.Dir("#include/liblouis")
 louisSourceDir = louisRootDir.Dir("liblouis")
+louisTableDir = louisRootDir.Dir("tables")
 outDir = sourceDir.Dir("louis")
-signExec=env['signExec'] if env['certFile'] else None
+unitTestTablesDir = env.Dir("#tests/unit/brailleTables")
+signExec = env['signExec'] if (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
 
 RE_AC_INIT = re.compile(r"^AC_INIT\(\[(?P<package>.*)\], \[(?P<version>.*)\], \[(?P<bugReport>.*)\], \[(?P<tarName>.*)\], \[(?P<url>.*)\]\)")
 def getLouisVersion():
@@ -54,7 +56,9 @@ if len(clangDirs) == 0:
 		"Perhaps the C++ Clang tools for Windows component in visual Studio is not installed"
 	) 
 env['CC'] = 'clang-cl'
-
+env['M4'] = str(env.File("#miscdeps/tools/m4.exe"))
+# Liblouis disables GNU extensions for m4
+env.Append(M4FLAGS='-G')
 # Don't analyze the code as not our project
 if 'analyze' in env['nvdaHelperDebugFlags']:
 	env.Append(CCFLAGS='/analyze-')
@@ -96,7 +100,28 @@ env.Install(sourceDir, louisLib)
 louisPython = env.Substfile(outDir.File("__init__.py"), louisRootDir.File("python/louis/__init__.py.in"),
 	SUBST_DICT={"###LIBLOUIS_SONAME###": louisLib[0].name})
 
-env.Install(outDir.Dir("tables"),
-	[f for f in env.Glob("%s/tables/*" % louisRootDir)
-		if f.name not in ("Makefile", "Makefile.am", "Makefile.in", "README", "maketablelist.sh")
-	])
+env.Install(
+	outDir.Dir("tables"),
+	[
+		f for f in env.Glob(f"{louisTableDir}/*")
+		if f.name not in (
+			"Makefile.am",
+			"README",
+			"maketablelist.sh",
+		) and not f.name.endswith(".in")
+	]
+)
+# Tables containing macros
+for f in env.Glob(f"{louisTableDir}/*.in"):
+	env.M4(
+		source=f,
+		target=outDir.Dir("tables").File(os.path.splitext(f.name)[0])
+	)
+# Custom tables unit test
+testTable = env.InstallAs(unitTestTablesDir.File("test.utb"), louisTableDir.File("en-us-comp8-ext.utb"))
+env.Depends(testTable, env.Install(unitTestTablesDir, [
+	louisTableDir.File("latinLetterDef8Dots.uti"),
+	louisTableDir.File("en-us-comp8-ext.utb")
+]))
+# Ensure the braille tables for tests are installed when copying the louis wrapper
+env.Depends(louisPython, testTable)

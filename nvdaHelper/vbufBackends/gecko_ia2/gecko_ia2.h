@@ -49,6 +49,17 @@ class GeckoVBufBackend_t: public VBufBackend_t {
 		const std::wstring& nodeBeingFilledRole
 	);
 
+	/* Fill the virtual buffer with information required to support aria-errormessage.
+	 *
+	 * @param pacc: The IAccessible for the node being filled.
+	 * @param nodeBeingFilled: The current node being filled. This will be the origin of an error relation.
+	 * @result: If `pacc` is the origin of an error relation, `nodeBeingFilled` will gain an attribute `errorMessage` with the text of the target end of the relation.
+	 */
+	void fillVBufAriaError(
+		CComPtr<IAccessible2> pacc,
+		VBufStorage_controlFieldNode_t& nodeBeingFilled
+	);
+
 	void versionSpecificInit(IAccessible2* pacc);
 
 	void fillTableCellInfo_IATable2(VBufStorage_controlFieldNode_t* node, IAccessibleTableCell* paccTableCell);

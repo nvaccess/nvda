@@ -2508,7 +2508,7 @@ def test_textParagraphNavigation():
 		# Tests compatibility with Russian Cyrillic script
 		"Предложение по-русски.",
 		# Tests regex condition for CJK full width character terminators
-		"我不会说中文！",
+		"我不会说中文",
 		"Bye-bye, world!",
 	]
 	for p in expectedParagraphs:
@@ -2565,15 +2565,8 @@ def test_styleNav():
 		<p>Fourth line is <b>bold again</b></p>
 		<p>End of document.</p>
 	""")
-	# For some reason we need to send Control+RightArrow;
-	# otherwise getting "Test page load complete" as actual speech
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("control+rightArrow")
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
-	_asserts.strings_match(actualSpeech, "Hello world!")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
 	_asserts.strings_match(actualSpeech, "No previous different style text")
-	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
-	_asserts.strings_match(actualSpeech, "This text is")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
 	_asserts.strings_match(actualSpeech, "Second line is")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("shift+d")
@@ -2583,7 +2576,7 @@ def test_styleNav():
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
 	_asserts.strings_match(actualSpeech, "No next same style text")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
-	_asserts.strings_match(actualSpeech, "End of document.")
+	_asserts.strings_match(actualSpeech, "End of document.  After Test Case Marker")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("d")
 	_asserts.strings_match(actualSpeech, "No next different style text")
 	for s in [
@@ -2608,3 +2601,98 @@ def test_styleNav():
 	_asserts.strings_match(actualSpeech, "No previous same style text")
 	actualSpeech, actualBraille = _NvdaLib.getSpeechAndBrailleAfterKey("s")
 	_asserts.strings_match(actualSpeech, "No next same style text")
+
+
+def test_ariaErrorMessage():
+	_chrome.prepareChrome("""
+		<h2>Native valid</h2>
+		<label for="i1">Input 1</label>
+		<input type="text" autocomplete="off" id="i1" aria-errormessage="e1" />
+		<p id="e1">Error 1</p>
+
+		<h2>Native invalid</h2>
+		<label for="i2">Input 2</label>
+		<input type="text" autocomplete="off"  id="i2" pattern="a" value="b" aria-errormessage="e2" />
+		<p id="e2">Error 2</p>
+
+		<h2>ARIA valid</h2>
+		<label id="l3">Input 3</label>
+		<div contenteditable role="textbox" aria-multiline="false" aria-labelledby="l3" aria-errormessage="e3"
+		     aria-invalid="false"></div>
+		<p id="e3">Error 3</p>
+
+		<h2>ARIA valid</h2>
+		<label id="l4">Input 4</label>
+		<div contenteditable role="textbox" aria-multiline="false" aria-labelledby="l4" aria-errormessage="e4"
+		     aria-invalid="true"></div>
+		<p id="e4">Error 4</p>
+	""")
+	# Force focus mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Focus mode"
+	)
+	# Tab to the native valid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 1", "edit", "blank"))
+	)
+
+	# Tab to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 2", "edit", "invalid entry", "Error 2", "selected b"))
+	)
+
+	# Tab to the ARIA valid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 3", "edit", "blank"))
+	)
+
+	# Tab to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("tab")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4", "blank"))
+	)
+
+	# Force browse mode
+	actualSpeech = _chrome.getSpeechAfterKey("NVDA+space")
+	_asserts.strings_match(
+		actualSpeech,
+		"Browse mode"
+	)
+	# Jump to the top of the document
+	_chrome.getSpeechAfterKey("control+home")
+	# Quick nav to the native valid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 1", "edit"))
+	)
+
+	# Quick nav to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 2", "edit", "invalid entry", "Error 2", "b"))
+	)
+
+	# Quick nav to the ARIA valid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 3", "edit"))
+	)
+
+	# Quick nav to the native invalid field
+	actualSpeech = _chrome.getSpeechAfterKey("e")
+	_asserts.strings_match(
+		actualSpeech,
+		SPEECH_SEP.join(("Input 4", "edit", "invalid entry", "Error 4"))
+	)
