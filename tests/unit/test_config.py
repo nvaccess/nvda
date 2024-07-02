@@ -829,27 +829,6 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 			profile['documentFormatting']['fontAttributeReporting']
 
 
-class Config_AggregatedSection_getitem(unittest.TestCase):
-	def setUp(self):
-		manager = MagicMock(ConfigManager())
-		spec = MagicMock(configobj.ConfigObj())
-		self.testSection = AggregatedSection(
-			manager=manager,
-			path=(),
-			spec=spec,
-			profiles=[],
-		)
-
-	def test_cached(self):
-		self.testSection._cache["foo"] = "bar"
-		self.assertEqual(self.testSection["foo"], "bar")
-
-	def test_KeyError(self):
-		self.testSection._cache["foo"] = KeyError
-		with self.assertRaises(KeyError):
-			self.testSection["foo"]
-
-
 class Config_getitem_alias(unittest.TestCase):
 	def setUp(self):
 		self.config = ConfigManager()["documentFormatting"]
@@ -889,6 +868,27 @@ class Config_getitem_alias(unittest.TestCase):
 		config['fontAttributeReporting'] = OutputMode.SPEECH_AND_BRAILLE
 		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
 		self.assertEqual(config['reportFontAttributes'], True)
+
+
+class Config_AggregatedSection_getitem(unittest.TestCase):
+	def setUp(self):
+		manager = MagicMock(ConfigManager())
+		spec = MagicMock(configobj.ConfigObj())
+		self.testSection = AggregatedSection(
+			manager=manager,
+			path=(),
+			spec=spec,
+			profiles=[],
+		)
+
+	def test_cached(self):
+		self.testSection._cache["foo"] = "bar"
+		self.assertEqual(self.testSection["foo"], "bar")
+
+	def test_KeyError(self):
+		self.testSection._cache["foo"] = KeyError
+		with self.assertRaises(KeyError):
+			self.testSection["foo"]
 
 
 class Config_AggregatedSection_setitem(unittest.TestCase):
