@@ -7,7 +7,6 @@
 import sys
 import pkgutil
 import importlib
-import config
 import baseObject
 from logHandler import log
 import globalPlugins
@@ -21,7 +20,7 @@ def listPlugins():
 			continue
 		try:
 			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin
-		except:
+		except:  # noqa: E722
 			log.error("Error importing global plugin %s" % name, exc_info=True)
 			continue
 		yield plugin
@@ -30,7 +29,7 @@ def initialize():
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
-		except:
+		except:  # noqa: E722
 			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
 
 def terminate():
@@ -38,7 +37,7 @@ def terminate():
 		runningPlugins.discard(plugin)
 		try:
 			plugin.terminate()
-		except:
+		except:  # noqa: E722
 			log.exception("Error terminating global plugin %r" % plugin)
 
 def reloadGlobalPlugins():

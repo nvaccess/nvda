@@ -11,7 +11,7 @@ from typing import (
 	Union,
 	cast,
 )
-from collections.abc import Generator
+from collections.abc import Generator  # noqa: F811
 import os
 import itertools
 import collections
@@ -47,7 +47,6 @@ import vision
 import speech
 from speech import sayAll
 import treeInterceptorHandler
-import inputCore
 import api
 import gui.guiHelper
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -510,7 +509,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			) -> Generator[TextInfoQuickNavItem, None, None]:
 				return self._iterTextStyle(itemType, direction, info)
 		else:
-			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)
+			iterFactory=lambda direction,info: self._iterNodesByType(itemType,direction,info)  # noqa: E731
 		info=self.selection
 		try:
 			item = next(iterFactory(direction, info))
@@ -555,7 +554,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		scriptSuffix = itemType[0].upper() + itemType[1:]
 		scriptName = "next%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "next", nextError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "next", nextError, readUnit)  # noqa: E731
 		script.__doc__ = nextDoc
 		script.__name__ = funcName
 		script.resumeSayAllMode = sayAll.CURSOR.CARET
@@ -564,7 +563,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			cls.__gestures["kb:%s" % key] = scriptName
 		scriptName = "previous%s" % scriptSuffix
 		funcName = "script_%s" % scriptName
-		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "previous", prevError, readUnit)
+		script = lambda self,gesture: self._quickNavScript(gesture, itemType, "previous", prevError, readUnit)  # noqa: E731
 		script.__doc__ = prevDoc
 		script.__name__ = funcName
 		script.resumeSayAllMode = sayAll.CURSOR.CARET
@@ -1282,7 +1281,7 @@ class ElementsListDialog(
 		# #8753: wxPython 4 returns "invalid tree item" when the tree view is empty, so use initial element if appropriate.
 		try:
 			defaultElement = self._initialElement if newElementType else self.tree.GetItemData(self.tree.GetSelection())
-		except:
+		except:  # noqa: E722
 			defaultElement = self._initialElement
 		# Clear the tree.
 		self.tree.DeleteChildren(self.treeRoot)
@@ -1347,7 +1346,7 @@ class ElementsListDialog(
 		elif key == wx.WXK_F2:
 			item=self.tree.GetSelection()
 			if item:
-				selectedItemType=self.tree.GetItemData(item).item
+				selectedItemType=self.tree.GetItemData(item).item  # noqa: F841
 				self.tree.EditLabel(item)
 				evt.Skip()
 
@@ -1719,7 +1718,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		focus = api.getFocusObject()
 		try:
 			focusInfo = self.makeTextInfo(focus)
-		except:
+		except:  # noqa: E722
 			return False
 		# We only want to override the tab order if the caret is not within the focused node.
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -1790,7 +1789,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		for parent in api.getFocusAncestors()[api.getFocusDifferenceLevel():]:
 			try:
 				parent.event_focusEntered()
-			except:
+			except:  # noqa: E722
 				log.exception("Error executing focusEntered event: %s" % parent)
 
 	def event_gainFocus(self, obj, nextHandler):
@@ -1843,7 +1842,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 
 		try:
 			focusInfo = self.makeTextInfo(obj)
-		except:
+		except:  # noqa: E722
 			# This object is not in the treeInterceptor, even though it resides beneath the document.
 			# Automatic pass through should be enabled in certain circumstances where this occurs.
 			if not self.passThrough and self.shouldPassThrough(obj, reason=OutputReason.FOCUS):

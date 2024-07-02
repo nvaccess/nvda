@@ -118,7 +118,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 					f" window class {tempObj.windowClassName if isinstance(tempObj, Window) else type(tempObj)}, "
 					f"application name {tempObj.appModule.appName}"
 				)
-			except:
+			except:  # noqa: E722
 				pass
 			tempObj=getDesktopObject()
 		# Scan backwards through the old ancestors looking for a match.
@@ -161,7 +161,7 @@ def setFocusObject(obj: NVDAObjects.NVDAObject) -> bool:  # noqa: C901
 	for o in ancestors[focusDifferenceLevel:]+[obj]:
 		try:
 			treeInterceptorObject=treeInterceptorHandler.update(o)
-		except:
+		except:  # noqa: E722
 			log.error("Error updating tree interceptor", exc_info=True)
 	#Always make sure that the focus object's treeInterceptor is forced to either the found treeInterceptor (if its in it) or to None
 	#This is to make sure that the treeInterceptor does not have to be looked up, which can cause problems for winInputHook
@@ -271,7 +271,7 @@ def setReviewPosition(
 
 	globalVars.reviewPosition=reviewPosition.copy()
 	globalVars.reviewPositionObj=reviewPosition.obj
-	if clearNavigatorObject: globalVars.navigatorObject=None
+	if clearNavigatorObject: globalVars.navigatorObject=None  # noqa: E701
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
 	if not (braille.handler.shouldAutoTether and isCaret):

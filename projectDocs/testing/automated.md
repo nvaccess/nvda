@@ -27,16 +27,16 @@ scons checkPot
 ```
 
 ### Linting your changes
-In order to ensure your changes comply with NVDA's coding style you can run the Flake8 linter locally.
-Some developers have found certain linting error messages misleading, these are clarified in `tests/lint/readme.md`.
-runlint.bat will use Flake8 to inspect only the differences between your working directory and the specified `base` branch.
-If you create a Pull Request, the `base` branch you use here should be the same as the target you would use for a Pull Request. In most cases it will be `origin/master`.
+
+In order to ensure your changes comply with NVDA's coding style you can run the Ruff linter locally.
+`runlint.bat` will use Ruff to lint and where possible, fix the code you have written.
+
 ```cmd
-runlint origin/master
+runlint.bat
 ```
 
-To be warned about linting errors faster, you may wish to integrate Flake8 with other development tools you are using.
-For more details, see `tests/lint/readme.md`
+To be warned about linting errors faster, you may wish to integrate Ruff with other development tools you are using.
+For more details, see the [linting docs](../dev/lint.md).
 
 ### Unit Tests
 Unit tests can be run with the `rununittests.bat` script.
@@ -50,3 +50,10 @@ To run all tests standard tests for developers use `runsystemtests.bat --include
 Internally this script uses the Robot test framework to execute the tests.
 Any arguments given to `runsystemtests.bat` are forwarded onto Robot.
 For more details (including filtering and exclusion of tests) see `tests/system/readme.md`.
+
+### License checks
+
+NVDA uses GPLv2 which is incompatible with certain licenses like Apache.
+Run `runlicensecheck.bat` to check that you don't introduce any new python dependencies with incompatible licenses.
+
+This is configured in [pyproject.toml](../../pyproject.toml) using the [licensecheck pip package](https://github.com/FHPythonUtils/LicenseCheck).

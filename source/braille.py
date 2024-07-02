@@ -5,7 +5,6 @@
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 import itertools
-import os
 import typing
 from typing import (
 	TYPE_CHECKING,
@@ -430,7 +429,7 @@ def getDisplayList(excludeNegativeChecks=True) -> List[Tuple[str, str]]:
 					displayList.append((display.name, display.description))
 			else:
 				log.debugWarning(f"Braille display driver {display.name} reports as unavailable, excluding")
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 	displayList.sort(key=lambda d: strxfrm(d[1]))
 	if lastDisplay:
@@ -1135,7 +1134,7 @@ class TextInfoRegion(Region):
 		"""
 		try:
 			return self.obj.makeTextInfo(textInfos.POSITION_SELECTION)
-		except:
+		except:  # noqa: E722
 			return self.obj.makeTextInfo(textInfos.POSITION_FIRST)
 
 	def _setCursor(self, info: textInfos.TextInfo):
@@ -2423,7 +2422,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
-			except:
+			except:  # noqa: E722
 				log.error("Error displaying cells. Disabling display", exc_info=True)
 				self.handleDisplayUnavailable()
 			return
@@ -2834,7 +2833,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		try:
 			self.display.display(data)
-		except:
+		except:  # noqa: E722
 			log.error("Error displaying cells. Disabling display", exc_info=True)
 			self.handleDisplayUnavailable()
 		else:

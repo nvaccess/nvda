@@ -20,12 +20,11 @@ import time
 import winsound
 import re
 import uuid
-import collections
 import NVDAHelper
 import oleacc
 import ui
 import speech
-from tableUtils import HeaderCellInfo, HeaderCellTracker
+from tableUtils import HeaderCellTracker
 import config
 from config.configFlags import ReportCellBorders
 import textInfos
@@ -47,8 +46,6 @@ from .. import NVDAObjectTextInfo
 import scriptHandler
 from scriptHandler import script
 import browseMode
-import inputCore
-import ctypes
 import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState
@@ -286,7 +283,7 @@ backgroundPatternLabels={
 		xlPatternRectangularGradient:_("rectangular gradient"),
 	}
 
-from .excelCellBorder import getCellBorderStyleDescription
+from .excelCellBorder import getCellBorderStyleDescription  # noqa: E402
 
 re_RC=re.compile(r'R(?:\[(\d+)\])?C(?:\[(\d+)\])?')
 re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
@@ -1868,7 +1865,7 @@ class ExcelDropdown(Window):
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		newFocus=self.selection or self
-		if eventHandler.lastQueuedFocusObject is newFocus: return
+		if eventHandler.lastQueuedFocusObject is newFocus: return  # noqa: E701
 		eventHandler.queueEvent("gainFocus",newFocus)
 
 	@script(gestures=("kb:escape", "kb:enter", "kb:space"), canPropagate=True)
@@ -1929,7 +1926,7 @@ class ExcelFormControl(ExcelBase):
 				formControlType=self.excelFormControlObject.FormControlType
 			else:
 				formControlType=None
-		except:
+		except:  # noqa: E722
 			return None
 		return self._roleMap[formControlType]
 
@@ -2025,7 +2022,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	_label=None
 	@property
 	def label(self):
-		if self._label: return self._label
+		if self._label: return self._label  # noqa: E701
 		alternativeText=self.excelItemObject.AlternativeText
 		if alternativeText: 
 			self._label=alternativeText+" "+self.excelItemObject.Name+" " + self.excelItemObject.TopLeftCell.address(False,False,1,False) + "-" + self.excelItemObject.BottomRightCell.address(False,False,1,False)
@@ -2036,7 +2033,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	_nvdaObj=None
 	@property
 	def nvdaObj(self):
-		if self._nvdaObj: return self._nvdaObj
+		if self._nvdaObj: return self._nvdaObj  # noqa: E701
 		formControlType=self.excelItemObject.formControlType
 		if formControlType ==xlListBox:
 			self._nvdaObj=ExcelFormControlListBox(windowHandle=self.treeInterceptorObj.rootNVDAObject.windowHandle,parent=self.treeInterceptorObj.rootNVDAObject,excelFormControlObject=self.excelItemObject)
@@ -2136,21 +2133,21 @@ class ExcelFormControlListBox(ExcelFormControl):
 		super(ExcelFormControlListBox,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
 			self.listSize=int(self.excelControlFormatObject.ListCount)
-		except:
+		except:  # noqa: E722
 			self.listSize=0
 		try:
 			self.selectedItemIndex= int(self.excelControlFormatObject.ListIndex)
-		except:
+		except:  # noqa: E722
 			self.selectedItemIndex=0
 		try:
 			self.isMultiSelectable= self.excelControlFormatObject.multiSelect!=xlNone
-		except:
+		except:  # noqa: E722
 			self.isMultiSelectable=False
 
 	def getChildAtIndex(self,index):
 		name=str(self.excelOLEFormatObject.List(index+1))
 		states=set([controlTypes.State.SELECTABLE])
-		if self.excelOLEFormatObject.Selected[index+1]==True:
+		if self.excelOLEFormatObject.Selected[index+1]==True:  # noqa: E712
 			states.add(controlTypes.State.SELECTED)
 		return ExcelDropdownItem(parent=self,name=name,states=states,index=index)
 
@@ -2172,7 +2169,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			if not self.isMultiSelectable:
 				try:
 					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
-				except:
+				except:  # noqa: E722
 					pass
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
@@ -2185,7 +2182,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			if not self.isMultiSelectable:
 				try:
 					self.excelOLEFormatObject.Selected[self.selectedItemIndex] = True
-				except:
+				except:  # noqa: E722
 					pass
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			if child:
@@ -2196,7 +2193,7 @@ class ExcelFormControlListBox(ExcelFormControl):
 			try:
 				lb=self.excelOLEFormatObject
 				lb.Selected[self.selectedItemIndex] =not lb.Selected[self.selectedItemIndex] 
-			except:
+			except:  # noqa: E722
 				return
 			child=self.getChildAtIndex(self.selectedItemIndex-1)
 			eventHandler.queueEvent("gainFocus",child)
@@ -2207,11 +2204,11 @@ class ExcelFormControlDropDown(ExcelFormControl):
 		super(ExcelFormControlDropDown,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
 			self.listSize=self.excelControlFormatObject.ListCount
-		except:
+		except:  # noqa: E722
 			self.listSize=0
 		try:
 			self.selectedItemIndex=self.excelControlFormatObject.ListIndex
-		except:
+		except:  # noqa: E722
 			self.selectedItemIndex=0
 
 	@script(gesture="kb:upArrow", canPropagate=True)
@@ -2238,19 +2235,19 @@ class ExcelFormControlScrollBar(ExcelFormControl):
 		super(ExcelFormControlScrollBar,self).__init__(windowHandle=windowHandle, parent=parent, excelFormControlObject=excelFormControlObject)
 		try:
 			self.minValue=self.excelControlFormatObject.min
-		except:
+		except:  # noqa: E722
 			self.minValue=0
 		try:
 			self.maxValue=self.excelControlFormatObject.max
-		except:
+		except:  # noqa: E722
 			self.maxValue=0
 		try:
 			self.smallChange=self.excelControlFormatObject.smallChange
-		except:
+		except:  # noqa: E722
 			self.smallChange=0
 		try:
 			self.largeChange=self.excelControlFormatObject.largeChange
-		except:
+		except:  # noqa: E722
 			self.largeChange=0
 
 	def _get_value(self):

@@ -14,7 +14,7 @@ import buildVersion
 import winKernel
 import config
 
-from ctypes import *
+from ctypes import *  # noqa: F403
 from ctypes import (
 	WINFUNCTYPE,
 	c_bool,
@@ -26,7 +26,7 @@ from ctypes import (
 	create_unicode_buffer,
 	windll,
 )
-from ctypes.wintypes import *
+from ctypes.wintypes import *  # noqa: F403
 from comtypes import BSTR
 import winUser
 import eventHandler
@@ -66,7 +66,7 @@ lastLayoutString=None
 
 #utility function to point an exported function pointer in a dll  to a ctypes wrapped python function
 def _setDllFuncPointer(dll,name,cfunc):
-	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value
+	cast(getattr(dll,name),POINTER(c_void_p)).contents.value=cast(cfunc,c_void_p).value  # noqa: F405
 
 #Implementation of nvdaController methods
 @WINFUNCTYPE(c_long,c_wchar_p)
@@ -190,13 +190,13 @@ def nvdaController_brailleMessage(text: str) -> SystemErrorCodes:
 def _lookupKeyboardLayoutNameWithHexString(layoutString):
 	buf=create_unicode_buffer(1024)
 	bufSize=c_int(2048)
-	key=HKEY()
-	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:
+	key=HKEY()  # noqa: F405
+	if windll.advapi32.RegOpenKeyExW(winreg.HKEY_LOCAL_MACHINE,u"SYSTEM\\CurrentControlSet\\Control\\Keyboard Layouts\\"+ layoutString,0,winreg.KEY_QUERY_VALUE,byref(key))==0:  # noqa: F405
 		try:
-			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Display Name",0,None,buf,byref(bufSize))==0:  # noqa: F405
 				windll.shlwapi.SHLoadIndirectString(buf.value,buf,1023,None)
 				return buf.value
-			if windll.advapi32.RegQueryValueExW(key,u"Layout Text",0,None,buf,byref(bufSize))==0:
+			if windll.advapi32.RegQueryValueExW(key,u"Layout Text",0,None,buf,byref(bufSize))==0:  # noqa: F405
 				return buf.value
 		finally:
 			windll.advapi32.RegCloseKey(key)
@@ -204,21 +204,21 @@ def _lookupKeyboardLayoutNameWithHexString(layoutString):
 @WINFUNCTYPE(c_long,c_wchar_p)
 def nvdaControllerInternal_requestRegistration(uuidString):
 	pid=c_long()
-	windll.rpcrt4.I_RpcBindingInqLocalClientPID(None,byref(pid))
+	windll.rpcrt4.I_RpcBindingInqLocalClientPID(None,byref(pid))  # noqa: F405
 	pid=pid.value
 	if not pid:
 		log.error("Could not get process ID for RPC call")
-		return -1;
+		return -1
 	bindingHandle=c_long()
 	bindingHandle.value=localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle: 
 		log.error("Could not bind to inproc rpc server for pid %d"%pid)
 		return -1
 	registrationHandle=c_long()
-	res=localLib.nvdaInProcUtils_registerNVDAProcess(bindingHandle,byref(registrationHandle))
+	res=localLib.nvdaInProcUtils_registerNVDAProcess(bindingHandle,byref(registrationHandle))  # noqa: F405
 	if res!=0 or not registrationHandle:
 		log.error("Could not register NVDA with inproc rpc server for pid %d, res %d, registrationHandle %s"%(pid,res,registrationHandle))
-		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))
+		windll.rpcrt4.RpcBindingFree(byref(bindingHandle))  # noqa: F405
 		return -1
 	import appModuleHandler
 	queueHandler.queueFunction(queueHandler.eventQueue,appModuleHandler.update,pid,helperLocalBindingHandle=bindingHandle,inprocRegistrationHandle=registrationHandle)
@@ -275,7 +275,7 @@ def nvdaControllerInternal_drawFocusRectNotify(hwnd, left, top, right, bottom):
 	focus=api.getFocusObject()
 	if isinstance(focus,Window) and hwnd==focus.windowHandle:
 		eventHandler.queueEvent("displayModel_drawFocusRectNotify",focus,rect=(left,top,right,bottom))
-	return 0;
+	return 0
 
 @WINFUNCTYPE(c_long,c_long,c_long,c_wchar_p)
 def nvdaControllerInternal_logMessage(level,pid,message):
@@ -373,7 +373,7 @@ def nvdaControllerInternal_inputCompositionUpdate(compositionString,selectionSta
 def handleInputCandidateListUpdate(candidatesString,selectionIndex,inputMethod):
 	candidateStrings=candidatesString.split('\n')
 	import speech
-	from NVDAObjects.inputComposition import InputComposition, CandidateList, CandidateItem
+	from NVDAObjects.inputComposition import CandidateItem
 	focus=api.getFocusObject()
 	if not (0<=selectionIndex<len(candidateStrings)):
 		if isinstance(focus,CandidateItem):
@@ -452,7 +452,7 @@ def handleInputConversionModeUpdate(oldFlags,newFlags,lcid):
 		for x in range(32):
 			x=2**x
 			msgs=inputConversionModeMessages.get(x)
-			if not msgs: continue
+			if not msgs: continue  # noqa: E701
 			newOn=bool(newFlags&x)
 			oldOn=bool(oldFlags&x)
 			if newOn!=oldOn: 
@@ -523,7 +523,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID,hkl,layoutString):
 				layoutStringCodes.append(stringCode[0:4].rjust(8,'0'))
 		for stringCode in layoutStringCodes:
 			inputMethodName=_lookupKeyboardLayoutNameWithHexString(stringCode)
-			if inputMethodName: break
+			if inputMethodName: break  # noqa: E701
 	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown") 
 		# Translators: The label for an unknown input method when switching input methods. 
@@ -642,7 +642,7 @@ def initialize() -> None:
 	res=windll.User32.GetKeyboardLayoutNameW(buf)
 	if res:
 		lastLayoutString=buf.value
-	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))
+	localLib=cdll.LoadLibrary(os.path.join(versionedLibPath,'nvdaHelperLocal.dll'))  # noqa: F405
 	for name,func in [
 		("nvdaController_speakText",nvdaController_speakText),
 		("nvdaController_speakSsml", nvdaController_speakSsml),
@@ -670,14 +670,14 @@ def initialize() -> None:
 			raise e
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
 	generateBeep=localLib.generateBeep
-	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]
+	generateBeep.argtypes=[c_char_p,c_float,c_int,c_int,c_int]  # noqa: F405
 	generateBeep.restype=c_int
 	onSsmlMarkReached = localLib.nvdaController_onSsmlMarkReached
 	onSsmlMarkReached.argtypes = [c_wchar_p]
 	onSsmlMarkReached.restype = c_ulong
 	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
-	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(
+	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(  # noqa: F405
 		("VBuf_getTextInRange", localLib),
 		((1,), (1,), (1,), (2,), (1,)))
 	if config.isAppX:
@@ -693,9 +693,9 @@ def initialize() -> None:
 		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
 	)
 	if not h:
-		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())
+		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())  # noqa: F405
 		return
-	_remoteLib=CDLL("nvdaHelperRemote",handle=h)
+	_remoteLib=CDLL("nvdaHelperRemote",handle=h)  # noqa: F405
 	if _remoteLib.injection_initialize() == 0:
 		raise RuntimeError("Error initializing NVDAHelperRemote")
 	if not _remoteLib.installIA2Support():
@@ -749,6 +749,6 @@ def bstrReturn(address):
 	# Just access the string ourselves.
 	# This will terminate at a null character, even though BSTR allows nulls.
 	# We're only using this for normal, null-terminated strings anyway.
-	val = wstring_at(address)
+	val = wstring_at(address)  # noqa: F405
 	windll.oleaut32.SysFreeString(address)
 	return val

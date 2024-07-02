@@ -494,10 +494,10 @@ class OfficeChartElementList(Window):
 		if len(self.elementList) == 0: 
 			ui.message(self.name)
 		else:
-			if self.activeElement == None: self.activeElement = self.elementList[0]
+			if self.activeElement == None: self.activeElement = self.elementList[0]  # noqa: E701, E711
 			else: 
-				if direction=="previous": self.activeElement = self.activeElement.previous
-				elif direction=="next": self.activeElement = self.activeElement.next
+				if direction=="previous": self.activeElement = self.activeElement.previous  # noqa: E701
+				elif direction=="next": self.activeElement = self.activeElement.next  # noqa: E701
 			self.activeElement.select() 
 			eventHandler.queueEvent("gainFocus", self.activeElement)
 							
@@ -527,7 +527,7 @@ class OfficeChart(OfficeChartElementList):
 		self.officeApplicationObject=officeApplicationObject
 		try:
 			seriesCount=self.officeChartObject.SeriesCollection().Count
-		except:
+		except:  # noqa: E722
 			seriesCount=None
 		if seriesCount:
 			for i in range(seriesCount):
@@ -536,7 +536,7 @@ class OfficeChart(OfficeChartElementList):
 		self.addElement( OfficeChartElementCollection(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
 		try:
 			self.officeChartObject.Select()
-		except:
+		except:  # noqa: E722
 			pass		
 		
 	def _get_name(self):
@@ -664,7 +664,7 @@ class OfficeChartElementSeries(OfficeChartElementList):
 			self.addElement ( OfficeChartElementTrendline(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlTrendline ,  arg1 = self.seriesIndex , arg2 = trendlineIndex ) , self )
 	
 	def _get_name(self):
-		currentSeries=self.officeChartObject.SeriesCollection(self.seriesIndex)
+		currentSeries=self.officeChartObject.SeriesCollection(self.seriesIndex)  # noqa: F841
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
 		return seriesText

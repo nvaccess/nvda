@@ -51,7 +51,7 @@ def RecursiveInstall(env, target, dir):
     dir = env.Dir(dir).abspath
     target = env.Dir(target).abspath
 
-    l = len(dir) + 1
+    l = len(dir) + 1  # noqa: E741
 
     relnodes = [ n.abspath[l:] for n in nodes ]
 

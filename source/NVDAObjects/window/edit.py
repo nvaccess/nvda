@@ -259,16 +259,16 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		formatField=textInfos.FormatField()
 		charFormat=None
 		if formatConfig["reportFontName"]:
-			if charFormat is None: charFormat=self._getCharFormat(offset)
+			if charFormat is None: charFormat=self._getCharFormat(offset)  # noqa: E701
 			formatField["font-name"]=charFormat.szFaceName
 		if formatConfig["reportFontSize"]:
-			if charFormat is None: charFormat=self._getCharFormat(offset)
+			if charFormat is None: charFormat=self._getCharFormat(offset)  # noqa: E701
 			# Font size is supposed to be an integral value
 			fontSize = charFormat.yHeight // 20
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
 		if formatConfig["fontAttributeReporting"]:
-			if charFormat is None: charFormat=self._getCharFormat(offset)
+			if charFormat is None: charFormat=self._getCharFormat(offset)  # noqa: E701
 			formatField["bold"]=bool(charFormat.dwEffects&CFE_BOLD)
 			formatField["italic"]=bool(charFormat.dwEffects&CFE_ITALIC)
 			formatField["underline"]=bool(charFormat.dwEffects&CFE_UNDERLINE)
@@ -283,12 +283,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 			else:
 			    formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
-			if charFormat is None: charFormat=self._getCharFormat(offset)
+			if charFormat is None: charFormat=self._getCharFormat(offset)  # noqa: E701
 			self._setFormatFieldColor(charFormat, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"]=self._getLineNumFromOffset(offset)+1
 		if formatConfig["reportLinks"]:
-			if charFormat is None: charFormat=self._getCharFormat(offset)
+			if charFormat is None: charFormat=self._getCharFormat(offset)  # noqa: E701
 			formatField["link"]=bool(charFormat.dwEffects&CFM_LINK)
 		return formatField,(startOffset,endOffset)
 
@@ -330,7 +330,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			start=ctypes.c_uint()
 			end=ctypes.c_uint()
-			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_GETSEL,ctypes.byref(start),ctypes.byref(end))
+			res=watchdog.cancellableSendMessage(self.obj.windowHandle,winUser.EM_GETSEL,ctypes.byref(start),ctypes.byref(end))  # noqa: F841
 			return start.value,end.value
 
 	def _setSelectionOffsets(self,start,end):
@@ -573,7 +573,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			langId = fontObj.languageID
 			if langId:
 				formatField['language']=languageHandler.windowsLCIDToLocaleName(langId)
-		except:
+		except:  # noqa: E722
 			log.debugWarning("language error",exc_info=True)
 			pass
 		return formatField
@@ -640,7 +640,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		# Outlook >=2007 exposes MSAA on its embedded objects thus we can use accName as the label
 		import oleacc
 		try:
-			label=o.QueryInterface(oleacc.IAccessible).accName(0);
+			label=o.QueryInterface(oleacc.IAccessible).accName(0)
 		except comtypes.COMError:
 			pass
 		if label:
@@ -666,7 +666,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			dataObj=None
 		if dataObj:
 			text=comtypes.BSTR()
-			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text));
+			res=NVDAHelper.localLib.getOleClipboardText(dataObj,ctypes.byref(text))  # noqa: F841
 			label=text.value
 		if label:
 			return label
@@ -693,7 +693,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		start=rangeObj.start
 		for offset in range(len(bufText)):
 			if ord(bufText[offset]) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
-				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate
+				if embedRangeObj is None: embedRangeObj=rangeObj.duplicate  # noqa: E701
 				embedRangeObj.setRange(start+offset,start+offset+1)
 				label=self._getEmbeddedObjectLabel(embedRangeObj)
 				if label:
@@ -880,7 +880,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 				ptr=ctypes.POINTER(comInterfaces.tom.ITextDocument)()
 				ctypes.windll.oleacc.AccessibleObjectFromWindow(self.windowHandle,-16,ctypes.byref(ptr._iid_),ctypes.byref(ptr))
 				self._ITextDocumentObject=ptr
-			except:
+			except:  # noqa: E722
 				log.error("Error getting ITextDocument",exc_info=True)
 				self._ITextDocumentObject=None
 		return self._ITextDocumentObject
@@ -889,7 +889,7 @@ class Edit(EditableTextWithAutoSelectDetection, EditBase):
 		if not hasattr(self,'_ITextSelectionObject'):
 			try:
 				self._ITextSelectionObject=self.ITextDocumentObject.selection
-			except:
+			except:  # noqa: E722
 				self._ITextSelectionObject=None
 		return self._ITextSelectionObject
 

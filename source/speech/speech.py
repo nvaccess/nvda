@@ -28,7 +28,7 @@ import languageHandler
 from textUtils import unicodeNormalize
 from . import manager
 from .extensions import speechCanceled, pre_speechCanceled, pre_speech
-from .extensions import filter_speechSequence, speechCanceled
+from .extensions import filter_speechSequence
 from .commands import (
 	# Commands that are used in this file.
 	BreakCommand,
@@ -1083,7 +1083,7 @@ def speak(  # noqa: C901
 	speechSequence=[]
 	for item in oldSpeechSequence:
 		if isinstance(item,LangChangeCommand):
-			if not autoLanguageSwitching: continue
+			if not autoLanguageSwitching: continue  # noqa: E701
 			curLanguage=item.lang
 			if not curLanguage or (not autoDialectSwitching and curLanguage.split('_')[0]==defaultLanguageRoot):
 				curLanguage=defaultLanguage
@@ -1091,7 +1091,7 @@ def speak(  # noqa: C901
 			if not unicodeNormalization:
 				continue
 		elif isinstance(item,str):
-			if not item: continue
+			if not item: continue  # noqa: E701
 			if autoLanguageSwitching and curLanguage!=prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage=curLanguage
@@ -1752,7 +1752,7 @@ def getTextInfoSpeech(  # noqa: C901
 			speechSequence.append(langChange)
 		else:
 			speechSequence.extend(indentationSpeech)
-		if speakTextInfoState: speakTextInfoState.indentationCache=allIndentation
+		if speakTextInfoState: speakTextInfoState.indentationCache=allIndentation  # noqa: E701
 	# Don't add this text if it is blank.
 	relativeBlank=True
 	for x in relativeSpeechSequence:
@@ -2125,7 +2125,7 @@ def _shouldSpeakContentFirst(
 			presCat != attrs.PRESCAT_CONTAINER
 			or role == controlTypes.Role.ARTICLE
 		)
-		and not (role in _neverSpeakContentFirstRoles)
+		and role not in _neverSpeakContentFirstRoles
 		and not tableID
 		and controlTypes.State.EDITABLE not in states
 	)
@@ -2511,7 +2511,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		# but not if the columnCount is 1 or less and there is no old columnCount.
 		if (((textColumnNumber and textColumnNumber!=oldTextColumnNumber) or
 			(textColumnCount and textColumnCount!=oldTextColumnCount)) and not
-			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :
+			(textColumnCount and int(textColumnCount) <=1 and oldTextColumnCount == None)) :  # noqa: E711
 			if textColumnNumber and textColumnCount:
 				# Translators: Indicates the text column number in a document.
 				# {0} will be replaced with the text column number.
