@@ -9,16 +9,23 @@ import controlTypes
 import appModuleHandler
 from comtypes import COMError
 import UIAHandler
-from NVDAObjects.UIA.wordDocument import WordDocument
+from NVDAObjects.UIA.wordDocument import WordDocument, WordDocumentTextInfo
 
 class MailWordDocumentTreeInterceptor(WordDocument.treeInterceptorClass):
 
 	def _get_isAlive(self):
 		return super(MailWordDocumentTreeInterceptor,self).isAlive and self.rootNVDAObject.shouldCreateTreeInterceptor
 
+class MailWordDocumentTextInfo(WordDocumentTextInfo):
+	# Windows Mail doesn't seem to support MS Word custom attributes, so call the base '_getFormatFieldAtRange'
+	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
+		return super(WordDocumentTextInfo, self)._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+
 class MailWordDocument(WordDocument):
 
+	TextInfo=MailWordDocumentTextInfo
 	treeInterceptorClass=MailWordDocumentTreeInterceptor
+
 	def _get_shouldCreateTreeInterceptor(self):
 		# Newer versions of Mail (Windows 11+) correctly set the readonly state for emails
 		if controlTypes.State.READONLY in self.states:
