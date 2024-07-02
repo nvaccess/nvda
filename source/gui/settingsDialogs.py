@@ -4758,9 +4758,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 	def __init__(self,parent):
 		try:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
+			symbolProcessor = characterProcessing.symbols._localeSpeechSymbolProcessors.fetchLocaleData(speech.getCurrentLanguage())
 		except LookupError:
-			symbolProcessor = characterProcessing._localeSpeechSymbolProcessors.fetchLocaleData("en")
+			symbolProcessor = characterProcessing.symbols._localeSpeechSymbolProcessors.fetchLocaleData("en")
 		self.symbolProcessor = symbolProcessor
 		desc = languageHandler.getLanguageDescription(self.symbolProcessor.locale)
 		if not desc:
@@ -5023,7 +5023,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 			self.symbolProcessor.userSymbols.save()
 		except IOError as e:
 			log.error("Error saving user symbols info: %s" % e)
-		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
+		characterProcessing.symbols._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
 		super(SpeechSymbolsDialog, self).onOk(evt)
 
 	def _refreshVisibleItems(self):
