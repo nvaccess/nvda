@@ -2,15 +2,8 @@
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
-To run the tests (unit tests, translatable string checks), first change directory to the root of the NVDA source distribution as above.
-Then, run:
-
-```cmd
-scons tests
-```
-
 ### Translatable string checks
-To run only the translatable string checks (which check that all translatable strings have translator comments), run:
+To run the translatable string checks (which check that all translatable strings have translator comments), run:
 
 ```cmd
 scons checkPot
