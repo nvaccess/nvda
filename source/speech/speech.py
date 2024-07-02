@@ -181,7 +181,9 @@ def processText(
 	text = RE_CONVERT_WHITESPACE.sub(" ", text)
 	if normalize:
 		text = unicodeNormalize(text)
-	return text.rstrip()
+		# keep leading space for normalization message
+		return text.rstrip()
+	return text.strip()
 
 
 def cancelSpeech():
