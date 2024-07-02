@@ -85,7 +85,7 @@ def initialize() -> None:
 		from . import mathPlayer
 		try:
 			provider = mathPlayer.MathPlayer()
-		except:
+		except:  # noqa: E722
 			log.warning("MathPlayer 4 not available")
 		else:
 			registerProvider(provider, speech=not speechProvider,

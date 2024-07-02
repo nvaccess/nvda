@@ -383,7 +383,7 @@ class AddonListVM:
 			log.debug(f"Selected Id in new order {selectedId}")
 			return selectedId
 		elif not newOrder:
-			log.debug(f"No entries in new order")
+			log.debug("No entries in new order")
 			# no entries after filter, select None
 			return None
 		elif selectedIndex is not None:
@@ -408,7 +408,7 @@ class AddonListVM:
 			# if there is any addon select it.
 			return newOrder[0]
 		else:
-			log.debug(f"No selection")
+			log.debug("No selection")
 			# no selection.
 			return None
 

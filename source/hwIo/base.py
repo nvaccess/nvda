@@ -21,7 +21,6 @@ import weakref
 import serial
 from serial.win32 import OVERLAPPED, FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, ERROR_IO_PENDING, COMMTIMEOUTS, CreateFile, SetCommTimeouts
 import winKernel
-import braille
 from logHandler import log
 import config
 import time
@@ -202,7 +201,7 @@ class IoBase(object):
 			log.debug("Read: %r" % data)
 		try:
 			self._onReceive(data)
-		except:
+		except:  # noqa: E722
 			log.error("", exc_info=True)
 
 

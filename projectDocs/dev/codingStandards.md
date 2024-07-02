@@ -1,6 +1,6 @@
 ## Code Style
 
-Python code style is enforced with the flake8 linter, see [`tests/lint/readme.md`](https://github.com/nvaccess/nvda/tree/master/tests/lint/readme.md) for more information.
+Python code style is enforced with the Ruff linter, see [linting](./lint.md) for more information.
 
 ### Encoding
 

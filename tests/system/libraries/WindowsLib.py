@@ -141,7 +141,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 			"See NVDA log for dump of all speech."
 		)
 	else:
-		builtIn.log(f"Found, attempting to select.", level="DEBUG")
+		builtIn.log("Found, attempting to select.", level="DEBUG")
 		nextIndex = spy.get_next_speech_index()
 		spy.emulateKeyPress("enter")
 		if not spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex, errorMessage=None):

@@ -32,7 +32,7 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
     * Matematik formülü (#16001, @mltony)
     * Aynı biçimde metin (#16000, @mltony)
     * Farklı biçimde metin (#16000, @mltony)
-    * Sentezleyici ayarları zincirinde ilk ve son ayara, ileri ve geri gitmek için komutlar eklendi. (#13768, #16095, @rmcpantoja)
+  * Sentezleyici ayarları zincirinde ilk ve son ayara, ileri ve geri gitmek için komutlar eklendi. (#13768, #16095, @rmcpantoja)
     * Sentezleyici ayarları zincirinde ilk ve son ayarı ayarlama özelliğinin kısayolu atanmamıştır. (#13768)
     * üzerinde bulunulan ayarı daha büyük adımlarla arttırıp azaltma (#13768):
       * Masa üstü: `NVDA+kontrol+sayfa yukarı` veya `NVDA+kontrol+sayfa aşağı`.
@@ -86,7 +86,7 @@ Thunderbird, Adobe Reader, web tarayıcıları, Nudi ve Geekbench gibi uygulamal
 * "Fare hareketlerinde koordinatları ses çalarak bildir" seçeneği etkinleştirildiğinde, uygulama uyku kipindeyken ses koordinatlarının oynatılma hatası düzeltildi. (#8059, @hwf1324)
 * Adobe Reader'da, NVDA PDF'lerdeki formüllerin alternatif metinlerini göz ardı etmiyor. (#12715)
 * NVDA'nın Geekbench'teki şeridi ve seçenekleri okuyamamasına neden olan bir hata düzeltildi. (#16251, @mzanm)
-* Konfigürasyon kaydedildiiğinde tüm profillerin kaydedilememesi gibi nadir bir durum düzeltildi. (# 16343, @CyrilleB79)
+* Konfigürasyon kaydedildiiğinde tüm profillerin kaydedilememesi gibi nadir bir durum düzeltildi. (#16343, @CyrilleB79)
 * Firefox ve Chromium tabanlı tarayıcılarda, NVDA, düzenlenebilir içeriğin içinde bir sunum listesinde (ul / ol) Enter tuşuna basıldığında odak kipine doğru bir şekilde girecek. (#16325)
 * Thunderbird mesaj listesinde görüntülenecek sütunları seçerken sütun durumu değişikliği doğru bir şekilde bildiriliyor. (#16323)
 * `-h`/`--help` komut satırı komutu yeniden doğru biçimde çalışıyor. (#16522, @XLTechie)
@@ -4846,4 +4846,3 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
-

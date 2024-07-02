@@ -4,7 +4,7 @@
 # Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Joseph Lee, Cyrille Bougot
 
 import ctypes
-from ctypes import *
+from ctypes import *  # noqa: F403
 from comtypes import BSTR
 import unicodedata
 import math
@@ -24,7 +24,6 @@ import windowUtils
 from locationHelper import RectLTRB, RectLTWH
 import textUtils
 from typing import (
-	Union,
 	List,
 	Tuple,
 	Optional,
@@ -37,17 +36,17 @@ UNIT_DISPLAYCHUNK = "displayChunk"
 
 def wcharToInt(c):
 	i=ord(c)
-	return c_short(i).value
+	return c_short(i).value  # noqa: F405
 
 def detectStringDirection(s):
 	direction=0
 	for b in (unicodedata.bidirectional(ch) for ch in s):
-		if b=='L': direction+=1
-		if b in ('R','AL'): direction-=1
+		if b=='L': direction+=1  # noqa: E701
+		if b in ('R','AL'): direction-=1  # noqa: E701
 	return direction
 
 def normalizeRtlString(s):
-	l=[]
+	l=[]  # noqa: E741
 	for c in s:
 		#If this is an arabic presentation form b character (commenly given by Windows when converting from glyphs)
 		#Decompose it to its original basic arabic (non-presentational_ character.
@@ -59,7 +58,7 @@ def normalizeRtlString(s):
 		l.append(c)
 	return u"".join(l)
 
-def yieldListRange(l,start,stop):
+def yieldListRange(l,start,stop):  # noqa: E741
 	for x in range(start,stop):
 		yield l[x]
 
@@ -101,11 +100,11 @@ def processFieldsAndRectsRangeReadingdirection(commandList,rects,startIndex,star
 	if not containsRtl:
 		# As no rtl text was ever seen, then there is nothing else to do
 		return
-	if overallDirection==0: overallDirection=1
+	if overallDirection==0: overallDirection=1  # noqa: E701
 	# following the calculated over all reading direction of the passage, correct all weak/neutral fields to have the same reading direction as the field preceeding them 
 	lastDirection=overallDirection
 	for index in range(startIndex,endIndex):
-		if overallDirection<0: index=endIndex-index-1
+		if overallDirection<0: index=endIndex-index-1  # noqa: E701
 		item=commandList[index]
 		if isinstance(item,textInfos.FieldCommand) and isinstance(item.field,textInfos.FormatField):
 			direction=item.field['direction']
@@ -172,7 +171,7 @@ _textChangeNotificationObjs=[]
 
 def initialize():
 	global _getWindowTextInRect,_requestTextChangeNotificationsForWindow, _getFocusRect
-	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))
+	_getWindowTextInRect=CFUNCTYPE(c_long,c_long,c_long,c_bool,c_int,c_int,c_int,c_int,c_int,c_int,c_bool,POINTER(BSTR),POINTER(BSTR))(('displayModel_getWindowTextInRect',NVDAHelper.localLib),((1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(1,),(2,),(2,)))  # noqa: F405
 	_requestTextChangeNotificationsForWindow=NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 
 def getCaretRect(obj):
@@ -218,11 +217,11 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 	return text, characterLocations
 
 def getFocusRect(obj):
-	left=c_long()
-	top=c_long()
-	right=c_long()
-	bottom=c_long()
-	if NVDAHelper.localLib.displayModel_getFocusRect(obj.appModule.helperLocalBindingHandle,obj.windowHandle,byref(left),byref(top),byref(right),byref(bottom))==0:
+	left=c_long()  # noqa: F405
+	top=c_long()  # noqa: F405
+	right=c_long()  # noqa: F405
+	bottom=c_long()  # noqa: F405
+	if NVDAHelper.localLib.displayModel_getFocusRect(obj.appModule.helperLocalBindingHandle,obj.windowHandle,byref(left),byref(top),byref(right),byref(bottom))==0:  # noqa: F405
 		return left.value,top.value,right.value,bottom.value
 	return None
 
@@ -494,7 +493,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		return obj
 
 	def _getOffsetsFromNVDAObject(self,obj):
-		l=obj.location
+		l=obj.location  # noqa: E741
 		if not l:
 			log.debugWarning("object has no location")
 			raise LookupError

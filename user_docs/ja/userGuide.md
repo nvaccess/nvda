@@ -2007,17 +2007,17 @@ NVDA設定ダイアログの点字カテゴリにある「変更する」ボタ�
 
 <!-- KC:setting -->
 
-##### Braille mode {#BrailleMode}
+##### 点字モード {#BrailleMode}
 
 Key: `NVDA+alt+t`
 
-This option allows you to select between the available braille modes.
+このオプションでは、利用可能な点字モードを選択できます。
 
-Currently, two braille modes are supported, "follow cursors" and "display speech output".
+現在サポートされている点字モードは「カーソル追随」と「音声出力を表示」です。
 
-When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
+「カーソル追随」が選択されている場合、点字ディスプレイはシステムフォーカス/テキストカーソルまたはナビゲーターオブジェクト/レビューカーソルのいずれかに追従します。どちらに追従するかは「点字表示の切り替え」によります。
 
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+「音声出力を表示」が選択されている場合、点字ディスプレイはNVDAが読み上げる内容、または読み上げモードが「声」の場合に読み上げるべき内容を表示します。
 
 ##### コンピューター点字(NABCC)を使用 {#BrailleSettingsExpandToComputerBraille}
 
