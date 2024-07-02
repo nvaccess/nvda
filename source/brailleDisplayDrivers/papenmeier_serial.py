@@ -48,7 +48,7 @@ def brl_out(offset: int, data: List[int]) -> bytes:
 
 def brl_poll(dev: serial.Serial) -> bytes:
 	"""read data from braille display, used by keypress handler"""
-	if dev.in_waiting < 10: return b""
+	if dev.in_waiting < 10: return b""  # noqa: E701
 	ret = dev.read(dev.in_waiting)
 	if ret[0] == STX and ret[9] == ETX:
 		return ret
@@ -93,8 +93,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if(self._dev is None):
 				self._dev = serial.Serial(self._port, baudrate = baud, timeout=TIMEOUT, writeTimeout=TIMEOUT)
 				self._dev.write(brl_auto_id())
-				if (baud == 19200): time.sleep(0.2)
-				else: time.sleep(0.03)
+				if (baud == 19200): time.sleep(0.2)  # noqa: E701
+				else: time.sleep(0.03)  # noqa: E701
 				displaytype = brl_poll(self._dev)
 				dic = -1
 				if len(displaytype) == 10 and displaytype[0] == STX and displaytype[1] == ord(b'I'):
@@ -153,33 +153,33 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		"""free resources"""
 		super(BrailleDisplayDriver, self).terminate()
 		try:
-			if(self._dev!=None):
+			if(self._dev!=None):  # noqa: E711
 				self._dev.close()
 				self._dev = None
 				self._keyCheckTimer.Stop()
 				self._keyCheckTimer = None
-		except:
+		except:  # noqa: E722
 			pass
 
 	def display(self, cells: List[int]):
 		"""write data to braille display"""
-		if(self._dev!=None):
+		if(self._dev!=None):  # noqa: E711
 			try:
 				self._dev.write(brl_out(self._offsetHorizontal, cells))
-			except:
+			except:  # noqa: E722
 				self._dev = None
 		
 	def executeGesture(self,gesture):
 		"""execute a gesture"""
 		#here you can add other gesture types
 		try:
-			if gesture.id: inputCore.manager.executeGesture(gesture)
+			if gesture.id: inputCore.manager.executeGesture(gesture)  # noqa: E701
 		except inputCore.NoInputGestureAction:
 			pass
 
 	def _handleKeyPresses(self): #called by the keycheck timer
 		"""if a button was pressed an input gesture is executed"""
-		if(self._dev!=None):
+		if(self._dev!=None):  # noqa: E711
 			data = brl_poll(self._dev)
 			if len(data) == 10 and data[1] == ord(b'K'):
 				pos = (data[2] << 8) + data[3]
@@ -190,7 +190,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self.executeGesture(InputGesture(pos, pressed, keys, self))
 			elif(len(data) == 0):
 				if(self._repeatcount==50):
-					if(len(self._lastkey)): self.executeGesture(InputGesture(None, None, None, self))
+					if(len(self._lastkey)): self.executeGesture(InputGesture(None, None, None, self))  # noqa: E701
 					self._repeatcount = 0
 				else:
 					self._repeatcount += 1
@@ -222,30 +222,30 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 def brl_keyname2(keys: int) -> str:
 	"""returns keyname for key index on displays with eab"""
-	if(keys & 4 == 4): return 'l1'
-	if(keys & 8 == 8): return 'l2'
-	if(keys & 16 == 16): return 'r1'
-	if(keys & 32 == 32): return 'r2'
+	if(keys & 4 == 4): return 'l1'  # noqa: E701
+	if(keys & 8 == 8): return 'l2'  # noqa: E701
+	if(keys & 16 == 16): return 'r1'  # noqa: E701
+	if(keys & 32 == 32): return 'r2'  # noqa: E701
 	return ''
 
 def brl_keyname(keyindex: int, driver: BrailleDisplayDriver) -> str:
 	"""returns keyname for key index"""
 	if(driver._eab):
-		if(keyindex==-255): return "left"
-		if(keyindex==-254): return "left2"
-		if(keyindex==-253): return "up"
-		if(keyindex==-252): return "up2"
-		if(keyindex==-251): return "right"
-		if(keyindex==-250): return "right2"
-		if(keyindex==-249): return "dn"
-		if(keyindex==-248): return "dn2"
+		if(keyindex==-255): return "left"  # noqa: E701
+		if(keyindex==-254): return "left2"  # noqa: E701
+		if(keyindex==-253): return "up"  # noqa: E701
+		if(keyindex==-252): return "up2"  # noqa: E701
+		if(keyindex==-251): return "right"  # noqa: E701
+		if(keyindex==-250): return "right2"  # noqa: E701
+		if(keyindex==-249): return "dn"  # noqa: E701
+		if(keyindex==-248): return "dn2"  # noqa: E701
 		return ''
 	else:
 		#display does not have an eab, so the display specific table is used
 		keyindex = keyindex+255
 		if(keyindex>=0 and keyindex<len(driver._keymap)):
 			return driver._keymap[keyindex]
-		else: return ''
+		else: return ''  # noqa: E701
 
 class InputGesture(braille.BrailleDisplayGesture):
 	"""input gesture class for papenmeier_serial displays used only by the driver"""
@@ -273,15 +273,15 @@ class InputGesture(braille.BrailleDisplayGesture):
 		elif(pressed == 0):
 			k: str = brl_keyname(keyindex, driver)
 			if(driver._lastkey!=k):
-				if(driver._lastkey!=''): self.id=driver._lastkey+','+k
+				if(driver._lastkey!=''): self.id=driver._lastkey+','+k  # noqa: E701
 			else:
 				self.id = k
-				if(len(driver._decodedkeys) and len(k)): self.id = driver._decodedkeys[0]+","+k
-				elif(len(driver._decodedkeys)==1): self.id = driver._decodedkeys[0]
-				elif(len(driver._decodedkeys)==2): self.id = driver._decodedkeys[0]+','+driver._decodedkeys[1]
+				if(len(driver._decodedkeys) and len(k)): self.id = driver._decodedkeys[0]+","+k  # noqa: E701
+				elif(len(driver._decodedkeys)==1): self.id = driver._decodedkeys[0]  # noqa: E701
+				elif(len(driver._decodedkeys)==2): self.id = driver._decodedkeys[0]+','+driver._decodedkeys[1]  # noqa: E701
 				driver._decodedkeys = [] 
 			driver._lastkey = ''
 		else:
-			if(driver._lastkey == ''): driver._lastkey=brl_keyname(keyindex, driver)
+			if(driver._lastkey == ''): driver._lastkey=brl_keyname(keyindex, driver)  # noqa: E701
 		keys2 = brl_keyname2(keys)
-		if(len(keys2) and driver._eab): driver._decodedkeys += [keys2]
+		if(len(keys2) and driver._eab): driver._decodedkeys += [keys2]  # noqa: E701

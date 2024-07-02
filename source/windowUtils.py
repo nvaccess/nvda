@@ -12,7 +12,7 @@ When working on this file, consider moving to winAPI.
 import ctypes
 import weakref
 import winUser
-from winUser import WNDCLASSEXW, WNDPROC, LRESULT
+from winUser import WNDCLASSEXW, WNDPROC
 from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
@@ -115,7 +115,7 @@ def getWindowScalingFactor(window: int) -> int:
 	user32 = ctypes.windll.user32
 	try:
 		winDpi: int = user32.GetDpiForWindow(window)
-	except:
+	except:  # noqa: E722
 		log.debug("GetDpiForWindow failed, using GetDeviceCaps instead")
 		dc = user32.GetDC(window)
 		winDpi: int = ctypes.windll.gdi32.GetDeviceCaps(dc, LOGPIXELSX)
@@ -274,6 +274,6 @@ class CustomWindow(AutoPropertyObject):
 			res = inst.windowProc(hwnd, msg, wParam, lParam)
 			if res is not None:
 				return res
-		except:
+		except:  # noqa: E722
 			log.exception("Error in wndProc")
 		return ctypes.windll.user32.DefWindowProcW(hwnd, msg, wParam, lParam)

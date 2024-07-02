@@ -151,7 +151,7 @@ class DictionaryDialog(
 	To use this dialog, override L{__init__} calling super().__init__.
 	"""
 	
-	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}
+	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: E741
 	helpId = "SpeechDictionaries"
 
 	@abstractmethod

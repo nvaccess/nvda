@@ -1,4 +1,3 @@
-import time
 import oleacc
 import queueHandler
 import eventHandler
@@ -75,17 +74,17 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def _get_previous(self):
 		item=super(MSCandUI21_candidateMenuItem,self).previous
-		if not item or controlTypes.State.INVISIBLE in item.states: return
+		if not item or controlTypes.State.INVISIBLE in item.states: return  # noqa: E701
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
 	def _get_next(self):
 		item=super(MSCandUI21_candidateMenuItem,self).next
-		if not item or controlTypes.State.INVISIBLE in item.states: return
+		if not item or controlTypes.State.INVISIBLE in item.states: return  # noqa: E701
 		return MSCandUI21_candidateMenuItem(IAccessibleObject=item.IAccessibleObject,IAccessibleChildID=item.IAccessibleChildID)
 
 	def doAction(self,index=None):
 		if not index:
-			l=self.location
+			l=self.location  # noqa: E741
 			if l:
 				x=l[0]
 				y=l[1]
@@ -98,12 +97,12 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 
 	def script_nextItem(self,gesture):
 		item=self.next
-		if not item or not isinstance(item.candidateNumber,int): return
+		if not item or not isinstance(item.candidateNumber,int): return  # noqa: E701
 		reportSelectedCandidate(item)
 
 	def script_previousItem(self,gesture):
 		item=self.previous
-		if not item or not isinstance(item.candidateNumber,int): return
+		if not item or not isinstance(item.candidateNumber,int): return  # noqa: E701
 		reportSelectedCandidate(item)
 
 	def script_changePage(self,gesture):
@@ -148,7 +147,7 @@ class MSCandUI21(IAccessible):
 
 	def event_show(self):
 		candidateList=self.simpleFirstChild
-		if not candidateList: return
+		if not candidateList: return  # noqa: E701
 		role=candidateList.role
 		if role==controlTypes.Role.LIST:
 			item=candidateList.firstChild

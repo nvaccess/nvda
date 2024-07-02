@@ -20,7 +20,6 @@ from .utils import (
 )
 import documentBase
 import treeInterceptorHandler
-import cursorManager
 import textInfos
 import browseMode
 from logHandler import log
