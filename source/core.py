@@ -907,6 +907,7 @@ def main():
 	else:
 		log.debug("initializing updateCheck")
 		updateCheck.initialize()
+		log.debug(f"NVDA user ID {updateCheck.state['id']}")
 
 	from winAPI import sessionTracking
 	sessionTracking.initialize()
