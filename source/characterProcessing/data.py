@@ -45,7 +45,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 				continue
 			self._dataMap[loc] = data
 			return data
-		raise LookupError(locale)
+		raise LookupError(f"No data for locale {locale!r}")
 
 	def invalidateLocaleData(self, locale: str) -> None:
 		"""Invalidate the data object (if any) for the given locale.
@@ -55,10 +55,11 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		try:
 			del self._dataMap[locale]
 		except KeyError:
-			pass
+			log.debug(f"No data found for locale '{locale}' to invalidate.")
 
 	def invalidateAllData(self):
 		"""Invalidate all data within this locale map.
 		This will cause a new data object to be created for every locale that is next requested.
 		"""
 		self._dataMap.clear()
+		log.debug("All locale data invalidated.")
