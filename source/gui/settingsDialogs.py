@@ -27,6 +27,7 @@ import installer
 from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, SynthDriver
 import config
 from config.configFlags import (
+	AddonsAutomaticUpdate,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -1589,6 +1590,32 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("SpeechSettingsTrust", self.trustVoiceLanguageCheckbox)
 		self.trustVoiceLanguageCheckbox.SetValue(config.conf["speech"]["trustVoiceLanguage"])
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = settingsSizerHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Speech settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "unicodeNormalization"],
+			conf=config.conf,
+			onChoiceEventHandler=self._onUnicodeNormalizationChange,
+		)
+		self.bindHelpEvent("SpeechUnicodeNormalization", self.unicodeNormalizationCombo)
+
+		# Translators: This is the label for a checkbox in the
+		# speech settings panel.
+		reportNormalizedForCharacterNavigationText = _("Report '&Normalized' when navigating by character")
+		self.reportNormalizedForCharacterNavigationCheckBox = settingsSizerHelper.addItem(
+			wx.CheckBox(self, label=reportNormalizedForCharacterNavigationText)
+		)
+		self.bindHelpEvent(
+			"SpeechReportNormalizedForCharacterNavigation",
+			self.reportNormalizedForCharacterNavigationCheckBox
+		)
+		self.reportNormalizedForCharacterNavigationCheckBox.SetValue(
+			config.conf["speech"]["reportNormalizedForCharacterNavigation"]
+		)
+
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the
 			# voice settings panel (if checked, data from the unicode CLDR will be used
@@ -1701,6 +1728,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			self.symbolLevelList.GetSelection()
 		].value
 		config.conf["speech"]["trustVoiceLanguage"] = self.trustVoiceLanguageCheckbox.IsChecked()
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
+		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
+			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
+		)
 		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
 		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
 		if currentIncludeCLDR is not newIncludeCldr:
@@ -1740,6 +1771,12 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 					list(self.speechModesList.GetCheckedItems())
 					+ [self._allSpeechModes.index(speech.SpeechMode.talk)]
 				)
+
+	def _onUnicodeNormalizationChange(self, evt: wx.CommandEvent):
+		evt.Skip()
+		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+		)
 
 	def isValid(self) -> bool:
 		enabledSpeechModes = self.speechModesList.CheckedItems
@@ -2861,11 +2898,23 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
-		# sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		pass
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		# Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
+		automaticUpdatesLabelText = _("&Update notifications:")
+		# TODO: change label to the following when the feature is implemented
+		# automaticUpdatesLabelText = _("Automatic &updates:")
+		self.automaticUpdatesComboBox = sHelper.addLabeledControl(
+			automaticUpdatesLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in AddonsAutomaticUpdate]
+		)
+		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
+		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
+		self.automaticUpdatesComboBox.SetSelection(index)
 
 	def onSave(self):
-		pass
+		index = self.automaticUpdatesComboBox.GetSelection()
+		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -3871,16 +3920,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tables = brailleTables.listTables()
 		# Translators: The label for a setting in braille settings to select the output table (the braille table used to read braille text on the braille display).
 		outputsLabelText = _("&Output table:")
-		outTables = [table for table in tables if table.output]
-		self.outTableNames = [table.fileName for table in outTables]
-		outTableChoices = [table.displayName for table in outTables]
+		self.outTables = [table for table in tables if table.output]
+		self.outTableNames = [table.fileName for table in self.outTables]
+		outTableChoices = [table.displayName for table in self.outTables]
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
 		try:
-			selection = self.outTableNames.index(config.conf["braille"]["translationTable"])
+			selection = self.outTables.index(braille.handler.table)
 			self.outTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
 			log.debug(
@@ -3897,7 +3946,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			selection = self.inTables.index(brailleInput.handler.table)
 			self.inTableList.SetSelection(selection)
 		except:
-			pass
+			log.exception()
 		if shouldDebugGui:
 			timePassed = time.time() - startTime
 			log.debug(
@@ -4118,6 +4167,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSettingsWordWrap", self.wordWrapCheckBox)
 		self.wordWrapCheckBox.Value = config.conf["braille"]["wordWrap"]
 
+		self.unicodeNormalizationCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Unicode normali&zation"
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "unicodeNormalization"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleUnicodeNormalization", self.unicodeNormalizationCombo)
+
 		self.brailleInterruptSpeechCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=_(
 				# Translators: This is a label for a combo-box in the Braille settings panel.
@@ -4134,11 +4194,13 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
+		
+		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
+		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
 		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
-		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -4155,6 +4217,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
+		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
@@ -4612,7 +4675,7 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		BrowseModePanel,
 		DocumentFormattingPanel,
 		DocumentNavigationPanel,
-		# AddonStorePanel, currently empty
+		AddonStorePanel,
 	]
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
@@ -4632,7 +4695,11 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 	def _doOnCategoryChange(self):
 		global NvdaSettingsDialogActiveConfigProfile
 		NvdaSettingsDialogActiveConfigProfile = config.conf.profiles[-1].name
-		if not NvdaSettingsDialogActiveConfigProfile or isinstance(self.currentCategory, GeneralSettingsPanel):
+		if (
+			not NvdaSettingsDialogActiveConfigProfile
+			or isinstance(self.currentCategory, GeneralSettingsPanel)
+			or isinstance(self.currentCategory, AddonStorePanel)
+		):
 			# Translators: The profile name for normal configuration
 			NvdaSettingsDialogActiveConfigProfile = _("normal configuration")
 		self.SetTitle(self._getDialogTitle())

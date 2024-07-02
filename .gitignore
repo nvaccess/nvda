@@ -41,6 +41,7 @@ uninstaller/UAC.nsh
 *.pyo
 *.dmp
 tests/unit/nvda.ini
+tests/unit/brailleTables
 tests/system/settingsCache/*
 !tests/system/settingsCache/2020.4/*.txt
 source/locale/en/LC_MESSAGES/nvda.po
@@ -49,3 +50,5 @@ source/locale/*/cldr.dic
 .vs
 .venv
 nvdaHelper/docs/
+*.pfx
+appveyor-tools/
