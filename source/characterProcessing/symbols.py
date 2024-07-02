@@ -640,8 +640,8 @@ def clearSpeechSymbols():
 	_localeSpeechSymbolProcessors.invalidateAllData()
 
 
-	if not prevConf:
 def handlePostConfigProfileSwitch(prevConf=None):
+	if not prevConf:
 		return
 	if prevConf["speech"]["includeCLDR"] is not config.conf["speech"]["includeCLDR"]:
 		# Either included or excluded CLDR data, so clear the cache.

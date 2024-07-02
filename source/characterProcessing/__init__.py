@@ -5,8 +5,8 @@
 # See the file COPYING for more details.
 
 
-from characterDescriptions import CharacterDescriptions, getCharacterDescription
-from symbols import (
+from .characterDescriptions import CharacterDescriptions, getCharacterDescription
+from .symbols import (
 	SymbolLevel,
 	SPEECH_SYMBOL_LEVEL_LABELS,
 	CONFIGURABLE_SPEECH_SYMBOL_LEVELS,
