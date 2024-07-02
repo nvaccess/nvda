@@ -81,7 +81,6 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
 * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
-* Fixed a rare case with the OneCore synthesizer where NVDA would strip spaces from text, effectively resulting in malformed speech output. (#16772, @LeonarddeR)
 
 ### Changes for Developers
 
