@@ -10,132 +10,14 @@ import codecs
 import collections
 import re
 from typing import (
-	Callable,
-	Dict,
-	Generic,
-	List,
-	Optional,
 	Tuple,
-	TypeVar,
 )
 
+from .data import LocaleDataMap
 from logHandler import log
 import globalVars
 import config
 from NVDAState import WritePaths
-
-
-_LocaleDataT = TypeVar("_LocaleDataT")
-
-
-class LocaleDataMap(Generic[_LocaleDataT], object):
-	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
-
-	def __init__(
-			self,
-			localeDataFactory: Callable[[str], _LocaleDataT]
-	):
-		"""
-		@param localeDataFactory: the factory to create data objects for the requested locale.
-		""" 
-		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
-		self._dataMap: Dict[str, _LocaleDataT] = {}
-
-	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
-		"""
-		Fetches a data object for the given locale. 
-		This may mean that the data object is first created and stored if it does not yet exist in the map.
-		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
-		@param locale: the locale of the data object requested
-		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
-		@return: the data object for the given locale
-		"""
-		localeList=[locale]
-		if fallback and '_' in locale:
-			localeList.append(locale.split('_')[0])
-		for l in localeList:  # noqa: E741
-			data=self._dataMap.get(l)
-			if data: return data  # noqa: E701
-			try:
-				data=self._localeDataFactory(l)
-			except LookupError:
-				data=None
-			if not data: continue  # noqa: E701
-			self._dataMap[l]=data
-			return data
-		raise LookupError(locale)
-
-	def invalidateLocaleData(self, locale: str) -> None:
-		"""Invalidate the data object (if any) for the given locale.
-		This will cause a new data object to be created when this locale is next requested.
-		@param locale: The locale for which the data object should be invalidated.
-		"""
-		try:
-			del self._dataMap[locale]
-		except KeyError:
-			pass
-
-	def invalidateAllData(self):
-		"""Invalidate all data within this locale map.
-		This will cause a new data object to be created for every locale that is next requested.
-		"""
-		self._dataMap.clear()
-
-class CharacterDescriptions(object):
-	"""
-	Represents a map of characters to one or more descriptions (examples) for that character.
-	The data is loaded from a file from the requested locale.
-	"""
-
-	def __init__(self, locale: str):
-		"""
-		@param locale: The characterDescriptions.dic file will be found by using this locale.
-		"""
-		self._entries: Dict[str, List[str]] = {}
-		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
-		if not os.path.isfile(fileName): 
-			raise LookupError(fileName)
-		f = codecs.open(fileName,"r","utf_8_sig",errors="replace")
-		for line in f:
-			if line.isspace() or line.startswith('#'):
-				continue
-			line=line.rstrip('\r\n')
-			temp=line.split("\t")
-			if len(temp) > 1:
-				key=temp.pop(0)
-				self._entries[key] = temp
-			else:
-				log.warning("can't parse line '%s'" % line)
-		log.debug("Loaded %d entries." % len(self._entries))
-		f.close()
-
-	def getCharacterDescription(self, character: str) -> Optional[List[str]]:
-		"""
-		Looks up the given character and returns a list containing all the description strings found.
-		"""
-		return self._entries.get(character)
-
-
-_charDescLocaleDataMap: LocaleDataMap[CharacterDescriptions] = LocaleDataMap(CharacterDescriptions)
-
-
-def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
-	"""
-	Finds a description or examples for the given character, which makes sense in the given locale.
-	@param locale: the locale (language[_COUNTRY]) the description should be for.
-	@param character: the character to fetch the description for.
-	@return: the found description for the given character
-	"""
-	try:
-		l=_charDescLocaleDataMap.fetchLocaleData(locale)  # noqa: E741
-	except LookupError:
-		if not locale.startswith('en'):
-			return getCharacterDescription('en',character)
-		raise LookupError("en")
-	desc=l.getCharacterDescription(character)
-	if not desc and not locale.startswith('en'):
-		desc=getCharacterDescription('en',character)
-	return desc
 
 
 # Speech symbol levels
