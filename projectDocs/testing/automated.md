@@ -2,25 +2,8 @@
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
-To run the tests (unit tests, translatable string checks), first change directory to the root of the NVDA source distribution as above.
-Then, run:
-
-```cmd
-scons tests
-```
-
-### Unit tests
-To run only specific unit tests, specify them using the `unitTests` variable on the command line.
-The tests should be provided as a comma-separated list.
-Each test should be specified as a Python module, class or method relative to the `tests\unit` directory.
-For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
-
-```cmd
-scons tests unitTests=test_cursorManager.TestMove,test_cursorManager.TestSelection
-```
-
 ### Translatable string checks
-To run only the translatable string checks (which check that all translatable strings have translator comments), run:
+To run the translatable string checks (which check that all translatable strings have translator comments), run:
 
 ```cmd
 scons checkPot
@@ -39,10 +22,20 @@ To be warned about linting errors faster, you may wish to integrate Ruff with ot
 For more details, see the [linting docs](../dev/lint.md).
 
 ### Unit Tests
+
 Unit tests can be run with the `rununittests.bat` script.
-Internally this script uses the Nose Python test framework to execute the tests.
-Any arguments given to `rununittests.bat` are forwarded onto Nose.
-Please refer to Nose's own documentation on how to filter tests etc.
+Internally this script uses the [xmlrunner](https://github.com/pycontribs/xmlrunner) wrapper around the [unittest](https://docs.python.org/3/library/unittest.html) framework to execute the tests.
+Any arguments given to `rununittests.bat` are forwarded onto xmlrunner, and then to unittest.
+
+To run only specific unit tests, specify a pattern to match against using the `-k` option on the command line.
+The `-k` option can be provided multiple times to provide multiple patterns to match against.
+For example, to run only methods in the `TestMove` and `TestSelection` classes in the file `tests\unit\test_cursorManager.py` file, run this command:
+
+```cmd
+rununittests -k test_cursorManager.TestMove -k test_cursorManager.TestSelection
+```
+
+Please refer to [unittest's documentation](https://docs.python.org/3/library/unittest.html#command-line-interface) for further information on how to filter tests.
 
 ### System Tests
 System tests can be run with the `runsystemtests.bat --include <TAG>` script.
