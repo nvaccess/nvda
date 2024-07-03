@@ -6,7 +6,7 @@
 
 ### New Features
 
-* Enhance Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
+* Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 
 ### Bug Fixes
 
