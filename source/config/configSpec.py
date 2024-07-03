@@ -89,6 +89,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	fontAttributeDisplay = featureFlag(optionsEnum="FontAttributesBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
     	excludedDisplays = string_list(default=list())
 
