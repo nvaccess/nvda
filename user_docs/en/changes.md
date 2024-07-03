@@ -6,6 +6,8 @@
 
 ### New Features
 
+* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+
 ### Bug Fixes
 
 ### Changes for Developers
