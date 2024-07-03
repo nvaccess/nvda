@@ -332,7 +332,8 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
 		obj = APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
-		if not obj: return
+		if not obj:
+			return
 		redirect = obj.objectFromPointRedirect(x,y)
 		if redirect:
 			obj = redirect
