@@ -6,6 +6,9 @@
 
 ### New Features
 
+* Microsoft Office:
+  * Enhance Microsoft Word Comment Command: Press Twice to Present Comment Content in Browsable message. (#16800, @Cary-Rowen)
+
 ### Bug Fixes
 
 ### Changes for Developers
