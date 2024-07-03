@@ -13,6 +13,7 @@ from typing import (
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
 import winVersion
+from logHandler import log
 from ._remoteOps import remoteAlgorithms
 from ._remoteOps.remoteTypes import (
 	RemoteExtensionTarget,
@@ -69,40 +70,41 @@ def msWord_getCustomAttributeValue(
 		remoteDocElement = ra.newElement(docElement)
 		remoteTextRange = ra.newTextRange(textRange)
 		remoteCustomAttribValue = ra.newVariant()
-		with ra.ifBlock(remoteDocElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)):
-			ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
-			remoteResult = ra.newVariant()
-			ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
-			remoteDocElement.callExtension(
-				guid_msWord_extendedTextRangePattern,
-				remoteResult
-			)
-			with ra.ifBlock(remoteResult.isNull()):
-				ra.logRuntimeMessage("extendedTextRangePattern is null")
-				ra.halt()
-			with ra.elseBlock():
-				ra.logRuntimeMessage("got extendedTextRangePattern")
-				remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
-				with ra.ifBlock(
-					remoteExtendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)
-				):
-					ra.logRuntimeMessage("extendedTextRangePattern supports getCustomAttributeValue")
-					ra.logRuntimeMessage("doing callExtension for getCustomAttributeValue")
-					remoteExtendedTextRangePattern.callExtension(
-						guid_msWord_getCustomAttributeValue,
-						remoteTextRange,
-						customAttribID,
-						remoteCustomAttribValue
-					)
-					ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue)
-					ra.Return(remoteCustomAttribValue)
-				with ra.elseBlock():
-					ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
-		with ra.elseBlock():
+		extendedTextRangeIsSupported = remoteDocElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)
+		with ra.ifBlock(extendedTextRangeIsSupported.inverse()):
 			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
-		ra.logRuntimeMessage("msWord_getCustomAttributeValue end")
+			ra.Return(None)
+		ra.logRuntimeMessage("docElement supports extendedTextRangePattern")
+		remoteResult = ra.newVariant()
+		ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
+		remoteDocElement.callExtension(
+			guid_msWord_extendedTextRangePattern,
+			remoteResult
+		)
+		with ra.ifBlock(remoteResult.isNull()):
+			ra.logRuntimeMessage("extendedTextRangePattern is null")
+			ra.Return(None)
+		ra.logRuntimeMessage("got extendedTextRangePattern")
+		remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
+		customAttributeValueIsSupported = remoteExtendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)
+		with ra.ifBlock(customAttributeValueIsSupported.inverse()):
+			ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
+			ra.Return(None)
+		ra.logRuntimeMessage("extendedTextRangePattern supports getCustomAttributeValue")
+		ra.logRuntimeMessage("doing callExtension for getCustomAttributeValue")
+		remoteExtendedTextRangePattern.callExtension(
+			guid_msWord_getCustomAttributeValue,
+			remoteTextRange,
+			customAttribID,
+			remoteCustomAttribValue
+		)
+		ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue)
+		ra.Return(remoteCustomAttribValue)
 
 	customAttribValue = op.execute()
+	if customAttribValue is None:
+		log.debugWarning("Custom attribute value not available")
+		return None
 	return customAttribValue
 
 
