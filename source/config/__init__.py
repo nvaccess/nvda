@@ -1287,9 +1287,9 @@ class AggregatedSection:
 		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
 		# Todo: Remove in 2025.1.
 		if version_year < 2025and NVDAState._allowDeprecatedAPI():
-			self.link_reportFontAttributes_and_fontAttributeReporting(key, val)
+			self._link_reportFontAttributes_and_fontAttributeReporting(key, val)
 
-	def link_reportFontAttributes_and_fontAttributeReporting(self, key, val):
+	def _link_reportFontAttributes_and_fontAttributeReporting(self, key, val):
 		if not (self.path == ("documentFormatting",)):
 			return
 		if key == "fontAttributeReporting":
