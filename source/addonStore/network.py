@@ -113,6 +113,8 @@ class AddonFileDownloader:
 		isCancelled = (
 			downloadAddonFuture.cancelled()
 			or downloadAddonFuture not in self._pending
+			# When the add-on status is set to a value other than "DOWNLOADING" before the completeness check,
+			# the download is considered to be canceled externally.
 			or self._pending[downloadAddonFuture][0].status != AvailableAddonStatus.DOWNLOADING
 		)
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
