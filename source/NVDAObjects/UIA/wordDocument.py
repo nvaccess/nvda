@@ -629,7 +629,8 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 			if repeats == 0:
 				ui.message(text)
 			elif repeats == 1:
-				ui.browseableMessage(text,
+				ui.browseableMessage(
+					text,
 					# Translators: title for Word comment dialog.
 					_("Comment")
 				)
