@@ -564,18 +564,19 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleReportFontAttributes(self,gesture):
 		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]
 		nextValue = OutputMode((currentValue + 1) % len(OutputMode))
-		if nextValue == OutputMode.OFF:
-			# Translators: A state in which font attributes are not reported.
-			status = _("Do not report font attributes")
-		elif nextValue == OutputMode.SPEECH:
-			# Translators: A state in which font attributes are only spoken.
-			status = _("Speak font attributes")
-		elif nextValue == OutputMode.BRAILLE:
-			# Translators: A state in which font attributes are only brailled.
-			status = _("Braille font attributes")
-		elif nextValue == OutputMode.SPEECH_AND_BRAILLE:
-			# Translators: A state in which font attributes are both spoken and brailled.
-			status = _("Speak and braille font attributes")
+		match nextValue:
+			case OutputMode.OFF:
+				# Translators: A state in which font attributes are not reported.
+				status = _("Do not report font attributes")
+			case OutputMode.SPEECH:
+				# Translators: A state in which font attributes are only spoken.
+				status = _("Speak font attributes")
+			case OutputMode.BRAILLE:
+				# Translators: A state in which font attributes are only brailled.
+				status = _("Braille font attributes")
+			case OutputMode.SPEECH_AND_BRAILLE:
+				# Translators: A state in which font attributes are both spoken and brailled.
+				status = _("Speak and braille font attributes")
 		config.conf["documentFormatting"]["fontAttributeReporting"] = nextValue
 		ui.message(status)
 
