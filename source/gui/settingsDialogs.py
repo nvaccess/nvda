@@ -34,6 +34,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import languageHandler
 import speech
@@ -2391,7 +2392,6 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		fontAttributesText = _("Font attrib&utes")
-		from config.configFlags import OutputMode
 		fontAttributesOptions = [i.displayString for i in OutputMode]
 		self.fontAttrsList = fontGroup.addLabeledControl(fontAttributesText, wx.Choice, choices=fontAttributesOptions)
 		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])
