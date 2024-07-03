@@ -766,7 +766,7 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
     		focusObj = api.getFocusObject()
     		name = focusObj.name
     		windowClassName = focusObj.windowClassName
-    		ui.message("class for %s window: %s" % (name, windowClassName))
+    		ui.message(f"class for {name} window: {windowClassName}")
     
     	@script(
     		description=_("Announces the window control ID of the current focus object"),
