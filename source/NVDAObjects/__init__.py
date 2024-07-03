@@ -319,7 +319,6 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		return None
 
-
 	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
