@@ -558,7 +558,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle report font attributes command.
-		description=_("Toggles between speaking, brailling, speaking and brailling, and not reporting font attributes."),
+		description=_("Cycles font attribute reporting between speech, braille, speech and braille, and off."),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
 	def script_toggleReportFontAttributes(self,gesture):
