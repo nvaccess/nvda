@@ -4188,6 +4188,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
 
+		self.formattingDisplayCombo = sHelper.addLabeledControl(
+			labelText=_("Formatting display"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=("braille", "fontAttributeDisplay"),
+			conf=config.conf
+			)
+		self.bindHelpEvent("BrailleSettingsFormattingDisplay", self.formattingDisplayCombo)
+
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start"%(time.time() - startTime))
 
@@ -4220,6 +4228,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[self.focusContextPresentationList.GetSelection()]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
+		self.formattingDisplayCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
