@@ -561,7 +561,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Cycles font attribute reporting between speech, braille, speech and braille, and off."),
 		category=SCRCAT_DOCUMENTFORMATTING
 	)
-	def script_toggleReportFontAttributes(self,gesture):
+	def script_toggleReportFontAttributes(self, gesture: "inputCore.InputGesture"):
 		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]
 		nextValue = OutputMode((currentValue + 1) % len(OutputMode))
 		match nextValue:
