@@ -1286,7 +1286,8 @@ class AggregatedSection:
 
 		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
 		# Todo: Remove in 2025.1.
-		self.link_reportFontAttributes_and_fontAttributeReporting(key, val)
+		if version_year < 2025and NVDAState._allowDeprecatedAPI():
+			self.link_reportFontAttributes_and_fontAttributeReporting(key, val)
 
 	def link_reportFontAttributes_and_fontAttributeReporting(self, key, val):
 		if not (self.path == ("documentFormatting",)):
@@ -1295,6 +1296,11 @@ class AggregatedSection:
 			key = "reportFontAttributes"
 			val = bool(val)
 		elif key == "reportFontAttributes":
+			log.warning(
+				"documentFormatting.reportFontAttributes is deprecated. Use documentFormatting.fontAttributeReporting instead.",
+				# Include stack info so testers can report warning to add-on author.
+				stack_info=True
+			)
 			key = "fontAttributeReporting"
 			val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
 		else:
