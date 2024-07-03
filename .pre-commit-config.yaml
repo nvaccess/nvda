@@ -34,3 +34,9 @@ repos:
       language: script
       pass_filenames: false
       types: [python, c, c++, batch]
+    - id: licenseCheck
+      name: Check license compatibility of pip dependencies
+      files: requirements.txt
+      entry: ./runlicensecheck.bat
+      language: script
+      pass_filenames: false

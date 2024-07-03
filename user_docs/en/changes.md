@@ -1,19 +1,37 @@
 # What's New in NVDA
 
-## 2024.3
-The Add-on Store will now notify you if any add-on updates are available on NVDA start up.
+## 2024.4
 
-This release adds support for Unicode Normalization to speech and braille output.
+### Important notes
+
+### New Features
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
+## 2024.3
+
+The Add-on Store will now notify you if any add-on updates are available on NVDA startup.
+
+There are now options to apply Unicode normalization to speech and braille output.
 This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
 It also allows reading of equations in the Microsoft Word equation editor.
+
+Help Tech Activator Pro braille displays are now supported.
+
+Unassigned commands have been added to scroll the mouse wheel vertically and horizontally.
 
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic)  transliterated Cuneiform text, and Turkish grade 2.
+Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, and Turkish.
 eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
-
 
 ### New Features
 
@@ -23,12 +41,11 @@ Unicode CLDR has also been updated.
   * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
   * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
   * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
-* New Braille features:
-  * Added support for the Help Tech Activator Pro displays. (#16668)
 * By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
   * This can be disabled in the "Add-on Store" category of settings.
   * NVDA checks daily for add-on updates.
   * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
+* Added support for the Help Tech Activator Pro displays. (#16668)
 
 ### Changes
 
@@ -37,30 +54,36 @@ Unicode CLDR has also been updated.
     * Added new language Karakalpak.
   * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
   * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
-  * Updated LibLouis Braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
-    * New Braille tables for Cyrillic Serbian, Yiddish, several ancient languages (Biblical Hebrew, Akkadian, Syriac, and Ugaritic), and transliterated Cuneiform text.
-    * New braille table for Turkish grade 2. (#16735)
-  * Updated NSIS 3.09 to 3.10 (#16674, @dpy013)
-  * Updated python markdown 3.5.1 to 3.6(#16725, @dpy013)
-  * Updated nh3 0.2.15 to 0.2.17(#16725, @dpy013)
+  * Updated LibLouis braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * New braille tables:
+      * Cyrillic Serbian.
+      * Yiddish.
+      * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
+      * Turkish grade 2. (#16735)
+  * Updated NSIS to 3.10 (#16674, @dpy013)
+  * Updated markdown to 3.6 (#16725, @dpy013)
+  * Updated nh3 to 0.2.17 (#16725, @dpy013)
 * The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA will now report figures with no accessible children, but with a label or description. (#14514)
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
-* By default, a new folder will be created when making a portable copy. Warnings have been added when writing to a non-empty directory. (#16684)
+* By default, a new folder will be created when making a portable copy.
+A warning message will inform you if you try writing to a non-empty directory. (#16684)
 
 ### Bug Fixes
+
 * Windows 11 fixes:
   * NVDA will no longer appear to get stuck when closing the clipboard history and emoji panel. (#16346, #16347, @josephsl)
-  * NVDA will announce visible candidates again when opening the Windows 11 IME interface. (#14023, @josephsl)
+  * NVDA will announce visible candidates again when opening the IME interface. (#14023, @josephsl)
   * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
   * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
 * Web browser fixes:
   * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
   * If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
-  * NVDA will correctly announce radio and checkbox menuitems when first entering submenus in Google Chrome and Mozilla Firefox. (#14550)
+  * NVDA will correctly announce radio and checkbox menu items when first entering sub-menus in Google Chrome and Mozilla Firefox. (#14550)
   * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
+  * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
@@ -71,15 +94,14 @@ Unicode CLDR has also been updated.
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
 * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
+* Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
 
 ### Changes for Developers
-
-Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * NVDA now uses Ruff instead of flake8 for linting. (#14817)
 * Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
 * A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
-It is especially useful to read the error location markers in tracebacks. (#16321,  @CyrilleB79)
+It is especially useful to read the error location markers in tracebacks. (#16321, @CyrilleB79)
 * Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
   * Tables can be provided in the `brailleTables` folder in an add-on package.
   * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
@@ -92,9 +114,6 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 * It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
-
-#### Deprecations
-
 
 ## 2024.2
 

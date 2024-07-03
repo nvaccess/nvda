@@ -15,6 +15,7 @@ from typing import (
 	TypeVar,
 	cast
 )
+from types import NoneType
 import ctypes
 from ctypes import (
 	_SimpleCData,
@@ -716,6 +717,8 @@ class RemoteGuid(RemoteBaseObject[GUID]):
 def getRemoteTypeForLocalType(LocalType: Type[object]) -> Type[RemoteBaseObject]:
 	if issubclass(LocalType, enum.IntEnum):
 		return RemoteIntEnum
+	elif issubclass(LocalType, NoneType):
+		return RemoteNull
 	elif issubclass(LocalType, bool):
 		return RemoteBool
 	elif issubclass(LocalType, int):
