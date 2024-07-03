@@ -310,7 +310,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	def objectFromPointRedirect(self, x, y):
 		"""Redirects NVDA to another object if this object is retrieved from on screen coordinates.
-		@param x: the x coordinate.
+		:param x: the x coordinate.
 		@param y: the y coordinate.
 		@type y: int
 		@return: The object that NVDA should be redirected to.
