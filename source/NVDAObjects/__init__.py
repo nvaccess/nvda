@@ -308,6 +308,18 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 
 	beTransparentToMouse=False #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 
+	def objectFromPointRedirect(self, x, y):
+		"""Redirects NVDA to another object if this object is retrieved from on screen coordinates.
+		@param x: the x coordinate.
+		@type x: int
+		@param y: the y coordinate.
+		@type y: int
+		@return: The object that NVDA should be redirected to.
+		@rtype: L{NVDAObject}
+		"""
+		return None
+
+
 	@staticmethod
 	def objectFromPoint(x,y):
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
@@ -320,7 +332,12 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		kwargs={}
 		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
-		return APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+		obj = APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+		if not obj: return
+		redirect = obj.objectFromPointRedirect(x,y)
+		if redirect:
+			obj = redirect
+		return obj
 
 	@staticmethod
 	def objectWithFocus():
