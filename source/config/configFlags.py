@@ -231,12 +231,12 @@ class OutputMode(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: This is a way of reporting information.
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.OFF: _("Off"),
-			# Translators: This is a way of reporting information.
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH: _("Speech"),
-			# Translators: This is a way of reporting information.
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.BRAILLE: _("Braille"),
-			# Translators: This is a way of reporting information.
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
 		}
