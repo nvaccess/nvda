@@ -16,11 +16,11 @@ builtins = [
 	"npgettext",
 ]
 
-logger-objects = ["logHandler.log"]
-
 include = [
 	"*.py",
 	"*.pyw",
+	"sconstruct",
+	"*sconscript",
 ]
 
 exclude = [
@@ -51,6 +51,7 @@ ignore = [
 	# indentation contains tabs
 	"W191",
 ]
+logger-objects = ["logHandler.log"]
 
 [tool.licensecheck]
 using = "requirements:requirements.txt"
@@ -79,4 +80,3 @@ ignore_packages = [
 	"wxPython",  # wxWindows Library License
 	"pillow",  # PIL Software License
 ]
-
