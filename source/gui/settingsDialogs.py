@@ -2658,7 +2658,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"]=self.detectFormatAfterCursorCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontName"]=self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"]=self.fontSizeCheckBox.IsChecked()
-		config.conf["documentFormatting"]["fontAttributeReporting"]=self.fontAttrsList.GetSelection()
+		config.conf["documentFormatting"]["fontAttributeReporting"] = self.fontAttrsList.GetSelection()
 		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)

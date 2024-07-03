@@ -792,6 +792,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		upgradeConfigFrom_11_to_12(profile)
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['reportFontAttributes']
+		with self.assertRaises(KeyError):
 			profile['documentFormatting']['fontAttributeReporting']
 	
 	def test_defaultProfile_reportFontAttributes_false(self):

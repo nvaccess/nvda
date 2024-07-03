@@ -576,7 +576,7 @@ class GlobalCommands(ScriptableObject):
 		elif nextValue == OutputMode.SPEECH_AND_BRAILLE:
 			# Translators: A state in which font attributes are both spoken and brailled.
 			status = _("Speak and braille font attributes")
-		config.conf["documentFormatting"]["fontAttributeReporting"]=nextValue
+		config.conf["documentFormatting"]["fontAttributeReporting"] = nextValue
 		ui.message(status)
 
 	@script(

@@ -14,21 +14,12 @@
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
-* A new configuration key, `documentFormatting.fontAttributeReporting`, has been created. Possible values are:
-
-  - 0: Off
-  - 1: Speech
-  - 2: Braille
-  - 3: Speech and braille
-
-  To maintain backwards compatibility, `documentFormatting.reportFontAttributes` is retained until 2025.1, with the following implementation:
-
-  - `documentFormatting.reportFormatting` will be set to `True` if `documentFormatting.fontAttributeReporting` is set to `SPEECH`, `BRAILLE`, or `SPEECH_AND_BRAILLE`, and `False` if it is set to `OFF`.
-  - `documentFormatting.fontAttributeReporting` will be set to `SPEECH_AND_BRAILLE` if `documentFormatting.reportFontAttributes` is set to `True`, or `OFF` if it is set to `False`.
-
 #### Deprecations
 
-* The configuration key `documentFormatting.reportFontAttributes` is deprecated for removal in NVDA 2025.1.
+* The `bool` configuration key `[documentFormatting][reportFontAttributes]` is deprecated for removal in 2025.1, instead use `[fontAttributeReporting]`. (#16748)
+  * The new key has an `int` value matching an `OutputMode` `enum` with options for speech, braille, speech and braille and off.
+  * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
+  * These keys are currently synchronized until 2025.1.
 
 ## 2024.3
 
