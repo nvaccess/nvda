@@ -615,7 +615,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		description=_(
 			# Translators: a description for a script that reports the comment at the caret.
 			"Reports the text of the comment where the system caret is located."
-			" If pressed twice, presents the information in browse mode"
+			" If pressed twice, presents the information in a browsable message"
 		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
