@@ -52,7 +52,7 @@ from typing import (
 )
 import NVDAState
 from NVDAState import WritePaths
-
+from buildVersion import version_year
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX=False
@@ -1286,19 +1286,22 @@ class AggregatedSection:
 
 		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
 		# Todo: Remove in 2025.1.
-		if self.path == ("documentFormatting",):
-			aliasing = False
-			if key == "fontAttributeReporting":
-				key = "reportFontAttributes"
-				val = bool(val)
-				aliasing = True
-			elif key == "reportFontAttributes":
-				key = "fontAttributeReporting"
-				val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
-				aliasing = True
-			if aliasing:
-				self._getUpdateSection()[key] = val
-				self._cache[key] = val
+		self.link_reportFontAttributes_and_fontAttributeReporting(key, val)
+
+	def link_reportFontAttributes_and_fontAttributeReporting(self, key, val):
+		if not (self.path == ("documentFormatting",)):
+			return
+		if key == "fontAttributeReporting":
+			key = "reportFontAttributes"
+			val = bool(val)
+		elif key == "reportFontAttributes":
+			key = "fontAttributeReporting"
+			val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
+		else:
+			# We don't care about other keys.
+			return
+		self._getUpdateSection()[key] = val
+		self._cache[key] = val
 
 	def _getUpdateSection(self):
 		profile = self.profiles[-1]
