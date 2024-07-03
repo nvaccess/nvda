@@ -326,7 +326,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCurrentComment(self,gesture):
+	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
 		fields=info.getTextWithFields(formatConfig={'reportComments':True})

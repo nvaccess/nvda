@@ -11,6 +11,7 @@ from typing import (
 
 import enum
 from comtypes import COMError
+import inputCore
 import mathPres
 import scriptHandler
 from scriptHandler import isScriptWaiting
@@ -620,7 +621,7 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCurrentComment(self,gesture):
+	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
 		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
 		commentInfo = getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
