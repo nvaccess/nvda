@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_iterable(TestCase):
-
 	def test_iterableFunction(self):
 		op = operation.Operation(localMode=True)
 

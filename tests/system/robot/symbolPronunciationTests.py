@@ -27,6 +27,7 @@ By line symbol expectations:
 	- The names of the characters: "tab space", what if there are many (hundreds)?
 	- A placeholder speech UI E.G "whitespace". Will it be obvious this is a placeholder?
 """
+
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 import enum as _enum
 import typing as _typing
@@ -49,6 +50,7 @@ _asserts: _AssertsLib = _getLib("AssertsLib")
 
 class Move(_enum.Enum):
 	"""Gestures to move by different amounts"""
+
 	REVIEW_CHAR = "numpad3"
 	REVIEW_WORD = "numpad6"
 	REVIEW_LINE = "numpad9"
@@ -62,24 +64,24 @@ class Move(_enum.Enum):
 
 
 class SymLevel(_enum.Enum):
-	"""Symbol levels, should match characterProcessing.SymbolLevel
-	"""
+	"""Symbol levels, should match characterProcessing.SymbolLevel"""
+
 	NONE = 0
 	SOME = 100
 	ALL = 300
 
 
 class EndSpeech(_enum.Enum):
-	""" Speech given when reaching the end of the movement direction.
-	"""
+	"""Speech given when reaching the end of the movement direction."""
+
 	BOTTOM = "Bottom"
 	RIGHT = "Right"
 	NONE = None
 
 
 class ReportLineIndentation(_enum.Enum):
-	"""Line indentation reporting options. Should match config.configFlags.ReportLineIndentation
-	"""
+	"""Line indentation reporting options. Should match config.configFlags.ReportLineIndentation"""
+
 	OFF = 0
 	SPEECH = 1
 
@@ -102,68 +104,79 @@ def _getByWordTestSample() -> str:
 		" ➔ 👕 \n"  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
 		# @^*_ used because it is treated as a single word in notepad.exe
 		"1 | 2 || 3 @^*_ 4\n"  # test single/multiple symbols within a "word" issue #10855
-		' \n'  # single space
-		'\t\n'  # single tab
-		'    \n'  # 4 spaces
-		'➔\n'  # no space before, only newline after symbol
-		'👕\n'  # no space before, only newline after symbol
-		'👕'  # no space before, no newline after symbol
+		" \n"  # single space
+		"\t\n"  # single tab
+		"    \n"  # 4 spaces
+		"➔\n"  # no space before, only newline after symbol
+		"👕\n"  # no space before, only newline after symbol
+		"👕"  # no space before, no newline after symbol
 	)
 
 
 def _getMoveByLineTestSample() -> str:
 	testData = [
 		"Test:",  # initial new line which isn't spoken
-		'Say',
-		'(quietly)',  # test parenthesis
+		"Say",
+		"(quietly)",  # test parenthesis
 		'"Hello,',  # test quote, comma
 		'Jim".',  # test quote, dot
 		" don't ",  # test punctuation inside a word.
-		'➔', '👕',  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
-		'➔ ', '👕 ',  # test Symbols containing punctuations with joined space
-		'➔👕',  # test Symbols containing punctuations without space
+		"➔",
+		"👕",  # test Symbols containing punctuations (right-pointing arrow, t-shirt)
+		"➔ ",
+		"👕 ",  # test Symbols containing punctuations with joined space
+		"➔👕",  # test Symbols containing punctuations without space
 		"1 | 2 || 3 @^*_ 4",  # test single/multiple symbols within a "word" issue #10855
-		' ',  # single space
-		'\t',  # single tab
-		'    ',  # 4 spaces
-		'',  # to ensure prior entry ends with newline.
+		" ",  # single space
+		"\t",  # single tab
+		"    ",  # 4 spaces
+		"",  # to ensure prior entry ends with newline.
 	]
-	return '\n'.join(testData)
+	return "\n".join(testData)
 
 
 def _getMoveByCharTestSample() -> str:
 	# Intentionally concat the following strings, there should be no trailing commas
 	return (
-		'T'  # An initial character, that isn't spoken (because it isn't traversed during nav).
+		"T"  # An initial character, that isn't spoken (because it isn't traversed during nav).
 		'S ()"'
 		"'e,➔👕\t"
-		'\na'  # Note: The 'a' character will be on the next line, thus won't be spoken
+		"\na"  # Note: The 'a' character will be on the next line, thus won't be spoken
 	)
 
 
 def test_moveByWord():
-	"""Move by word with symbol level 'none' then with symbol level 'all'
-	"""
+	"""Move by word with symbol level 'none' then with symbol level 'all'"""
 	_notepad.prepareNotepad(_getByWordTestSample())
 	_doTest(
 		navKey=Move.REVIEW_WORD,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
-			'Say',
-			'(quietly)', 'Hello,', 'Jim', '.',  # Expected: no symbols named
+			"Say",
+			"(quietly)",
+			"Hello,",
+			"Jim",
+			".",  # Expected: no symbols named
 			"don't",  # Expected: mid-word symbol
-			'right-pointing arrow', 't-shirt',
+			"right-pointing arrow",
+			"t-shirt",
 			# todo: There should not be any "empty" words. Expect 'bar bar', and 'at  caret  star  line'
-			'1', 'bar', '2', '', '3', '', '4',
+			"1",
+			"bar",
+			"2",
+			"",
+			"3",
+			"",
+			"4",
 			# end of first line
-			'blank',  # single space and newline
-			'',  # tab and newline  todo: There should not be any "empty" words.
-			'blank',  # 4 spaces and newline
-			'right-pointing arrow',
-			't-shirt',
-			't-shirt',
-			'blank',  # end of doc
+			"blank",  # single space and newline
+			"",  # tab and newline  todo: There should not be any "empty" words.
+			"blank",  # 4 spaces and newline
+			"right-pointing arrow",
+			"t-shirt",
+			"t-shirt",
+			"blank",  # end of doc
 		],
 	)
 
@@ -174,46 +187,58 @@ def test_moveByWord():
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
-			'Say',
-			'left paren(quietly right paren)',  # Expect: parenthesis are named
-			'quote Hello comma,', 'Jim', 'quote  dot.',  # Expect: quote, comma and dot are named
-			'don tick t',  # Expect: mid-word symbol substituted
-			'right dash-pointing arrow', 't dash-shirt',
+			"Say",
+			"left paren(quietly right paren)",  # Expect: parenthesis are named
+			"quote Hello comma,",
+			"Jim",
+			"quote  dot.",  # Expect: quote, comma and dot are named
+			"don tick t",  # Expect: mid-word symbol substituted
+			"right dash-pointing arrow",
+			"t dash-shirt",
 			# Expect no empty words:
-			'1', 'bar', '2', 'bar  bar', '3', 'at  caret  star  line', '4',
+			"1",
+			"bar",
+			"2",
+			"bar  bar",
+			"3",
+			"at  caret  star  line",
+			"4",
 			# end of first line
-			'blank',  # single space and newline
-			'tab',  # tab and newline
-			'blank',  # 4 spaces and newline
-			'right dash-pointing arrow',
-			't dash-shirt',
-			't dash-shirt',
-			'blank'  # end of doc
-		]
+			"blank",  # single space and newline
+			"tab",  # tab and newline
+			"blank",  # 4 spaces and newline
+			"right dash-pointing arrow",
+			"t dash-shirt",
+			"t dash-shirt",
+			"blank",  # end of doc
+		],
 	)
 
 
 def test_moveByLine():
-	""" Move by line with symbol level 'none' then with symbol level 'all'
-	"""
+	"""Move by line with symbol level 'none' then with symbol level 'all'"""
 	_notepad.prepareNotepad(_getMoveByLineTestSample())
 	_doTest(
 		navKey=Move.REVIEW_LINE,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
-			'Say', '(quietly)', 'Hello,', 'Jim .', "don't",  # Expect:
-			'',  # todo: Expect 'right-pointing arrow'
-			't-shirt',
-			'',  # todo: Expect 'right-pointing arrow'
-			't-shirt',
-			't-shirt',  # todo: Expect 'right-pointing arrow t-shirt'
-			'1   2    3      4',  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
-			'blank',  # single space
-			'',  # tab  # todo: There should not be any "empty" lines.
-			'blank',  # four spaces
-			'blank',  # end of doc
-		]
+			"Say",
+			"(quietly)",
+			"Hello,",
+			"Jim .",
+			"don't",  # Expect:
+			"",  # todo: Expect 'right-pointing arrow'
+			"t-shirt",
+			"",  # todo: Expect 'right-pointing arrow'
+			"t-shirt",
+			"t-shirt",  # todo: Expect 'right-pointing arrow t-shirt'
+			"1   2    3      4",  # todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+			"blank",  # single space
+			"",  # tab  # todo: There should not be any "empty" lines.
+			"blank",  # four spaces
+			"blank",  # end of doc
+		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
@@ -223,26 +248,28 @@ def test_moveByLine():
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.BOTTOM,
 		expectedSpeech=[
-			'Say',
-			'left paren(quietly right paren)',  # Expect: parenthesis are named
-			'quote Hello comma,', 'Jim quote  dot.',  # Expect: quote, comma and dot are named
-			'don tick t',  # Expect: mid-word symbol substituted
-			'right-pointing arrow', 't-shirt',  # Expect dash
-			'right-pointing arrow', 't-shirt',  # Expect dash
-			'right-pointing arrow  t-shirt',  # Expect dash
+			"Say",
+			"left paren(quietly right paren)",  # Expect: parenthesis are named
+			"quote Hello comma,",
+			"Jim quote  dot.",  # Expect: quote, comma and dot are named
+			"don tick t",  # Expect: mid-word symbol substituted
+			"right-pointing arrow",
+			"t-shirt",  # Expect dash
+			"right-pointing arrow",
+			"t-shirt",  # Expect dash
+			"right-pointing arrow  t-shirt",  # Expect dash
 			# Expect symbols replaced with description.
-			'1  bar  2  bar  bar  3  at  caret  star  line  4',
-			'blank',  # single space
-			'tab',  # single tab
-			'blank',  # 4 spaces
-			'blank',  # end of doc
+			"1  bar  2  bar  bar  3  at  caret  star  line  4",
+			"blank",  # single space
+			"tab",  # single tab
+			"blank",  # 4 spaces
+			"blank",  # end of doc
 		],
 	)
 
 
 def test_moveByChar():
-	""" Move by character with symbol level 'none', then with symbol level 'all'.
-	"""
+	"""Move by character with symbol level 'none', then with symbol level 'all'."""
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
 	# todo: Symbol level should not affect the output. Use same expected speech for both.
@@ -251,14 +278,19 @@ def test_moveByChar():
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.NONE,
 		expectedSpeech=[
-			'S', 'space',  # Expect whitespace named.
-			'left paren', 'right paren',  # Expect parens named
-			'quote', 'tick',  # Expect quote and apostrophe named
-			'e', 'comma',  # Expect comma named
-			'right-pointing arrow', 't-shirt',
-			'tab',  # Expect tab named
-			'carriage return',  # Expect Windows/notepad newline is \r\n
-			'line feed',  # on Windows/notepad newline is \r\n
+			"S",
+			"space",  # Expect whitespace named.
+			"left paren",
+			"right paren",  # Expect parens named
+			"quote",
+			"tick",  # Expect quote and apostrophe named
+			"e",
+			"comma",  # Expect comma named
+			"right-pointing arrow",
+			"t-shirt",
+			"tab",  # Expect tab named
+			"carriage return",  # Expect Windows/notepad newline is \r\n
+			"line feed",  # on Windows/notepad newline is \r\n
 		],
 	)
 
@@ -269,24 +301,29 @@ def test_moveByChar():
 		reportedAfterLast=EndSpeech.RIGHT,
 		symbolLevel=SymLevel.ALL,
 		expectedSpeech=[
-			'S', 'space',  # Expect whitespace named.
-			'left paren', 'right paren',  # Expect parens named
-			'quote', 'tick',  # Expect quote and apostrophe named
-			'e', 'comma',  # Expect comma named
+			"S",
+			"space",  # Expect whitespace named.
+			"left paren",
+			"right paren",  # Expect parens named
+			"quote",
+			"tick",  # Expect quote and apostrophe named
+			"e",
+			"comma",  # Expect comma named
 			# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-			'right dash-pointing arrow', 't dash-shirt',
-			'tab',  # Expect whitespace named.
-			'carriage return',  # on Windows/notepad newline is \r\n
-			'line feed',  # on Windows/notepad newline is \r\n
+			"right dash-pointing arrow",
+			"t dash-shirt",
+			"tab",  # Expect whitespace named.
+			"carriage return",  # on Windows/notepad newline is \r\n
+			"line feed",  # on Windows/notepad newline is \r\n
 		],
 	)
 
 
 _CHARACTER_DESCRIPTIONS = {
 	# english character descriptions.
-	'a': 'Alfa',
-	'b': 'Bravo',
-	'c': 'Charlie',
+	"a": "Alfa",
+	"b": "Bravo",
+	"c": "Charlie",
 }
 
 
@@ -304,18 +341,18 @@ def _testDelayedDescription(expectDescription: bool = True) -> None:
 		raise AssertionError("Nothing spoken after character press")
 	if spoken[0] not in _CHARACTER_DESCRIPTIONS:
 		raise AssertionError(
-			f"First piece of speech not an expected character; got: '{spoken[0]}'"
+			f"First piece of speech not an expected character; got: '{spoken[0]}'",
 		)
 	if expectDescription:
 		if len(spoken) != 2:
 			raise AssertionError(
-				f"Expected character with description; got: '{spoken}'"
+				f"Expected character with description; got: '{spoken}'",
 			)
 		_asserts.strings_match(spoken[1], _CHARACTER_DESCRIPTIONS[spoken[0]])
 	else:
 		if len(spoken) != 1:
 			raise AssertionError(
-				f"Expected single character; got: '{spoken}'"
+				f"Expected single character; got: '{spoken}'",
 			)
 
 
@@ -326,13 +363,13 @@ def test_delayedDescriptions():
 
 	# Activate delayed descriptions feature to do the next test.
 	spy = _NvdaLib.getSpyLib()
-	spy.set_configValue(['speech', 'delayedCharacterDescriptions'], True)
+	spy.set_configValue(["speech", "delayedCharacterDescriptions"], True)
 
 	_testDelayedDescription()
 
 
 def test_selByWord():
-	""" Select word by word with symbol level 'none' and symbol level 'all'.
+	"""Select word by word with symbol level 'none' and symbol level 'all'.
 	Note that the number of spaces between speech content and 'selected' varies, possibly due to the number
 	of times symbols are replaced.
 	"""
@@ -341,30 +378,43 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list((
-			i + (" " if i else "") + "selected" for i in [
-				'Test: ',
-				'Say ',
-				'(quietly) ', 'Hello, ', 'Jim ', '. ',  # Expected: no symbols named
-				"don't ",  # Expected: mid-word symbol
-				'', 't-shirt  ',  # todo: Expect right-pointing arrow
-				# end of first line
-				'',  # This is the newline todo: There should not be any "empty" words.
-				# todo: There should not be any "empty" words.
-				'1 ', '', '2 ', '', '3 ', '', '4',
-				# end of second line
-				'',  # newline and single space todo: There should not be any "empty" words.
-				'',  # newline and tab  todo: There should not be any "empty" words.
-				'',  # newline and 4 spaces todo: There should not be any "empty" words.
-				'',  # newline  todo: There should not be any "empty" words.
-				'right-pointing arrow',
-				'',  # newline  todo: There should not be any "empty" words.
-				't-shirt',
-				'',  # newline  todo: There should not be any "empty" words.
-				't-shirt',
-				# end of doc
-			]
-		)),
+		expectedSpeech=list(
+			(
+				i + (" " if i else "") + "selected"
+				for i in [
+					"Test: ",
+					"Say ",
+					"(quietly) ",
+					"Hello, ",
+					"Jim ",
+					". ",  # Expected: no symbols named
+					"don't ",  # Expected: mid-word symbol
+					"",
+					"t-shirt  ",  # todo: Expect right-pointing arrow
+					# end of first line
+					"",  # This is the newline todo: There should not be any "empty" words.
+					# todo: There should not be any "empty" words.
+					"1 ",
+					"",
+					"2 ",
+					"",
+					"3 ",
+					"",
+					"4",
+					# end of second line
+					"",  # newline and single space todo: There should not be any "empty" words.
+					"",  # newline and tab  todo: There should not be any "empty" words.
+					"",  # newline and 4 spaces todo: There should not be any "empty" words.
+					"",  # newline  todo: There should not be any "empty" words.
+					"right-pointing arrow",
+					"",  # newline  todo: There should not be any "empty" words.
+					"t-shirt",
+					"",  # newline  todo: There should not be any "empty" words.
+					"t-shirt",
+					# end of doc
+				]
+			)
+		),
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position
@@ -373,36 +423,48 @@ def test_selByWord():
 		navKey=Move.SEL_CARET_WORD,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list((
-			i + (" " if i else "") + "selected" for i in [
-				'Test colon: ',
-				'Say ',
-				'left paren(quietly right paren) ',  # Expect: parenthesis are named
-				'quote Hello comma, ', 'Jim ', 'quote  dot. ',  # Expect: quote, comma and dot are named
-				'don tick t ',  # Expect: mid-word symbol substituted
-				'right-pointing arrow  ', 't-shirt  ',  # Expect dash symbol not to be replaced with word.
-				# end of first line
-				'',  # newline  todo: There should not be any "empty" words.
-				# Expect no empty words:
-				'1 ', 'bar  ', '2 ', 'bar  bar  ', '3 ', 'at  caret  star  line  ', '4',
-				# end of second line
-				'',  # newline and single space
-				'tab ',  # newline and tab
-				'',  # newline and 4 spaces
-				'',  # newline
-				'right dash-pointing arrow',
-				'',  # newline  todo: There should not be any "empty" words.
-				't dash-shirt',
-				'',  # newline  todo: There should not be any "empty" words.
-				't dash-shirt',
-				# end of doc
-			]
-		))
+		expectedSpeech=list(
+			(
+				i + (" " if i else "") + "selected"
+				for i in [
+					"Test colon: ",
+					"Say ",
+					"left paren(quietly right paren) ",  # Expect: parenthesis are named
+					"quote Hello comma, ",
+					"Jim ",
+					"quote  dot. ",  # Expect: quote, comma and dot are named
+					"don tick t ",  # Expect: mid-word symbol substituted
+					"right-pointing arrow  ",
+					"t-shirt  ",  # Expect dash symbol not to be replaced with word.
+					# end of first line
+					"",  # newline  todo: There should not be any "empty" words.
+					# Expect no empty words:
+					"1 ",
+					"bar  ",
+					"2 ",
+					"bar  bar  ",
+					"3 ",
+					"at  caret  star  line  ",
+					"4",
+					# end of second line
+					"",  # newline and single space
+					"tab ",  # newline and tab
+					"",  # newline and 4 spaces
+					"",  # newline
+					"right dash-pointing arrow",
+					"",  # newline  todo: There should not be any "empty" words.
+					"t dash-shirt",
+					"",  # newline  todo: There should not be any "empty" words.
+					"t dash-shirt",
+					# end of doc
+				]
+			)
+		),
 	)
 
 
 def test_selByLine():
-	""" Select line by line with symbol level 'none' and symbol level 'all'.
+	"""Select line by line with symbol level 'none' and symbol level 'all'.
 	Note: the number of spaces between speech content and 'selected' varies, possibly due to the number
 	of times symbols are replaced.
 	"""
@@ -411,23 +473,30 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list((
-			i + ("   " if i else "") + "selected" for i in [
-				'Test:',
-				'Say', '(quietly)', 'Hello,', 'Jim .', "don't ",
-				'',  # todo: Expect 'right-pointing arrow'
-				't-shirt ',
-				'',  # todo: Expect 'right-pointing arrow'
-				't-shirt  ',
-				't-shirt ',  # todo: Expect 'right-pointing arrow t-shirt'
-				# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
-				'1   2    3      4',
-				'',  # single space todo: There should not be any "empty" lines.
-				'',  # tab todo: There should not be any "empty" lines.
-				'',  # four spaces todo: There should not be any "empty" lines.
-				# end of doc
-			]
-		))
+		expectedSpeech=list(
+			(
+				i + ("   " if i else "") + "selected"
+				for i in [
+					"Test:",
+					"Say",
+					"(quietly)",
+					"Hello,",
+					"Jim .",
+					"don't ",
+					"",  # todo: Expect 'right-pointing arrow'
+					"t-shirt ",
+					"",  # todo: Expect 'right-pointing arrow'
+					"t-shirt  ",
+					"t-shirt ",  # todo: Expect 'right-pointing arrow t-shirt'
+					# todo: Should symbols be passed to synth, i.e. "1 | 2 || 3 etc"?
+					"1   2    3      4",
+					"",  # single space todo: There should not be any "empty" lines.
+					"",  # tab todo: There should not be any "empty" lines.
+					"",  # four spaces todo: There should not be any "empty" lines.
+					# end of doc
+				]
+			)
+		),
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position
@@ -436,48 +505,61 @@ def test_selByLine():
 		navKey=Move.SEL_CARET_LINE,
 		symbolLevel=SymLevel.ALL,
 		reportedAfterLast=EndSpeech.NONE,
-		expectedSpeech=list((
-			i + (" " if i else "") + "selected" for i in [
-				'Test colon:  ',
-				'Say  ',
-				'left paren(quietly right paren)  ',  # Expect: parenthesis are named
-				'quote Hello comma,  ', 'Jim quote  dot.  ',  # Expect: quote, comma and dot are named
-				'don tick t   ',  # Expect: mid-word symbol substituted
-				'right-pointing arrow   ', 't-shirt   ',  # Expect dash
-				'right-pointing arrow    ', 't-shirt    ',  # Expect dash
-				'right-pointing arrow  t-shirt   ',  # Expect dash
-				# Expect | symbol replaced with bar, and other symbols named
-				'1  bar  2  bar  bar  3  at  caret  star  line  4  ',
-				'',  # single space
-				'tab   ',  # single tab
-				'',  # 4 spaces
-				# end of doc
-			]
-		)),
+		expectedSpeech=list(
+			(
+				i + (" " if i else "") + "selected"
+				for i in [
+					"Test colon:  ",
+					"Say  ",
+					"left paren(quietly right paren)  ",  # Expect: parenthesis are named
+					"quote Hello comma,  ",
+					"Jim quote  dot.  ",  # Expect: quote, comma and dot are named
+					"don tick t   ",  # Expect: mid-word symbol substituted
+					"right-pointing arrow   ",
+					"t-shirt   ",  # Expect dash
+					"right-pointing arrow    ",
+					"t-shirt    ",  # Expect dash
+					"right-pointing arrow  t-shirt   ",  # Expect dash
+					# Expect | symbol replaced with bar, and other symbols named
+					"1  bar  2  bar  bar  3  at  caret  star  line  4  ",
+					"",  # single space
+					"tab   ",  # single tab
+					"",  # 4 spaces
+					# end of doc
+				]
+			)
+		),
 	)
 
 
 def test_selByChar():
-	""" Select char by char with symbol level 'none' and symbol level 'all'.
-	"""
+	"""Select char by char with symbol level 'none' and symbol level 'all'."""
 	_notepad.prepareNotepad(_getMoveByCharTestSample())
 
 	_doTest(
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.NONE,
-		expectedSpeech=list((
-			i + (" " if i else "") + "selected" for i in [
-				'T',
-				'S', 'space',  # Expect whitespace named.
-				'left paren', 'right paren',  # Expect parens named
-				'quote', 'tick',  # Expect quote and apostrophe named
-				'e', 'comma',  # Expect comma named
-				'right-pointing arrow', 't-shirt',
-				'tab',  # Expect tab named
-				'',  # Expect Windows/notepad newline is \r\n
-			]
-		))
+		expectedSpeech=list(
+			(
+				i + (" " if i else "") + "selected"
+				for i in [
+					"T",
+					"S",
+					"space",  # Expect whitespace named.
+					"left paren",
+					"right paren",  # Expect parens named
+					"quote",
+					"tick",  # Expect quote and apostrophe named
+					"e",
+					"comma",  # Expect comma named
+					"right-pointing arrow",
+					"t-shirt",
+					"tab",  # Expect tab named
+					"",  # Expect Windows/notepad newline is \r\n
+				]
+			)
+		),
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position.
@@ -486,28 +568,39 @@ def test_selByChar():
 		navKey=Move.SEL_CARET_CHAR,
 		reportedAfterLast=EndSpeech.NONE,
 		symbolLevel=SymLevel.ALL,
-		expectedSpeech=list((
-			i + (" " if i else "") + "selected" for i in [
-				'T', 'S', 'space',  # Expect whitespace named.
-				'left paren', 'right paren',  # Expect parens named
-				'quote', 'tick',  # Expect quote and apostrophe named
-				'e', 'comma',  # Expect comma named
-				# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
-				'right dash-pointing arrow', 't dash-shirt',
-				'tab',  # Expect whitespace named.
-				'',  # on Windows/notepad newline is \r\n
-			]
-		))
+		expectedSpeech=list(
+			(
+				i + (" " if i else "") + "selected"
+				for i in [
+					"T",
+					"S",
+					"space",  # Expect whitespace named.
+					"left paren",
+					"right paren",  # Expect parens named
+					"quote",
+					"tick",  # Expect quote and apostrophe named
+					"e",
+					"comma",  # Expect comma named
+					# todo: Expect no replacement with word 'dash' i.e. expect 'right-pointing arrow', 't-shirt'
+					"right dash-pointing arrow",
+					"t dash-shirt",
+					"tab",  # Expect whitespace named.
+					"",  # on Windows/notepad newline is \r\n
+				]
+			)
+		),
 	)
 
 
 def test_symbolInSpeechUI():
-	""" Replace a translation string to include a character that is can be substituted,
+	"""Replace a translation string to include a character that is can be substituted,
 	check if the 'speech UI' translation string the character substituted.
 	"""
-	_notepad.prepareNotepad((
-		"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
-	))
+	_notepad.prepareNotepad(
+		(
+			"t"  # Character doesn't matter, we just want to invoke "Right" speech UI.
+		),
+	)
 	_setConfig(SymLevel.ALL)
 	spy = _NvdaLib.getSpyLib()
 	expected = "shouldn't sub tick symbol"
@@ -517,7 +610,7 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		["blank", ],
+		["blank"],
 		msg="actual vs expected. Unexpected speech when moving to final character.",
 	)
 
@@ -539,15 +632,15 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		[f"{expected}\nblank", ],
+		[f"{expected}\nblank"],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
 	)
 
 
 def _setConfig(
-		symbolLevel: SymLevel = SymLevel.SOME,
-		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLines: bool = False
+	symbolLevel: SymLevel = SymLevel.SOME,
+	reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+	ignoreBlankLines: bool = False,
 ) -> None:
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
@@ -562,12 +655,12 @@ def _setConfig(
 
 
 def _doTest(
-		navKey: Move,
-		expectedSpeech: _typing.List[str],
-		reportedAfterLast: EndSpeech,
-		symbolLevel: SymLevel = SymLevel.SOME,
-		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLines: bool = False
+	navKey: Move,
+	expectedSpeech: _typing.List[str],
+	reportedAfterLast: EndSpeech,
+	symbolLevel: SymLevel = SymLevel.SOME,
+	reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
+	ignoreBlankLines: bool = False,
 ) -> None:
 	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLines)
 
@@ -575,7 +668,7 @@ def _doTest(
 	_builtIn.should_be_equal(
 		actual,
 		expectedSpeech,
-		msg=f"actual vs expected. With symbolLevel {symbolLevel}"
+		msg=f"actual vs expected. With symbolLevel {symbolLevel}",
 	)
 
 	if reportedAfterLast == EndSpeech.NONE:
@@ -586,8 +679,8 @@ def _doTest(
 	actual = _pressKeyAndCollectSpeech(navKey.value, 1)
 	_builtIn.should_be_equal(
 		actual,
-		[endReached, ],
-		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}"
+		[endReached],
+		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}",
 	)
 
 
@@ -618,7 +711,7 @@ def test_tableHeaders():
 					<td>c</td>
 				</tr>
 			</table>
-		"""
+		""",
 	)
 	_setConfig(SymLevel.ALL)
 	# Expected to be in browse mode
@@ -626,43 +719,51 @@ def test_tableHeaders():
 	_asserts.strings_match(
 		actualSpeech,
 		# into the table, describe first column header
-		'  '.join([
-			"table",  # enter table context
-			"with 2 rows and 3 columns",  # details of the table context
-			"row 1",  # enter row 1 context
-			"column 1",  # enter column 1 context
-			"First dash-name",  # the contents of the cell
-		])
+		"  ".join(
+			[
+				"table",  # enter table context
+				"with 2 rows and 3 columns",  # details of the table context
+				"row 1",  # enter row 1 context
+				"column 1",  # enter column 1 context
+				"First dash-name",  # the contents of the cell
+			],
+		),
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe second column header
-		'  '.join([
-			"column 2",  # enter column 2 context, still in row 1, still in table
-			"right-pointing arrow   t-shirt",  # the contents of the cell
-		])
+		"  ".join(
+			[
+				"column 2",  # enter column 2 context, still in row 1, still in table
+				"right-pointing arrow   t-shirt",  # the contents of the cell
+			],
+		),
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		'  '.join([
-			"column 3",  # enter column 3 context, still in row 1, still in table
-			"Don tick t",  # the contents of the cell
-		])
+		"  ".join(
+			[
+				"column 3",  # enter column 3 context, still in row 1, still in table
+				"Don tick t",  # the contents of the cell
+			],
+		),
 	)
 	# into the first (non-header) row
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
 		actualSpeech,
 		# describe third column header
-		'  '.join([
-			"row 2",   # enter row 2 context, still in table
-			"First dash-name",  # reminder of the column name
-			"column 1",  # explicit column 2 context,
-			"a",  # the contents of the cell
-		])
+		"  ".join(
+			[
+				"row 2",  # enter row 2 context, still in table
+				"First dash-name",  # reminder of the column name
+				"column 1",  # explicit column 2 context,
+				"a",  # the contents of the cell
+			],
+		),
 	)
 
 	_doTest(
@@ -671,9 +772,9 @@ def test_tableHeaders():
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=[
 			# name of column, column number, \n cell contents
-			't-shirt  column 2\nb',  # note symbols NOT replaced in column name
+			"t-shirt  column 2\nb",  # note symbols NOT replaced in column name
 			"Don't  column 3\nc",  # note symbols NOT replaced in column name
-		]
+		],
 	)
 	# reset to start of row.
 	_NvdaLib.getSpeechAfterKey(Move.CARET_CHAR_BACK.value)
@@ -685,25 +786,28 @@ def test_tableHeaders():
 		reportedAfterLast=EndSpeech.NONE,
 		expectedSpeech=[
 			# name of column, column number 2, \n cell contents
-			'right-pointing arrow   t-shirt  column 2\nb',  # note symbols ARE replaced in column name
+			"right-pointing arrow   t-shirt  column 2\nb",  # note symbols ARE replaced in column name
 			"Don tick t  column 3\nc",  # note symbols ARE replaced in column name
-		]
+		],
 	)
 
 
 def test_ignoreBlankLinesForReportLineIndentation():
-	""" Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on
-	"""
-	_notepad.prepareNotepad('\n'.join([
-		'',  # blank line
-		'def foo',
-		'\thello',
-		'',  # blank line
-		'\tworld',
-		'',  # blank line
-		'def bar',
-		'',  # blank line
-	]))
+	"""Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on"""
+	_notepad.prepareNotepad(
+		"\n".join(
+			[
+				"",  # blank line
+				"def foo",
+				"\thello",
+				"",  # blank line
+				"\tworld",
+				"",  # blank line
+				"def bar",
+				"",  # blank line
+			],
+		),
+	)
 
 	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
 		_doTest(
@@ -712,20 +816,20 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			symbolLevel=SymLevel.ALL,
 			reportLineIndentation=ReportLineIndentation.SPEECH,
 			ignoreBlankLines=ignoreBlankLines,
-			expectedSpeech=expectedSpeech
+			expectedSpeech=expectedSpeech,
 		)
 
 	_doTestIgnoreBlankLines(
 		ignoreBlankLines=False,
 		expectedSpeech=[
-			'def foo',
-			'tab  hello',
-			'no indent  blank',
-			'tab  world',
-			'no indent  blank',
-			'def bar',
-			'blank'
-		]
+			"def foo",
+			"tab  hello",
+			"no indent  blank",
+			"tab  world",
+			"no indent  blank",
+			"def bar",
+			"blank",
+		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
@@ -733,12 +837,12 @@ def test_ignoreBlankLinesForReportLineIndentation():
 	_doTestIgnoreBlankLines(
 		ignoreBlankLines=True,
 		expectedSpeech=[
-			'def foo',
-			'tab  hello',
-			'blank',
-			'world',
-			'blank',
-			'no indent  def bar',
-			'blank'
-		]
+			"def foo",
+			"tab  hello",
+			"blank",
+			"world",
+			"blank",
+			"no indent  def bar",
+			"blank",
+		],
 	)

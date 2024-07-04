@@ -8,7 +8,6 @@ This module contains the instructions that operate on strings.
 Including to create new strings, check if an object is a string, and concatenate strings.
 """
 
-
 from __future__ import annotations
 from typing import cast
 from dataclasses import dataclass

@@ -71,7 +71,7 @@ from .types import (
 	SequenceItemT,
 	logBadSequenceTypes,
 	GeneratorWithReturn,
-	_flattenNestedSequences
+	_flattenNestedSequences,
 )
 
 __all__ = [
@@ -151,7 +151,7 @@ from .sayAll import initialize as sayAllInitialize
 
 
 def initialize():
-	""" Loads and sets the synth driver configured in nvda.ini.
+	"""Loads and sets the synth driver configured in nvda.ini.
 	Initializes the state of speech and initializes the sayAllHandler
 	"""
 	synthDriverHandler.initialize()

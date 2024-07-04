@@ -53,6 +53,12 @@ ignore = [
 ]
 logger-objects = ["logHandler.log"]
 
+[tool.ruff.lint.per-file-ignores]
+# sconscripts contains many inbuilt functions not recognised by the lint,
+# so ignore F821.
+"sconstruct" = ["F821"]
+"*sconscript" = ["F821"]
+
 [tool.licensecheck]
 using = "requirements:requirements.txt"
 only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]

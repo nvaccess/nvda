@@ -10,14 +10,14 @@ from typing import (
 	Self,
 	ClassVar,
 	Any,
-	Iterable
+	Iterable,
 )
 import ctypes
 from ctypes import (
 	_SimpleCData,
 	c_char,
 	c_long,
-	c_wchar
+	c_wchar,
 )
 import enum
 from dataclasses import dataclass
@@ -30,7 +30,6 @@ from .lowLevel import OperandId
 
 
 class _RemoteBase:
-
 	_robRef: weakref.ReferenceType[RemoteOperationBuilder] | None = None
 	_mutable: bool = True
 
@@ -69,7 +68,6 @@ class _RemoteBase:
 
 
 class Operand(_RemoteBase):
-
 	_operandId: OperandId | None = None
 	_sectionForInitInstructions: str | None = None
 	_defaultSectionForInitInstructions: str = "main"
@@ -115,7 +113,7 @@ class InstructionBase(metaclass=ABCMeta):
 		raise NotImplementedError()
 
 	def getByteCode(self) -> bytes:
-		byteCode = struct.pack('l', self.opCode.value)
+		byteCode = struct.pack("l", self.opCode.value)
 		params = list(self.params.values())
 		if len(params) > 0 and isinstance(params[-1], list):
 			# If the last parameter is a list, it is a variable length parameter.
@@ -152,9 +150,9 @@ class GenericInstruction(InstructionBase):
 	_params: dict[str, Operand | _SimpleCData | ctypes.Array | ctypes.Structure]
 
 	def __init__(
-			self,
-			opCode: lowLevel.InstructionType,
-			**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure
+		self,
+		opCode: lowLevel.InstructionType,
+		**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
 	):
 		self.opCode = opCode
 		self._params = kwargs
@@ -165,7 +163,6 @@ class GenericInstruction(InstructionBase):
 
 
 class InstructionList:
-
 	_all: list[InstructionBase | str]
 	_instructions: list[InstructionBase]
 	_modified = False
@@ -190,9 +187,9 @@ class InstructionList:
 		return self.getInstructionCount() - 1
 
 	def addGenericInstruction(
-			self,
-			opCode: lowLevel.InstructionType,
-			**params: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
+		self,
+		opCode: lowLevel.InstructionType,
+		**params: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
 	) -> int:
 		return self.addInstruction(GenericInstruction(opCode, **params))
 
@@ -202,7 +199,7 @@ class InstructionList:
 	def getByteCode(self) -> bytes:
 		if self._byteCodeCache is not None and not self._modified:
 			return self._byteCodeCache
-		byteCode = b''
+		byteCode = b""
 		for instruction in self._instructions:
 			byteCode += instruction.getByteCode()
 		self._byteCodeCache = byteCode
@@ -236,8 +233,7 @@ class InstructionList:
 
 
 class RemoteOperationBuilder:
-
-	_versionBytes: bytes = struct.pack('l', 0)
+	_versionBytes: bytes = struct.pack("l", 0)
 	_sectionNames = ["static", "const", "main"]
 	_lastOperandIdRequested = OperandId(1)
 	_defaultSection: str = "main"
@@ -273,9 +269,11 @@ class RemoteOperationBuilder:
 		self._defaultSection = oldDefaultSection
 
 	def getAllInstructions(self) -> list[InstructionBase]:
-		return list(itertools.chain.from_iterable(
-			instructionList._instructions for instructionList in self._instructionListBySection.values()
-		))
+		return list(
+			itertools.chain.from_iterable(
+				instructionList._instructions for instructionList in self._instructionListBySection.values()
+			),
+		)
 
 	def getByteCode(self) -> bytes:
 		byteCode = self._versionBytes
