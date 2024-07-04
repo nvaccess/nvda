@@ -294,6 +294,7 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import brailleTables
 	import speech
+	import characterProcessing
 	import vision
 	import inputCore
 	import bdDetect
@@ -311,6 +312,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleTables.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating character processing")
+	characterProcessing.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
 	log.debug("terminating sound split")
@@ -348,6 +351,9 @@ def resetConfiguration(factoryDefaults=False):
 	# Sound split
 	log.debug("initializing sound split")
 	audio.soundSplit.initialize()
+	# Character processing
+	log.debug("initializing character processing")
+	characterProcessing.initialize()
 	# Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -744,6 +750,10 @@ def main():
 
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
+	import characterProcessing
+
+	log.debug("Character processing")
+	characterProcessing.initialize()
 	import speech
 
 	log.debug("Initializing speech")
@@ -1044,6 +1054,7 @@ def main():
 	_terminate(braille)
 	_terminate(brailleTables)
 	_terminate(speech)
+	_terminate(characterProcessing)
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
@@ -1095,10 +1106,10 @@ def requestPump(immediate: bool = False):
 	"""Request a core pump.
 	This will perform any queued activity.
 	@param immediate: If True, the pump will happen as soon as possible. This
-		should be used where response time is most important; e.g. user input or
-		focus events.
-		If False, it is delayed slightly so that queues can implement rate limiting,
-		filter extraneous events, etc.
+	        should be used where response time is most important; e.g. user input or
+	        focus events.
+	        If False, it is delayed slightly so that queues can implement rate limiting,
+	        filter extraneous events, etc.
 	"""
 	if not _pump:
 		return

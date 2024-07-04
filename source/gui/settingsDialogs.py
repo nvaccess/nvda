@@ -1667,20 +1667,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 		)
 
-		includeCLDRText = _(
-			# Translators: This is the label for a checkbox in the
-			# voice settings panel (if checked, data from the unicode CLDR will be used
-			# to speak emoji descriptions).
-			"Include Unicode Consortium data (including emoji) when processing characters and symbols",
-		)
-		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
-			wx.CheckBox(self, label=includeCLDRText),
-		)
-		self.bindHelpEvent(
-			"SpeechSettingsCLDR",
-			self.includeCLDRCheckbox,
-		)
-		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+		self._appendSymbolDictionariesList(settingsSizerHelper)
 
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
@@ -1748,6 +1735,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self._appendSpeechModesList(settingsSizerHelper)
 
+	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._availableSymbolDictionaries = [
+			d for d in characterProcessing.getAvailableSymbolDictionaryDefinitions() if d.userVisible
+		]
+		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable symbol dictionaires.
+			_("E&xtra dictionaries for character and symbol processing:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[d.displayName for d in self._availableSymbolDictionaries],
+		)
+		self.bindHelpEvent("SpeechSymbolDictionaries", self.symbolDictionariesList)
+		self.symbolDictionariesList.CheckedItems = [
+			i for i, d in enumerate(self._availableSymbolDictionaries) if d.enabled
+		]
+		self.symbolDictionariesList.Select(0)
+
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
@@ -1788,10 +1791,14 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
-		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
-		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
-		if currentIncludeCLDR is not newIncludeCldr:
-			# Either included or excluded CLDR data, so clear the cache.
+		currentSymbolDictionaries = config.conf["speech"]["symbolDictionaries"]
+		config.conf["speech"]["symbolDictionaries"] = newSymbolDictionaries = [
+			d.name
+			for i, d in enumerate(self._availableSymbolDictionaries)
+			if i in self.symbolDictionariesList.CheckedItems
+		]
+		if set(currentSymbolDictionaries) != set(newSymbolDictionaries):
+			# Either included or excluded symbol dictionaries, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions

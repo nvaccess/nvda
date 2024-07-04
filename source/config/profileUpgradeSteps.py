@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2023 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2016-2024 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -376,4 +375,26 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 		log.debug(
 			"hidBrailleStandard added to braille display auto detection excluded displays. "
 			f"List is now: {profile['braille']['auto']['excludedDisplays']}",
+		)
+
+
+def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
+	"""Remove the includeCldr speech config flag and enabled it in the speechSymbols list."""
+	# Config spec entry was:
+	# includeCLDR = boolean(default=True)
+	try:
+		setting: str = profile["speech"]["includeCLDR"]
+		del profile["speech"]["includeCLDR"]
+	except KeyError:
+		log.debug("includeCLDR not present in config, no action taken.")
+		return
+	if "speech" not in profile:
+		profile["speech"] = {}
+	if "symbolDictionaries" not in profile["speech"]:
+		profile["speech"]["symbolDictionaries"] = []
+	if configobj.validate.is_boolean(setting):  # CLDR enabled
+		profile["speech"]["symbolDictionaries"] += ["cldr"]
+		log.debug(
+			"cldr added to speech symbol dictionaries."
+			f"List is now: {profile['speech']['symbolDictionaries']}",
 		)
