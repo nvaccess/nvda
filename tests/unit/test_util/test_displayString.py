@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2021 NV Access Limited.
 
-"""Unit tests for the displayString submodule.
-"""
+"""Unit tests for the displayString submodule."""
 
 import unittest
 from utils.displayString import DisplayStringEnum

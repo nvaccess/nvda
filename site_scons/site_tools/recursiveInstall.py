@@ -1,10 +1,10 @@
-#from http://xtargets.com/2010/04/21/recursive-install-builder-for-scons/
+# from http://xtargets.com/2010/04/21/recursive-install-builder-for-scons/
 # This tool adds an
 #
 # env.RecursiveInstall( target, path )
 #
-# This is usefull for doing 
-# 
+# This is usefull for doing
+#
 #   k = env.RecursiveInstall(dir_target, dir_source)
 #
 # and if any thing in dir_source is updated
@@ -31,37 +31,41 @@
 
 import os
 
-def recursive_install(env, path ):
-    nodes = env.Glob \
-        ( os.path.join(path, '*')
-        , strings=False
-        )
-    out = []
-    for n in nodes:
-        if n.isdir():
-            out.extend( recursive_install(env, n.abspath ))
-        else:
-            out.append(n)
 
-    return out
+def recursive_install(env, path):
+	nodes = env.Glob(
+		os.path.join(path, "*"),
+		strings=False,
+	)
+	out = []
+	for n in nodes:
+		if n.isdir():
+			out.extend(recursive_install(env, n.abspath))
+		else:
+			out.append(n)
+
+	return out
+
 
 def RecursiveInstall(env, target, dir):
-    nodes = recursive_install(env, dir)
+	nodes = recursive_install(env, dir)
 
-    dir = env.Dir(dir).abspath
-    target = env.Dir(target).abspath
+	dir = env.Dir(dir).abspath
+	target = env.Dir(target).abspath
 
-    l = len(dir) + 1  # noqa: E741
+	l = len(dir) + 1  # noqa: E741
 
-    relnodes = [ n.abspath[l:] for n in nodes ]
+	relnodes = [n.abspath[l:] for n in nodes]
 
-    for n in relnodes:
-        t = os.path.join(target, n)
-        s = os.path.join(dir, n)
-        env.InstallAs ( env.File(t), env.File(s))
+	for n in relnodes:
+		t = os.path.join(target, n)
+		s = os.path.join(dir, n)
+		env.InstallAs(env.File(t), env.File(s))
+
 
 def generate(env):
-    env.AddMethod(RecursiveInstall)
+	env.AddMethod(RecursiveInstall)
+
 
 def exists(env):
-    return True
+	return True

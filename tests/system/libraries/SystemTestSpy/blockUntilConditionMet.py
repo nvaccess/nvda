@@ -33,14 +33,14 @@ from being able to process queued events.
 
 
 def _blockUntilConditionMet(
-		getValue: Callable[[], GetValueResultT],
-		giveUpAfterSeconds: float,
-		shouldStopEvaluator: Callable[[GetValueResultT], bool] = lambda value: bool(value),
-		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
-		errorMessage: Optional[str] = None
-		) -> Tuple[
-EvaluatorWasMetT,  # Was evaluator met?
-Optional[GetValueResultT]  # Value when the evaluator was met, if it was met.
+	getValue: Callable[[], GetValueResultT],
+	giveUpAfterSeconds: float,
+	shouldStopEvaluator: Callable[[GetValueResultT], bool] = lambda value: bool(value),
+	intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+	errorMessage: Optional[str] = None,
+) -> Tuple[
+	EvaluatorWasMetT,  # Was evaluator met?
+	Optional[GetValueResultT],  # Value when the evaluator was met, if it was met.
 ]:
 	"""Repeatedly tries to get a value up until a time limit expires.
 	Tries are separated by a time interval.

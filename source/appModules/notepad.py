@@ -21,7 +21,6 @@ from typing import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_UIA_elementSelected(self, obj: NVDAObject, nextHandler: Callable[[], None]):
 		# Announce currently selected tab when it changes.
 		if (
@@ -37,8 +36,8 @@ class AppModule(appModuleHandler.AppModule):
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,
-					positionInfo=obj.positionInfo
-				)
+					positionInfo=obj.positionInfo,
+				),
 			)
 		nextHandler()
 
@@ -63,7 +62,10 @@ class AppModule(appModuleHandler.AppModule):
 			raise NotImplementedError()
 		# Obtain status bar text across Notepad 11 releases.
 		clientObject = UIAHandler.handler.clientObject
-		condition = clientObject.createPropertyCondition(UIAHandler.UIA_AutomationIdPropertyId, "ContentTextBlock")
+		condition = clientObject.createPropertyCondition(
+			UIAHandler.UIA_AutomationIdPropertyId,
+			"ContentTextBlock",
+		)
 		walker = clientObject.createTreeWalker(condition)
 		notepadWindow = clientObject.elementFromHandle(api.getForegroundObject().windowHandle)
 		try:

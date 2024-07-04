@@ -4,8 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited
 
-"""Utility methods for Driver and AutoSettings instances
-"""
+"""Utility methods for Driver and AutoSettings instances"""
 
 
 def paramToPercent(current: int, min: int, max: int) -> int:
@@ -43,6 +42,7 @@ class StringParameterInfo(object):
 	"""
 	Used to represent a value of a DriverSetting instance.
 	"""
+
 	id: str
 	displayName: str
 

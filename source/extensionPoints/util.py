@@ -7,7 +7,6 @@
 used, however for more advanced requirements these utilities can be used directly.
 """
 
-
 # "annotations" Needed to reference BoundMethodWeakref in one of the init params of itself.
 from __future__ import annotations
 import weakref
@@ -28,8 +27,8 @@ HandlerKeyT = Union[int, Tuple[int, int]]
 
 
 class AnnotatableWeakref(weakref.ref, Generic[HandlerT]):
-	"""A weakref.ref which allows annotation with custom attributes.
-	"""
+	"""A weakref.ref which allows annotation with custom attributes."""
+
 	handlerKey: int
 
 
@@ -42,17 +41,18 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	which can then be used to bind an instance method.
 	To get the actual method, you call an instance as you would a weakref.ref.
 	"""
+
 	handlerKey: Tuple[int, int]
 
 	def __init__(
-			self,
-			target: HandlerT,
-			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None
+		self,
+		target: HandlerT,
+		onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None,
 	):
 		if onDelete:
+
 			def onRefDelete(weak):
-				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies.
-				"""
+				"""Calls onDelete for our BoundMethodWeakref when one of the individual weakrefs (instance or function) dies."""
 				onDelete(self)
 		else:
 			onRefDelete = None
@@ -102,7 +102,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		#: and the values are weak references.
 		self._handlers = OrderedDict[
 			HandlerKeyT,
-			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]
+			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]],
 		]()
 
 	def register(self, handler: HandlerT):
@@ -141,7 +141,10 @@ class HandlerRegistrar(Generic[HandlerT]):
 			return False
 		return True
 
-	def unregister(self, handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT]):
+	def unregister(
+		self,
+		handler: Union[AnnotatableWeakref[HandlerT], BoundMethodWeakref[HandlerT], HandlerT],
+	):
 		if isinstance(handler, (AnnotatableWeakref, BoundMethodWeakref)):
 			key = handler.handlerKey
 		else:
@@ -160,7 +163,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		for weak in self._handlers.values():
 			handler = weak()
 			if not handler:
-				continue # Died.
+				continue  # Died.
 			yield handler
 
 
@@ -202,10 +205,7 @@ def callWithSupportedKwargs(func, *args, **kwargs):
 
 	# Check whether func has a catch-all for kwargs (**kwargs)
 	# In this case, we do not need to filter to just the supported args.
-	if not any(
-		param for param in sig.parameters.values()
-		if param.kind == param.VAR_KEYWORD
-	):
+	if not any(param for param in sig.parameters.values() if param.kind == param.VAR_KEYWORD):
 		# Delete all the kwargs that are not supported by this callable.
 		# Wrap the items call in a list, as the dictionary changes during iteration.
 		for kwarg in list(kwargs.keys()):
