@@ -15,7 +15,7 @@ repos:
   hooks:
   # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
   # if a trailing comma is added.
-  # This adds a trailing comma to args/iterable items in case it wass missed.
+  # This adds a trailing comma to args/iterable items in case it was missed.
   - id: add-trailing-comma
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
