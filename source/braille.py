@@ -45,7 +45,7 @@ from config.configFlags import (
 	BrailleMode,
 	ReportTableHeaders,
 )
-from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontAttributesBrailleModeFlag
 from logHandler import log
 import controlTypes
 import api
@@ -1147,7 +1147,7 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if not formatConfig["reportFontAttributes"]:
+		if not (formatConfig["reportFontAttributes"] and config.conf['braille']['fontAttributeDisplay'].calculated() == FontAttributesBrailleModeFlag.LIBLOUIS):
 			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
