@@ -17,6 +17,7 @@ from addonStore.dataManager import addonDataManager
 from addonStore.models.channel import Channel, _channelFilters
 from addonStore.models.status import (
 	EnabledStatus,
+	NewStatus,
 	_statusFilters,
 	_StatusFilterKey,
 )
@@ -195,6 +196,19 @@ class AddonStoreDialog(SettingsDialog):
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
+		self.newFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Published recently/all:"),
+				wxCtrlClass=wx.Choice,
+				choices=list(c.displayString for c in NewStatus),
+			),
+		)
+		self.newFilterCtrl.SetSelection(0)
+		self.newFilterCtrl.Bind(wx.EVT_CHOICE, self.onNewFilterChange, self.newFilterCtrl)
+		self.bindHelpEvent("AddonStoreFilterNew", self.newFilterCtrl)
+
 		# Translators: The label of a text field to filter the list of add-ons in the add-on store dialog.
 		searchFilterLabel = wx.StaticText(self, label=pgettext("addonStore", "&Search:"))
 		# noinspection PyAttributeOutsideInit
@@ -327,10 +341,15 @@ class AddonStoreDialog(SettingsDialog):
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:
 				self.channelFilterCtrl.Append(c.displayString)
+		if self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE:
+			self.newFilterCtrl.Enable()
+			self.newFilterCtrl.Show()
+		else:
+			self.newFilterCtrl.Hide()
+			self.newFilterCtrl.Disable()
 		if self._storeVM._filteredStatusKey in {
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
-			_StatusFilterKey.NEW,
 		}:
 			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
 				self._storeVM._installedAddons[Channel.DEV] or self._storeVM._installedAddons[Channel.BETA]
@@ -342,9 +361,6 @@ class AddonStoreDialog(SettingsDialog):
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()
 			self.includeIncompatibleCtrl.Show()
-			if self._storeVM._filteredStatusKey == _StatusFilterKey.NEW:
-				self.includeIncompatibleCtrl.Disable()
-				self.includeIncompatibleCtrl.Hide()
 		else:
 			self.channelFilterCtrl.Append(Channel.EXTERNAL.displayString)
 			self._storeVM._filterChannelKey = Channel.ALL
@@ -391,6 +407,17 @@ class AddonStoreDialog(SettingsDialog):
 
 	def onIncompatibleFilterChange(self, evt: wx.EVT_CHECKBOX):
 		self._storeVM._filterIncludeIncompatible = self.includeIncompatibleCtrl.GetValue()
+		if self._storeVM._filterIncludeIncompatible:
+			self.newFilterCtrl.Hide()
+			self.newFilterCtrl.Disable()
+		else:
+			self.newFilterCtrl.Enable()
+			self.newFilterCtrl.Show()
+		self._storeVM.refresh()
+
+	def onNewFilterChange(self, evt: wx.EVT_CHOICE):
+		index = self.newFilterCtrl.GetCurrentSelection()
+		self._storeVM._filterNew = list(NewStatus)[index]
 		self._storeVM.refresh()
 
 	def filter(self, filterText: str):
