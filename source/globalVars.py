@@ -74,25 +74,25 @@ class DefaultAppArgs(argparse.Namespace):
 
 # Encapsulated by api module,
 # refer to #14037 for removal strategy.
-desktopObject: Optional['NVDAObjects.NVDAObject'] = None
+desktopObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setDesktopObject|getDesktopObject` from `api` instead"""
 
-foregroundObject: Optional['NVDAObjects.NVDAObject'] = None
+foregroundObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setForegroundObject|getForegroundObject` from `api` instead"""
 
-focusObject: Optional['NVDAObjects.NVDAObject'] = None
+focusObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use `setFocusObject|getFocusObject` from `api` instead"""
 
-focusAncestors: List['NVDAObjects.NVDAObject'] = []
+focusAncestors: List["NVDAObjects.NVDAObject"] = []
 """Deprecated, use `getFocusAncestors` from `api` instead"""
 
 focusDifferenceLevel: Optional[int] = None
 """Deprecated, use `getFocusDifferenceLevel` from `api` instead"""
 
-mouseObject: Optional['NVDAObjects.NVDAObject'] = None
+mouseObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``setMouseObject|getMouseObject`` from `api` instead"""
 
-navigatorObject: Optional['NVDAObjects.NVDAObject'] = None
+navigatorObject: Optional["NVDAObjects.NVDAObject"] = None
 """Deprecated, use ``setNavigatorObject|getNavigatorObject`` from `api` instead"""
 
 reviewPosition: Optional["documentBase.TextContainerObject"] = None

@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_if(TestCase):
-
 	def test_if_true(self):
 		op = operation.Operation(localMode=True)
 

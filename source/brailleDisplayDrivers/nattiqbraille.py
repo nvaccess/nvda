@@ -38,9 +38,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
-		})
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.SERIAL,
+			{
+				"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+			},
+		)
 
 	@classmethod
 	def getManualPorts(cls):
@@ -53,8 +56,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug("Checking port %s for a Nattiq nBraille", port)
 			try:
 				self._serial = hwIo.Serial(
-					port, baudrate=BAUD_RATE, timeout=self.timeout, writeTimeout=self.timeout,
-					parity=serial.PARITY_NONE, onReceive=self._onReceive
+					port,
+					baudrate=BAUD_RATE,
+					timeout=self.timeout,
+					writeTimeout=self.timeout,
+					parity=serial.PARITY_NONE,
+					onReceive=self._onReceive,
 				)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
@@ -115,15 +122,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.debug(cells)
 		self._serial.write(cells.encode())
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(nattiqbraille):tback",),
-			"braille_routeTo": ("br(nattiqbraille):routing",),
-			"braille_scrollForward": ("br(nattiqbraille):tadvance",),
-			"braille_previousLine": ("br(nattiqbraille):tprevious",),
-			"braille_nextLine": ("br(nattiqbraille):tnext",),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(nattiqbraille):tback",),
+				"braille_routeTo": ("br(nattiqbraille):routing",),
+				"braille_scrollForward": ("br(nattiqbraille):tadvance",),
+				"braille_previousLine": ("br(nattiqbraille):tprevious",),
+				"braille_nextLine": ("br(nattiqbraille):tnext",),
+			},
 		},
-	})
+	)
 
 
 class InputGestureKeys(braille.BrailleDisplayGesture):

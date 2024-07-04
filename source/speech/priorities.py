@@ -14,6 +14,7 @@ class SpeechPriority(IntEnum):
 	Note: This enum has its counterpart in the NVDAController RPC interface (nvdaController.idl).
 	Additions to this enum should also be reflected in nvdaController.idl.
 	"""
+
 	#: Indicates that a speech sequence should have normal priority.
 	NORMAL = 0
 	#: Indicates that a speech sequence should be spoken after the next utterance of lower priority is complete.

@@ -26,6 +26,7 @@ LINE_END = "\r\n"
 
 class Section(IntEnum):
 	"""Sections must be nested in this order."""
+
 	HEADER = auto()
 	BODY = auto()
 
@@ -46,8 +47,7 @@ class Regex(Enum):
 
 
 class KeyCommandsError(Exception):
-	"""Raised due to an error encountered in the User Guide related to generation of the Key Commands document.
-	"""
+	"""Raised due to an error encountered in the User Guide related to generation of the Key Commands document."""
 
 
 class KeyCommandsExtension(Extension):
@@ -57,7 +57,7 @@ class KeyCommandsExtension(Extension):
 	PRIORITY = 25
 
 	def extendMarkdown(self, md: Markdown):
-		md.preprocessors.register(KeyCommandsPreprocessor(md), 'key_commands', self.PRIORITY)
+		md.preprocessors.register(KeyCommandsPreprocessor(md), "key_commands", self.PRIORITY)
 
 
 class KeyCommandsPreprocessor(Preprocessor):
@@ -148,7 +148,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			if self._settingsNumLayouts < 1:
 				raise KeyCommandsError(
 					f"{self._lineNum}, settingsSection command must specify the header row for a table"
-					" summarising the settings"
+					" summarising the settings",
 				)
 
 		elif cmd == Command.SETTING.value:
@@ -158,8 +158,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			raise KeyCommandsError(f"{self._lineNum}, Invalid command {cmd}")
 
 	def _seekNonEmptyLine(self) -> str:
-		"""Seeks to the next non-empty line in the user guide.
-		"""
+		"""Seeks to the next non-empty line in the user guide."""
 		line = next(self._ugLines).strip()
 		self._lineNum += 1
 		while not line:
@@ -195,7 +194,9 @@ class KeyCommandsPreprocessor(Preprocessor):
 
 	def _handleSetting(self):
 		if not self._settingsHeaderRow:
-			raise KeyCommandsError("%d, setting command cannot be used before settingsSection command" % self._lineNum)
+			raise KeyCommandsError(
+				"%d, setting command cannot be used before settingsSection command" % self._lineNum,
+			)
 
 		tableHeadersRequired = False
 		if not self._kcLines[-2].startswith("|"):
@@ -233,7 +234,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 				if not Regex.TABLE_ROW.value.match(line):
 					raise KeyCommandsError(
 						f"{self._lineNum}, setting command: "
-						"There must be one table row for each keyboard layout"
+						"There must be one table row for each keyboard layout",
 					)
 
 				# This is a table row.
@@ -241,7 +242,9 @@ class KeyCommandsPreprocessor(Preprocessor):
 				try:
 					key = line.strip("|").split("|")[1].strip()
 				except IndexError:
-					raise KeyCommandsError(f"{self._lineNum}, setting command: Key entry not found in table row.")
+					raise KeyCommandsError(
+						f"{self._lineNum}, setting command: Key entry not found in table row.",
+					)
 				else:
 					keys.append(key)
 
@@ -257,7 +260,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			raise KeyCommandsError(
 				f"{self._lineNum}, setting command: The keyboard shortcuts must be followed by a blank line. "
 				"Multiple keys must be included in a table. "
-				f"Erroneous key: {key}"
+				f"Erroneous key: {key}",
 			)
 
 		# Finally, the next line should be the description.

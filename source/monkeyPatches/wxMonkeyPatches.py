@@ -5,6 +5,7 @@
 
 from functools import wraps
 
+
 def apply(mainFrame, winUser, wx):
 	"""Patch wx.CallAfter to overcome an execution timing issue.
 

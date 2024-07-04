@@ -1,13 +1,14 @@
-#NVDAObjects/IAccessible/qt.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# NVDAObjects/IAccessible/qt.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import controlTypes
 from NVDAObjects.IAccessible import IAccessible
 import eventHandler
 from scriptHandler import isScriptWaiting
+
 
 def _getActiveChild(obj):
 	# QT doesn't do accFocus properly, so find the active child ourselves.
@@ -23,15 +24,15 @@ def _getActiveChild(obj):
 		if oldChild == child:
 			break
 	else:
-		return None				
+		return None
 	for child in obj.children:
 		states = child.states
 		if controlTypes.State.FOCUSED in states or controlTypes.State.SELECTED in states:
 			return child
 	return None
 
-class Client(IAccessible):
 
+class Client(IAccessible):
 	def _get__containedWidget(self):
 		widget = self.firstChild
 		if not widget:
@@ -55,45 +56,45 @@ class Client(IAccessible):
 	def _get_focusRedirect(self):
 		return self._containedWidget
 
-class Container(IAccessible):
 
+class Container(IAccessible):
 	def _get_activeChild(self):
 		return _getActiveChild(self)
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		# QT doesn't fire focus on the active child as it should, so we will bounce the focus to it.
 		# However, as the container does not have the focused state in QT5, we must still ensure we can get the event if we are going to bounce it
-		res=super(Container,self).shouldAllowIAccessibleFocusEvent
+		res = super(Container, self).shouldAllowIAccessibleFocusEvent
 		if not res:
-			res=bool(self.activeChild)
+			res = bool(self.activeChild)
 		return res
 
 	def _get_focusRedirect(self):
 		return self.activeChild
 
-class TableRow(Container):
 
-	value=None
-	description=None
+class TableRow(Container):
+	value = None
+	description = None
 
 	def _get_activeChild(self):
 		return _getActiveChild(self)
 
+
 class TableCell(IAccessible):
+	value = None
 
-	value=None
-
-	def script_nextColumn(self,gesture):
+	def script_nextColumn(self, gesture):
 		gesture.send()
 		if not isScriptWaiting():
-			next=self.next
+			next = self.next
 			if next and controlTypes.State.FOCUSED in next.states:
 				eventHandler.executeEvent("gainFocus", next)
 
-	def script_previousColumn(self,gesture):
+	def script_previousColumn(self, gesture):
 		gesture.send()
 		if not isScriptWaiting():
-			previous=self.previous
+			previous = self.previous
 			if previous and controlTypes.State.FOCUSED in previous.states:
 				eventHandler.executeEvent("gainFocus", previous)
 
@@ -106,20 +107,22 @@ class TableCell(IAccessible):
 
 
 class TreeViewItem(IAccessible):
-
 	value = None
 
-	hasEncodedAccDescription=True
+	hasEncodedAccDescription = True
+
 
 class Menu(IAccessible):
 	# QT incorrectly fires a focus event on the parent menu immediately after (correctly) firing focus on the menu item.
 	# This is probably QT task 241161, which was apparently fixed in QT 4.5.1.
 	shouldAllowIAccessibleFocusEvent = False
 
+
 class LayeredPane(IAccessible):
 	# QT < 4.6 uses ROLE_SYSTEM_IPADDRESS for layered pane.
 	# See QT task 258413.
 	role = controlTypes.Role.LAYEREDPANE
+
 
 class Application(IAccessible):
 	# QT sets the path of the application in the description, which is irrelevant to the user.
