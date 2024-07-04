@@ -747,38 +747,36 @@ Be very careful to keep all tabs and spaces intact.
 
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
-    --- start ---
-    #Window utility scripts for NVDA
-    #Developer guide example 4
+```py
+#Window utility scripts for NVDA
+#Developer guide example 4
+import globalPluginHandler
+from scriptHandler import script
+import ui
+import api
     
-    import globalPluginHandler
-    from scriptHandler import script
-    import ui
-    import api
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
     
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+	@script(
+		description=_("Announces the window class name of the current focus object"),
+		gesture="kb:NVDA+leftArrow"
+	)
+	def script_announceWindowClassName(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowClassName = focusObj.windowClassName
+		ui.message(f"class for {name} window: {windowClassName}")
     
-    	@script(
-    		description=_("Announces the window class name of the current focus object"),
-    		gesture="kb:NVDA+leftArrow"
-    	)
-    	def script_announceWindowClassName(self, gesture):
-    		focusObj = api.getFocusObject()
-    		name = focusObj.name
-    		windowClassName = focusObj.windowClassName
-    		ui.message(f"class for {name} window: {windowClassName}")
-    
-    	@script(
-    		description=_("Announces the window control ID of the current focus object"),
-    		gesture="kb:NVDA+rightArrow"
-    	)
-    	def script_announceWindowControlID(self, gesture):
-    		focusObj = api.getFocusObject()
-    		name = focusObj.name
-    		windowControlID = focusObj.windowControlID
-    		ui.message("Control ID for %s window: %d" % (name, windowControlID))
-    
-    --- end ---
+	@script(
+		description=_("Announces the window control ID of the current focus object"),
+		gesture="kb:NVDA+rightArrow"
+	)
+	def script_announceWindowControlID(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowControlID = focusObj.windowControlID
+		ui.message("Control ID for %s window: %d" % (name, windowControlID))
+``` 
 ### Events {#events}
 
 When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
