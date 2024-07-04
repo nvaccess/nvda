@@ -6,7 +6,8 @@
 
 ### New Features
 
-* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+* It is now possible to change the way NVDA displays certain text formatting attributes in braille. The available options are:
+  * Liblouis: Uses formatting markers defined in your selected braille table.
 
 ### Bug Fixes
 
