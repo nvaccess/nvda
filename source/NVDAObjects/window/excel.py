@@ -1621,18 +1621,18 @@ class ExcelCell(ExcelBase):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(_("Set {address} as start of column headers").format(address=self.cellCoordsText))
 			else:
-				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(
+					# Translators: a message reported in the SetColumnHeader script for Excel.
 					_("Already set {address} as start of column headers").format(address=self.cellCoordsText),
 				)
 		elif scriptCount == 1:
 			if self.parent.forgetHeaderCell(self, isColumnHeader=True, isRowHeader=False):
 				# Translators: a message reported in the SetColumnHeader script for Excel.
-				ui.message(_("Removed {address}    from column headers").format(address=self.cellCoordsText))
+				ui.message(_("Removed {address} from column headers").format(address=self.cellCoordsText))
 			else:
-				# Translators: a message reported in the SetColumnHeader script for Excel.
 				ui.message(
-					_("Cannot find {address}    in column headers").format(address=self.cellCoordsText),
+					# Translators: a message reported in the SetColumnHeader script for Excel.
+					_("Cannot find {address} in column headers").format(address=self.cellCoordsText),
 				)
 
 	@script(
@@ -1652,8 +1652,8 @@ class ExcelCell(ExcelBase):
 				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(_("Set {address} as start of row headers").format(address=self.cellCoordsText))
 			else:
-				# Translators: a message reported in the SetRowHeader script for Excel.
 				ui.message(
+					# Translators: a message reported in the SetRowHeader script for Excel.
 					_("Already set {address} as start of row headers").format(address=self.cellCoordsText),
 				)
 		elif scriptCount == 1:

@@ -208,6 +208,7 @@ class LauncherDialog(
 		sizer.Add(ctrl)
 		ctrl.Bind(wx.EVT_BUTTON, self.onContinueRunning)
 		self.actionButtons.append(ctrl)
+		# Translators: The label for a button to exit the NVDA launcher.
 		sizer.Add(wx.Button(self, label=_("E&xit"), id=wx.ID_CANCEL))
 		# If we bind this on the button, it fails to trigger when the dialog is closed.
 		self.Bind(wx.EVT_BUTTON, self.onExit, id=wx.ID_CANCEL)

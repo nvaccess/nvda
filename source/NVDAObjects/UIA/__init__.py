@@ -2723,11 +2723,8 @@ class SuggestionsList(UIA):
 		# Item count must be the last one spoken.
 		suggestionsCount: int = self.childCount
 		suggestionsMessage = (
-			# Translators: part of the suggestions count message for one suggestion.
-			_("1 suggestion")
-			# Translators: part of the suggestions count message (for example: 2 suggestions).
-			if suggestionsCount == 1
-			else _("{} suggestions").format(suggestionsCount)
+			# Translators: message from to note the number of suggestions
+			ngettext("{} suggestion", "{} suggestions", suggestionsCount).format(suggestionsCount)
 		)
 		ui.message(suggestionsMessage)
 

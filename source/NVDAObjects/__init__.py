@@ -642,9 +642,16 @@ class NVDAObject(
 		percentFromTop = (float(top - deskTop) / deskHeight) * 100
 		percentWidth = (float(width) / deskWidth) * 100
 		percentHeight = (float(height) / deskHeight) * 100
-		# Translators: Reports navigator object's dimensions (example output: object edges positioned 20 per cent from left edge of screen, 10 per cent from top edge of screen, width is 40 per cent of screen, height is 50 per cent of screen).
 		return _(
-			"Object edges positioned {left:.1f} per cent from left edge of screen, {top:.1f} per cent from top edge of screen, width is {width:.1f} per cent of screen, height is {height:.1f} per cent of screen",
+			# Translators: Reports navigator object's dimensions.
+			# Example output: Object edges positioned 20 per cent from left edge of screen,
+			# 10 per cent from top edge of screen,
+			# width is 40 per cent of screen,
+			# height is 50 per cent of screen.
+			"Object edges positioned {left:.1f} percent from left edge of screen, "
+			"{top:.1f} percent from top edge of screen, "
+			"width is {width:.1f} percent of screen, "
+			"height is {height:.1f} percent of screen",
 		).format(left=percentFromLeft, top=percentFromTop, width=percentWidth, height=percentHeight)
 
 	#: Typing information for auto-property: _get_parent

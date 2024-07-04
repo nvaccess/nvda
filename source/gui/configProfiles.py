@@ -175,9 +175,10 @@ class ProfilesDialog(
 			config.conf.manualActivateProfile(profile)
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when activating a configuration profile fails.
 			gui.messageBox(
+				# Translators: An error displayed when activating a configuration profile fails.
 				_("Error activating profile."),
+				# Translators: the title of an error message dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 				self,
@@ -209,9 +210,10 @@ class ProfilesDialog(
 			config.conf.deleteProfile(name)
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when deleting a configuration profile fails.
 			gui.messageBox(
+				# Translators: An error displayed when deleting a configuration profile fails.
 				_("Error deleting profile."),
+				# Translators: the title of an error message dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 				self,
@@ -326,9 +328,10 @@ class ProfilesDialog(
 			config.conf.saveProfileTriggers()
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when saving configuration profile triggers fails.
 			gui.messageBox(
+				# Translators: An error displayed when saving configuration profile triggers fails.
 				_("Error saving configuration profile triggers - probably read only file system."),
+				# Translators: the title of an error message dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 				parent=parentWindow,
@@ -486,9 +489,9 @@ class NewProfileDialog(
 		if (
 			spec in confTrigs
 			and gui.messageBox(
-				# Translators: The confirmation prompt presented when creating a new configuration profile
-				# and the selected trigger is already associated.
 				_(
+					# Translators: The confirmation prompt presented when creating a new configuration profile
+					# and the selected trigger is already associated.
 					"This trigger is already associated with another profile. "
 					"If you continue, it will be removed from that profile and associated with this one.\n"
 					"Are you sure you want to continue?",
@@ -518,9 +521,11 @@ class NewProfileDialog(
 		try:
 			config.conf.createProfile(name)
 		except ValueError:
-			# Translators: An error displayed when the user attempts to create a configuration profile which already exists.
 			gui.messageBox(
+				# Translators: An error displayed when the user attempts to create
+				# a configuration profile which already exists.
 				_("That profile already exists. Please choose a different name."),
+				# Translators: Title of an error message.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 				self,
@@ -528,9 +533,10 @@ class NewProfileDialog(
 			return
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
-			# Translators: An error displayed when creating a configuration profile fails.
 			gui.messageBox(
+				# Translators: An error displayed when creating a configuration profile fails.
 				_("Error creating profile - probably read only file system."),
+				# Translators: Title of an error message.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 				self,
@@ -545,9 +551,9 @@ class NewProfileDialog(
 		if manualEdit:
 			if (
 				gui.messageBox(
-					# Translators: The prompt asking the user whether they wish to
-					# manually activate a configuration profile that has just been created.
 					_(
+						# Translators: The prompt asking the user whether they wish to
+						# manually activate a configuration profile that has just been created.
 						"To edit this profile, you will need to manually activate it. "
 						"Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
 						"Do you wish to manually activate it now?",

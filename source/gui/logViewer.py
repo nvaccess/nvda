@@ -54,6 +54,7 @@ class LogViewer(
 		item = menu.Append(wx.ID_SAVEAS, _("Save &as...	Ctrl+S"))
 		self.Bind(wx.EVT_MENU, self.onSaveAsCommand, item)
 		menu.AppendSeparator()
+		# Translators: The label for a menu item in NVDA log viewer to exit.
 		item = menu.Append(wx.ID_EXIT, _("E&xit"))
 		self.Bind(wx.EVT_MENU, self.onClose, item)
 		# Translators: The title of a menu in NVDA Log Viewer.
@@ -90,8 +91,8 @@ class LogViewer(
 		self.Destroy()
 
 	def onSaveAsCommand(self, evt):
-		# Translators: Label of a menu item in NVDA Log Viewer.
 		filename = wx.FileSelector(
+			# Translators: Label of a menu item in NVDA Log Viewer.
 			_("Save As"),
 			default_filename="nvda.log",
 			flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT,
@@ -104,9 +105,10 @@ class LogViewer(
 			with open(filename, "w", encoding="UTF-8") as f:
 				f.write(self.outputCtrl.GetValue())
 		except (IOError, OSError) as e:
-			# Translators: Dialog text presented when NVDA cannot save a log file.
 			gui.messageBox(
+				# Translators: Dialog text presented when NVDA cannot save a log file.
 				_("Error saving log: %s") % e.strerror,
+				# Translators: the title of an error message dialog
 				_("Error"),
 				style=wx.OK | wx.ICON_ERROR,
 				parent=self,

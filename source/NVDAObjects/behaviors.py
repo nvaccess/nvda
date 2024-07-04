@@ -642,8 +642,8 @@ class CandidateItem(NVDAObject):
 					if description.startswith("(") and description.endswith(")"):
 						describedSymbols.append(description[1:-1])
 					else:
-						# Translators: a message announcing a candidate's character and description.
 						describedSymbols.append(
+							# Translators: a message announcing a candidate's character and description.
 							_("{symbol} as in {description}").format(symbol=symbol, description=description),
 						)
 				else:

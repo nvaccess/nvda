@@ -255,16 +255,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			return
 		if scriptCount == 0:
 			if self.setAsHeaderCell(cell, isColumnHeader=True, isRowHeader=False):
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 				ui.message(
+					# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 					_("Set row {rowNumber} column {columnNumber} as start of column headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),
 				)
 			else:
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 				ui.message(
+					# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 					_("Already set row {rowNumber} column {columnNumber} as start of column headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
@@ -272,17 +272,17 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				)
 		elif scriptCount == 1:
 			if self.forgetHeaderCell(cell, isColumnHeader=True, isRowHeader=False):
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 				ui.message(
-					_("Removed row {rowNumber} column {columnNumber}  from column headers").format(
+					# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+					_("Removed row {rowNumber} column {columnNumber} from column headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),
 				)
 			else:
-				# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 				ui.message(
-					_("Cannot find row {rowNumber} column {columnNumber}  in column headers").format(
+					# Translators: a message reported in the SetColumnHeader script for Microsoft Word.
+					_("Cannot find row {rowNumber} column {columnNumber} in column headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),
@@ -307,16 +307,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			return
 		if scriptCount == 0:
 			if self.setAsHeaderCell(cell, isColumnHeader=False, isRowHeader=True):
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 				ui.message(
+					# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 					_("Set row {rowNumber} column {columnNumber} as start of row headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),
 				)
 			else:
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 				ui.message(
+					# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 					_("Already set row {rowNumber} column {columnNumber} as start of row headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
@@ -324,17 +324,17 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				)
 		elif scriptCount == 1:
 			if self.forgetHeaderCell(cell, isColumnHeader=False, isRowHeader=True):
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 				ui.message(
-					_("Removed row {rowNumber} column {columnNumber}  from row headers").format(
+					# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+					_("Removed row {rowNumber} column {columnNumber} from row headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),
 				)
 			else:
-				# Translators: a message reported in the SetRowHeader script for Microsoft Word.
 				ui.message(
-					_("Cannot find row {rowNumber} column {columnNumber}  in row headers").format(
+					# Translators: a message reported in the SetRowHeader script for Microsoft Word.
+					_("Cannot find row {rowNumber} column {columnNumber} in row headers").format(
 						rowNumber=cell.rowIndex,
 						columnNumber=cell.columnIndex,
 					),

@@ -415,10 +415,10 @@ class UpdatableAddonsDialog(
 		self.openStoreButton = bHelper.addButton(self, wx.ID_CLOSE, label=openStoreLabel)
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
-		# Translators: The label of a button in a dialog
 		self.updateAllButton = bHelper.addButton(
 			self,
 			wx.ID_CLOSE,
+			# Translators: The label of a button in a dialog
 			label=pgettext("addonStore", "&Update all"),
 		)
 		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
