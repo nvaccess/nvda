@@ -450,6 +450,10 @@ class _DiffBasedWinTerminalUIA(EnhancedTermTypedCharSupport):
 		"Block notification events when diffing to prevent double reporting."
 		log.debugWarning(f"Notification event blocked to avoid double-report: {kwargs}")
 
+	def _get_caretMovementDetectionUsesEvents(self):
+		"Windows Terminal has a good implementation of caret move detection."
+		return True
+
 
 class _NotificationsBasedWinTerminalUIA(UIA):
 	"""
