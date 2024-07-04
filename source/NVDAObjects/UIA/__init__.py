@@ -256,7 +256,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if fetchAnnotationTypes:
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
-			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
+			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange, IDs)
 		fetch = lambda id: fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
 		if formatConfig["reportFontName"]:
 			val = fetch(UIAHandler.UIA_FontNameAttributeId)
@@ -269,17 +269,17 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["font-size"] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
 			val = fetch(UIAHandler.UIA_FontWeightAttributeId)
-			if isinstance(val,int):
-				formatField['bold'] = (val >= 700)
+			if isinstance(val, int):
+				formatField["bold"] = (val >= 700)
 			val = fetch(UIAHandler.UIA_IsItalicAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField['italic'] = val
+				formatField["italic"] = val
 			val = fetch(UIAHandler.UIA_UnderlineStyleAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField['underline'] = bool(val)
+				formatField["underline"] = bool(val)
 			val = fetch(UIAHandler.UIA_StrikethroughStyleAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField['strikethrough'] = bool(val)
+				formatField["strikethrough"] = bool(val)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			textPosition = None
 			val = fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
@@ -291,8 +291,8 @@ class UIATextInfo(textInfos.TextInfo):
 					textPosition = TextPosition.SUBSCRIPT
 				else:
 					textPosition = TextPosition.BASELINE
-			formatField['text-position'] = textPosition
-		if formatConfig['reportStyle']:
+			formatField["text-position"] = textPosition
+		if formatConfig["reportStyle"]:
 			val = fetch(UIAHandler.UIA_StyleNameAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"] = val
@@ -305,17 +305,17 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["text-align"] = textAlign
 		if formatConfig["reportColor"]:
 			val = fetch(UIAHandler.UIA_BackgroundColorAttributeId)
-			if isinstance(val,int):
-				formatField['background-color'] = colors.RGB.fromCOLORREF(val)
+			if isinstance(val, int):
+				formatField["background-color"] = colors.RGB.fromCOLORREF(val)
 			val = fetch(UIAHandler.UIA_ForegroundColorAttributeId)
-			if isinstance(val,int):
-				formatField['color'] = colors.RGB.fromCOLORREF(val)
-		if formatConfig['reportLineSpacing']:
+			if isinstance(val, int):
+				formatField["color"] = colors.RGB.fromCOLORREF(val)
+		if formatConfig["reportLineSpacing"]:
 			val = fetch(UIAHandler.UIA_LineSpacingAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
 				if val:
-					formatField['line-spacing'] = val
-		if formatConfig['reportLinks']:
+					formatField["line-spacing"] = val
+		if formatConfig["reportLinks"]:
 			val = fetch(UIAHandler.UIA_LinkAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
 				if val:
@@ -364,7 +364,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
 		cultureVal=fetch(UIAHandler.UIA_CultureAttributeId)
-		if cultureVal and isinstance(cultureVal,int):
+		if cultureVal and isinstance(cultureVal, int):
 			try:
 				formatField["language"] = languageHandler.windowsLCIDToLocaleName(cultureVal)
 			except:  # noqa: E722
