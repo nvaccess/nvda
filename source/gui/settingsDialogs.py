@@ -810,7 +810,8 @@ class GeneralSettingsPanel(SettingsPanel):
 		languageLabelText = _("NVDA &Language (requires restart):")
 		self.languageList=settingsSizerHelper.addLabeledControl(languageLabelText, wx.Choice, choices=languageChoices)
 		self.bindHelpEvent("GeneralSettingsLanguage", self.languageList)
-		self.languageList.SetToolTip(wx.ToolTip("Choose the language NVDA's messages and user interface should be presented in."))
+		# Translators: a tool tip for NVDA language selection in general settings.
+		self.languageList.SetToolTip(wx.ToolTip(_("Choose the language NVDA's messages and user interface should be presented in.")))
 		self.oldLanguage = config.conf["general"]["language"]
 		if languageHandler.isLanguageForced():
 			index = len(self.languageNames) - 1
