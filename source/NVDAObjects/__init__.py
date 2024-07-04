@@ -319,12 +319,13 @@ class NVDAObject(
 	def objectFromPointRedirect(self, x: int, y: int) -> "NVDAObject | None":
 		"""Redirects NVDA to another object if this object is retrieved from on screen coordinates.
 		:param x: the x coordinate.
+		:type x: int
 		:param y: the y coordinate.
 		:type y: int
 		:return: The object that NVDA should be redirected to.
 		:rtype: L{NVDAObject}
 		"""
-		return None
+		return
 
 	@staticmethod
 	def objectFromPoint(x, y):
@@ -337,11 +338,11 @@ class NVDAObject(
 		@rtype: L{NVDAObject}
 		"""
 		kwargs={}
-		APIClass=NVDAObject.findBestAPIClass(kwargs,relation=(x,y))
-		obj = APIClass(chooseBestAPI=False,**kwargs) if APIClass else None
+		APIClass = NVDAObject.findBestAPIClass(kwargs, relation=(x, y))
+		obj = APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
 		if not obj:
 			return
-		redirect = obj.objectFromPointRedirect(x,y)
+		redirect = obj.objectFromPointRedirect(x, y)
 		if redirect:
 			obj = redirect
 		return obj
