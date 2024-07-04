@@ -16,7 +16,6 @@ import eventHandler
 import speech
 import UIAHandler
 from NVDAObjects.UIA import UIA
-from NVDAObjects.window.edit import RichEdit
 from NVDAObjects import NVDAObject
 from typing import Callable
 
@@ -42,10 +41,6 @@ class AppModule(appModuleHandler.AppModule):
 				)
 			)
 		nextHandler()
-
-	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-		if obj.windowClassName == "RichEditD2DPT":
-			clsList.insert(0, RichEdit)
 
 	def _get_statusBar(self) -> NVDAObject:
 		"""Retrieves Windows 11 Notepad status bar.
