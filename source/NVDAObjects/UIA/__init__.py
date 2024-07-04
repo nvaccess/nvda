@@ -257,7 +257,8 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange, IDs)
-		fetch = lambda id: fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
+		def fetch(id):
+			fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
 		if formatConfig["reportFontName"]:
 			val = fetch(UIAHandler.UIA_FontNameAttributeId)
 			if val != UIAHandler.handler.reservedNotSupportedValue:
