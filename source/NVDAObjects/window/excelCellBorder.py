@@ -158,8 +158,8 @@ def getCellBorderStyleDescription(bordersObj, reportBorderColor=False):
 		del d[xlDiagonalUp]
 		del d[xlDiagonalDown]
 	for pos, desc in d.items():
-		# Translators: border styles in Microsoft Excel.
 		s.append(
+			# Translators: border styles in Microsoft Excel.
 			_("{desc} {position}").format(
 				desc=desc,
 				position=bordersIndexLabels.get(pos),

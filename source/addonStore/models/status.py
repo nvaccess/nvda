@@ -110,16 +110,16 @@ class AvailableAddonStatus(DisplayStringEnum):
 			self.PENDING_DISABLE: pgettext("addonStore", "Disabled, pending restart"),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.DISABLED: pgettext("addonStore", "Disabled"),
-			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_INCOMPATIBLE_DISABLED: pgettext(
 				"addonStore",
+				# Translators: Status for addons shown in the add-on store dialog
 				"Disabled (incompatible), pending restart",
 			),
 			# Translators: Status for addons shown in the add-on store dialog
 			self.INCOMPATIBLE_DISABLED: pgettext("addonStore", "Disabled (incompatible)"),
-			# Translators: Status for addons shown in the add-on store dialog
 			self.PENDING_INCOMPATIBLE_ENABLED: pgettext(
 				"addonStore",
+				# Translators: Status for addons shown in the add-on store dialog
 				"Enabled (incompatible), pending restart",
 			),
 			# Translators: Status for addons shown in the add-on store dialog

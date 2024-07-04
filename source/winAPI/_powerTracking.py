@@ -242,9 +242,9 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 			"{minutes:d} minutes",
 			nMinutes,
 		).format(minutes=nMinutes)
-		# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
-		# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
 		text.append(
+			# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
+			# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
 			_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText),
 		)
 	return text

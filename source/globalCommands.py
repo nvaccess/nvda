@@ -351,8 +351,8 @@ class GlobalCommands(ScriptableObject):
 				braille.handler.message(selectMessage)
 
 	@script(
-		# Translators: Input help mode message for report date and time command.
 		description=_(
+			# Translators: Input help mode message for report date and time command.
 			"If pressed once, reports the current time. If pressed twice, reports the current date",
 		),
 		category=SCRCAT_SYSTEM,
@@ -1177,8 +1177,8 @@ class GlobalCommands(ScriptableObject):
 		mouseHandler.executeMouseMoveEvent(x, y)
 
 	@script(
-		# Translators: Input help mode message for move navigator object to mouse command.
 		description=_(
+			# Translators: Input help mode message for move navigator object to mouse command.
 			"Sets the navigator object to the current object under the mouse pointer and speaks it",
 		),
 		category=SCRCAT_MOUSE,
@@ -1658,8 +1658,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("No action"))
 
 	@script(
-		# Translators: Input help mode message for move review cursor to top line command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to top line command.
 			"Moves the review cursor to the top line of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -1683,8 +1683,8 @@ class GlobalCommands(ScriptableObject):
 			return
 
 	@script(
-		# Translators: Input help mode message for move review cursor to previous line command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to previous line command.
 			"Moves the review cursor to the previous line of the current navigator object and speaks it",
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
@@ -1745,8 +1745,8 @@ class GlobalCommands(ScriptableObject):
 			speech.spellTextInfo(info, useCharacterDescriptions=scriptCount > 1)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to next line command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to next line command.
 			"Moves the review cursor to the next line of the current navigator object and speaks it",
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
@@ -1784,8 +1784,8 @@ class GlobalCommands(ScriptableObject):
 			)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to previous page command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to previous page command.
 			"Moves the review cursor to the previous page of the current navigator object and speaks it",
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
@@ -1818,8 +1818,8 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(info, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to next page command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to next page command.
 			"Moves the review cursor to the next page of the current navigator object and speaks it",
 		),
 		resumeSayAllMode=sayAll.CURSOR.REVIEW,
@@ -1857,8 +1857,8 @@ class GlobalCommands(ScriptableObject):
 			speech.speakTextInfo(newPage, unit=textInfos.UNIT_PAGE, reason=controlTypes.OutputReason.CARET)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to bottom line command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to bottom line command.
 			"Moves the review cursor to the bottom line of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -1882,8 +1882,8 @@ class GlobalCommands(ScriptableObject):
 			return
 
 	@script(
-		# Translators: Input help mode message for move review cursor to previous word command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to previous word command.
 			"Moves the review cursor to the previous word of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -1944,8 +1944,8 @@ class GlobalCommands(ScriptableObject):
 			speech.spellTextInfo(info, useCharacterDescriptions=scriptCount > 1)
 
 	@script(
-		# Translators: Input help mode message for move review cursor to next word command.
 		description=_(
+			# Translators: Input help mode message for move review cursor to next word command.
 			"Moves the review cursor to the next word of the current navigator object and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
@@ -2172,9 +2172,10 @@ class GlobalCommands(ScriptableObject):
 		return curLanguage
 
 	@script(
-		# Translators: Input help mode message for Review Current Symbol command.
 		description=_(
-			"Reports the symbol where the review cursor is positioned. Pressed twice, shows the symbol and the text used to speak it in browse mode",
+			# Translators: Input help mode message for Review Current Symbol command.
+			"Reports the symbol where the review cursor is positioned. "
+			"Pressed twice, shows the symbol and the text used to speak it in browse mode",
 		),
 		category=SCRCAT_TEXTREVIEW,
 		speakOnDemand=True,
@@ -3088,8 +3089,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Input help mode message for toggle auto focus focusable elements command.
 		description=_(
+			# Translators: Input help mode message for toggle auto focus focusable elements command.
 			"Toggles on and off automatic movement of the system focus due to browse mode commands",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
@@ -3990,8 +3991,8 @@ class GlobalCommands(ScriptableObject):
 		brailleInput.handler.toggleModifier("alt")
 
 	@script(
-		# Translators: Input help mode message for a braille command.
 		description=_(
+			# Translators: Input help mode message for a braille command.
 			"Virtually toggles the left windows key to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,

@@ -457,9 +457,11 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			# Translators: Reported when single letter navigation in browse mode is turned on.
 			ui.message(_("Single letter navigation on"))
 
-	# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
 	script_toggleSingleLetterNav.__doc__ = _(
-		"Toggles single letter navigation on and off. When on, single letter keys in browse mode jump to various kinds of elements on the page. When off, these keys are passed to the application",
+		# Translators: the description for the toggleSingleLetterNavigation command in browse mode.
+		"Toggles single letter navigation on and off. "
+		"When on, single letter keys in browse mode jump to various kinds of elements on the page. "
+		"When off, these keys are passed to the application",
 	)
 
 	def _get_ElementsListDialog(self):
@@ -1297,11 +1299,11 @@ class ElementsListDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = wx.BoxSizer(wx.VERTICAL)
 
-		# Translators: The label of a group of radio buttons to select the type of element
-		# in the browse mode Elements List dialog.
 		child = wx.RadioBox(
 			self,
 			wx.ID_ANY,
+			# Translators: The label of a group of radio buttons to select the type of element
+			# in the browse mode Elements List dialog.
 			label=_("Type:"),
 			choices=tuple(et[1] for et in self.ELEMENT_TYPES),
 		)
@@ -2302,8 +2304,8 @@ class BrowseModeDocumentTreeInterceptor(
 			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
 
 	script_moveToStartOfContainer.resumeSayAllMode = sayAll.CURSOR.CARET
-	# Translators: Description for the Move to start of container command in browse mode.
 	script_moveToStartOfContainer.__doc__ = _(
+		# Translators: Description for the Move to start of container command in browse mode.
 		"Moves to the start of the container element, such as a list or table",
 	)
 
@@ -2330,9 +2332,9 @@ class BrowseModeDocumentTreeInterceptor(
 			speech.speakTextInfo(container, reason=OutputReason.FOCUS)
 
 	script_movePastEndOfContainer.resumeSayAllMode = sayAll.CURSOR.CARET
-	# Translators: Description for the Move past end of container command in browse mode.
 	script_movePastEndOfContainer.__doc__ = _(
-		"Moves past the end  of the container element, such as a list or table",
+		# Translators: Description for the Move past end of container command in browse mode.
+		"Moves past the end of the container element, such as a list or table",
 	)
 
 	NOT_LINK_BLOCK_MIN_LEN = 30

@@ -278,8 +278,8 @@ class BrailleInputHandler(AutoPropertyObject):
 		for modifier in added:
 			speech.speakMessage(keyLabels.getKeyCombinationLabel(modifier))
 		for modifier in removed:
-			# Translators: Reported when a braille input modifier is released.
 			speech.speakMessage(
+				# Translators: Reported when a braille input modifier is released.
 				_("{modifier} released").format(
 					modifier=keyLabels.getKeyCombinationLabel(modifier),
 				),

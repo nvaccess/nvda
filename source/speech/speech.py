@@ -2319,8 +2319,8 @@ def getControlFieldSpeech(  # noqa: C901
 		# #7652: containerContainsText variable is set here, but the actual generation of all other output is
 		# handled further down in the general cases section.
 		# This ensures that properties such as name, states and level etc still get reported appropriately.
-		# Translators: Number of items in a list (example output: list with 5 items).
 		containerContainsText = (
+			# Translators: Number of items in a list (example output: list with 5 items).
 			ngettext("with %s item", "with %s items", childControlCount) % childControlCount
 		)
 	elif fieldType == "start_addedToControlFieldStack" and role == controlTypes.Role.TABLE and tableID:
@@ -2661,10 +2661,10 @@ def getFormatFieldSpeech(  # noqa: C901
 			# {color2} will be replaced with the second background color.
 			bgColorText = _("{color1} to {color2}").format(color1=bgColorText, color2=bg2Name)
 		if color and backgroundColor and color != oldColor and bgColorChanged:
-			# Translators: Reported when both the text and background colors change.
-			# {color} will be replaced with the text color.
-			# {backgroundColor} will be replaced with the background color.
 			textList.append(
+				# Translators: Reported when both the text and background colors change.
+				# {color} will be replaced with the text color.
+				# {backgroundColor} will be replaced with the background color.
 				_("{color} on {backgroundColor}").format(
 					color=color.name if isinstance(color, colors.RGB) else color,
 					backgroundColor=bgColorText,
@@ -2701,8 +2701,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		revision = attrs.get("revision-insertion")
 		oldRevision = attrsCache.get("revision-insertion") if attrsCache is not None else None
 		if (revision or oldRevision is not None) and revision != oldRevision:
-			# Translators: Reported when text is marked as having been inserted
 			text = (
+				# Translators: Reported when text is marked as having been inserted
 				_("inserted")
 				if revision
 				# Translators: Reported when text is no longer marked as having been inserted.
@@ -2712,8 +2712,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		revision = attrs.get("revision-deletion")
 		oldRevision = attrsCache.get("revision-deletion") if attrsCache is not None else None
 		if (revision or oldRevision is not None) and revision != oldRevision:
-			# Translators: Reported when text is marked as having been deleted
 			text = (
+				# Translators: Reported when text is marked as having been deleted
 				_("deleted")
 				if revision
 				# Translators: Reported when text is no longer marked as having been  deleted.
@@ -2735,8 +2735,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		marked = attrs.get("marked")
 		oldMarked = attrsCache.get("marked") if attrsCache is not None else None
 		if (marked or oldMarked is not None) and marked != oldMarked:
-			# Translators: Reported when text is marked
 			text = (
+				# Translators: Reported when text is marked
 				_("marked")
 				if marked
 				# Translators: Reported when text is no longer marked
@@ -2761,8 +2761,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		strong = attrs.get("strong")
 		oldStrong = attrsCache.get("strong") if attrsCache is not None else None
 		if (strong or oldStrong is not None) and strong != oldStrong:
-			# Translators: Reported when text is marked as strong (e.g. bold)
 			text = (
+				# Translators: Reported when text is marked as strong (e.g. bold)
 				_("strong")
 				if strong
 				# Translators: Reported when text is no longer marked as strong (e.g. bold)
@@ -2773,8 +2773,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		emphasised = attrs.get("emphasised")
 		oldEmphasised = attrsCache.get("emphasised") if attrsCache is not None else None
 		if (emphasised or oldEmphasised is not None) and emphasised != oldEmphasised:
-			# Translators: Reported when text is marked as emphasised
 			text = (
+				# Translators: Reported when text is marked as emphasised
 				_("emphasised")
 				if emphasised
 				# Translators: Reported when text is no longer marked as emphasised
@@ -2808,9 +2808,9 @@ def getFormatFieldSpeech(  # noqa: C901
 		oldStrikethrough = attrsCache.get("strikethrough") if attrsCache is not None else None
 		if (strikethrough or oldStrikethrough is not None) and strikethrough != oldStrikethrough:
 			if strikethrough:
-				# Translators: Reported when text is formatted with double strikethrough.
-				# See http://en.wikipedia.org/wiki/Strikethrough
 				text = (
+					# Translators: Reported when text is formatted with double strikethrough.
+					# See http://en.wikipedia.org/wiki/Strikethrough
 					_("double strikethrough")
 					if strikethrough == "double"
 					# Translators: Reported when text is formatted with strikethrough.
@@ -2825,8 +2825,8 @@ def getFormatFieldSpeech(  # noqa: C901
 		underline = attrs.get("underline")
 		oldUnderline = attrsCache.get("underline") if attrsCache is not None else None
 		if (underline or oldUnderline is not None) and underline != oldUnderline:
-			# Translators: Reported when text is underlined.
 			text = (
+				# Translators: Reported when text is underlined.
 				_("underlined")
 				if underline
 				# Translators: Reported when text is not underlined.

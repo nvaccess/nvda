@@ -496,10 +496,10 @@ msoAutoShapeTypeToRoleText = {
 	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout1AccentBar: pgettext("shape", "Callout with horizontal accent bar"),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout1BorderandAccentBar: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with border and horizontal accent bar",
 	),
 	# Translators: a shape name from Microsoft Office.
@@ -511,10 +511,10 @@ msoAutoShapeTypeToRoleText = {
 	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout2AccentBar: pgettext("shape", "Callout with diagonal callout line and accent bar"),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout2BorderandAccentBar: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with border, diagonal straight line and accent bar",
 	),
 	# Translators: a shape name from Microsoft Office.
@@ -526,10 +526,10 @@ msoAutoShapeTypeToRoleText = {
 	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout3AccentBar: pgettext("shape", "Callout with angled callout line and accent bar"),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout3BorderandAccentBar: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with border, angled callout line, and accent bar",
 	),
 	# Translators: a shape name from Microsoft Office.
@@ -538,22 +538,22 @@ msoAutoShapeTypeToRoleText = {
 	# Translators: a shape name from Microsoft Office.
 	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout4: pgettext("shape", "Callout with callout line segments forming a U-shape"),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout4AccentBar: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with accent bar and callout line segments forming a U-shape",
 	),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout4BorderandAccentBar: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with border, accent bar, and callout line segments forming a U-shape",
 	),
-	# Translators: a shape name from Microsoft Office.
-	# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 	msoShapeLineCallout4NoBorder: pgettext(
 		"shape",
+		# Translators: a shape name from Microsoft Office.
+		# See MSOAutoShapeType enumeration from https://msdn.microsoft.com/en-us/library/office/ff862770.aspx?f=255&MSPPError=-2147217396
 		"Callout with no border and callout line segments forming a U-shape",
 	),
 	# Translators: a shape name from Microsoft Office.
