@@ -10,6 +10,14 @@ repos:
     - id: end-of-file-fixer
     - id: trailing-whitespace
 
+- repo: https://github.com/asottile/add-trailing-comma
+  rev: v3.1.0
+  hooks:
+  # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
+  # if a trailing comma is added.
+  # This adds a trailing comma to args/iterable items in case it wass missed.
+  - id: add-trailing-comma
+
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
   rev: v0.5.0

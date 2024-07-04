@@ -42,9 +42,6 @@ exclude = [
 [tool.ruff.format]
 indent-style = "tab"
 line-ending = "lf"
-# Preserve indentation of items separated by commas and newlines,
-# rather than wrapping to a single line.
-skip-magic-trailing-comma = true
 
 [tool.ruff.lint.mccabe]
 max-complexity = 15
