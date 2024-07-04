@@ -363,7 +363,7 @@ class UIATextInfo(textInfos.TextInfo):
 				cats = self.obj._UIACustomAnnotationTypes
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
-		cultureVal=fetch(UIAHandler.UIA_CultureAttributeId)
+		cultureVal = fetch(UIAHandler.UIA_CultureAttributeId)
 		if cultureVal and isinstance(cultureVal, int):
 			try:
 				formatField["language"] = languageHandler.windowsLCIDToLocaleName(cultureVal)
