@@ -12,6 +12,7 @@ from typing import (
 	Optional,
 	Dict,
 	Tuple,
+	Callable,
 )
 import array
 from ctypes.wintypes import POINT
@@ -238,79 +239,77 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
+		fetch=lambda id: fetcher.getValue(id,ignoreMixedValues=ignoreMixedValues)
 		if formatConfig["reportFontName"]:
-			val=fetcher.getValue(UIAHandler.UIA_FontNameAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_FontNameAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["font-name"]=val
 		if formatConfig["reportFontSize"]:
-			val=fetcher.getValue(UIAHandler.UIA_FontSizeAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_FontSizeAttributeId)
 			if isinstance(val, numbers.Number):
 				# Translators: Abbreviation for points, a measurement of font size.
 				formatField['font-size'] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
-			val=fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_FontWeightAttributeId)
 			if isinstance(val,int):
 				formatField['bold']=(val>=700)
-			val=fetcher.getValue(UIAHandler.UIA_IsItalicAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_IsItalicAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['italic']=val
-			val=fetcher.getValue(UIAHandler.UIA_UnderlineStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_UnderlineStyleAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['underline']=bool(val)
-			val=fetcher.getValue(UIAHandler.UIA_StrikethroughStyleAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_StrikethroughStyleAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField['strikethrough']=bool(val)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			textPosition=None
-			val=fetcher.getValue(UIAHandler.UIA_IsSuperscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
 				textPosition = TextPosition.SUPERSCRIPT
 			else:
-				val=fetcher.getValue(UIAHandler.UIA_IsSubscriptAttributeId,ignoreMixedValues=ignoreMixedValues)
+				val=fetch(UIAHandler.UIA_IsSubscriptAttributeId)
 				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
 					textPosition = TextPosition.SUBSCRIPT
 				else:
 					textPosition = TextPosition.BASELINE
 			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
-			val=fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_StyleNameAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				formatField["style"]=val
 		if formatConfig["reportParagraphIndentation"]:
-			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
+			formatField.update(self._getFormatFieldIndent(fetch))
 		if formatConfig["reportAlignment"]:
-			val = fetcher.getValue(
-				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
+			val = fetch(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			textAlign = textAlignLabels.get(val)
 			if textAlign:
 				formatField['text-align'] = textAlign
 		if formatConfig["reportColor"]:
-			val=fetcher.getValue(UIAHandler.UIA_BackgroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_BackgroundColorAttributeId)
 			if isinstance(val,int):
 				formatField['background-color']=colors.RGB.fromCOLORREF(val)
-			val=fetcher.getValue(UIAHandler.UIA_ForegroundColorAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_ForegroundColorAttributeId)
 			if isinstance(val,int):
 				formatField['color']=colors.RGB.fromCOLORREF(val)
 		if formatConfig['reportLineSpacing']:
-			val=fetcher.getValue(UIAHandler.UIA_LineSpacingAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_LineSpacingAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				if val:
 					formatField['line-spacing']=val
 		if formatConfig['reportLinks']:
-			val=fetcher.getValue(UIAHandler.UIA_LinkAttributeId,ignoreMixedValues=ignoreMixedValues)
+			val=fetch(UIAHandler.UIA_LinkAttributeId)
 			if val!=UIAHandler.handler.reservedNotSupportedValue:
 				if val:
 					formatField['link']=True
 		if formatConfig["reportHeadings"]:
-			styleIDValue=fetcher.getValue(UIAHandler.UIA_StyleIdAttributeId,ignoreMixedValues=ignoreMixedValues)
+			styleIDValue=fetch(UIAHandler.UIA_StyleIdAttributeId)
 			# #9842: styleIDValue can sometimes be a pointer to IUnknown.
 			# In Python 3, comparing an int with a pointer raises a TypeError.
 			if isinstance(styleIDValue, int) and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9:
 				formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 		if fetchAnnotationTypes:
-			annotationTypes=fetcher.getValue(UIAHandler.UIA_AnnotationTypesAttributeId,ignoreMixedValues=ignoreMixedValues)
+			annotationTypes=fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
 			# Some UIA implementations return a single value rather than a tuple.
 			# Always mutate to a tuple to allow for a generic x in y matching 
 			if not isinstance(annotationTypes,tuple):
@@ -337,7 +336,7 @@ class UIATextInfo(textInfos.TextInfo):
 				cats = self.obj._UIACustomAnnotationTypes
 				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
 					formatField["bookmark"] = True
-		cultureVal=fetcher.getValue(UIAHandler.UIA_CultureAttributeId,ignoreMixedValues=ignoreMixedValues)
+		cultureVal=fetch(UIAHandler.UIA_CultureAttributeId)
 		if cultureVal and isinstance(cultureVal,int):
 			try:
 				formatField['language']=languageHandler.windowsLCIDToLocaleName(cultureVal)
@@ -346,27 +345,20 @@ class UIATextInfo(textInfos.TextInfo):
 				pass
 		return textInfos.FieldCommand("formatChange",formatField)
 
-	def _getFormatFieldIndent(
-			self,
-			fetcher: UIATextRangeAttributeValueFetcher,
-			ignoreMixedValues: bool,
-	) -> textInfos.FormatField:
+	def _getFormatFieldIndent(self, fetch: Callable[[int], int]) -> textInfos.FormatField:
 		"""
-		Helper function to get indent formatting from the fetcher passed as parameter.
+		Helper function to get indent formatting from UIA, using the fetch function passed as parameter.
 		The indent formatting is reported according to MS Word's convention.
-		@param fetcher: the UIA fetcher used to get all formatting information.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
-			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
-			a mixed attribute value signifying that the caller may want to try again with a smaller range.
+		@param fetch: gets formatting information from UIA.
 		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
 		
 		formatField = textInfos.FormatField()
-		val = fetcher.getValue(UIAHandler.UIA_IndentationFirstLineAttributeId, ignoreMixedValues=ignoreMixedValues)
+		val = fetch(UIAHandler.UIA_IndentationFirstLineAttributeId)
 		uiaIndentFirstLine = val if isinstance(val, float) else None
-		val = fetcher.getValue(UIAHandler.UIA_IndentationLeadingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		val = fetch(UIAHandler.UIA_IndentationLeadingAttributeId)
 		uiaIndentLeading = val if isinstance(val, float) else None
-		val = fetcher.getValue(UIAHandler.UIA_IndentationTrailingAttributeId, ignoreMixedValues=ignoreMixedValues)
+		val = fetch(UIAHandler.UIA_IndentationTrailingAttributeId)
 		uiaIndentTrailing = val if isinstance(val, float) else None
 		if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
 			reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
