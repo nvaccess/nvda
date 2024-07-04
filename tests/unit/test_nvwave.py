@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
-"""Unit tests for the nvwave module.
-"""
+"""Unit tests for the nvwave module."""
 
 import unittest
 import nvwave
@@ -20,12 +19,12 @@ class TestNVWaveExtensionPoints(unittest.TestCase):
 		kwargs = {
 			"fileName": os.path.join(globalVars.appDir, "waves", "start.wav"),
 			"asynchronous": False,
-			"isSpeechWaveFileCommand": False
+			"isSpeechWaveFileCommand": False,
 		}
 		with deciderTester(
 			self,
 			nvwave.decide_playWaveFile,
 			expectedDecision=False,
-			**kwargs
+			**kwargs,
 		):
 			nvwave.playWaveFile(**kwargs)

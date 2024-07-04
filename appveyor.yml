@@ -81,6 +81,7 @@ test_script:
  - ps: |
      "TEST_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\tests\translationCheck.ps1
+ - ps: appveyor\scripts\tests\licenseCheck.ps1
  - ps: appveyor\scripts\tests\unitTests.ps1
  - ps: appveyor\scripts\tests\lintCheck.ps1
  - ps: appveyor\scripts\tests\systemTests.ps1

@@ -22,25 +22,24 @@ class CharacterRangeStructLongLong(ctypes.Structure):
 	therefore in 64-bit builds of Notepad++ 8.3 and later
 	these ranges are represented by longlong.
 	"""
+
 	_fields_ = [
-		('cpMin', ctypes.c_longlong),
-		('cpMax', ctypes.c_longlong),
+		("cpMin", ctypes.c_longlong),
+		("cpMax", ctypes.c_longlong),
 	]
 
 
 class ScintillaTextInfoNpp83(ScintillaBase.ScintillaTextInfo):
-	"""Text info for 64-bit builds of Notepad++ 8.3 and later.
-	"""
+	"""Text info for 64-bit builds of Notepad++ 8.3 and later."""
 
 	class TextRangeStruct(ctypes.Structure):
 		_fields_ = [
-			('chrg', CharacterRangeStructLongLong),
-			('lpstrText', ctypes.c_char_p),
+			("chrg", CharacterRangeStructLongLong),
+			("lpstrText", ctypes.c_char_p),
 		]
 
 
 class NppEdit(ScintillaBase.Scintilla):
-
 	name = None  # The name of the editor is not useful.
 
 	def _get_TextInfo(self):
@@ -57,7 +56,6 @@ class NppEdit(ScintillaBase.Scintilla):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Scintilla" and obj.windowControlID == 0:
 			clsList.insert(0, NppEdit)

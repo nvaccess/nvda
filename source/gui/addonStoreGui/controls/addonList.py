@@ -26,14 +26,14 @@ from ..viewModels.addonList import AddonListItemVM, AddonListVM
 
 
 class AddonVirtualList(
-		nvdaControls.AutoWidthColumnListCtrl,
-		DpiScalingHelperMixinWithoutInit,
+	nvdaControls.AutoWidthColumnListCtrl,
+	DpiScalingHelperMixinWithoutInit,
 ):
 	def __init__(
-			self,
-			parent: wx.Window,
-			addonsListVM: AddonListVM,
-			actionsContextMenu: _MonoActionsContextMenu,
+		self,
+		parent: wx.Window,
+		addonsListVM: AddonListVM,
+		actionsContextMenu: _MonoActionsContextMenu,
 	):
 		super().__init__(
 			parent,
@@ -140,11 +140,11 @@ class AddonVirtualList(
 	def OnGetItemText(self, itemIndex: int, colIndex: int) -> str:
 		dataItem = self._addonsListVM.getAddonFieldText(
 			itemIndex,
-			self._addonsListVM.presentedFields[colIndex]
+			self._addonsListVM.presentedFields[colIndex],
 		)
 		if dataItem is None:
 			# Failed to get dataItem, index may have been lost in refresh.
-			return ''
+			return ""
 		return str(dataItem)
 
 	def OnColClick(self, evt: wx.ListEvent):

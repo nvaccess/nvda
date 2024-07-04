@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020-2022 NV Access Limited, Cyrille Bougot
 
-"""Unit tests for the characterProcessing module.
-"""
+"""Unit tests for the characterProcessing module."""
 
 import unittest
 import re
@@ -15,8 +14,7 @@ from characterProcessing import processSpeechSymbol
 
 
 class TestComplex(unittest.TestCase):
-	"""Test the complex symbols rules.
-	"""
+	"""Test the complex symbols rules."""
 
 	def _replace_cb(self, replacement, name=None):
 		"""Return a regexp callback which replaces matches of the given
@@ -24,10 +22,12 @@ class TestComplex(unittest.TestCase):
 		replacement string, with support for replacement of group
 		references.
 		"""
+
 		def replace(m):
 			if name is None or m.lastgroup == name:
 				return SpeechSymbolProcessor._replaceGroups(self, m, replacement)
 			return m.group()
+
 		return replace
 
 	def _replace(self, string, pattern, replacement, name=None):
@@ -39,32 +39,29 @@ class TestComplex(unittest.TestCase):
 		return regexp.sub(self._replace_cb(replacement, name), string)
 
 	def test_group_replacement(self):
-		"""Test that plain text gets properly replaced
-		"""
+		"""Test that plain text gets properly replaced"""
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement="a"
+			replacement="a",
 		)
 		self.assertEqual(replaced, "a")
 
 	def test_backslash_replacement(self):
-		"""Test that backslashes get properly replaced
-		"""
+		"""Test that backslashes get properly replaced"""
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement=r"\\"
+			replacement=r"\\",
 		)
 		self.assertEqual(replaced, "\\")
 
 	def test_double_backslash_replacement(self):
-		"""Test that double backslashes get properly replaced
-		"""
+		"""Test that double backslashes get properly replaced"""
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement=r"\\\\"
+			replacement=r"\\\\",
 		)
 		self.assertEqual(replaced, r"\\")
 
@@ -76,7 +73,7 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement=r"\a"
+				replacement=r"\a",
 			)
 
 	def test_missing_group(self):
@@ -87,7 +84,7 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement=r"\2"
+				replacement=r"\2",
 			)
 
 	def test_unterminated_escape(self):
@@ -98,33 +95,30 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement="\\"
+				replacement="\\",
 			)
 
 	def test_group_replacements(self):
-		"""Test that group references get properly replaced
-		"""
+		"""Test that group references get properly replaced"""
 		replaced = self._replace(
 			string="bar.BAT",
 			pattern=r"(([a-z]*)\.([A-Z]*))",
-			replacement=r"\2>\1"
+			replacement=r"\2>\1",
 		)
 		self.assertEqual(replaced, "BAT>bar")
 
 	def test_multiple_group_replacement(self):
-		"""Test that group indexing is correct with multiple groups
-		"""
+		"""Test that group indexing is correct with multiple groups"""
 		replaced = self._replace(
 			string="bar.BAT",
 			pattern=r"(baz)|(?P<foo>([a-z]*)\.([A-Z]*))",
 			replacement=r"\2>\1",
-			name="foo"
+			name="foo",
 		)
 		self.assertEqual(replaced, "BAT>bar")
 
 	def test_engine(self):
-		"""Test inclusion of group replacement in engine
-		"""
+		"""Test inclusion of group replacement in engine"""
 		replaced = process("fr_FR", "Le 03.04.05.", SymbolLevel.ALL)
 		self.assertEqual(replaced, "Le  03 point 04 point 05  point.")
 		replaced = process("fr_FR", "Le 03/04/05.", SymbolLevel.ALL)
@@ -132,27 +126,35 @@ class TestComplex(unittest.TestCase):
 
 
 # A character in CLDR file but not in symbol file
-CHAR_IN_CLDR_FILE = '☺'
-CHAR_IN_CLDR_FILE_DESC = 'smiling face'
+CHAR_IN_CLDR_FILE = "☺"
+CHAR_IN_CLDR_FILE_DESC = "smiling face"
 # A character in symbol file but not in CLDR file
-CHAR_IN_SYMB_FILE = ' '
-CHAR_IN_SYMB_FILE_DESC = 'space'
+CHAR_IN_SYMB_FILE = " "
+CHAR_IN_SYMB_FILE_DESC = "space"
 # A character in both CLDR and symbol file
-CHAR_IN_BOTH_FILES = '.'
-CHAR_IN_BOTH_FILES_DESC = 'dot'
+CHAR_IN_BOTH_FILES = "."
+CHAR_IN_BOTH_FILES_DESC = "dot"
 
 
 class TestUsingCLDR(unittest.TestCase):
-
 	def test_processSpeechSymbol_withoutSymbolFile(self):
-		"""Test processSpeechSymbol with languages that have CLDR file but no symbol file.
-		"""
-		
+		"""Test processSpeechSymbol with languages that have CLDR file but no symbol file."""
+
 		languagesWithoutSymbolFile = [
 			# The real list is:
 			# 'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'mni', 'ne', 'te', 'th', 'ur'
 			# But 'mni' has only a few symbols in CLDR (and not the smiling face)
-			'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'ne', 'te', 'th', 'ur'
+			"af_ZA",
+			"am",
+			"as",
+			"gu",
+			"id",
+			"kok",
+			"ml",
+			"ne",
+			"te",
+			"th",
+			"ur",
 		]
 		for locale in languagesWithoutSymbolFile:
 			self.assertNotEqual(
@@ -167,10 +169,9 @@ class TestUsingCLDR(unittest.TestCase):
 			)
 
 	def test_processSpeechSymbol_withSymbolFile(self):
-		"""Test processSpeechSymbol with languages that have both CLDR and symbol file.
-		"""
-		
-		languagesWithSymbolFileAndCLDR = ['fr_FR']
+		"""Test processSpeechSymbol with languages that have both CLDR and symbol file."""
+
+		languagesWithSymbolFileAndCLDR = ["fr_FR"]
 		for locale in languagesWithSymbolFileAndCLDR:
 			self.assertNotEqual(
 				processSpeechSymbol(locale, CHAR_IN_CLDR_FILE),

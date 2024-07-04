@@ -12,25 +12,27 @@
 # http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import([
-	'env',
-	'ia2RPCStubs',
-	'detoursLib',
-	'apiHookObj',
-])
+Import(
+	[
+		"env",
+		"ia2RPCStubs",
+		"detoursLib",
+		"apiHookObj",
+	]
+)
 
-winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
+winIPCUtilsObj = env.Object("./winIPCUtils", "../common/winIPCUtils.cpp")
 
-vbufBackendLibs=[
-	env.SConscript('../vbufBase/sconscript'),
-	env.SConscript('../vbufBackends/adobeAcrobat/sconscript'),
-	env.SConscript('../vbufBackends/lotusNotesRichText/sconscript'),
-	env.SConscript('../vbufBackends/gecko_ia2/sconscript'),
-	env.SConscript('../vbufBackends/mshtml/sconscript'),
-	env.SConscript('../vbufBackends/webKit/sconscript'),
+vbufBackendLibs = [
+	env.SConscript("../vbufBase/sconscript"),
+	env.SConscript("../vbufBackends/adobeAcrobat/sconscript"),
+	env.SConscript("../vbufBackends/lotusNotesRichText/sconscript"),
+	env.SConscript("../vbufBackends/gecko_ia2/sconscript"),
+	env.SConscript("../vbufBackends/mshtml/sconscript"),
+	env.SConscript("../vbufBackends/webKit/sconscript"),
 ]
 
-controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
+controllerRPCHeader, controllerRPCClientSource = env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
 		"../interfaces/nvdaController/nvdaController.idl",
@@ -40,7 +42,7 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaController_",
 )
 
-controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
+controllerInternalRPCHeader, controllerInternalRPCClientSource = env.MSRPCStubs(
 	target="./nvdaControllerInternal",
 	source=[
 		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
@@ -50,7 +52,7 @@ controllerInternalRPCHeader,controllerInternalRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaControllerInternal_",
 )
 
-vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
+vbufRPCHeader, vbufRPCServerSource = env.MSRPCStubs(
 	target="./vbufRemote",
 	source=[
 		"../interfaces/vbuf/vbuf.idl",
@@ -60,7 +62,7 @@ vbufRPCHeader,vbufRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBufRemote_",
 )
 
-displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
+displayModelRPCHeader, displayModelRPCServerSource = env.MSRPCStubs(
 	target="./displayModelRemote",
 	source=[
 		"../interfaces/displayModel/displayModel.idl",
@@ -70,7 +72,7 @@ displayModelRPCHeader,displayModelRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="displayModelRemote_",
 )
 
-nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
+nvdaInProcUtilsRPCHeader, nvdaInProcUtilsRPCServerSource = env.MSRPCStubs(
 	target="./nvdaInProcUtils",
 	source=[
 		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.idl",
@@ -80,10 +82,10 @@ nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaInProcUtils_",
 )
 
-ia2utilsObj=env.Object("./ia2utils","../common/ia2utils.cpp")
+ia2utilsObj = env.Object("./ia2utils", "../common/ia2utils.cpp")
 
 source = [
-	env['projectResFile'],
+	env["projectResFile"],
 	"injection.cpp",
 	"log.cpp",
 	"inProcess.cpp",
@@ -97,7 +99,7 @@ source = [
 	"ia2LiveRegions.cpp",
 	"textFromIAccessible.cpp",
 	ia2utilsObj,
-	env.Object('_ia2_i',ia2RPCStubs[3]),
+	env.Object("_ia2_i", ia2RPCStubs[3]),
 	"rpcSrv.cpp",
 	"vbufRemote.cpp",
 	vbufRPCServerSource,
@@ -135,10 +137,10 @@ libs = [
 	detoursLib,
 ]
 
-remoteLib=env.SharedLibrary(
+remoteLib = env.SharedLibrary(
 	target="nvdaHelperRemote",
 	source=source,
 	LIBS=libs,
 )
 
-Return('remoteLib')
+Return("remoteLib")

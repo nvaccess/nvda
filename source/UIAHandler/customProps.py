@@ -39,23 +39,25 @@ class CustomPropertyInfo:
 	"""Holds information about a CustomProperty
 	This makes it easy to define custom properties to be loaded.
 	"""
+
 	guid: GUID
 	programmaticName: str
 	uiaType: UIAutomationType
 	_registeredProperties: ClassVar[Dict[GUID, int]] = dict()
 
 	def _registerCustomProperty(self) -> int:
-		""" Registers a custom property with a given id.
+		"""Registers a custom property with a given id.
 
 		UIA will return the id to use when given the GUID.
 		Any application can be first to register a custom property, subsequent applications
 		will be given the same id.
 		"""
 		import NVDAHelper
+
 		return NVDAHelper.localLib.registerUIAProperty(
 			byref(self.guid),
 			self.programmaticName,
-			self.uiaType
+			self.uiaType,
 		)
 
 	@property
@@ -76,10 +78,9 @@ class CustomPropertyInfo:
 class CustomPropertiesCommon:
 	"""UIA 'custom properties' common to all applications.
 	Once registered, all subsequent registrations will return the same ID value.
-		"""
+	"""
 
 	def __init__(self):
-
 		self.itemIndex = CustomPropertyInfo(
 			guid=GUID("{92A053DA-2969-4021-BF27-514CFC2E4A69}"),
 			programmaticName="ItemIndex",

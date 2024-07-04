@@ -12,7 +12,6 @@ import winVersion
 
 
 class TestWinVersion(unittest.TestCase):
-
 	def test_getWinVer(self):
 		# Test a 3-tuple consisting of version major, minor, build.
 		# sys.getwindowsversion() internally returns a named tuple, so comparing tuples is possible.
@@ -20,7 +19,7 @@ class TestWinVersion(unittest.TestCase):
 		winVerPython = sys.getwindowsversion()
 		self.assertTupleEqual(
 			(currentWinVer.major, currentWinVer.minor, currentWinVer.build),
-			winVerPython[:3]
+			winVerPython[:3],
 		)
 
 	def test_getWinVerFromNonExistentRelease(self):
@@ -34,7 +33,8 @@ class TestWinVersion(unittest.TestCase):
 		minimumWinVer = winVersion.WIN81
 		emojiPanelIntroduced = winVersion.WIN10_1709
 		self.assertGreaterEqual(
-			emojiPanelIntroduced, minimumWinVer
+			emojiPanelIntroduced,
+			minimumWinVer,
 		)
 
 	def test_winVerKnownReleaseNameForWinVersionConstant(self):
@@ -49,7 +49,9 @@ class TestWinVersion(unittest.TestCase):
 		# Try Windows 10 1809.
 		knownMajor, knownMinor, knownBuild = 10, 0, 17763
 		knownPublicRelease = winVersion.WinVersion(
-			major=knownMajor, minor=knownMinor, build=knownBuild
+			major=knownMajor,
+			minor=knownMinor,
+			build=knownBuild,
 		)
 		self.assertEqual(knownPublicRelease.releaseName, "Windows 10 1809")
 
@@ -65,10 +67,13 @@ class TestWinVersion(unittest.TestCase):
 		# as this is defined for testing purposes.
 		major, minor, build = 10, 0, 21390
 		insiderBuild = winVersion.WinVersion(
-			major=major, minor=minor, build=build
+			major=major,
+			minor=minor,
+			build=build,
 		)
 		self.assertIn(
-			"unknown", insiderBuild.releaseName
+			"unknown",
+			insiderBuild.releaseName,
 		)
 
 	def test_winVerUnknownBuildToReleaseName(self):
@@ -76,7 +81,9 @@ class TestWinVersion(unittest.TestCase):
 		# Try Windows 8.1 which is actually version 6.3.
 		unknownMajor, unknownMinor, unknownBuild = 8, 1, 0
 		badWin81Info = winVersion.WinVersion(
-			major=unknownMajor, minor=unknownMinor, build=unknownBuild
+			major=unknownMajor,
+			minor=unknownMinor,
+			build=unknownBuild,
 		)
 		self.assertEqual(badWin81Info.releaseName, "Windows release unknown")
 
@@ -91,6 +98,8 @@ class TestWinVersion(unittest.TestCase):
 		# See if build 25398 (zinc milestone) is recognized as a Windows 11 "unknown" release.
 		zincMajor, zincMinor, zincBuild = 10, 0, 25398
 		win11ZincInfo = winVersion.WinVersion(
-			major=zincMajor, minor=zincMinor, build=zincBuild
+			major=zincMajor,
+			minor=zincMinor,
+			build=zincBuild,
 		)
 		self.assertEqual(win11ZincInfo.releaseName, "Windows 11 unknown")

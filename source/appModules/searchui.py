@@ -16,7 +16,6 @@ from NVDAObjects.UIA import UIA, SearchField, SuggestionListItem
 
 
 class StartMenuSearchField(SearchField):
-
 	# #7370: do not announce text when start menu (searchui) closes.
 	announceNewLineText = False
 
@@ -28,7 +27,6 @@ class StartMenuSearchField(SearchField):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_NVDAObject_init(self, obj):
 		if isinstance(obj, UIA):
 			# #10341: Build 18363 introduces modern search experience in File Explorer.
@@ -56,10 +54,8 @@ class AppModule(appModuleHandler.AppModule):
 			# #10329: Since 2019, some suggestion items are grouped inside another suggestions list item.
 			# #13544: grandparent must be checked due to redesign in 2019.
 			# Because of this, result details will not be announced like in the past.
-			elif (
-				obj.role == controlTypes.Role.LISTITEM and (
-					isinstance(obj.parent, SuggestionListItem)
-					or isinstance(obj.parent.parent, SuggestionListItem)
-				)
+			elif obj.role == controlTypes.Role.LISTITEM and (
+				isinstance(obj.parent, SuggestionListItem)
+				or isinstance(obj.parent.parent, SuggestionListItem)
 			):
 				clsList.insert(0, SuggestionListItem)

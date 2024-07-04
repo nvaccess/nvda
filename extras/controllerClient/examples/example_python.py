@@ -31,19 +31,19 @@ def onMarkReached(name: str) -> int:
 
 
 ssml = (
-	'<speak>'
-	'This is one sentence. '
+	"<speak>"
+	"This is one sentence. "
 	'<mark name="test" />'
 	'<prosody pitch="200%">This sentence is pronounced with higher pitch.</prosody>'
 	'<mark name="test2" />'
-	'This is a third sentence. '
+	"This is a third sentence. "
 	'<mark name="test3" />'
-	'This is a fourth sentence. We will stay silent for a second after this one.'
+	"This is a fourth sentence. We will stay silent for a second after this one."
 	'<break time="1000ms" />'
 	'<mark name="test4" />'
-	'This is a fifth sentence. '
+	"This is a fifth sentence. "
 	'<mark name="test5" />'
-	'</speak>'
+	"</speak>"
 )
 clientLib.nvdaController_setOnSsmlMarkReachedCallback(onMarkReached)
 clientLib.nvdaController_speakSsml(ssml, -1, 0, False)

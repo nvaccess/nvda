@@ -30,33 +30,45 @@ from speech.commands import (
 from speech.types import SpeechSequence
 
 XML_ESCAPES = {
-	0x3C: u"&lt;", # <
-	0x3E: u"&gt;", # >
-	0x26: u"&amp;", # &
-	0x22: u"&quot;", # "
+	0x3C: "&lt;",  # <
+	0x3E: "&gt;",  # >
+	0x26: "&amp;",  # &
+	0x22: "&quot;",  # "
 }
+
 
 # Regular expression to replace invalid XML characters.
 # Based on http://stackoverflow.com/a/22273639
 def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
-	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
-		for start, end in ranges]
-	leadingSurrogate = u"[\uD800-\uDBFF]"
-	trailingSurrogate = u"[\uDC00-\uDFFF]"
-	return re.compile((
+	ranges = (
+		(0x00, 0x08),
+		(0x0B, 0x0C),
+		(0x0E, 0x1F),
+		(0x7F, 0x84),
+		(0x86, 0x9F),
+		(0xFDD0, 0xFDDF),
+		(0xFFFE, 0xFFFF),
+	)
+	rangeExprs = ["%s-%s" % (chr(start), chr(end)) for start, end in ranges]
+	leadingSurrogate = "[\ud800-\udbff]"
+	trailingSurrogate = "[\udc00-\udfff]"
+	return re.compile(
+		(
 			# These ranges of characters are invalid.
-			u"[{ranges}]"
+			"[{ranges}]"
 			# Leading Unicode surrogate is invalid if not followed by trailing surrogate.
-			u"|{leading}(?!{trailing})"
+			"|{leading}(?!{trailing})"
 			# Trailing surrogate is invalid if not preceded by a leading surrogate.
-			u"|(?<!{leading}){trailing}"
+			"|(?<!{leading}){trailing}"
 		).format(
 			ranges="".join(rangeExprs),
 			leading=leadingSurrogate,
-			trailing=trailingSurrogate))
+			trailing=trailingSurrogate,
+		),
+	)
+
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
 RE_TIME_MS = re.compile(r"^(?P<time>\d+)ms$", re.IGNORECASE)
@@ -65,14 +77,12 @@ REPLACEMENT_CHAR = textUtils.REPLACEMENT_CHAR
 
 
 def toXmlLang(nvdaLang: str) -> str:
-	"""Convert an NVDA language to an XML language.
-	"""
+	"""Convert an NVDA language to an XML language."""
 	return nvdaLang.replace("_", "-")
 
 
 def toNvdaLang(xmlLang: str) -> str:
-	"""Convert an XML language to an NVDA language.
-	"""
+	"""Convert an XML language to an NVDA language."""
 	return xmlLang.replace("-", "_")
 
 
@@ -94,6 +104,7 @@ StopEnclosingTextCommand = namedtuple("StopEnclosingTextCommand", ())
 #: An XmlBalancer command to output a stand-alone tag.
 #: That is, it will not enclose subsequent output.
 StandAloneTagCommand = namedtuple("StandAloneTagCommand", ("tag", "attrs", "content"))
+
 
 def _escapeXml(text):
 	text = text.translate(XML_ESCAPES)
@@ -137,7 +148,7 @@ class XmlBalancer:
 		for attr, val in attrs.items():
 			self._out.append(' %s="' % attr)
 			# Attribute values could be ints, floats etc, not just strings.
-			# Therefore coerce the value to a string, as well as escaping xml characters. 
+			# Therefore coerce the value to a string, as well as escaping xml characters.
 			self._out.append(_escapeXml(str(val)))
 			self._out.append('"')
 		self._out.append("/>" if empty else ">")
@@ -177,8 +188,7 @@ class XmlBalancer:
 		self._tagsChanged = False
 
 	def generateXml(self, commands) -> str:
-		"""Generate XML from a sequence of balancer commands and text.
-		"""
+		"""Generate XML from a sequence of balancer commands and text."""
 		for command in commands:
 			if isinstance(command, str):
 				self._outputTags()
@@ -205,7 +215,7 @@ class XmlBalancer:
 			self._closeTag(tag)
 		for tag in self._enclosingAllTags:
 			self._closeTag(tag)
-		return u"".join(self._out)
+		return "".join(self._out)
 
 
 class SpeechXmlConverter:
@@ -249,23 +259,26 @@ class SpeechXmlConverter:
 				log.error("Unknown speech: %r" % item)
 
 	def convertToXml(self, speechSequence):
-		"""Convenience method to convert a speech sequence to XML using L{XmlBalancer}.
-		"""
+		"""Convenience method to convert a speech sequence to XML using L{XmlBalancer}."""
 		bal = XmlBalancer()
 		balCommands = self.generateBalancerCommands(speechSequence)
 		return bal.generateXml(balCommands)
 
 
 class SsmlConverter(SpeechXmlConverter):
-	"""Converts an NVDA speech sequence to SSML.
-	"""
+	"""Converts an NVDA speech sequence to SSML."""
 
 	def __init__(self, defaultLanguage: str):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
 	def generateBalancerCommands(self, speechSequence):
-		attrs = OrderedDict((("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
-			("xml:lang", self.defaultLanguage)))
+		attrs = OrderedDict(
+			(
+				("version", "1.0"),
+				("xmlns", "http://www.w3.org/2001/10/synthesis"),
+				("xml:lang", self.defaultLanguage),
+			),
+		)
 		yield EncloseAllCommand("speak", attrs)
 		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
 			yield command
@@ -292,13 +305,18 @@ class SsmlConverter(SpeechXmlConverter):
 			# Returning to normal.
 			return DelAttrCommand("prosody", attr)
 		else:
-			return SetAttrCommand("prosody", attr,
-				"%d%%" % int(command.multiplier* 100))
+			return SetAttrCommand(
+				"prosody",
+				attr,
+				"%d%%" % int(command.multiplier * 100),
+			)
 
 	def convertPitchCommand(self, command):
 		return self._convertProsody(command, "pitch")
+
 	def convertRateCommand(self, command):
 		return self._convertProsody(command, "rate")
+
 	def convertVolumeCommand(self, command):
 		return self._convertProsody(command, "volume")
 
@@ -339,10 +357,9 @@ class SpeechXmlParser:
 				self._speechSequence.append(command)
 
 	def convertFromXml(self, xml: str) -> SpeechSequence:
-		"""Convert XML to a speech sequence.
-		"""
+		"""Convert XML to a speech sequence."""
 		self._speechSequence = SpeechSequence()
-		parser = expat.ParserCreate('utf-8')
+		parser = expat.ParserCreate("utf-8")
 		parser.StartElementHandler = parser.EndElementHandler = self._elementHandler
 		parser.CharacterDataHandler = self._speechSequence.append
 		try:
@@ -358,8 +375,7 @@ MarkCallbackT = Callable[[str], None]
 
 
 class SsmlParser(SpeechXmlParser):
-	"""Parses SSML into an NVDA speech sequence.
-	"""
+	"""Parses SSML into an NVDA speech sequence."""
 
 	def __init__(self, markCallback: MarkCallbackT | None = None):
 		"""Constructor.
