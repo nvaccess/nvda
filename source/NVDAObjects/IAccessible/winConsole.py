@@ -14,9 +14,10 @@ from ..window import winConsole
 
 class EnhancedLegacyWinConsole(KeyboardHandlerBasedTypedCharSupport, winConsole.WinConsole, IAccessible):
 	"""
-		A hybrid approach to console access, using legacy APIs to read output
-		and KeyboardHandlerBasedTypedCharSupport for input.
+	A hybrid approach to console access, using legacy APIs to read output
+	and KeyboardHandlerBasedTypedCharSupport for input.
 	"""
+
 	#: Legacy consoles take quite a while to send textChange events.
 	#: This significantly impacts typing performance, so don't queue chars.
 	_supportsTextChange = False
@@ -24,14 +25,15 @@ class EnhancedLegacyWinConsole(KeyboardHandlerBasedTypedCharSupport, winConsole.
 
 class LegacyWinConsole(winConsole.WinConsole, IAccessible):
 	"""
-		NVDA's original console support, used by default on Windows versions
-		before 1607.
+	NVDA's original console support, used by default on Windows versions
+	before 1607.
 	"""
+
 	pass
 
 
 def findExtraOverlayClasses(obj, clsList):
-	if getWinVer() >= WIN10_1607 and config.conf['terminals']['keyboardSupportInLegacy']:
+	if getWinVer() >= WIN10_1607 and config.conf["terminals"]["keyboardSupportInLegacy"]:
 		clsList.append(EnhancedLegacyWinConsole)
 	else:
 		clsList.append(LegacyWinConsole)

@@ -1972,6 +1972,7 @@ Most synthesizers do support it.
 
 This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
+Synthesizers from Code Factory, both the add-on and the SAPI application, do not implement it correctly either and cause unwanted spelling of the spoken text (e.g. in NVDA menu or dialogs).
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ##### Delayed descriptions for characters on cursor movement {#delayedCharacterDescriptions}

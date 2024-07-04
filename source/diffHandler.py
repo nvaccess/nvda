@@ -33,6 +33,7 @@ class DiffMatchPatch(DiffAlgo):
 	"""A character-based diffing approach, using the Google Diff Match Patch
 	library in a proxy process (to work around a licence conflict).
 	"""
+
 	#: A subprocess.Popen object for the nvda_dmp process.
 	_proc = None
 	#: A lock to control access to the nvda_dmp process.
@@ -46,9 +47,16 @@ class DiffMatchPatch(DiffAlgo):
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
 			if NVDAState.isRunningAsSource():
-				dmp_path = (sys.executable, os.path.join(
-					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-				))
+				dmp_path = (
+					sys.executable,
+					os.path.join(
+						globalVars.appDir,
+						"..",
+						"include",
+						"nvda_dmp",
+						"nvda_dmp.py",
+					),
+				)
 			else:
 				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 			DiffMatchPatch._proc = subprocess.Popen(
@@ -56,7 +64,7 @@ class DiffMatchPatch(DiffAlgo):
 				creationflags=subprocess.CREATE_NO_WINDOW,
 				bufsize=0,
 				stdin=subprocess.PIPE,
-				stdout=subprocess.PIPE
+				stdout=subprocess.PIPE,
 			)
 
 	def _getText(self, ti: TextInfo) -> str:
@@ -74,7 +82,7 @@ class DiffMatchPatch(DiffAlgo):
 			return_code = cls._proc.poll()
 			if return_code is None:
 				continue
-			raise RuntimeError(f'Diff-match-patch proxy process died! Return code {return_code}')
+			raise RuntimeError(f"Diff-match-patch proxy process died! Return code {return_code}")
 		return buffer
 
 	def diff(self, newText: str, oldText: str) -> List[str]:
@@ -100,9 +108,7 @@ class DiffMatchPatch(DiffAlgo):
 				(diff_length,) = struct.unpack("=I", diffLengthBuffer)
 				diffBuffer = DiffMatchPatch._readData(diff_length)
 				return [
-					line
-					for line in diffBuffer.decode("utf-8").splitlines()
-					if line and not line.isspace()
+					line for line in diffBuffer.decode("utf-8").splitlines() if line and not line.isspace()
 				]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
@@ -190,28 +196,20 @@ class Difflib(DiffAlgo):
 
 def prefer_dmp():
 	"""
-		This function returns a Diff Match Patch object if allowed by the user.
-		DMP is new and can be explicitly disabled by a user setting. If config
-		does not allow DMP, this function returns a Difflib instance instead.
+	This function returns a Diff Match Patch object if allowed by the user.
+	DMP is new and can be explicitly disabled by a user setting. If config
+	does not allow DMP, this function returns a Difflib instance instead.
 	"""
-	return (
-		_difflib
-		if config.conf["terminals"]["diffAlgo"] == "difflib"
-		else _dmp
-	)
+	return _difflib if config.conf["terminals"]["diffAlgo"] == "difflib" else _dmp
 
 
 def prefer_difflib():
 	"""
-		This function returns a Difflib object if allowed by the user.
-		Difflib can be explicitly disabled by a user setting. If config
-		does not allow Difflib, this function returns a DMP instance instead.
+	This function returns a Difflib object if allowed by the user.
+	Difflib can be explicitly disabled by a user setting. If config
+	does not allow Difflib, this function returns a DMP instance instead.
 	"""
-	return (
-		_dmp
-		if config.conf["terminals"]["diffAlgo"] == "dmp"
-		else _difflib
-	)
+	return _dmp if config.conf["terminals"]["diffAlgo"] == "dmp" else _difflib
 
 
 _difflib = Difflib()

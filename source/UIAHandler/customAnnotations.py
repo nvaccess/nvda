@@ -38,11 +38,12 @@ class CustomAnnotationTypeInfo:
 	"""Holds information about a CustomAnnotationType
 	This makes it easy to define custom annotation types to be loaded.
 	"""
+
 	guid: GUID
 	_registeredAnnotations: ClassVar[Dict[GUID, int]] = dict()
 
 	def _registerCustomAnnotation(self) -> int:
-		""" Registers the annotation with a given GUID.
+		"""Registers the annotation with a given GUID.
 
 		A GUID uniquely identifies a custom annotation, but the UIA system relies on integer IDs.
 		Any application (clients or providers) can register a custom annotation type, subsequent applications
@@ -53,6 +54,7 @@ class CustomAnnotationTypeInfo:
 		"""
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			import NVDAHelper
+
 			return NVDAHelper.localLib.registerUIAAnnotationType(
 				byref(self.guid),
 			)

@@ -84,9 +84,10 @@ class WindowsTrackedSession(enum.IntEnum):
 	Values from: https://learn.microsoft.com/en-us/windows/win32/termserv/wm-wtssession-change
 	Context:
 	https://docs.microsoft.com/en-us/windows/win32/api/wtsapi32/nf-wtsapi32-wtsregistersessionnotification
-	
+
 	Unused in NVDA core.
 	"""
+
 	CONSOLE_CONNECT = 1
 	CONSOLE_DISCONNECT = 2
 	REMOTE_CONNECT = 3
@@ -104,14 +105,16 @@ class _WindowsLockedState(AutoPropertyObject):
 	"""
 	Class to encapsulate caching the Windows lock state.
 	"""
+
 	# Refer to AutoPropertyObject for notes on caching
 	_cache_isWindowsLocked = True
-	
+
 	# Typing information for auto-property _get_isWindowsLocked
 	isWindowsLocked: bool
 
 	def _get_isWindowsLocked(self) -> bool:
 		from winAPI.sessionTracking import _isWindowsLocked_checkViaSessionQuery
+
 		return _isWindowsLocked_checkViaSessionQuery()
 
 
@@ -124,6 +127,7 @@ def pumpAll():
 	"""Used to track the session lock state every core cycle, and detect changes."""
 	global _wasLockedPreviousPumpAll
 	from utils.security import post_sessionLockStateChanged
+
 	windowsIsNowLocked = _isWindowsLocked()
 	# search for lock app module once lock state is known,
 	# but before triggering callbacks via post_sessionLockStateChanged
@@ -141,7 +145,7 @@ def _isWindowsLocked() -> bool:
 	if _lockStateTracker is None:
 		log.error(
 			"_TrackNVDAInitialization.markInitializationComplete was called "
-			"before sessionTracking.initialize"
+			"before sessionTracking.initialize",
 		)
 		return False
 	return _lockStateTracker.isWindowsLocked
@@ -155,11 +159,13 @@ def isLockScreenModeActive() -> bool:
 	such as the PIN workflow reset and the Out Of Box Experience.
 	"""
 	from utils.security import isRunningOnSecureDesktop
+
 	if isRunningOnSecureDesktop():
 		# Use secure mode instead if on the secure desktop
 		return False
 
 	import winVersion
+
 	if winVersion.getWinVer() < winVersion.WIN10:
 		# On Windows 8 and Earlier, the lock screen runs on
 		# the secure desktop.
@@ -170,7 +176,7 @@ def isLockScreenModeActive() -> bool:
 
 
 def _isWindowsLocked_checkViaSessionQuery() -> bool:
-	""" Use a session query to check if the session is locked
+	"""Use a session query to check if the session is locked
 	@returns: True is the session is locked.
 	Also returns False if the lock state can not be determined via a Session Query.
 	"""
@@ -182,7 +188,7 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
 		log.error(
 			"Unable to determine lock state via Session Query."
-			f" Lock state value: {sessionQueryLockState!r}"
+			f" Lock state value: {sessionQueryLockState!r}",
 		)
 		return False
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
@@ -228,7 +234,9 @@ def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 		# (or the current session) specify WTS_CURRENT_SESSION
 		WTS_INFO_CLASS.WTSSessionInfoEx,  # Indicates the type of session information to retrieve
 		# Fetch a WTSINFOEXW containing a WTSINFOEX_LEVEL1 structure.
-		ctypes.byref(ppBuffer),  # A pointer to a variable that receives a pointer to the requested information.
+		ctypes.byref(
+			ppBuffer,
+		),  # A pointer to a variable that receives a pointer to the requested information.
 		# The format and contents of the data depend on the information class specified in the WTSInfoClass
 		# parameter.
 		# To free the returned buffer, call the WTSFreeMemory function.
@@ -240,21 +248,20 @@ def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 			raise RuntimeError(f"Failure calling WTSQuerySessionInformationW: {res}")
 		elif ctypes.sizeof(WTSINFOEXW) != pBytesReturned.value:
 			raise RuntimeError(
-				f"Returned data size failure, got {pBytesReturned.value}, expected {ctypes.sizeof(WTSINFOEXW)}"
+				f"Returned data size failure, got {pBytesReturned.value}, expected {ctypes.sizeof(WTSINFOEXW)}",
 			)
 		info = ctypes.cast(
 			ppBuffer,
-			_WTS_INFO_POINTER_T
+			_WTS_INFO_POINTER_T,
 		)
 		if (
-			not info.contents
-			or info.contents.Level != 1
+			not info.contents or info.contents.Level != 1
 			##
 			# Level value must be 1, see:
 			# https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexa
 		):
 			raise RuntimeError(
-				f"Unexpected Level data, got {info.contents.Level}."
+				f"Unexpected Level data, got {info.contents.Level}.",
 			)
 		return info
 	except Exception as e:

@@ -1,7 +1,7 @@
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2011 Sebastian Kruber <sebastian.kruber@hedo.de>
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2011 Sebastian Kruber <sebastian.kruber@hedo.de>
 
 # Parts of this code are inherited from the baum braille driver
 # written by James Teh <jamie@jantrid.net>
@@ -30,6 +30,7 @@ HEDO_MOBIL_CR_END = 0x67
 HEDO_MOBIL_CELL_COUNT = 40
 HEDO_MOBIL_STATUS_CELL_COUNT = 2
 
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "hedoMobilLine"
 	description = "hedo MobilLine USB"
@@ -54,7 +55,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
 			try:
-				self._ser = serial.Serial(port, baudrate=HEDO_MOBIL_BAUDRATE, timeout=HEDO_MOBIL_TIMEOUT, writeTimeout=HEDO_MOBIL_TIMEOUT, parity=serial.PARITY_ODD, bytesize=serial.EIGHTBITS, stopbits=serial.STOPBITS_ONE)
+				self._ser = serial.Serial(
+					port,
+					baudrate=HEDO_MOBIL_BAUDRATE,
+					timeout=HEDO_MOBIL_TIMEOUT,
+					writeTimeout=HEDO_MOBIL_TIMEOUT,
+					parity=serial.PARITY_ODD,
+					bytesize=serial.EIGHTBITS,
+					stopbits=serial.STOPBITS_ONE,
+				)
 			except serial.SerialException:
 				continue
 
@@ -76,7 +85,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		else:
 			raise RuntimeError("No display found")
-		
+
 		self._readTimer = wx.PyTimer(self.handleResponses)
 		self._readTimer.Start(HEDO_MOBIL_READ_INTERVAL)
 
@@ -175,20 +184,22 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debug("No Action for keys " + keys)
 				pass
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(hedoMobilLine):K1",),
-			"braille_toggleTether": ("br(hedoMobilLine):K2",),
-			"braille_scrollForward": ("br(hedoMobilLine):K3",),
-			"braille_previousLine": ("br(hedoMobilLine):B2",),
-			"braille_nextLine": ("br(hedoMobilLine):B5",),
-			"sayAll": ("br(hedoMobilLine):B6",),
-			"braille_routeTo": ("br(hedoMobilLine):routing",),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(hedoMobilLine):K1",),
+				"braille_toggleTether": ("br(hedoMobilLine):K2",),
+				"braille_scrollForward": ("br(hedoMobilLine):K3",),
+				"braille_previousLine": ("br(hedoMobilLine):B2",),
+				"braille_nextLine": ("br(hedoMobilLine):B5",),
+				"sayAll": ("br(hedoMobilLine):B6",),
+				"braille_routeTo": ("br(hedoMobilLine):routing",),
+			},
 		},
-	})
+	)
+
 
 class InputGestureKeys(braille.BrailleDisplayGesture):
-
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, keys):
@@ -196,8 +207,8 @@ class InputGestureKeys(braille.BrailleDisplayGesture):
 
 		self.id = keys
 
-class InputGestureRouting(braille.BrailleDisplayGesture):
 
+class InputGestureRouting(braille.BrailleDisplayGesture):
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, index):

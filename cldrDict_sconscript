@@ -5,9 +5,10 @@
 
 
 import typing
+
 if typing.TYPE_CHECKING:
 	import SCons
-	from SCons import(
+	from SCons import (
 		Dir,
 		Import,
 	)
@@ -15,14 +16,11 @@ if typing.TYPE_CHECKING:
 sourceDir: "SCons.Node.FS.Dir"
 env: "SCons.Environment.Base"
 Import(
-	'env',
-	'sourceDir',
+	"env",
+	"sourceDir",
 )
 
-targetCldrDir = sourceDir.Dir('locale')
+targetCldrDir = sourceDir.Dir("locale")
 cldrDataSource = Dir("include/nvda-cldr/locale")
 
-env.RecursiveInstall(
-	targetCldrDir,
-	cldrDataSource.abspath
-)
+env.RecursiveInstall(targetCldrDir, cldrDataSource.abspath)
