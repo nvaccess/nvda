@@ -95,15 +95,16 @@ class AddonFileDownloader:
 			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
 	def download(
-			self,
-			addonData: "AddonListItemVM[_AddonStoreModel]",
-			onComplete: OnCompleteT,
-			onDisplayableError: "DisplayableError.OnDisplayableErrorT",
+		self,
+		addonData: "AddonListItemVM[_AddonStoreModel]",
+		onComplete: OnCompleteT,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT",
 	):
 		self.progress[addonData] = 0
 		assert self._executor
 		f: Future[Optional[os.PathLike]] = self._executor.submit(
-			self._download, addonData,
+			self._download,
+			addonData,
 		)
 		self._pending[f] = addonData, onComplete, onDisplayableError
 		f.add_done_callback(self._done)
@@ -132,6 +133,7 @@ class AddonFileDownloader:
 		if downloadAddonFutureException:
 			cacheFilePath = None
 			from gui.message import DisplayableError
+
 			if not isinstance(downloadAddonFutureException, DisplayableError):
 				log.error("Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
 			else:
@@ -163,9 +165,9 @@ class AddonFileDownloader:
 		shutil.rmtree(WritePaths.addonStoreDownloadDir)
 
 	def _downloadAddonToPath(
-			self,
-			addonData: "AddonListItemVM[_AddonStoreModel]",
-			downloadFilePath: str,
+		self,
+		addonData: "AddonListItemVM[_AddonStoreModel]",
+		downloadFilePath: str,
 	) -> bool:
 		"""
 		@return: True if the add-on is downloaded successfully,
@@ -178,7 +180,7 @@ class AddonFileDownloader:
 		# 1GB at 0.5 MB/s takes 4.5hr to download.
 		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
 		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
-			with open(downloadFilePath, 'wb') as fd:
+			with open(downloadFilePath, "wb") as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide
 				# a responsive UI when cancelling.
@@ -198,6 +200,7 @@ class AddonFileDownloader:
 
 	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> Optional[os.PathLike]:
 		from gui.message import DisplayableError
+
 		# Translators: A title for a dialog notifying a user of an add-on download failure.
 		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
 

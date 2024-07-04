@@ -32,6 +32,7 @@ def initialize():
 		log.warning("Failed to initialize audio for tones", exc_info=True)
 		player = None
 
+
 # When exiting, ensure player is deleted before modules get cleaned up.
 # Otherwise, WavePlayer.__del__ will fail with an exception.
 @atexit.register
@@ -52,11 +53,11 @@ Handlers are called with the same arguments as L{beep} as keyword arguments.
 
 
 def beep(
-		hz: float,
-		length: int,
-		left: int = 50,
-		right: int = 50,
-		isSpeechBeepCommand: bool = False,
+	hz: float,
+	length: int,
+	left: int = 50,
+	right: int = 50,
+	isSpeechBeepCommand: bool = False,
 ):
 	"""Plays a tone at the given hz, length, and stereo balance.
 	@param hz: pitch in hz of the tone
@@ -65,7 +66,7 @@ def beep(
 	@param right: volume of the right channel (0 to 100)
 	@param isSpeechBeepCommand: whether this beep is created as part of a speech sequence
 	"""
-	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s"%(hz,length,left,right))
+	log.io("Beep at pitch %s, for %s ms, left volume %s, right volume %s" % (hz, length, left, right))
 	if not decide_beep.decide(
 		hz=hz,
 		length=length,
@@ -80,8 +81,9 @@ def beep(
 	if not player:
 		return
 	from NVDAHelper import generateBeep
-	bufSize=generateBeep(None,hz,length,left,right)
-	buf=create_string_buffer(bufSize)
-	generateBeep(buf,hz,length,left,right)
+
+	bufSize = generateBeep(None, hz, length, left, right)
+	buf = create_string_buffer(bufSize)
+	generateBeep(buf, hz, length, left, right)
 	player.stop()
 	player.feed(buf.raw)

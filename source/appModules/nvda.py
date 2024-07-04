@@ -28,8 +28,7 @@ nvdaMenuIaIdentity = None
 
 
 class NvdaDialog(IAccessible):
-	"""Fix to ensure NVDA message dialogs get reported when they pop up.
-	"""
+	"""Fix to ensure NVDA message dialogs get reported when they pop up."""
 
 	def _get_presentationType(self):
 		presType = super(NvdaDialog, self).presentationType
@@ -44,13 +43,13 @@ class NvdaDialog(IAccessible):
 
 class NvdaDialogEmptyDescription(IAccessible):
 	"""Fix to ensure the NVDA settings dialog does not run getDialogText including panel descriptions
-		when alt+tabbing back to a focused control on a panel with a description. This would result in the
-		description being spoken twice.
+	when alt+tabbing back to a focused control on a panel with a description. This would result in the
+	description being spoken twice.
 	"""
 
 	def _get_description(self):
 		"""Override the description property (because we can't override the classmethod getDialogText)
-			However this will do to ensure that the dialog is described as we wish.
+		However this will do to ensure that the dialog is described as we wish.
 		"""
 		return ""
 
@@ -60,7 +59,6 @@ SCRCAT_PYTHON_CONSOLE = _("Python Console")
 
 
 class NvdaPythonConsoleUIOutputClear(ScriptableObject):
-
 	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup})
 	isPrevFocusOnNvdaPopup = True
 
@@ -72,13 +70,13 @@ class NvdaPythonConsoleUIOutputClear(ScriptableObject):
 	)
 	def script_clearOutput(self, gesture: "inputCore.InputGesture"):
 		from pythonConsole import consoleUI
+
 		consoleUI.clear()
 		# Translators: Description of a message spoken when clearing the Python Console output pane
 		ui.message(_("Output pane cleared"))
 
 
 class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
-
 	# Allow the bound gestures to be edited through the Input Gestures dialog (see L{gui.prePopup})
 	isPrevFocusOnNvdaPopup = True
 
@@ -123,6 +121,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 
 	def _resultNavHelper(self, direction: str = "next", select: bool = False):
 		from pythonConsole import consoleUI
+
 		startPos, endPos = consoleUI.outputCtrl.GetSelection()
 		if self.isTextSelectionAnchoredAtStart:
 			curPos = endPos
@@ -147,7 +146,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 				speech.speakMessage(_("Bottom"))
 				return
 		else:
-			raise ValueError(u"Unexpected direction: {!r}".format(direction))
+			raise ValueError("Unexpected direction: {!r}".format(direction))
 		if select:
 			consoleUI.outputCtrl.Freeze()
 			anchorPos = startPos if self.isTextSelectionAnchoredAtStart else endPos
@@ -160,10 +159,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		copy = info.copy()
 		info.expand(textInfos.UNIT_LINE)
-		if (
-			copy.move(textInfos.UNIT_CHARACTER, 4, endPoint="end") == 4
-			and copy.text == ">>> "
-		):
+		if copy.move(textInfos.UNIT_CHARACTER, 4, endPoint="end") == 4 and copy.text == ">>> ":
 			info.move(textInfos.UNIT_CHARACTER, 4, endPoint="start")
 		speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 
@@ -176,7 +172,8 @@ class AppModule(appModuleHandler.AppModule):
 	@classmethod
 	def handlePossibleProfileSwitch(cls):
 		from gui.settingsDialogs import NvdaSettingsDialogActiveConfigProfile as newProfile
-		if (cls.oldProfile and newProfile and newProfile != cls.oldProfile):
+
+		if cls.oldProfile and newProfile and newProfile != cls.oldProfile:
 			# Translators: A message announcing what configuration profile is currently being edited.
 			speech.speakMessage(_("Editing profile {profile}").format(profile=newProfile))
 		cls.oldProfile = newProfile
@@ -202,7 +199,7 @@ class AppModule(appModuleHandler.AppModule):
 		# It seems that context menus always get the name "context" and this cannot be overridden.
 		# Fudge the name of the NVDA system tray menu to make it more friendly.
 		if self.isNvdaMenu(obj):
-			obj.name=versionInfo.name
+			obj.name = versionInfo.name
 
 	def event_gainFocus(self, obj, nextHandler):
 		if obj.role == controlTypes.Role.UNKNOWN and controlTypes.State.INVISIBLE in obj.states:
@@ -228,18 +225,21 @@ class AppModule(appModuleHandler.AppModule):
 			return False
 		windowHandle = obj.windowHandle
 		from gui.settingsDialogs import NvdaSettingsDialogWindowHandle
+
 		if windowHandle == NvdaSettingsDialogWindowHandle:
 			return True
 		return False
 
 	def isNvdaPythonConsoleUIInputCtrl(self, obj):
 		from pythonConsole import consoleUI
+
 		if not consoleUI:
 			return
 		return obj.windowHandle == consoleUI.inputCtrl.GetHandle()
 
 	def isNvdaPythonConsoleUIOutputCtrl(self, obj):
 		from pythonConsole import consoleUI
+
 		if not consoleUI:
 			return
 		return obj.windowHandle == consoleUI.outputCtrl.GetHandle()

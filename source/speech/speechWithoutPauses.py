@@ -39,8 +39,8 @@ class SpeechWithoutPauses:
 	)
 
 	def __init__(
-			self,
-			speakFunc: Callable[[SpeechSequence], None],
+		self,
+		speakFunc: Callable[[SpeechSequence], None],
 	):
 		"""
 		:param speakFunc: Function used by L{speakWithoutPauses} to speak. This will likely be speech.speak.
@@ -52,9 +52,9 @@ class SpeechWithoutPauses:
 		self._pendingSpeechSequence = []
 
 	def speakWithoutPauses(
-			self,
-			speechSequence: Optional[SpeechSequence],
-			detectBreaks: bool = True,
+		self,
+		speechSequence: Optional[SpeechSequence],
+		detectBreaks: bool = True,
 	) -> bool:
 		"""
 		Speaks the speech sequences given over multiple calls,
@@ -64,19 +64,19 @@ class SpeechWithoutPauses:
 			C{False} if only buffering occurred.
 		"""
 		speech = GeneratorWithReturn(
-      self.getSpeechWithoutPauses(
-       speechSequence,
-       detectBreaks,
-      ),
-  )
+			self.getSpeechWithoutPauses(
+				speechSequence,
+				detectBreaks,
+			),
+		)
 		for seq in speech:
 			self.speak(seq)
 		return speech.returnValue
 
 	def getSpeechWithoutPauses(  # noqa: C901
-			self,
-			speechSequence: Optional[SpeechSequence],
-			detectBreaks: bool = True,
+		self,
+		speechSequence: Optional[SpeechSequence],
+		detectBreaks: bool = True,
 	) -> Generator[SpeechSequence, None, bool]:
 		"""
 		Generate speech sequences over multiple calls,
@@ -106,8 +106,8 @@ class SpeechWithoutPauses:
 		return bool(speech)
 
 	def _detectBreaksAndGetSpeech(
-			self,
-			speechSequence: SpeechSequence,
+		self,
+		speechSequence: SpeechSequence,
 	) -> Generator[SpeechSequence, None, bool]:
 		lastStartIndex = 0
 		sequenceLen = len(speechSequence)
@@ -141,8 +141,8 @@ class SpeechWithoutPauses:
 		return pending
 
 	def _getSpeech(
-			self,
-			speechSequence: SpeechSequence,
+		self,
+		speechSequence: SpeechSequence,
 	) -> SpeechSequence:
 		"""
 		@return: May be an empty sequence

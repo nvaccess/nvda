@@ -60,9 +60,9 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 
 	@remoteMethod_mutable
 	def callExtension(
-			self,
-			extensionId: RemoteGuid | GUID,
-			*params: RemoteBaseObject | int | float | str,
+		self,
+		extensionId: RemoteGuid | GUID,
+		*params: RemoteBaseObject | int | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(

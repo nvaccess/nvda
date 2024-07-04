@@ -97,9 +97,9 @@ _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
-			self,
-			model: _AddonModelT,
-			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE,
+		self,
+		model: _AddonModelT,
+		status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE,
 	):
 		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
@@ -148,19 +148,27 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		)
 
 	def canUseEnableAction(self) -> bool:
-		return self.status == AvailableAddonStatus.DISABLED or self.status == AvailableAddonStatus.PENDING_DISABLE
+		return (
+			self.status == AvailableAddonStatus.DISABLED
+			or self.status == AvailableAddonStatus.PENDING_DISABLE
+		)
 
 	def canUseEnableOverrideIncompatibilityAction(self) -> bool:
-		return self.status in (
-			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-		) and self.model.canOverrideCompatibility
+		return (
+			self.status
+			in (
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			)
+			and self.model.canOverrideCompatibility
+		)
 
 	def canUseDisableAction(self) -> bool:
 		return (
 			self.model.isInstalled
 			and self.status in _installedAddonStatuses
-			and self.status not in (
+			and self.status
+			not in (
 				AvailableAddonStatus.DISABLED,
 				AvailableAddonStatus.PENDING_DISABLE,
 				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
@@ -192,9 +200,9 @@ class AddonDetailsVM:
 
 class AddonListVM:
 	def __init__(
-			self,
-			addons: List[AddonListItemVM],
-			storeVM: "AddonStoreVM",
+		self,
+		addons: List[AddonListItemVM],
+		storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
 		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
@@ -239,10 +247,7 @@ class AddonListVM:
 			_addonListItemVM.updated.unregister(self._itemDataUpdated)
 
 		# set new ID:listItemVM mapping.
-		self._addons = CaseInsensitiveDict({
-			vm.Id: vm
-			for vm in listVMs
-		})
+		self._addons = CaseInsensitiveDict({vm.Id: vm for vm in listVMs})
 		self._updateAddonListing()
 
 		# allow new listItemVMs to notify of updates.
@@ -254,7 +259,7 @@ class AddonListVM:
 		core.callLater(delay=0, callable=self.updated.notify)
 
 	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
-		""" Get the text for an item's attribute.
+		"""Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
 		@return: The text for the addon attribute
@@ -317,10 +322,10 @@ class AddonListVM:
 		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
-			self,
-			sortField: Optional[AddonListField] = None,
-			selectionIndex: Optional[int] = None,
-			selectionId: Optional[str] = None,
+		self,
+		sortField: Optional[AddonListField] = None,
+		selectionIndex: Optional[int] = None,
+		selectionId: Optional[str] = None,
 	):
 		if sortField is not None:
 			assert sortField in AddonListField
@@ -356,20 +361,18 @@ class AddonListVM:
 			)
 
 		filtered = (
-			vm for vm in self._addons.values()
+			vm
+			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([
-			vm.Id for vm in sorted(filtered, key=_getSortFieldData)
-		])
+		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
 		return filteredSorted
 
 	def _tryPersistSelection(
-			self,
-			newOrder: List[str],
+		self,
+		newOrder: List[str],
 	) -> Optional[str]:
-		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet.
-		"""
+		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet."""
 		selectedIndex = self.getSelectedIndex()
 		selectedId = self.selectedAddonId
 		if selectedId in newOrder:

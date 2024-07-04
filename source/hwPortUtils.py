@@ -2,8 +2,7 @@
 # Copyright (C) 2001-2023 Chris Liechti, NV Access Limited, Babbage B.V., Leonard de Ruijter
 # Based on serial scanner code by Chris Liechti from https://raw.githubusercontent.com/pyserial/pyserial/81167536e796cc2e13aa16abd17a14634dc3aed1/pyserial/examples/scanwin32.py
 
-"""Utilities for working with hardware connection ports.
-"""
+"""Utilities for working with hardware connection ports."""
 
 import ctypes
 import itertools
@@ -31,10 +30,10 @@ HDEVINFO = ctypes.c_void_p
 
 class SP_DEVINFO_DATA(ctypes.Structure):
 	_fields_ = (
-		('cbSize', DWORD),
-		('ClassGuid', GUID),
-		('DevInst', DWORD),
-		('Reserved', ctypes.POINTER(ULONG)),
+		("cbSize", DWORD),
+		("ClassGuid", GUID),
+		("DevInst", DWORD),
+		("Reserved", ctypes.POINTER(ULONG)),
 	)
 
 	def __str__(self):
@@ -46,10 +45,10 @@ PSP_DEVINFO_DATA = ctypes.POINTER(SP_DEVINFO_DATA)
 
 class SP_DEVICE_INTERFACE_DATA(ctypes.Structure):
 	_fields_ = (
-		('cbSize', DWORD),
-		('InterfaceClassGuid', GUID),
-		('Flags', DWORD),
-		('Reserved', ctypes.POINTER(ULONG)),
+		("cbSize", DWORD),
+		("InterfaceClassGuid", GUID),
+		("Flags", DWORD),
+		("Reserved", ctypes.POINTER(ULONG)),
 	)
 
 	def __str__(self):
@@ -63,8 +62,8 @@ PSP_DEVICE_INTERFACE_DETAIL_DATA = ctypes.c_void_p
 
 class DEVPROPKEY(ctypes.Structure):
 	_fields_ = (
-		('DEVPROPGUID', GUID),
-		('DEVPROPID', ULONG),
+		("DEVPROPGUID", GUID),
+		("DEVPROPID", ULONG),
 	)
 
 
@@ -174,10 +173,14 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 		case h if h.startswith("BTHENUM\\"):
 			# This is a Microsoft bluetooth port.
 			try:
-				addr = winreg.QueryValueEx(
-					regKey,
-					"Bluetooth_UniqueID",
-				)[0].split("#", 1)[1].split("_", 1)[0]
+				addr = (
+					winreg.QueryValueEx(
+						regKey,
+						"Bluetooth_UniqueID",
+					)[0]
+					.split("#", 1)[1]
+					.split("_", 1)[0]
+				)
 				addr = int(addr, 16)
 				info["bluetoothAddress"] = addr
 				if addr:
@@ -202,7 +205,7 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 		case h if "USB" in h or "FTDIBUS" in h:
 			usbIDStart = h.find("VID_")
 			if usbIDStart != -1:
-				info["usbID"] = hwID[usbIDStart:usbIDStart + 17]  # VID_xxxx&PID_xxxx
+				info["usbID"] = hwID[usbIDStart : usbIDStart + 17]  # VID_xxxx&PID_xxxx
 	return info
 
 
@@ -219,7 +222,8 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			ctypes.byref(devinfo),
 			SPDRP_HARDWAREID,
 			None,
-			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			ctypes.byref(buf),
+			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
@@ -253,7 +257,8 @@ def listComPorts(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			ctypes.byref(devinfo),
 			SPDRP_FRIENDLYNAME,
 			None,
-			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			ctypes.byref(buf),
+			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# #6007: SPDRP_FRIENDLYNAME sometimes doesn't exist/isn't valid.
@@ -350,8 +355,8 @@ def getWidcommBluetoothPortInfo(port):
 
 
 def _listDevices(
-		deviceClass: GUID,
-		onlyAvailable: bool = True,
+	deviceClass: GUID,
+	onlyAvailable: bool = True,
 ) -> typing.Iterator[tuple[HDEVINFO, ctypes.Structure, SP_DEVINFO_DATA, ctypes.c_wchar * 1024]]:
 	"""Internal helper function to list devices on the system for a specific device class.
 	@param deviceClass: The device class GUID.
@@ -396,8 +401,8 @@ def _listDevices(
 			# allocate buffer
 			class SP_DEVICE_INTERFACE_DETAIL_DATA_W(ctypes.Structure):
 				_fields_ = (
-					('cbSize', DWORD),
-					('DevicePath', WCHAR * (dwNeeded.value - ctypes.sizeof(DWORD))),
+					("cbSize", DWORD),
+					("DevicePath", WCHAR * (dwNeeded.value - ctypes.sizeof(DWORD))),
 				)
 
 				def __str__(self):
@@ -436,7 +441,8 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			ctypes.byref(devinfo),
 			SPDRP_HARDWAREID,
 			None,
-			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			ctypes.byref(buf),
+			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER
@@ -445,11 +451,13 @@ def listUsbDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 		else:
 			# The string is of the form "usb\VID_xxxx&PID_xxxx&..."
 			usbId = buf.value[4:21]  # VID_xxxx&PID_xxxx
-			entry.update({
-				"hardwareID": buf.value,
-				"usbID": usbId,
-				"devicePath": idd.DevicePath,
-			})
+			entry.update(
+				{
+					"hardwareID": buf.value,
+					"usbID": usbId,
+					"devicePath": idd.DevicePath,
+				},
+			)
 			if _isDebug():
 				log.debug(f"USB Id: {usbId!r}")
 
@@ -542,7 +550,7 @@ def _getHidInfo(hwId, path):
 			try:
 				caps = hidpi.HIDP_CAPS()
 				ctypes.windll.hid.HidP_GetCaps(pd, ctypes.byref(caps))
-				info['HIDUsagePage'] = caps.UsagePage
+				info["HIDUsagePage"] = caps.UsagePage
 			finally:
 				ctypes.windll.hid.HidD_FreePreparsedData(pd)
 	finally:
@@ -572,7 +580,8 @@ def listHidDevices(onlyAvailable: bool = True) -> typing.Iterator[dict]:
 			ctypes.byref(devinfo),
 			SPDRP_HARDWAREID,
 			None,
-			ctypes.byref(buf), ctypes.sizeof(buf) - 1,
+			ctypes.byref(buf),
+			ctypes.sizeof(buf) - 1,
 			None,
 		):
 			# Ignore ERROR_INSUFFICIENT_BUFFER

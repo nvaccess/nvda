@@ -40,41 +40,41 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	isThreadSafe = True
 	supportsAutomaticDetection = True
 	timeout = 0.2
-	supportedSettings = (
-		braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),
-	)
+	supportedSettings = (braille.BrailleDisplayDriver.HIDInputSetting(useConfig=True),)
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-      bdDetect.DeviceType.HID, {
-       "VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
-       "VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
-       "VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
-       "VID_C251&PID_1125",  # Esys (version >= 3.0, with HID keyboard, with SD card
-       "VID_C251&PID_1126",  # Esys (version >= 3.0, no SD card
-       "VID_C251&PID_1127",  # Reserved
-       "VID_C251&PID_1128",  # Esys (version >= 3.0, with SD card
-       "VID_C251&PID_1129",  # Reserved
-       "VID_C251&PID_112A",  # Reserved
-       "VID_C251&PID_112B",  # Reserved
-       "VID_C251&PID_112C",  # Reserved
-       "VID_C251&PID_112D",  # Reserved
-       "VID_C251&PID_112E",  # Reserved
-       "VID_C251&PID_112F",  # Reserved
-       "VID_C251&PID_1130",  # Esytime
-       "VID_C251&PID_1131",  # Reserved
-       "VID_C251&PID_1132",  # Reserved
-      },
-  )
+			bdDetect.DeviceType.HID,
+			{
+				"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
+				"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
+				"VID_C251&PID_1124",  # Esys (version < 3.0, with SD card
+				"VID_C251&PID_1125",  # Esys (version >= 3.0, with HID keyboard, with SD card
+				"VID_C251&PID_1126",  # Esys (version >= 3.0, no SD card
+				"VID_C251&PID_1127",  # Reserved
+				"VID_C251&PID_1128",  # Esys (version >= 3.0, with SD card
+				"VID_C251&PID_1129",  # Reserved
+				"VID_C251&PID_112A",  # Reserved
+				"VID_C251&PID_112B",  # Reserved
+				"VID_C251&PID_112C",  # Reserved
+				"VID_C251&PID_112D",  # Reserved
+				"VID_C251&PID_112E",  # Reserved
+				"VID_C251&PID_112F",  # Reserved
+				"VID_C251&PID_1130",  # Esytime
+				"VID_C251&PID_1131",  # Reserved
+				"VID_C251&PID_1132",  # Reserved
+			},
+		)
 		driverRegistrar.addUsbDevices(
-      bdDetect.DeviceType.SERIAL, {
-       "VID_28AC&PID_0012",  # b.note
-       "VID_28AC&PID_0013",  # b.note 2
-       "VID_28AC&PID_0020",  # b.book internal
-       "VID_28AC&PID_0021",  # b.book external
-      },
-  )
+			bdDetect.DeviceType.SERIAL,
+			{
+				"VID_28AC&PID_0012",  # b.note
+				"VID_28AC&PID_0013",  # b.note 2
+				"VID_28AC&PID_0020",  # b.book internal
+				"VID_28AC&PID_0021",  # b.book external
+			},
+		)
 
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("Esys"))
 
@@ -135,10 +135,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			if self.numCells and self.deviceType:
 				# A display responded.
 				log.info(
-        "Found {device} connected via {type} ({port})".format(
-        device=self.deviceType, type=portType, port=port,
-        ),
-    )
+					"Found {device} connected via {type} ({port})".format(
+						device=self.deviceType,
+						type=portType,
+						port=port,
+					),
+				)
 				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
 					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
@@ -158,7 +160,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		try:
 			if self.deviceType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
-				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b'')
+				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b"")
 			super().terminate()
 		finally:
 			# We must sleep before closing the port as not doing this can leave
@@ -169,8 +171,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._deviceData.clear()
 
 	def _prepFirstByteStreamAndData(
-			self,
-			data: bytes,
+		self,
+		data: bytes,
 	) -> (bytes, Union[BytesIO, hwIo.IoBase], bytes):
 		if self.isHid:
 			# data contains the entire packet.
@@ -243,9 +245,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self.deviceType = constants.DEVICE_TYPES[deviceType]
 			if 0x01 <= deviceType <= 0x06:  # Iris
 				self.keys = constants.KEYS_IRIS
-			elif 0x07 <= deviceType <= 0x0d:  # Esys
+			elif 0x07 <= deviceType <= 0x0D:  # Esys
 				self.keys = constants.KEYS_ESYS
-			elif 0x0e <= deviceType <= 0x11:  # Esitime
+			elif 0x0E <= deviceType <= 0x11:  # Esitime
 				self.keys = constants.KEYS_ESITIME
 			elif 0x12 <= deviceType <= 0x13:
 				self.keys = constants.KEYS_BNOTE
@@ -295,7 +297,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					inputCore.manager.executeGesture(gestures.InputGesture(self))
 				except inputCore.NoInputGestureAction:
 					pass
-				self._ignoreCommandKeyReleases = not isIris and (group == constants.EB_KEY_COMMAND or self.keysDown[constants.EB_KEY_COMMAND] > 0)  # noqa E501
+				self._ignoreCommandKeyReleases = not isIris and (
+					group == constants.EB_KEY_COMMAND or self.keysDown[constants.EB_KEY_COMMAND] > 0
+				)  # noqa E501
 			if not isIris and group == constants.EB_KEY_COMMAND:
 				self.keysDown[group] = arg
 			else:
@@ -304,15 +308,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def _sendPacket(self, packetType: bytes, packetSubType: bytes, packetData: bytes = b""):
 		packetSize = len(packetData) + 4
 		packetBytes = bytearray(
-			b"".join([
-				constants.STX,
-				packetSize.to_bytes(2, "big", signed=False),
-				packetType,
-				packetSubType,
-				packetData,
-				constants.ETX,
-   ]),
-  )
+			b"".join(
+				[
+					constants.STX,
+					packetSize.to_bytes(2, "big", signed=False),
+					packetType,
+					packetSubType,
+					packetData,
+					constants.ETX,
+				],
+			),
+		)
 		if self.receivesAckPackets:
 			with self._frameLock:
 				frame = self._frame
@@ -332,12 +338,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		# When the packet length exceeds C{blockSize}, the packet is split up into several block packets.
 		# These blocks are of size C{blockSize}.
 		for offset in range(0, len(packet), blockSize):
-			bytesToWrite = packet[offset:(offset + blockSize)]
-			hidPacket = b"".join([
-				b"\x00",
-				bytesToWrite,
-				b"\x55" * (blockSize - len(bytesToWrite)),  # padding
-			])
+			bytesToWrite = packet[offset : (offset + blockSize)]
+			hidPacket = b"".join(
+				[
+					b"\x00",
+					bytesToWrite,
+					b"\x55" * (blockSize - len(bytesToWrite)),  # padding
+				],
+			)
 			self._dev.write(hidPacket)
 
 	def display(self, cells: List[int]):
@@ -380,10 +388,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			announceUnavailableMessage()
 		elif state:
 			# Translators: Message when HID keyboard simulation is enabled.
-			ui.message(_('HID keyboard simulation enabled'))
+			ui.message(_("HID keyboard simulation enabled"))
 		else:
 			# Translators: Message when HID keyboard simulation is disabled.
-			ui.message(_('HID keyboard simulation disabled'))
+			ui.message(_("HID keyboard simulation disabled"))
 
 	# Translators: Description of the script that toggles HID keyboard simulation.
 	script_toggleHidKeyboardInput.__doc__ = _("Toggle HID keyboard simulation")

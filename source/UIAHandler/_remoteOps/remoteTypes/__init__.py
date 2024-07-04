@@ -40,16 +40,15 @@ from ..remoteFuncWrapper import (
 from .. import operation
 
 
-_remoteFunc_self = TypeVar('_remoteFunc_self', bound=builder._RemoteBase)
-_remoteFunc_paramSpec = ParamSpec('_remoteFunc_paramSpec')
-_remoteFunc_return = TypeVar('_remoteFunc_return')
+_remoteFunc_self = TypeVar("_remoteFunc_self", bound=builder._RemoteBase)
+_remoteFunc_paramSpec = ParamSpec("_remoteFunc_paramSpec")
+_remoteFunc_return = TypeVar("_remoteFunc_return")
 
 
-LocalTypeVar = TypeVar('LocalTypeVar')
+LocalTypeVar = TypeVar("LocalTypeVar")
 
 
 class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
-
 	_IsTypeInstruction: Type[builder.InstructionBase]
 	LocalType: Type[LocalTypeVar] | None = None
 	_initialValue: LocalTypeVar | None = None
@@ -69,7 +68,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		raise NotImplementedError()
 
-	def _initOperand(self, initialValue: LocalTypeVar | None = None, const: bool =False):
+	def _initOperand(self, initialValue: LocalTypeVar | None = None, const: bool = False):
 		if initialValue is not None:
 			if self.LocalType is None:
 				raise TypeError(f"{type(self).__name__} does not support an initial value")
@@ -86,11 +85,11 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 	@classmethod
 	def createNew(
-			cls,
-			rob: builder.RemoteOperationBuilder,
-			initialValue: LocalTypeVar | None = None,
-			operandId: lowLevel.OperandId | None = None,
-			const: bool = False,
+		cls,
+		rob: builder.RemoteOperationBuilder,
+		initialValue: LocalTypeVar | None = None,
+		operandId: lowLevel.OperandId | None = None,
+		const: bool = False,
 	) -> Self:
 		if operandId is None:
 			operandId = rob.requestNewOperandId()
@@ -124,7 +123,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}",
 			)
 			return cast(RemoteType, cachedRemoteObj)
-		with rob.overrideDefaultSection('const'):
+		with rob.overrideDefaultSection("const"):
 			remoteObj = RemoteType.createNew(rob, obj, const=True)
 		rob.getDefaultInstructionList().addComment(
 			f"Using cached {remoteObj} for constant value {repr(obj)}",
@@ -202,7 +201,6 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 
 class RemoteVariant(RemoteBaseObject):
-
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewNull(
 			result=self,
@@ -256,7 +254,7 @@ class RemoteVariant(RemoteBaseObject):
 	def isElement(self) -> RemoteBool:
 		return self._isType(RemoteElement)
 
-	_TV_asType = TypeVar('_TV_asType', bound=RemoteBaseObject)
+	_TV_asType = TypeVar("_TV_asType", bound=RemoteBaseObject)
 
 	def asType(self, remoteClass: Type[_TV_asType]) -> _TV_asType:
 		return remoteClass(self.rob, self.operandId)
@@ -272,7 +270,6 @@ class RemoteNull(RemoteBaseObject):
 
 
 class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
-
 	_NewInstruction: Type[builder.InstructionBase]
 	_ctype: Type[_SimpleCData]
 
@@ -351,7 +348,6 @@ class RemoteBool(RemoteIntegral[bool]):
 
 
 class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
-
 	@remoteMethod
 	def __gt__(self, other: Self | LocalTypeVar) -> RemoteBool:
 		return self._doCompare(lowLevel.ComparisonType.GreaterThan, other)
@@ -418,7 +414,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod
 	def __mod__(self, other: Self | LocalTypeVar) -> Self:
-		return (self - (self / other) * other)
+		return self - (self / other) * other
 
 	@remoteMethod
 	def __radd__(self, other: Self | LocalTypeVar) -> Self:
@@ -470,7 +466,7 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 
 	@remoteMethod
 	def __rmod__(self, other: Self | LocalTypeVar) -> Self:
-		return (other - (other / self) * self)
+		return other - (other / self) * self
 
 	@remoteMethod_mutable
 	def __iadd__(self, other: Self | LocalTypeVar) -> Self:
@@ -612,7 +608,6 @@ class RemoteString(RemoteBaseObject[str]):
 
 
 class RemoteArray(RemoteBaseObject):
-
 	_LOCAL_COM_INTERFACES = [
 		UIA.IUIAutomationElement,
 		UIA.IUIAutomationTextRange,
@@ -677,9 +672,9 @@ class RemoteArray(RemoteBaseObject):
 
 	@remoteMethod_mutable
 	def __setitem__(
-			self,
-			index: RemoteIntBase | int,
-			value: RemoteBaseObject | int | float | str,
+		self,
+		index: RemoteIntBase | int,
+		value: RemoteBaseObject | int | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySetAt(

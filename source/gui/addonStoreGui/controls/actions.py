@@ -33,13 +33,12 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 	_contextMenu: wx.Menu
 
 	@abstractmethod
-	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionT):
-		...
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonActionT): ...
 
 	def popupContextMenuFromPosition(
-			self,
-			targetWindow: wx.Window,
-			position: wx.Position = wx.DefaultPosition,
+		self,
+		targetWindow: wx.Window,
+		position: wx.Position = wx.DefaultPosition,
 	):
 		self._populateContextMenu()
 		targetWindow.PopupMenu(self._contextMenu, pos=position)
@@ -90,6 +89,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 
 class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 	"""Context menu for actions for a single add-on"""
+
 	def __init__(self, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._actionMenuItemMap = {}
@@ -107,6 +107,7 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 
 class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 	"""Context menu for actions for a group of add-ons"""
+
 	def __init__(self, storeVM: AddonStoreVM):
 		self._storeVM = storeVM
 		self._actionMenuItemMap = {}
@@ -119,9 +120,9 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 		self._selectedAddons = selectedAddons
 
 	def popupContextMenuFromPosition(
-			self,
-			targetWindow: wx.Window,
-			position: wx.Position = wx.DefaultPosition,
+		self,
+		targetWindow: wx.Window,
+		position: wx.Position = wx.DefaultPosition,
 	):
 		super().popupContextMenuFromPosition(targetWindow, position)
 		if self._contextMenu.GetMenuItemCount() == 0:
@@ -158,7 +159,8 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				displayName=pgettext("addonStore", "&Remove selected add-ons"),
 				actionHandler=self._storeVM.removeAddons,
 				validCheck=lambda aVMs: (
-					self._storeVM._filteredStatusKey in [
+					self._storeVM._filteredStatusKey
+					in [
 						# Removing add-ons in the updatable view fails,
 						# as the updated version cannot be removed.
 						_StatusFilterKey.INSTALLED,
@@ -194,7 +196,7 @@ class AddonListValidator:
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				return True
 		return False
-	
+
 	def canUseUpdateAction(self) -> bool:
 		hasUpdatable = False
 		hasInstallable = False

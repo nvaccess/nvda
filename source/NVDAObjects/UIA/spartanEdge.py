@@ -21,15 +21,12 @@ from . import UIA, web
 """
 
 
-class EdgeTextInfo(web.UIAWebTextInfo):
-	...
+class EdgeTextInfo(web.UIAWebTextInfo): ...
 
 
 class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
-
 	def _hasEmbedded(self):
-		""" Is this textInfo positioned on an embedded child?
-		"""
+		"""Is this textInfo positioned on an embedded child?"""
 		children = self._rangeObj.getChildren()
 		if children.length:
 			child = children.getElement(0)
@@ -37,9 +34,9 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 				childRange = self.obj.UIATextPattern.rangeFromChild(child)
 				if childRange:
 					childChildren = childRange.getChildren()
-				if (
-					childChildren.length == 1
-					and UIAHandler.handler.clientObject.compareElements(child, childChildren.getElement(0))
+				if childChildren.length == 1 and UIAHandler.handler.clientObject.compareElements(
+					child,
+					childChildren.getElement(0),
 				):
 					return True
 		return False
@@ -176,12 +173,9 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 			return
 		# check for an embedded child
 		childElements = getChildrenWithCacheFromUIATextRange(startRange, self._controlFieldUIACacheRequest)
-		if (
-			childElements.length == 1
-			and UIAHandler.handler.clientObject.compareElements(
-				rootElement,
-				childElements.getElement(0),
-			)
+		if childElements.length == 1 and UIAHandler.handler.clientObject.compareElements(
+			rootElement,
+			childElements.getElement(0),
 		):
 			log.debug("Using single embedded child as enclosingElement")
 			for field in super(EdgeTextInfo, self)._getTextWithFieldsForUIARange(
@@ -294,8 +288,8 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 						textRange,
 						UIAHandler.TextPatternRangeEndpoint_Start,
 					)
-					field['_startOfNode'] = not clippedStart
-					field['_endOfNode'] = not clippedEnd
+					field["_startOfNode"] = not clippedStart
+					field["_endOfNode"] = not clippedEnd
 				if 0 < tempRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					tempRange,
@@ -323,7 +317,6 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 
 
 class EdgeNode(web.UIAWeb):
-
 	_edgeIsPreGapRemoval = winVersion.getWinVer().build < 15048
 
 	_TextInfo = EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
@@ -375,12 +368,10 @@ class EdgeNode(web.UIAWeb):
 		return False
 
 
-class EdgeList(web.List):
-	...
+class EdgeList(web.List): ...
 
 
 class EdgeHTMLRootContainer(EdgeNode):
-
 	def event_gainFocus(self):
 		firstChild = self.firstChild
 		if isinstance(firstChild, UIA):
@@ -390,13 +381,11 @@ class EdgeHTMLRootContainer(EdgeNode):
 
 
 class EdgeHTMLTreeInterceptor(web.UIAWebTreeInterceptor):
-
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
 
 
 class EdgeHTMLRoot(EdgeNode):
-
 	treeInterceptorClass = EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):

@@ -40,6 +40,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		# details-roles is currently only defined in Chromium
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
+
 		detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
 			self._target.IAccessibleRole,
 		)
@@ -62,6 +63,7 @@ class MozAnnotation(AnnotationOrigin):
 	"""
 	Unlike base Ia2Web implementation, the details-roles IA2 attribute is not exposed in Firefox.
 	"""
+
 	_originObj: "Mozilla"
 
 	def __bool__(self) -> bool:
@@ -93,7 +95,6 @@ class MozAnnotation(AnnotationOrigin):
 
 
 class Mozilla(ia2Web.Ia2Web):
-
 	def _get_states(self):
 		states = super(Mozilla, self).states
 		if self.IAccessibleStates & oleacc.STATE_SYSTEM_MARQUEED:
@@ -128,12 +129,12 @@ class Mozilla(ia2Web.Ia2Web):
 			return controlTypes.DescriptionFrom.ARIA_DESCRIPTION
 
 	def _get_presentationType(self):
-		presType=super(Mozilla,self).presentationType
-		if presType==self.presType_content:
-			if self.role==controlTypes.Role.TABLE and self.IA2Attributes.get('layout-guess')=='true':
-				presType=self.presType_layout
-			elif self.table and self.table.presentationType==self.presType_layout:
-				presType=self.presType_layout
+		presType = super(Mozilla, self).presentationType
+		if presType == self.presType_content:
+			if self.role == controlTypes.Role.TABLE and self.IA2Attributes.get("layout-guess") == "true":
+				presType = self.presType_layout
+			elif self.table and self.table.presentationType == self.presType_layout:
+				presType = self.presType_layout
 		return presType
 
 	annotations: MozAnnotation
@@ -170,16 +171,17 @@ class Mozilla(ia2Web.Ia2Web):
 
 
 class Document(ia2Web.Document):
-
 	def _get_parent(self):
 		res = IAccessibleHandler.accParent(
-			self.IAccessibleObject, self.IAccessibleChildID,
+			self.IAccessibleObject,
+			self.IAccessibleChildID,
 		)
 		if not res:
 			# accParent is broken in Firefox for same-process iframe documents.
 			# Use NODE_CHILD_OF instead.
 			res = IAccessibleHandler.accNavigate(
-				self.IAccessibleObject, self.IAccessibleChildID,
+				self.IAccessibleObject,
+				self.IAccessibleChildID,
 				IAccessibleHandler.NAVRELATION_NODE_CHILD_OF,
 			)
 		if not res:
@@ -189,11 +191,12 @@ class Document(ia2Web.Document):
 	def _get_treeInterceptorClass(self):
 		if controlTypes.State.EDITABLE not in self.states:
 			import virtualBuffers.gecko_ia2
+
 			return virtualBuffers.gecko_ia2.Gecko_ia2
-		return super(Document,self).treeInterceptorClass
+		return super(Document, self).treeInterceptorClass
+
 
 class EmbeddedObject(Mozilla):
-
 	def _get_shouldAllowIAccessibleFocusEvent(self):
 		focusWindow = winUser.getGUIThreadInfo(self.windowThreadID).hwndFocus
 		if self.windowHandle != focusWindow:
@@ -202,16 +205,21 @@ class EmbeddedObject(Mozilla):
 			return False
 		return super(EmbeddedObject, self).shouldAllowIAccessibleFocusEvent
 
+
 class GeckoPluginWindowRoot(WindowRoot):
 	parentUsesSuperOnWindowRootIAccessible = False
 
 	def _get_parent(self):
-		parent=super(GeckoPluginWindowRoot,self).parent
-		if parent.IAccessibleRole==oleacc.ROLE_SYSTEM_CLIENT:
+		parent = super(GeckoPluginWindowRoot, self).parent
+		if parent.IAccessibleRole == oleacc.ROLE_SYSTEM_CLIENT:
 			# Skip the window wrapping the plugin window,
 			# which doesn't expose a Gecko accessible in Gecko >= 11.
-			parent=parent.parent.parent
-		res = IAccessibleHandler.accNavigate(parent.IAccessibleObject, 0, IAccessibleHandler.NAVRELATION_EMBEDS)
+			parent = parent.parent.parent
+		res = IAccessibleHandler.accNavigate(
+			parent.IAccessibleObject,
+			0,
+			IAccessibleHandler.NAVRELATION_EMBEDS,
+		)
 		if res:
 			obj = IAccessible(IAccessibleObject=res[0], IAccessibleChildID=res[1])
 			if obj:
@@ -225,9 +233,11 @@ class GeckoPluginWindowRoot(WindowRoot):
 			log.debugWarning("NAVRELATION_EMBEDS failed")
 		return parent
 
+
 class TextLeaf(Mozilla):
 	role = controlTypes.Role.STATICTEXT
 	beTransparentToMouse = True
+
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class if this is a Mozilla object.
@@ -261,7 +271,11 @@ def findExtraOverlayClasses(obj, clsList):
 		# Check if the tree view is a table.
 		parent = obj.parent
 		# Tree view items may be nested, so skip any tree view item ancestors.
-		while parent and isinstance(parent, Mozilla) and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM:
+		while (
+			parent
+			and isinstance(parent, Mozilla)
+			and parent.IAccessibleRole == oleacc.ROLE_SYSTEM_OUTLINEITEM
+		):
 			newParent = parent.parent
 			parent.parent = newParent
 			parent = newParent
@@ -269,9 +283,12 @@ def findExtraOverlayClasses(obj, clsList):
 			clsList.append(RowWithFakeNavigation)
 
 	ia2Web.findExtraOverlayClasses(
-     obj, clsList,
-     baseClass=Mozilla, documentClass=Document,
- )
+		obj,
+		clsList,
+		baseClass=Mozilla,
+		documentClass=Document,
+	)
+
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {

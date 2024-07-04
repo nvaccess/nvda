@@ -6,6 +6,7 @@
 """Manages NVDA configuration.
 Provides utility classes to make handling featureFlags easier.
 """
+
 import enum
 import typing
 
@@ -37,10 +38,11 @@ class FeatureFlag:
 	The default option allows users to explicitly defer to the NVDA default behaviour.
 	The default behaviour can change, without affecting a user's preference.
 	"""
+
 	def __init__(
-			self,
-			value: FlagValueEnum,
-			behaviorOfDefault: FlagValueEnum,
+		self,
+		value: FlagValueEnum,
+		behaviorOfDefault: FlagValueEnum,
 	):
 		self.value = value
 		self.enumClassType: typing.Type[FlagValueEnum] = type(value)
@@ -73,17 +75,16 @@ class FeatureFlag:
 		return super().__eq__(other)
 
 	def __str__(self) -> str:
-		"""So that the value can be saved to the ini file.
-		"""
+		"""So that the value can be saved to the ini file."""
 		return self.value.name
 
 
 def _validateConfig_featureFlag(
-		value: Union[str, FeatureFlag, None],
-		optionsEnum: str,
-		behaviorOfDefault: str,
+	value: Union[str, FeatureFlag, None],
+	optionsEnum: str,
+	behaviorOfDefault: str,
 ) -> FeatureFlag:
-	""" Used in conjunction with configObj.Validator
+	"""Used in conjunction with configObj.Validator
 	param value: The value to be validated / converted to a FeatureFlag object.
 	Expected: "enabled", "disabled", "default"
 	param behaviorOfDefault: Required, the default behavior of the flag, should be "enabled" or "disabled".
@@ -95,7 +96,7 @@ def _validateConfig_featureFlag(
 	)
 	if not isinstance(optionsEnum, str):
 		raise ValidateError(
-			'Spec Error: optionsEnum must be specified as a string'
+			"Spec Error: optionsEnum must be specified as a string"
 			f" (got type {type(optionsEnum)} with value: {optionsEnum})",
 		)
 	try:
@@ -108,8 +109,8 @@ def _validateConfig_featureFlag(
 
 	if not isinstance(behaviorOfDefault, str):
 		raise ValidateError(
-			'Spec Error: behaviorOfDefault must be specified as a valid'
-			f' {OptionsEnumClass.__qualname__} member string'
+			"Spec Error: behaviorOfDefault must be specified as a valid"
+			f" {OptionsEnumClass.__qualname__} member string"
 			f" (got type {type(behaviorOfDefault)} with value: {behaviorOfDefault})",
 		)
 	try:
@@ -143,7 +144,7 @@ def _validateConfig_featureFlag(
 
 
 def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
-	""" Ensure that default is specified for featureFlag used in configSpec.
+	"""Ensure that default is specified for featureFlag used in configSpec.
 	Param examples based on the following spec string in configSpec:
 		loadChromiumVBufOnBusyState = featureFlag(behaviorOfDefault="enabled", optionsEnum="BoolFlag")
 	@param specString: EG 'featureFlag(behaviorOfDefault="enabled", optionsEnum="BoolFlag")'
@@ -173,7 +174,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 			name_or_msg=(
 				f"Param '{optionsEnumKey}' should have a string value"
 				f" but got {type(optionsEnumVal)}. {usage}"
-   ),
+			),
 			value=specString,
 		)
 	availableEnums = dict(featureFlagEnums.getAvailableEnums())
@@ -198,7 +199,7 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 			name_or_msg=(
 				f"Param '{behaviorOfDefaultKey}' should have a string value"
 				f" but got {type(behaviorOfDefaultVal)}. {usage}"
-   ),
+			),
 			value=specString,
 		)
 	behaviorOfDefaultVal = behaviorOfDefaultVal.upper()
@@ -214,15 +215,12 @@ def _transformSpec_AddFeatureFlagDefault(specString: str, **kwargs) -> str:
 		)
 	if len(kwargs) != 2:
 		raise VdtParamError(
-			name_or_msg=(
-				"Unexpected number of params."
-				f" Got {kwargs}. {usage}"
-			),
+			name_or_msg=("Unexpected number of params." f" Got {kwargs}. {usage}"),
 			value=specString,
 		)
 	# ensure there is the expected default
 	retString = (
-		'_featureFlag('
+		"_featureFlag("
 		f'{optionsEnumKey}="{optionsEnumVal}"'
 		f', {behaviorOfDefaultKey}="{behaviorOfDefaultVal}"'
 		f', default="DEFAULT")'

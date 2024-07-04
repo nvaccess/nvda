@@ -88,9 +88,9 @@ class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 
 
 def _shouldProceedWhenInstalledAddonVersionUnknown(
-		parent: wx.Window,
-		addon: _AddonGUIModel,
-		useRememberChoiceCheckbox: bool = False,
+	parent: wx.Window,
+	addon: _AddonGUIModel,
+	useRememberChoiceCheckbox: bool = False,
 ) -> tuple[bool, bool]:
 	# an installed add-on should have an addon Handler Model
 	assert addon._addonHandlerModel
@@ -103,12 +103,12 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 		"Installed version: {oldVersion}. "
 		"Available version: {version}.\n"
 		"Proceed with installation anyway? ",
- ).format(
-	name=addon.displayName,
-	version=addon.addonVersionName,
-	oldVersion=addon._addonHandlerModel.version,
-	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+	).format(
+		name=addon.displayName,
+		version=addon.addonVersionName,
+		oldVersion=addon._addonHandlerModel.version,
+		lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
+		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -123,16 +123,15 @@ def _shouldProceedWhenInstalledAddonVersionUnknown(
 
 
 def _shouldProceedToRemoveAddonDialog(
-		parent,
-		addon: "SupportsVersionCheck",
-		useRememberChoiceCheckbox: bool = False,
+	parent,
+	addon: "SupportsVersionCheck",
+	useRememberChoiceCheckbox: bool = False,
 ) -> tuple[bool, bool]:
 	removeMessage = pgettext(
 		"addonStore",
 		# Translators: Presented when attempting to remove the selected add-on.
 		# {addon} is replaced with the add-on name.
-		"Are you sure you wish to remove the {addon} add-on from NVDA? "
-		"This cannot be undone.",
+		"Are you sure you wish to remove the {addon} add-on from NVDA? " "This cannot be undone.",
 	).format(addon=addon.displayName)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -147,9 +146,9 @@ def _shouldProceedToRemoveAddonDialog(
 
 
 def _shouldInstallWhenAddonTooOldDialog(
-		parent: wx.Window,
-		addon: _AddonGUIModel,
-		useRememberChoiceCheckbox: bool = False,
+	parent: wx.Window,
+	addon: _AddonGUIModel,
+	useRememberChoiceCheckbox: bool = False,
 ) -> tuple[bool, bool]:
 	incompatibleMessage = pgettext(
 		"addonStore",
@@ -161,11 +160,11 @@ def _shouldInstallWhenAddonTooOldDialog(
 		"your current NVDA version is {NVDAVersion}. "
 		"Installation may cause unstable behavior in NVDA.\n"
 		"Proceed with installation anyway? ",
- ).format(
-	name=addon.displayName,
-	version=addon.addonVersionName,
-	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+	).format(
+		name=addon.displayName,
+		version=addon.addonVersionName,
+		lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
+		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -180,9 +179,9 @@ def _shouldInstallWhenAddonTooOldDialog(
 
 
 def _shouldEnableWhenAddonTooOldDialog(
-		parent: wx.Window,
-		addon: _AddonGUIModel,
-		useRememberChoiceCheckbox: bool = False,
+	parent: wx.Window,
+	addon: _AddonGUIModel,
+	useRememberChoiceCheckbox: bool = False,
 ) -> tuple[bool, bool]:
 	incompatibleMessage = pgettext(
 		"addonStore",
@@ -194,11 +193,11 @@ def _shouldEnableWhenAddonTooOldDialog(
 		"your current NVDA version is {NVDAVersion}. "
 		"Enabling may cause unstable behavior in NVDA.\n"
 		"Proceed with enabling anyway? ",
- ).format(
-	name=addon.displayName,
-	version=addon.addonVersionName,
-	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+	).format(
+		name=addon.displayName,
+		version=addon.addonVersionName,
+		lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
+		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -213,55 +212,54 @@ def _shouldEnableWhenAddonTooOldDialog(
 
 
 def _showAddonRequiresNVDAUpdateDialog(
-		parent: wx.Window,
-		addon: _AddonGUIModel,
+	parent: wx.Window,
+	addon: _AddonGUIModel,
 ) -> None:
 	incompatibleMessage = _(
 		# Translators: The message displayed when installing an add-on package is prohibited,
 		# because it requires a later version of NVDA than is currently installed.
 		"Installation of {summary} {version} has been blocked. The minimum NVDA version required for "
 		"this add-on is {minimumNVDAVersion}, your current NVDA version is {NVDAVersion}",
- ).format(
-	summary=addon.displayName,
-	version=addon.addonVersionName,
-	minimumNVDAVersion=addonAPIVersion.formatForGUI(addon.minimumNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+	).format(
+		summary=addon.displayName,
+		version=addon.addonVersionName,
+		minimumNVDAVersion=addonAPIVersion.formatForGUI(addon.minimumNVDAVersion),
+		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
 	)
 	displayDialogAsModal(
-     ErrorAddonInstallDialog(
-      parent=parent,
-      # Translators: The title of a dialog presented when an error occurs.
-      title=pgettext("addonStore", "Add-on installation failure"),
-      message=incompatibleMessage,
-      showAddonInfoFunction=lambda: _showAddonInfo(addon),
-     ),
- )
+		ErrorAddonInstallDialog(
+			parent=parent,
+			# Translators: The title of a dialog presented when an error occurs.
+			title=pgettext("addonStore", "Add-on installation failure"),
+			message=incompatibleMessage,
+			showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		),
+	)
 
 
 def _showConfirmAddonInstallDialog(
-		parent: wx.Window,
-		addon: _AddonGUIModel,
+	parent: wx.Window,
+	addon: _AddonGUIModel,
 ) -> int:
 	confirmInstallMessage = _(
 		# Translators: A message asking the user if they really wish to install an addon.
 		"Are you sure you want to install this add-on?\n"
 		"Only install add-ons from trusted sources.\n"
 		"Addon: {summary} {version}",
- ).format(
-	summary=addon.displayName,
-	version=addon.addonVersionName,
- )
+	).format(
+		summary=addon.displayName,
+		version=addon.addonVersionName,
+	)
 
 	return displayDialogAsModal(
-     ConfirmAddonInstallDialog(
-      parent=parent,
-      # Translators: Title for message asking if the user really wishes to install an Addon.
-      title=pgettext("addonStore", "Add-on Installation"),
-      message=confirmInstallMessage,
-      showAddonInfoFunction=lambda: _showAddonInfo(addon),
-     ),
- )
-
+		ConfirmAddonInstallDialog(
+			parent=parent,
+			# Translators: Title for message asking if the user really wishes to install an Addon.
+			title=pgettext("addonStore", "Add-on Installation"),
+			message=confirmInstallMessage,
+			showAddonInfoFunction=lambda: _showAddonInfo(addon),
+		),
+	)
 
 
 def _showAddonInfo(addon: _AddonGUIModel) -> None:
@@ -269,15 +267,13 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 		pgettext(
 			"addonStore",
 			# Translators: message shown in the Addon Information dialog.
-			"{summary} ({name})\n"
-			"Version: {version}\n"
-			"Description: {description}\n",
-  ).format(
-		summary=addon.displayName,
-		name=addon.addonId,
-		version=addon.addonVersionName,
-		description=addon.description,
-  ),
+			"{summary} ({name})\n" "Version: {version}\n" "Description: {description}\n",
+		).format(
+			summary=addon.displayName,
+			name=addon.addonId,
+			version=addon.addonVersionName,
+			description=addon.description,
+		),
 	]
 	if isinstance(addon, _AddonStoreModel):
 		# Translators: the publisher part of the About Add-on information
@@ -304,8 +300,8 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 
 
 class _SafetyWarningDialog(
-		ContextHelpMixin,
-		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
+	ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog warning the user about the risks of installing add-ons."""
 
@@ -364,8 +360,8 @@ class _SafetyWarningDialog(
 
 
 class UpdatableAddonsDialog(
-		ContextHelpMixin,
-		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
+	ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog notifying users that updatable add-ons are available"""
 
@@ -420,7 +416,11 @@ class UpdatableAddonsDialog(
 		self.openStoreButton.Bind(wx.EVT_BUTTON, self.onOpenStoreButton)
 
 		# Translators: The label of a button in a dialog
-		self.updateAllButton = bHelper.addButton(self, wx.ID_CLOSE, label=pgettext("addonStore", "&Update all"))
+		self.updateAllButton = bHelper.addButton(
+			self,
+			wx.ID_CLOSE,
+			label=pgettext("addonStore", "&Update all"),
+		)
 		self.updateAllButton.Bind(wx.EVT_BUTTON, self.onUpdateAllButton)
 
 		# Translators: The label of a button in a dialog
@@ -453,13 +453,15 @@ class UpdatableAddonsDialog(
 		self.addonsList.AppendColumn(channelLabel, width=150)
 		self.addonsList.AppendColumn(statusLabel, width=300)
 		for addon in self.addonsPendingUpdate:
-			self.addonsList.Append((
-				addon.displayName,
-				addon._addonHandlerModel.version,
-				addon.addonVersionName,
-				addon.channel.displayString,
-				AvailableAddonStatus.UPDATE.displayString,
-			))
+			self.addonsList.Append(
+				(
+					addon.displayName,
+					addon._addonHandlerModel.version,
+					addon.addonVersionName,
+					addon.channel.displayString,
+					AvailableAddonStatus.UPDATE.displayString,
+				),
+			)
 		self.addonsList.Refresh()
 
 	def onOpenStoreButton(self, evt: wx.CommandEvent):
@@ -470,6 +472,7 @@ class UpdatableAddonsDialog(
 
 	def onUpdateAllButton(self, evt: wx.CommandEvent):
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
+
 		self.listItemVMs: list[AddonListItemVM] = []
 		for addon in self.addonsPendingUpdate:
 			listItemVM = AddonListItemVM(addon, status=AvailableAddonStatus.UPDATE)
@@ -495,6 +498,7 @@ class UpdatableAddonsDialog(
 	def onClose(self, evt: wx.CloseEvent):
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
 		from .storeDialog import AddonStoreDialog
+
 		evt.Veto()
 
 		numInProgress = len(AddonStoreVM._downloader.progress)
@@ -550,9 +554,8 @@ class UpdatableAddonsDialog(
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
-		if (
-			globalVars.appArgs.secure
-			or (AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"])
+		if globalVars.appArgs.secure or (
+			AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"]
 		):
 			log.debug("automatic add-on updates are disabled")
 			return

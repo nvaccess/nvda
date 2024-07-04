@@ -48,9 +48,9 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 
 	@remoteMethod
 	def getPropertyValue(
-			self,
-			propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
-			ignoreDefault: RemoteBool | bool = False,
+		self,
+		propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
+		ignoreDefault: RemoteBool | bool = False,
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(

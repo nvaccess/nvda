@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2021 NV Access Limited, Babbage B.V.
 
-"""Unit tests for the controlTypes module.
-"""
+"""Unit tests for the controlTypes module."""
+
 import enum
 import logging
 import unittest
@@ -17,8 +17,7 @@ import logHandler
 
 
 class TestLabels(unittest.TestCase):
-	_noDisplayStringRoles = {
-	}
+	_noDisplayStringRoles = {}
 	_noDisplayStringStates = {
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
@@ -73,7 +72,6 @@ class TestLabels(unittest.TestCase):
 
 
 class TestProcessStates(unittest.TestCase):
-
 	def setUp(self):
 		self.obj = PlaceholderNVDAObject()
 		self.obj.role = controlTypes.Role.CHECKBOX
@@ -106,8 +104,8 @@ class TestProcessStates(unittest.TestCase):
 			{controlTypes.State.CHECKED},
 		)
 
-class TestStateOrder(unittest.TestCase):
 
+class TestStateOrder(unittest.TestCase):
 	def test_positiveMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
 		obj.role = controlTypes.Role.CHECKBOX
@@ -200,6 +198,7 @@ class TestBackCompat(unittest.TestCase):
 			UNLOCKED = 0x20000000000
 			HAS_ARIA_DETAILS = 0x40000000000
 			HASNOTE = 0x80000000000
+
 		for old in oldStates:
 			new = controlTypes.State[old.name]
 			self.assertEqual(new.value, old.value, msg=f"Value not equal: {new.name}")

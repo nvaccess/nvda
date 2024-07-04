@@ -9,7 +9,6 @@ import UIAHandler
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
 		if propertyId in (
 			UIAHandler.UIA_NamePropertyId,

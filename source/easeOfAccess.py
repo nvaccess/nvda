@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Utilities for working with the Windows Ease of Access Center.
-"""
+"""Utilities for working with the Windows Ease of Access Center."""
 
 from enum import Enum, IntEnum
 from typing import Any, List
@@ -43,6 +42,7 @@ class RegistryKey(str, Enum):
 
 class AutoStartContext(IntEnum):
 	"""Registry HKEY used for tracking when NVDA starts automatically"""
+
 	ON_LOGON_SCREEN = winreg.HKEY_LOCAL_MACHINE
 	AFTER_LOGON = winreg.HKEY_CURRENT_USER
 
@@ -100,7 +100,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	return (_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext))
+	return _APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
 def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:

@@ -20,10 +20,10 @@ if not PROJECT_ID:
 
 
 def request(
-		path: str,
-		method=requests.get,
-		headers: dict[str, str] | None = None,
-		**kwargs,
+	path: str,
+	method=requests.get,
+	headers: dict[str, str] | None = None,
+	**kwargs,
 ) -> requests.Response:
 	if headers is None:
 		headers = {}

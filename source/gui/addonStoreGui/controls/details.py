@@ -29,8 +29,8 @@ if TYPE_CHECKING:
 
 
 class AddonDetails(
-		wx.Panel,
-		DpiScalingHelperMixinWithoutInit,
+	wx.Panel,
+	DpiScalingHelperMixinWithoutInit,
 ):
 	_labelSpace = " "  # em space, wider than regular space, for visual layout.
 
@@ -55,10 +55,10 @@ class AddonDetails(
 	Parent: "AddonStoreDialog"
 
 	def __init__(
-			self,
-			parent: "AddonStoreDialog",
-			detailsVM: AddonDetailsVM,
-			actionsContextMenu: _MonoActionsContextMenu,
+		self,
+		parent: "AddonStoreDialog",
+		detailsVM: AddonDetailsVM,
+		actionsContextMenu: _MonoActionsContextMenu,
 	):
 		self._detailsVM: AddonDetailsVM = detailsVM
 		self._actionsContextMenu = actionsContextMenu
@@ -129,7 +129,10 @@ class AddonDetails(
 		self.contents.Add(self.actionsButton)
 		self.actionsButton.Bind(
 			event=wx.EVT_BUTTON,
-			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(self, self.actionsButton.Position),
+			handler=lambda e: self._actionsContextMenu.popupContextMenuFromPosition(
+				self,
+				self.actionsButton.Position,
+			),
 		)
 
 		self.contents.AddSpacer(guiHelper.SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS)
@@ -212,15 +215,15 @@ class AddonDetails(
 			if numSelectedAddons > 1:
 				self.contentsPanel.Hide()
 				self.updateAddonName(
-        npgettext(
-         "addonStore",
-         # Translators: Header (usually the add-on name) when multiple add-ons are selected.
-         # In the add-on store dialog.
-         "{num} add-on selected.",
-         "{num} add-ons selected.",
-         numSelectedAddons,
-        ).format(num=numSelectedAddons),
-    )
+					npgettext(
+						"addonStore",
+						# Translators: Header (usually the add-on name) when multiple add-ons are selected.
+						# In the add-on store dialog.
+						"{num} add-on selected.",
+						"{num} add-ons selected.",
+						numSelectedAddons,
+					).format(num=numSelectedAddons),
+				)
 			elif not details:
 				self.contentsPanel.Hide()
 				if self._detailsVM._listVM._isLoading:
@@ -357,7 +360,7 @@ class AddonDetails(
 		detailsTextCtrl = self.otherDetailsTextCtrl
 
 		if detailsTextCtrl.GetValue():
-			detailsTextCtrl.AppendText('\n')
+			detailsTextCtrl.AppendText("\n")
 
 		self._addDetailsLabel(label)
 		detailsTextCtrl.SetDefaultStyle(self.defaultStyle)

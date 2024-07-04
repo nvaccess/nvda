@@ -7,7 +7,6 @@
 This module contains the instructions that check for and call UI Automation custom extensions.
 """
 
-
 from __future__ import annotations
 from dataclasses import dataclass
 import ctypes

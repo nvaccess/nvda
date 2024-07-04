@@ -17,6 +17,7 @@ class TestCheckPot(unittest.TestCase):
 
 	def setUp(self):
 		from ... import checkPot
+
 		self.checkPot = checkPot
 		self.saved_EXPECTED_MESSAGES_WITHOUT_COMMENTS = checkPot.EXPECTED_MESSAGES_WITHOUT_COMMENTS
 		checkPot.EXPECTED_MESSAGES_WITHOUT_COMMENTS = {

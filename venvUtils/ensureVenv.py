@@ -46,9 +46,9 @@ def askYesNoQuestion(message: str, default: bool) -> bool:
 		else:
 			answer = "y" if default else "n"
 			print(f"{question}{answer} (answered non-interactively)")
-		if answer == 'n':
+		if answer == "n":
 			return False
-		elif answer == 'y':
+		elif answer == "y":
 			return True
 		else:
 			continue  # ask again
@@ -63,7 +63,7 @@ def fetchRequirementsSet(path: str) -> Set[str]:
 	"""
 	with open(path, "r") as f:
 		lines = [x.strip() for x in f.readlines()]
-		lines = [x for x in lines if x and not x.isspace() and not x.startswith('#')]
+		lines = [x for x in lines if x and not x.isspace() and not x.startswith("#")]
 	return set(lines)
 
 
@@ -81,22 +81,35 @@ def populate():
 			os.path.join(venv_path, "scripts", "activate.bat"),
 			"&&",
 			# Ensure we have the latest version of pip
-			"py", "-m", "pip",
-			"install", "--upgrade", "pip",
+			"py",
+			"-m",
+			"pip",
+			"install",
+			"--upgrade",
+			"pip",
 			"&&",
 			# py2exe is not compatible with setuptools 70+
 			# wheel must be manually installed when creating an non-isolated build with a custom setuptools version.
-			"py", "-m", "pip",
-			"install", "setuptools==69.5.1", "wheel",
+			"py",
+			"-m",
+			"pip",
+			"install",
+			"setuptools==69.5.1",
+			"wheel",
 			"&&",
 			# Install required packages with pip
-			"py", "-m", "pip",
+			"py",
+			"-m",
+			"pip",
 			# "--no-build-isolation" is used to avoid issues with py2exe.
 			# When AppVeyor creates an isolated build environment, it uses a different version of setuptools
 			# that is incompatible with py2exe.
 			# Using --no-build-isolation ensures that the same version of setuptools is used in the build environment,
 			# however requires us manually installing the wheel package.
-			"install", "--no-build-isolation", "-r", requirements_path,
+			"install",
+			"--no-build-isolation",
+			"-r",
+			requirements_path,
 		],
 		check=True,
 		shell=True,
@@ -113,7 +126,8 @@ def createVenv():
 	subprocess.run(
 		[
 			sys.executable,
-			"-m", "venv",
+			"-m",
+			"venv",
 			"--clear",
 			venv_path,
 		],
@@ -140,10 +154,7 @@ def ensureVenvAndRequirements():
 	if not os.path.exists(venv_path):
 		print("Virtual environment does not exist.")
 		return createVenvAndPopulate()
-	if (
-		not os.path.exists(venv_python_version_path)
-		or not os.path.exists(venv_orig_requirements_path)
-	):
+	if not os.path.exists(venv_python_version_path) or not os.path.exists(venv_orig_requirements_path):
 		if askYesNoQuestion(
 			f"Virtual environment at {venv_path} probably not created by NVDA. "
 			"This directory must be removed before continuing. Should it be removed?",
@@ -174,7 +185,7 @@ def ensureVenvAndRequirements():
 		return populate()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
 	# Ensure we are not inside an already active Python virtual environment.
 	virtualEnv = os.getenv("VIRTUAL_ENV")
 	if virtualEnv:

@@ -30,7 +30,6 @@ except RuntimeError:
 
 @unique
 class _ExitAction(DisplayStringEnum):
-
 	EXIT = auto()
 	RESTART = auto()
 	RESTART_WITH_ADDONS_DISABLED = auto()
@@ -143,7 +142,10 @@ class ExitDialog(wx.Dialog):
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame
-				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+
+				if any(
+					getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo),
+				):
 					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
 						parent=mainFrame,
 						destPath=destPath,

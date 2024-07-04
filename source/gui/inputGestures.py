@@ -104,6 +104,7 @@ class _ScriptVM:
 
 		for g in scriptInfo.gestures:
 			self.gestures.append(_GestureVM(g))
+
 	# todo: Gestures could be sorted?
 
 	def __repr__(self):
@@ -150,11 +151,11 @@ class _CategoryVM:
 		for scriptName in sorted(scripts, key=strxfrm):
 			scriptInfo = scripts[scriptName]
 			self.scripts.append(
-       _ScriptVM(
-        displayName=scriptName,
-        scriptInfo=scriptInfo,
-       ),
-   )
+				_ScriptVM(
+					displayName=scriptName,
+					scriptInfo=scriptInfo,
+				),
+			)
 
 	def __repr__(self):
 		return f"Category: {self.displayName}"
@@ -217,10 +218,10 @@ class _EmuCategoryVM:
 			emuG = emuGestures[scriptName]
 			if isinstance(emuG, inputCore.KbEmuScriptInfo):
 				self.scripts.append(
-        _EmulatedGestureVM(
-         emuGestureInfo=emuG,
-        ),
-    )
+					_EmulatedGestureVM(
+						emuGestureInfo=emuG,
+					),
+				)
 			elif isinstance(emuG, inputCore.AllGesturesScriptInfo):
 				self.scripts.append(_ScriptVM(scriptName, emuG))
 			else:
@@ -232,16 +233,16 @@ class _EmuCategoryVM:
 		return self.pending
 
 	def finalisePending(
-			self,
-			scriptInfo: inputCore.AllGesturesScriptInfo,
+		self,
+		scriptInfo: inputCore.AllGesturesScriptInfo,
 	) -> _EmulatedGestureVM:
 		assert self.pending is not None
 		self.scripts.remove(self.pending)
 		return self._addEmulation(scriptInfo)
 
 	def _addEmulation(
-			self,
-			scriptInfo: inputCore.AllGesturesScriptInfo,
+		self,
+		scriptInfo: inputCore.AllGesturesScriptInfo,
 	) -> _EmulatedGestureVM:
 		emuGesture = self.removedKbEmulation.pop(scriptInfo.displayName, None)
 		if not emuGesture:
@@ -306,9 +307,7 @@ class _InputGesturesViewModel:
 				catIndex,
 				catVM.scripts.index(scriptVM),
 			)
-		return (
-			catIndex,
-		)
+		return (catIndex,)
 
 	def _fillAllGestures(self):
 		gestureMappings = _getAllGestureScriptInfo()
@@ -318,18 +317,18 @@ class _InputGesturesViewModel:
 			scripts = gestureMappings[catName]
 			if catName == inputCore.SCRCAT_KBEMU:
 				self.allGestures.append(
-        _EmuCategoryVM(
-         displayName=catName,
-         emuGestures=scripts,
-        ),
-    )
+					_EmuCategoryVM(
+						displayName=catName,
+						emuGestures=scripts,
+					),
+				)
 			else:
 				self.allGestures.append(
-        _CategoryVM(
-         displayName=catName,
-         scripts=scripts,
-        ),
-    )
+					_CategoryVM(
+						displayName=catName,
+						scripts=scripts,
+					),
+				)
 
 	def commitChanges(self):
 		gesturesToRemove = [
@@ -339,12 +338,15 @@ class _InputGesturesViewModel:
 			for gestureVM in scriptVM.removedGestures.values()
 		]
 
-		gesturesForRemovedKbEmu = list([
-			(gestureVM, scriptVM.scriptInfo)
-			for catVM in self.allGestures if isinstance(catVM, _EmuCategoryVM)
-			for scriptVM in catVM.removedKbEmulation.values()
-			for gestureVM in scriptVM.removedGestures.values()
-		])
+		gesturesForRemovedKbEmu = list(
+			[
+				(gestureVM, scriptVM.scriptInfo)
+				for catVM in self.allGestures
+				if isinstance(catVM, _EmuCategoryVM)
+				for scriptVM in catVM.removedKbEmulation.values()
+				for gestureVM in scriptVM.removedGestures.values()
+			],
+		)
 		didRemove = False
 		for gestureVM, scriptInfo in itertools.chain(gesturesToRemove, gesturesForRemovedKbEmu):
 			log.debug(
@@ -418,11 +420,7 @@ class _InputGesturesViewModel:
 			re.U | re.IGNORECASE,
 		)
 		for catVM in self.allGestures:
-			filteredScripts = [
-				scriptVM
-				for scriptVM in catVM.scripts
-				if pattern.match(scriptVM.displayName)
-			]
+			filteredScripts = [scriptVM for scriptVM in catVM.scripts if pattern.match(scriptVM.displayName)]
 			if filteredScripts:
 				# clone the catVM, but start empty.
 				filteredCat: Union[_CategoryVM, _EmuCategoryVM] = type(catVM)(catVM.displayName, {})
@@ -432,7 +430,6 @@ class _InputGesturesViewModel:
 
 
 class _GesturesTree(VirtualTree, wx.TreeCtrl):
-
 	def __init__(self, parent, gesturesVM: _InputGesturesViewModel):
 		self.gesturesVM = gesturesVM
 		super().__init__(
@@ -500,13 +497,13 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			)
 			return None
 		# ensure that the length of tuple is 3, missing elements replaced with None
-		nonesForMissingElements = ((None,) * (3 - len(selIdx)))
+		nonesForMissingElements = (None,) * (3 - len(selIdx))
 		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
 		return self.getData(selIdx)
 
 	def getData(
-			self,
-			index: Tuple[int, Optional[int], Optional[int]],
+		self,
+		index: Tuple[int, Optional[int], Optional[int]],
 	) -> Optional[_VmSelection]:
 		assert 3 == len(index) and index[0] is not None
 		if len(self.gesturesVM.filteredGestures) == 0:
@@ -753,6 +750,7 @@ class InputGesturesDialog(SettingsDialog):
 		# Use the last identifier, which is the most generic one
 		gestureToEmulate = gesture.identifiers[-1]
 		from globalCommands import GlobalCommands
+
 		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(
 			GlobalCommands,
 			kbGestureIdentifier=gestureToEmulate,
@@ -785,16 +783,19 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def onReset(self, evt):
-		if gui.messageBox(
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("""Are you sure you want to reset all gestures to their factory defaults?
+		if (
+			gui.messageBox(
+				# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+				_("""Are you sure you want to reset all gestures to their factory defaults?
 
 			All of your user defined gestures, whether previously set or defined during this session, will be lost.
 			This cannot be undone."""),
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("Reset gestures"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT,
-		) != wx.YES:
+				# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+				_("Reset gestures"),
+				style=wx.YES | wx.NO | wx.NO_DEFAULT,
+			)
+			!= wx.YES
+		):
 			return
 		inputCore.manager.userGestureMap.clear()
 		try:

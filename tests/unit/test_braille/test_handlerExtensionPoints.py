@@ -3,9 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the extension points in the braille module.
-"""
-
+"""Unit tests for the extension points in the braille module."""
 
 import braille
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
@@ -55,7 +53,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			self,
 			braille.filter_displaySize,
 			braille.handler._displaySize,  # The currently cached display size
-			20,   # The filter handler should change the display size to 40
+			20,  # The filter handler should change the display size to 40
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displaySize, expectedOutput)
 

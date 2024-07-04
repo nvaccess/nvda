@@ -39,13 +39,13 @@ class ReadThread(Thread):
 	"""Controls most of read operations and tries to reconnect when needed."""
 
 	def __init__(
-			self,
-			readFunction: Callable[[], None],
-			disableFunction: Callable[[], None],
-			event: Event,
-			dev: serial.Serial,
-			*args,
-			**kwargs,
+		self,
+		readFunction: Callable[[], None],
+		disableFunction: Callable[[], None],
+		event: Event,
+		dev: serial.Serial,
+		*args,
+		**kwargs,
 	):
 		"""Constructor.
 		@param readFunction: Handles read operations and reconnection.
@@ -73,8 +73,7 @@ class ReadThread(Thread):
 					self._event.wait(KC_INTERVAL)
 					continue
 				log.debug(
-					f"Port {self._dev.name} present, calling {self._readFunction.__name__} "
-					"to open it",
+					f"Port {self._dev.name} present, calling {self._readFunction.__name__} " "to open it",
 				)
 				self._readFunction()
 				if not self._dev.is_open:
@@ -145,9 +144,9 @@ class RepeatedTimer:
 	"""
 
 	def __init__(
-			self,
-			interval: float,
-			feedFunction: Callable[[], None],
+		self,
+		interval: float,
+		feedFunction: Callable[[], None],
 	):
 		"""Constructor.
 		@param interval: Checking frequency

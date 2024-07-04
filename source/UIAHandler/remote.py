@@ -51,15 +51,15 @@ def initialize(doRemote: bool, UIAClient: UIA.IUIAutomation):
 
 
 def terminate():
-	""" Terminates UIA remote operations support."""
+	"""Terminates UIA remote operations support."""
 	global _isSupported
 	_isSupported = False
 
 
 def msWord_getCustomAttributeValue(
-		docElement: UIA.IUIAutomationElement,
-		textRange: UIA.IUIAutomationTextRange,
-		customAttribID: int,
+	docElement: UIA.IUIAutomationElement,
+	textRange: UIA.IUIAutomationTextRange,
+	customAttribID: int,
 ) -> Optional[Any]:
 	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
@@ -70,7 +70,9 @@ def msWord_getCustomAttributeValue(
 		remoteDocElement = ra.newElement(docElement)
 		remoteTextRange = ra.newTextRange(textRange)
 		remoteCustomAttribValue = ra.newVariant()
-		extendedTextRangeIsSupported = remoteDocElement.isExtensionSupported(guid_msWord_extendedTextRangePattern)
+		extendedTextRangeIsSupported = remoteDocElement.isExtensionSupported(
+			guid_msWord_extendedTextRangePattern,
+		)
 		with ra.ifBlock(extendedTextRangeIsSupported.inverse()):
 			ra.logRuntimeMessage("docElement does not support extendedTextRangePattern")
 			ra.Return(None)
@@ -86,7 +88,9 @@ def msWord_getCustomAttributeValue(
 			ra.Return(None)
 		ra.logRuntimeMessage("got extendedTextRangePattern")
 		remoteExtendedTextRangePattern = remoteResult.asType(RemoteExtensionTarget)
-		customAttributeValueIsSupported = remoteExtendedTextRangePattern.isExtensionSupported(guid_msWord_getCustomAttributeValue)
+		customAttributeValueIsSupported = remoteExtendedTextRangePattern.isExtensionSupported(
+			guid_msWord_getCustomAttributeValue,
+		)
 		with ra.ifBlock(customAttributeValueIsSupported.inverse()):
 			ra.logRuntimeMessage("extendedTextRangePattern does not support getCustomAttributeValue")
 			ra.Return(None)
@@ -109,7 +113,7 @@ def msWord_getCustomAttributeValue(
 
 
 def collectAllHeadingsInTextRange(
-		textRange: UIA.IUIAutomationTextRange,
+	textRange: UIA.IUIAutomationTextRange,
 ) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
 	op = operation.Operation()
 
@@ -117,7 +121,9 @@ def collectAllHeadingsInTextRange(
 	def code(ra: remoteAPI.RemoteAPI):
 		remoteTextRange = ra.newTextRange(textRange, static=True)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
-			ra, remoteTextRange, TextUnit.Paragraph,
+			ra,
+			remoteTextRange,
+			TextUnit.Paragraph,
 		) as paragraphRange:
 			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
 			with ra.ifBlock(val.isInt()):
@@ -132,9 +138,9 @@ def collectAllHeadingsInTextRange(
 
 
 def findFirstHeadingInTextRange(
-		textRange: UIA.IUIAutomationTextRange,
-		wantedLevel: int | None = None,
-		reverse: bool = False,
+	textRange: UIA.IUIAutomationTextRange,
+	wantedLevel: int | None = None,
+	reverse: bool = False,
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
 	op = operation.Operation()
 
@@ -149,7 +155,10 @@ def findFirstHeadingInTextRange(
 			ra.logRuntimeMessage("Doing initial move")
 			remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
-			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse,
+			ra,
+			remoteTextRange,
+			TextUnit.Paragraph,
+			reverse=reverse,
 		) as paragraphRange:
 			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
 			with ra.ifBlock(val.isInt()):

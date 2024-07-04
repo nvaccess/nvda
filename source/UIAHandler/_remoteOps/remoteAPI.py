@@ -89,13 +89,13 @@ class RemoteAPI(builder._RemoteBase):
 		self.addCompiletimeComment(f"Yielding {remoteValue}")
 		self._op._yieldListOperand.append(remoteValue)
 
-	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
+	_newObject_RemoteType = TypeVar("_newObject_RemoteType", bound=RemoteBaseObject)
 
 	def _newObject(
-			self,
-			RemoteType: Type[_newObject_RemoteType],
-			value: Any,
-			static: bool = False,
+		self,
+		RemoteType: Type[_newObject_RemoteType],
+		value: Any,
+		static: bool = False,
 	) -> _newObject_RemoteType:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -135,9 +135,9 @@ class RemoteAPI(builder._RemoteBase):
 		return RemoteArray.createNew(self.rob)
 
 	def newElement(
-			self,
-			value: UIA.IUIAutomationElement | None = None,
-			static: bool = False,
+		self,
+		value: UIA.IUIAutomationElement | None = None,
+		static: bool = False,
 	) -> RemoteElement:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -150,9 +150,9 @@ class RemoteAPI(builder._RemoteBase):
 				return self._newObject(RemoteElement, value, static=static)
 
 	def newTextRange(
-			self,
-			value: UIA.IUIAutomationTextRange | None = None,
-			static: bool = False,
+		self,
+		value: UIA.IUIAutomationTextRange | None = None,
+		static: bool = False,
 	) -> RemoteTextRange:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -263,14 +263,14 @@ class RemoteAPI(builder._RemoteBase):
 		loopBlockInstruction.breakBranch = RelativeOffset(nextInstructionIndex - loopBlockInstructionIndex)
 		self._scopeInstructionJustExited = loopBlockInstruction
 
-	_range_intTypeVar = TypeVar('_range_intTypeVar', bound=RemoteIntBase)
+	_range_intTypeVar = TypeVar("_range_intTypeVar", bound=RemoteIntBase)
 
 	@remoteContextManager
 	def forEachNumInRange(
-			self,
-			start: _range_intTypeVar | int,
-			stop: _range_intTypeVar | int,
-			step: _range_intTypeVar | int = 1,
+		self,
+		start: _range_intTypeVar | int,
+		stop: _range_intTypeVar | int,
+		step: _range_intTypeVar | int = 1,
 	) -> Generator[RemoteIntBase, None, None]:
 		RemoteType: Type[RemoteIntBase] = RemoteInt
 		for arg in (start, stop, step):
@@ -287,8 +287,8 @@ class RemoteAPI(builder._RemoteBase):
 
 	@remoteContextManager
 	def forEachItemInArray(
-			self,
-			array: RemoteArray,
+		self,
+		array: RemoteArray,
 	) -> Generator[RemoteVariant, None, None]:
 		with self.forEachNumInRange(0, array.size()) as index:
 			yield array[index]

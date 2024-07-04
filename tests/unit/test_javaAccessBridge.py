@@ -59,7 +59,7 @@ MODIFIER_COMBINATIONS = [
 		AccessibleKeystroke.SHIFT: "shift",
 	},
 ]
-BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord("A"), ord("Z") + 1)]
 FKEY_SHORTCUTS = [chr(x) for x in range(1, 25)]
 
 

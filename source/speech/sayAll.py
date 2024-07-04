@@ -45,10 +45,10 @@ SayAllHandler = None
 
 
 def initialize(
-		speakFunc: Callable[[SpeechSequence], None],
-		speakObject: 'speakObject',
-		getTextInfoSpeech: 'getTextInfoSpeech',
-		SpeakTextInfoState: 'SpeakTextInfoState',
+	speakFunc: Callable[[SpeechSequence], None],
+	speakObject: "speakObject",
+	getTextInfoSpeech: "getTextInfoSpeech",
+	SpeakTextInfoState: "SpeakTextInfoState",
 ):
 	log.debug("Initializing sayAllHandler")
 	global SayAllHandler
@@ -62,25 +62,25 @@ def initialize(
 
 class _SayAllHandler:
 	def __init__(
-			self,
-			speechWithoutPausesInstance: SpeechWithoutPauses,
-			speakObject: 'speakObject',
-			getTextInfoSpeech: 'getTextInfoSpeech',
-			SpeakTextInfoState: 'SpeakTextInfoState',
+		self,
+		speechWithoutPausesInstance: SpeechWithoutPauses,
+		speakObject: "speakObject",
+		getTextInfoSpeech: "getTextInfoSpeech",
+		SpeakTextInfoState: "SpeakTextInfoState",
 	):
 		self.lastSayAllMode = None
 		self.speechWithoutPausesInstance = speechWithoutPausesInstance
 		#: The active say all manager.
 		#: This is a weakref because the manager should be allowed to die once say all is complete.
-		self._getActiveSayAll = lambda: None  # noqa: Return None when called like a dead weakref.
+		self._getActiveSayAll = lambda: None  # Return None when called like a dead weakref.
 		self._speakObject = speakObject
 		self._getTextInfoSpeech = getTextInfoSpeech
 		self._makeSpeakTextInfoState = SpeakTextInfoState
 
 	def stop(self):
-		'''
+		"""
 		Stops any active objects reader and resets the SayAllHandler's SpeechWithoutPauses instance
-		'''
+		"""
 		active = self._getActiveSayAll()
 		if active:
 			active.stop()
@@ -93,17 +93,17 @@ class _SayAllHandler:
 		"""
 		return bool(self._getActiveSayAll())
 
-	def readObjects(self, obj: 'NVDAObjects.NVDAObject'):
+	def readObjects(self, obj: "NVDAObjects.NVDAObject"):
 		reader = _ObjectsReader(self, obj)
 		self._getActiveSayAll = weakref.ref(reader)
 		reader.next()
 
 	def readText(
-			self,
-			cursor: CURSOR,
-			startPos: Optional[textInfos.TextInfo] = None,
-			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
-			shouldUpdateCaret: bool = True,
+		self,
+		cursor: CURSOR,
+		startPos: Optional[textInfos.TextInfo] = None,
+		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		shouldUpdateCaret: bool = True,
 	) -> None:
 		self.lastSayAllMode = cursor
 		try:
@@ -123,19 +123,18 @@ class _SayAllHandler:
 
 
 class _ObjectsReader(garbageHandler.TrackedObject):
-
-	def __init__(self, handler: _SayAllHandler, root: 'NVDAObjects.NVDAObject'):
+	def __init__(self, handler: _SayAllHandler, root: "NVDAObjects.NVDAObject"):
 		self.handler = handler
 		self.walker = self.walk(root)
 		self.prevObj = None
 
-	def walk(self, obj: 'NVDAObjects.NVDAObject'):
+	def walk(self, obj: "NVDAObjects.NVDAObject"):
 		yield obj
-		child=obj.simpleFirstChild
+		child = obj.simpleFirstChild
 		while child:
 			for descendant in self.walk(child):
 				yield descendant
-			child=child.simpleNext
+			child = child.simpleNext
 
 	def next(self):
 		if not self.walker:
@@ -185,6 +184,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 	10. If there are no more pages, we're finished.
 	11. If there is another page, L{turnPage} calls L{nextLine}.
 	"""
+
 	MAX_BUFFERED_LINES = 10
 
 	def __init__(self, handler: _SayAllHandler):
@@ -199,12 +199,10 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		self.initialIteration = True
 
 	@abstractmethod
-	def getInitialTextInfo(self) -> textInfos.TextInfo:
-		...
+	def getInitialTextInfo(self) -> textInfos.TextInfo: ...
 
 	@abstractmethod
-	def updateCaret(self, updater: textInfos.TextInfo) -> None:
-		...
+	def updateCaret(self, updater: textInfos.TextInfo) -> None: ...
 
 	def shouldReadInitialPosition(self) -> bool:
 		return False
@@ -348,11 +346,13 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		# we might switch synths too early and truncate the final speech.
 		# We do this by putting a CallbackCommand at the start of a new utterance.
 		cb = CallbackCommand(self.stop, name="say-all:stop")
-		self.handler.speechWithoutPausesInstance.speakWithoutPauses([
-			EndUtteranceCommand(),
-			cb,
-			EndUtteranceCommand(),
-		])
+		self.handler.speechWithoutPausesInstance.speakWithoutPauses(
+			[
+				EndUtteranceCommand(),
+				cb,
+				EndUtteranceCommand(),
+			],
+		)
 
 	def stop(self):
 		if not self.reader:
@@ -388,11 +388,11 @@ class _ReviewTextReader(_TextReader):
 
 class _TableTextReader(_CaretTextReader):
 	def __init__(
-			self,
-			handler: _SayAllHandler,
-			startPos: Optional[textInfos.TextInfo] = None,
-			nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
-			shouldUpdateCaret: bool = True,
+		self,
+		handler: _SayAllHandler,
+		startPos: Optional[textInfos.TextInfo] = None,
+		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
+		shouldUpdateCaret: bool = True,
 	):
 		self.startPos = startPos
 		self.nextLineFunc = nextLineFunc
@@ -422,6 +422,6 @@ class _TableTextReader(_CaretTextReader):
 
 
 class SayAllProfileTrigger(config.ProfileTrigger):
-	"""A configuration profile trigger for when say all is in progress.
-	"""
+	"""A configuration profile trigger for when say all is in progress."""
+
 	spec = "sayAll"

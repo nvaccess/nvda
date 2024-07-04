@@ -77,8 +77,8 @@ def formatForGUI(versionTuple: AddonApiVersionT) -> str:
 		year, major, minor = versionTuple
 		return buildVersion.formatVersionForGUI(year, major, minor)
 	except (
-			ValueError,  # Too few/many values to unpack
-			TypeError,  # versionTuple is None or some other incorrect type
+		ValueError,  # Too few/many values to unpack
+		TypeError,  # versionTuple is None or some other incorrect type
 	):
 		# This path should never be hit. But the appearance of "unknown" in the GUI is a better outcome
 		# than an exception and unusable dialog.

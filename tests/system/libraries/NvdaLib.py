@@ -12,6 +12,7 @@ It contains helper methods for system tests, most specifically related to NVDA
 This is in contrast with the `SystemTestSpy/speechSpy*.py files,
 which provide library functions related to monitoring NVDA and asserting NVDA output.
 """
+
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from datetime import datetime as _datetime
 from os.path import (
@@ -51,12 +52,11 @@ from robot.libraries.Process import Process as _Process
 from robot.libraries.Remote import Remote as _Remote
 
 builtIn: BuiltIn = BuiltIn()
-opSys: _OpSysLib = _getLib('OperatingSystem')
-process: _Process = _getLib('Process')
+opSys: _OpSysLib = _getLib("OperatingSystem")
+process: _Process = _getLib("Process")
 
 
 class _NvdaLocationData:
-
 	def __init__(self):
 		# robot is expected to be run from the NVDA repo root directory. We want all repo specific
 		# paths to be relative to this. This would allow us to change where it is run from if we decided to.
@@ -76,10 +76,12 @@ class _NvdaLocationData:
 			if self._installFilePath is not None:
 				self.NVDAInstallerCommandline = f'"{str(self._installFilePath)}"'
 		else:
-			raise AssertionError("RobotFramework should be run with argument: '-v whichNVDA:[source|installed]'")
+			raise AssertionError(
+				"RobotFramework should be run with argument: '-v whichNVDA:[source|installed]'",
+			)
 
 		self.profileDir = _pJoin(self.stagingDir, "nvdaProfile")
-		self.logPath = _pJoin(self.profileDir, 'nvda.log')
+		self.logPath = _pJoin(self.profileDir, "nvda.log")
 		self.preservedLogsDir = _pJoin(
 			builtIn.get_variable_value("${OUTPUT DIR}"),
 			"nvdaTestRunLogs",
@@ -94,8 +96,8 @@ class _NvdaLocationData:
 			return None  # Py2exe not used for source.
 
 	def findInstalledNVDAPath(self) -> _Optional[str]:
-		NVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'nvda', 'nvda.exe')
-		legacyNVDAFilePath = _pJoin(_expandvars('%PROGRAMFILES%'), 'NVDA', 'nvda.exe')
+		NVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "nvda", "nvda.exe")
+		legacyNVDAFilePath = _pJoin(_expandvars("%PROGRAMFILES%"), "NVDA", "nvda.exe")
 		exeErrorMsg = f"Unable to find installed NVDA exe. Paths tried: {NVDAFilePath}, {legacyNVDAFilePath}"
 		try:
 			opSys.file_should_exist(NVDAFilePath)
@@ -126,6 +128,7 @@ class NvdaLib:
 	Notable:
 	- NvdaLib.nvdaSpy is a library instance for getting speech and other information out of NVDA
 	"""
+
 	def __init__(self):
 		self.nvdaSpy: _Optional["NVDASpyLib"] = None
 		self.nvdaHandle: _Optional[int] = None
@@ -154,9 +157,9 @@ class NvdaLib:
 			_locations.stagingDir,
 		)
 
-	nvdaProcessAlias = 'nvdaAlias'
+	nvdaProcessAlias = "nvdaAlias"
 	_spyServerPort = 8270  # is `registered by IANA` for remote server usage. Two ASCII values:'RF'
-	_spyServerURI = f'http://127.0.0.1:{_spyServerPort}'
+	_spyServerURI = f"http://127.0.0.1:{_spyServerPort}"
 	_spyAlias = _nvdaSpyAlias
 
 	def _startNVDAProcess(self):
@@ -168,8 +171,8 @@ class NvdaLib:
 			f"{_locations.baseNVDACommandline}"
 			f" --debug-logging"
 			f" -r"
-			f" -c \"{_locations.profileDir}\""
-			f" --log-file \"{_locations.logPath}\""
+			f' -c "{_locations.profileDir}"'
+			f' --log-file "{_locations.logPath}"'
 		)
 		self.nvdaHandle = handle = process.start_process(
 			command,
@@ -189,8 +192,8 @@ class NvdaLib:
 			f"{_locations.NVDAInstallerCommandline}"
 			f" --debug-logging"
 			f" -r"
-			f" -c \"{_locations.profileDir}\""
-			f" --log-file \"{_locations.logPath}\""
+			f' -c "{_locations.profileDir}"'
+			f' --log-file "{_locations.logPath}"'
 		)
 		self.nvdaHandle = handle = process.start_process(
 			command,
@@ -211,7 +214,7 @@ class NvdaLib:
 		Instead we wait until the remote server is available before importing the library and continuing.
 		"""
 
-		builtIn.log(f"Waiting for {self._spyAlias} to be available at: {self._spyServerURI}", level='DEBUG')
+		builtIn.log(f"Waiting for {self._spyAlias} to be available at: {self._spyServerURI}", level="DEBUG")
 		# Importing the 'Remote' library always succeeds, even when a connection can not be made.
 		# If that happens, then some 'Remote' keyword will fail at some later point.
 		# therefore we use '_testRemoteServer' to ensure that we can in fact connect before proceeding.
@@ -221,7 +224,7 @@ class NvdaLib:
 			intervalBetweenSeconds=DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 			errorMessage=f"Unable to connect to {self._spyAlias}",
 		)
-		builtIn.log(f"Connecting to {self._spyAlias}", level='DEBUG')
+		builtIn.log(f"Connecting to {self._spyAlias}", level="DEBUG")
 		# If any remote call takes longer than this, the connection will be closed!
 		maxRemoteKeywordDurationSeconds = 30
 		builtIn.import_library(
@@ -233,7 +236,7 @@ class NvdaLib:
 			"WITH NAME",
 			self._spyAlias,
 		)
-		builtIn.log(f"Getting {self._spyAlias} library instance", level='DEBUG')
+		builtIn.log(f"Getting {self._spyAlias} library instance", level="DEBUG")
 		self.nvdaSpy = self._addMethodsToSpy(builtIn.get_library_instance(self._spyAlias))
 		# Ensure that keywords timeout before `timeout` given to `Remote` library,
 		# otherwise we lose control over NVDA.
@@ -241,20 +244,20 @@ class NvdaLib:
 
 	@staticmethod
 	def _addMethodsToSpy(remoteLib: _Remote):
-		""" Adds a method for each keywords on the remote library.
+		"""Adds a method for each keywords on the remote library.
 		@param remoteLib: the library to augment with methods.
 		@rtype: SystemTestSpy.speechSpyGlobalPlugin.NVDASpyLib
 		@return: The library augmented with methods for all keywords.
 		"""
+
 		# Add methods back onto the lib so they can be called directly rather than manually calling run_keyword
 		def _makeKeywordCaller(lib, keyword):
 			def runKeyword(*args, **kwargs):
 				builtIn.log(
-					f"{keyword}"
-					f"{f' {args}' if args else ''}"
-					f"{f' {kwargs}' if kwargs else ''}",
+					f"{keyword}" f"{f' {args}' if args else ''}" f"{f' {kwargs}' if kwargs else ''}",
 				)
 				return lib.run_keyword(keyword, args, kwargs)
+
 			return runKeyword
 
 		for name in remoteLib.get_keyword_names():
@@ -287,8 +290,8 @@ class NvdaLib:
 					(["debugLog", "MSAA"], True),
 					(["debugLog", "UIA"], True),
 					(["debugLog", "timeSinceInput"], True),
-    ],
-   )
+				],
+			)
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
 		self.lastNVDAStart = _datetime.utcnow()
@@ -296,7 +299,7 @@ class NvdaLib:
 		self.setup_nvda_profile(settingsFileName, gesturesFileName)
 		builtIn.log("Config copied", level="DEBUG")  # observe timing of the startup
 		nvdaProcessHandle = self._startNVDAProcess()
-		builtIn.log("Started NVDA process", level="DEBUG")   # observe timing of the startup
+		builtIn.log("Started NVDA process", level="DEBUG")  # observe timing of the startup
 		process.process_should_be_running(nvdaProcessHandle)
 		self._connectToRemoteServer()
 		builtIn.log("Connected to RF remote server", level="DEBUG")  # observe timing of the startup
@@ -312,10 +315,10 @@ class NvdaLib:
 			_locations.logPath,
 			saveToPath,
 		)
-		builtIn.log(f"Log saved to: {saveToPath}", level='DEBUG')
+		builtIn.log(f"Log saved to: {saveToPath}", level="DEBUG")
 
 	def save_py2exe_boot_log(self):
-		""" If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
+		"""If a dialog shows: Errors in "nvda.exe", see the logfile at <path> for details.
 		This orginates from
 		py2exe boot logs are saved to
 		${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-py2exe-nvda.log
@@ -330,11 +333,11 @@ class NvdaLib:
 			copyFrom,
 			saveToPath,
 		)
-		builtIn.log(f"py2exe log saved to: {saveToPath}", level='DEBUG')
+		builtIn.log(f"py2exe log saved to: {saveToPath}", level="DEBUG")
 
 	def create_preserved_test_output_filename(self, fileName):
 		"""EG for nvda.log path will become:
-			${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log
+		${OUTPUT DIR}/nvdaTestRunLogs/${SUITE NAME}-${TEST NAME}-nvda.log
 		"""
 		return _pJoin(_locations.preservedLogsDir, self._createTestIdFileName(fileName))
 
@@ -376,8 +379,8 @@ class NvdaLib:
 
 	@staticmethod
 	def check_for_crash_dump(
-			since: _Optional[_datetime],
-			overridePath: _Optional[str] = None,
+		since: _Optional[_datetime],
+		overridePath: _Optional[str] = None,
 	) -> _Optional[str]:
 		"""
 		Checks if a crash.dmp exits and returns the crash dmp path if so
@@ -408,7 +411,7 @@ class NvdaLib:
 
 
 def getSpyLib() -> "NVDASpyLib":
-	""" Gets the spy library instance. This has been augmented with methods for all supported keywords.
+	"""Gets the spy library instance. This has been augmented with methods for all supported keywords.
 	Requires NvdaLib and nvdaSpy (remote library - see speechSpyGlobalPlugin) to be initialised.
 	On failure check order of keywords in Robot log and NVDA log for failures.
 	@return: Remote NVDA spy Robot Framework library.

@@ -13,7 +13,6 @@ from winAPI._displayTracking import (
 
 
 class Test_UpdateOrientationState(unittest.TestCase):
-
 	def test_orientationChange_landscape(self):
 		# Simulate a 90deg rotation
 		# or a new monitor with a different orientation.

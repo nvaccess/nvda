@@ -8,6 +8,7 @@ It allows tests to get information out of NVDA.
 It is copied into the (system test specific) NVDA profile directory. It becomes the '__init__.py' file as part
 of a package.
 """
+
 import gettext
 import typing
 from typing import (
@@ -35,6 +36,7 @@ import os
 
 SpeechIndexT = int
 
+
 def _importRobotRemoteServer() -> typing.Type:
 	log.debug(f"before path mod: {sys.path}")
 	# Get the path to the top of the package
@@ -43,21 +45,25 @@ def _importRobotRemoteServer() -> typing.Type:
 	sys.path.append(os.path.join(TOP_DIR, "libs"))
 	log.debug(f"after path mod: {sys.path}")
 	from robotremoteserver import RobotRemoteServer
+
 	return RobotRemoteServer
 
 
 class NVDASpyLib:
-	""" Robot Framework Library to spy on NVDA during system tests.
+	"""Robot Framework Library to spy on NVDA during system tests.
 	Used to determine if NVDA has finished starting, and various ways of getting speech output.
 	All public methods are part of the Robot Library
 	"""
+
 	SPEECH_HAS_FINISHED_SECONDS: float = 1.0
 	_brailleCellCount: int = 120
 
 	def __init__(self):
 		# speech cache is ordered temporally, oldest at low indexes, most recent at highest index.
 		self._nvdaSpeech_requiresLock = [  # requires thread locking before read/write
-			[""],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
+			[
+				"",
+			],  # initialise with an empty string, this allows for access via [-1]. This is equiv to no speech.
 		]
 		self._lastSpeechTime_requiresLock = _timer()
 		#: Lock to protect members that are written to in _onNvdaSpeech.
@@ -79,12 +85,14 @@ class NVDASpyLib:
 
 	def _registerWithExtensionPoints(self):
 		from core import postNvdaStartup
+
 		postNvdaStartup.register(self._onNvdaStartupComplete)
 
 		# This file (`speechSpyGlobalPlugin.py`) is moved to
 		# "scratchpad/globalPlugins/speechSpyGlobalPlugin/__init__.py"
 		# Import path must be valid after `speechSpySynthDriver.py` is moved to "scratchpad/synthDrivers/"
 		from synthDrivers.speechSpySynthDriver import post_speech
+
 		post_speech.register(self._onNvdaSpeech)
 
 	ConfKeyPath = typing.List[str]
@@ -97,6 +105,7 @@ class NVDASpyLib:
 
 	def set_configValue(self, keyPath: ConfKeyPath, val: ConfKeyVal):
 		import config
+
 		if not keyPath or len(keyPath) < 1:
 			raise ValueError("Key path not provided")
 		penultimateConf = config.conf
@@ -106,14 +115,15 @@ class NVDASpyLib:
 		penultimateConf[ultimateKey] = val
 
 	def assignGesture(
-			self,
-			gesture: str,
-			module: str,
-			className: str,
-			script: Optional[str],
-			replace: bool = False,
+		self,
+		gesture: str,
+		module: str,
+		className: str,
+		script: Optional[str],
+		replace: bool = False,
 	):
 		import inputCore
+
 		inputCore.manager.userGestureMap.add(
 			gesture,
 			module,
@@ -126,14 +136,16 @@ class NVDASpyLib:
 
 	def override_translationString(self, invariantString: str, replacementString: str):
 		import languageHandler
+
 		if not self.fakeTranslations:
+
 			class Translation_Fake(gettext.NullTranslations):
 				originalTranslationFunction: Optional
 				translationResults: typing.Dict[str, str]
 
 				def __init__(
-						self,
-						originalTranslationFunction: Optional,
+					self,
+					originalTranslationFunction: Optional,
 				):
 					self.originalTranslationFunction = originalTranslationFunction
 					self.translationResults = {}
@@ -159,20 +171,24 @@ class NVDASpyLib:
 
 	def queueNVDAMainThreadCrash(self):
 		from queueHandler import queueFunction, eventQueue
+
 		queueFunction(eventQueue, _crashNVDA)
 
 	def queueNVDAIoThreadCrash(self):
 		from hwIo import bgThread
+
 		bgThread.queueAsApc(_crashNVDA)
 
 	def queueNVDAUIAHandlerThreadCrash(self):
 		from UIAHandler import handler
+
 		handler.MTAThreadQueue.put(_crashNVDA)
 
 	# callbacks for extension points
 	def _onNvdaStartupComplete(self):
 		self._isNvdaStartupComplete = True
 		import braille
+
 		braille.filter_displaySize.register(self.getBrailleCellCount)
 		braille.pre_writeCells.register(self._onNvdaBraille)
 
@@ -200,14 +216,14 @@ class NVDASpyLib:
 	@staticmethod
 	def _getJoinedBaseStringsFromCommands(speechCommandArray) -> str:
 		baseStrings = [c for c in speechCommandArray if isinstance(c, str)]
-		return ''.join(baseStrings).strip()
+		return "".join(baseStrings).strip()
 
 	def _getSpeechAtIndex(self, speechIndex):
 		with self._speechLock:
 			return self._getJoinedBaseStringsFromCommands(self._nvdaSpeech_requiresLock[speechIndex])
 
 	def get_speech_at_index_until_now(self, speechIndex: int) -> str:
-		""" All speech from (and including) the index until now.
+		"""All speech from (and including) the index until now.
 		@param speechIndex:
 		@return: The speech joined together, see L{_getJoinedBaseStringsFromCommands}
 		"""
@@ -258,7 +274,7 @@ class NVDASpyLib:
 			return self._nvdaBraille_requiresLock[brailleIndex]
 
 	def get_braille_at_index_until_now(self, brailleIndex: int) -> str:
-		""" All raw braille text from (and including) the index until now.
+		"""All raw braille text from (and including) the index until now.
 		@param brailleIndex:
 		@return: The raw text, each update on a new line
 		"""
@@ -275,6 +291,7 @@ class NVDASpyLib:
 		if threading.get_ident() != core.mainThreadId:
 			log.warning("RF lib error, must be called on main thread.")
 		import api
+
 		obj = api.getNavigatorObject()
 		if hasattr(obj, "devInfo"):
 			log.info("Developer info for navigator object:\n%s" % "\n".join(obj.devInfo))
@@ -347,16 +364,15 @@ class NVDASpyLib:
 		return self._allSpeechStartIndex
 
 	def get_next_speech_index(self) -> SpeechIndexT:
-		""" @return: the next index that will be used.
-		"""
+		"""@return: the next index that will be used."""
 		return self.get_last_speech_index() + 1
 
 	def _has_speech_occurred_before_timeout(
-			self,
-			speech: str,
-			afterIndex: Optional[int],
-			maxWaitSeconds: float,
-			intervalBetweenSeconds: float,
+		self,
+		speech: str,
+		afterIndex: Optional[int],
+		maxWaitSeconds: float,
+		intervalBetweenSeconds: float,
 	) -> Tuple[bool, Optional[int]]:
 		"""
 		@param speech: The speech to expect.
@@ -374,11 +390,11 @@ class NVDASpyLib:
 		)
 
 	def wait_for_specific_speech_no_raise(
-			self,
-			speech: str,
-			afterIndex: Optional[int] = None,
-			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+		self,
+		speech: str,
+		afterIndex: Optional[int] = None,
+		maxWaitSeconds: float = 5.0,
+		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> Optional[int]:
 		"""
 		@param speech: The speech to expect.
@@ -398,11 +414,11 @@ class NVDASpyLib:
 		return speechIndex
 
 	def wait_for_specific_speech(
-			self,
-			speech: str,
-			afterIndex: Optional[int] = None,
-			maxWaitSeconds: float = 5.0,
-			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+		self,
+		speech: str,
+		afterIndex: Optional[int] = None,
+		maxWaitSeconds: float = 5.0,
+		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> int:
 		"""
 		@param speech: The speech to expect.
@@ -426,11 +442,11 @@ class NVDASpyLib:
 		return speechIndex
 
 	def ensure_speech_did_not_occur(
-			self,
-			speech: str,
-			afterIndex: Optional[int] = None,
-			maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
-			intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
+		self,
+		speech: str,
+		afterIndex: Optional[int] = None,
+		maxWaitSeconds: float = SPEECH_HAS_FINISHED_SECONDS,
+		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	) -> None:
 		"""
 		@param speech: The speech to check for.
@@ -454,10 +470,10 @@ class NVDASpyLib:
 			)
 
 	def wait_for_speech_to_finish(
-			self,
-			maxWaitSeconds=5.0,
-			speechStartedIndex: Optional[int] = None,
-			errorMessage: Optional[str] = "Speech did not finish before timeout",
+		self,
+		maxWaitSeconds=5.0,
+		speechStartedIndex: Optional[int] = None,
+		errorMessage: Optional[str] = "Speech did not finish before timeout",
 	) -> bool:
 		"""speechStartedIndex should generally be fetched with get_next_speech_index
 		@param errorMessage: Supply None to bypass assert.
@@ -470,9 +486,9 @@ class NVDASpyLib:
 		return success
 
 	def wait_for_braille_update(
-			self,
-			nextBrailleIndex: int,
-			maxWaitSeconds=5.0,
+		self,
+		nextBrailleIndex: int,
+		maxWaitSeconds=5.0,
 	):
 		"""Wait until there is at least a single update.
 		@note there may be subsequent braille updates. This method does not confirm updates are finished.
@@ -487,8 +503,7 @@ class NVDASpyLib:
 		return self._getBrailleAtIndex(-1)
 
 	def get_next_braille_index(self) -> int:
-		""" @return: the next index that will be used.
-		"""
+		"""@return: the next index that will be used."""
 		return self.get_last_braille_index() + 1
 
 	def emulateKeyPress(self, kbIdentifier: str, blockUntilProcessed=True):
@@ -572,5 +587,4 @@ def _crashNVDA(param: Optional[int] = None):
 
 
 GlobalPlugin = SystemTestSpyServer
-GlobalPlugin.__gestures = {
-}
+GlobalPlugin.__gestures = {}

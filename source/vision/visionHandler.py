@@ -9,6 +9,7 @@
 The vision handler is the core of the vision framework.
 See the documentation of L{VisionHandler} for more details about what it does.
 """
+
 from . import providerInfo
 from .constants import Context
 from .providerBase import VisionEnhancementProvider
@@ -26,8 +27,8 @@ from . import exceptions
 
 
 def _getProviderClass(
-		moduleName: str,
-		caseSensitive: bool = True,
+	moduleName: str,
+	caseSensitive: bool = True,
 ) -> Type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
@@ -39,7 +40,7 @@ def _getProviderClass(
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-			if name.startswith('_') or name.lower() != moduleName.lower():
+			if name.startswith("_") or name.lower() != moduleName.lower():
 				continue
 			return importlib.import_module(
 				"visionEnhancementProviders.%s" % name,
@@ -51,7 +52,7 @@ def _getProviderClass(
 
 def _getProvidersFromFileSystem():
 	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-		if moduleName.startswith('_'):
+		if moduleName.startswith("_"):
 			continue
 		try:
 			#  Get each piece of info in a new statement so any exceptions raised identifies the line correctly.
@@ -102,6 +103,7 @@ class VisionHandler(AutoPropertyObject):
 	def _getBuiltInProviderIds(self):
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
+
 		return [
 			NVDAHighlighterSettings.getId(),
 			ScreenCurtainSettings.getId(),
@@ -125,9 +127,9 @@ class VisionHandler(AutoPropertyObject):
 		self._allProviders = list(allProviders)
 
 	def getProviderList(
-			self,
-			onlyStartable: bool = True,
-			reloadFromSystem: bool = False,
+		self,
+		onlyStartable: bool = True,
+		reloadFromSystem: bool = False,
 	) -> List[providerInfo.ProviderInfo]:
 		"""Gets a list of available vision enhancement provider information
 		@param onlyStartable: excludes all providers for which the check method returns C{False}.
@@ -162,28 +164,25 @@ class VisionHandler(AutoPropertyObject):
 		return list(self._providers.values())
 
 	def getActiveProviderInfos(self) -> List[providerInfo.ProviderInfo]:
-		activeProviderInfos = [
-			self.getProviderInfo(p) for p in self._providers
-		]
+		activeProviderInfos = [self.getProviderInfo(p) for p in self._providers]
 		return list(activeProviderInfos)
 
 	def getConfiguredProviderInfos(self) -> List[providerInfo.ProviderInfo]:
 		configuredProviderInfos: List[providerInfo.ProviderInfo] = [
-			p for p in self._allProviders
-			if p.providerClass.isEnabledInConfig()
+			p for p in self._allProviders if p.providerClass.isEnabledInConfig()
 		]
 		return configuredProviderInfos
 
 	def getProviderInstance(
-			self,
-			provider: providerInfo.ProviderInfo,
+		self,
+		provider: providerInfo.ProviderInfo,
 	) -> Optional[VisionEnhancementProvider]:
 		return self._providers.get(provider.providerId)
 
 	def terminateProvider(
-			self,
-			provider: providerInfo.ProviderInfo,
-			saveSettings: bool = True,
+		self,
+		provider: providerInfo.ProviderInfo,
+		saveSettings: bool = True,
 	) -> None:
 		"""Terminates a currently active provider.
 		When termination fails, an exception is raised.
@@ -220,14 +219,17 @@ class VisionHandler(AutoPropertyObject):
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
-				log.error(f"Error while registering to extension points for provider {providerId}", exc_info=True)
+				log.error(
+					f"Error while registering to extension points for provider {providerId}",
+					exc_info=True,
+				)
 		if exception:
 			raise exception
 
 	def initializeProvider(
-			self,
-			provider: providerInfo.ProviderInfo,
-			temporary: bool = False,
+		self,
+		provider: providerInfo.ProviderInfo,
+		temporary: bool = False,
 	) -> None:
 		"""
 		Enables and activates the supplied provider.
@@ -270,8 +272,9 @@ class VisionHandler(AutoPropertyObject):
 					providerInst.terminate()
 				except Exception:
 					log.error(
-						f"Error terminating provider {providerId} after registering to extension points", exc_info=True,
-     )
+						f"Error terminating provider {providerId} after registering to extension points",
+						exc_info=True,
+					)
 				raise registerEventExtensionPointsException
 		if not temporary:
 			providerInst.enableInConfig(True)
@@ -360,7 +363,7 @@ class VisionHandler(AutoPropertyObject):
 			# focus/review hasn't yet been initialized.
 			return
 		self.handleGainFocus(api.getFocusObject())
-	
+
 	def initialNavigatorObject(self) -> None:
 		"""Handles the current navigator object when the provider is initialized.
 		This function notifies an extension point; thus it can raise any type of exception.

@@ -21,18 +21,19 @@ def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) ->
 	UIAControlType = obj.UIAElement.cachedControlType
 	if UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
 		clsList.insert(0, SysListViewList)
-	elif UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId and isinstance(obj.parent, SysListViewList):
+	elif UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId and isinstance(
+		obj.parent,
+		SysListViewList,
+	):
 		clsList.insert(0, SysListViewItem)
 		if obj.parent._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_IsTablePatternAvailablePropertyId):
 			clsList.insert(0, RowWithFakeNavigation)
 
 
-class SysListViewList(UIA):
-	...
+class SysListViewList(UIA): ...
 
 
 class SysListViewItem(ListItem):
-
 	def _get_name(self) -> str:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount <= 1:
@@ -52,7 +53,8 @@ class SysListViewItem(ListItem):
 			columnHeaderTextList = []
 			if (
 				name
-				and config.conf['documentFormatting']['reportTableHeaders'] in (
+				and config.conf["documentFormatting"]["reportTableHeaders"]
+				in (
 					ReportTableHeaders.ROWS_AND_COLUMNS,
 					ReportTableHeaders.COLUMNS,
 				)
@@ -107,12 +109,12 @@ class SysListViewItem(ListItem):
 		except (COMError, NotImplementedError):
 			pass
 		if itemIndex > 0:
-			info['indexInGroup'] = itemIndex
+			info["indexInGroup"] = itemIndex
 			itemCount = 0
 			try:
 				itemCount = self.parent.rowCount
 			except (COMError, NotImplementedError):
 				pass
 			if itemCount > 0:
-				info['similarItemsInGroup'] = itemCount
+				info["similarItemsInGroup"] = itemCount
 		return info

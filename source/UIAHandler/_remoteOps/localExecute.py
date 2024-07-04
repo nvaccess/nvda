@@ -133,10 +133,10 @@ class LocalExecutor(operation.Executor):
 		self._ip += 1
 
 	def _executeInstruction(
-			self,
-			instruction: builder.InstructionBase,
-			breakAddress: int | None = None,
-			continueAddress: int | None = None,
+		self,
+		instruction: builder.InstructionBase,
+		breakAddress: int | None = None,
+		continueAddress: int | None = None,
 	):
 		match instruction:
 			case instructions.Halt():
@@ -162,11 +162,11 @@ class LocalExecutor(operation.Executor):
 				self._ip += 1
 
 	def _instructionLoop(
-			self,
-			stopInstruction: Type[builder.InstructionBase] | None = None,
-			breakAddress: int | None = None,
-			continueAddress: int | None = None,
-			catchAddress: int | None = None,
+		self,
+		stopInstruction: Type[builder.InstructionBase] | None = None,
+		breakAddress: int | None = None,
+		continueAddress: int | None = None,
+		catchAddress: int | None = None,
 	):
 		self._instructionLoopDepth += 1
 		try:

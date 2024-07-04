@@ -42,12 +42,12 @@ class OrderedWinEventLimiter(object):
 		self._lastMenuEvent = None
 
 	def addEvent(
-			self,
-			eventID: int,
-			window: int,
-			objectID: int,
-			childID: int,
-			threadID: int,
+		self,
+		eventID: int,
+		window: int,
+		objectID: int,
+		childID: int,
+		threadID: int,
 	) -> bool:
 		"""Adds a winEvent to the limiter.
 		@param eventID: the winEvent type
@@ -81,8 +81,8 @@ class OrderedWinEventLimiter(object):
 		return True
 
 	def flushEvents(
-			self,
-			alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
+		self,
+		alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
 	) -> List:
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.
@@ -113,7 +113,7 @@ class OrderedWinEventLimiter(object):
 			heapq.heappush(self._eventHeap, (v,) + k)
 		f = self._focusEventCache
 		self._focusEventCache = {}
-		for k, v in sorted(f.items(), key=lambda item: item[1])[0 - self.maxFocusItems:]:
+		for k, v in sorted(f.items(), key=lambda item: item[1])[0 - self.maxFocusItems :]:
 			heapq.heappush(self._eventHeap, (v,) + k)
 		e = self._eventHeap
 		self._eventHeap = []

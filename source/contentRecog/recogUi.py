@@ -75,11 +75,13 @@ class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Wind
 			self._selection.activate()
 		except NotImplementedError:
 			log.debugWarning("Result TextInfo does not implement activate")
+
 	# Translators: Describes a command.
 	script_activatePosition.__doc__ = _("Activates the text at the cursor if possible")
 
 	def script_exit(self, gesture):
 		eventHandler.executeEvent("gainFocus", self.parent)
+
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Dismiss the recognition result")
 
@@ -111,10 +113,10 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 	"""
 
 	def __init__(
-			self,
-			recognizer: ContentRecognizer,
-			imageInfo: RecogImageInfo,
-			obj: Optional[NVDAObjects.NVDAObject] = None,
+		self,
+		recognizer: ContentRecognizer,
+		imageInfo: RecogImageInfo,
+		obj: Optional[NVDAObjects.NVDAObject] = None,
 	):
 		self.recognizer = recognizer
 		self.imageInfo = imageInfo
@@ -130,8 +132,10 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 		imgInfo = self.imageInfo
 		sb = screenBitmap.ScreenBitmap(imgInfo.recogWidth, imgInfo.recogHeight)
 		pixels = sb.captureImage(
-			imgInfo.screenLeft, imgInfo.screenTop,
-			imgInfo.screenWidth, imgInfo.screenHeight,
+			imgInfo.screenLeft,
+			imgInfo.screenTop,
+			imgInfo.screenWidth,
+			imgInfo.screenHeight,
 		)
 		self.recognizer.recognize(pixels, self.imageInfo, onResult)
 

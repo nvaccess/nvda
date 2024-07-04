@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited.
 
-"""Unit tests for the eSpeak synth driver submodule.
-"""
+"""Unit tests for the eSpeak synth driver submodule."""
 
 import logging
 import unittest
@@ -25,6 +24,7 @@ class FakeESpeakSynthDriver:
 
 class TestSynthDriver_Logic(unittest.TestCase):
 	"""Testing of internal logic for the eSpeak driver."""
+
 	def test_normalizeLangCommand(self):
 		"""Test cases for determining a supported eSpeak language from a LangChangeCommand."""
 		self.assertEqual(
@@ -73,7 +73,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		self._nvwaveOpenOld = nvwave.WavePlayer.open
 		nvwave.WavePlayer.open = lambda self: None
 		self._driver = SynthDriver()
-	
+
 	def tearDown(self) -> None:
 		self._driver.terminate()
 		nvwave.WavePlayer.open = self._nvwaveOpenOld
@@ -93,7 +93,9 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		)
 
 		expectedUnsupportedMappedLanguages = set(self._driver._defaultLangToLocale.keys())
-		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(eSpeakAvailableLangs)
+		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(
+			eSpeakAvailableLangs,
+		)
 		self.assertEqual(
 			set(),
 			unexpectedSupportedMappedLanguages,
@@ -103,8 +105,12 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			),
 		)
 
-		supportedLanguagesWithLocaleStripped = set(stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs)
-		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(eSpeakAvailableLangs)
+		supportedLanguagesWithLocaleStripped = set(
+			stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs
+		)
+		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(
+			eSpeakAvailableLangs,
+		)
 		self.assertEqual(
 			expectedUnsupportedMappedLanguages,
 			unsupportedLanguagesWithoutLocale,
@@ -120,12 +126,16 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		Confirms that eSpeak can manually be switched to all of its supported languages with the locale removed.
 		This doesn't test automatic language switching.
 		"""
-		availableLangsWithoutLocale = set(stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages)
+		availableLangsWithoutLocale = set(
+			stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages
+		)
 		for langWithoutLocale in availableLangsWithoutLocale:
 			_setVoiceByLanguage(langWithoutLocale)
 			self.assertEqual(
 				langWithoutLocale,
-				self._driver.voice.split("\\")[-1],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
+				self._driver.voice.split("\\")[
+					-1
+				],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
 				msg="Language without locale not supported by eSpeak",
 			)
 

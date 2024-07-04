@@ -3,10 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""This module provides custom asserts for system tests.
-"""
+"""This module provides custom asserts for system tests."""
+
 from typing import List
 from robot.libraries.BuiltIn import BuiltIn
+
 builtIn: BuiltIn = BuiltIn()
 
 
@@ -14,7 +15,7 @@ builtIn: BuiltIn = BuiltIn()
 class AssertsLib:
 	@staticmethod
 	def strings_match(actual, expected, ignore_case=False, comparison="speech", message=""):
-		message += '\n' if message else ''
+		message += "\n" if message else ""
 		# Include expected text in robot test report so that the actual behavior
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
@@ -43,13 +44,13 @@ class AssertsLib:
 
 	@staticmethod
 	def string_contains_strings(
-			actual: str,
-			expectedSubStrings: List[str],
-			ignore_case: bool = False,
-			comparison: str = "speech",
-			message: str = "",
+		actual: str,
+		expectedSubStrings: List[str],
+		ignore_case: bool = False,
+		comparison: str = "speech",
+		message: str = "",
 	):
-		message += '\n' if message else ''
+		message += "\n" if message else ""
 		# Include expected text in robot test report so that the actual behavior
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
@@ -83,10 +84,10 @@ class AssertsLib:
 
 	@staticmethod
 	def speech_contains(
-			actual: str,
-			expectedSpeechParts: List[str],
-			ignore_case: bool = False,
-			message: str = "",
+		actual: str,
+		expectedSpeechParts: List[str],
+		ignore_case: bool = False,
+		message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,
@@ -102,10 +103,10 @@ class AssertsLib:
 
 	@staticmethod
 	def braille_contains(
-			actual: str,
-			expectedBrailleParts: List[str],
-			ignore_case: bool = False,
-			message: str = "",
+		actual: str,
+		expectedBrailleParts: List[str],
+		ignore_case: bool = False,
+		message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,

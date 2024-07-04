@@ -156,23 +156,25 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
 		self.channelFilterCtrl = cast(
-      wx.Choice, filterCtrlsLine0.addLabeledControl(
-       # Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-       labelText=pgettext("addonStore", "Cha&nnel:"),
-       wxCtrlClass=wx.Choice,
-       choices=list(c.displayString for c in _channelFilters),
-      ),
-  )
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Cha&nnel:"),
+				wxCtrlClass=wx.Choice,
+				choices=list(c.displayString for c in _channelFilters),
+			),
+		)
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
 		self.includeIncompatibleCtrl = cast(
-      wx.CheckBox, filterCtrlsLine0.addItem(
-       wx.CheckBox(self, label=incompatibleAddonsLabel),
-      ),
-  )
+			wx.CheckBox,
+			filterCtrlsLine0.addItem(
+				wx.CheckBox(self, label=incompatibleAddonsLabel),
+			),
+		)
 		self.includeIncompatibleCtrl.SetValue(0)
 		self.includeIncompatibleCtrl.Bind(
 			wx.EVT_CHECKBOX,
@@ -182,13 +184,14 @@ class AddonStoreDialog(SettingsDialog):
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
 		self.enabledFilterCtrl = cast(
-      wx.Choice, filterCtrlsLine0.addLabeledControl(
-       # Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-       labelText=pgettext("addonStore", "Ena&bled/disabled:"),
-       wxCtrlClass=wx.Choice,
-       choices=list(c.displayString for c in EnabledStatus),
-      ),
-  )
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Ena&bled/disabled:"),
+				wxCtrlClass=wx.Choice,
+				choices=list(c.displayString for c in EnabledStatus),
+			),
+		)
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
@@ -273,10 +276,8 @@ class AddonStoreDialog(SettingsDialog):
 	@property
 	def _requiresRestart(self) -> bool:
 		from addonHandler import state, AddonStateCategory
-		if (
-			addonDataManager._downloadsPendingInstall
-			or state[AddonStateCategory.PENDING_INSTALL]
-		):
+
+		if addonDataManager._downloadsPendingInstall or state[AddonStateCategory.PENDING_INSTALL]:
 			log.debug(
 				"Add-ons pending install, restart required.\n"
 				f"Downloads pending install (add-on store installs): {addonDataManager._downloadsPendingInstall}.\n"
@@ -304,7 +305,9 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _titleText(self) -> str:
-		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
+		return (
+			f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
+		)
 
 	@property
 	def _listLabelText(self) -> str:
@@ -329,8 +332,7 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.UPDATE,
 		}:
 			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
-				self._storeVM._installedAddons[Channel.DEV]
-				or self._storeVM._installedAddons[Channel.BETA]
+				self._storeVM._installedAddons[Channel.DEV] or self._storeVM._installedAddons[Channel.BETA]
 			):
 				self._storeVM._filterChannelKey = Channel.ALL
 			else:
@@ -408,6 +410,10 @@ class AddonStoreDialog(SettingsDialog):
 		try:
 			addonGui.installAddon(self, addonPath)
 		except DisplayableError as displayableError:
-			callLater(delay=0, callable=self._storeVM.onDisplayableError.notify, displayableError=displayableError)
+			callLater(
+				delay=0,
+				callable=self._storeVM.onDisplayableError.notify,
+				displayableError=displayableError,
+			)
 			return
 		self._storeVM.refresh()

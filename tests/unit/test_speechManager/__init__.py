@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020 NV Access Limited
 
-"""Unit tests for speech/manager module
-"""
+"""Unit tests for speech/manager module"""
+
 import unittest
 from typing import Optional, Callable
 
@@ -62,8 +62,7 @@ class TestSpeechIndexComparison(unittest.TestCase):
 		self.assertFalse(_isIndexABeforeIndexB(firstIndex, lastIndex))
 
 	def testExtents_relativeToFirstIndex(self):
-		"""How far ahead of the first index can b get before a is no longer considered before
-		"""
+		"""How far ahead of the first index can b get before a is no longer considered before"""
 		firstIndex: _IndexT = 1
 		boundaryAfterFirstIndex = WRAPPED_INDEX_MAGNITUDE + 1
 		boundaryBeforeFirstIndex = boundaryAfterFirstIndex + 1
@@ -75,8 +74,7 @@ class TestSpeechIndexComparison(unittest.TestCase):
 		self.assertFalse(_isIndexABeforeIndexB(boundaryAfterFirstIndex, firstIndex))
 
 	def testExtents_relativeToLastIndex(self):
-		"""How far ahead of the "last index" can b get before a is no longer considered before
-		"""
+		"""How far ahead of the "last index" can b get before a is no longer considered before"""
 		lastIndex = MAX_INDEX
 
 		boundaryAfterLastIndex = WRAPPED_INDEX_MAGNITUDE
@@ -89,7 +87,7 @@ class TestSpeechIndexComparison(unittest.TestCase):
 		self.assertTrue(_isIndexABeforeIndexB(boundaryBeforeLastIndex, lastIndex))
 
 	def testExtents_relativeToMidPoint(self):
-		""" Despite the largest possible index being odd, there is an even number of possible indexes since
+		"""Despite the largest possible index being odd, there is an even number of possible indexes since
 		zero is not used as an index. For a given A value there will be a B value (in a space of 9998
 		values) that is equal, leaving 9997 values which can not be split evenly into before / after.
 		"""
@@ -125,7 +123,8 @@ class TestSpeechIndexComparison(unittest.TestCase):
 
 		# There should only be one pair with equivalence (the equal pair)
 		self.assertEqual(
-			len(indexesWithEquivalence), 1,
+			len(indexesWithEquivalence),
+			1,
 			msg=f"Indexes with neither true: {indexesWithEquivalence!r}",
 		)
 		# Ensure equivalent indexes really are equal
@@ -133,7 +132,8 @@ class TestSpeechIndexComparison(unittest.TestCase):
 
 		# None should be: A < B < A
 		self.assertEqual(
-			len(bothBefore), 0,
+			len(bothBefore),
+			0,
 			msg=f"Indexes with both true: {bothBefore!r}",
 		)
 		# Check that the number of B values before and after is as expected.
@@ -168,9 +168,9 @@ class _CancellableSpeechCommand_withLamda(_CancellableSpeechCommand):
 		return True
 
 	def __init__(
-			self,
-			checkIfValid: Optional[Callable[[], bool]] = None,
-			getDevInfo: Optional[Callable[[], str]] = None,
+		self,
+		checkIfValid: Optional[Callable[[], bool]] = None,
+		getDevInfo: Optional[Callable[[], str]] = None,
 	):
 		if checkIfValid is not None:
 			self._checkIfValid = checkIfValid
@@ -184,8 +184,9 @@ class CancellableSpeechTests(unittest.TestCase):
 
 	def setUp(self):
 		import speechDictHandler
+
 		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 1  # yes
 
 	def test_validSpeechSpoken(self):
 		"""Tests the outcome when speech stays valid. It should not be cancelled."""
@@ -206,9 +207,9 @@ class CancellableSpeechTests(unittest.TestCase):
 
 	def test_invalidated_indexHit(self):
 		"""Hitting an index should cause a cancellation of speech that has become
-			invalid after being sent to the synth.
-			For particularly long utterances with many indexes, the speech can be
-			stopped sooner.
+		invalid after being sent to the synth.
+		For particularly long utterances with many indexes, the speech can be
+		stopped sooner.
 		"""
 		smi = SpeechManagerInteractions(self)
 		isSpeechNumberValid = {}
@@ -237,9 +238,9 @@ class CancellableSpeechTests(unittest.TestCase):
 
 	def test_invalidated_newSpeech(self):
 		"""New speech should cause a cancellation of speech that has become
-			invalid after being sent to the synth.
-			Ensure that new speech can be started as soon as possible to reduce
-			the stammering of the synth.
+		invalid after being sent to the synth.
+		Ensure that new speech can be started as soon as possible to reduce
+		the stammering of the synth.
 		"""
 		smi = SpeechManagerInteractions(self)
 		isSpeechNumberValid = {}
@@ -273,11 +274,11 @@ class CancellableSpeechTests(unittest.TestCase):
 
 	def test_invalidated_newSpeechWithCancellable(self):
 		"""New speech that contains a cancellableSpeechCommand should cause a
-			cancellation of speech that has become invalid after being sent to the
-			synth.
-			Similar to test_invalidated_newSpeech, but ensure that the
-			cancellableSpeechCommand does not affect the behaviour.
-			"""
+		cancellation of speech that has become invalid after being sent to the
+		synth.
+		Similar to test_invalidated_newSpeech, but ensure that the
+		cancellableSpeechCommand does not affect the behaviour.
+		"""
 		smi = SpeechManagerInteractions(self)
 		isSpeechNumberValid = {}
 
@@ -317,19 +318,22 @@ class CancellableSpeechTests(unittest.TestCase):
 		smi = SpeechManagerInteractions(self)
 
 		with smi.expectation():
-			smi.speak([
-				"Stays invalid",
-				_CancellableSpeechCommand_withLamda(lambda: False),
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
-			])
+			smi.speak(
+				[
+					"Stays invalid",
+					_CancellableSpeechCommand_withLamda(lambda: False),
+					smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+				],
+			)
 
 		with smi.expectation():
 			smi.speak(["Stays valid", _CancellableSpeechCommand_withLamda(lambda: True)])
 			smi.expect_synthSpeak(
-       sequence=[
-        "Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-       ],
-   )
+				sequence=[
+					"Stays valid",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				],
+			)
 
 
 class SayAllEmulatedTests(unittest.TestCase):
@@ -337,8 +341,9 @@ class SayAllEmulatedTests(unittest.TestCase):
 
 	def setUp(self):
 		import speechDictHandler
+
 		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 2  # no
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 2  # no
 
 	def test_simpleSpeech(self):
 		smi = SpeechManagerInteractions(self)
@@ -359,46 +364,53 @@ class SayAllEmulatedTests(unittest.TestCase):
 			smi.expect_synthSpeak(seqIndex2)
 
 	def test_standardSayAll(self):
-		"""See #11144: Mimic behaviour that caused repeated speech during say-all - Full example.
-		"""
+		"""See #11144: Mimic behaviour that caused repeated speech during say-all - Full example."""
 		smi = SpeechManagerInteractions(self)
 		callBack = smi.create_CallBackCommand
 		expectIndex = smi.create_ExpectedIndex
 
 		# First sayAll queues up a number of utterances.
 		with smi.expectation():
-			seqNum = smi.speak([
-				callBack(expectedToBecomeIndex=1),
-				'sequence 0  ',
-				callBack(expectedToBecomeIndex=2),
-			])
+			seqNum = smi.speak(
+				[
+					callBack(expectedToBecomeIndex=1),
+					"sequence 0  ",
+					callBack(expectedToBecomeIndex=2),
+				],
+			)
 			self.assertEqual(seqNum, 0)
 			# Speech manager is expected to get started immediately
 			smi.expect_synthSpeak(seqNum)
 
-		seqNum = smi.speak([
-			'sequence 1 before call back  ',
-			callBack(expectedToBecomeIndex=3),
-			'sequence 1 after call back  ',
-			callBack(expectedToBecomeIndex=4),
-		])
+		seqNum = smi.speak(
+			[
+				"sequence 1 before call back  ",
+				callBack(expectedToBecomeIndex=3),
+				"sequence 1 after call back  ",
+				callBack(expectedToBecomeIndex=4),
+			],
+		)
 		self.assertEqual(seqNum, 1)
 
 		# Synth has already reached the first index, callback shouldn't be called until
 		# pump all is called.
 		smi.indexReached(1)  # start of sequenceNumber 0
 
-		seqNum = smi.speak([
-			'sequence 2  ',
-			callBack(expectedToBecomeIndex=5),
-		])
+		seqNum = smi.speak(
+			[
+				"sequence 2  ",
+				callBack(expectedToBecomeIndex=5),
+			],
+		)
 		self.assertEqual(seqNum, 2)
 
-		seqNum = smi.speak([
-			# for some reason say-all handler does not give this sequence callback commands
-			'sequence 3  ',
-			expectIndex(expectedToBecomeIndex=6),
-		])
+		seqNum = smi.speak(
+			[
+				# for some reason say-all handler does not give this sequence callback commands
+				"sequence 3  ",
+				expectIndex(expectedToBecomeIndex=6),
+			],
+		)
 		self.assertEqual(seqNum, 3)
 
 		with smi.expectation():
@@ -433,7 +445,8 @@ class SayAllEmulatedTests(unittest.TestCase):
 				expectedSendSequenceNumber=4,
 				seq=[
 					callBack(expectedToBecomeIndex=7),
-					'sequence 4  ', expectIndex(expectedToBecomeIndex=8),
+					"sequence 4  ",
+					expectIndex(expectedToBecomeIndex=8),
 				],
 			)
 			# Now ensure there is no double speaking!
@@ -453,8 +466,8 @@ class SayAllEmulatedTests(unittest.TestCase):
 		expectIndex = smi.create_ExpectedIndex
 
 		with smi.expectation():
-			seq0 = smi.speak(['sequence 0  ', callBack(expectedToBecomeIndex=1)])
-			seq1 = smi.speak(['sequence 1  ', callBack(expectedToBecomeIndex=2)])
+			seq0 = smi.speak(["sequence 0  ", callBack(expectedToBecomeIndex=1)])
+			seq1 = smi.speak(["sequence 1  ", callBack(expectedToBecomeIndex=2)])
 			smi.expect_synthSpeak(seq0)
 
 		with smi.expectation():
@@ -466,7 +479,8 @@ class SayAllEmulatedTests(unittest.TestCase):
 				expectedSendSequenceNumber=2,
 				seq=[
 					callBack(expectedToBecomeIndex=3),
-					'sequence 2  ', expectIndex(expectedToBecomeIndex=4),
+					"sequence 2  ",
+					expectIndex(expectedToBecomeIndex=4),
 				],
 			)
 			# Now ensure there is no double speaking!
@@ -475,28 +489,30 @@ class SayAllEmulatedTests(unittest.TestCase):
 
 class SayAllEmulatedTests_withCancellableSpeechEnabled(SayAllEmulatedTests):
 	"""Note, while cancellable speech is configurable test with and without it enabled."""
+
 	def setUp(self):
 		super().setUp()
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 1  # yes
 
 
 class InitialDevelopmentTests(unittest.TestCase):
 	"""These tests were run manually during the initial development of speechManager.
-		See PR #7599 for source of tests.
-		Test numbers match order of tests defined on original PR, however they are grouped in this file based on
-		the features they test.
-		Manual test steps are kept in unit tests doc string, they can be run in the NVDA python console after
-		the following imports:
-			from speech import sayAll, appModuleHandler
+	See PR #7599 for source of tests.
+	Test numbers match order of tests defined on original PR, however they are grouped in this file based on
+	the features they test.
+	Manual test steps are kept in unit tests doc string, they can be run in the NVDA python console after
+	the following imports:
+		from speech import sayAll, appModuleHandler
 	"""
 
 	def setUp(self):
 		import speechDictHandler
-		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 2  # no
 
-	@patch.object(WaveFileCommand, 'run')
-	@patch.object(BeepCommand, 'run')
+		speechDictHandler.initialize()  # setting the synth depends on dictionary["voice"]
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 2  # no
+
+	@patch.object(WaveFileCommand, "run")
+	@patch.object(BeepCommand, "run")
 	def test_1(self, mock_BeepCommand_run, mock_WaveFileCommand_run):
 		r"""Text, beep, beep, sound, text.
 		Manual Test (in NVDA python console):
@@ -546,9 +562,9 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""
 		smi = SpeechManagerInteractions(self)
 		sequence = [
-			u"This is the first utterance",
+			"This is the first utterance",
 			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
-			u"And this is the second",
+			"And this is the second",
 			smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 		]
 		with smi.expectation():
@@ -571,12 +587,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi = SpeechManagerInteractions(self)
 		sequence = [
 			PitchCommand(offset=50),
-			u"This is the first utterance in a higher pitch",
+			"This is the first utterance in a higher pitch",
 			# EndUtterance effectively splits the sequence, two sequence numbers are returned
 			# from smi.speak for ease of adding expectations.
 			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
 			smi.create_ExpectedProsodyCommand(PitchCommand(offset=50)),
-			u"And this is the second",
+			"And this is the second",
 			smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 		]
 		with smi.expectation():
@@ -599,28 +615,33 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
-			first, last = smi.speak([
-				"1 2 3 ", "4 5",
-				# EndUtterance effectively splits the sequence, two sequence numbers are returned
-				# for ease of adding expectations.
-				smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
-				"16 17 18 19 20",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-			])
+			first, last = smi.speak(
+				[
+					"1 2 3 ",
+					"4 5",
+					# EndUtterance effectively splits the sequence, two sequence numbers are returned
+					# for ease of adding expectations.
+					smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
+					"16 17 18 19 20",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				],
+			)
 			smi.expect_synthSpeak(first)
 
 		interrupt1 = smi.speak(
-      priority=speech.Spri.NEXT, seq=[
-       "6 7 8 9 10",
-       smi.create_ExpectedIndex(expectedToBecomeIndex=3),
-      ],
-  )
+			priority=speech.Spri.NEXT,
+			seq=[
+				"6 7 8 9 10",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+			],
+		)
 		interrupt2 = smi.speak(
-      priority=speech.Spri.NEXT, seq=[
-       "11 12 13 14 15",
-       smi.create_ExpectedIndex(expectedToBecomeIndex=4),
-      ],
-  )
+			priority=speech.Spri.NEXT,
+			seq=[
+				"11 12 13 14 15",
+				smi.create_ExpectedIndex(expectedToBecomeIndex=4),
+			],
+		)
 
 		with smi.expectation():
 			smi.indexReached(1)  # endUtterance
@@ -642,7 +663,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthSpeak(fin)
 
-	@patch.object(BeepCommand, 'run')
+	@patch.object(BeepCommand, "run")
 	def test_7_SPRI(self, mock_BeepCommand_run):
 		"""Utterance at SPRI_NORMAL including a beep. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
@@ -699,19 +720,25 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
 			first = smi.speak(
-       priority=speech.Spri.NOW, seq=[
-        "First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1),
-       ],
-   )
+				priority=speech.Spri.NOW,
+				seq=[
+					"First ",
+					"utterance",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+				],
+			)
 			smi.expect_synthSpeak(first)
 			smi.expect_synthCancel()
 
 		with smi.expectation():
 			second = smi.speak(
-       priority=speech.Spri.NOW, seq=[
-        "Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-       ],
-   )
+				priority=speech.Spri.NOW,
+				seq=[
+					"Second ",
+					"utterance",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				],
+			)
 
 		with smi.expectation():
 			smi.indexReached(1)
@@ -728,26 +755,32 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
 			first = smi.speak(
-       priority=speech.Spri.NOW, seq=[
-        "First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1),
-       ],
-   )
+				priority=speech.Spri.NOW,
+				seq=[
+					"First ",
+					"utterance",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+				],
+			)
 			smi.expect_synthSpeak(first)
 			smi.expect_synthCancel()
 
 		with smi.expectation():
 			second = smi.speak(
-       priority=speech.Spri.NEXT, seq=[
-        "Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
-       ],
-   )
+				priority=speech.Spri.NEXT,
+				seq=[
+					"Second ",
+					"utterance",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+				],
+			)
 
 		with smi.expectation():
 			smi.indexReached(1)
 			smi.pumpAll()
 			smi.expect_synthSpeak(second)
 
-	@patch.object(BeepCommand, 'run')
+	@patch.object(BeepCommand, "run")
 	def test_13_SPRI_interruptBeforeIndexReached(self, mock_BeepCommand_run):
 		"""The same as the other test_13, but the first index is not reached before the interruption.
 		In this cases speech manager is expected to finish the first utterance before interrupting.
@@ -783,7 +816,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthSpeak(first)
 
-	@patch.object(BeepCommand, 'run')
+	@patch.object(BeepCommand, "run")
 	def test_13_SPRI_interruptAfterIndexReached(self, mock_BeepCommand_run):
 		"""Utterance at SPRI_NORMAL including a pitch change and beep. Utterance at SPRI_NOW.
 		Manual Test (in NVDA python console):
@@ -818,11 +851,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 
 		with smi.expectation():
 			interrupt = smi.speak(
-       priority=speech.Spri.NOW, seq=[
-        "This is an interruption",
-        smi.create_ExpectedIndex(expectedToBecomeIndex=3),
-       ],
-   )
+				priority=speech.Spri.NOW,
+				seq=[
+					"This is an interruption",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+				],
+			)
 			smi.expect_synthSpeak(interrupt)
 			smi.expect_synthCancel()
 
@@ -897,12 +931,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_synthCancel()
 			smi.expect_mockCall(t2.enter)
 			smi.expect_synthSpeak(
-       sequence=[
-        seq[1],  # PitchCommand
-        '5 6 7 8',
-        seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
-       ],
-   )
+				sequence=[
+					seq[1],  # PitchCommand
+					"5 6 7 8",
+					seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
+				],
+			)
 
 		with smi.expectation():
 			smi.indexReached(2)
@@ -912,12 +946,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			smi.expect_synthCancel()
 			smi.expect_synthSpeak(
-       sequence=[
-        seq[1],  # PitchCommand
-        '9 10 11 12',
-        smi.create_ExpectedIndex(expectedToBecomeIndex=3),
-       ],
-   )
+				sequence=[
+					seq[1],  # PitchCommand
+					"9 10 11 12",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+				],
+			)
 			smi.expect_mockCall(t1.exit)
 
 		with smi.expectation():
@@ -961,7 +995,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		with smi.expectation():
 			smi.doneSpeaking()
 			smi.pumpAll()
-			smi.expect_synthSpeak(sequence=['9 10 11 12', smi.create_ExpectedIndex(expectedToBecomeIndex=2)])
+			smi.expect_synthSpeak(sequence=["9 10 11 12", smi.create_ExpectedIndex(expectedToBecomeIndex=2)])
 			smi.expect_synthCancel()
 			smi.expect_mockCall(t1.exit)
 		with smi.expectation():
@@ -988,10 +1022,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 		smi.addMockCallMonitoring([t1.enter, t1.exit])
 
 		with smi.expectation():
-			first = smi.speak([
-				"This is a normal utterance, text, text,",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
-			])
+			first = smi.speak(
+				[
+					"This is a normal utterance, text, text,",
+					smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+				],
+			)
 			smi.expect_synthSpeak(first)
 
 		# before the first utterance can finish, it is interrupted.
@@ -1156,14 +1192,14 @@ class InitialDevelopmentTests(unittest.TestCase):
 
 class InitialDevelopmentTests_withCancellableSpeechEnabled(InitialDevelopmentTests):
 	"""Note, while cancellable speech is configurable test with and without it enabled."""
+
 	def setUp(self):
 		super().setUp()
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 1  # yes
 
 
 class RegressionTests(unittest.TestCase):
-	"""Tests to prevent regressions after issues are fixed.
-	"""
+	"""Tests to prevent regressions after issues are fixed."""
 
 	def test_redundantSequenceAfterEndUtterance(self):
 		"""
@@ -1205,7 +1241,7 @@ class RegressionTests(unittest.TestCase):
 
 		speechSequence = [
 			CharacterModeCommand(True),
-			'',
+			"",
 			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
 		]
 		with smi.expectation():
@@ -1215,6 +1251,7 @@ class RegressionTests(unittest.TestCase):
 
 class RegressionTests_withCancellableSpeechEnabled(RegressionTests):
 	"""Note, while cancellable speech is configurable test with and without it enabled."""
+
 	def setUp(self):
 		super().setUp()
-		config.conf['featureFlag']['cancelExpiredFocusSpeech'] = 1  # yes
+		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = 1  # yes

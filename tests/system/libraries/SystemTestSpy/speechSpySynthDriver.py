@@ -9,6 +9,7 @@ output during system tests.
 Note: The name of this module must match the name of the synth driver, and the configured synthesizer
 in the `tests/system/nvdaSettingsFiles/*.ini` files.
 """
+
 import queue
 import threading
 import time
@@ -25,8 +26,8 @@ post_speech = extensionPoints.Action()
 
 
 class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
-	"""A synth driver configured during system tests to capture speech output
-	"""
+	"""A synth driver configured during system tests to capture speech output"""
+
 	name = "SpeechSpySynthDriver"  # Name must match configuration files and module.
 	description = "System test speech spy"
 
@@ -138,6 +139,5 @@ SynthDriver = SpeechSpySynthDriver
 
 
 def _yieldThread():
-	"""Intended to allow the main thread to process pending events.
-	"""
+	"""Intended to allow the main thread to process pending events."""
 	time.sleep(0)

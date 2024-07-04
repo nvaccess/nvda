@@ -31,6 +31,7 @@ from ..window import Window
 
 class ConsoleUIATextInfo(UIATextInfo):
 	"A TextInfo implementation for consoles with an IMPROVED, but not FORMATTED, API level."
+
 	def __init__(self, obj, position, _rangeObj=None):
 		collapseToEnd = None
 		# We want to limit  textInfos to just the visible part of the console.
@@ -65,7 +66,7 @@ class ConsoleUIATextInfo(UIATextInfo):
 			# Move back one character to remain within bounds.
 			_rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_End,
-				UIAHandler.NVDAUnitsToUIAUnits['character'],
+				UIAHandler.NVDAUnitsToUIAUnits["character"],
 				-1,
 			)
 			collapseToEnd = True
@@ -87,14 +88,11 @@ class ConsoleUIATextInfo(UIATextInfo):
 		if oldInfo:
 			try:
 				if (
-					(
-						self.compareEndPoints(boundingInfo, "startToStart") < 0
-						or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
-					)
-					and not (
-						oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
-						or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
-					)
+					self.compareEndPoints(boundingInfo, "startToStart") < 0
+					or self.compareEndPoints(boundingInfo, "startToEnd") >= 0
+				) and not (
+					oldInfo.compareEndPoints(boundingInfo, "startToStart") < 0
+					or oldInfo.compareEndPoints(boundingInfo, "startToEnd") >= 0
 				):
 					self._rangeObj = oldInfo._rangeObj
 					return 0
@@ -126,6 +124,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 	"""Implementation of various workarounds for pre-microsoft/terminal#4018
 	conhost: fixes expand/collapse, uses rangeFromPoint instead of broken
 	GetVisibleRanges for bounding, and implements word movement support."""
+
 	def _getBoundingRange(self, obj, position):
 		# We could use IUIAutomationTextRange::getVisibleRanges, but it seems very broken in consoles
 		# once more than a few screens worth of content has been written to the console.
@@ -303,7 +302,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 		lineText = lineInfo._rangeObj.getText(-1)
 		# Convert NULL and non-breaking space to space to make sure
 		# that words will break on them
-		lineText = lineText.translate({0: u' ', 0xa0: u' '})
+		lineText = lineText.translate({0: " ", 0xA0: " "})
 		start = ctypes.c_int()
 		end = ctypes.c_int()
 		# Uniscribe does some strange things when you give it a string  with
@@ -342,7 +341,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 		# Consoles don't actually store spaces, the character is merely left blank.
 		res = super()._get_text()
 		if not res:
-			return ' '
+			return " "
 		else:
 			return res
 
@@ -367,10 +366,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 
 	def _get__caretMovementTimeoutMultiplier(self):
 		"On older consoles, the caret can take a while to move."
-		return (
-			1 if self.apiLevel >= WinConsoleAPILevel.IMPROVED
-			else 1.5
-		)
+		return 1 if self.apiLevel >= WinConsoleAPILevel.IMPROVED else 1.5
 
 	def _get_windowThreadID(self):
 		# #10113: Windows forces the thread of console windows to match the thread of the first attached process.
@@ -378,6 +374,7 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 		# NVDA really requires the real thread the window was created in,
 		# I.e. a thread inside conhost.
 		from IAccessibleHandler.internalWinEventHandler import consoleWindowsToThreadIDs
+
 		threadID = consoleWindowsToThreadIDs.get(self.windowHandle, 0)
 		if not threadID:
 			threadID = super().windowThreadID
@@ -417,11 +414,12 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			# from the standard and alt mode buffers, E_FAIL is returned.
 			# Downgrade this to a debugWarning.
 			log.debugWarning(
-       (
-        "Exception raised when comparing selections, "
-        "probably due to a switch to/from the alt buffer."
-       ), exc_info=True,
-   )
+				(
+					"Exception raised when comparing selections, "
+					"probably due to a switch to/from the alt buffer."
+				),
+				exc_info=True,
+			)
 
 	def event_UIA_notification(self, **kwargs):
 		"""
@@ -465,11 +463,11 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 	announceNewLineText = False
 
 	def event_UIA_notification(
-			self,
-			notificationKind: Optional[int] = None,
-			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
-			displayString: Optional[str] = None,
-			activityId: Optional[str] = None,
+		self,
+		notificationKind: Optional[int] = None,
+		notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
+		displayString: Optional[str] = None,
+		activityId: Optional[str] = None,
 	):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:

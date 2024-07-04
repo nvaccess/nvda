@@ -107,7 +107,6 @@ playToggleSoundsCheckBoxText = _("&Play sound when toggling Screen Curtain")
 
 
 class ScreenCurtainSettings(providerBase.VisionEnhancementProviderSettings):
-
 	warnOnLoad: bool
 	playToggleSounds: bool
 
@@ -145,17 +144,16 @@ warnOnLoadText = _(
 
 
 class WarnOnLoadDialog(MessageDialog):
-
 	showWarningOnLoadCheckBox: wx.CheckBox
 	noButton: wx.Button
 
 	def __init__(
-			self,
-			screenCurtainSettingsStorage: ScreenCurtainSettings,
-			parent,
-			title=_("Warning"),
-			message=warnOnLoadText,
-			dialogType=MessageDialog.DIALOG_TYPE_WARNING,
+		self,
+		screenCurtainSettingsStorage: ScreenCurtainSettings,
+		parent,
+		title=_("Warning"),
+		message=warnOnLoadText,
+		dialogType=MessageDialog.DIALOG_TYPE_WARNING,
 	):
 		self._settingsStorage = screenCurtainSettingsStorage
 		super().__init__(parent, title, message, dialogType)
@@ -218,19 +216,18 @@ class WarnOnLoadDialog(MessageDialog):
 
 
 class ScreenCurtainGuiPanel(
-		AutoSettingsMixin,
-		SettingsPanel,
+	AutoSettingsMixin,
+	SettingsPanel,
 ):
-
 	_enabledCheckbox: wx.CheckBox
 	_enableCheckSizer: wx.BoxSizer
-	
+
 	helpId = "VisionSettingsScreenCurtain"
 
 	def __init__(
-			self,
-			parent,
-			providerControl: VisionProviderStateControl,
+		self,
+		parent,
+		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
 		super().__init__(parent)
@@ -285,6 +282,7 @@ class ScreenCurtainGuiPanel(
 		from contentRecog.recogUi import RefreshableRecogResultNVDAObject
 		import speech
 		import ui
+
 		focusObj = api.getFocusObject()
 		if isinstance(focusObj, RefreshableRecogResultNVDAObject) and focusObj.recognizer.allowAutoRefresh:
 			# Translators: Warning message when trying to enable the screen curtain when OCR is active.

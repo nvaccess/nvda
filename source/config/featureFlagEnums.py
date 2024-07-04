@@ -10,6 +10,7 @@ All feature flags enums should
 - inherit from DisplayStringEnum and implement _displayStringLabels (for the 'displayString' property)
 - have a 'DEFAULT' member.
 """
+
 import enum
 import typing
 from typing import Protocol
@@ -21,17 +22,18 @@ from utils.displayString import (
 
 
 class FeatureFlagEnumProtocol(Protocol):
-	""" All feature flags are expected to have a "DEFAULT" value.
+	"""All feature flags are expected to have a "DEFAULT" value.
 	This definition is provided only for type annotations
 	"""
+
 	DEFAULT: enum.Enum  # Required enum member
 	name: str  # comes from enum.Enum
 	value: str  # comes from enum.Enum
 
 
 class FlagValueEnum(enum.EnumMeta, _DisplayStringEnumMixin, FeatureFlagEnumProtocol):
-	"""Provided only for type annotations.
-	"""
+	"""Provided only for type annotations."""
+
 	pass
 
 

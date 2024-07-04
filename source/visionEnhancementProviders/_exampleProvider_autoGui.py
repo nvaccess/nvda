@@ -22,10 +22,8 @@ This might be because the provider must interface with an external application o
 
 
 class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
-
 	#: dictionary of the setting id's available when provider is running.
-	_availableRuntimeSettings = [
-	]
+	_availableRuntimeSettings = []
 
 	# The following settings can be configured prior to runtime in this example
 	shouldDoX: bool
@@ -99,21 +97,25 @@ class AutoGuiTestSettings(providerBase.VisionEnhancementProviderSettings):
 	def _getAvailableRuntimeSettings(self) -> SupportedSettingType:
 		settings = []
 		if self._hasFeature("runtimeOnlySetting_externalValueLoad"):
-			settings.extend([
-				NumericDriverSetting(
-					"runtimeOnlySetting_externalValueLoad",  # value stored in matching property name on class
-					"Runtime Only amount, external value load",
-					# no GUI default
-				),
-			])
+			settings.extend(
+				[
+					NumericDriverSetting(
+						"runtimeOnlySetting_externalValueLoad",  # value stored in matching property name on class
+						"Runtime Only amount, external value load",
+						# no GUI default
+					),
+				],
+			)
 		if self._hasFeature("runtimeOnlySetting_localDefault"):
-			settings.extend([
-				NumericDriverSetting(
-					"runtimeOnlySetting_localDefault",  # value stored in matching property name on class
-					"Runtime Only amount, local default",
-					defaultVal=50,
-				),
-			])
+			settings.extend(
+				[
+					NumericDriverSetting(
+						"runtimeOnlySetting_localDefault",  # value stored in matching property name on class
+						"Runtime Only amount, local default",
+						defaultVal=50,
+					),
+				],
+			)
 		return settings
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
@@ -148,14 +150,16 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 		self._showCurrentConfig()
 
 	def _initRuntimeOnlySettings(self):
-		""" This method might query another application for its capabilities and initialise these configuration
-			options.
+		"""This method might query another application for its capabilities and initialise these configuration
+		options.
 		"""
 		settings = self.getSettings()
-		settings.addRuntimeSettingsAvailibility([
-			"runtimeOnlySetting_localDefault",
-			"runtimeOnlySetting_externalValueLoad",
-		])
+		settings.addRuntimeSettingsAvailibility(
+			[
+				"runtimeOnlySetting_localDefault",
+				"runtimeOnlySetting_externalValueLoad",
+			],
+		)
 
 		# load and set values from the external source, this will override values loaded from config.
 		settings.runtimeOnlySetting_externalValueLoad = self._getValueFromDeviceOrOtherApplication(
@@ -163,7 +167,7 @@ class AutoGuiTestProvider(providerBase.VisionEnhancementProvider):
 		)
 
 	def _getValueFromDeviceOrOtherApplication(self, settingId: str) -> Any:
-		""" This method might connect to another application / device and fetch default values."""
+		"""This method might connect to another application / device and fetch default values."""
 		if settingId == "runtimeOnlySetting_externalValueLoad":
 			return 75
 		return None

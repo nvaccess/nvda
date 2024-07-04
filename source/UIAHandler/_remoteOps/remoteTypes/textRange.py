@@ -94,10 +94,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod_mutable
 	def moveEndpointByUnit(
-			self,
-			endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-			count: RemoteInt | int,
+		self,
+		endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+		unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
+		count: RemoteInt | int,
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -113,10 +113,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod_mutable
 	def moveEndpointByRange(
-			self,
-			srcEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-			otherRange: RemoteTextRange,
-			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+		self,
+		srcEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+		otherRange: RemoteTextRange,
+		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 	):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByRange(
@@ -129,8 +129,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod
 	def getAttributeValue(
-			self,
-			attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId,
+		self,
+		attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId,
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -144,10 +144,10 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 	@remoteMethod
 	def compareEndpoints(
-			self,
-			thisEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
-			otherRange: RemoteTextRange,
-			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+		self,
+		thisEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
+		otherRange: RemoteTextRange,
+		otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -167,12 +167,11 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 
 
 class _RemoteTextRangeEndpoint(builder._RemoteBase):
-
 	def __init__(
-			self,
-			rob: builder.RemoteOperationBuilder,
-			textRangeLA: RemoteTextRangeLogicalAdapter,
-			isStart: bool,
+		self,
+		rob: builder.RemoteOperationBuilder,
+		textRangeLA: RemoteTextRangeLogicalAdapter,
+		isStart: bool,
 	):
 		super().__init__(rob)
 		self._la = textRangeLA
@@ -204,9 +203,9 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 		self.textRange.moveEndpointByRange(self.endpoint, other.textRange, other.endpoint)
 
 	def moveByUnit(
-			self,
-			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-			count: RemoteInt | int,
+		self,
+		unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
+		count: RemoteInt | int,
 	) -> RemoteInt:
 		realCount = (count * -1) if self.isReversed else count
 		res = self.textRange.moveEndpointByUnit(self.endpoint, unit, realCount)
@@ -232,12 +231,11 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 
 
 class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
-
 	def __init__(
-			self,
-			rob: builder.RemoteOperationBuilder,
-			textRange: RemoteTextRange,
-			reverse: bool = False,
+		self,
+		rob: builder.RemoteOperationBuilder,
+		textRange: RemoteTextRange,
+		reverse: bool = False,
 	):
 		super().__init__(rob)
 		self._textRange = textRange

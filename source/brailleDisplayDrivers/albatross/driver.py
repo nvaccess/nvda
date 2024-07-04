@@ -85,10 +85,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-      DeviceType.SERIAL, {
-       "VID_0403&PID_6001",  # Caiku Albatross 46/80
-      },
-  )
+			DeviceType.SERIAL,
+			{
+				"VID_0403&PID_6001",  # Caiku Albatross 46/80
+			},
+		)
 
 	@classmethod
 	def getManualPorts(cls):
@@ -169,10 +170,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
 				# Block port if its vid and pid are correct but bus reported
 				# device description is not "Albatross Braille Display".
-				if (
-					portId == VID_AND_PID
-					and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC
-				):
+				if portId == VID_AND_PID and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC:
 					log.debug(f"port {port} blocked; port information: {portInfo}")
 					continue
 				# For reconnection
@@ -336,8 +334,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug(
-				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
-				"trying to reconnect",
+				f"INIT_START_BYTE {INIT_START_BYTE} read failed, " "trying to reconnect",
 				exc_info=True,
 			)
 			return False
@@ -389,7 +386,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# might raise.
 		except (IOError, AttributeError):
 			log.debug(
-				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True,
+				f"I/O buffer reset failed on port {self._currentPort}",
+				exc_info=True,
 			)
 			if self._dev.is_open:
 				self._dev.close()
@@ -465,7 +463,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		settingsByte = None
 		for i in data:
-			iAsByte = i.to_bytes(1, 'big')
+			iAsByte = i.to_bytes(1, "big")
 			if not self._initByteReceived:
 				if iAsByte == INIT_START_BYTE:
 					self._initByteReceived = True
@@ -670,8 +668,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._waitingCtrlPacket = True
 					self._partialCtrlPacket = data
 					log.debug(
-						f"Read: Ctrl key packet {data} dequeued partially, "
-						"_readQueue is empty",
+						f"Read: Ctrl key packet {data} dequeued partially, " "_readQueue is empty",
 						exc_info=True,
 					)
 					return
@@ -759,14 +756,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if cell != self._oldCells[i]:
 					self._oldCells[i] = cell
 					# display indexing starts from 1
-					writeBytes.append((i + 1).to_bytes(1, 'big'))
+					writeBytes.append((i + 1).to_bytes(1, "big"))
 					# Bits have to be reversed.
 					writeBytes.append(
 						int(
-							'{:08b}'.format(cell)[::-1], 2,
-						)
-						.to_bytes(
-							1, 'big',
+							"{:08b}".format(cell)[::-1],
+							2,
+						).to_bytes(
+							1,
+							"big",
 						),
 					)
 			writeBytes.append(END_BYTE)
