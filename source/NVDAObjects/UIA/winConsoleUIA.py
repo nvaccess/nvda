@@ -481,18 +481,3 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 		for line in displayString.splitlines():
 			if line and not line.isspace():  # Don't say "blank" during autoread
 				speech.speakText(line)
-
-
-def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility."""
-	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
-		log.warning(
-			"WinTerminalUIA is deprecated. "
-			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA",
-		)
-		return (
-			_NotificationsBasedWinTerminalUIA
-			if _shouldUseWindowsTerminalNotifications()
-			else _DiffBasedWinTerminalUIA
-		)
-	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
