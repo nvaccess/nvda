@@ -70,7 +70,7 @@ class ExpectedProsody:
 	]
 
 	def __eq__(self, other):
-		if type(self.expectedProsody) != type(other):
+		if type(self.expectedProsody) != type(other):  # noqa: E721
 			return False
 		if isinstance(other, BaseProsodyCommand):
 			return repr(other) == repr(self.expectedProsody)

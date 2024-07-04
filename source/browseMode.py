@@ -2273,7 +2273,7 @@ class BrowseModeDocumentTreeInterceptor(documentBase.DocumentWithTableNavigation
 		# Now merging adjacent strings
 		result = []
 		for k, g in itertools.groupby(sequence, key=type):
-			if k == str:
+			if k == str:  # noqa: E721
 				result.append("".join(g))
 			else:
 				result.extend(list(g))

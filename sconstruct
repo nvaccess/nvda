@@ -52,11 +52,11 @@ if (
 	)
 sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
-import sourceEnv
+import sourceEnv  # noqa: E402
 sys.path.remove(sourceEnvPath)
-import time
-import importlib.util
-import winreg
+import time  # noqa: E402
+import importlib.util  # noqa: E402
+import winreg  # noqa: E402
 
 def recursiveCopy(env,targetDir,sourceDir):
 	targets=[]
@@ -73,10 +73,10 @@ def recursiveCopy(env,targetDir,sourceDir):
 	return targets
 
 # Import NVDA's versionInfo module.
-import gettext
+import gettext  # noqa: E402
 gettext.install("nvda")
 sys.path.append("source")
-import versionInfo
+import versionInfo  # noqa: E402
 del sys.path[-1]
 
 makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
@@ -356,7 +356,7 @@ def ZipArchiveAction(target, source, env):
 				arcName = arcName.replace(".." + os.path.sep, "")
 			return "" if arcName == "." else arcName
 	else:
-		getArcName = lambda origName: "" if origName == "." else origName
+		getArcName = lambda origName: "" if origName == "." else origName  # noqa: E731
 
 	# Nasty hack to make zipfile use best compression, since it isn't configurable.
 	# Tried setting memlevel to 9 as well, but it made compression slightly worse.

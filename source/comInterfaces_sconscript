@@ -19,10 +19,10 @@ Import(
 	'env',
 )
 
-import importlib.util
+import importlib.util  # noqa: E402
 
 # Monkeypatch comtypes to clear the importlib cache when importing a new module
-import comtypes.client._generate
+import comtypes.client._generate  # noqa: E402
 old_my_import = comtypes.client._generate._my_import
 def new_my_import(fullname):
 	importlib.invalidate_caches()
@@ -77,7 +77,7 @@ interfaceBuilder=env.Builder(
 env['BUILDERS']['comtypesInterface'] = interfaceBuilder
 
 # Force comtypes generated interfaces in to our directory
-import comtypes.client
+import comtypes.client  # noqa: E402
 comtypes.client.gen_dir=Dir('comInterfaces').abspath
 
 COM_INTERFACES = {

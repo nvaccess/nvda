@@ -2,7 +2,7 @@ Import([
 	"thirdPartyEnv"
 ])
 
-import typing
+import typing  # noqa: E402
 
 thirdPartyEnv: Environment = thirdPartyEnv
 env: Environment = typing.cast(Environment, thirdPartyEnv.Clone())

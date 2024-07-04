@@ -447,7 +447,7 @@ phonemeData = env.espeak_compilePhonemeData(
 env.Depends(phonemeData,espeakLib)
 for i in phonemeData:
 	iDir = espeakRepo.Dir('espeak-ng-data').abspath
-	l = len(iDir) + 1
+	l = len(iDir) + 1  # noqa: E741
 	fileName = i.abspath[l:]
 	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
 
@@ -472,7 +472,7 @@ dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
 
 # Create compile commands for all languages
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
-	if langCode in excludeLangs: continue
+	if langCode in excludeLangs: continue  # noqa: E701
 
 	dictFilePath = espeakRepo.Dir('espeak-ng-data').File(dictFileName)
 
