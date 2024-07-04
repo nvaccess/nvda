@@ -4,6 +4,7 @@
 # Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Takuya Nishimoto
 
 """Default highlighter based on GDI Plus."""
+
 from typing import Optional, Tuple
 
 from autoSettingsUtils.autoSettings import SupportedSettingType
@@ -37,7 +38,7 @@ import core
 
 
 class HighlightStyle(
-		namedtuple("HighlightStyle", ("color", "width", "style", "margin"))
+	namedtuple("HighlightStyle", ("color", "width", "style", "margin")),
 ):
 	"""Represents the style of a highlight for a particular context.
 	@ivar color: The color to use for the style
@@ -68,9 +69,9 @@ SOLID_YELLOW = HighlightStyle(YELLOW, 2, winGDI.DashStyleSolid, 2)
 
 
 class HighlightWindow(CustomWindow):
-	transparency = 0xff
-	className = u"NVDAHighlighter"
-	windowName = u"NVDA Highlighter Window"
+	transparency = 0xFF
+	className = "NVDAHighlighter"
+	windowName = "NVDA Highlighter Window"
 	windowStyle = winUser.WS_POPUP | winUser.WS_DISABLED
 	extendedWindowStyle = (
 		# Ensure that the window is on top of all other windows
@@ -109,8 +110,11 @@ class HighlightWindow(CustomWindow):
 		if not winUser.user32.SetWindowPos(
 			self.handle,
 			winUser.HWND_TOPMOST,
-			left, top, width, height,
-			winUser.SWP_NOACTIVATE
+			left,
+			top,
+			width,
+			height,
+			winUser.SWP_NOACTIVATE,
 		):
 			raise WinError()
 		winUser.user32.ShowWindow(self.handle, winUser.SW_SHOWNA)
@@ -121,7 +125,7 @@ class HighlightWindow(CustomWindow):
 		super().__init__(
 			windowName=self.windowName,
 			windowStyle=self.windowStyle,
-			extendedWindowStyle=self.extendedWindowStyle
+			extendedWindowStyle=self.extendedWindowStyle,
 		)
 		self.location = None
 		self.highlighterRef = weakref.ref(highlighter)
@@ -129,7 +133,8 @@ class HighlightWindow(CustomWindow):
 			self.handle,
 			self.transparentColor,
 			self.transparency,
-			winUser.LWA_ALPHA | winUser.LWA_COLORKEY)
+			winUser.LWA_ALPHA | winUser.LWA_COLORKEY,
+		)
 		self.updateLocationForDisplays()
 		if not winUser.user32.UpdateWindow(self.handle):
 			raise WinError()
@@ -141,8 +146,11 @@ class HighlightWindow(CustomWindow):
 			winUser.user32.SetWindowPos(
 				self.handle,
 				winUser.HWND_TOPMOST,
-				0, 0, 0, 0,
-				winUser.SWP_NOACTIVATE | winUser.SWP_NOMOVE | winUser.SWP_NOSIZE
+				0,
+				0,
+				0,
+				0,
+				winUser.SWP_NOACTIVATE | winUser.SWP_NOMOVE | winUser.SWP_NOSIZE,
 			)
 		elif msg == winUser.WM_DESTROY:
 			winUser.user32.PostQuitMessage(0)
@@ -193,7 +201,7 @@ class HighlightWindow(CustomWindow):
 					with winGDI.GDIPlusPen(
 						HighlightStyle.color.toGDIPlusARGB(),
 						HighlightStyle.width,
-						HighlightStyle.style
+						HighlightStyle.style,
 					) as pen:
 						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
@@ -234,28 +242,27 @@ class NVDAHighlighterSettings(providerBase.VisionEnhancementProviderSettings):
 	def _get_supportedSettings(self) -> SupportedSettingType:
 		return [
 			BooleanDriverSetting(
-				'highlight%s' % (context[0].upper() + context[1:]),
+				"highlight%s" % (context[0].upper() + context[1:]),
 				_contextOptionLabelsWithAccelerators[context],
-				defaultVal=True
+				defaultVal=True,
 			)
 			for context in _supportedContexts
 		]
 
 
 class NVDAHighlighterGuiPanel(
-		AutoSettingsMixin,
-		SettingsPanel
+	AutoSettingsMixin,
+	SettingsPanel,
 ):
-	
 	_enableCheckSizer: wx.BoxSizer
 	_enabledCheckbox: wx.CheckBox
-	
+
 	helpId = "VisionSettingsFocusHighlight"
 
 	def __init__(
-			self,
-			parent: wx.Window,
-			providerControl: VisionProviderStateControl
+		self,
+		parent: wx.Window,
+		providerControl: VisionProviderStateControl,
 	):
 		self._providerControl = providerControl
 		initiallyEnabledInConfig = NVDAHighlighter.isEnabledInConfig()
@@ -269,7 +276,7 @@ class NVDAHighlighterGuiPanel(
 			if any(settingsToCheck):
 				log.debugWarning(
 					"Highlighter disabled in config while some of its settings are enabled. "
-					"This will be corrected"
+					"This will be corrected",
 				)
 				settingsStorage.highlightBrowseMode = False
 				settingsStorage.highlightFocus = False
@@ -284,7 +291,7 @@ class NVDAHighlighterGuiPanel(
 			#  Translators: The label for a checkbox that enables / disables focus highlighting
 			#  in the NVDA Highlighter vision settings panel.
 			label=_("&Enable Highlighting"),
-			style=wx.CHK_3STATE
+			style=wx.CHK_3STATE,
 		)
 
 		self.mainSizer.Add(self._enabledCheckbox)
@@ -294,7 +301,7 @@ class NVDAHighlighterGuiPanel(
 		self.optionsText = wx.StaticText(
 			self,
 			# Translators: The label for a group box containing the NVDA highlighter options.
-			label=_("Options:")
+			label=_("Options:"),
 		)
 		self.mainSizer.Add(self.optionsText)
 
@@ -339,8 +346,7 @@ class NVDAHighlighterGuiPanel(
 			self._onEnableFailure()
 
 	def _onEnableFailure(self):
-		""" Initialization of Highlighter failed. Reset settings / GUI
-		"""
+		"""Initialization of Highlighter failed. Reset settings / GUI"""
 		settingsStorage = self._getSettingsStorage()
 		settingsStorage.highlightBrowseMode = False
 		settingsStorage.highlightFocus = False
@@ -404,8 +410,8 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		return True
 
 	def registerEventExtensionPoints(  # override
-			self,
-			extensionPoints: EventExtensionPoints
+		self,
+		extensionPoints: EventExtensionPoints,
 	) -> None:
 		extensionPoints.post_focusChange.register(self.handleFocusChange)
 		extensionPoints.post_reviewMove.register(self.handleReviewMove)
@@ -491,17 +497,16 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		self.updateContextRect(context=Context.BROWSEMODE)
 
 	def refresh(self):
-		"""Refreshes the screen positions of the enabled highlights.
-		"""
+		"""Refreshes the screen positions of the enabled highlights."""
 		if self._window and self._window.handle:
 			self._window.refresh()
 
 	def _get_enabledContexts(self):
-		"""Gets the contexts for which the highlighter is enabled.
-		"""
+		"""Gets the contexts for which the highlighter is enabled."""
 		return tuple(
-			context for context in _supportedContexts
-			if getattr(self.getSettings(), 'highlight%s' % (context[0].upper() + context[1:]))
+			context
+			for context in _supportedContexts
+			if getattr(self.getSettings(), "highlight%s" % (context[0].upper() + context[1:]))
 		)
 
 

@@ -35,49 +35,54 @@ and deactivate that profile when browse mode becomes inactive.
 @type browseMode: bool
 """
 
-runningTable=set()
+runningTable = set()
+
 
 def getTreeInterceptor(obj):
 	for ti in runningTable:
 		if obj in ti:
 			return ti
 
+
 def update(obj, force=False):
 	# Don't create treeInterceptors for objects for which NVDA should sleep.
 	if obj.sleepMode:
 		return None
-	#If this object already has a treeInterceptor, just return that and don't bother trying to create one
-	ti=obj.treeInterceptor
+	# If this object already has a treeInterceptor, just return that and don't bother trying to create one
+	ti = obj.treeInterceptor
 	if not ti:
 		if not obj.shouldCreateTreeInterceptor and not force:
 			return None
 		try:
-			newClass=obj.treeInterceptorClass
+			newClass = obj.treeInterceptorClass
 		except NotImplementedError:
 			return None
 		if not force and (
-			not config.conf['virtualBuffers']['enableOnPageLoad'] or
-			getattr(obj.appModule, "disableBrowseModeByDefault", False)
+			not config.conf["virtualBuffers"]["enableOnPageLoad"]
+			or getattr(obj.appModule, "disableBrowseModeByDefault", False)
 		):
 			# Import late to avoid circular import.
 			from browseMode import BrowseModeTreeInterceptor
+
 			# Disabling enableOnPageLoad should only affect browse mode tree interceptors.
 			if issubclass(newClass, BrowseModeTreeInterceptor):
 				return None
-		ti=newClass(obj)
+		ti = newClass(obj)
 		if not ti.isAlive:
 			return None
 		runningTable.add(ti)
-		log.debug("Adding new treeInterceptor to runningTable: %s"%ti)
+		log.debug("Adding new treeInterceptor to runningTable: %s" % ti)
 	if ti.shouldPrepare:
 		ti.prepare()
 	return ti
+
 
 def cleanup():
 	"""Kills off any treeInterceptors that are no longer alive."""
 	for ti in list(runningTable):
 		if not ti.isAlive:
 			killTreeInterceptor(ti)
+
 
 def killTreeInterceptor(treeInterceptorObject):
 	try:
@@ -87,10 +92,12 @@ def killTreeInterceptor(treeInterceptorObject):
 	treeInterceptorObject.terminate()
 	log.debug("Killed treeInterceptor: %s" % treeInterceptorObject)
 
+
 def terminate():
 	"""Kills any currently running treeInterceptors"""
 	for ti in list(runningTable):
 		killTreeInterceptor(ti)
+
 
 class TreeInterceptor(baseObject.ScriptableObject):
 	"""Intercepts events and scripts for a tree of NVDAObjects.
@@ -99,7 +106,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 	Similarly, scripts on this interceptor take precedence over those of encompassed objects.
 	"""
 
-	shouldTrapNonCommandGestures=False #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
+	shouldTrapNonCommandGestures = False  #: If true then gestures that do not have a script and are not a command gesture should be trapped from going through to Windows.
 
 	def __init__(self, rootNVDAObject: "NVDAObjects.NVDAObject"):
 		super(TreeInterceptor, self).__init__()
@@ -136,8 +143,7 @@ class TreeInterceptor(baseObject.ScriptableObject):
 	passThrough: bool
 
 	def _get_passThrough(self):
-		"""Whether most scripts should temporarily pass through this interceptor without being intercepted.
-		"""
+		"""Whether most scripts should temporarily pass through this interceptor without being intercepted."""
 		return self._passThrough
 
 	def _set_passThrough(self, state):
@@ -147,34 +153,35 @@ class TreeInterceptor(baseObject.ScriptableObject):
 		browseMode = not self.passThrough
 		post_browseModeStateChange.notify(browseMode=browseMode)
 		if state:
-			if config.conf['reviewCursor']['followFocus']:
-				focusObj=api.getFocusObject()
+			if config.conf["reviewCursor"]["followFocus"]:
+				focusObj = api.getFocusObject()
 				if self is focusObj.treeInterceptor:
-					if review.getCurrentMode()=='document':
+					if review.getCurrentMode() == "document":
 						# if focus is in this treeInterceptor and review mode is document, turning on passThrough should force object review
-						review.setCurrentMode('object')
+						review.setCurrentMode("object")
 					if not api.setNavigatorObject(focusObj, isFocus=True):
 						return
 			focusObj = api.getFocusObject()
 			braille.handler.handleGainFocus(focusObj)
 			vision.handler.handleGainFocus(focusObj)
 		else:
-			obj=api.getNavigatorObject()
-			if config.conf['reviewCursor']['followCaret'] and self is obj.treeInterceptor: 
-				if review.getCurrentMode()=='object':
-					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review 
-					review.setCurrentMode('document',True)
+			obj = api.getNavigatorObject()
+			if config.conf["reviewCursor"]["followCaret"] and self is obj.treeInterceptor:
+				if review.getCurrentMode() == "object":
+					# if navigator object is in this treeInterceptor and the review mode is object, then turning off passThrough should force document review
+					review.setCurrentMode("document", True)
 			braille.handler.handleGainFocus(self)
 			vision.handler.handleGainFocus(self)
 
-	_cache_shouldPrepare=True
-	shouldPrepare=False #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
+	_cache_shouldPrepare = True
+	shouldPrepare = False  #:True if this treeInterceptor's prepare method should be called in order to make it ready (e.g. load a virtualBuffer, or process the document in some way).
 
 	def prepare(self):
 		"""Prepares this treeInterceptor so that it becomes ready to accept event/script input."""
 		raise NotImplementedError
 
-class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
+
+class DocumentTreeInterceptor(documentBase.TextContainerObject, TreeInterceptor):
 	"""A TreeInterceptor that supports document review."""
 
 	#: Indicates if the text selection is anchored at the start.
@@ -185,29 +192,29 @@ class DocumentTreeInterceptor(documentBase.TextContainerObject,TreeInterceptor):
 	#: this will be False.
 	#: If the selection is anchored at the end or there is no information this is C{False}.
 	#: @type: bool
-	isTextSelectionAnchoredAtStart=True
+	isTextSelectionAnchoredAtStart = True
+
 
 class RootProxyTextInfo(textInfos.TextInfo):
-
-	def __init__(self,obj,position,**kwargs):
-		super(RootProxyTextInfo,self).__init__(obj,position)
-		if isinstance(position,self.InnerTextInfoClass):
-			self.innerTextInfo=position
+	def __init__(self, obj, position, **kwargs):
+		super(RootProxyTextInfo, self).__init__(obj, position)
+		if isinstance(position, self.InnerTextInfoClass):
+			self.innerTextInfo = position
 		else:
-			self.innerTextInfo=self.InnerTextInfoClass(obj.rootNVDAObject,position,**kwargs)
+			self.innerTextInfo = self.InnerTextInfoClass(obj.rootNVDAObject, position, **kwargs)
 
 	def _get_InnerTextInfoClass(self):
 		return self.obj.rootNVDAObject.TextInfo
 
 	def copy(self):
-		innerCopy=self.innerTextInfo.copy()
-		return self.__class__(self.obj,innerCopy)
+		innerCopy = self.innerTextInfo.copy()
+		return self.__class__(self.obj, innerCopy)
 
 	def _get__rangeObj(self):
 		return self.innerTextInfo._rangeObj
 
-	def _set__rangeObj(self,r):
-		self.innerTextInfo._rangeObj=r
+	def _set__rangeObj(self, r):
+		self.innerTextInfo._rangeObj = r
 
 	def _get_locationText(self):
 		return self.innerTextInfo.locationText
@@ -215,26 +222,26 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def copyToClipboard(self, notify=False):
 		return self.innerTextInfo.copyToClipboard(notify)
 
-	def find(self,text,caseSensitive=False,reverse=False):
-		return self.innerTextInfo.find(text,caseSensitive,reverse)
+	def find(self, text, caseSensitive=False, reverse=False):
+		return self.innerTextInfo.find(text, caseSensitive, reverse)
 
 	def activate(self):
 		return self.innerTextInfo.activate()
 
-	def compareEndPoints(self,other,which):
-		return self.innerTextInfo.compareEndPoints(other.innerTextInfo,which)
+	def compareEndPoints(self, other, which):
+		return self.innerTextInfo.compareEndPoints(other.innerTextInfo, which)
 
-	def setEndPoint(self,other,which):
-		return self.innerTextInfo.setEndPoint(other.innerTextInfo,which)
+	def setEndPoint(self, other, which):
+		return self.innerTextInfo.setEndPoint(other.innerTextInfo, which)
 
 	def _get_isCollapsed(self):
 		return self.innerTextInfo.isCollapsed
 
-	def collapse(self,end=False):
+	def collapse(self, end=False):
 		return self.innerTextInfo.collapse(end=end)
 
-	def move(self,unit,direction,endPoint=None):
-		return self.innerTextInfo.move(unit,direction,endPoint=endPoint)
+	def move(self, unit, direction, endPoint=None):
+		return self.innerTextInfo.move(unit, direction, endPoint=endPoint)
 
 	def _get_bookmark(self):
 		return self.innerTextInfo.bookmark
@@ -254,7 +261,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		return self.innerTextInfo.getTextWithFields(formatConfig=formatConfig)
 
-	def expand(self,unit):
+	def expand(self, unit):
 		return self.innerTextInfo.expand(unit)
 
 	def getMathMl(self, field):
@@ -267,14 +274,14 @@ class RootProxyTextInfo(textInfos.TextInfo):
 		return self.innerTextInfo.focusableNVDAObjectAtStart
 
 	def getFormatFieldSpeech(
-			self,
-			attrs: textInfos.Field,
-			attrsCache: Optional[textInfos.Field] = None,
-			formatConfig: Optional[Dict[str, bool]] = None,
-			reason: Optional[OutputReason] = None,
-			unit: Optional[str] = None,
-			extraDetail: bool = False,
-			initialFormat: bool = False,
+		self,
+		attrs: textInfos.Field,
+		attrsCache: Optional[textInfos.Field] = None,
+		formatConfig: Optional[Dict[str, bool]] = None,
+		reason: Optional[OutputReason] = None,
+		unit: Optional[str] = None,
+		extraDetail: bool = False,
+		initialFormat: bool = False,
 	) -> SpeechSequence:
 		sequence = self.innerTextInfo.getFormatFieldSpeech(
 			attrs,
@@ -283,7 +290,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 			reason=reason,
 			unit=unit,
 			extraDetail=extraDetail,
-			initialFormat=initialFormat
+			initialFormat=initialFormat,
 		)
 		textInfos._logBadSequenceTypes(sequence)
 		return sequence

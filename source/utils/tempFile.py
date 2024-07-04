@@ -8,9 +8,9 @@ import tempfile
 
 
 def _createEmptyTempFileForDeletingFile(
-		dir: str | None = None,
-		prefix: str | None = None,
-		suffix: str | None = None,
+	dir: str | None = None,
+	prefix: str | None = None,
+	suffix: str | None = None,
 ) -> str:
 	"""
 	Create an empty temporary file and return its path.

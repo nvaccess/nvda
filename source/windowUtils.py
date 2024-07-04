@@ -19,6 +19,8 @@ from baseObject import AutoPropertyObject
 from typing import Optional
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
+
+
 def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	"""Find a descendant window matching specified criteria.
 	@param parent: The handle of the parent window to search within.
@@ -35,6 +37,7 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 	"""
 	# We need something mutable to store the result from the callback.
 	result = []
+
 	@WNDENUMPROC
 	def callback(window, data):
 		if (
@@ -45,11 +48,13 @@ def findDescendantWindow(parent, visible=None, controlID=None, className=None):
 			result.append(window)
 			return False
 		return True
+
 	ctypes.windll.user32.EnumChildWindows(parent, callback, 0)
 	try:
 		return result[0]
 	except IndexError:
 		raise LookupError("No matching descendant window found")
+
 
 try:
 	# Windows >= 8.1
@@ -64,6 +69,7 @@ except AttributeError:
 		# Windows <= XP
 		_logicalToPhysicalPoint = None
 		_physicalToLogicalPoint = None
+
 
 def logicalToPhysicalPoint(window, x, y):
 	"""Converts the logical coordinates of a point in a window to physical coordinates.
@@ -81,6 +87,7 @@ def logicalToPhysicalPoint(window, x, y):
 	point = ctypes.wintypes.POINT(x, y)
 	_logicalToPhysicalPoint(window, ctypes.byref(point))
 	return point.x, point.y
+
 
 def physicalToLogicalPoint(window, x, y):
 	"""Converts the physical coordinates of a point in a window to logical coordinates.
@@ -127,13 +134,14 @@ def getWindowScalingFactor(window: int) -> int:
 	# There is little information about what GetDeviceCaps does in the case of a failure for LOGPIXELSX, however,
 	# a value of zero is certainly an error.
 	if winDpi <= 0:
-		log.debugWarning("Failed to get the DPI for the window, assuming a "
-		                 "DPI of {} and using a scaling of 1. The hWnd value "
-		                 "used was: {}".format(DEFAULT_DPI_LEVEL, window))
+		log.debugWarning(
+			"Failed to get the DPI for the window, assuming a "
+			"DPI of {} and using a scaling of 1. The hWnd value "
+			"used was: {}".format(DEFAULT_DPI_LEVEL, window),
+		)
 		return 1
 
 	return round(winDpi / DEFAULT_DPI_LEVEL)
-
 
 
 appInstance = ctypes.windll.kernel32.GetModuleHandleW(None)
@@ -146,6 +154,7 @@ class CustomWindow(AutoPropertyObject):
 	The window will be destroyed when the instance is deleted,
 	but it can be explicitly destroyed using L{destroy}.
 	"""
+
 	handle: Optional[int] = None
 
 	@classmethod
@@ -178,11 +187,11 @@ class CustomWindow(AutoPropertyObject):
 	_hwndsToInstances = weakref.WeakValueDictionary()
 
 	def __init__(
-			self,
-			windowName: Optional[str] = None,
-			windowStyle: int = 0,
-			extendedWindowStyle: int = 0,
-			parent: Optional[int] = None
+		self,
+		windowName: Optional[str] = None,
+		windowStyle: int = 0,
+		extendedWindowStyle: int = 0,
+		parent: Optional[int] = None,
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
@@ -218,7 +227,7 @@ class CustomWindow(AutoPropertyObject):
 			parent,
 			None,
 			appInstance,
-			None
+			None,
 		)
 		if res == 0:
 			raise ctypes.WinError()
@@ -232,12 +241,15 @@ class CustomWindow(AutoPropertyObject):
 		but you may wish to call it earlier.
 		"""
 		if not ctypes.windll.user32.DestroyWindow(self.handle):
-			log.error(f"Error destroying window for {self.__class__.__qualname__}", exc_info=ctypes.WinError())
+			log.error(
+				f"Error destroying window for {self.__class__.__qualname__}",
+				exc_info=ctypes.WinError(),
+			)
 		self.handle = None
 		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",
-				exc_info=ctypes.WinError()
+				exc_info=ctypes.WinError(),
 			)
 		self._classAtom = None
 
