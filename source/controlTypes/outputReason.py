@@ -7,8 +7,8 @@ from enum import Enum, auto
 
 
 class OutputReason(Enum):
-	"""Specify the reason that a given piece of output was generated.
-	"""
+	"""Specify the reason that a given piece of output was generated."""
+
 	#: An object to be reported due to a focus change or similar.
 	FOCUS = auto()
 	#: An ancestor of the focus object to be reported due to a focus change or similar.

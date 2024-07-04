@@ -35,7 +35,9 @@ def setDPIAwareness() -> None:
 		DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2 = -4
 		# Method introduced in Windows 10
 		# https://docs.microsoft.com/en-us/windows/win32/hidpi/dpi-awareness-context
-		success = ctypes.windll.user32.SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2)
+		success = ctypes.windll.user32.SetProcessDpiAwarenessContext(
+			DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2,
+		)
 	except AttributeError:
 		log.debug("Cannot set DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2")
 	else:

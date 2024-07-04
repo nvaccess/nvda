@@ -7,18 +7,18 @@
 from __future__ import annotations
 from typing import (
 	Iterable,
-	Generic
+	Generic,
 )
 from ctypes import (
 	c_ulong,
 )
 from comtypes import (
-	GUID
+	GUID,
 )
 from .. import instructions
 from ..remoteFuncWrapper import (
 	remoteMethod,
-	remoteMethod_mutable
+	remoteMethod_mutable,
 )
 from . import (
 	LocalTypeVar,
@@ -38,7 +38,7 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewNull(
-			result=self
+			result=self,
 		)
 
 	@remoteMethod
@@ -53,22 +53,22 @@ class RemoteExtensionTarget(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar
 			instructions.IsExtensionSupported(
 				result=result,
 				target=self,
-				extensionId=RemoteGuid.ensureRemote(self.rob, extensionId)
-			)
+				extensionId=RemoteGuid.ensureRemote(self.rob, extensionId),
+			),
 		)
 		return result
 
 	@remoteMethod_mutable
 	def callExtension(
-			self,
-			extensionId: RemoteGuid | GUID,
-			*params: RemoteBaseObject | int | float | str
+		self,
+		extensionId: RemoteGuid | GUID,
+		*params: RemoteBaseObject | int | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.CallExtension(
 				target=self,
 				extensionId=RemoteGuid.ensureRemote(self.rob, extensionId),
 				argCount=c_ulong(len(params)),
-				arguments=[RemoteBaseObject.ensureRemote(self.rob, param) for param in params]
-			)
+				arguments=[RemoteBaseObject.ensureRemote(self.rob, param) for param in params],
+			),
 		)

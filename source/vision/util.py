@@ -28,6 +28,7 @@ def getCaretRect(obj: Optional[TextContainerObject] = None) -> locationHelper.Re
 	if api.isNVDAObject(obj):
 		# Import late to avoid circular import
 		import displayModel
+
 		# Check whether there is a caret in the window.
 		# Note that, even windows that don't have navigable text could have a caret, such as in Excel.
 		try:
@@ -62,8 +63,8 @@ def getObjectRect(obj: NVDAObject) -> locationHelper.RectLTRB:
 
 
 def getContextRect(
-		context: Context,
-		obj: Optional[TextContainerObject] = None
+	context: Context,
+	obj: Optional[TextContainerObject] = None,
 ) -> Optional[locationHelper.RectLTRB]:
 	"""Gets a rectangle for the specified context."""
 	if context == Context.FOCUS:

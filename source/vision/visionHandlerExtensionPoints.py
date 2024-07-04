@@ -24,6 +24,7 @@ class EventExtensionPoints:
 	performing registration to the extension points it is interested in.
 	For an example, see the L{visionEnhancementProviders.NVDAHighlighter} module.
 	"""
+
 	#: Notifies a vision enhancement provider when an object property has changed.
 	#: This allows a vision enhancement provider to take an action
 	#: when one of the properties of an object has changed.

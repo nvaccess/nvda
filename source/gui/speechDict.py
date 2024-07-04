@@ -21,23 +21,23 @@ from .settingsDialogs import SettingsDialog
 
 
 class DictionaryEntryDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "SpeechDictionaries"
-	
+
 	TYPE_LABELS = {
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
 	}
 	TYPE_LABELS_ORDERING = (
 		speechDictHandler.ENTRY_TYPE_ANYWHERE,
 		speechDictHandler.ENTRY_TYPE_WORD,
-		speechDictHandler.ENTRY_TYPE_REGEXP
+		speechDictHandler.ENTRY_TYPE_REGEXP,
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
@@ -65,7 +65,9 @@ class DictionaryEntryDialog(
 
 		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
 		typeText = _("&Type")
-		typeChoices = [DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING]
+		typeChoices = [
+			DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING
+		]
 		self.typeRadioBox = sHelper.addItem(wx.RadioBox(self, label=typeText, choices=typeChoices))
 
 		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
@@ -92,7 +94,7 @@ class DictionaryEntryDialog(
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.patternTextCtrl.SetFocus()
 			return
@@ -111,27 +113,29 @@ class DictionaryEntryDialog(
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the pattern field: \"{error}\".").format(error=e),
+				_('Regular Expression error in the pattern field: "{error}".').format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.patternTextCtrl.SetFocus()
 			return
 		try:
 			dictEntry.sub("test")  # Ensure there are no grouping error (#11407)
 		except RegexpError as e:
-			log.debugWarning(f"Could not add dictionary entry due to regex error in the replacement field : {e}")
+			log.debugWarning(
+				f"Could not add dictionary entry due to regex error in the replacement field : {e}",
+			)
 			if entryType != speechDictHandler.ENTRY_TYPE_REGEXP:
 				raise e
 			gui.messageBox(
 				# Translators: This is an error message to let the user know that the dictionary entry is not valid.
-				_("Regular Expression error in the replacement field: \"{error}\".").format(error=e),
+				_('Regular Expression error in the replacement field: "{error}".').format(error=e),
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.replacementTextCtrl.SetFocus()
 			return
@@ -142,15 +146,15 @@ class DictionaryEntryDialog(
 
 
 class DictionaryDialog(
-		SettingsDialog,
-		metaclass=guiHelper.SIPABCMeta,
+	SettingsDialog,
+	metaclass=guiHelper.SIPABCMeta,
 ):
 	"""A dictionary dialog.
 	A dictionary dialog is a setting dialog containing a list of dictionary entries and buttons to manage them.
-	
+
 	To use this dialog, override L{__init__} calling super().__init__.
 	"""
-	
+
 	TYPE_LABELS = {t: l.replace("&", "") for t, l in DictionaryEntryDialog.TYPE_LABELS.items()}  # noqa: E741
 	helpId = "SpeechDictionaries"
 
@@ -174,7 +178,8 @@ class DictionaryDialog(
 		entriesLabelText = _("&Dictionary entries")
 		self.dictList = sHelper.addLabeledControl(
 			entriesLabelText,
-			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+			wx.ListCtrl,
+			style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.AppendColumn(_("Comment"), width=150)
@@ -192,32 +197,34 @@ class DictionaryDialog(
 		self.dictList.AppendColumn(_("Type"), width=50)
 		self.offOn = (_("off"), _("on"))
 		for entry in self.tempSpeechDict:
-			self.dictList.Append((
-				entry.comment,
-				entry.pattern,
-				entry.replacement,
-				self.offOn[int(entry.caseSensitive)],
-				DictionaryDialog.TYPE_LABELS[entry.type]
-			))
+			self.dictList.Append(
+				(
+					entry.comment,
+					entry.pattern,
+					entry.replacement,
+					self.offOn[int(entry.caseSensitive)],
+					DictionaryDialog.TYPE_LABELS[entry.type],
+				),
+			)
 		self.editingIndex = -1
 
 		bHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to add new entries.
-			label=_("&Add")
+			label=_("&Add"),
 		).Bind(wx.EVT_BUTTON, self.onAddClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-			label=_("&Edit")
+			label=_("&Edit"),
 		).Bind(wx.EVT_BUTTON, self.onEditClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-			label=_("&Remove")
+			label=_("&Remove"),
 		).Bind(wx.EVT_BUTTON, self.onRemoveClick)
 
 		bHelper.sizer.AddStretchSpacer()
@@ -225,7 +232,7 @@ class DictionaryDialog(
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button on the Speech Dictionary dialog.
-			label=_("Remove all")
+			label=_("Remove all"),
 		).Bind(wx.EVT_BUTTON, self.onRemoveAll)
 
 		sHelper.addItem(bHelper, flag=wx.EXPAND)
@@ -250,13 +257,15 @@ class DictionaryDialog(
 		entryDialog = DictionaryEntryDialog(self, title=_("Add Dictionary Entry"))
 		if entryDialog.ShowModal() == wx.ID_OK:
 			self.tempSpeechDict.append(entryDialog.dictEntry)
-			self.dictList.Append((
-				entryDialog.commentTextCtrl.GetValue(),
-				entryDialog.patternTextCtrl.GetValue(),
-				entryDialog.replacementTextCtrl.GetValue(),
-				self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],
-				DictionaryDialog.TYPE_LABELS[entryDialog.getType()]
-			))
+			self.dictList.Append(
+				(
+					entryDialog.commentTextCtrl.GetValue(),
+					entryDialog.patternTextCtrl.GetValue(),
+					entryDialog.replacementTextCtrl.GetValue(),
+					self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],
+					DictionaryDialog.TYPE_LABELS[entryDialog.getType()],
+				),
+			)
 			index = self.dictList.GetFirstSelected()
 			while index >= 0:
 				self.dictList.Select(index, on=0)
@@ -298,13 +307,16 @@ class DictionaryDialog(
 		self.dictList.SetFocus()
 
 	def onRemoveAll(self, evt):
-		if gui.messageBox(
-			# Translators: A prompt for confirmation on the Speech Dictionary dialog.
-			_("Are you sure you want to remove all the entries in this dictionary?"),
-			# Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
-			_("Remove all"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT
-		) != wx.YES:
+		if (
+			gui.messageBox(
+				# Translators: A prompt for confirmation on the Speech Dictionary dialog.
+				_("Are you sure you want to remove all the entries in this dictionary?"),
+				# Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
+				_("Remove all"),
+				style=wx.YES | wx.NO | wx.NO_DEFAULT,
+			)
+			!= wx.YES
+		):
 			return
 		# Looping instead of clearing here in order to avoid recreation of the columns
 		# eventually loosing their manually changed widths.

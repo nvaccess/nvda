@@ -41,7 +41,7 @@ Handlers are called with three arguments.
 
 
 class WindowMessage(IntEnum):
-	DISPLAY_CHANGE = 0x7e
+	DISPLAY_CHANGE = 0x7E
 	"""
 	WM_DISPLAYCHANGE
 

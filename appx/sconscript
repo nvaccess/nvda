@@ -1,108 +1,118 @@
 ###
-#This file is a part of the NVDA project.
-#URL: https://www.nvaccess.org/
-#Copyright 2018-2019 NV Access Limited
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: https://www.nvaccess.org/
+# Copyright 2018-2019 NV Access Limited
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 import subprocess
 import versionInfo
 import os
 
-Import([
-	'env',
-	'outFilePrefix',
-	'isStoreSubmission',
-])
+Import(
+	[
+		"env",
+		"outFilePrefix",
+		"isStoreSubmission",
+	]
+)
+
 
 def getCertPublisher(env):
 	"""
 	If no signing certificate is provided, then the given publisher is used as is.
 	If a signing certificate is given, then the publisher is extracted from the certificate.
 	"""
-	certFilePath = env.get('certFile')
+	certFilePath = env.get("certFile")
 	if not certFilePath:
-		return env['publisher']
-	certPassword=env.get('certPassword','')
+		return env["publisher"]
+	certPassword = env.get("certPassword", "")
 	if not os.path.isabs(certFilePath):
 		# If path is not absolute it is assumed that it is being given relative to the top dir of the repo
-		repoTopDir = Dir('#').abspath
+		repoTopDir = Dir("#").abspath
 		certFilePath = os.path.abspath(os.path.normpath(os.path.join(repoTopDir, certFilePath)))
-	cmd=['certutil', '-dump', '-p', certPassword, certFilePath]
-	lines=subprocess.run(cmd,check=True,capture_output=True,text=True).stdout.splitlines()
-	linePrefix='Subject: '
+	cmd = ["certutil", "-dump", "-p", certPassword, certFilePath]
+	lines = subprocess.run(cmd, check=True, capture_output=True, text=True).stdout.splitlines()
+	linePrefix = "Subject: "
 	for line in lines:
 		if line.startswith(linePrefix):
-			subject=line[len(linePrefix):].rstrip()
+			subject = line[len(linePrefix) :].rstrip()
 			return subject
 
-packageName="NVAccessLimited.NVDANonVisualDesktopAccess"
-packageVersion="%s.%s.%s.%s"%(versionInfo.version_year,versionInfo.version_major,env['version_build'],0)
+
+packageName = "NVAccessLimited.NVDANonVisualDesktopAccess"
+packageVersion = "%s.%s.%s.%s" % (
+	versionInfo.version_year,
+	versionInfo.version_major,
+	env["version_build"],
+	0,
+)
 if isStoreSubmission:
-	packageFileName=outFilePrefix+"_storeSubmission.appx"
+	packageFileName = outFilePrefix + "_storeSubmission.appx"
 	# NV Access Limited's Windows Store publisher ID
 	# It is okay to be here as the only way to submit, validate and sign the package is via the NV Access store account.
-	packagePublisher="CN=83B1DA31-9B66-442C-88AB-77B4B815E1DE"
-	packagePublisherDisplayName="NV Access Limited"
-	productName="NVDA Screen Reader (Windows Store Edition)" 
-else: # not for submission, just side-loadable
-	packageFileName=outFilePrefix+"_sideLoadable.appx"
-	packagePublisher=getCertPublisher(env)
-	packagePublisherDisplayName=env['publisher']
-	productName="NVDA Screen Reader (Windows Desktop Bridge Edition)" 
+	packagePublisher = "CN=83B1DA31-9B66-442C-88AB-77B4B815E1DE"
+	packagePublisherDisplayName = "NV Access Limited"
+	productName = "NVDA Screen Reader (Windows Store Edition)"
+else:  # not for submission, just side-loadable
+	packageFileName = outFilePrefix + "_sideLoadable.appx"
+	packagePublisher = getCertPublisher(env)
+	packagePublisherDisplayName = env["publisher"]
+	productName = "NVDA Screen Reader (Windows Desktop Bridge Edition)"
 
-signExec = env['signExec'] if (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
+signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
 
 
 # Files from NVDA's distribution that cannot be included in the appx due to policy or security restrictions
 excludedDistFiles = [
-	'nvda_slave.exe',
-	'nvda_noUIAccess.exe',
-	'lib/IAccessible2Proxy.dll',
-	'lib/ISimpleDOM.dll',
-	'lib/NVDAHelperRemote.dll',
-	'lib64/',
-	'libArm64/',
-	'uninstall.exe',
+	"nvda_slave.exe",
+	"nvda_noUIAccess.exe",
+	"lib/IAccessible2Proxy.dll",
+	"lib/ISimpleDOM.dll",
+	"lib/NVDAHelperRemote.dll",
+	"lib64/",
+	"libArm64/",
+	"uninstall.exe",
 ]
 
-# Create an appx manifest with version and publisher etc all filled in 
-manifest=env.Substfile(
+# Create an appx manifest with version and publisher etc all filled in
+manifest = env.Substfile(
 	"AppxManifest.xml",
-	'manifest.xml.subst',
+	"manifest.xml.subst",
 	SUBST_DICT={
-		'%packageName%':packageName,
-		'%packageVersion%':packageVersion,
-		'%packagePublisher%':packagePublisher,
-		'%publisher%':packagePublisherDisplayName,
-		'%productName%':productName,
-		'%description%':versionInfo.description,
+		"%packageName%": packageName,
+		"%packageVersion%": packageVersion,
+		"%packagePublisher%": packagePublisher,
+		"%publisher%": packagePublisherDisplayName,
+		"%productName%": productName,
+		"%description%": versionInfo.description,
 	},
 )
-# Make a copy of the dist dir produced by py2exe 
+# Make a copy of the dist dir produced by py2exe
 # And also place some extra appx specific images in there
-appxContent=env.Command(
-	target='content',
-	source=[Dir("#dist"),Dir('#appx/appx_images'),manifest],
+appxContent = env.Command(
+	target="content",
+	source=[Dir("#dist"), Dir("#appx/appx_images"), manifest],
 	action=[
 		Delete("$TARGET"),
-		Copy("$TARGET","${SOURCES[0]}"),
-		Copy("${TARGET}\\appx_images","${SOURCES[1]}"),
-		Copy("${TARGET}\\AppxManifest.xml","${SOURCES[2]}"),
-	]+[Delete("${TARGET}/%s"%excludeFile) for excludeFile in excludedDistFiles],
+		Copy("$TARGET", "${SOURCES[0]}"),
+		Copy("${TARGET}\\appx_images", "${SOURCES[1]}"),
+		Copy("${TARGET}\\AppxManifest.xml", "${SOURCES[2]}"),
+	]
+	+ [Delete("${TARGET}/%s" % excludeFile) for excludeFile in excludedDistFiles],
 )
-# Ensure that it is always copied as we can't tell if dist changed 
+# Ensure that it is always copied as we can't tell if dist changed
 env.AlwaysBuild(appxContent)
 # Package the appx
-appx=env.Command(packageFileName,appxContent,"makeappx pack /p $TARGET /d $SOURCE")
+appx = env.Command(packageFileName, appxContent, "makeappx pack /p $TARGET /d $SOURCE")
 if signExec and not isStoreSubmission:
-	env.AddPostAction(appx,signExec)
+	env.AddPostAction(appx, signExec)
 
-Return(['appx'])
+Return(["appx"])
