@@ -61,7 +61,7 @@ def queueEvent(eventName,obj,**kwargs):
 		eventName,
 		obj,
 		kwargs,
-		_immediate=eventName == "gainFocus"
+		_immediate=eventName == "gainFocus",
 	)
 
 
@@ -124,11 +124,13 @@ class _EventExecuter(garbageHandler.TrackedObject):
 		try:
 			return func(*args, **self.kwargs)
 		except TypeError:
-			log.warning("Could not execute function {func} defined in {module} module; kwargs: {kwargs}".format(
-				func=func.__name__,
-				module=func.__module__ or "unknown",
-				kwargs=self.kwargs
-			), exc_info=True)
+			log.warning(
+       "Could not execute function {func} defined in {module} module; kwargs: {kwargs}".format(
+        func=func.__name__,
+        module=func.__module__ or "unknown",
+        kwargs=self.kwargs,
+       ), exc_info=True,
+   )
 			return extensionPoints.callWithSupportedKwargs(func, *args, **self.kwargs)
 
 	def gen(self, eventName, obj):
@@ -265,7 +267,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 			and self._obj.IAccessibleRole in (
 				oleacc.ROLE_SYSTEM_MENUITEM,
 				IA2.IA2_ROLE_CHECK_MENU_ITEM,
-				IA2.IA2_ROLE_RADIO_MENU_ITEM
+				IA2.IA2_ROLE_RADIO_MENU_ITEM,
 			)
 			and lastFocus.IAccessibleRole == oleacc.ROLE_SYSTEM_MENUPOPUP
 			and self._obj.parent
@@ -279,7 +281,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 				log.debugWarning(
 					"This ancestor menu was not announced properly, and should have been focused before the submenu item.\n"
 					f"Object info: {self._obj.devInfo}\n"
-					f"Ancestor info: {ancestor.devInfo}"
+					f"Ancestor info: {ancestor.devInfo}",
 				)
 				return True
 			
@@ -290,7 +292,7 @@ class FocusLossCancellableSpeechCommand(_CancellableSpeechCommand):
 
 def _getFocusLossCancellableSpeechCommand(
 		obj,
-		reason: controlTypes.OutputReason
+		reason: controlTypes.OutputReason,
 ) -> Optional[_CancellableSpeechCommand]:
 	if reason != controlTypes.OutputReason.FOCUS or not speech.manager._shouldCancelExpiredFocusEvents():
 		return None
@@ -469,9 +471,11 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		# We can't filter without a window handle.
 		return True
 	wClass = winUser.getClassName(windowHandle)
-	key = (eventName,
-		winUser.getWindowThreadProcessID(windowHandle)[0],
-		wClass)
+	key = (
+     eventName,
+     winUser.getWindowThreadProcessID(windowHandle)[0],
+     wClass,
+ )
 	if key in _acceptEvents:
 		return True
 	if eventName == "valueChange" and config.conf["presentation"]["progressBarUpdates"]["reportBackgroundProgressBars"]:
@@ -515,13 +519,17 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 		== winUser.getAncestor(fg, winUser.GA_ROOTOWNER)
 	):
 		return True
-	if (winUser.isDescendantWindow(fg, windowHandle)
-			# #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
-			or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))):
+	if (
+     winUser.isDescendantWindow(fg, windowHandle)
+     # #3899, #3905: Covers cases such as the Firefox Page Bookmarked window and OpenOffice/LibreOffice context menus.
+     or winUser.isDescendantWindow(fg, winUser.getAncestor(windowHandle, winUser.GA_ROOTOWNER))
+ ):
 		# This is for the foreground application.
 		return True
-	if (winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
-			or winUser.user32.GetWindowLongW(winUser.getAncestor(windowHandle, winUser.GA_ROOT), winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST):
+	if (
+     winUser.user32.GetWindowLongW(windowHandle, winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
+     or winUser.user32.GetWindowLongW(winUser.getAncestor(windowHandle, winUser.GA_ROOT), winUser.GWL_EXSTYLE) & winUser.WS_EX_TOPMOST
+ ):
 		# This window or its root is a topmost window.
 		# This includes menus, combo box pop-ups and the task switching list.
 		return True
@@ -541,7 +549,7 @@ def shouldAcceptEvent(eventName, windowHandle=None):
 				log.debugWarning("Could not create UIA element for root of Chromium document", exc_info=True)
 			else:
 				condition = UIAHandler.handler.clientObject.CreatePropertyCondition(
-					UIAHandler.UIA_NativeWindowHandlePropertyId, gi.hwndFocus
+					UIAHandler.UIA_NativeWindowHandlePropertyId, gi.hwndFocus,
 				)
 				try:
 					walker = UIAHandler.handler.clientObject.CreateTreeWalker(condition)

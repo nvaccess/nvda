@@ -321,8 +321,10 @@ class SynthDriver(SynthDriver):
 				tagsChanged[0] = True
 			elif isinstance(item, PhonemeCommand):
 				try:
-					textList.append(u'<pron sym="%s">%s</pron>'
-						% (self._convertPhoneme(item.ipa), item.text or u""))
+					textList.append(
+         u'<pron sym="%s">%s</pron>'
+         % (self._convertPhoneme(item.ipa), item.text or u""),
+     )
 				except LookupError:
 					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
 					if item.text:

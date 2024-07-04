@@ -20,12 +20,12 @@ class TestNVWaveExtensionPoints(unittest.TestCase):
 		kwargs = {
 			"fileName": os.path.join(globalVars.appDir, "waves", "start.wav"),
 			"asynchronous": False,
-			"isSpeechWaveFileCommand": False
+			"isSpeechWaveFileCommand": False,
 		}
 		with deciderTester(
 			self,
 			nvwave.decide_playWaveFile,
 			expectedDecision=False,
-			**kwargs
+			**kwargs,
 		):
 			nvwave.playWaveFile(**kwargs)

@@ -76,7 +76,7 @@ class InputComposition(EditableTextWithAutoSelectDetection,Window):
 					queueHandler.eventQueue,
 					speech.speakText,
 					newText,
-					symbolLevel=characterProcessing.SymbolLevel.ALL
+					symbolLevel=characterProcessing.SymbolLevel.ALL,
 				)
 
 	def compositionUpdate(self,compositionString,selectionStart,selectionEnd,isReading,announce=True):

@@ -63,20 +63,20 @@ class ChromeLib:
 			# An additionally started chrome process merely communicates the intent to open a URI and then exits.
 			# Start is tracking only this process.
 			"Is Start process still running (True expected): "
-			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
+			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}",
 		)
 
 		if not ChromeLib._chromeWindow:
 			builtIn.log(
 				"Unable to close tab, Chrome window not initialised correctly.",
-				level="WARN"
+				level="WARN",
 			)
 			return
 
 		if not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
 			builtIn.log(
 				"Unable to close tab, window not in foreground: "
-				f"({ChromeLib._chromeWindow.title} - {ChromeLib._chromeWindow.hwndVal})"
+				f"({ChromeLib._chromeWindow.title} - {ChromeLib._chromeWindow.hwndVal})",
 			)
 			return
 
@@ -84,12 +84,12 @@ class ChromeLib:
 		process.wait_for_process(
 			ChromeLib._processRFHandleForStart,
 			timeout="10 seconds",
-			on_timeout="continue"
+			on_timeout="continue",
 		)
 		builtIn.log(
 			# False is expected, chrome should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
-			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}"
+			f"{process.is_process_running(ChromeLib._processRFHandleForStart)}",
 		)
 
 	def exit_chrome(self):
@@ -126,7 +126,7 @@ class ChromeLib:
 			giveUpAfterSeconds=10,  # Chrome has been taking ~3 seconds to open a new tab on appveyor.
 			shouldStopEvaluator=lambda _window: _window is not None,
 			intervalBetweenSeconds=0.5,
-			errorMessage="Unable to get chrome window"
+			errorMessage="Unable to get chrome window",
 		)
 
 		if not success or ChromeLib._chromeWindow is None:
@@ -184,7 +184,7 @@ class ChromeLib:
 			moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('alt+d')  # focus the address bar, chrome shortcut
 			if expectedAddressBarSpeech not in moveToAddressBarSpeech:
 				builtIn.log(
-					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}"
+					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}",
 				)
 				return False
 
@@ -192,14 +192,14 @@ class ChromeLib:
 		if ChromeLib._testCaseTitle not in afterControlF6Speech:
 			builtIn.log(
 				f"Didn't get tab title '{ChromeLib._testCaseTitle}' after moving to document, "
-				f"instead got: {afterControlF6Speech}"
+				f"instead got: {afterControlF6Speech}",
 			)
 			return False
 
 		afterUpArrowSpeech = _NvdaLib.getSpeechAfterKey('upArrow')  # focus web content, chrome shortcut.
 		if ChromeLib._beforeMarker not in afterUpArrowSpeech:
 			builtIn.log(
-				f"Didn't get '{ChromeLib._beforeMarker}' after moving to document, instead got: {afterUpArrowSpeech}"
+				f"Didn't get '{ChromeLib._beforeMarker}' after moving to document, instead got: {afterUpArrowSpeech}",
 			)
 			return False
 
@@ -210,7 +210,7 @@ class ChromeLib:
 		if ChromeLib._beforeMarker not in afterNumPad8Speech:
 			builtIn.log(
 				f"Didn't get {ChromeLib._beforeMarker} after reporting the current line"
-				f", instead got: {afterNumPad8Speech}"
+				f", instead got: {afterNumPad8Speech}",
 			)
 			return False
 		return True
@@ -218,7 +218,7 @@ class ChromeLib:
 	def canChromeTitleBeReported(self, chromeTitleSpeechPattern: re.Pattern) -> bool:
 		speech = _NvdaLib.getSpeechAfterKey('NVDA+t')
 		return bool(
-			chromeTitleSpeechPattern.search(speech)
+			chromeTitleSpeechPattern.search(speech),
 		)
 
 	def prepareChrome(self, testCase: str, _alwaysDoToggleFocus: bool = False) -> None:
@@ -263,7 +263,7 @@ class ChromeLib:
 		if not self._waitForStartMarker():
 			builtIn.fail(
 				"Unable to locate 'before sample' marker."
-				" See NVDA log for full speech."
+				" See NVDA log for full speech.",
 			)
 		# Move to the loading status line, and wait for it to become complete
 		# the page has fully loaded.
@@ -276,7 +276,7 @@ class ChromeLib:
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
 			builtIn.fail(
-				"Failed to wait for Test page load complete."
+				"Failed to wait for Test page load complete.",
 			)
 
 	@staticmethod

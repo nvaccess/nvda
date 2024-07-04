@@ -66,7 +66,7 @@ class ExpectedProsody:
 	expectedProsody: Union[
 		PitchCommand,
 		RateCommand,
-		VolumeCommand
+		VolumeCommand,
 	]
 
 	def __eq__(self, other):
@@ -255,7 +255,7 @@ class SpeechManagerInteractions:
 	def speak(
 			self,
 			seq: List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex, EndUtteranceCommand]],
-			priority=speech.Spri.NORMAL
+			priority=speech.Spri.NORMAL,
 	) -> Union[_SentSequenceIndex, List[_SentSequenceIndex]]:
 		"""Call SpeechManager.speak and track sequences used."""
 		sequenceNumbers = self._updateKnownSequences(seq)
@@ -297,7 +297,7 @@ class SpeechManagerInteractions:
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		cb = CallbackCommand(
 			lambda i=expectedToBecomeIndex: self._indexReachedCallback(i),
-			name=f"indexCommandIndex: {expectedToBecomeIndex}"
+			name=f"indexCommandIndex: {expectedToBecomeIndex}",
 		)
 		cb.expectedIndexCommandIndex = expectedToBecomeIndex
 		return cb
@@ -325,7 +325,7 @@ class SpeechManagerInteractions:
 		"""
 		self._testCase.assertIsNotNone(
 			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			"Did you forget to provide the 'expectedToBecomeIndex' argument?",
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		b = BeepCommand(hz, length, left, right)
@@ -340,7 +340,7 @@ class SpeechManagerInteractions:
 		"""
 		self._testCase.assertIsNotNone(
 			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			"Did you forget to provide the 'expectedToBecomeIndex' argument?",
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		t = ConfigProfileTriggerCommand(trigger, enter)
@@ -355,7 +355,7 @@ class SpeechManagerInteractions:
 		"""
 		self._testCase.assertIsNotNone(
 			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			"Did you forget to provide the 'expectedToBecomeIndex' argument?",
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		w = WaveFileCommand(filename)
@@ -370,7 +370,7 @@ class SpeechManagerInteractions:
 		"""
 		self._testCase.assertIsNotNone(
 			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			"Did you forget to provide the 'expectedToBecomeIndex' argument?",
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		e = EndUtteranceCommand()
@@ -380,7 +380,7 @@ class SpeechManagerInteractions:
 	def expect_indexReachedCallback(
 			self,
 			forIndex: _IndexT,
-			sideEffect: Optional[Callable[[], None]] = None
+			sideEffect: Optional[Callable[[], None]] = None,
 	):
 		"""Expect that upon exiting the expectation block, forIndex will have been reached.
 			If a side effect is required (such as speaking more text) this must be called before
@@ -391,7 +391,7 @@ class SpeechManagerInteractions:
 		if not (self._lastCommandIndex >= forIndex > 0):
 			self._testCase.fail(
 				f"Test Case error. Index {forIndex} not sent to synth yet,"
-				f" ensure SpeechManagerInteractions.speak has already been called."
+				f" ensure SpeechManagerInteractions.speak has already been called.",
 			)
 		self._awaitingCallbackForIndex.append((forIndex, sideEffect))
 
@@ -399,7 +399,7 @@ class SpeechManagerInteractions:
 			self._testCase.fail(
 				f"IndexReached not yet called for {forIndex}."
 				f" Check test for smi.indexReached({forIndex})"
-				f" IndexReach called for the following: {self._testDebug_IndexReached!r}"
+				f" IndexReach called for the following: {self._testDebug_IndexReached!r}",
 			)
 		self._assertSpeechManagerKnowsAboutIndex(forIndex)
 
@@ -449,7 +449,7 @@ class SpeechManagerInteractions:
 			self._testCase.assertLess(
 				sequenceNumbers,
 				len(self._knownSequences),
-				msg=f"Less than {sequenceNumbers} sequences have been sent to the synth (see calls to speak)"
+				msg=f"Less than {sequenceNumbers} sequences have been sent to the synth (see calls to speak)",
 			)
 			self._awaitingSpeakCalls.append(sequenceNumbers)
 		else:
@@ -458,7 +458,7 @@ class SpeechManagerInteractions:
 					self.expect_synthSpeak(i)
 				else:
 					self._testCase.fail(
-						f"sequenceNumbers should be int or Iterable[int]. ArgType: {type(sequenceNumbers)}"
+						f"sequenceNumbers should be int or Iterable[int]. ArgType: {type(sequenceNumbers)}",
 					)
 
 	def _updateExpectedStateFromAwaiting_speak(self):
@@ -490,7 +490,7 @@ class SpeechManagerInteractions:
 				f"Number of CallbackCommand callbacks not as expected."
 				f"\nExpected: {expectedCalls}"
 				f"\nGot: {self._indexReachedCallback.call_args_list}"
-			)
+			),
 		)
 		self._indexReachedCallback.assert_has_calls(expectedCalls)
 
@@ -499,7 +499,7 @@ class SpeechManagerInteractions:
 		self._testCase.assertEqual(
 			expectedCancelCallCount,
 			self.synthMock.cancel.call_count,
-			msg=f"The number of calls to synth.cancel was not as expected. Expected {expectedCancelCallCount}"
+			msg=f"The number of calls to synth.cancel was not as expected. Expected {expectedCancelCallCount}",
 		)
 
 	def _assertMockCallsState(self):
@@ -507,7 +507,7 @@ class SpeechManagerInteractions:
 			self._testCase.assertEqual(
 				e,
 				m.call_count,
-				msg=f"The number of calls to {m} was not as expected. Expected {e}"
+				msg=f"The number of calls to {m} was not as expected. Expected {e}",
 			)
 
 	def _assertCurrentSpeechCallState(self):
@@ -522,7 +522,7 @@ class SpeechManagerInteractions:
 				f"\nExpected a total of {len(expectedSeqIndexes)}"
 				f"\nThe index(es) of the expected sequences: {expectedSeqIndexes}"
 				f"\nActual calls: {mockSpeak.call_args_list}"
-			)
+			),
 		)
 		# Build (total) expected call list
 		replaceWithExpectedIndexTypes = (
@@ -550,7 +550,7 @@ class SpeechManagerInteractions:
 			expectCallbackForIndex: int,
 			expectedSendSequenceNumber: Union[int, List[int]],
 			seq,
-			priority=speech.Spri.NORMAL
+			priority=speech.Spri.NORMAL,
 	):
 		"""Must be called in an 'expectation' block. """
 		def _lineReachedSideEffect():
@@ -570,7 +570,7 @@ class SpeechManagerInteractions:
 		self._testCase.assertEqual(
 			expectedToBecomeIndex,
 			indexCommandIndex,
-			msg="Did you forget to update the 'expectedToBecomeIndex' argument?"
+			msg="Did you forget to update the 'expectedToBecomeIndex' argument?",
 		)
 
 	def _filterAndSendSpeech(self, seq, priority):

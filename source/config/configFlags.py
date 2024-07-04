@@ -112,7 +112,7 @@ class BrailleMode(DisplayStringStrEnum):
 			# Translators: The label for a braille mode
 			BrailleMode.FOLLOW_CURSORS: _("follow cursors"),
 			# Translators: The label for a braille mode
-			BrailleMode.SPEECH_OUTPUT: _("display speech output")
+			BrailleMode.SPEECH_OUTPUT: _("display speech output"),
 		}
 
 

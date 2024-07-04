@@ -14,7 +14,7 @@ import os
 from ctypes import (
 	windll,
 	byref,
-	POINTER
+	POINTER,
 )
 import comtypes.client
 from comtypes import IUnknown
@@ -54,14 +54,14 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 	log.warning(
 		"While on secure screens browsable messages can not be used."
 		" The browsable message window creates a security risk."
-		f" Attempted to open message with title: {title!r}"
+		f" Attempted to open message with title: {title!r}",
 	)
 
 	if not title:
 		browsableMessageUnavailableMsg: str = _(
 			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
 			# when Windows is on a secure screen (sign-on screen / UAC prompt).
-			"This feature is unavailable while on secure screens such as the sign-on screen or UAC prompt."
+			"This feature is unavailable while on secure screens such as the sign-on screen or UAC prompt.",
 		)
 	else:
 		browsableMessageUnavailableMsg: str = _(
@@ -71,7 +71,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 			# The {title} will be replaced with the title.
 			# The title may be something like "Formatting".
 			"This feature ({title}) is unavailable while on secure screens"
-			" such as the sign-on screen or UAC prompt."
+			" such as the sign-on screen or UAC prompt.",
 		)
 		browsableMessageUnavailableMsg = browsableMessageUnavailableMsg.format(title=title)
 
@@ -100,8 +100,8 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		return
 
 	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
-	if not os.path.isfile(htmlFileName ): 
-		raise LookupError(htmlFileName )
+	if not os.path.isfile(htmlFileName): 
+		raise LookupError(htmlFileName)
 	moniker = POINTER(IUnknown)()
 	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
 	if not title:
@@ -129,7 +129,7 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		HTMLDLG_MODELESS , 
 		byref(dialogArgsVar), 
 		DIALOG_OPTIONS, 
-		None
+		None,
 	)
 	gui.mainFrame.postPopup() 
 
@@ -183,5 +183,5 @@ def reportTextCopiedToClipboard(text: Optional[str] = None):
 		text=_("Copied to clipboard: {text}").format(text=spokenText),
 		# Translators: Displayed in braille when a text has been copied to clipboard.
 		# {text} is replaced by the copied text.
-		brailleText=_("Copied: {text}").format(text=text)
+		brailleText=_("Copied: {text}").format(text=text),
 	)

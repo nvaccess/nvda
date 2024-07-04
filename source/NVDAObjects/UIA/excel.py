@@ -194,7 +194,7 @@ class ExcelCell(ExcelObject):
 			"excel-UIA",
 			# Translators: the description of a script
 			"Shows a browseable message Listing information about a cell's "
-			"appearance such as outline and fill colors, rotation and size"
+			"appearance such as outline and fill colors, rotation and size",
 		),
 		gestures=["kb:NVDA+o"],
 	)
@@ -203,31 +203,33 @@ class ExcelCell(ExcelObject):
 		tmpl = pgettext(
 			"excel-UIA",
 			# Translators: The width of the cell in points
-			"Cell width: {0.x:.1f} pt"
+			"Cell width: {0.x:.1f} pt",
 		)
 		infoList.append(tmpl.format(self.cellSize))
 
 		tmpl = pgettext(
 			"excel-UIA",
 			# Translators: The height of the cell in points
-			"Cell height: {0.y:.1f} pt"
+			"Cell height: {0.y:.1f} pt",
 		)
 		infoList.append(tmpl.format(self.cellSize))
 
 		if self.rotation is not None:
-			infoList.append(npgettext(
-				"excel-UIA",
-				# Translators: The rotation in degrees of an Excel cell
-				"Rotation: {0} degree",
-				"Rotation: {0} degrees",
-				self.rotation,
-			).format(self.rotation))
+			infoList.append(
+       npgettext(
+        "excel-UIA",
+        # Translators: The rotation in degrees of an Excel cell
+        "Rotation: {0} degree",
+        "Rotation: {0} degrees",
+        self.rotation,
+       ).format(self.rotation),
+   )
 
 		if self.outlineColor is not None:
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The outline (border) colors of an Excel cell.
-				"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+				"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}",
 			)
 			infoList.append(tmpl.format(*self.outlineColor))
 
@@ -235,7 +237,7 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The outline (border) thickness values of an Excel cell.
-				"Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+				"Outline thickness: top={0}, bottom={1}, left={2}, right={3}",
 			)
 			infoList.append(tmpl.format(*self.outlineThickness))
 
@@ -243,7 +245,7 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The fill color of an Excel cell
-				"Fill color: {0.name}"
+				"Fill color: {0.name}",
 			)
 			infoList.append(tmpl.format(self.fillColor))
 
@@ -251,32 +253,32 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The fill type (pattern, gradient etc) of an Excel Cell
-				"Fill type: {0}"
+				"Fill type: {0}",
 			)
 			infoList.append(tmpl.format(UIAHandler.constants.FillTypeLabels[self.fillType]))
 		numberFormat = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.cellNumberFormat.id
+			self._UIAExcelCustomProps.cellNumberFormat.id,
 		)
 		if numberFormat:
 			# Translators: the number format of an Excel cell
 			tmpl = _("Number format: {0}")
 			infoList.append(tmpl.format(numberFormat))
 		hasDataValidation = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.hasDataValidation.id
+			self._UIAExcelCustomProps.hasDataValidation.id,
 		)
 		if hasDataValidation:
 			# Translators: If an excel cell has data validation set
 			tmpl = _("Has data validation")
 			infoList.append(tmpl)
 		dataValidationPrompt = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.dataValidationPrompt.id
+			self._UIAExcelCustomProps.dataValidationPrompt.id,
 		)
 		if dataValidationPrompt:
 			# Translators: the data validation prompt (input message) for an Excel cell
 			tmpl = _("Data validation prompt: {0}")
 			infoList.append(tmpl.format(dataValidationPrompt))
 		hasConditionalFormatting = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.hasConditionalFormatting.id
+			self._UIAExcelCustomProps.hasConditionalFormatting.id,
 		)
 		if hasConditionalFormatting:
 			# Translators: If an excel cell has conditional formatting
@@ -292,8 +294,8 @@ class ExcelCell(ExcelObject):
 			title=pgettext(
 				"excel-UIA",
 				# Translators: Title for a browsable message that describes the appearance of a cell in Excel
-				"Cell Appearance"
-			)
+				"Cell Appearance",
+			),
 		)
 
 	def _hasSelection(self):
@@ -325,7 +327,7 @@ class ExcelCell(ExcelObject):
 			# Translators: an error message on a cell in Microsoft Excel
 			descriptionList.append(
 				# Translators:  an error message on a cell in Microsoft Excel.
-				_("Error: {errorText}").format(errorText=self.errorText)
+				_("Error: {errorText}").format(errorText=self.errorText),
 			)
 		presence = self.UIAAnnotationObjects.get(UIAHandler.AnnotationType_Author)
 		if presence:
@@ -333,8 +335,8 @@ class ExcelCell(ExcelObject):
 			descriptionList.append(
 				# Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
 				_("{author} is editing").format(
-					author=author
-				)
+					author=author,
+				),
 			)
 		baseDescription = super().description
 		if baseDescription:
@@ -427,43 +429,43 @@ class ExcelCell(ExcelObject):
 	def _get_cellCoordsText(self):
 		if self._hasSelection():
 			sc = self._getUIACacheablePropertyValue(
-				UIAHandler.UIA_SelectionItemSelectionContainerPropertyId
+				UIAHandler.UIA_SelectionItemSelectionContainerPropertyId,
 			).QueryInterface(UIAHandler.IUIAutomationElement)
 
 			firstSelected = sc.GetCurrentPropertyValue(
-				UIAHandler.UIA_Selection2FirstSelectedItemPropertyId
+				UIAHandler.UIA_Selection2FirstSelectedItemPropertyId,
 			).QueryInterface(UIAHandler.IUIAutomationElement)
 
 			firstAddress = firstSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_NamePropertyId
+				UIAHandler.UIA_NamePropertyId,
 			).replace('"', '').replace(' ', '')
 
 			firstValue = firstSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_ValueValuePropertyId
+				UIAHandler.UIA_ValueValuePropertyId,
 			)
 
 			lastSelected = sc.GetCurrentPropertyValue(
-				UIAHandler.UIA_Selection2LastSelectedItemPropertyId
+				UIAHandler.UIA_Selection2LastSelectedItemPropertyId,
 			).QueryInterface(UIAHandler.IUIAutomationElement)
 
 			lastAddress = lastSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_NamePropertyId
+				UIAHandler.UIA_NamePropertyId,
 			).replace('"', '').replace(' ', '')
 
 			lastValue = lastSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_ValueValuePropertyId
+				UIAHandler.UIA_ValueValuePropertyId,
 			)
 
 			cellCoordsTemplate = pgettext(
 				"excel-UIA",
 				# Translators: Excel, report selected range of cell coordinates
-				"{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+				"{firstAddress} {firstValue} through {lastAddress} {lastValue}",
 			)
 			return cellCoordsTemplate.format(
 				firstAddress=firstAddress,
 				firstValue=firstValue,
 				lastAddress=lastAddress,
-				lastValue=lastValue
+				lastValue=lastValue,
 			)
 		else:
 			name = super().name
@@ -478,14 +480,14 @@ class ExcelCell(ExcelObject):
 				firstColumn, firstRow = self._coordinateRegEx.match(firstAddress).groups()
 				firstRow = int(firstRow)
 				lastColumn = firstColumn if self.columnSpan == 1 else self._getColumnRepresentationForNumber(
-					self._getNumberRepresentationForColumn(firstColumn) + (self.columnSpan - 1)
+					self._getNumberRepresentationForColumn(firstColumn) + (self.columnSpan - 1),
 				)
 				lastRow = firstRow + (self.rowSpan - 1)
 				lastAddress = f"{lastColumn}{lastRow}"
 				cellCoordsTemplate = pgettext(
 					"excel-UIA",
 					# Translators: Excel, report merged range of cell coordinates
-					"{firstAddress} through {lastAddress}"
+					"{firstAddress} through {lastAddress}",
 				)
 				return cellCoordsTemplate.format(
 					firstAddress=firstAddress,
@@ -496,7 +498,8 @@ class ExcelCell(ExcelObject):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note or comment thread on the current cell"),
-		gesture="kb:NVDA+alt+c")
+		gesture="kb:NVDA+alt+c",
+ )
 	def script_reportComment(self, gesture):
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			noteElement = self.UIAAnnotationObjects.get(self._UIAExcelCustomAnnotationTypes.note.id)
@@ -518,7 +521,7 @@ class ExcelCell(ExcelObject):
 				# Translators: a comment on a cell in Microsoft excel.
 				text = _("Comment thread: {comment}  by {author}").format(
 					comment=comment,
-					author=author
+					author=author,
 				)
 			else:
 				text = ngettext(

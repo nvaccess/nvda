@@ -109,8 +109,11 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				self._cellValueCaps = cellValueCaps
 				self.numCells = cellValueCaps.ReportCount
 				# A display responded.
-				log.info("Found display with {cells} cells connected via {type} ({port})".format(
-					cells=self.numCells, type=portType, port=port))
+				log.info(
+        "Found display with {cells} cells connected via {type} ({port})".format(
+        cells=self.numCells, type=portType, port=port,
+        ),
+    )
 				break
 			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
@@ -127,7 +130,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
 				and valueCaps.u1.NotRange.Usage in (
 					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
-					BraillePageUsageID.SIX_DOT_BRAILLE_CELL
+					BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
 				)
 				and valueCaps.ReportCount > 0
 			):
@@ -201,7 +204,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 			HID_USAGE_PAGE_BRAILLE,
 			self._cellValueCaps.LinkCollection,
 			self._cellValueCaps.u1.NotRange.Usage,
-			cellBytes
+			cellBytes,
 		)
 		self._dev.write(report.data)
 

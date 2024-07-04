@@ -146,5 +146,5 @@ class HIDP_CAPS (Structure):
 		("NumberOutputDataIndices", USHORT),
 		("NumberFeatureButtonCaps", USHORT),
 		("NumberFeatureValueCaps", USHORT),
-		("NumberFeatureDataIndices", USHORT)
+		("NumberFeatureDataIndices", USHORT),
 	)

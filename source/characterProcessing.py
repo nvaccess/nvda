@@ -33,7 +33,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 
 	def __init__(
 			self,
-			localeDataFactory: Callable[[str], _LocaleDataT]
+			localeDataFactory: Callable[[str], _LocaleDataT],
 	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
@@ -198,8 +198,11 @@ class SpeechSymbol(object):
 	def __repr__(self):
 		attrs = []
 		for attr in self.__slots__:
-			attrs.append("{name}={val!r}".format(
-				name=attr, val=getattr(self, attr)))
+			attrs.append(
+       "{name}={val!r}".format(
+       name=attr, val=getattr(self, attr),
+       ),
+   )
 		return "SpeechSymbol(%s)" % ", ".join(attrs)
 
 class SpeechSymbols(object):
@@ -241,8 +244,11 @@ class SpeechSymbols(object):
 					else:
 						raise ValueError
 				except ValueError:
-					log.warning(u"Invalid line in file {file}: {line}".format(
-						file=fileName, line=line))
+					log.warning(
+         u"Invalid line in file {file}: {line}".format(
+         file=fileName, line=line,
+         ),
+     )
 
 	def _loadComplexSymbol(self, line: str) -> None:
 		try:
@@ -358,14 +364,16 @@ class SpeechSymbols(object):
 		identifier = symbol.identifier
 		try:
 			identifier = u"\\%s%s" % (
-				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]], identifier[1:])
+				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]], identifier[1:],
+   )
 		except KeyError:
 			pass
-		fields = [identifier,
-			self._saveSymbolField(symbol.replacement),
-			self._saveSymbolField(symbol.level, self.LEVEL_OUTPUT),
-			self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT)
-		]
+		fields = [
+      identifier,
+       self._saveSymbolField(symbol.replacement),
+       self._saveSymbolField(symbol.level, self.LEVEL_OUTPUT),
+       self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT),
+  ]
 		# Strip optional fields with default values.
 		for field in reversed(fields[2:]):
 			if field == "-":
@@ -396,7 +404,7 @@ def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbol
 		try:
 			builtin.load(
 				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
-				allowComplexSymbols=False
+				allowComplexSymbols=False,
 			)
 			builtinDataImported = True
 		except IOError:
@@ -500,8 +508,11 @@ class SpeechSymbolProcessor(object):
 		for symbol in list(symbols.values()):
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
-				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
-					symbol=symbol.identifier, locale=self.locale))
+				log.warning(
+        u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
+        symbol=symbol.identifier, locale=self.locale,
+        ),
+    )
 				del symbols[symbol.identifier]
 				try:
 					if len(symbol.identifier) == 1:
@@ -533,20 +544,23 @@ class SpeechSymbolProcessor(object):
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
 			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
-			for index, symbol in enumerate(complexSymbolsList))
+			for index, symbol in enumerate(complexSymbolsList)
+  )
 		patterns.extend([
 			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
 			r"(?P<rstripSpace>  +$)",
 			# Repeated characters: more than 3 repeats.
-			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
+			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,
 		])
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
-		patterns.append(r"(?P<simple>{multiChars}|{singleChars})".format(
-			multiChars="|".join(re.escape(identifier) for identifier in multiChars),
-			singleChars=characters
-		))
+		patterns.append(
+      r"(?P<simple>{multiChars}|{singleChars})".format(
+       multiChars="|".join(re.escape(identifier) for identifier in multiChars),
+       singleChars=characters,
+      ),
+  )
 		pattern = "|".join(patterns)
 		try:
 			self._regexp = re.compile(pattern, re.UNICODE)

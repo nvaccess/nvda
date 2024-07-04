@@ -261,7 +261,8 @@ def findExtraOverlayClasses(obj,clsList):
 		and (
 			obj.role==controlTypes.Role.BUTTON
 			or obj.role==controlTypes.Role.LISTITEM
-	)):
+  )
+ ):
 			clsList.append(ModernCandidateUICandidateItem)
 	elif windowClassName=="MSCandUIWindow_Candidate":
 		if role==oleacc.ROLE_SYSTEM_CLIENT:

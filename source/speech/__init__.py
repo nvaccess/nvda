@@ -71,7 +71,7 @@ from .types import (
 	SequenceItemT,
 	logBadSequenceTypes,
 	GeneratorWithReturn,
-	_flattenNestedSequences
+	_flattenNestedSequences,
 )
 
 __all__ = [

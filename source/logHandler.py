@@ -239,8 +239,10 @@ class Logger(logging.Logger):
 		if stack_info:
 			if stack_info is True:
 				stack_info = traceback.extract_stack(f)
-			msg += ("\nStack trace:\n"
-				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
+			msg += (
+       "\nStack trace:\n"
+       + stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip())
+   )
 
 		res = super()._log(level, msg, args, exc_info, extra)
 
@@ -283,7 +285,7 @@ class Logger(logging.Logger):
 					RPCConstants.RPC.S_SERVER_UNAVAILABLE,
 					RPCConstants.RPC.S_CALL_FAILED_DNE,
 					EPT_S_NOT_REGISTERED,
-					RPCConstants.RPC.E_CALL_CANCELED
+					RPCConstants.RPC.E_CALL_CANCELED,
 				)
 			)
 			or (
@@ -295,8 +297,10 @@ class Logger(logging.Logger):
 						EVENT_E_ALL_SUBSCRIBERS_FAILED,
 						RPCConstants.RPC.E_CALL_REJECTED,
 						RPCConstants.RPC.E_CALL_CANCELED,
-						RPCConstants.RPC.E_DISCONNECTED
-					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE))
+						RPCConstants.RPC.E_DISCONNECTED,
+					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE
+    )
+   )
 			or isinstance(exc, exceptions.CallCancelled)
 		):
 			level = self.DEBUGWARNING
@@ -534,7 +538,7 @@ def initialize(shouldDoRemoteLogging=False):
 		# Input: kb(desktop):v
 		logFormatter = Formatter(
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
-			style="{"
+			style="{",
 		)
 		if _shouldDisableLogging():
 			logHandler = logging.NullHandler()
@@ -571,7 +575,7 @@ def initialize(shouldDoRemoteLogging=False):
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
 			fmt="{codepath!s}:\n{message}",
-			style="{"
+			style="{",
 		)
 	logHandler.setFormatter(logFormatter)
 	log.root.addHandler(logHandler)

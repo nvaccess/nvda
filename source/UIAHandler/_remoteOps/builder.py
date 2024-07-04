@@ -10,14 +10,14 @@ from typing import (
 	Self,
 	ClassVar,
 	Any,
-	Iterable
+	Iterable,
 )
 import ctypes
 from ctypes import (
 	_SimpleCData,
 	c_char,
 	c_long,
-	c_wchar
+	c_wchar,
 )
 import enum
 from dataclasses import dataclass
@@ -154,7 +154,7 @@ class GenericInstruction(InstructionBase):
 	def __init__(
 			self,
 			opCode: lowLevel.InstructionType,
-			**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure
+			**kwargs: Operand | _SimpleCData | ctypes.Array | ctypes.Structure,
 	):
 		self.opCode = opCode
 		self._params = kwargs
@@ -273,9 +273,11 @@ class RemoteOperationBuilder:
 		self._defaultSection = oldDefaultSection
 
 	def getAllInstructions(self) -> list[InstructionBase]:
-		return list(itertools.chain.from_iterable(
-			instructionList._instructions for instructionList in self._instructionListBySection.values()
-		))
+		return list(
+      itertools.chain.from_iterable(
+       instructionList._instructions for instructionList in self._instructionListBySection.values()
+      ),
+  )
 
 	def getByteCode(self) -> bytes:
 		byteCode = self._versionBytes

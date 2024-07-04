@@ -32,7 +32,7 @@ import api
 import textInfos
 from logHandler import log
 from UIAHandler.types import (
-	IUIAutomationTextRangeT
+	IUIAutomationTextRangeT,
 )
 from UIAHandler.utils import (
 	BulkUIATextRangeAttributeValueFetcher,
@@ -58,7 +58,7 @@ from NVDAObjects.behaviors import (
 	Dialog,
 	Notification,
 	EditableTextWithSuggestions,
-	ToolTip
+	ToolTip,
 )
 import braille
 import locationHelper
@@ -145,7 +145,7 @@ class UIATextInfo(textInfos.TextInfo):
 	UIAFormatUnits=[
 		UIAHandler.TextUnit_Format,
 		UIAHandler.TextUnit_Word,
-		UIAHandler.TextUnit_Character
+		UIAHandler.TextUnit_Character,
 	]
 
 	def find(self,text,caseSensitive=False,reverse=False):
@@ -212,12 +212,12 @@ class UIATextInfo(textInfos.TextInfo):
 					UIAHandler.UIA_FontWeightAttributeId,
 					UIAHandler.UIA_IsItalicAttributeId,
 					UIAHandler.UIA_UnderlineStyleAttributeId,
-					UIAHandler.UIA_StrikethroughStyleAttributeId
+					UIAHandler.UIA_StrikethroughStyleAttributeId,
 				})
 			if formatConfig["reportSuperscriptsAndSubscripts"]:
 				IDs.update({
 					UIAHandler.UIA_IsSuperscriptAttributeId,
-					UIAHandler.UIA_IsSubscriptAttributeId
+					UIAHandler.UIA_IsSubscriptAttributeId,
 				})
 			if formatConfig["reportParagraphIndentation"]:
 				IDs.update(set(paragraphIndentIDs))
@@ -417,7 +417,7 @@ class UIATextInfo(textInfos.TextInfo):
 			self,
 			obj: NVDAObject,
 			position: str,
-			_rangeObj: Optional[IUIAutomationTextRangeT] = None
+			_rangeObj: Optional[IUIAutomationTextRangeT] = None,
 	):
 		super(UIATextInfo,self).__init__(obj,position)
 		if _rangeObj:
@@ -517,7 +517,7 @@ class UIATextInfo(textInfos.TextInfo):
 		UIAHandler.UIA_MenuItemControlTypeId,
 		UIAHandler.UIA_TabItemControlTypeId,
 		UIAHandler.UIA_TextControlTypeId,
-		UIAHandler.UIA_SplitButtonControlTypeId
+		UIAHandler.UIA_SplitButtonControlTypeId,
 	}
 
 	def _getControlFieldForUIAObject(
@@ -525,7 +525,7 @@ class UIATextInfo(textInfos.TextInfo):
 			obj: "UIA",
 			isEmbedded=False,
 			startOfNode=False,
-			endOfNode=False
+			endOfNode=False,
 	) -> textInfos.ControlField:
 		"""
 		Fetch control field information for the given UIA NVDAObject.
@@ -585,7 +585,7 @@ class UIATextInfo(textInfos.TextInfo):
 			self,
 			textRange: IUIAutomationTextRangeT,
 			formatConfig: Dict,
-			UIAFormatUnits: Optional[List[int]] = None
+			UIAFormatUnits: Optional[List[int]] = None,
 	) -> Generator[textInfos.FieldCommand, None, None]:
 		"""
 		Yields format fields and text for the given UI Automation text range, split up by the first available UI Automation text unit that does not result in mixed attribute values.
@@ -610,7 +610,7 @@ class UIATextInfo(textInfos.TextInfo):
 		if debug:
 			log.debug(
 				f"Walking by unit {unit}, "
-				f"with further units of: {furtherUIAFormatUnits}"
+				f"with further units of: {furtherUIAFormatUnits}",
 			)
 		rangeIter=iterUIARangeByUnit(textRange,unit) if unit is not None else [textRange]
 		for tempRange in rangeIter:
@@ -731,7 +731,7 @@ class UIATextInfo(textInfos.TextInfo):
 					obj,
 					isEmbedded=objIsEmbedded,
 					startOfNode=startOfNode,
-					endOfNode=endOfNode
+					endOfNode=endOfNode,
 				)
 			except LookupError:
 				if debug:
@@ -792,7 +792,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if childRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					textRange,
-					UIAHandler.TextPatternRangeEndpoint_Start
+					UIAHandler.TextPatternRangeEndpoint_Start,
 				) <= 0:
 					if debug:
 						log.debug("Child completely before textRange. Skipping")
@@ -800,7 +800,7 @@ class UIATextInfo(textInfos.TextInfo):
 				if childRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_Start,
 					textRange,
-					UIAHandler.TextPatternRangeEndpoint_End
+					UIAHandler.TextPatternRangeEndpoint_End,
 				) >= 0:
 					if debug:
 						log.debug("Child at or past end of textRange. Breaking")
@@ -808,18 +808,18 @@ class UIATextInfo(textInfos.TextInfo):
 				lastChildEndDelta = childRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					textRange,
-					UIAHandler.TextPatternRangeEndpoint_End
+					UIAHandler.TextPatternRangeEndpoint_End,
 				)
 				if lastChildEndDelta > 0:
 					if debug:
 						log.debug(
 							"textRange ended part way through the child. "
-							"Crop end of childRange to fit"
+							"Crop end of childRange to fit",
 						)
 					childRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_End,
 						textRange,
-						UIAHandler.TextPatternRangeEndpoint_End
+						UIAHandler.TextPatternRangeEndpoint_End,
 					)
 					clippedEnd = True
 				childStartDelta=childRange.CompareEndpoints(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
@@ -834,7 +834,7 @@ class UIATextInfo(textInfos.TextInfo):
 					if debug:
 						log.debug(
 							"textRange started part way through child. "
-							"Cropping Start of child range to fit"
+							"Cropping Start of child range to fit",
 						)
 					childRange.MoveEndpointByRange(UIAHandler.TextPatternRangeEndpoint_Start,tempRange,UIAHandler.TextPatternRangeEndpoint_End)
 					clippedStart=True
@@ -1096,7 +1096,7 @@ class UIA(Window):
 				# changes the controlType to document
 				and self.role in (
 					controlTypes.Role.PANE,
-					controlTypes.Role.DOCUMENT
+					controlTypes.Role.DOCUMENT,
 				)
 				and self.parent
 				and (
@@ -1205,7 +1205,7 @@ class UIA(Window):
 				# #10329: 2019 Windows Search results require special handling due to UI redesign.
 				parentElement = UIAHandler.handler.baseTreeWalker.GetParentElementBuildCache(
 					self.UIAElement,
-					UIAHandler.handler.baseCacheRequest
+					UIAHandler.handler.baseCacheRequest,
 				)
 				# Sometimes, fetching parent (list control) via base tree walker fails,
 				# especially when dealing with suggestions in Windows10 Start menu.
@@ -1289,13 +1289,13 @@ class UIA(Window):
 			if UIAHandler._isDebug():
 				log.debug(
 					f"kwargsFromSuper: given coordinates {relation}, "
-					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+					f"fetched element {UIAHandler.handler.getUIAElementDebugString(UIAElement)}",
 				)
 			# Ignore this object if it is non native.
 			if not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
 					log.debug(
-						f"kwargsFromSuper: ignoring non native element at coordinates {relation}"
+						f"kwargsFromSuper: ignoring non native element at coordinates {relation}",
 					)
 				return False
 			# This object may be in a different window, so we need to recalculate the window handle.
@@ -1303,7 +1303,7 @@ class UIA(Window):
 		elif relation=="focus":
 			try:
 				UIAElement = UIAHandler.handler.clientObject.getFocusedElementBuildCache(
-					UIAHandler.handler.baseCacheRequest
+					UIAHandler.handler.baseCacheRequest,
 				)
 			except COMError:
 				log.debugWarning("getFocusedElement failed", exc_info=True)
@@ -1311,13 +1311,13 @@ class UIA(Window):
 			if UIAHandler._isDebug():
 				log.debug(
 					f"kwargsFromSuper: fetched focused element "
-					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}"
+					f"{UIAHandler.handler.getUIAElementDebugString(UIAElement)}",
 				)
 			# Ignore this object if it is non native.
 			if ignoreNonNativeElementsWithFocus and not UIAHandler.handler.isNativeUIAElement(UIAElement):
 				if UIAHandler._isDebug():
 					log.debug(
-						"kwargsFromSuper: ignoring non native element with focus"
+						"kwargsFromSuper: ignoring non native element with focus",
 					)
 				return False
 			# This object may be in a different window, so we need to recalculate the window handle.
@@ -1356,7 +1356,7 @@ class UIA(Window):
 			if UIAHandler._isDebug():
 				log.debug(
 					"No windowHandle for UIA NvDAObject. "
-					"Searching UIA element ancestry for nearest windowHandle"
+					"Searching UIA element ancestry for nearest windowHandle",
 				)
 			windowHandle=UIAHandler.handler.getNearestWindowHandle(UIAElement)
 		if not windowHandle:
@@ -1420,14 +1420,14 @@ class UIA(Window):
 	def _get_UIARangeValuePattern(self):
 		self.UIARangeValuePattern = self._getUIAPattern(
 			UIAHandler.UIA_RangeValuePatternId,
-			UIAHandler.IUIAutomationRangeValuePattern
+			UIAHandler.IUIAutomationRangeValuePattern,
 		)
 		return self.UIARangeValuePattern
 
 	def _get_UIAValuePattern(self):
 		self.UIAValuePattern = self._getUIAPattern(
 			UIAHandler.UIA_ValuePatternId,
-			UIAHandler.IUIAutomationValuePattern
+			UIAHandler.IUIAutomationValuePattern,
 		)
 		return self.UIAValuePattern
 
@@ -1442,7 +1442,7 @@ class UIA(Window):
 	def _get_UIASelectionPattern(self):
 		self.UIASelectionPattern = self._getUIAPattern(
 			UIAHandler.UIA_SelectionPatternId,
-			UIAHandler.IUIAutomationSelectionPattern
+			UIAHandler.IUIAutomationSelectionPattern,
 		)
 		return self.UIASelectionPattern
 
@@ -1450,7 +1450,7 @@ class UIA(Window):
 		try:
 			self.UIASelectionPattern2 = self._getUIAPattern(
 				UIAHandler.UIA_SelectionPattern2Id,
-				UIAHandler.IUIAutomationSelectionPattern2
+				UIAHandler.IUIAutomationSelectionPattern2,
 			)
 		except COMError:
 			# SelectionPattern2 is not available on older Operating Systems such as Windows 7
@@ -1503,7 +1503,7 @@ class UIA(Window):
 		self.UIATextPattern = self._getUIAPattern(
 			UIAHandler.UIA_TextPatternId,
 			UIAHandler.IUIAutomationTextPattern,
-			cache=False
+			cache=False,
 		)
 		return self.UIATextPattern
 
@@ -1511,7 +1511,7 @@ class UIA(Window):
 		self.UIATableItemPattern = self._getUIAPattern(
 			UIAHandler.UIA_TableItemPatternId,
 			UIAHandler.IUIAutomationTableItemPattern,
-			cache=False
+			cache=False,
 		)
 		return self.UIATableItemPattern
 
@@ -1613,7 +1613,7 @@ class UIA(Window):
 		try:
 			return UIAHandler.UIALiveSettingtoNVDAAriaLivePoliteness.get(
 				self._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_LiveSettingPropertyId),
-				super().liveRegionPoliteness
+				super().liveRegionPoliteness,
 			)
 		except COMError:
 			return super().liveRegionPoliteness
@@ -1907,7 +1907,7 @@ class UIA(Window):
 	def _getTextFromHeaderElement(self, element: UIAHandler.IUIAutomationElement) -> typing.Optional[str]:
 		obj = UIA(
 			windowHandle=self.windowHandle,
-			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+			UIAElement=element.buildUpdatedCache(UIAHandler.handler.baseCacheRequest),
 		)
 		if not obj:
 			return None
@@ -2098,7 +2098,7 @@ class UIA(Window):
 			objIDArray = array.array("l", objID)
 			UIACondition = UIAHandler.handler.clientObject.createPropertyCondition(
 				UIAHandler.UIA_RuntimeIdPropertyId,
-				objIDArray
+				objIDArray,
 			)
 			UIAWalker = UIAHandler.handler.clientObject.createTreeWalker(UIACondition)
 			try:
@@ -2163,7 +2163,7 @@ class UIA(Window):
 			notificationKind: Optional[int] = None,
 			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
 			displayString: Optional[str] = None,
-			activityId: Optional[str] = None
+			activityId: Optional[str] = None,
 	):
 		"""
 		Introduced in Windows 10 Fall Creators Update (build 16299).
@@ -2192,7 +2192,7 @@ class UIA(Window):
 		# UIA drop target effect property was introduced in Windows 8.
 		try:
 			dropTargetEffect = self._getUIACacheablePropertyValue(
-				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+				UIAHandler.UIA_DropTargetDropTargetEffectPropertyId,
 			)
 		except COMError:
 			dropTargetEffect = ""
@@ -2203,7 +2203,7 @@ class UIA(Window):
 					continue
 				try:
 					dropTargetEffect = element._getUIACacheablePropertyValue(
-						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId
+						UIAHandler.UIA_DropTargetDropTargetEffectPropertyId,
 					)
 				except COMError:
 					dropTargetEffect = ""
@@ -2362,8 +2362,10 @@ class ListItem(UIA):
 		if not self.hasFocus:
 			parent = self.parent
 			focus=api.getFocusObject()
-			if parent and parent==focus and (isinstance(parent, ComboBoxWithoutValuePattern)
-				or (parent._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId) and parent.windowClassName.startswith("Windows.UI.Core"))):
+			if parent and parent==focus and (
+       isinstance(parent, ComboBoxWithoutValuePattern)
+       or (parent._getUIACacheablePropertyValue(UIAHandler.UIA_IsValuePatternAvailablePropertyId) and parent.windowClassName.startswith("Windows.UI.Core"))
+   ):
 				# #6337: This is an item in a combo box without the Value pattern or does not raise value change event.
 				# This item has been selected, so notify the combo box that its value has changed.
 				focus.event_valueChange()

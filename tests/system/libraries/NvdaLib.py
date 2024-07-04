@@ -38,7 +38,7 @@ from SystemTestSpy import (
 	DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
 	_getLib,
 	_nvdaSpyAlias,
-	configManager
+	configManager,
 )
 
 if typing.TYPE_CHECKING:
@@ -82,7 +82,7 @@ class _NvdaLocationData:
 		self.logPath = _pJoin(self.profileDir, 'nvda.log')
 		self.preservedLogsDir = _pJoin(
 			builtIn.get_variable_value("${OUTPUT DIR}"),
-			"nvdaTestRunLogs"
+			"nvdaTestRunLogs",
 		)
 
 	def getPy2exeBootLogPath(self) -> _Optional[str]:
@@ -151,7 +151,7 @@ class NvdaLib:
 	@staticmethod
 	def teardown_nvda_profile():
 		configManager.teardownProfile(
-			_locations.stagingDir
+			_locations.stagingDir,
 		)
 
 	nvdaProcessAlias = 'nvdaAlias'
@@ -252,7 +252,7 @@ class NvdaLib:
 				builtIn.log(
 					f"{keyword}"
 					f"{f' {args}' if args else ''}"
-					f"{f' {kwargs}' if kwargs else ''}"
+					f"{f' {kwargs}' if kwargs else ''}",
 				)
 				return lib.run_keyword(keyword, args, kwargs)
 			return runKeyword
@@ -261,7 +261,7 @@ class NvdaLib:
 			setattr(
 				remoteLib,
 				name,
-				_makeKeywordCaller(remoteLib, name)
+				_makeKeywordCaller(remoteLib, name),
 			)
 		return remoteLib
 
@@ -279,7 +279,7 @@ class NvdaLib:
 	def enable_verbose_debug_logging_if_requested(self):
 		builtIn.should_be_true(self.nvdaSpy is not None)
 		shouldEnableVerboseDebugLogging = bool(
-			builtIn.get_variable_value("${verboseDebugLogging}", "")
+			builtIn.get_variable_value("${verboseDebugLogging}", ""),
 		)
 		if shouldEnableVerboseDebugLogging:
 			self.nvdaSpy.modifyNVDAConfig(
@@ -287,7 +287,8 @@ class NvdaLib:
 					(["debugLog", "MSAA"], True),
 					(["debugLog", "UIA"], True),
 					(["debugLog", "timeSinceInput"], True),
-			])
+    ],
+   )
 
 	def start_NVDA(self, settingsFileName: str, gesturesFileName: _Optional[str] = None):
 		self.lastNVDAStart = _datetime.utcnow()
@@ -309,7 +310,7 @@ class NvdaLib:
 		saveToPath = self.create_preserved_test_output_filename("nvda.log")
 		opSys.copy_file(
 			_locations.logPath,
-			saveToPath
+			saveToPath,
 		)
 		builtIn.log(f"Log saved to: {saveToPath}", level='DEBUG')
 
@@ -327,7 +328,7 @@ class NvdaLib:
 		saveToPath = self.create_preserved_test_output_filename("py2exe-nvda.log")
 		opSys.copy_file(
 			copyFrom,
-			saveToPath
+			saveToPath,
 		)
 		builtIn.log(f"py2exe log saved to: {saveToPath}", level='DEBUG')
 
@@ -398,7 +399,7 @@ class NvdaLib:
 		saveToPath = self.create_preserved_test_output_filename("nvda_crash.dmp")
 		opSys.copy_file(
 			crashPath,
-			saveToPath
+			saveToPath,
 		)
 		if deleteCachedAfter:
 			opSys.remove_file(crashPath)

@@ -51,8 +51,10 @@ KEY_NAMES = {
 	BAUM_ROUTING_KEYS: None,
 	BAUM_ROUTING_KEY: None,
 	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
-	BAUM_BRAILLE_KEYS: ("b9", "b10", "b11", None, "c1", "c2", "c3", "c4", # byte 1
-		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"), # byte 2
+	BAUM_BRAILLE_KEYS: (
+     "b9", "b10", "b11", None, "c1", "c2", "c3", "c4", # byte 1
+     "b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8",
+ ), # byte 2
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
@@ -66,63 +68,71 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_0904&PID_3001",  # RefreshaBraille 18
-			"VID_0904&PID_6101",  # VarioUltra 20
-			"VID_0904&PID_6103",  # VarioUltra 32
-			"VID_0904&PID_6102",  # VarioUltra 40
-			"VID_0904&PID_4004",  # Pronto! 18 V3
-			"VID_0904&PID_4005",  # Pronto! 40 V3
-			"VID_0904&PID_4007",  # Pronto! 18 V4
-			"VID_0904&PID_4008",  # Pronto! 40 V4
-			"VID_0904&PID_6001",  # SuperVario2 40
-			"VID_0904&PID_6002",  # SuperVario2 24
-			"VID_0904&PID_6003",  # SuperVario2 32
-			"VID_0904&PID_6004",  # SuperVario2 64
-			"VID_0904&PID_6005",  # SuperVario2 80
-			"VID_0904&PID_6006",  # Brailliant2 40
-			"VID_0904&PID_6007",  # Brailliant2 24
-			"VID_0904&PID_6008",  # Brailliant2 32
-			"VID_0904&PID_6009",  # Brailliant2 64
-			"VID_0904&PID_600A",  # Brailliant2 80
-			"VID_0904&PID_6201",  # Vario 340
-			"VID_0483&PID_A1D3",  # Orbit Reader 20
-			"VID_0904&PID_6301",  # Vario 4
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.HID, {
+       "VID_0904&PID_3001",  # RefreshaBraille 18
+       "VID_0904&PID_6101",  # VarioUltra 20
+       "VID_0904&PID_6103",  # VarioUltra 32
+       "VID_0904&PID_6102",  # VarioUltra 40
+       "VID_0904&PID_4004",  # Pronto! 18 V3
+       "VID_0904&PID_4005",  # Pronto! 40 V3
+       "VID_0904&PID_4007",  # Pronto! 18 V4
+       "VID_0904&PID_4008",  # Pronto! 40 V4
+       "VID_0904&PID_6001",  # SuperVario2 40
+       "VID_0904&PID_6002",  # SuperVario2 24
+       "VID_0904&PID_6003",  # SuperVario2 32
+       "VID_0904&PID_6004",  # SuperVario2 64
+       "VID_0904&PID_6005",  # SuperVario2 80
+       "VID_0904&PID_6006",  # Brailliant2 40
+       "VID_0904&PID_6007",  # Brailliant2 24
+       "VID_0904&PID_6008",  # Brailliant2 32
+       "VID_0904&PID_6009",  # Brailliant2 64
+       "VID_0904&PID_600A",  # Brailliant2 80
+       "VID_0904&PID_6201",  # Vario 340
+       "VID_0483&PID_A1D3",  # Orbit Reader 20
+       "VID_0904&PID_6301",  # Vario 4
+      },
+  )
 
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_0403&PID_FE70",  # Vario 40
-			"VID_0403&PID_FE71",  # PocketVario
-			"VID_0403&PID_FE72",  # SuperVario/Brailliant 40
-			"VID_0403&PID_FE73",  # SuperVario/Brailliant 32
-			"VID_0403&PID_FE74",  # SuperVario/Brailliant 64
-			"VID_0403&PID_FE75",  # SuperVario/Brailliant 80
-			"VID_0904&PID_2001",  # EcoVario 24
-			"VID_0904&PID_2002",  # EcoVario 40
-			"VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
-			"VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
-			"VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
-			"VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
-			"VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
-			"VID_0904&PID_2014",  # EcoVario 32
-			"VID_0904&PID_2015",  # EcoVario 64
-			"VID_0904&PID_2016",  # EcoVario 80
-			"VID_0904&PID_3000",  # RefreshaBraille 18
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.SERIAL, {
+       "VID_0403&PID_FE70",  # Vario 40
+       "VID_0403&PID_FE71",  # PocketVario
+       "VID_0403&PID_FE72",  # SuperVario/Brailliant 40
+       "VID_0403&PID_FE73",  # SuperVario/Brailliant 32
+       "VID_0403&PID_FE74",  # SuperVario/Brailliant 64
+       "VID_0403&PID_FE75",  # SuperVario/Brailliant 80
+       "VID_0904&PID_2001",  # EcoVario 24
+       "VID_0904&PID_2002",  # EcoVario 40
+       "VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
+       "VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
+       "VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
+       "VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
+       "VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
+       "VID_0904&PID_2014",  # EcoVario 32
+       "VID_0904&PID_2015",  # EcoVario 64
+       "VID_0904&PID_2016",  # EcoVario 80
+       "VID_0904&PID_3000",  # RefreshaBraille 18
+      },
+  )
 
-		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
-			"Baum SuperVario",
-			"Baum PocketVario",
-			"Baum SVario",
-			"HWG Brailliant",
-			"Refreshabraille",
-			"VarioConnect",
-			"BrailleConnect",
-			"Pronto!",
-			"VarioUltra",
-			"Orbit Reader 20",
-			"Vario 4",
-		)))
+		driverRegistrar.addBluetoothDevices(
+      lambda m: any(
+          m.id.startswith(prefix) for prefix in (
+           "Baum SuperVario",
+           "Baum PocketVario",
+           "Baum SVario",
+           "HWG Brailliant",
+           "Refreshabraille",
+           "VarioConnect",
+           "BrailleConnect",
+           "Pronto!",
+           "VarioUltra",
+           "Orbit Reader 20",
+           "Vario 4",
+          )
+      ),
+  )
 
 	@classmethod
 	def getManualPorts(cls):
@@ -170,8 +180,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					break
 			if self.numCells:
 				# A display responded.
-				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._deviceID, type=portType, port=port))
+				log.info(
+        "Found {device} connected via {type} ({port})".format(
+        device=self._deviceID, type=portType, port=port,
+        ),
+    )
 				break
 			self._dev.close()
 
@@ -218,7 +231,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			data = b"".join([
 				ESCAPE,
 				command,
-				arg
+				arg,
 			])
 			self._dev.write(data)
 

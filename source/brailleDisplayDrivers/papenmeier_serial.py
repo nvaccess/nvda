@@ -38,7 +38,7 @@ def brl_out(offset: int, data: List[int]) -> bytes:
 	d2 = len(data)+7
 	ret = bytearray([
 		STX,
-		ord(b'S')
+		ord(b'S'),
 	])
 	ret.extend(offset.to_bytes(2, "big", signed=False))
 	ret.extend(d2.to_bytes(2, "big", signed=False))
@@ -217,7 +217,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			"title": ("br(papenmeier_serial):l1,up",),
 			"reportStatusLine": ("br(papenmeier_serial):l2,dn",),
-		}
+		},
 	})
 
 def brl_keyname2(keys: int) -> str:
@@ -257,7 +257,7 @@ class InputGesture(braille.BrailleDisplayGesture):
 			keyindex: Optional[int],
 			pressed: Optional[int],
 			keys: Optional[int],
-			driver: BrailleDisplayDriver
+			driver: BrailleDisplayDriver,
 	):
 		super(InputGesture, self).__init__()
 		self.id = ''

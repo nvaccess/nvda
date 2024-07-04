@@ -41,7 +41,7 @@ class MozAnnotationTarget(AnnotationTarget):
 		# this may diverge in Firefox in the future.
 		from .chromium import supportedAriaDetailsRoles
 		detailsRole = IAccessibleHandler.IAccessibleRolesToNVDARoles.get(
-			self._target.IAccessibleRole
+			self._target.IAccessibleRole,
 		)
 		# return a supported details role
 		if config.conf["debugLog"]["annotations"]:
@@ -69,7 +69,7 @@ class MozAnnotation(AnnotationOrigin):
 		# IA2 attribute is not exposed in Firefox.
 		# Although slower, we have to fetch the details relations instead.
 		return bool(
-			self._originObj.detailsRelations
+			self._originObj.detailsRelations,
 		)
 
 	@property
@@ -173,14 +173,14 @@ class Document(ia2Web.Document):
 
 	def _get_parent(self):
 		res = IAccessibleHandler.accParent(
-			self.IAccessibleObject, self.IAccessibleChildID
+			self.IAccessibleObject, self.IAccessibleChildID,
 		)
 		if not res:
 			# accParent is broken in Firefox for same-process iframe documents.
 			# Use NODE_CHILD_OF instead.
 			res = IAccessibleHandler.accNavigate(
 				self.IAccessibleObject, self.IAccessibleChildID,
-				IAccessibleHandler.NAVRELATION_NODE_CHILD_OF
+				IAccessibleHandler.NAVRELATION_NODE_CHILD_OF,
 			)
 		if not res:
 			return None
@@ -268,8 +268,10 @@ def findExtraOverlayClasses(obj, clsList):
 		if hasattr(parent, "IAccessibleTableObject") or hasattr(parent, "IAccessibleTable2Object"):
 			clsList.append(RowWithFakeNavigation)
 
-	ia2Web.findExtraOverlayClasses(obj, clsList,
-		baseClass=Mozilla, documentClass=Document)
+	ia2Web.findExtraOverlayClasses(
+     obj, clsList,
+     baseClass=Mozilla, documentClass=Document,
+ )
 
 #: Maps IAccessible roles to NVDAObject overlay classes.
 _IAccessibleRolesToOverlayClasses = {

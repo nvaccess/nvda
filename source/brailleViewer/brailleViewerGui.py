@@ -42,7 +42,7 @@ def _getCharIndexUnderMouse(ctrl: wx.TextCtrl) -> Optional[int]:
 	# Above: mouseY is less than windowY I.E. when 'toClient.y' < 0
 	# Before: mouseX is less than windowX I.E. when 'toClient.x' < 0
 	result, index = ctrl.HitTestPos(
-		toClient
+		toClient,
 	)
 	if result == wx.TE_HT_ON_TEXT and toClient.y > 0 and toClient.x > 0:
 		return index
@@ -95,11 +95,13 @@ class CharCellBackgroundColorAnimation:
 		# [0..1] proportion accumulatedElapsedTime is through totalTime
 		normalisedElapsed = min(1.0, max(0.0, (0.001 + accumulatedElapsedTime) / self._durationSeconds))
 		colourTransitionValue = self._startValue + normalisedElapsed * (1 - self._startValue)
-		currentColorTuple = tuple(int(c) for c in _linearInterpolate(
-			colourTransitionValue,
-			self._originColor.Get(includeAlpha=False),
-			self._destColor.Get(includeAlpha=False)
-		))
+		currentColorTuple = tuple(
+      int(c) for c in _linearInterpolate(
+       colourTransitionValue,
+       self._originColor.Get(includeAlpha=False),
+       self._destColor.Get(includeAlpha=False),
+      )
+  )
 		currentStyle = createBackgroundColorTextAttr(wx.Colour(*currentColorTuple))
 		index = self._textCellIndex
 		length = len(self._textCtrl.GetValue())
@@ -159,7 +161,7 @@ class TextCellHover:
 			startValue=0.2,
 			originColor=self._normalBGColor,
 			destColor=wx.Colour(255, 205, 60),  # orange-yellow
-			durationSeconds=self._secondsOfHoverToActivate
+			durationSeconds=self._secondsOfHoverToActivate,
 		)
 
 	def _setPostActivateStyle(self):
@@ -169,7 +171,7 @@ class TextCellHover:
 			startValue=0.0,
 			originColor=wx.Colour(81, 215, 81),  # green
 			destColor=self._normalBGColor,
-			durationSeconds=self._secondsOfPostActivate
+			durationSeconds=self._secondsOfPostActivate,
 		)
 
 	def doHoverTracking(self):
@@ -221,7 +223,7 @@ class TextCellHover:
 	def _activateRouteToCell(self):
 		from .brailleViewerInputGesture import BrailleViewerGesture_RouteTo
 		inputCore.manager.executeGesture(
-			BrailleViewerGesture_RouteTo(self._charIndex)
+			BrailleViewerGesture_RouteTo(self._charIndex),
 		)
 
 
@@ -253,7 +255,7 @@ def _setBrailleFont(fontName: str, textCtrl: wx.Control) -> wx.Font:
 # may start at the same time)
 class BrailleViewerFrame(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 
 	helpId = "BrailleViewer"
@@ -285,7 +287,7 @@ class BrailleViewerFrame(
 			gui.mainFrame,
 			title=self._title,
 			pos=dialogPos,
-			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP
+			style=wx.CAPTION | wx.CLOSE_BOX | wx.STAY_ON_TOP,
 		)
 		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self.Bind(wx.EVT_CLOSE, self._onClose)
@@ -339,7 +341,7 @@ class BrailleViewerFrame(
 		# Use the same font so the size is accurate.
 		_setBrailleFont(
 			"FreeMono-FixedBraille",
-			self._brailleSizeTest
+			self._brailleSizeTest,
 		)
 
 		# Keep the label hidden since it provides no information.
@@ -365,11 +367,11 @@ class BrailleViewerFrame(
 			parent,
 			value=self._brailleOutputLastSet,
 			style=wx.TE_RICH | wx.TE_READONLY,
-			size=wx.Size(labelSize.x, -1)
+			size=wx.Size(labelSize.x, -1),
 		)
 		_setBrailleFont(
 			"FreeMono-FixedBraille",
-			self._brailleOutput
+			self._brailleOutput,
 		)
 		log.debug(f"Font for braille: {self._brailleOutput.GetFont().GetNativeFontInfoUserDesc()}")
 		sizer.Add(self._brailleOutput, flag=wx.EXPAND, proportion=1)
@@ -379,11 +381,11 @@ class BrailleViewerFrame(
 		self._rawTextOutput = wx.TextCtrl(
 			parent,
 			value=self._rawTextOutputLastSet,
-			style=wx.TE_RICH2 | wx.TE_READONLY
+			style=wx.TE_RICH2 | wx.TE_READONLY,
 		)
 		_setBrailleFont(
 			"FreeMono-FixedBraille",
-			self._rawTextOutput
+			self._rawTextOutput,
 		)
 		log.debug(f"Font for raw text: {self._rawTextOutput.Font.GetNativeFontInfoUserDesc()}")
 		sizer.Add(self._rawTextOutput, flag=wx.EXPAND, proportion=1)
@@ -394,7 +396,8 @@ class BrailleViewerFrame(
 		showOnStartupCheckboxLabel = _("&Show Braille Viewer on Startup")
 		self._shouldShowOnStartupCheckBox = wx.CheckBox(
 			parent=parent,
-			label=showOnStartupCheckboxLabel)
+			label=showOnStartupCheckboxLabel,
+  )
 		self._shouldShowOnStartupCheckBox.SetValue(config.conf["brailleViewer"]["showBrailleViewerAtStartup"])
 		self._shouldShowOnStartupCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldShowOnStartupChanged)
 		optionsSizer.Add(self._shouldShowOnStartupCheckBox)
@@ -406,7 +409,7 @@ class BrailleViewerFrame(
 		hoverRoutesCellText = _("&Hover for cell routing")
 		self._shouldHoverRouteToCellCheckBox = wx.CheckBox(
 			parent=parent,
-			label=hoverRoutesCellText
+			label=hoverRoutesCellText,
 		)
 		self._shouldHoverRouteToCellCheckBox.Bind(wx.EVT_CHECKBOX, self._onShouldHoverRouteToCellCheckBoxChanged)
 		self._shouldHoverRouteToCellCheckBox.SetValue(_shouldDoHover())
@@ -501,7 +504,7 @@ class BrailleViewerFrame(
 			newSize = self._brailleOutput.GetSize()
 			log.debug(
 				f"Updating brailleViewer cell count to: {self._newCellCount}"
-				f", braille label size {oldSize} -> {newSize}"
+				f", braille label size {oldSize} -> {newSize}",
 			)
 			# Ensure that any variation in the number of characters displayed is still shown by calling `Fit`.
 			# This should really only happen when an external display with a different cell count is connected.

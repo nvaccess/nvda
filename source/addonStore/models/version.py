@@ -29,7 +29,7 @@ class MajorMinorPatch(NamedTuple):
 		return cls(
 			int(versionParts[0]),
 			int(versionParts[1]),
-			0 if len(versionParts) == 2 else int(versionParts[2])
+			0 if len(versionParts) == 2 else int(versionParts[2]),
 		)
 
 
@@ -111,9 +111,9 @@ class SupportsVersionCheck(Protocol):
 				# A more recent version of NVDA is required for the add-on to work.
 				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
 				"An updated version of NVDA is required. "
-				"NVDA version {nvdaVersion} or later."
-				).format(
-			nvdaVersion=addonAPIVersion.formatForGUI(self.minimumNVDAVersion)
+				"NVDA version {nvdaVersion} or later.",
+   ).format(
+			nvdaVersion=addonAPIVersion.formatForGUI(self.minimumNVDAVersion),
 			)
 		elif not isAddonTested(self, backwardsCompatToVersion):
 			return pgettext(
@@ -124,11 +124,11 @@ class SupportsVersionCheck(Protocol):
 				"An updated version of this add-on is required. "
 				"This add-on was last tested with {lastTestedNVDAVersion}. "
 				"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
-				"You can enable this add-on at your own risk. "
-				).format(
+				"You can enable this add-on at your own risk. ",
+   ).format(
 			nvdaVersion=addonAPIVersion.formatForGUI(backwardsCompatToVersion),
 			lastTestedNVDAVersion=addonAPIVersion.formatForGUI(self.lastTestedNVDAVersion),
-			)
+   )
 		else:
 			return None
 
@@ -141,7 +141,7 @@ def getAddonCompatibilityMessage() -> str:
 		"Your NVDA configuration contains add-ons that are incompatible with this version of NVDA. "
 		"These add-ons will be disabled after installation. "
 		"After installation, you will be able to manually re-enable these add-ons at your own risk. "
-		"If you rely on these add-ons, please review the list to decide whether to continue with the installation. "
+		"If you rely on these add-ons, please review the list to decide whether to continue with the installation. ",
 	)
 
 
@@ -151,5 +151,5 @@ def getAddonCompatibilityConfirmationMessage() -> str:
 		# Translators: A message to confirm that the user understands that incompatible add-ons
 		# will be disabled after installation, and can be manually re-enabled.
 		"I understand that incompatible add-ons will be disabled "
-		"and can be manually re-enabled at my own risk after installation."
+		"and can be manually re-enabled at my own risk after installation.",
 	)

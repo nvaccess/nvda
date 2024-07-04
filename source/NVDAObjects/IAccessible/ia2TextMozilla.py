@@ -35,7 +35,7 @@ class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
 	def _iterTextWithEmbeddedObjects(
 			self,
 			withFields,
-			formatConfig=None
+			formatConfig=None,
 	) -> typing.Generator[int, None, None]:
 		yield from range(self._startOffset, self._endOffset)
 
@@ -89,7 +89,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		# determine whether we are at this position.
 		try:
 			start, end, text = caretObj.IAccessibleTextObject.textAtOffset(
-				IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR
+				IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR,
 			)
 			# If the offsets are different, this means there is a character, which
 			# means this is not the insertion point at the end of a line.
@@ -104,7 +104,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		except COMError:
 			log.debugWarning(
 				"Couldn't determine if caret is at end of line insertion point",
-				exc_info=True
+				exc_info=True,
 			)
 		return False
 
@@ -368,7 +368,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				if not ti:
 					log.debugWarning(
 						"_getEmbedding returned None while getting initial fields. "
-						"Object probably dead."
+						"Object probably dead.",
 					)
 					return []
 				obj = ti.obj
@@ -403,7 +403,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if not ti:
 				log.debugWarning(
 					"_getEmbedding returned None while ascending to get more text. "
-					"Object probably dead."
+					"Object probably dead.",
 				)
 				return []
 			obj = ti.obj
@@ -443,7 +443,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			self,
 			expandTi: offsets.OffsetsTextInfo,
 			unit: str,
-			obj: IAccessible
+			obj: IAccessible,
 	) -> None:
 		if (
 			self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER

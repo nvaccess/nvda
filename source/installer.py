@@ -183,7 +183,7 @@ def removeOldLibFiles(destPath, rebootOK=False):
 						log.warning(
 							"Failed to remove a directory no longer needed. "
 							"This can be manually removed after a reboot or the  installer will try"
-							f" removing it again next time. Directory: {repr(path)}"
+							f" removing it again next time. Directory: {repr(path)}",
 						)
 			for f in files:
 				path = os.path.join(parent, f)
@@ -220,13 +220,16 @@ def removeOldProgramFiles(destPath):
 	#  Also remove old .dll and .manifest files.
 	for curDestDir,subDirs,files in os.walk(destPath):
 		if curDestDir == destPath:
-			subDirs[:] = [x for x in subDirs if os.path.basename(x).lower() not in (
-				'userconfig',
-				'systemconfig',
-				#  Do not remove old libraries here. It is done by removeOldLibFiles.
-				'lib',
-				'lib64',
-				'libarm64')]
+			subDirs[:] = [
+       x for x in subDirs if os.path.basename(x).lower() not in (
+       'userconfig',
+       'systemconfig',
+       #  Do not remove old libraries here. It is done by removeOldLibFiles.
+       'lib',
+       'lib64',
+       'libarm64',
+       )
+   ]
 		for f in files:
 			if f.endswith((".pyc", ".pyo", ".pyd", ".dll", ".manifest")):
 				path=os.path.join(curDestDir, f)
@@ -274,7 +277,7 @@ def registerInstallation(
 		startMenuFolder: str,
 		shouldCreateDesktopShortcut: bool,
 		startOnLogonScreen: bool,
-		configInLocalAppData: bool = False
+		configInLocalAppData: bool = False,
 ) -> None:
 	calculatedUninstallerRegInfo = getUninstallerRegInfo(installDir)
 	log.debug(f"Estimated install size: {calculatedUninstallerRegInfo.get('EstimatedSize')} KiB")
@@ -282,7 +285,7 @@ def registerInstallation(
 		winreg.HKEY_LOCAL_MACHINE,
 		r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\NVDA",
 		0,
-		winreg.KEY_WRITE
+		winreg.KEY_WRITE,
 	) as k:
 		for name, value in calculatedUninstallerRegInfo.items():
 			if isinstance(value, int):
@@ -296,7 +299,7 @@ def registerInstallation(
 				name,
 				None,
 				regType,
-				value
+				value,
 			)
 	with winreg.CreateKeyEx(winreg.HKEY_LOCAL_MACHINE,"SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\nvda.exe",0,winreg.KEY_WRITE) as k:
 		winreg.SetValueEx(k,"",None,winreg.REG_SZ,os.path.join(installDir,"nvda.exe"))
@@ -308,7 +311,7 @@ def registerInstallation(
 				config.RegistryKey.CONFIG_IN_LOCAL_APPDATA_SUBKEY.value,
 				None,
 				winreg.REG_DWORD,
-				int(configInLocalAppData)
+				int(configInLocalAppData),
 			)
 		if NVDAState._forceSecureModeEnabled():
 			winreg.SetValueEx(
@@ -316,7 +319,7 @@ def registerInstallation(
 				config.RegistryKey.FORCE_SECURE_MODE_SUBKEY.value,
 				None,
 				winreg.REG_DWORD,
-				1
+				1,
 			)
 	registerEaseOfAccess(installDir)
 	if startOnLogonScreen is not None:
@@ -353,7 +356,7 @@ def _createShortcutWithFallback(
 			iconLocation,
 			workingDirectory,
 			hotkey,
-			prependSpecialFolder
+			prependSpecialFolder,
 		)
 	except Exception:
 		if hotkey is not None and fallbackHotkey is not None:
@@ -381,7 +384,7 @@ def _createShortcutWithFallback(
 		else:
 			log.error(
 				f"Error creating {path}, no mitigation possible. "
-				f"Perhaps controlled folder access is active for this directory."
+				f"Perhaps controlled folder access is active for this directory.",
 			)
 
 
@@ -411,7 +414,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		path=os.path.join(startMenuFolder, "NVDA.lnk"),
 		targetPath=NVDAExe,
 		workingDirectory=installDir,
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: A label for a shortcut in start menu and a menu entry in NVDA menu (to go to NVDA website).
@@ -420,7 +423,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		path=os.path.join(startMenuFolder, webSiteTranslated + ".lnk"),
 		fallbackPath=os.path.join(startMenuFolder, "NVDA web site.lnk"),
 		targetPath=versionInfo.url,
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: A label for a shortcut item in start menu to uninstall NVDA from the computer.
@@ -430,7 +433,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		fallbackPath=os.path.join(startMenuFolder, "Uninstall NVDA.lnk"),
 		targetPath=os.path.join(installDir, "uninstall.exe"),
 		workingDirectory=installDir,
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: A label for a shortcut item in start menu to open current user's NVDA configuration directory.
@@ -441,7 +444,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		targetPath=slaveExe,
 		arguments="explore_userConfigPath",
 		workingDirectory=installDir,
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: The label of the NVDA Documentation menu in the Start Menu.
@@ -453,7 +456,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		path=os.path.join(docFolder, commandsRefTranslated + ".lnk"),
 		fallbackPath=os.path.join(docFolder, "Commands Quick Reference.lnk"),
 		targetPath=getDocFilePath("keyCommands.html", installDir),
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: A label for a shortcut in start menu to open NVDA user guide.
@@ -462,7 +465,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		path=os.path.join(docFolder, userGuideTranslated + ".lnk"),
 		fallbackPath=os.path.join(docFolder, "User Guide.lnk"),
 		targetPath=getDocFilePath("userGuide.html", installDir),
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 	# Translators: A label for a shortcut in start menu to open NVDA what's new.
@@ -471,7 +474,7 @@ def _updateShortcuts(NVDAExe, installDir, shouldCreateDesktopShortcut, slaveExe,
 		path=os.path.join(docFolder, changesTranslated + ".lnk"),
 		fallbackPath=os.path.join(docFolder, "What's new.lnk"),
 		targetPath=getDocFilePath("changes.html", installDir),
-		prependSpecialFolder="AllUsersPrograms"
+		prependSpecialFolder="AllUsersPrograms",
 	)
 
 
@@ -486,7 +489,7 @@ def unregisterInstallation(keepDesktopShortcut=False):
 		winreg.DeleteKeyEx(
 			winreg.HKEY_LOCAL_MACHINE,
 			easeOfAccess.RegistryKey.APP.value,
-			winreg.KEY_WOW64_64KEY
+			winreg.KEY_WOW64_64KEY,
 		)
 		easeOfAccess.setAutoStart(easeOfAccess.AutoStartContext.ON_LOGON_SCREEN, False)
 	except WindowsError:
@@ -574,7 +577,7 @@ def tryRemoveFile(
 		path: str,
 		numRetries: int = 6,
 		retryInterval: float = 0.5,
-		rebootOK: bool = False
+		rebootOK: bool = False,
 ):
 	dirPath=os.path.dirname(path)
 	tempPath = _createEmptyTempFileForDeletingFile(dir=dirPath)
@@ -637,7 +640,7 @@ _nvdaExes = {
 	"nvda_noUIAccess.exe",
 	"nvda_uiAccess.exe",
 	"nvda_dmp.exe",
-	"nvda_slave.exe"
+	"nvda_slave.exe",
 }
 
 
@@ -656,7 +659,7 @@ def _deleteFileGroupOrFail(
 		installDir: str,
 		relativeFilepaths: Iterable[str],
 		numTries: int = 6,
-		retryWaitInterval: float = 0.5
+		retryWaitInterval: float = 0.5,
 ):
 	"""
 	Delete a group of files in the installer folder.
@@ -727,7 +730,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		installDir,
 		_nvdaExes.union({"nvda_service.exe"}),
 		numTries=6,
-		retryWaitInterval=0.5
+		retryWaitInterval=0.5,
 	)
 	unregisterInstallation(keepDesktopShortcut=shouldCreateDesktopShortcut)
 	if prevInstallPath:
@@ -747,7 +750,7 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 		startMenuFolder,
 		shouldCreateDesktopShortcut,
 		shouldRunAtLogon,
-		NVDAState._configInLocalAppDataEnabled()
+		NVDAState._configInLocalAppDataEnabled(),
 	)
 	COMRegistrationFixes.fixCOMRegistrations()
 
@@ -782,51 +785,55 @@ def registerEaseOfAccess(installDir):
 		winreg.HKEY_LOCAL_MACHINE,
 		easeOfAccess.RegistryKey.APP.value,
 		0,
-		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY
+		winreg.KEY_ALL_ACCESS | winreg.KEY_WOW64_64KEY,
 	) as appKey:
-		winreg.SetValueEx(appKey, "ApplicationName", None, winreg.REG_SZ,
-			versionInfo.name)
-		winreg.SetValueEx(appKey, "Description", None, winreg.REG_SZ,
-			versionInfo.longName)
+		winreg.SetValueEx(
+      appKey, "ApplicationName", None, winreg.REG_SZ,
+      versionInfo.name,
+  )
+		winreg.SetValueEx(
+      appKey, "Description", None, winreg.REG_SZ,
+      versionInfo.longName,
+  )
 		winreg.SetValueEx(
 			appKey,
 			"Profile",
 			None,
 			winreg.REG_SZ,
-			'<HCIModel><Accommodation type="severe vision"/></HCIModel>'
+			'<HCIModel><Accommodation type="severe vision"/></HCIModel>',
 		)
 		winreg.SetValueEx(
 			appKey,
 			"SimpleProfile",
 			None,
 			winreg.REG_SZ,
-			"screenreader"
+			"screenreader",
 		)
 		winreg.SetValueEx(
 			appKey,
 			"ATExe",
 			None,
 			winreg.REG_SZ,
-			"nvda.exe"
+			"nvda.exe",
 		)
 		winreg.SetValueEx(
 			appKey,
 			"StartExe",
 			None,
 			winreg.REG_SZ,
-			os.path.join(installDir, "nvda.exe")
+			os.path.join(installDir, "nvda.exe"),
 		)
 		winreg.SetValueEx(
 			appKey,
 			"StartParams",
 			None,
 			winreg.REG_SZ,
-			"--ease-of-access"
+			"--ease-of-access",
 		)
 		winreg.SetValueEx(
 			appKey,
 			"TerminateOnDesktopSwitch",
 			None,
 			winreg.REG_DWORD,
-			0
+			0,
 		)

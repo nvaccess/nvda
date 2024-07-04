@@ -23,7 +23,7 @@ from utils.security import isLockScreenModeActive, post_sessionLockStateChanged
 # may start at the same time)
 class SpeechViewerFrame(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "SpeechViewer"
 
@@ -44,7 +44,7 @@ class SpeechViewerFrame(
 			title=_("NVDA Speech Viewer"),
 			size=dialogSize,
 			pos=dialogPos,
-			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP
+			style=wx.CAPTION | wx.CLOSE_BOX | wx.RESIZE_BORDER | wx.STAY_ON_TOP,
 		)
 		post_sessionLockStateChanged.register(self.onSessionLockStateChange)
 		self._isDestroyed = False
@@ -79,29 +79,29 @@ class SpeechViewerFrame(
 	def _createControls(self, sizer, parent):
 		self.textCtrl = wx.TextCtrl(
 			parent,
-			style=wx.TE_RICH2 | wx.TE_READONLY | wx.TE_MULTILINE
+			style=wx.TE_RICH2 | wx.TE_READONLY | wx.TE_MULTILINE,
 		)
 		sizer.Add(
 			self.textCtrl,
 			proportion=1,
-			flag=wx.EXPAND
+			flag=wx.EXPAND,
 		)
 
 		self.shouldShowOnStartupCheckBox = wx.CheckBox(
 			parent,
 			# Translators: The label for a setting in the speech viewer that controls
 			# whether the speech viewer is shown at startup or not.
-			label=_("&Show Speech Viewer on Startup")
+			label=_("&Show Speech Viewer on Startup"),
 		)
 		sizer.Add(
 			self.shouldShowOnStartupCheckBox,
 			border=5,
-			flag=wx.EXPAND | wx.ALL
+			flag=wx.EXPAND | wx.ALL,
 		)
 		self.shouldShowOnStartupCheckBox.SetValue(config.conf["speechViewer"]["showSpeechViewerAtStartup"])
 		self.shouldShowOnStartupCheckBox.Bind(
 			wx.EVT_CHECKBOX,
-			self.onShouldShowOnStartupChanged
+			self.onShouldShowOnStartupChanged,
 		)
 		if isLockScreenModeActive():
 			self.shouldShowOnStartupCheckBox.Disable()
@@ -138,8 +138,8 @@ class SpeechViewerFrame(
 		return len(configSizes) == len(attachedSizes) and all( configSizes[i] == attachedSizes[i] for i in range(len(configSizes)))
 
 	def getAttachedDisplaySizesAsStringArray(self):
-		displays = ( wx.Display(i).GetGeometry().GetSize() for i in range(wx.Display.GetCount()) )
-		return [repr( (i.width, i.height) ) for i in displays]
+		displays = ( wx.Display(i).GetGeometry().GetSize() for i in range(wx.Display.GetCount()))
+		return [repr( (i.width, i.height)) for i in displays]
 
 	def savePositionInformation(self):
 		position = self.GetPosition()
@@ -166,7 +166,7 @@ def activate():
 
 def _setActive(
 		isNowActive: bool,
-		speechViewerFrame: Optional[SpeechViewerFrame] = None
+		speechViewerFrame: Optional[SpeechViewerFrame] = None,
 ) -> None:
 	global _guiFrame, isActive
 	isActive = isNowActive

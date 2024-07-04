@@ -77,7 +77,7 @@ def DoxyfileParse(file_contents):
          elif token == "=":
             data[key] = list()
          else:
-            append_data( data, key, new_data, token )
+            append_data( data, key, new_data, token)
             new_data = True
 
       last_token = token
@@ -85,7 +85,7 @@ def DoxyfileParse(file_contents):
 
       if last_token == '\\' and token != '\n':
          new_data = False
-         append_data( data, key, new_data, '\\' )
+         append_data( data, key, new_data, '\\')
 
    # compress lists of len 1 into single strings
    # Wrap items into a list, since we're mutating the dictionary
@@ -204,12 +204,14 @@ def generate(env):
       source_scanner =  doxyfile_scanner,
    )
 
-   env.Append(BUILDERS = {
-      'Doxygen': doxyfile_builder,
-   })
+   env.Append(
+       BUILDERS = {
+          'Doxygen': doxyfile_builder,
+       },
+   )
 
    env.AppendUnique(
-      DOXYGEN = fetchDoxygenPath()
+      DOXYGEN = fetchDoxygenPath(),
    )
 
 def exists(env):

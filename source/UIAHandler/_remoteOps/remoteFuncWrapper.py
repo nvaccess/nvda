@@ -11,7 +11,7 @@ from typing import (
 	Callable,
 	Concatenate,
 	ParamSpec,
-	TypeVar
+	TypeVar,
 )
 import functools
 import contextlib
@@ -35,11 +35,11 @@ class _BaseRemoteFuncWrapper:
 			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
 			funcSelf: _remoteFunc_self,
 			*args: _remoteFunc_paramSpec.args,
-			**kwargs: _remoteFunc_paramSpec.kwargs
+			**kwargs: _remoteFunc_paramSpec.kwargs,
 	) -> _remoteFunc_return:
 		main = funcSelf.rob.getInstructionList('main')
 		main.addComment(
-			f"Entering {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
+			f"Entering {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}",
 		)
 		res = func(funcSelf, *args, **kwargs)
 		main.addComment(f"Exiting {func.__qualname__}")
@@ -53,7 +53,7 @@ class _BaseRemoteFuncWrapper:
 		def wrapper(
 				funcSelf: _remoteFunc_self,
 				*args: _remoteFunc_paramSpec.args,
-				**kwargs: _remoteFunc_paramSpec.kwargs
+				**kwargs: _remoteFunc_paramSpec.kwargs,
 		) -> _remoteFunc_return:
 			return self._execRawFunc(func, funcSelf, *args, **kwargs)
 		return wrapper
@@ -71,7 +71,7 @@ class RemoteMethodWrapper(_BaseRemoteFuncWrapper):
 			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], _remoteFunc_return],
 			funcSelf: _remoteFunc_self,
 			*args: _remoteFunc_paramSpec.args,
-			**kwargs: _remoteFunc_paramSpec.kwargs
+			**kwargs: _remoteFunc_paramSpec.kwargs,
 	) -> _remoteFunc_return:
 		if self._mutable and not funcSelf._mutable:
 			raise RuntimeError(f"{funcSelf.__class__.__name__} is not mutable")
@@ -83,8 +83,8 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 	def __call__(
 			self,
 			func: Callable[
-				Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None]
-			]
+				Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], Generator[_remoteFunc_return, None, None],
+			],
 	) -> Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]]:
 		contextFunc = contextlib.contextmanager(func)
 		return super().__call__(contextFunc)
@@ -95,11 +95,11 @@ class RemoteContextManager(_BaseRemoteFuncWrapper):
 			func: Callable[Concatenate[_remoteFunc_self, _remoteFunc_paramSpec], ContextManager[_remoteFunc_return]],
 			funcSelf: _remoteFunc_self,
 			*args: _remoteFunc_paramSpec.args,
-			**kwargs: _remoteFunc_paramSpec.kwargs
+			**kwargs: _remoteFunc_paramSpec.kwargs,
 	) -> Generator[_remoteFunc_return, None, None]:
 		main = funcSelf.rob.getInstructionList('main')
 		main.addComment(
-			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}"
+			f"Entering context manager {func.__qualname__}{self.generateArgsKwargsString(*args, **kwargs)}",
 		)
 		with func(funcSelf, *args, **kwargs) as val:
 			main.addComment("Yielding to outer scope")

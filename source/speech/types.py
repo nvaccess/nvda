@@ -43,7 +43,7 @@ class GeneratorWithReturn(Iterable):
 
 
 def _flattenNestedSequences(
-		nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn]
+		nestedSequences: Union[Iterable[SpeechSequence], GeneratorWithReturn],
 ) -> Generator[SequenceItemT, Any, Optional[bool]]:
 	"""Turns [[a,b,c],[d,e]] into [a,b,c,d,e]"""
 	yield from (i for seq in nestedSequences for i in seq)
@@ -69,7 +69,7 @@ def logBadSequenceTypes(sequence: SpeechIterable, raiseExceptionOnError=False) -
 		log.error(
 			f"Unexpected Sequence Type: {type(sequence)!r} supplied,"
 			f" a {SpeechSequence!r} is required.",
-			stack_info=True
+			stack_info=True,
 		)
 		if raiseExceptionOnError:
 			raise ValueError("Unexpected type in speech sequence")

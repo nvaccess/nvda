@@ -250,34 +250,38 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		deviceTypes = {
 			bdDetect.DeviceType.HID: (
 				{
-					"VID_045E&PID_940A"  # Braille Edge3S 40
+					"VID_045E&PID_940A",  # Braille Edge3S 40
 				},
-				True
+				True,
 			),
 			bdDetect.DeviceType.CUSTOM: (
 				{
 					"VID_045E&PID_930A",  # Braille Sense & Smart Beetle
-					"VID_045E&PID_930B"  # Braille EDGE 40
+					"VID_045E&PID_930B",  # Braille EDGE 40
 				},
-				False
+				False,
 			),
 			bdDetect.DeviceType.SERIAL: (
 				{
 					"VID_0403&PID_6001",
-					"VID_1A86&PID_55D3"  # Braille Edge2S 40
+					"VID_1A86&PID_55D3",  # Braille Edge2S 40
 				},
-				False
-			)
+				False,
+			),
 		}
 
 		for deviceType, (ids, useAsFallback) in deviceTypes.items():
 			driverRegistrar.addUsbDevices(deviceType, ids, useAsFallback)
 
-		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
-			"BrailleSense",
-			"BrailleEDGE",
-			"SmartBeetle",
-		)))
+		driverRegistrar.addBluetoothDevices(
+      lambda m: any(
+          m.id.startswith(prefix) for prefix in (
+           "BrailleSense",
+           "BrailleEDGE",
+           "SmartBeetle",
+          )
+      ),
+  )
 
 	@classmethod
 	def getManualPorts(cls) -> Iterator[tuple[str, str]]:
@@ -308,7 +312,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 							parity=PARITY,
 							timeout=self.timeout,
 							writeTimeout=self.timeout,
-							onReceive=self._onReceive
+							onReceive=self._onReceive,
 						)
 					case _:
 						log.error(f"No matching case for portType found: {portType}")
@@ -335,8 +339,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._sendIdentificationRequests(match)
 			if self._model:
 				# A display responded.
-				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._model.name, type=portType, port=port))
+				log.info(
+        "Found {device} connected via {type} ({port})".format(
+        device=self._model.name, type=portType, port=port,
+        ),
+    )
 				break
 
 			self._dev.close()
@@ -349,7 +356,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if self.isHID:
 			outputReport: bytes = b"".join([
 				intToByte(self.numCells),  # length
-				cellBytes
+				cellBytes,
 			])
 
 			self._dev.setOutputReport(outputReport)
@@ -401,11 +408,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for modelId, cls in matchedModelsMap:
 			log.debug("Sending request for id %r" % modelId)
 
-			self._dev.write(b"".join([
-				b"\x1c",
-				modelId,
-				b"\x1f"
-			]))
+			self._dev.write(
+       b"".join([
+        b"\x1c",
+        modelId,
+        b"\x1f",
+       ]),
+   )
 			self._dev.waitForRead(self.timeout)
 			if self._model:
 				log.debug("%s model has been set"%self._model.name)
@@ -561,7 +570,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			packetType: bytes,
 			mode: bytes,
 			data1: bytes,
-			data2: bytes = b""
+			data2: bytes = b"",
 	):
 		d1Len = len(data1)
 		d2Len = len(data2)
@@ -628,7 +637,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"globalCommands.GlobalCommands": {
 					"braille_routeTo": (
 				"br(hims):routing",
-			),
+     ),
 			"braille_scrollBack": (
 				"br(hims):leftSideScrollUp",
 				"br(hims):rightSideScrollUp",
@@ -832,7 +841,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:alt+insert": (
 				"br(hims.smartbeetle):f3+rightSideScroll",
 			),
-		}
+		},
 	})
 
 class KeyInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):

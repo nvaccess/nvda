@@ -127,9 +127,11 @@ def getWindowScalingFactor(window: int) -> int:
 	# There is little information about what GetDeviceCaps does in the case of a failure for LOGPIXELSX, however,
 	# a value of zero is certainly an error.
 	if winDpi <= 0:
-		log.debugWarning("Failed to get the DPI for the window, assuming a "
-		                 "DPI of {} and using a scaling of 1. The hWnd value "
-		                 "used was: {}".format(DEFAULT_DPI_LEVEL, window))
+		log.debugWarning(
+      "Failed to get the DPI for the window, assuming a "
+      "DPI of {} and using a scaling of 1. The hWnd value "
+      "used was: {}".format(DEFAULT_DPI_LEVEL, window),
+  )
 		return 1
 
 	return round(winDpi / DEFAULT_DPI_LEVEL)
@@ -182,7 +184,7 @@ class CustomWindow(AutoPropertyObject):
 			windowName: Optional[str] = None,
 			windowStyle: int = 0,
 			extendedWindowStyle: int = 0,
-			parent: Optional[int] = None
+			parent: Optional[int] = None,
 	):
 		"""Constructor.
 		@param windowName: The name of the window.
@@ -218,7 +220,7 @@ class CustomWindow(AutoPropertyObject):
 			parent,
 			None,
 			appInstance,
-			None
+			None,
 		)
 		if res == 0:
 			raise ctypes.WinError()
@@ -237,7 +239,7 @@ class CustomWindow(AutoPropertyObject):
 		if not ctypes.windll.user32.UnregisterClassW(self._classAtom, appInstance):
 			log.error(
 				f"Error unregistering window class for {self.__class__.__qualname__}",
-				exc_info=ctypes.WinError()
+				exc_info=ctypes.WinError(),
 			)
 		self._classAtom = None
 

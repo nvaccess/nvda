@@ -42,8 +42,10 @@ def _buildInvalidXmlRegexp():
 	# Ranges of invalid characters.
 	# Both start and end are inclusive; i.e. they are both themselves considered invalid.
 	ranges = ((0x00, 0x08), (0x0B, 0x0C), (0x0E, 0x1F), (0x7F, 0x84), (0x86, 0x9F), (0xFDD0, 0xFDDF), (0xFFFE, 0xFFFF))
-	rangeExprs = [u"%s-%s" % (chr(start), chr(end))
-		for start, end in ranges]
+	rangeExprs = [
+     u"%s-%s" % (chr(start), chr(end))
+     for start, end in ranges
+ ]
 	leadingSurrogate = u"[\uD800-\uDBFF]"
 	trailingSurrogate = u"[\uDC00-\uDFFF]"
 	return re.compile((
@@ -53,10 +55,11 @@ def _buildInvalidXmlRegexp():
 			u"|{leading}(?!{trailing})"
 			# Trailing surrogate is invalid if not preceded by a leading surrogate.
 			u"|(?<!{leading}){trailing}"
-		).format(
+ ).format(
 			ranges="".join(rangeExprs),
 			leading=leadingSurrogate,
-			trailing=trailingSurrogate))
+			trailing=trailingSurrogate,
+ ))
 
 RE_INVALID_XML_CHARS = _buildInvalidXmlRegexp()
 RE_TIME_MS = re.compile(r"^(?P<time>\d+)ms$", re.IGNORECASE)
@@ -264,8 +267,10 @@ class SsmlConverter(SpeechXmlConverter):
 		self.defaultLanguage = toXmlLang(defaultLanguage)
 
 	def generateBalancerCommands(self, speechSequence):
-		attrs = OrderedDict((("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
-			("xml:lang", self.defaultLanguage)))
+		attrs = OrderedDict((
+      ("version", "1.0"), ("xmlns", "http://www.w3.org/2001/10/synthesis"),
+      ("xml:lang", self.defaultLanguage),
+  ))
 		yield EncloseAllCommand("speak", attrs)
 		for command in super(SsmlConverter, self).generateBalancerCommands(speechSequence):
 			yield command
@@ -292,8 +297,10 @@ class SsmlConverter(SpeechXmlConverter):
 			# Returning to normal.
 			return DelAttrCommand("prosody", attr)
 		else:
-			return SetAttrCommand("prosody", attr,
-				"%d%%" % int(command.multiplier* 100))
+			return SetAttrCommand(
+       "prosody", attr,
+       "%d%%" % int(command.multiplier* 100),
+   )
 
 	def convertPitchCommand(self, command):
 		return self._convertProsody(command, "pitch")

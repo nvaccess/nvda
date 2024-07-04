@@ -80,18 +80,21 @@ def alive():
 	SECOND_TO_100_NANOSECOND = 10 ** 7  # nanosecond is 10^9, 10^7 is hundreds of nanoseconds
 	windll.kernel32.SetWaitableTimer(
 		_coreDeadTimer,
-		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(
-			# The time after which the state of the timer is to be set to signaled,
-			# in 100 nanosecond intervals.
-			# Use the format described by the FILETIME structure.
-			# Positive values indicate absolute time.
-			# Be sure to use a UTC-based absolute time, as the system uses UTC-based time internally.
-			# Negative values indicate relative time.
-			# The actual timer accuracy depends on the capability of your hardware.
-			# For more information about UTC-based time, see System Time.
-			-int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT)
-		)),
-		0, None, None, False)
+		ctypes.byref(
+      ctypes.wintypes.LARGE_INTEGER(
+       # The time after which the state of the timer is to be set to signaled,
+       # in 100 nanosecond intervals.
+       # Use the format described by the FILETIME structure.
+       # Positive values indicate absolute time.
+       # Be sure to use a UTC-based absolute time, as the system uses UTC-based time internally.
+       # Negative values indicate relative time.
+       # The actual timer accuracy depends on the capability of your hardware.
+       # For more information about UTC-based time, see System Time.
+       -int(SECOND_TO_100_NANOSECOND * MIN_CORE_ALIVE_TIMEOUT),
+      ),
+  ),
+		0, None, None, False,
+ )
 
 
 def asleep():
@@ -165,7 +168,7 @@ def waitForFreezeRecovery(waitedSince: float):
 	if log.isEnabledFor(log.DEBUGWARNING):
 		stacks = logHandler.getFormattedStacksForAllThreads()
 		log.debugWarning(
-			f"Listing stacks for Python threads:\n{stacks}"
+			f"Listing stacks for Python threads:\n{stacks}",
 		)
 
 	# After every FROZEN_WARNING_TIMEOUT seconds have elapsed
@@ -190,7 +193,7 @@ def waitForFreezeRecovery(waitedSince: float):
 		time.sleep(RECOVER_ATTEMPT_INTERVAL)
 
 	log.info(
-		f"Recovered from freeze after {_timer() - waitedSince} seconds."
+		f"Recovered from freeze after {_timer() - waitedSince} seconds.",
 	)
 
 def _shouldRecoverAfterMinTimeout():
@@ -240,8 +243,10 @@ def _crashHandler(exceptionInfo):
 		# Though we aren't using pythonic functions to write to the dump file,
 		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
 		with open(dumpPath, "wb") as mdf:
-			mdExc = MINIDUMP_EXCEPTION_INFORMATION(ThreadId=threadId,
-				ExceptionPointers=exceptionInfo, ClientPointers=False)
+			mdExc = MINIDUMP_EXCEPTION_INFORMATION(
+       ThreadId=threadId,
+       ExceptionPointers=exceptionInfo, ClientPointers=False,
+   )
 			if not ctypes.windll.DbgHelp.MiniDumpWriteDump(
 				winKernel.kernel32.GetCurrentProcess(),
 				globalVars.appPid,
@@ -249,7 +254,7 @@ def _crashHandler(exceptionInfo):
 				0, # MiniDumpNormal
 				ctypes.byref(mdExc),
 				None,
-				None
+				None,
 			):
 				raise ctypes.WinError()
 	except:  # noqa: E722
@@ -289,8 +294,10 @@ def initialize():
 	windll.kernel32.SetUnhandledExceptionFilter(_crashHandler)
 	oledll.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
-	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(NVDAHelper.localLib,
-		"cancelCallEvent")
+	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
+     NVDAHelper.localLib,
+     "cancelCallEvent",
+ )
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(NVDAHelper.localLib, "_notifySendMessageCancelled", _notifySendMessageCancelled)
 	_watcherThread = threading.Thread(
@@ -310,9 +317,11 @@ def terminate():
 	isRunning=False
 	oledll.ole32.CoDisableCallCancellation(None)
 	# Wake up the watcher so it knows to finish.
-	windll.kernel32.SetWaitableTimer(_coreDeadTimer,
-		ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
-		0, None, None, False)
+	windll.kernel32.SetWaitableTimer(
+     _coreDeadTimer,
+     ctypes.byref(ctypes.wintypes.LARGE_INTEGER(0)),
+     0, None, None, False,
+ )
 	_watcherThread.join()
 
 class Suspender(object):
@@ -356,7 +365,8 @@ class CancellableCallThread(threading.Thread):
 		self._executeEvent.set()
 
 		waitHandles = (ctypes.wintypes.HANDLE * 2)(
-			self._executionDoneEvent, _cancelCallEvent)
+			self._executionDoneEvent, _cancelCallEvent,
+  )
 		waitIndex = ctypes.wintypes.DWORD()
 		if pumpMessages:
 			oledll.ole32.CoWaitForMultipleHandles(0, winKernel.INFINITE, 2, waitHandles, ctypes.byref(waitIndex))

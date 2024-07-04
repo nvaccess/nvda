@@ -41,7 +41,7 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
-			endOfNode=endOfNode
+			endOfNode=endOfNode,
 		)
 		# use the value of comboboxes as content.
 		if obj.role == controlTypes.Role.COMBOBOX:

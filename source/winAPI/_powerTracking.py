@@ -92,7 +92,7 @@ class SystemPowerStatus(ctypes.Structure):
 		("BatteryLifePercent", ctypes.c_byte),
 		("Reserved1", ctypes.c_byte),
 		("BatteryLifeTime", ctypes.wintypes.DWORD),
-		("BatteryFullLiveTime", ctypes.wintypes.DWORD)
+		("BatteryFullLiveTime", ctypes.wintypes.DWORD),
 	]
 
 	BatteryFlag: BatteryFlag

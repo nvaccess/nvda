@@ -146,7 +146,7 @@ def nvdaController_speakSsml(  # noqa: C901
 		speech.speak,
 		speechSequence=sequence,
 		symbolLevel=symbolLevel,
-		priority=priority
+		priority=priority,
 	)
 	if not asynchronous:
 		try:
@@ -253,12 +253,12 @@ def nvdaControllerInternal_reportLiveRegion(text: str, politeness: str):
 			Spri.NEXT
 			if politenessValue == AriaLivePoliteness.ASSERTIVE
 			else Spri.NORMAL
-		)
+		),
 	)
 	queueHandler.queueFunction(
 		queueHandler.eventQueue,
 		braille.handler.message,
-		text
+		text,
 	)
 	return 0
 
@@ -408,13 +408,13 @@ inputConversionModeMessages={
 		# Translators: A mode  that allows typing in the actual 'native' characters for an east-Asian input method language currently selected, rather than alpha numeric (Roman/English) characters. 
 		_("Native input"),
 		# Translators: a mode that lets you type in alpha numeric (roman/english) characters, rather than 'native' characters for the east-Asian input method  language currently selected.
-		_("Alpha numeric input")
+		_("Alpha numeric input"),
 	),
 	8:(
 		# Translators: for East-Asian input methods, a mode that allows typing in full-shaped (full double-byte) characters, rather than the smaller half-shaped ones.
 		_("Full shaped mode"),
 		# Translators: for East-Asian input methods, a mode that allows typing in half-shaped (single-byte) characters, rather than the larger full-shaped (double-byte) ones.
-		_("Half shaped mode")
+		_("Half shaped mode"),
 	),
 }
 
@@ -679,7 +679,8 @@ def initialize() -> None:
 	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
 	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(  # noqa: F405
 		("VBuf_getTextInRange", localLib),
-		((1,), (1,), (1,), (2,), (1,)))
+		((1,), (1,), (1,), (2,), (1,)),
+ )
 	if config.isAppX:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
@@ -690,7 +691,7 @@ def initialize() -> None:
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
 		# such as IAccessible2proxy.dll.
-		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH
+		winKernel.LOAD_WITH_ALTERED_SEARCH_PATH,
 	)
 	if not h:
 		log.critical("Error loading nvdaHelperRemote.dll: %s" % WinError())  # noqa: F405

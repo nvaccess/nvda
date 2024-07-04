@@ -38,7 +38,7 @@ from config.configFlags import (
 	TetherTo,
 )
 from utils.displayString import (
-	DisplayStringEnum
+	DisplayStringEnum,
 )
 
 
@@ -46,10 +46,12 @@ class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
 
 	def test_knownEnumsReturned(self):
 		self.assertTrue(
-			set(getAvailableEnums()).issuperset({
-				("BoolFlag", BoolFlag),
-			}
-		))
+			set(getAvailableEnums()).issuperset(
+       {
+         ("BoolFlag", BoolFlag),
+       },
+   ),
+  )
 
 	def test_allEnumsHaveDefault(self):
 		noDefault = []
@@ -69,7 +71,7 @@ class Config_FeatureFlag_specTransform(unittest.TestCase):
 				optionsEnum="BoolFlag",
 				# note: configObj treats param 'default' specially, it isn't passed through as a kwarg.
 			),
-			'_featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="DISABLED", default="DEFAULT")'
+			'_featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="DISABLED", default="DEFAULT")',
 		)
 
 	def test_behaviorOfDefaultGetsKept(self):
@@ -79,7 +81,7 @@ class Config_FeatureFlag_specTransform(unittest.TestCase):
 				behaviorOfDefault="enabled",
 				optionsEnum="BoolFlag",
 			),
-			'_featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="ENABLED", default="DEFAULT")'
+			'_featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="ENABLED", default="DEFAULT")',
 		)
 
 	def test_paramDefaultIsError(self):
@@ -125,7 +127,7 @@ class Config_FeatureFlag_specTransform(unittest.TestCase):
 				'featureFlag(behaviorOfDefault="enabled", optionsEnum="BoolFlag", someOther=True)',
 				behaviorOfDefault="enabled",
 				optionsEnum="BoolFlag",
-				someOther=True
+				someOther=True,
 			)
 
 	def test_optionsEnumMustBeKnown(self):
@@ -134,7 +136,7 @@ class Config_FeatureFlag_specTransform(unittest.TestCase):
 				'featureFlag(behaviorOfDefault="enabled", optionsEnum="UnknownEnumClass", someOther=True)',
 				behaviorOfDefault="enabled",
 				optionsEnum="UnknownEnumClass",
-				someOther=True
+				someOther=True,
 			)
 
 
@@ -146,14 +148,14 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 			enumType: typing.Type,
 			value: enum.Enum,
 			behaviorOfDefault: enum.Enum,
-			calculatedValue: bool
+			calculatedValue: bool,
 	) -> None:
 		self.assertIsInstance(flag.value, enumType, msg="Wrong enum type created")
 		self.assertIsInstance(value, enumType, msg="Test error: wrong enum type for checking value")
 		self.assertIsInstance(
 			behaviorOfDefault,
 			enumType,
-			msg="Test error: wrong enum type for checking behaviorOfDefault"
+			msg="Test error: wrong enum type for checking behaviorOfDefault",
 		)
 
 		self.assertEqual(bool(flag), calculatedValue, msg="Calculated value for behaviour is unexpected")
@@ -161,96 +163,96 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 		self.assertEqual(
 			flag.behaviorOfDefault,
 			behaviorOfDefault,
-			msg="Flag behaviorOfDefault value is unexpected"
+			msg="Flag behaviorOfDefault value is unexpected",
 		)
 		self.assertEqual(
 			str(flag),  # conversion to string required to save to config.
 			value.name.upper(),
-			msg="Flag string conversion not as expected"
+			msg="Flag string conversion not as expected",
 		)
 
 	def test_enabled_lower(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"enabled",
 			behaviorOfDefault="disabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.ENABLED,
 			behaviorOfDefault=BoolFlag.DISABLED,
-			calculatedValue=True
+			calculatedValue=True,
 		)
 
 	def test_enabled_upper(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"ENABLED",
 			behaviorOfDefault="disabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.ENABLED,
 			behaviorOfDefault=BoolFlag.DISABLED,
-			calculatedValue=True
+			calculatedValue=True,
 		)
 
 	def test_disabled_lower(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"disabled",
 			behaviorOfDefault="enabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.DISABLED,
 			behaviorOfDefault=BoolFlag.ENABLED,
-			calculatedValue=False
+			calculatedValue=False,
 		)
 
 	def test_disabled_upper(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"DISABLED",
 			behaviorOfDefault="enabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.DISABLED,
 			behaviorOfDefault=BoolFlag.ENABLED,
-			calculatedValue=False
+			calculatedValue=False,
 		)
 
 	def test_default_lower(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"default",
 			behaviorOfDefault="enabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.DEFAULT,
 			behaviorOfDefault=BoolFlag.ENABLED,
-			calculatedValue=True
+			calculatedValue=True,
 		)
 
 	def test_default_upper(self):
 		flag = featureFlag._validateConfig_featureFlag(
 			"DEFAULT",
 			behaviorOfDefault="enabled",
-			optionsEnum=BoolFlag.__name__
+			optionsEnum=BoolFlag.__name__,
 		)
 		self.assertFeatureFlagState(
 			flag,
 			enumType=BoolFlag,
 			value=BoolFlag.DEFAULT,
 			behaviorOfDefault=BoolFlag.ENABLED,
-			calculatedValue=True
+			calculatedValue=True,
 		)
 
 	def test_empty_raises(self):
@@ -258,7 +260,7 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 			featureFlag._validateConfig_featureFlag(
 				"",  # Given our usage of ConfigObj, this situation is unexpected.
 				behaviorOfDefault="disabled",
-				optionsEnum=BoolFlag.__name__
+				optionsEnum=BoolFlag.__name__,
 			)
 
 	def test_None_raises(self):
@@ -266,7 +268,7 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 			featureFlag._validateConfig_featureFlag(
 				None,  # Given our usage of ConfigObj, this situation is unexpected.
 				behaviorOfDefault="disabled",
-				optionsEnum=BoolFlag.__name__
+				optionsEnum=BoolFlag.__name__,
 			)
 
 	def test_invalid_raises(self):
@@ -274,7 +276,7 @@ class Config_FeatureFlag_validateFeatureFlag(unittest.TestCase):
 			featureFlag._validateConfig_featureFlag(
 				"invalid",  # must be a valid member of BoolFlag
 				behaviorOfDefault="disabled",
-				optionsEnum=BoolFlag.__name__
+				optionsEnum=BoolFlag.__name__,
 			)
 
 

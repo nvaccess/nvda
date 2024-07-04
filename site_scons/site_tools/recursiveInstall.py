@@ -31,15 +31,15 @@
 
 import os
 
-def recursive_install(env, path ):
+def recursive_install(env, path):
     nodes = env.Glob \
         ( os.path.join(path, '*')
-        , strings=False
+        , strings=False,
         )
     out = []
     for n in nodes:
         if n.isdir():
-            out.extend( recursive_install(env, n.abspath ))
+            out.extend( recursive_install(env, n.abspath))
         else:
             out.append(n)
 
@@ -53,7 +53,7 @@ def RecursiveInstall(env, target, dir):
 
     l = len(dir) + 1  # noqa: E741
 
-    relnodes = [ n.abspath[l:] for n in nodes ]
+    relnodes = [ n.abspath[l:] for n in nodes]
 
     for n in relnodes:
         t = os.path.join(target, n)

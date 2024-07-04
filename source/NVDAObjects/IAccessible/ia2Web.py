@@ -56,7 +56,7 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 	def __bool__(self) -> bool:
 		return bool(
-			self._originObj.IA2Attributes.get("details-roles")
+			self._originObj.IA2Attributes.get("details-roles"),
 		)
 
 	@property
@@ -211,7 +211,7 @@ class Ia2Web(IAccessible):
 			states.discard(controlTypes.State.EDITABLE)
 		if controlTypes.State.HASPOPUP in states:
 			popupState = aria.ariaHaspopupValuesToNVDAStates.get(
-				self.IA2Attributes.get("haspopup")
+				self.IA2Attributes.get("haspopup"),
 			)
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
@@ -239,7 +239,7 @@ class Ia2Web(IAccessible):
 			speech.speakObjectProperties(
 				self,
 				current=True,
-				reason=controlTypes.OutputReason.CHANGE
+				reason=controlTypes.OutputReason.CHANGE,
 			)
 		# super calls event_stateChange which updates braille, so no need to
 		# update braille here.
@@ -302,7 +302,7 @@ class Editor(Ia2Web, DocumentWithTableNavigation):
 			except AttributeError:
 				# No IAccessibleTable2, try IAccessibleTable instead.
 				cell = table.IAccessibleTableObject.accessibleAt(
-					destRow - 1, destCol - 1
+					destRow - 1, destCol - 1,
 				).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
@@ -350,8 +350,10 @@ class Math(Ia2Web):
 				attrs = ""
 			return "<math%s>%s</math>" % (attrs, node.innerHTML)
 		except COMError:
-			log.debugWarning("Error retrieving math. "
-				"Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True)
+			log.debugWarning(
+       "Error retrieving math. "
+       "Not supported in this browser or ISimpleDOM COM proxy not registered.", exc_info=True,
+   )
 			raise LookupError
 
 

@@ -58,7 +58,7 @@ class NotepadLib:
 		builtIn.log(
 			# True is expected due to /wait argument.
 			"Is Start process still running (True expected): "
-			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}",
 		)
 		spy = _NvdaLib.getSpyLib()
 		if _getForegroundHwnd() == NotepadLib.notepadWindow.hwndVal:
@@ -67,14 +67,14 @@ class NotepadLib:
 			process.wait_for_process(
 				NotepadLib.processRFHandleForStart,
 				timeout="10 seconds",
-				on_timeout="continue"
+				on_timeout="continue",
 			)
 		else:
 			builtIn.log("Test case not in foreground, can't close it.")
 		builtIn.log(
 			# False is expected, notepad should have allowed "Start" to exit.
 			"Is Start process still running (False expected): "
-			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}"
+			f"{process.is_process_running(NotepadLib.processRFHandleForStart)}",
 		)
 
 	def start_notepad(self, filePath: str, expectedTitlePattern: re.Pattern) -> _Window:
@@ -95,7 +95,7 @@ class NotepadLib:
 			giveUpAfterSeconds=3,
 			shouldStopEvaluator=lambda _window: _window is not None,
 			intervalBetweenSeconds=0.5,
-			errorMessage="Unable to get notepad window"
+			errorMessage="Unable to get notepad window",
 		)
 
 		if not success or NotepadLib.notepadWindow is None:
@@ -134,7 +134,7 @@ class NotepadLib:
 		success, _success = _blockUntilConditionMet(
 			getValue=_isNotepadInForeground,
 			giveUpAfterSeconds=3,
-			intervalBetweenSeconds=0.5
+			intervalBetweenSeconds=0.5,
 		)
 		if success:
 			return
@@ -146,13 +146,13 @@ class NotepadLib:
 			builtIn.log(f"Couldn't retrieve active window information.\nException: {e}")
 		raise AssertionError(
 			"Unable to focus Notepad.\n"
-			f"{windowInformation}"
+			f"{windowInformation}",
 		)
 
 	def canNotepadTitleBeReported(self, notepadTitleSpeechPattern: re.Pattern) -> bool:
 		titleSpeech = _NvdaLib.getSpeechAfterKey('NVDA+t')
 		return bool(
-			notepadTitleSpeechPattern.search(titleSpeech)
+			notepadTitleSpeechPattern.search(titleSpeech),
 		)
 
 	def prepareNotepad(self, testCase: str) -> None:
@@ -174,7 +174,7 @@ class NotepadLib:
 		windowsLib.logForegroundWindowTitle()
 		testCaseNotepadTitleSpeech = re.compile(
 			# Unlike getUniqueTestCaseTitleRegex, this speech does not have to be at the start of the string.
-			f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)"
+			f"{NotepadLib._testCaseTitle} \\({abs(_testCaseHash)}\\)",
 		)
 		if not self.canNotepadTitleBeReported(notepadTitleSpeechPattern=testCaseNotepadTitleSpeech):
 			builtIn.log("Trying to switch to notepad Window")

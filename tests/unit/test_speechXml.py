@@ -97,13 +97,13 @@ class TestXmlBalancer(unittest.TestCase):
 
 	def test_standAloneTag(self):
 		xml = self.balancer.generateXml([
-			speechXml.StandAloneTagCommand("tag", {"attr": "val"}, "content")
+			speechXml.StandAloneTagCommand("tag", {"attr": "val"}, "content"),
 		])
 		self.assertEqual(xml, '<tag attr="val">content</tag>')
 
 	def test_standAloneTagNoContent(self):
 		xml = self.balancer.generateXml([
-			speechXml.StandAloneTagCommand("tag", {"attr": "val"}, None)
+			speechXml.StandAloneTagCommand("tag", {"attr": "val"}, None),
 		])
 		self.assertEqual(xml, '<tag attr="val"/>')
 
@@ -112,7 +112,7 @@ class TestXmlBalancer(unittest.TestCase):
 		Depends on behavior tested in test_standAloneTagNoContent.
 		"""
 		xml = self.balancer.generateXml([
-			speechXml.StandAloneTagCommand("tag", {"attr": '"v1"&"v2"'}, None)
+			speechXml.StandAloneTagCommand("tag", {"attr": '"v1"&"v2"'}, None),
 		])
 		self.assertEqual(xml, '<tag attr="&quot;v1&quot;&amp;&quot;v2&quot;"/>')
 
@@ -121,21 +121,21 @@ class TestXmlBalancer(unittest.TestCase):
 		"""
 		xml = self.balancer.generateXml([
 			speechXml.EncloseAllCommand("encloseAll", {"attr": "val"}),
-			speechXml.StandAloneTagCommand("standAlone", {}, "content")
+			speechXml.StandAloneTagCommand("standAlone", {}, "content"),
 		])
 		self.assertEqual(xml, '<encloseAll attr="val"><standAlone>content</standAlone></encloseAll>')
 
 	def test_setAttr(self):
 		xml = self.balancer.generateXml([
 			speechXml.SetAttrCommand("pitch", "val", 50),
-			"text"
+			"text",
 		])
 		self.assertEqual(xml, '<pitch val="50">text</pitch>')
 
 	def test_delAttrNoSetAttr(self):
 		xml = self.balancer.generateXml([
 			speechXml.DelAttrCommand("pitch", "val"),
-			"text"
+			"text",
 		])
 		self.assertEqual(xml, 'text')
 
@@ -144,7 +144,7 @@ class TestXmlBalancer(unittest.TestCase):
 			speechXml.SetAttrCommand("pitch", "val", 50),
 			"t1",
 			speechXml.DelAttrCommand("pitch", "val"),
-			"t2"
+			"t2",
 		])
 		self.assertEqual(xml, '<pitch val="50">t1</pitch>t2')
 
@@ -154,7 +154,7 @@ class TestXmlBalancer(unittest.TestCase):
 		xml = self.balancer.generateXml([
 			speechXml.SetAttrCommand("pitch", "val", 50),
 			speechXml.SetAttrCommand("volume", "val", 60),
-			"text"
+			"text",
 		])
 		self.assertEqual(xml, '<pitch val="50"><volume val="60">text</volume></pitch>')
 
@@ -165,7 +165,7 @@ class TestXmlBalancer(unittest.TestCase):
 			speechXml.SetAttrCommand("pitch", "val", 50),
 			"t1",
 			speechXml.SetAttrCommand("volume", "val", 60),
-			"t2"
+			"t2",
 		])
 		self.assertEqual(xml, '<pitch val="50">t1</pitch><pitch val="50"><volume val="60">t2</volume></pitch>')
 
@@ -175,7 +175,7 @@ class TestXmlBalancer(unittest.TestCase):
 		xml = self.balancer.generateXml([
 			speechXml.SetAttrCommand("prosody", "pitch", 50),
 			speechXml.SetAttrCommand("prosody", "volume", 60),
-			"text"
+			"text",
 		])
 		self.assertEqual(xml, '<prosody pitch="50" volume="60">text</prosody>')
 
@@ -187,7 +187,7 @@ class TestXmlBalancer(unittest.TestCase):
 			speechXml.SetAttrCommand("volume", "val", 60),
 			"t1",
 			speechXml.DelAttrCommand("pitch", "val"),
-			"t2"
+			"t2",
 		])
 		self.assertEqual(xml, '<pitch val="50"><volume val="60">t1</volume></pitch><volume val="60">t2</volume>')
 
@@ -199,7 +199,7 @@ class TestXmlBalancer(unittest.TestCase):
 			speechXml.SetAttrCommand("prosody", "volume", 60),
 			"t1",
 			speechXml.DelAttrCommand("prosody", "pitch"),
-			"t2"
+			"t2",
 		])
 		self.assertEqual(xml, '<prosody pitch="50" volume="60">t1</prosody><prosody volume="60">t2</prosody>')
 
@@ -209,7 +209,7 @@ class TestXmlBalancer(unittest.TestCase):
 		xml = self.balancer.generateXml([
 			speechXml.EncloseTextCommand("say-as", {"interpret-as": "characters"}),
 			speechXml.StandAloneTagCommand("mark", {"name": "1"}, None),
-			"c"
+			"c",
 		])
 		self.assertEqual(xml, '<mark name="1"/><say-as interpret-as="characters">c</say-as>')
 
@@ -220,7 +220,7 @@ class TestXmlBalancer(unittest.TestCase):
 			speechXml.EncloseTextCommand("say-as", {}),
 			"c",
 			speechXml.StopEnclosingTextCommand(),
-			"t"
+			"t",
 		])
 		self.assertEqual(xml, '<say-as>c</say-as>t')
 
@@ -245,17 +245,18 @@ class TestSsmlConverter(unittest.TestCase):
 			IndexCommand(1),
 			"c",
 			CharacterModeCommand(False),
-			PhonemeCommand("phIpa", text="phText")
+			PhonemeCommand("phIpa", text="phText"),
 		])
-		self.assertEqual(xml,
-			'<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
-			't1'
-			'<prosody pitch="200%" volume="200%">t2</prosody>'
-			'<prosody volume="200%"><voice xml:lang="de-DE">'
-			'<mark name="1"/><say-as interpret-as="characters">c</say-as>'
-			'<phoneme alphabet="ipa" ph="phIpa">phText</phoneme>'
-			'</voice></prosody></speak>'
-		)
+		self.assertEqual(
+      xml,
+       '<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
+       't1'
+       '<prosody pitch="200%" volume="200%">t2</prosody>'
+       '<prosody volume="200%"><voice xml:lang="de-DE">'
+       '<mark name="1"/><say-as interpret-as="characters">c</say-as>'
+       '<phoneme alphabet="ipa" ph="phIpa">phText</phoneme>'
+       '</voice></prosody></speak>',
+  )
 
 
 class TestSsmlParser(unittest.TestCase):

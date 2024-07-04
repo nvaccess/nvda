@@ -234,15 +234,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				rects.append(
 					locationHelper.RectLTWH.fromCollection(
 						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
-						getLocationFromOffset(inclusiveLineEnd)
-					)
+						getLocationFromOffset(inclusiveLineEnd),
+					),
 				)
 				offset = inclusiveLineEnd + 1
 		else:
 			rects.append(
 				locationHelper.RectLTWH.fromCollection(
-					startLocation
-				)
+					startLocation,
+				),
 			)
 		intersectedRects = []
 		for rect in rects:
@@ -344,7 +344,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			uniscribeLineLength,
 			relOffset,
 			ctypes.byref(relStart),
-			ctypes.byref(relEnd)
+			ctypes.byref(relEnd),
 		):
 			relStart = relStart.value
 			relEnd = min(lineLength, relEnd.value)

@@ -25,7 +25,7 @@ def __getattr__(attrName: str) -> Any:
 			log.warning(
 				"speechDictHandler.dictFormatUpgrade.speechDictsPath is deprecated, "
 				"instead use NVDAState.WritePaths.speechDictsDir",
-				stack_info=True
+				stack_info=True,
 			)
 			return WritePaths.speechDictsDir
 
@@ -33,7 +33,7 @@ def __getattr__(attrName: str) -> Any:
 			log.warning(
 				"speechDictHandler.dictFormatUpgrade.voiceDictsPath is deprecated, "
 				"instead use NVDAState.WritePaths.voiceDictsDir",
-				stack_info=True
+				stack_info=True,
 			)
 			return WritePaths.voiceDictsDir
 
@@ -41,7 +41,7 @@ def __getattr__(attrName: str) -> Any:
 			log.warning(
 				"speechDictHandler.dictFormatUpgrade.voiceDictsBackupPath is deprecated, "
 				"instead use NVDAState.WritePaths.voiceDictsBackupDir",
-				stack_info=True
+				stack_info=True,
 			)
 			return WritePaths.voiceDictsBackupDir
 
@@ -55,8 +55,8 @@ def createVoiceDictFileName(synthName, voiceName):
 	fileNameFormat = u"{synth}-{voice}.dic"
 	return fileNameFormat.format(
 			synth = synthName,
-			voice = api.filterFileName(voiceName)
-			)
+			voice = api.filterFileName(voiceName),
+ )
 
 def doAnyUpgrades(synth):
 	""" Do any upgrades required for the synth passed in.
@@ -105,7 +105,7 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 		# dicts diectory
 		voiceDictGlob = os.path.join(
 			WritePaths.speechDictsDir,
-			"{synthName}*".format(synthName=synthName)
+			"{synthName}*".format(synthName=synthName),
 		)
 		log.debug("voiceDictGlob: %s"%voiceDictGlob)
 
@@ -122,11 +122,13 @@ def _doSynthVoiceDictBackupAndMove(synthName, oldFileNameToNewFileNameList=None)
 			if oldFileNameToNewFileNameList:
 				for oldFname, newFname in oldFileNameToNewFileNameList:
 					if oldFname == actualBasename:
-						log.debug("renaming {} to {} and moving to {}".format(
-							actualPath,
-							newFname,
-							newDictPath
-							))
+						log.debug(
+          "renaming {} to {} and moving to {}".format(
+          actualPath,
+          newFname,
+          newDictPath,
+          ),
+      )
 						renameTo = newFname
 						break
 			shutil.move(actualPath, os.path.join(newDictPath, renameTo))
@@ -137,8 +139,8 @@ def _doEspeakDictUpgrade():
 		for ID, (oldName, newName) in espeakNameChanges.items():
 			yield (
 					createVoiceDictFileName(synthName, oldName),
-					createVoiceDictFileName(synthName, newName)
-					)
+					createVoiceDictFileName(synthName, newName),
+   )
 	_doSynthVoiceDictBackupAndMove(synthName, list(getNextVoice()))
 
 # the ID maped to old and new names for voices in espeak-ng

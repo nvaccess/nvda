@@ -53,7 +53,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 	"""
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
-		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion",
 	) as currentVersion:
 		# Version 20H2 and later where a separate display version string is used.
 		try:
@@ -64,7 +64,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			except OSError:
 				raise RuntimeError(
-					"Release name is not recorded in Windows Registry on this version of Windows"
+					"Release name is not recorded in Windows Registry on this version of Windows",
 				) from None
 	return releaseId
 
@@ -85,7 +85,7 @@ class WinVersion(object):
 			releaseName: str | None = None,
 			servicePack: str = "",
 			productType: str = "",
-			processorArchitecture: str = ""
+			processorArchitecture: str = "",
 	):
 		self.major = major
 		self.minor = minor
@@ -182,7 +182,7 @@ def getWinVer():
 		if WinVersion(
 			major=winVer.major,
 			minor=winVer.minor,
-			build=winVer.build
+			build=winVer.build,
 		) >= WIN11:
 			releaseName = f"Windows 11 {_getRunningVersionNameFromWinReg()}"
 		else:
@@ -196,7 +196,7 @@ def getWinVer():
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
-		processorArchitecture=platform.machine()
+		processorArchitecture=platform.machine(),
 	)
 
 
@@ -222,7 +222,7 @@ if NVDAState._allowDeprecatedAPI():
 		log.debugWarning(
 			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable, "
 			"use visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return True
 

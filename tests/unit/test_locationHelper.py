@@ -74,38 +74,42 @@ class TestRectUtilities(unittest.TestCase):
 	def test_collection(self):
 		"""Tests whether a collection of several rectangle and point types convert to the expected L{RectLTRB}."""
 		rect=RectLTRB(left=10, top=15, right=500, bottom=1000)
-		self.assertEqual(RectLTRB.fromCollection(
-			rect.topLeft,
-			rect.bottomRight,
-			rect.center,
-			Point(15, 15),
-			Point(20, 20),
-			Point(50, 50),
-			Point(400, 400),
-			POINT(x=15, y=15),
-			POINT(x=20, y=20),
-			POINT(x=50, y=50),
-			POINT(x=400, y=400),
-			RectLTRB(left=450, top=450, right=490, bottom=990),
-			RECT(450, 450, 490, 990)
-		), rect)
+		self.assertEqual(
+      RectLTRB.fromCollection(
+       rect.topLeft,
+       rect.bottomRight,
+       rect.center,
+       Point(15, 15),
+       Point(20, 20),
+       Point(50, 50),
+       Point(400, 400),
+       POINT(x=15, y=15),
+       POINT(x=20, y=20),
+       POINT(x=50, y=50),
+       POINT(x=400, y=400),
+       RectLTRB(left=450, top=450, right=490, bottom=990),
+       RECT(450, 450, 490, 990),
+      ), rect,
+  )
 
 		location=RectLTWH(left=10, top=15, width=500, height=1000)
-		self.assertEqual(RectLTWH.fromCollection(
-			location.topLeft,
-			location.bottomRight,
-			location.center,
-			Point(15, 15),
-			Point(20, 20),
-			Point(50, 50),
-			Point(400, 400),
-			POINT(x=15, y=15),
-			POINT(x=20, y=20),
-			POINT(x=50, y=50),
-			POINT(x=400, y=400),
-			RectLTRB(left=450, top=450, right=505, bottom=1010),
-			RECT(450, 450, 490, 990)
-		), location)
+		self.assertEqual(
+      RectLTWH.fromCollection(
+       location.topLeft,
+       location.bottomRight,
+       location.center,
+       Point(15, 15),
+       Point(20, 20),
+       Point(50, 50),
+       Point(400, 400),
+       POINT(x=15, y=15),
+       POINT(x=20, y=20),
+       POINT(x=50, y=50),
+       POINT(x=400, y=400),
+       RectLTRB(left=450, top=450, right=505, bottom=1010),
+       RECT(450, 450, 490, 990),
+      ), location,
+  )
 
 	def test_fromFloatCollection(self):
 		self.assertEqual(RectLTRB(left=10, top=10, right=20, bottom=20), RectLTRB.fromFloatCollection(10.0, 10.0, 20.0, 20.0))

@@ -61,7 +61,7 @@ class SysListViewItem(ListItem):
 				try:
 					columnHeaderItems = e.getCachedPropertyValueEx(
 						UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId,
-						False
+						False,
 					)
 				except COMError:
 					log.debugWarning("Couldn't fetch column header items", exc_info=True)
@@ -89,11 +89,11 @@ class SysListViewItem(ListItem):
 		childCacheRequest.addProperty(UIAHandler.UIA.UIA_GridItemRowPropertyId)
 		element = UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(
 			self.UIAElement,
-			childCacheRequest
+			childCacheRequest,
 		)
 		val = element.getCachedPropertyValueEx(
 			UIAHandler.UIA.UIA_GridItemRowPropertyId,
-			True
+			True,
 		)
 		if val == UIAHandler.handler.reservedNotSupportedValue:
 			return super().indexInParent

@@ -75,7 +75,7 @@ FilterValueT = TypeVar("FilterValueT")
 
 class Filter(
 		HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
-		Generic[FilterValueT]
+		Generic[FilterValueT],
 ):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.

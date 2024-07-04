@@ -251,9 +251,11 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 		# and instance methods are meant to be generated on retrieval anyway.
 		func = getattr(self.__class__, scriptAttrName, None)
 		if not func:
-			raise LookupError("No such script on class {className}. Couldn't find attribute: {scriptAttrName}".format(
-				className=self.__class__.__name__, scriptAttrName=scriptAttrName
-			))
+			raise LookupError(
+       "No such script on class {className}. Couldn't find attribute: {scriptAttrName}".format(
+        className=self.__class__.__name__, scriptAttrName=scriptAttrName,
+       ),
+   )
 		# Import late to avoid circular import.
 		import inputCore
 		self._gestureMap[inputCore.normalizeGestureIdentifier(gestureIdentifier)] = func
@@ -307,10 +309,12 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 			except KeyError:
 				continue
 			except AttributeError:
-				log.exception((
-					"Base class may not have been initialized."
-					f"\nMRO={self.__class__.__mro__}"
-				) if not hasattr(self, "_gestureMap") else None)
+				log.exception(
+        (
+         "Base class may not have been initialized."
+         f"\nMRO={self.__class__.__mro__}"
+        ) if not hasattr(self, "_gestureMap") else None,
+    )
 				return None
 		else:
 			return None

@@ -326,9 +326,10 @@ class CalendarView(IAccessible):
 			startText="%s %s"%(startDateText,startText)
 		CalendarView._lastStartDate=startDate
 		if endDate!=startDate:
-			if ((startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
-				(endDate - startDate).total_seconds()==SECONDS_PER_DAY
-			):
+			if (
+       (startTime.hour, startTime.minute, startTime.second) == (0, 0, 0) and
+        (endDate - startDate).total_seconds()==SECONDS_PER_DAY
+   ):
 				# Translators: a message reporting the date of a all day Outlook calendar entry
 				return _("{date} (all day)").format(date=startDateText)
 			endText="%s %s"%(winKernel.GetDateFormatEx(winKernel.LOCALE_NAME_USER_DEFAULT, winKernel.DATE_LONGDATE, endTime, None),endText)
@@ -349,7 +350,7 @@ class CalendarView(IAccessible):
 			languageHandler.LOCALE_USER_DEFAULT,
 			languageHandler.LOCALE.SLIST,
 			separatorBuf,
-			bufLength
+			bufLength,
 		) == 0:
 			raise ctypes.WinError()
 		categoriesCount = len(categories.split(f"{separatorBuf.value} "))
@@ -401,25 +402,25 @@ class CalendarView(IAccessible):
 					winKernel.LOCALE_NAME_USER_DEFAULT,
 					winKernel.DATE_LONGDATE,
 					selectedStartTime,
-					None
+					None,
 				)
 				startTime = winKernel.GetTimeFormatEx(
 					winKernel.LOCALE_NAME_USER_DEFAULT,
 					winKernel.TIME_NOSECONDS,
 					selectedStartTime,
-					None
+					None,
 				)
 				endDate = winKernel.GetDateFormatEx(
 					winKernel.LOCALE_NAME_USER_DEFAULT,
 					winKernel.DATE_LONGDATE,
 					selectedEndTime,
-					None
+					None,
 				)
 				endTime = winKernel.GetTimeFormatEx(
 					winKernel.LOCALE_NAME_USER_DEFAULT,
 					winKernel.TIME_NOSECONDS,
 					selectedEndTime,
-					None
+					None,
 				)
 				query = f'[Start] < "{endDate} {endTime}" And [End] > "{startDate} {startTime}"'
 				i=e.currentFolder.items
@@ -467,7 +468,7 @@ class UIAGridRow(RowWithFakeNavigation,UIA):
 					self.windowThreadID,
 					mapiObject,
 					PR_LAST_VERB_EXECUTED,
-					ctypes.byref(v)
+					ctypes.byref(v),
 				)
 				if res==S_OK:
 					verbLabel=executedVerbLabels.get(v.value,None)
@@ -610,7 +611,7 @@ class MailViewerTreeInterceptor(WordDocumentTreeInterceptor):
 			self,
 			kind: str,
 			direction: documentBase._Movement = documentBase._Movement.NEXT,
-			pos: textInfos.TextInfo | None = None
+			pos: textInfos.TextInfo | None = None,
 	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError("Outlook is not supported due to performance - #16408")
 

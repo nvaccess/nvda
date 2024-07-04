@@ -80,7 +80,7 @@ def __getattr__(attrName: str) -> Any:
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
 			f"{attrName} is deprecated. "
-			f"Use bdDetect.DeviceType.{replacementSymbol.name} instead. "
+			f"Use bdDetect.DeviceType.{replacementSymbol.name} instead. ",
 		)
 		return replacementSymbol
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -130,7 +130,7 @@ def _isDebug():
 
 
 def getDriversForConnectedUsbDevices(
-		limitToDevices: Optional[List[str]] = None
+		limitToDevices: Optional[List[str]] = None,
 ) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for connected USB devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
@@ -199,7 +199,7 @@ def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 
 
 def getDriversForPossibleBluetoothDevices(
-		limitToDevices: Optional[List[str]] = None
+		limitToDevices: Optional[List[str]] = None,
 ) -> Iterator[Tuple[str, DeviceMatch]]:
 	"""Get any matching drivers for possible Bluetooth devices.
 	Looks for (and yields) custom drivers first, then considers if the device is may be compatible with the
@@ -289,10 +289,12 @@ class _DeviceInfoFetcher(AutoPropertyObject):
 		for port in self.comPorts:
 			if (usbId := port.get("usbID")) is None:
 				continue
-			if (usbDict := next(
-				(d for d in self.usbDevices if d.get("usbID") == usbId),
-				None
-			)) is not None:
+			if (
+       usbDict := next(
+        (d for d in self.usbDevices if d.get("usbID") == usbId),
+        None,
+       )
+   ) is not None:
 				comPorts.append(port | usbDict)
 		return comPorts
 
@@ -328,7 +330,7 @@ class _Detector:
 			self,
 			usb: bool = False,
 			bluetooth: bool = False,
-			limitToDevices: Optional[List[str]] = None
+			limitToDevices: Optional[List[str]] = None,
 	):
 		"""Queues a scan for devices.
 		If a scan is already in progress, a new scan will be queued after the current scan.
@@ -399,7 +401,7 @@ class _Detector:
 			self,
 			usb: bool,
 			bluetooth: bool,
-			limitToDevices: Optional[List[str]]
+			limitToDevices: Optional[List[str]],
 	):
 		"""Performs the actual background scan.
 		this function should be run on a background thread.
@@ -486,7 +488,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		(
 			DeviceMatch(DeviceType.SERIAL, port["usbID"], port["port"], port)
 			for port in deviceInfoFetcher.usbComPorts
-		)
+		),
 	)
 
 	fallbackMatches: list[DeviceMatch] = []
@@ -545,10 +547,14 @@ def driverHasPossibleDevices(driver: str) -> bool:
 	@return: C{True} if there are possible devices, C{False} otherwise.
 	@raise LookupError: If there is no detection data for this driver.
 	"""
-	return bool(next(itertools.chain(
-		getConnectedUsbDevicesForDriver(driver),
-		getPossibleBluetoothDevicesForDriver(driver)
-	), None))
+	return bool(
+     next(
+         itertools.chain(
+          getConnectedUsbDevicesForDriver(driver),
+          getPossibleBluetoothDevicesForDriver(driver),
+         ), None,
+     ),
+ )
 
 
 def driverSupportsAutoDetection(driver: str) -> bool:
@@ -572,16 +578,18 @@ def driverIsEnabledForAutoDetection(driver: str) -> bool:
 
 
 def getSupportedBrailleDisplayDrivers(
-		onlyEnabled: bool = False
+		onlyEnabled: bool = False,
 ) -> Generator[Type["braille.BrailleDisplayDriver"], Any, Any]:
-	return braille.getDisplayDrivers(lambda d: (
-		d.isThreadSafe
-		and d.supportsAutomaticDetection
-		and (
-			not onlyEnabled
-			or d.name not in config.conf["braille"]["auto"]["excludedDisplays"]
-		)
-	))
+	return braille.getDisplayDrivers(
+     lambda d: (
+      d.isThreadSafe
+      and d.supportsAutomaticDetection
+      and (
+       not onlyEnabled
+       or d.name not in config.conf["braille"]["auto"]["excludedDisplays"]
+      )
+     ),
+ )
 
 
 def getBrailleDisplayDriversEnabledForDetection() -> Generator[str, Any, Any]:
@@ -652,7 +660,7 @@ class DriverRegistrar:
 		if malformedIds:
 			raise ValueError(
 				f"Invalid IDs provided for driver {self._driver!r}, type {type!r}: "
-				f"{', '.join(malformedIds)}"
+				f"{', '.join(malformedIds)}",
 			)
 		if useAsFallBack:
 			fallBackDevices.update((self._driver, type, id) for id in ids)
@@ -673,7 +681,7 @@ class DriverRegistrar:
 	def addDeviceScanner(
 			self,
 			scanFunc: Callable[..., Iterable[Tuple[str, DeviceMatch]]],
-			moveToStart: bool = False
+			moveToStart: bool = False,
 	):
 		"""Register a callable to scan devices.
 		This adds a handler to L{scanForDevices}.

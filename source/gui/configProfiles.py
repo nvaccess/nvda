@@ -15,7 +15,7 @@ import gui.contextHelp
 
 class ProfilesDialog(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	shouldSuspendConfigProfileTriggers = True
 	helpId = "ConfigurationProfiles"
@@ -49,7 +49,7 @@ class ProfilesDialog(
 		changeProfilesSizer = wx.BoxSizer(wx.VERTICAL)
 		item = self.profileList = wx.ListBox(
 			profilesListBox,
-			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames]
+			choices=[self.getProfileDisplay(name, includeStates=True) for name in self.profileNames],
 		)
 		self.bindHelpEvent("ProfilesBasicManagement", self.profileList)
 		item.Bind(wx.EVT_LISTBOX, self.onProfileListChoice)
@@ -172,8 +172,10 @@ class ProfilesDialog(
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when activating a configuration profile fails.
-			gui.messageBox(_("Error activating profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("Error activating profile."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			return
 		self.Close()
 
@@ -190,7 +192,7 @@ class ProfilesDialog(
 			_("The profile {} will be permanently deleted. This action cannot be undone.").format(name),
 			# Translators: The title of the confirmation dialog for deletion of a configuration profile.
 			_("Confirm Deletion"),
-			wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION, self
+			wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_QUESTION, self,
 		) != wx.OK:
 			return
 		try:
@@ -198,8 +200,10 @@ class ProfilesDialog(
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when deleting a configuration profile fails.
-			gui.messageBox(_("Error deleting profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("Error deleting profile."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			return
 		del self.profileNames[index]
 		self.profileList.Delete(index)
@@ -237,7 +241,7 @@ class ProfilesDialog(
 				_("New name:"),
 				# Translators: The title of the dialog to rename a configuration profile.
 				caption=_("Rename Profile"),
-				value=oldName
+				value=oldName,
 			) as d:
 				if d.ShowModal() == wx.ID_CANCEL:
 					return
@@ -251,7 +255,7 @@ class ProfilesDialog(
 				# Translators: The title of an error message dialog.
 				caption=_("Error"),
 				style=wx.ICON_ERROR,
-				parent=self
+				parent=self,
 			)
 		newName = api.filterFileName(newName)
 		try:
@@ -259,13 +263,17 @@ class ProfilesDialog(
 		except ValueError:
 			# Translators: An error displayed when renaming a configuration profile
 			# and a profile with the new name already exists.
-			gui.messageBox(_("That profile already exists. Please choose a different name."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("That profile already exists. Please choose a different name."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			return
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
-			gui.messageBox(_("Error renaming profile."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("Error renaming profile."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			return
 		self.profileNames[index] = newName
 		self.profileList.SetString(index, self.getProfileDisplay(newName, includeStates=True))
@@ -278,11 +286,13 @@ class ProfilesDialog(
 
 	def getSimpleTriggers(self):
 		# Yields (spec, display, manualEdit)
-		yield ("app:%s" % self.currentAppName,
-			# Translators: Displayed for the configuration profile trigger for the current application.
-			# %s is replaced by the application executable name.
-			_("Current application (%s)") % self.currentAppName,
-			False)
+		yield (
+      "app:%s" % self.currentAppName,
+      # Translators: Displayed for the configuration profile trigger for the current application.
+      # %s is replaced by the application executable name.
+      _("Current application (%s)") % self.currentAppName,
+      False,
+  )
 		# Translators: Displayed for the configuration profile trigger for say all.
 		yield "sayAll", _("Say all"), True
 
@@ -301,8 +311,10 @@ class ProfilesDialog(
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when saving configuration profile triggers fails.
-			gui.messageBox(_("Error saving configuration profile triggers - probably read only file system."),
-				_("Error"), wx.OK | wx.ICON_ERROR, parent=parentWindow)
+			gui.messageBox(
+       _("Error saving configuration profile triggers - probably read only file system."),
+       _("Error"), wx.OK | wx.ICON_ERROR, parent=parentWindow,
+   )
 
 class TriggerInfo(object):
 	__slots__ = ("spec", "display", "profile")
@@ -315,7 +327,7 @@ class TriggerInfo(object):
 
 class TriggersDialog(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ConfigProfileTriggers"
 
@@ -379,8 +391,10 @@ class TriggersDialog(
 		try:
 			self.profileList.Selection = self.Parent.profileNames.index(trig.profile)
 		except ValueError:
-			log.error("Trigger %s: invalid profile %s"
-				% (trig.spec, trig.profile))
+			log.error(
+       "Trigger %s: invalid profile %s"
+       % (trig.spec, trig.profile),
+   )
 			self.profileList.Selection = 0
 			trig.profile = None
 
@@ -406,7 +420,7 @@ class TriggersDialog(
 
 class NewProfileDialog(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "ProfilesCreating"
 
@@ -425,8 +439,12 @@ class NewProfileDialog(
 		# in the new configuration profile dialog.
 		self.triggers = triggers = [(None, _("Manual activation"), True)]
 		triggers.extend(parent.getSimpleTriggers())
-		self.triggerChoice = sHelper.addItem(wx.RadioBox(self, label=_("Use this profile for:"),
-			choices=[trig[1] for trig in triggers]))
+		self.triggerChoice = sHelper.addItem(
+      wx.RadioBox(
+          self, label=_("Use this profile for:"),
+          choices=[trig[1] for trig in triggers],
+      ),
+  )
 		self.triggerChoice.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
@@ -449,10 +467,12 @@ class NewProfileDialog(
 		if spec in confTrigs and gui.messageBox(
 			# Translators: The confirmation prompt presented when creating a new configuration profile
 			# and the selected trigger is already associated.
-			_("This trigger is already associated with another profile. "
-				"If you continue, it will be removed from that profile and associated with this one.\n"
-				"Are you sure you want to continue?"),
-			_("Warning"), wx.ICON_WARNING | wx.YES | wx.NO, self
+			_(
+       "This trigger is already associated with another profile. "
+       "If you continue, it will be removed from that profile and associated with this one.\n"
+       "Are you sure you want to continue?",
+   ),
+			_("Warning"), wx.ICON_WARNING | wx.YES | wx.NO, self,
 		) == wx.NO:
 			return
 
@@ -465,7 +485,7 @@ class NewProfileDialog(
 				# Translators: The title of an error message dialog.
 				caption=_("Error"),
 				style=wx.ICON_ERROR,
-				parent=self
+				parent=self,
 			)
 			self.profileName.SetFocus()
 			return
@@ -474,14 +494,18 @@ class NewProfileDialog(
 			config.conf.createProfile(name)
 		except ValueError:
 			# Translators: An error displayed when the user attempts to create a configuration profile which already exists.
-			gui.messageBox(_("That profile already exists. Please choose a different name."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("That profile already exists. Please choose a different name."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			return
 		except:  # noqa: E722
 			log.debugWarning("", exc_info=True)
 			# Translators: An error displayed when creating a configuration profile fails.
-			gui.messageBox(_("Error creating profile - probably read only file system."),
-				_("Error"), wx.OK | wx.ICON_ERROR, self)
+			gui.messageBox(
+       _("Error creating profile - probably read only file system."),
+       _("Error"), wx.OK | wx.ICON_ERROR, self,
+   )
 			self.onCancel(evt)
 			return
 		if spec:
@@ -493,11 +517,13 @@ class NewProfileDialog(
 			if gui.messageBox(
 				# Translators: The prompt asking the user whether they wish to
 				# manually activate a configuration profile that has just been created.
-				_("To edit this profile, you will need to manually activate it. "
-					"Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
-					"Do you wish to manually activate it now?"),
+				_(
+        "To edit this profile, you will need to manually activate it. "
+        "Once you have finished editing, you will need to manually deactivate it to resume normal usage.\n"
+        "Do you wish to manually activate it now?",
+    ),
 				# Translators: The title of the confirmation dialog for manual activation of a created profile.
-				_("Manual Activation"), wx.YES | wx.NO | wx.ICON_QUESTION, self
+				_("Manual Activation"), wx.YES | wx.NO | wx.ICON_QUESTION, self,
 			) == wx.YES:
 				config.conf.manualActivateProfile(name)
 			else:

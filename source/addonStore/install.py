@@ -41,8 +41,8 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 				"addonStore",
 				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
 				# The %s will be replaced with the path to the add-on that could not be opened.
-				"Failed to open add-on package file at {filePath} - missing file or invalid file format"
-			).format(filePath=addonPath)
+				"Failed to open add-on package file at {filePath} - missing file or invalid file format",
+			).format(filePath=addonPath),
 		)
 
 	if not bundle.isCompatible and not (
@@ -55,8 +55,8 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 				"addonStore",
 				# Translators: The message displayed when an add-on is not supported by this version of NVDA.
 				# The %s will be replaced with the path to the add-on that is not supported.
-				"Add-on not supported %s"
-			) % addonPath
+				"Add-on not supported %s",
+			) % addonPath,
 		)
 	return bundle
 
@@ -94,8 +94,8 @@ def installAddon(addonPath: PathLike) -> None:
 				"addonStore",
 				# Translators: The message displayed when an error occurs when installing an add-on package.
 				# The %s will be replaced with the path to the add-on that could not be installed.
-				"Failed to install add-on from %s"
-			) % addonPath
+				"Failed to install add-on from %s",
+			) % addonPath,
 		)
 	finally:
 		if addonObj is not None:

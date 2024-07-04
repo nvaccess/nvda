@@ -150,7 +150,7 @@ class HeadingUIATextInfoQuickNavItem(browseMode.TextInfoQuickNavItem):
 			document: UIA,
 			position: UIATextInfo,
 			label: str | None = None,
-			level: int = 0
+			level: int = 0,
 	):
 		super(HeadingUIATextInfoQuickNavItem,self).__init__(itemType,document,position)
 		self.level=level
@@ -170,7 +170,7 @@ def UIAHeadingQuicknavIterator(
 		itemType: str,
 		document: "UIABrowseModeDocument",
 		position: Optional["UIABrowseModeDocumentTextInfo"],
-		direction: str = "next"
+		direction: str = "next",
 ):
 	reverse = bool(direction == "previous")
 	itemTypeBaseLen = len('heading')
@@ -449,18 +449,18 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition = createUIAMultiPropertyCondition(
 				{
 					UIAHandler.UIA.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_ListControlTypeId,
-					UIAHandler.UIA.UIA_IsKeyboardFocusablePropertyId: False
+					UIAHandler.UIA.UIA_IsKeyboardFocusablePropertyId: False,
 				},
 				{
 					UIAHandler.UIA.UIA_ControlTypePropertyId: [
 						UIAHandler.UIA.UIA_TableControlTypeId,
-						UIAHandler.UIA.UIA_DataGridControlTypeId
-					]
+						UIAHandler.UIA.UIA_DataGridControlTypeId,
+					],
 				},
 				{
 					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
-					UIAHandler.UIA_AriaRolePropertyId: ["article"]
-				}
+					UIAHandler.UIA_AriaRolePropertyId: ["article"],
+				},
 			)
 			return UIAControlQuicknavIterator(nodeType,self,pos,condition,direction)
 		elif nodeType=="edit":
@@ -470,11 +470,11 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition = createUIAMultiPropertyCondition(
 				{
 					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_EditControlTypeId,
-					UIAHandler.UIA_ValueIsReadOnlyPropertyId: False
+					UIAHandler.UIA_ValueIsReadOnlyPropertyId: False,
 				},
 				{
 					UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_ListControlTypeId,
-					UIAHandler.UIA_IsKeyboardFocusablePropertyId: True
+					UIAHandler.UIA_IsKeyboardFocusablePropertyId: True,
 				},
 				{
 					UIAHandler.UIA_ControlTypePropertyId: [
@@ -483,7 +483,7 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 						UIAHandler.UIA_ComboBoxControlTypeId,
 						UIAHandler.UIA_RadioButtonControlTypeId,
 						UIAHandler.UIA_TabItemControlTypeId,
-					]
+					],
 				},
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
@@ -491,39 +491,39 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 			condition = UIAHandler.handler.clientObject.createNotCondition(
 				UIAHandler.handler.clientObject.createPropertyCondition(
 					UIAHandler.UIA.UIA_LandmarkTypePropertyId,
-					0
-				)
+					0,
+				),
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "article":
 			condition = createUIAMultiPropertyCondition({
 				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA.UIA_GroupControlTypeId,
-				UIAHandler.UIA_AriaRolePropertyId: ["article"]
+				UIAHandler.UIA_AriaRolePropertyId: ["article"],
 			})
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "grouping":
 			condition = UIAHandler.handler.clientObject.CreateAndConditionFromArray([
 				UIAHandler.handler.clientObject.createPropertyCondition(
 					UIAHandler.UIA.UIA_ControlTypePropertyId,
-					UIAHandler.UIA.UIA_GroupControlTypeId
+					UIAHandler.UIA.UIA_GroupControlTypeId,
 				),
 				UIAHandler.handler.clientObject.createNotCondition(
 					UIAHandler.handler.clientObject.createPropertyCondition(
 						UIAHandler.UIA.UIA_NamePropertyId,
-						""
-					)
-				)
+						"",
+					),
+				),
 			])
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "tab":
 			condition = UIAHandler.handler.clientObject.createPropertyCondition(
-				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId
+				UIAHandler.UIA_ControlTypePropertyId, UIAHandler.UIA_TabItemControlTypeId,
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 		elif nodeType == "progressBar":
 			condition = UIAHandler.handler.clientObject.createPropertyCondition(
 				UIAHandler.UIA_ControlTypePropertyId,
-				UIAHandler.UIA_ProgressBarControlTypeId
+				UIAHandler.UIA_ProgressBarControlTypeId,
 			)
 			return UIAControlQuicknavIterator(nodeType, self, pos, condition, direction)
 
@@ -551,13 +551,13 @@ class UIABrowseModeDocument(UIADocumentWithTableNavigation,browseMode.BrowseMode
 		runtimeID=VARIANT()
 		try:
 			self.rootNVDAObject.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
-				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID)
+				UIAHandler.UIA_RuntimeIdPropertyId, byref(runtimeID),
 			)
 		except COMError:
 			runtimeID = VARIANT()
 		if runtimeID.vt == VT_EMPTY:
 			log.debugWarning(
-				"Could not get runtimeID of document. Most likely document is dead."
+				"Could not get runtimeID of document. Most likely document is dead.",
 			)
 			return False
 		UIACondition=UIAHandler.handler.clientObject.createPropertyCondition(UIAHandler.UIA_RuntimeIdPropertyId,runtimeID)

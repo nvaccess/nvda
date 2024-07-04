@@ -26,7 +26,7 @@ from ctypes import (
 	CFUNCTYPE,
 	WinError,
 	create_string_buffer,
-	create_unicode_buffer
+	create_unicode_buffer,
 )
 from ctypes.wintypes import BOOL, HWND, WCHAR
 import time
@@ -339,7 +339,7 @@ def _fixBridgeFuncs():
 		JOBJECT64,
 		POINTER(AccessibleTextRectInfo),
 		jint,
-		errcheck=True
+		errcheck=True,
 	)
 	_fixBridgeFunc(BOOL,'getAccessibleTextLineBounds',c_long,JOBJECT64,jint,POINTER(jint),POINTER(jint),errcheck=True)
 	_fixBridgeFunc(BOOL,'getAccessibleTextRange',c_long,JOBJECT64,jint,jint,POINTER(c_char),c_short,errcheck=True)
@@ -839,7 +839,8 @@ def initialize():
 	global bridgeDll, isRunning
 	try:
 		bridgeDll = cdll.LoadLibrary(
-			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"))
+			os.path.join(NVDAHelper.versionedLibPath, "windowsaccessbridge-32.dll"),
+  )
 	except WindowsError:
 		raise NotImplementedError("dll not available")
 	_fixBridgeFuncs()
@@ -900,7 +901,7 @@ JABKeyControlCodesToLabels = {
 	AccessibleVK.HOME: "home",
 	AccessibleVK.END: "end",
 	AccessibleVK.PAGE_UP: "pageup",
-	AccessibleVK.PAGE_DOWN: "pagedown"
+	AccessibleVK.PAGE_DOWN: "pagedown",
 }
 
 # Do not include AccessibleKeystroke.FKEY_KEYSTROKE and AccessibleKeystroke.CONTROLCODE
@@ -913,7 +914,7 @@ JABKeyModifiersToLabels = {
 	AccessibleKeystroke.ALT: "alt",
 	AccessibleKeystroke.META: "meta",
 	AccessibleKeystroke.CONTROL: "control",
-	AccessibleKeystroke.SHIFT: "shift"
+	AccessibleKeystroke.SHIFT: "shift",
 }
 
 

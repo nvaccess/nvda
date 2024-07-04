@@ -476,7 +476,7 @@ class WordDocumentChartQuickNavItem(WordDocumentCollectionQuickNavItem):
 		return u"{text}".format(text=text)
 
 	def moveTo(self):
-		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject )
+		chartNVDAObj = _msOfficeChart.OfficeChart(windowHandle= self.document.rootNVDAObject.windowHandle, officeApplicationObject=self.rangeObj.Document.Application, officeChartObject=self.collectionItem.Chart , initialDocument  = self.document.rootNVDAObject)
 		eventHandler.queueEvent("gainFocus",chartNVDAObj)
 
 class WordDocumentSpellingErrorQuickNavItem(WordDocumentCollectionQuickNavItem):
@@ -547,10 +547,11 @@ class WinWordCollectionQuicknavIterator(object):
 			try:
 				item=self.quickNavItemClass(self.itemType,self.document,collectionItem)
 			except COMError:
-				message = ("Error iterating over item with "
-					"type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
-					"\nThis could be caused by an issue with some element within or a corruption of the word document."
-					).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
+				message = (
+        "Error iterating over item with "
+        "type: {type}, iteration direction: {dir}, total item count: {count}, item at index: {index}"
+        "\nThis could be caused by an issue with some element within or a corruption of the word document."
+    ).format(type=self.itemType, dir=self.direction, count=itemCount, index=index)
 				log.debugWarning(message ,exc_info=True)
 				continue
 			itemRange=item.rangeObj
@@ -572,7 +573,7 @@ class LinkWinWordCollectionQuicknavIterator(WinWordCollectionQuicknavIterator):
 		if t == FIELD_TYPE_REF:
 			fieldText = item.code.text.strip().split(' ')
 			# ensure that the text has a \\h in it
-			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) )
+			return any( fieldText[i] == '\\h' for i in range(2, len(fieldText)))
 		return t == FIELD_TYPE_HYPERLINK
 
 
@@ -693,7 +694,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		newRng.End=newRng.End+1
 		if newRng.InlineShapes.Count >= 1:
 			if newRng.InlineShapes[1].Type==wdInlineShapeChart:
-				return eventHandler.queueEvent('gainFocus',_msOfficeChart.OfficeChart(windowHandle= self.obj.windowHandle, officeApplicationObject=self.obj.WinwordDocumentObject.Application, officeChartObject=newRng.InlineShapes[1].Chart , initialDocument = self.obj ))
+				return eventHandler.queueEvent('gainFocus',_msOfficeChart.OfficeChart(windowHandle= self.obj.windowHandle, officeApplicationObject=self.obj.WinwordDocumentObject.Application, officeChartObject=newRng.InlineShapes[1].Chart , initialDocument = self.obj))
 		# Handle activating links.
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange=self._rangeObj.duplicate
@@ -719,7 +720,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			# text will be something like ' REF _Ref457210120 \\h '
 			fieldText = field.code.text.strip().split(' ')
 			# the \\h field indicates that the field is a link
-			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText)) ):
+			if not any( fieldText[i] == '\\h' for i in range(2, len(fieldText))):
 				log.debugWarning("no \\h for field xref: %s" % field.code.text)
 				continue
 			bookmarkKey = fieldText[1] # we want the _Ref12345 part
@@ -783,7 +784,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None
+		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed: return []  # noqa: E701
 		if self.obj.ignoreFormatting:
@@ -916,7 +917,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field['line-spacing'] = pgettext(
 					'line spacing value',
 					# Translators: line spacing of exactly x point
-					"exactly {space:.1f} pt"
+					"exactly {space:.1f} pt",
 				).format(space=float(lineSpacingVal))
 			elif lineSpacingRule==wdLineSpaceAtLeast:
 				# Translators: line spacing of at least x point
@@ -1076,10 +1077,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		#units higher than character and word expand to contain the last text plus the insertion point offset in the document
 		#However move from a character before will incorrectly move to this offset which makes move/expand contridictory to each other
 		#Make sure that move fails if it lands on the final offset but the unit is bigger than character/word
-		if (direction>0 and endPoint!="end"
-			and unit not in (wdCharacter,wdWord) # moving by units of line or more
-			and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
-			):
+		if (
+      direction>0 and endPoint!="end"
+      and unit not in (wdCharacter,wdWord) # moving by units of line or more
+      and (_rangeObj.start+1) == self.obj.WinwordDocumentObject.range().end # character after the range start is the end of the document range
+  ):
 			return 0
 		return res
 
@@ -1256,10 +1258,10 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 			self,
 			kind: str,
 			direction: documentBase._Movement = documentBase._Movement.NEXT,
-			pos: textInfos.TextInfo | None = None
+			pos: textInfos.TextInfo | None = None,
 	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError(
-			"word textInfos are not supported due to multiple issues with them - #16569"
+			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
 
 	__gestures={
@@ -1428,7 +1430,7 @@ class WordDocument(Window):
 		margin = self.WinwordDocumentObject.PageSetup.LeftMargin
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
-			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent
+			lambda: self.WinwordSelectionObject.paragraphFormat.LeftIndent,
 		)
 		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
 		ui.message(msg)
@@ -1512,7 +1514,7 @@ class WordDocument(Window):
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
-			lambda: self.WinwordWindowObject.ActivePane.View.ShowAll
+			lambda: self.WinwordWindowObject.ActivePane.View.ShowAll,
 		)
 		if val:
 			# Translators: a message when toggling Display Nonprinting Characters in Microsoft word
@@ -1636,8 +1638,8 @@ class WordDocument(Window):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):
 			self.bindGesture("kb:alt+shift+home", "caret_changeSelection")
 			self.bindGesture("kb:alt+shift+end", "caret_changeSelection")
-			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection",)
-			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection",)
+			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection")
+			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection")
 
 	__gestures = {
 		"kb:control+[":"increaseDecreaseFontSize",
@@ -1693,14 +1695,15 @@ class WordDocument_WwN(WordDocument):
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
-	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
-		# Translators: The label of a radio button to select the type of element
-		# in the browse mode Elements List dialog.
-		("annotation", _("&Annotations")),
-		# Translators: The label of a radio button to select the type of element
-		# in the browse mode Elements List dialog.
-		("chart", _("&Charts")),
-		# Translators: The label of a radio button to select the type of element
-		# in the browse mode Elements List dialog.
-		("error", _("&Errors")),
-	)
+	ELEMENT_TYPES=(
+     browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+      # Translators: The label of a radio button to select the type of element
+      # in the browse mode Elements List dialog.
+      ("annotation", _("&Annotations")),
+      # Translators: The label of a radio button to select the type of element
+      # in the browse mode Elements List dialog.
+      ("chart", _("&Charts")),
+      # Translators: The label of a radio button to select the type of element
+      # in the browse mode Elements List dialog.
+      ("error", _("&Errors")),
+ )

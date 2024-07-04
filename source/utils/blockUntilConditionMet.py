@@ -34,9 +34,9 @@ def blockUntilConditionMet(
 		giveUpAfterSeconds: float,
 		shouldStopEvaluator: Callable[[GetValueResultT], bool] = lambda value: bool(value),
 		intervalBetweenSeconds: float = DEFAULT_INTERVAL_BETWEEN_EVAL_SECONDS,
-		) -> Tuple[
+) -> Tuple[
 EvaluatorWasMetT,  # Was evaluator met?
-Optional[GetValueResultT]  # None or the value when the evaluator was met
+Optional[GetValueResultT],  # None or the value when the evaluator was met
 ]:
 	"""Repeatedly tries to get a value up until a time limit expires.
 	Tries are separated by a time interval.

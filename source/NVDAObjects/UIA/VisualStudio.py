@@ -28,9 +28,11 @@ class IntelliSenseItem(UIA):
 		if api.setNavigatorObject(self, isFocus=True):
 			self.reportFocus()
 			# Display results as flash messages.
-			braille.handler.message(braille.getPropertiesBraille(
-				name=self.name, role=self.role, positionInfo=self.positionInfo, description=self.description
-			))
+			braille.handler.message(
+       braille.getPropertiesBraille(
+        name=self.name, role=self.role, positionInfo=self.positionInfo, description=self.description,
+       ),
+   )
 
 
 class IntelliSenseList(UIA):
@@ -50,7 +52,7 @@ class IntelliSenseLiveRegion(UIA):
 
 _INTELLISENSE_LIST_AUTOMATION_IDS = {
 	"listBoxCompletions",
-	"CompletionList"
+	"CompletionList",
 }
 
 

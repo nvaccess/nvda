@@ -29,7 +29,7 @@ specialCaseEvents = [
 	winUser.EVENT_SYSTEM_MENUSTART,
 	winUser.EVENT_SYSTEM_MENUEND,
 	winUser.EVENT_SYSTEM_MENUPOPUPSTART,
-	winUser.EVENT_SYSTEM_MENUPOPUPEND
+	winUser.EVENT_SYSTEM_MENUPOPUPEND,
 ]
 
 
@@ -78,14 +78,15 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			window=n, objectID=n, childID=n, threadID=n,
 		)
 		events = limiter.flushEvents()
-		actualEvents = [(
-			e[0],  # eventID
-			e[1],  # window
-		) for e in events
-		]
+		actualEvents = [
+      (
+       e[0],  # eventID
+       e[1],  # window
+      ) for e in events
+  ]
 		expectedEvents = [
 			(winUser.EVENT_SYSTEM_FOREGROUND, n),
-			(winUser.EVENT_SYSTEM_FOREGROUND, n)
+			(winUser.EVENT_SYSTEM_FOREGROUND, n),
 		]
 		self.assertEqual(expectedEvents, actualEvents)
 
@@ -186,7 +187,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		for n in range(2000):  # send many events, to saturate all limits.
 			eventId = specialCaseEvents[n % len(specialCaseEvents)]
 			limiter.addEvent(eventId, *allowedSource, threadID=0)
-		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource])
 
 		expected = [
 			# Two Foreground events, because they are added to multiple queues.
@@ -204,13 +205,13 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		# We have events from two unique objects:
 		# Window, objectID, childID
 		allowedSource = (1, 1, 1)
-		otherSource = (2, 2, 2,)
+		otherSource = (2, 2, 2)
 
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 		for n in range(50):  # send many value changed events
 			limiter.addEvent(winUser.EVENT_OBJECT_VALUECHANGE, *allowedSource, threadID=0)
 			limiter.addEvent(winUser.EVENT_OBJECT_VALUECHANGE, *otherSource, threadID=0)
-		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[allowedSource])
 		# only the most recent event of each object is kept, all previous duplicates are discarded
 		self.assertEqual(2, len(events))
 
@@ -219,7 +220,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 		"""
 		# We have events from two unique objects:
 		# Window, objectID, childID
-		source = (2, 2, 2,)
+		source = (2, 2, 2)
 
 		limiter = OrderedWinEventLimiter(maxFocusItems=4)
 
@@ -241,7 +242,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		events = limiter.flushEvents()
@@ -265,7 +266,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		events = limiter.flushEvents()
@@ -290,7 +291,7 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		# Note event type must differ from start canary to ensure they are not duplicates
@@ -319,13 +320,13 @@ class TestOrderedWinEventLimiter(unittest.TestCase):
 			eventId = nonSpecialCaseEvents[n % len(nonSpecialCaseEvents)]
 			# same thread, different object. Ensure there are no duplicates
 			# Window, objectID, childID
-			source = (2, 2, n,)
+			source = (2, 2, n)
 			limiter.addEvent(eventId, *source, threadID=0)
 
 		eventEndCanary = (winUser.EVENT_OBJECT_NAMECHANGE, *canaryObject)
 		limiter.addEvent(*eventEndCanary, threadID=0)
 
-		events = limiter.flushEvents(alwaysAllowedObjects=[canaryObject, ])
+		events = limiter.flushEvents(alwaysAllowedObjects=[canaryObject])
 		# only the most recent event of each object is kept, all previous duplicates are discarded
 		self.assertEqual(11, len(events))
 		self.assertIn(eventStartCanary, events)

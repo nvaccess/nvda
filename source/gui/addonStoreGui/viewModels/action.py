@@ -27,8 +27,8 @@ class _AddonAction(Generic[ActionTargetT], ABC):
 	def __init__(
 			self,
 			displayName: str,
-			actionHandler: Callable[[ActionTargetT, ], None],
-			validCheck: Callable[[ActionTargetT, ], bool],
+			actionHandler: Callable[[ActionTargetT], None],
+			validCheck: Callable[[ActionTargetT], bool],
 			actionTarget: ActionTargetT,
 	):
 		"""
@@ -74,8 +74,8 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 	def __init__(
 			self,
 			displayName: str,
-			actionHandler: Callable[["AddonListItemVM", ], None],
-			validCheck: Callable[["AddonListItemVM", ], bool],
+			actionHandler: Callable[["AddonListItemVM"], None],
+			validCheck: Callable[["AddonListItemVM"], bool],
 			actionTarget: Optional["AddonListItemVM"],
 	):
 		"""
@@ -129,8 +129,8 @@ class BatchAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
 	def __init__(
 			self,
 			displayName: str,
-			actionHandler: Callable[[Iterable["AddonListItemVM"], ], None],
-			validCheck: Callable[[Iterable["AddonListItemVM"], ], bool],
+			actionHandler: Callable[[Iterable["AddonListItemVM"]], None],
+			validCheck: Callable[[Iterable["AddonListItemVM"]], bool],
 			actionTarget: Iterable["AddonListItemVM"],
 	):
 		"""

@@ -34,7 +34,7 @@ from ctypes.wintypes import (
 	LPSTR,
 	WCHAR,
 	UINT,
-	LPUINT
+	LPUINT,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
@@ -85,7 +85,7 @@ class WAVEFORMATEX(Structure):
 		("nAvgBytesPerSec", DWORD),
 		("nBlockAlign", WORD),
 		("wBitsPerSample", WORD),
-		("cbSize", WORD)
+		("cbSize", WORD),
 	]
 LPWAVEFORMATEX = POINTER(WAVEFORMATEX)
 
@@ -100,7 +100,7 @@ WAVEHDR._fields_ = [
 	("dwFlags", DWORD),
 	("dwLoops", DWORD),
 	("lpNext", LPWAVEHDR),
-	("reserved", DWORD)
+	("reserved", DWORD),
 ]
 WHDR_DONE = 1
 
@@ -209,7 +209,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			wantDucking: bool = True,
 			buffered: bool = False,
 			purpose: AudioPurpose = AudioPurpose.SPEECH,
-		):
+ ):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@param samplesPerSec: Samples per second (hz).
@@ -265,7 +265,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			if isinstance(preferredDevice, str):
 				self._outputDeviceID = outputDeviceNameToID(
 					preferredDevice,
-					useDefaultIfInvalid=True  # fallback to WAVE_MAPPER
+					useDefaultIfInvalid=True,  # fallback to WAVE_MAPPER
 				)
 				# If default is used, get the appropriate name.
 				self._outputDeviceName = outputDeviceIDToName(self._outputDeviceID)
@@ -277,7 +277,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 		except (LookupError, TypeError):
 			log.warning(
 				f"Unsupported WavePlayer device argument: {preferredDevice}"
-				f" Falling back to WAVE_MAPPER"
+				f" Falling back to WAVE_MAPPER",
 			)
 			self._setCurrentDevice(WAVE_MAPPER)
 
@@ -287,7 +287,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 		if _isDebugForNvWave():
 			log.debug(
 				f"preferred device: {self._preferredDeviceName}"
-				f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})"
+				f" current device name: {self._outputDeviceName} (id: {self._outputDeviceID})",
 			)
 		return self._outputDeviceName == self._preferredDeviceName
 
@@ -318,7 +318,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 				log.debug(
 					f"Calling winmm.waveOutOpen."
 					f" outputDeviceName: {self._outputDeviceName}"
-					f" outputDeviceID: {self._outputDeviceID}"
+					f" outputDeviceID: {self._outputDeviceID}",
 				)
 			wfx = WAVEFORMATEX()
 			wfx.wFormatTag = WAVE_FORMAT_PCM
@@ -336,7 +336,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 						LPWAVEFORMATEX(wfx),
 						self._waveout_event,
 						0,
-						CALLBACK_EVENT
+						CALLBACK_EVENT,
 					)
 			except WindowsError:
 				lastOutputDeviceID = self._outputDeviceID
@@ -359,7 +359,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			self,
 			data: typing.Union[bytes, c_void_p],
 			size: typing.Optional[int] = None,
-			onDone: typing.Optional[typing.Callable] = None
+			onDone: typing.Optional[typing.Callable] = None,
 	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This is normally synchronous.
@@ -586,7 +586,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 				f"Winmm Error: {message}"
 				f" outputDeviceName: {self._outputDeviceName}"
 				f" with id: {self._outputDeviceID}",
-				stack_info=True
+				stack_info=True,
 			)
 		WavePlayer.audioDeviceError_static = True
 		self._close()
@@ -594,7 +594,7 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 	def _safe_winmm_call(
 			self,
 			winmmCall: Callable[[Optional[int]], None],
-			messageOnFailure: str
+			messageOnFailure: str,
 	) -> bool:
 		if not self._waveout:
 			return False
@@ -675,7 +675,7 @@ fileWavePlayerThread = None
 def playWaveFile(
 		fileName: str,
 		asynchronous: bool = True,
-		isSpeechWaveFileCommand: bool = False
+		isSpeechWaveFileCommand: bool = False,
 ):
 	"""plays a specified wave file.
 	@param fileName: the path to the wave file, usually absolute.
@@ -698,10 +698,10 @@ def playWaveFile(
 	if not decide_playWaveFile.decide(
 		fileName=fileName,
 		asynchronous=asynchronous,
-		isSpeechWaveFileCommand=isSpeechWaveFileCommand
+		isSpeechWaveFileCommand=isSpeechWaveFileCommand,
 	):
 		log.debug(
-			"Playing wave file canceled by handler registered to decide_playWaveFile extension point"
+			"Playing wave file canceled by handler registered to decide_playWaveFile extension point",
 		)
 		return
 
@@ -725,7 +725,7 @@ def playWaveFile(
 		bitsPerSample=f.getsampwidth() * 8,
 		outputDevice=config.conf["speech"]["outputDevice"],
 		wantDucking=False,
-		purpose=AudioPurpose.SOUNDS
+		purpose=AudioPurpose.SOUNDS,
 	)
 	if asynchronous:
 		fileWavePlayerThread = threading.Thread(
@@ -823,7 +823,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			outputDevice,
 			format,
-			WasapiWavePlayer._callback
+			WasapiWavePlayer._callback,
 		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
@@ -875,7 +875,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		except WindowsError:
 			log.warning(
 				"Couldn't open specified or default audio device. "
-				"There may be no audio devices."
+				"There may be no audio devices.",
 			)
 			WavePlayer.audioDeviceError_static = True
 			raise
@@ -891,7 +891,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			self,
 			data: typing.Union[bytes, c_void_p],
 			size: typing.Optional[int] = None,
-			onDone: typing.Optional[typing.Callable] = None
+			onDone: typing.Optional[typing.Callable] = None,
 	) -> None:
 		"""Feed a chunk of audio data to be played.
 		This will block until there is sufficient space in the buffer.
@@ -915,7 +915,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				self._player,
 				data,
 				size if size is not None else len(data),
-				byref(feedId) if onDone else None
+				byref(feedId) if onDone else None,
 			)
 		except WindowsError:
 			# #16722: This might occur on a Remote Desktop server when a client session
@@ -986,7 +986,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			*,
 			all: Optional[float] = None,
 			left: Optional[float] = None,
-			right: Optional[float] = None
+			right: Optional[float] = None,
 	):
 		"""Set the volume of one or more channels in this stream.
 		Levels must be specified as a number between 0 and 1.
@@ -1027,7 +1027,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			try:
 				core.callLater(
 					cls._IDLE_CHECK_INTERVAL,
-					cls._idleCheck
+					cls._idleCheck,
 				)
 			except core.NVDANotInitializedError:
 				# This can happen when playing the start sound. We close the stream after

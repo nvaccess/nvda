@@ -30,7 +30,7 @@ class IsElement(_TypedInstruction):
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		registers[self.result.operandId] = isinstance(
-			registers[self.target.operandId], POINTER(UIA.IUIAutomationElement)
+			registers[self.target.operandId], POINTER(UIA.IUIAutomationElement),
 		)
 
 

@@ -218,9 +218,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			# Translators: The label of a shortcut of NVDA.
 			"Set column header. Pressing once will set this cell as the first column header for any cell lower and "
 			"to the right of it within this table. Pressing twice will forget the current column header for this "
-			"cell."
+			"cell.",
 		),
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -250,9 +250,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		description=_(
 			# Translators: The label of a shortcut of NVDA.
 			"Set row header. Pressing once will set this cell as the first row header for any cell lower and to the "
-			"right of it within this table. Pressing twice will forget the current row header for this cell."
+			"right of it within this table. Pressing twice will forget the current row header for this cell.",
 		),
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -282,8 +282,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			"kb:alt+home",
 			"kb:alt+end",
 			"kb:alt+pageUp",
-			"kb:alt+pageDown"
-		)
+			"kb:alt+pageDown",
+		),
 	)
 	def script_caret_moveByCell(self, gesture: inputCore.InputGesture) -> None:
 		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -388,7 +388,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			ui.message(_("Edge of table"))
 			return False
 		newInfo = winWordWindowModule.WordDocumentTextInfo(
-			self, textInfos.POSITION_CARET, _rangeObj=foundCell
+			self, textInfos.POSITION_CARET, _rangeObj=foundCell,
 		)
 		speech.speakTextInfo(newInfo, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_CELL)
 		newInfo.collapse()
@@ -396,32 +396,32 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		return True
 
 	@script(
-		gesture="kb:control+alt+downArrow"
+		gesture="kb:control+alt+downArrow",
 	)
 	def script_nextRow(self,gesture):
 		self._moveInTable(row=True,forward=True)
 
 	@script(
-		gesture="kb:control+alt+upArrow"
+		gesture="kb:control+alt+upArrow",
 	)
 	def script_previousRow(self,gesture):
 		self._moveInTable(row=True,forward=False)
 
 	@script(
-		gesture="kb:control+alt+rightArrow"
+		gesture="kb:control+alt+rightArrow",
 	)
 	def script_nextColumn(self,gesture):
 		self._moveInTable(row=False,forward=True)
 
 	@script(
-		gesture="kb:control+alt+leftArrow"
+		gesture="kb:control+alt+leftArrow",
 	)
 	def script_previousColumn(self,gesture):
 		self._moveInTable(row=False,forward=False)
 
 	@script(
 		gesture="kb:control+downArrow",
-		resumeSayAllMode=sayAll.CURSOR.CARET
+		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
 	def script_nextParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -432,7 +432,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 
 	@script(
 		gesture="kb:control+upArrow",
-		resumeSayAllMode=sayAll.CURSOR.CARET
+		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
 	def script_previousParagraph(self,gesture):
 		info=self.makeTextInfo(textInfos.POSITION_CARET)
@@ -448,7 +448,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 			"kb:control+y",
 			"kb:control+z",
 			"kb:alt+backspace",
-		)
+		),
 	)
 	def script_updateBrailleAndReviewPosition(self, gesture: inputCore.InputGesture) -> None:
 		"""Helper script to update braille and review position.

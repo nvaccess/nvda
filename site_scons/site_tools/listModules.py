@@ -14,7 +14,7 @@ import SCons
 def _generateModuleList(
 		target: list[SCons.Node.FS.File],
 		source: list[SCons.Node.FS.Dir],
-		env: SCons.Environment.Environment
+		env: SCons.Environment.Environment,
 ) -> None:
 	"""
 	Generate a list of Python modules from compiled '.pyc' files within `library.zip` in the source folder.
@@ -58,7 +58,8 @@ def _generateModuleList(
 
 def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["GenerateModuleList"] = SCons.Builder.Builder(
-		action=SCons.Action.Action(_generateModuleList))
+		action=SCons.Action.Action(_generateModuleList),
+ )
 
 
 def exists(env: SCons.Environment.Environment) -> bool:

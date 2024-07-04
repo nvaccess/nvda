@@ -21,7 +21,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 	def setUp(self) -> None:
 		self.testPowerStatus = cast(
 			SystemPowerStatus,
-			MagicMock(SystemPowerStatus())
+			MagicMock(SystemPowerStatus()),
 		)
 
 	def test_fetch_status_fetchFailed(self):

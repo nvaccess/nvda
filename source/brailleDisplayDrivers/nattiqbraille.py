@@ -38,9 +38,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.SERIAL, {
+       "VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
+      },
+  )
 
 	@classmethod
 	def getManualPorts(cls):
@@ -54,7 +56,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			try:
 				self._serial = hwIo.Serial(
 					port, baudrate=BAUD_RATE, timeout=self.timeout, writeTimeout=self.timeout,
-					parity=serial.PARITY_NONE, onReceive=self._onReceive
+					parity=serial.PARITY_NONE, onReceive=self._onReceive,
 				)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)

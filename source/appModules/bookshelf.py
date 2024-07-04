@@ -17,7 +17,8 @@ def getDocument():
 	try:
 		document = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
 			windowUtils.findDescendantWindow(api.getForegroundObject().windowHandle, className="Internet Explorer_Server"),
-			winUser.OBJID_CLIENT, 0)
+			winUser.OBJID_CLIENT, 0,
+  )
 		return document
 	except LookupError:
 		return None

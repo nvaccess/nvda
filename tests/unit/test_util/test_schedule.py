@@ -67,12 +67,12 @@ class ScheduleThreadTests(unittest.TestCase):
 			self.assertLessEqual(
 				actualSecsOffset,
 				expectedSecsOffsetMax,
-				f"Job {jobIndex} was not scheduled as expected. Job: {currentJob}"
+				f"Job {jobIndex} was not scheduled as expected. Job: {currentJob}",
 			)
 			self.assertGreaterEqual(
 				actualSecsOffset,
 				expectedSecsOffsetMin,
-				f"Job {jobIndex} was not scheduled as expected. Job: {currentJob}"
+				f"Job {jobIndex} was not scheduled as expected. Job: {currentJob}",
 			)
 
 			# Ensure the job runs as expected
@@ -81,7 +81,7 @@ class ScheduleThreadTests(unittest.TestCase):
 			self.assertEqual(
 				scheduledVals,
 				expectedResult,
-				f"Job {jobIndex} did not run as expected. Scheduled jobs: {schedule.jobs}"
+				f"Job {jobIndex} did not run as expected. Scheduled jobs: {schedule.jobs}",
 			)
 
 	def test_scheduleJob(self):

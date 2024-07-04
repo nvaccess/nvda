@@ -37,8 +37,8 @@ class AppModule(appModuleHandler.AppModule):
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,
-					positionInfo=obj.positionInfo
-				)
+					positionInfo=obj.positionInfo,
+				),
 			)
 		nextHandler()
 

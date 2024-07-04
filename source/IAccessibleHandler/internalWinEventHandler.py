@@ -68,7 +68,7 @@ _processDestroyWinEvent = None
 def winEventCallback(handle, eventID, window, objectID, childID, threadID, timestamp):  # noqa: C901
 	if isMSAADebugLoggingEnabled():
 		log.debug(
-			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+			f"Hook received winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 		)
 	try:
 		# Ignore all object IDs from alert onwards (sound, nativeom etc) as we don't support them
@@ -76,7 +76,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"objectID not supported. "
-					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			return
 		# Ignore all locationChange events except ones for the caret
@@ -84,7 +84,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"locationChange for something other than the caret. "
-					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"Dropping winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			return
 		if eventID == winUser.EVENT_OBJECT_DESTROY:
@@ -96,7 +96,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"Changing OBJID_WINDOW to OBJID_CLIENT "
-					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 		# Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
@@ -111,14 +111,14 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"Changing NULL or invalid window to desktop window "
-					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"for winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			window = winUser.getDesktopWindow()
 		elif not isWindow:
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"Invalid window. "
-					f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			return
 
@@ -132,7 +132,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		if windowClassName == "EXCEL7" and objectID > 0:
 			log.debug(
 				f"Dropping UIA proxied event for Excel7 window. "
-				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 			)
 			return
 		if windowClassName == "ConsoleWindowClass":
@@ -145,7 +145,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"Dropping menu event for IME window. "
-					f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			return
 		if eventID == winUser.EVENT_SYSTEM_FOREGROUND:
@@ -154,7 +154,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 				if isMSAADebugLoggingEnabled():
 					log.debug(
 						f"Progman or shell_trayWnd window. "
-						f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+						f"Dropping winEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 					)
 				return
 			# #3831: Event handling can be deferred if Windows takes a while to change the foreground window.
@@ -165,7 +165,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			if isMSAADebugLoggingEnabled():
 				log.debug(
 					f"Recording foreground defer "
-					f"for WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"for WinEvent: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 		if windowClassName == "MSNHiddenWindowClass":
 			# HACK: Events get fired by this window in Windows Live Messenger 2009 when it starts. If we send a
@@ -174,7 +174,7 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 			return
 		if isMSAADebugLoggingEnabled():
 			log.debug(
-				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+				f"Adding winEvent to limiter: {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 			)
 		if winEventLimiter.addEvent(eventID, window, objectID, childID, threadID):
 			core.requestPump(immediate=eventID == winUser.EVENT_OBJECT_FOCUS)
@@ -189,11 +189,13 @@ winEventHookIDs = []
 
 
 def initialize(
-		processDestroyWinEventFunc: Callable[[
-			c_int,  # window
-			c_int,  # objectID
-			c_int,  # childID
-		], None]
+		processDestroyWinEventFunc: Callable[
+      [
+       c_int,  # window
+       c_int,  # objectID
+       c_int,  # childID
+      ], None,
+  ],
 ):
 	global _processDestroyWinEvent
 	_processDestroyWinEvent = processDestroyWinEventFunc
@@ -204,7 +206,7 @@ def initialize(
 		else:
 			log.error(
 				f"initialize: could not register callback for"
-				f" event {eventType} ({winEventIDsToNVDAEventNames[eventType]})"
+				f" event {eventType} ({winEventIDsToNVDAEventNames[eventType]})",
 			)
 
 
@@ -233,7 +235,7 @@ def _shouldGetEvents():
 				log.debugWarning(
 					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
 					f"Deferring until foreground is {_deferUntilForegroundWindow} ({futureForegroundClassName}), "
-					f"defer count {_foregroundDefers}"
+					f"defer count {_foregroundDefers}",
 				)
 			return False
 		else:
@@ -244,7 +246,7 @@ def _shouldGetEvents():
 				log.debugWarning(
 					"Foreground took too long to change. "
 					f"Foreground still {curForegroundWindow} ({curForegroundClassName}). "
-					f"Should be {_deferUntilForegroundWindow} ({futureForegroundClassName})"
+					f"Should be {_deferUntilForegroundWindow} ({futureForegroundClassName})",
 				)
 			_deferUntilForegroundWindow = None
 	return True

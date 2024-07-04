@@ -234,5 +234,5 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 				# We have just reverted to first setting, so report this change to user
 				queueHandler.queueFunction(
 					queueHandler.eventQueue,
-					ui.message,"%s %s" % (self.currentSettingName,self.currentSettingValue)
+					ui.message,"%s %s" % (self.currentSettingName,self.currentSettingValue),
 				)

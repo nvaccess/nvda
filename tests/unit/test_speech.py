@@ -31,20 +31,22 @@ from .extensionPointTestHelpers import actionTester
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 	def test_symbolNamesAtStartAndEnd(self):
 		# Spelling ¡hola!
-		seq = (c for c in [
-			'inverted exclamation point',
-			EndUtteranceCommand(),
-			'h',
-			EndUtteranceCommand(),
-			'o',
-			EndUtteranceCommand(),
-			'l',
-			EndUtteranceCommand(),
-			'a',
-			EndUtteranceCommand(),
-			'bang',
-			EndUtteranceCommand()
-		])
+		seq = (
+      c for c in [
+       'inverted exclamation point',
+       EndUtteranceCommand(),
+       'h',
+       EndUtteranceCommand(),
+       'o',
+       EndUtteranceCommand(),
+       'l',
+       EndUtteranceCommand(),
+       'a',
+       EndUtteranceCommand(),
+       'bang',
+       EndUtteranceCommand(),
+      ]
+  )
 		expected = repr([
 			'inverted exclamation point',
 			EndUtteranceCommand(),
@@ -59,25 +61,27 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 			EndUtteranceCommand(),
 			CharacterModeCommand(False),
 			'bang',
-			EndUtteranceCommand()
+			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechAddCharMode(seq)
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_manySymbolNamesInARow(self):
 		# Spelling a...b
-		seq = (c for c in [
-			'a',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'b',
-			EndUtteranceCommand()
-		])
+		seq = (
+      c for c in [
+       'a',
+       EndUtteranceCommand(),
+       'dot',
+       EndUtteranceCommand(),
+       'dot',
+       EndUtteranceCommand(),
+       'dot',
+       EndUtteranceCommand(),
+       'b',
+       EndUtteranceCommand(),
+      ]
+  )
 		expected = repr([
 			CharacterModeCommand(True),
 			'a',
@@ -91,7 +95,7 @@ class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 			EndUtteranceCommand(),
 			CharacterModeCommand(True),
 			'b',
-			EndUtteranceCommand()
+			EndUtteranceCommand(),
 		])
 		output = _getSpellingSpeechAddCharMode(seq)
 		self.assertEqual(repr(list(output)), expected)
@@ -147,7 +151,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		expected = repr([
 			PitchCommand(offset=30),
 			'A',
-			PitchCommand()
+			PitchCommand(),
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -185,7 +189,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def test_capNotificationsWithPlaceHolderBefore(self):
 		self.translationsFake.translationResults["cap %s"] = "%s cap"
-		expected = repr(['A', ' cap', ])  # for English this would be "cap A"
+		expected = repr(['A', ' cap'])  # for English this would be "cap A"
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
 			sayCapForCapitals=True,
@@ -197,7 +201,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 	def test_normalizedNotifications(self):
 		expected = repr([
 			'A',
-			' normalized'
+			' normalized',
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -215,7 +219,7 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 			'cap ',
 			'A',
 			' normalized',
-			PitchCommand()
+			PitchCommand(),
 		])
 		output = _getSpellingCharAddCapNotification(
 			speakCharAs='A',
@@ -235,7 +239,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 	def tearDown(self):
 		# Restore default value
 		config.conf['speech']['autoLanguageSwitching'] = config.conf.getConfigValidation(
-			['speech', 'autoLanguageSwitching']
+			['speech', 'autoLanguageSwitching'],
 		).default
 
 	def test_simpleSpelling(self):

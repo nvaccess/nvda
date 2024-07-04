@@ -454,8 +454,8 @@ class UIAHandler(COMObject):
 			windll.kernel32.OpenThread(
 				winKernel.SYNCHRONIZE,
 				False,
-				self.MTAThread.ident
-			)
+				self.MTAThread.ident,
+			),
 		)
 		self.MTAThreadQueue.put_nowait(None)
 		# Wait for the MTA thread to die (while still message pumping)
@@ -471,7 +471,7 @@ class UIAHandler(COMObject):
 				UIA.CUIAutomation8._reg_clsid_,
 				# Minimum interface is IUIAutomation3 (Windows 8.1).
 				interface=UIA.CUIAutomation8._com_interfaces_[1],
-				clsctx=CLSCTX_INPROC_SERVER
+				clsctx=CLSCTX_INPROC_SERVER,
 			)
 			# #7345: Instruct UIA to never map MSAA winEvents to UIA propertyChange events.
 			# These events are not needed by NVDA, and they can cause the UI Automation client library to become unresponsive if an application firing winEvents has a slow message pump. 
@@ -527,7 +527,7 @@ class UIAHandler(COMObject):
 				handler = self._rateLimitedEventHandler = POINTER(IUnknown)()
 				NVDAHelper.localLib.rateLimitedUIAEventHandler_create(
 					self._com_pointers_[IUnknown._iid_],
-					byref(self._rateLimitedEventHandler)
+					byref(self._rateLimitedEventHandler),
 				)
 			else:
 				handler = self
@@ -570,8 +570,8 @@ class UIAHandler(COMObject):
 			*self.clientObject.IntSafeArrayToNativeArray(
 				globalEventHandlerGroupUIAPropertyIds
 				if utils._shouldSelectivelyRegister()
-				else UIAPropertyIdsToNVDAEventNames
-			)
+				else UIAPropertyIdsToNVDAEventNames,
+			),
 		)
 		for eventId in (
 			globalEventHandlerGroupUIAEventIds
@@ -582,7 +582,7 @@ class UIAHandler(COMObject):
 				eventId,
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 		if (
 			not utils._shouldSelectivelyRegister()
@@ -593,20 +593,20 @@ class UIAHandler(COMObject):
 				UIA.UIA_Text_TextChangedEventId,
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 		# #7984: add support for notification event (IUIAutomation5, part of Windows 10 build 16299 and later).
 		if isinstance(self.clientObject, UIA.IUIAutomation5):
 			self.globalEventHandlerGroup.AddNotificationEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 		if isinstance(self.clientObject, UIA.IUIAutomation6):
 			self.globalEventHandlerGroup.AddActiveTextPositionChangedEventHandler(
 				UIA.TreeScope_Subtree,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 		self.addEventHandlerGroup(self.rootElement, self.globalEventHandlerGroup)
 
@@ -621,32 +621,32 @@ class UIAHandler(COMObject):
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
 			handler,
-			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
+			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds),
 		)
 		self.localEventHandlerGroupWithTextChanges.AddPropertyChangedEventHandler(
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
 			handler,
-			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds)
+			*self.clientObject.IntSafeArrayToNativeArray(localEventHandlerGroupUIAPropertyIds),
 		)
 		for eventId in localEventHandlerGroupUIAEventIds:
 			self.localEventHandlerGroup.AddAutomationEventHandler(
 				eventId,
 				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 			self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
 				eventId,
 				UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 				self.baseCacheRequest,
-				handler
+				handler,
 			)
 		self.localEventHandlerGroupWithTextChanges.AddAutomationEventHandler(
 			UIA.UIA_Text_TextChangedEventId,
 			UIA.TreeScope_Ancestors | UIA.TreeScope_Element,
 			self.baseCacheRequest,
-			handler
+			handler,
 		)
 
 	def addEventHandlerGroup(self, element, eventHandlerGroup):
@@ -696,7 +696,7 @@ class UIAHandler(COMObject):
 					log.debugWarning(
 						f"{logPrefix} registering for textChange events from UIA element "
 						f"with class name {repr(element.currentClassName)} "
-						f"and automation ID {repr(element.CachedAutomationID)}"
+						f"and automation ID {repr(element.CachedAutomationID)}",
 					)
 				self.addEventHandlerGroup(element, group)
 			except COMError:
@@ -724,7 +724,7 @@ class UIAHandler(COMObject):
 		if _isDebug():
 			log.debug(
 				f"handleAutomationEvent called with event {self.getUIAEventIDDebugString(eventID)} "
-				f"for element {self.getUIAElementDebugString(sender)}"
+				f"for element {self.getUIAElementDebugString(sender)}",
 			)
 		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
@@ -751,7 +751,7 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debugWarning(
 						"HandleAutomationEvent: Dropping textChange event "
-						f"from element {self.getUIAElementDebugString(sender)}"
+						f"from element {self.getUIAElementDebugString(sender)}",
 					)
 				return
 		else:
@@ -770,13 +770,13 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					"handleAutomationEvent: element matches focus. "
-					f"Redirecting event to focus NVDAObject {focus}"
+					f"Redirecting event to focus NVDAObject {focus}",
 				)
 			obj = focus
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug(
-					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for non native element"
+					f"HandleAutomationEvent: Ignoring event {NVDAEventName} for non native element",
 				)
 			return
 		window = obj.windowHandle if obj else self.getNearestWindowHandle(sender)
@@ -784,12 +784,12 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					f"Checking if should accept NVDA event {NVDAEventName} "
-					f"with window {self.getWindowHandleDebugString(window)}"
+					f"with window {self.getWindowHandleDebugString(window)}",
 				)
 			if not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
 				if _isDebug():
 					log.debug(
-						f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+						f"HandleAutomationEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False",
 					)
 				return
 		if not obj:
@@ -799,7 +799,7 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debugWarning(
 						f"HandleAutomationEvent: Exception while creating object for event {NVDAEventName}",
-						exc_info=True
+						exc_info=True,
 					)
 				return
 			if not obj:
@@ -808,7 +808,7 @@ class UIAHandler(COMObject):
 				return
 			if _isDebug():
 				log.debug(
-					f"handleAutomationEvent: created object {obj} "
+					f"handleAutomationEvent: created object {obj} ",
 				)
 		if (
 			(NVDAEventName == "gainFocus" and not obj.shouldAllowUIAFocusEvent)
@@ -817,13 +817,13 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					"HandleAutomationEvent: "
-					f"Ignoring event {NVDAEventName} because ignored by object itself"
+					f"Ignoring event {NVDAEventName} because ignored by object itself",
 				)
 			return
 		if _isDebug():
 			log.debug(
 				f"handleAutomationEvent: queuing NVDA event {NVDAEventName} "
-				f"for NVDAObject {obj} "
+				f"for NVDAObject {obj} ",
 			)
 		eventHandler.queueEvent(NVDAEventName,obj)
 
@@ -867,20 +867,20 @@ class UIAHandler(COMObject):
 				):
 					if _isDebug():
 						log.debugWarning(
-							"HandleFocusChangedEvent: Ignoring duplicate focus event "
+							"HandleFocusChangedEvent: Ignoring duplicate focus event ",
 						)
 					return
 			except COMError:
 				if _isDebug():
 					log.debugWarning(
 						"HandleFocusChangedEvent: Couldn't check for duplicate focus event ",
-						exc_info=True
+						exc_info=True,
 					)
 		window = self.getNearestWindowHandle(sender)
 		if window and not eventHandler.shouldAcceptEvent("gainFocus", windowHandle=window):
 			if _isDebug():
 				log.debug(
-					"HandleFocusChangedEvent: Ignoring for shouldAcceptEvent=False"
+					"HandleFocusChangedEvent: Ignoring for shouldAcceptEvent=False",
 				)
 			return
 		try:
@@ -889,13 +889,13 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debugWarning(
 					"HandleFocusChangedEvent: Exception while creating NVDAObject ",
-					exc_info=True
+					exc_info=True,
 				)
 			obj = None
 		if not obj:
 			if _isDebug():
 				log.debug(
-					"handleFocusChangedEvent: Could not create an NVDAObject "
+					"handleFocusChangedEvent: Could not create an NVDAObject ",
 				)
 			return
 		if _isDebug():
@@ -903,13 +903,13 @@ class UIAHandler(COMObject):
 		if not obj.shouldAllowUIAFocusEvent:
 			if _isDebug():
 				log.debug(
-					"HandleFocusChangedEvent: NVDAObject chose to ignore event "
+					"HandleFocusChangedEvent: NVDAObject chose to ignore event ",
 				)
 			return
 		if _isDebug():
 			log.debug(
 				"handleFocusChangedEvent: Queuing NVDA gainFocus event "
-				f"for obj {obj} "
+				f"for obj {obj} ",
 			)
 		eventHandler.queueEvent("gainFocus",obj)
 
@@ -918,7 +918,7 @@ class UIAHandler(COMObject):
 			log.debug(
 				f"handlePropertyChangeEvent called with property {self.getUIAPropertyIDDebugString(propertyId)}, "
 				f"value {str(newValue.value)[:50]} "
-				f"for element {self.getUIAElementDebugString(sender)}"
+				f"for element {self.getUIAElementDebugString(sender)}",
 			)
 		# #3867: For now manually force this VARIANT type to empty to get around a nasty double free in comtypes/ctypes.
 		# We also don't use the value in this callback.
@@ -938,7 +938,7 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debug(
 						f"handlePropertyChangeEvent: dropping property {self.getUIAPropertyIDDebugString(propertyId)} "
-						f"at request of appModule {appMod.appName}"
+						f"at request of appModule {appMod.appName}",
 					)
 				return
 		NVDAEventName=UIAPropertyIdsToNVDAEventNames.get(propertyId,None)
@@ -956,13 +956,13 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					"propertyChange event is for focus. "
-					f"Redirecting event to focus NVDAObject {focus}"
+					f"Redirecting event to focus NVDAObject {focus}",
 				)
 			obj = focus
 		elif not self.isNativeUIAElement(sender):
 			if _isDebug():
 				log.debug(
-					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for non native element"
+					f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for non native element",
 				)
 			return
 		window = obj.windowHandle if obj else self.getNearestWindowHandle(sender)
@@ -970,12 +970,12 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					f"Checking if should accept NVDA event {NVDAEventName} "
-					f"with window {self.getWindowHandleDebugString(window)}"
+					f"with window {self.getWindowHandleDebugString(window)}",
 				)
 			if not eventHandler.shouldAcceptEvent(NVDAEventName, windowHandle=window):
 				if _isDebug():
 					log.debug(
-						f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False"
+						f"HandlePropertyChangedEvent: Ignoring event {NVDAEventName} for shouldAcceptEvent=False",
 					)
 				return
 		if not obj:
@@ -985,7 +985,7 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debugWarning(
 						f"HandlePropertyChangedEvent: Exception while creating object for event {NVDAEventName}",
-						exc_info=True
+						exc_info=True,
 					)
 				return
 			if not obj:
@@ -994,12 +994,12 @@ class UIAHandler(COMObject):
 				return
 			if _isDebug():
 				log.debug(
-					f"handlePropertyChangeEvent: created object {obj} "
+					f"handlePropertyChangeEvent: created object {obj} ",
 				)
 		if _isDebug():
 			log.debug(
 				f"handlePropertyChangeEvent: queuing NVDA {NVDAEventName} event "
-				f"for NVDAObject {obj} "
+				f"for NVDAObject {obj} ",
 			)
 		eventHandler.queueEvent(NVDAEventName,obj)
 
@@ -1009,7 +1009,7 @@ class UIAHandler(COMObject):
 			NotificationKind,
 			NotificationProcessing,
 			displayString,
-			activityId
+			activityId,
 	):
 		if _isDebug():
 			log.debug(
@@ -1018,7 +1018,7 @@ class UIAHandler(COMObject):
 				f"notificationProcessing {self.getUIANotificationProcessingValueDebugString(NotificationProcessing)}, "
 				f"displayString {str(displayString)[:50]}, "
 				f"activityID {activityId}, "
-				f"for element {self.getUIAElementDebugString(sender)}"
+				f"for element {self.getUIAElementDebugString(sender)}",
 			)
 		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
@@ -1035,7 +1035,7 @@ class UIAHandler(COMObject):
 					f"NotificationProcessing={NotificationProcessing} "
 					f"displayString={displayString} "
 					f"activityId={activityId}",
-					exc_info=True
+					exc_info=True,
 				)
 			return
 		if not obj:
@@ -1046,24 +1046,24 @@ class UIAHandler(COMObject):
 					"HandleNotificationEvent: Ignoring because no object: "
 					f"NotificationProcessing={NotificationProcessing} "
 					f"displayString={displayString} "
-					f"activityId={activityId}"
+					f"activityId={activityId}",
 				)
 			return
 		if _isDebug():
 			log.debug(
 				"Queuing UIA_notification NVDA event "
-				f"for NVDAObject {obj}"
+				f"for NVDAObject {obj}",
 			)
 		eventHandler.queueEvent("UIA_notification",obj, notificationKind=NotificationKind, notificationProcessing=NotificationProcessing, displayString=displayString, activityId=activityId)
 
 	def IUIAutomationActiveTextPositionChangedEventHandler_HandleActiveTextPositionChangedEvent(
 			self,
 			sender,
-			textRange
+			textRange,
 	):
 		if _isDebug():
 			log.debug(
-				f"HandleActiveTextPositionChangedEvent called for element {self.getUIAElementDebugString(sender)}"
+				f"HandleActiveTextPositionChangedEvent called for element {self.getUIAElementDebugString(sender)}",
 			)
 		if not self.MTAThreadInitEvent.is_set():
 			# UIAHandler hasn't finished initialising yet, so just ignore this event.
@@ -1077,19 +1077,19 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debugWarning(
 					"HandleActiveTextPositionChangedEvent: Exception while creating object: ",
-					exc_info=True
+					exc_info=True,
 				)
 			return
 		if not obj:
 			if _isDebug():
 				log.debug(
-					"HandleActiveTextPositionchangedEvent: Ignoring because no object: "
+					"HandleActiveTextPositionchangedEvent: Ignoring because no object: ",
 				)
 			return
 		if _isDebug():
 			log.debug(
 				"handleActiveTextPositionChange: Queuing UIA_activeTextPositionChanged NVDA event "
-				f"for NVDAObject {obj}"
+				f"for NVDAObject {obj}",
 			)
 		eventHandler.queueEvent("UIA_activeTextPositionChanged", obj, textRange=textRange)
 
@@ -1119,7 +1119,7 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isGoodUIAWindow(hwnd):
 			if isDebug:
 				log.debug(
-					f"appModule {appModule.appName} says to treat window as UIA"
+					f"appModule {appModule.appName} says to treat window as UIA",
 				)
 			return True
 		# There are certain window classes that just had bad UIA implementations
@@ -1131,7 +1131,7 @@ class UIAHandler(COMObject):
 		if appModule and appModule.isBadUIAWindow(hwnd):
 			if isDebug:
 				log.debug(
-					f"appModule {appModule.appName} says to not treat window as UIA"
+					f"appModule {appModule.appName} says to not treat window as UIA",
 				)
 			return False
 		if windowClass == "NetUIHWND" and appModule:
@@ -1151,14 +1151,14 @@ class UIAHandler(COMObject):
 				# this is not necessarily an office app, or an app with version information, for example geekbench 6.
 				log.debugWarning(
 					"Failed parsing productName / productVersion, version information likely missing",
-					exc_info=True
+					exc_info=True,
 				)
 				isOfficeApp = False
 				isOffice2013OrOlder = False
 			if isOfficeApp and isOffice2013OrOlder:
 				parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
 				while parentHwnd:
-					if winUser.getClassName(parentHwnd) in ("Net UI Tool Window", "MsoCommandBar",):
+					if winUser.getClassName(parentHwnd) in ("Net UI Tool Window", "MsoCommandBar"):
 						if isDebug:
 							log.debug("Office 2013 ribon or older. Treating as non-UIA")
 						return False
@@ -1251,7 +1251,7 @@ class UIAHandler(COMObject):
 		if not v or (now-v[1])>0.5:
 			v = (
 				self._isUIAWindowHelper(hwnd, isDebug=isDebug),
-				now
+				now,
 			)
 			self.UIAWindowHandleCache[hwnd]=v
 		elif isDebug:
@@ -1266,13 +1266,13 @@ class UIAHandler(COMObject):
 				log.debug(
 					"Got previously cached nearest windowHandle "
 					f"of {self.getWindowHandleDebugString(windowHandle)} "
-					f"for element {self.getUIAElementDebugString(UIAElement)}"
+					f"for element {self.getUIAElementDebugString(UIAElement)}",
 				)
 			return windowHandle
 		if _isDebug():
 			log.debug(
 				"Locating nearest ancestor windowHandle "
-				f"for element {self.getUIAElementDebugString(UIAElement)}"
+				f"for element {self.getUIAElementDebugString(UIAElement)}",
 			)
 		try:
 			processID = UIAElement.cachedProcessID
@@ -1292,17 +1292,17 @@ class UIAHandler(COMObject):
 			):
 				if _isDebug():
 					log.debug(
-						f"using active WDAG local window {self.getWindowHandleDebugString(gi.hwndActive)}"
+						f"using active WDAG local window {self.getWindowHandleDebugString(gi.hwndActive)}",
 					)
 				return gi.hwndActive
 			else:
 				if _isDebug():
 					log.debug(
-						f"Active window is not WDAG or is wrong instance:  {self.getWindowHandleDebugString(gi.hwndActive)}"
+						f"Active window is not WDAG or is wrong instance:  {self.getWindowHandleDebugString(gi.hwndActive)}",
 					)
 				return None
 			condition = utils.createUIAMultiPropertyCondition(
-				{UIA.UIA_ClassNamePropertyId: ['ApplicationFrameWindow', 'CabinetWClass']}
+				{UIA.UIA_ClassNamePropertyId: ['ApplicationFrameWindow', 'CabinetWClass']},
 			)
 			walker = self.clientObject.createTreeWalker(condition)
 		else:
@@ -1316,7 +1316,7 @@ class UIAHandler(COMObject):
 			new = walker.NormalizeElementBuildCache(UIAElement, cacheRequest)
 		except COMError:
 			log.debugWarning(
-				"error walking up to an element with a valid windowHandle", exc_info=True
+				"error walking up to an element with a valid windowHandle", exc_info=True,
 			)
 			return None
 		try:
@@ -1324,13 +1324,13 @@ class UIAHandler(COMObject):
 		except COMError:
 			if _isDebug():
 				log.debugWarning(
-					"Unable to get cachedNativeWindowHandle from found ancestor element", exc_info=True
+					"Unable to get cachedNativeWindowHandle from found ancestor element", exc_info=True,
 				)
 			return None
 		if _isDebug():
 			log.debug(
 				"Found ancestor element "
-				f"with valid windowHandle {self.getWindowHandleDebugString(window)}"
+				f"with valid windowHandle {self.getWindowHandleDebugString(window)}",
 			)
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle = window
@@ -1352,7 +1352,7 @@ class UIAHandler(COMObject):
 			return False
 		condition = utils.createUIAMultiPropertyCondition(
 			{UIA.UIA_ClassNamePropertyId: 'NetUIHWNDElement'},
-			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle}
+			{UIA.UIA_NativeWindowHandlePropertyId: windowHandle},
 		)
 		walker = self.clientObject.createTreeWalker(condition)
 		cacheRequest = self.clientObject.createCacheRequest()
@@ -1382,7 +1382,7 @@ class UIAHandler(COMObject):
 			and not self.isUIAWindow(oldFocus.windowHandle)
 		):
 			IAccessibleHandler.internalWinEventHandler.winEventLimiter.addEvent(
-				winUser.EVENT_OBJECT_FOCUS, oldFocus.windowHandle, winUser.OBJID_CLIENT, 0, oldFocus.windowThreadID
+				winUser.EVENT_OBJECT_FOCUS, oldFocus.windowHandle, winUser.OBJID_CLIENT, 0, oldFocus.windowThreadID,
 			)
 
 	def isNativeUIAElement(self,UIAElement):
@@ -1401,7 +1401,7 @@ class UIAHandler(COMObject):
 			if _isDebug():
 				log.debug(
 					"element is local to NVDA, "
-					"treating as non-native."
+					"treating as non-native.",
 				)
 			return False
 		# Whether this is a native element depends on whether its window natively supports UIA.
@@ -1411,7 +1411,7 @@ class UIAHandler(COMObject):
 				if _isDebug():
 					log.debug(
 						"treating element as native due to "
-						f"windowHandle {self.getWindowHandleDebugString(windowHandle)}. "
+						f"windowHandle {self.getWindowHandleDebugString(windowHandle)}. ",
 					)
 				return True
 			# #12982: although NVDA by default may not treat this element's window as native UIA,
@@ -1423,7 +1423,7 @@ class UIAHandler(COMObject):
 			if self._isNetUIEmbeddedInWordDoc(UIAElement):
 				if _isDebug():
 					log.debug(
-						"treating as native as is a netUI embedded in word doc. "
+						"treating as native as is a netUI embedded in word doc. ",
 					)
 				return True
 			if winUser.getClassName(windowHandle)=="DirectUIHWND" and "IEFRAME.dll" in UIAElement.cachedProviderDescription and UIAElement.currentClassName in ("DownloadBox", "accessiblebutton", "DUIToolbarButton", "PushButton"):
@@ -1435,7 +1435,7 @@ class UIAHandler(COMObject):
 				# Therefore, we must use UIA here.
 				if _isDebug():
 					log.debug(
-						"treating as native as is in IE9 downloads list. "
+						"treating as native as is in IE9 downloads list. ",
 					)
 				return True
 		if _isDebug():

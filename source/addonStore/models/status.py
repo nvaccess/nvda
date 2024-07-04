@@ -335,8 +335,8 @@ def getStatus(model: "_AddonGUIModel", context: _StatusFilterKey) -> AvailableAd
 
 _addonStoreStateToAddonHandlerState: OrderedDict[
 	AvailableAddonStatus,
-	Set[AddonStateCategory]
-	] = OrderedDict({
+	Set[AddonStateCategory],
+] = OrderedDict({
 	# Pending states must be first as the pending state may be altering another state.
 	AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED: {
 		AddonStateCategory.BLOCKED,
@@ -448,14 +448,14 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 		from addonHandler import ADDON_PENDINGINSTALL_SUFFIX
 		return os.path.join(
 			WritePaths.addonsDir,
-			self.name + ADDON_PENDINGINSTALL_SUFFIX
+			self.name + ADDON_PENDINGINSTALL_SUFFIX,
 		)
 
 	@property
 	def installPath(self) -> str:
 		return os.path.join(
 			WritePaths.addonsDir,
-			self.name
+			self.name,
 		)
 
 	@property

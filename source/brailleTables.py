@@ -31,7 +31,7 @@ class TableSource(StrEnum):
 
 
 _tablesDirs = collections.ChainMap({
-	TableSource.BUILTIN: TABLES_DIR
+	TableSource.BUILTIN: TABLES_DIR,
 })
 """Chainmap of directories for braille tables lookup, including custom tables."""
 
@@ -75,7 +75,7 @@ def addTable(
 		contracted: bool = False,
 		output: bool = True,
 		input: bool = True,
-		source: str = TableSource.BUILTIN
+		source: str = TableSource.BUILTIN,
 ):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
@@ -106,7 +106,7 @@ def listTables() -> list[BrailleTable]:
 	"""
 	return sorted(
 		_tables.values(),
-		key=lambda table: (table.source != TableSource.BUILTIN, strxfrm(table.displayName))
+		key=lambda table: (table.source != TableSource.BUILTIN, strxfrm(table.displayName)),
 	)
 
 
@@ -778,7 +778,7 @@ def initialize():
 			except Exception:
 				log.exception(
 					"Error while applying custom braille tables config from scratchpad manifest: "
-					f"{manifestPath}"
+					f"{manifestPath}",
 				)
 
 

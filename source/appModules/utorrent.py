@@ -27,10 +27,11 @@ class DuplicateFocusListView(IAccessible):
 		focus = api.getFocusObject()
 		focusRole = focus.role
 		focusStates = focus.states
-		if (self == focus or
-			(focusRole == controlTypes.Role.MENUITEM and controlTypes.State.FOCUSED in focusStates) or
-			(focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
-		):
+		if (
+      self == focus or
+       (focusRole == controlTypes.Role.MENUITEM and controlTypes.State.FOCUSED in focusStates) or
+       (focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
+  ):
 			return False
 		return super(DuplicateFocusListView, self).shouldAllowIAccessibleFocusEvent
 
@@ -46,8 +47,11 @@ class TorrentContentsListItem(ListItem):
 		# We need to use the display model to retrieve the Name column.
 		try:
 			left, top, width, height = self._getColumnLocation(column)
-			return displayModel.DisplayModelTextInfo(self, locationHelper.RectLTRB(
-				left, top, left + width, top + height)).text
+			return displayModel.DisplayModelTextInfo(
+       self, locationHelper.RectLTRB(
+       left, top, left + width, top + height,
+       ),
+   ).text
 		except:  # noqa: E722
 			log.debugWarning("Error retrieving name using display model", exc_info=True)
 			return superContent

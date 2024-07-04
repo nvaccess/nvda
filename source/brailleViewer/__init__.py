@@ -108,7 +108,7 @@ def createBrailleViewerTool():
 
 	_brailleGui = BrailleViewerFrame(
 		braille.handler.displaySize,
-		_onGuiDestroyed
+		_onGuiDestroyed,
 	)
 	braille.pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
 	postBrailleViewerToolToggledAction.notify(created=True)

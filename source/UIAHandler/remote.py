@@ -8,7 +8,7 @@ from typing import (
 	Optional,
 	Any,
 	Generator,
-	cast
+	cast,
 )
 from comtypes import GUID
 from comInterfaces import UIAutomationClient as UIA
@@ -17,14 +17,14 @@ from logHandler import log
 from ._remoteOps import remoteAlgorithms
 from ._remoteOps.remoteTypes import (
 	RemoteExtensionTarget,
-	RemoteInt
+	RemoteInt,
 )
 from ._remoteOps import operation
 from ._remoteOps import remoteAPI
 from ._remoteOps.lowLevel import (
 	TextUnit,
 	AttributeId,
-	StyleId
+	StyleId,
 )
 
 
@@ -59,7 +59,7 @@ def terminate():
 def msWord_getCustomAttributeValue(
 		docElement: UIA.IUIAutomationElement,
 		textRange: UIA.IUIAutomationTextRange,
-		customAttribID: int
+		customAttribID: int,
 ) -> Optional[Any]:
 	guid_msWord_extendedTextRangePattern = GUID("{93514122-FF04-4B2C-A4AD-4AB04587C129}")
 	guid_msWord_getCustomAttributeValue = GUID("{081ACA91-32F2-46F0-9FB9-017038BC45F8}")
@@ -79,7 +79,7 @@ def msWord_getCustomAttributeValue(
 		ra.logRuntimeMessage("doing callExtension for extendedTextRangePattern")
 		remoteDocElement.callExtension(
 			guid_msWord_extendedTextRangePattern,
-			remoteResult
+			remoteResult,
 		)
 		with ra.ifBlock(remoteResult.isNull()):
 			ra.logRuntimeMessage("extendedTextRangePattern is null")
@@ -96,7 +96,7 @@ def msWord_getCustomAttributeValue(
 			guid_msWord_getCustomAttributeValue,
 			remoteTextRange,
 			customAttribID,
-			remoteCustomAttribValue
+			remoteCustomAttribValue,
 		)
 		ra.logRuntimeMessage("got customAttribValue of ", remoteCustomAttribValue)
 		ra.Return(remoteCustomAttribValue)
@@ -109,7 +109,7 @@ def msWord_getCustomAttributeValue(
 
 
 def collectAllHeadingsInTextRange(
-		textRange: UIA.IUIAutomationTextRange
+		textRange: UIA.IUIAutomationTextRange,
 ) -> Generator[tuple[int, str, UIA.IUIAutomationElement], None, None]:
 	op = operation.Operation()
 
@@ -117,7 +117,7 @@ def collectAllHeadingsInTextRange(
 	def code(ra: remoteAPI.RemoteAPI):
 		remoteTextRange = ra.newTextRange(textRange, static=True)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
-			ra, remoteTextRange, TextUnit.Paragraph
+			ra, remoteTextRange, TextUnit.Paragraph,
 		) as paragraphRange:
 			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
 			with ra.ifBlock(val.isInt()):
@@ -134,7 +134,7 @@ def collectAllHeadingsInTextRange(
 def findFirstHeadingInTextRange(
 		textRange: UIA.IUIAutomationTextRange,
 		wantedLevel: int | None = None,
-		reverse: bool = False
+		reverse: bool = False,
 ) -> tuple[int, str, UIA.IUIAutomationElement] | None:
 	op = operation.Operation()
 
@@ -149,7 +149,7 @@ def findFirstHeadingInTextRange(
 			ra.logRuntimeMessage("Doing initial move")
 			remoteTextRange.getLogicalAdapter(reverse).start.moveByUnit(TextUnit.Paragraph, 1)
 		with remoteAlgorithms.remote_forEachUnitInTextRange(
-			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse
+			ra, remoteTextRange, TextUnit.Paragraph, reverse=reverse,
 		) as paragraphRange:
 			val = paragraphRange.getAttributeValue(AttributeId.StyleId)
 			with ra.ifBlock(val.isInt()):
@@ -168,5 +168,5 @@ def findFirstHeadingInTextRange(
 	return (
 		cast(int, level),
 		cast(str, label),
-		cast(UIA.IUIAutomationTextRange, paragraphRange)
+		cast(UIA.IUIAutomationTextRange, paragraphRange),
 	)

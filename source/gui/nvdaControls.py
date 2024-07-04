@@ -43,7 +43,7 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		itemTextCallable=None,
 		pos=wx.DefaultPosition,
 		size=wx.DefaultSize,
-		style=0
+		style=0,
 	):
 		""" initialiser
 			Takes the same parameter as a wx.ListCtrl with the following additions:
@@ -148,9 +148,10 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	This event is only fired when an item is toggled with the mouse or keyboard.
 	"""
 
-	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumn="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
-		check_image=None, uncheck_image=None, imgsz=(16, 16)
-	):
+	def __init__(
+     self, parent, id=wx.ID_ANY, autoSizeColumn="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
+      check_image=None, uncheck_image=None, imgsz=(16, 16),
+ ):
 		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style, autoSizeColumn=autoSizeColumn)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
 		# Register a custom wx.Accessible implementation to fix accessibility incompleties
@@ -257,7 +258,7 @@ class MessageDialog(DPIScaledDialog):
 			self,
 			id=wx.ID_OK,
 			# Translators: An ok button on a message dialog.
-			label=_("OK")
+			label=_("OK"),
 		)
 		ok.SetDefault()
 		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
@@ -266,7 +267,7 @@ class MessageDialog(DPIScaledDialog):
 			self,
 			id=wx.ID_CANCEL,
 			# Translators: A cancel button on a message dialog.
-			label=_("Cancel")
+			label=_("Cancel"),
 		)
 		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
@@ -321,7 +322,7 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer.Add(
 			contentsSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+			flag=wx.ALL,
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
@@ -393,7 +394,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
 			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
 			childRectRelativeToScreen.width,
-			childRectRelativeToScreen.height
+			childRectRelativeToScreen.height,
 		)
 
 	def ScrollChildIntoView(self, child: wx.Window) -> None:
@@ -450,7 +451,7 @@ class FeatureFlagCombo(wx.Choice):
 		if self._optionsEnumClass.DEFAULT in translatedOptions:
 			raise ValueError(
 				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
-				" It will be added automatically. See _setDefaultOptionLabel"
+				" It will be added automatically. See _setDefaultOptionLabel",
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
 		choices = list(self._translatedOptions.values())
@@ -466,7 +467,7 @@ class FeatureFlagCombo(wx.Choice):
 		if onChoiceEventHandler is not None:
 			self.Bind(
 				wx.EVT_CHOICE,
-				onChoiceEventHandler
+				onChoiceEventHandler,
 			)
 		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
@@ -535,7 +536,7 @@ class FeatureFlagCombo(wx.Choice):
 
 	def _createOptionsDict(
 			self,
-			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
+			translatedOptions: OrderedDict[FeatureFlagEnumT, str],
 	) -> OrderedDict[enum.Enum, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
@@ -544,9 +545,9 @@ class FeatureFlagCombo(wx.Choice):
 		# The placeholder {} is replaced with the label of the option which describes current default behavior
 		# in NVDA. EG "Default (Yes)".
 		defaultOptionLabel: str = _("Default ({})").format(
-			translatedStringForBehaviorOfDefault
+			translatedStringForBehaviorOfDefault,
 		)
 		return collections.OrderedDict({
 			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
-			**translatedOptions
+			**translatedOptions,
 		})

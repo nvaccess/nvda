@@ -76,8 +76,8 @@ def quits_from_menu(showExitDialog=True):
 			actualSpeech,
 			"\n".join([
 				"Exit NVDA  dialog",
-				"What would you like to do?  combo box  Exit  collapsed  Alt plus  d"
-			])
+				"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
+			]),
 		)
 		_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little for it
 		spy.emulateKeyPress("enter", blockUntilProcessed=False)  # don't block so NVDA can exit
@@ -85,7 +85,7 @@ def quits_from_menu(showExitDialog=True):
 	_blockUntilConditionMet(
 		getValue=lambda: not _nvdaIsRunning(),
 		giveUpAfterSeconds=3,
-		errorMessage="NVDA failed to exit in the specified timeout"
+		errorMessage="NVDA failed to exit in the specified timeout",
 	)
 	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
@@ -105,8 +105,8 @@ def quits_from_keyboard():
 		actualSpeech,
 		"\n".join([
 			"Exit NVDA  dialog",
-			"What would you like to do?  combo box  Exit  collapsed  Alt plus  d"
-		])
+			"What would you like to do?  combo box  Exit  collapsed  Alt plus  d",
+		]),
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	_builtIn.should_be_true(_nvdaIsRunning(), msg="NVDA is not running")
@@ -114,7 +114,7 @@ def quits_from_keyboard():
 	_blockUntilConditionMet(
 		getValue=lambda: not _nvdaIsRunning(),
 		giveUpAfterSeconds=3,
-		errorMessage="NVDA failed to exit in the specified timeout"
+		errorMessage="NVDA failed to exit in the specified timeout",
 	)
 	_builtIn.should_not_be_true(_nvdaIsRunning(), msg="NVDA is still running")
 
@@ -143,8 +143,8 @@ def read_welcome_dialog():
 				"NVDA, get help, and access other NVDA functions."
 			),
 			"Options  grouping",
-			"Keyboard layout:  combo box  desktop  collapsed  Alt plus  k"
-		])
+			"Keyboard layout:  combo box  desktop  collapsed  Alt plus  k",
+		]),
 	)
 	_builtIn.sleep(1)  # the dialog is not always receiving the enter keypress, wait a little longer for it
 	spy.emulateKeyPress("enter")
@@ -167,11 +167,11 @@ def NVDA_restarts():
 	_blockUntilConditionMet(
 		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
 		giveUpAfterSeconds=10,
-		errorMessage="Old NVDA is still running"
+		errorMessage="Old NVDA is still running",
 	)
 	_builtIn.should_not_be_true(
 		windowWithHandleExists(oldMsgWindowHandle),
-		msg="Old NVDA process is stil running"
+		msg="Old NVDA process is stil running",
 	)
 	waitUntilWindowFocused("Welcome to NVDA")
 
@@ -195,11 +195,11 @@ def _ensureRestartWithCrashDump(crashFunction: _Callable[[], None]):
 	_blockUntilConditionMet(
 		getValue=lambda: windowWithHandleExists(oldMsgWindowHandle) is False,
 		giveUpAfterSeconds=3,
-		errorMessage="Old NVDA is still running"
+		errorMessage="Old NVDA is still running",
 	)
 	_builtIn.should_not_be_true(
 		windowWithHandleExists(oldMsgWindowHandle),
-		msg="Old NVDA process is stil running"
+		msg="Old NVDA process is stil running",
 	)
 	crashOccurred, crashPath = _blockUntilConditionMet(
 		getValue=lambda: _nvdaRobot.check_for_crash_dump(startTime),

@@ -22,7 +22,7 @@ import versionInfo
 
 class WelcomeDialog(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA welcome dialog.
 	This provides essential information for new users,
@@ -38,7 +38,7 @@ class WelcomeDialog(
 		"By default, the Insert and numpad Insert keys may both be used as the NVDA key.\n"
 		"You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 		"Press NVDA+n at any time to activate the NVDA menu.\n"
-		"From this menu, you can configure NVDA, get help, and access other NVDA functions."
+		"From this menu, you can configure NVDA, get help, and access other NVDA functions.",
 	)
 	_instances: Set["WelcomeDialog"] = weakref.WeakSet()
 
@@ -93,7 +93,7 @@ class WelcomeDialog(
 		mainSizer.Add(
 			self.CreateButtonSizer(wx.OK),
 			border=gui.guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL | wx.ALIGN_RIGHT
+			flag=wx.ALL | wx.ALIGN_RIGHT,
 		)
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
@@ -116,7 +116,7 @@ class WelcomeDialog(
 				_(
 					# Translators: The title of an error message box displayed when validating the startup dialog
 					"At least one NVDA modifier key must be set. "
-					"Caps lock will remain as an NVDA modifier key. "
+					"Caps lock will remain as an NVDA modifier key. ",
 				),
 				# Translators: The title of an error message box displayed when validating the startup dialog
 				_("Error"),
@@ -158,7 +158,7 @@ class WelcomeDialog(
 class LauncherDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The dialog that is displayed when NVDA is started from the launcher.
 	This displays the license and allows the user to install or create a portable copy of NVDA.
@@ -266,7 +266,7 @@ class LauncherDialog(
 
 class AskAllowUsageStatsDialog(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog   # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,   # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog asking if the user wishes to allow NVDA usage stats to be collected by NV Access."""
 	
@@ -286,7 +286,7 @@ class AskAllowUsageStatsDialog(
 			"certain NVDA configuration such as current synthesizer, braille display and braille table. "
 			"No spoken or braille content will be ever sent to NV Access. "
 			"Please refer to the User Guide for a current list of all data collected.\n\n"
-			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?"
+			"Do you wish to allow NV Access to periodically collect this data in order to improve NVDA?",
 		)
 		sText = sHelper.addItem(wx.StaticText(self, label=message))
 		# the wx.Window must be constructed before we can get the handle.
@@ -294,7 +294,7 @@ class AskAllowUsageStatsDialog(
 		self.scaleFactor = windowUtils.getWindowScalingFactor(self.GetHandle())
 		sText.Wrap(
 			# 600 was fairly arbitrarily chosen by a visual user to look acceptable on their machine.
-			self.scaleFactor * 600
+			self.scaleFactor * 600,
 		)
 
 		bHelper = sHelper.addDialogDismissButtons(gui.guiHelper.ButtonHelper(wx.HORIZONTAL))

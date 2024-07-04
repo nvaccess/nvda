@@ -118,7 +118,7 @@ def fixCOMRegistrations() -> None:
 	is64bit = winVer.processorArchitecture.endswith("64")
 	log.debug(
 		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, "
-		"{} bit.".format("64" if is64bit else "32")
+		"{} bit.".format("64" if is64bit else "32"),
 	)
 	# OLEACC (MSAA) proxies
 	apply32bitRegistryPatch(OLEACC_REG_FILE_PATH)

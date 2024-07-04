@@ -206,10 +206,11 @@ def isTextRangeOffscreen(textRange, visiRanges):
 		lastVisiRange = visiRanges.GetElement(visiLength - 1)
 		return textRange.CompareEndPoints(
 			UIAHandler.TextPatternRangeEndpoint_Start, firstVisiRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		) < 0 or textRange.CompareEndPoints(
 			UIAHandler.TextPatternRangeEndpoint_Start, lastVisiRange,
-			UIAHandler.TextPatternRangeEndpoint_End) >= 0
+			UIAHandler.TextPatternRangeEndpoint_End,
+  ) >= 0
 	else:
 		# Visible textRanges not available.
 		raise RuntimeError("Visible textRanges array is empty or invalid.")
@@ -328,19 +329,19 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 	# Therefore, if exactly one range is returned, it is almost definitely an IMPROVED console.
 	try:
 		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
-			hwnd, UIAHandler.handler.baseCacheRequest
+			hwnd, UIAHandler.handler.baseCacheRequest,
 		)
 		textAreaCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
 		textAreaCacheRequest.TreeScope = UIAHandler.TreeScope_Children
 		textAreaCacheRequest.treeFilter = UIAHandler.handler.clientObject.createPropertyCondition(
 			UIAHandler.UIA_AutomationIdPropertyId,
-			"Text Area"
+			"Text Area",
 		)
 		textArea = UIAElement.buildUpdatedCache(
-			textAreaCacheRequest
+			textAreaCacheRequest,
 		).getCachedChildren().GetElement(0)
 		UIATextPattern = textArea.GetCurrentPattern(
-			UIAHandler.UIA_TextPatternId
+			UIAHandler.UIA_TextPatternId,
 		).QueryInterface(UIAHandler.IUIAutomationTextPattern)
 		visiRanges = UIATextPattern.GetVisibleRanges()
 		if visiRanges.length == 1:
@@ -348,7 +349,7 @@ def _getConhostAPILevel(hwnd: int) -> WinConsoleAPILevel:
 			# information to UIA.
 			if isinstance(
 				visiRanges.GetElement(0).GetAttributeValue(UIAHandler.UIA_FontNameAttributeId),
-				str
+				str,
 			):
 				return WinConsoleAPILevel.FORMATTED
 			else:
@@ -383,7 +384,7 @@ def _isFrameworkIdWinForm(hwnd: int) -> bool:
 	"""
 	try:
 		UIAElement = UIAHandler.handler.clientObject.ElementFromHandleBuildCache(
-			hwnd, UIAHandler.handler.baseCacheRequest
+			hwnd, UIAHandler.handler.baseCacheRequest,
 		)
 		return UIAElement.cachedFrameworkID == "WinForm"
 	except COMError:

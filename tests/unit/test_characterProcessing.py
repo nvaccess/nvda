@@ -44,7 +44,7 @@ class TestComplex(unittest.TestCase):
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement="a"
+			replacement="a",
 		)
 		self.assertEqual(replaced, "a")
 
@@ -54,7 +54,7 @@ class TestComplex(unittest.TestCase):
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement=r"\\"
+			replacement=r"\\",
 		)
 		self.assertEqual(replaced, "\\")
 
@@ -64,7 +64,7 @@ class TestComplex(unittest.TestCase):
 		replaced = self._replace(
 			string="1",
 			pattern=r"(\d)",
-			replacement=r"\\\\"
+			replacement=r"\\\\",
 		)
 		self.assertEqual(replaced, r"\\")
 
@@ -76,7 +76,7 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement=r"\a"
+				replacement=r"\a",
 			)
 
 	def test_missing_group(self):
@@ -87,7 +87,7 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement=r"\2"
+				replacement=r"\2",
 			)
 
 	def test_unterminated_escape(self):
@@ -98,7 +98,7 @@ class TestComplex(unittest.TestCase):
 			self._replace(
 				string="1",
 				pattern=r"(\d)",
-				replacement="\\"
+				replacement="\\",
 			)
 
 	def test_group_replacements(self):
@@ -107,7 +107,7 @@ class TestComplex(unittest.TestCase):
 		replaced = self._replace(
 			string="bar.BAT",
 			pattern=r"(([a-z]*)\.([A-Z]*))",
-			replacement=r"\2>\1"
+			replacement=r"\2>\1",
 		)
 		self.assertEqual(replaced, "BAT>bar")
 
@@ -118,7 +118,7 @@ class TestComplex(unittest.TestCase):
 			string="bar.BAT",
 			pattern=r"(baz)|(?P<foo>([a-z]*)\.([A-Z]*))",
 			replacement=r"\2>\1",
-			name="foo"
+			name="foo",
 		)
 		self.assertEqual(replaced, "BAT>bar")
 
@@ -152,7 +152,7 @@ class TestUsingCLDR(unittest.TestCase):
 			# The real list is:
 			# 'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'mni', 'ne', 'te', 'th', 'ur'
 			# But 'mni' has only a few symbols in CLDR (and not the smiling face)
-			'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'ne', 'te', 'th', 'ur'
+			'af_ZA', 'am', 'as', 'gu', 'id', 'kok', 'ml', 'ne', 'te', 'th', 'ur',
 		]
 		for locale in languagesWithoutSymbolFile:
 			self.assertNotEqual(

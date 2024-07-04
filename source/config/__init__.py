@@ -88,7 +88,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "addConfigDirsToPythonPackagePath" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"addConfigDirsToPythonPackagePath is deprecated, "
-			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
+			"use addonHandler.packaging.addDirsToPythonPackagePath instead.",
 		)
 		from addonHandler.packaging import addDirsToPythonPackagePath
 		return addDirsToPythonPackagePath
@@ -147,18 +147,18 @@ def isInstalledCopy() -> bool:
 	try:
 		k = winreg.OpenKey(
 			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.INSTALLED_COPY.value
+			RegistryKey.INSTALLED_COPY.value,
 		)
 	except FileNotFoundError:
 		log.debug(
 			f"Unable to find isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}"
-			"- this is not an installed copy."
+			"- this is not an installed copy.",
 		)
 		return False
 	except WindowsError:
 		log.error(
 			f"Unable to open isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -167,7 +167,7 @@ def isInstalledCopy() -> bool:
 	except FileNotFoundError:
 		log.debug(
 			f"Unable to find UninstallDirectory value for {RegistryKey.INSTALLED_COPY}"
-			"- this may not be an installed copy."
+			"- this may not be an installed copy.",
 		)
 		return False
 	except WindowsError:
@@ -181,7 +181,7 @@ def isInstalledCopy() -> bool:
 		log.error(
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -299,13 +299,13 @@ def getStartAfterLogon() -> bool:
 	except FileNotFoundError:
 		log.debugWarning(
 			f"Unable to find run registry key {RegistryKey.RUN}",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 	except WindowsError:
 		log.error(
 			f"Unable to open run registry key {RegistryKey.RUN}",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -323,7 +323,7 @@ def getStartAfterLogon() -> bool:
 	except WindowsError:
 		log.error(
 			"Failed to access the start after logon directory.",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 	
@@ -335,7 +335,7 @@ def getStartAfterLogon() -> bool:
 	except WindowsError:
 		log.error(
 			"Failed to access the current running NVDA directory.",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -364,7 +364,7 @@ def setStartAfterLogon(enable: bool) -> None:
 	except FileNotFoundError:
 		log.debug(
 			"The run registry key is not set for setStartAfterLogon."
-			"This is expected since ease of access is used"
+			"This is expected since ease of access is used",
 		)
 		return
 	try:
@@ -372,7 +372,7 @@ def setStartAfterLogon(enable: bool) -> None:
 	except WindowsError:
 		log.error(
 			"Couldn't unset registry key for nvda to start after logon.",
-			exc_info=True
+			exc_info=True,
 		)
 
 
@@ -476,7 +476,7 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		if systemUtils.execElevated(
 			SLAVE_FILENAME,
 			("config_setStartOnLogonScreen", "%d" % enable),
-			wait=True
+			wait=True,
 		) != 0:
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
@@ -527,7 +527,7 @@ class ConfigManager(object):
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
 		self.validator: Validator = Validator({
-			"_featureFlag": _validateConfig_featureFlag
+			"_featureFlag": _validateConfig_featureFlag,
 		})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
@@ -785,8 +785,10 @@ class ConfigManager(object):
 		# Remove any triggers associated with this profile.
 		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
-		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.items()
-			if trigProfile == name]
+		delTrigs = [
+      trigSpec for trigSpec, trigProfile in allTriggers.items()
+      if trigProfile == name
+  ]
 		if delTrigs:
 			for trigSpec in delTrigs:
 				del allTriggers[trigSpec]
@@ -1069,7 +1071,7 @@ class AggregatedSection:
 			manager: ConfigManager,
 			path: Tuple[str],
 			spec: ConfigObj,
-			profiles: List[ConfigObj]
+			profiles: List[ConfigObj],
 	):
 		self.manager = manager
 		self.path = path
@@ -1086,7 +1088,7 @@ class AggregatedSection:
 	def __getitem__(
 			self,
 			key: aggregatedSection._cacheKeyT,
-			checkValidity: bool = True
+			checkValidity: bool = True,
 	):
 		# Try the cache first.
 		try:
@@ -1228,7 +1230,7 @@ class AggregatedSection:
 	def __setitem__(
 			self,
 			key: aggregatedSection._cacheKeyT,
-			val: aggregatedSection._cacheValueT
+			val: aggregatedSection._cacheValueT,
 	):
 		spec = self._spec.get(key) if self.spec else None
 		if self._isSection(spec) and not self._isSection(val):
@@ -1359,8 +1361,10 @@ class ProfileTrigger(object):
 		try:
 			conf._triggerProfileEnter(self)
 		except:  # noqa: E722
-			log.error("Error entering trigger %s, profile %s"
-				% (self.spec, self.profileName), exc_info=True)
+			log.error(
+       "Error entering trigger %s, profile %s"
+       % (self.spec, self.profileName), exc_info=True,
+   )
 	__enter__ = enter
 
 	def exit(self):
@@ -1372,8 +1376,10 @@ class ProfileTrigger(object):
 		try:
 			conf._triggerProfileExit(self)
 		except:  # noqa: E722
-			log.error("Error exiting trigger %s, profile %s"
-				% (self.spec, self.profileName), exc_info=True)
+			log.error(
+       "Error exiting trigger %s, profile %s"
+       % (self.spec, self.profileName), exc_info=True,
+   )
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()

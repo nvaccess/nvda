@@ -64,7 +64,7 @@ class AppModule(appModuleHandler.AppModule):
 			log.debugWarning(
 				"LockApp is being initialized but NVDA does not expect Windows to be locked. "
 				"DynamicNVDAObjectType may have failed to apply LockScreenObject. "
-				"This means session lock state tracking has failed. "
+				"This means session lock state tracking has failed. ",
 			)
 			clsList.insert(0, LockScreenObject)
 
@@ -83,7 +83,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not scriptShouldRun:
 			log.error(
 				"scriptHandler failed to block script when Windows is locked. "
-				"This means session lock state tracking has failed. "
+				"This means session lock state tracking has failed. ",
 			)
 		return scriptShouldRun
 

@@ -55,7 +55,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 	supportedSettings = []
 	supportedNotifications = {
 		synthDriverHandler.synthIndexReached,
-		synthDriverHandler.synthDoneSpeaking
+		synthDriverHandler.synthDoneSpeaking,
 	}
 	POLL_INTERVAL_SECS = 0.3
 
@@ -91,7 +91,7 @@ class SpeechSpySynthDriver(synthDriverHandler.SynthDriver):
 				try:
 					speechSequence = self._queuedSpeech.get(
 						block=True,
-						timeout=self.POLL_INTERVAL_SECS  # interruptable so that NVDA can exit.
+						timeout=self.POLL_INTERVAL_SECS,  # interruptable so that NVDA can exit.
 					)
 				except queue.Empty:
 					if self._speechStarted:

@@ -43,7 +43,7 @@ MODELS = {
 #  beginning/end of the display are used as status cells, and an extra blank cell to separate status
 #  from normal cells. These devices require a special translation table: L{FOCUS_1_TRANSLATION_TABLE}
 #  This line of displays is known as the first generation Focus displays.
-FOCUS_1_CELL_COUNTS = (44, 70, 84,)
+FOCUS_1_CELL_COUNTS = (44, 70, 84)
 
 # Packet types
 #: Query the display for information such as manufacturer, model and firmware version
@@ -148,7 +148,7 @@ def _translate(cells, translationTable):
 
 #: Dots table used by first generation Focus displays
 FOCUS_1_DOTS_TABLE = [
-	0X01, 0X02, 0X04, 0X10, 0X20, 0X40, 0X08, 0X80
+	0X01, 0X02, 0X04, 0X10, 0X20, 0X40, 0X08, 0X80,
 ]
 
 #: Braille translation table used by first generation Focus displays
@@ -170,32 +170,40 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	wizWheelActions = [
 		# Translators: The name of a key on a braille display, that scrolls the display
 		# to show previous/next part of a long line.
-		(_("display scroll"), ("globalCommands", "GlobalCommands", "braille_scrollBack"),
-			("globalCommands", "GlobalCommands", "braille_scrollForward")),
+		(
+      _("display scroll"), ("globalCommands", "GlobalCommands", "braille_scrollBack"),
+      ("globalCommands", "GlobalCommands", "braille_scrollForward"),
+  ),
 		# Translators: The name of a key on a braille display, that scrolls the display to show the next/previous line.
-		(_("line scroll"), ("globalCommands", "GlobalCommands", "braille_previousLine"),
-			("globalCommands", "GlobalCommands", "braille_nextLine")),
+		(
+      _("line scroll"), ("globalCommands", "GlobalCommands", "braille_previousLine"),
+      ("globalCommands", "GlobalCommands", "braille_nextLine"),
+  ),
 	]
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.CUSTOM, {
-			"VID_0F4E&PID_0100",  # Focus 1
-			"VID_0F4E&PID_0111",  # PAC Mate
-			"VID_0F4E&PID_0112",  # Focus 2
-			"VID_0F4E&PID_0114",  # Focus Blue
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.CUSTOM, {
+       "VID_0F4E&PID_0100",  # Focus 1
+       "VID_0F4E&PID_0111",  # PAC Mate
+       "VID_0F4E&PID_0112",  # Focus 2
+       "VID_0F4E&PID_0114",  # Focus Blue
+      },
+  )
 
-		driverRegistrar.addBluetoothDevices(lambda m: (
-			any(
-				m.id.startswith(prefix)
-				for prefix in (
-					"F14", "Focus 14 BT",
-					"Focus 40 BT",
-					"Focus 80 BT",
-				)
-			)
-		))
+		driverRegistrar.addBluetoothDevices(
+      lambda m: (
+       any(
+        m.id.startswith(prefix)
+        for prefix in (
+         "F14", "Focus 14 BT",
+         "Focus 40 BT",
+         "Focus 80 BT",
+        )
+       )
+      ),
+  )
 
 	def __init__(self, port="auto"):
 		self.numCells = 0
@@ -228,7 +236,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						epOut=0,
 						onReceive=self._onReceive,
 						onReceiveSize=56,
-						onReadError=self._handleReadError
+						onReadError=self._handleReadError,
 					)
 				else:
 					self._dev = hwIo.Serial(
@@ -237,7 +245,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						parity=PARITY,
 						timeout=self.timeout,
 						writeTimeout=self.timeout,
-						onReceive=self._onReceive
+						onReceive=self._onReceive,
 					)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
@@ -252,8 +260,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 			if self.numCells and self._model:
 				# A display responded.
-				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._model, type=portType, port=port))
+				log.info(
+        "Found {device} connected via {type} ({port})".format(
+        device=self._model, type=portType, port=port,
+        ),
+    )
 				break
 			self._dev.close()
 
@@ -261,10 +272,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			raise RuntimeError("No Freedom Scientific display found")
 
 		self._configureDisplay()
-		self.gestureMap.add("br(freedomScientific):topRouting1",
-			"globalCommands", "GlobalCommands", "braille_scrollBack")
-		self.gestureMap.add("br(freedomScientific):topRouting%d" % self.numCells,
-			"globalCommands", "GlobalCommands", "braille_scrollForward")
+		self.gestureMap.add(
+      "br(freedomScientific):topRouting1",
+      "globalCommands", "GlobalCommands", "braille_scrollBack",
+  )
+		self.gestureMap.add(
+      "br(freedomScientific):topRouting%d" % self.numCells,
+      "globalCommands", "GlobalCommands", "braille_scrollForward",
+  )
 		self._restarting = False
 
 	def terminate(self):
@@ -281,7 +296,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			arg1: bytes = FS_BYTE_NULL,
 			arg2: bytes = FS_BYTE_NULL,
 			arg3: bytes = FS_BYTE_NULL,
-			data: bytes = FS_DATA_EMPTY
+			data: bytes = FS_DATA_EMPTY,
 	):
 		"""Send a packet to the display
 		@param packetType: Type of packet (first byte), use one of the FS_PKT constants
@@ -330,7 +345,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			payload: bytes = data.read(length)
 			checksum: int = ord(data.read(1))
 			calculatedChecksum = BrailleDisplayDriver._calculateChecksum(
-				packetType + arg1 + arg2 + arg3 + payload
+				packetType + arg1 + arg2 + arg3 + payload,
 			)
 			assert calculatedChecksum == checksum, "Checksum mismatch, expected %s but got %s" % (checksum, payload[-1])
 		else:
@@ -350,7 +365,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		return False
 
 	def _handlePacket(
-			self, packetType: bytes, arg1: bytes, arg2: bytes, arg3: bytes, payload: bytes
+			self, packetType: bytes, arg1: bytes, arg2: bytes, arg3: bytes, payload: bytes,
 	):
 		"""Handle a packet from the device"
 
@@ -386,15 +401,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._handleAck()
 		elif packetType == FS_PKT_INFO:
 			manuBytes = payload[INFO_MANU_START:INFO_MANU_END].replace(
-					FS_BYTE_NULL, b""
+					FS_BYTE_NULL, b"",
 			)
 			self._manufacturer = manuBytes.decode()
 			modelBytes = payload[INFO_MODEL_START:INFO_MODEL_END].replace(
-				FS_BYTE_NULL, b""
+				FS_BYTE_NULL, b"",
 			)
 			self._model = modelBytes.decode()
 			firmwareBytes = payload[INFO_VERSION_START:INFO_VERSION_END].replace(
-				FS_BYTE_NULL, b""
+				FS_BYTE_NULL, b"",
 			)
 			self._firmwareVersion = firmwareBytes.decode()
 			self.numCells = MODELS.get(self._model, 0)
@@ -403,7 +418,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				self.translationTable = FOCUS_1_TRANSLATION_TABLE
 			log.debug(
 				"Device info: manufacturer: %s model: %s, version: %s",
-				self._manufacturer, self._model, self._firmwareVersion
+				self._manufacturer, self._model, self._firmwareVersion,
 			)
 		elif packetType == FS_PKT_WHEEL:
 			threeLeastSigBitsMask = 0x7
@@ -416,7 +431,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					(False, False),
 					(True, False),
 					(True, True),
-					(False, True)
+					(False, True),
 				][wheelNumber]
 			except IndexError:
 				log.debugWarning("wheelNumber unknown")
@@ -529,7 +544,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				intToByte(self.numCells),
 				FS_BYTE_NULL,
 				FS_BYTE_NULL,
-				bytes(cells)
+				bytes(cells),
 			)
 			self._pendingCells = []
 		else:
@@ -541,8 +556,10 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			return
 		if self._model.startswith("Focus") and ord(self._firmwareVersion[0]) >= ord("3"):
 			# Focus 2 or later. Make sure extended keys support is enabled.
-			log.debug("Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.",
-				self._model, self._firmwareVersion)
+			log.debug(
+       "Activating extended keys on freedom Scientific display. Display name: %s, firmware version: %s.",
+       self._model, self._firmwareVersion,
+   )
 			self._sendPacket(FS_PKT_CONFIG, FS_CFG_EXTKEY)
 
 	def script_toggleLeftWizWheelAction(self, _gesture):
@@ -569,13 +586,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	gestureMap = inputCore.GlobalGestureMap({
 		"globalCommands.GlobalCommands": {
 			"braille_routeTo": ("br(freedomScientific):routing",),
-			"braille_scrollBack": ("br(freedomScientific):leftAdvanceBar",
-				"br(freedomScientific):leftBumperBarUp", "br(freedomScientific):rightBumperBarUp",),
-			"braille_scrollForward": ("br(freedomScientific):rightAdvanceBar",
-				"br(freedomScientific):leftBumperBarDown", "br(freedomScientific):rightBumperBarDown",),
+			"braille_scrollBack": (
+       "br(freedomScientific):leftAdvanceBar",
+       "br(freedomScientific):leftBumperBarUp", "br(freedomScientific):rightBumperBarUp",
+   ),
+			"braille_scrollForward": (
+       "br(freedomScientific):rightAdvanceBar",
+       "br(freedomScientific):leftBumperBarDown", "br(freedomScientific):rightBumperBarDown",
+   ),
 			"braille_previousLine":
-				("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp",),
-			"braille_nextLine": ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown",),
+				("br(freedomScientific):leftRockerBarUp", "br(freedomScientific):rightRockerBarUp"),
+			"braille_nextLine": ("br(freedomScientific):leftRockerBarDown", "br(freedomScientific):rightRockerBarDown"),
 			"kb:shift+tab": ("br(freedomScientific):dot1+dot2+brailleSpaceBar",),
 			"kb:tab": ("br(freedomScientific):dot4+dot5+brailleSpaceBar",),
 			"kb:upArrow": ("br(freedomScientific):dot1+brailleSpaceBar",),
@@ -610,7 +631,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"braille_toggleNVDAKeyShift": ("br(freedomscientific):dot5+dot7+dot8+brailleSpaceBar",),
 			"braille_toggleControlAlt": ("br(freedomscientific):dot3+dot6+dot8+brailleSpaceBar",),
 			"braille_toggleControlAltShift": ("br(freedomscientific):dot3+dot6+dot7+dot8+brailleSpaceBar",),
-		}
+		},
 	})
 
 # pylint: disable=abstract-method

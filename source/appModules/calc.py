@@ -16,9 +16,10 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName=obj.windowClassName
 		windowControlID=obj.windowControlID
-		if ((windowClassName=="Edit" and windowControlID==403)
-			or (windowClassName=="Static" and windowControlID==150)
-		):
+		if (
+      (windowClassName=="Edit" and windowControlID==403)
+       or (windowClassName=="Static" and windowControlID==150)
+  ):
 			clsList.insert(0, Display)
 
 

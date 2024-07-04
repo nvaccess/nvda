@@ -49,7 +49,7 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 		pythonImports=[  # relative to the python path
 			r"robotremoteserver",
 		],
-		libsDest=spyPackageLibsDir
+		libsDest=spyPackageLibsDir,
 	)
 
 	try:
@@ -60,23 +60,23 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 			pythonImports=[  # relative to the python path
 				"xmlrpc",
 			],
-			libsDest=spyPackageLibsDir
+			libsDest=spyPackageLibsDir,
 		)
 
 	# install the global plugin
 	# Despite duplication, specify full paths for clarity.
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "speechSpyGlobalPlugin.py"),
-		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin", "__init__.py")
+		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin", "__init__.py"),
 	)
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "blockUntilConditionMet.py"),
-		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin")
+		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin"),
 	)
 	# install the test spy speech synth
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "speechSpySynthDriver.py"),
-		_pJoin(scratchPadDir, "synthDrivers", "speechSpySynthDriver.py")
+		_pJoin(scratchPadDir, "synthDrivers", "speechSpySynthDriver.py"),
 	)
 
 
@@ -101,18 +101,18 @@ def setupProfile(
 	opSys.copy_file(
 		# Despite duplication, specify full paths for clarity.
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
-		_pJoin(stagingDir, "nvdaProfile", "nvda.ini")
+		_pJoin(stagingDir, "nvdaProfile", "nvda.ini"),
 	)
 	if gesturesFileName is not None:
 		opSys.copy_file(
 			# Despite duplication, specify full paths for clarity.
 			_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", gesturesFileName),
-			_pJoin(stagingDir, "nvdaProfile", "gestures.ini")
+			_pJoin(stagingDir, "nvdaProfile", "gestures.ini"),
 		)
 	# create a package to use as the globalPlugin
 	_installSystemTestSpyToScratchPad(
 		repoRoot,
-		_pJoin(stagingDir, "nvdaProfile", "scratchpad")
+		_pJoin(stagingDir, "nvdaProfile", "scratchpad"),
 	)
 
 
@@ -124,5 +124,5 @@ def teardownProfile(stagingDir: str):
 	builtIn.log("Cleaning up NVDA profile", level='DEBUG')
 	opSys.remove_directory(
 		_pJoin(stagingDir, "nvdaProfile"),
-		recursive=True
+		recursive=True,
 	)

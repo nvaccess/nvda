@@ -122,13 +122,13 @@ class test_synthDriverHandler(unittest.TestCase):
 	def test_synthChangedExtensionPoint(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			audioOutputDevice="default"
+			audioOutputDevice="default",
 		)
 
 		with actionTester(
 			self,
 			synthDriverHandler.synthChanged,
 			useAssertDictContainsSubset=True,
-			**expectedKwargs
+			**expectedKwargs,
 		):
 			synthDriverHandler.setSynth("auto")

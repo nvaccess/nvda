@@ -91,7 +91,7 @@ def _prepareForFindByAttributes(attribs):
 				optRegexp.append(r")\b(?:\\;|[^;])*;")
 			else:
 				# Assume all are exact matches or None (must not exist).
-				optRegexp.append("(?:" )
+				optRegexp.append("(?:")
 				optRegexp.append("|".join((escape(val)+u';') if val is not None else u';' for val in values))
 				optRegexp.append(")")
 		regexp.append("".join(optRegexp))
@@ -128,8 +128,10 @@ class VirtualBufferQuickNavItem(browseMode.TextInfoQuickNavItem):
 	def isChild(self,parent): 
 		if self.itemType == "heading":
 			try:
-				if (int(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])["level"])
-						> int(parent.textInfo._getControlFieldAttribs(parent.vbufFieldIdentifier[0], parent.vbufFieldIdentifier[1])["level"])):
+				if (
+        int(self.textInfo._getControlFieldAttribs(self.vbufFieldIdentifier[0], self.vbufFieldIdentifier[1])["level"])
+        > int(parent.textInfo._getControlFieldAttribs(parent.vbufFieldIdentifier[0], parent.vbufFieldIdentifier[1])["level"])
+    ):
 					return True
 			except (KeyError, ValueError, TypeError):
 				return False
@@ -246,7 +248,8 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo,textInfos.offs
 		try:
 			start, end = self._getOffsetsFromFieldIdentifier(
 				int(attrs.get('controlIdentifier_docHandle')),
-				int(attrs.get('controlIdentifier_ID')))
+				int(attrs.get('controlIdentifier_ID')),
+   )
 		except (LookupError, ValueError):
 			log.debugWarning("unable to get offsets used to fetch content")
 			return placeholder
@@ -476,7 +479,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			self.VBufHandle=NVDAHelper.localLib.VBuf_createBuffer(
 				self.rootNVDAObject.appModule.helperLocalBindingHandle,
 				self.rootDocHandle,self.rootID,
-				self.backendName
+				self.backendName,
 			)
 			if not self.VBufHandle:
 				raise RuntimeError("Could not remotely create virtualBuffer")
@@ -485,9 +488,12 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone, success=False)
 			return
 		if log.isEnabledFor(log.DEBUG):
-			log.debug("Buffer load took %.3f sec, %d chars" % (
-				time.time() - startTime,
-				NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle)))
+			log.debug(
+       "Buffer load took %.3f sec, %d chars" % (
+       time.time() - startTime,
+       NVDAHelper.localLib.VBuf_getTextLength(self.VBufHandle),
+       ),
+   )
 		queueHandler.queueFunction(queueHandler.eventQueue, self._loadBufferDone)
 
 	def _loadBufferDone(self, success=True):
@@ -593,7 +599,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 	@script(
 		description=_(
 			# Translators: the description for the toggleScreenLayout script on virtualBuffers.
-			"Toggles on and off if the screen layout is preserved while rendering the document content"
+			"Toggles on and off if the screen layout is preserved while rendering the document content",
 		),
 		gesture="kb:NVDA+v",
 	)
@@ -667,7 +673,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			axis: documentBase._Axis,
 	) -> textInfos.TextInfo:
 		tableID, origRow, origCol, origRowSpan, origColSpan = (
-			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan
+			cell.tableID, cell.row, cell.col, cell.rowSpan, cell.colSpan,
 		)
 		# Determine destination row and column.
 		destRow = origRow
@@ -779,8 +785,10 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			docHandle, objId = self.getIdentifierFromNVDAObject(obj)
 		except:  # noqa: E722
-			log.debugWarning("getIdentifierFromNVDAObject failed. "
-				"Object probably died while walking ancestors.", exc_info=True)
+			log.debugWarning(
+       "getIdentifierFromNVDAObject failed. "
+       "Object probably died while walking ancestors.", exc_info=True,
+   )
 			return None
 		node = VBufRemote_nodeHandle_t()
 		if not self.VBufHandle:

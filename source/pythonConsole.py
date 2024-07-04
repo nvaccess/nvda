@@ -285,7 +285,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 
 class ConsoleUI(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA Python console GUI.
 	"""
@@ -405,9 +405,11 @@ class ConsoleUI(
 				# Only show text after the last dot (so as to not keep repeting the class or module in the context menu)
 				label=comp.rsplit('.',1)[-1]
 				item = menu.Append(wx.ID_ANY, label)
-				self.Bind(wx.EVT_MENU,
-					lambda evt, completion=comp: self._insertCompletion(original, completion),
-					item)
+				self.Bind(
+        wx.EVT_MENU,
+        lambda evt, completion=comp: self._insertCompletion(original, completion),
+        item,
+    )
 			self.PopupMenu(menu)
 			menu.Destroy()
 			return True

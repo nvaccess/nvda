@@ -27,12 +27,12 @@ from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
 	UIADocumentWithTableNavigation,
 	UIATextAttributeQuicknavIterator,
-	TextAttribUIATextInfoQuickNavItem
+	TextAttribUIATextInfoQuickNavItem,
 )
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
-	WordDocumentTextInfo as LegacyWordDocumentTextInfo
+	WordDocumentTextInfo as LegacyWordDocumentTextInfo,
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
@@ -56,14 +56,15 @@ END_OF_ROW_MARK = '\x07'
 
 class ElementsListDialog(browseMode.ElementsListDialog):
 
-	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
-		# Translators: The label of a radio button to select the type of element
-		# in the browse mode Elements List dialog.
-		("annotation", _("&Annotations")),
-		# Translators: The label of a radio button to select the type of element
-		# in the browse mode Elements List dialog.
-		("error", _("&Errors")),
-	)
+	ELEMENT_TYPES=(
+     browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+      # Translators: The label of a radio button to select the type of element
+      # in the browse mode Elements List dialog.
+      ("annotation", _("&Annotations")),
+      # Translators: The label of a radio button to select the type of element
+      # in the browse mode Elements List dialog.
+      ("error", _("&Errors")),
+ )
 
 class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
@@ -113,7 +114,7 @@ def getCommentInfoFromPosition(position):
 				not obj.parent
 				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
 				or not obj.parent.UIAElement.getCurrentPropertyValue(
-					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId
+					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId,
 				)
 			):
 				continue
@@ -137,7 +138,7 @@ def getPresentableCommentInfoFromPosition(commentInfo):
 
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
 	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues={UIAHandler.AnnotationType_Comment,}
+	wantedAttribValues={UIAHandler.AnnotationType_Comment}
 
 	@property
 	def label(self):
@@ -207,7 +208,7 @@ class WordDocumentTextInfo(UIATextInfo):
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
-			endOfNode=endOfNode
+			endOfNode=endOfNode,
 		)
 		if automationId.startswith('UIA_AutomationId_Word_Page_'):
 			field['page-number'] = automationId.rsplit('_', 1)[-1]
@@ -293,7 +294,7 @@ class WordDocumentTextInfo(UIATextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None
+		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell
@@ -429,13 +430,13 @@ class WordDocumentTextInfo(UIATextInfo):
 			docElement = self.obj.UIAElement
 			if formatConfig['reportLineNumber']:
 				lineNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.LINE_NUMBER
+					docElement, textRange, UIACustomAttributeID.LINE_NUMBER,
 				)
 				if isinstance(lineNumber, int):
 					formatField.field['line-number'] = lineNumber
 			if formatConfig['reportPage']:
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER
+					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER,
 				)
 				if isinstance(sectionNumber, int):
 					formatField.field['section-number'] = sectionNumber
@@ -444,7 +445,7 @@ class WordDocumentTextInfo(UIATextInfo):
 					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
 					# This should only be reenabled for versions identified not to crash.
 					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
-						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER,
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field['text-column-number'] = textColumnNumber
@@ -519,10 +520,10 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			self,
 			kind: str,
 			direction: documentBase._Movement = documentBase._Movement.NEXT,
-			pos: textInfos.TextInfo | None = None
+			pos: textInfos.TextInfo | None = None,
 	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError(
-			"word textInfos are not supported due to multiple issues with them - #16569"
+			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
 
 
@@ -627,18 +628,22 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 
 	@script(gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self, gesture):
-		ui.message(_(
-			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
-			# headers.
-			"Command not supported in this type of document. "
-			"The tables have their first row cells automatically set as column headers."
-		))
+		ui.message(
+      _(
+       # Translators: The message reported in Microsoft Word for document types not supporting setting custom
+       # headers.
+       "Command not supported in this type of document. "
+       "The tables have their first row cells automatically set as column headers.",
+      ),
+  )
 
 	@script(gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self, gesture):
-		ui.message(_(
-			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
-			# headers.
-			"Command not supported in this type of document. "
-			"The tables have their first column cells automatically set as row headers."
-		))
+		ui.message(
+      _(
+       # Translators: The message reported in Microsoft Word for document types not supporting setting custom
+       # headers.
+       "Command not supported in this type of document. "
+       "The tables have their first column cells automatically set as row headers.",
+      ),
+  )

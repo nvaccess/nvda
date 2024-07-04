@@ -72,7 +72,7 @@ def _GetWindows(
 
 def _GetVisibleWindows() -> List[Window]:
 	return _GetWindows(
-		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title)
+		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title),
 	)
 
 
@@ -81,9 +81,11 @@ def CloseWindow(window: Window) -> bool:
 	@return: True if the window exists and the message was sent.
 	"""
 	if windowWithHandleExists(window.hwndVal):
-		return bool(windll.user32.CloseWindow(
-			window.hwndVal,
-		))
+		return bool(
+      windll.user32.CloseWindow(
+       window.hwndVal,
+      ),
+  )
 	return False
 
 
@@ -111,7 +113,7 @@ def SetForegroundWindow(window: Window, logger: Logger) -> bool:
 
 def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
 	windows = _GetWindows(
-		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title))
+		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title)),
 	)
 	if len(windows) == 1:
 		logger(f"Found window (HWND: {windows[0].hwndVal}) (title: {windows[0].title})")

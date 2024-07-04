@@ -294,8 +294,10 @@ class TouchHandler(threading.Thread):
 		@param obj: The NVDAObject with which the user is interacting.
 		@type obj: L{NVDAObjects.NVDAObject}
 		"""
-		oledll.oleacc.AccNotifyTouchInteraction(gui.mainFrame.Handle, obj.windowHandle,  # noqa: F405
-			obj.location.center.toPOINT())
+		oledll.oleacc.AccNotifyTouchInteraction(
+      gui.mainFrame.Handle, obj.windowHandle,  # noqa: F405
+      obj.location.center.toPOINT(),
+  )
 
 handler=None
 
@@ -342,7 +344,7 @@ def initialize():
 	if not touchSupported(debugLog=True):
 		raise NotImplementedError
 	log.debug(
-		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES)
+		"Touchscreen detected, maximum touch inputs: %d" % winUser.user32.GetSystemMetrics(SM_MAXIMUMTOUCHES),
 	)
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 	setTouchSupport(config.conf["touch"]["enabled"])

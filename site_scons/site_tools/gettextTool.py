@@ -22,8 +22,10 @@ def exists(env):
 
 def generate(env):
 	env['BUILDERS']['gettextMoFile']=env.Builder(
-		action=env.Action([[MSGFMT,"-o","$TARGET","$SOURCE"]],
-			lambda t,s,e: 'Compiling gettext template %s'%s[0].path),
+		action=env.Action(
+      [[MSGFMT,"-o","$TARGET","$SOURCE"]],
+      lambda t,s,e: 'Compiling gettext template %s'%s[0].path,
+  ),
 		suffix='.mo',
-		src_suffix='.po'
+		src_suffix='.po',
 	)

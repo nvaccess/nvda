@@ -105,7 +105,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds - _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds - _FakeTimer.POLL_INTERVAL,
 			),
 			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
 		)
@@ -113,7 +113,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 		timeElapsed = self._timer.time()
 		self.assertTrue(
 			success,
-			msg=f"Test condition failed unexpectedly due to timeout. Elapsed time: {timeElapsed:.2f}s"
+			msg=f"Test condition failed unexpectedly due to timeout. Elapsed time: {timeElapsed:.2f}s",
 		)
 		self.assertGreater(giveUpAfterSeconds, timeElapsed)
 
@@ -123,14 +123,14 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds + _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds + _FakeTimer.POLL_INTERVAL,
 			),
 			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
 		)
 		timeElapsed = self._timer.time()
 		self.assertFalse(
 			success,
-			msg=f"Test condition succeeded unexpectedly before timeout. Elapsed time: {timeElapsed:.2f}s"
+			msg=f"Test condition succeeded unexpectedly before timeout. Elapsed time: {timeElapsed:.2f}s",
 		)
 		self.assertGreaterEqual(timeElapsed, giveUpAfterSeconds)
 

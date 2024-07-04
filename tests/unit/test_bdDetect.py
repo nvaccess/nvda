@@ -17,12 +17,12 @@ class TestBdDetectExtensionPoints(unittest.TestCase):
 	"""A test for the extension points on the bdDetect module."""
 
 	def test_scanForDevices(self):
-		kwargs = dict(usb=False, bluetooth=False, limitToDevices=["noBraille"],)
+		kwargs = dict(usb=False, bluetooth=False, limitToDevices=["noBraille"])
 		with chainTester(
 			self,
 			bdDetect.scanForDevices,
 			[("noBraille", bdDetect.DeviceMatch("", "", "", {}))],
-			**kwargs
+			**kwargs,
 		):
 			braille.handler._enableDetection(**kwargs)
 			# wait for the detector to be terminated.

@@ -17,7 +17,7 @@ from .base import (  # noqa: F401
 	Bulk,
 	boolToByte,
 	intToByte,
-	getByte
+	getByte,
 )
 from .hid import Hid  # noqa: F401
 from .ioThread import IoThread

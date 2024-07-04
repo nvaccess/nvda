@@ -105,7 +105,7 @@ class MSHTMLTextInfo(VirtualBufferTextInfo):
 		#Priority is aria role -> HTML tag name -> IAccessible role
 		role = next(
 			(aria.ariaRolesToNVDARoles[ar] for ar in ariaRoles if ar in aria.ariaRolesToNVDARoles),
-			controlTypes.Role.UNKNOWN
+			controlTypes.Role.UNKNOWN,
 		)
 		if role == controlTypes.Role.UNKNOWN and nodeName:
 			role=NVDAObjects.IAccessible.MSHTML.nodeNamesToNVDARoles.get(nodeName,controlTypes.Role.UNKNOWN)
@@ -368,15 +368,17 @@ class MSHTML(VirtualBuffer):
 				{"HTMLAttrib::role": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
 				{
 					"HTMLAttrib::role": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
-				{"IHTMLDOMNode::nodeName": [
-					VBufStorage_findMatch_word(node.upper()) for node, lr in aria.htmlNodeNameToAriaRoles.items()
-					if lr in aria.landmarkRoles
-				]},
+				{
+        "IHTMLDOMNode::nodeName": [
+         VBufStorage_findMatch_word(node.upper()) for node, lr in aria.htmlNodeNameToAriaRoles.items()
+         if lr in aria.landmarkRoles
+        ],
+    },
 				{
 					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("SECTION")],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 			]
 		elif nodeType == "article":
@@ -390,11 +392,11 @@ class MSHTML(VirtualBuffer):
 					"HTMLAttrib::role": [
 						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
 					],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 				{
 					"IHTMLDOMNode::nodeName": [VBufStorage_findMatch_word("FIELDSET")],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 			]
 		elif nodeType == "tab":

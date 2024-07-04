@@ -141,7 +141,7 @@ def _isWindowsLocked() -> bool:
 	if _lockStateTracker is None:
 		log.error(
 			"_TrackNVDAInitialization.markInitializationComplete was called "
-			"before sessionTracking.initialize"
+			"before sessionTracking.initialize",
 		)
 		return False
 	return _lockStateTracker.isWindowsLocked
@@ -182,7 +182,7 @@ def _isWindowsLocked_checkViaSessionQuery() -> bool:
 	if sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_UNKNOWN:
 		log.error(
 			"Unable to determine lock state via Session Query."
-			f" Lock state value: {sessionQueryLockState!r}"
+			f" Lock state value: {sessionQueryLockState!r}",
 		)
 		return False
 	return sessionQueryLockState == WTS_LockState.WTS_SESSIONSTATE_LOCK
@@ -240,11 +240,11 @@ def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 			raise RuntimeError(f"Failure calling WTSQuerySessionInformationW: {res}")
 		elif ctypes.sizeof(WTSINFOEXW) != pBytesReturned.value:
 			raise RuntimeError(
-				f"Returned data size failure, got {pBytesReturned.value}, expected {ctypes.sizeof(WTSINFOEXW)}"
+				f"Returned data size failure, got {pBytesReturned.value}, expected {ctypes.sizeof(WTSINFOEXW)}",
 			)
 		info = ctypes.cast(
 			ppBuffer,
-			_WTS_INFO_POINTER_T
+			_WTS_INFO_POINTER_T,
 		)
 		if (
 			not info.contents
@@ -254,7 +254,7 @@ def _getCurrentSessionInfoEx() -> Optional[_WTS_INFO_POINTER_T]:
 			# https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexa
 		):
 			raise RuntimeError(
-				f"Unexpected Level data, got {info.contents.Level}."
+				f"Unexpected Level data, got {info.contents.Level}.",
 			)
 		return info
 	except Exception as e:

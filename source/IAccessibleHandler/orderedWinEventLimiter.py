@@ -14,7 +14,7 @@ MENU_EVENTIDS = (
 	winUser.EVENT_SYSTEM_MENUSTART,
 	winUser.EVENT_SYSTEM_MENUEND,
 	winUser.EVENT_SYSTEM_MENUPOPUPSTART,
-	winUser.EVENT_SYSTEM_MENUPOPUPEND
+	winUser.EVENT_SYSTEM_MENUPOPUPEND,
 )
 
 
@@ -47,7 +47,7 @@ class OrderedWinEventLimiter(object):
 			window: int,
 			objectID: int,
 			childID: int,
-			threadID: int
+			threadID: int,
 	) -> bool:
 		"""Adds a winEvent to the limiter.
 		@param eventID: the winEvent type
@@ -82,7 +82,7 @@ class OrderedWinEventLimiter(object):
 
 	def flushEvents(
 			self,
-			alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None
+			alwaysAllowedObjects: Optional[List[IAccessibleObjectIdentifierType]] = None,
 	) -> List:
 		"""Returns a list of winEvents that have been added.
 		Due to limiting, it will not necessarily be all the winEvents that were originally added.
@@ -123,7 +123,7 @@ class OrderedWinEventLimiter(object):
 			if isMSAADebugLoggingEnabled():
 				eventID, window, objectID, childID, threadID = event
 				log.debug(
-					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}"
+					f"Emitting winEvent {getWinEventLogInfo(window, objectID, childID, eventID, threadID)}",
 				)
 			r.append(event[:-1])
 		return r

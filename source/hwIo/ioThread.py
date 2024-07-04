@@ -20,7 +20,7 @@ LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
 	None,
 	ctypes.wintypes.DWORD,
 	ctypes.wintypes.DWORD,
-	LPOVERLAPPED
+	LPOVERLAPPED,
 )
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
@@ -29,15 +29,15 @@ CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
 ApcStoreT = typing.Dict[
 	ApcIdT,
 	typing.Tuple[
-		typing.Union[ApcT, BoundMethodWeakref[ApcT], AnnotatableWeakref[ApcT]], ApcIdT
-	]
+		typing.Union[ApcT, BoundMethodWeakref[ApcT], AnnotatableWeakref[ApcT]], ApcIdT,
+	],
 ]
 CompletionRoutineStoreTypeT = typing.Dict[
 	OverlappedStructAddressT,
 	typing.Tuple[
 		typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]],
-		OVERLAPPED
-	]
+		OVERLAPPED,
+	],
 ]
 
 
@@ -75,7 +75,7 @@ class IoThread(threading.Thread):
 	def __init__(self):
 		super().__init__(
 			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
-			daemon=True
+			daemon=True,
 		)
 
 	@winKernel.PAPCFUNC
@@ -93,7 +93,7 @@ class IoThread(threading.Thread):
 			function = reference()
 			if not function:
 				log.debugWarning(
-					f"Not executing queued APC {param}:{reference.funcName} with param {actualParam} because reference died"
+					f"Not executing queued APC {param}:{reference.funcName} with param {actualParam} because reference died",
 				)
 				return
 		else:
@@ -108,7 +108,7 @@ class IoThread(threading.Thread):
 	def _internalCompletionRoutine(
 			error: int,
 			numberOfBytes: int,
-			overlapped: LPOVERLAPPED
+			overlapped: LPOVERLAPPED,
 	):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):
@@ -124,7 +124,7 @@ class IoThread(threading.Thread):
 		function = reference()
 		if not function:
 			log.debugWarning(
-				f"Not executing queued completion routine 0x{ptr:x}:{reference.funcName} because reference died"
+				f"Not executing queued completion routine 0x{ptr:x}:{reference.funcName} because reference died",
 			)
 			return
 
@@ -167,7 +167,7 @@ class IoThread(threading.Thread):
 	def queueAsApc(
 			self,
 			func: ApcT,
-			param: int = 0
+			param: int = 0,
 	):
 		"""safely queues a Python function call as an Asynchronous Procedure Call (APC).
 		The function and param are saved in a store on the IoThread instance.
@@ -185,7 +185,7 @@ class IoThread(threading.Thread):
 			handle: typing.Union[int, ctypes.wintypes.HANDLE],
 			dueTime: int,
 			func: ApcT,
-			param: int = 0
+			param: int = 0,
 	):
 		""""Safe wrapper around winKernel.setWaitableTimer that uses an internal APC.
 		A weak reference to the function and its param are saved in a store on the IoThread instance.
@@ -202,7 +202,7 @@ class IoThread(threading.Thread):
 			handle,
 			dueTime,
 			completionRoutine=self._internalApc,
-			arg=internalParam
+			arg=internalParam,
 		)
 
 	def queueAsCompletionRoutine(
@@ -226,7 +226,7 @@ class IoThread(threading.Thread):
 		if addr in self._completionRoutineStore:
 			raise RuntimeError(
 				f"Overlapped structure with address 0x{addr:x} has a completion routine queued already. "
-				"Only one completion routine for one overlapped structure can be queued at a time."
+				"Only one completion routine for one overlapped structure can be queued at a time.",
 			)
 
 		# Generate a weak reference to the function

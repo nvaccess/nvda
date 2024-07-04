@@ -60,12 +60,12 @@ class TestLinesWordsResult(unittest.TestCase):
 	DATA = [
 		[
 			{"x": 100, "y": 200, "width": 10, "height": 20, "text": "word1"},
-			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"}
+			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"},
 		],
 		[
 			{"x": 100, "y": 220, "width": 10, "height": 20, "text": "word3"},
-			{"x": 110, "y": 220, "width": 10, "height": 20, "text": "word4"}
-		]
+			{"x": 110, "y": 220, "width": 10, "height": 20, "text": "word4"},
+		],
 	]
 	TOP = 0
 	BOTTOM = 23

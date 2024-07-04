@@ -88,8 +88,10 @@ def initialize() -> None:
 		except:  # noqa: E722
 			log.warning("MathPlayer 4 not available")
 		else:
-			registerProvider(provider, speech=not speechProvider,
-				braille=not brailleProvider, interaction=not interactionProvider)
+			registerProvider(
+       provider, speech=not speechProvider,
+       braille=not brailleProvider, interaction=not interactionProvider,
+   )
 
 
 class MathInteractionNVDAObject(Window):

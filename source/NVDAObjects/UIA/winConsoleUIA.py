@@ -38,7 +38,7 @@ class ConsoleUIATextInfo(UIATextInfo):
 		if not _rangeObj and position in (
 			textInfos.POSITION_FIRST,
 			textInfos.POSITION_LAST,
-			textInfos.POSITION_ALL
+			textInfos.POSITION_ALL,
 		):
 			try:
 				_rangeObj, collapseToEnd = self._getBoundingRange(obj, position)
@@ -66,7 +66,7 @@ class ConsoleUIATextInfo(UIATextInfo):
 			_rangeObj.MoveEndpointByUnit(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				UIAHandler.NVDAUnitsToUIAUnits['character'],
-				-1
+				-1,
 			)
 			collapseToEnd = True
 		return (_rangeObj, collapseToEnd)
@@ -165,7 +165,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 			self._rangeObj.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
 				oldInfo._rangeObj,
-				UIAHandler.TextPatternRangeEndpoint_Start
+				UIAHandler.TextPatternRangeEndpoint_Start,
 			)
 
 	def compareEndPoints(self, other, which):
@@ -206,19 +206,19 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 			start, end = self._getWordOffsetsInThisLine(offset, lineInfo)
 			wordEndPoints = (
 				(offset - start) * -1,
-				end - offset - 1
+				end - offset - 1,
 			)
 			if wordEndPoints[0]:
 				self._rangeObj.MoveEndpointByUnit(
 					UIAHandler.TextPatternRangeEndpoint_Start,
 					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-					wordEndPoints[0]
+					wordEndPoints[0],
 				)
 			if wordEndPoints[1]:
 				self._rangeObj.MoveEndpointByUnit(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					UIAHandler.NVDAUnitsToUIAUnits[textInfos.UNIT_CHARACTER],
-					wordEndPoints[1]
+					wordEndPoints[1],
 				)
 		else:
 			return super(ConsoleUIATextInfo, self).expand(unit)
@@ -239,7 +239,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 				res = self.move(
 					textInfos.UNIT_CHARACTER,
 					end - offset,
-					endPoint=endPoint
+					endPoint=endPoint,
 				)
 			else:
 				# Moving backwards
@@ -250,7 +250,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 					self.move(
 						textInfos.UNIT_CHARACTER,
 						wordStartDistance,
-						endPoint=endPoint
+						endPoint=endPoint,
 					)
 					offset += wordStartDistance
 				# Try to move one character back before the start of the word.
@@ -274,7 +274,7 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 					self.move(
 						textInfos.UNIT_CHARACTER,
 						wordStartDistance,
-						endPoint=endPoint
+						endPoint=endPoint,
 					)
 		else:  # moving by a unit other than word
 			res = super(ConsoleUIATextInfo, self).move(unit, direction, endPoint)
@@ -316,11 +316,11 @@ class ConsoleUIATextInfoWorkaroundEndInclusive(ConsoleUIATextInfo):
 			lineTextLen,
 			offset,
 			ctypes.byref(start),
-			ctypes.byref(end)
+			ctypes.byref(end),
 		)
 		return (
 			start.value,
-			min(end.value, max(1, lineTextLen - 2))
+			min(end.value, max(1, lineTextLen - 2)),
 		)
 
 	def _isCollapsed(self):
@@ -416,10 +416,12 @@ class WinConsoleUIA(KeyboardHandlerBasedTypedCharSupport):
 			# microsoft/terminal#5399: when attempting to compare text ranges
 			# from the standard and alt mode buffers, E_FAIL is returned.
 			# Downgrade this to a debugWarning.
-			log.debugWarning((
-				"Exception raised when comparing selections, "
-				"probably due to a switch to/from the alt buffer."
-			), exc_info=True)
+			log.debugWarning(
+       (
+        "Exception raised when comparing selections, "
+        "probably due to a switch to/from the alt buffer."
+       ), exc_info=True,
+   )
 
 	def event_UIA_notification(self, **kwargs):
 		"""
@@ -467,7 +469,7 @@ class _NotificationsBasedWinTerminalUIA(UIA):
 			notificationKind: Optional[int] = None,
 			notificationProcessing: Optional[int] = UIAHandler.NotificationProcessing_CurrentThenMostRecent,
 			displayString: Optional[str] = None,
-			activityId: Optional[str] = None
+			activityId: Optional[str] = None,
 	):
 		# Do not announce output from background terminals.
 		if self.appModule != api.getFocusObject().appModule:
@@ -488,7 +490,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "WinTerminalUIA" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"WinTerminalUIA is deprecated. "
-			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA"
+			"Instead use _DiffBasedWinTerminalUIA or _NotificationsBasedWinTerminalUIA",
 		)
 		return (
 			_NotificationsBasedWinTerminalUIA

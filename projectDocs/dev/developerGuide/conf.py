@@ -60,7 +60,7 @@ author = versionInfo.publisher
 version = versionInfo.formatVersionForGUI(
 	versionInfo.version_year,
 	versionInfo.version_major,
-	versionInfo.version_minor
+	versionInfo.version_minor,
 )
 
 # The full version, including alpha/beta/rc tags
@@ -84,7 +84,7 @@ templates_path = ['_templates']
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
-	"_build"
+	"_build",
 ]
 
 

@@ -145,7 +145,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 			# We just started speaking this object, so move the navigator to it.
 			if not api.setNavigatorObject(
 				self.prevObj,
-				isFocus=self.handler.lastSayAllMode == CURSOR.CARET
+				isFocus=self.handler.lastSayAllMode == CURSOR.CARET,
 			):
 				return
 			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
@@ -158,7 +158,7 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		SayAllHandler._speakObject(
 			obj,
 			reason=controlTypes.OutputReason.SAYALL,
-			_prefixSpeechCommand=callbackCommand
+			_prefixSpeechCommand=callbackCommand,
 		)
 
 	def stop(self):
@@ -281,7 +281,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 		cb = CallbackCommand(
 			_onLineReached,
-			name="say-all:lineReached"
+			name="say-all:lineReached",
 		)
 
 		# Generate the speech sequence for the reader textInfo
@@ -292,7 +292,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			self.reader,
 			unit=textInfos.UNIT_READINGCHUNK,
 			reason=controlTypes.OutputReason.SAYALL,
-			useCache=state
+			useCache=state,
 		)
 		seq = list(_flattenNestedSequences(speechGen))
 		seq.insert(0, cb)
@@ -351,7 +351,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		self.handler.speechWithoutPausesInstance.speakWithoutPauses([
 			EndUtteranceCommand(),
 			cb,
-			EndUtteranceCommand()
+			EndUtteranceCommand(),
 		])
 
 	def stop(self):

@@ -46,9 +46,11 @@ class DiffMatchPatch(DiffAlgo):
 		if not DiffMatchPatch._proc:
 			log.debug("Starting diff-match-patch proxy")
 			if NVDAState.isRunningAsSource():
-				dmp_path = (sys.executable, os.path.join(
-					globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py"
-				))
+				dmp_path = (
+        sys.executable, os.path.join(
+         globalVars.appDir, "..", "include", "nvda_dmp", "nvda_dmp.py",
+        ),
+    )
 			else:
 				dmp_path = (os.path.join(globalVars.appDir, "nvda_dmp.exe"),)
 			DiffMatchPatch._proc = subprocess.Popen(
@@ -56,7 +58,7 @@ class DiffMatchPatch(DiffAlgo):
 				creationflags=subprocess.CREATE_NO_WINDOW,
 				bufsize=0,
 				stdin=subprocess.PIPE,
-				stdout=subprocess.PIPE
+				stdout=subprocess.PIPE,
 			)
 
 	def _getText(self, ti: TextInfo) -> str:

@@ -82,7 +82,7 @@ class BookPageViewTreeInterceptor(DocumentWithPageTurns,ReviewCursorManager,Brow
 		table = obj.table
 		try:
 			cell = table.IAccessibleTable2Object.cellAt(
-				destRow - 1, destCol - 1
+				destRow - 1, destCol - 1,
 			).QueryInterface(IA2.IAccessible2)
 			cell = IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
 			# If the cell we fetched is marked as hidden, raise LookupError which will instruct calling code to try an adjacent cell instead.
@@ -271,8 +271,10 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			if isinstance(item, textInfos.FieldCommand) and item.command == "formatChange":
 				if formatConfig['reportPage']:
 					item.field['page-number'] = self.obj.pageNumber
-			elif (isinstance(item, textInfos.FieldCommand) and item.command == "controlStart"
-					and item.field.get("mathMl")):
+			elif (
+       isinstance(item, textInfos.FieldCommand) and item.command == "controlStart"
+       and item.field.get("mathMl")
+   ):
 				# We have MathML, so don't report alt text (if any) as content.
 				item.field.pop("content", None)
 		return items
@@ -285,7 +287,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			reason: Optional[OutputReason] = None,
 			unit: Optional[str] = None,
 			extraDetail: bool = False,
-			initialFormat: bool = False
+			initialFormat: bool = False,
 	) -> SpeechSequence:
 		out: SpeechSequence = []
 		comment = attrs.get("kindle-user-note")
@@ -322,7 +324,7 @@ class BookPageViewTextInfo(MozillaCompoundTextInfo):
 			reason=reason,
 			unit=unit,
 			extraDetail=extraDetail,
-			initialFormat=initialFormat
+			initialFormat=initialFormat,
 		)
 		out.extend(superSpeech)
 		textInfos._logBadSequenceTypes(out)

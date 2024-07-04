@@ -20,10 +20,10 @@ class AppModule(appModuleHandler.AppModule):
 				try:
 					if (
 						obj.next.UIAAutomationId.startswith(
-							"SystemSettings_Audio_Output_VolumeValue_"
+							"SystemSettings_Audio_Output_VolumeValue_",
 						)
 						or obj.simplePrevious.UIAAutomationId.startswith(
-							"SystemSettings_Audio_Input_VolumeValue_"
+							"SystemSettings_Audio_Input_VolumeValue_",
 						)
 					):
 						try:

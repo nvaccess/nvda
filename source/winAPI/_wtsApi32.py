@@ -165,7 +165,7 @@ WTSQuerySessionInformationT = Callable[
 		POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer. Holds WTSINFOEXW, use ctypes.cast
 		POINTER(DWORD),  # [out] DWORD * pBytesReturned
 	],
-	bool
+	bool,
 ]
 WTSQuerySessionInformation: WTSQuerySessionInformationT = windll.wtsapi32.WTSQuerySessionInformationW
 WTSQuerySessionInformation.argtypes = (
@@ -173,7 +173,7 @@ WTSQuerySessionInformation.argtypes = (
 	DWORD,  # [ in] DWORD SessionId
 	c_int,  # [ in]  WTS_INFO_CLASS WTSInfoClass,
 	POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer,
-	POINTER(DWORD)  # [out] DWORD * pBytesReturned
+	POINTER(DWORD),  # [out] DWORD * pBytesReturned
 )
 WTSQuerySessionInformation.restype = BOOL  # On Failure, the return value is zero.
 

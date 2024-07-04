@@ -175,7 +175,7 @@ class SynthDriver(driverHandler.Driver):
 			_("Rate boos&t"),
 			# Translators: Label for a setting in synth settings ring.
 			displayName=pgettext('synth setting', 'Rate boost'),
-			availableInSettingsRing=True
+			availableInSettingsRing=True,
 		)
 
 	@classmethod
@@ -368,7 +368,8 @@ class SynthDriver(driverHandler.Driver):
 				"Loaded changed settings for SynthDriver {}"
 				if onlyChanged else
 				"Loaded settings for SynthDriver {}"
-			).format(self.name))
+			).format(self.name),
+  )
 
 	def _get_initialSettingsRingSetting(self):
 		supportedSettings = list(self.supportedSettings)

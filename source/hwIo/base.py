@@ -33,7 +33,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "LPOVERLAPPED_COMPLETION_ROUTINE" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"Importing LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.base is deprecated. "
-			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead."
+			"Import LPOVERLAPPED_COMPLETION_ROUTINE from hwIo.ioThread instead.",
 		)
 		from .ioThread import LPOVERLAPPED_COMPLETION_ROUTINE
 		return LPOVERLAPPED_COMPLETION_ROUTINE
@@ -123,7 +123,7 @@ class IoBase(object):
 		size = len(data)
 		return (
 			size,
-			ctypes.create_string_buffer(data) # this will append a null char, which is intentional
+			ctypes.create_string_buffer(data), # this will append a null char, which is intentional
 		)
 
 	def write(self, data: bytes):
@@ -171,7 +171,7 @@ class IoBase(object):
 			self._readBuf,
 			self._readSize,
 			byref(self._readOl),
-			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl)
+			ioThread.queueAsCompletionRoutine(self._ioDone, self._readOl),
 		)
 
 	def _ioDone(self, error, numberOfBytes: int, overlapped):
@@ -216,7 +216,7 @@ class Serial(IoBase):
 			onReceive: Callable[[bytes], None],
 			onReadError: Optional[Callable[[int], bool]] = None,
 			ioThread: Optional[IoThread] = None,
-			**kwargs
+			**kwargs,
 	):
 		"""Constructor.
 		Pass the arguments you would normally pass to L{serial.Serial}.
@@ -247,7 +247,7 @@ class Serial(IoBase):
 			self._ser._port_handle,
 			onReceive,
 			onReadError=onReadError,
-			ioThread=ioThread
+			ioThread=ioThread,
 		)
 
 	def read(self, size=1) -> bytes:
@@ -321,14 +321,18 @@ class Bulk(IoBase):
 			log.debug("Opening device %s" % path)
 		readPath="{path}\\{endpoint}".format(path=path,endpoint=epIn)
 		writePath="{path}\\{endpoint}".format(path=path,endpoint=epOut)
-		readHandle = CreateFile(readPath, winKernel.GENERIC_READ,
-			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		readHandle = CreateFile(
+      readPath, winKernel.GENERIC_READ,
+      0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None,
+  )
 		if readHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open read handle failed: %s" % ctypes.WinError())
 			raise ctypes.WinError()
-		writeHandle = CreateFile(writePath, winKernel.GENERIC_WRITE,
-			0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None)
+		writeHandle = CreateFile(
+      writePath, winKernel.GENERIC_WRITE,
+      0, None, winKernel.OPEN_EXISTING, FILE_FLAG_OVERLAPPED, None,
+  )
 		if writeHandle == INVALID_HANDLE_VALUE:
 			if _isDebug():
 				log.debug("Open write handle failed: %s" % ctypes.WinError())
@@ -339,7 +343,7 @@ class Bulk(IoBase):
 			writeFileHandle=writeHandle,
 			onReceiveSize=onReceiveSize,
 			onReadError=onReadError,
-			ioThread=ioThread
+			ioThread=ioThread,
 		)
 
 	def close(self):
@@ -354,7 +358,7 @@ def boolToByte(arg: bool) -> bytes:
 	return arg.to_bytes(
 		length=1,
 		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
-		signed=False  # Since this represents length, it makes no sense to send a negative value.
+		signed=False,  # Since this represents length, it makes no sense to send a negative value.
 	)
 
 
@@ -364,7 +368,7 @@ def intToByte(arg: int) -> bytes:
 	return arg.to_bytes(
 		length=1,  # Will raise if value overflows, eg arg > 255
 		byteorder=sys.byteorder,  # for a single byte big/little endian does not matter.
-		signed=False  # Since this represents length, it makes no sense to send a negative value.
+		signed=False,  # Since this represents length, it makes no sense to send a negative value.
 	)
 
 def getByte(arg: bytes, index: int) -> bytes:

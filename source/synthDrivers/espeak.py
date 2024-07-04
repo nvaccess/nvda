@@ -262,7 +262,7 @@ class SynthDriver(SynthDriver):
 		# Check for any language where the language code matches, regardless of dialect: e.g. ru-ru to ru
 		matchingLangs = filter(
 			lambda lang: stripLocaleFromLangCode(lang) == langWithoutLocale,
-			lowerCaseAvailableLangs
+			lowerCaseAvailableLangs,
 		)
 		anyLocaleMatchingLang = next(matchingLangs, None)
 		

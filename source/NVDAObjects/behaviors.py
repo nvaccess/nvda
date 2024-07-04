@@ -104,7 +104,7 @@ class Dialog(NVDAObject):
 				controlTypes.Role.PARAGRAPH,
 				controlTypes.Role.SECTION,
 				controlTypes.Role.TEXTFRAME,
-				controlTypes.Role.UNKNOWN
+				controlTypes.Role.UNKNOWN,
 			):
 				#Grab text from descendants, but not for a child which inherits from Dialog and has focusable descendants
 				#Stops double reporting when focus is in a property page in a dialog
@@ -537,14 +537,16 @@ class EnhancedTermTypedCharSupport(Terminal):
 		self._dispatchQueue()
 		super().event_textChange()
 
-	@script(gestures=[
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:tab",
-		"kb:control+c",
-		"kb:control+d",
-		"kb:control+pause"
-	])
+	@script(
+     gestures=[
+      "kb:enter",
+      "kb:numpadEnter",
+      "kb:tab",
+      "kb:control+c",
+      "kb:control+d",
+      "kb:control+pause",
+     ],
+ )
 	def script_flush_queuedChars(self, gesture):
 		"""
 		Flushes the typed word buffer and queue of typedCharacter events if present.
@@ -735,7 +737,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the first column"
+			"Moves the navigator object to the first column",
 		),
 		gesture="kb:Control+Alt+Home",
 		canPropagate=True,
@@ -749,7 +751,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object to the last column"
+			"Moves the navigator object to the last column",
 		),
 		gesture="kb:Control+Alt+End",
 		canPropagate=True,
@@ -766,7 +768,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object and focus to the first row"
+			"Moves the navigator object and focus to the first row",
 		),
 		gesture="kb:Control+Alt+PageUp",
 		canPropagate=True,
@@ -777,7 +779,7 @@ class RowWithFakeNavigation(NVDAObject):
 	@script(
 		description=_(
 			# Translators: The description of an NVDA command.
-			"Moves the navigator object and focus to the last row"
+			"Moves the navigator object and focus to the last row",
 		),
 		gesture="kb:Control+Alt+PageDown",
 		canPropagate=True,

@@ -83,7 +83,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 	try:
 		parsedTime = datetime.strptime(
 			timeStr,
-			_timeOutputToParsingFormats[outputFormat]
+			_timeOutputToParsingFormats[outputFormat],
 		)
 	except ValueError:
 		# Note if D > 31, strptime does not recognise that value for d.
@@ -97,7 +97,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 		days=parsedDay,
 		hours=parsedTime.hour,
 		minutes=parsedTime.minute,
-		seconds=parsedTime.second
+		seconds=parsedTime.second,
 	)
 
 

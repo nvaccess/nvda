@@ -67,7 +67,7 @@ class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _get_boundingRects(self):
 		if self.obj.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
-		return [self.obj.location,]
+		return [self.obj.location]
 
 class InvalidNVDAObject(RuntimeError):
 	"""Raised by NVDAObjects during construction to inform that this object is invalid.
@@ -525,7 +525,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_annotations(self) -> typing.Optional[AnnotationOrigin]:
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(
-				f"Fetching annotations not supported on: {self.__class__.__qualname__}"
+				f"Fetching annotations not supported on: {self.__class__.__qualname__}",
 			)
 		return None
 
@@ -538,7 +538,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_detailsSummary(self) -> typing.Optional[str]:
 		log.warning(
 			"NVDAObject.detailsSummary is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return None
 
@@ -549,7 +549,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		log.warning(
 			"NVDAObject.hasDetails is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return bool(self.annotations)
 
@@ -561,7 +561,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 	def _get_detailsRole(self) -> typing.Optional[controlTypes.Role]:
 		log.warning(
 			"NVDAObject.detailsRole is deprecated. Use NVDAObject.annotations instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debugWarning(f"Fetching details summary not supported on: {self.__class__.__qualname__}")
@@ -704,7 +704,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 		"""
 		log.debugWarning(
 			"Base implementation used."
-			" Relies on child.next which is error prone in many IA2 implementations."
+			" Relies on child.next which is error prone in many IA2 implementations.",
 		)
 		children=[]
 		child=self.firstChild
@@ -908,7 +908,7 @@ class NVDAObject(documentBase.TextContainerObject, baseObject.ScriptableObject, 
 			controlTypes.Role.TITLEBAR,
 			controlTypes.Role.LABEL,
 			controlTypes.Role.WHITESPACE,
-			controlTypes.Role.BORDER
+			controlTypes.Role.BORDER,
 		):
 			return self.presType_layout
 		name = self.name
@@ -1202,7 +1202,7 @@ Tries to force this object to take the focus.
 					speech.priorities.Spri.NEXT
 					if politeness == aria.AriaLivePoliteness.ASSERTIVE
 					else speech.priorities.Spri.NORMAL
-				)
+				),
 			)
 
 	def event_typedCharacter(self,ch):
@@ -1270,9 +1270,11 @@ Tries to force this object to take the focus.
 				if api.setNavigatorObject(self, isFocus=True):
 					self.reportFocus()
 					# Display results as flash messages.
-					braille.handler.message(braille.getPropertiesBraille(
-						name=self.name, role=self.role, positionInfo=self.positionInfo
-					))
+					braille.handler.message(
+         braille.getPropertiesBraille(
+          name=self.name, role=self.role, positionInfo=self.positionInfo,
+         ),
+     )
 		self.event_stateChange()
 
 	def event_stateChange(self):
@@ -1334,7 +1336,7 @@ This code is executed if a gain focus event is received by this object.
 		if not (braille.handler.shouldAutoTether and isFocus):
 			braille.handler.handleReviewMove(shouldAutoTether=not isFocus)
 		vision.handler.handleReviewMove(
-			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR
+			context=vision.constants.Context.FOCUS if isFocus else vision.constants.Context.NAVIGATOR,
 		)
 
 	def event_valueChange(self):

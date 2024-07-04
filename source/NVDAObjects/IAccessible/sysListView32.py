@@ -242,7 +242,7 @@ class List(List):
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
 			columnCount,
-			columnOrderArray
+			columnOrderArray,
 		)
 		if res:
 			return None
@@ -268,7 +268,7 @@ class List(List):
 				self.windowHandle,
 				LVM_GETCOLUMNORDERARRAY,
 				columnCount,
-				internalCoa
+				internalCoa,
 			)
 			if res:
 				winKernel.readProcessMemory(processHandle,internalCoa,byref(coa),sizeof(coa),None)  # noqa: F405
@@ -276,7 +276,7 @@ class List(List):
 				coa = None
 				log.debugWarning(
 					f"LVM_GETCOLUMNORDERARRAY failed for list. "
-					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}"
+					f"Windows Error: {ctypes.GetLastError()}, Handle: {self.windowHandle}",
 				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalCoa,0,winKernel.MEM_RELEASE)
@@ -408,7 +408,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			self.windowHandle,
 			item,
 			subItem,
-			ctypes.byref(rect)
+			ctypes.byref(rect),
 		) != 0:
 			return None
 		return rect
@@ -427,7 +427,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			left=LVIR_LABEL,
 			# According to Microsoft, top should be the one-based index of the subitem.
 			# However, indexes coming from LVM_GETCOLUMNORDERARRAY are zero based.
-			top=index
+			top=index,
 		)
 		internalRect=winKernel.virtualAllocEx(processHandle,None,sizeof(localRect),winKernel.MEM_COMMIT,winKernel.PAGE_READWRITE)  # noqa: F405
 		try:
@@ -436,7 +436,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 				self.windowHandle,
 				LVM_GETSUBITEMRECT,
 				self.IAccessibleChildID - 1,
-				internalRect
+				internalRect,
 			)
 			if res:
 				winKernel.readProcessMemory(
@@ -444,7 +444,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 					internalRect,
 					ctypes.byref(localRect),
 					ctypes.sizeof(localRect),
-					None
+					None,
 				)
 		finally:
 			winKernel.virtualFreeEx(processHandle,internalRect,0,winKernel.MEM_RELEASE)
@@ -494,7 +494,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			self.windowHandle,
 			item,
 			subItem,
-			ctypes.byref(text)
+			ctypes.byref(text),
 		) != 0:
 			return None
 		return text.value
@@ -594,7 +594,7 @@ class ListItem(RowWithFakeNavigation, RowWithoutCellObjects, ListItemWithoutColu
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
 			subItem,
-			ctypes.byref(text)
+			ctypes.byref(text),
 		) != 0:
 			return None
 		return text.value

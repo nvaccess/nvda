@@ -32,7 +32,7 @@ class FakeSeikantkDriver(seikantk.BrailleDisplayDriver):
 		brailleDots = arg[0]
 		keys = arg[1] | (arg[2] << 8)
 		self._pressedKeys = set(seikantk._getKeyNames(keys, seikantk._keyNames)).union(
-			seikantk._getKeyNames(brailleDots, seikantk._dotNames)
+			seikantk._getKeyNames(brailleDots, seikantk._dotNames),
 		)
 
 	def _handleRouting(self, arg: bytes):
@@ -102,7 +102,7 @@ class TestSeikantkDriver_HID(unittest.TestCase):
 			self,
 			sampleMessage: bytes,
 			expectedKeyNames: Set[str],
-			expectedRoutingIndexes: Set[int]
+			expectedRoutingIndexes: Set[int],
 	):
 		seikaTestDriver = FakeSeikantkDriver(isHid=True)
 		seikaTestDriver.simulateMessageReceived(sampleMessage)
@@ -153,7 +153,7 @@ class TestSeikantkDriver_Serial(unittest.TestCase):
 			self,
 			sampleMessage: bytes,
 			expectedKeyNames: Set[str],
-			expectedRoutingIndexes: Set[int]
+			expectedRoutingIndexes: Set[int],
 	):
 		seikaTestDriver = FakeSeikantkDriver(isHid=False)
 		seikaTestDriver.simulateMessageReceived(sampleMessage)

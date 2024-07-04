@@ -79,7 +79,7 @@ class AutoSettings(AutoPropertyObject):
 	def _initSpecificSettings(
 			cls,
 			clsOrInst: Any,
-			settings: SupportedSettingType
+			settings: SupportedSettingType,
 	) -> None:
 		section = cls._getConfigSection()
 		settingsId = cls.getId()
@@ -89,7 +89,7 @@ class AutoSettings(AutoPropertyObject):
 			config.conf[section][settingsId] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
 		config.conf[section][settingsId].spec.update(
-			cls._getConfigSpecForSettings(settings)
+			cls._getConfigSpecForSettings(settings),
 		)
 		# Make sure the clsOrInst has attributes for every setting
 		for setting in settings:
@@ -128,7 +128,7 @@ class AutoSettings(AutoPropertyObject):
 	@classmethod
 	def _getConfigSpecForSettings(
 			cls,
-			settings: SupportedSettingType
+			settings: SupportedSettingType,
 	) -> Dict:
 		section = cls._getConfigSection()
 		spec = deepcopy(config.confspec[section]["__many__"])
@@ -145,7 +145,7 @@ class AutoSettings(AutoPropertyObject):
 	def _saveSpecificSettings(
 			cls,
 			clsOrInst: Any,
-			settings: SupportedSettingType
+			settings: SupportedSettingType,
 	) -> None:
 		"""
 		Save values for settings to config.
@@ -164,7 +164,7 @@ class AutoSettings(AutoPropertyObject):
 			except UnsupportedConfigParameterError:
 				log.debugWarning(
 					f"Unsupported setting {setting.id!r}; ignoring",
-					exc_info=True
+					exc_info=True,
 				)
 				continue
 		if settings:
@@ -183,7 +183,7 @@ class AutoSettings(AutoPropertyObject):
 			cls,
 			clsOrInst: Any,
 			settings: SupportedSettingType,
-			onlyChanged: bool = False
+			onlyChanged: bool = False,
 	) -> None:
 		"""
 		Load settings from config, set them on `clsOrInst`.
@@ -208,14 +208,14 @@ class AutoSettings(AutoPropertyObject):
 			except UnsupportedConfigParameterError:
 				log.debugWarning(
 					f"Unsupported setting {setting.id!r}; ignoring",
-					exc_info=True
+					exc_info=True,
 				)
 				continue
 		if settings:
 			log.debug(
 				f"Loaded changed settings for {cls.__qualname__}"
 				if onlyChanged else
-				f"Loaded settings for {cls.__qualname__}"
+				f"Loaded settings for {cls.__qualname__}",
 			)
 
 	def loadSettings(self, onlyChanged: bool = False):

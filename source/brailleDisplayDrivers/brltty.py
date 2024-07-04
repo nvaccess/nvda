@@ -114,7 +114,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if keyType == brlapi.KEY_TYPE_CMD:
 			try:
 				inputCore.manager.executeGesture(
-					InputGesture(self.driverName, command, argument)
+					InputGesture(self.driverName, command, argument),
 				)
 			except inputCore.NoInputGestureAction:
 				pass
@@ -133,7 +133,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"dateTime": ("br(brltty):time",),
 			"review_currentLine": ("br(brltty):say_line",),
 			"review_sayAll": ("br(brltty):say_below",),
-		}
+		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture):

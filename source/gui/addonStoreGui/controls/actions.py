@@ -39,7 +39,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 	def popupContextMenuFromPosition(
 			self,
 			targetWindow: wx.Window,
-			position: wx.Position = wx.DefaultPosition
+			position: wx.Position = wx.DefaultPosition,
 	):
 		self._populateContextMenu()
 		targetWindow.PopupMenu(self._contextMenu, pos=position)
@@ -64,7 +64,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 					self._actionMenuItemMap[action] = self._contextMenu.Insert(
 						prevActionIndex,
 						id=-1,
-						item=action.displayName
+						item=action.displayName,
 					)
 
 				# Bind the menu item to the latest action VM
@@ -121,7 +121,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 	def popupContextMenuFromPosition(
 			self,
 			targetWindow: wx.Window,
-			position: wx.Position = wx.DefaultPosition
+			position: wx.Position = wx.DefaultPosition,
 	):
 		super().popupContextMenuFromPosition(targetWindow, position)
 		if self._contextMenu.GetMenuItemCount() == 0:
@@ -144,14 +144,14 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 					self._storeVM._filteredStatusKey == _StatusFilterKey.AVAILABLE
 					and AddonListValidator(aVMs).canUseInstallAction()
 				),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that updates the selected add-ons
 				displayName=pgettext("addonStore", "&Update selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseUpdateAction(),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
@@ -166,21 +166,21 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 					]
 					and AddonListValidator(aVMs).canUseRemoveAction()
 				),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that enables the selected add-ons
 				displayName=pgettext("addonStore", "&Enable selected add-ons"),
 				actionHandler=self._storeVM.enableAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseEnableAction(),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that disables the selected add-ons
 				displayName=pgettext("addonStore", "&Disable selected add-ons"),
 				actionHandler=self._storeVM.disableAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseDisableAction(),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 		]
 

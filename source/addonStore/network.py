@@ -64,7 +64,7 @@ def _getCacheHashURL() -> str:
 class AddonFileDownloader:
 	OnCompleteT = Callable[
 		["AddonListItemVM[_AddonStoreModel]", Optional[os.PathLike]],
-		None
+		None,
 	]
 
 	def __init__(self):
@@ -74,13 +74,13 @@ class AddonFileDownloader:
 			Tuple[
 				"AddonListItemVM[_AddonStoreModel]",
 				AddonFileDownloader.OnCompleteT,
-				"DisplayableError.OnDisplayableErrorT"
-			]
+				"DisplayableError.OnDisplayableErrorT",
+			],
 		] = {}
 		self.complete: Dict[
 			"AddonListItemVM[_AddonStoreModel]",
 			# Path to downloaded file
-			Optional[os.PathLike]
+			Optional[os.PathLike],
 		] = {}
 		self._executor = ThreadPoolExecutor(
 			max_workers=10,
@@ -138,7 +138,7 @@ class AddonFileDownloader:
 				callLater(
 					delay=0,
 					callable=onDisplayableError.notify,
-					displayableError=downloadAddonFutureException
+					displayableError=downloadAddonFutureException,
 				)
 		else:
 			cacheFilePath = downloadAddonFuture.result()
@@ -165,7 +165,7 @@ class AddonFileDownloader:
 	def _downloadAddonToPath(
 			self,
 			addonData: "AddonListItemVM[_AddonStoreModel]",
-			downloadFilePath: str
+			downloadFilePath: str,
 	) -> bool:
 		"""
 		@return: True if the add-on is downloaded successfully,
@@ -221,7 +221,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to download add-on: {name}"
+					"Unable to download add-on: {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
@@ -231,7 +231,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to save add-on as a file: {name}"
+					"Unable to save add-on as a file: {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
@@ -242,7 +242,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download is not safe
-					"Add-on download not safe: checksum failed for {name}"
+					"Add-on download not safe: checksum failed for {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)

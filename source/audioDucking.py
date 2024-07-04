@@ -76,14 +76,14 @@ def _setDuckingState(switch):
 				oledll.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
-					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK
+					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
 				_lastDuckedTime=time.time()
 			else:
 				oledll.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
-					ANRUSDucking.AUDIO_ACTIVE_NODUCK
+					ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
 		except WindowsError as e:
 			# When the NVDA build is not signed, audio ducking fails with access denied.
@@ -99,7 +99,7 @@ def _setDuckingState(switch):
 				# we want developers to hear the "error sound", and to halt, so still raise the exception.
 				log.error(
 					"Unknown error when setting ducking state:  Error number: {:#010X}".format(errorCode),
-					exc_info=True
+					exc_info=True,
 				)
 				raise e
 

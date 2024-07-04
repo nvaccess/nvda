@@ -249,7 +249,7 @@ def _upgradeConfigFrom_8_to_9_showMessages(profile: ConfigObj) -> None:
 				# So we fix it with ShowMessages.DISABLED but also issue a warning.
 				log.debugWarning(
 					"Invalid config found: noMessageTimeout=True and messageTimeout=0."
-					" Fixing it with setting showMessages on DISABLE."
+					" Fixing it with setting showMessages on DISABLE.",
 				)
 		else:
 			if noMessageTimeoutVal:
@@ -286,7 +286,7 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 		# "Review") and the current profile has this option set to "Focus".
 		# In this case, tetherTo keeps the same value.
 		log.debug(
-			"autoTether not present in config but tetherTo present, no action taken (keeping tetherTo value)."
+			"autoTether not present in config but tetherTo present, no action taken (keeping tetherTo value).",
 		)
 	elif isTetherToMissing:
 		if autoTetherVal:
@@ -345,7 +345,7 @@ def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
 			# Thus we consider case 1 which is the only use case reachable by the user via NVDA's GUI.
 			log.debug(
 				"No True value for any of 'use*AsNVDAModifierKey',"
-				" restore caps lock (only possible case via NVDA's GUI)."
+				" restore caps lock (only possible case via NVDA's GUI).",
 			)
 			val = NVDAKey.CAPS_LOCK.value
 		profile['keyboard']['NVDAModifierKeys'] = val
@@ -374,5 +374,5 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 		profile['braille']['auto']['excludedDisplays'] += ["hidBrailleStandard"]
 		log.debug(
 			"hidBrailleStandard added to braille display auto detection excluded displays. "
-			f"List is now: {profile['braille']['auto']['excludedDisplays']}"
+			f"List is now: {profile['braille']['auto']['excludedDisplays']}",
 		)

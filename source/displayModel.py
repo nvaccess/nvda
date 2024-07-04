@@ -27,7 +27,7 @@ from typing import (
 	List,
 	Tuple,
 	Optional,
-	Dict
+	Dict,
 )
 
 #: A text info unit constant for a single chunk in a display model
@@ -186,7 +186,7 @@ def getCaretRect(obj):
 		ctypes.byref(left),
 		ctypes.byref(top),
 		ctypes.byref(right),
-		ctypes.byref(bottom)
+		ctypes.byref(bottom),
 	)
 	if res != 0:
 		raise RuntimeError(f"displayModel_getCaretRect failed with res {res}")
@@ -194,7 +194,7 @@ def getCaretRect(obj):
 		left.value,
 		top.value,
 		right.value,
-		bottom.value
+		bottom.value,
 	)
 
 def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,minHorizontalWhitespace,minVerticalWhitespace,stripOuterWhitespace=True,includeDescendantWindows=True):
@@ -209,7 +209,7 @@ def getWindowTextInRect(bindingHandle, windowHandle, left, top, right, bottom,mi
 			wcharToInt(cp),
 			wcharToInt(next(cpBufIt)),
 			wcharToInt(next(cpBufIt)),
-			wcharToInt(next(cpBufIt))
+			wcharToInt(next(cpBufIt)),
 		)
 		if right < left:
 			left, right = right, left
@@ -302,7 +302,7 @@ class DisplayModelTextInfo(OffsetsTextInfo):
 		List[textInfos.TextInfo.TextOrFieldsT],
 		List[RectLTRB],
 		List[int],
-		List[int]
+		List[int],
 	]:
 		# All returned coordinates are logical coordinates.
 		if self._location:
@@ -590,7 +590,7 @@ class EditableTextDisplayModelTextInfo(DisplayModelTextInfo):
 			self,
 			caretRect: RectLTRB,
 			validateBaseline: bool = True,
-			validateDirection: bool = True
+			validateDirection: bool = True,
 	):
 		# Accepts logical coordinates.
 		for charOffset, ((charLeft, charTop, charRight, charBottom),charBaseline,charDirection) in enumerate(self._getStoryOffsetLocations()):

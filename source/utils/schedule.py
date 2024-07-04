@@ -99,7 +99,7 @@ class ScheduleThread(threading.Thread):
 			task: Callable,
 			queueToThread: ThreadTarget,
 			*args,
-			**kwargs
+			**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a daily job to run at startup.
@@ -127,7 +127,7 @@ class ScheduleThread(threading.Thread):
 			cronTime: str,
 			queueToThread: ThreadTarget,
 			*args,
-			**kwargs
+			**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a daily job to run at specific times.
@@ -150,7 +150,7 @@ class ScheduleThread(threading.Thread):
 			jobSchedule: schedule.Job,
 			queueToThread: ThreadTarget,
 			*args,
-			**kwargs
+			**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a job to run at specific times.
@@ -198,7 +198,7 @@ class ScheduleThread(threading.Thread):
 				# raise warning that job time clashes with existing job
 				raise JobClashError(
 					f"Job time {jobSchedule.at_time} clashes with existing job: "
-					f"{existingJob.job_func} and {task.__name__}"
+					f"{existingJob.job_func} and {task.__name__}",
 				)
 		return jobSchedule.do(callJobOnThread, *args, **kwargs)
 

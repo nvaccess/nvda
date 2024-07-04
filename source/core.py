@@ -43,7 +43,7 @@ def __getattr__(attrName: str) -> Any:
 		from winAPI.messageWindow import pre_handleWindowMessage
 		log.warning(
 			"core.post_windowMessageReceipt is deprecated, "
-			"use winAPI.messageWindow.pre_handleWindowMessage instead."
+			"use winAPI.messageWindow.pre_handleWindowMessage instead.",
 		)
 		return pre_handleWindowMessage
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -84,8 +84,8 @@ def _showAddonsErrors() -> None:
 				# Translators: Shown when one or more add-ons failed to update.
 				"The following add-on failed to update: {}.",
 				"The following add-ons failed to update: {}.",
-				len(failedUpdates)
-			).format(", ".join(failedUpdates))
+				len(failedUpdates),
+			).format(", ".join(failedUpdates)),
 		)
 	if failedRemovals:
 		addonFailureMessages.append(
@@ -93,8 +93,8 @@ def _showAddonsErrors() -> None:
 				# Translators: Shown when one or more add-ons failed to be uninstalled.
 				"The following add-on failed to uninstall: {}.",
 				"The following add-ons failed to uninstall: {}.",
-				len(failedRemovals)
-			).format(", ".join(failedRemovals))
+				len(failedRemovals),
+			).format(", ".join(failedRemovals)),
 		)
 	if failedInstalls:
 		addonFailureMessages.append(
@@ -102,8 +102,8 @@ def _showAddonsErrors() -> None:
 				# Translators: Shown when one or more add-ons failed to be installed.
 				"The following add-on failed to be installed: {}.",
 				"The following add-ons failed to be installed: {}.",
-				len(failedInstalls)
-			).format(", ".join(failedInstalls))
+				len(failedInstalls),
+			).format(", ".join(failedInstalls)),
 		)
 
 	if addonFailureMessages:
@@ -112,11 +112,11 @@ def _showAddonsErrors() -> None:
 		gui.messageBox(
 			_(
 				# Translators: Shown when one or more actions on add-ons failed.
-				"Some operations on add-ons failed. See the log file for more details.\n{}"
+				"Some operations on add-ons failed. See the log file for more details.\n{}",
 			).format("\n".join(addonFailureMessages)),
 			# Translators: Title of message shown when requested action on add-ons failed.
 			_("Error"),
-			wx.ICON_ERROR | wx.OK
+			wx.ICON_ERROR | wx.OK,
 		)
 
 
@@ -143,23 +143,26 @@ def doStartupDialogs():
 		gui.messageBox(
 			# Translators: Shown when NVDA has been started with unknown command line parameters.
 			_("The following command line parameters are unknown to NVDA: {params}").format(
-				params=", ".join(unknownCLIParams)
+				params=", ".join(unknownCLIParams),
 			),
 			# Translators: Title of the dialog letting user know
 			# that command line parameters they provided are unknown.
 			_("Unknown command line parameters"),
-			wx.OK | wx.ICON_ERROR
+			wx.OK | wx.ICON_ERROR,
 		)
 	if config.conf.baseConfigError:
 		import wx
 		gui.messageBox(
 			# Translators: A message informing the user that there are errors in the configuration file.
-			_("Your configuration file contains errors. "
-				"Your configuration has been reset to factory defaults.\n"
-				"More details about the errors can be found in the log file."),
+			_(
+       "Your configuration file contains errors. "
+       "Your configuration has been reset to factory defaults.\n"
+       "More details about the errors can be found in the log file.",
+   ),
 			# Translators: The title of the dialog to tell users that there are errors in the configuration file.
 			_("Configuration File Error"),
-			wx.OK | wx.ICON_EXCLAMATION)
+			wx.OK | wx.ICON_EXCLAMATION,
+  )
 	if config.conf["general"]["showWelcomeDialogAtStartup"]:
 		from gui.startupDialogs import WelcomeDialog
 		WelcomeDialog.run()
@@ -170,9 +173,13 @@ def doStartupDialogs():
 	import inputCore
 	if inputCore.manager.userGestureMap.lastUpdateContainedError:
 		import wx
-		gui.messageBox(_("Your gesture map file contains errors.\n"
-				"More details about the errors can be found in the log file."),
-			_("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION)
+		gui.messageBox(
+      _(
+          "Your gesture map file contains errors.\n"
+          "More details about the errors can be found in the log file.",
+      ),
+      _("gesture map File Error"), wx.OK|wx.ICON_EXCLAMATION,
+  )
 	try:
 		import updateCheck
 	except RuntimeError:
@@ -226,11 +233,13 @@ def restartUnsafely():
 	options = []
 	if NVDAState.isRunningAsSource():
 		options.append(os.path.basename(sys.argv[0]))
-	_startNewInstance(NewNVDAInstance(
-		sys.executable,
-		subprocess.list2cmdline(options + sys.argv[1:]),
-		globalVars.appDir
-	))
+	_startNewInstance(
+     NewNVDAInstance(
+      sys.executable,
+      subprocess.list2cmdline(options + sys.argv[1:]),
+      globalVars.appDir,
+     ),
+ )
 
 
 def restart(disableAddons=False, debugLogging=False):
@@ -242,7 +251,7 @@ def restart(disableAddons=False, debugLogging=False):
 		return
 	import subprocess
 	for paramToRemove in (
-		"--disable-addons", "--debug-logging", "--ease-of-access"
+		"--disable-addons", "--debug-logging", "--ease-of-access",
 	) + languageHandler.getLanguageCliArgs():
 		try:
 			sys.argv.remove(paramToRemove)
@@ -256,11 +265,13 @@ def restart(disableAddons=False, debugLogging=False):
 	if debugLogging:
 		options.append('--debug-logging')
 
-	if not triggerNVDAExit(NewNVDAInstance(
-		sys.executable,
-		subprocess.list2cmdline(options + sys.argv[1:]),
-		globalVars.appDir
-	)):
+	if not triggerNVDAExit(
+     NewNVDAInstance(
+      sys.executable,
+      subprocess.list2cmdline(options + sys.argv[1:]),
+      globalVars.appDir,
+     ),
+ ):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
 
@@ -396,7 +407,7 @@ def _startNewInstance(newNVDA: NewNVDAInstance):
 		parameters=newNVDA.parameters,
 		directory=newNVDA.directory,
 		# #4475: ensure that the first window of the new process is not hidden by providing SW_SHOWNORMAL
-		showCmd=SW_SHOWNORMAL
+		showCmd=SW_SHOWNORMAL,
 	)
 
 
@@ -454,7 +465,7 @@ def _closeAllWindows():
 		if state is _SettingsDialog.DialogState.DESTROYED:
 			log.debugWarning(
 				"Destroyed but not deleted instance of gui.SettingsDialog exists"
-				f": {instance.title} - {instance.__class__.__qualname__} - {instance}"
+				f": {instance.title} - {instance.__class__.__qualname__} - {instance}",
 			)
 		else:
 			log.debug("Exiting NVDA with an open settings dialog: {!r}".format(instance))
@@ -593,7 +604,7 @@ def _setUpWxApp() -> "wx.App":
 			try:
 				nvwave.playWaveFile(
 					os.path.join(globalVars.appDir, "waves", "exit.wav"),
-					asynchronous=False
+					asynchronous=False,
 				)
 			except Exception:
 				log.exception("Error playing exit sound")
@@ -630,7 +641,7 @@ def main():
 		)
 	):
 		WritePaths.configDir = config.getUserDefaultConfigPath(
-			useInstalledPathIfExists=globalVars.appArgs.launcher
+			useInstalledPathIfExists=globalVars.appArgs.launcher,
 		)
 	#Initialize the config path (make sure it exists)
 	config.initConfigPath()
@@ -802,7 +813,7 @@ def main():
 		wx.CallAfter(
 			gui.installerGui.doSilentInstall,
 			copyPortableConfig=globalVars.appArgs.copyPortableConfig,
-			startAfterInstall=not globalVars.appArgs.installSilent
+			startAfterInstall=not globalVars.appArgs.installSilent,
 		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
@@ -934,7 +945,7 @@ def main():
 	if triggerNVDAExit():
 		log.debug(
 			"NVDA not already exiting, hit catch-all exit trigger."
-			" This likely indicates NVDA is exiting due to WM_QUIT."
+			" This likely indicates NVDA is exiting due to WM_QUIT.",
 		)
 		queueHandler.pumpAll()
 	_terminate(gui)
@@ -983,7 +994,7 @@ def main():
 		try:
 			nvwave.playWaveFile(
 				os.path.join(globalVars.appDir, "waves", "exit.wav"),
-				asynchronous=False
+				asynchronous=False,
 			)
 		except:  # noqa: E722
 			pass

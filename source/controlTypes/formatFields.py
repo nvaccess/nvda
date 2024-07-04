@@ -74,7 +74,7 @@ class FontSize:
 		# Translators: A measurement unit of font size.
 		"larger": pgettext("font size", "larger"),
 		# Translators: A measurement unit of font size.
-		"smaller": pgettext("font size", "smaller")
+		"smaller": pgettext("font size", "smaller"),
 	}
 
 	_measurementRe = re.compile(r"([0-9\.]+)(px|em|ex|rem|pt|%)")

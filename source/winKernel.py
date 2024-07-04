@@ -35,7 +35,7 @@ def __getattr__(attrName: str) -> Any:
 		from winAPI._powerTracking import SystemPowerStatus
 		log.warning(
 			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
-			"use winAPI._powerTracking.SystemPowerStatus instead."
+			"use winAPI._powerTracking.SystemPowerStatus instead.",
 		)
 		return SystemPowerStatus
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -153,7 +153,7 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 		period,
 		completionRoutine,
 		arg,
-		resume
+		resume,
 	)
 	if res==0:
 		raise ctypes.WinError()
@@ -213,14 +213,14 @@ class SYSTEMTIME(ctypes.Structure):
 		("wHour", WORD),
 		("wMinute", WORD),
 		("wSecond", WORD),
-		("wMilliseconds", WORD)
+		("wMilliseconds", WORD),
 	)
 
 
 class FILETIME(Structure):
 	_fields_ = (
 		("dwLowDateTime", DWORD),
-		("dwHighDateTime", DWORD)
+		("dwHighDateTime", DWORD),
 	)
 
 
@@ -232,7 +232,7 @@ class TIME_ZONE_INFORMATION(Structure):
 		("StandardBias", ctypes.wintypes.LONG),
 		("DaylightName", ctypes.wintypes.WCHAR * 32),
 		("DaylightDate", SYSTEMTIME),
-		("DaylightBias", ctypes.wintypes.LONG)
+		("DaylightBias", ctypes.wintypes.LONG),
 	)
 
 
@@ -256,7 +256,7 @@ def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None
 def SystemTimeToTzSpecificLocalTime(
 		lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
 		lpUniversalTime: SYSTEMTIME,
-		lpLocalTime: SYSTEMTIME
+		lpLocalTime: SYSTEMTIME,
 ) -> None:
 	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
 	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
@@ -268,7 +268,7 @@ def SystemTimeToTzSpecificLocalTime(
 	if lpTimeZoneInformation is not None:
 		lpTimeZoneInformation = byref(lpTimeZoneInformation)
 	if kernel32.SystemTimeToTzSpecificLocalTime(
-		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
+		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime),
 	) == 0:
 		raise WinError()
 
@@ -355,7 +355,7 @@ class SECURITY_ATTRIBUTES(Structure):
 	_fields_ = (
 		("nLength", DWORD),
 		("lpSecurityDescriptor", LPVOID),
-		("bInheritHandle", BOOL)
+		("bInheritHandle", BOOL),
 	)
 	def __init__(self, **kwargs):
 		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)

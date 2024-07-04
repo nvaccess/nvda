@@ -66,7 +66,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		if strEnd is not None and strEnd < strStart:
 			raise ValueError(
 				"strEnd=%d must be greater than or equal to strStart=%d"
-				% (strEnd, strStart)
+				% (strEnd, strStart),
 			)
 		if strStart < 0 or strStart > self.strLength:
 			if raiseOnError:
@@ -95,7 +95,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		"""
 		if encodedEnd is not None and encodedEnd < encodedStart:
 			raise ValueError(
-				f"{encodedEnd=} must be greater than or equal to {encodedStart=}"
+				f"{encodedEnd=} must be greater than or equal to {encodedStart=}",
 			)
 		if encodedStart < 0 or encodedStart > self.encodedStringLength:
 			if raiseOnError:
@@ -244,7 +244,7 @@ def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
 	encoding: Optional[str] = None,
-	errorsFallback: str = "replace"
+	errorsFallback: str = "replace",
 ):
 	"""
 	Gets a string from a raw bytes object, decoded using the specified L{encoding}.
@@ -491,7 +491,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			self,
 			encodedStart: int,
 			encodedEnd: int | None = None,
-			raiseOnError: bool = False
+			raiseOnError: bool = False,
 	) -> int | Tuple[int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedStart == 0:

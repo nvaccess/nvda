@@ -41,7 +41,7 @@ class FolderId(str, Enum):
 def SHGetKnownFolderPath(
 		folderGuid: Union[FolderId, str],
 		dwFlags: int = 0,
-		hToken: Optional[int] = None
+		hToken: Optional[int] = None,
 ) -> str:
 	"""Wrapper for `SHGetKnownFolderPath` which caches the results
 	to avoid calling the win32 function unnecessarily."""
@@ -54,7 +54,7 @@ def SHGetKnownFolderPath(
 		comtypes.byref(guid),
 		dwFlags,
 		hToken,
-		ctypes.byref(pathPointer)
+		ctypes.byref(pathPointer),
 	)
 	if res != 0:
 		raise RuntimeError(f"SHGetKnownFolderPath failed with error code {res}")

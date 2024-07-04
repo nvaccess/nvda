@@ -117,13 +117,13 @@ def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 				# Translators: border styles in Microsoft Excel.
 				desc=_("{weight} {style}").format(
 					style=borderStyleLabels.get(style),
-					weight=borderWeightLabels.get(weight)
+					weight=borderWeightLabels.get(weight),
 				)
 			if reportBorderColor:
 				# Translators: border styles in Microsoft Excel.
 				d[pos]=_("{color} {desc}").format(
 					color=colors.RGB.fromCOLORREF(int(border.color)).name,
-					desc=desc
+					desc=desc,
 				)
 			else:
 				d[pos]=desc
@@ -152,8 +152,10 @@ def getCellBorderStyleDescription(bordersObj,reportBorderColor=False):
 		del d[xlDiagonalDown]
 	for pos,desc in d.items():
 		# Translators: border styles in Microsoft Excel.
-		s.append(_("{desc} {position}").format(
-			desc=desc,
-			position=bordersIndexLabels.get(pos)
-		))
+		s.append(
+      _("{desc} {position}").format(
+       desc=desc,
+       position=bordersIndexLabels.get(pos),
+      ),
+  )
 	return ', '.join(s)

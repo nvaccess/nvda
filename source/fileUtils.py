@@ -87,18 +87,21 @@ def getFileVersionInfo(name, *attributes):
 	r = ctypes.c_uint()
 	l = ctypes.c_uint()  # noqa: E741
 	# Look for codepages
-	ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
-		ctypes.byref(r), ctypes.byref(l))
+	ctypes.windll.version.VerQueryValueW(
+     res, u'\\VarFileInfo\\Translation',
+     ctypes.byref(r), ctypes.byref(l),
+ )
 	if not l.value:
 		raise RuntimeError("No codepage")
 	# Take the first codepage (what else ?)
 	codepage = array.array('H', ctypes.string_at(r.value, 4))
 	codepage = "%04x%04x" % tuple(codepage)
 	for attr in attributes:
-		if not ctypes.windll.version.VerQueryValueW(res,
-			u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
-			ctypes.byref(r), ctypes.byref(l)
-		):
+		if not ctypes.windll.version.VerQueryValueW(
+      res,
+       u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
+       ctypes.byref(r), ctypes.byref(l),
+  ):
 			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))
 			fileVersionInfo[attr] = None
 		else:

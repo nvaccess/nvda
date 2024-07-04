@@ -30,8 +30,10 @@ class CompoundTextInfo(textInfos.TextInfo):
 		return obj.makeTextInfo(position)
 
 	def _normalizeStartAndEnd(self):
-		if (self._start.isCollapsed and self._startObj != self._endObj
-				and self._start.compareEndPoints(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd") == 0):
+		if (
+      self._start.isCollapsed and self._startObj != self._endObj
+      and self._start.compareEndPoints(self._makeRawTextInfo(self._startObj, textInfos.POSITION_ALL), "endToEnd") == 0
+  ):
 			# Start it is at the end of its object.
 			# This is equivalent to the start of the next content.
 			# Aside from being pointless, we don't want a collapsed start object, as this will cause bogus control fields to be emitted.
@@ -40,8 +42,10 @@ class CompoundTextInfo(textInfos.TextInfo):
 			except LookupError:
 				pass
 
-		if (self._end.isCollapsed and self._endObj != self._startObj
-				and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart") == 0):
+		if (
+      self._end.isCollapsed and self._endObj != self._startObj
+      and self._end.compareEndPoints(self._makeRawTextInfo(self._endObj, textInfos.POSITION_FIRST), "startToStart") == 0
+  ):
 			# End is at the start of its object.
 			# This is equivalent to the end of the previous content.
 			# Aside from being pointless, we don't want a collapsed end object, as this will cause bogus control fields to be emitted.
@@ -320,7 +324,7 @@ class TreeCompoundTextInfo(CompoundTextInfo):
 					fields.extend((
 						textInfos.FieldCommand("controlStart", controlField),
 						textUtils.OBJ_REPLACEMENT_CHAR,
-						textInfos.FieldCommand("controlEnd", None)
+						textInfos.FieldCommand("controlEnd", None),
 					))
 				else:  # str or fieldCommand
 					if not isinstance(textWithEmbeddedObjectsItem, (str, textInfos.FieldCommand)):

@@ -283,7 +283,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 			reason=reason,
 			unit=unit,
 			extraDetail=extraDetail,
-			initialFormat=initialFormat
+			initialFormat=initialFormat,
 		)
 		textInfos._logBadSequenceTypes(sequence)
 		return sequence

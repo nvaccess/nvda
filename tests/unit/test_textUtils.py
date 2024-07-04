@@ -210,10 +210,12 @@ class TestEdgeCases(unittest.TestCase):
 		self.assertEqual(converter.strLength, 3)
 		self.assertEqual(
 			converter.wideToStrOffsets(-1, 0, raiseOnError=False),
-			(0, 0))
+			(0, 0),
+  )
 		self.assertEqual(
 			converter.wideToStrOffsets(0, 4, raiseOnError=False),
-			(0, 3))
+			(0, 3),
+  )
 		self.assertRaises(IndexError, converter.wideToStrOffsets, -1, 0, raiseOnError=True)
 		self.assertRaises(IndexError, converter.wideToStrOffsets, 0, 4, raiseOnError=True)
 		self.assertRaises(ValueError, converter.wideToStrOffsets, 1, 0)
@@ -223,10 +225,12 @@ class TestEdgeCases(unittest.TestCase):
 		self.assertEqual(converter.wideStringLength, 3)
 		self.assertEqual(
 			converter.strToWideOffsets(-1, 0, raiseOnError=False),
-			(0, 0))
+			(0, 0),
+  )
 		self.assertEqual(
 			converter.strToWideOffsets(0, 4, raiseOnError=False),
-			(0, 3))
+			(0, 3),
+  )
 		self.assertRaises(IndexError, converter.strToWideOffsets, -1, 0, raiseOnError=True)
 		self.assertRaises(IndexError, converter.strToWideOffsets, 0, 4, raiseOnError=True)
 		self.assertRaises(ValueError, converter.strToWideOffsets, 1, 0)

@@ -22,7 +22,7 @@ class TestScriptDecorator(unittest.TestCase):
 			canPropagate=True,
 			bypassInputHelp=True,
 			allowInSleepMode=True,
-			resumeSayAllMode=CURSOR.CARET
+			resumeSayAllMode=CURSOR.CARET,
 		)
 		def script_test(self, gesture):
 			return

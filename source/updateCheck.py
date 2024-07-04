@@ -203,7 +203,7 @@ def getPendingUpdate() -> Optional[Tuple]:
 	else:
 		if pendingUpdateFile and os.path.isfile(pendingUpdateFile):
 			return (
-				pendingUpdateFile, pendingUpdateVersion, pendingUpdateAPIVersion, pendingUpdateBackCompatToAPIVersion
+				pendingUpdateFile, pendingUpdateVersion, pendingUpdateAPIVersion, pendingUpdateBackCompatToAPIVersion,
 			)
 		else:
 			_setStateToNone(state)
@@ -236,7 +236,7 @@ def _executeUpdate(destPath):
 		if os.access(portablePath, os.W_OK):
 			executeParams = u'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
 				portablePath=portablePath,
-				configPath=WritePaths.configDir
+				configPath=WritePaths.configDir,
 			)
 		else:
 			executeParams = u"--launcher"
@@ -286,21 +286,25 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			autoChecker.setNextCheck()
 
 	def _started(self):
-		self._progressDialog = gui.IndeterminateProgressDialog(gui.mainFrame,
-			# Translators: The title of the dialog displayed while manually checking for an NVDA update.
-			_("Checking for Update"),
-			# Translators: The progress message displayed while manually checking for an NVDA update.
-			_("Checking for update"))
+		self._progressDialog = gui.IndeterminateProgressDialog(
+      gui.mainFrame,
+      # Translators: The title of the dialog displayed while manually checking for an NVDA update.
+      _("Checking for Update"),
+      # Translators: The progress message displayed while manually checking for an NVDA update.
+      _("Checking for update"),
+  )
 
 	def _error(self):
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
-		wx.CallAfter(gui.messageBox,
-			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
-			_("Error checking for update."),
-			# Translators: The title of an error message dialog.
-			_("Error"),
-			wx.OK | wx.ICON_ERROR)
+		wx.CallAfter(
+      gui.messageBox,
+      # Translators: A message indicating that an error occurred while checking for an update to NVDA.
+      _("Error checking for update."),
+      # Translators: The title of an error message dialog.
+      _("Error"),
+      wx.OK | wx.ICON_ERROR,
+  )
 
 	def _result(self, info: Optional[Dict]) -> None:
 		wx.CallAfter(self._progressDialog.done)
@@ -353,7 +357,7 @@ class AutoUpdateChecker(UpdateChecker):
 class UpdateResultDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
@@ -382,24 +386,28 @@ class UpdateResultDialog(
 			message = _(
 				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 				# applied.
-				"Update to NVDA version {version} has been downloaded and is ready to be applied."
+				"Update to NVDA version {version} has been downloaded and is ready to be applied.",
 			).format(**updateInfo)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
-			showAddonCompat = any(getIncompatibleAddons(
-				currentAPIVersion=self.apiVersion,
-				backCompatToAPIVersion=self.backCompatTo
-			))
+			showAddonCompat = any(
+       getIncompatibleAddons(
+        currentAPIVersion=self.apiVersion,
+        backCompatToAPIVersion=self.backCompatTo,
+       ),
+   )
 			if showAddonCompat:
 				message += "\n\n" + getAddonCompatibilityMessage()
-				confirmationCheckbox = sHelper.addItem(wx.CheckBox(
-					self,
-					label=getAddonCompatibilityConfirmationMessage()
-				))
+				confirmationCheckbox = sHelper.addItem(
+        wx.CheckBox(
+         self,
+         label=getAddonCompatibilityConfirmationMessage(),
+        ),
+    )
 				confirmationCheckbox.Bind(
 					wx.EVT_CHECKBOX,
-					lambda evt: self.updateButton.Enable(not self.updateButton.Enabled)
+					lambda evt: self.updateButton.Enable(not self.updateButton.Enabled),
 				)
 				confirmationCheckbox.SetFocus()
 				# Translators: The label of a button to review add-ons prior to NVDA update.
@@ -409,17 +417,17 @@ class UpdateResultDialog(
 				self,
 				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Update to NVDA {version}").format(**updateInfo)
+				label=_("&Update to NVDA {version}").format(**updateInfo),
 			)
 			self.updateButton.Bind(
 				wx.EVT_BUTTON,
-				lambda evt: self.onUpdateButton(pendingUpdateDetails[0])
+				lambda evt: self.onUpdateButton(pendingUpdateDetails[0]),
 			)
 			self.updateButton.Enable(not showAddonCompat)
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to re-download a pending NVDA update.
-				label=_("Re-&download update")
+				label=_("Re-&download update"),
 			).Bind(wx.EVT_BUTTON, self.onDownloadButton)
 		else:
 			# Translators: A message indicating that an updated version of NVDA is available.
@@ -428,7 +436,7 @@ class UpdateResultDialog(
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to download an NVDA update.
-				label=_("&Download update")
+				label=_("&Download update"),
 			).Bind(wx.EVT_BUTTON, self.onDownloadButton)
 			if auto:  # this prompt was triggered by auto update checker
 				# the user might not want to wait for a download right now, so give the option to be reminded later.
@@ -475,7 +483,7 @@ class UpdateResultDialog(
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
 			APIVersion=self.apiVersion,
-			APIBackwardsCompatToVersion=self.backCompatTo
+			APIBackwardsCompatToVersion=self.backCompatTo,
 		)
 		displayDialogAsModal(incompatibleAddons)
 
@@ -501,20 +509,24 @@ class UpdateAskInstallDialog(
 		# Translators: A message indicating that an update to NVDA is ready to be applied.
 		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
-		showAddonCompat = any(getIncompatibleAddons(
-			currentAPIVersion=self.apiVersion,
-			backCompatToAPIVersion=self.backCompatTo
-		))
+		showAddonCompat = any(
+      getIncompatibleAddons(
+       currentAPIVersion=self.apiVersion,
+       backCompatToAPIVersion=self.backCompatTo,
+      ),
+  )
 		if showAddonCompat:
 			message += "\n" + getAddonCompatibilityMessage()
 		text = sHelper.addItem(wx.StaticText(self, label=message))
 		text.Wrap(self.scaleSize(500))
 
 		if showAddonCompat:
-			self.confirmationCheckbox = sHelper.addItem(wx.CheckBox(
-				self,
-				label=getAddonCompatibilityConfirmationMessage()
-			))
+			self.confirmationCheckbox = sHelper.addItem(
+       wx.CheckBox(
+        self,
+        label=getAddonCompatibilityConfirmationMessage(),
+       ),
+   )
 
 		bHelper = sHelper.addDialogDismissButtons(guiHelper.ButtonHelper(wx.HORIZONTAL))
 		if showAddonCompat:
@@ -530,7 +542,7 @@ class UpdateAskInstallDialog(
 			self.confirmationCheckbox.SetFocus()
 			self.confirmationCheckbox.Bind(
 				wx.EVT_CHECKBOX,
-				lambda evt: updateButton.Enable(not updateButton.Enabled)
+				lambda evt: updateButton.Enable(not updateButton.Enabled),
 			)
 			updateButton.Enable(False)
 		if self.storeUpdatesDirWritable:
@@ -551,7 +563,7 @@ class UpdateAskInstallDialog(
 		incompatibleAddons = addonGui.IncompatibleAddonsDialog(
 			parent=self,
 			APIVersion=self.apiVersion,
-			APIBackwardsCompatToVersion=self.backCompatTo
+			APIBackwardsCompatToVersion=self.backCompatTo,
 		)
 		displayDialogAsModal(incompatibleAddons)
 
@@ -575,7 +587,8 @@ class UpdateAskInstallDialog(
 				_("Unable to postpone update."),
 				# Translators: The title of the message when a downloaded update file could not be preserved.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR)
+				wx.OK | wx.ICON_ERROR,
+   )
 			finalDest=self.destPath
 		state["pendingUpdateFile"]=finalDest
 		state["pendingUpdateVersion"]=self.version
@@ -616,13 +629,15 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		self._guiExecTimer = gui.NonReEntrantTimer(self._guiExecNotify)
 		gui.mainFrame.prePopup()
 		# Translators: The title of the dialog displayed while downloading an NVDA update.
-		self._progressDialog = wx.ProgressDialog(_("Downloading Update"),
-			# Translators: The progress message indicating that a connection is being established.
-			_("Connecting"),
-			# PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
-			# and waits for the user to press the Close button.
-			style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
-			parent=gui.mainFrame)
+		self._progressDialog = wx.ProgressDialog(
+      _("Downloading Update"),
+      # Translators: The progress message indicating that a connection is being established.
+      _("Connecting"),
+      # PD_AUTO_HIDE is required because ProgressDialog.Update blocks at 100%
+      # and waits for the user to press the Close button.
+      style=wx.PD_CAN_ABORT | wx.PD_ELAPSED_TIME | wx.PD_REMAINING_TIME | wx.PD_AUTO_HIDE,
+      parent=gui.mainFrame,
+  )
 		self._progressDialog.CentreOnScreen()
 		self._progressDialog.Raise()
 		t = threading.Thread(
@@ -731,17 +746,20 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 			# Translators: A message indicating that an error occurred while downloading an update to NVDA.
 			_("Error downloading update."),
 			_("Error"),
-			wx.OK | wx.ICON_ERROR)
+			wx.OK | wx.ICON_ERROR,
+  )
 
 	def _downloadSuccess(self):
 		self._stopped()
-		gui.runScriptModalDialog(UpdateAskInstallDialog(
-			parent=gui.mainFrame,
-			destPath=self.destPath,
-			version=self.version,
-			apiVersion=self.apiVersion,
-			backCompatTo=self.backCompatToAPIVersion
-		))
+		gui.runScriptModalDialog(
+      UpdateAskInstallDialog(
+       parent=gui.mainFrame,
+       destPath=self.destPath,
+       version=self.version,
+       apiVersion=self.apiVersion,
+       backCompatTo=self.backCompatToAPIVersion,
+      ),
+  )
 
 class DonateRequestDialog(wx.Dialog):
 	MESSAGE = _(
@@ -750,7 +768,7 @@ class DonateRequestDialog(wx.Dialog):
 		"This project relies primarily on donations and grants. By donating, you are helping to fund full time development.\n"
 		"If even $10 is donated for every download, we will be able to cover all of the ongoing costs of the project.\n"
 		"All donations are received by NV Access, the non-profit organisation which develops NVDA.\n"
-		"Thank you for your support."
+		"Thank you for your support.",
 	)
 
 	def __init__(self, parent, continueFunc):
@@ -890,13 +908,20 @@ def _updateWindowsRootCertificates():
 	certCont = crypt.CertCreateCertificateContext(
 		0x00000001, # X509_ASN_ENCODING
 		cert,
-		len(cert))
+		len(cert),
+ )
 	# Ask Windows to build a certificate chain, thus triggering a root certificate update.
 	chainCont = ctypes.c_void_p()
-	crypt.CertGetCertificateChain(None, certCont, None, None,
-		ctypes.byref(CERT_CHAIN_PARA(cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
-			RequestedUsage=CERT_USAGE_MATCH())),
-		0, None,
-		ctypes.byref(chainCont))
+	crypt.CertGetCertificateChain(
+     None, certCont, None, None,
+     ctypes.byref(
+         CERT_CHAIN_PARA(
+             cbSize=ctypes.sizeof(CERT_CHAIN_PARA),
+             RequestedUsage=CERT_USAGE_MATCH(),
+         ),
+     ),
+     0, None,
+     ctypes.byref(chainCont),
+ )
 	crypt.CertFreeCertificateChain(chainCont)
 	crypt.CertFreeCertificateContext(certCont)

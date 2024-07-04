@@ -177,7 +177,7 @@ def callback(wav,numsamples,event):
 			player.feed(
 				c_void_p(wav + prevByte),
 				size=indexByte - prevByte,
-				onDone=lambda indexNum=indexNum: onIndexReached(indexNum)
+				onDone=lambda indexNum=indexNum: onIndexReached(indexNum),
 			)
 			prevByte = indexByte
 			if not isSpeaking:
@@ -345,7 +345,7 @@ def initialize(indexCallback=None):
 		AUDIO_OUTPUT_SYNCHRONOUS, 300,
 		os.fsencode(eSpeakPath),
 		# #10607: ensure espeak does not exit NVDA's process on errors such as the espeak path being invalid.
-		espeakINITIALIZE_DONT_EXIT
+		espeakINITIALIZE_DONT_EXIT,
 	)
 	if sampleRate <= 0:
 		raise OSError(f"espeak_Initialize failed with code {sampleRate}. Given Espeak data path of {eSpeakPath}")
@@ -354,7 +354,7 @@ def initialize(indexCallback=None):
 		samplesPerSec=sampleRate,
 		bitsPerSample=16,
 		outputDevice=config.conf["speech"]["outputDevice"],
-		buffered=True
+		buffered=True,
 	)
 	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)

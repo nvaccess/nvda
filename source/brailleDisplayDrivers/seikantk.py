@@ -107,9 +107,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(DeviceType.HID, {
-			vidpid,  # Seika Notetaker
-		})
+		driverRegistrar.addUsbDevices(
+      DeviceType.HID, {
+       vidpid,  # Seika Notetaker
+      },
+  )
 
 		driverRegistrar.addBluetoothDevices(isSeikaBluetoothDeviceMatch)
 
@@ -140,7 +142,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					log.info("Trying Seika notetaker on USB-HID")
 					self._dev = dev = hwIo.Hid(
 						path=match.port,  # for a Hid match type 'port' is actually 'path'.
-						onReceive=self._onReceiveHID
+						onReceive=self._onReceiveHID,
 					)
 					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
 					dev.setFeature(SEIKA_CMD_ON)  # device on
@@ -178,7 +180,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.info(
 				f"Seika notetaker,"
 				f" Cells {self.numCells}"
-				f" Buttons {self.numBtns}"
+				f" Buttons {self.numBtns}",
 			)
 
 	def _getDeviceInfo(self, dev: hwIo.IoBase) -> bool:
@@ -347,7 +349,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
 			"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
 			"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
-			"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE",),
+			"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE"),
 			"kb:backspace": ("br(seikantk):d7",),
 			"kb:pageup": ("br(seikantk):SPACE+LJ_RIGHT",),
 			"kb:pagedown": ("br(seikantk):SPACE+LJ_LEFT",),
@@ -379,7 +381,7 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	bitsPerByte = 8
 	# Convert bytes into a single bitset int
 	combinedRoutingKeysBitSet = sum(
-		[value << (bitsPerByte * bitIndex) for bitIndex, value in enumerate(routingKeyBytes)]
+		[value << (bitsPerByte * bitIndex) for bitIndex, value in enumerate(routingKeyBytes)],
 	)
 	numRoutingKeys = len(routingKeyBytes) * bitsPerByte
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}

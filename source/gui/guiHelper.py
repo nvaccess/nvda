@@ -134,13 +134,15 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 
 	# staticText and input control
 	# likely a labelled control from LabeledControlHelper
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
-		wx.Button,
-		wx.Choice,
-		wx.Slider,
-		wx.SpinCtrl,
-		wx.TextCtrl,
-	)):
+	if isinstance(firstElement, wx.StaticText) and isinstance(
+     secondElement, (
+      wx.Button,
+      wx.Choice,
+      wx.Slider,
+      wx.SpinCtrl,
+      wx.TextCtrl,
+     ),
+ ):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
@@ -306,7 +308,7 @@ class BoxSizerHelper:
 			self,
 			parent: wx.Dialog,
 			orientation: Optional[int] = None,
-			sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None
+			sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None,
 	):
 		""" Init. Pass in either orientation OR sizer.
 			@param parent: An instance of the parent wx window. EG wx.Dialog
@@ -374,7 +376,7 @@ class BoxSizerHelper:
 			self,
 			labelText: str,
 			wxCtrlClass: Type[_LabeledControlT],
-			**kwargs
+			**kwargs,
 	) -> _LabeledControlT:
 		""" Convenience method to create a labeled control
 			@param labelText: Text to use when constructing the wx.StaticText to label the control.
@@ -399,7 +401,7 @@ class BoxSizerHelper:
 	def addDialogDismissButtons(
 			self,
 			buttons: "_ButtonsT",
-			separated: bool = False
+			separated: bool = False,
 	) -> "_ButtonsT":
 		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
@@ -415,7 +417,7 @@ class BoxSizerHelper:
 		"""
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
-				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
+				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented.",
 			)
 		if isinstance(buttons, ButtonHelper):
 			toAdd = buttons.sizer

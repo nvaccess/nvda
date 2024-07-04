@@ -60,7 +60,7 @@ def __getattr__(attrName: str) -> Any:
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
 			f"Importing {attrName} from here is deprecated. "
-			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. "
+			f"Import {replacementSymbol.name} from winAPI.winUser.constants instead. ",
 		)
 		return replacementSymbol
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -696,33 +696,43 @@ def getSystemStickyKeys():
 # START SENDINPUT TYPE DECLARATIONS
 PUL = POINTER(c_ulong)  # noqa: F405
 class KeyBdInput(Structure):
-    _fields_ = [("wVk", c_ushort),  # noqa: F405
-             ("wScan", c_ushort),  # noqa: F405
-             ("dwFlags", c_ulong),  # noqa: F405
-             ("time", c_ulong),  # noqa: F405
-             ("dwExtraInfo", PUL)]
+    _fields_ = [
+        ("wVk", c_ushort),  # noqa: F405
+        ("wScan", c_ushort),  # noqa: F405
+        ("dwFlags", c_ulong),  # noqa: F405
+        ("time", c_ulong),  # noqa: F405
+        ("dwExtraInfo", PUL),
+    ]
 
 class HardwareInput(Structure):
-    _fields_ = [("uMsg", c_ulong),  # noqa: F405
-             ("wParamL", c_short),  # noqa: F405
-             ("wParamH", c_ushort)]  # noqa: F405
+    _fields_ = [
+        ("uMsg", c_ulong),  # noqa: F405
+        ("wParamL", c_short),  # noqa: F405
+        ("wParamH", c_ushort),
+    ]  # noqa: F405
 
 class MouseInput(Structure):
-    _fields_ = [("dx", c_long),  # noqa: F405
-             ("dy", c_long),  # noqa: F405
-             ("mouseData", c_ulong),  # noqa: F405
-             ("dwFlags", c_ulong),  # noqa: F405
-             ("time",c_ulong),  # noqa: F405
-             ("dwExtraInfo", PUL)]
+    _fields_ = [
+        ("dx", c_long),  # noqa: F405
+        ("dy", c_long),  # noqa: F405
+        ("mouseData", c_ulong),  # noqa: F405
+        ("dwFlags", c_ulong),  # noqa: F405
+        ("time",c_ulong),  # noqa: F405
+        ("dwExtraInfo", PUL),
+    ]
 
 class Input_I(Union):  # noqa: F405
-    _fields_ = [("ki", KeyBdInput),
-              ("mi", MouseInput),
-              ("hi", HardwareInput)]
+    _fields_ = [
+        ("ki", KeyBdInput),
+        ("mi", MouseInput),
+        ("hi", HardwareInput),
+    ]
 
 class Input(Structure):
-    _fields_ = [("type", c_ulong),  # noqa: F405
-             ("ii", Input_I)]
+    _fields_ = [
+        ("type", c_ulong),  # noqa: F405
+        ("ii", Input_I),
+    ]
 
 
 INPUT_MOUSE = 0  # The event is a mouse event. Use the mi structure of the union.
@@ -744,7 +754,7 @@ class PAINTSTRUCT(Structure):
 		('rcPaint', RECT),
 		('fRestore', c_int),
 		('fIncUpdate', c_int),
-		('rgbReserved', c_char * 32)
+		('rgbReserved', c_char * 32),
 	]
 
 

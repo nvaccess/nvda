@@ -138,7 +138,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 		spy.wait_for_speech_to_finish(speechStartedIndex=nextIndex)
 		raise AssertionError(
 			f"Unable to find Window in task switcher matching: {targetWindowNamePattern}\n"
-			"See NVDA log for dump of all speech."
+			"See NVDA log for dump of all speech.",
 		)
 	else:
 		builtIn.log("Found, attempting to select.", level="DEBUG")
@@ -149,7 +149,7 @@ def taskSwitchToItemMatching(targetWindowNamePattern: _re.Pattern, maxWindowsToT
 				"Expected some speech after enter press."
 				f" Speech at index: {nextIndex}"
 				f", nextIndex: {spy.get_next_speech_index()}"
-				f", speech in range: {spy.get_speech_at_index_until_now(nextIndex)}"
+				f", speech in range: {spy.get_speech_at_index_until_now(nextIndex)}",
 			)
 
 
@@ -167,7 +167,7 @@ def _tryOpenTaskSwitcher() -> _Optional["_SpeechIndexT"]:
 		firstRow,
 		afterIndex=expectedStartOfKeypressSpeechIndex - 1,
 		maxWaitSeconds=5,
-		intervalBetweenSeconds=0.3
+		intervalBetweenSeconds=0.3,
 	)
 	builtIn.log(f"indexOfSpeech '{firstRow}': {indexOfSpeech}", level="DEBUG")
 	if indexOfSpeech:

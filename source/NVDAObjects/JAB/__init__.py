@@ -361,7 +361,7 @@ class JAB(Window):
 			self.role not in [
 				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
 				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
-				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON,
 			]
 			and self._JABAccContextInfo.accessibleValue
 			and not self._JABAccContextInfo.accessibleText
@@ -409,7 +409,7 @@ class JAB(Window):
 			and self.role in (
 				controlTypes.Role.TREEVIEWITEM,
 				controlTypes.Role.LISTITEM,
-				controlTypes.Role.TAB
+				controlTypes.Role.TAB,
 			)
 		):
 			index=self._JABAccContextInfo.indexInParent+1
@@ -573,9 +573,11 @@ class JAB(Window):
 		if index is None:
 			index = self.defaultActionIndex
 		try:
-			JABHandler.bridgeDll.doAccessibleActions(self.jabContext.vmID, self.jabContext.accContext,
-				JABHandler.AccessibleActionsToDo(actionsCount=1, actions=(self._actions[index],)),
-				JABHandler.jint())
+			JABHandler.bridgeDll.doAccessibleActions(
+       self.jabContext.vmID, self.jabContext.accContext,
+       JABHandler.AccessibleActionsToDo(actionsCount=1, actions=(self._actions[index],)),
+       JABHandler.jint(),
+   )
 		except (IndexError, RuntimeError):
 			raise NotImplementedError
 

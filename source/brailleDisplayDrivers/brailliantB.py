@@ -87,22 +87,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_1C71&PID_C111",  # Mantis Q 40
-			"VID_1C71&PID_C101",  # Chameleon 20
-			"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
-			"VID_1C71&PID_CE01",  # NLS eReader 20 HID
-			"VID_1C71&PID_C006",  # Brailliant BI 32, 40 and 80
-			"VID_1C71&PID_C022",  # Brailliant BI 14
-			"VID_1C71&PID_C131",  # Brailliant BI 40X
-			"VID_1C71&PID_C141",  # Brailliant BI 20X
-			"VID_1C71&PID_C00A",  # BrailleNote Touch
-			"VID_1C71&PID_C00E",  # BrailleNote Touch v2
-		})
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
-			"VID_1C71&PID_C021",  # Brailliant BI 14
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.HID, {
+       "VID_1C71&PID_C111",  # Mantis Q 40
+       "VID_1C71&PID_C101",  # Chameleon 20
+       "VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
+       "VID_1C71&PID_CE01",  # NLS eReader 20 HID
+       "VID_1C71&PID_C006",  # Brailliant BI 32, 40 and 80
+       "VID_1C71&PID_C022",  # Brailliant BI 14
+       "VID_1C71&PID_C131",  # Brailliant BI 40X
+       "VID_1C71&PID_C141",  # Brailliant BI 20X
+       "VID_1C71&PID_C00A",  # BrailleNote Touch
+       "VID_1C71&PID_C00E",  # BrailleNote Touch v2
+      },
+  )
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.SERIAL, {
+       "VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
+       "VID_1C71&PID_C021",  # Brailliant BI 14
+      },
+  )
 		driverRegistrar.addBluetoothDevices(
 			lambda m: (
 				m.type == bdDetect.DeviceType.SERIAL
@@ -125,7 +129,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					"Brailliant BI 40X",
 					"Brailliant BI 20X",
 				)
-			)
+			),
 		)
 
 	@classmethod
@@ -158,8 +162,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					break # Success!
 			if self.numCells:
 				# A display responded.
-				log.info("Found display with {cells} cells connected via {type} ({port})".format(
-					cells=self.numCells, type=portType, port=port))
+				log.info(
+        "Found display with {cells} cells connected via {type} ({port})".format(
+        cells=self.numCells, type=portType, port=port,
+        ),
+    )
 				break
 			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
@@ -203,7 +210,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			HEADER,
 			msgId,
 			intToByte(len(payload)),
-			payload
+			payload,
 		])
 		self._dev.write(data)
 
@@ -275,7 +282,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				HR_BRAILLE,  # id
 				b"\x01\x00",  # Module 1, offset 0
 				intToByte(self.numCells),  # length
-				cellBytes
+				cellBytes,
 			])
 			#: Humanware HID devices require the use of HidD_SetOutputReport when
 			# sending data to the device via HID, as WriteFile seems to block forever

@@ -19,14 +19,14 @@ class AssertsLib:
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
 			f"{message}assert {comparison} string matches (ignore case: {ignore_case}):  '{expected}'",
-			level="INFO"
+			level="INFO",
 		)
 		try:
 			builtIn.should_be_equal_as_strings(
 				actual,
 				expected,
 				msg=f"{message}{comparison} Actual != Expected",
-				ignore_case=ignore_case
+				ignore_case=ignore_case,
 			)
 		except AssertionError:
 			# Occasionally on assert failure the repr of the string makes it easier to determine the differences.
@@ -35,9 +35,9 @@ class AssertsLib:
 					comparison,
 					ignore_case,
 					repr(actual),
-					repr(expected)
+					repr(expected),
 				),
-				level="DEBUG"
+				level="DEBUG",
 			)
 			raise
 
@@ -47,14 +47,14 @@ class AssertsLib:
 			expectedSubStrings: List[str],
 			ignore_case: bool = False,
 			comparison: str = "speech",
-			message: str = ""
+			message: str = "",
 	):
 		message += '\n' if message else ''
 		# Include expected text in robot test report so that the actual behavior
 		# can be determined entirely from the report, even when the test passes.
 		builtIn.log(
 			f"{message}assert {comparison} string matches (ignore case: {ignore_case}):  '{expectedSubStrings}'",
-			level="INFO"
+			level="INFO",
 		)
 		try:
 			for subString in expectedSubStrings:
@@ -62,7 +62,7 @@ class AssertsLib:
 					actual,
 					subString,
 					msg=f"{message}{comparison} Actual != Expected",
-					ignore_case=ignore_case
+					ignore_case=ignore_case,
 				)
 		except AssertionError:
 			# Occasionally on assert failure the repr of the string makes it easier to determine the differences.
@@ -71,9 +71,9 @@ class AssertsLib:
 					comparison,
 					ignore_case,
 					repr(actual),
-					repr(subString)
+					repr(subString),
 				),
-				level="DEBUG"
+				level="DEBUG",
 			)
 			raise
 
@@ -86,14 +86,14 @@ class AssertsLib:
 			actual: str,
 			expectedSpeechParts: List[str],
 			ignore_case: bool = False,
-			message: str = ""
+			message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,
 			expectedSpeechParts,
 			ignore_case,
 			comparison="speech",
-			message=message
+			message=message,
 		)
 
 	@staticmethod
@@ -105,12 +105,12 @@ class AssertsLib:
 			actual: str,
 			expectedBrailleParts: List[str],
 			ignore_case: bool = False,
-			message: str = ""
+			message: str = "",
 	):
 		AssertsLib.string_contains_strings(
 			actual,
 			expectedBrailleParts,
 			ignore_case,
 			comparison="braille",
-			message=message
+			message=message,
 		)

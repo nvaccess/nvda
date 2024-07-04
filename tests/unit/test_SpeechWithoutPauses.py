@@ -26,7 +26,7 @@ class SpeechSpy:
 
 	def speak(
 			self,
-			speechSeqence: SpeechSequence
+			speechSeqence: SpeechSequence,
 	):
 		self.spokenSequences.append(speechSeqence)
 
@@ -51,7 +51,7 @@ def resetSpeakDest():
 
 def old_speakWithoutPauses(  # noqa: C901
 		speechSequence: SpeechSequence,
-		detectBreaks: bool = True
+		detectBreaks: bool = True,
 ) -> bool:
 	"""
 	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or
@@ -141,13 +141,13 @@ class TestOldImplVsNew(unittest.TestCase):
 					callbackCommand,
 					lang_en,
 					'The purpose of the wxPyWiki is to provide documentation, examples, how-tos, etc. for helping people ',
-					lang_default
+					lang_default,
 				],
 				[
 					callbackCommand,
 					lang_en,
 					'learn, understand and use ',
-					lang_default
+					lang_default,
 				],
 				[
 					callbackCommand,
@@ -159,15 +159,15 @@ class TestOldImplVsNew(unittest.TestCase):
 					lang_default,
 					lang_en,
 					'. Anything that falls within those guidelines is fair game. ',
-					lang_default
+					lang_default,
 				],
 				[
 					EndUtteranceCommand(),
 					callbackCommand,
 					lang_en,
 					'Note: To get to the main wxPython site click ',
-					lang_default
-				]
+					lang_default,
+				],
 			]
 
 		expectedSpeech = repr(
@@ -195,17 +195,17 @@ class TestOldImplVsNew(unittest.TestCase):
 					'wxPython',
 					lang_default,
 					lang_en,
-					'. Anything that falls within those guidelines is fair game. '
+					'. Anything that falls within those guidelines is fair game. ',
 				],
 				'spoke:True',
 				[
 					# this sequence seems incorrect, however it persists the "old" behavior:
 					# - it is missing a callback command
 					# - it has no speech, just a meaningless pair of lang change commands
-					lang_en, lang_default
+					lang_en, lang_default,
 				],
-				'spoke:False'
-			]
+				'spoke:False',
+			],
 		)
 
 		oldSpeech = resetSpeakDest()

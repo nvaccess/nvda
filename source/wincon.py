@@ -34,7 +34,7 @@ class CONSOLE_SELECTION_INFO(Structure):  # noqa: F405
 class CHAR_INFO(Structure):  # noqa: F405
 	_fields_ = [
 		('Char', c_wchar), #union of char and wchar_t isn't needed since we deal only with unicode  # noqa: F405
-		('Attributes', WORD)  # noqa: F405
+		('Attributes', WORD),  # noqa: F405
 	]
 
 PHANDLER_ROUTINE=WINFUNCTYPE(BOOL,DWORD)  # noqa: F405

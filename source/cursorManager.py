@@ -78,7 +78,7 @@ class FindDialog(
 			self.activeCursorManager.doFindText,
 			text,
 			caseSensitive=caseSensitive,
-			reverse=self.reverse
+			reverse=self.reverse,
 		)
 		self.Destroy()
 
@@ -193,7 +193,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# Translators: message dialog title displayed to the user when
 				# searching text and no text is found.
 				_("0 matches"),
-				wx.OK | wx.ICON_INFORMATION
+				wx.OK | wx.ICON_INFORMATION,
 			)
 		CursorManager._lastFindText=text
 		CursorManager._lastCaseSensitivity=caseSensitive
@@ -212,7 +212,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	@script(
 		description=_(
 			# Translators: Input help message for find next command.
-			"find the next occurrence of the previously entered text string from the current cursor's position"
+			"find the next occurrence of the previously entered text string from the current cursor's position",
 		),
 		gesture="kb:NVDA+f3",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
@@ -230,7 +230,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	@script(
 		description=_(
 			# Translators: Input help message for find previous command.
-			"find the previous occurrence of the previously entered text string from the current cursor's position"
+			"find the previous occurrence of the previously entered text string from the current cursor's position",
 		),
 		gesture="kb:NVDA+shift+f3",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
@@ -296,7 +296,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			passKey, moved = moveToMultiLineBreakParagraph(
 				nextParagraph=nextParagraph,
 				speakNew=not willSayAllResume(gesture),
-				ti=ti)
+				ti=ti,
+   )
 			if moved:
 				self.selection = ti
 			elif passKey:

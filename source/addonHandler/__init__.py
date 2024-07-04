@@ -116,7 +116,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def fromPickledDict(
 			self,
-			pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]]
+			pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
 	) -> None:
 		# Load from pickledState
 		if "backCompatToAPIVersion" in pickledState:
@@ -155,7 +155,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		if self.manualOverridesAPIVersion != addonAPIVersion.BACK_COMPAT_TO:
 			log.debug(
 				"BACK_COMPAT_TO API version for manual compatibility overrides has changed. "
-				f"NVDA API has been upgraded: from {self.manualOverridesAPIVersion} to {addonAPIVersion.BACK_COMPAT_TO}"
+				f"NVDA API has been upgraded: from {self.manualOverridesAPIVersion} to {addonAPIVersion.BACK_COMPAT_TO}",
 			)
 		if self.manualOverridesAPIVersion < addonAPIVersion.BACK_COMPAT_TO:
 			# Reset compatibility overrides as the API version has upgraded.
@@ -213,8 +213,8 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
 		for blockedAddon in CaseInsensitiveSet(
 			self[AddonStateCategory.BLOCKED].union(
-				self[AddonStateCategory.OVERRIDE_COMPATIBILITY]
-			)
+				self[AddonStateCategory.OVERRIDE_COMPATIBILITY],
+			),
 		):
 			# Iterate over copy of set to prevent updating the set while iterating over it.
 			if blockedAddon not in installedAddons and blockedAddon not in self[AddonStateCategory.PENDING_INSTALL]:
@@ -238,7 +238,7 @@ def getRunningAddons() -> "AddonHandlerModelGeneratorT":
 
 def getIncompatibleAddons(
 		currentAPIVersion=addonAPIVersion.CURRENT,
-		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO
+		backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO,
 ) -> "AddonHandlerModelGeneratorT":
 	""" Returns a generator of the add-ons that are not compatible.
 	"""
@@ -247,7 +247,7 @@ def getIncompatibleAddons(
 			not isAddonCompatible(
 				addon,
 				currentAPIVersion=currentAPIVersion,
-				backwardsCompatToVersion=backCompatToAPIVersion
+				backwardsCompatToVersion=backCompatToAPIVersion,
 			)
 			and (
 				# Add-ons that override incompatibility are not considered incompatible.
@@ -256,7 +256,7 @@ def getIncompatibleAddons(
 				# then the add-on compatibility override will be reset
 				or backCompatToAPIVersion > addonAPIVersion.BACK_COMPAT_TO
 			)
-		)
+		),
 	)
 
 
@@ -295,7 +295,7 @@ def initialize():
 	if missingPendingInstalls := state[AddonStateCategory.PENDING_INSTALL] - _failedPendingInstalls:
 		log.error(
 			"The following add-ons should be installed, "
-			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}"
+			f"but are no longer present on disk: {', '.join(missingPendingInstalls)}",
 		)
 		state[AddonStateCategory.PENDING_INSTALL] -= missingPendingInstalls
 	if missingPendingOverrideCompat := (
@@ -303,7 +303,7 @@ def initialize():
 	):
 		log.error(
 			"The following add-ons which were marked as compatible are no longer installed: "
-			f"{', '.join(missingPendingOverrideCompat)}"
+			f"{', '.join(missingPendingOverrideCompat)}",
 		)
 		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY] -= missingPendingOverrideCompat
 	if NVDAState.shouldWriteToDisk():
@@ -328,7 +328,7 @@ def _getDefaultAddonPaths() -> list[str]:
 
 def _getAvailableAddonsFromPath(
 		path: str,
-		isFirstLoad: bool = False
+		isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	""" Gets available add-ons from path.
 	An addon is only considered available if the manifest file is loaded with no errors.
@@ -384,8 +384,9 @@ def _getAvailableAddonsFromPath(
 						" Requires API: {a.minimumNVDAVersion}."
 						" Last-tested API: {a.lastTestedNVDAVersion}".format(
 							name=name,
-							a=a
-						))
+							a=a,
+						),
+     )
 					if a.isDisabled:
 						log.debug("Disabling add-on %s", name)
 					if not (
@@ -404,7 +405,7 @@ _availableAddons = collections.OrderedDict()
 def getAvailableAddons(
 		refresh: bool = False,
 		filterFunc: Optional[Callable[["Addon"], bool]] = None,
-		isFirstLoad: bool = False
+		isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	""" Gets all available addons on the system.
 	@param refresh: Whether or not to query the file system for available add-ons.
@@ -640,8 +641,8 @@ class Addon(AddonBase):
 						self.manifest['minimumNVDAVersion'],
 						self.manifest['lastTestedNVDAVersion'],
 						addonAPIVersion.CURRENT,
-						addonAPIVersion.BACK_COMPAT_TO
-					)
+						addonAPIVersion.BACK_COMPAT_TO,
+					),
 				)
 			if self.name in state[AddonStateCategory.PENDING_DISABLE]:
 				# Undoing a pending disable.
@@ -735,7 +736,7 @@ class Addon(AddonBase):
 			self,
 			taskName: Literal["onInstall", "onUninstall"],
 			*args,
-			**kwargs
+			**kwargs,
 	) -> None:
 		"""
 		Executes the function having the given taskName with the given args and kwargs,
@@ -846,7 +847,7 @@ def initTranslation():
 		translations.gettext: "_",
 		translations.ngettext: "ngettext",
 		translations.pgettext: "pgettext",
-		translations.npgettext: "npgettext"
+		translations.npgettext: "npgettext",
 	}
 	# Point _ to the translation object in the globals namespace of the caller frame
 	try:
@@ -897,7 +898,7 @@ class AddonBundle(AddonBase):
 				# ZipFile.open opens every file in binary mode.
 				# decoding is handled by configobj.
 				z.open(MANIFEST_FILENAME, 'r'),
-				translatedInput=translatedInput
+				translatedInput=translatedInput,
 			)
 			if self.manifest.errors is not None:
 				_report_manifest_errors(self.manifest)
@@ -964,8 +965,9 @@ def _report_manifest_errors(manifest):
 
 class AddonManifest(ConfigObj):
 	""" Add-on manifest file. It contains metadata about an NVDA add-on package. """
-	configspec = ConfigObj(StringIO(
-	"""
+	configspec = ConfigObj(
+     StringIO(
+     """
 # NVDA Add-on Manifest configuration specification
 # Add-on unique name
 # Suggested convention is lowerCamelCase.
@@ -1014,7 +1016,9 @@ docFileName = string(default=None)
 # "0.0.0" is also valid.
 # The final integer can be left out, and in that case will default to 0. E.g. 2019.1
 
-"""))
+""",
+     ),
+ )
 
 	def __init__(self, input, translatedInput=None):
 		""" Constructs an L{AddonManifest} instance from manifest string data
@@ -1032,7 +1036,7 @@ docFileName = string(default=None)
 		elif True != self._validateApiVersionRange():  # noqa: E712
 			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
 				self.get("minimumNVDAVersion"),
-				self.get("lastTestedNVDAVersion")
+				self.get("lastTestedNVDAVersion"),
 			)
 		self._translatedConfig = None
 		if translatedInput is not None:

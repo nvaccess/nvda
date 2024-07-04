@@ -61,7 +61,7 @@ class PointLStruct(ctypes.Structure):
  	_fields_=[
 		('x',ctypes.c_long),
 		('y',ctypes.c_long),
-	]
+  ]
 
 class CharRangeStruct(ctypes.Structure):
 	_fields_=[
@@ -182,8 +182,10 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# If the specified index is greater than the index of the last character in the control,
 		# the control returns -1.
 		if point.x <0 or point.y <0:
-			raise LookupError("Point with client coordinates x=%d, y=%d not within client area of object" %
-				(point.x, point.y))
+			raise LookupError(
+       "Point with client coordinates x=%d, y=%d not within client area of object" %
+       (point.x, point.y),
+   )
 		return point.toScreen(self.obj.windowHandle)
 
 
@@ -295,7 +297,7 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _setFormatFieldColor(
 			self,
 			charFormat: Union[CharFormat2AStruct, CharFormat2WStruct],
-			formatField: textInfos.FormatField
+			formatField: textInfos.FormatField,
 	) -> None:
 		if charFormat.dwEffects & CFE_AUTOCOLOR:
 			rgb = GetSysColor(SysColorIndex.WINDOW_TEXT)
@@ -581,7 +583,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 	def _setFormatFieldColor(
 			self,
 			fontObj,
-			formatField: textInfos.FormatField
+			formatField: textInfos.FormatField,
 	) -> None:
 		fgColor = fontObj.foreColor
 		if fgColor == comInterfaces.tom.tomAutoColor:
@@ -744,18 +746,20 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			return [
 				textInfos.FieldCommand(
 					"formatChange",
-					self._getFormatFieldAtRange(textRange, formatConfig)
+					self._getFormatFieldAtRange(textRange, formatConfig),
 				),
-				self._getTextAtRange(self._rangeObj)
+				self._getTextAtRange(self._rangeObj),
 			]
 		commandList=[]
 		endLimit=self._rangeObj.end
 		while textRange.end<endLimit:
 			self._expandFormatRange(textRange, formatConfig)
-			commandList.append(textInfos.FieldCommand(
-				"formatChange",
-				self._getFormatFieldAtRange(textRange, formatConfig)
-			))
+			commandList.append(
+       textInfos.FieldCommand(
+        "formatChange",
+        self._getFormatFieldAtRange(textRange, formatConfig),
+       ),
+   )
 			commandList.append(self._getTextAtRange(textRange))
 			end = textRange.end
 			textRange.start = end

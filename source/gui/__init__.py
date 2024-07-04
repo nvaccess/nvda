@@ -261,7 +261,7 @@ class MainFrame(wx.Frame):
 					destPath=destPath,
 					version=version,
 					apiVersion=apiVersion,
-					backCompatTo=backCompatToAPIVersion
+					backCompatTo=backCompatToAPIVersion,
 				)
 				runScriptModalDialog(confirmUpdateDialog)
 			else:
@@ -459,15 +459,16 @@ class MainFrame(wx.Frame):
 			# Translators: A message to warn the user when starting the COM Registration Fixing tool 
 			_("You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?"),
 			# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool 
-			_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self
+			_("Warning"),wx.YES|wx.NO|wx.ICON_WARNING,self,
 		)==wx.NO:
 			return
-		progressDialog = IndeterminateProgressDialog(mainFrame,
-			# Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
-			_("COM Registration Fixing Tool"),
-			# Translators: The message displayed while NVDA is running the COM Registration fixing tool 
-			_("Please wait while NVDA tries to fix your system's COM registrations.")
-		)
+		progressDialog = IndeterminateProgressDialog(
+      mainFrame,
+       # Translators: The title of the dialog presented while NVDA is running the COM Registration fixing tool 
+       _("COM Registration Fixing Tool"),
+       # Translators: The message displayed while NVDA is running the COM Registration fixing tool 
+       _("Please wait while NVDA tries to fix your system's COM registrations."),
+  )
 		try:
 			systemUtils.execElevated(config.SLAVE_FILENAME, ["fixCOMRegistrations"])
 		except:  # noqa: E722
@@ -478,11 +479,11 @@ class MainFrame(wx.Frame):
 			_(
 				# Translators: The message displayed when the COM Registration Fixing tool completes.
 				"The COM Registration Fixing tool has finished. "
-				"It is highly recommended that you restart your computer now, to make sure the changes take full effect."
+				"It is highly recommended that you restart your computer now, to make sure the changes take full effect.",
 			),
 			# Translators: The title of a dialog presented when the COM Registration Fixing tool is complete. 
 			_("COM Registration Fixing Tool"),
-			wx.OK
+			wx.OK,
 		)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
@@ -502,11 +503,13 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		self.menu=wx.Menu()
 		menu_preferences=self.preferencesMenu=wx.Menu()
-		item = menu_preferences.Append(wx.ID_ANY,
-			# Translators: The label for the menu item to open NVDA Settings dialog.
-			_("&Settings..."),
-			# Translators: The description for the menu item to open NVDA Settings dialog.
-			_("NVDA settings"))
+		item = menu_preferences.Append(
+      wx.ID_ANY,
+      # Translators: The label for the menu item to open NVDA Settings dialog.
+      _("&Settings..."),
+      # Translators: The description for the menu item to open NVDA Settings dialog.
+      _("NVDA settings"),
+  )
 		self.Bind(wx.EVT_MENU, frame.onNVDASettingsCommand, item)
 		if not globalVars.appArgs.secure:
 			# Translators: The label for a submenu under NvDA Preferences menu to select speech dictionaries.
@@ -534,7 +537,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.menu_tools_toggleBrailleViewer: wx.MenuItem = menu_tools.AppendCheckItem(
 				wx.ID_ANY,
 				# Translators: The label for the menu item to toggle Braille Viewer.
-				_("&Braille viewer")
+				_("&Braille viewer"),
 			)
 
 			item = self.menu_tools_toggleBrailleViewer
@@ -619,7 +622,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open Default speech dictionary dialog.
 			_("&Default dictionary..."),
 			# Translators: The help text for the menu item to open Default speech dictionary dialog.
-			_("A dialog where you can set default dictionary by adding dictionary entries to the list")
+			_("A dialog where you can set default dictionary by adding dictionary entries to the list"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onDefaultDictionaryCommand, item)
 		item = subMenu_speechDicts.Append(
@@ -630,8 +633,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				# Translators: The help text for the menu item
 				# to open Voice specific speech dictionary dialog.
 				"A dialog where you can set voice-specific dictionary by adding"
-				" dictionary entries to the list"
-			)
+				" dictionary entries to the list",
+			),
 		)
 		self.Bind(wx.EVT_MENU, frame.onVoiceDictionaryCommand, item)
 		item = subMenu_speechDicts.Append(
@@ -639,7 +642,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to open Temporary speech dictionary dialog.
 			_("&Temporary dictionary..."),
 			# Translators: The help text for the menu item to open Temporary speech dictionary dialog.
-			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box")
+			_("A dialog where you can set temporary dictionary by adding dictionary entries to the edit box"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onTemporaryDictionaryCommand, item)
 		return subMenu_speechDicts
@@ -654,7 +657,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			# Translators: The label for the menu item to revert to saved configuration.
 			_("&Revert to saved configuration"),
 			# Translators: The help text for the menu item to revert to saved configuration.
-			_("Reset all settings to saved state")
+			_("Reset all settings to saved state"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToSavedConfigurationCommand, item)
 		item = self.menu.Append(
@@ -664,7 +667,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Reset configuration to &factory defaults"),
 			# Translators: The help text for the menu item to reset settings to default settings.
 			# Here, default settings means settings that were there when the user first used NVDA.
-			_("Reset all settings to default state")
+			_("Reset all settings to default state"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onRevertToDefaultConfigurationCommand, item)
 		if NVDAState.shouldWriteToDisk():
@@ -673,7 +676,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				# Translators: The label for the menu item to save current settings.
 				_("&Save configuration"),
 				# Translators: The help text for the menu item to save current settings.
-				_("Write the current configuration to nvda.ini")
+				_("Write the current configuration to nvda.ini"),
 			)
 			self.Bind(wx.EVT_MENU, frame.onSaveConfigurationCommand, item)
 
@@ -710,14 +713,14 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			self.Bind(
 				wx.EVT_MENU,
 				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
-				item
+				item,
 			)
 			# Translators: The label for the menu item to view NVDA Contributors list document.
 			item = self.helpMenu.Append(wx.ID_ANY, _("C&ontributors"))
 			self.Bind(
 				wx.EVT_MENU,
 				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
-				item
+				item,
 			)
 
 			self.helpMenu.AppendSeparator()
@@ -747,7 +750,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 				# Translators: The label for the menu item to run a pending update.
 				_("Install pending &update"),
 				# Translators: The description for the menu item to run a pending update.
-				_("Execute a previously downloaded NVDA update")
+				_("Execute a previously downloaded NVDA update"),
 			)
 			self.Bind(wx.EVT_MENU, frame.onExecuteUpdateCommand, item)
 

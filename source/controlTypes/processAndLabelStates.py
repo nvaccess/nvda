@@ -14,7 +14,7 @@ def _processPositiveStates(
 		role: Role,
 		states: Set[State],
 		reason: OutputReason,
-		positiveStates: Optional[Set[State]] = None
+		positiveStates: Optional[Set[State]] = None,
 ) -> Set[State]:
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is checked.
@@ -81,7 +81,7 @@ def _processNegativeStates(
 		role: Role,
 		states: Set[State],
 		reason: OutputReason,
-		negativeStates: Optional[Set[State]] = None
+		negativeStates: Optional[Set[State]] = None,
 ) -> Set[State]:
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not

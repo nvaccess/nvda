@@ -15,7 +15,7 @@ from typing import (
 	Optional,
 	Set,
 	Tuple,
-	Union
+	Union,
 )
 from collections import OrderedDict
 import ctypes
@@ -264,7 +264,7 @@ class OneCoreSynthDriver(SynthDriver):
 			channels=wav.getnchannels(),
 			samplesPerSec=samplesPerSec,
 			bitsPerSample=bytesPerSample * 8,
-			outputDevice=config.conf["speech"]["outputDevice"]
+			outputDevice=config.conf["speech"]["outputDevice"],
 		)
 
 	def terminate(self):
@@ -286,8 +286,10 @@ class OneCoreSynthDriver(SynthDriver):
 		# There might be more text pending. Throw it away.
 		if self.supportsProsodyOptions:
 			# In this case however, we must keep any parameter changes.
-			self._queuedSpeech = [item for item in self._queuedSpeech
-				if not isinstance(item, str)]
+			self._queuedSpeech = [
+       item for item in self._queuedSpeech
+       if not isinstance(item, str)
+   ]
 		else:
 			self._queuedSpeech = []
 		if self._player:
@@ -302,7 +304,7 @@ class OneCoreSynthDriver(SynthDriver):
 				self.availableLanguages,
 				self._rate,
 				self._pitch,
-				self._volume
+				self._volume,
 			)
 		text = conv.convertToXml(speechSequence)
 		# #7495: Calling WaveOutOpen blocks for ~100 ms if called from the callback
@@ -477,7 +479,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._player.feed(
 				ctypes.c_void_p(data + prevPos),
 				size=pos - prevPos,
-				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index)
+				onDone=lambda index=index: synthIndexReached.notify(synth=self, index=index),
 			)
 			prevPos = pos
 		if self._wasCancelled:

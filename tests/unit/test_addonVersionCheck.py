@@ -32,7 +32,7 @@ class mockAddon(AddonBase):
 			minAPIVersion,
 			lastTestedAPIVersion,
 			name="mockAddon",
-			version="1.0"
+			version="1.0",
 	):
 		super(mockAddon, self).__init__()
 		self._name = name

@@ -126,7 +126,7 @@ def __getattr__(attrName: str) -> Any:
 			XlVAlign.BOTTOM.value: "botom",
 			XlVAlign.TOP.value: "top",
 			1: "default",
-		}
+		},
 	}
 	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
 		replacementSymbol = _deprecatedConstantsMap[attrName]
@@ -281,7 +281,7 @@ backgroundPatternLabels={
 		xlPatternLinearGradient:_("linear gradient"),
 		# Translators: A type of background pattern in Microsoft Excel.
 		xlPatternRectangularGradient:_("rectangular gradient"),
-	}
+}
 
 from .excelCellBorder import getCellBorderStyleDescription  # noqa: E402
 
@@ -290,10 +290,10 @@ re_absRC=re.compile(r'^R(\d+)C(\d+)(?::R(\d+)C(\d+))?$')
 
 class ExcelQuickNavItem(browseMode.QuickNavItem):
 
-	def __init__( self , nodeType , document , itemObject , itemCollection ):
+	def __init__( self , nodeType , document , itemObject , itemCollection):
 		self.excelItemObject = itemObject
 		self.excelItemCollection = itemCollection 
-		super( ExcelQuickNavItem ,self).__init__( nodeType , document )
+		super( ExcelQuickNavItem ,self).__init__( nodeType , document)
 
 	def activate(self):
 		pass
@@ -319,7 +319,7 @@ class ExcelChartQuickNavItem(ExcelQuickNavItem):
 			nodeType,
 			document,
 			chartObject,
-			chartCollection
+			chartCollection,
 		)
 
 	def __lt__(self,other):
@@ -375,8 +375,8 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 				activeCell.row,
 				activeCell.column,
 				self.excelItemObject.row,
-				self.excelItemObject.column
-			)
+				self.excelItemObject.column,
+			),
 		)
 
 		if self.excelItemObject.row == activeCell.row:
@@ -388,16 +388,16 @@ class ExcelRangeBasedQuickNavItem(ExcelQuickNavItem):
 
 class ExcelCommentQuickNavItem(ExcelRangeBasedQuickNavItem):
 
-	def __init__( self , nodeType , document , commentObject , commentCollection ):
+	def __init__( self , nodeType , document , commentObject , commentCollection):
 		self.comment=commentObject.comment
 		self.label = commentObject.address(False,False,1,False) + " " + (self.comment.Text() if self.comment else "")
-		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection )
+		super( ExcelCommentQuickNavItem , self).__init__( nodeType , document , commentObject , commentCollection)
 
 class ExcelFormulaQuickNavItem(ExcelRangeBasedQuickNavItem):
 
-	def __init__( self , nodeType , document , formulaObject , formulaCollection ):
+	def __init__( self , nodeType , document , formulaObject , formulaCollection):
 		self.label = formulaObject.address(False, False, 1, False) + " " + formulaObject.FormulaLocal
-		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection )
+		super( ExcelFormulaQuickNavItem , self).__init__( nodeType , document , formulaObject , formulaCollection)
 
 class ExcelQuicknavIterator(object):
 	"""
@@ -444,21 +444,21 @@ class ExcelQuicknavIterator(object):
 		if self.direction=="previous":
 			items=reversed(items)
 		for collectionItem in items:
-			item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items )
+			item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items)
 			if not self.filter(collectionItem):
 				continue
 			yield item
 
 class ChartExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelChartQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
-	def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject):
 		return worksheetObject.ChartObjects() 
 
 class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelCommentQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
-	def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject):
 		try:
-			return  worksheetObject.cells.SpecialCells( xlCellTypeComments )
+			return  worksheetObject.cells.SpecialCells( xlCellTypeComments)
 		except(COMError):
 			return None
 
@@ -467,20 +467,20 @@ class CommentExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 
 class FormulaExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	quickNavItemClass=ExcelFormulaQuickNavItem#: the QuickNavItem class that should be instanciated and emitted. 
-	def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject):
 		try:
-			return  worksheetObject.cells.SpecialCells( xlCellTypeFormulas )
+			return  worksheetObject.cells.SpecialCells( xlCellTypeFormulas)
 		except(COMError):
 
 			return None
 
 class ExcelSheetQuickNavItem(ExcelQuickNavItem):
 
-	def __init__( self , nodeType , document , sheetObject , sheetCollection ):
+	def __init__( self , nodeType , document , sheetObject , sheetCollection):
 		self.label = sheetObject.Name
 		self.sheetIndex = sheetObject.Index
 		self.sheetObject = sheetObject
-		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection )
+		super( ExcelSheetQuickNavItem , self).__init__( nodeType , document , sheetObject , sheetCollection)
 
 	def __lt__(self,other):
 		return self.sheetIndex < other.sheetIndex
@@ -511,7 +511,7 @@ class SheetsExcelCollectionQuicknavIterator(ExcelQuicknavIterator):
 	Allows iterating over an MS excel Sheets collection emitting L{QuickNavItem} object.
 	"""
 	quickNavItemClass=ExcelSheetQuickNavItem#: the QuickNavItem class that should be instantiated and emitted. 
-	def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject):
 		try:
 			return worksheetObject.Application.ActiveWorkbook.sheets
 		except(COMError):
@@ -636,15 +636,15 @@ class ExcelBrowseModeTreeInterceptor(browseMode.BrowseModeTreeInterceptor):
 
 	def _iterNodesByType(self,nodeType,direction="next",pos=None):
 		if nodeType=="chart":
-			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+			return ChartExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None).iterate()
 		elif nodeType=="comment":
-			return CommentExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None ).iterate()
+			return CommentExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None).iterate()
 		elif nodeType=="formula":
-			return FormulaExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None ).iterate()
+			return FormulaExcelCellInfoQuicknavIterator( nodeType , self.rootNVDAObject, direction , None).iterate()
 		elif nodeType=="sheet":
-			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None ).iterate()
+			return SheetsExcelCollectionQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None).iterate()
 		elif nodeType=="formField":
-			return ExcelFormControlQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None,self ).iterate(pos)
+			return ExcelFormControlQuicknavIterator( nodeType , self.rootNVDAObject.excelWorksheetObject , direction , None,self).iterate(pos)
 		else:
 			raise NotImplementedError
 
@@ -804,7 +804,7 @@ class ExcelWorksheet(ExcelBase):
 		# .ab34
 		r'(\.(?P<minAddress>[a-zA-Z]+[0-9]+)?(\.(?P<maxAddress>[a-zA-Z]+[0-9]+)?'
 		# Optionally followed by a period (.) and extra random data (sometimes produced by other screen readers)
-		r'(\..*)*)?)?$'
+		r'(\..*)*)?)?$',
 	)
 
 	def populateHeaderCellTrackerFromNames(self,headerCellTracker):
@@ -972,57 +972,59 @@ class ExcelWorksheet(ExcelBase):
 			states.add(controlTypes.State.PROTECTED)
 		return states
 
-	@scriptHandler.script(gestures=(
-		"kb:tab",
-		"kb:shift+tab",
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:shift+enter",
-		"kb:shift+numpadEnter",
-		"kb:upArrow",
-		"kb:downArrow",
-		"kb:leftArrow",
-		"kb:rightArrow",
-		"kb:control+upArrow",
-		"kb:control+downArrow",
-		"kb:control+leftArrow",
-		"kb:control+rightArrow",
-		"kb:home",
-		"kb:end",
-		"kb:control+home",
-		"kb:control+end",
-		"kb:shift+upArrow",
-		"kb:shift+downArrow",
-		"kb:shift+leftArrow",
-		"kb:shift+rightArrow",
-		"kb:shift+control+upArrow",
-		"kb:shift+control+downArrow",
-		"kb:shift+control+leftArrow",
-		"kb:shift+control+rightArrow",
-		"kb:shift+home",
-		"kb:shift+end",
-		"kb:shift+control+home",
-		"kb:shift+control+end",
-		"kb:shift+space",
-		"kb:control+space",
-		"kb:pageUp",
-		"kb:pageDown",
-		"kb:shift+pageUp",
-		"kb:shift+pageDown",
-		"kb:alt+pageUp",
-		"kb:alt+pageDown",
-		"kb:alt+shift+pageUp",
-		"kb:alt+shift+pageDown",
-		"kb:control+shift+8",
-		"kb:control+pageUp",
-		"kb:control+pageDown",
-		"kb:control+a",
-		"kb:control+v",
-		"kb:shift+f11",
-		"kb:control+y",
-		"kb:control+z",
-		"kb:alt+backspace",
-	), canPropagate=True)
+	@scriptHandler.script(
+     gestures=(
+      "kb:tab",
+      "kb:shift+tab",
+      "kb:enter",
+      "kb:numpadEnter",
+      "kb:shift+enter",
+      "kb:shift+numpadEnter",
+      "kb:upArrow",
+      "kb:downArrow",
+      "kb:leftArrow",
+      "kb:rightArrow",
+      "kb:control+upArrow",
+      "kb:control+downArrow",
+      "kb:control+leftArrow",
+      "kb:control+rightArrow",
+      "kb:home",
+      "kb:end",
+      "kb:control+home",
+      "kb:control+end",
+      "kb:shift+upArrow",
+      "kb:shift+downArrow",
+      "kb:shift+leftArrow",
+      "kb:shift+rightArrow",
+      "kb:shift+control+upArrow",
+      "kb:shift+control+downArrow",
+      "kb:shift+control+leftArrow",
+      "kb:shift+control+rightArrow",
+      "kb:shift+home",
+      "kb:shift+end",
+      "kb:shift+control+home",
+      "kb:shift+control+end",
+      "kb:shift+space",
+      "kb:control+space",
+      "kb:pageUp",
+      "kb:pageDown",
+      "kb:shift+pageUp",
+      "kb:shift+pageDown",
+      "kb:alt+pageUp",
+      "kb:alt+pageDown",
+      "kb:alt+shift+pageUp",
+      "kb:alt+shift+pageDown",
+      "kb:control+shift+8",
+      "kb:control+pageUp",
+      "kb:control+pageDown",
+      "kb:control+a",
+      "kb:control+v",
+      "kb:shift+f11",
+      "kb:control+y",
+      "kb:control+z",
+      "kb:alt+backspace",
+     ), canPropagate=True,
+ )
 
 	def script_changeSelection(self,gesture):
 		oldSelection = self._getSelection()
@@ -1091,7 +1093,7 @@ class ExcelWorksheet(ExcelBase):
 			return
 		enabled = self._WaitForValueChangeForAction(
 			action=lambda: gesture.send(),
-			fetcher=lambda: getStateFun(selObj)
+			fetcher=lambda: getStateFun(selObj),
 		)
 		if enabled:
 			ui.message(msgOn)
@@ -1309,7 +1311,7 @@ class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 	def __init__( self , parentIterator, cellInfo):
 		self.excelCellInfo = cellInfo
 		self.parentIterator=parentIterator
-		super( ExcelCellInfoQuickNavItem ,self).__init__( parentIterator.itemType , parentIterator.document )
+		super( ExcelCellInfoQuickNavItem ,self).__init__( parentIterator.itemType , parentIterator.document)
 
 	def activate(self):
 		pass
@@ -1463,10 +1465,10 @@ class ExcelCell(ExcelBase):
 			# Translators: the description for a script for Excel
 			"Sets the current cell as start of column header. Pressing once will set this cell as the first column "
 			"header for any cell lower and to the right of it within this region. Pressing twice will forget the "
-			"current column header for this cell."
+			"current column header for this cell.",
 		),
 		gesture="kb:NVDA+shift+c",
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_setColumnHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1490,10 +1492,10 @@ class ExcelCell(ExcelBase):
 			# Translators: the description for a script for Excel
 			"Sets the current cell as start of row headers. Pressing once will set this cell as the first row header "
 			"for any cell lower and to the right of it within this region. Pressing twice will forget the current "
-			"row header for this cell."
+			"row header for this cell.",
 		),
 		gesture="kb:NVDA+shift+r",
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_setRowHeader(self,gesture):
 		scriptCount=scriptHandler.getLastScriptRepeatCount()
@@ -1551,7 +1553,7 @@ class ExcelCell(ExcelBase):
 			False, # relative row 
 			False, # relative column
 			xlA1, # 'a1' format
-			True # include book / sheet name
+			True, # include book / sheet name
 		)
 		try:
 			thisAddr=self.excelCellObject.address(*addressArgs)
@@ -1621,7 +1623,7 @@ class ExcelCell(ExcelBase):
 			if nvCellStates & possibleCellState.value:
 				states.add(
 					# intentionally use indexing operator so an error is raised for a missing key
-					_nvCellStatesToStates[possibleCellState]
+					_nvCellStatesToStates[possibleCellState],
 				)
 		return states
 
@@ -1695,7 +1697,7 @@ class ExcelCell(ExcelBase):
 		# Translators: the description  for a script for Excel
 		description=_("Opens the note editing dialog"),
 		gesture="kb:shift+f2",
-		category=SCRCAT_SYSTEMCARET
+		category=SCRCAT_SYSTEMCARET,
 	)
 	def script_editComment(self,gesture):
 		commentObj=self.excelCellObject.comment
@@ -1706,7 +1708,8 @@ class ExcelCell(ExcelBase):
 			# Translators: Title for the note editing  dialog
 			_("Note"),
 			value=commentObj.text() if commentObj else u"",
-			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL)
+			style=wx.TE_MULTILINE|wx.OK|wx.CANCEL,
+  )
 		def callback(result):
 			if result == wx.ID_OK:
 				if commentObj:
@@ -1730,7 +1733,7 @@ class ExcelCell(ExcelBase):
 			sequence = speech.getFormatFieldSpeech(
 				formatField,
 				attrsCache=self.parent._formatFieldSpeechCache,
-				formatConfig=formatConfig
+				formatConfig=formatConfig,
 			)
 			speech.speak(sequence)
 		super(ExcelCell,self).reportFocus()
@@ -1759,7 +1762,7 @@ class ExcelSelection(ExcelBase):
 			firstAddress=self.getCellAddress(firstCell),
 			firstContent=firstCell.Text,
 			lastAddress=self.getCellAddress(lastCell),
-			lastContent=lastCell.Text
+			lastContent=lastCell.Text,
 		)
 
 	def _get_parent(self):
@@ -1812,7 +1815,7 @@ class ExcelDropdownItem(Window):
 		return self.parent.treeInterceptor
 
 	def _get_positionInfo(self):
-		return {'indexInGroup':self.index+1,'similarItemsInGroup':self.parent.childCount,}
+		return {'indexInGroup':self.index+1,'similarItemsInGroup':self.parent.childCount}
 
 class ExcelDropdown(Window):
 
@@ -1861,7 +1864,8 @@ class ExcelDropdown(Window):
 
 	@script(
 		gestures=("kb:downArrow", "kb:upArrow", "kb:leftArrow", "kb:rightArrow", "kb:home", "kb:end"),
-		canPropagate=True)
+		canPropagate=True,
+ )
 	def script_selectionChange(self,gesture):
 		gesture.send()
 		newFocus=self.selection or self
@@ -2014,8 +2018,8 @@ class ExcelFormControl(ExcelBase):
 
 class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 
-	def __init__( self , nodeType , document , formControlObject , formControlCollection, treeInterceptorObj ):
-		super( ExcelFormControlQuickNavItem ,self).__init__( nodeType , document , formControlObject , formControlCollection )
+	def __init__( self , nodeType , document , formControlObject , formControlCollection, treeInterceptorObj):
+		super( ExcelFormControlQuickNavItem ,self).__init__( nodeType , document , formControlObject , formControlCollection)
 		self.formControlObjectIndex = formControlObject.ZOrderPosition
 		self.treeInterceptorObj=treeInterceptorObj
 
@@ -2074,7 +2078,7 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 		super(ExcelFormControlQuicknavIterator,self).__init__(itemType , document , direction , includeCurrent)
 		self.treeInterceptorObj=treeInterceptorObj
 
-	def collectionFromWorksheet( self , worksheetObject ):
+	def collectionFromWorksheet( self , worksheetObject):
 		try:
 			return worksheetObject.Shapes
 		except(COMError):
@@ -2110,12 +2114,12 @@ class ExcelFormControlQuicknavIterator(ExcelQuicknavIterator):
 				for collectionItem in reversed(items):
 					itemRow=collectionItem._comobj.excelRow
 					if (itemRow<row or (itemRow==row and collectionItem.TopLeftCell.Column<col)) and self.filter(collectionItem):
-						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj )
+						item=self.quickNavItemClass(self.itemType,self.document,collectionItem,items,self.treeInterceptorObj)
 						yield item
 		else:
 			for collectionItem in items:
 				if self.filter(collectionItem):
-					item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items,self.treeInterceptorObj )
+					item=self.quickNavItemClass(self.itemType,self.document,collectionItem , items,self.treeInterceptorObj)
 					yield item
 
 	def filter(self,shape):

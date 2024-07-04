@@ -87,7 +87,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getPointFromOffset(self,offset):
 		point=locationHelper.Point(
 			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTXFROMPOSITION,None,offset),
-			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset)
+			watchdog.cancellableSendMessage(self.obj.windowHandle,SCI_POINTYFROMPOSITION,None,offset),
 		).toScreen(self.obj.windowHandle)
 		if point.x is not None and point.y is not None:
 			return point

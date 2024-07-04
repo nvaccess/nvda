@@ -140,7 +140,7 @@ class AddonVirtualList(
 	def OnGetItemText(self, itemIndex: int, colIndex: int) -> str:
 		dataItem = self._addonsListVM.getAddonFieldText(
 			itemIndex,
-			self._addonsListVM.presentedFields[colIndex]
+			self._addonsListVM.presentedFields[colIndex],
 		)
 		if dataItem is None:
 			# Failed to get dataItem, index may have been lost in refresh.

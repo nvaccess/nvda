@@ -32,12 +32,12 @@ class DictionaryEntryDialog(
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
 		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression")
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
 	}
 	TYPE_LABELS_ORDERING = (
 		speechDictHandler.ENTRY_TYPE_ANYWHERE,
 		speechDictHandler.ENTRY_TYPE_WORD,
-		speechDictHandler.ENTRY_TYPE_REGEXP
+		speechDictHandler.ENTRY_TYPE_REGEXP,
 	)
 
 	# Translators: This is the label for the edit dictionary entry dialog.
@@ -92,7 +92,7 @@ class DictionaryEntryDialog(
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.patternTextCtrl.SetFocus()
 			return
@@ -115,7 +115,7 @@ class DictionaryEntryDialog(
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.patternTextCtrl.SetFocus()
 			return
@@ -131,7 +131,7 @@ class DictionaryEntryDialog(
 				# Translators: The title of an error message raised by the Dictionary Entry dialog
 				_("Dictionary Entry Error"),
 				wx.OK | wx.ICON_WARNING,
-				self
+				self,
 			)
 			self.replacementTextCtrl.SetFocus()
 			return
@@ -174,7 +174,7 @@ class DictionaryDialog(
 		entriesLabelText = _("&Dictionary entries")
 		self.dictList = sHelper.addLabeledControl(
 			entriesLabelText,
-			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL
+			wx.ListCtrl, style=wx.LC_REPORT | wx.LC_SINGLE_SEL,
 		)
 		# Translators: The label for a column in dictionary entries list used to identify comments for the entry.
 		self.dictList.AppendColumn(_("Comment"), width=150)
@@ -197,7 +197,7 @@ class DictionaryDialog(
 				entry.pattern,
 				entry.replacement,
 				self.offOn[int(entry.caseSensitive)],
-				DictionaryDialog.TYPE_LABELS[entry.type]
+				DictionaryDialog.TYPE_LABELS[entry.type],
 			))
 		self.editingIndex = -1
 
@@ -205,19 +205,19 @@ class DictionaryDialog(
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to add new entries.
-			label=_("&Add")
+			label=_("&Add"),
 		).Bind(wx.EVT_BUTTON, self.onAddClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to edit existing entries.
-			label=_("&Edit")
+			label=_("&Edit"),
 		).Bind(wx.EVT_BUTTON, self.onEditClick)
 
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button in speech dictionaries dialog to remove existing entries.
-			label=_("&Remove")
+			label=_("&Remove"),
 		).Bind(wx.EVT_BUTTON, self.onRemoveClick)
 
 		bHelper.sizer.AddStretchSpacer()
@@ -225,7 +225,7 @@ class DictionaryDialog(
 		bHelper.addButton(
 			parent=self,
 			# Translators: The label for a button on the Speech Dictionary dialog.
-			label=_("Remove all")
+			label=_("Remove all"),
 		).Bind(wx.EVT_BUTTON, self.onRemoveAll)
 
 		sHelper.addItem(bHelper, flag=wx.EXPAND)
@@ -255,7 +255,7 @@ class DictionaryDialog(
 				entryDialog.patternTextCtrl.GetValue(),
 				entryDialog.replacementTextCtrl.GetValue(),
 				self.offOn[int(entryDialog.caseSensitiveCheckBox.GetValue())],
-				DictionaryDialog.TYPE_LABELS[entryDialog.getType()]
+				DictionaryDialog.TYPE_LABELS[entryDialog.getType()],
 			))
 			index = self.dictList.GetFirstSelected()
 			while index >= 0:
@@ -303,7 +303,7 @@ class DictionaryDialog(
 			_("Are you sure you want to remove all the entries in this dictionary?"),
 			# Translators: The title on a prompt for confirmation on the Speech Dictionary dialog.
 			_("Remove all"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT
+			style=wx.YES | wx.NO | wx.NO_DEFAULT,
 		) != wx.YES:
 			return
 		# Looping instead of clearing here in order to avoid recreation of the columns

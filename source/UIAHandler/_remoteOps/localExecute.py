@@ -110,7 +110,7 @@ class LocalExecutor(operation.Executor):
 		self._instructionLoop(
 			stopInstruction=instructions.EndLoopBlock,
 			breakAddress=breakAddress,
-			continueAddress=continueAddress
+			continueAddress=continueAddress,
 		)
 
 	def _execute_NewTryBlock(self, instruction: instructions.NewTryBlock):
@@ -136,7 +136,7 @@ class LocalExecutor(operation.Executor):
 			self,
 			instruction: builder.InstructionBase,
 			breakAddress: int | None = None,
-			continueAddress: int | None = None
+			continueAddress: int | None = None,
 	):
 		match instruction:
 			case instructions.Halt():
@@ -166,7 +166,7 @@ class LocalExecutor(operation.Executor):
 			stopInstruction: Type[builder.InstructionBase] | None = None,
 			breakAddress: int | None = None,
 			continueAddress: int | None = None,
-			catchAddress: int | None = None
+			catchAddress: int | None = None,
 	):
 		self._instructionLoopDepth += 1
 		try:
@@ -224,5 +224,5 @@ class LocalExecutor(operation.Executor):
 			results={k: v for k, v in self._registers.items() if k in self._requestedResults},
 			status=status,
 			errorLocation=self._ip,
-			extendedError=self._operationStatus
+			extendedError=self._operationStatus,
 		)

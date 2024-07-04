@@ -374,7 +374,7 @@ class AppModule(appModuleHandler.AppModule):
 		clientObject = UIAHandler.handler.clientObject
 		condition = clientObject.createPropertyCondition(
 			UIAHandler.UIA_ControlTypePropertyId,
-			UIAHandler.UIA_StatusBarControlTypeId
+			UIAHandler.UIA_StatusBarControlTypeId,
 		)
 		walker = clientObject.createTreeWalker(condition)
 		try:
@@ -413,20 +413,24 @@ class AppModule(appModuleHandler.AppModule):
 					iter(
 						grandChild for grandChild in child.children
 						if controlTypes.State.CHECKED in grandChild.states
-					), None
+					), None,
 				)
 				if selected is not None:
-					parts.append(" ".join(
-						[child.name]
-						+ ([selected.name] if selected is not None else [])
-					))
+					parts.append(
+         " ".join(
+          [child.name]
+          + ([selected.name] if selected is not None else []),
+         ),
+     )
 			else:
 				# Unexpected child, try to retrieve something useful.
-				parts.append(" ".join(
-					chunk
-					for chunk in (child.name, child.value)
-					if chunk and isinstance(chunk, str) and not chunk.isspace()
-				))
+				parts.append(
+        " ".join(
+         chunk
+         for chunk in (child.name, child.value)
+         if chunk and isinstance(chunk, str) and not chunk.isspace()
+        ),
+    )
 		if not parts:
 			# We couldn't retrieve anything. Resort to standard behavior.
 			raise NotImplementedError
@@ -464,7 +468,7 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			windowClass == "msctls_progress32"
 			and winUser.getClassName(
-				winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
+				winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT),
 			) == "Address Band Root"
 		):
 			obj.presentationType = obj.presType_layout
@@ -536,7 +540,7 @@ class AppModule(appModuleHandler.AppModule):
 				# 19H2 and earlier
 				"windowsinternal_composableshell_experiences_textinput_inputapp",
 				# 20H1 and later
-				"textinputhost"
+				"textinputhost",
 			)
 			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
@@ -558,7 +562,7 @@ class AppModule(appModuleHandler.AppModule):
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,
-					positionInfo=obj.positionInfo
-				)
+					positionInfo=obj.positionInfo,
+				),
 			)
 		nextHandler()

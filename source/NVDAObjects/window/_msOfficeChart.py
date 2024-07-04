@@ -136,223 +136,223 @@ xlXYScatterSmoothNoMarkers = 73
 chartTypeDict = {
     # Translators: A type of chart in Microsoft Office. 
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DArea : _( "3D Area" ),
+    xl3DArea : _( "3D Area"),
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DAreaStacked : _( "3D Stacked Area" ),
+    xl3DAreaStacked : _( "3D Stacked Area"),
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DAreaStacked100 : _( "100 percent Stacked Area" ) ,
+    xl3DAreaStacked100 : _( "100 percent Stacked Area") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DBarClustered : _( "3D Clustered Bar" ) ,
+    xl3DBarClustered : _( "3D Clustered Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DBarStacked : _( "3D Stacked Bar" ) ,
+    xl3DBarStacked : _( "3D Stacked Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DBarStacked100 : _( "3D 100 percent Stacked Bar" ) ,
+    xl3DBarStacked100 : _( "3D 100 percent Stacked Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DColumn : _( "3D Column" ) ,
+    xl3DColumn : _( "3D Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DColumnClustered : _( "3D Clustered Column" ),
+    xl3DColumnClustered : _( "3D Clustered Column"),
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DColumnStacked : _( "3D Stacked Column" ) ,
+    xl3DColumnStacked : _( "3D Stacked Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DColumnStacked100 : _( "3D 100 percent Stacked Column" ) ,
+    xl3DColumnStacked100 : _( "3D 100 percent Stacked Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DLine : _( "3D Line" ) ,
+    xl3DLine : _( "3D Line") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DPie : _( "3D Pie" ) ,
+    xl3DPie : _( "3D Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xl3DPieExploded : _( "Exploded 3D Pie" ) ,
+    xl3DPieExploded : _( "Exploded 3D Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlArea : _( "Area" ) ,
+    xlArea : _( "Area") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlAreaStacked : _( "Stacked Area" ) ,
+    xlAreaStacked : _( "Stacked Area") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlAreaStacked100 : _( "100 percent Stacked Area" ) ,
+    xlAreaStacked100 : _( "100 percent Stacked Area") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBarClustered : _( "Clustered Bar" ) ,
+    xlBarClustered : _( "Clustered Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBarOfPie : _( "Bar of Pie" ) ,
+    xlBarOfPie : _( "Bar of Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBarStacked : _( "Stacked Bar" ) ,
+    xlBarStacked : _( "Stacked Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBarStacked100 : _( "100 percent Stacked Bar" ) ,
+    xlBarStacked100 : _( "100 percent Stacked Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBubble : _( "Bubble" ) ,
+    xlBubble : _( "Bubble") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlBubble3DEffect : _( "Bubble with 3D effects" ) ,
+    xlBubble3DEffect : _( "Bubble with 3D effects") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlColumnClustered : _( "Clustered Column" ) ,
+    xlColumnClustered : _( "Clustered Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlColumnStacked : _( "Stacked Column" ) ,
+    xlColumnStacked : _( "Stacked Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlColumnStacked100 : _( "100 percent Stacked Column" ) ,
+    xlColumnStacked100 : _( "100 percent Stacked Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeBarClustered : _( "Clustered Cone Bar" ) ,
+    xlConeBarClustered : _( "Clustered Cone Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeBarStacked : _( "Stacked Cone Bar" ) ,
+    xlConeBarStacked : _( "Stacked Cone Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeBarStacked100 : _( "100 percent Stacked Cone Bar" ) ,
+    xlConeBarStacked100 : _( "100 percent Stacked Cone Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeCol : _( "3D Cone Column" ) ,
+    xlConeCol : _( "3D Cone Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeColClustered : _( "Clustered Cone Column" ) ,
+    xlConeColClustered : _( "Clustered Cone Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeColStacked : _( "Stacked Cone Column" ),
+    xlConeColStacked : _( "Stacked Cone Column"),
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlConeColStacked100 : _( "100 percent Stacked Cone Column" ) ,
+    xlConeColStacked100 : _( "100 percent Stacked Cone Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderBarClustered : _( "Clustered Cylinder Bar" ) ,
+    xlCylinderBarClustered : _( "Clustered Cylinder Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderBarStacked : _( "Stacked Cylinder Bar" ) ,
+    xlCylinderBarStacked : _( "Stacked Cylinder Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderBarStacked100 : _( "100 percent Stacked Cylinder Bar" ) ,
+    xlCylinderBarStacked100 : _( "100 percent Stacked Cylinder Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderCol : _( "3D Cylinder Column" ) ,
+    xlCylinderCol : _( "3D Cylinder Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderColClustered : _( "Clustered Cone Column" ) ,
+    xlCylinderColClustered : _( "Clustered Cone Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderColStacked : _( "Stacked Cone Column" ) ,
+    xlCylinderColStacked : _( "Stacked Cone Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlCylinderColStacked100 : _( "100 percent Stacked Cylinder Column" ) ,
+    xlCylinderColStacked100 : _( "100 percent Stacked Cylinder Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlDoughnut : _( "Doughnut" ) ,
+    xlDoughnut : _( "Doughnut") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlDoughnutExploded : _( "Exploded Doughnut" ) ,
+    xlDoughnutExploded : _( "Exploded Doughnut") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLine : _( "Line" ) ,
+    xlLine : _( "Line") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLineMarkers : _( "Line with Markers" ) ,
+    xlLineMarkers : _( "Line with Markers") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLineMarkersStacked : _( "Stacked Line with Markers" ) ,
+    xlLineMarkersStacked : _( "Stacked Line with Markers") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLineMarkersStacked100 : _( "100 percent Stacked Line with Markers" ) ,
+    xlLineMarkersStacked100 : _( "100 percent Stacked Line with Markers") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLineStacked : _( "Stacked Line" ) ,
+    xlLineStacked : _( "Stacked Line") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlLineStacked100 : _( "100 percent Stacked Line" ) ,
+    xlLineStacked100 : _( "100 percent Stacked Line") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlPie : _( "Pie" ) ,
+    xlPie : _( "Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlPieExploded : _( "Exploded Pie" ) ,
+    xlPieExploded : _( "Exploded Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlPieOfPie : _( "Pie of Pie" ) ,
+    xlPieOfPie : _( "Pie of Pie") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidBarClustered : _( "Clustered Pyramid Bar" ) ,
+    xlPyramidBarClustered : _( "Clustered Pyramid Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidBarStacked : _( "Stacked Pyramid Bar" ) ,
+    xlPyramidBarStacked : _( "Stacked Pyramid Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidBarStacked100 : _( "100 percent Stacked Pyramid Bar" ) ,
+    xlPyramidBarStacked100 : _( "100 percent Stacked Pyramid Bar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidCol : _( "3D Pyramid Column" ) ,
+    xlPyramidCol : _( "3D Pyramid Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidColClustered : _( "Clustered Pyramid Column" ) ,
+    xlPyramidColClustered : _( "Clustered Pyramid Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidColStacked : _( "Stacked Pyramid Column" ) ,
+    xlPyramidColStacked : _( "Stacked Pyramid Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-b22a8bb9-a673-4d7f-b481-aa747c48eb3d
-    xlPyramidColStacked100 : _( "100 percent Stacked Pyramid Column" ) ,
+    xlPyramidColStacked100 : _( "100 percent Stacked Pyramid Column") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlRadar : _( "Radar" ) ,
+    xlRadar : _( "Radar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlRadarFilled : _( "Filled Radar" ) ,
+    xlRadarFilled : _( "Filled Radar") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlRadarMarkers : _( "Radar with Data Markers" ) ,
+    xlRadarMarkers : _( "Radar with Data Markers") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlStockHLC : _( "High-Low-Close" ) ,
+    xlStockHLC : _( "High-Low-Close") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlStockOHLC : _( "Open-High-Low-Close" ) ,
+    xlStockOHLC : _( "Open-High-Low-Close") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlStockVHLC : _( "Volume-High-Low-Close" ) ,
+    xlStockVHLC : _( "Volume-High-Low-Close") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlStockVOHLC : _( "Volume-Open-High-Low-Close" ) ,
+    xlStockVOHLC : _( "Volume-Open-High-Low-Close") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlSurface : _( "3D Surface" ) ,
+    xlSurface : _( "3D Surface") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlSurfaceTopView : _( "Surface (Top View)" ) ,
+    xlSurfaceTopView : _( "Surface (Top View)") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlSurfaceTopViewWireframe : _( "Surface (Top View wireframe)" ) ,
+    xlSurfaceTopViewWireframe : _( "Surface (Top View wireframe)") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlSurfaceWireframe : _( "3D Surface (wireframe)" ) ,
+    xlSurfaceWireframe : _( "3D Surface (wireframe)") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlXYScatter : _( "Scatter" ) ,
+    xlXYScatter : _( "Scatter") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlXYScatterLines : _( "Scatter with Lines" ) ,
+    xlXYScatterLines : _( "Scatter with Lines") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlXYScatterLinesNoMarkers : _( "Scatter with Lines and No Data Markers" ) ,
+    xlXYScatterLinesNoMarkers : _( "Scatter with Lines and No Data Markers") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlXYScatterSmooth : _( "Scatter with Smoothed Lines" ) ,
+    xlXYScatterSmooth : _( "Scatter with Smoothed Lines") ,
     # Translators: A type of chart in Microsoft Office.
     # See https://support.office.com/en-in/article/Available-chart-types-a019c053-ba7f-4c46-a09a-82e17f3ee5be
-    xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers")
+    xlXYScatterSmoothNoMarkers : _( "Scatter with Smoothed Lines and No Data Markers"),
 }
 
 # Axis types in chart
@@ -377,7 +377,7 @@ class OfficeChartElementBase(Window):
 	#used for deciding whether to report extra information for chart or plot areas
 	reportExtraInfo = False
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		self.officeChartObject = officeChartObject
 		self.elementID = elementID 
 		self.arg1 = arg1
@@ -404,19 +404,19 @@ class OfficeChartElementBase(Window):
 		return controlTypes.Role.UNKNOWN
 
 	def _get_name(self):
-		return self._getChartElementText(self.elementID , self.arg1 , self.arg2 , self.reportExtraInfo )
+		return self._getChartElementText(self.elementID , self.arg1 , self.arg2 , self.reportExtraInfo)
 
 	def select(self):
 		"""used to activate specific element in the office application"""
 		raise NotImplementedError
 		
 	def script_reportCurrentChartElementWithExtraInfo(self,gesture):
-		ui.message( self._getChartElementText(self.elementID , self.arg1 , self.arg2 , True ) )
+		ui.message( self._getChartElementText(self.elementID , self.arg1 , self.arg2 , True))
 
 	def script_reportCurrentChartElementColor(self,gesture):
 		if self.elementID == xlSeries:
 			if self.arg2 == -1:
-				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.arg1 ).Interior.Color ) ).name  ) )
+				ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.arg1).Interior.Color)).name))
 
 	ELEMENT_IDS = {
 		# Translators: A type of element in a Microsoft Office chart.
@@ -462,7 +462,7 @@ class OfficeChartElementBase(Window):
 		# Translators: A type of element in a Microsoft Office chart.
 		xlShape: _("Shape"),
 	}
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		return self.ELEMENT_IDS[ElementID]
 
 	__gestures = {
@@ -472,11 +472,11 @@ class OfficeChartElementBase(Window):
 
 class OfficeChartElementList(Window):
 
-	def __init__(self, windowHandle , officeChartObject , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle , officeChartObject , elementID=None  , arg1=None , arg2=None):
 		self.officeChartObject = officeChartObject
 		self.elementList = []
 		self.activeElement = None	
-		super(OfficeChartElementList,self).__init__(windowHandle=windowHandle )
+		super(OfficeChartElementList,self).__init__(windowHandle=windowHandle)
 
 	def addElement(self , element , parent):
 		element.parent = parent
@@ -484,8 +484,8 @@ class OfficeChartElementList(Window):
 		elementCount = len(self.elementList)
 
 		if( elementCount > 1):
-			self.elementList[ elementCount - 2 ].next= self.elementList[ elementCount -1]    
-			self.elementList[ elementCount  -1].previous= self.elementList[ elementCount - 2 ]
+			self.elementList[ elementCount - 2].next= self.elementList[ elementCount -1]    
+			self.elementList[ elementCount  -1].previous= self.elementList[ elementCount - 2]
 
 		self.elementList[0].previous = self.elementList[ elementCount -1]    
 		self.elementList[ elementCount -1].next = self.elementList[0]
@@ -521,7 +521,7 @@ class OfficeChart(OfficeChartElementList):
 	role=controlTypes.Role.CHART
 
 	def __init__(self,windowHandle, officeApplicationObject, officeChartObject, initialDocument , keyIndex=0):
-		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject )
+		super(OfficeChart,self).__init__(windowHandle=windowHandle  , officeChartObject = officeChartObject)
 		self.initialDocument = initialDocument 
 		self.parent=initialDocument
 		self.officeApplicationObject=officeApplicationObject
@@ -531,9 +531,9 @@ class OfficeChart(OfficeChartElementList):
 			seriesCount=None
 		if seriesCount:
 			for i in range(seriesCount):
-				self.addElement( OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = i +1 ) , self) 
+				self.addElement( OfficeChartElementSeries(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject , elementID = xlSeries , arg1 = i +1) , self) 
 
-		self.addElement( OfficeChartElementCollection(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject ) , self )
+		self.addElement( OfficeChartElementCollection(windowHandle=self.windowHandle, officeChartObject = self.officeChartObject) , self)
 		try:
 			self.officeChartObject.Select()
 		except:  # noqa: E722
@@ -546,9 +546,11 @@ class OfficeChart(OfficeChartElementList):
 			name=self.officeChartObject.Name
 		#find the type of the chart
 		chartType = self.officeChartObject.ChartType
-		chartTypeText = chartTypeDict.get(chartType,
-                # Translators: Reported when the type of a chart is not known.
-                                _("unknown"))
+		chartTypeText = chartTypeDict.get(
+      chartType,
+      # Translators: Reported when the type of a chart is not known.
+                      _("unknown"),
+  )
 		# Translators: Message reporting the title and type of a chart.
 		text=_("Chart title: {chartTitle}, type: {chartType}").format(chartTitle=name, chartType=chartTypeText)
 		return text
@@ -580,10 +582,10 @@ class OfficeChart(OfficeChartElementList):
 			"Toggles between browse mode and focus mode."
 			" When in focus mode, keys will pass straight through to the application, "
 			"allowing you to interact directly with a control. "
-			"When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
+			"When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc.",
 		),
 		category=inputCore.SCRCAT_BROWSEMODE,
-		gestures=("kb:enter", "kb(desktop):numpadEnter", "kb:space")
+		gestures=("kb:enter", "kb(desktop):numpadEnter", "kb:space"),
 	)
 	def script_activatePosition(self, gesture):
 		# Toggle browse mode pass-through.
@@ -607,33 +609,33 @@ class OfficeChartElementCollection(OfficeChartElementList):
 	role=controlTypes.Role.CHARTELEMENT
 	description=None
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementCollection ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementCollection ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 		if officeChartObject.HasTitle:
-			self.addElement(OfficeChartElementChartTitle(windowHandle = windowHandle, officeChartObject = officeChartObject ) , self )
+			self.addElement(OfficeChartElementChartTitle(windowHandle = windowHandle, officeChartObject = officeChartObject) , self)
 
-		axisAndAxisTitles = OfficeChartElementAxis.getAvailableAxisAndAxisTitle(windowHandle, officeChartObject )
+		axisAndAxisTitles = OfficeChartElementAxis.getAvailableAxisAndAxisTitle(windowHandle, officeChartObject)
 		for item in axisAndAxisTitles:
 			self.addElement( item , self)
 
-		chartAreaObject = OfficeChartElementChartArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) 
+		chartAreaObject = OfficeChartElementChartArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject) 
 		chartAreaObject.reportExtraInfo = True
-		self.addElement( chartAreaObject , self )
-		plotAreaObject = OfficeChartElementPlotArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) 
+		self.addElement( chartAreaObject , self)
+		plotAreaObject = OfficeChartElementPlotArea(windowHandle=self.windowHandle,  officeChartObject = officeChartObject) 
 		plotAreaObject.reportExtraInfo = True
-		self.addElement( plotAreaObject , self )
+		self.addElement( plotAreaObject , self)
 
 		if officeChartObject.HasLegend:
-			self.addElement(OfficeChartElementLegend(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
+			self.addElement(OfficeChartElementLegend(windowHandle=self.windowHandle,  officeChartObject = officeChartObject) , self)
 
 			self.legendEntryCount = self.officeChartObject.Legend.LegendEntries().Count
-			for legendEntryIndex in range( 1 , self.legendEntryCount  + 1 ) :
-				legendEntry = OfficeChartElementLegendEntry(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlLegendEntry ,  arg1 = legendEntryIndex , arg2 = self.legendEntryCount ) 
+			for legendEntryIndex in range( 1 , self.legendEntryCount  + 1) :
+				legendEntry = OfficeChartElementLegendEntry(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlLegendEntry ,  arg1 = legendEntryIndex , arg2 = self.legendEntryCount) 
 				legendEntry.eventDriven = False
-				self.addElement ( legendEntry , self )
+				self.addElement ( legendEntry , self)
 
 		if officeChartObject.HasDataTable:
-			self.addElement(OfficeChartElementDataTable(windowHandle=self.windowHandle,  officeChartObject = officeChartObject ) , self )
+			self.addElement(OfficeChartElementDataTable(windowHandle=self.windowHandle,  officeChartObject = officeChartObject) , self)
 
 	def _get_name(self):
 		#Translators: Speak text chart elements when virtual row of chart elements is reached while navigation
@@ -647,8 +649,8 @@ class OfficeChartElementSeries(OfficeChartElementList):
 	description=None
 	role=controlTypes.Role.CHARTELEMENT
 
-	def __init__(self,windowHandle, officeChartObject , elementID , arg1 = None , arg2= None   ):
-		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject = officeChartObject ) 
+	def __init__(self,windowHandle, officeChartObject , elementID , arg1 = None , arg2= None):
+		super(OfficeChartElementSeries,self).__init__( windowHandle=windowHandle , officeChartObject = officeChartObject) 
 		self.elementID=elementID 
 		self.seriesIndex=arg1
 		self.currentPointIndex=arg2
@@ -657,16 +659,16 @@ class OfficeChartElementSeries(OfficeChartElementList):
 		self.pointsCount=self.pointsCollection.Count
 
 		for pointIndex in range(1,self.pointsCount +1) :
-			self.addElement ( OfficeChartElementPoint(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlSeries, arg1 =self.seriesIndex, arg2 =pointIndex) , self )
+			self.addElement ( OfficeChartElementPoint(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlSeries, arg1 =self.seriesIndex, arg2 =pointIndex) , self)
 
 		self.trendlinesCount = self.officeChartObject.SeriesCollection(self.seriesIndex).Trendlines().Count
-		for trendlineIndex in range( 1 , self.trendlinesCount + 1 ) :
-			self.addElement ( OfficeChartElementTrendline(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlTrendline ,  arg1 = self.seriesIndex , arg2 = trendlineIndex ) , self )
+		for trendlineIndex in range( 1 , self.trendlinesCount + 1) :
+			self.addElement ( OfficeChartElementTrendline(windowHandle=self.windowHandle,  officeChartObject = self.officeChartObject ,  elementID= xlTrendline ,  arg1 = self.seriesIndex , arg2 = trendlineIndex) , self)
 	
 	def _get_name(self):
 		currentSeries=self.officeChartObject.SeriesCollection(self.seriesIndex)  # noqa: F841
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
-		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount )
+		seriesText=_("{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(self.seriesIndex).Name , seriesIndex = self.seriesIndex , seriesCount = self.seriesCount)
 		return seriesText
 
 	def select(self):
@@ -675,10 +677,10 @@ class OfficeChartElementSeries(OfficeChartElementList):
 	def script_reportColor(self, gesture):
 		if self.officeChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
 			#Translators: Message to be spoken to report Slice Color in Pie Chart
-			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.seriesIndex ).Points(self.currentPointIndex).Format.Fill.ForeColor.RGB) ).name  ) )
+			ui.message ( _( "Slice color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.seriesIndex).Points(self.currentPointIndex).Format.Fill.ForeColor.RGB)).name))
 		else:
 			#Translators: Message to be spoken to report Series Color
-			ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.seriesIndex ).Interior.Color ) ).name  ) )
+			ui.message ( _( "Series color: {colorName} ").format(colorName=colors.RGB.fromCOLORREF(int( self.officeChartObject.SeriesCollection( self.seriesIndex).Interior.Color)).name))
 
 	__gestures = {
 				"kb:NVDA+5": "reportColor",
@@ -686,21 +688,21 @@ class OfficeChartElementSeries(OfficeChartElementList):
 
 class OfficeChartElementPoint(OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super(OfficeChartElementPoint ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super(OfficeChartElementPoint ,self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if ElementID == xlSeries:
 			if arg2 == -1:
 				# Translators: Details about a series in a chart.
 				# For example, this might report "foo series 1 of 2"
-				return _( "{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count )
+				return _( "{seriesName} series {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count)
 			else:
 				if self.officeChartObject.Application.name == "Microsoft Excel": 
 					# get the formula string and split it on comma separator to obtain range.
 	# the formula should be in the form SERIES(name_ref, categories, values, plot_order
 					listSeparator = self.officeChartObject.Application.International(xlListSeparator) 
-					formulas = self.officeChartObject.SeriesCollection(arg1).Formula.split(listSeparator ) 
+					formulas = self.officeChartObject.SeriesCollection(arg1).Formula.split(listSeparator) 
 					if len(formulas) == 4:
 						chartSeriesXValue = self.officeChartObject.Application.Range(formulas[1]).Rows[arg2].Text
 					else:
@@ -733,11 +735,11 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 					# Translators: Specifies the category of a data point.
 					# {categoryAxisTitle} will be replaced with the title of the category axis; e.g. "Month".
 					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.officeChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = chartSeriesXValue ) 
+					output += _( "{categoryAxisTitle} {categoryAxisData}: ").format( categoryAxisTitle = self.officeChartObject.Axes(xlCategory).AxisTitle.Text , categoryAxisData = chartSeriesXValue) 
 				else:
 					# Translators: Specifies the category of a data point.
 					# {categoryAxisData} will be replaced with the category itself; e.g. "January".
-					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = chartSeriesXValue ) 
+					output += _( "Category {categoryAxisData}: ").format( categoryAxisData = chartSeriesXValue) 
 
 				if self.officeChartObject.HasAxis(xlValue) and self.officeChartObject.Axes(xlValue).HasTitle:
 					# Translators: Specifies the value of a data point.
@@ -750,14 +752,14 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 					output +=  _( "value {valueAxisData}").format( valueAxisData = self.officeChartObject.SeriesCollection(arg1).Values[arg2-1]) 
 
 				if self.officeChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
-					total = math.fsum( self.officeChartObject.SeriesCollection(arg1).Values ) 
+					total = math.fsum( self.officeChartObject.SeriesCollection(arg1).Values) 
 					# Translators: Details about a slice of a pie chart.
 					# For example, this might report "fraction 25.25 percent slice 1 of 5"
-					output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.officeChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , pointIndex = arg2 , pointCount = len( self.officeChartObject.SeriesCollection(arg1).Values ) )
+					output += _( " fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}").format( fractionValue = self.officeChartObject.SeriesCollection(arg1).Values[arg2-1] / total *100.00 , pointIndex = arg2 , pointCount = len( self.officeChartObject.SeriesCollection(arg1).Values))
 				else:
 					# Translators: Details about a segment of a chart.
 					# For example, this might report "column 1 of 5"
-					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.officeChartObject.SeriesCollection(arg1).Values ) )
+					output += _( " {segmentType} {pointIndex} of {pointCount}").format( segmentType = self.GetChartSegment() ,  pointIndex = arg2 , pointCount = len( self.officeChartObject.SeriesCollection(arg1).Values))
 
 				return  output 
 
@@ -772,21 +774,24 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 													# Translators: Indicates Primary Category Axis
 													xlPrimary: _("Primary Category Axis"),
 													# Translators: Indicates Secondary Category Axis
-													xlSecondary: _("Secondary Category Axis")},
+													xlSecondary: _("Secondary Category Axis"),
+    },
 				xlValue: {
 													# Translators: Indicates Primary Value Axis
 													xlPrimary: _("Primary Value Axis"),
 													# Translators: Indicates Secondary Value Axis
-													xlSecondary: _("Secondary Value Axis")},
+													xlSecondary: _("Secondary Value Axis"),
+    },
 				xlSeriesAxis: {
 													# Translators: Indicates Primary Series Axis
 													xlPrimary: _("Primary Series Axis"),
 													# Translators: Indicates Secondary Series Axis
-													xlSecondary: _("Secondary Series Axis")}
+													xlSecondary: _("Secondary Series Axis"),
+    },
 	}
 
 	@classmethod
-	def getAvailableAxisAndAxisTitle( cls , windowHandle , tempChartObject ):
+	def getAvailableAxisAndAxisTitle( cls , windowHandle , tempChartObject):
 		listOfChartAxis = []
 		for axisType in [xlCategory, xlValue, xlSeriesAxis]:
 			for axisGroup in [xlPrimary, xlSecondary]:
@@ -796,32 +801,32 @@ class OfficeChartElementAxis(OfficeChartElementBase):
 						listOfChartAxis.append(OfficeChartElementAxisTitle(windowHandle = windowHandle , officeChartObject = tempChartObject , elementID = xlAxisTitle , arg1 = axisType , arg2 = axisGroup))
 		return listOfChartAxis
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		self.axisGroup = arg1
 		self.axisType = arg2
-		super( OfficeChartElementAxis , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super( OfficeChartElementAxis , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		return self._axisMap[self.axisType][self.axisGroup]
 
 	def select(self):
-		self.officeChartObject.Axes( self.axisType , self.axisGroup ).Select()
+		self.officeChartObject.Axes( self.axisType , self.axisGroup).Select()
 
-class OfficeChartElementAxisTitle( OfficeChartElementAxis ):
+class OfficeChartElementAxisTitle( OfficeChartElementAxis):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementAxisTitle , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementAxisTitle , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		# Translators: Indicates a chart axis title in Microsoft Office.
-		axisTitle = super(OfficeChartElementAxisTitle , self)._getChartElementText(ElementID , arg1 , arg2 )
-		if self.officeChartObject.HasAxis( arg2 , arg1 ) and self.officeChartObject.Axes( arg2 , arg1 ).HasTitle:
+		axisTitle = super(OfficeChartElementAxisTitle , self)._getChartElementText(ElementID , arg1 , arg2)
+		if self.officeChartObject.HasAxis( arg2 , arg1) and self.officeChartObject.Axes( arg2 , arg1).HasTitle:
 			# Translators: the title of a chart axis 
 			axisTitle += _(" title: {axisTitle}").format( axisTitle = self.officeChartObject.Axes(self.axisType, self.axisGroup).AxisTitle.Text)
 		return  axisTitle 
 
 	def select(self):
-		self.officeChartObject.Axes( self.axisType , self.axisGroup ).AxisTitle.Select()
+		self.officeChartObject.Axes( self.axisType , self.axisGroup).AxisTitle.Select()
 
 class OfficeChartElementTrendline( OfficeChartElementBase):
 
@@ -837,20 +842,20 @@ class OfficeChartElementTrendline( OfficeChartElementBase):
 								# Translators: Indicates that trendline type is Polynomial
 								xlPolynomial: _("Polynomial"),
 								# Translators: Indicates that trendline type is Power
-								xlPower: _("Power") 
+								xlPower: _("Power"), 
 	}
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		self.seriesIndex = arg1
 		self.trendlineIndex = arg2
 		self.currentTrendline = officeChartObject.SeriesCollection(self.seriesIndex).Trendlines(self.trendlineIndex)
-		super( OfficeChartElementTrendline , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super( OfficeChartElementTrendline , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
 			label=self.currentTrendline.DataLabel.Text
 			#Translators: Substitute superscript two by square for R square value
-			label=label.replace(u"²", _( " square " ))
+			label=label.replace(u"²", _( " square "))
 			label=re.sub(r'([a-zA-Z]+)([2])',r'\1 square', label)
 			label=re.sub(r'([a-zA-Z]+)([3])',r'\1 cube', label)
 			label=re.sub(r'([a-zA-Z]+)([-]*[04-9][0-9]*)',r'\1 to the power \2', label)
@@ -868,26 +873,26 @@ class OfficeChartElementTrendline( OfficeChartElementBase):
 
 class OfficeChartElementChartTitle( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementChartTitle , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementChartTitle , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if self.officeChartObject.HasTitle:
 			# Translators: Details about a chart title in Microsoft Office.
-			return _( "Chart title: {chartTitle}").format ( chartTitle = self.officeChartObject.ChartTitle.Text )
+			return _( "Chart title: {chartTitle}").format ( chartTitle = self.officeChartObject.ChartTitle.Text)
 		else:
 				# Translators: Indicates an untitled chart in Microsoft Office.
-			return _( "Untitled chart" )
+			return _( "Untitled chart")
 
 	def select(self):
 		self.officeChartObject.ChartTitle.Select()
 
 class OfficeChartElementChartArea( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementChartArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementChartArea , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if reportExtraInfo:
 			# Translators: Details about the chart area in a Microsoft Office chart.
 			return _( "Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}").format ( chartAreaHeight = self.officeChartObject.ChartArea.Height , chartAreaWidth = self.officeChartObject.ChartArea.Width , chartAreaTop = self.officeChartObject.ChartArea.Top , chartAreaLeft = self.officeChartObject.ChartArea.Left)
@@ -900,28 +905,28 @@ class OfficeChartElementChartArea( OfficeChartElementBase):
 
 class OfficeChartElementPlotArea( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementPlotArea , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementPlotArea , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if reportExtraInfo:
 			# useing {:.0f} to remove fractions
 			# Translators: Details about the plot area of a Microsoft Office chart.
-			return _( "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.officeChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.officeChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.officeChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.officeChartObject.PlotArea.InsideLeft )
+			return _( "Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}").format ( plotAreaInsideHeight = self.officeChartObject.PlotArea.InsideHeight , plotAreaInsideWidth = self.officeChartObject.PlotArea.InsideWidth , plotAreaInsideTop = self.officeChartObject.PlotArea.InsideTop , plotAreaInsideLeft = self.officeChartObject.PlotArea.InsideLeft)
 		else:
 			# Translators: Indicates the plot area of a Microsoft Office chart.
-			return _( "Plot area " )
+			return _( "Plot area ")
 
 	def select(self):
 		self.officeChartObject.PlotArea.Select()
 
 class OfficeChartElementLegend( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		self.chartLegend = officeChartObject.Legend
-		super( OfficeChartElementLegend , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super( OfficeChartElementLegend , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		return self.chartLegend.Name
 
 	def select(self):
@@ -931,20 +936,20 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 
 	eventDriven = True
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		if self.eventDriven:
 			self.legendEntry = officeChartObject.Legend.LegendEntries(arg1)
-		super( OfficeChartElementLegendEntry , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+		super( OfficeChartElementLegendEntry , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		# Translators: Details about a legend entry for a series in a Microsoft Office chart.
 		# For example, this might report "Legend entry for series Temperature 1 of 2"
 		if self.eventDriven:
 			# Translators: a message for the legend entry of a chart in MS Office
-			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count ) 
+			return _( "Legend entry for series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count) 
 		else:
 			# Translators: the legend entry for a chart in Microsoft Office
-			return _( "Legend entry {legendEntryIndex} of {legendEntryCount}").format( legendEntryIndex = arg1 , legendEntryCount = arg2 ) 
+			return _( "Legend entry {legendEntryIndex} of {legendEntryCount}").format( legendEntryIndex = arg1 , legendEntryCount = arg2) 
 
 	def select(self):
 		if self.eventDriven:
@@ -952,29 +957,29 @@ class OfficeChartElementLegendEntry( OfficeChartElementBase):
 
 class OfficeChartElementLegendKey( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
-		super( OfficeChartElementLegendKey , self ).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2 )
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
+		super( OfficeChartElementLegendKey , self).__init__( windowHandle=windowHandle , officeChartObject=officeChartObject , elementID=elementID , arg1=arg1 , arg2=arg2)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		if ElementID == xlLegendKey:
 			# Translators: Details about a legend key for a series in a Microsoft office chart.
 			# For example, this might report "Legend key for series Temperature 1 of 2"
 			# See https://support.office.com/en-us/article/Excel-Glossary-53b6ce43-1a9f-4ac2-a33c-d6f64ea2d1fc?CorrelationId=44f003e6-453a-4b14-a9a6-3fb5287109c7&ui=en-US&rs=en-US&ad=US
-			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count )
+			return _( "Legend key for Series {seriesName} {seriesIndex} of {seriesCount}").format( seriesName = self.officeChartObject.SeriesCollection(arg1).Name , seriesIndex = arg1 , seriesCount = self.officeChartObject.SeriesCollection().Count)
 
 
 class OfficeChartElementDataTable( OfficeChartElementBase):
 
-	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None ):
+	def __init__(self, windowHandle=None , officeChartObject=None   , elementID=None  , arg1=None , arg2=None):
 		super().__init__(
 			windowHandle=windowHandle,
 			officeChartObject=officeChartObject,
 			elementID=elementID,
 			arg1=arg1,
-			arg2=arg2
+			arg2=arg2,
 		)
 
-	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False ):
+	def _getChartElementText(self, ElementID ,arg1,arg2 , reportExtraInfo=False):
 		#Translators: Data Table will be spoken when chart element Data Table is selected
 		return _("Data Table")
 

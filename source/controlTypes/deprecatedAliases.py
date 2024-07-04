@@ -23,7 +23,7 @@ from .state import (
 )
 from .processAndLabelStates import (
 	_processNegativeStates,
-	_processPositiveStates
+	_processPositiveStates,
 )
 
 # Do not extend

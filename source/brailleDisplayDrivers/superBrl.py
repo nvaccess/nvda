@@ -32,9 +32,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_10C4&PID_EA60",  # SuperBraille 3.2
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.SERIAL, {
+       "VID_10C4&PID_EA60",  # SuperBraille 3.2
+      },
+  )
 
 	@classmethod
 	def getManualPorts(cls):
@@ -84,7 +86,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.version=self._dev.read(8)
 
 	def display(self, cells: List[int]):
-		writeBytes: List[bytes] = [DISPLAY_TAG, ]
+		writeBytes: List[bytes] = [DISPLAY_TAG]
 		for cell in cells:
 			writeBytes.append(b"\x00")
 			writeBytes.append(intToByte(cell))

@@ -61,7 +61,7 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, MMCTable)
 			elif obj.role in (
 				controlTypes.Role.TABLECELL,
-				controlTypes.Role.TABLEROWHEADER
+				controlTypes.Role.TABLEROWHEADER,
 			):
 				clsList.insert(0, MMCTableCell)
 		if obj.windowClassName == "tooltips_class32" and obj.name is None:

@@ -64,7 +64,7 @@ def getPrimaryDisplayOrientation() -> OrientationState:
 	return OrientationState(
 		width,
 		height,
-		_getOrientationStyle(width=width, height=height)
+		_getOrientationStyle(width=width, height=height),
 	)
 
 

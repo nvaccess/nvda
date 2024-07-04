@@ -27,7 +27,7 @@ class TestInputManagerExtensionPoints(unittest.TestCase):
 			self,
 			inputCore.decide_executeGesture,
 			expectedDecision=False,
-			gesture=gesture
+			gesture=gesture,
 		):
 			inputCore.manager.executeGesture(gesture)
 

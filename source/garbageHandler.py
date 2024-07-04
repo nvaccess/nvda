@@ -69,7 +69,7 @@ def notifyObjectDeletion(obj):
 		if _reportCountDuringCollection == 1:
 			log.debugWarning(
 				"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
-				stack_info=True
+				stack_info=True,
 			)
 		log.debugWarning(f"Deleting unreachable object {obj}")
 

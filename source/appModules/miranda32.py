@@ -256,9 +256,10 @@ class DuplicateFocusListBox(IAccessible):
 		focus = api.getFocusObject()
 		focusRole = focus.role
 		focusStates = focus.states
-		if (self == focus or
-			(focusRole == controlTypes.Role.MENUITEM and controlTypes.State.FOCUSED in focusStates) or
-			(focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
-		):
+		if (
+      self == focus or
+       (focusRole == controlTypes.Role.MENUITEM and controlTypes.State.FOCUSED in focusStates) or
+       (focusRole == controlTypes.Role.POPUPMENU and controlTypes.State.INVISIBLE not in focusStates)
+  ):
 			return False
 		return super(DuplicateFocusListBox, self).shouldAllowIAccessibleFocusEvent

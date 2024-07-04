@@ -132,7 +132,7 @@ class AppModule(appModuleHandler.AppModule):
 		"kb:numpadEnter",
 		"kb:escape",
 		"kb:delete",
-		"kb:numpadDelete"
+		"kb:numpadDelete",
 	)
 
 	@scriptHandler.script(gestures=_calculatorResultGestures)
@@ -163,7 +163,7 @@ class AppModule(appModuleHandler.AppModule):
 	# Handle both number row and numpad with num lock on.
 	@scriptHandler.script(
 		gestures=[f"kb:{i}" for i in range(10)]
-		+ [f"kb:numLockNumpad{i}" for i in range(10)]
+		+ [f"kb:numLockNumpad{i}" for i in range(10)],
 	)
 	def script_doNotAnnounceCalculatorResults(self, gesture):
 		gesture.send()

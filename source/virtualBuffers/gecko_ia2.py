@@ -41,7 +41,7 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 		isCurrent = controlTypes.IsCurrent.NO
 	if isCurrent != controlTypes.IsCurrent.NO:
 		return {
-			'current': isCurrent
+			'current': isCurrent,
 		}
 	return {}
 
@@ -113,7 +113,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			"table-rownumber-presentational",
 			"table-columnnumber-presentational",
 			"table-rowcount-presentational",
-			"table-columncount-presentational"
+			"table-columncount-presentational",
 		):
 			attrVal = attrs.get(attr)
 			if attrVal is not None and attrVal.lstrip('-').isdigit():
@@ -190,7 +190,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				states.discard(controlTypes.State.CHECKED)
 				states.add(controlTypes.State.ON)
 		popupState = aria.ariaHaspopupValuesToNVDAStates.get(
-			attrs.get("IAccessible2::attribute_haspopup")
+			attrs.get("IAccessible2::attribute_haspopup"),
 		)
 		if popupState:
 			states.discard(controlTypes.State.HASPOPUP)
@@ -322,7 +322,7 @@ class Gecko_ia2(VirtualBuffer):
 	def getNVDAObjectFromIdentifier(
 			self,
 			docHandle: int,
-			ID: int
+			ID: int,
 	) -> NVDAObjects.IAccessible.IAccessible:
 		try:
 			pacc = self.rootNVDAObject.IAccessibleObject.accChild(ID)
@@ -331,7 +331,7 @@ class Gecko_ia2(VirtualBuffer):
 		return NVDAObjects.IAccessible.IAccessible(
 			windowHandle=docHandle,
 			IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),
-			IAccessibleChildID=0
+			IAccessibleChildID=0,
 		)
 
 	def getIdentifierFromNVDAObject(self,obj):
@@ -370,7 +370,7 @@ class Gecko_ia2(VirtualBuffer):
 			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING], "IAccessible2::attribute_level": [nodeType[7:]]}
 		elif nodeType == "annotation":
 			attrs = {
-				"IAccessible::role": [IA2.IA2_ROLE_CONTENT_DELETION, IA2.IA2_ROLE_CONTENT_INSERTION]
+				"IAccessible::role": [IA2.IA2_ROLE_CONTENT_DELETION, IA2.IA2_ROLE_CONTENT_INSERTION],
 			}
 		elif nodeType=="heading":
 			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING]}
@@ -403,7 +403,7 @@ class Gecko_ia2(VirtualBuffer):
 				{
 					"IAccessible::role": [
 						oleacc.ROLE_SYSTEM_COMBOBOX,
-						oleacc.ROLE_SYSTEM_TEXT
+						oleacc.ROLE_SYSTEM_TEXT,
 					],
 					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
 				},
@@ -421,18 +421,18 @@ class Gecko_ia2(VirtualBuffer):
 				"IAccessible::role": [
 					oleacc.ROLE_SYSTEM_PUSHBUTTON,
 					oleacc.ROLE_SYSTEM_BUTTONMENU,
-					IA2.IA2_ROLE_TOGGLE_BUTTON
-				]
+					IA2.IA2_ROLE_TOGGLE_BUTTON,
+				],
 			}
 		elif nodeType=="edit":
 			attrs=[
 				{
 					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
-					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[1]
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[1],
 				},
 				{
 					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
-					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[None]
+					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[None],
 				},
 			]
 		elif nodeType=="frame":
@@ -463,12 +463,14 @@ class Gecko_ia2(VirtualBuffer):
 			attrs = [
 				{"IAccessible::role": [IA2.IA2_ROLE_LANDMARK]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]}
-				]
+				{
+        "IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
+        "name": [VBufStorage_findMatch_notEmpty],
+    },
+   ]
 		elif nodeType == "article":
 			attrs = [
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]},
 			]
 		elif nodeType == "grouping":
 			attrs = [
@@ -476,24 +478,24 @@ class Gecko_ia2(VirtualBuffer):
 					"IAccessible2::attribute_xml-roles": [
 						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
 					],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 				{
 					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 			]
 		elif nodeType=="embeddedObject":
 			attrs=[
 				{
 					"IAccessible2::attribute_tag":
-					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"])
+					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"]),
 				},
 				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		elif nodeType == "tab":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]},
 			]
 		elif nodeType == "figure":
 			attrs = [
@@ -504,22 +506,24 @@ class Gecko_ia2(VirtualBuffer):
 			]
 		elif nodeType == "menuItem":
 			attrs = [
-				{"IAccessible::role": [
-					oleacc.ROLE_SYSTEM_BUTTONMENU,
-					oleacc.ROLE_SYSTEM_MENUITEM,
-				]}
+				{
+        "IAccessible::role": [
+         oleacc.ROLE_SYSTEM_BUTTONMENU,
+         oleacc.ROLE_SYSTEM_MENUITEM,
+        ],
+    },
 			]
 		elif nodeType == "toggleButton":
 			attrs = [
-				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]}
+				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]},
 			]
 		elif nodeType == "progressBar":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]},
 			]
 		elif nodeType == "math":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]},
 			]
 		else:
 			return None
@@ -609,7 +613,7 @@ class Gecko_ia2(VirtualBuffer):
 		log.debug(f"ia2 start ID: {ia2Sel.startID}")
 		log.debug(f"ia2 start offset: {ia2Sel.startOffset}")
 		ia2Sel.startObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-			ia2Sel.startWindow, winUser.OBJID_CLIENT, ia2Sel.startID
+			ia2Sel.startWindow, winUser.OBJID_CLIENT, ia2Sel.startID,
 		)
 		assert (childID == 0), "childID should be 0"
 		ia2Sel.startObj = ia2Sel.startObj.QueryInterface(IAccessibleText)
@@ -656,7 +660,7 @@ class Gecko_ia2(VirtualBuffer):
 			log.debug("Reusing ia2Sel.startObj for ia2Sel.endObj")
 		else:
 			ia2Sel.endObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-				ia2Sel.endWindow, winUser.OBJID_CLIENT, ia2Sel.endID
+				ia2Sel.endWindow, winUser.OBJID_CLIENT, ia2Sel.endID,
 			)
 			assert (childID == 0), "childID should be 0"
 			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
@@ -666,7 +670,7 @@ class Gecko_ia2(VirtualBuffer):
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
-				IAccessibleTextSelectionContainer
+				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e
@@ -685,7 +689,7 @@ class Gecko_ia2(VirtualBuffer):
 				ia2Sel.startOffset,
 				ia2Sel.endObj,
 				ia2Sel.endOffset,
-				False
+				False,
 			)
 			paccTextSelectionContainer.SetSelections(1, byref(r))
 		else:  # No selection
@@ -696,7 +700,7 @@ class Gecko_ia2(VirtualBuffer):
 		"""Clear the native selection in the application."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
-				IAccessibleTextSelectionContainer
+				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e

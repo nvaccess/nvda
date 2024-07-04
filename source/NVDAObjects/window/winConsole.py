@@ -89,14 +89,16 @@ class WinConsole(Terminal, EditableTextWithoutAutoSelectDetection, Window):
 				self.startMonitoring()
 		core.callLater(200,reconnect)
 
-	@script(gestures=[
-		"kb:enter",
-		"kb:numpadEnter",
-		"kb:tab",
-		"kb:control+c",
-		"kb:control+d",
-		"kb:control+pause"
-	])
+	@script(
+     gestures=[
+      "kb:enter",
+      "kb:numpadEnter",
+      "kb:tab",
+      "kb:control+c",
+      "kb:control+d",
+      "kb:control+pause",
+     ],
+ )
 	def script_flush_queuedChars(self, gesture):
 		"""
 		Flushes the typed word buffer if present.

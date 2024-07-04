@@ -289,7 +289,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			startPos: textInfos.TextInfo,
 			cell: _TableCell,
 			movement: _Movement,
-			axis: _Axis
+			axis: _Axis,
 	) -> textInfos.TextInfo:
 		"""
 		Locates the first or last cell in current row or column given coordinates of current cell.
@@ -366,7 +366,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 					self.selection,
 					cell,
 					movement,
-					axis
+					axis,
 				)
 			elif movement is None:
 				info = self._getTableCellAt(cell.tableID, self.selection, cell.row, cell.col)
@@ -399,7 +399,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	def _tableMovementScriptHelper(
 			self,
 			movement: _Movement = _Movement.NEXT,
-			axis: Optional[_Axis] = None
+			axis: Optional[_Axis] = None,
 	):
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		# at run-time. (#12404)
@@ -510,7 +510,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		self._tableSayAll(_Movement.NEXT, _Axis.COLUMN)
 	script_sayAllRow.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads the row horizontally from the current cell rightwards to the last cell in the row."
+		"Reads the row horizontally from the current cell rightwards to the last cell in the row.",
 	)
 	script_sayAllRow.speakOnDemand = True
 	
@@ -519,7 +519,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		self._tableSayAll(_Movement.NEXT, _Axis.ROW)
 	script_sayAllColumn.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads the column vertically from the current cell downwards to the last cell in the column."
+		"Reads the column vertically from the current cell downwards to the last cell in the column.",
 	)
 	script_sayAllColumn.speakOnDemand = True
 
@@ -528,7 +528,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	script_speakRow.__doc__ = _(
 		# Translators: the description for the speak row command
 		"Reads the current row horizontally from left to right "
-		"without moving the system caret."
+		"without moving the system caret.",
 	)
 	script_speakRow.speakOnDemand = True
 
@@ -537,7 +537,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 	script_speakColumn.__doc__ = _(
 		# Translators: the description for the speak column command
 		"Reads the current column vertically from top to bottom "
-		"without moving the system caret."
+		"without moving the system caret.",
 	)
 	script_speakColumn.speakOnDemand = True
 

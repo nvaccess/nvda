@@ -86,7 +86,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 		gesture="kb:alt+downArrow",
 		# Translators: Description of a command to move to the next result in the Python Console output pane
 		description=_("Move to the next result"),
-		category=SCRCAT_PYTHON_CONSOLE
+		category=SCRCAT_PYTHON_CONSOLE,
 	)
 	def script_moveToNextResult(self, gesture: "inputCore.InputGesture"):
 		self._resultNavHelper(direction="next", select=False)
@@ -96,7 +96,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 		# Translators: Description of a command to move to the previous result
 		# in the Python Console output pane
 		description=_("Move to the previous result"),
-		category=SCRCAT_PYTHON_CONSOLE
+		category=SCRCAT_PYTHON_CONSOLE,
 	)
 	def script_moveToPrevResult(self, gesture: "inputCore.InputGesture"):
 		self._resultNavHelper(direction="previous", select=False)
@@ -106,7 +106,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 		# Translators: Description of a command to select from the current caret position to the end
 		# of the current result in the Python Console output pane
 		description=_("Select until the end of the current result"),
-		category=SCRCAT_PYTHON_CONSOLE
+		category=SCRCAT_PYTHON_CONSOLE,
 	)
 	def script_selectToResultEnd(self, gesture: "inputCore.InputGesture"):
 		self._resultNavHelper(direction="next", select=True)
@@ -116,7 +116,7 @@ class NvdaPythonConsoleUIOutputCtrl(ScriptableObject):
 		# Translators: Description of a command to select from the current caret position to the start
 		# of the current result in the Python Console output pane
 		description=_("Select until the start of the current result"),
-		category=SCRCAT_PYTHON_CONSOLE
+		category=SCRCAT_PYTHON_CONSOLE,
 	)
 	def script_selectToResultStart(self, gesture: "inputCore.InputGesture"):
 		self._resultNavHelper(direction="previous", select=True)

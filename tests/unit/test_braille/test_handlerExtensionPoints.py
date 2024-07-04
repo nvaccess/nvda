@@ -21,7 +21,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		expectedKwargs = dict(
 			cells=cells,
 			rawText=braille.handler._rawText,
-			currentCellCount=braille.handler.displaySize
+			currentCellCount=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
@@ -29,7 +29,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 
 	def test_displaySizeChanged(self):
 		expectedKwargs = dict(
-			displaySize=braille.handler.displaySize
+			displaySize=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
@@ -41,7 +41,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_displayChanged(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			detected=None
+			detected=None,
 		)
 
 		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):

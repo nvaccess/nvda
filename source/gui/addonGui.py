@@ -29,14 +29,14 @@ def promptUserForRestart():
 		# as addons have been added, enabled/disabled or removed.
 		"Changes were made to add-ons. "
 		"You must restart NVDA for these changes to take effect. "
-		"Would you like to restart now?"
+		"Would you like to restart now?",
 	)
 	# Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
 	restartTitle = _("Restart NVDA")
 	result = gui.messageBox(
 		message=restartMessage,
 		caption=restartTitle,
-		style=wx.YES | wx.NO | wx.ICON_WARNING
+		style=wx.YES | wx.NO | wx.ICON_WARNING,
 	)
 	if wx.YES == result:
 		if gui.message.isModalMessageBoxActive():
@@ -52,7 +52,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 			parent,
 			title,
 			message,
-			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_WARNING
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_WARNING,
 		)
 		self._showAddonInfoFunction = showAddonInfoFunction
 
@@ -61,7 +61,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 			self,
 			# Translators: A button in the addon installation warning / blocked dialog which shows
 			# more information about the addon
-			label=_("&About add-on...")
+			label=_("&About add-on..."),
 		)
 		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
 		yesButton = buttonHelper.addButton(
@@ -69,7 +69,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 			id=wx.ID_YES,
 			# Translators: A button in the addon installation warning dialog which allows the user to agree to installing
 			#  the add-on
-			label=_("&Yes")
+			label=_("&Yes"),
 		)
 		yesButton.SetDefault()
 		yesButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.YES))
@@ -79,7 +79,7 @@ class ConfirmAddonInstallDialog(nvdaControls.MessageDialog):
 			id=wx.ID_NO,
 			# Translators: A button in the addon installation warning dialog which allows the user to decide not to
 			# install the add-on
-			label=_("&No")
+			label=_("&No"),
 		)
 		noButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.NO))
 
@@ -90,7 +90,7 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 			parent,
 			title,
 			message,
-			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_ERROR
+			dialogType=nvdaControls.MessageDialog.DIALOG_TYPE_ERROR,
 		)
 		self._showAddonInfoFunction = showAddonInfoFunction
 
@@ -99,7 +99,7 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 			self,
 			# Translators: A button in the addon installation warning / blocked dialog which shows
 			# more information about the addon
-			label=_("&About add-on...")
+			label=_("&About add-on..."),
 		)
 		addonInfoButton.Bind(wx.EVT_BUTTON, lambda evt: self._showAddonInfoFunction())
 
@@ -107,14 +107,16 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 			self,
 			id=wx.ID_OK,
 			# Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
-			label=_("OK")
+			label=_("OK"),
 		)
 		okButton.SetDefault()
 		okButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-		displayDialogAsModal(IncompatibleAddonsDialog(
-			parent=self,
-			# the defaults from the addon GUI are fine. We are testing against the running version.
-		))
+		displayDialogAsModal(
+      IncompatibleAddonsDialog(
+       parent=self,
+       # the defaults from the addon GUI are fine. We are testing against the running version.
+      ),
+  )
 
 
 # C901 'installAddon' is too complex (16)
@@ -142,7 +144,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			_("Failed to open add-on package file at %s - missing file or invalid file format") % addonPath,
 			# Translators: The title of a dialog presented when an error occurs.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR
+			wx.OK | wx.ICON_ERROR,
 		)
 		return False  # Exit early, can't install an invalid bundle
 
@@ -176,20 +178,20 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			# currently installed according to the version number.
 			"You are about to install version {newVersion} of {summary},"
 			" which appears to be already installed. "
-			"Would you still like to update?"
+			"Would you still like to update?",
 		).format(summary=summary, newVersion=newVersion)
 
 		updateAddonInstallationMessage = _(
 			# Translators: A message asking if the user wishes to update a previously installed
 			# add-on with this one.
 			"A version of this add-on is already installed. "
-			"Would you like to update {summary} version {curVersion} to version {newVersion}?"
+			"Would you like to update {summary} version {curVersion} to version {newVersion}?",
 		).format(summary=summary, curVersion=curVersion, newVersion=newVersion)
 
 		if gui.messageBox(
 			overwriteExistingAddonInstallationMessage if curVersion == newVersion else updateAddonInstallationMessage,
 			messageBoxTitle,
-			wx.YES|wx.NO|wx.ICON_WARNING
+			wx.YES|wx.NO|wx.ICON_WARNING,
 		) != wx.YES:
 			return False
 
@@ -213,7 +215,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		# Translators: The title of the dialog presented while an Addon is being installed.
 		_("Installing Add-on"),
 		# Translators: The message displayed while an addon is being installed.
-		_("Please wait while the add-on is being installed.")
+		_("Please wait while the add-on is being installed."),
 	)
 
 	try:
@@ -234,7 +236,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 			_("Failed to install add-on from %s") % addonPath,
 			# Translators: The title of a dialog presented when an error occurs.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR
+			wx.OK | wx.ICON_ERROR,
 		)
 	finally:
 		if addonObj is not None:
@@ -250,7 +252,8 @@ def handleRemoteAddonInstall(addonPath: str):
 			_("Add-ons cannot be installed in the Windows Store version of NVDA"),
 			# Translators: The title of a dialog presented when an error occurs.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR)
+			wx.OK | wx.ICON_ERROR,
+  )
 		return
 	gui.mainFrame.prePopup()
 	if installAddon(gui.mainFrame, addonPath):
@@ -260,7 +263,7 @@ def handleRemoteAddonInstall(addonPath: str):
 class IncompatibleAddonsDialog(
 		DpiScalingHelperMixinWithoutInit,
 		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""A dialog that lists incompatible addons, and why they are not compatible"""
 	@classmethod
@@ -283,7 +286,7 @@ class IncompatibleAddonsDialog(
 			self,
 			parent,
 			APIVersion = addonAPIVersion.CURRENT,
-			APIBackwardsCompatToVersion = addonAPIVersion.BACK_COMPAT_TO
+			APIBackwardsCompatToVersion = addonAPIVersion.BACK_COMPAT_TO,
 	):
 		if IncompatibleAddonsDialog._instance() is not None:
 			raise RuntimeError("Attempting to open multiple IncompatibleAddonsDialog instances")
@@ -292,10 +295,12 @@ class IncompatibleAddonsDialog(
 		self._APIVersion = APIVersion
 		self._APIBackwardsCompatToVersion = APIBackwardsCompatToVersion
 
-		self.unknownCompatibilityAddonsList = list(addonHandler.getIncompatibleAddons(
-			currentAPIVersion=APIVersion,
-			backCompatToAPIVersion=APIBackwardsCompatToVersion
-		))
+		self.unknownCompatibilityAddonsList = list(
+      addonHandler.getIncompatibleAddons(
+       currentAPIVersion=APIVersion,
+       backCompatToAPIVersion=APIBackwardsCompatToVersion,
+      ),
+  )
 		if not len(self.unknownCompatibilityAddonsList) > 0:
 			# this dialog is not designed to show an empty list.
 			raise RuntimeError("No incompatible addons.")
@@ -315,7 +320,7 @@ class IncompatibleAddonsDialog(
 			# Translators: The title of the Incompatible Addons Dialog
 			"The following add-ons are incompatible with NVDA version {}."
 			" These add-ons can not be enabled."
-			" Please contact the add-on author for further assistance."
+			" Please contact the add-on author for further assistance.",
 		).format(addonAPIVersion.formatForGUI(self._APIVersion))
 		AddonSelectionIntroLabel=wx.StaticText(self, label=introText)
 		AddonSelectionIntroLabel.Wrap(self.scaleSize(maxControlWidth))
@@ -348,7 +353,7 @@ class IncompatibleAddonsDialog(
 			settingsSizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.ALL | wx.EXPAND,
-			proportion=1
+			proportion=1,
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)

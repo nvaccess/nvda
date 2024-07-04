@@ -59,7 +59,7 @@ def _doValidation(profile, validator):
 				u"Unable to validate config file after upgrade: Key {0} : {1}\n" +
 				"Full result: (value of false means the key was not present)\n" +
 				"{2}"
-				).format(key, value, flatResult)
+   ).format(key, value, flatResult)
 			raise ValueError(errorString)
 
 def _ensureVersionProperty(profile):

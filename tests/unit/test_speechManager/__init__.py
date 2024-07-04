@@ -126,7 +126,7 @@ class TestSpeechIndexComparison(unittest.TestCase):
 		# There should only be one pair with equivalence (the equal pair)
 		self.assertEqual(
 			len(indexesWithEquivalence), 1,
-			msg=f"Indexes with neither true: {indexesWithEquivalence!r}"
+			msg=f"Indexes with neither true: {indexesWithEquivalence!r}",
 		)
 		# Ensure equivalent indexes really are equal
 		self.assertEqual(indexesWithEquivalence[0][0], indexesWithEquivalence[0][1])
@@ -134,13 +134,13 @@ class TestSpeechIndexComparison(unittest.TestCase):
 		# None should be: A < B < A
 		self.assertEqual(
 			len(bothBefore), 0,
-			msg=f"Indexes with both true: {bothBefore!r}"
+			msg=f"Indexes with both true: {bothBefore!r}",
 		)
 		# Check that the number of B values before and after is as expected.
 		self.assertAlmostEqual(
 			stationaryBeforeCount,
 			movingBeforeCount,
-			delta=1  # Odd number of available indexes since 0 is excluded and one pair is equivalent.
+			delta=1,  # Odd number of available indexes since 0 is excluded and one pair is equivalent.
 		)
 
 
@@ -320,14 +320,16 @@ class CancellableSpeechTests(unittest.TestCase):
 			smi.speak([
 				"Stays invalid",
 				_CancellableSpeechCommand_withLamda(lambda: False),
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
 			])
 
 		with smi.expectation():
 			smi.speak(["Stays valid", _CancellableSpeechCommand_withLamda(lambda: True)])
-			smi.expect_synthSpeak(sequence=[
-				"Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
-			])
+			smi.expect_synthSpeak(
+       sequence=[
+        "Stays valid", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+       ],
+   )
 
 
 class SayAllEmulatedTests(unittest.TestCase):
@@ -368,7 +370,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 			seqNum = smi.speak([
 				callBack(expectedToBecomeIndex=1),
 				'sequence 0  ',
-				callBack(expectedToBecomeIndex=2)
+				callBack(expectedToBecomeIndex=2),
 			])
 			self.assertEqual(seqNum, 0)
 			# Speech manager is expected to get started immediately
@@ -378,7 +380,7 @@ class SayAllEmulatedTests(unittest.TestCase):
 			'sequence 1 before call back  ',
 			callBack(expectedToBecomeIndex=3),
 			'sequence 1 after call back  ',
-			callBack(expectedToBecomeIndex=4)
+			callBack(expectedToBecomeIndex=4),
 		])
 		self.assertEqual(seqNum, 1)
 
@@ -388,14 +390,14 @@ class SayAllEmulatedTests(unittest.TestCase):
 
 		seqNum = smi.speak([
 			'sequence 2  ',
-			callBack(expectedToBecomeIndex=5)
+			callBack(expectedToBecomeIndex=5),
 		])
 		self.assertEqual(seqNum, 2)
 
 		seqNum = smi.speak([
 			# for some reason say-all handler does not give this sequence callback commands
 			'sequence 3  ',
-			expectIndex(expectedToBecomeIndex=6)
+			expectIndex(expectedToBecomeIndex=6),
 		])
 		self.assertEqual(seqNum, 3)
 
@@ -431,8 +433,8 @@ class SayAllEmulatedTests(unittest.TestCase):
 				expectedSendSequenceNumber=4,
 				seq=[
 					callBack(expectedToBecomeIndex=7),
-					'sequence 4  ', expectIndex(expectedToBecomeIndex=8)
-				]
+					'sequence 4  ', expectIndex(expectedToBecomeIndex=8),
+				],
 			)
 			# Now ensure there is no double speaking!
 			smi.expect_synthSpeak(3)
@@ -464,8 +466,8 @@ class SayAllEmulatedTests(unittest.TestCase):
 				expectedSendSequenceNumber=2,
 				seq=[
 					callBack(expectedToBecomeIndex=3),
-					'sequence 2  ', expectIndex(expectedToBecomeIndex=4)
-				]
+					'sequence 2  ', expectIndex(expectedToBecomeIndex=4),
+				],
 			)
 			# Now ensure there is no double speaking!
 			smi.expect_synthSpeak(seq1)
@@ -520,7 +522,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"higher pitch. And for the finale, let's ",
 			_waveFileCommand(r"waves\browseMode.wav", expectedToBecomeIndex=3),
 			"play a sound.",
-			smi.create_ExpectedIndex(expectedToBecomeIndex=4)
+			smi.create_ExpectedIndex(expectedToBecomeIndex=4),
 		]
 		with smi.expectation():
 			smi.speak(sequence)
@@ -530,9 +532,9 @@ class InitialDevelopmentTests(unittest.TestCase):
 			with smi.expectation():
 				smi.indexReached(i)
 				smi.pumpAll()
-				if i in [1, 2, ]:
+				if i in [1, 2]:
 					smi.expect_mockCall(mock_BeepCommand_run)
-				if i in [3, ]:
+				if i in [3]:
 					smi.expect_mockCall(mock_WaveFileCommand_run)
 
 	def test2(self):
@@ -607,14 +609,18 @@ class InitialDevelopmentTests(unittest.TestCase):
 			])
 			smi.expect_synthSpeak(first)
 
-		interrupt1 = smi.speak(priority=speech.Spri.NEXT, seq=[
-			"6 7 8 9 10",
-			smi.create_ExpectedIndex(expectedToBecomeIndex=3)
-		])
-		interrupt2 = smi.speak(priority=speech.Spri.NEXT, seq=[
-			"11 12 13 14 15",
-			smi.create_ExpectedIndex(expectedToBecomeIndex=4)
-		])
+		interrupt1 = smi.speak(
+      priority=speech.Spri.NEXT, seq=[
+       "6 7 8 9 10",
+       smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+      ],
+  )
+		interrupt2 = smi.speak(
+      priority=speech.Spri.NEXT, seq=[
+       "11 12 13 14 15",
+       smi.create_ExpectedIndex(expectedToBecomeIndex=4),
+      ],
+  )
 
 		with smi.expectation():
 			smi.indexReached(1)  # endUtterance
@@ -656,7 +662,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			"Text before the beep ",
 			_beepCommand(440, 10, expectedToBecomeIndex=1),
 			"text after the beep, text, text, text, text",
-			smi.create_ExpectedIndex(expectedToBecomeIndex=2)
+			smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 		]
 		postInterruption = toBeInterrupted[2:]
 		with smi.expectation():
@@ -671,7 +677,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		with smi.expectation():
 			interrupt = smi.speak(
 				priority=speech.Spri.NOW,
-				seq=["This is an interruption", smi.create_ExpectedIndex(expectedToBecomeIndex=3)]
+				seq=["This is an interruption", smi.create_ExpectedIndex(expectedToBecomeIndex=3)],
 			)
 			smi.expect_synthCancel()
 			smi.expect_synthSpeak(interrupt)
@@ -680,7 +686,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.indexReached(3)
 			smi.pumpAll()
 			smi.expect_synthSpeak(
-				sequence=postInterruption
+				sequence=postInterruption,
 			)
 
 	def test_8_SPRI(self):
@@ -692,16 +698,20 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
-			first = smi.speak(priority=speech.Spri.NOW, seq=[
-				"First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1)
-			])
+			first = smi.speak(
+       priority=speech.Spri.NOW, seq=[
+        "First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+       ],
+   )
 			smi.expect_synthSpeak(first)
 			smi.expect_synthCancel()
 
 		with smi.expectation():
-			second = smi.speak(priority=speech.Spri.NOW, seq=[
-				"Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
-			])
+			second = smi.speak(
+       priority=speech.Spri.NOW, seq=[
+        "Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+       ],
+   )
 
 		with smi.expectation():
 			smi.indexReached(1)
@@ -717,16 +727,20 @@ class InitialDevelopmentTests(unittest.TestCase):
 		"""
 		smi = SpeechManagerInteractions(self)
 		with smi.expectation():
-			first = smi.speak(priority=speech.Spri.NOW, seq=[
-				"First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1)
-			])
+			first = smi.speak(
+       priority=speech.Spri.NOW, seq=[
+        "First ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=1),
+       ],
+   )
 			smi.expect_synthSpeak(first)
 			smi.expect_synthCancel()
 
 		with smi.expectation():
-			second = smi.speak(priority=speech.Spri.NEXT, seq=[
-				"Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2)
-			])
+			second = smi.speak(
+       priority=speech.Spri.NEXT, seq=[
+        "Second ", "utterance", smi.create_ExpectedIndex(expectedToBecomeIndex=2),
+       ],
+   )
 
 		with smi.expectation():
 			smi.indexReached(1)
@@ -756,8 +770,8 @@ class InitialDevelopmentTests(unittest.TestCase):
 				priority=speech.Spri.NOW,
 				seq=[
 					"This is an interruption",
-					smi.create_ExpectedIndex(expectedToBecomeIndex=3)
-				]
+					smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+				],
 			)
 			smi.expect_synthSpeak(interrupt)
 			smi.expect_synthCancel()
@@ -803,10 +817,12 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_mockCall(mock_BeepCommand_run)
 
 		with smi.expectation():
-			interrupt = smi.speak(priority=speech.Spri.NOW, seq=[
-				"This is an interruption",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=3)
-			])
+			interrupt = smi.speak(
+       priority=speech.Spri.NOW, seq=[
+        "This is an interruption",
+        smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+       ],
+   )
 			smi.expect_synthSpeak(interrupt)
 			smi.expect_synthCancel()
 
@@ -815,7 +831,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.pumpAll()
 			resume = [
 				smi.create_ExpectedProsodyCommand(firstSeq[0]),
-				*firstSeq[3:]
+				*firstSeq[3:],
 			]
 			smi.expect_synthSpeak(sequence=resume)
 
@@ -865,7 +881,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			# The preceeding index is expected,
 			# as the following profile trigger commands will cause the utterance to be split here.
 			ConfigProfileTriggerCommand(t1, False),
-			"9 10 11 12"
+			"9 10 11 12",
 		]
 		with smi.expectation():
 			smi.speak(seq)
@@ -880,11 +896,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.expect_mockCall(t1.enter)
 			smi.expect_synthCancel()
 			smi.expect_mockCall(t2.enter)
-			smi.expect_synthSpeak(sequence=[
-				seq[1],  # PitchCommand
-				'5 6 7 8',
-				seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
-			])
+			smi.expect_synthSpeak(
+       sequence=[
+        seq[1],  # PitchCommand
+        '5 6 7 8',
+        seq[7],  # IndexCommand index=2 (due to a  ConfigProfileTriggerCommand following it)
+       ],
+   )
 
 		with smi.expectation():
 			smi.indexReached(2)
@@ -893,11 +911,13 @@ class InitialDevelopmentTests(unittest.TestCase):
 			smi.doneSpeaking()
 			smi.pumpAll()
 			smi.expect_synthCancel()
-			smi.expect_synthSpeak(sequence=[
-				seq[1],  # PitchCommand
-				'9 10 11 12',
-				smi.create_ExpectedIndex(expectedToBecomeIndex=3)
-			])
+			smi.expect_synthSpeak(
+       sequence=[
+        seq[1],  # PitchCommand
+        '9 10 11 12',
+        smi.create_ExpectedIndex(expectedToBecomeIndex=3),
+       ],
+   )
 			smi.expect_mockCall(t1.exit)
 
 		with smi.expectation():
@@ -970,7 +990,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		with smi.expectation():
 			first = smi.speak([
 				"This is a normal utterance, text, text,",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
 			])
 			smi.expect_synthSpeak(first)
 
@@ -979,7 +999,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			interrupt = [
 				ConfigProfileTriggerCommand(t1, True),
 				"This is an interruption with a different profile",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=2)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 			]
 			smi.speak(priority=speech.Spri.NOW, seq=interrupt)
 			smi.expect_synthCancel()  # twice ??
@@ -1019,7 +1039,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			first = [
 				ConfigProfileTriggerCommand(t1, True),
 				"This is a normal utterance with a different profile",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
 			]
 			smi.speak(first)
 			smi.expect_synthSpeak(sequence=first[1:])
@@ -1030,7 +1050,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 		with smi.expectation():
 			interrupt = [
 				"This is an interruption",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=2)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 			]
 			interruptIndex = smi.speak(priority=speech.Spri.NOW, seq=interrupt)
 			smi.expect_synthCancel()  # 2 calls ??
@@ -1086,7 +1106,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			first = [
 				ConfigProfileTriggerCommand(t1, True),
 				"This is a normal utterance with profile 1",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=1)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=1),
 			]
 			smi.speak(first)
 			smi.expect_synthSpeak(sequence=first[1:])
@@ -1098,7 +1118,7 @@ class InitialDevelopmentTests(unittest.TestCase):
 			interrupt = [
 				ConfigProfileTriggerCommand(t2, True),
 				"This is an interruption with profile 2",
-				smi.create_ExpectedIndex(expectedToBecomeIndex=2)
+				smi.create_ExpectedIndex(expectedToBecomeIndex=2),
 			]
 			smi.speak(priority=speech.Spri.NOW, seq=interrupt)
 			smi.expect_synthCancel()  # 3 calls ??
@@ -1186,7 +1206,7 @@ class RegressionTests(unittest.TestCase):
 		speechSequence = [
 			CharacterModeCommand(True),
 			'',
-			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1)
+			smi.create_EndUtteranceCommand(expectedToBecomeIndex=1),
 		]
 		with smi.expectation():
 			seqIndexes = smi.speak(speechSequence)

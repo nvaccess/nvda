@@ -48,7 +48,7 @@ def brl_auto_id() -> bytes:
 	"""send auto id command to braille display"""
 	# device will respond with a message that allows identification of the display
 	return bytes([
-		STX, AUTOID, 0x50, 0x50, ETX
+		STX, AUTOID, 0x50, 0x50, ETX,
 	])
 
 def _swapDotBits(d: int) -> List[int]:
@@ -394,10 +394,10 @@ connection could not be established"""
 			
 			"kb:control+escape": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6",),
 			"kb:control+alt+delete": ("br(papenmeier):space+d1+d2+d3+d4+d5+d6+d7+d8",),
-			"kb:enter": ("br(papenmeier):space+d8", "br(papenmeier):d8",),
+			"kb:enter": ("br(papenmeier):space+d8", "br(papenmeier):d8"),
 			"kb:pageup": ("br(papenmeier):space+d3",),
 			"kb:pagedown": ("br(papenmeier):space+d6",),
-			"kb:backspace": ("br(papenmeier):space+d6+d8", "br(papenmeier):d7",),
+			"kb:backspace": ("br(papenmeier):space+d6+d8", "br(papenmeier):d7"),
 			"kb:home": ("br(papenmeier):space+d1+d2",),
 			"kb:end": ("br(papenmeier):space+d4+d5",),
 			"kb:delete": ("br(papenmeier):space+d5+d6",),
@@ -440,7 +440,7 @@ connection could not be established"""
 			"kb:control+x": ("br(papenmeier):d1+d3+d4+d6+d7+d8",),
 			"kb:control+y": ("br(papenmeier):d1+d3+d4+d5+d6+d7+d8",),
 			"kb:control+z": ("br(papenmeier):d1+d3+d5+d6+d7+d8",),
-		}
+		},
 	})
 
 def brl_decode_trio(keys: bytes)->List[int]:

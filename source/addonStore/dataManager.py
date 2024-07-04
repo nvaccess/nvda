@@ -122,7 +122,7 @@ class _DataManager:
 		if response.status_code != requests.codes.OK:
 			log.error(
 				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}"
+				f" response ({response.status_code}): {response.content}",
 			)
 			return None
 		return response.content
@@ -138,7 +138,7 @@ class _DataManager:
 		if response.status_code != requests.codes.OK:
 			log.error(
 				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}"
+				f" response ({response.status_code}): {response.content}",
 			)
 			return None
 		cacheHash = response.json()
@@ -273,7 +273,7 @@ class _DataManager:
 				displayableError = DisplayableError(
 					# Translators: A message shown when fetching add-on data from the store fails
 					pgettext("addonStore", "Unable to fetch latest add-on data for incompatible add-ons."),
-					self._updateFailureMessage
+					self._updateFailureMessage,
 				)
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 

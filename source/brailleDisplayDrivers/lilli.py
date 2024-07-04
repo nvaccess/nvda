@@ -26,7 +26,7 @@ LILLI_KEYS = [
 	"", "SF1", "SF2", "SF3", "SF4",  "SF5", "SF6", "SF7", "SF8", "SF9", "SF10", "SLF", "SUP", "SRG", "SDN", "",
 	"", "LF1", "LF2", "LF3", "LF4",  "LF5", "LF6", "LF7", "LF8", "LF9", "LF10", "LLF", "LUP", "LRG", "LDN", "",
 	"", "SLF1", "SLF2", "SLF3", "SLF4",  "SLF5", "SLF6", "SLF7", "SLF8", "SLF9", "SLF10", "SLLF", "SLUP", "SLRG", "SLDN", "SFDN", "SFUP",
-	"route"
+	"route",
 ]
 ROUTE_COMMAND = "route"
 
@@ -113,7 +113,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"kb:tab": ("br(lilli):SRG",),
 			"kb:alt+tab": ("br(lilli):SDN",),
 			"kb:alt+shift+tab": ("br(lilli):SUP",),
-		}
+		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture):

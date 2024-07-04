@@ -206,9 +206,11 @@ An NVDAObject for a window
 		"""
 		left, top, width, height = self.location
 		left, top = winUser.ScreenToClient(self.windowHandle, left, top)
-		winUser.RedrawWindow(self.windowHandle,
-			winUser.RECT(left, top, left + width, top + height), None,
-			winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW)
+		winUser.RedrawWindow(
+      self.windowHandle,
+      winUser.RECT(left, top, left + width, top + height), None,
+      winUser.RDW_INVALIDATE | winUser.RDW_UPDATENOW,
+  )
 
 	def _get_windowText(self):
 		textLength=watchdog.cancellableSendMessage(self.windowHandle,winUser.WM_GETTEXTLENGTH,0,0)

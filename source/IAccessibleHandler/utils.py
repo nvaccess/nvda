@@ -62,7 +62,7 @@ def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
 		messageList.append(f"{eventName}")
 	messageList.append(
 		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
-		f"process {processID} ({processName})"
+		f"process {processID} ({processName})",
 	)
 	if threadID is not None:
 		messageList.append(f"thread {threadID}")

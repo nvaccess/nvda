@@ -136,7 +136,7 @@ class MultiTouchTracker:
 		"actionCount",
 		"childTrackers",
 		"rawSingleTouchTracker",
-		"pluralTimeout"
+		"pluralTimeout",
 	]
 
 	def __init__(
@@ -149,7 +149,7 @@ class MultiTouchTracker:
 			numFingers: int = 1,
 			actionCount: int = 1,
 			rawSingleTouchTracker: SingleTouchTracker | None = None,
-			pluralTimeout: float | None = None
+			pluralTimeout: float | None = None,
 	):
 		"""Represents an action jointly performed by 1 or more fingers.
 

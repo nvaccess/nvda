@@ -59,7 +59,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the status of the addon.
 		# e.g. available, downloading installing
 		pgettext("addonStore", "Status"),
-		150
+		150,
 	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
@@ -82,13 +82,13 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the addon's publisher.
 		pgettext("addonStore", "Publisher"),
 		100,
-		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED})
+		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED}),
 	)
 	author = (
 		# Translators: The name of the column that contains the addon's author.
 		pgettext("addonStore", "Author"),
 		100,
-		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
 	)
 
 
@@ -99,7 +99,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
 			self,
 			model: _AddonModelT,
-			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
+			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE,
 	):
 		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
@@ -212,7 +212,7 @@ class AddonListVM:
 		self._validate(
 			sortField=self._sortByModelField,
 			selectionIndex=self.getSelectedIndex(),
-			selectionId=self.selectedAddonId
+			selectionId=self.selectedAddonId,
 		)
 		self.selectedAddonId = self._tryPersistSelection(self._addonsFilteredOrdered)
 		self.resetListItems(addons)
@@ -392,7 +392,7 @@ class AddonListVM:
 				f"oldSelectedIndex: {selectedIndex}, "
 				f"oldMaxIndex: {oldMaxIndex}, "
 				f"newSelectedIndex: {newSelectedIndex}, "
-				f"newMaxIndex: {newMaxIndex}"
+				f"newMaxIndex: {newMaxIndex}",
 			)
 			return newOrder[newSelectedIndex]
 		elif self.lastSelectedAddonId in newOrder:

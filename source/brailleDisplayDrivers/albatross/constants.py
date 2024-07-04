@@ -156,7 +156,7 @@ CONTROL_KEY_CODES: FrozenSet[Keys] = frozenset(
 		Keys.end2,
 		Keys.eCursor2,
 		Keys.cursor2,
-	}
+	},
 )
 """Ctrl keys which may start key combination."""
 
@@ -233,8 +233,8 @@ ROUTING_KEY_RANGES: FrozenSet[RoutingKeyRange] = frozenset(
 		RoutingKeyRange("routing", 2, 41, indexOffset=2),
 		RoutingKeyRange("secondRouting", 43, 82, indexOffset=43),
 		RoutingKeyRange("routing", 111, 150, indexOffset=71),
-		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112)
-	}
+		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112),
+	},
 )
 """Defines routing key ranges. See L{RoutingKeyRange}."""
 

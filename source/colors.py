@@ -161,7 +161,7 @@ def _calcColorName(red: int, green: int, blue: int, alpha: int, reportTransparen
 			'color variation',
 			# Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 			# "transparent bright orange-yellow"
-			'transparent {colorDescription}'
+			'transparent {colorDescription}',
 		).format(colorDescription=closestName)
 	return closestName
 

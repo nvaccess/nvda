@@ -19,7 +19,7 @@ logViewer = None
 
 class LogViewer(
 		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+		wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
 	"""The NVDA log viewer GUI.
 	"""
@@ -126,7 +126,7 @@ def activate():
 			_("Log is unavailable"),
 			# Translators: The title of an error message dialog.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR
+			wx.OK | wx.ICON_ERROR,
 		)
 		return
 	logViewer.Raise()

@@ -28,7 +28,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		)
 		self.assertEqual(
 			newStyle,
-			Orientation.LANDSCAPE
+			Orientation.LANDSCAPE,
 		)
 
 	def test_orientationChange_portrait(self):
@@ -45,7 +45,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		)
 		self.assertEqual(
 			newStyle,
-			Orientation.PORTRAIT
+			Orientation.PORTRAIT,
 		)
 
 	def test_noChanges_screenFlip(self):
@@ -63,7 +63,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 		)
 		self.assertEqual(
 			newStyle,
-			Orientation.LANDSCAPE
+			Orientation.LANDSCAPE,
 		)
 
 	def test_widthIncreaseLandscape(self):

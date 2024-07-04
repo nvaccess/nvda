@@ -39,7 +39,7 @@ class Test_getKeyboardShortcutSpeech(unittest.TestCase):
 		(see #15566).
 		"""
 
-		expected = repr(['A', ])
+		expected = repr(['A'])
 		output = _getKeyboardShortcutSpeech(
 			keyboardShortcut='A',
 		)

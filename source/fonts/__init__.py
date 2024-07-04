@@ -53,7 +53,7 @@ def _addFontResource(fontPath: str) -> int:
 		# The system will take care of unloading the font when the process ends.
 		FR_PRIVATE,
 		# Reserved. Must be zero.
-		0
+		0,
 	)
 	return res
 

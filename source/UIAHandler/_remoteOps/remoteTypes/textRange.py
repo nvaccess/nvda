@@ -6,10 +6,10 @@
 
 from __future__ import annotations
 from typing import (
-	cast
+	cast,
 )
 from ctypes import (
-	POINTER
+	POINTER,
 )
 from UIAHandler import UIA
 from .. import lowLevel
@@ -17,7 +17,7 @@ from .. import instructions
 from .. import builder
 from ..remoteFuncWrapper import (
 	remoteMethod,
-	remoteMethod_mutable
+	remoteMethod_mutable,
 )
 from . import (
 	RemoteVariant,
@@ -55,8 +55,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeClone(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
@@ -66,8 +66,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeGetEnclosingElement(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
@@ -78,8 +78,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 			instructions.TextRangeGetText(
 				result=result,
 				target=self,
-				maxLength=RemoteInt.ensureRemote(self.rob, maxLength)
-			)
+				maxLength=RemoteInt.ensureRemote(self.rob, maxLength),
+			),
 		)
 		return result
 
@@ -88,8 +88,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeExpandToEnclosingUnit(
 				target=self,
-				unit=RemoteIntEnum.ensureRemote(self.rob, unit)
-			)
+				unit=RemoteIntEnum.ensureRemote(self.rob, unit),
+			),
 		)
 
 	@remoteMethod_mutable
@@ -97,7 +97,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 			self,
 			endpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-			count: RemoteInt | int
+			count: RemoteInt | int,
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -106,8 +106,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 				target=self,
 				endpoint=RemoteIntEnum.ensureRemote(self.rob, endpoint),
 				unit=RemoteIntEnum.ensureRemote(self.rob, unit),
-				count=RemoteInt.ensureRemote(self.rob, count)
-			)
+				count=RemoteInt.ensureRemote(self.rob, count),
+			),
 		)
 		return result
 
@@ -116,29 +116,29 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 			self,
 			srcEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 			otherRange: RemoteTextRange,
-			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
+			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 	):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeMoveEndpointByRange(
 				target=self,
 				srcEndpoint=RemoteIntEnum.ensureRemote(self.rob, srcEndpoint),
 				otherRange=otherRange,
-				otherEndpoint=RemoteIntEnum.ensureRemote(self.rob, otherEndpoint)
-			)
+				otherEndpoint=RemoteIntEnum.ensureRemote(self.rob, otherEndpoint),
+			),
 		)
 
 	@remoteMethod
 	def getAttributeValue(
 			self,
-			attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId
+			attributeId: RemoteIntEnum[lowLevel.AttributeId] | lowLevel.AttributeId,
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.TextRangeGetAttributeValue(
 				result=result,
 				target=self,
-				attributeId=RemoteIntEnum.ensureRemote(self.rob, attributeId)
-			)
+				attributeId=RemoteIntEnum.ensureRemote(self.rob, attributeId),
+			),
 		)
 		return result
 
@@ -147,7 +147,7 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 			self,
 			thisEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 			otherRange: RemoteTextRange,
-			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint
+			otherEndpoint: RemoteIntEnum[lowLevel.TextPatternRangeEndpoint] | lowLevel.TextPatternRangeEndpoint,
 	) -> RemoteInt:
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -156,8 +156,8 @@ class RemoteTextRange(RemoteExtensionTarget[POINTER(UIA.IUIAutomationTextRange)]
 				target=self,
 				thisEndpoint=RemoteIntEnum.ensureRemote(self.rob, thisEndpoint),
 				otherRange=otherRange,
-				otherEndpoint=RemoteIntEnum.ensureRemote(self.rob, otherEndpoint)
-			)
+				otherEndpoint=RemoteIntEnum.ensureRemote(self.rob, otherEndpoint),
+			),
 		)
 		return result
 
@@ -172,7 +172,7 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 			self,
 			rob: builder.RemoteOperationBuilder,
 			textRangeLA: RemoteTextRangeLogicalAdapter,
-			isStart: bool
+			isStart: bool,
 	):
 		super().__init__(rob)
 		self._la = textRangeLA
@@ -206,7 +206,7 @@ class _RemoteTextRangeEndpoint(builder._RemoteBase):
 	def moveByUnit(
 			self,
 			unit: RemoteIntEnum[lowLevel.TextUnit] | lowLevel.TextUnit,
-			count: RemoteInt | int
+			count: RemoteInt | int,
 	) -> RemoteInt:
 		realCount = (count * -1) if self.isReversed else count
 		res = self.textRange.moveEndpointByUnit(self.endpoint, unit, realCount)
@@ -237,7 +237,7 @@ class RemoteTextRangeLogicalAdapter(builder._RemoteBase):
 			self,
 			rob: builder.RemoteOperationBuilder,
 			textRange: RemoteTextRange,
-			reverse: bool = False
+			reverse: bool = False,
 	):
 		super().__init__(rob)
 		self._textRange = textRange

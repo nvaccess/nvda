@@ -22,7 +22,7 @@ def __getattr__(attrName: str) -> Any:
 		log.warning(
 			"speechDictHandler.speechDictsPath is deprecated, "
 			"instead use NVDAState.WritePaths.speechDictsDir",
-			stack_info=True
+			stack_info=True,
 		)
 		return WritePaths.speechDictsDir
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")

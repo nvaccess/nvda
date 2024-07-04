@@ -41,7 +41,7 @@ def ShellExecute(
 		file: str,
 		parameters: Optional[str],
 		directory: Optional[str],
-		showCmd: int
+		showCmd: int,
 ) -> None:
 	if not file:
 		raise RuntimeError("file cannot be None")

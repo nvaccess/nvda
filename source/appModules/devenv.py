@@ -96,7 +96,7 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 		lineNumberRange.MoveEndpointByRange(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			lineNumberRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		)
 		return lineNumberRange.GetText(-1)
 
@@ -111,7 +111,7 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 			except ValueError:
 				log.debugWarning(
 					f"Couldn't parse {lineNumberStr} as integer to report a line number",
-					exc_info=True
+					exc_info=True,
 				)
 		return formatField
 
@@ -199,7 +199,7 @@ class VsTextEditPane(EditableText, Window):
 				return VsTextEditPaneTextInfo
 			else:
 				log.debugWarning(
-					f"Retrieved Visual Studio window object, but unknown type: {self._window.Type}"
+					f"Retrieved Visual Studio window object, but unknown type: {self._window.Type}",
 				)
 		except Exception:
 			log.debugWarning("Couldn't retrieve Visual Studio window object", exc_info=True)
@@ -214,7 +214,7 @@ class VsTextEditPane(EditableText, Window):
 				self._window.Left,
 				self._window.Top,
 				self._window.Width,
-				self._window.Height
+				self._window.Height,
 			)
 		return super().location
 
@@ -239,5 +239,5 @@ class ObjectsTreeItem(IAccessible):
 
 	def _get_positionInfo(self):
 		return {
-			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
+			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID)),
 		}

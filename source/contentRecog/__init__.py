@@ -113,7 +113,7 @@ class RecogImageInfo:
 			screenTop: int,
 			screenWidth: int,
 			screenHeight: int,
-			resizeFactor: Union[int, float]
+			resizeFactor: Union[int, float],
 	):
 		"""
 		@param screenLeft: The x screen coordinate of the upper-left corner of the image.
@@ -143,7 +143,7 @@ class RecogImageInfo:
 			screenTop: int,
 			screenWidth: int,
 			screenHeight: int,
-			recognizer: ContentRecognizer
+			recognizer: ContentRecognizer,
 	):
 		"""Convenience method to construct an instance using a L{ContentRecognizer}.
 		The resize factor is obtained by calling L{ContentRecognizer.getResizeFactor}.
@@ -242,13 +242,15 @@ class LinesWordsResult(RecognitionResult):
 					# Separate with a space.
 					self._textList.append(" ")
 					self.textLen += 1
-				self.words.append(LwrWord(
-					self.textLen,
-					self.imageInfo.convertXToScreen(word["x"]),
-					self.imageInfo.convertYToScreen(word["y"]),
-					self.imageInfo.convertWidthToScreen(word["width"]),
-					self.imageInfo.convertHeightToScreen(word["height"]))
-				)
+				self.words.append(
+        LwrWord(
+         self.textLen,
+         self.imageInfo.convertXToScreen(word["x"]),
+         self.imageInfo.convertYToScreen(word["y"]),
+         self.imageInfo.convertWidthToScreen(word["width"]),
+         self.imageInfo.convertHeightToScreen(word["height"]),
+        ),
+    )
 				text = word["text"]
 				self._textList.append(text)
 				self.textLen += len(text)

@@ -27,10 +27,12 @@ DLL_NAMES = [
 	"ISimpleDOM.dll",
 	"nvdaHelperRemote.dll",
 ]
-DLL_FILES = [f
-	for dll in DLL_NAMES
-	# We need both the 32 bit and 64 bit symbols.
-	for f in (os.path.join(NVDA_LIB, dll), os.path.join(NVDA_LIB64, dll))]
+DLL_FILES = [
+    f
+    for dll in DLL_NAMES
+    # We need both the 32 bit and 64 bit symbols.
+    for f in (os.path.join(NVDA_LIB, dll), os.path.join(NVDA_LIB64, dll))
+]
 
 class ProcError(Exception):
 	def __init__(self, returncode, stderr):
@@ -38,10 +40,12 @@ class ProcError(Exception):
 		self.stderr = stderr
 
 def check_output(command):
-	proc = subprocess.Popen(command,
-		stdout=subprocess.PIPE,
-		stderr=subprocess.PIPE,
-		text=True)
+	proc = subprocess.Popen(
+     command,
+     stdout=subprocess.PIPE,
+     stderr=subprocess.PIPE,
+     text=True,
+ )
 	stdout, stderr = proc.communicate()
 	if proc.returncode != 0:
 		raise ProcError(proc.returncode, stderr)
@@ -91,7 +95,7 @@ def upload():
 				URL,
 				files={'symbols.zip': open(ZIP_FILE, 'rb')},
 				headers={'Auth-Token': os.getenv('mozillaSymsAuthToken')},
-				allow_redirects=False
+				allow_redirects=False,
 			)
 			break  # success
 		except Exception as e:

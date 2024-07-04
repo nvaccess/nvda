@@ -55,7 +55,7 @@ class CustomPropertyInfo:
 		return NVDAHelper.localLib.registerUIAProperty(
 			byref(self.guid),
 			self.programmaticName,
-			self.uiaType
+			self.uiaType,
 		)
 
 	@property

@@ -67,7 +67,7 @@ class ControlField(Field):
 			ancestors,
 			formatConfig,
 			reason=OutputReason.CARET,
-			extraDetail=False
+			extraDetail=False,
 	):
 		role = self.get("role", controlTypes.Role.UNKNOWN)
 		states = self.get("states", set())
@@ -152,7 +152,7 @@ class ControlField(Field):
 				controlTypes.Role.FOOTNOTE,
 				controlTypes.Role.ENDNOTE,
 				controlTypes.Role.EMBEDDEDOBJECT,
-				controlTypes.Role.MATH
+				controlTypes.Role.MATH,
 			)
 			or (
 				extraDetail and role == controlTypes.Role.LISTITEM
@@ -180,10 +180,12 @@ class ControlField(Field):
 				controlTypes.Role.ARTICLE,
 				controlTypes.Role.MARKED_CONTENT,
 			)
-			or (role == controlTypes.Role.EDITABLETEXT and (
-				controlTypes.State.READONLY not in states
-				or controlTypes.State.FOCUSABLE in states
-			) and controlTypes.State.MULTILINE in states)
+			or (
+       role == controlTypes.Role.EDITABLETEXT and (
+        controlTypes.State.READONLY not in states
+        or controlTypes.State.FOCUSABLE in states
+       ) and controlTypes.State.MULTILINE in states
+   )
 			or (role == controlTypes.Role.LIST and controlTypes.State.READONLY in states)
 			or (role == controlTypes.Role.LANDMARK or landmark)
 			or (controlTypes.State.FOCUSABLE in states and controlTypes.State.EDITABLE in states)
@@ -592,12 +594,12 @@ class TextInfo(baseObject.AutoPropertyObject):
 			fieldType: str,
 			formatConfig: Optional[Dict[str, bool]] = None,
 			extraDetail: bool = False,
-			reason: Optional[OutputReason] = None
+			reason: Optional[OutputReason] = None,
 	) -> SpeechSequence:
 		# Import late to avoid circular import.
 		import speech
 		sequence = speech.getControlFieldSpeech(
-			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason
+			attrs, ancestorAttrs, fieldType, formatConfig, extraDetail, reason,
 		)
 		_logBadSequenceTypes(sequence)
 		return sequence
@@ -631,7 +633,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			reason=reason,
 			unit=unit,
 			extraDetail=extraDetail,
-			initialFormat=initialFormat
+			initialFormat=initialFormat,
 		)
 
 	def activate(self):
@@ -911,7 +913,7 @@ class TextInfoEndpoint:
 	def __init__(
 			self,
 			textInfo: TextInfo,
-			isStart: bool
+			isStart: bool,
 	):
 		"""
 		@param textInfo: the TextInfo instance you wish to represent an endpoint of.

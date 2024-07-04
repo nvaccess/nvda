@@ -34,7 +34,7 @@ class WinwordWordDocument(WordDocument):
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
+			lambda: self.WinwordDocumentObject.TrackRevisions,
 		)
 		if val:
 			# Translators: a message when toggling change tracking in Microsoft word

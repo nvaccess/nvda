@@ -89,26 +89,26 @@ class UIAWebTextInfo(UIATextInfo):
 		element = self.UIAElementAtStart
 		condition = createUIAMultiPropertyCondition(
 			{
-				UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent
+				UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent,
 			},
 			{
 				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_ListControlTypeId,
 				UIAHandler.UIA_IsKeyboardFocusablePropertyId: True,
-			}
+			},
 		)
 		# A part from the condition given, we must always match on the root of the document
 		# so we know when to stop walking
 		runtimeID = VARIANT()
 		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
 			UIAHandler.UIA_RuntimeIdPropertyId,
-			byref(runtimeID)
+			byref(runtimeID),
 		)
 		condition = UIAHandler.handler.clientObject.createOrCondition(
 			UIAHandler.handler.clientObject.createPropertyCondition(
 				UIAHandler.UIA_RuntimeIdPropertyId,
-				runtimeID
+				runtimeID,
 			),
-			condition
+			condition,
 		)
 		walker = UIAHandler.handler.clientObject.createTreeWalker(condition)
 		cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
@@ -156,14 +156,14 @@ class UIAWebTextInfo(UIATextInfo):
 			textRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
 				textRange,
-				UIAHandler.TextPatternRangeEndpoint_End
+				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
 			textRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				textRange,
-				UIAHandler.TextPatternRangeEndpoint_Start
+				UIAHandler.TextPatternRangeEndpoint_Start,
 			)
 		self._rangeObj = textRange
 
@@ -200,7 +200,7 @@ class UIAWebTextInfo(UIATextInfo):
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
-			endOfNode=endOfNode
+			endOfNode=endOfNode,
 		)
 		field['embedded'] = isEmbedded
 		role = field.get('role')
@@ -216,7 +216,7 @@ class UIAWebTextInfo(UIATextInfo):
 		):
 			field['isBlock'] = True
 		ariaProperties = splitUIAElementAttribs(
-			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId),
 		)
 		# ARIA roledescription and landmarks
 		field['roleText'] = ariaProperties.get('roledescription')
@@ -269,7 +269,7 @@ class UIAWebTextInfo(UIATextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None
+		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
@@ -398,7 +398,7 @@ class UIAWeb(UIA):
 				return controlTypes.IsCurrent(valueOfAriaCurrent)
 			except ValueError:
 				log.debugWarning(
-					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}"
+					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}",
 				)
 		return controlTypes.IsCurrent.NO
 
@@ -473,11 +473,11 @@ def HeadingControlQuicknavIterator(itemType, document, position, direction="next
 	levels = list(range(1, 7))
 	condition = createUIAMultiPropertyCondition({
 		UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_TextControlTypeId,
-		UIAHandler.UIA_LevelPropertyId: levels
+		UIAHandler.UIA_LevelPropertyId: levels,
 	})
 	levelString = itemType[7:]
 	itemIter = UIAControlQuicknavIterator(
-		itemType, document, position, condition, direction=direction, itemClass=HeadingControlQuickNavItem
+		itemType, document, position, condition, direction=direction, itemClass=HeadingControlQuickNavItem,
 	)
 	for item in itemIter:
 		# Verify this is the correct heading level via text attributes

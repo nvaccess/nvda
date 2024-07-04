@@ -140,11 +140,11 @@ class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
 		Unicode only locale names"""
 		self.assertIn(
 			languageHandler.ansiCodePageFromNVDALocale("hi"),
-			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES
+			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES,
 		)
 		self.assertIn(
 			languageHandler.ansiCodePageFromNVDALocale("Ne"),
-			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES
+			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES,
 		)
 
 
@@ -154,7 +154,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 	SUPPORTED_LOCALES = [
 		("en", 'English_United States.1252'),
 		("fa-IR", "Persian_Iran.1256"),
-		("pl_PL", "Polish_Poland.1250")
+		("pl_PL", "Polish_Poland.1250"),
 	]
 
 	def setUp(self):
@@ -250,7 +250,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 		ctypes.windll.kernel32.SetThreadLocale(0)
 		defaultThreadLocale = ctypes.windll.kernel32.GetThreadLocale()
 		self._defaultThreadLocaleName = languageHandler.windowsLCIDToLocaleName(
-			defaultThreadLocale
+			defaultThreadLocale,
 		)
 
 		locale.setlocale(locale.LC_ALL, "")
@@ -311,7 +311,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 					self.assertIn(
 						locale.setlocale(locale.LC_ALL),
 						possibleVariants,
-						f"full values: {localeName} {python_locale}"
+						f"full values: {localeName} {python_locale}",
 					)
 
 	def test_WindowsLanguages_NoErrorsThrown(self):

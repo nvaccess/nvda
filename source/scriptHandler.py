@@ -32,9 +32,9 @@ _ScriptFilterT = Callable[
 	[
 		Optional[_ScriptFunctionT],
 		"NVDAObjects.NVDAObject",
-		"inputCore.InputGesture"
+		"inputCore.InputGesture",
 	],
-	Optional[_ScriptFunctionT]
+	Optional[_ScriptFunctionT],
 ]
 
 _numScriptsQueued=0 #Number of scripts that are queued to be executed
@@ -166,7 +166,7 @@ def _getFocusAncestorScript(
 
 
 def _yieldObjectsForFindScript(
-		gesture: "inputCore.InputGesture"
+		gesture: "inputCore.InputGesture",
 ) -> Generator[Tuple["NVDAObjects.NVDAObject", Optional[_ScriptFilterT]], None, None]:
 	"""
 	This generator is used to determine which NVDAObject to perform an input gesture on,
@@ -254,7 +254,7 @@ def queueScript(script,gesture):
 		_queueScriptCallback,
 		script,
 		gesture,
-		_immediate=getattr(gesture, "_immediate", True)
+		_immediate=getattr(gesture, "_immediate", True),
 	)
 
 def willSayAllResume(gesture):
@@ -372,13 +372,13 @@ def script(
 		if not isinstance(decoratedScript, types.FunctionType):
 			log.warning(
 				"Using the script decorator is unsupported for %r" % decoratedScript,
-				stack_info=True
+				stack_info=True,
 			)
 			return decoratedScript
 		if not decoratedScript.__name__.startswith("script_"):
 			log.warning(
 				"Can't apply  script decorator to %r which name does not start with 'script_'" % decoratedScript.__name__,
-				stack_info=True
+				stack_info=True,
 			)
 			return decoratedScript
 		decoratedScript.__doc__ = description

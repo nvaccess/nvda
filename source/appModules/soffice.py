@@ -5,7 +5,7 @@
 
 from typing import (
 	Optional,
-	Union
+	Union,
 )
 
 from comtypes import COMError
@@ -41,7 +41,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 	def _getFormatFieldFromLegacyAttributesString(  # noqa: C901
 			self,
 			attribsString: str,
-			offset: int
+			offset: int,
 	) -> textInfos.FormatField:
 
 		"""Get format field with information retrieved from a text
@@ -124,7 +124,7 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			self,
 			offset: int,
 			formatConfig: Optional[dict],
-			calculateOffsets: bool
+			calculateOffsets: bool,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		"""Get format field and offset information from either
 		attributes according to the IAccessible2 specification
@@ -155,13 +155,13 @@ class SymphonyTextInfo(IA2TextTextInfo):
 		if attribsString and attribsString.startswith('Version:1;'):
 			formatField = self._getFormatFieldFromLegacyAttributesString(
 				attribsString,
-				offset
+				offset,
 			)
 		else:
 			formatField, (startOffset, endOffset) = super()._getFormatFieldAndOffsets(
 				offset,
 				formatConfig,
-				calculateOffsets
+				calculateOffsets,
 			)
 
 		return formatField, (startOffset, endOffset)
@@ -170,19 +170,19 @@ class SymphonyTextInfo(IA2TextTextInfo):
 			self,
 			offset: int,
 			formatConfig: Optional[dict],
-			calculateOffsets: bool = True
+			calculateOffsets: bool = True,
 	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		formatField, (startOffset, endOffset) = self._getFormatFieldAndOffsetsFromAttributes(
 			offset,
 			formatConfig,
-			calculateOffsets
+			calculateOffsets,
 		)
 		obj = self.obj
 
 		# optimisation: Assume a hyperlink occupies a full attribute run.
 		try:
 			if obj.IAccessibleTextObject.QueryInterface(
-				IA2.IAccessibleHypertext
+				IA2.IAccessibleHypertext,
 			).hyperlinkIndex(offset) != -1:
 				formatField["link"] = True
 		except COMError:
@@ -291,7 +291,7 @@ class SymphonyIATableCell(SymphonyTableCell):
 				self,
 				states=True,
 				cellCoordsText=True,
-				reason=controlTypes.OutputReason.CHANGE
+				reason=controlTypes.OutputReason.CHANGE,
 			)
 		braille.handler.handleUpdate(self)
 		vision.handler.handleUpdate(self, property="states")
@@ -327,12 +327,12 @@ class SymphonyIATableCell(SymphonyTableCell):
 				firstAddress=firstAddress,
 				firstValue=firstValue,
 				lastAddress=lastAddress,
-				lastValue=lastValue
+				lastValue=lastValue,
 			)
 		elif self.rowSpan > 1 or self.columnSpan > 1:
 			lastSelected = (
 				(self.rowNumber - 1) + (self.rowSpan - 1),
-				(self.columnNumber - 1) + (self.columnSpan - 1)
+				(self.columnNumber - 1) + (self.columnSpan - 1),
 			)
 			lastCellUnknown = self.table.IAccessibleTable2Object.cellAt(*lastSelected)
 			lastAccessible = lastCellUnknown.QueryInterface(IA2.IAccessible2)
@@ -340,7 +340,7 @@ class SymphonyIATableCell(SymphonyTableCell):
 			# Translators: LibreOffice, report range of cell coordinates
 			return _("{firstAddress} through {lastAddress}").format(
 				firstAddress=self._get_name(),
-				lastAddress=lastAddress
+				lastAddress=lastAddress,
 			)
 		return super().cellCoordsText
 
@@ -427,7 +427,7 @@ class SymphonyDocumentTextInfo(TreeCompoundTextInfo):
 			verticalDistanceText = getDistanceTextForTwips(verticalPos)
 			return _(
 				# Translators: LibreOffice, report cursor position in the current page
-				"cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page"
+				"cursor positioned {horizontalDistance} from left edge of page, {verticalDistance} from top edge of page",
 			).format(horizontalDistance=horizontalDistanceText, verticalDistance=verticalDistanceText)
 		except (AttributeError, KeyError):
 			return super(SymphonyDocumentTextInfo, self)._get_locationText()
@@ -495,7 +495,7 @@ class SymphonyDocument(CompoundDocument):
 			"kb:control+r",
 			# justified
 			"kb:control+j",
-		]
+		],
 	)
 	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
 		"""Reset time and enable announcement of toggled toolbar buttons.
@@ -548,7 +548,7 @@ class AppModule(appModuleHandler.AppModule):
 			controlTypes.Role.FRAME,
 			controlTypes.Role.OPTIONPANE,
 			controlTypes.Role.ROOTPANE,
-			controlTypes.Role.WINDOW
+			controlTypes.Role.WINDOW,
 		}:
 			return None
 		for child in obj.children:

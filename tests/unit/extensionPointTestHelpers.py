@@ -23,7 +23,7 @@ def actionTester(
 		testCase: unittest.TestCase,
 		action: Action,
 		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+		**expectedKwargs,
 ):
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
@@ -56,7 +56,7 @@ def deciderTester(
 		decider: Decider,
 		expectedDecision: bool,
 		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+		**expectedKwargs,
 ):
 	"""A context manager that allows testing a Decider.
 	@param testCase: The test case to apply the assertion on.
@@ -93,7 +93,7 @@ def filterTester(
 		expectedInput: FilterValueT,
 		expectedOutput: FilterValueT,
 		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+		**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
@@ -132,7 +132,7 @@ def chainTester(
 		chain: Chain,
 		expectedOutput: Iterable[ChainValueTypeT],
 		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+		**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.

@@ -56,7 +56,7 @@ class AdobeAcrobat_TextInfo(VirtualBufferTextInfo):
 			and states.issuperset({
 				controlTypes.State.READONLY,
 				controlTypes.State.FOCUSABLE,
-				controlTypes.State.LINKED
+				controlTypes.State.LINKED,
 			})
 		):
 			# HACK: Acrobat sets focus states on text nodes beneath links,

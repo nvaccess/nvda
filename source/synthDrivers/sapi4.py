@@ -32,7 +32,7 @@ from ._sapi4 import (
 	TTSFEATURE_SPEED,
 	TTSFEATURE_VOLUME,
 	TTSMODEINFO,
-	VOICECHARSET
+	VOICECHARSET,
 )
 import config
 import nvwave
@@ -46,7 +46,7 @@ from speech.commands import (
 	PitchCommand,
 	RateCommand,
 	VolumeCommand,
-	BaseProsodyCommand
+	BaseProsodyCommand,
 )
 from speech.types import SpeechSequence
 
@@ -194,7 +194,7 @@ class SynthDriver(SynthDriver):
 			flags,
 			TextSDATA(text),
 			self._bufSinkPtr,
-			ITTSBufNotifySink._iid_
+			ITTSBufNotifySink._iid_,
 		)
 
 	def cancel(self):

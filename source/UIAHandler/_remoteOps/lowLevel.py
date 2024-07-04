@@ -10,7 +10,7 @@ from ctypes import (
 	c_void_p,
 	c_long,
 	c_ulong,
-	c_bool
+	c_bool,
 )
 from comtypes.automation import VARIANT
 import os
@@ -361,16 +361,16 @@ class TextPatternRangeEndpoint(enum.IntEnum):
 
 PropertyId = enum.IntEnum(
 	"PropertyId",
-	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")}
+	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")},
 )
 
 
 AttributeId = enum.IntEnum(
 	"AttributeId",
-	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")}
+	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")},
 )
 
 StyleId = enum.IntEnum(
 	"StyleId",
-	{k[8:]: v for k, v in vars(UIA).items() if k.startswith("StyleId")}
+	{k[8:]: v for k, v in vars(UIA).items() if k.startswith("StyleId")},
 )

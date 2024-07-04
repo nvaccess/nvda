@@ -59,7 +59,7 @@ class BoolFlag(DisplayStringEnum):
 		if self == BoolFlag.DEFAULT:
 			raise ValueError(
 				"Only ENABLED or DISABLED are valid bool values"
-				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy"
+				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy",
 			)
 		return self == BoolFlag.ENABLED
 
@@ -73,7 +73,7 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 			# Translators: Label for a paragraph style in NVDA settings.
 			self.SINGLE_LINE_BREAK: _("Single line break"),
 			# Translators: Label for a paragraph style in NVDA settings.
-			self.MULTI_LINE_BREAK: _("Multi line break")
+			self.MULTI_LINE_BREAK: _("Multi line break"),
 		}
 
 	DEFAULT = enum.auto()
@@ -91,7 +91,7 @@ class ReviewRoutingMovesSystemCaretFlag(DisplayStringEnum):
 			# Translators: Label for setting to move the system caret when routing review cursor with braille.
 			self.ONLY_WHEN_AUTO_TETHERED: _("Only when tethered automatically"),
 			# Translators: Label for setting to move the system caret when routing review cursor with braille.
-			self.ALWAYS: _("Always")
+			self.ALWAYS: _("Always"),
 		}
 
 	DEFAULT = enum.auto()

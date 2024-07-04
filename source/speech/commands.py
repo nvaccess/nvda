@@ -33,7 +33,7 @@ class _CancellableSpeechCommand(SpeechCommand):
 
 	def __init__(
 			self,
-			reportDevInfo=False
+			reportDevInfo=False,
 	):
 		"""
 		@param reportDevInfo: If true, developer info is reported for repr implementation.
@@ -304,7 +304,8 @@ class BaseProsodyCommand(SynthParamCommand):
 		else:
 			param = ""
 		return "{type}({param})".format(
-			type=type(self).__name__, param=param)
+			type=type(self).__name__, param=param,
+  )
 
 	def __eq__(self, __o: object) -> bool:
 		if __o is self:
@@ -402,7 +403,7 @@ class CallbackCommand(BaseCallbackCommand):
 
 	def __repr__(self):
 		return "CallbackCommand(name={name})".format(
-			name=self._name
+			name=self._name,
 		)
 
 class BeepCommand(BaseCallbackCommand):
@@ -422,12 +423,13 @@ class BeepCommand(BaseCallbackCommand):
 			self.length,
 			left=self.left,
 			right=self.right,
-			isSpeechBeepCommand=True
+			isSpeechBeepCommand=True,
 		)
 
 	def __repr__(self):
 		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
-			hz=self.hz, length=self.length, left=self.left, right=self.right)
+			hz=self.hz, length=self.length, left=self.left, right=self.right,
+  )
 
 class WaveFileCommand(BaseCallbackCommand):
 	"""Play a wave file.

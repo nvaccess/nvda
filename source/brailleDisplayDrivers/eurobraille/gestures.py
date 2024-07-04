@@ -113,8 +113,8 @@ GestureMapEntries = {
 		"kb:f11": ("br(eurobraille):dot1+dot3+backspace",),
 		"kb:f12": ("br(eurobraille):dot1+dot2+dot3+backspace",),
 		"kb:windows": ("br(eurobraille):dot1+dot2+dot4+dot5+dot6+space",),
-		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
-		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
+		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace"),
+		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace"),
 		"braille_toggleShift": (
 			"br(eurobraille):dot1+dot7+space",
 			"br(eurobraille):dot4+dot7+space",
@@ -130,7 +130,7 @@ GestureMapEntries = {
 		"braille_toggleAlt": (
 			"br(eurobraille):dot1+dot8+space",
 			"br(eurobraille):dot4+dot8+space",
-			"br(eurobraille):l6"
+			"br(eurobraille):l6",
 		),
 		"kb:alt": ("br(eurobraille):dot8+space"),
 		"braille_toggleNVDAKey": ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),

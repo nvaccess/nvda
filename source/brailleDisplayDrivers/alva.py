@@ -82,24 +82,30 @@ ALVA_SPECIAL_SETTINGS_CHANGED = 0x01
 
 DOUBLED_KEY_COUNTS = {
 	ALVA_THUMB_GROUP: 5,
-	ALVA_SP_GROUP: 9
+	ALVA_SP_GROUP: 9,
 }
 
 ALVA_KEYS = {
 	# Thumb keys (FRONT_GROUP)
-	ALVA_THUMB_GROUP: ("t1", "t2", "t3", "t4", "t5",
-		# Only for BC680
-		"t1", "t2", "t3", "t4", "t5"),
+	ALVA_THUMB_GROUP: (
+     "t1", "t2", "t3", "t4", "t5",
+     # Only for BC680
+     "t1", "t2", "t3", "t4", "t5",
+ ),
 	# eTouch keys (ETOUCH_GROUP)
 	ALVA_ETOUCH_GROUP: ("etouch1", "etouch2", "etouch3", "etouch4"),
 	# Smartpad keys (PDA_GROUP)
-	ALVA_SP_GROUP: ("sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
-		# Only for BC680
-		"sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4"),
+	ALVA_SP_GROUP: (
+     "sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
+     # Only for BC680
+     "sp1", "sp2", "spLeft", "spEnter", "spUp", "spDown", "spRight", "sp3", "sp4",
+ ),
 	# Feature pack keys.
 	# Numbers start at 0x01, therefore the first string is an empty placeholder.
-	ALVA_FEATURE_PACK_GROUP: ("", "dot1", "dot2", "dot3", "dot4", "dot5", "dot6", "dot7", "dot8",
-		"control", "windows", "space", "alt", "enter"),
+	ALVA_FEATURE_PACK_GROUP: (
+     "", "dot1", "dot2", "dot3", "dot4", "dot5", "dot6", "dot7", "dot8",
+     "control", "windows", "space", "alt", "enter",
+ ),
 }
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
@@ -116,11 +122,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_0798&PID_0640",  # BC640
-			"VID_0798&PID_0680",  # BC680
-			"VID_0798&PID_0699",  # USB protocol converter
-		})
+		driverRegistrar.addUsbDevices(
+      bdDetect.DeviceType.HID, {
+       "VID_0798&PID_0640",  # BC640
+       "VID_0798&PID_0680",  # BC680
+       "VID_0798&PID_0699",  # USB protocol converter
+      },
+  )
 
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("ALVA "))
 
@@ -192,8 +200,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			self._updateSettings()
 			if self.numCells:
 				# A display responded.
-				log.info("Found display with {cells} cells connected via {type} ({port})".format(
-					cells=self.numCells, type=portType, port=port))
+				log.info(
+        "Found display with {cells} cells connected via {type} ({port})".format(
+        cells=self.numCells, type=portType, port=port,
+        ),
+    )
 				break
 			self._dev.close()
 
@@ -247,7 +258,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if reportID == ALVA_KEY_REPORT:
 			self._handleInput(
 				data[ALVA_KEY_REPORT_KEY_GROUP_POS],
-				data[ALVA_KEY_REPORT_KEY_POS]
+				data[ALVA_KEY_REPORT_KEY_POS],
 			)
 
 	def _handleInput(self, group: int, number: int) -> None:
@@ -283,7 +294,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				ALVA_BRAILLE_OUTPUT_REPORT,
 				intToByte(offset),
 				intToByte(len(cellsToWrite)),
-				cellsToWrite
+				cellsToWrite,
 			])
 			self._dev.write(data)
 
@@ -293,7 +304,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		value = b"".join([
 			b"\x00",
 			intToByte(len(cellBytes)),
-			cellBytes
+			cellBytes,
 		])
 		self._ser6SendMessage(b"B", value)
 
@@ -320,7 +331,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				day=time[3],
 				hour=time[4],
 				minute=time[5],
-				second=time[6]
+				second=time[6],
 			)
 		except ValueError:
 			log.debugWarning("Invalid time/date of ALVA display: %r" % time)
@@ -340,7 +351,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			dt.day,
 			dt.hour,
 			dt.minute,
-			dt.second
+			dt.second,
 		]
 		if self.isHid:
 			self._dev.setFeature(ALVA_RTC_REPORT + bytes(timeList))
@@ -355,7 +366,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		if self.isHid:
 			# Make sure the device settings are up to date.
 			keySettings: int = self._dev.getFeature(
-				ALVA_KEY_SETTINGS_REPORT
+				ALVA_KEY_SETTINGS_REPORT,
 			)[ALVA_KEY_SETTINGS_POS]
 			# Try to update the state
 			if rawState:
@@ -368,14 +379,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			# Check whether the state has been changed successfully.
 			# If not, this device does not support this feature.
 			keySettings: int = self._dev.getFeature(
-				ALVA_KEY_SETTINGS_REPORT
+				ALVA_KEY_SETTINGS_REPORT,
 			)[ALVA_KEY_SETTINGS_POS]
 			# Save the new state
 			self._rawKeyboardInput = bool(keySettings & ALVA_KEY_RAW_INPUT_MASK)
 		else:
 			self._ser6SendMessage(
 				cmd=b"r",
-				value=boolToByte(rawState)
+				value=boolToByte(rawState),
 			)
 			self._ser6SendMessage(b"r", b"?")
 			for i in range(3):
@@ -420,26 +431,26 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			"title": ("br(alva):etouch2",),
 			"reportStatusLine": ("br(alva):etouch4",),
 			"kb:shift+tab": ("br(alva):sp1",),
-			"kb:alt": ("br(alva):sp2","br(alva):alt",),
+			"kb:alt": ("br(alva):sp2","br(alva):alt"),
 			"kb:escape": ("br(alva):sp3",),
 			"kb:tab": ("br(alva):sp4",),
 			"kb:upArrow": ("br(alva):spUp",),
 			"kb:downArrow": ("br(alva):spDown",),
 			"kb:leftArrow": ("br(alva):spLeft",),
 			"kb:rightArrow": ("br(alva):spRight",),
-			"kb:enter": ("br(alva):spEnter","br(alva):enter",),
+			"kb:enter": ("br(alva):spEnter","br(alva):enter"),
 			"dateTime": ("br(alva):sp2+sp3",),
 			"showGui": ("br(alva):sp1+sp3",),
 			"kb:windows+d": ("br(alva):sp1+sp4",),
 			"kb:windows+b": ("br(alva):sp3+sp4",),
-			"kb:windows": ("br(alva):sp1+sp2","br(alva):windows",),
+			"kb:windows": ("br(alva):sp1+sp2","br(alva):windows"),
 			"kb:alt+tab": ("br(alva):sp2+sp4",),
 			"kb:control+home": ("br(alva):t3+spUp",),
 			"kb:control+end": ("br(alva):t3+spDown",),
 			"kb:home": ("br(alva):t3+spLeft",),
 			"kb:end": ("br(alva):t3+spRight",),
 			"kb:control": ("br(alva):control",),
-		}
+		},
 	})
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):

@@ -56,7 +56,7 @@ KEYS_STICK: Dict[int, str] = OrderedDict({
 	0x2000000: "joystick2Down",
 	0x4000000: "joystick2Right",
 	0x8000000: "joystick2Left",
-	0x10000000: "joystick2Center"
+	0x10000000: "joystick2Center",
 })
 KEYS_ESYS: Dict[int, str] = OrderedDict({
 	0x01: "switch1Right",
@@ -124,5 +124,5 @@ DEVICE_TYPES: Dict[int, str] = {
 	0x12: "bnote",
 	0x13: "bnote 2",
 	0x14: "bbook",
-	0x15: "bbook 2"
+	0x15: "bbook 2",
 }

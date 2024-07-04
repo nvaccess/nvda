@@ -25,7 +25,7 @@ class NVDAObjectWithGesturesDictionary(PlaceholderNVDAObject):
 		return
 
 	__gestures = {
-		"kb:b": "bravo"
+		"kb:b": "bravo",
 	}
 
 class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
@@ -47,7 +47,7 @@ class NVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAObject):
 class SubclassedNVDAObjectWithDecoratedScriptAndGesturesDictionary(
 	NVDAObjectWithDecoratedScript,
 	NVDAObjectWithGesturesDictionary,
-	NVDAObjectWithDecoratedScriptAndGesturesDictionary
+	NVDAObjectWithDecoratedScriptAndGesturesDictionary,
 ):
 	"""An object with decorated scripts and L{__gestures} dictionaries, based on subclassing."""
 
@@ -70,7 +70,7 @@ class DynamicNVDAObjectWithDecoratedScriptAndGesturesDictionary(PlaceholderNVDAO
 		clsList.extend([
 			NVDAObjectWithDecoratedScript,
 			NVDAObjectWithGesturesDictionary,
-			NVDAObjectWithDecoratedScriptAndGesturesDictionary
+			NVDAObjectWithDecoratedScriptAndGesturesDictionary,
 		])
 
 	@script(gestures=["kb:g"])
@@ -140,7 +140,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 			TypeError,
 			"^Can't instantiate abstract class AutoPropertyObjectWithAbstractProperty "
 			"with abstract method x",
-			AutoPropertyObjectWithAbstractProperty
+			AutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_subclassedAbstractProperty(self):
@@ -148,7 +148,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 			TypeError,
 			"^Can't instantiate abstract class SubclassedAutoPropertyObjectWithAbstractProperty "
 			"with abstract method x",
-			SubclassedAutoPropertyObjectWithAbstractProperty
+			SubclassedAutoPropertyObjectWithAbstractProperty,
 		)
 
 	def test_implementedProperty(self):

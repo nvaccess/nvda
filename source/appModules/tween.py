@@ -46,7 +46,7 @@ class TweetListItem(ListItem):
 			left, top, width, height = self._getColumnLocationRaw(index)
 			content = displayModel.DisplayModelTextInfo(
 				self,
-				locationHelper.RectLTRB(left, top, left + width, top + height)
+				locationHelper.RectLTRB(left, top, left + width, top + height),
 			).text
 			if content:
 				return content

@@ -143,7 +143,7 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 def md2html_actionFunc(
 		target: list[SCons.Node.FS.File],
 		source: list[SCons.Node.FS.File],
-		env: SCons.Environment.Environment
+		env: SCons.Environment.Environment,
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
 	isUserGuide = target[0].path.endswith("userGuide.html")
@@ -178,7 +178,7 @@ def md2html_actionFunc(
 			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
 			title=title,
 			extraStylesheet=extraStylesheet,
-		)
+		),
 	)
 
 	htmlOutput = _generateSanitizedHTML(mdStr, isKeyCommands)
@@ -216,5 +216,5 @@ def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["md2html"] = env.Builder(
 		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to {t[0].path}"),
 		suffix=".html",
-		src_suffix=".md"
+		src_suffix=".md",
 	)

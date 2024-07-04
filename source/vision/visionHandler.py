@@ -27,13 +27,13 @@ from . import exceptions
 
 def _getProviderClass(
 		moduleName: str,
-		caseSensitive: bool = True
+		caseSensitive: bool = True,
 ) -> Type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return importlib.import_module(
 			"visionEnhancementProviders.%s" % moduleName,
-			package="visionEnhancementProviders"
+			package="visionEnhancementProviders",
 		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
@@ -43,7 +43,7 @@ def _getProviderClass(
 				continue
 			return importlib.import_module(
 				"visionEnhancementProviders.%s" % name,
-				package="visionEnhancementProviders"
+				package="visionEnhancementProviders",
 			).VisionEnhancementProvider
 		else:
 			raise initialException
@@ -63,12 +63,12 @@ def _getProvidersFromFileSystem():
 				providerId=providerId,
 				moduleName=moduleName,
 				displayName=displayName,
-				providerClass=provider
+				providerClass=provider,
 			)
 		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
 			log.error(
 				f"Error while importing vision enhancement provider module {moduleName}",
-				exc_info=True
+				exc_info=True,
 			)
 			continue
 
@@ -104,7 +104,7 @@ class VisionHandler(AutoPropertyObject):
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
 		return [
 			NVDAHighlighterSettings.getId(),
-			ScreenCurtainSettings.getId()
+			ScreenCurtainSettings.getId(),
 		]
 
 	def _updateAllProvidersList(self):
@@ -112,7 +112,7 @@ class VisionHandler(AutoPropertyObject):
 		# id is used because it will not vary by locale
 		allProviders = sorted(
 			_getProvidersFromFileSystem(),
-			key=lambda info: info.providerId.lower()
+			key=lambda info: info.providerId.lower(),
 		)
 		# Built in providers should come first
 		# Python list.sort is stable sort again by 'built-in'
@@ -120,7 +120,7 @@ class VisionHandler(AutoPropertyObject):
 		allProviders = sorted(
 			allProviders,
 			key=lambda info: info.providerId in builtInProviderIds,
-			reverse=True  # Because False comes before True, we want built-ins first.
+			reverse=True,  # Because False comes before True, we want built-ins first.
 		)
 		self._allProviders = list(allProviders)
 
@@ -148,7 +148,7 @@ class VisionHandler(AutoPropertyObject):
 					providerList.append(provider)
 				else:
 					log.debugWarning(
-						f"Excluding Vision enhancement provider module {provider.moduleName} which is unable to start"
+						f"Excluding Vision enhancement provider module {provider.moduleName} which is unable to start",
 					)
 		return providerList
 
@@ -176,14 +176,14 @@ class VisionHandler(AutoPropertyObject):
 
 	def getProviderInstance(
 			self,
-			provider: providerInfo.ProviderInfo
+			provider: providerInfo.ProviderInfo,
 	) -> Optional[VisionEnhancementProvider]:
 		return self._providers.get(provider.providerId)
 
 	def terminateProvider(
 			self,
 			provider: providerInfo.ProviderInfo,
-			saveSettings: bool = True
+			saveSettings: bool = True,
 	) -> None:
 		"""Terminates a currently active provider.
 		When termination fails, an exception is raised.
@@ -197,7 +197,7 @@ class VisionHandler(AutoPropertyObject):
 		providerInstance = self._providers.pop(providerId, None)
 		if not providerInstance:
 			raise exceptions.ProviderTerminateException(
-				f"Tried to terminate uninitialized provider {providerId!r}"
+				f"Tried to terminate uninitialized provider {providerId!r}",
 			)
 		exception = None
 		if saveSettings:
@@ -227,7 +227,7 @@ class VisionHandler(AutoPropertyObject):
 	def initializeProvider(
 			self,
 			provider: providerInfo.ProviderInfo,
-			temporary: bool = False
+			temporary: bool = False,
 	) -> None:
 		"""
 		Enables and activates the supplied provider.
@@ -249,7 +249,7 @@ class VisionHandler(AutoPropertyObject):
 			providerCls = provider.providerClass
 			if not providerCls.canStart():
 				raise exceptions.ProviderInitException(
-					f"Trying to initialize provider {providerId} which reported being unable to start"
+					f"Trying to initialize provider {providerId} which reported being unable to start",
 				)
 			try:
 				# Initialize the provider.
@@ -270,7 +270,8 @@ class VisionHandler(AutoPropertyObject):
 					providerInst.terminate()
 				except Exception:
 					log.error(
-						f"Error terminating provider {providerId} after registering to extension points", exc_info=True)
+						f"Error terminating provider {providerId} after registering to extension points", exc_info=True,
+     )
 				raise registerEventExtensionPointsException
 		if not temporary:
 			providerInst.enableInConfig(True)
@@ -339,7 +340,7 @@ class VisionHandler(AutoPropertyObject):
 			except Exception:
 				log.error(
 					f"Could not terminate the {providerId} vision enhancement provider",
-					exc_info=True
+					exc_info=True,
 				)
 		for providerId in providersToInitialize:
 			try:
@@ -348,7 +349,7 @@ class VisionHandler(AutoPropertyObject):
 			except Exception:
 				log.error(
 					f"Could not initialize the {providerId} vision enhancement provider",
-					exc_info=True
+					exc_info=True,
 				)
 
 	def initialFocus(self) -> None:

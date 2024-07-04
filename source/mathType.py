@@ -37,5 +37,5 @@ def getMathMl(oleFormat, runForConversion=True):
 		# 1 is OLECLOSE_NOSAVE
 		lib.MTCloseOleObject(1, mt)
 	return mathPres.stripExtraneousXml(
-		mathMl.value.decode('utf8')
+		mathMl.value.decode('utf8'),
 	)

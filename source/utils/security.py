@@ -33,7 +33,7 @@ def __getattr__(attrName: str) -> Any:
 		if attrName == "isObjectAboveLockScreen":
 			log.warning(
 				"isObjectAboveLockScreen(obj) is deprecated. "
-				"Instead use obj.isBelowLockScreen. "
+				"Instead use obj.isBelowLockScreen. ",
 			)
 			return _isObjectAboveLockScreen
 		if attrName == "postSessionLockStateChanged":
@@ -187,7 +187,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
 		"This function is deprecated. "
-		"Instead use obj.isBelowLockScreen. "
+		"Instead use obj.isBelowLockScreen. ",
 	)
 	return not obj.isBelowLockScreen
 
@@ -229,7 +229,7 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	from NVDAObjects.window import Window
 	if not isinstance(obj, Window):
 		log.debug(
-			"Cannot detect if object is below lock app, considering object as safe. "
+			"Cannot detect if object is below lock app, considering object as safe. ",
 		)
 		# Must be a window instance to get the HWNDVal, other NVDAObjects do not support this.
 		return False
@@ -267,7 +267,7 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	except _UnexpectedWindowCountError:
 		log.debugWarning(
 			"Couldn't determine lock screen and NVDA object relative z-order",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -282,7 +282,7 @@ class _UnexpectedWindowCountError(Exception):
 
 def _isWindowBelowWindowMatchesCond(
 		window: winUser.HWNDVal,
-		matchCond: Callable[[winUser.HWNDVal], bool]
+		matchCond: Callable[[winUser.HWNDVal], bool],
 ) -> bool:
 	"""
 	This is a risky hack.
@@ -328,7 +328,7 @@ def _isWindowBelowWindowMatchesCond(
 		raise _UnexpectedWindowCountError(
 			"Windows found\n"
 			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
-			f" - window 2 index: {window2Index}\n"
+			f" - window 2 index: {window2Index}\n",
 		)
 	if window1Indexes[0] >= window2Index:
 		return False
@@ -358,7 +358,7 @@ def warnSessionLockStateUnknown() -> None:
 		" While this instance of NVDA is running,"
 		" your desktop will not be secure when Windows is locked."
 		" Restarting Windows may address this."
-		" If this error is ongoing then disabling the Windows lock screen is recommended."
+		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
 	unableToDetermineSessionLockStateMsg = _(
@@ -368,7 +368,7 @@ def warnSessionLockStateUnknown() -> None:
 		" While this instance of NVDA is running,"
 		" your desktop will not be secure when Windows is locked."
 		" Restarting Windows may address this."
-		" If this error is ongoing then disabling the Windows lock screen is recommended."
+		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
 	import wx  # Late import to prevent circular dependency.

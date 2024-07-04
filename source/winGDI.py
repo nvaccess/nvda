@@ -54,14 +54,14 @@ class GdiplusStartupInput(Structure):
 		('GdiplusVersion', c_uint32),
 		('DebugEventCallback', c_void_p),
 		('SuppressBackgroundThread', BOOL),
-		('SuppressExternalCodecs', BOOL)
+		('SuppressExternalCodecs', BOOL),
 	]
 
 
 class GdiplusStartupOutput(Structure):
 	_fields = [
 		('NotificationHookProc', c_void_p),
-		('NotificationUnhookProc', c_void_p)
+		('NotificationUnhookProc', c_void_p),
 	]
 
 

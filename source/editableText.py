@@ -96,7 +96,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			):
 				log.debug(
 					"Caret move detected using event. Elapsed %g sec, retries %d"
-					% (elapsed, retries)
+					% (elapsed, retries),
 				)
 				# We must fetch the caret here rather than above the isPendingEvents check
 				# to avoid a race condition where an event is queued from a background
@@ -123,7 +123,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			if newBookmark and newBookmark!=bookmark:
 				log.debug(
 					"Caret move detected using bookmarks. Elapsed %g sec, retries %d"
-					% (elapsed, retries)
+					% (elapsed, retries),
 				)
 				return (True, newInfo)
 			if origWord is not None and newInfo and elapsed >= self._hasCaretMoved_minWordTimeoutSec:
@@ -224,7 +224,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			unit=textInfos.UNIT_LINE,
 			reason=controlTypes.OutputReason.CARET,
 			onlyInitialFields=onlyInitial,
-			suppressBlanks=True
+			suppressBlanks=True,
 		)
 
 	def _caretMoveBySentenceHelper(self, gesture, direction):
@@ -327,7 +327,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			from documentNavigation.paragraphHelper import moveToSingleLineBreakParagraph
 			passKey, moved = moveToSingleLineBreakParagraph(
 				nextParagraph=nextParagraph,
-				speakNew=not willSayAllResume(gesture)
+				speakNew=not willSayAllResume(gesture),
 			)
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)
@@ -335,7 +335,7 @@ class EditableText(TextContainerObject,ScriptableObject):
 			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
 			passKey, moved = moveToMultiLineBreakParagraph(
 				nextParagraph=nextParagraph,
-				speakNew=not willSayAllResume(gesture)
+				speakNew=not willSayAllResume(gesture),
 			)
 			if passKey:
 				self.script_caret_moveByParagraph(gesture)

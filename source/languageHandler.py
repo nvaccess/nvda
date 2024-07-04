@@ -52,7 +52,7 @@ LCIDS_TO_TRANSLATED_LOCALES = {
 	# Windows maps this to "ku-Arab-IQ", however a translation is added for
 	# Central Kurdish in localesData.LANG_NAMES_TO_LOCALIZED_DESCS["ckb"]
 	# and NVDA may drop "Arab-IQ" from this locale to get the language.
-	1170: 'ckb'
+	1170: 'ckb',
 }
 """
 Map Windows locale identifiers to language codes.
@@ -322,7 +322,7 @@ def getWindowsLanguage():
 
 
 def _createGettextTranslation(
-		localeName: str
+		localeName: str,
 ) -> Union[None, gettext.GNUTranslations, gettext.NullTranslations]:
 	if localeName in LANGS_WITHOUT_TRANSLATIONS:
 		globalVars.appArgs.language = localeName

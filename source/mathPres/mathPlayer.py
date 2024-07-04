@@ -49,7 +49,8 @@ RE_MP_SPEECH = re.compile(
 	# Commas indicating pauses in navigation messages.
 	r"| ?(?P<comma>,) ?"
 	# Actual content.
-	r"|(?P<content>[^<,]+)")
+	r"|(?P<content>[^<,]+)",
+)
 PROSODY_COMMANDS = {
 	"pitch": PitchCommand,
 	"volume": VolumeCommand,
@@ -100,8 +101,12 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 
 	def reportFocus(self):
 		super(MathPlayerInteraction, self).reportFocus()
-		speech.speak(_processMpSpeech(self.provider._mpSpeech.GetSpokenText(),
-			self.provider._language))
+		speech.speak(
+      _processMpSpeech(
+          self.provider._mpSpeech.GetSpokenText(),
+          self.provider._language,
+      ),
+  )
 
 	def getBrailleRegions(
 			self,
@@ -132,8 +137,10 @@ class MathPlayerInteraction(mathPres.MathInteractionNVDAObject):
 	def script_navigate(self, gesture):
 		modNames = gesture.modifierNames
 		try:
-			text = self.provider._mpNavigation.DoNavigateKeyPress(gesture.vkCode,
-				"shift" in modNames, "control" in modNames, "alt" in modNames, False)
+			text = self.provider._mpNavigation.DoNavigateKeyPress(
+       gesture.vkCode,
+       "shift" in modNames, "control" in modNames, "alt" in modNames, False,
+   )
 		except COMError:
 			return
 		speech.speak(_processMpSpeech(text, self.provider._language))

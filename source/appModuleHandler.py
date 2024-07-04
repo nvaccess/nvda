@@ -74,7 +74,7 @@ class processEntry32W(ctypes.Structure):
 		("th32ParentProcessID",ctypes.wintypes.DWORD),
 		("pcPriClassBase",ctypes.c_long),
 		("dwFlags",ctypes.wintypes.DWORD),
-		("szExeFile", ctypes.c_wchar * 260)
+		("szExeFile", ctypes.c_wchar * 260),
 	]
 
 
@@ -82,7 +82,7 @@ class _PROCESS_MACHINE_INFORMATION(ctypes.Structure):
 	_fields_ = [
 		("ProcessMachine", ctypes.wintypes.USHORT),
 		("Res0", ctypes.wintypes.USHORT),
-		("MachineAttributes", ctypes.wintypes.DWORD)
+		("MachineAttributes", ctypes.wintypes.DWORD),
 	]
 
 
@@ -133,7 +133,7 @@ def _getPossibleAppModuleNamesForExecutable(executableName: str) -> Tuple[str, .
 			# For new App Modules consider adding an alias to `appModule.EXECUTABLE_NAMES_TO_APP_MODS`
 			# rather than rely on the fact that dots are replaced.
 			executableName.replace(".", "_"),
-			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName)
+			appModules.EXECUTABLE_NAMES_TO_APP_MODS.get(executableName),
 		) if aliasName is not None
 	)
 
@@ -160,7 +160,7 @@ def _importAppModuleForExecutable(executableName: str) -> Optional[ModuleType]:
 		if doesAppModuleExist(possibleModName):
 			return importlib.import_module(
 				f"appModules.{possibleModName}",
-				package="appModules"
+				package="appModules",
 			)
 	return None  # Module not found
 
@@ -281,7 +281,7 @@ def fetchAppModule(processID: int, appName: str) -> AppModule:
 			# Translators: This is presented when errors are found in an appModule
 			# (example output: error in appModule explorer).
 			_("Error in appModule %s") % modName,
-			speechPriority=speech.priorities.Spri.NOW
+			speechPriority=speech.priorities.Spri.NOW,
 		)
 
 	# Use the base AppModule.
@@ -296,15 +296,18 @@ def reloadAppModules():
 	global appModules
 	state = []
 	for mod in runningTable.values():
-		state.append({key: getattr(mod, key) for key in ("processID",
-			# #2892: We must save nvdaHelperRemote handles, as we can't reinitialize without a foreground/focus event.
-			# Also, if there is an active context handle such as a loaded buffer,
-			# nvdaHelperRemote can't reinit until that handle dies.
-			"helperLocalBindingHandle", "_inprocRegistrationHandle",
-			# #5380: We must save config profile triggers so they can be cleaned up correctly.
-			# Otherwise, they'll remain active forever.
-			"_configProfileTrigger",
-		) if hasattr(mod, key)})
+		state.append({
+      key: getattr(mod, key) for key in (
+          "processID",
+           # #2892: We must save nvdaHelperRemote handles, as we can't reinitialize without a foreground/focus event.
+           # Also, if there is an active context handle such as a loaded buffer,
+           # nvdaHelperRemote can't reinit until that handle dies.
+           "helperLocalBindingHandle", "_inprocRegistrationHandle",
+           # #5380: We must save config profile triggers so they can be cleaned up correctly.
+           # Otherwise, they'll remain active forever.
+           "_configProfileTrigger",
+      ) if hasattr(mod, key)
+  })
 		# #2892: Don't disconnect from nvdaHelperRemote during termination.
 		mod._helperPreventDisconnect = True
 	terminate()
@@ -473,7 +476,7 @@ class AppModule(baseObject.ScriptableObject):
 		exeFileName = ctypes.create_unicode_buffer(ctypes.wintypes.MAX_PATH)
 		length = ctypes.wintypes.DWORD(ctypes.wintypes.MAX_PATH)
 		if not ctypes.windll.Kernel32.QueryFullProcessImageNameW(
-			self.processHandle, 0, exeFileName, ctypes.byref(length)
+			self.processHandle, 0, exeFileName, ctypes.byref(length),
 		):
 			raise ctypes.WinError()
 		fileName = exeFileName.value
@@ -490,7 +493,7 @@ class AppModule(baseObject.ScriptableObject):
 		ctypes.windll.kernel32.GetPackageFullName(self.processHandle, ctypes.byref(length), None)
 		packageFullName = ctypes.create_unicode_buffer(length.value)
 		if ctypes.windll.kernel32.GetPackageFullName(
-			self.processHandle, ctypes.byref(length), packageFullName
+			self.processHandle, ctypes.byref(length), packageFullName,
 		) == 0:
 			return packageFullName.value
 		else:
@@ -591,8 +594,10 @@ class AppModule(baseObject.ScriptableObject):
 		try:
 			# We need IsWow64Process2 to detect WOW64 on ARM64.
 			processMachine = ctypes.wintypes.USHORT()
-			if ctypes.windll.kernel32.IsWow64Process2(self.processHandle,
-					ctypes.byref(processMachine), None) == 0:
+			if ctypes.windll.kernel32.IsWow64Process2(
+       self.processHandle,
+       ctypes.byref(processMachine), None,
+   ) == 0:
 				self.is64BitProcess = False
 				return False
 			# IMAGE_FILE_MACHINE_UNKNOWN if not a WOW64 process.
@@ -667,7 +672,7 @@ class AppModule(baseObject.ScriptableObject):
 				self.processHandle,
 				ProcessMachineTypeInfo,
 				ctypes.byref(processMachineInfo),
-				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION)
+				ctypes.sizeof(_PROCESS_MACHINE_INFORMATION),
 			):
 				self.appArchitecture = "unknown"
 			else:
@@ -725,10 +730,13 @@ class AppModule(baseObject.ScriptableObject):
 		"""Request that this process writes a minidump when it crashes for debugging.
 		This should only be called if instructed by a developer.
 		"""
-		path = os.path.join(tempfile.gettempdir(),
-			"nvda_crash_%s_%d.dmp" % (self.appName, self.processID))
+		path = os.path.join(
+      tempfile.gettempdir(),
+      "nvda_crash_%s_%d.dmp" % (self.appName, self.processID),
+  )
 		NVDAHelper.localLib.nvdaInProcUtils_dumpOnCrash(
-			self.helperLocalBindingHandle, path)
+			self.helperLocalBindingHandle, path,
+  )
 		print("Dump path: %s" % path)
 
 	def _get_statusBar(self):
@@ -809,8 +817,10 @@ def getWmiProcessInfo(processId):
 	"""
 	try:
 		wmi = comtypes.client.CoGetObject(r"winmgmts:root\cimv2", dynamic=True)
-		results = wmi.ExecQuery("select * from Win32_Process "
-			"where ProcessId = %d" % processId)
+		results = wmi.ExecQuery(
+      "select * from Win32_Process "
+      "where ProcessId = %d" % processId,
+  )
 		for result in results:
 			return result
 	except:  # noqa: E722

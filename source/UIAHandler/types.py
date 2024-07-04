@@ -26,7 +26,7 @@ class _IUIAutomationTextRangeT(Protocol):
 			self,
 			source: int,
 			rangeObject: "IUIAutomationTextRangeT",
-			target: int
+			target: int,
 	) -> int:
 		...
 
@@ -49,7 +49,7 @@ class _IUIAutomationTextRangeT(Protocol):
 			self,
 			source: int,
 			rangeObject: "IUIAutomationTextRangeT",
-			target: int
+			target: int,
 	) -> None:
 		...
 

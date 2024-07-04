@@ -15,13 +15,13 @@ from typing import (
 )
 from ctypes import (
 	_SimpleCData,
-	c_long
+	c_long,
 )
 import enum
 from .. import builder
 from . import (
 	RemoteInt,
-	remoteMethod
+	remoteMethod,
 )
 
 
@@ -85,7 +85,7 @@ class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
 	def ensureRemote(
 			cls,
 			rob: builder.RemoteOperationBuilder,
-			obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar
+			obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar,
 	) -> RemoteIntEnum[_RemoteIntEnum_LocalTypeVar]:
 		remoteObj = super().ensureRemote(rob, cast(Any, obj))
 		return cast(RemoteIntEnum[_RemoteIntEnum_LocalTypeVar], remoteObj)

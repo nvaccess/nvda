@@ -103,7 +103,7 @@ class Document(ia2Web.Document):
 
 	def _get_treeInterceptorClass(self) -> typing.Type["TreeInterceptor"]:
 		shouldLoadVBufOnBusyFeatureFlag = bool(
-			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"]
+			config.conf["virtualBuffers"]["loadChromiumVBufOnBusyState"],
 		)
 		vBufUnavailableStates = {  # if any of these are in states, don't return ChromeVBuf
 			controlTypes.State.EDITABLE,
@@ -111,13 +111,13 @@ class Document(ia2Web.Document):
 		if not shouldLoadVBufOnBusyFeatureFlag:
 			log.debug(
 				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
-				" vBuf WILL NOT be loaded when state of the document is busy."
+				" vBuf WILL NOT be loaded when state of the document is busy.",
 			)
 			vBufUnavailableStates.add(controlTypes.State.BUSY)
 		else:
 			log.debug(
 				f"loadChromiumVBufOnBusyState feature flag is {shouldLoadVBufOnBusyFeatureFlag},"
-				" vBuf WILL be loaded when state of the document is busy."
+				" vBuf WILL be loaded when state of the document is busy.",
 			)
 		if self.states.intersection(vBufUnavailableStates):
 			return super().treeInterceptorClass
@@ -178,5 +178,7 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList.append(PresentationalList)
 	elif obj.role == controlTypes.Role.GROUPING and obj.IA2Attributes.get("tag", "").casefold() == "figure":
 		clsList.append(Figure)
-	ia2Web.findExtraOverlayClasses(obj, clsList,
-		documentClass=Document)
+	ia2Web.findExtraOverlayClasses(
+     obj, clsList,
+     documentClass=Document,
+ )

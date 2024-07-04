@@ -188,8 +188,8 @@ def test_moveByWord():
 			'right dash-pointing arrow',
 			't dash-shirt',
 			't dash-shirt',
-			'blank'  # end of doc
-		]
+			'blank',  # end of doc
+		],
 	)
 
 
@@ -213,7 +213,7 @@ def test_moveByLine():
 			'',  # tab  # todo: There should not be any "empty" lines.
 			'blank',  # four spaces
 			'blank',  # end of doc
-		]
+		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
@@ -304,18 +304,18 @@ def _testDelayedDescription(expectDescription: bool = True) -> None:
 		raise AssertionError("Nothing spoken after character press")
 	if spoken[0] not in _CHARACTER_DESCRIPTIONS:
 		raise AssertionError(
-			f"First piece of speech not an expected character; got: '{spoken[0]}'"
+			f"First piece of speech not an expected character; got: '{spoken[0]}'",
 		)
 	if expectDescription:
 		if len(spoken) != 2:
 			raise AssertionError(
-				f"Expected character with description; got: '{spoken}'"
+				f"Expected character with description; got: '{spoken}'",
 			)
 		_asserts.strings_match(spoken[1], _CHARACTER_DESCRIPTIONS[spoken[0]])
 	else:
 		if len(spoken) != 1:
 			raise AssertionError(
-				f"Expected single character; got: '{spoken}'"
+				f"Expected single character; got: '{spoken}'",
 			)
 
 
@@ -397,7 +397,7 @@ def test_selByWord():
 				't dash-shirt',
 				# end of doc
 			]
-		))
+		)),
 	)
 
 
@@ -427,7 +427,7 @@ def test_selByLine():
 				'',  # four spaces todo: There should not be any "empty" lines.
 				# end of doc
 			]
-		))
+		)),
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position
@@ -477,7 +477,7 @@ def test_selByChar():
 				'tab',  # Expect tab named
 				'',  # Expect Windows/notepad newline is \r\n
 			]
-		))
+		)),
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.CARET_HOME.value)  # reset to start position.
@@ -497,7 +497,7 @@ def test_selByChar():
 				'tab',  # Expect whitespace named.
 				'',  # on Windows/notepad newline is \r\n
 			]
-		))
+		)),
 	)
 
 
@@ -517,7 +517,7 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		["blank", ],
+		["blank"],
 		msg="actual vs expected. Unexpected speech when moving to final character.",
 	)
 
@@ -539,7 +539,7 @@ def test_symbolInSpeechUI():
 	actual = _pressKeyAndCollectSpeech(Move.REVIEW_CHAR.value, numberOfTimes=1)
 	_builtIn.should_be_equal(
 		actual,
-		[f"{expected}\nblank", ],
+		[f"{expected}\nblank"],
 		msg="actual vs expected. NVDA speech UI substitutes symbols",
 	)
 
@@ -547,7 +547,7 @@ def test_symbolInSpeechUI():
 def _setConfig(
 		symbolLevel: SymLevel = SymLevel.SOME,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLines: bool = False
+		ignoreBlankLines: bool = False,
 ) -> None:
 	spy = _NvdaLib.getSpyLib()
 	spy.set_configValue(["documentFormatting", "reportLineIndentation"], reportLineIndentation.value)
@@ -567,7 +567,7 @@ def _doTest(
 		reportedAfterLast: EndSpeech,
 		symbolLevel: SymLevel = SymLevel.SOME,
 		reportLineIndentation: ReportLineIndentation = ReportLineIndentation.OFF,
-		ignoreBlankLines: bool = False
+		ignoreBlankLines: bool = False,
 ) -> None:
 	_setConfig(symbolLevel, reportLineIndentation, ignoreBlankLines)
 
@@ -575,7 +575,7 @@ def _doTest(
 	_builtIn.should_be_equal(
 		actual,
 		expectedSpeech,
-		msg=f"actual vs expected. With symbolLevel {symbolLevel}"
+		msg=f"actual vs expected. With symbolLevel {symbolLevel}",
 	)
 
 	if reportedAfterLast == EndSpeech.NONE:
@@ -586,8 +586,8 @@ def _doTest(
 	actual = _pressKeyAndCollectSpeech(navKey.value, 1)
 	_builtIn.should_be_equal(
 		actual,
-		[endReached, ],
-		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}"
+		[endReached],
+		msg=f"End reached failure. actual vs expected. With symbolLevel {symbolLevel}",
 	)
 
 
@@ -618,7 +618,7 @@ def test_tableHeaders():
 					<td>c</td>
 				</tr>
 			</table>
-		"""
+		""",
 	)
 	_setConfig(SymLevel.ALL)
 	# Expected to be in browse mode
@@ -632,7 +632,7 @@ def test_tableHeaders():
 			"row 1",  # enter row 1 context
 			"column 1",  # enter column 1 context
 			"First dash-name",  # the contents of the cell
-		])
+		]),
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
@@ -641,7 +641,7 @@ def test_tableHeaders():
 		'  '.join([
 			"column 2",  # enter column 2 context, still in row 1, still in table
 			"right-pointing arrow   t-shirt",  # the contents of the cell
-		])
+		]),
 	)
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
 	_asserts.strings_match(
@@ -650,7 +650,7 @@ def test_tableHeaders():
 		'  '.join([
 			"column 3",  # enter column 3 context, still in row 1, still in table
 			"Don tick t",  # the contents of the cell
-		])
+		]),
 	)
 	# into the first (non-header) row
 	actualSpeech = _chrome.getSpeechAfterKey("downArrow")
@@ -662,7 +662,7 @@ def test_tableHeaders():
 			"First dash-name",  # reminder of the column name
 			"column 1",  # explicit column 2 context,
 			"a",  # the contents of the cell
-		])
+		]),
 	)
 
 	_doTest(
@@ -673,7 +673,7 @@ def test_tableHeaders():
 			# name of column, column number, \n cell contents
 			't-shirt  column 2\nb',  # note symbols NOT replaced in column name
 			"Don't  column 3\nc",  # note symbols NOT replaced in column name
-		]
+		],
 	)
 	# reset to start of row.
 	_NvdaLib.getSpeechAfterKey(Move.CARET_CHAR_BACK.value)
@@ -687,23 +687,25 @@ def test_tableHeaders():
 			# name of column, column number 2, \n cell contents
 			'right-pointing arrow   t-shirt  column 2\nb',  # note symbols ARE replaced in column name
 			"Don tick t  column 3\nc",  # note symbols ARE replaced in column name
-		]
+		],
 	)
 
 
 def test_ignoreBlankLinesForReportLineIndentation():
 	""" Test line indentation reporting with ignoreBlankLinesForReportLineIndentation off and then on
 	"""
-	_notepad.prepareNotepad('\n'.join([
-		'',  # blank line
-		'def foo',
-		'\thello',
-		'',  # blank line
-		'\tworld',
-		'',  # blank line
-		'def bar',
-		'',  # blank line
-	]))
+	_notepad.prepareNotepad(
+     '\n'.join([
+      '',  # blank line
+      'def foo',
+      '\thello',
+      '',  # blank line
+      '\tworld',
+      '',  # blank line
+      'def bar',
+      '',  # blank line
+     ]),
+ )
 
 	def _doTestIgnoreBlankLines(ignoreBlankLines: bool, expectedSpeech: _typing.List[str]) -> None:
 		_doTest(
@@ -712,7 +714,7 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			symbolLevel=SymLevel.ALL,
 			reportLineIndentation=ReportLineIndentation.SPEECH,
 			ignoreBlankLines=ignoreBlankLines,
-			expectedSpeech=expectedSpeech
+			expectedSpeech=expectedSpeech,
 		)
 
 	_doTestIgnoreBlankLines(
@@ -724,8 +726,8 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			'tab  world',
 			'no indent  blank',
 			'def bar',
-			'blank'
-		]
+			'blank',
+		],
 	)
 
 	_NvdaLib.getSpeechAfterKey(Move.REVIEW_HOME.value)  # reset to start position
@@ -739,6 +741,6 @@ def test_ignoreBlankLinesForReportLineIndentation():
 			'world',
 			'blank',
 			'no indent  def bar',
-			'blank'
-		]
+			'blank',
+		],
 	)

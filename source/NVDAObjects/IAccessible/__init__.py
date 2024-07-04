@@ -172,7 +172,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getOffsetFromPoint(self,x,y):
 		if self.obj.IAccessibleTextObject.nCharacters>0:
 			offset = self.obj.IAccessibleTextObject.OffsetAtPoint(
-				x, y, IA2.IA2_COORDTYPE_SCREEN_RELATIVE
+				x, y, IA2.IA2_COORDTYPE_SCREEN_RELATIVE,
 			)
 			# IA2 specifies that a result of -1 indicates that
 			# the point is invalid or there is no character under the point.
@@ -187,9 +187,11 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	@classmethod
 	def _getBoundingRectFromOffsetInObject(cls,obj,offset):
 		try:
-			res = RectLTWH(*obj.IAccessibleTextObject.characterExtents(
-				offset, IA2.IA2_COORDTYPE_SCREEN_RELATIVE
-			))
+			res = RectLTWH(
+       *obj.IAccessibleTextObject.characterExtents(
+        offset, IA2.IA2_COORDTYPE_SCREEN_RELATIVE,
+       ),
+   )
 		except COMError:
 			raise NotImplementedError
 		if not any(res[2:]):
@@ -386,7 +388,7 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _iterTextWithEmbeddedObjects(
 			self,
 			withFields,
-			formatConfig=None
+			formatConfig=None,
 	) -> typing.Generator[typing.Union[textInfos.FieldCommand, str, int], None, None]:
 		"""Iterate through the text, splitting at embedded object characters.
 		Where an embedded object character occurs, its offset is provided.
@@ -543,8 +545,9 @@ the NVDAObject for IAccessible
 			windowClassName.lower().startswith('mscandui')
 			or windowClassName in (
 				"Microsoft.IME.CandidateWindow.View",
-				"Microsoft.IME.UIManager.CandidateWindow.Host"
-		)):
+				"Microsoft.IME.UIManager.CandidateWindow.Host",
+   )
+  ):
 			from . import mscandui
 			mscandui.findExtraOverlayClasses(self,clsList)
 		elif windowClassName=="GeckoPluginWindow" and self.event_objectID==0 and self.IAccessibleChildID==0:
@@ -653,7 +656,7 @@ the NVDAObject for IAccessible
 			IAccessibleChildID: Optional[int] = None,
 			event_windowHandle: Optional = None,
 			event_objectID: Optional = None,
-			event_childID: Optional = None
+			event_childID: Optional = None,
 	):
 		"""
 		@param windowHandle: the window handle, if known
@@ -949,7 +952,7 @@ the NVDAObject for IAccessible
 			log.debugWarning("could not get IAccessible states",exc_info=True)
 		else:
 			states.update(
-				IAccessibleHandler.calculateNvdaStates(self.IAccessibleRole, IAccessibleStates)
+				IAccessibleHandler.calculateNvdaStates(self.IAccessibleRole, IAccessibleStates),
 			)
 
 		if not isinstance(self.IAccessibleObject, IA2.IAccessible2):
@@ -1171,8 +1174,10 @@ the NVDAObject for IAccessible
 				return super(IAccessible, self).getChild(index)
 			return None
 		if child[0] == self.IAccessibleObject:
-			return IAccessible(windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=child[1],
-				event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1])
+			return IAccessible(
+       windowHandle=self.windowHandle, IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=child[1],
+       event_windowHandle=self.event_windowHandle, event_objectID=self.event_objectID, event_childID=child[1],
+   )
 		return self.correctAPIForRelation(IAccessible(IAccessibleObject=child[0], IAccessibleChildID=child[1]))
 
 	#: Type definition for auto prop '_get_IA2Attributes'
@@ -1591,7 +1596,7 @@ the NVDAObject for IAccessible
 			relationType.value,
 			# Bug in relationTargetsOfType, Chrome does not respect maxRelations param.
 			# https://crbug.com/1399184
-			maxRelations
+			maxRelations,
 		)
 		if config.conf["debugLog"]["annotations"]:
 			log.debug(f"Got {count} relations, given maxRelations: {maxRelations}")
@@ -1604,7 +1609,7 @@ the NVDAObject for IAccessible
 
 	def _getIA2RelationFirstTarget(
 			self,
-			relationType: typing.Union[str, "IAccessibleHandler.RelationType"]
+			relationType: typing.Union[str, "IAccessibleHandler.RelationType"],
 	) -> typing.Optional["IAccessible"]:
 		""" Get the first target for the relation of type.
 		@param relationType: The type of relation to fetch.
@@ -1625,7 +1630,7 @@ the NVDAObject for IAccessible
 				# Just take the first.
 				return IAccessible(
 					IAccessibleObject=ia2Object,
-					IAccessibleChildID=0
+					IAccessibleChildID=0,
 				)
 		except (NotImplementedError, COMError):
 			log.debugWarning("Unable to use _getIA2TargetsForRelationsOfType, fallback to _IA2Relations.")
@@ -1639,7 +1644,7 @@ the NVDAObject for IAccessible
 					ia2Object = IAccessibleHandler.normalizeIAccessible(target)
 					return IAccessible(
 						IAccessibleObject=ia2Object,
-						IAccessibleChildID=0
+						IAccessibleChildID=0,
 					)
 		except (NotImplementedError, COMError):
 			log.debug("Unable to fetch _IA2Relations", exc_info=True)
@@ -1648,7 +1653,7 @@ the NVDAObject for IAccessible
 
 	def _getIA2RelationTargetsOfType(
 			self,
-			relationType: Union[str, IAccessibleHandler.RelationType]
+			relationType: Union[str, IAccessibleHandler.RelationType],
 	) -> typing.Iterable["IAccessible"]:
 		""" Get the targets for the relation of type.
 		Higher level function than _getIA2TargetsForRelationsOfType
@@ -1674,7 +1679,7 @@ the NVDAObject for IAccessible
 				ia2Object = IAccessibleHandler.normalizeIAccessible(target)
 				ia = IAccessible(
 					IAccessibleObject=ia2Object,
-					IAccessibleChildID=0
+					IAccessibleChildID=0,
 				)
 				yield ia
 			# NotImplementedError is expected to occur for all targets or none.
@@ -1693,7 +1698,7 @@ the NVDAObject for IAccessible
 						ia2Object = IAccessibleHandler.normalizeIAccessible(target)
 						yield IAccessible(
 							IAccessibleObject=ia2Object,
-							IAccessibleChildID=0
+							IAccessibleChildID=0,
 						)
 			return
 		except (NotImplementedError, COMError):

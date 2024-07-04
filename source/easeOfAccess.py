@@ -53,7 +53,7 @@ def isRegistered() -> bool:
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 		return True
 	except FileNotFoundError:
@@ -115,7 +115,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:
 			autoStartContext.value,
 			RegistryKey.ROOT.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 	except FileNotFoundError:
 		log.debug(f"Unable to find existing {autoStartContext} {RegistryKey.ROOT}")
@@ -164,12 +164,12 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 			autoStartContext.value,
 			RegistryKey.ROOT.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
 		)
 		winreg.SetValueEx(
 			k,
 			"Configuration",
 			None,
 			winreg.REG_SZ,
-			",".join(conf)
+			",".join(conf),
 		)

@@ -47,7 +47,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 	def __init__(
 			self,
 			target: HandlerT,
-			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None
+			onDelete: Optional[Callable[[BoundMethodWeakref], None]] = None,
 	):
 		if onDelete:
 			def onRefDelete(weak):
@@ -102,7 +102,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 		#: and the values are weak references.
 		self._handlers = OrderedDict[
 			HandlerKeyT,
-			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]]
+			Union[BoundMethodWeakref[HandlerT], AnnotatableWeakref[HandlerT]],
 		]()
 
 	def register(self, handler: HandlerT):

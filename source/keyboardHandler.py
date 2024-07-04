@@ -119,7 +119,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName == "SUPPORTED_NVDA_MODIFIER_KEYS" and NVDAState._allowDeprecatedAPI():
 		log.warning(
 			"keyboardHandler.SUPPORTED_NVDA_MODIFIER_KEYS is deprecated with no direct replacement. "
-			"Consider using the class config.configFlags.NVDAKey instead."
+			"Consider using the class config.configFlags.NVDAKey instead.",
 		)
 		return ("capslock", "numpadinsert", "insert")
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -489,13 +489,14 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			# Translators: Reported for an unknown key press.
 			# %s will be replaced with the key code.
 			_("unknown %s") % key[8:] if key.startswith("unknown_")
-			else localizedKeyLabels.get(key.lower(), key) for key in self._keyNamesInDisplayOrder)
+			else localizedKeyLabels.get(key.lower(), key) for key in self._keyNamesInDisplayOrder
+  )
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
 		return (
 			u"kb({layout}):{key}".format(layout=self.layout, key=keyName),
-			u"kb:{key}".format(key=keyName)
+			u"kb:{key}".format(key=keyName),
 		)
 
 	def _get_shouldReportAsCommand(self):
@@ -549,9 +550,12 @@ class KeyboardInputGesture(inputCore.InputGesture):
 	def _reportToggleKey(self):
 		toggleState = winUser.getKeyState(self.vkCode) & 1
 		key = self.mainKeyName
-		ui.message(u"{key} {state}".format(
-			key=localizedKeyLabels.get(key.lower(), key),
-			state=_("on") if toggleState else _("off")))
+		ui.message(
+      u"{key} {state}".format(
+      key=localizedKeyLabels.get(key.lower(), key),
+      state=_("on") if toggleState else _("off"),
+      ),
+  )
 
 	def executeScript(self, script):
 		if canModifiersPerformAction(self.generalizedModifiers):

@@ -26,7 +26,7 @@ isInteractive = hasattr(sys.stdout, "isatty") and sys.stdout.isatty()
 if not isInteractive:
 	print(
 		"Warning: Running in non-interactive mode. Defaults are assumed for prompts, if applicable",
-		flush=True
+		flush=True,
 	)
 
 
@@ -117,7 +117,7 @@ def createVenv():
 			"--clear",
 			venv_path,
 		],
-		check=True
+		check=True,
 	)
 	with open(venv_python_version_path, "w") as f:
 		f.write(sys.version)
@@ -147,7 +147,7 @@ def ensureVenvAndRequirements():
 		if askYesNoQuestion(
 			f"Virtual environment at {venv_path} probably not created by NVDA. "
 			"This directory must be removed before continuing. Should it be removed?",
-			default=True
+			default=True,
 		):
 			return createVenvAndPopulate()
 		else:
@@ -168,7 +168,7 @@ def ensureVenvAndRequirements():
 			"This means that transitive dependencies can get out of sync "
 			"with those used in automated builds. "
 			"Would you like to continue recreating the environment?",
-			default=True
+			default=True,
 		):
 			return createVenvAndPopulate()
 		return populate()
@@ -180,7 +180,7 @@ if __name__ == '__main__':
 	if virtualEnv:
 		print(
 			"Error: It looks like another Python virtual environment is already active in this shell.\n"
-			"Please deactivate the current Python virtual environment and try again."
+			"Please deactivate the current Python virtual environment and try again.",
 		)
 		sys.exit(1)
 	ensureVenvAndRequirements()

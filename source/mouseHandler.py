@@ -162,7 +162,8 @@ def getMouseRestrictedToScreens(x, y, displays):
 		scrCenterToMouse = mpos - screenCenter
 		mouseLimitedToScreen = screenCenter + wx.RealPoint( # relative to origin
 			max(min(scrCenterToMouse.x, halfWidth.x), -halfWidth.x),
-			max(min(scrCenterToMouse.y, halfWidth.y), -halfWidth.y))
+			max(min(scrCenterToMouse.y, halfWidth.y), -halfWidth.y),
+  )
 		edgeToMouse = mpos - mouseLimitedToScreen
 		distFromRectToMouseSqd = abs(edgeToMouse.x) + abs(edgeToMouse.y)
 		if closestDistValue == None or closestDistValue > distFromRectToMouseSqd:  # noqa: E711
@@ -202,16 +203,18 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 
 def executeMouseMoveEvent(x,y):
 	desktopObject=api.getDesktopObject()
-	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount()) ]
+	displays = [ wx.Display(i).GetGeometry() for i in range(wx.Display.GetCount())]
 	x, y = getMouseRestrictedToScreens(x, y, displays)
 	screenWidth, screenHeight, minPos = getTotalWidthAndHeightAndMinimumPosition(displays)
 	oldMouseObject = api.getMouseObject()
 	mouseObject = desktopObject.objectFromPoint(x, y)
 
 	if config.conf["mouse"]["audioCoordinatesOnMouseMove"] and not oldMouseObject.sleepMode:
-		playAudioCoordinates(x, y, screenWidth, screenHeight, minPos,
-			config.conf['mouse']['audioCoordinates_detectBrightness'],
-			config.conf['mouse']['audioCoordinates_blurFactor'])
+		playAudioCoordinates(
+      x, y, screenWidth, screenHeight, minPos,
+      config.conf['mouse']['audioCoordinates_detectBrightness'],
+      config.conf['mouse']['audioCoordinates_blurFactor'],
+  )
 
 	while mouseObject and mouseObject.beTransparentToMouse:
 		mouseObject=mouseObject.parent
@@ -309,7 +312,7 @@ def getLogicalButtonFlags() -> LogicalButtonFlags:
 def _doClick(
 		downFlag: int,
 		upFlag: int,
-		releaseDelay: Optional[float] = None
+		releaseDelay: Optional[float] = None,
 ):
 	executeMouseEvent(downFlag, 0, 0)
 	if releaseDelay:

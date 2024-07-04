@@ -201,7 +201,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=6,
-				triggerHWND=4
+				triggerHWND=4,
 			),
 			aboveWindow=5,
 			belowWindow=2,
@@ -217,10 +217,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=5,
-				triggerHWND=4
+				triggerHWND=4,
 			),
 			aboveWindow=6,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_visited_windowMoves_belowTargets(self):
@@ -232,7 +232,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=1,
-				triggerHWND=4
+				triggerHWND=4,
 			),
 			aboveWindow=5,
 			belowWindow=2,
@@ -248,12 +248,12 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=8,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=10,
 			belowWindow=6,
 			aboveRaises=_UnexpectedWindowCountError,  # handled as if window is above
-			belowExpectFailure=True  # handled as if window is above
+			belowExpectFailure=True,  # handled as if window is above
 		)
 
 	def test_active_windowMoves_beforeTargets(self):
@@ -265,7 +265,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=5,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=10,
 			belowWindow=6,
@@ -281,10 +281,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			_MoveWindow(
 				HWNDToMove=3,
 				insertBelowHWND=1,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=10,
-			belowWindow=6
+			belowWindow=6,
 		)
 
 	def test_unvisited_windowMoves_aboveTargets(self):
@@ -296,10 +296,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=5,
 				insertBelowHWND=8,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=6,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_unvisited_windowMoves_betweenTargets(self):
@@ -311,10 +311,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=4,
 				insertBelowHWND=6,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=8,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_unvisited_windowMoves_belowTargets(self):
@@ -326,10 +326,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=4,
 				insertBelowHWND=1,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=8,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_belowWindow_windowMoves_aboveAboveWindow(self):
@@ -343,10 +343,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=belowWindow,
 				insertBelowHWND=8,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=6,
-			belowWindow=belowWindow
+			belowWindow=belowWindow,
 		)
 
 	def test_belowWindow_windowMoves_towardsAboveWindow(self):
@@ -360,7 +360,7 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=belowWindow,
 				insertBelowHWND=6,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=8,
 			belowWindow=belowWindow,
@@ -377,10 +377,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=belowWindow,
 				insertBelowHWND=1,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=8,
-			belowWindow=belowWindow
+			belowWindow=belowWindow,
 		)
 
 	def test_aboveWindow_windowMoves_furtherAbove(self):
@@ -393,10 +393,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=aboveWindow,
 				insertBelowHWND=8,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=aboveWindow,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_aboveWindow_windowMoves_towardsBelowWindow(self):
@@ -409,10 +409,10 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=aboveWindow,
 				insertBelowHWND=6,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=aboveWindow,
-			belowWindow=2
+			belowWindow=2,
 		)
 
 	def test_aboveWindow_windowMoves_belowBelowWindow(self):
@@ -426,9 +426,9 @@ class Test_isWindowAboveWindowMatchesCond_dynamic(_Test_isWindowAboveWindowMatch
 			move=_MoveWindow(
 				HWNDToMove=aboveWindow,
 				insertBelowHWND=1,
-				triggerHWND=3
+				triggerHWND=3,
 			),
 			aboveWindow=aboveWindow,
 			belowWindow=2,
-			belowRaises=_UnexpectedWindowCountError  # handled as if window is above
+			belowRaises=_UnexpectedWindowCountError,  # handled as if window is above
 		)

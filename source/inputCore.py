@@ -276,7 +276,7 @@ class GlobalGestureMap:
 			module: str,
 			className: str,
 			script: Optional[ScriptNameT],
-			replace: bool = False
+			replace: bool = False,
 	):
 		"""Add a gesture mapping.
 		@param gesture: The gesture identifier.
@@ -505,7 +505,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			# lead to unexpected behavior for gesture emulation, i.e. the gesture will be send to the system
 			# when the decider decided not to execute it.
 			log.debug(
-				"Gesture execution canceled by handler registered to decide_executeGesture extension point"
+				"Gesture execution canceled by handler registered to decide_executeGesture extension point",
 			)
 			return
 
@@ -567,7 +567,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				queueHandler.eventQueue,
 				speech.speakMessage,
 				gesture.displayName,
-				_immediate=True
+				_immediate=True,
 			)
 
 		gesture.reportExtra()
@@ -607,7 +607,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			self._handleInputHelp,
 			gesture,
 			onlyLog=bypass or not gesture.reportInInputHelp,
-			_immediate=immediate
+			_immediate=immediate,
 		)
 		return bypass
 
@@ -639,7 +639,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		speech.speakText(
 			textList[0],
 			reason=controlTypes.OutputReason.MESSAGE,
-			symbolLevel=characterProcessing.SymbolLevel.ALL
+			symbolLevel=characterProcessing.SymbolLevel.ALL,
 		)
 		for text in textList[1:]:
 			speech.speakMessage(text)
@@ -694,7 +694,7 @@ class _AllGestureMappingsRetriever(object):
 		Dict[
 			str,  # command display name
 			Any,  # AllGesturesScriptInfo
-		]
+		],
 	]
 
 	def __init__(self, obj, ancestors):
@@ -793,7 +793,7 @@ class _AllGestureMappingsRetriever(object):
 		info = KbEmuScriptInfo(scriptCls, kbGestureIdentifier)
 		info.category = SCRCAT_KBEMU
 		info.displayName = getDisplayTextForGestureIdentifier(
-			normalizeGestureIdentifier(kbGestureIdentifier)
+			normalizeGestureIdentifier(kbGestureIdentifier),
 		)[1]
 		return info
 
@@ -959,9 +959,10 @@ def  logTimeSinceInput():
 	"""Log the time since the last input was received.
 	This does nothing if time since input logging is disabled.
 	"""
-	if (not log.isEnabledFor(log.IO)
-		or not config.conf["debugLog"]["timeSinceInput"]
-		or not manager or not manager._lastInputTime
-	):
+	if (
+     not log.isEnabledFor(log.IO)
+      or not config.conf["debugLog"]["timeSinceInput"]
+      or not manager or not manager._lastInputTime
+ ):
 		return
 	log.io("%.3f sec since input" % (time.time() - manager._lastInputTime))

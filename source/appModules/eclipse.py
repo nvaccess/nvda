@@ -43,7 +43,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			pass
 
 	@script(
-		gestures = ["kb:enter", "kb:escape"]
+		gestures = ["kb:enter", "kb:escape"],
 	)
 	def script_closeAutocompleter(self, gesture):
 		gesture.send()
@@ -56,7 +56,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		# Translators: Input help mode message for the 'read documentation script
 		description=_("Tries to read documentation for the selected autocompletion item."),
 		gesture="kb:nvda+d",
-		category=SCRCAT_ECLIPSE
+		category=SCRCAT_ECLIPSE,
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None
@@ -115,7 +115,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 			ui.message(_("Can't find the documentation window."))
 
 	@script(
-		gesture="kb:tab"
+		gesture="kb:tab",
 	)
 	def script_completeInstruction(self, gesture):
 		"""
@@ -152,11 +152,13 @@ class AutocompletionListItem(IAccessible):
 
 			# Simply calling `reportFocus` doesn't output the text in braille
 			# and reporting with `ui.message` needs an extra translation string when reporting position info
-			braille.handler.message(braille.getPropertiesBraille(
-				name=self.name,
-				role=self.role,
-				positionInfo=self.positionInfo
-			))
+			braille.handler.message(
+       braille.getPropertiesBraille(
+        name=self.name,
+        role=self.role,
+        positionInfo=self.positionInfo,
+       ),
+   )
 
 class AppModule(appModuleHandler.AppModule):
 	LIST_VIEW_CLASS = "SysListView32"
@@ -190,7 +192,7 @@ class AppModule(appModuleHandler.AppModule):
 				)
 				and obj.parent.parent.parent.parent.simpleNext.role in (
 					controlTypes.Role.BUTTON,
-					controlTypes.Role.TOGGLEBUTTON
+					controlTypes.Role.TOGGLEBUTTON,
 				)
 			):
 				clsList.insert(0, AutocompletionListItem)

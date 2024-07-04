@@ -239,7 +239,7 @@ class TestMoveToCodepointOffsetInOffsetsTextInfo(unittest.TestCase):
 	]
 
 	def runTestImpl(self, prefix: str, text: str, target: str, encoding: str):
-		self.assertTrue(target in text, "Invalid test case", )
+		self.assertTrue(target in text, "Invalid test case")
 		prefixOffset = textUtils.getOffsetConverter(encoding)(prefix).encodedStringLength
 		obj = BasicTextProvider(text=prefix + text, encoding=encoding)
 		info = obj.makeTextInfo(Offsets(0, 0))

@@ -111,7 +111,7 @@ class NVDASpyLib:
 			module: str,
 			className: str,
 			script: Optional[str],
-			replace: bool = False
+			replace: bool = False,
 	):
 		import inputCore
 		inputCore.manager.userGestureMap.add(
@@ -133,7 +133,7 @@ class NVDASpyLib:
 
 				def __init__(
 						self,
-						originalTranslationFunction: Optional
+						originalTranslationFunction: Optional,
 				):
 					self.originalTranslationFunction = originalTranslationFunction
 					self.translationResults = {}
@@ -153,7 +153,7 @@ class NVDASpyLib:
 						self.originalTranslationFunction.install()
 
 			self.fakeTranslations = Translation_Fake(
-				languageHandler.installedTranslation() if languageHandler.installedTranslation else None
+				languageHandler.installedTranslation() if languageHandler.installedTranslation else None,
 			)
 		self.fakeTranslations.translationResults[invariantString] = replacementString
 
@@ -242,7 +242,7 @@ class NVDASpyLib:
 			log.debug(
 				f"started: {started}"
 				f" (speechStartedIndex: {speechStartedIndex}, nextIndex: {nextIndex})"
-				f" elapsedSinceLastSpeech: {elapsed}"
+				f" elapsedSinceLastSpeech: {elapsed}",
 			)
 			finished = self.SPEECH_HAS_FINISHED_SECONDS < elapsed
 			return started and finished
@@ -370,7 +370,7 @@ class NVDASpyLib:
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
 			shouldStopEvaluator=lambda indexFound: indexFound >= (afterIndex if afterIndex else 0),
 			intervalBetweenSeconds=intervalBetweenSeconds,
-			errorMessage=None
+			errorMessage=None,
 		)
 
 	def wait_for_specific_speech_no_raise(
@@ -391,7 +391,7 @@ class NVDASpyLib:
 			speech,
 			afterIndex,
 			maxWaitSeconds,
-			intervalBetweenSeconds
+			intervalBetweenSeconds,
 		)
 		if not success:
 			return None
@@ -415,13 +415,13 @@ class NVDASpyLib:
 			speech,
 			afterIndex,
 			maxWaitSeconds,
-			intervalBetweenSeconds
+			intervalBetweenSeconds,
 		)
 		if not success:
 			self.dump_speech_to_log()
 			raise AssertionError(
 				f"Specific speech did not occur before timeout: {speech}\n"
-				"See NVDA log for dump of all speech."
+				"See NVDA log for dump of all speech.",
 			)
 		return speechIndex
 
@@ -444,20 +444,20 @@ class NVDASpyLib:
 			speech,
 			afterIndex,
 			maxWaitSeconds,
-			intervalBetweenSeconds
+			intervalBetweenSeconds,
 		)
 		if success:
 			self.dump_speech_to_log()
 			raise AssertionError(
 				f"Specific speech occurred unexpectedly before timeout: {speech}\n"
-				"See NVDA log for dump of all speech."
+				"See NVDA log for dump of all speech.",
 			)
 
 	def wait_for_speech_to_finish(
 			self,
 			maxWaitSeconds=5.0,
 			speechStartedIndex: Optional[int] = None,
-			errorMessage: Optional[str] = "Speech did not finish before timeout"
+			errorMessage: Optional[str] = "Speech did not finish before timeout",
 	) -> bool:
 		"""speechStartedIndex should generally be fetched with get_next_speech_index
 		@param errorMessage: Supply None to bypass assert.
@@ -480,7 +480,7 @@ class NVDASpyLib:
 		_blockUntilConditionMet(
 			getValue=lambda: self.get_last_braille_index() == nextBrailleIndex,
 			giveUpAfterSeconds=self._minTimeout(maxWaitSeconds),
-			errorMessage=None
+			errorMessage=None,
 		)
 
 	def get_last_braille(self) -> str:
@@ -547,7 +547,7 @@ class SystemTestSpyServer(globalPluginHandler.GlobalPlugin):
 		server = self._server = RobotRemoteServer(
 			spyLibrary,  # provides library behaviour
 			port=8270,  # default:8270 is `registered by IANA` for remote server usage. Two ASCII values, RF.
-			serve=False  # we want to start this serving on another thread so as not to block.
+			serve=False,  # we want to start this serving on another thread so as not to block.
 		)
 		log.debug("Server address: {}".format(server.server_address))
 		server_thread = threading.Thread(

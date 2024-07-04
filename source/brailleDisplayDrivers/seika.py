@@ -51,7 +51,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT,
 					parity=serial.PARITY_ODD,
 					bytesize=serial.EIGHTBITS,
-					stopbits=serial.STOPBITS_ONE
+					stopbits=serial.STOPBITS_ONE,
 				)
 			except serial.SerialException:
 				continue
@@ -94,7 +94,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(f"receive {versionS}")
 			if versionS.startswith((
 				b'\x00\x05(\x08v5.0\x01\x01\x01\x01',
-				b'\x00\x05(\x08seika\x00'
+				b'\x00\x05(\x08seika\x00',
 			)):
 				log.info(f"Found Seika3 old Version connected via {port} Version {versionS}")
 				self.numCells = 40

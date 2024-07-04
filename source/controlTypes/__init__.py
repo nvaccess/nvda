@@ -35,5 +35,5 @@ __all__ = [
 	"TextPosition",
 	"transformRoleStates",
 	"VerticalTextAlign",
-	*deprecatedAliases.__all__
+	*deprecatedAliases.__all__,
 ]

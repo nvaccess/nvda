@@ -73,7 +73,7 @@ def messageBox(
 		message: str,
 		caption: str = wx.MessageBoxCaptionStr,
 		style: int = wx.OK | wx.CENTER,
-		parent: Optional[wx.Window] = None
+		parent: Optional[wx.Window] = None,
 ) -> int:
 	"""Display a message dialog.
 	Avoid using C{wx.MessageDialog} and C{wx.MessageBox} directly.

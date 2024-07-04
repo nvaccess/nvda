@@ -148,7 +148,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			if self._settingsNumLayouts < 1:
 				raise KeyCommandsError(
 					f"{self._lineNum}, settingsSection command must specify the header row for a table"
-					" summarising the settings"
+					" summarising the settings",
 				)
 
 		elif cmd == Command.SETTING.value:
@@ -233,7 +233,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 				if not Regex.TABLE_ROW.value.match(line):
 					raise KeyCommandsError(
 						f"{self._lineNum}, setting command: "
-						"There must be one table row for each keyboard layout"
+						"There must be one table row for each keyboard layout",
 					)
 
 				# This is a table row.
@@ -257,7 +257,7 @@ class KeyCommandsPreprocessor(Preprocessor):
 			raise KeyCommandsError(
 				f"{self._lineNum}, setting command: The keyboard shortcuts must be followed by a blank line. "
 				"Multiple keys must be included in a table. "
-				f"Erroneous key: {key}"
+				f"Erroneous key: {key}",
 			)
 
 		# Finally, the next line should be the description.

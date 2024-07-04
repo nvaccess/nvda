@@ -131,7 +131,7 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}.download"
+			f"{self.name}.download",
 		)
 
 	@property
@@ -143,7 +143,7 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}-{self.addonVersionName}.nvda-addon"
+			f"{self.name}-{self.addonVersionName}.nvda-addon",
 		)
 
 	@property
@@ -155,7 +155,7 @@ class _AddonStoreModel(_AddonGUIModel):
 			lambda m: m[0].model.name == self.name,
 			# add-ons which have been downloaded but
 			# have not been installed yet
-			addonDataManager._downloadsPendingInstall
+			addonDataManager._downloadsPendingInstall,
 		)
 		return (
 			super().isPendingInstall

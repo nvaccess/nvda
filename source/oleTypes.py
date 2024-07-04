@@ -109,30 +109,42 @@ class IEnumOLEVERB(IUnknown):
 class tagOLEVERB(Structure):  # noqa: F405
     pass
 IEnumOLEVERB._methods_ = [
-    COMMETHOD([], HRESULT, 'RemoteNext',
-              ( ['in'], c_ulong, 'celt' ),  # noqa: F405
-              ( ['out'], POINTER(tagOLEVERB), 'rgelt' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pceltFetched' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Skip',
-              ( ['in'], c_ulong, 'celt' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteNext',
+        ( ['in'], c_ulong, 'celt'),  # noqa: F405
+        ( ['out'], POINTER(tagOLEVERB), 'rgelt'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pceltFetched'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Skip',
+        ( ['in'], c_ulong, 'celt'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'Reset'),
-    COMMETHOD([], HRESULT, 'Clone',
-              ( ['out'], POINTER(POINTER(IEnumOLEVERB)), 'ppenum' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Clone',
+        ( ['out'], POINTER(POINTER(IEnumOLEVERB)), 'ppenum'),
+    ),  # noqa: F405
 ]
 class IEnumUnknown(IUnknown):
     _case_insensitive_ = True
     _iid_ = GUID('{00000100-0000-0000-C000-000000000046}')
     _idlflags_ = []
 IEnumUnknown._methods_ = [
-    COMMETHOD([], HRESULT, 'RemoteNext',
-              ( ['in'], c_ulong, 'celt' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IUnknown)), 'rgelt' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pceltFetched' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Skip',
-              ( ['in'], c_ulong, 'celt' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteNext',
+        ( ['in'], c_ulong, 'celt'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IUnknown)), 'rgelt'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pceltFetched'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Skip',
+        ( ['in'], c_ulong, 'celt'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'Reset'),
-    COMMETHOD([], HRESULT, 'Clone',
-              ( ['out'], POINTER(POINTER(IEnumUnknown)), 'ppenum' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Clone',
+        ( ['out'], POINTER(POINTER(IEnumUnknown)), 'ppenum'),
+    ),  # noqa: F405
 ]
 class _RemotableHandle(Structure):  # noqa: F405
     pass
@@ -205,18 +217,24 @@ class IOleContainer(IParseDisplayName):
     _iid_ = GUID('{0000011B-0000-0000-C000-000000000046}')
     _idlflags_ = []
 IParseDisplayName._methods_ = [
-    COMMETHOD([], HRESULT, 'ParseDisplayName',
-              ( ['in'], POINTER(IBindCtx), 'pbc' ),  # noqa: F405
-              ( ['in'], WSTRING, 'pszDisplayName' ),
-              ( ['out'], POINTER(c_ulong), 'pchEaten' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IMoniker)), 'ppmkOut' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'ParseDisplayName',
+        ( ['in'], POINTER(IBindCtx), 'pbc'),  # noqa: F405
+        ( ['in'], WSTRING, 'pszDisplayName'),
+        ( ['out'], POINTER(c_ulong), 'pchEaten'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IMoniker)), 'ppmkOut'),
+    ),  # noqa: F405
 ]
 IOleContainer._methods_ = [
-    COMMETHOD([], HRESULT, 'EnumObjects',
-              ( ['in'], c_ulong, 'grfFlags' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IEnumUnknown)), 'ppenum' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'LockContainer',
-              ( ['in'], c_int, 'fLock' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'EnumObjects',
+        ( ['in'], c_ulong, 'grfFlags'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IEnumUnknown)), 'ppenum'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'LockContainer',
+        ( ['in'], c_int, 'fLock'),
+    ),  # noqa: F405
 ]
 class IOleObject(IUnknown):
     _case_insensitive_ = True
@@ -243,63 +261,101 @@ class IEnumSTATDATA(IUnknown):
     _iid_ = GUID('{00000105-0000-0000-C000-000000000046}')
     _idlflags_ = []
 IOleObject._methods_ = [
-    COMMETHOD([], HRESULT, 'SetClientSite',
-              ( ['in'], POINTER(IOleClientSite), 'pClientSite' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetClientSite',
-              ( ['out'], POINTER(POINTER(IOleClientSite)), 'ppClientSite' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'SetHostNames',
-              ( ['in'], WSTRING, 'szContainerApp' ),
-              ( ['in'], WSTRING, 'szContainerObj' )),
-    COMMETHOD([], HRESULT, 'Close',
-              ( ['in'], c_ulong, 'dwSaveOption' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'SetMoniker',
-              ( ['in'], c_ulong, 'dwWhichMoniker' ),  # noqa: F405
-              ( ['in'], POINTER(IMoniker), 'pmk' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetMoniker',
-              ( ['in'], c_ulong, 'dwAssign' ),  # noqa: F405
-              ( ['in'], c_ulong, 'dwWhichMoniker' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IMoniker)), 'ppmk' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'InitFromData',
-              ( ['in'], POINTER(IDataObject), 'pDataObject' ),  # noqa: F405
-              ( ['in'], c_int, 'fCreation' ),  # noqa: F405
-              ( ['in'], c_ulong, 'dwReserved' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetClipboardData',
-              ( ['in'], c_ulong, 'dwReserved' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IDataObject)), 'ppDataObject' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'DoVerb',
-              ( ['in'], c_int, 'iVerb' ),  # noqa: F405
-              ( ['in'], POINTER(tagMSG), 'lpmsg' ),  # noqa: F405
-              ( ['in'], POINTER(IOleClientSite), 'pActiveSite' ),  # noqa: F405
-              ( ['in'], c_int, 'lindex' ),  # noqa: F405
-              ( ['in'], wireHWND, 'hwndParent' ),
-              ( ['in'], POINTER(tagRECT), 'lprcPosRect' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'EnumVerbs',
-              ( ['out'], POINTER(POINTER(IEnumOLEVERB)), 'ppEnumOleVerb' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'SetClientSite',
+        ( ['in'], POINTER(IOleClientSite), 'pClientSite'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetClientSite',
+        ( ['out'], POINTER(POINTER(IOleClientSite)), 'ppClientSite'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'SetHostNames',
+        ( ['in'], WSTRING, 'szContainerApp'),
+        ( ['in'], WSTRING, 'szContainerObj'),
+    ),
+    COMMETHOD(
+        [], HRESULT, 'Close',
+        ( ['in'], c_ulong, 'dwSaveOption'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'SetMoniker',
+        ( ['in'], c_ulong, 'dwWhichMoniker'),  # noqa: F405
+        ( ['in'], POINTER(IMoniker), 'pmk'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetMoniker',
+        ( ['in'], c_ulong, 'dwAssign'),  # noqa: F405
+        ( ['in'], c_ulong, 'dwWhichMoniker'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IMoniker)), 'ppmk'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'InitFromData',
+        ( ['in'], POINTER(IDataObject), 'pDataObject'),  # noqa: F405
+        ( ['in'], c_int, 'fCreation'),  # noqa: F405
+        ( ['in'], c_ulong, 'dwReserved'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetClipboardData',
+        ( ['in'], c_ulong, 'dwReserved'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IDataObject)), 'ppDataObject'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'DoVerb',
+        ( ['in'], c_int, 'iVerb'),  # noqa: F405
+        ( ['in'], POINTER(tagMSG), 'lpmsg'),  # noqa: F405
+        ( ['in'], POINTER(IOleClientSite), 'pActiveSite'),  # noqa: F405
+        ( ['in'], c_int, 'lindex'),  # noqa: F405
+        ( ['in'], wireHWND, 'hwndParent'),
+        ( ['in'], POINTER(tagRECT), 'lprcPosRect'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'EnumVerbs',
+        ( ['out'], POINTER(POINTER(IEnumOLEVERB)), 'ppEnumOleVerb'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'Update'),
     COMMETHOD([], HRESULT, 'IsUpToDate'),
-    COMMETHOD([], HRESULT, 'GetUserClassID',
-              ( ['out'], POINTER(GUID), 'pClsid' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetUserType',
-              ( ['in'], c_ulong, 'dwFormOfType' ),  # noqa: F405
-              ( ['out'], POINTER(WSTRING), 'pszUserType' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'SetExtent',
-              ( ['in'], c_ulong, 'dwDrawAspect' ),  # noqa: F405
-              ( ['in'], POINTER(tagSIZEL), 'psizel' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetExtent',
-              ( ['in'], c_ulong, 'dwDrawAspect' ),  # noqa: F405
-              ( ['out'], POINTER(tagSIZEL), 'psizel' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Advise',
-              ( ['in'], POINTER(IAdviseSink), 'pAdvSink' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pdwConnection' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Unadvise',
-              ( ['in'], c_ulong, 'dwConnection' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'EnumAdvise',
-              ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenumAdvise' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetMiscStatus',
-              ( ['in'], c_ulong, 'dwAspect' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pdwStatus' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'SetColorScheme',
-              ( ['in'], POINTER(tagLOGPALETTE), 'pLogpal' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetUserClassID',
+        ( ['out'], POINTER(GUID), 'pClsid'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetUserType',
+        ( ['in'], c_ulong, 'dwFormOfType'),  # noqa: F405
+        ( ['out'], POINTER(WSTRING), 'pszUserType'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'SetExtent',
+        ( ['in'], c_ulong, 'dwDrawAspect'),  # noqa: F405
+        ( ['in'], POINTER(tagSIZEL), 'psizel'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetExtent',
+        ( ['in'], c_ulong, 'dwDrawAspect'),  # noqa: F405
+        ( ['out'], POINTER(tagSIZEL), 'psizel'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Advise',
+        ( ['in'], POINTER(IAdviseSink), 'pAdvSink'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pdwConnection'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Unadvise',
+        ( ['in'], c_ulong, 'dwConnection'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'EnumAdvise',
+        ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenumAdvise'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetMiscStatus',
+        ( ['in'], c_ulong, 'dwAspect'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pdwStatus'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'SetColorScheme',
+        ( ['in'], POINTER(tagLOGPALETTE), 'pLogpal'),
+    ),  # noqa: F405
 ]
 class __MIDL_IWinTypes_0005(Union):  # noqa: F405
     pass
@@ -377,15 +433,21 @@ assert sizeof(_userHGLOBAL) == 16, sizeof(_userHGLOBAL)  # noqa: F405
 assert alignment(_userHGLOBAL) == 8, alignment(_userHGLOBAL)  # noqa: F405
 IOleClientSite._methods_ = [
     COMMETHOD([], HRESULT, 'SaveObject'),
-    COMMETHOD([], HRESULT, 'GetMoniker',
-              ( ['in'], c_ulong, 'dwAssign' ),  # noqa: F405
-              ( ['in'], c_ulong, 'dwWhichMoniker' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IMoniker)), 'ppmk' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetContainer',
-              ( ['out'], POINTER(POINTER(IOleContainer)), 'ppContainer' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetMoniker',
+        ( ['in'], c_ulong, 'dwAssign'),  # noqa: F405
+        ( ['in'], c_ulong, 'dwWhichMoniker'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IMoniker)), 'ppmk'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetContainer',
+        ( ['out'], POINTER(POINTER(IOleContainer)), 'ppContainer'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'ShowObject'),
-    COMMETHOD([], HRESULT, 'OnShowWindow',
-              ( ['in'], c_int, 'fShow' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'OnShowWindow',
+        ( ['in'], c_int, 'fShow'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'RequestNewObjectLayout'),
 ]
 class __MIDL_IAdviseSink_0002(Union):  # noqa: F405
@@ -413,36 +475,56 @@ class IEnumFORMATETC(IUnknown):
     _iid_ = GUID('{00000103-0000-0000-C000-000000000046}')
     _idlflags_ = []
 IDataObject._methods_ = [
-    COMMETHOD([], HRESULT, 'GetData',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetcIn' ),  # noqa: F405
-              ( ['out'], POINTER(wireSTGMEDIUM), 'pmedium' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'RemoteGetData',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetcIn' ),  # noqa: F405
-              ( ['out'], POINTER(wireSTGMEDIUM), 'pRemoteMedium' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'RemoteGetDataHere',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetc' ),  # noqa: F405
-              ( ['in', 'out'], POINTER(wireSTGMEDIUM), 'pRemoteMedium' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'QueryGetData',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetc' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'GetCanonicalFormatEtc',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatectIn' ),  # noqa: F405
-              ( ['out'], POINTER(tagFORMATETC), 'pformatetcOut' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'RemoteSetData',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetc' ),  # noqa: F405
-              ( ['in'], POINTER(wireFLAG_STGMEDIUM), 'pmedium' ),  # noqa: F405
-              ( ['in'], c_int, 'fRelease' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'EnumFormatEtc',
-              ( ['in'], c_ulong, 'dwDirection' ),  # noqa: F405
-              ( ['out'], POINTER(POINTER(IEnumFORMATETC)), 'ppenumFormatEtc' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'DAdvise',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetc' ),  # noqa: F405
-              ( ['in'], c_ulong, 'advf' ),  # noqa: F405
-              ( ['in'], POINTER(IAdviseSink), 'pAdvSink' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pdwConnection' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'DUnadvise',
-              ( ['in'], c_ulong, 'dwConnection' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'EnumDAdvise',
-              ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenumAdvise' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetData',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetcIn'),  # noqa: F405
+        ( ['out'], POINTER(wireSTGMEDIUM), 'pmedium'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteGetData',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetcIn'),  # noqa: F405
+        ( ['out'], POINTER(wireSTGMEDIUM), 'pRemoteMedium'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteGetDataHere',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetc'),  # noqa: F405
+        ( ['in', 'out'], POINTER(wireSTGMEDIUM), 'pRemoteMedium'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'QueryGetData',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetc'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'GetCanonicalFormatEtc',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatectIn'),  # noqa: F405
+        ( ['out'], POINTER(tagFORMATETC), 'pformatetcOut'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteSetData',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetc'),  # noqa: F405
+        ( ['in'], POINTER(wireFLAG_STGMEDIUM), 'pmedium'),  # noqa: F405
+        ( ['in'], c_int, 'fRelease'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'EnumFormatEtc',
+        ( ['in'], c_ulong, 'dwDirection'),  # noqa: F405
+        ( ['out'], POINTER(POINTER(IEnumFORMATETC)), 'ppenumFormatEtc'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'DAdvise',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetc'),  # noqa: F405
+        ( ['in'], c_ulong, 'advf'),  # noqa: F405
+        ( ['in'], POINTER(IAdviseSink), 'pAdvSink'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pdwConnection'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'DUnadvise',
+        ( ['in'], c_ulong, 'dwConnection'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'EnumDAdvise',
+        ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenumAdvise'),
+    ),  # noqa: F405
 ]
 class tagPOINT(Structure):  # noqa: F405
     pass
@@ -453,14 +535,20 @@ tagPOINT._fields_ = [
 assert sizeof(tagPOINT) == 8, sizeof(tagPOINT)  # noqa: F405
 assert alignment(tagPOINT) == 4, alignment(tagPOINT)  # noqa: F405
 IAdviseSink._methods_ = [
-    COMMETHOD([], HRESULT, 'RemoteOnDataChange',
-              ( ['in'], POINTER(tagFORMATETC), 'pformatetc' ),  # noqa: F405
-              ( ['in'], POINTER(wireASYNC_STGMEDIUM), 'pStgmed' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'RemoteOnViewChange',
-              ( ['in'], c_ulong, 'dwAspect' ),  # noqa: F405
-              ( ['in'], c_int, 'lindex' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'RemoteOnRename',
-              ( ['in'], POINTER(IMoniker), 'pmk' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteOnDataChange',
+        ( ['in'], POINTER(tagFORMATETC), 'pformatetc'),  # noqa: F405
+        ( ['in'], POINTER(wireASYNC_STGMEDIUM), 'pStgmed'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteOnViewChange',
+        ( ['in'], c_ulong, 'dwAspect'),  # noqa: F405
+        ( ['in'], c_int, 'lindex'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteOnRename',
+        ( ['in'], POINTER(IMoniker), 'pmk'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'RemoteOnSave'),
     COMMETHOD([], HRESULT, 'RemoteOnClose'),
 ]
@@ -484,15 +572,21 @@ assert alignment(_userFLAG_STGMEDIUM) == 4, alignment(_userFLAG_STGMEDIUM)  # no
 class tagSTATDATA(Structure):  # noqa: F405
     pass
 IEnumSTATDATA._methods_ = [
-    COMMETHOD([], HRESULT, 'RemoteNext',
-              ( ['in'], c_ulong, 'celt' ),  # noqa: F405
-              ( ['out'], POINTER(tagSTATDATA), 'rgelt' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pceltFetched' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Skip',
-              ( ['in'], c_ulong, 'celt' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteNext',
+        ( ['in'], c_ulong, 'celt'),  # noqa: F405
+        ( ['out'], POINTER(tagSTATDATA), 'rgelt'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pceltFetched'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Skip',
+        ( ['in'], c_ulong, 'celt'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'Reset'),
-    COMMETHOD([], HRESULT, 'Clone',
-              ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenum' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Clone',
+        ( ['out'], POINTER(POINTER(IEnumSTATDATA)), 'ppenum'),
+    ),  # noqa: F405
 ]
 tagSIZEL._fields_ = [
     ('cx', c_int),  # noqa: F405
@@ -511,15 +605,21 @@ tagMSG._fields_ = [
 assert sizeof(tagMSG) == 28, sizeof(tagMSG)  # noqa: F405
 assert alignment(tagMSG) == 4, alignment(tagMSG)  # noqa: F405
 IEnumFORMATETC._methods_ = [
-    COMMETHOD([], HRESULT, 'RemoteNext',
-              ( ['in'], c_ulong, 'celt' ),  # noqa: F405
-              ( ['out'], POINTER(tagFORMATETC), 'rgelt' ),  # noqa: F405
-              ( ['out'], POINTER(c_ulong), 'pceltFetched' )),  # noqa: F405
-    COMMETHOD([], HRESULT, 'Skip',
-              ( ['in'], c_ulong, 'celt' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'RemoteNext',
+        ( ['in'], c_ulong, 'celt'),  # noqa: F405
+        ( ['out'], POINTER(tagFORMATETC), 'rgelt'),  # noqa: F405
+        ( ['out'], POINTER(c_ulong), 'pceltFetched'),
+    ),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Skip',
+        ( ['in'], c_ulong, 'celt'),
+    ),  # noqa: F405
     COMMETHOD([], HRESULT, 'Reset'),
-    COMMETHOD([], HRESULT, 'Clone',
-              ( ['out'], POINTER(POINTER(IEnumFORMATETC)), 'ppenum' )),  # noqa: F405
+    COMMETHOD(
+        [], HRESULT, 'Clone',
+        ( ['out'], POINTER(POINTER(IEnumFORMATETC)), 'ppenum'),
+    ),  # noqa: F405
 ]
 _FLAGGED_BYTE_BLOB._fields_ = [
     ('fFlags', c_ulong),  # noqa: F405

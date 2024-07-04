@@ -64,7 +64,8 @@ def read_portable_copy_dialog():
 	spy.emulateKeyPress("alt+p")
 
 	spy.wait_for_specific_speech(
-		"To create a portable copy of NVDA, please select the path and other options and then press Continue")
+		"To create a portable copy of NVDA, please select the path and other options and then press Continue",
+ )
 	
 	# exit NVDA Installer
 	spy.emulateKeyPress("escape")

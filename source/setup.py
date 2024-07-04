@@ -105,8 +105,8 @@ def getRecursiveDataFiles(dest: str, source: str, excludes: tuple = ()) -> list[
 				getRecursiveDataFiles(
 					os.path.join(dest, dirName),
 					os.path.join(source, dirName),
-					excludes=excludes
-				)
+					excludes=excludes,
+				),
 			)
 	return rulesList
 
@@ -115,7 +115,7 @@ def _genManifestTemplate(shouldHaveUIAccess: bool) -> tuple[int, int, bytes]:
 	return (
 		RT_MANIFEST,
 		1,
-		(_manifestTemplate % {"uiAccess": shouldHaveUIAccess}).encode("utf-8")
+		(_manifestTemplate % {"uiAccess": shouldHaveUIAccess}).encode("utf-8"),
 	)
 
 
@@ -132,7 +132,7 @@ _py2ExeWindows = [
 			"product_version": version,
 			"copyright": NVDAcopyright,
 			"company_name": publisher,
-		}
+		},
 	},
 	# The nvda_uiAccess target will be added at runtime if required.
 	{
@@ -146,24 +146,26 @@ _py2ExeWindows = [
 			"product_version": version,
 			"copyright": NVDAcopyright,
 			"company_name": publisher,
-		}
+		},
 	},
 ]
 if _partialArgs.uiAccess:
-	_py2ExeWindows.insert(1, {
-		"script": "nvda.pyw",
-		"dest_base": "nvda_uiAccess",
-		"icon_resources": [(1, "images/nvda.ico")],
-		"other_resources": [_genManifestTemplate(shouldHaveUIAccess=True)],
-		"version_info": {
-			"version": formatBuildVersionString(),
-			"description": "NVDA application (has UIAccess)",
-			"product_name": name,
-			"product_version": version,
-			"copyright": NVDAcopyright,
-			"company_name": publisher,
-		}
-	})
+	_py2ExeWindows.insert(
+     1, {
+      "script": "nvda.pyw",
+      "dest_base": "nvda_uiAccess",
+      "icon_resources": [(1, "images/nvda.ico")],
+      "other_resources": [_genManifestTemplate(shouldHaveUIAccess=True)],
+      "version_info": {
+       "version": formatBuildVersionString(),
+       "description": "NVDA application (has UIAccess)",
+       "product_name": name,
+       "product_version": version,
+       "copyright": NVDAcopyright,
+       "company_name": publisher,
+      },
+     },
+ )
 
 
 freeze(
@@ -259,39 +261,40 @@ freeze(
 		(".", glob("../miscDeps/python/*.dll")),
 		(".", ['message.html']),
 		(".", [os.path.join(sys.base_prefix, "python3.dll")]),
-		] + (
+ ] + (
 	getLocaleDataFiles()
 	+ getRecursiveDataFiles(
 		"synthDrivers",
 		"synthDrivers",
 		excludes=tuple(
 			f"*{ext}" for ext in importlib.machinery.all_suffixes()
-			) + (
+  ) + (
 		"*.exp",
 		"*.lib",
-		"*.pdb"
-	))
+		"*.pdb",
+  ),
+ )
 	+ getRecursiveDataFiles(
 		"brailleDisplayDrivers",
 		"brailleDisplayDrivers",
 		excludes=tuple(
 			f"*{ext}" for ext in importlib.machinery.all_suffixes()
-			) + (
+  ) + (
 		"*.md",
-		)
+		),
 	)
 	+ getRecursiveDataFiles(
 		"documentation",
 		"../user_docs",
 		excludes=tuple(
 			f"*{ext}" for ext in importlib.machinery.all_suffixes()
-			) + (
+  ) + (
 		"__pycache__",
 		"*.md",
 		"*/user_docs/styles.css",
 		"*/user_docs/numberedHeadings.css",
-		"*/developerGuide.*"
-		)
+		"*/developerGuide.*",
+		),
 	)
 	),
 )

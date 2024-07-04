@@ -72,7 +72,7 @@ def hasUiAccess():
 	ctypes.windll.advapi32.OpenProcessToken(
 		ctypes.windll.kernel32.GetCurrentProcess(),
 		winKernel.MAXIMUM_ALLOWED,
-		ctypes.byref(token)
+		ctypes.byref(token),
 	)
 	try:
 		val = ctypes.wintypes.DWORD()
@@ -81,7 +81,7 @@ def hasUiAccess():
 			TokenUIAccess,
 			ctypes.byref(val),
 			ctypes.sizeof(ctypes.wintypes.DWORD),
-			ctypes.byref(ctypes.wintypes.DWORD())
+			ctypes.byref(ctypes.wintypes.DWORD()),
 		)
 		return bool(val.value)
 	finally:
@@ -103,7 +103,7 @@ class TokenOrigin(ctypes.Structure):
 	This structure is used in calls to the Win32 GetTokenInformation function.
 	"""
 	_fields_ = [
-		("originatingLogonSession", ctypes.c_ulonglong)  # OriginatingLogonSession in C structure
+		("originatingLogonSession", ctypes.c_ulonglong),  # OriginatingLogonSession in C structure
 	]
 
 
@@ -122,7 +122,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 	if not ctypes.windll.advapi32.OpenProcessToken(
 		processHandle,
 		winKernel.MAXIMUM_ALLOWED,
-		ctypes.byref(token)
+		ctypes.byref(token),
 	):
 		raise ctypes.WinError()
 	try:
@@ -132,7 +132,7 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 			TOKEN_ORIGIN,
 			ctypes.byref(val),
 			ctypes.sizeof(val),
-			ctypes.byref(ctypes.wintypes.DWORD())
+			ctypes.byref(ctypes.wintypes.DWORD()),
 		):
 			raise ctypes.WinError()
 		return val.originatingLogonSession
@@ -179,7 +179,7 @@ def _getDesktopName() -> str:
 		UOI_NAME,
 		byref(name),
 		sizeof(name),
-		None
+		None,
 	)
 	return name.value
 
@@ -231,7 +231,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		self.funcRes: Optional[_execAndPumpResT] = None
 		fname = repr(func)
 		super().__init__(
-			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
+			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})",
 		)
 		self.threadExc: Exception | None = None
 		self.start()

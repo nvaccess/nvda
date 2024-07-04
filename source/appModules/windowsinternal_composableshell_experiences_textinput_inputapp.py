@@ -177,8 +177,8 @@ class AppModule(appModuleHandler.AppModule):
 		if isinstance(
 			obj, (
 				ImeCandidateItem,  # IME candidate items
-				NavigationMenuItem  # Windows 11 emoji panel navigation menu items
-			)
+				NavigationMenuItem,  # Windows 11 emoji panel navigation menu items
+			),
 		):
 			return nextHandler()
 		# #7273: When this is fired on categories,
@@ -216,11 +216,13 @@ class AppModule(appModuleHandler.AppModule):
 				obj = candidate.firstChild
 		if obj is not None and api.setNavigatorObject(obj):
 			obj.reportFocus()
-			braille.handler.message(braille.getPropertiesBraille(
-				name=obj.name,
-				role=obj.role,
-				positionInfo=obj.positionInfo
-			))
+			braille.handler.message(
+       braille.getPropertiesBraille(
+        name=obj.name,
+        role=obj.role,
+        positionInfo=obj.positionInfo,
+       ),
+   )
 			# Cache selected item.
 			self._recentlySelected = obj.name
 		else:
@@ -232,7 +234,7 @@ class AppModule(appModuleHandler.AppModule):
 	# Emoji panel for build 16299 and 17134.
 	_classicEmojiPanelAutomationIds = (
 		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarItemControl",
-		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton"
+		"TEMPLATE_PART_ExpressiveInputFullViewFuntionBarCloseButton",
 	)
 
 	def event_UIA_window_windowOpen(self, obj, nextHandler):
@@ -320,10 +322,12 @@ class AppModule(appModuleHandler.AppModule):
 			(obj.UIAElement.cachedClassName in ("CRootKey", "GridViewItem"))
 			# Just ignore useless clipboard status.
 			# Also top emoji search result must be announced for better user experience.
-			or (obj.UIAAutomationId in (
-				"TEMPLATE_PART_ClipboardItemsList",
-				"TEMPLATE_PART_Search_TextBlock"
-			))
+			or (
+       obj.UIAAutomationId in (
+        "TEMPLATE_PART_ClipboardItemsList",
+        "TEMPLATE_PART_Search_TextBlock",
+       )
+   )
 			# And no, emoji entries should not be announced here.
 			or (self._recentlySelected is not None and self._recentlySelected in obj.name)
 		):
@@ -352,7 +356,7 @@ class AppModule(appModuleHandler.AppModule):
 			obj.UIAAutomationId not in (
 				"TEMPLATE_PART_ExpressionFullViewItemsGrid",
 				"TEMPLATE_PART_ClipboardItemIndex",
-				"CandidateWindowControl"
+				"CandidateWindowControl",
 			)
 		):
 			ui.message(obj.name)
@@ -364,7 +368,7 @@ class AppModule(appModuleHandler.AppModule):
 			nextHandler: Callable[[], None],
 			displayString: str | None = None,
 			activityId: str | None = None,
-			**kwargs
+			**kwargs,
 	):
 		# #16009: Windows 11 modern keyboard uses UIA notification event to announce things.
 		# These include voice typing availability message and appearance of Suggested Actions
