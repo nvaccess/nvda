@@ -775,7 +775,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		focusObj = api.getFocusObject()
 		name = focusObj.name
 		windowControlID = focusObj.windowControlID
-		ui.message("Control ID for %s window: %d" % (name, windowControlID))
+		ui.message(f"Control ID for {name} window: {windowControlID}")
 ``` 
 ### Events {#events}
 
@@ -879,26 +879,25 @@ Notice that the command is specific to edit fields; i.e. it only works while you
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
 
-    --- start ---
-    import appModuleHandler
-    from scriptHandler import script
-    from NVDAObjects.IAccessible import IAccessible
-    import controlTypes
-    import ui
+```py
+import appModuleHandler
+from scriptHandler import script
+from NVDAObjects.IAccessible import IAccessible
+import controlTypes
+import ui
     
-    class AppModule(appModuleHandler.AppModule):
+class AppModule(appModuleHandler.AppModule):
     
-    	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-    		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
-    			clsList.insert(0, EnhancedEditField)
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
+			clsList.insert(0, EnhancedEditField)
     
-    class EnhancedEditField(IAccessible):
+class EnhancedEditField(IAccessible):
     
-    	@script(gesture="kb:NVDA+l")
-    	def script_reportLength(self, gesture):
-    		ui.message("%d" % len(self.value))
-    
-    --- end ---
+	@script(gesture="kb:NVDA+l")
+	def script_reportLength(self, gesture):
+		ui.message(f"len(self.value)")
+```
 ### Making Small Changes to an NVDA Object in App Modules {#smallChangesToNVDAObjectInAppModules}
 
 Sometimes, you may wish to make only small changes to an NVDA Object in an application, such as overriding its name or role.
