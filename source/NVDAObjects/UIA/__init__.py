@@ -256,46 +256,46 @@ class UIATextInfo(textInfos.TextInfo):
 			if fetchAnnotationTypes:
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
-			fetcher=BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
-		fetch=lambda id: fetcher.getValue(id,ignoreMixedValues=ignoreMixedValues)
+			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange,IDs)
+		fetch = lambda id: fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
 		if formatConfig["reportFontName"]:
-			val=fetch(UIAHandler.UIA_FontNameAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField["font-name"]=val
+			val = fetch(UIAHandler.UIA_FontNameAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
+				formatField["font-name"] = val
 		if formatConfig["reportFontSize"]:
-			val=fetch(UIAHandler.UIA_FontSizeAttributeId)
+			val = fetch(UIAHandler.UIA_FontSizeAttributeId)
 			if isinstance(val, numbers.Number):
 				# Translators: Abbreviation for points, a measurement of font size.
 				formatField["font-size"] = pgettext("font size", "%s pt") % float(val)
 		if formatConfig["reportFontAttributes"]:
-			val=fetch(UIAHandler.UIA_FontWeightAttributeId)
+			val = fetch(UIAHandler.UIA_FontWeightAttributeId)
 			if isinstance(val,int):
-				formatField['bold']=(val>=700)
-			val=fetch(UIAHandler.UIA_IsItalicAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField['italic']=val
-			val=fetch(UIAHandler.UIA_UnderlineStyleAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField['underline']=bool(val)
-			val=fetch(UIAHandler.UIA_StrikethroughStyleAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField['strikethrough']=bool(val)
+				formatField['bold'] = (val >= 700)
+			val = fetch(UIAHandler.UIA_IsItalicAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
+				formatField['italic'] = val
+			val = fetch(UIAHandler.UIA_UnderlineStyleAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
+				formatField['underline'] = bool(val)
+			val = fetch(UIAHandler.UIA_StrikethroughStyleAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
+				formatField['strikethrough'] = bool(val)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
-			textPosition=None
-			val=fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue and val:
+			textPosition = None
+			val = fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue and val:
 				textPosition = TextPosition.SUPERSCRIPT
 			else:
-				val=fetch(UIAHandler.UIA_IsSubscriptAttributeId)
-				if val!=UIAHandler.handler.reservedNotSupportedValue and val:
+				val = fetch(UIAHandler.UIA_IsSubscriptAttributeId)
+				if val != UIAHandler.handler.reservedNotSupportedValue and val:
 					textPosition = TextPosition.SUBSCRIPT
 				else:
 					textPosition = TextPosition.BASELINE
 			formatField['text-position'] = textPosition
 		if formatConfig['reportStyle']:
-			val=fetch(UIAHandler.UIA_StyleNameAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
-				formatField["style"]=val
+			val = fetch(UIAHandler.UIA_StyleNameAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
+				formatField["style"] = val
 		if formatConfig["reportParagraphIndentation"]:
 			formatField.update(self._getFormatFieldIndent(fetch))
 		if formatConfig["reportAlignment"]:
@@ -304,24 +304,24 @@ class UIATextInfo(textInfos.TextInfo):
 			if textAlign:
 				formatField["text-align"] = textAlign
 		if formatConfig["reportColor"]:
-			val=fetch(UIAHandler.UIA_BackgroundColorAttributeId)
+			val = fetch(UIAHandler.UIA_BackgroundColorAttributeId)
 			if isinstance(val,int):
-				formatField['background-color']=colors.RGB.fromCOLORREF(val)
-			val=fetch(UIAHandler.UIA_ForegroundColorAttributeId)
+				formatField['background-color'] = colors.RGB.fromCOLORREF(val)
+			val = fetch(UIAHandler.UIA_ForegroundColorAttributeId)
 			if isinstance(val,int):
-				formatField['color']=colors.RGB.fromCOLORREF(val)
+				formatField['color'] = colors.RGB.fromCOLORREF(val)
 		if formatConfig['reportLineSpacing']:
-			val=fetch(UIAHandler.UIA_LineSpacingAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
+			val = fetch(UIAHandler.UIA_LineSpacingAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
 				if val:
-					formatField['line-spacing']=val
+					formatField['line-spacing'] = val
 		if formatConfig['reportLinks']:
-			val=fetch(UIAHandler.UIA_LinkAttributeId)
-			if val!=UIAHandler.handler.reservedNotSupportedValue:
+			val = fetch(UIAHandler.UIA_LinkAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue:
 				if val:
 					formatField["link"] = True
 		if formatConfig["reportHeadings"]:
-			styleIDValue=fetch(UIAHandler.UIA_StyleIdAttributeId)
+			styleIDValue = fetch(UIAHandler.UIA_StyleIdAttributeId)
 			# #9842: styleIDValue can sometimes be a pointer to IUnknown.
 			# In Python 3, comparing an int with a pointer raises a TypeError.
 			if (
@@ -330,7 +330,7 @@ class UIATextInfo(textInfos.TextInfo):
 			):
 				formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 		if fetchAnnotationTypes:
-			annotationTypes=fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
+			annotationTypes = fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
 			# Some UIA implementations return a single value rather than a tuple.
 			# Always mutate to a tuple to allow for a generic x in y matching
 			if not isinstance(annotationTypes, tuple):
