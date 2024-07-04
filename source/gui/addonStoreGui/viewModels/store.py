@@ -153,7 +153,7 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "Ca&ncel install"),
 				actionHandler=self.cancelInstallForAddon,
 				validCheck=lambda aVM: aVM.canUseCancelInstallAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon

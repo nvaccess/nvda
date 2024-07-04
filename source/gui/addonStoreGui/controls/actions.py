@@ -159,7 +159,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				displayName=pgettext("addonStore", "Ca&ncel install of selected add-ons"),
 				actionHandler=self._storeVM.cancelInstallForAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseCancelInstallAction(),
-				actionTarget=self._selectedAddons
+				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
