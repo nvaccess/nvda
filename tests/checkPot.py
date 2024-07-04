@@ -55,7 +55,6 @@ EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
 	"Display",
 	"left",
 	"right",
-	"E&xit",
 	"Error renaming profile.",
 	"Use this profile for:",
 	"This change requires administrator privileges.",

@@ -849,9 +849,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		settingsSizerHelper.addItem(self.askToExitCheckBox)
 		self.bindHelpEvent("GeneralSettingsShowExitOptions", self.askToExitCheckBox)
 
-		# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 		self.playStartAndExitSoundsCheckBox = wx.CheckBox(
 			self,
+			# Translators: The label for a setting in general settings to play sounds when NVDA starts or exits.
 			label=_("&Play sounds when starting or exiting NVDA"),
 		)
 		self.bindHelpEvent("GeneralSettingsPlaySounds", self.playStartAndExitSoundsCheckBox)
@@ -919,9 +919,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
 		if updateCheck:
-			# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA (if not checked, user must check for updates manually).
 			item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
 				self,
+				# Translators: The label of a checkbox in general settings to toggle automatic checking for updated versions of NVDA.
+				# If not checked, user must check for updates manually.
 				label=_("Automatically check for &updates to NVDA"),
 			)
 			self.bindHelpEvent("GeneralSettingsCheckForUpdates", self.autoCheckForUpdatesCheckBox)
@@ -930,10 +931,10 @@ class GeneralSettingsPanel(SettingsPanel):
 				item.Disable()
 			settingsSizerHelper.addItem(item)
 
-			# Translators: The label of a checkbox in general settings to toggle startup notifications
-			# for a pending NVDA update.
 			item = self.notifyForPendingUpdateCheckBox = wx.CheckBox(
 				self,
+				# Translators: The label of a checkbox in general settings to toggle startup notifications
+				# for a pending NVDA update.
 				label=_("Notify for &pending update on startup"),
 			)
 			self.bindHelpEvent("GeneralSettingsNotifyPendingUpdates", self.notifyForPendingUpdateCheckBox)
@@ -982,9 +983,10 @@ class GeneralSettingsPanel(SettingsPanel):
 				break
 			except installer.RetriableFailure:
 				log.debugWarning("Error when copying settings to system config", exc_info=True)
-				# Translators: a message dialog asking to retry or cancel when copying settings  fails
 				message = _(
-					"Unable to copy a file. Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to.",
+					# Translators: a message dialog asking to retry or cancel when copying settings  fails
+					"Unable to copy a file. "
+					"Perhaps it is currently being used by another process or you have run out of disc space on the drive you are copying to.",
 				)
 				# Translators: the title of a retry cancel dialog when copying settings  fails
 				title = _("Error Copying")
@@ -1002,9 +1004,10 @@ class GeneralSettingsPanel(SettingsPanel):
 			# Translators: The message displayed when errors were found while trying to copy current configuration to system settings.
 			gui.messageBox(_("Error copying NVDA user settings"), _("Error"), wx.OK | wx.ICON_ERROR, self)
 		else:
-			# Translators: The message displayed when copying configuration to system settings was successful.
 			gui.messageBox(
+				# Translators: The message displayed when copying configuration to system settings was successful.
 				_("Successfully copied NVDA user settings"),
+				# Translators: The message title displayed when copying configuration to system settings was successful.
 				_("Success"),
 				wx.OK | wx.ICON_INFORMATION,
 				self,
@@ -1059,8 +1062,8 @@ class LanguageRestartDialog(
 		super(LanguageRestartDialog, self).__init__(parent, title=_("Language Configuration Change"))
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
-		# Translators: The message displayed after NVDA interface language has been changed.
 		sHelper.addItem(
+			# Translators: The message displayed after NVDA interface language has been changed.
 			wx.StaticText(self, label=_("NVDA must be restarted for the new language to take effect.")),
 		)
 
@@ -2137,11 +2140,11 @@ class InputCompositionPanel(SettingsPanel):
 	helpId = "InputCompositionSettings"
 
 	def makeSettings(self, settingsSizer):
-		# Translators: This is the label for a checkbox in the
-		# Input composition settings panel.
 		self.autoReportAllCandidatesCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
+			# Translators: This is the label for a checkbox in the
+			# Input composition settings panel.
 			label=_("Automatically report all available &candidates"),
 		)
 		self.bindHelpEvent("InputCompositionReportAllCandidates", self.autoReportAllCandidatesCheckBox)
@@ -2149,11 +2152,11 @@ class InputCompositionPanel(SettingsPanel):
 			config.conf["inputComposition"]["autoReportAllCandidates"],
 		)
 		settingsSizer.Add(self.autoReportAllCandidatesCheckBox, border=10, flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# Input composition settings panel.
 		self.announceSelectedCandidateCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
+			# Translators: This is the label for a checkbox in the
+			# Input composition settings panel.
 			label=_("Announce &selected candidate"),
 		)
 		self.bindHelpEvent(
@@ -2164,11 +2167,11 @@ class InputCompositionPanel(SettingsPanel):
 			config.conf["inputComposition"]["announceSelectedCandidate"],
 		)
 		settingsSizer.Add(self.announceSelectedCandidateCheckBox, border=10, flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# Input composition settings panel.
 		self.candidateIncludesShortCharacterDescriptionCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
+			# Translators: This is the label for a checkbox in the
+			# Input composition settings panel.
 			label=_("Always include short character &description when announcing candidates"),
 		)
 		self.bindHelpEvent(
@@ -2179,11 +2182,11 @@ class InputCompositionPanel(SettingsPanel):
 			config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"],
 		)
 		settingsSizer.Add(self.candidateIncludesShortCharacterDescriptionCheckBox, border=10, flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# Input composition settings panel.
 		self.reportReadingStringChangesCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
+			# Translators: This is the label for a checkbox in the
+			# Input composition settings panel.
 			label=_("Report changes to the &reading string"),
 		)
 		self.bindHelpEvent(
@@ -2194,11 +2197,11 @@ class InputCompositionPanel(SettingsPanel):
 			config.conf["inputComposition"]["reportReadingStringChanges"],
 		)
 		settingsSizer.Add(self.reportReadingStringChangesCheckBox, border=10, flag=wx.BOTTOM)
-		# Translators: This is the label for a checkbox in the
-		# Input composition settings panel.
 		self.reportCompositionStringChangesCheckBox = wx.CheckBox(
 			self,
 			wx.ID_ANY,
+			# Translators: This is the label for a checkbox in the
+			# Input composition settings panel.
 			label=_("Report changes to the &composition string"),
 		)
 		self.bindHelpEvent(
@@ -3229,10 +3232,10 @@ class AdvancedPanelControls(
 		UIAGroup = guiHelper.BoxSizerHelper(self, sizer=UIASizer)
 		sHelper.addItem(UIAGroup)
 
-		# Translators: This is the label for a combo box for selecting the
-		# means of registering for UI Automation events in the advanced settings panel.
-		# Choices are automatic, selective, and global.
 		selectiveUIAEventRegistrationComboText = _(
+			# Translators: This is the label for a combo box for selecting the
+			# means of registering for UI Automation events in the advanced settings panel.
+			# Choices are automatic, selective, and global.
 			"Regi&stration for UI Automation events and property changes:",
 		)
 		selectiveUIAEventRegistrationChoices = [
@@ -5207,9 +5210,11 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter()
 		for index, symbol in enumerate(self.symbols):
 			if identifier == symbol.identifier:
-				# Translators: An error reported in the Symbol Pronunciation dialog when adding a symbol that is already present.
 				gui.messageBox(
+					# Translators: An error reported in the Symbol Pronunciation dialog
+					# when adding a symbol that is already present.
 					_('Symbol "%s" is already present.') % identifier,
+					# Translators: title of an error message
 					_("Error"),
 					wx.OK | wx.ICON_ERROR,
 				)

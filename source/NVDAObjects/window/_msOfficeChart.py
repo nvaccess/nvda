@@ -433,7 +433,8 @@ class OfficeChartElementBase(Window):
 		if self.elementID == xlSeries:
 			if self.arg2 == -1:
 				ui.message(
-					_("Series color: {colorName} ").format(
+					# Translators: Message to be spoken to report Series Color
+					_("Series color: {colorName}").format(
 						colorName=colors.RGB.fromCOLORREF(
 							int(self.officeChartObject.SeriesCollection(self.arg1).Interior.Color),
 						).name,
@@ -786,8 +787,8 @@ class OfficeChartElementSeries(OfficeChartElementList):
 
 	def script_reportColor(self, gesture):
 		if self.officeChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
-			# Translators: Message to be spoken to report Slice Color in Pie Chart
 			ui.message(
+				# Translators: Message to be spoken to report Slice Color in Pie Chart
 				_("Slice color: {colorName} ").format(
 					colorName=colors.RGB.fromCOLORREF(
 						int(
@@ -799,9 +800,9 @@ class OfficeChartElementSeries(OfficeChartElementList):
 				),
 			)
 		else:
-			# Translators: Message to be spoken to report Series Color
 			ui.message(
-				_("Series color: {colorName} ").format(
+				# Translators: Message to be spoken to report Series Color
+				_("Series color: {colorName}").format(
 					colorName=colors.RGB.fromCOLORREF(
 						int(self.officeChartObject.SeriesCollection(self.seriesIndex).Interior.Color),
 					).name,
@@ -911,9 +912,9 @@ class OfficeChartElementPoint(OfficeChartElementBase):
 
 				if self.officeChartObject.ChartType in (xlPie, xlPieExploded, xlPieOfPie):
 					total = math.fsum(self.officeChartObject.SeriesCollection(arg1).Values)
-					# Translators: Details about a slice of a pie chart.
-					# For example, this might report "fraction 25.25 percent slice 1 of 5"
 					output += _(
+						# Translators: Details about a slice of a pie chart.
+						# For example, this might report "fraction 25.25 percent slice 1 of 5"
 						" fraction {fractionValue:.2f} Percent slice {pointIndex} of {pointCount}",
 					).format(
 						fractionValue=self.officeChartObject.SeriesCollection(arg1).Values[arg2 - 1]
@@ -1069,8 +1070,8 @@ class OfficeChartElementTrendline(OfficeChartElementBase):
 			label = re.sub(r"([a-zA-Z]+)([-]*[04-9][0-9]*)", r"\1 to the power \2", label)
 			# Translators: Substitute - by minus in trendline equations.
 			label = label.replace("-", _(" minus "))
-			# Translators: This message gives trendline type and name for selected series
 			output = _(
+				# Translators: This message gives trendline type and name for selected series
 				"{seriesName} trendline type: {trendlineType}, name: {trendlineName}, label: {trendlineLabel} ",
 			).format(
 				seriesName=self.officeChartObject.SeriesCollection(self.seriesIndex).Name,
@@ -1125,9 +1126,10 @@ class OfficeChartElementChartArea(OfficeChartElementBase):
 
 	def _getChartElementText(self, ElementID, arg1, arg2, reportExtraInfo=False):
 		if reportExtraInfo:
-			# Translators: Details about the chart area in a Microsoft Office chart.
 			return _(
-				"Chart area, height: {chartAreaHeight}, width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}",
+				# Translators: Details about the chart area in a Microsoft Office chart.
+				"Chart area, height: {chartAreaHeight}, "
+				"width: {chartAreaWidth}, top: {chartAreaTop}, left: {chartAreaLeft}",
 			).format(
 				chartAreaHeight=self.officeChartObject.ChartArea.Height,
 				chartAreaWidth=self.officeChartObject.ChartArea.Width,
@@ -1155,9 +1157,12 @@ class OfficeChartElementPlotArea(OfficeChartElementBase):
 	def _getChartElementText(self, ElementID, arg1, arg2, reportExtraInfo=False):
 		if reportExtraInfo:
 			# useing {:.0f} to remove fractions
-			# Translators: Details about the plot area of a Microsoft Office chart.
 			return _(
-				"Plot area, inside height: {plotAreaInsideHeight:.0f}, inside width: {plotAreaInsideWidth:.0f}, inside top: {plotAreaInsideTop:.0f}, inside left: {plotAreaInsideLeft:.0f}",
+				# Translators: Details about the plot area of a Microsoft Office chart.
+				"Plot area, inside height: {plotAreaInsideHeight:.0f}, "
+				"inside width: {plotAreaInsideWidth:.0f}, "
+				"inside top: {plotAreaInsideTop:.0f}, "
+				"inside left: {plotAreaInsideLeft:.0f}",
 			).format(
 				plotAreaInsideHeight=self.officeChartObject.PlotArea.InsideHeight,
 				plotAreaInsideWidth=self.officeChartObject.PlotArea.InsideWidth,

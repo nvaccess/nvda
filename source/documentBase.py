@@ -573,8 +573,8 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 			config.conf["documentFormatting"]["includeLayoutTables"] = True
 		ui.message(state)
 
-	# Translators: Input help mode message for include layout tables command.
 	script_toggleIncludeLayoutTables.__doc__ = _(
+		# Translators: Input help mode message for include layout tables command.
 		"Toggles on and off the inclusion of layout tables in browse mode",
 	)
 

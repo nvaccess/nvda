@@ -203,10 +203,11 @@ class MainFrame(wx.Frame):
 
 	def onRevertToDefaultConfigurationCommand(self, evt):
 		queueHandler.queueFunction(queueHandler.eventQueue, core.resetConfiguration, factoryDefaults=True)
-		# Translators: Reported when configuration has been restored to defaults by using restore configuration to factory defaults item in NVDA menu.
 		queueHandler.queueFunction(
 			queueHandler.eventQueue,
 			ui.message,
+			# Translators: Reported when configuration has been restored to defaults,
+			# by using restore configuration to factory defaults item in NVDA menu.
 			_("Configuration restored to factory defaults"),
 		)
 
@@ -220,9 +221,11 @@ class MainFrame(wx.Frame):
 			# Translators: Reported when current configuration has been saved.
 			queueHandler.queueFunction(queueHandler.eventQueue, ui.message, _("Configuration saved"))
 		except PermissionError:
-			# Translators: Message shown when current configuration cannot be saved such as when running NVDA from a CD.
 			messageBox(
+				# Translators: Message shown when current configuration cannot be saved,
+				# such as when running NVDA from a CD.
 				_("Could not save configuration - probably read only file system"),
+				# Translators: the title of an error message dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
@@ -235,10 +238,11 @@ class MainFrame(wx.Frame):
 		except SettingsDialog.MultiInstanceErrorWithDialog as errorWithDialog:
 			errorWithDialog.dialog.SetFocus()
 		except MultiCategorySettingsDialog.CategoryUnavailableError:
-			# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog
-			# (example: when trying to open touch interaction settings on an unsupported system).
 			messageBox(
+				# Translators: Message shown when trying to open an unavailable category of a multi category settings dialog.
+				# Example: when trying to open touch interaction settings on an unsupported system.
 				_("The settings panel you tried to open is unavailable on this system."),
+				# Translators: the title of an error message dialog
 				_("Error"),
 				style=wx.OK | wx.ICON_ERROR,
 			)
@@ -482,9 +486,13 @@ class MainFrame(wx.Frame):
 	def onRunCOMRegistrationFixesCommand(self, evt):
 		if (
 			messageBox(
-				# Translators: A message to warn the user when starting the COM Registration Fixing tool
 				_(
-					"You are about to run the COM Registration Fixing tool. This tool will try to fix common system problems that stop NVDA from being able to access content in many programs including Firefox and Internet Explorer. This tool must make changes to the System registry and therefore requires administrative access. Are you sure you wish to proceed?",
+					# Translators: A message to warn the user when starting the COM Registration Fixing tool
+					"You are about to run the COM Registration Fixing tool. "
+					"This tool will try to fix common system problems that stop NVDA from being able to access content "
+					"in many programs including Firefox and Internet Explorer. "
+					"This tool must make changes to the System registry and therefore requires administrative access. "
+					"Are you sure you wish to proceed?",
 				),
 				# Translators: The title of the warning dialog displayed when launching the COM Registration Fixing tool
 				_("Warning"),
@@ -561,9 +569,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			item = menu_tools.Append(wx.ID_ANY, _("View &log"))
 			self.Bind(wx.EVT_MENU, frame.onViewLogCommand, item)
 
-			# Translators: The label for the menu item to toggle Speech Viewer.
 			item = self.menu_tools_toggleSpeechViewer = menu_tools.AppendCheckItem(
 				wx.ID_ANY,
+				# Translators: The label for the menu item to toggle Speech Viewer.
 				_("&Speech viewer"),
 			)
 			item.Check(speechViewer.isActive)
@@ -623,7 +631,13 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		self._appendPendingUpdateSection(frame)
 
 		self.menu.AppendSeparator()
-		item = self.menu.Append(wx.ID_EXIT, _("E&xit"), _("Exit NVDA"))
+		item = self.menu.Append(
+			wx.ID_EXIT,
+			# Translators: The label for the menu item to exit NVDA
+			_("E&xit"),
+			# Translators: The help string for the menu item to exit NVDA
+			_("Exit NVDA"),
+		)
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)

@@ -648,8 +648,8 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		# Use a timer because timers aren't re-entrant.
 		self._guiExecTimer = gui.NonReEntrantTimer(self._guiExecNotify)
 		gui.mainFrame.prePopup()
-		# Translators: The title of the dialog displayed while downloading an NVDA update.
 		self._progressDialog = wx.ProgressDialog(
+			# Translators: The title of the dialog displayed while downloading an NVDA update.
 			_("Downloading Update"),
 			# Translators: The progress message indicating that a connection is being established.
 			_("Connecting"),

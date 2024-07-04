@@ -155,8 +155,8 @@ def doStartupDialogs():
 		import wx
 
 		gui.messageBox(
-			# Translators: A message informing the user that there are errors in the configuration file.
 			_(
+				# Translators: A message informing the user that there are errors in the configuration file.
 				"Your configuration file contains errors. "
 				"Your configuration has been reset to factory defaults.\n"
 				"More details about the errors can be found in the log file.",

@@ -142,10 +142,10 @@ class ReportLineIndentation(DisplayStringIntEnum):
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with tones.
 			ReportLineIndentation.TONES: pgettext("line indentation setting", "Tones"),
-			# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
-			# Speech and tones.
 			ReportLineIndentation.SPEECH_AND_TONES: pgettext(
 				"line indentation setting",
+				# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+				# Speech and tones.
 				"Both Speech and Tones",
 			),
 		}

@@ -1665,8 +1665,8 @@ class WordDocument(Window):
 			lambda: self.WinwordSelectionObject.paragraphFormat.outlineLevel,
 		)
 		style = self.WinwordSelectionObject.style.nameLocal
-		# Translators: the message when the outline level / style is changed in Microsoft word
 		ui.message(
+			# Translators: the message when the outline level / style is changed in Microsoft word
 			_("{styleName} style, outline level {outlineLevel}").format(styleName=style, outlineLevel=val),
 		)
 

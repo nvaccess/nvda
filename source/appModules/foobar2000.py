@@ -166,8 +166,8 @@ class AppModule(appModuleHandler.AppModule):
 		if parsedElapsedTime is not None and parsedTotalTime is not None:
 			remainingTime = parsedTotalTime - parsedElapsedTime
 			remainingTimeFormatted = TimeOutputFormat.parseTimeDeltaToFormatted(remainingTime)
-			# Translators: Reported remaining time in Foobar2000
 			ui.message(
+				# Translators: Reported remaining time in Foobar2000
 				_("{remainingTimeFormatted} remaining").format(remainingTimeFormatted=remainingTimeFormatted),
 			)
 		else:

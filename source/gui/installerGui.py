@@ -84,9 +84,11 @@ def doInstall(
 	progressDialog.done()
 	del progressDialog
 	if isinstance(res, installer.RetriableFailure):
-		# Translators: a message dialog asking to retry or cancel when NVDA install fails
 		message = _(
-			"The installation is unable to remove or overwrite a file. Another copy of NVDA may be running on another logged-on user account. Please make sure all installed copies of NVDA are shut down and try the installation again.",
+			# Translators: a message dialog asking to retry or cancel when NVDA install fails
+			"The installation is unable to remove or overwrite a file. "
+			"Another copy of NVDA may be running on another logged-on user account. "
+			"Please make sure all installed copies of NVDA are shut down and try the installation again.",
 		)
 		# Translators: the title of a retry cancel dialog when NVDA installation fails
 		title = _("File in Use")
@@ -101,8 +103,8 @@ def doInstall(
 			)
 	if res != 0:
 		log.error("Installation failed: %s" % res)
-		# Translators: The message displayed when an error occurs during installation of NVDA.
 		gui.messageBox(
+			# Translators: The message displayed when an error occurs during installation of NVDA.
 			_("The installation of NVDA failed. Please check the Log Viewer for more information."),
 			# Translators: The title of a dialog presented when an error occurs.
 			_("Error"),
@@ -117,9 +119,9 @@ def doInstall(
 			# Translators: The message displayed when NVDA has been successfully updated.
 			else _("Successfully updated your installation of NVDA. ")
 		)
-		# Translators: The message displayed to the user after NVDA is installed
-		# and the installed copy is about to be started.
 		gui.messageBox(
+			# Translators: The message displayed to the user after NVDA is installed
+			# and the installed copy is about to be started.
 			msg + _("Please press OK to start the installed copy."),
 			# Translators: The title of a dialog presented to indicate a successful operation.
 			_("Success"),
@@ -183,13 +185,13 @@ class InstallerDialog(
 		# Translators: An informational message in the Install NVDA dialog.
 		msg = _("To install NVDA to your hard drive, please press the Continue button.")
 		if self.isUpdate:
-			# Translators: An informational message in the Install NVDA dialog.
 			msg += " " + _(
+				# Translators: An informational message in the Install NVDA dialog.
 				"A previous copy of NVDA has been found on your system. This copy will be updated.",
 			)
 			if not os.path.isdir(installer.defaultInstallPath):
-				# Translators: a message in the installer telling the user NVDA is now located in a different place.
 				msg += " " + _(
+					# Translators: a message in the installer telling the user NVDA is now located in a different place.
 					"The installation path for NVDA has changed. it will now  be installed in {path}",
 				).format(path=installer.defaultInstallPath)
 		if shouldAskAboutAddons:
@@ -430,8 +432,8 @@ class PortableCreaterDialog(
 		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		# Translators: An informational message displayed in the Create Portable NVDA dialog.
 		dialogCaption = _(
+			# Translators: An informational message displayed in the Create Portable NVDA dialog.
 			"To create a portable copy of NVDA, please select the path and other options and then press Continue",
 		)
 		sHelper.addItem(wx.StaticText(self, label=dialogCaption))
