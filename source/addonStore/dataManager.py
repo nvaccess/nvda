@@ -197,7 +197,7 @@ class _DataManager:
 		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
 		formattedLastBackupDate = lastBackupDate.strftime("%d/%m/%Y")
 		if resetNewAddons == "monthly":
-			timedeltaDays = 30
+			timedeltaDays = 31
 		else:  # weekly
 			timedeltaDays = 7
 		nextResetDate = lastBackupDate + timedelta(days=timedeltaDays)
