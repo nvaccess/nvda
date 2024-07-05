@@ -200,7 +200,7 @@ class AddonStoreDialog(SettingsDialog):
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
 				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Published recently/all:"),
+				labelText=pgettext("addonStore", "Release date filter:"),
 				wxCtrlClass=wx.Choice,
 				choices=list(c.displayString for c in NewStatus),
 			),
