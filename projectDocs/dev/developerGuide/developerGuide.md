@@ -1094,11 +1094,11 @@ All locales implicitly inherit the symbol information for English, though any of
 
 When adding a dictionary, some information must be provided such as its display name when the dictionary is optional and should be shown in the speech category of the settings dialog.
 A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
-When an add-on ships with dictionaries, this information is included in its manifest in the optional `speechSYmbols` section.
+When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
 For example:
 
 ```ini
-[speechSymbols]
+[symbolDictionaries]
 [[greek]]
 displayName = Greek
 mandatory = false
