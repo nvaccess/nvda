@@ -1,4 +1,4 @@
-NVDA License
+## NVDA License
 
 NVDA is available under the GNU General Public License version 2 or later, with two special exceptions.
 The exceptions are outlined in the sections "Non-GPL Components in Plugins and Drivers" and "Microsoft Distributable Code".
@@ -290,12 +290,12 @@ POSSIBILITY OF SUCH DAMAGES.
 ```
 
 = Non-GPL Components in Plugins and Drivers =
-Plugins and drivers, including those provided by third parties, are considered derivative works of NVDA and must therefore be licensed under the terms of the GNU General Public License version 2.
+Plugins and drivers, including those provided by third parties, are considered derivative works of NVDA and must therefore be licensed under the terms of the GNU General Public License version 2 or later.
 As a special exception, an NVDA plugin or driver (as defined in the NVDA Developer Guide) may use components under other licenses provided that:
-a) Any such component does not prevent the NVDA plugin or driver from being licensed under the terms of the GNU General Public License version 2; and
+a) Any such component does not prevent the NVDA plugin or driver from being licensed under the terms of the GNU General Public License version 2 or later; and
 b) Any such component does not directly use and is not directly used by any portion of NVDA outside of that plugin or driver.
 For example, a speech synthesizer driver may use a speech synthesiser under a proprietary license.
-In contrast, in a plugin providing support for an application, the code which implements any interface provided by NVDA must be licensed under the GNU General Public License version 2.
+In contrast, in a plugin providing support for an application, the code which implements any interface provided by NVDA must be licensed under the GNU General Public License version 2 or later.
 
 
 = Microsoft Distributable Code =
@@ -304,7 +304,7 @@ This applies to the following files:
 - Microsoft.VC*.manifest
 - msvc*.dll
 
-As a special exception to the GNU General Public License version 2, these components may be included with binary distributions of NVDA without being subject to the terms of that license.
+As a special exception to the GNU General Public License version 2 or later, these components may be included with binary distributions of NVDA without being subject to the terms of that license.
 
 Microsoft Distributable Code is covered by the following terms:
 
@@ -319,3 +319,24 @@ e) modify or distribute the source code of any Distributable Code so that any pa
  ii) others have the right to modify it.
 ```
 
+## Third-Party Dependencies
+
+NVDA includes various third-party dependencies, each with its own license terms. 
+For a comprehensive and up-to-date list of these dependencies, along with their respective license information, please visit the following URL:
+
+TODO: permalink
+
+[https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md](https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md)
+
+In addition to these dependencies, the following dependencies are also included in NVDA:
+
+- eSpeak: GPL-3
+- LibLouis: LGPL-3
+- BrlAPI: LGPL-3
+- IAccessible 2: Simplified BSD 
+- Microsoft Detours: MIT 
+- Python: PSF
+- NSIS: zlib/libpng
+
+plus:
+miscDeps
