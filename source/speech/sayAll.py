@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Cyrille Bougot
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
@@ -93,7 +93,9 @@ class _SayAllHandler:
 		"""
 		return bool(self._getActiveSayAll())
 
-	def readObjects(self, obj: "NVDAObjects.NVDAObject"):
+	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool = False):
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
 		self._getActiveSayAll = weakref.ref(reader)
 		reader.next()
@@ -104,8 +106,11 @@ class _SayAllHandler:
 		startPos: Optional[textInfos.TextInfo] = None,
 		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
 		shouldUpdateCaret: bool = True,
+		startedFromScript: bool = False,
 	) -> None:
 		self.lastSayAllMode = cursor
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		try:
 			if cursor == CURSOR.CARET:
 				reader = _CaretTextReader(self)

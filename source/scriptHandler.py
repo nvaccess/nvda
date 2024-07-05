@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2007-2024 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -302,7 +302,7 @@ def executeScript(script, gesture):
 	finally:
 		_isScriptRunning = False
 		if resumeSayAllMode is not None:
-			sayAll.SayAllHandler.readText(resumeSayAllMode)
+			sayAll.SayAllHandler.readText(resumeSayAllMode, startedFromScript=None)
 
 
 def getLastScriptRepeatCount():
