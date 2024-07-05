@@ -623,22 +623,20 @@ class AddonStoreVM:
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
-		elif self._filterNew != NewStatus.ALL:
-			if addonDataManager._oldAddonCache is None:
-				availableAddons = _createAddonGUICollection()
-			else:
-				oldAddons = addonDataManager._getOldAddons()
-				newAddons = _createAddonGUICollection()
-				for channel in availableAddons:
-					for addonId in availableAddons[channel]:
-						availableAddon = availableAddons[channel][addonId]
-						if (
-							addonId not in oldAddons[channel]
-							or availableAddon.addonVersionNumber
-							!= oldAddons[channel][addonId].addonVersionNumber
-						):
-							newAddons[channel][addonId] = availableAddons[channel][addonId]
-				availableAddons = newAddons
+		elif self._filterNew != NewStatus.ALL and addonDataManager._oldAddonCache:
+			oldAddons = addonDataManager._getOldAddons()
+			newAddons = {
+				channel: {
+					addonId: addon
+					for addonId, addon in addons.items()
+					if addonId not in oldAddons[channel]
+					or addon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+				}
+				for channel, addons in availableAddons.items()
+			}
+			availableAddons = newAddons
+		else:
+			availableAddons = _createAddonGUICollection()
 		log.debug("completed getting addons in the background")
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())
