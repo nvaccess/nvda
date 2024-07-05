@@ -195,7 +195,7 @@ class _DataManager:
 			return _("Empty list: NVDA needs to be restarted to retrieve new add-ons")
 		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
 		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
-		formattedLastBackupDate = lastBackupDate.strftime("%d/%m/%Y")
+		formattedLastBackupDate = lastBackupDate.strftime("%x")
 		if resetNewAddons == "monthly":
 			timedeltaDays = 31
 		else:  # weekly
