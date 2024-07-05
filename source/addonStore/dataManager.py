@@ -201,7 +201,7 @@ class _DataManager:
 		else:  # weekly
 			timedeltaDays = 7
 		nextResetDate = lastBackupDate + timedelta(days=timedeltaDays)
-		formattedNextResetDate = nextResetDate.strftime("%d/%m/%Y")
+		formattedNextResetDate = nextResetDate.strftime("%x")
 		return f"{formattedLastBackupDate}-{formattedNextResetDate}"
 
 	def _cacheCompatibleAddonsBackup(self):
