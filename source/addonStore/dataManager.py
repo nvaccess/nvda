@@ -188,8 +188,11 @@ class _DataManager:
 	def _getResetNewAddonsDate(self) -> str:
 		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
 		if resetNewAddons == "startup":
-			# Translators: Message presented in the new add-ons tab, informing that new add-ons will be reset at startup
+			# Translators: Message presented in the new add-ons combo box, informing that new add-ons will be reset at startup
 			return _("Will be reset at startup")
+		if not os.path.exists(self._cacheCompatibleOldFile):
+			# Translators: Message presented in the new add-ons combo box, informing that new add-ons will be retrieved when NVDA is restarted
+			return _("Empty list: NVDA needs to be restarted to retrieve new add-ons")
 		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
 		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
 		formattedLastBackupDate = lastBackupDate.strftime("%d/%m/%Y")
