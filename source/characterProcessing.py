@@ -878,7 +878,7 @@ def _addSymbolDefinitions():
 			for name, dictConfig in symbolsDict.items():
 				definition = SymbolDictionaryDefinition(
 					name=name,
-					path=os.path.join(directory, "symbols-{name}.dic"),
+					path=os.path.join(directory, f"symbols-{name}.dic"),
 					displayName=dictConfig["displayName"],
 					allowComplexSymbols=False,
 					mandatory=dictConfig["mandatory"],
