@@ -37,7 +37,6 @@ SB_VERT = 1
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def __init__(self, *args, **kwargs):
 		super().__init__(*args, **kwargs)
 		self._DTECache = {}
@@ -56,10 +55,7 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList[0:0] = [VsTextEditPane, EditableTextWithoutAutoSelectDetection]
-		elif (
-			(self.vsMajor == 15 and self.vsMinor >= 3)
-			or self.vsMajor >= 16
-		):
+		elif (self.vsMajor == 15 and self.vsMinor >= 3) or self.vsMajor >= 16:
 			if obj.role == controlTypes.Role.TREEVIEWITEM and obj.windowClassName == "LiteTreeView32":
 				clsList.insert(0, ObjectsTreeItem)
 
@@ -88,7 +84,6 @@ class AppModule(appModuleHandler.AppModule):
 
 
 class VsWpfTextViewTextInfo(UIATextInfo):
-
 	def _getLineNumberString(self, textRange):
 		# Visual Studio exposes line numbers as part of the actual text.
 		# We want to store the line number in a format field instead.
@@ -96,29 +91,33 @@ class VsWpfTextViewTextInfo(UIATextInfo):
 		lineNumberRange.MoveEndpointByRange(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			lineNumberRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		)
 		return lineNumberRange.GetText(-1)
 
 	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
-		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
-		if not formatField or not formatConfig['reportLineNumber']:
+		formatField = super()._getFormatFieldAtRange(
+			textRange,
+			formatConfig,
+			ignoreMixedValues=ignoreMixedValues,
+		)
+		if not formatField or not formatConfig["reportLineNumber"]:
 			return formatField
 		lineNumberStr = self._getLineNumberString(textRange)
 		if lineNumberStr:
 			try:
-				formatField.field['line-number'] = int(lineNumberStr)
+				formatField.field["line-number"] = int(lineNumberStr)
 			except ValueError:
 				log.debugWarning(
 					f"Couldn't parse {lineNumberStr} as integer to report a line number",
-					exc_info=True
+					exc_info=True,
 				)
 		return formatField
 
 	def _getTextFromUIARange(self, textRange):
 		text = super()._getTextFromUIARange(textRange)
 		lineNumberStr = self._getLineNumberString(textRange)
-		return text[(0 if not lineNumberStr else len(lineNumberStr)):]
+		return text[(0 if not lineNumberStr else len(lineNumberStr)) :]
 
 
 class VsWpfTextView(WpfTextView):
@@ -126,7 +125,6 @@ class VsWpfTextView(WpfTextView):
 
 
 class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
-
 	def _get__selectionObject(self):
 		window = self.obj._window
 		if window.Type == VsWindowType.Document:
@@ -192,14 +190,13 @@ class VsTextEditPaneTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 
 class VsTextEditPane(EditableText, Window):
-
 	def _get_TextInfo(self):
 		try:
 			if self._window.Type in iter(VsWindowType):
 				return VsTextEditPaneTextInfo
 			else:
 				log.debugWarning(
-					f"Retrieved Visual Studio window object, but unknown type: {self._window.Type}"
+					f"Retrieved Visual Studio window object, but unknown type: {self._window.Type}",
 				)
 		except Exception:
 			log.debugWarning("Couldn't retrieve Visual Studio window object", exc_info=True)
@@ -214,7 +211,7 @@ class VsTextEditPane(EditableText, Window):
 				self._window.Left,
 				self._window.Top,
 				self._window.Width,
-				self._window.Height
+				self._window.Height,
 			)
 		return super().location
 
@@ -223,7 +220,6 @@ class VsTextEditPane(EditableText, Window):
 
 
 class ObjectsTreeItem(IAccessible):
-
 	def _get_focusRedirect(self):
 		"""
 		Returns the correct focused item in the object explorer trees
@@ -239,5 +235,5 @@ class ObjectsTreeItem(IAccessible):
 
 	def _get_positionInfo(self):
 		return {
-			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
+			"level": int(self.IAccessibleObject.accValue(self.IAccessibleChildID)),
 		}

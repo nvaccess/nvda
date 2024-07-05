@@ -27,22 +27,22 @@ class Excel6(Window):
 	"""
 
 	def _get_focusRedirect(self):
-		if self.role==controlTypes.Role.UNKNOWN:
+		if self.role == controlTypes.Role.UNKNOWN:
 			# The control is inaccessible, try several times to find the CellEdit UIA element with focus and use that instead.
 			for count in range(10):
-				if count>=1:
+				if count >= 1:
 					api.processPendingEvents(processEventQueue=False)
 					if eventHandler.isPendingEvents("gainFocus"):
 						return
 					time.sleep(0.05)
-				e=UIAHandler.handler.lastFocusedUIAElement
-				if e and e.cachedAutomationID=="CellEdit":
-					obj=UIA(UIAElement=e)
+				e = UIAHandler.handler.lastFocusedUIAElement
+				if e and e.cachedAutomationID == "CellEdit":
+					obj = UIA(UIAElement=e)
 					# Set the UIA edit control's parent to the parent of self.
 					# otherwise a whole bunch of UIA focus ancestors for the edit control will be reported.
 					obj.parent = self.parent
 					# Cache this for as long as this object exists.
-					self.focusRedirect=obj
+					self.focusRedirect = obj
 					return obj
 
 
@@ -57,15 +57,10 @@ class Excel6_WhenUIAEnabled(IAccessible):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def isGoodUIAWindow(self, hwnd: int) -> bool:
 		windowClass = winUser.getClassName(hwnd)
-		versionMajor = int(self.productVersion.split('.')[0])
-		if (
-			versionMajor >= 16
-			and windowClass == "RICHEDIT60W"
-			and winVersion.getWinVer() >= winVersion.WIN10
-		):
+		versionMajor = int(self.productVersion.split(".")[0])
+		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
 			# has a very good UI Automation implementation,
 			# Though oddly IsServerSideProvider returns false for these windows.
@@ -82,7 +77,7 @@ class AppModule(appModuleHandler.AppModule):
 			except ValueError:
 				pass
 			clsList.insert(0, DisplayModelEditableText)
-		if windowClass=="EXCEL6":
+		if windowClass == "EXCEL6":
 			if config.conf["UIA"]["useInMSExcelWhenAvailable"]:
 				# #12303: When accessing Microsoft Excel via UI Automation
 				# MSAA focus events on the old formula edit window should be completely ignored.

@@ -26,26 +26,28 @@ def getScaleFactor(windowHandle: int) -> int:
 	order to get the window handle, this likely means calling the wx.window __init__ method prior
 	to calling self.GetHandle()"""
 	import windowUtils
+
 	return windowUtils.getWindowScalingFactor(windowHandle)
 
 
 class DpiScalingHelperMixin(object):
-	""" mixin to provide size scaling intended to be used with wx.Window (usually wx.Dialog)
-			Sub-classes are responsible for calling wx.Window init
+	"""mixin to provide size scaling intended to be used with wx.Window (usually wx.Dialog)
+	Sub-classes are responsible for calling wx.Window init
 	"""
 
 	def __init__(self, windowHandle: int):
 		self._scaleFactor = getScaleFactor(windowHandle)
 
 	def scaleSize(self, size: _Size) -> _ScaledSize:
-		assert getattr(self, u"_scaleFactor", None)
+		assert getattr(self, "_scaleFactor", None)
 		return scaleSize(self._scaleFactor, size)
 
 
 class DpiScalingHelperMixinWithoutInit:
 	"""Same concept as DpiScalingHelperMixin, but ensures you do not have to explicitly call the init
-		of wx.Window or this mixin
+	of wx.Window or this mixin
 	"""
+
 	GetHandle: Callable[[], Any]  # Should be provided by wx.Window
 	_scaleFactor: Optional[int] = None
 

@@ -21,15 +21,12 @@ from . import UIA, web
 """
 
 
-class EdgeTextInfo(web.UIAWebTextInfo):
-	...
+class EdgeTextInfo(web.UIAWebTextInfo): ...
 
 
 class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
-
 	def _hasEmbedded(self):
-		""" Is this textInfo positioned on an embedded child?
-		"""
+		"""Is this textInfo positioned on an embedded child?"""
 		children = self._rangeObj.getChildren()
 		if children.length:
 			child = children.getElement(0)
@@ -37,9 +34,9 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 				childRange = self.obj.UIATextPattern.rangeFromChild(child)
 				if childRange:
 					childChildren = childRange.getChildren()
-				if (
-					childChildren.length == 1
-					and UIAHandler.handler.clientObject.compareElements(child, childChildren.getElement(0))
+				if childChildren.length == 1 and UIAHandler.handler.clientObject.compareElements(
+					child,
+					childChildren.getElement(0),
 				):
 					return True
 		return False
@@ -49,7 +46,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		if not endPoint:
 			if direction > 0 and unit in (
 				textInfos.UNIT_LINE,
-				textInfos.UNIT_PARAGRAPH
+				textInfos.UNIT_PARAGRAPH,
 			):
 				return self._collapsedMove(unit, direction, skipReplacedContent)
 			elif direction > 0:
@@ -107,7 +104,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		includeRoot=True,
 		recurseChildren=True,
 		alwaysWalkAncestors=True,
-		_rootElementClipped=(True, True)
+		_rootElementClipped=(True, True),
 	):
 		# Edge zooms into its children at the start.
 		# Thus you are already in the deepest first child.
@@ -124,7 +121,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 				includeRoot=includeRoot,
 				alwaysWalkAncestors=True,
 				recurseChildren=False,
-				_rootElementClipped=_rootElementClipped
+				_rootElementClipped=_rootElementClipped,
 			):
 				yield field
 			return
@@ -136,11 +133,11 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		startRange.MoveEndpointByRange(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			startRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		)
 		enclosingElement = getEnclosingElementWithCacheFromUIATextRange(
 			startRange,
-			self._controlFieldUIACacheRequest
+			self._controlFieldUIACacheRequest,
 		)
 		if not enclosingElement:
 			log.debug("No enclosingElement. Returning")
@@ -154,34 +151,31 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		startRange.MoveEndpointByRange(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			enclosingRange,
-			UIAHandler.TextPatternRangeEndpoint_End
+			UIAHandler.TextPatternRangeEndpoint_End,
 		)
 		if 0 < startRange.CompareEndpoints(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			textRange,
-			UIAHandler.TextPatternRangeEndpoint_End
+			UIAHandler.TextPatternRangeEndpoint_End,
 		):
 			startRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				textRange,
-				UIAHandler.TextPatternRangeEndpoint_End
+				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 		# Ensure we don't now have a collapsed range
 		if 0 >= startRange.CompareEndpoints(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			startRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		):
 			log.debug("Collapsed range. Returning")
 			return
 		# check for an embedded child
 		childElements = getChildrenWithCacheFromUIATextRange(startRange, self._controlFieldUIACacheRequest)
-		if (
-			childElements.length == 1
-			and UIAHandler.handler.clientObject.compareElements(
-				rootElement,
-				childElements.getElement(0)
-			)
+		if childElements.length == 1 and UIAHandler.handler.clientObject.compareElements(
+			rootElement,
+			childElements.getElement(0),
 		):
 			log.debug("Using single embedded child as enclosingElement")
 			for field in super(EdgeTextInfo, self)._getTextWithFieldsForUIARange(
@@ -191,7 +185,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 				_rootElementClipped=_rootElementClipped,
 				includeRoot=includeRoot,
 				alwaysWalkAncestors=False,
-				recurseChildren=False
+				recurseChildren=False,
 			):
 				yield field
 			return
@@ -212,7 +206,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 						obj = UIA(
 							windowHandle=self.obj.windowHandle,
 							UIAElement=parentElement,
-							initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs
+							initialUIACachedPropertyIDs=self._controlFieldUIACachedPropertyIDs,
 						)
 						field = self._getControlFieldForUIAObject(obj)
 					except LookupError:
@@ -229,7 +223,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 			log.debug("Fetching next parentElement")
 			parentElement = UIAHandler.handler.baseTreeWalker.getParentElementBuildCache(
 				parentElement,
-				self._controlFieldUIACacheRequest
+				self._controlFieldUIACacheRequest,
 			)
 		log.debug("Done generating parents")
 		log.debug("Yielding parents in reverse order")
@@ -241,12 +235,12 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 		clippedStart = 0 > enclosingRange.CompareEndpoints(
 			UIAHandler.TextPatternRangeEndpoint_Start,
 			startRange,
-			UIAHandler.TextPatternRangeEndpoint_Start
+			UIAHandler.TextPatternRangeEndpoint_Start,
 		)
 		clippedEnd = 0 < enclosingRange.CompareEndpoints(
 			UIAHandler.TextPatternRangeEndpoint_End,
 			startRange,
-			UIAHandler.TextPatternRangeEndpoint_End
+			UIAHandler.TextPatternRangeEndpoint_End,
 		)
 		for field in super(EdgeTextInfo, self)._getTextWithFieldsForUIARange(
 			enclosingElement,
@@ -255,7 +249,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 			_rootElementClipped=(clippedStart, clippedEnd),
 			includeRoot=includeRoot or hasAncestors,
 			alwaysWalkAncestors=False,
-			recurseChildren=True
+			recurseChildren=True,
 		):
 			yield field
 		tempRange = startRange.clone()
@@ -266,24 +260,24 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 			tempRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
 				tempRange,
-				UIAHandler.TextPatternRangeEndpoint_End
+				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 			parentRange = self.obj.getNormalizedUIATextRangeFromElement(parentElement)
 			if parentRange:
 				tempRange.MoveEndpointByRange(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					parentRange,
-					UIAHandler.TextPatternRangeEndpoint_End
+					UIAHandler.TextPatternRangeEndpoint_End,
 				)
 				if 0 < tempRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					textRange,
-					UIAHandler.TextPatternRangeEndpoint_End
+					UIAHandler.TextPatternRangeEndpoint_End,
 				):
 					tempRange.MoveEndpointByRange(
 						UIAHandler.TextPatternRangeEndpoint_End,
 						textRange,
-						UIAHandler.TextPatternRangeEndpoint_End
+						UIAHandler.TextPatternRangeEndpoint_End,
 					)
 					clippedEnd = True
 				else:
@@ -292,14 +286,14 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 					clippedStart = 0 > parentRange.CompareEndpoints(
 						UIAHandler.TextPatternRangeEndpoint_Start,
 						textRange,
-						UIAHandler.TextPatternRangeEndpoint_Start
+						UIAHandler.TextPatternRangeEndpoint_Start,
 					)
-					field['_startOfNode'] = not clippedStart
-					field['_endOfNode'] = not clippedEnd
+					field["_startOfNode"] = not clippedStart
+					field["_endOfNode"] = not clippedEnd
 				if 0 < tempRange.CompareEndpoints(
 					UIAHandler.TextPatternRangeEndpoint_End,
 					tempRange,
-					UIAHandler.TextPatternRangeEndpoint_Start
+					UIAHandler.TextPatternRangeEndpoint_Start,
 				):
 					log.debug("Recursing endRange")
 					for endField in self._getTextWithFieldsForUIARange(
@@ -309,7 +303,7 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 						_rootElementClipped=(clippedStart, clippedEnd),
 						includeRoot=False,
 						alwaysWalkAncestors=True,
-						recurseChildren=True
+						recurseChildren=True,
 					):
 						yield endField
 					log.debug("Done recursing endRange")
@@ -323,7 +317,6 @@ class EdgeTextInfo_preGapRemoval(EdgeTextInfo):
 
 
 class EdgeNode(web.UIAWeb):
-
 	_edgeIsPreGapRemoval = winVersion.getWinVer().build < 15048
 
 	_TextInfo = EdgeTextInfo_preGapRemoval if _edgeIsPreGapRemoval else EdgeTextInfo
@@ -336,7 +329,7 @@ class EdgeNode(web.UIAWeb):
 		lastCharInfo = EdgeTextInfo_preGapRemoval(
 			obj=self,
 			position=None,
-			_rangeObj=textRange
+			_rangeObj=textRange,
 		)
 		lastCharInfo._rangeObj = textRange
 		charInfo = lastCharInfo.copy()
@@ -346,7 +339,7 @@ class EdgeNode(web.UIAWeb):
 		# EdgeTextInfo_preGapRemoval.move?
 		while 0 != super(EdgeTextInfo, charInfo).move(
 			textInfos.UNIT_CHARACTER,
-			1
+			1,
 		):
 			charInfo.setEndPoint(lastCharInfo, "startToStart")
 			if charInfo.text or charInfo._hasEmbedded():
@@ -375,12 +368,10 @@ class EdgeNode(web.UIAWeb):
 		return False
 
 
-class EdgeList(web.List):
-	...
+class EdgeList(web.List): ...
 
 
 class EdgeHTMLRootContainer(EdgeNode):
-
 	def event_gainFocus(self):
 		firstChild = self.firstChild
 		if isinstance(firstChild, UIA):
@@ -390,13 +381,11 @@ class EdgeHTMLRootContainer(EdgeNode):
 
 
 class EdgeHTMLTreeInterceptor(web.UIAWebTreeInterceptor):
-
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent.name
 
 
 class EdgeHTMLRoot(EdgeNode):
-
 	treeInterceptorClass = EdgeHTMLTreeInterceptor
 
 	def _get_shouldCreateTreeInterceptor(self):

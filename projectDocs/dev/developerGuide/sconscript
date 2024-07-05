@@ -9,41 +9,39 @@ Import("env", "outputDir", "sourceDir")
 
 env = env.Clone()
 
-devDocsOutputDir=outputDir.Dir('devDocs')
+devDocsOutputDir = outputDir.Dir("devDocs")
 
 # Build the developer guide and move it to the output directory
-htmlFile = env.md2html('developerGuide.md')
+htmlFile = env.md2html("developerGuide.md")
 devGuide = env.Command(
-	target=devDocsOutputDir.File('developerGuide.html'),
-	source=htmlFile,
-	action=Move('$TARGET', '$SOURCE')
+	target=devDocsOutputDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
 )
 env.Alias("developerGuide", devGuide)
 
-devDocs_nvdaHelper_temp=env.Doxygen(source='../../../nvdaHelper/doxyfile')
+devDocs_nvdaHelper_temp = env.Doxygen(source="../../../nvdaHelper/doxyfile")
 devDocs_nvdaHelper = env.Command(
-	target=devDocsOutputDir.Dir('nvdaHelper'),
+	target=devDocsOutputDir.Dir("nvdaHelper"),
 	source=devDocs_nvdaHelper_temp,
-	action=Move('$TARGET', '$SOURCE')
+	action=Move("$TARGET", "$SOURCE"),
 )
-env.Alias('devDocs_nvdaHelper', devDocs_nvdaHelper)
-env.Clean('devDocs_nvdaHelper', devDocs_nvdaHelper)
+env.Alias("devDocs_nvdaHelper", devDocs_nvdaHelper)
+env.Clean("devDocs_nvdaHelper", devDocs_nvdaHelper)
 
 ignorePaths = [
-	'_buildVersion.py',
-	'comInterfaces',
-	'images',
-	'lib',
-	'lib64',
-	'libArm64',
-	'locale',
-	'louis',  # Not our project
-	'typelibs',
-	'waves',
+	"_buildVersion.py",
+	"comInterfaces",
+	"images",
+	"lib",
+	"lib64",
+	"libArm64",
+	"locale",
+	"louis",  # Not our project
+	"typelibs",
+	"waves",
 	"mathType.py",  # Fails when not installed
-	'oleTypes.py',  # Not our code
-	'setup.py',  # Py2exe
-	'sourceEnv.py',  # Only available when running from source
+	"oleTypes.py",  # Not our code
+	"setup.py",  # Py2exe
+	"sourceEnv.py",  # Only available when running from source
 ]
 
 sphinxAPIDocs = env.Command(
@@ -52,26 +50,33 @@ sphinxAPIDocs = env.Command(
 	[
 		[
 			sys.executable,
-			"-m", "sphinx.ext.apidoc",
+			"-m",
+			"sphinx.ext.apidoc",
 			# "--force",  # overwrite existing files
 			"-P",  # Include private modules
 			"--module-first",  # put module documentation before submodule documentation
-			"--output-dir", "$TARGET",
-			"$SOURCE"  # Module sources
-		] + [f"{sourceDir}\\{f}" for f in ignorePaths]
-	]
+			"--output-dir",
+			"$TARGET",
+			"$SOURCE",  # Module sources
+		]
+		+ [f"{sourceDir}\\{f}" for f in ignorePaths]
+	],
 )
 sphinxHtml = env.Command(
 	"_build",
 	sphinxAPIDocs,
-	[[
-		sys.executable,
-		"-m", "sphinx.cmd.build",
-		"-M", "html",
-		"projectDocs/dev/developerGuide",  # Source directory
-		"$TARGET",  # Build directory
-	]]
+	[
+		[
+			sys.executable,
+			"-m",
+			"sphinx.cmd.build",
+			"-M",
+			"html",
+			"projectDocs/dev/developerGuide",  # Source directory
+			"$TARGET",  # Build directory
+		]
+	],
 )
-devDocs_nvda = env.Command(devDocsOutputDir.Dir('NVDA'), sphinxHtml, Move('$TARGET', '$SOURCE'))
-env.Alias('devDocs', [devGuide, devDocs_nvda])
-env.Clean('devDocs', [devGuide, devDocs_nvda])
+devDocs_nvda = env.Command(devDocsOutputDir.Dir("NVDA"), sphinxHtml, Move("$TARGET", "$SOURCE"))
+env.Alias("devDocs", [devGuide, devDocs_nvda])
+env.Clean("devDocs", [devGuide, devDocs_nvda])

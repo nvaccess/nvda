@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Functions to add python modules within addon directories to python module paths.
-"""
+"""Functions to add python modules within addon directories to python module paths."""
 
 import os.path
 from typing import Optional
@@ -24,6 +23,7 @@ def initializeModulePackagePaths():
 	import globalPlugins
 	import synthDrivers
 	import visionEnhancementProviders
+
 	modules = [
 		appModules,
 		brailleDisplayDrivers,
@@ -44,9 +44,10 @@ def addDirsToPythonPackagePath(module: ModuleType, subdir: Optional[str] = None)
 	if config.isAppX or globalVars.appArgs.disableAddons:
 		return
 	from . import getRunningAddons
+
 	for addon in getRunningAddons():
 		addon.addToPackagePath(module)
-	if globalVars.appArgs.secure or not config.conf['development']['enableScratchpadDir']:
+	if globalVars.appArgs.secure or not config.conf["development"]["enableScratchpadDir"]:
 		return
 	if not subdir:
 		subdir = module.__name__

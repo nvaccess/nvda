@@ -15,7 +15,7 @@ class _WritePaths:
 	@property
 	def configDir(self) -> str:
 		return globalVars.appArgs.configPath
-	
+
 	@configDir.setter
 	def configDir(self, configPath: str):
 		globalVars.appArgs.configPath = configPath
@@ -64,6 +64,7 @@ class _WritePaths:
 	@property
 	def addonStateFile(self) -> str:
 		from addonHandler import stateFilename
+
 		return os.path.join(self.configDir, stateFilename)
 
 	@property
@@ -97,7 +98,7 @@ def isRunningAsSource() -> bool:
 	True if NVDA is running as a source copy.
 	When running as an installed copy, py2exe sets sys.frozen to 'windows_exe'.
 	"""
-	return getattr(sys, 'frozen', None) is None
+	return getattr(sys, "frozen", None) is None
 
 
 def _allowDeprecatedAPI() -> bool:
@@ -165,6 +166,7 @@ class _TrackNVDAInitialization:
 
 def _forceSecureModeEnabled() -> bool:
 	from config import RegistryKey
+
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 		return bool(winreg.QueryValueEx(k, RegistryKey.FORCE_SECURE_MODE_SUBKEY.value)[0])
@@ -175,6 +177,7 @@ def _forceSecureModeEnabled() -> bool:
 
 def _serviceDebugEnabled() -> bool:
 	from config import RegistryKey
+
 	try:
 		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.NVDA.value)
 		return bool(winreg.QueryValueEx(k, RegistryKey.SERVICE_DEBUG_SUBKEY.value)[0])
