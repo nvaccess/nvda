@@ -841,10 +841,11 @@ _symbolDictionaryDefinitions: list[SymbolDictionaryDefinition] = []
 
 
 def getAvailableSymbolDictionaryDefinitions() -> Generator[SymbolDictionaryDefinition, None, None]:
+	"""Get available symbol dictionary definitions as initialized in core or in add-ons."""
 	yield from _symbolDictionaryDefinitions
 
 
-def initialize():
+def _addSymbolDefinitions():
 	# Add symbol dictionary definitions
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
@@ -862,26 +863,32 @@ def initialize():
 			mandatory=True,
 		),
 	)
+
 	import addonHandler
 
 	for addon in addonHandler.getRunningAddons():
-		symbolsDict = addon.manifest.get("symbolDictionaries")
-		if not symbolsDict:
-			continue
-		log.debug(f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}")
-		directory = os.path.join(addon.path, "locale", "{locale}")
-		for name, dictConfig in symbolsDict.items():
-			definition = SymbolDictionaryDefinition(
-				name=name,
-				path=os.path.join(directory, "symbols-{name}.dic"),
-				displayName=dictConfig["displayName"],
-				allowComplexSymbols=False,
-				mandatory=dictConfig["mandatory"],
-			)
-			if not definition.availableLocales:
-				log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
+		try:
+			symbolsDict = addon.manifest.get("symbolDictionaries")
+			if not symbolsDict:
 				continue
-			_symbolDictionaryDefinitions.append(definition)
+			log.debug(
+				f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}",
+			)
+			directory = os.path.join(addon.path, "locale", "{locale}")
+			for name, dictConfig in symbolsDict.items():
+				definition = SymbolDictionaryDefinition(
+					name=name,
+					path=os.path.join(directory, "symbols-{name}.dic"),
+					displayName=dictConfig["displayName"],
+					allowComplexSymbols=False,
+					mandatory=dictConfig["mandatory"],
+				)
+				if not definition.availableLocales:
+					log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
+					continue
+				_symbolDictionaryDefinitions.append(definition)
+		except Exception:
+			log.exception(f"Error while applying custom symbol dictionaries config from addon {addon.name!r}")
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
 			name="user",
@@ -892,6 +899,9 @@ def initialize():
 		),
 	)
 
+
+def initialize():
+	_addSymbolDefinitions()
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 
