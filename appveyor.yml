@@ -15,8 +15,8 @@ branches:
 
 environment:
  PY_PYTHON: 3.11-32
- secure_authenticode_pass:
-  secure: Way+hJyhbiLG/cmCo4+dHHzS5DiSvk/45o6frnIQ27GBX6nVDsh7jwQ7fSnqxBRP
+ apiSigningToken:
+  secure: 8ARK3NZNRlz8VrhTbpTLP5GMnwbqlUN0DK4SYL4FUYSAAEgXUSB+MBcHHLa6JL9E
  secure_ssh_pass:
   secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
@@ -28,11 +28,11 @@ environment:
  scons_publisher: NV Access
  # Comment out any of the feature_* variables to disable the respective build feature.
  # They are checked for existence of content, not specific value.
- feature_buildSymbols: True
- feature_uploadSymbolsToMozilla: True
- feature_buildAppx: True
- feature_crowdinSync: True
- feature_signing: True
+ feature_buildSymbols: configured
+ feature_uploadSymbolsToMozilla: configured
+ #feature_buildAppx: configured
+ feature_crowdinSync: configured
+ feature_signing: configured
 
 # scripts that are called at very beginning, before repo cloning
 init:
@@ -54,6 +54,7 @@ build_script:
  - ps: |
      "BUILD_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setSconsArgs.ps1
+ - ps: Install-Module -Name SignPath -Force
  - scons source %sconsArgs%
  - scons %sconsOutTargets% %sconsArgs%
  - ps: appveyor\scripts\buildSymbolStore.ps1
