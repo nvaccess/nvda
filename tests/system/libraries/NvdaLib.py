@@ -385,7 +385,7 @@ class NvdaLib:
 		"""
 		Checks if a crash.dmp exits and returns the crash dmp path if so
 		"""
-		crashPath = overridePath or _pJoin(_locations.logPath, "..", "nvda_crash.dmp")
+		crashPath = overridePath or _pJoin(_locations.profileDir, "nvda_crash.dmp")
 		try:
 			opSys.file_should_not_exist(crashPath)
 		except Exception:

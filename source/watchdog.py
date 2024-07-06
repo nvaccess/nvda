@@ -250,7 +250,7 @@ def _crashHandler(exceptionInfo):
 	ctypes.pythonapi.PyThreadState_SetAsyncExc(threadId, None)
 
 	# Write a minidump.
-	dumpPath = os.path.join(globalVars.appArgs.logFileName, "..", "nvda_crash.dmp")
+	dumpPath = os.path.join(os.path.dirname(globalVars.appArgs.logFileName), "nvda_crash.dmp")
 	try:
 		# Though we aren't using pythonic functions to write to the dump file,
 		# open it in binary mode as opening it in text mode (the default) doesn't make sense.
