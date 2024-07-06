@@ -340,9 +340,6 @@ class UIATextInfo(textInfos.TextInfo):
 				log.debugWarning("language error", exc_info=True)
 				pass
 
-	# C901 '_getFormatFieldAtRange' is too complex
-	# Note: when working on _getFormatFieldAtRange, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
 	def _getFormatFieldAtRange(  # noqa: C901
 		self,
 		textRange: IUIAutomationTextRangeT,
@@ -408,8 +405,10 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
 			IDs.add(UIAHandler.UIA_CultureAttributeId)
 			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange, IDs)
+
 		def fetch(id):
 			return fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
+		
 		formatField = textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			self._getFormatFieldFontName(fetch, formatField)
