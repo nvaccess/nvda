@@ -6,22 +6,22 @@
 
 from __future__ import annotations
 from typing import (
-	cast
+	cast,
 )
 from ctypes import (
-	POINTER
+	POINTER,
 )
 from UIAHandler import UIA
 from .. import lowLevel
 from .. import instructions
 from ..remoteFuncWrapper import (
-	remoteMethod
+	remoteMethod,
 )
 from . import (
 	RemoteExtensionTarget,
 	RemoteIntEnum,
 	RemoteBool,
-	RemoteVariant
+	RemoteVariant,
 )
 
 
@@ -48,9 +48,9 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 
 	@remoteMethod
 	def getPropertyValue(
-			self,
-			propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
-			ignoreDefault: RemoteBool | bool = False
+		self,
+		propertyId: RemoteIntEnum[lowLevel.PropertyId] | lowLevel.PropertyId,
+		ignoreDefault: RemoteBool | bool = False,
 	) -> RemoteVariant:
 		result = RemoteVariant(self.rob, self.rob.requestNewOperandId())
 		self.rob.getDefaultInstructionList().addInstruction(
@@ -58,8 +58,8 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 				result=result,
 				target=self,
 				propertyId=RemoteIntEnum.ensureRemote(self.rob, propertyId),
-				ignoreDefault=RemoteBool.ensureRemote(self.rob, ignoreDefault)
-			)
+				ignoreDefault=RemoteBool.ensureRemote(self.rob, ignoreDefault),
+			),
 		)
 		return result
 
@@ -69,8 +69,8 @@ class RemoteElement(RemoteExtensionTarget[POINTER(UIA.IUIAutomationElement)]):
 			instructions.ElementNavigate(
 				result=result,
 				target=self,
-				direction=RemoteIntEnum.ensureRemote(self.rob, navigationDirection)
-			)
+				direction=RemoteIntEnum.ensureRemote(self.rob, navigationDirection),
+			),
 		)
 		return result
 

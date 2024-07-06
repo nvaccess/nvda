@@ -37,13 +37,22 @@ reviews:
       Also consider readability and clarity of contents.
       Ensure that changes follow the style of one sentence per line, suggest changes if this is not met.
       "
+    - path: "user_docs/en/changes.md"
+      instructions: "
+      Ensure each change log entry references an issue or pull request number.
+      Change log entries can also include a reference to a GitHub author.
+      Examples of valid change log entries:
+      * Item with sub-items (#123, @username):
+        * sub-item
+        * bar (#342)
+      * Item with.
+      Multiple lines. (#143)
+      "
   tools:
     github-checks:
       enabled: true
     ruff:
-      # Should become true if we switch linters, 
-      # right now linting is done by a flake8 check (#14817).
-      enabled: false
+      enabled: true
     markdownlint:
       # We use custom markdown syntax such as {#Anchor} for anchors.
       # This is not supported by markdownlint.

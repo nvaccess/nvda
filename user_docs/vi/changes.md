@@ -3,17 +3,17 @@
 
 ## 2024.2
 
-Một tính năng mới, tên gọi chia âm thanh.
+Một tính năng mới, tên gọi tách âm thanh.
 Tính năng này cho phép đặt âm thanh NVDA vào một kênh (ví dụ như bên trái) trong khi âm thanh từ tất cả ứng dụng khác sẽ được đặt ở một kênh khác (ví dụ như bên phải).
 
-Có thêm lệnh mới để tùy chỉnh vòng thiết lập cho giọng đọc, cho phép người dùng đi đến cài đặt đầu tiên hay cuối cùng, và để tăng hoặc giảm giá trị của cài đặt hiện tại bằng các bước dài hơn.
-Cũng có thêm những phím lệnh di chuyển nhanh, cho phép người dùng gán thao tác để di chuyển nhanh giữa: đoạn, đoạn đã căn lề, kiểu văn ban giống nhau, kiểu văn bản khác nhau, mục trình đơn, các nút ật / tắt, thanh tiến độ, hình ảnh, và công thức toán.
+Có thêm lệnh mới để tùy chỉnh vòng thiết lập cho giọng đọc, cho phép người dùng đi đến cài đặt đầu tiên hay cuối cùng, và để tăng hoặc giảm giá trị của cài đặt hiện tại bằng các bước nhảy dài hơn.
+Cũng có thêm những phím lệnh di chuyển nhanh, cho phép người dùng gán thao tác để di chuyển nhanh giữa: đoạn, đoạn đã căn lề, kiểu văn bản giống nhau, kiểu văn bản khác nhau, mục trình đơn, các nút bật / tắt, thanh tiến độ, hình ảnh, và công thức toán.
 
 Nhiều tính năng mới và sửa lỗi cho chữ nổi.
 Đã thêm một chế độ chữ nổi mới gọi là "hiện đầu ra giọng đọc".
-Khi kích hoạt, màn hình chữ nổi sẽ hiền thị chính xác những gì NVDA đọc.
+Khi kích hoạt, màn hình chữ nổi sẽ hiển thị chính xác những gì NVDA đọc.
 Cũng đã thêm hỗ trợ cho các màn hình BrailleEdgeS2 và BrailleEdgeS3.
-Đã cập nhật LibLouis, thêm chi tiết mới (xác định chữ hoa) cho các bản chữ nổi tiếng Belarusian và Ukrainian, bảng chữ nổi tiếng Lào và Tây Ban Nha để đọc văn bản tiếng Greek.
+Đã cập nhật LibLouis, thêm chi tiết mới (xác định chữ hoa) cho các bản chữ nổi tiếng Belarus và Ukraina, bảng chữ nổi tiếng Lào và Tây Ban Nha để đọc văn bản tiếng Hy Lạp.
 
 Đã cập nhật eSpeak, thêm ngôn ngữ mới Tigrinya.
 
@@ -23,7 +23,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 
 * Các phím lệnh mới:
   * Lệnh di chuyển nhanh mới `p` để di chuyển đến đoạn văn bản kế/đoạn văn bản trước trong chế độ duyệt. (#15998, @mltony)
-  * Lệnh di chuyển nhanh mới, chưa gán phím tắt, có thể dùng để di chuyển đến các thành phần kế tiếp hoặc trước đó:
+  * Lệnh di chuyển nhanh mới, chưa gán thao tác, có thể dùng để di chuyển đến các thành phần kế tiếp hoặc trước đó:
     * nhóm hình ảnh (#10826)
     * căn lề dọc đoạn văn bản (#15999, @mltony)
     * mục trên trình đơn (#16001, @mltony)
@@ -37,14 +37,14 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
     * giảm và tăng giá trị hiện tại của vòng thiết lập bộ đọc bằng bước nhảy lớn hơn (#13768):
       * Máy bàn: `NVDA+control+pageUp` và `NVDA+control+pageDown`.
       * Máy xách tay: `NVDA+control+shift+pageUp` và `NVDA+control+shift+pageDown`.
-  * Thêm thao tác chưa gán lệnh để bật / tắt thông áo nhóm hình ảnh và phụ đề. (#10826, #14349)
-* Chữ nỏi:
+  * Thêm thao tác chưa gán lệnh để bật / tắt thông báo nhóm hình ảnh và phụ đề. (#10826, #14349)
+* Chữ nổi:
   * Thêm hỗ trợ cho các màn hình BrailleEdgeS2 và BrailleEdgeS3. (#16033, #16279, @EdKweon)
-  * Thêm chế độ chữ nổi mới gọi là "hiện thị đầu ra giọng đọc". (#15898, @Emil-18)
+  * Thêm chế độ chữ nổi mới gọi là "hiển thị đầu ra giọng đọc". (#15898, @Emil-18)
     * Khi kích hoạt, các màn hình chữ nổi sẽ hiển thị chính xác những gì NVDA đọc.
     * Có thể bật / tắt bằng cách bấm `NVDA+alt+t`, hoặc bật / tắt trong hộp thoại cài đặt chữ nổi.
-* Chia âm thanh: (#12985, @mltony)
-  * Cho phép chia âm thanh NVDA vào một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
+* Tách âm thanh: (#12985, @mltony)
+  * Cho phép tách âm thanh NVDA ra một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
   * Bật / tắt bằng lệnh `NVDA+alt+s`.
 * Đã hỗ trợ thông báo tiêu đề cột và dòng  trong các phần tử HTML có thể chỉnh sửa nội dung. (#14113)
 * Đã thêm tùy chọn để vô hiệu hóa thông báo nhóm hình ảnh và phụ đề trong cài đặt định dạng tài liệu. (#10826, #14349)
@@ -74,7 +74,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 ### Sửa lỗi
 
 * Sửa lỗi cho Windows 11:
-  * NVDA lại một lần nữa thông báo phần cứng cho gọi ý đầu vào bàn phím. (#16283, @josephsl)
+  * NVDA lại một lần nữa thông báo phần cứng cho gợi ý đầu vào bàn phím. (#16283, @josephsl)
   * Trong phiên bản 24H2 (2024 Update và Windows Server 2025), có thể dùng tương tác chuột và tương tác cảm ứng trong các thiết lập nhanh (quick settings). (#16348, @josephsl)
 * Cửa Hàng Add-on :
   * Khi bấm `ctrl+tab`, focus di chuyển đến đúng tiêu đề của thẻ mới. (#14986, @ABuffEr)
@@ -93,6 +93,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 * Hỗ trợ của NVDA cho phần mềm phiên dịch Poedit phiên bản 3.4 trở lên hoạt động chuẩn xác khi dịch các ngôn ngữ 1 hoặc nhiều hơn 2 dạng số nhiều (e.g. Chinese, Polish). (#16318)
 
 ### Các thay đổi cho nhà phát triển
+
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.md để biết thêm thông tin.
 
 ## 2024.1
@@ -3180,4 +3181,3 @@ Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.t2t 
 ### Các phiên bản cũ
 
 Các thay đổi và tính năng mới của các phiên bản cũ hiện không được dịch sang tiếng Việt. Vui lòng xem bản tiếng Anh changes.t2t để biết thêm thông tin.
-

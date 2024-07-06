@@ -1,8 +1,8 @@
-#appModules/thunderbird.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2012 NVDA Contributors
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# appModules/thunderbird.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2012 NVDA Contributors
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 """App module for Thunderbird email client."""
 
@@ -16,15 +16,18 @@ from typing import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_gainFocus(self, obj, nextHandler):
-		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.BUSY in obj.states and winUser.isWindowVisible(obj.windowHandle):
+		if (
+			obj.role == controlTypes.Role.DOCUMENT
+			and controlTypes.State.BUSY in obj.states
+			and winUser.isWindowVisible(obj.windowHandle)
+		):
 			statusBar = api.getStatusBar()
 			if statusBar:
 				try:
 					# The document loading status is contained in the second field of the status bar.
 					statusText = statusBar.firstChild.next.name
-				except:
+				except:  # noqa: E722
 					# Fall back to reading the entire status bar.
 					statusText = api.getStatusBarText(statusBar)
 				speech.speakMessage(controlTypes.State.BUSY.displayString)
@@ -34,10 +37,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def event_nameChange(self, obj: NVDAObject, nextHandler: Callable[[], None]) -> None:
 		focusObj: NVDAObject = api.getFocusObject()
-		if (
-			focusObj.windowClassName == "MozillaDropShadowWindowClass"
-			and focusObj.windowControlID == 0
-		):
+		if focusObj.windowClassName == "MozillaDropShadowWindowClass" and focusObj.windowControlID == 0:
 			# Report state changes in "select columns to display" menu
 			focusObj.event_stateChange()
 		nextHandler()

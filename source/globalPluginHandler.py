@@ -1,13 +1,12 @@
-#globalPluginHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010 James Teh <jamie@jantrid.net>
+# globalPluginHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010 James Teh <jamie@jantrid.net>
 
 import sys
 import pkgutil
 import importlib
-import config
 import baseObject
 from logHandler import log
 import globalPlugins
@@ -15,45 +14,50 @@ import globalPlugins
 #: All currently running global plugins.
 runningPlugins = set()
 
+
 def listPlugins():
 	for loader, name, isPkg in pkgutil.iter_modules(globalPlugins.__path__):
 		if name.startswith("_"):
 			continue
 		try:
 			plugin = importlib.import_module("globalPlugins.%s" % name, package="globalPlugins").GlobalPlugin
-		except:
+		except:  # noqa: E722
 			log.error("Error importing global plugin %s" % name, exc_info=True)
 			continue
 		yield plugin
+
 
 def initialize():
 	for plugin in listPlugins():
 		try:
 			runningPlugins.add(plugin())
-		except:
+		except:  # noqa: E722
 			log.error("Error initializing global plugin %r" % plugin, exc_info=True)
+
 
 def terminate():
 	for plugin in list(runningPlugins):
 		runningPlugins.discard(plugin)
 		try:
 			plugin.terminate()
-		except:
+		except:  # noqa: E722
 			log.exception("Error terminating global plugin %r" % plugin)
 
+
 def reloadGlobalPlugins():
-	"""Reloads running global plugins.
-	"""
+	"""Reloads running global plugins."""
 	global globalPlugins
 	terminate()
 	del globalPlugins
-	mods=[k for k,v in sys.modules.items() if k.startswith("globalPlugins") and v is not None]
+	mods = [k for k, v in sys.modules.items() if k.startswith("globalPlugins") and v is not None]
 	for mod in mods:
 		del sys.modules[mod]
 	import globalPlugins
 	from addonHandler.packaging import addDirsToPythonPackagePath
+
 	addDirsToPythonPackagePath(globalPlugins)
 	initialize()
+
 
 class GlobalPlugin(baseObject.ScriptableObject):
 	"""Base global plugin.

@@ -33,7 +33,6 @@ class SoundSplitState(DisplayStringIntEnum):
 	NVDA_RIGHT_APPS_BOTH = 5
 	NVDA_BOTH_APPS_LEFT = 6
 	NVDA_BOTH_APPS_RIGHT = 7
-	
 
 	@property
 	def _displayStringLabels(self) -> dict[IntEnum, str]:
@@ -118,7 +117,9 @@ class ChannelVolumeSetter(AudioSessionCallback):
 		channelVolume = session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
-			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
+			log.warning(
+				f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!",
+			)
 			self.foundSessionWithNot2Channels = True
 			return
 		if pid != globalVars.appPid:
@@ -172,7 +173,7 @@ def _toggleSoundSplitState() -> None:
 		message = _(
 			# Translators: error message when wasapi is turned off.
 			"Sound split cannot be used. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
 		)
 		ui.message(message)
 		return
@@ -193,6 +194,6 @@ def _toggleSoundSplitState() -> None:
 			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
 			# had number of channels other than 2 .
 			"Warning: couldn't set volumes for sound split: "
-			"one of audio sessions is either mono, or has more than 2 audio channels."
+			"one of audio sessions is either mono, or has more than 2 audio channels.",
 		)
 		ui.message(msg)
