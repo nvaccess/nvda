@@ -211,18 +211,7 @@ Full automatic updating is not currently supported.
 
 1. Remove `source/userConfig/addonStore/_cachedCompatibleAddons-old.json`, or edit this file removing some entries corresponding to cached add-ons, or changing version number
 1. Start NVDA
-1. Open the store to the New available add-ons tab
-1. Ensure Show new add-ons notifications are enabled in the Add-on Store panel
-1. Trigger the Show new add-ons notification manually, or alternatively wait for the notification to occur
-    1. From the NVDA Python console, find the scheduled thread
-        ```py
-        import schedule
-        schedule.jobs
-        ```
-    1. Replace `i` with the index of the scheduled thread to find the job
-        ```py
-        schedule.jobs[i].run()
-        ```
+1. Open the store to the available add-ons tab, and use the combo box to filter add-ons by release date
 
 ### Reset new add-ons
 
@@ -233,7 +222,7 @@ Full automatic updating is not currently supported.
 1. Ensure Reset new add-ons is set to At startup in the Add-on store panel
 1. Restart NVDA
 1. Check that the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file has been changed
-1. Check that the period for recent add-ons is updated in the new add-ons tab of the store when the reset new add-ons option is changed in the add-ons store settings panel.
+1. Check that the period for recent add-ons is updated in the release date filter combo box of the available add-ons tab of the store, when the reset new add-ons option is changed in the add-ons store settings panel.
 
 
 ## Other add-on actions
