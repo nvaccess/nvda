@@ -413,20 +413,19 @@ As explained above, sometimes the default way of associating an App Module with 
 
 In such cases you can distribute a small global plugin along with your App Module which maps it to the executable.
 For example to map the App Module named "time_app_mod" to the "time" executable the plugin may be written as follows:
+```py
+import appModuleHandler
+import globalPluginHandler
 
-    import appModuleHandler
-    import globalPluginHandler
-    
-    
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
-    	def __init__(self, *args, **kwargs):
-    		super().__init__(*args, **kwargs)
-    		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
-    
-    	def terminate(self, *args, **kwargs):
-    		super().terminate(*args, **kwargs)
-    		appModuleHandler.unregisterExecutable("time")
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
+
+	def terminate(self, *args, **kwargs):
+		super().terminate(*args, **kwargs)
+		appModuleHandler.unregisterExecutable("time")
+```
 ### Example 1: An App Module that Beeps on Focus Change Events {#Example1}
 
 The following example App Module makes NVDA beep each time the focus changes within the notepad application.
@@ -440,21 +439,21 @@ Once saved in the correct location, either restart NVDA or choose Reload Plugins
 Finally, open Notepad and move the focus around the application; e.g. move along the menu bar, open some dialog boxes, etc.
 You should hear beeps each time the focus changes.
 Note though that if you move outside of Notepad - for instance, to Windows Explorer - you do not hear beeps.
+```py
+--- start ---
+# Notepad App Module for NVDA
+# Developer guide example 1
 
-    --- start ---
-    # Notepad App Module for NVDA
-    # Developer guide example 1
-    
-    import appModuleHandler
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	def event_gainFocus(self, obj, nextHandler):
-    		import tones
-    		tones.beep(550, 50)
-    		nextHandler()
-    
-    --- end ---
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+
+--- end ---
+```
 
 This App Module file starts with two comment lines, which describe what the file is for.
 
@@ -483,22 +482,21 @@ By default, apps employing Edge WebView2 such as modern Outlook (olk.exe) are di
 ### Example 2: an app module for an app hosted by wwahost.exe {#example2}
 
 The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
+```py
+--- start ---
+# wwahost/test App Module for NVDA
+# Developer guide example 2
 
-    --- start ---
-    # wwahost/test App Module for NVDA
-    # Developer guide example 2
-    
-    from nvdaBuiltin.appModules.wwahost import *
-    
-    class AppModule(AppModule):
-    
-    	def event_gainFocus(self, obj, nextHandler):
-    		import tones
-    		tones.beep(550, 50)
-    		nextHandler()
-    
-    --- end ---
+from nvdaBuiltin.appModules.wwahost import *
 
+class AppModule(AppModule):
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+
+--- end ---
+```
 The biggest difference from Notepad app module is where wwahost app module comes from.
 As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
 
@@ -544,24 +542,22 @@ Be very careful to keep all tabs and spaces intact.
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
 From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
+```py
+--- start ---
+# Version announcement plugin for NVDA
+# Developer guide example 3
 
-    --- start ---
-    # Version announcement plugin for NVDA
-    # Developer guide example 3
-    
-    import globalPluginHandler
-    from scriptHandler import script
-    import ui
-    import versionInfo
-    
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
-    	@script(gesture="kb:NVDA+shift+v")
-    	def script_announceNVDAVersion(self, gesture):
-    		ui.message(versionInfo.version)
-    
-    --- end ---
+import globalPluginHandler
+from scriptHandler import script
+import ui
+import versionInfo
 
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+	@script(gesture="kb:NVDA+shift+v")
+	def script_announceNVDAVersion(self, gesture):
+		ui.message(versionInfo.version)
+--- end ---
+```
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
 It then imports the globalPluginHandler module, so that the Global Plugin has access to the base GlobalPlugin class.
@@ -682,22 +678,22 @@ The script decorator modifies the script in such a way that it will be properly 
 Furthermore, it ensures that the script is listed with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
 
 In order for you to use the script decorator, you will have to import it from the scriptHandler module.
-
-    from scriptHandler import script
+```py
+from scriptHandler import script
+```
 
 After that, just above your script definition, add the script decorator, providing it the desired arguments.
 For example:
-
-    --- start ---
-    	@script(
-    		description=_("Speaks the date and time"),
-    		category=inputCore.SCRCAT_MISC,
-    		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
-    	)
-    	def script_sayDateTime(self, gesture):
-    
-    --- end ---
-
+```py
+--- start ---
+	@script(
+		description=_("Speaks the date and time"),
+		category=inputCore.SCRCAT_MISC,
+		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
+	)
+	def script_sayDateTime(self, gesture):
+--- end ---
+```
 In this example, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
 It will have the description "Speaks the date and time", and will be bound to the "NVDA+shift+t" and "NVDA+alt+r" key combinations on the keyboard.
 
@@ -754,9 +750,9 @@ import globalPluginHandler
 from scriptHandler import script
 import ui
 import api
-    
+
 class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
+
 	@script(
 		description=_("Announces the window class name of the current focus object"),
 		gesture="kb:NVDA+leftArrow"
@@ -766,7 +762,7 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 		name = focusObj.name
 		windowClassName = focusObj.windowClassName
 		ui.message(f"class for {name} window: {windowClassName}")
-    
+
 	@script(
 		description=_("Announces the window control ID of the current focus object"),
 		gesture="kb:NVDA+rightArrow"
@@ -833,15 +829,16 @@ This is done by providing an App Module for that application which simply sets s
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
 As always, the file must have a .py extension.
+```py
+--- start ---
+import appModuleHandler
 
-    --- start ---
-    import appModuleHandler
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	sleepMode = True
-    
-    --- end ---
+class AppModule(appModuleHandler.AppModule):
+
+	sleepMode = True
+
+--- end ---
+```
 ### Providing Custom NVDA Object Classes {#customNVDAObjectClasses}
 
 Providing custom NVDA Object classes is probably the most powerful and useful way to improve the experience of an application in an NVDA plugin.
@@ -885,15 +882,15 @@ from scriptHandler import script
 from NVDAObjects.IAccessible import IAccessible
 import controlTypes
 import ui
-    
+
 class AppModule(appModuleHandler.AppModule):
-    
+
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
 			clsList.insert(0, EnhancedEditField)
-    
+
 class EnhancedEditField(IAccessible):
-    
+
 	@script(gesture="kb:NVDA+l")
 	def script_reportLength(self, gesture):
 		ui.message(f"len(self.value)")
@@ -917,30 +914,31 @@ This app module for notepad makes NVDA report Notepad's main edit field as havin
 That is, when it receives focus, NVDA will say "Content edit".
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+```py
+--- start ---
+import appModuleHandler
+from NVDAObjects.window import Window
 
-    --- start ---
-    import appModuleHandler
-    from NVDAObjects.window import Window
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	def event_NVDAObject_init(self, obj):
-    		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
-    			obj.name = "Content"
-    --- end ---
+class AppModule(appModuleHandler.AppModule):
+
+	def event_NVDAObject_init(self, obj):
+		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
+			obj.name = "Content"
+--- end ---
+```
 ### Parsing additional command line arguments in your plugin {#PluginCLIArgs}
 
 By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
 However if you want to use any additional arguments, this is possible by adding a handler to the extension point `addonHandler.isCLIParamKnown`.
 Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in the global plugin, since app modules or other drivers may not be loaded at this stage.
 A sample handler can be written as follows:
-
-    def processArgs(cliArgument: str) -> bool:
-    	if cliArgument == "--enable-addon-feature":
-    		...
-    		return True  # Argument is known to the add-on and should not be flagged by NVDA
-    	return False  # unknown argument - NVDA should warn user
-
+```py
+def processArgs(cliArgument: str) -> bool:
+	if cliArgument == "--enable-addon-feature":
+		...
+		return True  # Argument is known to the add-on and should not be flagged by NVDA
+	return False  # unknown argument - NVDA should warn user
+```
 Then the handler needs to be registered - preferably in the constructor of your global plugin:
 
     addonHandler.isCLIParamKnown.register(processArgs)
@@ -1014,17 +1012,19 @@ The manifest can also specify information regarding the additional braille trans
 Please refer to the [braille translation tables section](#BrailleTables) later on in this document.
 
 #### An Example Manifest File {#manifestExample}
-    --- start ---
-    name = "myTestAddon"
-    summary = "Cool Test Add-on"
-    version = "1.0.0"
-    description = "An example add-on showing how to create add-ons!"
-    author = "Michael Curran <mick@example.com>"
-    url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
-    docFileName = "readme.html"
-    minimumNVDAVersion = "2021.1"
-    lastTestedNVDAVersion = "2022.3.3"
-    --- end ---
+```ini
+--- start ---
+name = "myTestAddon"
+summary = "Cool Test Add-on"
+version = "1.0.0"
+description = "An example add-on showing how to create add-ons!"
+author = "Michael Curran <mick@example.com>"
+url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
+docFileName = "readme.html"
+minimumNVDAVersion = "2021.1"
+lastTestedNVDAVersion = "2022.3.3"
+--- end ---
+```
 ### Plugins and Drivers {#pluginsAndDrivers}
 
 The following plugins and drivers can be included in an add-on:
