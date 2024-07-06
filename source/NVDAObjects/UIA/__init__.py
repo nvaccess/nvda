@@ -190,7 +190,7 @@ class UIATextInfo(textInfos.TextInfo):
 	def _getFormatFieldFontAttributes(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		val = fetch(UIAHandler.UIA_FontWeightAttributeId)
 		if isinstance(val, int):
-			formatField["bold"] = (val >= 700)
+			formatField["bold"] = val >= 700
 		val = fetch(UIAHandler.UIA_IsItalicAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			formatField["italic"] = val
@@ -201,7 +201,9 @@ class UIATextInfo(textInfos.TextInfo):
 		if val != UIAHandler.handler.reservedNotSupportedValue:
 			formatField["strikethrough"] = bool(val)
 
-	def _getFormatFieldSuperscriptsAndSubscripts(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+	def _getFormatFieldSuperscriptsAndSubscripts(
+		self, fetch: Callable[[int], int], formatField: textInfos.FormatField
+	):
 		textPosition = None
 		val = fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
 		if val != UIAHandler.handler.reservedNotSupportedValue and val:
@@ -292,10 +294,7 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 
 	def _getFormatFieldAnnotationTypes(
-		self,
-		fetch: Callable[[int], int],
-		formatField: textInfos.FormatField,
-		formatConfig: Dict
+		self, fetch: Callable[[int], int], formatField: textInfos.FormatField, formatConfig: Dict
 	):
 		annotationTypes = fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
 		# Some UIA implementations return a single value rather than a tuple.
@@ -309,10 +308,7 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["invalid-grammar"] = True
 		if formatConfig["reportComments"]:
 			cats = self.obj._UIACustomAnnotationTypes
-			if (
-				cats.microsoftWord_draftComment.id
-				and cats.microsoftWord_draftComment.id in annotationTypes
-			):
+			if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
 				formatField["comment"] = textInfos.CommentType.DRAFT
 			elif (
 				cats.microsoftWord_resolvedComment.id
@@ -408,7 +404,7 @@ class UIATextInfo(textInfos.TextInfo):
 
 		def fetch(id):
 			return fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
-		
+
 		formatField = textInfos.FormatField()
 		if formatConfig["reportFontName"]:
 			self._getFormatFieldFontName(fetch, formatField)
