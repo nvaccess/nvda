@@ -28,7 +28,6 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
-	ShowNewAddons,
 	ResetNewAddons,
 	NVDAKey,
 	ShowMessages,
@@ -3104,14 +3103,6 @@ class AddonStorePanel(SettingsPanel):
 		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
-		# Translators: This is a label for the show new add-ons combo box in the Add-on Store Settings dialog.
-		showNewAddonsLabelText = _("&Show new add-ons:")
-		self.showNewAddonsComboBox = sHelper.addLabeledControl(
-			showNewAddonsLabelText, wx.Choice, choices=[mode.displayString for mode in ShowNewAddons]
-		)
-		self.bindHelpEvent("ShowNewAddons", self.showNewAddonsComboBox)
-		index = [x.value for x in ShowNewAddons].index(config.conf["addonStore"]["showNewAddons"])
-		self.showNewAddonsComboBox.SetSelection(index)
 		# Translators: This is a label for the reset new add-ons combo box in the Add-on Store Settings dialog.
 		resetNewAddonsLabelText = _("&Reset new add-ons:")
 		self.resetNewAddonsComboBox = sHelper.addLabeledControl(
@@ -3124,8 +3115,6 @@ class AddonStorePanel(SettingsPanel):
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
-		index = self.showNewAddonsComboBox.GetSelection()
-		config.conf["addonStore"]["showNewAddons"] = [x.value for x in ShowNewAddons][index]
 		index = self.resetNewAddonsComboBox.GetSelection()
 		config.conf["addonStore"]["resetNewAddons"] = [x.value for x in ResetNewAddons][index]
 
