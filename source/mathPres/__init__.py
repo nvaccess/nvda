@@ -59,10 +59,10 @@ interactionProvider: Optional[MathPresentationProvider] = None
 
 
 def registerProvider(
-		provider: MathPresentationProvider,
-		speech: bool = False,
-		braille: bool = False,
-		interaction: bool = False,
+	provider: MathPresentationProvider,
+	speech: bool = False,
+	braille: bool = False,
+	interaction: bool = False,
 ):
 	"""Register a math presentation provider.
 	@param provider: The provider to register.
@@ -83,13 +83,18 @@ def initialize() -> None:
 	# Register builtin providers if a plugin hasn't registered others.
 	if not speechProvider or not brailleProvider or not interactionProvider:
 		from . import mathPlayer
+
 		try:
 			provider = mathPlayer.MathPlayer()
 		except:  # noqa: E722
 			log.warning("MathPlayer 4 not available")
 		else:
-			registerProvider(provider, speech=not speechProvider,
-				braille=not brailleProvider, interaction=not interactionProvider)
+			registerProvider(
+				provider,
+				speech=not speechProvider,
+				braille=not brailleProvider,
+				interaction=not interactionProvider,
+			)
 
 
 class MathInteractionNVDAObject(Window):
@@ -122,6 +127,7 @@ class MathInteractionNVDAObject(Window):
 
 	def script_exit(self, gesture):
 		eventHandler.executeEvent("gainFocus", self.parent)
+
 	# Translators: Describes a command.
 	script_exit.__doc__ = _("Exit math interaction")
 
@@ -129,7 +135,10 @@ class MathInteractionNVDAObject(Window):
 		"kb:escape": "exit",
 	}
 
+
 RE_STRIP_XML_PREFIX = re.compile(r"^.*?(?=<(?:\w+:)?math[ >])")
+
+
 def stripExtraneousXml(xml):
 	"""Strip extraneous XML from MathML.
 	This is needed where retrieving MathML produces more than just the math tag.
@@ -174,6 +183,8 @@ def interactWithMathMl(mathMl: str) -> None:
 
 
 RE_MATH_LANG = re.compile(r"""<math.*? xml:lang=["']([^"']+)["'].*?>""")
+
+
 def getLanguageFromMath(mathMl):
 	"""Get the language specified in a math tag.
 	@return: The language or C{None} if unspeicifed.
@@ -184,8 +195,10 @@ def getLanguageFromMath(mathMl):
 		return m.group(1)
 	return None
 
+
 RE_MATH_APPEND = re.compile(r"(<math[^>]*)>")
+
+
 def insertLanguageIntoMath(mathMl, language):
-	"""Insert the specified language into a math tag.
-	"""
+	"""Insert the specified language into a math tag."""
 	return RE_MATH_APPEND.sub(r'\1 xml:lang="%s">' % language, mathMl, count=1)

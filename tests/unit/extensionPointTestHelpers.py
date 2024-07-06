@@ -20,10 +20,10 @@ from typing import Iterable
 
 @contextmanager
 def actionTester(
-		testCase: unittest.TestCase,
-		action: Action,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	action: Action,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing an Action.
 	@param testCase: The test case to apply assertions on.
@@ -46,17 +46,19 @@ def actionTester(
 		yield
 	finally:
 		action.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def deciderTester(
-		testCase: unittest.TestCase,
-		decider: Decider,
-		expectedDecision: bool,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	decider: Decider,
+	expectedDecision: bool,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Decider.
 	@param testCase: The test case to apply the assertion on.
@@ -82,18 +84,20 @@ def deciderTester(
 		yield expectedDecision
 	finally:
 		decider.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def filterTester(
-		testCase: unittest.TestCase,
-		filter: Filter,
-		expectedInput: FilterValueT,
-		expectedOutput: FilterValueT,
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	filter: Filter,
+	expectedInput: FilterValueT,
+	expectedOutput: FilterValueT,
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
@@ -122,17 +126,19 @@ def filterTester(
 		yield expectedOutput
 	finally:
 		filter.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)
 
 
 @contextmanager
 def chainTester(
-		testCase: unittest.TestCase,
-		chain: Chain,
-		expectedOutput: Iterable[ChainValueTypeT],
-		useAssertDictContainsSubset: bool = False,
-		**expectedKwargs
+	testCase: unittest.TestCase,
+	chain: Chain,
+	expectedOutput: Iterable[ChainValueTypeT],
+	useAssertDictContainsSubset: bool = False,
+	**expectedKwargs,
 ):
 	"""A context manager that allows testing a Filter.
 	@param testCase: The test case to apply the assertion on.
@@ -158,5 +164,7 @@ def chainTester(
 		yield expectedOutput
 	finally:
 		chain.unregister(handler)
-		testFunc = testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		testFunc = (
+			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
+		)
 		testFunc(expectedKwargs, actualKwargs)

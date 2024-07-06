@@ -3,13 +3,10 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019 NV Access Limited, Babbage B.V.
 
-"""Module containing exceptions for the vision framework.
-"""
+"""Module containing exceptions for the vision framework."""
 
 
-class ProviderTerminateException(RuntimeError):
-	...
+class ProviderTerminateException(RuntimeError): ...
 
 
-class ProviderInitException(RuntimeError):
-	...
+class ProviderInitException(RuntimeError): ...

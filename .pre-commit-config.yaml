@@ -1,10 +1,50 @@
 repos:
-- repo: https://github.com/astral-sh/ruff-pre-commit
-  # Ruff version.
-  rev: v0.4.10
+
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v4.6.0
   hooks:
-    # Run the linter.
+    # Checks python syntax
+    - id: check-ast
+    - id: check-case-conflict
+    - id: check-merge-conflict
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+
+- repo: https://github.com/asottile/add-trailing-comma
+  rev: v3.1.0
+  hooks:
+  # Ruff preserves indent/new-line formatting of function arguments, list items, and similar iterables,
+  # if a trailing comma is added.
+  # This adds a trailing comma to args/iterable items in case it was missed.
+  - id: add-trailing-comma
+
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  # Matches Ruff version in requirements.
+  rev: v0.5.0
+  hooks:
     - id: ruff
+      name: lint with ruff
       args: [ --fix ]
-    # Run the formatter.
     - id: ruff-format
+      name: format with ruff
+
+- repo: local
+  hooks:
+    - id: checkPot
+      name: translation string check
+      entry: cmd.exe /c "scons checkPot -j 4"
+      language: system
+      pass_filenames: false
+      types: [python, pofile]
+    - id: unitTest
+      name: unit tests
+      entry: ./rununittests.bat
+      language: script
+      pass_filenames: false
+      types: [python, c, c++, batch]
+    - id: licenseCheck
+      name: Check license compatibility of pip dependencies
+      files: requirements.txt
+      entry: ./runlicensecheck.bat
+      language: script
+      pass_filenames: false

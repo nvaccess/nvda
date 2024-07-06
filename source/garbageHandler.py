@@ -25,7 +25,7 @@ class TrackedObject:
 	def __del__(self):
 		# __del__ may still be called while Python is exiting.
 		# And therefore some symbols may be set to None.
-		isFinalizing = getattr(sys, 'is_finalizing', lambda: True)()
+		isFinalizing = getattr(sys, "is_finalizing", lambda: True)()
 		if not isFinalizing:
 			notifyObjectDeletion(self)
 
@@ -35,7 +35,7 @@ _reportCountDuringCollection = 0
 
 
 def initialize():
-	""" Initializes NVDA's garbage handler. """
+	"""Initializes NVDA's garbage handler."""
 	# Instruct Python to keep all unreachable objects for later inspection
 	# gc.set_debug(gc.DEBUG_SAVEALL)
 	# Register a callback with Python's garbage collector
@@ -69,12 +69,11 @@ def notifyObjectDeletion(obj):
 		if _reportCountDuringCollection == 1:
 			log.debugWarning(
 				"Garbage collector has found one or more unreachable objects. See further warnings for specific objects.",
-				stack_info=True
+				stack_info=True,
 			)
 		log.debugWarning(f"Deleting unreachable object {obj}")
 
 
-
 def terminate():
-	""" Terminates NVDA's garbage handler. """
+	"""Terminates NVDA's garbage handler."""
 	gc.callbacks.remove(_collectionCallback)

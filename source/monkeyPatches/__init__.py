@@ -12,4 +12,5 @@ applyWxMonkeyPatches = wxMonkeyPatches.apply
 def applyMonkeyPatches():
 	# Apply several monkey patches to comtypes
 	from . import comtypesMonkeyPatches
+
 	comtypesMonkeyPatches.applyMonkeyPatches()

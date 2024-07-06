@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2021 NV Access Limited, Babbage B.V.
 
-"""Unit tests for the controlTypes module.
-"""
+"""Unit tests for the controlTypes module."""
+
 import enum
 import logging
 import unittest
@@ -17,8 +17,7 @@ import logHandler
 
 
 class TestLabels(unittest.TestCase):
-	_noDisplayStringRoles = {
-	}
+	_noDisplayStringRoles = {}
 	_noDisplayStringStates = {
 		# HAS_ARIA_DETAILS is not used internally to NVDA, only exists for backwards
 		# compatibility of the add-on API
@@ -73,7 +72,6 @@ class TestLabels(unittest.TestCase):
 
 
 class TestProcessStates(unittest.TestCase):
-
 	def setUp(self):
 		self.obj = PlaceholderNVDAObject()
 		self.obj.role = controlTypes.Role.CHECKBOX
@@ -81,7 +79,7 @@ class TestProcessStates(unittest.TestCase):
 			controlTypes.State.FOCUSABLE,
 			controlTypes.State.INVALID_ENTRY,
 			controlTypes.State.FOCUSED,
-			controlTypes.State.REQUIRED
+			controlTypes.State.REQUIRED,
 		}
 
 	def test_positiveStates(self):
@@ -90,9 +88,9 @@ class TestProcessStates(unittest.TestCase):
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
-				self.obj.states
+				self.obj.states,
 			),
-			{controlTypes.State.INVALID_ENTRY, controlTypes.State.REQUIRED}
+			{controlTypes.State.INVALID_ENTRY, controlTypes.State.REQUIRED},
 		)
 
 	def test_negativeStates(self):
@@ -101,13 +99,13 @@ class TestProcessStates(unittest.TestCase):
 				self.obj.role,
 				self.obj.states,
 				controlTypes.OutputReason.FOCUS,
-				None
+				None,
 			),
-			{controlTypes.State.CHECKED}
+			{controlTypes.State.CHECKED},
 		)
 
-class TestStateOrder(unittest.TestCase):
 
+class TestStateOrder(unittest.TestCase):
 	def test_positiveMergedStatesOutput(self):
 		obj = PlaceholderNVDAObject()
 		obj.role = controlTypes.Role.CHECKBOX
@@ -116,7 +114,7 @@ class TestStateOrder(unittest.TestCase):
 			controlTypes.State.FOCUSABLE,
 			controlTypes.State.FOCUSED,
 			controlTypes.State.SELECTED,
-			controlTypes.State.SELECTABLE
+			controlTypes.State.SELECTABLE,
 		}
 		self.assertEqual(
 			controlTypes.processAndLabelStates(
@@ -124,9 +122,9 @@ class TestStateOrder(unittest.TestCase):
 				obj.states,
 				controlTypes.OutputReason.FOCUS,
 				obj.states,
-				None
+				None,
 			),
-			[controlTypes.State.CHECKED.displayString]
+			[controlTypes.State.CHECKED.displayString],
 		)
 
 	def test_negativeMergedStatesOutput(self):
@@ -136,7 +134,7 @@ class TestStateOrder(unittest.TestCase):
 			controlTypes.State.FOCUSABLE,
 			controlTypes.State.FOCUSED,
 			controlTypes.State.SELECTED,
-			controlTypes.State.SELECTABLE
+			controlTypes.State.SELECTABLE,
 		}
 		self.assertEqual(
 			controlTypes.processAndLabelStates(
@@ -144,9 +142,9 @@ class TestStateOrder(unittest.TestCase):
 				obj.states,
 				controlTypes.OutputReason.FOCUS,
 				obj.states,
-				None
+				None,
 			),
-			[controlTypes.State.CHECKED.negativeDisplayString]
+			[controlTypes.State.CHECKED.negativeDisplayString],
 		)
 
 
@@ -200,6 +198,7 @@ class TestBackCompat(unittest.TestCase):
 			UNLOCKED = 0x20000000000
 			HAS_ARIA_DETAILS = 0x40000000000
 			HASNOTE = 0x80000000000
+
 		for old in oldStates:
 			new = controlTypes.State[old.name]
 			self.assertEqual(new.value, old.value, msg=f"Value not equal: {new.name}")
@@ -207,7 +206,7 @@ class TestBackCompat(unittest.TestCase):
 			self.assertEqual(
 				controlTypes.State(old.value),
 				old.value,
-				msg=f"Can't construct from integer value: {new.name}"
+				msg=f"Can't construct from integer value: {new.name}",
 			)
 
 	def test_rolesValues(self):
@@ -215,40 +214,40 @@ class TestBackCompat(unittest.TestCase):
 			if i in self.MISSING_ROLE_VALUES:
 				with self.assertRaises(
 					ValueError,
-					msg=f"Role with value {i} expected to not exist."
+					msg=f"Role with value {i} expected to not exist.",
 				):
 					controlTypes.Role(i)
 			else:
 				self.assertEqual(
 					i,
 					controlTypes.Role(i),
-					msg=f"Role with value {i} expected to exist."
+					msg=f"Role with value {i} expected to exist.",
 				)
 
 		for role in controlTypes.Role:
 			self.assertTrue(
 				isinstance(role, int),
-				msg="Role expected to subclass int"
+				msg="Role expected to subclass int",
 			)
 			self.assertEqual(
 				type(role.value),
 				int,
-				msg="Role value expected to be of type int"
+				msg="Role value expected to be of type int",
 			)
 			self.assertEqual(
 				role,
 				role.value,
-				msg="Role (enum member) and role value (int) expected to be considered equal"
+				msg="Role (enum member) and role value (int) expected to be considered equal",
 			)
 			self.assertLess(
 				role,
 				role.value + 1,
-				msg="Role (enum member) expected to be compared as int"
+				msg="Role (enum member) expected to be compared as int",
 			)
 			self.assertGreater(
 				role,
 				role.value - 1,
-				msg="Role (enum member) expected to be compared as int"
+				msg="Role (enum member) expected to be compared as int",
 			)
 
 
@@ -267,5 +266,5 @@ class Test_FontSize(unittest.TestCase):
 		self.assertIn(
 			"Unknown font-size value, can't translate 'unsupported'",
 			logContext.output[0],
-			msg="Parsing attempt for unknown font-size value did not fail as expected"
+			msg="Parsing attempt for unknown font-size value did not fail as expected",
 		)

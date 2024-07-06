@@ -10,6 +10,7 @@ For example, you might wish to notify about a configuration profile switch
 or allow modification of spoken messages before they are passed to the synthesizer.
 See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
+
 from logHandler import log
 from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref  # noqa: F401
 from typing import (
@@ -74,8 +75,8 @@ FilterValueT = TypeVar("FilterValueT")
 
 
 class Filter(
-		HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
-		Generic[FilterValueT]
+	HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
+	Generic[FilterValueT],
 ):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
@@ -222,7 +223,7 @@ class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 				log.exception("Error running handler %r for %r" % (handler, self))
 				continue
 		if (not self.defaultDecision) in decisions:
-			return (not self.defaultDecision)
+			return not self.defaultDecision
 		return self.defaultDecision
 
 
