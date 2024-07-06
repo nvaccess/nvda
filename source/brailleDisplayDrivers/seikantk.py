@@ -350,7 +350,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
 				"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
 				"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
-				"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE"),
 				"kb:backspace": ("br(seikantk):d7",),
 				"kb:pageup": ("br(seikantk):SPACE+LJ_RIGHT",),
 				"kb:pagedown": ("br(seikantk):SPACE+LJ_LEFT",),
