@@ -2958,7 +2958,7 @@ This option determines the period of time to reset new add-ons.
 
 |Option |Behaviour |
 |---|---|
-|Monthly |Add-ons will be considered as new for a month (30 days) |
+|Monthly |Add-ons will be considered as new for a month (31 days) |
 |Weekly | Add-ons will be considered as new for a week (7 days) |
 |At startup | Add-ons will be considered as new until NVDA is restarted |
 
