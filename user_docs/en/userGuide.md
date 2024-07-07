@@ -3502,7 +3502,7 @@ Available and updatable add-ons can be filtered to include [incompatible add-ons
 
 Available add-ons can be filtered to show just the most recent published add-ons.
 
-To learn how to configure how long add-ons will be consideredas as recently published, please refer to {#ResetNewAddons}.
+To learn how to configure how long add-ons will be considered as recently published, please refer to {#ResetNewAddons}.
 
 #### Filter add-ons by channel {#AddonStoreFilterChannel}
 
