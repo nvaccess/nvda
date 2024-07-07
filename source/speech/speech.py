@@ -1090,10 +1090,7 @@ def speak(  # noqa: C901
 		if (
 			(script and getattr(script, "speakOnDemand", False))
 			or inputCore.manager.isInputHelpActive
-			or (
-				SayAllHandler.isRunning()
-				and SayAllHandler.startedFromScript
-			)
+			or (SayAllHandler.isRunning() and SayAllHandler.startedFromScript)
 		):
 			pass  # Do nothing and continue
 		else:
