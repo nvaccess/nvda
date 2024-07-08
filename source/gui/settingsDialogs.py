@@ -1666,6 +1666,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.reportNormalizedForCharacterNavigationCheckBox.SetValue(
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 		)
+		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+		)
 
 		includeCLDRText = _(
 			# Translators: This is the label for a checkbox in the

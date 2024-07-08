@@ -1,5 +1,90 @@
 # Mitä uutta NVDA:ssa
 
+## 2024.3
+
+Lisäosakauppa ilmoittaa nyt NVDA:n käynnistyksen yhteydessä, jos lisäosapäivityksiä on saatavilla.
+
+Nyt on mahdollista soveltaa Unicode-normalisointia puhe- ja pistekirjoitustulosteeseen.
+Tämä voi olla hyödyllistä luettaessa merkkejä, joita puhesyntetisaattori ei tunnista tai joita ei ole pistetaulukossa ja joille on olemassa yhteensopiva vaihtoehto, kuten yleisesti sosiaalisessa mediassa käytettävät lihavoidut ja kursivoidut merkit.
+Se mahdollistaa myös kaavojen lukemisen Microsoft Wordin kaavaeditorissa.
+
+Help Techin Activator Pro -pistenäyttöjä tuetaan.
+
+Lisätty määrittämättömiä komentoja hiiren rullan vierittämiseen pysty- ja vaakasuunnassa.
+
+Useita erityisesti Windows 11:n emojipaneeliin ja leikepöytähistoriaan liittyviä bugikorjauksia.
+Verkkoselaimille on tehty korjauksia virheilmoitusten, kuvien, kuvatekstien, taulukoiden nimien ja valintaruutu/valintapainikevalikoiden kohteiden puhumiseen.
+
+Liblouis on päivitetty, ja se sisältää uuden serbian (kyrilliset aakkoset), jiddišin, useiden muinaiskielten sekä turkin pistetaulukot.
+eSpeak on päivitetty tukemaan karakalpakin kieltä.
+Myös Unicode CLDR on päivitetty.
+
+### Uudet ominaisuudet
+
+* Uusia näppäinkomentoja:
+  * Lisätty määrittämättömiä komentoja hiiren rullan pysty- ja vaakasuuntaiseen vierittämiseen, mikä parantaa navigointia verkkosivuilla ja sovelluksissa (kuten Dism++), joissa on dynaamista sisältöä. (#16462, @Cary-Rowen)
+* Lisätty puhe- ja pistekirjoitustulostukseen tuki Unicode-normalisoinnille. (#11570, #16466 @LeonarddeR).
+  * Tämä voi olla hyödyllistä, kun luetaan merkkejä, joita puhesyntetisaattori ei tunnista tai joita ei ole pistetaulukossa ja joille on olemassa yhteensopiva vaihtoehto, kuten yleisesti sosiaalisessa mediassa käytettävät lihavoidut ja kursivoidut merkit.
+  * Se mahdollistaa myös kaavojen lukemisen Microsoft Wordin kaavaeditorissa. (#4631)
+  * Voit ottaa tämän toiminnon käyttöön sekä puheelle että pistekirjoitukselle niiden omissa asetuskategorioissa NVDA:n asetusvalintaikkunassa.
+* Saat oletusarvoisesti NVDA:n käynnistyksen jälkeen ilmoituksen, jos lisäosapäivityksiä on saatavilla. (#15035)
+  * Tämä voidaan poistaa käytöstä asetusvalintaikkunan Lisäosakauppa-kategoriasta.
+  * Lisäosien päivitykset tarkistetaan kerran päivässä.
+  * Vain samassa kanavassa olevien lisäosien päivitykset tarkistetaan (esim. asennetuille beetaversioille ilmoitetaan vain beetakanavan päivitykset).
+* Lisätty tuki Help Techin Activator Pro -pistenäytöille. (#16668)
+
+### Muutokset
+
+* Komponenttien päivitykset:
+  * eSpeak NG on päivitetty versioksi 1.52-dev muutos `54ee11a79`. (#16495)
+    * Lisätty karakalpakin kieli.
+  * Unicode CLDR päivitetty versioksi 45.0. (#16507, @OzancanKaratas)
+  * Päivitetty fast_diff_match_patch (käytetään muutosten havaitsemiseen päätteissä ja muussa dynaamisessa sisällössä) versioksi 2.1.0. (#16508, @codeofdusk)
+  * LibLouis-pistekääntäjä päivitetty versioksi [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Uusia pistetaulukoita:
+      * Kyrillinen serbia.
+      * Jiddiš.
+      * Useita muinaiskieliä: raamatullinen heprea, akkadi, syyria, ugarit ja translitteroitu nuolenpääkirjoitus.
+      * Turkkilainen taso 2. (#16735)
+  * Päivitetty NSIS versioksi 3.10. (#16674, @dpy013)
+  * Päivitetty markdown versioksi 3.6. (#16725, @dpy013)
+  * Päivitetty nh3 versioksi 0.2.17. (#16725, @dpy013)
+* pistekirjoituksen varasyöttötaulukko on nyt sama kuin varatulostustaulukko, joka on yhdenmukaistettu englannin pistemerkistö, taso 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA ilmaisee nyt kuvat, joilla ei ole saavutettavia alielementtejä, mutta joilla on nimi tai kuvaus. (#14514)
+* Selaustilassa riveittäin luettaessa ei enää ilmoiteta "kuvateksti" jokaisella kuvan tai taulukon pitkän kuvatekstin rivillä. (#14874)
+* Viimeinen suorittamaton komento ei enää katoa Python-konsolissa syötehistoriaa selattaessa. (#16653, @CyrilleB79)
+* Anonyymi yksilöllinen tunniste lähetetään nyt osana valinnaista NVDA:n käyttötilastojen keräämistä. (#16266)
+* Massamuistiversiota luotaessa luodaan oletusarvoisesti uusi hakemisto.
+Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä. (#16684)
+
+### Bugikorjaukset
+
+* Windows 11:
+  * NVDA ei enää vaikuta jumiutuvan leikepöydän historiaa ja emojipaneelia suljettaessa. (#16346, #16347, @josephsl)
+  * NVDA puhuu taas näkyvät ehdotukset IME-käyttöliittymää avattaessa. (#14023, @josephsl)
+  * NVDA ei enää sano kahdesti "leikepöydän historia" emojipaneelin valikkokohteita selattaessa. (#16532, @josephsl)
+  * NVDA ei enää katkaise puhetta ja pistekirjoitusta tarkasteltaessa kaomojeita ja symboleita emojipaneelissa. (#16533, @josephsl)
+* Verkkoselaimet:
+  * `aria-errormessage`-viitteellä varustetut virheilmoitukset puhutaan nyt Google Chromessa ja Mozilla Firefoxissa. (#8318)
+  * Mikäli saatavilla, NVDA käyttää `aria-labelledby`-attribuuttia taulukoiden saavutettavien nimien ilmaisemiseen Mozilla Firefoxissa. (#5183)
+  * NVDA puhuu oikein valintaruutu- ja valintapainikevalikon kohteet siirryttäessä ensimmäistä kertaa alivalikkoihin Google Chromessa ja Mozilla Firefoxissa. (#14550)
+  * NVDA:n selaustilan hakutoiminto on nyt tarkempi, kun sivu sisältää emojeita. (#16317, @LeonarddeR)
+  * NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
+* NVDA puhuu oikein automaattisen täydennyksen ehdotukset Eclipsessä ja muissa Eclipse-pohjaisissa ympäristöissä Windows 11:ssä. (#16416, @thgcode)
+* Paranneltu automaattisen tekstin lukemisen luotettavuutta erityisesti päätesovelluksissa. (#15850, #16027, @Danstiv)
+* NVDA ilmaisee oikein valinnan muutokset Microsoft Excelissä solun tekstiä muokattaessa. (#15843)
+* NVDA lukee nyt oikein Java Access Bridgeä käyttävissä sovelluksissa tekstin viimeisen tyhjän rivin sen sijaan, että toistaisi edellisen rivin. (#9376, @dmitrii-drobotov)
+* NVDA ilmaisee uuden muotoilun (esim. "Lihavointi käytössä", "Lihavointi pois") käytettäessä vastaavaa pikanäppäintä tekstin muotoilun (lihavointi, kursivointi, alleviivaus, ala- ja yläindeksi, tasaus) vaihtamiseen LibreOffice Writerissä (versio 24.8 ja uudemmat). (#4248, @michaelweghorn)
+* NVDA ei enää toisinaan puhu väärää merkkiä, sanaa jne., kun UI Automation -rajapintaa käyttävien sovellusten tekstikentissä liikutaan nuolinäppäimillä. (#16711, @jcsteh)
+* Kun tekstiä liitetään Windows 10:n/11:n laskimeen, NVDA puhuu nyt oikein koko liitetyn numeron. (#16573, @TristanBurchett)
+* Puhe ei enää ole hiljaa, kun yhteys etätyöpöytäistuntoon katkaistaan ja muodostetaan uudelleen. (#16722, @jcsteh)
+* Lisätty Visual Studio Codeen tuki objektin nimen lukemiselle tekstintarkastelukomennoilla. (#16248, @Cary-Rowen)
+* NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
+* NVDA-äänien toisto ei enää epäonnistu monoäänilaitteella. (#16770, @jcsteh)
+
+### Muutokset kehittäjille
+
+Katso muutokset tämän dokumentin [englanninkielisestä versiosta](../en/changes.html).
 
 ## 2024.2
 
