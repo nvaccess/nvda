@@ -157,8 +157,8 @@ def _shouldInstallWhenAddonTooOldDialog(
 		# because the add-on is too old for the running version of NVDA.
 		"Warning: add-on is incompatible: {name} {version}. "
 		"Check for an updated version of this add-on if possible. "
-		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
-		"your current NVDA version is {NVDAVersion}. "
+		"This add-on was last tested with NVDA {lastTestedNVDAVersion}. "
+		"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 		"Installation may cause unstable behavior in NVDA.\n"
 		"Proceed with installation anyway? "
 		).format(
@@ -190,8 +190,8 @@ def _shouldEnableWhenAddonTooOldDialog(
 		# because the add-on is too old for the running version of NVDA.
 		"Warning: add-on is incompatible: {name} {version}. "
 		"Check for an updated version of this add-on if possible. "
-		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
-		"your current NVDA version is {NVDAVersion}. "
+		"This add-on was last tested with NVDA {lastTestedNVDAVersion}. "
+		"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 		"Enabling may cause unstable behavior in NVDA.\n"
 		"Proceed with enabling anyway? "
 		).format(
