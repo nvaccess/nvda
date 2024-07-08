@@ -1972,6 +1972,7 @@ Većina govornih jedinica to podržava.
 
 Ova opcija bi općenito trebala biti aktivirana.
 Međutim, u nekim Microsoft Speech API govornim jedinicama ova se opcija ne primijenjuje pravilno i one se ponašaju čudno kad je ova opcija aktivirana.
+Govorne jedinice tvrtke Code Factory, dodatak i sapi aplikacija, također nepravilno implementiraju tu funkciju i nepravilno slovkaju znakove (npr. u NVDA izborniku ili dijaloškim okvirima).
 Ako imate problem s izgovorom pojedinačnih znakova, pokušajte s deaktiviranom opcijom.
 
 ##### Opis znakova koji kasni prilikom pomicanja kursora {#delayedCharacterDescriptions}

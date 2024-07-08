@@ -1965,13 +1965,14 @@ Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin aina isoa k
 
 ##### Käytä tavaustoimintoa (jos mahdollista) {#SpeechSettingsUseSpelling}
 
-Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
-Esim. englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
-Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
-Useimmat syntetisaattorit tukevat asetusta.
+Jotkut sanat koostuvat vain yhdestä merkistä, mutta ääntämys on erilainen riippuen siitä, lausutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
+Esimerkiksi englannin kielessä "a" on sekä kirjain että sana, ja se äännetään eri tavoin kummassakin tapauksessa.
+Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tapaukset toisistaan, mikäli se vain tukee toimintoa.
+Useimmat syntetisaattorit tukevat sitä.
 
-Tämä asetus tulisi tavallisesti ottaa käyttöön.
-Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
+Tämä asetus tulisi yleensä ottaa käyttöön.
+Jotkin SAPI-syntetisaattorit toimivat kuitenkin oudosti tämän ollessa käytössä, koska toimintoa ei ole toteutettu niissä oikein.
+Code Factoryn syntetisaattorit, sekä lisäosa- että SAPI-versio, eivät myöskään toteuta asetusta oikein ja aiheuttavat ei-toivottua tekstin kirjaimittain lukemista (esim. NVDA-valikossa tai -valintaikkunoissa).
 Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
 
 ##### Viivästetyt merkkien kuvaukset kohdistinta siirrettäessä {#delayedCharacterDescriptions}
