@@ -1970,9 +1970,10 @@ Ein Beispiel hierfür ist der Buchstabe "a" im Englischen, der unterschiedlich a
 Diese Option ermöglicht der Sprachausgabe zwischen diesen beiden Fällen zu unterscheiden, falls dies unterstützt wird.
 Die meisten Sprachausgaben unterstützen jedoch dies.
 
-Diese Option sollte im Allgemeinen aktiviert sein.
-Es gibt jedoch einige SAPI-Sprachausgaben von Microsoft, bei denen dies nicht korrekt implementiert ist und die sich eigenwillig verhalten, wenn diese Option aktiviert ist.
-Wenn Sie Probleme mit der Aussprache mancher Zeichen haben, versuchen Sie, die Option zu deaktivieren.
+Diese Option sollte generell aktiviert werden.
+Einige Sprachausgaben über die Microsoft Speech API implementieren dies jedoch nicht korrekt und verhalten sich seltsam, wenn es aktiviert ist.
+Sprachausgaben von Code Factory, sowohl die NVDA-Erweiterung als auch die SAPI-Anwendung, implementieren es ebenfalls nicht korrekt und verursachen unerwünschte Schreibweisen des vorgelesenenen Textes (z. B. in NVDA-Menüs oder Dialogfeldern).
+Wenn Sie Probleme mit der Aussprache einzelner Zeichen haben, versuchen Sie, diese Option zu deaktivieren.
 
 ##### Verzögerte Beschreibungen für Zeichen bei Cursor-Bewegung {#delayedCharacterDescriptions}
 
