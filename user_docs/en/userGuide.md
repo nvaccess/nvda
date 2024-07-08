@@ -51,7 +51,6 @@ Major highlights include:
   * Note 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 150 MB of storage space.
-* at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
 
