@@ -322,13 +322,13 @@ e) modify or distribute the source code of any Distributable Code so that any pa
 ## Third-Party Dependencies
 
 NVDA includes various third-party dependencies, each with its own license terms. 
-For a comprehensive and up-to-date list of these dependencies, along with their respective license information, please visit the following URL:
+For an automatically generated list of these dependencies, along with their respective license information, please visit the following URL:
 
 TODO: permalink
 
 [https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md](https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md)
 
-In addition to these dependencies, the following dependencies are also included in NVDA:
+In addition to these dependencies, the following are also included in NVDA:
 
 - eSpeak: GPL-3
 - LibLouis: LGPL-3
@@ -338,4 +338,6 @@ In addition to these dependencies, the following dependencies are also included 
 - Python: PSF
 - NSIS: zlib/libpng
 
-TODO: plus miscDeps
+Furthermore, NVDA also utilises additional static/binary dependencies, details of which can be found at the following URL:
+
+https://github.com/nvaccess/nvda-misc-deps/tree/master
