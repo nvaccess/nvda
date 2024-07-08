@@ -2,6 +2,29 @@
 requires = ["setuptools<70", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "nvda"
+description = "NonVisual Desktop Access (NVDA)"
+maintainers = [
+	{name = "NV Access", email = "info@nvaccess.org"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: Accessibility",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+readme = "readme.md"
+license = {file = "copying.txt"}
+
+[project.urls]
+Homepage = "https://www.nvaccess.org/"
+Repository = "https://github.com/nvaccess/nvda.git"
+Issues = "https://github.com/nvaccess/nvda/issues"
+
 [tool.ruff]
 line-length = 110
 
