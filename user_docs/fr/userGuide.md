@@ -1971,8 +1971,9 @@ Cette option permet au synthétiseur de différencier les deux cas si le synthé
 La plupart des synthétiseurs la supportent.
 
 En général, cette option devrait être activée.
-Cependant, certains synthétiseurs utilisant les API de parole Microsoft se comportent bizarrement quand cette option est activée.
-Si vous rencontrez des problèmes à l'épellation de caractères, essayez de désactiver cette option.
+Cependant, certains synthétiseurs utilisant les API de parole Microsoft ne l'implémentent pas correctement et se comportent bizarrement quand cette option est activée.
+Les synthétiseurs de chez Code Factory, aussi bien l'extension que l'application SAPI, ne l'implémentent pas non plus correctement et provoquent une épellation indésirable du texte annoncé (par exemple dans le menu ou les boîtes de dialogue NVDA).
+Si vous rencontrez des problèmes avec l'épellation de caractères, essayez de désactiver cette option.
 
 ##### Description différée des caractères lors du mouvement du curseur {#delayedCharacterDescriptions}
 
