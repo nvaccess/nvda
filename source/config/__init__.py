@@ -1289,23 +1289,48 @@ class AggregatedSection:
 		if version_year < 2025and NVDAState._allowDeprecatedAPI():
 			self._linkDeprecatedValues(key, val)
 
-	def _linkDeprecatedValues(self, key, val):
-		if not (self.path == ("documentFormatting",)):
-			return
-		if key == "fontAttributeReporting":
-			key = "reportFontAttributes"
-			val = bool(val)
-		elif key == "reportFontAttributes":
-			log.warning(
-				"documentFormatting.reportFontAttributes is deprecated. Use documentFormatting.fontAttributeReporting instead.",
-				# Include stack info so testers can report warning to add-on author.
-				stack_info=True
-			)
-			key = "fontAttributeReporting"
-			val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
-		else:
-			# We don't care about other keys.
-			return
+	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
+		"""Link deprecated config keys and values to their replacements.
+
+		Args:
+			key: The configuration key to link to its new or old counterpart.
+			val: The value associated with the configuration key.
+		
+		postconditions:
+			- If self.path is "documentFormatting":
+				- If key is "reportFontAttributes":
+					- If val is True, "documentFormatting.fontAttributeReporting" is set to OutputMode.SPEECH_AND_BRAILLE, otherwise, it is set to OutputMode.OFF.
+				- If key is "fontAttributeReporting":
+					- if val is OutputMode.OFF, "documentFormatting.reportFontAttributes" is set to False, otherwise, it is set to True.
+		"""
+		match self.path:
+			case ("documentFormatting",):
+				match key:
+					case "fontAttributeReporting":
+						# Alias documentFormatting.fontAttributeReporting to documentFormatting.reportFontAttributes for backwards compatibility.
+						key = "reportFontAttributes"
+						val = bool(val)
+
+					case "reportFontAttributes":
+						# Alias documentFormatting.reportFontAttributes to documentFormatting.fontAttributeReporting for forwards compatibility.
+						log.warning(
+							"documentFormatting.reportFontAttributes is deprecated. Use documentFormatting.fontAttributeReporting instead.",
+							# Include stack info so testers can report warning to add-on author.
+							stack_info=True
+						)
+						key = "fontAttributeReporting"
+						val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
+
+					case _:
+						# We don't care about other keys in this section.
+						return
+					
+			case _:
+				# We don't care about other sections.
+				return
+		
+		# Update the value in the most recently activated profile.
+		# If we have reached this point, we must have a new key and value to set.
 		self._getUpdateSection()[key] = val
 		self._cache[key] = val
 
