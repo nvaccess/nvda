@@ -223,10 +223,16 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 
 @unique
 class OutputMode(DisplayStringIntEnum):
-	OFF = 0
-	SPEECH = 1
-	BRAILLE = 2
-	SPEECH_AND_BRAILLE = 3
+	"""Enumeration for ways to output information, such as formatting.
+	Use OutputMode.MEMBER.value to compare with the config;
+	use OutputMode.MEMBER.displayString in the UI for a translatable description of this member.
+
+	This is currently implemented as an IntEnum due to limitations iterating over IntFlag members. However, an attempt should be made to adhere to the convention that single output modes are powers of 2, and combinations of output modes are bitwise ORs of these values.
+	"""
+	OFF = 0b0
+	SPEECH = 0b01
+	BRAILLE = 0b10
+	SPEECH_AND_BRAILLE = SPEECH | BRAILLE
 
 	@property
 	def _displayStringLabels(self):
