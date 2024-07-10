@@ -39,7 +39,7 @@ MODIFIER_COMBINATIONS = [
 	{
 		AccessibleKeystroke.ALT: "alt",
 		AccessibleKeystroke.CONTROL: "control",
-		AccessibleKeystroke.SHIFT: "shift"
+		AccessibleKeystroke.SHIFT: "shift",
 	},
 	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.SHIFT: "shift"},
 	{AccessibleKeystroke.ALT: "alt", AccessibleKeystroke.CONTROL: "control"},
@@ -56,10 +56,10 @@ MODIFIER_COMBINATIONS = [
 		AccessibleKeystroke.ALT: "alt",
 		AccessibleKeystroke.META: "meta",
 		AccessibleKeystroke.CONTROL: "control",
-		AccessibleKeystroke.SHIFT: "shift"
-	}
+		AccessibleKeystroke.SHIFT: "shift",
+	},
 ]
-BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord('A'), ord('Z') + 1)]
+BASIC_SHORTCUT_KEYS = [chr(x) for x in range(ord("A"), ord("Z") + 1)]
 FKEY_SHORTCUTS = [chr(x) for x in range(1, 25)]
 
 

@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
-"""Unit tests for the inputCore module.
-"""
+"""Unit tests for the inputCore module."""
 
 import unittest
 import inputCore
@@ -27,7 +26,7 @@ class TestInputManagerExtensionPoints(unittest.TestCase):
 			self,
 			inputCore.decide_executeGesture,
 			expectedDecision=False,
-			gesture=gesture
+			gesture=gesture,
 		):
 			inputCore.manager.executeGesture(gesture)
 
@@ -38,6 +37,7 @@ class TestGlobalGestureMap(unittest.TestCase):
 
 	def test_exportAndUpdateAreEqual(self):
 		from brailleDisplayDrivers.hims import BrailleDisplayDriver as HimsDriver
+
 		exported = HimsDriver.gestureMap.export()
 		newMap = inputCore.GlobalGestureMap(exported)
 		self.assertEqual(HimsDriver.gestureMap, newMap)

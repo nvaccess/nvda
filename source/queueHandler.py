@@ -1,8 +1,8 @@
-#queueHandler.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2006-2018 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# queueHandler.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2018 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import types
 from queue import SimpleQueue
@@ -17,18 +17,20 @@ import core
 # Which may cause a deadlock.
 eventQueue = SimpleQueue()
 
-generators={}
-lastGeneratorObjID=0
+generators = {}
+lastGeneratorObjID = 0
+
 
 def registerGeneratorObject(generatorObj):
-	global generators,lastGeneratorObjID
-	if not isinstance(generatorObj,types.GeneratorType):
-		raise TypeError('Arg 2 must be a generator object, not %s'%type(generatorObj))
-	lastGeneratorObjID+=1
-	log.debug("Adding generator %d"%lastGeneratorObjID)
-	generators[lastGeneratorObjID]=generatorObj
+	global generators, lastGeneratorObjID
+	if not isinstance(generatorObj, types.GeneratorType):
+		raise TypeError("Arg 2 must be a generator object, not %s" % type(generatorObj))
+	lastGeneratorObjID += 1
+	log.debug("Adding generator %d" % lastGeneratorObjID)
+	generators[lastGeneratorObjID] = generatorObj
 	core.requestPump()
 	return lastGeneratorObjID
+
 
 def cancelGeneratorObject(generatorObjID):
 	global generators
@@ -47,29 +49,33 @@ def queueFunction(queue, func, *args, _immediate: bool = False, **kwargs):
 		to delay it slightly (e.g. events). See the immediate argument to
 		L{core.requestPump}.
 	"""
-	queue.put_nowait((func,args,kwargs))
+	queue.put_nowait((func, args, kwargs))
 	core.requestPump(immediate=_immediate)
 
+
 def isRunningGenerators():
-	res=len(generators)>0
-	log.debug("generators running: %s"%res)
+	res = len(generators) > 0
+	log.debug("generators running: %s" % res)
+
 
 def flushQueue(queue):
-	for count in range(queue.qsize()+1):
+	for count in range(queue.qsize() + 1):
 		if not queue.empty():
-			(func,args,kwargs)=queue.get_nowait()
+			(func, args, kwargs) = queue.get_nowait()
 			watchdog.alive()
 			try:
-				func(*args,**kwargs)
+				func(*args, **kwargs)
 			except:  # noqa: E722
 				log.exception(f"Error in func {func.__qualname__}")
 
+
 def isPendingItems(queue):
 	if not queue.empty():
-		res=True
+		res = True
 	else:
-		res=False
+		res = False
 	return res
+
 
 def pumpAll():
 	# This dict can mutate during iteration, so wrap the keys in a list.
@@ -84,10 +90,10 @@ def pumpAll():
 		try:
 			next(gen)
 		except StopIteration:
-			log.debug("generator %s finished"%ID)
+			log.debug("generator %s finished" % ID)
 			del generators[ID]
 		except:  # noqa: E722
-			log.exception("error in generator %d"%ID)
+			log.exception("error in generator %d" % ID)
 			del generators[ID]
 		# Lose our reference so Python can destroy the generator if appropriate.
 		del gen

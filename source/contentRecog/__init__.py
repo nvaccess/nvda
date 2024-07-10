@@ -33,8 +33,7 @@ class BaseContentRecogTextInfo(cursorManager._ReviewCursorManagerTextInfo):
 
 
 class ContentRecognizer(AutoPropertyObject):
-	"""Implementation of a content recognizer.
-	"""
+	"""Implementation of a content recognizer."""
 
 	allowAutoRefresh: bool = False
 	"""
@@ -56,7 +55,12 @@ class ContentRecognizer(AutoPropertyObject):
 		return 1
 
 	@abstractmethod
-	def recognize(self, pixels: ctypes.Array, imageInfo: "RecogImageInfo", onResult: onRecognizeResultCallbackT):
+	def recognize(
+		self,
+		pixels: ctypes.Array,
+		imageInfo: "RecogImageInfo",
+		onResult: onRecognizeResultCallbackT,
+	):
 		"""Asynchronously recognize content from an image.
 		This method should not block.
 		Only one recognition can be performed at a time.
@@ -75,13 +79,11 @@ class ContentRecognizer(AutoPropertyObject):
 
 	@abstractmethod
 	def cancel(self):
-		"""Cancel the recognition in progress (if any).
-		"""
+		"""Cancel the recognition in progress (if any)."""
 		raise NotImplementedError
 
 	def validateCaptureBounds(self, location: RectLTWH) -> bool:
-		"""Validate the capture coordinates before creating image for content recognition
-		"""
+		"""Validate the capture coordinates before creating image for content recognition"""
 		return True
 
 	def validateObject(self, nav: NVDAObject) -> bool:
@@ -108,12 +110,12 @@ class RecogImageInfo:
 	"""
 
 	def __init__(
-			self,
-			screenLeft: int,
-			screenTop: int,
-			screenWidth: int,
-			screenHeight: int,
-			resizeFactor: Union[int, float]
+		self,
+		screenLeft: int,
+		screenTop: int,
+		screenWidth: int,
+		screenHeight: int,
+		resizeFactor: Union[int, float],
 	):
 		"""
 		@param screenLeft: The x screen coordinate of the upper-left corner of the image.
@@ -138,12 +140,12 @@ class RecogImageInfo:
 
 	@classmethod
 	def createFromRecognizer(
-			cls,
-			screenLeft: int,
-			screenTop: int,
-			screenWidth: int,
-			screenHeight: int,
-			recognizer: ContentRecognizer
+		cls,
+		screenLeft: int,
+		screenTop: int,
+		screenWidth: int,
+		screenHeight: int,
+		recognizer: ContentRecognizer,
 	):
 		"""Convenience method to construct an instance using a L{ContentRecognizer}.
 		The resize factor is obtained by calling L{ContentRecognizer.getResizeFactor}.
@@ -152,23 +154,19 @@ class RecogImageInfo:
 		return cls(screenLeft, screenTop, screenWidth, screenHeight, resize)
 
 	def convertXToScreen(self, x):
-		"""Convert an x coordinate in the recognized image to an x coordinate on the screen.
-		"""
+		"""Convert an x coordinate in the recognized image to an x coordinate on the screen."""
 		return self.screenLeft + int(x / self.resizeFactor)
 
 	def convertYToScreen(self, y):
-		"""Convert an y coordinate in the recognized image to a y coordinate on the screen.
-		"""
+		"""Convert an y coordinate in the recognized image to a y coordinate on the screen."""
 		return self.screenTop + int(y / self.resizeFactor)
 
 	def convertWidthToScreen(self, width):
-		"""Convert width in the recognized image to the width on the screen.
-		"""
+		"""Convert width in the recognized image to the width on the screen."""
 		return int(width / self.resizeFactor)
 
 	def convertHeightToScreen(self, height):
-		"""Convert height in the recognized image to the height on the screen.
-		"""
+		"""Convert height in the recognized image to the height on the screen."""
 		return int(height / self.resizeFactor)
 
 
@@ -242,12 +240,14 @@ class LinesWordsResult(RecognitionResult):
 					# Separate with a space.
 					self._textList.append(" ")
 					self.textLen += 1
-				self.words.append(LwrWord(
-					self.textLen,
-					self.imageInfo.convertXToScreen(word["x"]),
-					self.imageInfo.convertYToScreen(word["y"]),
-					self.imageInfo.convertWidthToScreen(word["width"]),
-					self.imageInfo.convertHeightToScreen(word["height"]))
+				self.words.append(
+					LwrWord(
+						self.textLen,
+						self.imageInfo.convertXToScreen(word["x"]),
+						self.imageInfo.convertYToScreen(word["y"]),
+						self.imageInfo.convertWidthToScreen(word["width"]),
+						self.imageInfo.convertHeightToScreen(word["height"]),
+					),
 				)
 				text = word["text"]
 				self._textList.append(text)

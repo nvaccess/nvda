@@ -27,55 +27,56 @@ if TYPE_CHECKING:
 
 
 def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility.
-	"""
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	import NVDAState
+
 	if attrName == "SYSTEM_POWER_STATUS" and NVDAState._allowDeprecatedAPI():
 		from logHandler import log
 		from winAPI._powerTracking import SystemPowerStatus
+
 		log.warning(
 			"winKernel.SYSTEM_POWER_STATUS is deprecated, "
-			"use winAPI._powerTracking.SystemPowerStatus instead."
+			"use winAPI._powerTracking.SystemPowerStatus instead.",
 		)
 		return SystemPowerStatus
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
 
-kernel32=ctypes.windll.kernel32
+kernel32 = ctypes.windll.kernel32
 advapi32 = windll.advapi32
 
-#Constants
-INFINITE = 0xffffffff
-#Process control
-PROCESS_ALL_ACCESS=0x1F0FFF
-PROCESS_TERMINATE=0x1
-PROCESS_VM_OPERATION=0x8
-PROCESS_VM_READ=0x10
-PROCESS_VM_WRITE=0X20
-SYNCHRONIZE=0x100000
-PROCESS_QUERY_INFORMATION=0x400
-READ_CONTROL=0x20000
-MEM_COMMIT=0x1000
-MEM_RELEASE=0x8000
-PAGE_READWRITE=0x4
+# Constants
+INFINITE = 0xFFFFFFFF
+# Process control
+PROCESS_ALL_ACCESS = 0x1F0FFF
+PROCESS_TERMINATE = 0x1
+PROCESS_VM_OPERATION = 0x8
+PROCESS_VM_READ = 0x10
+PROCESS_VM_WRITE = 0x20
+SYNCHRONIZE = 0x100000
+PROCESS_QUERY_INFORMATION = 0x400
+READ_CONTROL = 0x20000
+MEM_COMMIT = 0x1000
+MEM_RELEASE = 0x8000
+PAGE_READWRITE = 0x4
 MAXIMUM_ALLOWED = 0x2000000
 STARTF_USESTDHANDLES = 0x00000100
-#Console handles
-STD_INPUT_HANDLE=-10
-STD_OUTPUT_HANDLE=-11
-STD_ERROR_HANDLE=-12
-LOCALE_USER_DEFAULT=0x0400
-LOCALE_NAME_USER_DEFAULT=None
-DATE_LONGDATE=0x00000002 
-TIME_NOSECONDS=0x00000002
+# Console handles
+STD_INPUT_HANDLE = -10
+STD_OUTPUT_HANDLE = -11
+STD_ERROR_HANDLE = -12
+LOCALE_USER_DEFAULT = 0x0400
+LOCALE_NAME_USER_DEFAULT = None
+DATE_LONGDATE = 0x00000002
+TIME_NOSECONDS = 0x00000002
 # Create Mutex
-ERROR_ALREADY_EXISTS = 0xb7
+ERROR_ALREADY_EXISTS = 0xB7
 # Wait return types
 WAIT_ABANDONED = 0x00000080
-WAIT_IO_COMPLETION = 0x000000c0
+WAIT_IO_COMPLETION = 0x000000C0
 WAIT_OBJECT_0 = 0x00000000
 WAIT_TIMEOUT = 0x00000102
-WAIT_FAILED = 0xffffffff
+WAIT_FAILED = 0xFFFFFFFF
 # Image file machine constants
 IMAGE_FILE_MACHINE_UNKNOWN = 0
 # LoadLibraryEx constants
@@ -83,29 +84,49 @@ LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
 
 
 def GetStdHandle(handleID):
-	h=kernel32.GetStdHandle(handleID)
-	if h==0:
+	h = kernel32.GetStdHandle(handleID)
+	if h == 0:
 		raise WinError()
 	return h
 
-GENERIC_READ=0x80000000
-GENERIC_WRITE=0x40000000
-FILE_SHARE_READ=1
-FILE_SHARE_WRITE=2
-FILE_SHARE_DELETE=4
-OPEN_EXISTING=3
 
-def CreateFile(fileName,desiredAccess,shareMode,securityAttributes,creationDisposition,flags,templateFile):
-	res=kernel32.CreateFileW(fileName,desiredAccess,shareMode,securityAttributes,creationDisposition,flags,templateFile)
-	if res==0:
+GENERIC_READ = 0x80000000
+GENERIC_WRITE = 0x40000000
+FILE_SHARE_READ = 1
+FILE_SHARE_WRITE = 2
+FILE_SHARE_DELETE = 4
+OPEN_EXISTING = 3
+
+
+def CreateFile(
+	fileName,
+	desiredAccess,
+	shareMode,
+	securityAttributes,
+	creationDisposition,
+	flags,
+	templateFile,
+):
+	res = kernel32.CreateFileW(
+		fileName,
+		desiredAccess,
+		shareMode,
+		securityAttributes,
+		creationDisposition,
+		flags,
+		templateFile,
+	)
+	if res == 0:
 		raise ctypes.WinError()
 	return res
+
 
 def createEvent(eventAttributes=None, manualReset=False, initialState=False, name=None):
 	res = kernel32.CreateEventW(eventAttributes, manualReset, initialState, name)
-	if res==0:
+	if res == 0:
 		raise ctypes.WinError()
 	return res
+
 
 def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 	"""Wrapper to the kernel32 CreateWaitableTimer function.
@@ -122,9 +143,10 @@ def createWaitableTimer(securityAttributes=None, manualReset=False, name=None):
 	@type name: str
 	"""
 	res = kernel32.CreateWaitableTimerW(securityAttributes, manualReset, name)
-	if res==0:
+	if res == 0:
 		raise ctypes.WinError()
 	return res
+
 
 def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None, resume=False):
 	"""Wrapper to the kernel32 SETWaitableTimer function.
@@ -142,26 +164,27 @@ def setWaitableTimer(handle, dueTime, period=0, completionRoutine=None, arg=None
 	@param arg: Defaults to C{None}; a pointer to a structure that is passed to the completion routine.
 	@type arg: L{ctypes.c_void_p}
 	@param resume: Defaults to C{False}; the system is not restored.
-		If this parameter is TRUE, restores a system in suspended power conservation mode 
+		If this parameter is TRUE, restores a system in suspended power conservation mode
 		when the timer state is set to signaled.
 	@type resume: bool
 	"""
 	res = kernel32.SetWaitableTimer(
 		handle,
 		# due time is in 100 nanosecond intervals, relative time should be negated.
-		byref(LARGE_INTEGER(dueTime*-10000)),
+		byref(LARGE_INTEGER(dueTime * -10000)),
 		period,
 		completionRoutine,
 		arg,
-		resume
+		resume,
 	)
-	if res==0:
+	if res == 0:
 		raise ctypes.WinError()
 	return True
 
 
 def openProcess(*args):
 	return kernel32.OpenProcess(*args)
+
 
 def closeHandle(*args):
 	return kernel32.CloseHandle(*args)
@@ -213,14 +236,14 @@ class SYSTEMTIME(ctypes.Structure):
 		("wHour", WORD),
 		("wMinute", WORD),
 		("wSecond", WORD),
-		("wMilliseconds", WORD)
+		("wMilliseconds", WORD),
 	)
 
 
 class FILETIME(Structure):
 	_fields_ = (
 		("dwLowDateTime", DWORD),
-		("dwHighDateTime", DWORD)
+		("dwHighDateTime", DWORD),
 	)
 
 
@@ -232,7 +255,7 @@ class TIME_ZONE_INFORMATION(Structure):
 		("StandardBias", ctypes.wintypes.LONG),
 		("DaylightName", ctypes.wintypes.WCHAR * 32),
 		("DaylightDate", SYSTEMTIME),
-		("DaylightBias", ctypes.wintypes.LONG)
+		("DaylightBias", ctypes.wintypes.LONG),
 	)
 
 
@@ -254,9 +277,9 @@ def FileTimeToSystemTime(lpFileTime: FILETIME, lpSystemTime: SYSTEMTIME) -> None
 
 
 def SystemTimeToTzSpecificLocalTime(
-		lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
-		lpUniversalTime: SYSTEMTIME,
-		lpLocalTime: SYSTEMTIME
+	lpTimeZoneInformation: Union[TIME_ZONE_INFORMATION, None],
+	lpUniversalTime: SYSTEMTIME,
+	lpLocalTime: SYSTEMTIME,
 ) -> None:
 	"""Wrapper for `SystemTimeToTzSpecificLocalTime` from kernel32.
 	:param lpTimeZoneInformation: Either TIME_ZONE_INFORMATION containing info about the desired time zone
@@ -267,32 +290,38 @@ def SystemTimeToTzSpecificLocalTime(
 	"""
 	if lpTimeZoneInformation is not None:
 		lpTimeZoneInformation = byref(lpTimeZoneInformation)
-	if kernel32.SystemTimeToTzSpecificLocalTime(
-		lpTimeZoneInformation, byref(lpUniversalTime), byref(lpLocalTime)
-	) == 0:
+	if (
+		kernel32.SystemTimeToTzSpecificLocalTime(
+			lpTimeZoneInformation,
+			byref(lpUniversalTime),
+			byref(lpLocalTime),
+		)
+		== 0
+	):
 		raise WinError()
 
 
-def GetDateFormatEx(Locale,dwFlags,date,lpFormat):
+def GetDateFormatEx(Locale, dwFlags, date, lpFormat):
 	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpDate=byref(date)
+		date = SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
+		lpDate = byref(date)
 	else:
-		lpDate=None
-	bufferLength=kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
+		lpDate = None
+	bufferLength = kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, None, 0, None)
+	buf = ctypes.create_unicode_buffer("", bufferLength)
 	kernel32.GetDateFormatEx(Locale, dwFlags, lpDate, lpFormat, buf, bufferLength, None)
 	return buf.value
 
-def GetTimeFormatEx(Locale,dwFlags,date,lpFormat):
+
+def GetTimeFormatEx(Locale, dwFlags, date, lpFormat):
 	if date is not None:
-		date=SYSTEMTIME(date.year,date.month,0,date.day,date.hour,date.minute,date.second,0)
-		lpTime=byref(date)
+		date = SYSTEMTIME(date.year, date.month, 0, date.day, date.hour, date.minute, date.second, 0)
+		lpTime = byref(date)
 	else:
-		lpTime=None
-	bufferLength=kernel32.GetTimeFormatEx(Locale,dwFlags,lpTime,lpFormat, None, 0)
-	buf=ctypes.create_unicode_buffer("", bufferLength)
-	kernel32.GetTimeFormatEx(Locale,dwFlags,lpTime,lpFormat, buf, bufferLength)
+		lpTime = None
+	bufferLength = kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, None, 0)
+	buf = ctypes.create_unicode_buffer("", bufferLength)
+	kernel32.GetTimeFormatEx(Locale, dwFlags, lpTime, lpFormat, buf, bufferLength)
 	return buf.value
 
 
@@ -302,33 +331,41 @@ def virtualAllocEx(*args):
 		raise WinError()
 	return res
 
+
 def virtualFreeEx(*args):
 	return kernel32.VirtualFreeEx(*args)
+
 
 def readProcessMemory(*args):
 	return kernel32.ReadProcessMemory(*args)
 
+
 def writeProcessMemory(*args):
 	return kernel32.WriteProcessMemory(*args)
 
-def waitForSingleObject(handle,timeout):
-	res = kernel32.WaitForSingleObject(handle,timeout)
-	if res==WAIT_FAILED:
+
+def waitForSingleObject(handle, timeout):
+	res = kernel32.WaitForSingleObject(handle, timeout)
+	if res == WAIT_FAILED:
 		raise ctypes.WinError()
 	return res
 
-def waitForSingleObjectEx(handle,timeout, alertable):
-	res = kernel32.WaitForSingleObjectEx(handle,timeout, alertable)
-	if res==WAIT_FAILED:
+
+def waitForSingleObjectEx(handle, timeout, alertable):
+	res = kernel32.WaitForSingleObjectEx(handle, timeout, alertable)
+	if res == WAIT_FAILED:
 		raise ctypes.WinError()
 	return res
+
 
 SHUTDOWN_NORETRY = 0x00000001
+
 
 def SetProcessShutdownParameters(level, flags):
 	res = kernel32.SetProcessShutdownParameters(level, flags)
 	if res == 0:
 		raise ctypes.WinError()
+
 
 def GetExitCodeProcess(process):
 	exitCode = ctypes.wintypes.DWORD()
@@ -336,9 +373,11 @@ def GetExitCodeProcess(process):
 		raise ctypes.WinError()
 	return exitCode.value
 
+
 def TerminateProcess(process, exitCode):
 	if not kernel32.TerminateProcess(process, exitCode):
 		raise ctypes.WinError()
+
 
 DRIVE_UNKNOWN = 0
 DRIVE_NO_ROOT_DIR = 1
@@ -348,64 +387,111 @@ DRIVE_REMOTE = 4
 DRIVE_CDROM = 5
 DRIVE_RAMDISK = 6
 
+
 def GetDriveType(rootPathName):
 	return kernel32.GetDriveTypeW(rootPathName)
+
 
 class SECURITY_ATTRIBUTES(Structure):
 	_fields_ = (
 		("nLength", DWORD),
 		("lpSecurityDescriptor", LPVOID),
-		("bInheritHandle", BOOL)
+		("bInheritHandle", BOOL),
 	)
+
 	def __init__(self, **kwargs):
 		super(SECURITY_ATTRIBUTES, self).__init__(nLength=sizeof(self), **kwargs)
+
 
 def CreatePipe(pipeAttributes, size):
 	read = ctypes.wintypes.HANDLE()
 	write = ctypes.wintypes.HANDLE()
-	if kernel32.CreatePipe(ctypes.byref(read), ctypes.byref(write), byref(pipeAttributes) if pipeAttributes else None, ctypes.wintypes.DWORD(size)) == 0:
+	if (
+		kernel32.CreatePipe(
+			ctypes.byref(read),
+			ctypes.byref(write),
+			byref(pipeAttributes) if pipeAttributes else None,
+			ctypes.wintypes.DWORD(size),
+		)
+		== 0
+	):
 		raise ctypes.WinError()
 	return read.value, write.value
 
+
 class STARTUPINFOW(Structure):
-	_fields_=(
-		('cb',DWORD),
-		('lpReserved',LPWSTR),
-		('lpDesktop',LPWSTR),
-		('lpTitle',LPWSTR),
-		('dwX',DWORD),
-		('dwY',DWORD),
-		('dwXSize',DWORD),
-		('dwYSize',DWORD),
-		('dwXCountChars',DWORD),
-		('dwYCountChars',DWORD),
-		('dwFillAttribute',DWORD),
-		('dwFlags',DWORD),
-		('wShowWindow',WORD),
-		('cbReserved2',WORD),
-		('lpReserved2',POINTER(c_byte)),
-		('hSTDInput',HANDLE),
-		('hSTDOutput',HANDLE),
-		('hSTDError',HANDLE),
+	_fields_ = (
+		("cb", DWORD),
+		("lpReserved", LPWSTR),
+		("lpDesktop", LPWSTR),
+		("lpTitle", LPWSTR),
+		("dwX", DWORD),
+		("dwY", DWORD),
+		("dwXSize", DWORD),
+		("dwYSize", DWORD),
+		("dwXCountChars", DWORD),
+		("dwYCountChars", DWORD),
+		("dwFillAttribute", DWORD),
+		("dwFlags", DWORD),
+		("wShowWindow", WORD),
+		("cbReserved2", WORD),
+		("lpReserved2", POINTER(c_byte)),
+		("hSTDInput", HANDLE),
+		("hSTDOutput", HANDLE),
+		("hSTDError", HANDLE),
 	)
+
 	def __init__(self, **kwargs):
 		super(STARTUPINFOW, self).__init__(cb=sizeof(self), **kwargs)
+
+
 STARTUPINFO = STARTUPINFOW
 
+
 class PROCESS_INFORMATION(Structure):
-	_fields_=(
-		('hProcess',HANDLE),
-		('hThread',HANDLE),
-		('dwProcessID',DWORD),
-		('dwThreadID',DWORD),
+	_fields_ = (
+		("hProcess", HANDLE),
+		("hThread", HANDLE),
+		("dwProcessID", DWORD),
+		("dwThreadID", DWORD),
 	)
 
-def CreateProcessAsUser(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, startupInfo, processInformation):
-	if advapi32.CreateProcessAsUserW(token, applicationName, commandLine, processAttributes, threadAttributes, inheritHandles, creationFlags, environment, currentDirectory, byref(startupInfo), byref(processInformation)) == 0:
+
+def CreateProcessAsUser(
+	token,
+	applicationName,
+	commandLine,
+	processAttributes,
+	threadAttributes,
+	inheritHandles,
+	creationFlags,
+	environment,
+	currentDirectory,
+	startupInfo,
+	processInformation,
+):
+	if (
+		advapi32.CreateProcessAsUserW(
+			token,
+			applicationName,
+			commandLine,
+			processAttributes,
+			threadAttributes,
+			inheritHandles,
+			creationFlags,
+			environment,
+			currentDirectory,
+			byref(startupInfo),
+			byref(processInformation),
+		)
+		== 0
+	):
 		raise WinError()
+
 
 def GetCurrentProcess():
 	return kernel32.GetCurrentProcess()
+
 
 def OpenProcessToken(ProcessHandle, DesiredAccess):
 	token = HANDLE()
@@ -413,48 +499,70 @@ def OpenProcessToken(ProcessHandle, DesiredAccess):
 		raise WinError()
 	return token.value
 
+
 DUPLICATE_SAME_ACCESS = 0x00000002
 
-def DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, desiredAccess, inheritHandle, options):
+
+def DuplicateHandle(
+	sourceProcessHandle,
+	sourceHandle,
+	targetProcessHandle,
+	desiredAccess,
+	inheritHandle,
+	options,
+):
 	targetHandle = HANDLE()
-	if kernel32.DuplicateHandle(sourceProcessHandle, sourceHandle, targetProcessHandle, byref(targetHandle), desiredAccess, inheritHandle, options) == 0:
+	if (
+		kernel32.DuplicateHandle(
+			sourceProcessHandle,
+			sourceHandle,
+			targetProcessHandle,
+			byref(targetHandle),
+			desiredAccess,
+			inheritHandle,
+			options,
+		)
+		== 0
+	):
 		raise WinError()
 	return targetHandle.value
+
 
 PAPCFUNC = ctypes.WINFUNCTYPE(None, ctypes.wintypes.ULONG)
 THREAD_SET_CONTEXT = 16
 
-GMEM_MOVEABLE=2
+GMEM_MOVEABLE = 2
+
 
 class HGLOBAL(HANDLE):
 	"""
 	A class for the HGLOBAL Windows handle type.
-	This class can auto-free the handle when it goes out of scope, 
+	This class can auto-free the handle when it goes out of scope,
 	and also contains a classmethod for alloc,
 	And a context manager compatible method for locking.
 	"""
 
-	def __init__(self,h,autoFree=True):
+	def __init__(self, h, autoFree=True):
 		"""
 		@param h: the raw Windows HGLOBAL handle
-		@param autoFree: True by default, the handle will automatically be freed with GlobalFree 
+		@param autoFree: True by default, the handle will automatically be freed with GlobalFree
 		when this object goes out of scope.
 		"""
-		super(HGLOBAL,self).__init__(h)
-		self._autoFree=autoFree
+		super(HGLOBAL, self).__init__(h)
+		self._autoFree = autoFree
 
 	def __del__(self):
 		if self and self._autoFree:
 			windll.kernel32.GlobalFree(self)
 
 	@classmethod
-	def alloc(cls,flags,size):
+	def alloc(cls, flags, size):
 		"""
 		Allocates global memory with GlobalAlloc
 		providing it as an instance of this class.
 		This method Takes the same arguments as GlobalAlloc.
 		"""
-		h=windll.kernel32.GlobalAlloc(flags,size)
+		h = windll.kernel32.GlobalAlloc(flags, size)
 		return cls(h)
 
 	@contextlib.contextmanager
@@ -475,7 +583,8 @@ class HGLOBAL(HANDLE):
 		Sets this HGLOBAL value to NULL, forgetting the existing value.
 		Necessary if you pass this HGLOBAL to an API that takes ownership and therefore will handle freeing itself.
 		"""
-		self.value=None
+		self.value = None
+
 
 MOVEFILE_COPY_ALLOWED = 0x2
 MOVEFILE_CREATE_HARDLINK = 0x10
@@ -483,6 +592,7 @@ MOVEFILE_DELAY_UNTIL_REBOOT = 0x4
 MOVEFILE_FAIL_IF_NOT_TRACKABLE = 0x20
 MOVEFILE_REPLACE_EXISTING = 0x1
 MOVEFILE_WRITE_THROUGH = 0x8
+
 
 def moveFileEx(lpExistingFileName: str, lpNewFileName: str, dwFlags: int):
 	# If MoveFileExW fails, Windows will raise appropriate errors.
@@ -508,6 +618,7 @@ def SetThreadExecutionState(esFlags):
 def LCIDToLocaleName(windowsLCID: LCID) -> Optional[str]:
 	# NVDA cannot run with this imported at module level
 	from logHandler import log
+
 	dwFlags = 0
 	bufferLength = kernel32.LCIDToLocaleName(windowsLCID, None, 0, dwFlags)
 	if bufferLength == 0:
