@@ -165,7 +165,7 @@ def _shouldInstallWhenAddonTooOldDialog(
 	name=addon.displayName,
 	version=addon.addonVersionName,
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
+	nvdaVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -198,7 +198,7 @@ def _shouldEnableWhenAddonTooOldDialog(
 	name=addon.displayName,
 	version=addon.addonVersionName,
 	lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-	NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT)
+	nvdaVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
