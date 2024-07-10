@@ -574,9 +574,11 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Input help mode message for toggle report font attributes command.
-		description=_("Cycles font attribute reporting between speech, braille, speech and braille, and off."),
-		category=SCRCAT_DOCUMENTFORMATTING
+		description=_(
+			# Translators: Input help mode message for toggle report font attributes command.
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+		),
+		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportFontAttributes(self, gesture: "inputCore.InputGesture"):
 		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]

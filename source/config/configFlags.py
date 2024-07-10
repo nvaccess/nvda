@@ -226,6 +226,7 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 			self.DISABLED: _("Disabled"),
 		}
 
+
 @unique
 class OutputMode(DisplayStringIntEnum):
 	"""Enumeration for ways to output information, such as formatting.
@@ -234,6 +235,7 @@ class OutputMode(DisplayStringIntEnum):
 
 	This is currently implemented as an IntEnum due to limitations iterating over IntFlag members. However, an attempt should be made to adhere to the convention that single output modes are powers of 2, and combinations of output modes are bitwise ORs of these values.
 	"""
+
 	OFF = 0b0
 	SPEECH = 0b01
 	BRAILLE = 0b10
@@ -251,7 +253,7 @@ class OutputMode(DisplayStringIntEnum):
 			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
 		}
-	
+
 	@enum_property
 	def inSpeech(self) -> bool:
 		"""Check if the output mode includes speech.
@@ -260,7 +262,7 @@ class OutputMode(DisplayStringIntEnum):
 				bool: True if the output mode includes speech, False otherwise.
 		"""
 		return self & self.SPEECH != 0
-	
+
 	@enum_property
 	def inBraille(self) -> bool:
 		"""Check if the output mode includes braille.

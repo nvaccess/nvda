@@ -1307,7 +1307,7 @@ class AggregatedSection:
 
 		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
 		# Todo: Remove in 2025.1.
-		if version_year < 2025and NVDAState._allowDeprecatedAPI():
+		if version_year < 2025 and NVDAState._allowDeprecatedAPI():
 			self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
@@ -1316,7 +1316,7 @@ class AggregatedSection:
 		Args:
 			key: The configuration key to link to its new or old counterpart.
 			val: The value associated with the configuration key.
-		
+
 		postconditions:
 			- If self.path is "documentFormatting":
 				- If key is "reportFontAttributes":
@@ -1337,7 +1337,7 @@ class AggregatedSection:
 						log.warning(
 							"documentFormatting.reportFontAttributes is deprecated. Use documentFormatting.fontAttributeReporting instead.",
 							# Include stack info so testers can report warning to add-on author.
-							stack_info=True
+							stack_info=True,
 						)
 						key = "fontAttributeReporting"
 						val = OutputMode.SPEECH_AND_BRAILLE if val else OutputMode.OFF
@@ -1345,11 +1345,11 @@ class AggregatedSection:
 					case _:
 						# We don't care about other keys in this section.
 						return
-					
+
 			case _:
 				# We don't care about other sections.
 				return
-		
+
 		# Update the value in the most recently activated profile.
 		# If we have reached this point, we must have a new key and value to set.
 		self._getUpdateSection()[key] = val

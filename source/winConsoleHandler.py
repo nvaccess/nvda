@@ -280,15 +280,15 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 				field, (boundStart, boundEnd) = self._getFormatFieldAndOffsets(boundEnd, formatConfig)
 				if lastText:
 					commands.append("".join(lastText))
-					lastText=[]
-				commands.append(textInfos.FieldCommand("formatChange",field))
-			if not c.Attributes==lastAttr:
-				formatField=textInfos.FormatField()
-				if formatConfig['reportColor']:
-					formatField["color"]=CONSOLE_COLORS_TO_RGB[c.Attributes&0x0f]
-					formatField["background-color"]=CONSOLE_COLORS_TO_RGB[(c.Attributes>>4)&0x0f]
-				if formatConfig['fontAttributeReporting'] and c.Attributes&COMMON_LVB_UNDERSCORE:
-					formatField['underline']=True
+					lastText = []
+				commands.append(textInfos.FieldCommand("formatChange", field))
+			if not c.Attributes == lastAttr:
+				formatField = textInfos.FormatField()
+				if formatConfig["reportColor"]:
+					formatField["color"] = CONSOLE_COLORS_TO_RGB[c.Attributes & 0x0F]
+					formatField["background-color"] = CONSOLE_COLORS_TO_RGB[(c.Attributes >> 4) & 0x0F]
+				if formatConfig["fontAttributeReporting"] and c.Attributes & COMMON_LVB_UNDERSCORE:
+					formatField["underline"] = True
 				if formatField:
 					if lastText:
 						commands.append("".join(lastText))

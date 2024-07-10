@@ -785,6 +785,7 @@ class Config_profileUpgradeSteps_upgradeConfigFrom_9_to_10(unittest.TestCase):
 			NVDAKey.CAPS_LOCK.value,
 		)
 
+
 class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 	def test_DefaultProfile_Unmodified(self):
 		"""reportFontAttributes unmodified."""
@@ -792,9 +793,9 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
 		with self.assertRaises(KeyError):
-			profile['documentFormatting']['reportFontAttributes']
+			profile["documentFormatting"]["reportFontAttributes"]
 		with self.assertRaises(KeyError):
-			profile['documentFormatting']['fontAttributeReporting']
+			profile["documentFormatting"]["fontAttributeReporting"]
 
 	def test_defaultProfile_reportFontAttributes_false(self):
 		"""reportFontAttributes set to False."""
@@ -804,8 +805,8 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
-		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'False')
-		self.assertEqual(profile['documentFormatting']['fontAttributeReporting'], OutputMode.OFF.value)
+		self.assertEqual(profile["documentFormatting"]["reportFontAttributes"], "False")
+		self.assertEqual(profile["documentFormatting"]["fontAttributeReporting"], OutputMode.OFF.value)
 
 	def test_defaultProfile_reportFontAttributes_true(self):
 		"""reportFontAttributes set to True."""
@@ -815,8 +816,10 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
-		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'True')
-		self.assertEqual(profile['documentFormatting']['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE.value)
+		self.assertEqual(profile["documentFormatting"]["reportFontAttributes"], "True")
+		self.assertEqual(
+			profile["documentFormatting"]["fontAttributeReporting"], OutputMode.SPEECH_AND_BRAILLE.value
+		)
 
 	def test_defaultProfile_reportFontAttributes_invalid(self):
 		"""reportFontAttributes set to a non-boolean value."""
@@ -826,9 +829,9 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		"""
 		profile = _loadProfile(configString)
 		upgradeConfigFrom_11_to_12(profile)
-		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'notABool')
+		self.assertEqual(profile["documentFormatting"]["reportFontAttributes"], "notABool")
 		with self.assertRaises(KeyError):
-			profile['documentFormatting']['fontAttributeReporting']
+			profile["documentFormatting"]["fontAttributeReporting"]
 
 
 class Config_getitem_alias(unittest.TestCase):
@@ -837,39 +840,39 @@ class Config_getitem_alias(unittest.TestCase):
 
 	def test_set_reportFontAttributes_false(self):
 		config = self.config
-		config['reportFontAttributes'] = False
-		self.assertEqual(config['reportFontAttributes'], False)
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.OFF)
+		config["reportFontAttributes"] = False
+		self.assertEqual(config["reportFontAttributes"], False)
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.OFF)
 
 	def test_set_reportFontAttributes_true(self):
 		config = self.config
-		config['reportFontAttributes'] = True
-		self.assertEqual(config['reportFontAttributes'], True)
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
+		config["reportFontAttributes"] = True
+		self.assertEqual(config["reportFontAttributes"], True)
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.SPEECH_AND_BRAILLE)
 
 	def test_set_fontAttributeReporting_off(self):
 		config = self.config
-		config['fontAttributeReporting'] = OutputMode.OFF
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.OFF)
-		self.assertEqual(config['reportFontAttributes'], False)
+		config["fontAttributeReporting"] = OutputMode.OFF
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.OFF)
+		self.assertEqual(config["reportFontAttributes"], False)
 
 	def test_set_fontAttributeReporting_speech(self):
 		config = self.config
-		config['fontAttributeReporting'] = OutputMode.SPEECH
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH)
-		self.assertEqual(config['reportFontAttributes'], True)
+		config["fontAttributeReporting"] = OutputMode.SPEECH
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.SPEECH)
+		self.assertEqual(config["reportFontAttributes"], True)
 
 	def test_set_fontAttributeReporting_braille(self):
 		config = self.config
-		config['fontAttributeReporting'] = OutputMode.BRAILLE
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.BRAILLE)
-		self.assertEqual(config['reportFontAttributes'], True)
+		config["fontAttributeReporting"] = OutputMode.BRAILLE
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.BRAILLE)
+		self.assertEqual(config["reportFontAttributes"], True)
 
 	def test_set_fontAttributeReporting_speechAndBraille(self):
 		config = self.config
-		config['fontAttributeReporting'] = OutputMode.SPEECH_AND_BRAILLE
-		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
-		self.assertEqual(config['reportFontAttributes'], True)
+		config["fontAttributeReporting"] = OutputMode.SPEECH_AND_BRAILLE
+		self.assertEqual(config["fontAttributeReporting"], OutputMode.SPEECH_AND_BRAILLE)
+		self.assertEqual(config["reportFontAttributes"], True)
 
 
 class Config_ConfigFlags_OutputMode(unittest.TestCase):

@@ -2783,9 +2783,9 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if OutputMode(formatConfig["fontAttributeReporting"]).inSpeech:
-		bold=attrs.get("bold")
-		oldBold=attrsCache.get("bold") if attrsCache is not None else None
-		if (bold or oldBold is not None) and bold!=oldBold:
+		bold = attrs.get("bold")
+		oldBold = attrsCache.get("bold") if attrsCache is not None else None
+		if (bold or oldBold is not None) and bold != oldBold:
 			# Translators: Reported when text is bolded.
 			text = (
 				_("bold")
