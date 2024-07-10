@@ -1206,7 +1206,11 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if not (formatConfig["reportFontAttributes"] and config.conf['braille']['fontAttributeDisplay'].calculated() == FontAttributesBrailleModeFlag.LIBLOUIS):
+		if not (
+			formatConfig["reportFontAttributes"]
+			and config.conf["braille"]["fontAttributeDisplay"].calculated()
+			== FontAttributesBrailleModeFlag.LIBLOUIS
+		):
 			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold

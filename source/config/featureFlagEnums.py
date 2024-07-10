@@ -124,6 +124,7 @@ class WindowsTerminalStrategyFlag(DisplayStringEnum):
 
 class FontAttributesBrailleModeFlag(DisplayStringEnum):
 	"""Enumeration containing the possible ways to display formatting changes in braille."""
+
 	DEFAULT = enum.auto()
 	LIBLOUIS = enum.auto()
 	TAGS = enum.auto()

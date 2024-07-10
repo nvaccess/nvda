@@ -4430,8 +4430,8 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			labelText=_("Formatting display"),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=("braille", "fontAttributeDisplay"),
-			conf=config.conf
-			)
+			conf=config.conf,
+		)
 		self.bindHelpEvent("BrailleSettingsFormattingDisplay", self.formattingDisplayCombo)
 
 		if gui._isDebug():
