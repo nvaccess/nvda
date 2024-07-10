@@ -126,12 +126,15 @@ class FontAttributesBrailleModeFlag(DisplayStringEnum):
 	"""Enumeration containing the possible ways to display formatting changes in braille."""
 	DEFAULT = enum.auto()
 	LIBLOUIS = enum.auto()
+	TAGS = enum.auto()
 
 	@property
 	def _displayStringLabels(self) -> dict["FontAttributesBrailleModeFlag", str]:
 		return {
 			# Translators: The label for a braille mode
 			FontAttributesBrailleModeFlag.LIBLOUIS: _("Liblouis"),
+			# Translators: The label for a braille mode
+			FontAttributesBrailleModeFlag.TAGS: _("Tags"),
 		}
 
 
