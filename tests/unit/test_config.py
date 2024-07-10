@@ -795,7 +795,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 			profile['documentFormatting']['reportFontAttributes']
 		with self.assertRaises(KeyError):
 			profile['documentFormatting']['fontAttributeReporting']
-	
+
 	def test_defaultProfile_reportFontAttributes_false(self):
 		"""reportFontAttributes set to False."""
 		configString = """
@@ -806,7 +806,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_11_to_12(unittest.TestCase):
 		upgradeConfigFrom_11_to_12(profile)
 		self.assertEqual(profile['documentFormatting']['reportFontAttributes'], 'False')
 		self.assertEqual(profile['documentFormatting']['fontAttributeReporting'], OutputMode.OFF.value)
-	
+
 	def test_defaultProfile_reportFontAttributes_true(self):
 		"""reportFontAttributes set to True."""
 		configString = """
@@ -840,7 +840,7 @@ class Config_getitem_alias(unittest.TestCase):
 		config['reportFontAttributes'] = False
 		self.assertEqual(config['reportFontAttributes'], False)
 		self.assertEqual(config['fontAttributeReporting'], OutputMode.OFF)
-	
+
 	def test_set_reportFontAttributes_true(self):
 		config = self.config
 		config['reportFontAttributes'] = True
@@ -870,6 +870,20 @@ class Config_getitem_alias(unittest.TestCase):
 		config['fontAttributeReporting'] = OutputMode.SPEECH_AND_BRAILLE
 		self.assertEqual(config['fontAttributeReporting'], OutputMode.SPEECH_AND_BRAILLE)
 		self.assertEqual(config['reportFontAttributes'], True)
+
+
+class Config_ConfigFlags_OutputMode(unittest.TestCase):
+	def test_inSpeech(self):
+		self.assertTrue(OutputMode.SPEECH.inSpeech)
+		self.assertTrue(OutputMode.SPEECH_AND_BRAILLE.inSpeech)
+		self.assertFalse(OutputMode.BRAILLE.inSpeech)
+		self.assertFalse(OutputMode.OFF.inSpeech)
+
+	def test_inBraille(self):
+		self.assertTrue(OutputMode.BRAILLE.inBraille)
+		self.assertTrue(OutputMode.SPEECH_AND_BRAILLE.inBraille)
+		self.assertFalse(OutputMode.SPEECH.inBraille)
+		self.assertFalse(OutputMode.OFF.inBraille)
 
 
 class Config_AggregatedSection_getitem(unittest.TestCase):
