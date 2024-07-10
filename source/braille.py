@@ -1124,12 +1124,16 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				text = _("bkmk")
 				textList.append(text)
 
-	if config.conf["braille"]["fontAttributeDisplay"].calculated() == FontAttributesBrailleModeFlag.TAGS and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None:
+	if (
+		config.conf["braille"]["fontAttributeDisplay"].calculated() == FontAttributesBrailleModeFlag.TAGS
+		and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None
+	):
 		textList.append(formattingTags)
 
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
 
 def _getFormattingTags(field, fieldCache, formatConfig):
 	textList = []
