@@ -381,7 +381,7 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 
 
 def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
-	"""Convert reportFontAttributes from a boolean to a choice of speech and/or braille."""
+	"""Add a new key, documentFormatting.fontAttributeReporting, which allows users to select between speech and/or braille, and base it on documentFormatting.reportFontAttributes."""
 	try:
 		reportFontAttributes: bool = profile["documentFormatting"].as_bool("reportFontAttributes")
 	except KeyError:
