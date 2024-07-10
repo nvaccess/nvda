@@ -1123,17 +1123,42 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: brailled when text contains a bookmark
 				text = _("bkmk")
 				textList.append(text)
-	
-	bold = field.get("bold", False)
-	oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
-	if bold and not oldBold:
-		textList.append("⣏⠃⣹")
-	elif oldBold and not bold:
-		textList.append("⣏⡃⣹")
-	
+
+	if config.conf["braille"]["fontAttributeDisplay"].calculated() == FontAttributesBrailleModeFlag.TAGS and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None:
+		textList.append(formattingTags)
+
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
+def _getFormattingTags(field, fieldCache, formatConfig):
+	textList = []
+	bold = field.get("bold", False)
+	oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
+	if bold and not oldBold:
+		textList.append("⠃")
+	elif oldBold and not bold:
+		textList.append("⡃")
+	italics = field.get("italic", False)
+	oldItalics = fieldCache.get("italic", False) if fieldCache is not None else False
+	if italics and not oldItalics:
+		textList.append("⠊")
+	elif oldItalics and not italics:
+		textList.append("⡊")
+	underline = field.get("underline", False)
+	oldUnderline = fieldCache.get("underline", False) if fieldCache is not None else False
+	if underline and not oldUnderline:
+		textList.append("⠥")
+	elif oldUnderline and not underline:
+		textList.append("⡥")
+	strikethrough = field.get("strikethrough", False)
+	oldStrikethrough = fieldCache.get("strikethrough", False) if fieldCache is not None else False
+	if strikethrough and not oldStrikethrough:
+		textList.append("⠎")
+	elif oldStrikethrough and not strikethrough:
+		textList.append("⡎")
+	if len(textList) > 0:
+		return "⣋" + "".join(textList) + "⣙"
 
 
 class TextInfoRegion(Region):
