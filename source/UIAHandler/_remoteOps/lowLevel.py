@@ -10,7 +10,7 @@ from ctypes import (
 	c_void_p,
 	c_long,
 	c_ulong,
-	c_bool
+	c_bool,
 )
 from comtypes.automation import VARIANT
 import os
@@ -201,14 +201,14 @@ class InstructionType(enum.IntEnum):
 	ContinueLoop = 0x09
 
 	# Error handling
-	NewTryBlock = 0x0a
-	EndTryBlock = 0x0b
-	SetOperationStatus = 0x0c
-	GetOperationStatus = 0x0d
+	NewTryBlock = 0x0A
+	EndTryBlock = 0x0B
+	SetOperationStatus = 0x0C
+	GetOperationStatus = 0x0D
 
 	# Arithmetic
-	Add = 0x0e
-	Subtract = 0x0f
+	Add = 0x0E
+	Subtract = 0x0F
 	Multiply = 0x10
 	Divide = 0x11
 	BinaryAdd = 0x12
@@ -222,16 +222,16 @@ class InstructionType(enum.IntEnum):
 	InPlaceBoolOr = 0x18
 
 	BoolNot = 0x19
-	BoolAnd = 0x1a
-	BoolOr = 0x1b
+	BoolAnd = 0x1A
+	BoolOr = 0x1B
 
 	# Generic comparison
-	Compare = 0x1c
+	Compare = 0x1C
 
 	# New object constructors
-	NewInt = 0x1d
-	NewUint = 0x1e
-	NewBool = 0x1f
+	NewInt = 0x1D
+	NewUint = 0x1E
+	NewBool = 0x1F
 	NewDouble = 0x20
 	NewChar = 0x21
 	NewString = 0x22
@@ -246,14 +246,14 @@ class InstructionType(enum.IntEnum):
 	GetRectProperty = 0x29
 
 	# RemoteArray methods
-	RemoteArrayAppend = 0x2a
-	RemoteArraySetAt = 0x2b
-	RemoteArrayRemoveAt = 0x2c
-	RemoteArrayGetAt = 0x2d
-	RemoteArraySize = 0x2e
+	RemoteArrayAppend = 0x2A
+	RemoteArraySetAt = 0x2B
+	RemoteArrayRemoveAt = 0x2C
+	RemoteArrayGetAt = 0x2D
+	RemoteArraySize = 0x2E
 
 	# RemoteStringMap methods
-	RemoteStringMapInsert = 0x2f
+	RemoteStringMapInsert = 0x2F
 	RemoteStringMapRemove = 0x30
 	RemoteStringMapHasKey = 0x31
 	RemoteStringMapLookup = 0x32
@@ -270,12 +270,12 @@ class InstructionType(enum.IntEnum):
 	Navigate = 0x39
 
 	# Type interrogation methods
-	IsNull = 0x3a
-	IsNotSupported = 0x3b
-	IsMixedAttribute = 0x3c
-	IsBool = 0x3d
-	IsInt = 0x3e
-	IsUint = 0x3f
+	IsNull = 0x3A
+	IsNotSupported = 0x3B
+	IsMixedAttribute = 0x3C
+	IsBool = 0x3D
+	IsInt = 0x3E
+	IsUint = 0x3F
 	IsDouble = 0x40
 	IsChar = 0x41
 	IsString = 0x42
@@ -288,14 +288,14 @@ class InstructionType(enum.IntEnum):
 	# GUID support
 	NewGuid = 0x48
 	IsGuid = 0x49
-	LookupId = 0x4a
-	LookupGuid = 0x4b
+	LookupId = 0x4A
+	LookupGuid = 0x4B
 
 	# Cache requests
-	NewCacheRequest = 0x4c
-	IsCacheRequest = 0x4d
-	CacheRequestAddProperty = 0x4e
-	CacheRequestAddPattern = 0x4f
+	NewCacheRequest = 0x4C
+	IsCacheRequest = 0x4D
+	CacheRequestAddProperty = 0x4E
+	CacheRequestAddPattern = 0x4F
 	PopulateCache = 0x50
 
 	Stringify = 0x51
@@ -306,25 +306,25 @@ class InstructionType(enum.IntEnum):
 	IsExtensionSupported = 0x54
 
 	# text ranges
-	TextRangeClone = 0x271e0103
-	TextRangeCompare = 0x271e0104
-	TextRangeCompareEndpoints = 0x271e0105
-	TextRangeExpandToEnclosingUnit = 0x271e0106
-	TextRangeFindAttribute = 0x271e0107
-	TextRangeFindText = 0x271e0108
-	TextRangeGetAttributeValue = 0x271e0109
-	TextRangeGetBoundingRectangles = 0x271e010a
-	TextRangeGetEnclosingElement = 0x271e010b
-	TextRangeGetText = 0x271e010c
-	TextRangeMove = 0x271e010d
-	TextRangeMoveEndpointByUnit = 0x271e010e
-	TextRangeMoveEndpointByRange = 0x271e010f
-	TextRangeSelect = 0x271e0110
-	TextRangeAddToSelection = 0x271e0111
-	TextRangeRemoveFromSelection = 0x271e0112
-	TextRangeScrollIntoView = 0x271e0113
-	TextRangeGetChildren = 0x271e0114
-	TextRangeShowContextMenu = 0x271e0115
+	TextRangeClone = 0x271E0103
+	TextRangeCompare = 0x271E0104
+	TextRangeCompareEndpoints = 0x271E0105
+	TextRangeExpandToEnclosingUnit = 0x271E0106
+	TextRangeFindAttribute = 0x271E0107
+	TextRangeFindText = 0x271E0108
+	TextRangeGetAttributeValue = 0x271E0109
+	TextRangeGetBoundingRectangles = 0x271E010A
+	TextRangeGetEnclosingElement = 0x271E010B
+	TextRangeGetText = 0x271E010C
+	TextRangeMove = 0x271E010D
+	TextRangeMoveEndpointByUnit = 0x271E010E
+	TextRangeMoveEndpointByRange = 0x271E010F
+	TextRangeSelect = 0x271E0110
+	TextRangeAddToSelection = 0x271E0111
+	TextRangeRemoveFromSelection = 0x271E0112
+	TextRangeScrollIntoView = 0x271E0113
+	TextRangeGetChildren = 0x271E0114
+	TextRangeShowContextMenu = 0x271E0115
 
 
 class ComparisonType(enum.IntEnum):
@@ -361,16 +361,16 @@ class TextPatternRangeEndpoint(enum.IntEnum):
 
 PropertyId = enum.IntEnum(
 	"PropertyId",
-	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")}
+	{k[4:-10]: v for k, v in vars(UIA).items() if k.endswith("PropertyId")},
 )
 
 
 AttributeId = enum.IntEnum(
 	"AttributeId",
-	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")}
+	{k[4:-11]: v for k, v in vars(UIA).items() if k.endswith("AttributeId")},
 )
 
 StyleId = enum.IntEnum(
 	"StyleId",
-	{k[8:]: v for k, v in vars(UIA).items() if k.startswith("StyleId")}
+	{k[8:]: v for k, v in vars(UIA).items() if k.startswith("StyleId")},
 )

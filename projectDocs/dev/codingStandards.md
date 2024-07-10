@@ -1,19 +1,22 @@
 ## Code Style
 
-Python code style is enforced with the flake8 linter, see [`tests/lint/readme.md`](https://github.com/nvaccess/nvda/tree/master/tests/lint/readme.md) for more information.
+Python code style is enforced with the Ruff linter, see [linting](./lint.md) for more information.
 
 ### Encoding
+
 * Where Python files contain non-ASCII characters, they should be encoded in UTF-8.
-    * There should be no Unicode BOM at the start of the file, as this unfortunately breaks one of the translation tools we use (`xgettext`).
-    Instead, include this as the first line of the file, only if the file contains non-ASCII characters:
-        ```py
-        # -*- coding: UTF-8 -*-
-        ```
-    * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
+  * There should be no Unicode BOM at the start of the file, as this unfortunately breaks one of the translation tools we use (`xgettext`).
+  Instead, include this as the first line of the file, only if the file contains non-ASCII characters:
+
+  ```py
+  # -*- coding: UTF-8 -*-
+  ```
+
+  * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
     This is particularly relevant for braille display drivers.
     This is due to a `gettext` bug; see [comment on #2592](https://github.com/nvaccess/nvda/issues/2592#issuecomment-155299911).
-* New files should contain `LF` line endings, however NVDA currently uses a mix of LF and CRLF line endings.
-See issue [#12387](https://github.com/nvaccess/nvda/issues/12387).
+* Text files should be committed with `LF` line endings.
+Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
 ### Indentation
 * Indentation must be done with tabs (one per level), not spaces.

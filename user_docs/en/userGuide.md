@@ -522,8 +522,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the `insert`, `numpadInsert`, and/or `capsLock` key can be used as the `NVDA` modifier key.
+By default, both the `insert` and `numpadInsert` keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
@@ -1916,7 +1916,7 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
-For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
   1. One stand alone unicode character (ü)
   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
@@ -1972,6 +1972,7 @@ Most synthesizers do support it.
 
 This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
+Synthesizers from Code Factory, both the add-on and the SAPI application, do not implement it correctly either and cause unwanted spelling of the spoken text (e.g. in NVDA menu or dialogs).
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ##### Delayed descriptions for characters on cursor movement {#delayedCharacterDescriptions}
@@ -2240,6 +2241,20 @@ The selection indicator might be a distraction while reading.
 Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Formatting display {#BrailleSettingsFormattingDisplay}
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default, Liblouis |
+| Default | Liblouis |
+
+This setting determines how NVDA will display text formatting. This option only has an effect if NVDA is set to display font attributes in braille. The following options are supported:
+
+| Option | Description |
+|---|---|
+| Default | The default setting, as specified by NVDA. |
+| Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
@@ -2943,7 +2958,7 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 
 |Option |Behaviour |
 |---|---|
-|Enabled |Notify when updates are available to add-ons within the same channel |
+|Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
 #### Windows OCR Settings {#Win10OcrSettings}
@@ -3655,9 +3670,7 @@ For more information, read the in-depth section: [Add-ons and the Add-on Store](
 
 ### Create portable copy {#CreatePortableCopy}
 
-This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+This will open a dialog which allows you to create a portable copy of NVDA out of the currently running version.
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 

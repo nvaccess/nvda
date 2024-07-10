@@ -1,19 +1,18 @@
-#tests/unit/contentRecog/test_contentRecog.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2017 NV Access Limited
+# tests/unit/contentRecog/test_contentRecog.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2017 NV Access Limited
 
-"""Unit tests for the contentRecog module.
-"""
+"""Unit tests for the contentRecog module."""
 
 import unittest
 import contentRecog
 import textInfos
 from locationHelper import RectLTWH
 
-class TestRecogImageInfo(unittest.TestCase):
 
+class TestRecogImageInfo(unittest.TestCase):
 	def test_noOffsetNoResize(self):
 		info = contentRecog.RecogImageInfo(0, 0, 1000, 2000, 1)
 		self.assertEqual(info.recogWidth, 1000)
@@ -50,22 +49,25 @@ class TestRecogImageInfo(unittest.TestCase):
 		self.assertEqual(info.convertWidthToScreen(200), 100)
 		self.assertEqual(info.convertHeightToScreen(400), 200)
 
+
 class FakeNVDAObject(object):
 	pass
+
 
 class TestLinesWordsResult(unittest.TestCase):
 	"""Tests that contentRecog.LinesWordsResult and contentRecog.LwrTextInfo
 	correctly parse and process the JSON from a recognizer.
 	"""
+
 	DATA = [
 		[
 			{"x": 100, "y": 200, "width": 10, "height": 20, "text": "word1"},
-			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"}
+			{"x": 110, "y": 200, "width": 10, "height": 20, "text": "word2"},
 		],
 		[
 			{"x": 100, "y": 220, "width": 10, "height": 20, "text": "word3"},
-			{"x": 110, "y": 220, "width": 10, "height": 20, "text": "word4"}
-		]
+			{"x": 110, "y": 220, "width": 10, "height": 20, "text": "word4"},
+		],
 	]
 	TOP = 0
 	BOTTOM = 23

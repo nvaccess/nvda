@@ -8,7 +8,6 @@ import appModuleHandler
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_NVDAObject_init(self, obj):
 		obj.description = None
 		obj.shouldAllowIAccessibleFocusEvent = True

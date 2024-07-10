@@ -43,16 +43,16 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		itemTextCallable=None,
 		pos=wx.DefaultPosition,
 		size=wx.DefaultSize,
-		style=0
+		style=0,
 	):
-		""" initialiser
-			Takes the same parameter as a wx.ListCtrl with the following additions:
-			@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
-				Pass the column number to be resized, valid values: 1 to N
-			@type autoSizeColumn: int
-			@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
-				It should accept the same parameters as L{OnGetItemText},
-			@type itemTextCallable: L{callable}
+		"""initialiser
+		Takes the same parameter as a wx.ListCtrl with the following additions:
+		@param autoSizeColumn: defaults to "LAST" which results in the last column being resized.
+			Pass the column number to be resized, valid values: 1 to N
+		@type autoSizeColumn: int
+		@param itemTextCallable: A callable to be called to get the item text for a particular item's column in the list.
+			It should accept the same parameters as L{OnGetItemText},
+		@type itemTextCallable: L{callable}
 		"""
 		if itemTextCallable is not None:
 			if not isinstance(itemTextCallable, Callable):
@@ -81,14 +81,27 @@ class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
 		evt.Index = index
 		self.ProcessEvent(evt)
 
+
 class SelectOnFocusSpinCtrl(wx.SpinCtrl):
 	"""
 	A spin control that automatically selects the value when the control gains focus.
 	This makes editing the values quicker.
 	"""
-	def __init__(self, parent, id=wx.ID_ANY, value=wx.EmptyString, pos=wx.DefaultPosition, size=wx.DefaultSize, style=wx.SP_ARROW_KEYS|wx.ALIGN_RIGHT, min=0, max=100, initial=0, name="labelStr"):
-		""" initialiser - Takes the same parameters as a wx.SpinCtrl.
-		"""
+
+	def __init__(
+		self,
+		parent,
+		id=wx.ID_ANY,
+		value=wx.EmptyString,
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=wx.SP_ARROW_KEYS | wx.ALIGN_RIGHT,
+		min=0,
+		max=100,
+		initial=0,
+		name="labelStr",
+	):
+		"""initialiser - Takes the same parameters as a wx.SpinCtrl."""
 		wx.SpinCtrl.__init__(self, parent, id, value, pos, size, style, min, max, initial, name)
 		self.Bind(wx.EVT_SET_FOCUS, self.OnSetFocus)
 
@@ -136,7 +149,13 @@ class CustomCheckListBox(wx.CheckListBox):
 		# Notify winEvent that something changed.
 		# We must do this, so that NVDA receives a stateChange.
 		evt.Skip()
-		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, evt.Selection+1)
+		winUser.NotifyWinEvent(
+			winUser.EVENT_OBJECT_STATECHANGE,
+			self.Handle,
+			winUser.OBJID_CLIENT,
+			evt.Selection + 1,
+		)
+
 
 class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtrlMixin):
 	"""
@@ -148,10 +167,27 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	This event is only fired when an item is toggled with the mouse or keyboard.
 	"""
 
-	def __init__(self, parent, id=wx.ID_ANY, autoSizeColumn="LAST", pos=wx.DefaultPosition, size=wx.DefaultSize, style=0,
-		check_image=None, uncheck_image=None, imgsz=(16, 16)
+	def __init__(
+		self,
+		parent,
+		id=wx.ID_ANY,
+		autoSizeColumn="LAST",
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=0,
+		check_image=None,
+		uncheck_image=None,
+		imgsz=(16, 16),
 	):
-		AutoWidthColumnListCtrl.__init__(self, parent, id=id, pos=pos, size=size, style=style, autoSizeColumn=autoSizeColumn)
+		AutoWidthColumnListCtrl.__init__(
+			self,
+			parent,
+			id=id,
+			pos=pos,
+			size=size,
+			style=style,
+			autoSizeColumn=autoSizeColumn,
+		)
 		listmix.CheckListCtrlMixin.__init__(self, check_image, uncheck_image, imgsz)
 		# Register a custom wx.Accessible implementation to fix accessibility incompleties
 		self.SetAccessible(ListCtrlAccessible(self))
@@ -172,9 +208,9 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 
 	CheckedItems = property(fget=GetCheckedItems, fset=SetCheckedItems)
 
-	def onCharHook(self,evt):
+	def onCharHook(self, evt):
 		key = evt.GetKeyCode()
-		if key!=wx.WXK_SPACE:
+		if key != wx.WXK_SPACE:
 			evt.Skip()
 			return
 		index = self.FocusedItem
@@ -184,7 +220,7 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 		self.ToggleItem(index)
 		self.sendCheckListBoxEvent(index)
 
-	def onLeftDown(self,evt):
+	def onLeftDown(self, evt):
 		"""Additional event handler for mouse clicks to call L{sendCheckListBoxEvent}."""
 		(index, flags) = self.HitTest(evt.GetPosition())
 		evt.Skip()
@@ -205,18 +241,20 @@ class AutoWidthColumnCheckListCtrl(AutoWidthColumnListCtrl, listmix.CheckListCtr
 	def notifyIAccessible(self, index):
 		# Notify winEvent that something changed.
 		# We must do this, so that NVDA receives a stateChange.
-		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index+1)
+		winUser.NotifyWinEvent(winUser.EVENT_OBJECT_STATECHANGE, self.Handle, winUser.OBJID_CLIENT, index + 1)
 
 	def sendCheckListBoxEvent(self, index):
-		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX,self.Id)
+		evt = wx.CommandEvent(wx.wxEVT_CHECKLISTBOX, self.Id)
 		evt.EventObject = self
 		evt.Int = index
 		self.ProcessEvent(evt)
+
 
 class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 	"""Automatically calls constructors in the right order, passing on arguments, and providing scaling features.
 	Until wxWidgets/wxWidgets#334 is resolved, and we have updated to that build of wx.
 	"""
+
 	def __init__(self, *args, **kwargs):
 		"""Called in place of wx.Dialog __init__ arguments are forwarded on.
 		Expected args (from wx docs):
@@ -251,13 +289,12 @@ class MessageDialog(DPIScaledDialog):
 	}
 
 	def _addButtons(self, buttonHelper):
-		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality.
-		"""
+		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
 		ok = buttonHelper.addButton(
 			self,
 			id=wx.ID_OK,
 			# Translators: An ok button on a message dialog.
-			label=_("OK")
+			label=_("OK"),
 		)
 		ok.SetDefault()
 		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
@@ -266,7 +303,7 @@ class MessageDialog(DPIScaledDialog):
 			self,
 			id=wx.ID_CANCEL,
 			# Translators: A cancel button on a message dialog.
-			label=_("Cancel")
+			label=_("Cancel"),
 		)
 		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 
@@ -308,7 +345,7 @@ class MessageDialog(DPIScaledDialog):
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
 		# Double ampersand in the dialog's label to avoid this character to be interpreted as an accelerator.
-		label = message.replace('&', '&&')
+		label = message.replace("&", "&&")
 		text = wx.StaticText(self, label=label)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
@@ -321,7 +358,7 @@ class MessageDialog(DPIScaledDialog):
 		mainSizer.Add(
 			contentsSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL
+			flag=wx.ALL,
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
@@ -340,20 +377,24 @@ class MessageDialog(DPIScaledDialog):
 
 
 class EnhancedInputSlider(wx.Slider):
-
-	def __init__(self,*args, **kwargs):
-		super(EnhancedInputSlider,self).__init__(*args,**kwargs)
+	def __init__(self, *args, **kwargs):
+		super(EnhancedInputSlider, self).__init__(*args, **kwargs)
 		self.Bind(wx.EVT_CHAR, self.onSliderChar)
 
-	def SetValue(self,i):
+	def SetValue(self, i):
 		super(EnhancedInputSlider, self).SetValue(i)
-		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED,self.GetId())
+		evt = wx.CommandEvent(wx.wxEVT_COMMAND_SLIDER_UPDATED, self.GetId())
 		evt.SetInt(i)
 		self.ProcessEvent(evt)
 		# HACK: Win events don't seem to be sent for certain explicitly set values,
 		# so send our own win event.
 		# This will cause duplicates in some cases, but NVDA will filter them out.
-		winUser.user32.NotifyWinEvent(winUser.EVENT_OBJECT_VALUECHANGE,self.Handle,winUser.OBJID_CLIENT,winUser.CHILDID_SELF)
+		winUser.user32.NotifyWinEvent(
+			winUser.EVENT_OBJECT_VALUECHANGE,
+			self.Handle,
+			winUser.OBJID_CLIENT,
+			winUser.CHILDID_SELF,
+		)
 
 	def onSliderChar(self, evt):
 		key = evt.KeyCode
@@ -381,6 +422,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 	with tabs (#12224). A PR to wxPython implementing this fix can be tracked on
 	https://github.com/wxWidgets/Phoenix/pull/1950
 	"""
+
 	def GetChildRectRelativeToSelf(self, child: wx.Window) -> wx.Rect:
 		"""
 		window.GetRect returns the size of a window, and its position relative to its parent.
@@ -393,7 +435,7 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 			childRectRelativeToScreen.x - scrolledPanelScreenPosition.x,
 			childRectRelativeToScreen.y - scrolledPanelScreenPosition.y,
 			childRectRelativeToScreen.width,
-			childRectRelativeToScreen.height
+			childRectRelativeToScreen.height,
 		)
 
 	def ScrollChildIntoView(self, child: wx.Window) -> None:
@@ -413,19 +455,19 @@ class TabbableScrolledPanel(scrolledpanel.ScrolledPanel):
 
 
 class FeatureFlagCombo(wx.Choice):
-	"""Creates a combobox (wx.Choice) with a list of feature flags.
-	"""
+	"""Creates a combobox (wx.Choice) with a list of feature flags."""
+
 	def __init__(
-			self,
-			parent: wx.Window,
-			keyPath: List[str],
-			conf: config.ConfigManager,
-			pos=wx.DefaultPosition,
-			size=wx.DefaultSize,
-			style=0,
-			validator=wx.DefaultValidator,
-			name=wx.ChoiceNameStr,
-			onChoiceEventHandler: typing.Callable[[wx.CommandEvent], None] | None = None,
+		self,
+		parent: wx.Window,
+		keyPath: List[str],
+		conf: config.ConfigManager,
+		pos=wx.DefaultPosition,
+		size=wx.DefaultSize,
+		style=0,
+		validator=wx.DefaultValidator,
+		name=wx.ChoiceNameStr,
+		onChoiceEventHandler: typing.Callable[[wx.CommandEvent], None] | None = None,
 	):
 		"""
 		:param parent: The parent window.
@@ -442,15 +484,17 @@ class FeatureFlagCombo(wx.Choice):
 		self._conf = conf
 		configValue = self._getConfigValue()
 		self._optionsEnumClass: Type[FeatureFlagEnumT] = configValue.enumClassType
-		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict({
-			value: value.displayString
-			for value in self._optionsEnumClass
-			if value != self._optionsEnumClass.DEFAULT
-		})
+		translatedOptions: typing.OrderedDict[FeatureFlagEnumT, str] = collections.OrderedDict(
+			{
+				value: value.displayString
+				for value in self._optionsEnumClass
+				if value != self._optionsEnumClass.DEFAULT
+			},
+		)
 		if self._optionsEnumClass.DEFAULT in translatedOptions:
 			raise ValueError(
 				f"The translatedOptions dictionary should not contain the key {self._optionsEnumClass.DEFAULT!r}"
-				" It will be added automatically. See _setDefaultOptionLabel"
+				" It will be added automatically. See _setDefaultOptionLabel",
 			)
 		self._translatedOptions = self._createOptionsDict(translatedOptions)
 		choices = list(self._translatedOptions.values())
@@ -466,7 +510,7 @@ class FeatureFlagCombo(wx.Choice):
 		if onChoiceEventHandler is not None:
 			self.Bind(
 				wx.EVT_CHOICE,
-				onChoiceEventHandler
+				onChoiceEventHandler,
 			)
 		self.SetSelection(self._getChoiceIndex(configValue.value))
 		self.defaultValue = self._getConfSpecDefaultValue()
@@ -504,8 +548,7 @@ class FeatureFlagCombo(wx.Choice):
 		return self.GetSelection() == self.defaultValue
 
 	def resetToConfigSpecDefault(self) -> None:
-		"""Set the value of the control to the default value from the config spec.
-		"""
+		"""Set the value of the control to the default value from the config spec."""
 		self.SetSelection(self._getChoiceIndex(self.defaultValue))
 
 	def _getControlCurrentValue(self) -> enum.Enum:
@@ -517,8 +560,7 @@ class FeatureFlagCombo(wx.Choice):
 		return FeatureFlag(flagValue, currentFlag.behaviorOfDefault)
 
 	def saveCurrentValueToConf(self) -> None:
-		""" Set the config value to the current value of the control.
-		"""
+		"""Set the config value to the current value of the control."""
 		flagValue = self._getControlCurrentValue()
 		keyPath = self._confPath
 		if not keyPath or len(keyPath) < 1:
@@ -534,8 +576,8 @@ class FeatureFlagCombo(wx.Choice):
 				conf = conf[nextKey]
 
 	def _createOptionsDict(
-			self,
-			translatedOptions: OrderedDict[FeatureFlagEnumT, str]
+		self,
+		translatedOptions: OrderedDict[FeatureFlagEnumT, str],
 	) -> OrderedDict[enum.Enum, str]:
 		behaviorOfDefault = self._getConfigValue().behaviorOfDefault
 		translatedStringForBehaviorOfDefault = translatedOptions[behaviorOfDefault]
@@ -544,9 +586,11 @@ class FeatureFlagCombo(wx.Choice):
 		# The placeholder {} is replaced with the label of the option which describes current default behavior
 		# in NVDA. EG "Default (Yes)".
 		defaultOptionLabel: str = _("Default ({})").format(
-			translatedStringForBehaviorOfDefault
+			translatedStringForBehaviorOfDefault,
 		)
-		return collections.OrderedDict({
-			self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
-			**translatedOptions
-		})
+		return collections.OrderedDict(
+			{
+				self._optionsEnumClass.DEFAULT: defaultOptionLabel,  # make sure default is the first option.
+				**translatedOptions,
+			},
+		)

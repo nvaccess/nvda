@@ -25,11 +25,11 @@ ActionTargetT = TypeVar("ActionTargetT", Optional["AddonListItemVM"], Iterable["
 
 class _AddonAction(Generic[ActionTargetT], ABC):
 	def __init__(
-			self,
-			displayName: str,
-			actionHandler: Callable[[ActionTargetT, ], None],
-			validCheck: Callable[[ActionTargetT, ], bool],
-			actionTarget: ActionTargetT,
+		self,
+		displayName: str,
+		actionHandler: Callable[[ActionTargetT], None],
+		validCheck: Callable[[ActionTargetT], bool],
+		actionTarget: ActionTargetT,
 	):
 		"""
 		@param displayName: Translated string, to be displayed to the user. Should describe the action / behaviour.
@@ -45,8 +45,7 @@ class _AddonAction(Generic[ActionTargetT], ABC):
 		"""Notify of changes to the action"""
 
 	@abstractmethod
-	def _listItemChanged(self, addonListItemVM: "AddonListItemVM"):
-		...
+	def _listItemChanged(self, addonListItemVM: "AddonListItemVM"): ...
 
 	@property
 	def isValid(self) -> bool:
@@ -59,11 +58,12 @@ class _AddonAction(Generic[ActionTargetT], ABC):
 	def _notify(self):
 		# ensure calling on the main thread.
 		from core import callLater
+
 		callLater(delay=0, callable=self.updated.notify, addonActionVM=self)
 
 
 class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
-	""" Actions/behaviour that can be embedded within other views/viewModels that can apply to a single
+	"""Actions/behaviour that can be embedded within other views/viewModels that can apply to a single
 	L{AddonListItemVM}.
 	Use the L{AddonActionVM.updated} extensionPoint.Action to be notified about changes.
 	E.G.:
@@ -71,12 +71,13 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 	- Entirely changing the AddonListItemVM action will be applied to, the validity can be checked for the new
 	item.
 	"""
+
 	def __init__(
-			self,
-			displayName: str,
-			actionHandler: Callable[["AddonListItemVM", ], None],
-			validCheck: Callable[["AddonListItemVM", ], bool],
-			actionTarget: Optional["AddonListItemVM"],
+		self,
+		displayName: str,
+		actionHandler: Callable[["AddonListItemVM"], None],
+		validCheck: Callable[["AddonListItemVM"], bool],
+		actionTarget: Optional["AddonListItemVM"],
 	):
 		"""
 		@param displayName: Translated string, to be displayed to the user. Should describe the action / behaviour.
@@ -84,6 +85,7 @@ class AddonActionVM(_AddonAction[Optional["AddonListItemVM"]]):
 		@param validCheck: Is the action valid for the current listItemVM
 		@param actionTarget: The listItemVM this action will be applied to. L{updated} notifies of modification.
 		"""
+
 		def _validCheck(listItemVM: Optional["AddonListItemVM"]) -> bool:
 			# Handle the None case so that each validCheck doesn't have to.
 			return listItemVM is not None and validCheck(listItemVM)
@@ -126,12 +128,13 @@ class BatchAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
 	- Entirely changing the AddonListItemVM action will be applied to, the validity can be checked for the new
 	item.
 	"""
+
 	def __init__(
-			self,
-			displayName: str,
-			actionHandler: Callable[[Iterable["AddonListItemVM"], ], None],
-			validCheck: Callable[[Iterable["AddonListItemVM"], ], bool],
-			actionTarget: Iterable["AddonListItemVM"],
+		self,
+		displayName: str,
+		actionHandler: Callable[[Iterable["AddonListItemVM"]], None],
+		validCheck: Callable[[Iterable["AddonListItemVM"]], bool],
+		actionTarget: Iterable["AddonListItemVM"],
 	):
 		"""
 		@param displayName: Translated string, to be displayed to the user. Should describe the action / behaviour.
@@ -156,7 +159,7 @@ class BatchAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
 		for oldListItemVM in self._actionTarget:
 			if oldListItemVM not in newActionTarget:
 				oldListItemVM.updated.unregister(self._listItemChanged)
-		
+
 		for newListItemVM in newActionTarget:
 			if newListItemVM not in self._actionTarget:
 				newListItemVM.updated.register(self._listItemChanged)

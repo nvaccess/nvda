@@ -13,18 +13,20 @@ import shutil
 import SCons.Node.FS
 import SCons.Environment
 
-DEFAULT_EXTENSIONS = frozenset({
-	# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
-	"markdown.extensions.extra",
-	# Allows TOC with [TOC]"
-	"markdown.extensions.toc",
-	# Makes list behaviour better, including 2 space indents by default
-	"mdx_truly_sane_lists",
-	# External links will open in a new tab, and title will be set to the link text
-	"markdown_link_attr_modifier",
-	# Adds links to GitHub authors, issues and PRs
-	"mdx_gh_links",
-})
+DEFAULT_EXTENSIONS = frozenset(
+	{
+		# Supports tables, HTML mixed with markdown, code blocks, custom attributes and more
+		"markdown.extensions.extra",
+		# Allows TOC with [TOC]"
+		"markdown.extensions.toc",
+		# Makes list behaviour better, including 2 space indents by default
+		"mdx_truly_sane_lists",
+		# External links will open in a new tab, and title will be set to the link text
+		"markdown_link_attr_modifier",
+		# Adds links to GitHub authors, issues and PRs
+		"mdx_gh_links",
+	},
+)
 
 EXTENSIONS_CONFIG = {
 	"markdown_link_attr_modifier": {
@@ -55,6 +57,7 @@ HTML_HEADERS = """
 
 def _replaceNVDATags(md: str, env: SCons.Environment.Environment) -> str:
 	import versionInfo
+
 	# Replace tags in source file
 	md = md.replace("NVDA_VERSION", env["version"])
 	md = md.replace("NVDA_URL", versionInfo.url)
@@ -86,6 +89,7 @@ def _getTitle(mdBuffer: io.StringIO, isKeyCommands: bool = False) -> str:
 def _createAttributeFilter() -> dict[str, set[str]]:
 	# Create attribute filter exceptions for HTML sanitization
 	import nh3
+
 	allowedAttributes: dict[str, set[str]] = deepcopy(nh3.ALLOWED_ATTRIBUTES)
 
 	attributesWithAnchors = {"h1", "h2", "h3", "h4", "h5", "h6", "td"}
@@ -119,6 +123,7 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	extensions = set(DEFAULT_EXTENSIONS)
 	if isKeyCommands:
 		from user_docs.keyCommandsDoc import KeyCommandsExtension
+
 		extensions.add(KeyCommandsExtension())
 
 	htmlOutput = markdown.markdown(
@@ -141,9 +146,9 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 
 
 def md2html_actionFunc(
-		target: list[SCons.Node.FS.File],
-		source: list[SCons.Node.FS.File],
-		env: SCons.Environment.Environment
+	target: list[SCons.Node.FS.File],
+	source: list[SCons.Node.FS.File],
+	env: SCons.Environment.Environment,
 ):
 	isKeyCommands = target[0].path.endswith("keyCommands.html")
 	isUserGuide = target[0].path.endswith("userGuide.html")
@@ -178,7 +183,7 @@ def md2html_actionFunc(
 			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
 			title=title,
 			extraStylesheet=extraStylesheet,
-		)
+		),
 	)
 
 	htmlOutput = _generateSanitizedHTML(mdStr, isKeyCommands)
@@ -216,5 +221,5 @@ def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["md2html"] = env.Builder(
 		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to {t[0].path}"),
 		suffix=".html",
-		src_suffix=".md"
+		src_suffix=".md",
 	)

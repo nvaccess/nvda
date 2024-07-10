@@ -13,18 +13,17 @@ if TYPE_CHECKING:
 
 
 def hasAddonGotRequiredSupport(
-		addon: "SupportsVersionCheck",
-		currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT
+	addon: "SupportsVersionCheck",
+	currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
 ) -> bool:
-	"""True if NVDA provides the add-on with an API version high enough to meet the add-on's minimum requirements
-	"""
+	"""True if NVDA provides the add-on with an API version high enough to meet the add-on's minimum requirements"""
 	minVersion = addon.minimumNVDAVersion
 	return minVersion <= currentAPIVersion
 
 
 def isAddonTested(
-		addon: "SupportsVersionCheck",
-		backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO
+	addon: "SupportsVersionCheck",
+	backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO,
 ) -> bool:
 	"""True if this add-on is tested for the given API version.
 	By default, the current version of NVDA is evaluated.
@@ -33,12 +32,15 @@ def isAddonTested(
 
 
 def isAddonCompatible(
-		addon: "SupportsVersionCheck",
-		currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
-		backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO
+	addon: "SupportsVersionCheck",
+	currentAPIVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.CURRENT,
+	backwardsCompatToVersion: addonAPIVersion.AddonApiVersionT = addonAPIVersion.BACK_COMPAT_TO,
 ) -> bool:
 	"""Tests if the addon is compatible.
 	The compatibility is defined by having the required features in NVDA, and by having been tested / built against
 	an API version that is still supported by this version of NVDA.
 	"""
-	return hasAddonGotRequiredSupport(addon, currentAPIVersion) and isAddonTested(addon, backwardsCompatToVersion)
+	return hasAddonGotRequiredSupport(addon, currentAPIVersion) and isAddonTested(
+		addon,
+		backwardsCompatToVersion,
+	)
