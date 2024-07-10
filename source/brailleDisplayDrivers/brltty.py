@@ -10,11 +10,12 @@ import braille
 from logHandler import log
 import inputCore
 from typing import List
+
 try:
 	import brlapi
+
 	BRLAPI_CMD_KEYS = {
-		code: name[8:].lower()
-		for name, code in vars(brlapi).items() if name.startswith("KEY_CMD_")
+		code: name[8:].lower() for name, code in vars(brlapi).items() if name.startswith("KEY_CMD_")
 	}
 except ImportError:
 	brlapi = None
@@ -26,9 +27,10 @@ KEY_CHECK_INTERVAL = 50
 # however, if a user compiles their own version this may differ
 BRLAPI_NAMED_PIPE_PREFIX = "BrlAPI"
 
+
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
-	"""brltty braille display driver.
-	"""
+	"""brltty braille display driver."""
+
 	name = "brltty"
 	description = "brltty"
 	isThreadSafe = True
@@ -44,7 +46,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		The brlapi.Connection constructor takes either a `host:port` argument or just `:port`.
 		If only a port is given, this corresponds to the number at the end of the named pipe.
 		"""
-		return [pipe.name for pipe in os.scandir("//./pipe/") if pipe.name.startswith(BRLAPI_NAMED_PIPE_PREFIX)]
+		return [
+			pipe.name for pipe in os.scandir("//./pipe/") if pipe.name.startswith(BRLAPI_NAMED_PIPE_PREFIX)
+		]
 
 	@classmethod
 	def check(cls):
@@ -81,7 +85,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _get_numCols(self) -> int:
 		return self._con.displaySize[0]
-	
+
 	def _get_numRows(self) -> int:
 		return self._con.displaySize[1]
 
@@ -114,30 +118,32 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if keyType == brlapi.KEY_TYPE_CMD:
 			try:
 				inputCore.manager.executeGesture(
-					InputGesture(self.driverName, command, argument)
+					InputGesture(self.driverName, command, argument),
 				)
 			except inputCore.NoInputGestureAction:
 				pass
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(brltty):fwinlt",),
-			"braille_scrollForward": ("br(brltty):fwinrt",),
-			"braille_previousLine": ("br(brltty):lnup",),
-			"braille_nextLine": ("br(brltty):lndn",),
-			"braille_routeTo": ("br(brltty):route",),
-			"toggleInputHelp": ("br(brltty):learn"),
-			"showGui": ("br(brltty):prefmenu",),
-			"revertConfiguration": ("br(brltty):prefload",),
-			"saveConfiguration": ("br(brltty):prefsave",),
-			"dateTime": ("br(brltty):time",),
-			"review_currentLine": ("br(brltty):say_line",),
-			"review_sayAll": ("br(brltty):say_below",),
-		}
-	})
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(brltty):fwinlt",),
+				"braille_scrollForward": ("br(brltty):fwinrt",),
+				"braille_previousLine": ("br(brltty):lnup",),
+				"braille_nextLine": ("br(brltty):lndn",),
+				"braille_routeTo": ("br(brltty):route",),
+				"toggleInputHelp": ("br(brltty):learn"),
+				"showGui": ("br(brltty):prefmenu",),
+				"revertConfiguration": ("br(brltty):prefload",),
+				"saveConfiguration": ("br(brltty):prefsave",),
+				"dateTime": ("br(brltty):time",),
+				"review_currentLine": ("br(brltty):say_line",),
+				"review_sayAll": ("br(brltty):say_below",),
+			},
+		},
+	)
+
 
 class InputGesture(braille.BrailleDisplayGesture):
-
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, command, argument):

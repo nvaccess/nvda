@@ -16,11 +16,11 @@ builtins = [
 	"npgettext",
 ]
 
-logger-objects = ["logHandler.log"]
-
 include = [
 	"*.py",
 	"*.pyw",
+	"sconstruct",
+	"*sconscript",
 ]
 
 exclude = [
@@ -51,6 +51,13 @@ ignore = [
 	# indentation contains tabs
 	"W191",
 ]
+logger-objects = ["logHandler.log"]
+
+[tool.ruff.lint.per-file-ignores]
+# sconscripts contains many inbuilt functions not recognised by the lint,
+# so ignore F821.
+"sconstruct" = ["F821"]
+"*sconscript" = ["F821"]
 
 [tool.licensecheck]
 using = "requirements:requirements.txt"
@@ -79,4 +86,3 @@ ignore_packages = [
 	"wxPython",  # wxWindows Library License
 	"pillow",  # PIL Software License
 ]
-

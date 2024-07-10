@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_int(TestCase):
-
 	def test_inplace_add(self):
 		op = operation.Operation(localMode=True)
 

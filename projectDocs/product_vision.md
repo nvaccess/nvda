@@ -66,5 +66,6 @@ Developed by NV Access in partnership with a dedicated open source community, NV
     * NVDA provides freedom for add-ons to find innovative solutions by allowing them broad access to NVDA's internals.
     * NVDA ensures add-ons do not break by postponing API breakages to once per year, announcing these changes many months ahead of time.
     * NVDA Protects users from installing an add-on that is incompatible with the current version of NVDA, allowing the user to override this protection if they understand the risk. 
- 
-  
+ 16. Utility: NVDA provides solutions for blind and vision impaired people in accessing technology that:
+    * provide utility to a significant proportion of users in day-to-day use.
+    * are a necessity for a small subset of our users, without which NVDA would not be functional for them.

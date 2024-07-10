@@ -331,5 +331,5 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #: The configuration specification
 #: @type: ConfigObj
-confspec = ConfigObj(StringIO( configSpecString ), list_values=False, encoding="UTF-8")
+confspec = ConfigObj(StringIO(configSpecString), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

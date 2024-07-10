@@ -3,232 +3,240 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-import os
-import shutil
 
 Import(
-	'env',
-	'sourceDir',
-	'sourceTypelibDir',
-	'libInstallDir',
-	'clientInstallDir',
+	"env",
+	"sourceDir",
+	"sourceTypelibDir",
+	"libInstallDir",
+	"clientInstallDir",
 )
+
 
 # some utilities for COM proxies
 def clsidStringToCLSIDDefine(clsidString):
 	"""
 	Converts a CLSID string of the form "{abcdef12-abcd-abcd-abcd-abcdef123456}"
-	Into a c-style struct initializer for initializing a GUID (I.e. "{0xabcdef12,0xabcd,0xabcd,{0xab,0xcd,0xab,0xcd,0xef,0x12,0x34,0x56}}") 
+	Into a c-style struct initializer for initializing a GUID (I.e. "{0xabcdef12,0xabcd,0xabcd,{0xab,0xcd,0xab,0xcd,0xef,0x12,0x34,0x56}}")
 	"""
-	d=clsidString[1:-1].replace('-','')
-	return "{%s,%s,%s,%s}"%(
-		"0x"+d[0:8],
-		"0x"+d[8:12],
-		"0x"+d[12:16],
-		"{%s}"%(",".join("0x"+d[x:x+2] for x in range(16,32,2)))
+	d = clsidString[1:-1].replace("-", "")
+	return "{%s,%s,%s,%s}" % (
+		"0x" + d[0:8],
+		"0x" + d[8:12],
+		"0x" + d[12:16],
+		"{%s}" % (",".join("0x" + d[x : x + 2] for x in range(16, 32, 2))),
 	)
 
-def COMProxyDllBuilder(env,target,source,proxyClsid):
+
+def COMProxyDllBuilder(env, target, source, proxyClsid):
 	"""
 	Builds a COM proxy dll from iid, proxy and dlldata c files generated from an IDL file with MIDL.
 	It provides the needed linker flags, and also embeds a manifest in the dll registering the given proxy CLSID for this dll's class object.
 	"""
-	proxyName=str(target)
-	manifestFile=env.Substfile(
-		target=proxyName+'.manifest',
-		source='COMProxy.manifest.subst', 
+	proxyName = str(target)
+	manifestFile = env.Substfile(
+		target=proxyName + ".manifest",
+		source="COMProxy.manifest.subst",
 		SUBST_DICT={
-			'%proxyClsid%':proxyClsid,
-			'%proxyName%':proxyName,
-		}
+			"%proxyClsid%": proxyClsid,
+			"%proxyName%": proxyName,
+		},
 	)
-	proxyDll=env.SharedLibrary(
+	proxyDll = env.SharedLibrary(
 		target=target,
 		source=source,
-		LIBS=['rpcrt4','oleaut32','ole32'],
-		CPPDEFINES=list(env['CPPDEFINES']) + [
-			'WIN32',
-			('PROXY_CLSID_IS',clsidStringToCLSIDDefine(proxyClsid)),
+		LIBS=["rpcrt4", "oleaut32", "ole32"],
+		CPPDEFINES=list(env["CPPDEFINES"])
+		+ [
+			"WIN32",
+			("PROXY_CLSID_IS", clsidStringToCLSIDDefine(proxyClsid)),
 		],
 		LINKFLAGS=[
-			env['LINKFLAGS'],
-			'/export:DllGetClassObject,private',
-			'/export:DllCanUnloadNow,private',
-			'/export:GetProxyDllInfo,private',
-			'/manifest:embed',
-			'/manifestinput:'+manifestFile[0].path,
+			env["LINKFLAGS"],
+			"/export:DllGetClassObject,private",
+			"/export:DllCanUnloadNow,private",
+			"/export:GetProxyDllInfo,private",
+			"/manifest:embed",
+			"/manifestinput:" + manifestFile[0].path,
 		],
 	)
-	env.Depends(proxyDll,manifestFile)
+	env.Depends(proxyDll, manifestFile)
 	return proxyDll
-env.AddMethod(COMProxyDllBuilder,'COMProxyDll')
+
+
+env.AddMethod(COMProxyDllBuilder, "COMProxyDll")
 
 # We only support compiling with MSVC 14.2 (2019) or newer
-if not env.get('MSVC_VERSION') or tuple(map(int, env.get('MSVC_VERSION').split("."))) < (14, 2):
+if not env.get("MSVC_VERSION") or tuple(map(int, env.get("MSVC_VERSION").split("."))) < (14, 2):
 	raise RuntimeError("Visual C++ 14.2 (Visual Studio 2019) or newer not found")
 
-TARGET_ARCH=env['TARGET_ARCH']
-debug=env['nvdaHelperDebugFlags']
-release=env['release']
-signExec = env['signExec'] if (bool(env['certFile']) ^ bool(env['apiSigningToken'])) else None
+TARGET_ARCH = env["TARGET_ARCH"]
+debug = env["nvdaHelperDebugFlags"]
+release = env["release"]
+signExec = env["signExec"] if (bool(env["certFile"]) ^ bool(env["apiSigningToken"])) else None
 
-#Some defines and includes for the environment
+# Some defines and includes for the environment
 env.Append(
 	CPPDEFINES=[
-		'UNICODE',
-		'_CRT_SECURE_NO_DEPRECATE',
-		('LOGLEVEL', '${nvdaHelperLogLevel}'),
-		('_WIN32_WINNT', '_WIN32_WINNT_WINBLUE'),
+		"UNICODE",
+		"_CRT_SECURE_NO_DEPRECATE",
+		("LOGLEVEL", "${nvdaHelperLogLevel}"),
+		("_WIN32_WINNT", "_WIN32_WINNT_WINBLUE"),
 		# NOMINMAX: prevent minwindef.h min/max macro definition, which unexpectedly override developer
 		# expectations
-		'NOMINMAX',
+		"NOMINMAX",
 	]
 )
 
-env.Append(CXXFLAGS=['/EHsc'])
+env.Append(CXXFLAGS=["/EHsc"])
 
-env.Append(CPPPATH=[
-	'#/include',
-	'#/include/wil/include',
-	'#/miscDeps/include',
-	Dir('.').abspath
-])
+env.Append(CPPPATH=["#/include", "#/include/wil/include", "#/miscDeps/include", Dir(".").abspath])
 
 # Windows 8.1 (blue)
 subsystem = "/subsystem:windows,6.03"
 
 env.Append(
 	LINKFLAGS=[
-		'/incremental:no',
-		'/WX',
+		"/incremental:no",
+		"/WX",
 		subsystem,
 	]
 )
-env.Append(LINKFLAGS='/release') #We always want a checksum in the header
-if TARGET_ARCH == 'x86_64':
-	env.Append(MIDLFLAGS='/x64')
-elif TARGET_ARCH == 'arm64':
-	env.Append(MIDLFLAGS='/arm64')
+env.Append(LINKFLAGS="/release")  # We always want a checksum in the header
+if TARGET_ARCH == "x86_64":
+	env.Append(MIDLFLAGS="/x64")
+elif TARGET_ARCH == "arm64":
+	env.Append(MIDLFLAGS="/arm64")
 else:
-	env.Append(MIDLFLAGS='/win32')
+	env.Append(MIDLFLAGS="/win32")
 
-if not release: 
-	env.Append(CCFLAGS=['/Od'])
+if not release:
+	env.Append(CCFLAGS=["/Od"])
 else:
-	env.Append(CCFLAGS='/O2')
-	env.Append(CCFLAGS='/GL')
-	env.Append(LINKFLAGS=['/LTCG'])
+	env.Append(CCFLAGS="/O2")
+	env.Append(CCFLAGS="/GL")
+	env.Append(LINKFLAGS=["/LTCG"])
 
-if 'debugCRT' not in debug:
-	env.Append(CPPDEFINES='NDEBUG')
+if "debugCRT" not in debug:
+	env.Append(CPPDEFINES="NDEBUG")
 
-if 'RTC' in debug:
-	env.Append(CCFLAGS=['/RTCsu'])
+if "RTC" in debug:
+	env.Append(CCFLAGS=["/RTCsu"])
 
 
-#We always want debug symbols
-env.Append(PDB='${TARGET}.pdb')
-env.Append(LINKFLAGS='/OPT:REF') #having symbols usually turns this off but we have no need for unused symbols
+# We always want debug symbols
+env.Append(PDB="${TARGET}.pdb")
+env.Append(
+	LINKFLAGS="/OPT:REF"
+)  # having symbols usually turns this off but we have no need for unused symbols
 
-env.Append(CCFLAGS=[
-	'/std:c++20',
-	'/permissive-',
-	# '/showIncludes': Useful to understand which file causes some other file to be included.
-	# It will output a list of the include files.
-	# The option also displays nested include files, that is, the files
-	# included by the files that you include.
-])
+env.Append(
+	CCFLAGS=[
+		"/std:c++20",
+		"/permissive-",
+		# '/showIncludes': Useful to understand which file causes some other file to be included.
+		# It will output a list of the include files.
+		# The option also displays nested include files, that is, the files
+		# included by the files that you include.
+	]
+)
 
-if 'debugCRT' in debug:
-	env.Append(CCFLAGS=['/MTd'])
+if "debugCRT" in debug:
+	env.Append(CCFLAGS=["/MTd"])
 else:
-	env.Append(CCFLAGS=['/MT'])
+	env.Append(CCFLAGS=["/MT"])
 
 # Don't enable warnings and warnings as errors or analysis to 3rd party code.
 thirdPartyEnv = env.Clone()
 
-env.Append(CCFLAGS=[
-	'/W3',  # warning level 3
-])
-if 'analyze' in debug:
-	env.Append(CCFLAGS=['/analyze'])
+env.Append(
+	CCFLAGS=[
+		"/W3",  # warning level 3
+	]
+)
+if "analyze" in debug:
+	env.Append(CCFLAGS=["/analyze"])
 	# Disable: Inconsistent annotation for 'x': this instance has no annotations.
 	# Seems all MIDL-generated code from idl files don't add annotations
-	env.Append(CCFLAGS='/wd28251')
+	env.Append(CCFLAGS="/wd28251")
 	# Disable: 'x': unreferenced formal parameter
 	# We use a great deal of hook functions where we have no need for various parameters
-	env.Append(CCFLAGS='/wd4100')
+	env.Append(CCFLAGS="/wd4100")
 else:
-	env.Append(CCFLAGS=[
-		'/WX',  # warnings as error, don't do this with analyze, the build stops too early
-	])
+	env.Append(
+		CCFLAGS=[
+			"/WX",  # warnings as error, don't do this with analyze, the build stops too early
+		]
+	)
 
-Export('thirdPartyEnv')
-Export('env')
+Export("thirdPartyEnv")
+Export("env")
 
-acrobatAccessRPCStubs=env.SConscript('acrobatAccess_sconscript')
-Export('acrobatAccessRPCStubs')
-if TARGET_ARCH=='x86':
-	env.Install(sourceTypelibDir,acrobatAccessRPCStubs[0]) #typelib
+acrobatAccessRPCStubs = env.SConscript("acrobatAccess_sconscript")
+Export("acrobatAccessRPCStubs")
+if TARGET_ARCH == "x86":
+	env.Install(sourceTypelibDir, acrobatAccessRPCStubs[0])  # typelib
 
-ia2RPCStubs=env.SConscript('ia2_sconscript')
-Export('ia2RPCStubs')
+ia2RPCStubs = env.SConscript("ia2_sconscript")
+Export("ia2RPCStubs")
 if signExec:
-	env.AddPostAction(ia2RPCStubs[0],[signExec])
-env.Install(libInstallDir,ia2RPCStubs[0]) #proxy dll
-if TARGET_ARCH=='x86':
-	env.Install(sourceTypelibDir,ia2RPCStubs[1]) #typelib
+	env.AddPostAction(ia2RPCStubs[0], [signExec])
+env.Install(libInstallDir, ia2RPCStubs[0])  # proxy dll
+if TARGET_ARCH == "x86":
+	env.Install(sourceTypelibDir, ia2RPCStubs[1])  # typelib
 
-iSimpleDomRPCStubs=env.SConscript('ISimpleDOM_sconscript')
+iSimpleDomRPCStubs = env.SConscript("ISimpleDOM_sconscript")
 if signExec:
-	env.AddPostAction(iSimpleDomRPCStubs[0],[signExec])
-env.Install(libInstallDir,iSimpleDomRPCStubs[0]) #proxy dll
-if TARGET_ARCH=='x86':
-	env.Install(sourceTypelibDir,iSimpleDomRPCStubs[1]) #typelib
+	env.AddPostAction(iSimpleDomRPCStubs[0], [signExec])
+env.Install(libInstallDir, iSimpleDomRPCStubs[0])  # proxy dll
+if TARGET_ARCH == "x86":
+	env.Install(sourceTypelibDir, iSimpleDomRPCStubs[1])  # typelib
 
-mathPlayerRPCStubs=env.SConscript('mathPlayer_sconscript')
-if TARGET_ARCH=='x86':
-	env.Install(sourceTypelibDir,mathPlayerRPCStubs[0]) #typelib
+mathPlayerRPCStubs = env.SConscript("mathPlayer_sconscript")
+if TARGET_ARCH == "x86":
+	env.Install(sourceTypelibDir, mathPlayerRPCStubs[0])  # typelib
 
-detoursLib = env.SConscript('detours/sconscript')
-Export('detoursLib')
+detoursLib = env.SConscript("detours/sconscript")
+Export("detoursLib")
 
-apiHookObj = env.Object("apiHook","common/apiHook.cpp")
-Export('apiHookObj')
+apiHookObj = env.Object("apiHook", "common/apiHook.cpp")
+Export("apiHookObj")
 
-if TARGET_ARCH=='x86':
-	localLib=env.SConscript('local/sconscript')
-	Export('localLib')
+if TARGET_ARCH == "x86":
+	localLib = env.SConscript("local/sconscript")
+	Export("localLib")
 	if signExec:
-		env.AddPostAction(localLib[0],[signExec])
-	env.Install(libInstallDir,localLib)
-	win10localLib=env.SConscript('localWin10/sconscript',)
+		env.AddPostAction(localLib[0], [signExec])
+	env.Install(libInstallDir, localLib)
+	win10localLib = env.SConscript(
+		"localWin10/sconscript",
+	)
 	if signExec:
-		env.AddPostAction(win10localLib[0],[signExec])
-	env.Install(libInstallDir,win10localLib)
-	UIARemoteLib=env.SConscript('UIARemote/sconscript')
+		env.AddPostAction(win10localLib[0], [signExec])
+	env.Install(libInstallDir, win10localLib)
+	UIARemoteLib = env.SConscript("UIARemote/sconscript")
 	if signExec:
-		env.AddPostAction(UIARemoteLib[0],[signExec])
-	env.Install(libInstallDir,UIARemoteLib)
+		env.AddPostAction(UIARemoteLib[0], [signExec])
+	env.Install(libInstallDir, UIARemoteLib)
 
-clientLib=env.SConscript('client/sconscript')
-Export('clientLib')
+clientLib = env.SConscript("client/sconscript")
+Export("clientLib")
 if signExec:
-	env.AddPostAction(clientLib[0],[signExec])
-env.Install(clientInstallDir,clientLib)
+	env.AddPostAction(clientLib[0], [signExec])
+env.Install(clientInstallDir, clientLib)
 
-remoteLib=env.SConscript('remote/sconscript')
-Export('remoteLib')
+remoteLib = env.SConscript("remote/sconscript")
+Export("remoteLib")
 if signExec:
-	env.AddPostAction(remoteLib[0],[signExec])
-env.Install(libInstallDir,remoteLib)
+	env.AddPostAction(remoteLib[0], [signExec])
+env.Install(libInstallDir, remoteLib)
 
-if TARGET_ARCH in ('x86_64', 'arm64'):
-	remoteLoaderProgram=env.SConscript('remoteLoader/sconscript')
+if TARGET_ARCH in ("x86_64", "arm64"):
+	remoteLoaderProgram = env.SConscript("remoteLoader/sconscript")
 	if signExec:
-		env.AddPostAction(remoteLoaderProgram,[signExec])
-	env.Install(libInstallDir,remoteLoaderProgram)
+		env.AddPostAction(remoteLoaderProgram, [signExec])
+	env.Install(libInstallDir, remoteLoaderProgram)
 
-if TARGET_ARCH=='x86':
-	thirdPartyEnv.SConscript('espeak/sconscript')
-	thirdPartyEnv.SConscript('liblouis/sconscript')
+if TARGET_ARCH == "x86":
+	thirdPartyEnv.SConscript("espeak/sconscript")
+	thirdPartyEnv.SConscript("liblouis/sconscript")

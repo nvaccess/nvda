@@ -49,7 +49,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		self.assertEqual(converter.strToWideOffsets(3, 3), (6, 6))
 
 	def test_mixedSurrogatePairsAndNonSurrogates(self):
-		converter = WideStringOffsetConverter(text=u"a" + FACE_PALM + u"b") # a🤦b
+		converter = WideStringOffsetConverter(text="a" + FACE_PALM + "b")  # a🤦b
 		self.assertEqual(converter.wideStringLength, 4)
 		self.assertEqual(converter.strToWideOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.strToWideOffsets(0, 1), (0, 1))
@@ -67,7 +67,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		Tests surrogate pairs, non surrogates as well as
 		single surrogate characters (i.e. incomplete pairs)
 		"""
-		converter = WideStringOffsetConverter(text=u"a" + u"\ud83e" + FACE_PALM + u"\udd26" + u"b")
+		converter = WideStringOffsetConverter(text="a" + "\ud83e" + FACE_PALM + "\udd26" + "b")
 		self.assertEqual(converter.wideStringLength, 6)
 		self.assertEqual(converter.strToWideOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.strToWideOffsets(0, 1), (0, 1))
@@ -90,6 +90,7 @@ class TestStrToWideOffsets(unittest.TestCase):
 		self.assertEqual(converter.strToWideOffsets(4, 4), (5, 5))
 		self.assertEqual(converter.strToWideOffsets(4, 5), (5, 6))
 		self.assertEqual(converter.strToWideOffsets(5, 5), (6, 6))
+
 
 class TestWideToStrOffsets(unittest.TestCase):
 	"""
@@ -144,7 +145,7 @@ class TestWideToStrOffsets(unittest.TestCase):
 		self.assertEqual(converter.wideToStrOffsets(6, 6), (3, 3))
 
 	def test_mixedSurrogatePairsAndNonSurrogates(self):
-		converter = WideStringOffsetConverter(text=u"a" + FACE_PALM + u"b") # a🤦b
+		converter = WideStringOffsetConverter(text="a" + FACE_PALM + "b")  # a🤦b
 		self.assertEqual(converter.strLength, 3)
 		self.assertEqual(converter.wideToStrOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.wideToStrOffsets(0, 1), (0, 1))
@@ -167,7 +168,7 @@ class TestWideToStrOffsets(unittest.TestCase):
 		Tests surrogate pairs, non surrogates as well as
 		single surrogate characters (i.e. incomplete pairs)
 		"""
-		converter = WideStringOffsetConverter(text=u"a" + u"\ud83e" + FACE_PALM + u"\udd26" + u"b")
+		converter = WideStringOffsetConverter(text="a" + "\ud83e" + FACE_PALM + "\udd26" + "b")
 		self.assertEqual(converter.strLength, 5)
 		self.assertEqual(converter.wideToStrOffsets(0, 0), (0, 0))
 		self.assertEqual(converter.wideToStrOffsets(0, 1), (0, 1))
@@ -210,10 +211,12 @@ class TestEdgeCases(unittest.TestCase):
 		self.assertEqual(converter.strLength, 3)
 		self.assertEqual(
 			converter.wideToStrOffsets(-1, 0, raiseOnError=False),
-			(0, 0))
+			(0, 0),
+		)
 		self.assertEqual(
 			converter.wideToStrOffsets(0, 4, raiseOnError=False),
-			(0, 3))
+			(0, 3),
+		)
 		self.assertRaises(IndexError, converter.wideToStrOffsets, -1, 0, raiseOnError=True)
 		self.assertRaises(IndexError, converter.wideToStrOffsets, 0, 4, raiseOnError=True)
 		self.assertRaises(ValueError, converter.wideToStrOffsets, 1, 0)
@@ -223,10 +226,12 @@ class TestEdgeCases(unittest.TestCase):
 		self.assertEqual(converter.wideStringLength, 3)
 		self.assertEqual(
 			converter.strToWideOffsets(-1, 0, raiseOnError=False),
-			(0, 0))
+			(0, 0),
+		)
 		self.assertEqual(
 			converter.strToWideOffsets(0, 4, raiseOnError=False),
-			(0, 3))
+			(0, 3),
+		)
 		self.assertRaises(IndexError, converter.strToWideOffsets, -1, 0, raiseOnError=True)
 		self.assertRaises(IndexError, converter.strToWideOffsets, 0, 4, raiseOnError=True)
 		self.assertRaises(ValueError, converter.strToWideOffsets, 1, 0)
@@ -239,17 +244,86 @@ class TestUnicodeNormalizationOffsetConverter(unittest.TestCase):
 		text = "Één eigenwĳze geïnteresseerde ĳsbeer"
 		converter = UnicodeNormalizationOffsetConverter(text, "NFKC")
 		expectedStrToEncoded = (
-			0, 0, 1, 1, 2, 3,  # Één
-			4, 5, 6, 7, 8, 9, 10, 12, 13, 14,  # eigenwijze
-			15, 16, 17, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,  # geïnteresseerde
-			31, 33, 34, 35, 36, 37,  # ijsbeer
+			0,
+			0,
+			1,
+			1,
+			2,
+			3,  # Één
+			4,
+			5,
+			6,
+			7,
+			8,
+			9,
+			10,
+			12,
+			13,
+			14,  # eigenwijze
+			15,
+			16,
+			17,
+			17,
+			18,
+			19,
+			20,
+			21,
+			22,
+			23,
+			24,
+			25,
+			26,
+			27,
+			28,
+			29,
+			30,  # geïnteresseerde
+			31,
+			33,
+			34,
+			35,
+			36,
+			37,  # ijsbeer
 		)
 		self.assertSequenceEqual(converter.computedStrToEncodedOffsets, expectedStrToEncoded)
 		expectedEncodedToStr = (
-			0, 2, 4, 5,  # Één
-			6, 7, 8, 9, 10, 11, 12, 12, 13, 14, 15,  # eigenwijze
-			16, 17, 18, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32,  # geïnteresseerde
-			33, 33, 34, 35, 36, 37, 38,  # ijsbeer
+			0,
+			2,
+			4,
+			5,  # Één
+			6,
+			7,
+			8,
+			9,
+			10,
+			11,
+			12,
+			12,
+			13,
+			14,
+			15,  # eigenwijze
+			16,
+			17,
+			18,
+			20,
+			21,
+			22,
+			23,
+			24,
+			25,
+			26,
+			27,
+			28,
+			29,
+			30,
+			31,
+			32,  # geïnteresseerde
+			33,
+			33,
+			34,
+			35,
+			36,
+			37,
+			38,  # ijsbeer
 		)
 		self.assertSequenceEqual(converter.computedEncodedToStrOffsets, expectedEncodedToStr)
 

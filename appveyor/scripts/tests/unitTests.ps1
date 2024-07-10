@@ -1,6 +1,6 @@
 $outDir = (Resolve-Path .\testOutput\unit\)
 $unitTestsXml = "$outDir\unitTests.xml"
-.\rununittests.bat --output-file "$unitTestsXml"
+.\rununittests.bat --output-file "$unitTestsXml" -v
 if($LastExitCode -ne 0) {
 	Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode
 	Add-AppveyorMessage "FAIL: Unit tests. See test results for more information."

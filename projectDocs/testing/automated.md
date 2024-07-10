@@ -1,8 +1,28 @@
 ## Running Automated Tests
+
 If you make a change to the NVDA code, you should run NVDA's automated tests.
 These tests help to ensure that code changes do not unintentionally break functionality that was previously working.
 
+### Pre-commit hooks
+
+[Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
+This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
+
+From a shell, set up pre-commit scripts for your NVDA python environment:
+
+1. `venvUtils\ensureAndActivate.bat`
+1. `pre-commit install`
+
+Alternatively, set up pre-commit scripts globally:
+
+1. `pip install pre-commit`
+1. `pre-commit install --allow-missing-config`
+
+To skip pre-commit hooks from triggering, use the `--no-verify` CLI option.
+Example: `git commit -m "message" --no-verify`.
+
 ### Translatable string checks
+
 To run the translatable string checks (which check that all translatable strings have translator comments), run:
 
 ```cmd
