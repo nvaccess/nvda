@@ -337,7 +337,7 @@ class NVDAObject(
 		@return: The object at the given x and y coordinates.
 		@rtype: L{NVDAObject}
 		"""
-		kwargs={}
+		kwargs = {}
 		APIClass = NVDAObject.findBestAPIClass(kwargs, relation=(x, y))
 		obj = APIClass(chooseBestAPI=False, **kwargs) if APIClass else None
 		if not obj:
