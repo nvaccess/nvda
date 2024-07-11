@@ -2883,7 +2883,7 @@ To toggle these settings from anywhere, please assign custom gestures using the 
 ##### Font attributes {#DocumentFormattingFontAttributes}
 
 This option allows you to select how certain font attributes, such as bold, italics, underline and strikethrough are reported.
-The font attributes combo box has four options.
+The font attributes combo box has four options:
 
 * Off: NVDA will not report these font attributes.
 * Speech: NVDA will announce when these font attributes change.
