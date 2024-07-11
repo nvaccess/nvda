@@ -949,9 +949,11 @@ Then the handler needs to be registered - preferably in the constructor of your 
     addonHandler.isCLIParamKnown.register(processArgs)
 ## Packaging Code as NVDA Add-ons {#Addons}
 
-To make it easy for users to share and install plugins, drivers, speech symbol dictionaries and braille translation tables, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
+Add-ons make it easy for users to share and install plugins, drivers, speech symbol dictionaries and braille translation tables.
+They can be packaged in to a single NVDA add-on package, which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
 Add-on packages are only supported in NVDA 2012.2 and later.
-An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`" which contains a manifest file, optional install/uninstall code and one or more directories containing plugins, drivers, speech symbol dictionaries and/or and braille translation tables.
+An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`".
+It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech symbol dictionaries and braille translation tables.
 
 ### Non-ASCII File Names in Zip Archives {#nonASCIIFileNamesInZip}
 
@@ -1013,13 +1015,12 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates e.g. 2018.3.1) then the user will be warned not to install the add-on.
 
-The manifest can also specify information regarding the additional speech symbol dictionaries and/or braille translation tables provided by the add-on.
-Please refer to the [speech symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections later on in this document.
+The manifest can also specify information regarding the additional speech symbol dictionaries and braille translation tables provided by the add-on.
+Please refer to the [speech symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
 
 #### An Example Manifest File {#manifestExample}
 
 ```ini
---- start ---``
 name = "myTestAddon"
 summary = "Cool Test Add-on"
 version = "1.0.0"
@@ -1029,7 +1030,6 @@ url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
 docFileName = "readme.html"
 minimumNVDAVersion = "2021.1"
 lastTestedNVDAVersion = "2022.3.3"
---- end ---
 ```
 
 ### Plugins and Drivers {#pluginsAndDrivers}
@@ -1083,16 +1083,16 @@ To allow plugins in your add-on to access gettext message information via calls 
 This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
 For more information about gettext and NVDA translation in general, please read the [Translating NVDA page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
-#### SPeech symbol dictionaries {#AddonSymbolDictionaries}
+#### Speech symbol dictionaries {#AddonSymbolDictionaries}
 
-Starting with NVDA 2024.4, you can provide custom speech symbol dictionaries in add-ons to improve symbol pronunciation.
+You can provide custom speech symbol dictionaries in add-ons to improve symbol pronunciation.
 The process to create custom speech symbol dictionaries is very similar to that of the [translation process of existing symbols](#symbolPronunciation).
 Note that [complex symbols](#complexSymbols) are not supported.
 
-Custom dictionaries must be placed in a language directory and have a file name in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
+Custom dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden for specific locales.
 
-When adding a dictionary, some information must be provided such as its display name when the dictionary is optional and should be shown in the speech category of the settings dialog.
+When adding a dictionary not marked as mandatory, some information must be provided such as its display name and should be shown in the speech category of the settings dialog.
 A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
 When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
 For example:
@@ -1108,7 +1108,7 @@ displayName = Biblical Hebrew
 mandatory = true
 ```
 
-In the above example, `greek` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the `Extra dictionaries for character and symbol processing` setting.
+In the above example, `greek` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
 Its file will be stored as `locale\en\symbols-greek.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-greek.dic`.
 When using NVDA in French, symbols that aren't defined in the French dictionary inherit the symbol information for English.
 
