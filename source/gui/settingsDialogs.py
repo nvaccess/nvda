@@ -2576,7 +2576,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		fontAttributesText = _("Font attrib&utes")
-		fontAttributesOptions = [i.displayString for i in OutputMode]
+		fontAttributesOptions = [i.displayString for i in OutputMode.__members__.values()]
 		self.fontAttrsList = fontGroup.addLabeledControl(
 			fontAttributesText, wx.Choice, choices=fontAttributesOptions
 		)

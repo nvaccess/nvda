@@ -228,12 +228,10 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 
 
 @unique
-class OutputMode(DisplayStringIntEnum):
+class OutputMode(DisplayStringIntFlag):
 	"""Enumeration for ways to output information, such as formatting.
 	Use OutputMode.MEMBER.value to compare with the config;
 	use OutputMode.MEMBER.displayString in the UI for a translatable description of this member.
-
-	This is currently implemented as an IntEnum due to limitations iterating over IntFlag members. However, an attempt should be made to adhere to the convention that single output modes are powers of 2, and combinations of output modes are bitwise ORs of these values.
 	"""
 
 	OFF = 0b0

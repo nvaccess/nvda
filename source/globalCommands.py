@@ -582,7 +582,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportFontAttributes(self, gesture: "inputCore.InputGesture"):
 		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]
-		nextValue = OutputMode((currentValue + 1) % len(OutputMode))
+		nextValue = OutputMode((currentValue + 1) % len(OutputMode.__members__))
 		match nextValue:
 			case OutputMode.OFF:
 				# Translators: A state in which font attributes are not reported.
