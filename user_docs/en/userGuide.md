@@ -2882,11 +2882,14 @@ To toggle these settings from anywhere, please assign custom gestures using the 
 
 ##### Font attributes {#DocumentFormattingFontAttributes}
 
-This option allows you to select how certain font attributes, such as bold, italics, underline and strikethrough are reported. The Font attributes combo box has four options.
+This option allows you to select how certain font attributes, such as bold, italics, underline and strikethrough are reported.
+The font attributes combo box has four options.
 
 * Off: NVDA will not report these font attributes.
 * Speech: NVDA will announce when these font attributes change.
-* Braille: NVDA will display bold, italic, and underlines in braille. Note that your chosen braille table must support displaying these attributes. Exactly how these attributes are displayed varies between tables.
+* Braille: NVDA will display bold, italic, and underlines in braille.
+Note that your chosen braille table must support displaying these attributes.
+Exactly how these attributes are displayed varies between tables.
 * Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
