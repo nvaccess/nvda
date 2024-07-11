@@ -1092,7 +1092,7 @@ Note that [complex symbols](#complexSymbols) are not supported.
 Custom dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden for specific locales.
 
-When adding a dictionary not marked as mandatory, some information must be provided such as its display name and should be shown in the speech category of the settings dialog.
+When adding a dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
 A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
 When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
 For example:
@@ -1114,6 +1114,15 @@ When using NVDA in French, symbols that aren't defined in the French dictionary 
 
 Also in the example, the `hebrew` dictionary is marked mandatory and will therefore always be enabled as long as the add-on is active.
 Its file will be stored as `locale\en\symbols-hebrew.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-hebrew.dic`.
+
+Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[symbolDictionaries]
+[[hebrew]]
+displayName = Hébreu Biblique
+```
 
 ### Add-on Documentation {#AddonDoc}
 
@@ -1158,6 +1167,15 @@ In that case, the table does not need to be shipped in the add-on's brailleTable
 Providing a custom table, whether it has the same file name as a standard table or a different name, thus requires you to define the table in the add-on's manifest.
 The only exception to this rule applies to tables that are included within other tables.
 While they don't have to be included in the manifest of the add-on, they can only be included from other tables that are part of the same add-on.
+
+Note that for the display name of the table to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[brailleTables]
+[[no-no-8dot.utb]]
+displayName = Norvégien Braille informatique 8 points - Remplacement
+```
 
 Custom tables can also be placed in the brailleTables subdirectory of the scratchpad directory.
 In this case, the table metadata can be placed in a `manifest.ini` file in the root of the scratchpad in the exact same format as the example above.
