@@ -96,7 +96,7 @@ self.copySettingsButton = wx.Button(
   - Anything imported into a (sub)module can also be imported from that submodule.
   - As a result, removing unused imports may break compatibility, and should be done in compatibility breaking releases (see `deprecations.md`).
 * Unused imports will give a lint warning. These can be handled the following ways:
-  - If these imports are inteded to be imported from other modules, they can be done included in a definition for `__all__`. This will override and define the symbols imported when performing a star import, eg `from module import *`.
+  - If these imports are intended to be imported from other modules, they can be included in a definition for `__all__`. This will override and define the symbols imported when performing a star import, eg `from module import *`.
   - Otherwise, with a comment like `# noqa: <explanation>`.
 
 ### Considering future backwards compatibility
