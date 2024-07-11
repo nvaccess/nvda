@@ -19,7 +19,6 @@ from addonStore.dataManager import addonDataManager
 from addonStore.models.status import AvailableAddonStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
-import globalVars
 import gui
 from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
@@ -33,6 +32,7 @@ from gui.guiHelper import (
 )
 from gui.message import DisplayableError, displayDialogAsModal, messageBox
 from logHandler import log
+import NVDAState
 import ui
 import windowUtils
 
@@ -547,7 +547,7 @@ class UpdatableAddonsDialog(
 	@classmethod
 	def _checkForUpdatableAddons(cls):
 		if (
-			globalVars.appArgs.secure
+			not NVDAState.shouldWriteToDisk()
 			or (AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"])
 		):
 			log.debug("automatic add-on updates are disabled")
