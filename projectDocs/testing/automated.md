@@ -31,15 +31,15 @@ scons checkPot
 
 ### Linting your changes
 
-In order to ensure your changes comply with NVDA's coding style you can run the Ruff linter locally.
-`runlint.bat` will use Ruff to lint and where possible, fix the code you have written.
+Our linting process involves running [Ruff](https://docs.astral.sh/ruff) to pick up Python linting issues and auto-apply fixes where possible.
+
+To run the linter locally:
 
 ```cmd
 runlint.bat
 ```
 
-To be warned about linting errors faster, you may wish to integrate Ruff with other development tools you are using.
-For more details, see the [linting docs](../dev/lint.md).
+To be warned about linting errors faster, you may wish to integrate Ruff with your IDE or other development tools you are using.
 
 ### Unit Tests
 
