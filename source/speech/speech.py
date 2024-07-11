@@ -2783,11 +2783,11 @@ def getFormatFieldSpeech(  # noqa: C901
 			)
 			textList.append(text)
 	if formatConfig["fontAttributeReporting"] & OutputMode.SPEECH:
-		bold=attrs.get("bold")
-		oldBold=attrsCache.get("bold") if attrsCache is not None else None
-		if (bold or oldBold is not None) and bold!=oldBold:
-			# Translators: Reported when text is bolded.
+		bold = attrs.get("bold")
+		oldBold = attrsCache.get("bold") if attrsCache is not None else None
+		if (bold or oldBold is not None) and bold != oldBold:
 			text = (
+				# Translators: Reported when text is bolded.
 				_("bold")
 				if bold
 				# Translators: Reported when text is not bolded.
