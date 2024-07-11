@@ -9,7 +9,7 @@
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
-  * UIA for XAML and WPF text controls; (#16817, @LeonarddeR)
+  * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
 
 ### Changes for Developers
