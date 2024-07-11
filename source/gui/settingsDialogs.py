@@ -822,10 +822,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			choices=languageChoices,
 		)
 		self.bindHelpEvent("GeneralSettingsLanguage", self.languageList)
-		self.languageList.SetToolTip(
-			# Translators: a tool tip for NVDA language selection in general settings.
-			wx.ToolTip(_("Choose the language NVDA's messages and user interface should be presented in.")),
-		)
 		self.oldLanguage = config.conf["general"]["language"]
 		if languageHandler.isLanguageForced():
 			index = len(self.languageNames) - 1
