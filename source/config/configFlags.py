@@ -11,7 +11,7 @@ When creating new parameter options, consider using F{FeatureFlag} which explici
 the default value.
 """
 
-from enum import unique, property as enum_property
+from enum import unique
 from utils.displayString import (
 	DisplayStringIntEnum,
 	DisplayStringStrEnum,
@@ -253,21 +253,3 @@ class OutputMode(DisplayStringIntEnum):
 			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
 		}
-
-	@enum_property
-	def inSpeech(self) -> bool:
-		"""Check if the output mode includes speech.
-
-		Returns:
-				bool: True if the output mode includes speech, False otherwise.
-		"""
-		return self & self.SPEECH != 0
-
-	@enum_property
-	def inBraille(self) -> bool:
-		"""Check if the output mode includes braille.
-
-		Returns:
-				bool: True if the output mode includes braille, False otherwise.
-		"""
-		return self & self.BRAILLE != 0

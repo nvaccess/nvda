@@ -2782,10 +2782,10 @@ def getFormatFieldSpeech(  # noqa: C901
 				else _("not emphasised")
 			)
 			textList.append(text)
-	if OutputMode(formatConfig["fontAttributeReporting"]).inSpeech:
-		bold = attrs.get("bold")
-		oldBold = attrsCache.get("bold") if attrsCache is not None else None
-		if (bold or oldBold is not None) and bold != oldBold:
+	if formatConfig["fontAttributeReporting"] & OutputMode.SPEECH:
+		bold=attrs.get("bold")
+		oldBold=attrsCache.get("bold") if attrsCache is not None else None
+		if (bold or oldBold is not None) and bold!=oldBold:
 			# Translators: Reported when text is bolded.
 			text = (
 				_("bold")
