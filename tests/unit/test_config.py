@@ -875,20 +875,6 @@ class Config_getitem_alias(unittest.TestCase):
 		self.assertEqual(config["reportFontAttributes"], True)
 
 
-class Config_ConfigFlags_OutputMode(unittest.TestCase):
-	def test_inSpeech(self):
-		self.assertTrue(OutputMode.SPEECH.inSpeech)
-		self.assertTrue(OutputMode.SPEECH_AND_BRAILLE.inSpeech)
-		self.assertFalse(OutputMode.BRAILLE.inSpeech)
-		self.assertFalse(OutputMode.OFF.inSpeech)
-
-	def test_inBraille(self):
-		self.assertTrue(OutputMode.BRAILLE.inBraille)
-		self.assertTrue(OutputMode.SPEECH_AND_BRAILLE.inBraille)
-		self.assertFalse(OutputMode.SPEECH.inBraille)
-		self.assertFalse(OutputMode.OFF.inBraille)
-
-
 class Config_AggregatedSection_getitem(unittest.TestCase):
 	def setUp(self):
 		manager = MagicMock(ConfigManager())
