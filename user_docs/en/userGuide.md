@@ -2947,6 +2947,21 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
+##### Reset New Add-ons {#ResetNewAddons}
+
+This option determines the period of time to reset new add-ons.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Monthly (Default), Weekly, At startup |
+|Default |Monthly |
+
+|Option |Behaviour |
+|---|---|
+|Monthly |Add-ons will be considered as new for a month (31 days) |
+|Weekly | Add-ons will be considered as new for a week (7 days) |
+|At startup | Add-ons will be considered as new until NVDA is restarted |
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3482,6 +3497,12 @@ The default shows both enabled and disabled add-ons.
 #### Include incompatible add-ons {#AddonStoreFilterIncompatible}
 
 Available and updatable add-ons can be filtered to include [incompatible add-ons](#incompatibleAddonsManager) that are available to install.
+
+#### Filter add-ons by release date {#AddonStoreFilterDate}
+
+Available add-ons can be filtered to show just the most recent published add-ons.
+
+To learn how to configure how long add-ons will be considered as recently published, please refer to {#ResetNewAddons}.
 
 #### Filter add-ons by channel {#AddonStoreFilterChannel}
 

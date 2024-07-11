@@ -28,6 +28,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
+	ResetNewAddons,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -3102,10 +3103,20 @@ class AddonStorePanel(SettingsPanel):
 		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
+		# Translators: This is a label for the reset new add-ons combo box in the Add-on Store Settings dialog.
+		resetNewAddonsLabelText = _("&Reset new add-ons:")
+		self.resetNewAddonsComboBox = sHelper.addLabeledControl(
+			resetNewAddonsLabelText, wx.Choice, choices=[mode.displayString for mode in ResetNewAddons]
+		)
+		self.bindHelpEvent("ResetNewAddons", self.resetNewAddonsComboBox)
+		index = [x.value for x in ResetNewAddons].index(config.conf["addonStore"]["resetNewAddons"])
+		self.resetNewAddonsComboBox.SetSelection(index)
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+		index = self.resetNewAddonsComboBox.GetSelection()
+		config.conf["addonStore"]["resetNewAddons"] = [x.value for x in ResetNewAddons][index]
 
 
 class TouchInteractionPanel(SettingsPanel):

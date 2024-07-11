@@ -207,6 +207,24 @@ For example: "Clock".
 
 Full automatic updating is not currently supported.
 
+### Check for new add-ons
+
+1. Remove `source/userConfig/addonStore/_cachedCompatibleAddons-old.json`, or edit this file removing some entries corresponding to cached add-ons, or changing version number
+1. Start NVDA
+1. Open the store to the available add-ons tab, and use the combo box to filter add-ons by release date
+
+### Reset new add-ons
+
+1. Ensure Reset new add-ons is set to monthly or weekly in the Add-on store panel
+1. Check the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file
+1. Restart NVDA
+1. Check that the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file is the same
+1. Ensure Reset new add-ons is set to At startup in the Add-on store panel
+1. Restart NVDA
+1. Check that the last modification date of the `source/userConfig/addonStore/_cachedCompatibleAddons-old.json` file has been changed
+1. Check that the period for recent add-ons is updated in the release date filter combo box of the available add-ons tab of the store, when the reset new add-ons option is changed in the add-ons store settings panel.
+
+
 ## Other add-on actions
 
 ### Disabling an add-on
@@ -283,3 +301,4 @@ Where you can find your NVDA user configuration folder:
 - For installed copies: `%APPDATA%\nvda`
 - For source copies: `source\userConfig`
 - Inside a portable copy directory: `userConfig`
+

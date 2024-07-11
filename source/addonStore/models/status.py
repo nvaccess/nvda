@@ -44,6 +44,21 @@ class EnabledStatus(DisplayStringEnum):
 		}
 
 
+class NewStatus(DisplayStringEnum):
+	ALL = enum.auto()
+	NEW = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> Dict["EnabledStatus", str]:
+		resetNewAddonsDate = getResetNewAddonsDate()
+		return {
+			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+			self.ALL: pgettext("addonStore", "All"),
+			# Translators: The label of an option to filter the list of add-ons in the add-on store dialog.
+			self.NEW: pgettext("addonStore", "New add-ons (%s)" % resetNewAddonsDate),
+		}
+
+
 @enum.unique
 # TODO refactor rename from AvailableAddonStatus to AddonStatus
 class AvailableAddonStatus(DisplayStringEnum):
@@ -268,7 +283,7 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 		# Parsing from a side-loaded add-on
 		try:
 			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(
-				model._addonHandlerModel.version,
+				model._addonHandlerModel.version
 			)
 		except ValueError:
 			# Parsing failed to get a numeric version.
@@ -344,10 +359,7 @@ def getStatus(model: "_AddonGUIModel", context: _StatusFilterKey) -> AvailableAd
 	return AvailableAddonStatus.UNKNOWN
 
 
-_addonStoreStateToAddonHandlerState: OrderedDict[
-	AvailableAddonStatus,
-	Set[AddonStateCategory],
-] = OrderedDict(
+_addonStoreStateToAddonHandlerState: OrderedDict[AvailableAddonStatus, Set[AddonStateCategory]] = OrderedDict(
 	{
 		# Pending states must be first as the pending state may be altering another state.
 		AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED: {
@@ -371,7 +383,7 @@ _addonStoreStateToAddonHandlerState: OrderedDict[
 		AvailableAddonStatus.INCOMPATIBLE_ENABLED: {AddonStateCategory.OVERRIDE_COMPATIBILITY},
 		AvailableAddonStatus.DISABLED: {AddonStateCategory.DISABLED},
 		AvailableAddonStatus.INSTALLED: {AddonStateCategory.PENDING_INSTALL},
-	},
+	}
 )
 
 
@@ -423,7 +435,7 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 			{
 				AvailableAddonStatus.INCOMPATIBLE,
 				AvailableAddonStatus.AVAILABLE,
-			},
+			}
 		),
 		_StatusFilterKey.INCOMPATIBLE: {
 			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
@@ -432,11 +444,17 @@ _statusFilters: OrderedDict[_StatusFilterKey, Set[AvailableAddonStatus]] = Order
 			AvailableAddonStatus.INCOMPATIBLE_ENABLED,
 			AvailableAddonStatus.UNKNOWN,
 		},
-	},
+	}
 )
 """A dictionary where the keys are a status to filter by,
 and the values are which statuses should be shown for a given filter.
 """
+
+
+def getResetNewAddonsDate() -> str:
+	from ..dataManager import addonDataManager
+
+	return addonDataManager._getResetNewAddonsDate()
 
 
 class SupportsAddonState(SupportsVersionCheck, Protocol):
@@ -458,17 +476,11 @@ class SupportsAddonState(SupportsVersionCheck, Protocol):
 	def pendingInstallPath(self) -> str:
 		from addonHandler import ADDON_PENDINGINSTALL_SUFFIX
 
-		return os.path.join(
-			WritePaths.addonsDir,
-			self.name + ADDON_PENDINGINSTALL_SUFFIX,
-		)
+		return os.path.join(WritePaths.addonsDir, self.name + ADDON_PENDINGINSTALL_SUFFIX)
 
 	@property
 	def installPath(self) -> str:
-		return os.path.join(
-			WritePaths.addonsDir,
-			self.name,
-		)
+		return os.path.join(WritePaths.addonsDir, self.name)
 
 	@property
 	def isPendingInstall(self) -> bool:

@@ -6,6 +6,9 @@
 
 ### New Features
 
+* You can filter available add-ons by release date on the store. (#16681, @nvdaes)
+  * From the Add-on store settings panel, new options are available to determine the period of time to reset new add-ons.
+
 ### Bug Fixes
 
 * NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)

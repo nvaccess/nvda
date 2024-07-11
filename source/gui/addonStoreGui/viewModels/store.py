@@ -31,6 +31,7 @@ from addonStore.models.channel import (
 )
 from addonStore.models.status import (
 	EnabledStatus,
+	NewStatus,
 	getStatus,
 	_statusFilters,
 	_StatusFilterKey,
@@ -91,6 +92,10 @@ class AddonStoreVM:
 		Filters the add-on list view model by enabled or disabled.
 		"""
 		self._filterIncludeIncompatible: bool = False
+		self._filterNew: NewStatus = NewStatus.ALL
+		"""
+		Filters the add-on list view model by all or recently published.
+		"""
 
 		self.listVM: AddonListVM = AddonListVM(
 			addons=self._createListItemVMs(),
@@ -618,6 +623,21 @@ class AddonStoreVM:
 						and incompatibleAddons[channel][addonId].canOverrideCompatibility
 					):
 						availableAddons[channel][addonId] = incompatibleAddons[channel][addonId]
+		elif self._filterNew != NewStatus.ALL:
+			if addonDataManager._oldAddonCache:
+				oldAddons = addonDataManager._getOldAddons()
+				newAddons = {
+					channel: {
+						addonId: addon
+						for addonId, addon in addons.items()
+						if addonId not in oldAddons[channel]
+						or addon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+					}
+					for channel, addons in availableAddons.items()
+				}
+				availableAddons = newAddons
+			else:
+				availableAddons = _createAddonGUICollection()
 		log.debug("completed getting addons in the background")
 		self._availableAddons = availableAddons
 		self.listVM.resetListItems(self._createListItemVMs())

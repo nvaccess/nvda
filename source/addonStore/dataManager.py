@@ -8,6 +8,7 @@ import json
 import os
 import pathlib
 import threading
+from datetime import datetime, timedelta
 from typing import (
 	TYPE_CHECKING,
 	Optional,
@@ -80,6 +81,7 @@ def terminate():
 class _DataManager:
 	_cacheLatestFilename: str = "_cachedLatestAddons.json"
 	_cacheCompatibleFilename: str = "_cachedCompatibleAddons.json"
+	_cacheCompatibleOldFilename: str = "_cachedCompatibleAddons-old.json"
 	_downloadsPendingInstall: Set[Tuple["AddonListItemVM[_AddonStoreModel]", os.PathLike]] = set()
 	_downloadsPendingCompletion: Set["AddonListItemVM[_AddonStoreModel]"] = set()
 
@@ -88,8 +90,10 @@ class _DataManager:
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
 		self._cacheCompatibleFile = os.path.join(
-			WritePaths.addonStoreDir,
-			_DataManager._cacheCompatibleFilename,
+			WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename
+		)
+		self._cacheCompatibleOldFile = os.path.join(
+			WritePaths.addonStoreDir, _DataManager._cacheCompatibleOldFilename
 		)
 		self._installedAddonDataCacheDir = WritePaths.addonsDir
 
@@ -100,6 +104,7 @@ class _DataManager:
 
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
+		self._oldAddonCache = self._getCachedAddonData(self._cacheCompatibleOldFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
 		# Fetch available add-ons cache early
 		self._initialiseAvailableAddonsThread = threading.Thread(
@@ -114,6 +119,8 @@ class _DataManager:
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
 			log.debugWarning("initialiseAvailableAddons thread did not terminate immediately")
+		if self._shouldCacheCompatibleAddonsBackup():
+			self._cacheCompatibleAddonsBackup()
 
 	def _getLatestAddonsDataForVersion(self, apiVersion: str) -> Optional[bytes]:
 		url = _getAddonStoreURL(self._preferredChannel, self._lang, apiVersion)
@@ -160,6 +167,52 @@ class _DataManager:
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
 		with open(self._cacheCompatibleFile, "w", encoding="utf-8") as cacheFile:
+			json.dump(cacheData, cacheFile, ensure_ascii=False)
+
+	def _shouldCacheCompatibleAddonsBackup(self) -> bool:
+		if not os.path.exists(self._cacheCompatibleOldFile):
+			return True
+		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
+		if resetNewAddons == "startup":
+			return True
+		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
+		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
+		nowDate = datetime.now()
+		diffDate = nowDate - lastBackupDate
+		if resetNewAddons == "weekly" and diffDate.days >= 7:
+			return True
+		if resetNewAddons == "monthly" and diffDate.days >= 30:
+			return True
+		return False
+
+	def _getResetNewAddonsDate(self) -> str:
+		resetNewAddons = config.conf["addonStore"]["resetNewAddons"]
+		if resetNewAddons == "startup":
+			# Translators: Message presented in the new add-ons combo box, informing that new add-ons will be reset at startup
+			return _("Will be reset at startup")
+		if not os.path.exists(self._cacheCompatibleOldFile):
+			# Translators: Message presented in the new add-ons combo box, informing that new add-ons will be retrieved when NVDA is restarted
+			return _("Empty list: NVDA needs to be restarted to retrieve new add-ons")
+		lastBackupTime = os.path.getmtime(self._cacheCompatibleOldFile)
+		lastBackupDate = datetime.fromtimestamp(lastBackupTime)
+		formattedLastBackupDate = lastBackupDate.strftime("%x")
+		if resetNewAddons == "monthly":
+			timedeltaDays = 31
+		else:  # weekly
+			timedeltaDays = 7
+		nextResetDate = lastBackupDate + timedelta(days=timedeltaDays)
+		formattedNextResetDate = nextResetDate.strftime("%x")
+		return f"{formattedLastBackupDate}-{formattedNextResetDate}"
+
+	def _cacheCompatibleAddonsBackup(self):
+		if not NVDAState.shouldWriteToDisk():
+			return
+		try:
+			with open(self._cacheCompatibleFile, "r", encoding="utf-8") as cacheFile:
+				cacheData = json.load(cacheFile)
+		except Exception:
+			log.exception("Invalid add-on store cache")
+		with open(self._cacheCompatibleOldFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
@@ -286,6 +339,26 @@ class _DataManager:
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
 		return deepcopy(self._latestAddonCache.cachedAddonData)
+
+	def _checkForNewAddons(self) -> bool:
+		oldAddons = self._getOldAddons()
+		compatibleAddons = self.getLatestCompatibleAddons()
+		installedAddons = self._installedAddonsCache._get_installedAddons()
+		for channel in compatibleAddons:
+			for addonId in compatibleAddons[channel]:
+				compatibleAddon = compatibleAddons[channel][addonId]
+				if (
+					addonId not in oldAddons[channel]
+					or compatibleAddon.addonVersionNumber != oldAddons[channel][addonId].addonVersionNumber
+				) and addonId not in installedAddons:
+					return True
+		return False
+
+	def _getOldAddons(self) -> "AddonGUICollectionT":
+		if self._oldAddonCache is None:
+			return _createAddonGUICollection()
+		oldAddons = deepcopy(self._oldAddonCache.cachedAddonData)
+		return oldAddons
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
