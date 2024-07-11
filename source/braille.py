@@ -1141,7 +1141,18 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 
-def _getFormattingTags(field, fieldCache, formatConfig):
+def _getFormattingTags(field: dict[str, str], fieldCache: dict[str, str], formatConfig: dict[str, bool]) -> str | None:
+	"""
+	Get the formatting tags for the given field and cache.
+
+	Args:
+		field: The format field.
+		fieldCache (dict): The previous format field.
+		formatConfig: The user's format config.
+
+	Returns:
+		The formatting tag as a string, or None if no formatting is applied.
+	"""
 	textList = []
 	bold = field.get("bold", False)
 	oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
