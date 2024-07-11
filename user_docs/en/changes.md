@@ -10,6 +10,8 @@
 
 ### Bug Fixes
 
+* NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
@@ -22,6 +24,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * The new key has an `int` value matching an `OutputMode` `enum` with options for speech, braille, speech and braille and off.
   * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
   * These keys are currently synchronized until 2025.1.
+* `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
 
 ## 2024.3
 
