@@ -1306,7 +1306,7 @@ class AggregatedSection:
 		self._cache[key] = val
 
 		# Alias [documentFormatting][reportFontAttributes] for backwards compatibility.
-		# Todo: Remove in 2025.1.
+		# TODO: Comment out in 2025.1.
 		if version_year < 2025 and NVDAState._allowDeprecatedAPI():
 			self._linkDeprecatedValues(key, val)
 
