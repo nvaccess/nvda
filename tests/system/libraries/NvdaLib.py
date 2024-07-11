@@ -21,6 +21,7 @@ from os.path import (
 	expandvars as _expandvars,
 	exists as _exists,
 	splitext as _splitext,
+	dirname as _dirname,
 )
 import tempfile as _tempFile
 from typing import (
@@ -385,7 +386,7 @@ class NvdaLib:
 		"""
 		Checks if a crash.dmp exits and returns the crash dmp path if so
 		"""
-		crashPath = overridePath or _pJoin(_locations.profileDir, "nvda_crash.dmp")
+		crashPath = overridePath or _pJoin(_dirname(_locations.logPath), "nvda_crash.dmp")
 		try:
 			opSys.file_should_not_exist(crashPath)
 		except Exception:
