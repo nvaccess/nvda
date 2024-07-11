@@ -343,11 +343,11 @@ class SpeechSymbols:
 	def save(self, fileName=None):
 		"""Save symbol information to a file.
 		@param fileName: The name of the file to which to save symbol information,
-		        C{None} to use the file name last passed to L{load} or L{save}.
+			C{None} to use the file name last passed to L{load} or L{save}.
 		@type fileName: str
 		@raise IOError: If the file cannot be written.
 		@raise ValueError: If C{fileName} is C{None}
-		        and L{load} or L{save} has not been called.
+			and L{load} or L{save} has not been called.
 		"""
 		if fileName:
 			self.fileName = fileName
@@ -702,7 +702,7 @@ class SpeechSymbolProcessor:
 		"""Determine whether a symbol is built in.
 		@param symbolIdentifier: The identifier of the symbol in question.
 		@return: C{True} if the symbol is built in,
-		        C{False} if it was added by the user.
+			C{False} if it was added by the user.
 		"""
 		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
