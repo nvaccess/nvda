@@ -326,6 +326,12 @@ INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
 INPUT_END_IND = " ⣹"
 
+# Delimiters for the start and end of format tags.
+FORMAT_TAG_START_IND = "⣏"
+"""Unicode braille indicator at the start of a formatt tag."""
+FORMAT_TAG_END_IND = "⣙"
+"""Unicode braille indicator at the end of a formatt tag."""
+
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
@@ -1162,7 +1168,7 @@ def _getFormattingTags(field, fieldCache, formatConfig):
 	elif oldStrikethrough and not strikethrough:
 		textList.append("⡎")
 	if len(textList) > 0:
-		return "⣋" + "".join(textList) + "⣙"
+		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
 
 
 class TextInfoRegion(Region):
