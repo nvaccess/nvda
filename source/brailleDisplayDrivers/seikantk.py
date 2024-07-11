@@ -307,15 +307,15 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		key = arg[1] | (arg[2] << 8)
 		gestures = []
 		if brailleDots:
-			if key in (1, 2, 3): # bk:space+dots
+			if key in (1, 2, 3):  # bk:space+dots
 				key = 0
 				gestures.append(InputGesture(dots=brailleDots, space=True))
-			else: # bk:dots
+			else:  # bk:dots
 				gestures.append(InputGesture(dots=brailleDots, space=False))
 		if key:
-			if key in (1, 2): # bk:space
+			if key in (1, 2):  # bk:space
 				gestures.append(InputGesture(dots=0, space=True))
-			else: # br(seikantk):XXX
+			else:  # br(seikantk):XXX
 				gestures.append(InputGesture(keys=key))
 		for gesture in gestures:
 			try:
