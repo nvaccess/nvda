@@ -378,23 +378,20 @@ def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
 		)
 
 
-def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
-	"""Remove the includeCldr speech config flag and enabled it in the speechSymbols list."""
-	# Config spec entry was:
-	# includeCLDR = boolean(default=True)
+def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
+	"""
+	If the includeCldr speech config flag is set in a profile,
+	enable the cldr dictionary in the speechSymbols list.
+	"""
 	try:
-		setting: str = profile["speech"]["includeCLDR"]
-		del profile["speech"]["includeCLDR"]
+		setting: bool = profile["speech"].as_bool("includeCLDR")
 	except KeyError:
 		log.debug("includeCLDR not present in config, no action taken.")
 		return
-	if "speech" not in profile:
-		profile["speech"] = {}
-	if "symbolDictionaries" not in profile["speech"]:
-		profile["speech"]["symbolDictionaries"] = []
-	if configobj.validate.is_boolean(setting):  # CLDR enabled
-		profile["speech"]["symbolDictionaries"] += ["cldr"]
-		log.debug(
-			"cldr added to speech symbol dictionaries."
-			f"List is now: {profile['speech']['symbolDictionaries']}",
-		)
+	except ValueError:
+		log.error("includeCLDR is not a boolean, no action taken.")
+		return
+	profile["speech"]["symbolDictionaries"] = ["cldr"] if setting else []
+	log.debug(
+		f"Handled cldr value of {setting!r}. List is now: {profile['speech']['symbolDictionaries']}",
+	)
