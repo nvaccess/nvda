@@ -1916,7 +1916,7 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
-For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
   1. One stand alone unicode character (ü)
   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
@@ -2944,7 +2944,7 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 
 |Option |Behaviour |
 |---|---|
-|Enabled |Notify when updates are available to add-ons within the same channel |
+|Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
 #### Windows OCR Settings {#Win10OcrSettings}
@@ -3656,9 +3656,7 @@ For more information, read the in-depth section: [Add-ons and the Add-on Store](
 
 ### Create portable copy {#CreatePortableCopy}
 
-This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+This will open a dialog which allows you to create a portable copy of NVDA out of the currently running version.
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
