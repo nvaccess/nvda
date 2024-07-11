@@ -10,6 +10,8 @@
 
 ### Bug Fixes
 
+* NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
@@ -17,6 +19,8 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
 
 #### Deprecations
+
+* `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
 
 ## 2024.3
 
@@ -33,7 +37,7 @@ Unassigned commands have been added to scroll the mouse wheel vertically and hor
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, and Turkish.
+LibLouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, Turkish, and the International Phonetic Alphabet.
 eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
 
@@ -64,6 +68,7 @@ Unicode CLDR has also been updated.
       * Yiddish.
       * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
       * Turkish grade 2. (#16735)
+      * International Phonetic Alphabet. (#16773)
   * Updated NSIS to 3.10 (#16674, @dpy013)
   * Updated markdown to 3.6 (#16725, @dpy013)
   * Updated nh3 to 0.2.17 (#16725, @dpy013)
