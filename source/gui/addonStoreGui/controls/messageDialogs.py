@@ -19,7 +19,6 @@ from addonStore.dataManager import addonDataManager
 from addonStore.models.status import AvailableAddonStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
-import globalVars
 import gui
 from gui import nvdaControls
 from gui.addonGui import ConfirmAddonInstallDialog, ErrorAddonInstallDialog, promptUserForRestart
@@ -33,6 +32,7 @@ from gui.guiHelper import (
 )
 from gui.message import DisplayableError, displayDialogAsModal, messageBox
 from logHandler import log
+import NVDAState
 import ui
 import windowUtils
 
@@ -156,15 +156,15 @@ def _shouldInstallWhenAddonTooOldDialog(
 		# because the add-on is too old for the running version of NVDA.
 		"Warning: add-on is incompatible: {name} {version}. "
 		"Check for an updated version of this add-on if possible. "
-		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
-		"your current NVDA version is {NVDAVersion}. "
+		"This add-on was last tested with NVDA {lastTestedNVDAVersion}. "
+		"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 		"Installation may cause unstable behavior in NVDA.\n"
 		"Proceed with installation anyway? ",
 	).format(
 		name=addon.displayName,
 		version=addon.addonVersionName,
 		lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+		nvdaVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -189,15 +189,15 @@ def _shouldEnableWhenAddonTooOldDialog(
 		# because the add-on is too old for the running version of NVDA.
 		"Warning: add-on is incompatible: {name} {version}. "
 		"Check for an updated version of this add-on if possible. "
-		"The last tested NVDA version for this add-on is {lastTestedNVDAVersion}, "
-		"your current NVDA version is {NVDAVersion}. "
+		"This add-on was last tested with NVDA {lastTestedNVDAVersion}. "
+		"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 		"Enabling may cause unstable behavior in NVDA.\n"
 		"Proceed with enabling anyway? ",
 	).format(
 		name=addon.displayName,
 		version=addon.addonVersionName,
 		lastTestedNVDAVersion=addonAPIVersion.formatForGUI(addon.lastTestedNVDAVersion),
-		NVDAVersion=addonAPIVersion.formatForGUI(addonAPIVersion.CURRENT),
+		nvdaVersion=addonAPIVersion.formatForGUI(addonAPIVersion.BACK_COMPAT_TO),
 	)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -554,7 +554,7 @@ class UpdatableAddonsDialog(
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
-		if globalVars.appArgs.secure or (
+		if not NVDAState.shouldWriteToDisk() or (
 			AddonsAutomaticUpdate.DISABLED == config.conf["addonStore"]["automaticUpdates"]
 		):
 			log.debug("automatic add-on updates are disabled")

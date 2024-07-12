@@ -362,7 +362,7 @@ NVDAUnitsToWordUnits = {
 formatConfigFlagsMap = {
 	"reportFontName": 0x1,
 	"reportFontSize": 0x2,
-	"reportFontAttributes": 0x4,
+	"fontAttributeReporting": 0x4,
 	"reportColor": 0x8,
 	"reportAlignment": 0x10,
 	"reportStyle": 0x20,
