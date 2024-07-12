@@ -325,7 +325,7 @@ class NVDAObject(
 		return
 
 	@staticmethod
-	def objectFromPoint(x: int, y: int) -> "NVDAObject"):
+	def objectFromPoint(x: int, y: int) -> "NVDAObject":
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
 		:param x: the x coordinate.
 		:param y: the y coordinate.
