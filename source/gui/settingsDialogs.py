@@ -34,6 +34,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import languageHandler
 import speech
@@ -2579,8 +2580,12 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		fontAttributesText = _("Font attrib&utes")
-		self.fontAttrsCheckBox = fontGroup.addItem(wx.CheckBox(fontGroupBox, label=fontAttributesText))
-		self.fontAttrsCheckBox.SetValue(config.conf["documentFormatting"]["reportFontAttributes"])
+		fontAttributesOptions = [i.displayString for i in OutputMode.__members__.values()]
+		self.fontAttrsList = fontGroup.addLabeledControl(
+			fontAttributesText, wx.Choice, choices=fontAttributesOptions
+		)
+		self.bindHelpEvent("DocumentFormattingFontAttributes", self.fontAttrsList)
+		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2851,7 +2856,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		)
 		config.conf["documentFormatting"]["reportFontName"] = self.fontNameCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportFontSize"] = self.fontSizeCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportFontAttributes"] = self.fontAttrsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["fontAttributeReporting"] = self.fontAttrsList.GetSelection()
 		config.conf["documentFormatting"]["reportSuperscriptsAndSubscripts"] = (
 			self.superscriptsAndSubscriptsCheckBox.IsChecked()
 		)

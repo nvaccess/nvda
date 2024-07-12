@@ -640,6 +640,13 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 						f"winEvent {getWinEventLogInfo(window, objectID, childID)}",
 					)
 				return False
+		elif isinstance(focus.IAccessibleObject, IA2.IAccessible2):
+			if isMSAADebugLoggingEnabled():
+				log.debug(
+					"Ignoring MSAA caret event on focused IAccessible2 object"
+					f"winEvent {getWinEventLogInfo(window, objectID, childID)}",
+				)
+			return False
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				"handling winEvent as caret event on focus. "
