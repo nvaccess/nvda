@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -83,12 +83,11 @@ def installAddon(addonPath: PathLike) -> None:
 	bundle = _getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
-	try:
-		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
-		if prevAddon:
-			prevAddon.requestRemove()
-	except addonHandler.AddonError:  # Handle other exceptions as they are known
-		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
+	addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+	if bundle._installExceptions:
+		log.error(f"Error(s) installing addon bundle from {addonPath}")
+		for e in bundle._installExceptions:
+			log.error(e, exc_info=True)
 		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
@@ -97,6 +96,8 @@ def installAddon(addonPath: PathLike) -> None:
 				"Failed to install add-on from %s"
 			) % addonPath
 		)
-	finally:
-		if addonObj is not None:
-			addonObj._cleanupAddonImports()
+	else:
+		if prevAddon:
+			prevAddon.requestRemove()
+	if addonObj is not None:
+		addonObj._cleanupAddonImports()
