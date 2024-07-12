@@ -325,14 +325,11 @@ class NVDAObject(
 		return
 
 	@staticmethod
-	def objectFromPoint(x, y):
+	def objectFromPoint(x: int, y: int) -> "NVDAObject"):
 		"""Retrieves an NVDAObject instance representing a control in the Operating System at the given x and y coordinates.
-		@param x: the x coordinate.
-		@type x: int
-		@param y: the y coordinate.
-		@param y: int
-		@return: The object at the given x and y coordinates.
-		@rtype: L{NVDAObject}
+		:param x: the x coordinate.
+		:param y: the y coordinate.
+		:return: The object at the given x and y coordinates.
 		"""
 		kwargs = {}
 		APIClass = NVDAObject.findBestAPIClass(kwargs, relation=(x, y))
