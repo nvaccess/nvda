@@ -6,6 +6,8 @@
 
 ### New Features
 
+* NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
+
 ### Bug Fixes
 
 * NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)
@@ -18,6 +20,10 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 
 #### Deprecations
 
+* The `bool` configuration key `[documentFormatting][reportFontAttributes]` is deprecated for removal in 2025.1, instead use `[fontAttributeReporting]`. (#16748)
+  * The new key has an `int` value matching an `OutputMode` `enum` with options for speech, braille, speech and braille and off.
+  * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
+  * These keys are currently synchronized until 2025.1.
 * `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
 
 ## 2024.3
