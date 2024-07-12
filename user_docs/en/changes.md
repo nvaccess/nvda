@@ -56,7 +56,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy.
-A warning message will inform you if you try writing to a non-empty directory. (#16684)
+A warning message will inform you if you try writing to a non-empty directory. (#16686)
 
 ### Bug Fixes
 
@@ -80,7 +80,6 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
-* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
 
 ### Changes for Developers
