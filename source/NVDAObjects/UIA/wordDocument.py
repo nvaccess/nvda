@@ -665,7 +665,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 				ui.browseableMessage(
 					text,
 					# Translators: title for Word comment dialog.
-					_("Comment")
+					_("Comment"),
 				)
 		else:
 			# Translators: a message when there is no comment to report in Microsoft Word

@@ -411,7 +411,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 							ui.browseableMessage(
 								text,
 								# Translators: title for Word comment dialog.
-								_("Comment")
+								_("Comment"),
 							)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
