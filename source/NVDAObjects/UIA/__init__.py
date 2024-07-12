@@ -221,7 +221,7 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_FontNameAttributeId)
 			if formatConfig["reportFontSize"]:
 				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
-			if formatConfig["reportFontAttributes"]:
+			if formatConfig["fontAttributeReporting"]:
 				IDs.update(
 					{
 						UIAHandler.UIA_FontWeightAttributeId,
@@ -265,7 +265,7 @@ class UIATextInfo(textInfos.TextInfo):
 			if isinstance(val, numbers.Number):
 				# Translators: Abbreviation for points, a measurement of font size.
 				formatField["font-size"] = pgettext("font size", "%s pt") % float(val)
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			val = fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId, ignoreMixedValues=ignoreMixedValues)
 			if isinstance(val, int):
 				formatField["bold"] = val >= 700
