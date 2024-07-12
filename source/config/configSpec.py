@@ -37,6 +37,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trustVoiceLanguage = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
+	# Deprecated in 2025.1
+	includeCLDR = boolean(default=True)
 	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
@@ -206,7 +208,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	# Deprecated in 2025.1
-	reportFontAttributes = boolean(default=false)                                                                   
+	reportFontAttributes = boolean(default=false)
 	# 0: Off, 1: Speech, 2: Braille, 3: Speech and Braille
 	fontAttributeReporting = integer(0, 3, default=0)
 	reportRevisions = boolean(default=true)
