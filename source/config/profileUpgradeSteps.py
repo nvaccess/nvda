@@ -393,8 +393,8 @@ def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
 		OutputMode.SPEECH_AND_BRAILLE if reportFontAttributes else OutputMode.OFF
 	)
 	log.debug(
-		f"documentFormatting.fontAttributeReporting added with value {profile['documentFormatting']['fontAttributeReporting']}."
-	
+		f"documentFormatting.fontAttributeReporting added with value {profile['documentFormatting']['fontAttributeReporting']}.",
+	)
 
 
 def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
