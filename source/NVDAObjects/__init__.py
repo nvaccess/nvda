@@ -317,13 +317,10 @@ class NVDAObject(
 	beTransparentToMouse = False  #:If true then NVDA will never consider the mouse to be on this object, rather it will be on an ancestor.
 
 	def objectFromPointRedirect(self, x: int, y: int) -> "NVDAObject | None":
-		"""Redirects NVDA to another object if this object is retrieved from on screen coordinates.
+		"""Redirects NVDA to another object if this object is retrieved from on-screen coordinates.
 		:param x: the x coordinate.
-		:type x: int
 		:param y: the y coordinate.
-		:type y: int
 		:return: The object that NVDA should be redirected to.
-		:rtype: L{NVDAObject}
 		"""
 		return
 
