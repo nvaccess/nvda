@@ -1,3 +1,5 @@
+exclude: ^user_docs/(?!en/).*$
+
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -8,7 +10,9 @@ repos:
     - id: check-case-conflict
     - id: check-merge-conflict
     - id: end-of-file-fixer
+      types_or: [python, c, c++, batch, markdown]
     - id: trailing-whitespace
+      types_or: [python, c, c++, batch, markdown]
 
 - repo: https://github.com/asottile/add-trailing-comma
   rev: v3.1.0
@@ -20,7 +24,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.5.0
+  rev: v0.5.2
   hooks:
     - id: ruff
       name: lint with ruff
@@ -35,13 +39,13 @@ repos:
       entry: cmd.exe /c "scons checkPot -j 4"
       language: system
       pass_filenames: false
-      types: [python, pofile]
+      types: [python]
     - id: unitTest
       name: unit tests
       entry: ./rununittests.bat
       language: script
       pass_filenames: false
-      types: [python, c, c++, batch]
+      types_or: [python, c, c++, batch]
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
       files: requirements.txt
