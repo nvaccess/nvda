@@ -126,7 +126,7 @@ class SupportsVersionCheck(Protocol):
 				# The addon relies on older, removed features of NVDA, an updated add-on is required.
 				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
 				"An updated version of this add-on is required. "
-				"This add-on was last tested with {lastTestedNVDAVersion}. "
+				"This add-on was last tested with NVDA {lastTestedNVDAVersion}. "
 				"NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. "
 				"You can enable this add-on at your own risk. ",
 			).format(
