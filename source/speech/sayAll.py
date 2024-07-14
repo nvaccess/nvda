@@ -94,6 +94,11 @@ class _SayAllHandler:
 		return bool(self._getActiveSayAll())
 
 	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool | None = False):
+		"""Start or restarts the object reader.
+		:obj: the object to be read
+		:startedFromScript: whether the current say all action was initially started from a script; use None to keep
+		    unmodified the last value, e.g. when the say all action is resumed during skim reading.
+		"""
 		if startedFromScript is not None:
 			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
@@ -108,6 +113,14 @@ class _SayAllHandler:
 		shouldUpdateCaret: bool = True,
 		startedFromScript: bool | None = False,
 	) -> None:
+		"""Start or restarts the reader
+		:cursor: the type of cursor used for say all
+		:startPos: start position (only used for table say all)
+		:nextLineFunc: function called to read the next line (only used for table say all)
+		:shouldUpdateCaret: wheter the caret should be updated during say all (only used for table say all)
+		:startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			unmodified the last value, e.g. when the say all action is resumed during skim reading.
+		"""
 		self.lastSayAllMode = cursor
 		if startedFromScript is not None:
 			self.startedFromScript = startedFromScript
