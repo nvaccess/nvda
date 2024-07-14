@@ -5,6 +5,8 @@
 ### Important notes
 
 ### New Features
+* The volume of the other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. (#16052, @mltony)
+* The sound of the other applications can be muted with `NVDA+alt+delete`. (#16052, @mltony)
 
 ### Bug Fixes
 
@@ -48,8 +50,6 @@ Unicode CLDR has also been updated.
   * NVDA checks daily for add-on updates.
   * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
 * Added support for the Help Tech Activator Pro displays. (#16668)
-* The volume of the other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. (#16052, @mltony)
-* The sound of the other applications can be muted with `NVDA+alt+delete`. (#16052, @mltony)
 
 ### Changes
 
