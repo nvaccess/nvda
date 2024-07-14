@@ -93,7 +93,7 @@ class _SayAllHandler:
 		"""
 		return bool(self._getActiveSayAll())
 
-	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool = False):
+	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool | None = False):
 		if startedFromScript is not None:
 			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
@@ -106,7 +106,7 @@ class _SayAllHandler:
 		startPos: Optional[textInfos.TextInfo] = None,
 		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
 		shouldUpdateCaret: bool = True,
-		startedFromScript: bool = False,
+		startedFromScript: bool | None = False,
 	) -> None:
 		self.lastSayAllMode = cursor
 		if startedFromScript is not None:
