@@ -68,6 +68,11 @@ import ui
 import winVersion
 import NVDAObjects
 
+paragraphIndentIDs = {
+	UIAHandler.UIA_IndentationFirstLineAttributeId,
+	UIAHandler.UIA_IndentationLeadingAttributeId,
+	UIAHandler.UIA_IndentationTrailingAttributeId,
+}
 
 textAlignLabels = {
 	UIAHandler.HorizontalTextAlignment_Left: TextAlign.LEFT,
@@ -381,9 +386,7 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_IsSuperscriptAttributeId)
 				IDs.add(UIAHandler.UIA_IsSubscriptAttributeId)
 			if formatConfig["reportParagraphIndentation"]:
-				IDs.add(UIAHandler.UIA_IndentationFirstLineAttributeId)
-				IDs.add(UIAHandler.UIA_IndentationLeadingAttributeId)
-				IDs.add(UIAHandler.UIA_IndentationTrailingAttributeId)
+				IDs.update(set(paragraphIndentIDs))
 			if formatConfig["reportAlignment"]:
 				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
 			if formatConfig["reportColor"]:
