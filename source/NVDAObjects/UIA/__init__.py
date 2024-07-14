@@ -68,6 +68,7 @@ import ui
 import winVersion
 import NVDAObjects
 
+
 paragraphIndentIDs = {
 	UIAHandler.UIA_IndentationFirstLineAttributeId,
 	UIAHandler.UIA_IndentationLeadingAttributeId,
