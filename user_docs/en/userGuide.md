@@ -1487,7 +1487,8 @@ The Elements List can list headings, links, annotations (which includes comments
 #### Reporting Comments {#WordReportingComments}
 
 <!-- KC:beginInclude -->
-To report any comments at the current caret position, press NVDA+alt+c.
+To report any comments at the current caret position, press `NVDA+alt+c`.
+Pressing twice shows the information in a browsable message.
 <!-- KC:endInclude -->
 All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
 
@@ -1916,7 +1917,7 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
 
 1. Normalization to composed characters.
-For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
   1. One stand alone unicode character (ü)
   1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
   Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
@@ -2841,7 +2842,7 @@ You can configure reporting of:
 * Font
   * Font name
   * Font size
-  * Font attributes
+  * Font attributes [(Off, Speech, Braille, Speech and braille)](#DocumentFormattingFontAttributes)
   * Superscripts and subscripts
   * Emphasis
   * Highlighted (Marked) text
@@ -2879,6 +2880,18 @@ You can configure reporting of:
   * Clickable
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
+
+##### Font attributes {#DocumentFormattingFontAttributes}
+
+This option allows you to select how certain font attributes, such as bold, italics, underline and strikethrough are reported.
+The font attributes combo box has four options:
+
+* Off: NVDA will not report these font attributes.
+* Speech: NVDA will announce when these font attributes change.
+* Braille: NVDA will display bold, italic, and underlines in braille.
+Note that your chosen braille table must support displaying these attributes.
+Exactly how these attributes are displayed varies between tables.
+* Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
 
@@ -2944,7 +2957,7 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 
 |Option |Behaviour |
 |---|---|
-|Enabled |Notify when updates are available to add-ons within the same channel |
+|Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
 #### Windows OCR Settings {#Win10OcrSettings}
@@ -3656,9 +3669,7 @@ For more information, read the in-depth section: [Add-ons and the Add-on Store](
 
 ### Create portable copy {#CreatePortableCopy}
 
-This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
+This will open a dialog which allows you to create a portable copy of NVDA out of the currently running version.
 
 Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 

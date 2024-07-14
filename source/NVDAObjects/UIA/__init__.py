@@ -22,12 +22,12 @@ import time
 import numbers
 import colors
 import languageHandler
+import NVDAState
 import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
-import inputCore
 import config
 import speech
 import api
@@ -378,7 +378,7 @@ class UIATextInfo(textInfos.TextInfo):
 				IDs.add(UIAHandler.UIA_FontNameAttributeId)
 			if formatConfig["reportFontSize"]:
 				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
-			if formatConfig["reportFontAttributes"]:
+			if formatConfig["fontAttributeReporting"]:
 				IDs.add(UIAHandler.UIA_FontWeightAttributeId)
 				IDs.add(UIAHandler.UIA_IsItalicAttributeId)
 				IDs.add(UIAHandler.UIA_UnderlineStyleAttributeId)
@@ -414,7 +414,7 @@ class UIATextInfo(textInfos.TextInfo):
 			self._getFormatFieldFontName(fetch, formatField)
 		if formatConfig["reportFontSize"]:
 			self._getFormatFieldFontSize(fetch, formatField)
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			self._getFormatFieldFontAttributes(fetch, formatField)
 		if formatConfig["reportSuperscriptsAndSubscripts"]:
 			self._getFormatFieldSuperscriptsAndSubscripts(fetch, formatField)
@@ -2468,27 +2468,13 @@ class UIA(Window):
 			ui.message(dropTargetEffect)
 
 
-class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
-	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
-	# in the related UIA text pattern.
-	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
-	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
-	caretMovementDetectionUsesEvents = False
+if NVDAState._allowDeprecatedAPI():
 
-	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
-		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
-		comparing a text range copied from before backspace with a text range fetched after backspace
-		isn't reliable, as the ranges compare equal.
-		Therefore, we must always rely on events for caret change detection in this case.
-		"""
-		self.caretMovementDetectionUsesEvents = True
-		try:
-			super()._backspaceScriptHelper(unit, gesture)
-		finally:
-			self.caretMovementDetectionUsesEvents = False
+	class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+		"""InaccurateTextChangeEventEmittingEditableText is deprecated without a replacement."""
 
 
-class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+class XamlEditableText(EditableTextBase, UIA):
 	"""An UIA element with editable text exposed by the XAML framework."""
 
 	...
@@ -2673,7 +2659,7 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened = ToolTip.event_show
 
 
-class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+class WpfTextView(EditableTextBase, UIA):
 	"""WpfTextView fires name state changes once a second,
 	plus when IUIAutomationTextRange::GetAttributeValue is called.
 	This causes major lag when using this control with Braille in NVDA. (#2759)

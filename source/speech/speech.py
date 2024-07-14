@@ -66,6 +66,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import aria
 from .priorities import Spri
@@ -2781,12 +2782,12 @@ def getFormatFieldSpeech(  # noqa: C901
 				else _("not emphasised")
 			)
 			textList.append(text)
-	if formatConfig["reportFontAttributes"]:
+	if formatConfig["fontAttributeReporting"] & OutputMode.SPEECH:
 		bold = attrs.get("bold")
 		oldBold = attrsCache.get("bold") if attrsCache is not None else None
 		if (bold or oldBold is not None) and bold != oldBold:
-			# Translators: Reported when text is bolded.
 			text = (
+				# Translators: Reported when text is bolded.
 				_("bold")
 				if bold
 				# Translators: Reported when text is not bolded.
