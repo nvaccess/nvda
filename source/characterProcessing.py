@@ -343,11 +343,11 @@ class SpeechSymbols:
 	def save(self, fileName=None):
 		"""Save symbol information to a file.
 		@param fileName: The name of the file to which to save symbol information,
-			C{None} to use the file name last passed to L{load} or L{save}.
+		        C{None} to use the file name last passed to L{load} or L{save}.
 		@type fileName: str
 		@raise IOError: If the file cannot be written.
 		@raise ValueError: If C{fileName} is C{None}
-			and L{load} or L{save} has not been called.
+		        and L{load} or L{save} has not been called.
 		"""
 		if fileName:
 			self.fileName = fileName
@@ -417,7 +417,6 @@ def _getSpeechSymbolsForLocale(locale: str) -> list[SpeechSymbols]:
 				f"Error loading {definition.name!r} symbols for locale {locale!r}",
 				exc_info=True,
 			)
-			return symbols
 	if len(symbols) <= 1:
 		raise LookupError(f"No symbol information for locale {locale!r}")
 	return symbols
@@ -702,7 +701,7 @@ class SpeechSymbolProcessor:
 		"""Determine whether a symbol is built in.
 		@param symbolIdentifier: The identifier of the symbol in question.
 		@return: C{True} if the symbol is built in,
-			C{False} if it was added by the user.
+		        C{False} if it was added by the user.
 		"""
 		return any(symbolIdentifier in source.symbols for source in self.builtinSources)
 
@@ -787,7 +786,7 @@ class SymbolDictionaryDefinition:
 			raise ValueError(f"Invalid formatable path for dictionary: {self.path!r}")
 		if not self.displayName and not self.mandatory:
 			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
-		object.__setattr__(self, "symbols", LocaleDataMap(self._getSymbols))
+		object.__setattr__(self, "symbols", LocaleDataMap(self._initSymbols))
 
 	@cached_property
 	def userVisible(self) -> bool:
@@ -807,7 +806,7 @@ class SymbolDictionaryDefinition:
 		"""
 		return self.symbols.fetchLocaleData(locale, fallback=False)
 
-	def _getSymbols(self, locale: str) -> SpeechSymbols:
+	def _initSymbols(self, locale: str) -> SpeechSymbols:
 		raiseOnError = not self.user
 		symbols = SpeechSymbols()
 		if locale not in self.availableLocales:
@@ -838,6 +837,12 @@ class SymbolDictionaryDefinition:
 
 
 _symbolDictionaryDefinitions: list[SymbolDictionaryDefinition] = []
+"""
+A list of available symbol dictionary definitions.
+These definitions are used to load symbol dictionaries for various locales.
+The list is filled with definitions from core and from add-ons using _addSymbolDefinitions.
+With getAvailableSymbolDictionaryDefinitions, there is a public interface to retrieve the definitions.
+"""
 
 
 def getAvailableSymbolDictionaryDefinitions() -> Generator[SymbolDictionaryDefinition, None, None]:
@@ -867,15 +872,15 @@ def _addSymbolDefinitions():
 	import addonHandler
 
 	for addon in addonHandler.getRunningAddons():
-		try:
-			symbolsDict = addon.manifest.get("symbolDictionaries")
-			if not symbolsDict:
-				continue
-			log.debug(
-				f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}",
-			)
-			directory = os.path.join(addon.path, "locale", "{locale}")
-			for name, dictConfig in symbolsDict.items():
+		symbolsDict = addon.manifest.get("symbolDictionaries")
+		if not symbolsDict:
+			continue
+		log.debug(
+			f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}",
+		)
+		directory = os.path.join(addon.path, "locale", "{locale}")
+		for name, dictConfig in symbolsDict.items():
+			try:
 				definition = SymbolDictionaryDefinition(
 					name=name,
 					path=os.path.join(directory, f"symbols-{name}.dic"),
@@ -887,8 +892,10 @@ def _addSymbolDefinitions():
 					log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
 					continue
 				_symbolDictionaryDefinitions.append(definition)
-		except Exception:
-			log.exception(f"Error while applying custom symbol dictionaries config from addon {addon.name!r}")
+			except Exception:
+				log.exception(
+					f"Error while applying custom symbol dictionaries config from addon {addon.name!r}",
+				)
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
 			name="user",

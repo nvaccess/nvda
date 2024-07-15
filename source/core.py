@@ -1109,10 +1109,10 @@ def requestPump(immediate: bool = False):
 	"""Request a core pump.
 	This will perform any queued activity.
 	@param immediate: If True, the pump will happen as soon as possible. This
-	        should be used where response time is most important; e.g. user input or
-	        focus events.
-	        If False, it is delayed slightly so that queues can implement rate limiting,
-	        filter extraneous events, etc.
+		should be used where response time is most important; e.g. user input or
+		focus events.
+		If False, it is delayed slightly so that queues can implement rate limiting,
+		filter extraneous events, etc.
 	"""
 	if not _pump:
 		return
