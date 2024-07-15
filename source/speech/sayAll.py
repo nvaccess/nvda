@@ -95,7 +95,7 @@ class _SayAllHandler:
 
 	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool | None = False):
 		"""Start or restarts the object reader.
-		:obj: the object to be read
+		:param obj: the object to be read
 		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
 			the last value unmodified, e.g. when the say all action is resumed during skim reading.
 		"""
