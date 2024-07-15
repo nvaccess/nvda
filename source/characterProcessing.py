@@ -784,7 +784,7 @@ class SymbolDictionaryDefinition:
 
 	def __post_init__(self):
 		if self.path.count("{locale}") != 1:
-			raise ValueError(f"Invalid formatable path for dictionary: {self.path!r}")
+			raise ValueError(f"Invalid formattable path for dictionary, locale must be included in: {self.path!r}")
 		if not self.displayName and not self.mandatory:
 			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
 		object.__setattr__(self, "symbols", LocaleDataMap(self._getSymbols))
