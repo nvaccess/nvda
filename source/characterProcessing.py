@@ -407,7 +407,7 @@ class SpeechSymbols:
 
 def _getSpeechSymbolsForLocale(locale: str) -> list[SpeechSymbols]:
 	symbols: list[SpeechSymbols] = []
-	for definition in listAvailableSymbolDictionaryDefinitions():
+	for definition in _symbolDictionaryDefinitions:
 		if not definition.enabled:
 			continue
 		try:
@@ -790,7 +790,9 @@ class SymbolDictionaryDefinition:
 
 	def __post_init__(self):
 		if self.path.count("{locale}") != 1:
-			raise ValueError(f"Invalid formattable path for dictionary, locale must be included in: {self.path!r}")
+			raise ValueError(
+				f"Invalid formattable path for dictionary, locale must be included in: {self.path!r}",
+			)
 		if not self.displayName and not self.mandatory:
 			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
 		object.__setattr__(self, "symbols", LocaleDataMap(self._initSymbols))
