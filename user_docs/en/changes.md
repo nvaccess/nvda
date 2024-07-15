@@ -82,6 +82,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
 * NVDA will report addresses when arrowing through To/CC/BCC fields in outlook.com / Modern Outlook. (#16856)
+* NVDA now handles add-on installation failures more gracefully. (#16704)
 
 ### Changes for Developers
 
