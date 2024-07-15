@@ -46,6 +46,7 @@ Unicode CLDR has also been updated.
       * Yiddish.
       * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
       * Turkish grade 2. (#16735)
+      * International Phonetic Alphabet. (#16773)
   * Updated NSIS to 3.10 (#16674, @dpy013)
   * Updated markdown to 3.6 (#16725, @dpy013)
   * Updated nh3 to 0.2.17 (#16725, @dpy013)

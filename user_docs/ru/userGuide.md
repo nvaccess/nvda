@@ -3656,11 +3656,9 @@ Python консоль NVDA, которая может быть вызвана и
 
 ### Создать переносную копию {#CreatePortableCopy}
 
-Этот пункт меню вызывает диалог, позволяющий вам из установленной версии NVDA создать её переносную копию.
+Откроется диалог, позволяющий вам из текущей запущенной версии NVDA создать её переносную копию.
 
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
-
-Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
+Для получения дополнительной информации следуйте инструкциям в разделе [Создания переносной копии](#CreatingAPortableCopy).
 
 ### Средство восстановления COM-объектов {#RunCOMRegistrationFixingTool}
 

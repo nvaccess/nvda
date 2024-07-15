@@ -1916,7 +1916,7 @@ Zum Beispiel kann der lateinische Buchstabe "h" auch als "𝐡" (fett), "ℎ" (i
 Dieser Aspekt der Normalisierung hilft auch beim Lesen von Gleichungen im Gleichungs-Editor in Microsoft Word.
 
 1. Normalisierung auf zusammengesetzte Zeichen.
-Zum Beispiel kann das Zeichen "ü" (u mit Umlaut / Diaeresis), ein in Sprachen wie Deutsch und Türkisch gebräuchliches Zeichen, in zwei Formen dargestellt werden.
+Zum Beispiel kann das Zeichen "ü" (u mit Umlaut / Diaeresis), ein in Sprachen wie Deutsch und Türkisch gebräuchliches Zeichen, in zwei Formen dargestellt werden:
   1. Ein eigenständiges Unicode-Zeichen (ü).
   1. Eine Aufteilung in zwei Zeichen (ü), nämlich den normalen lateinischen Buchstaben u und einen Diaeresis-Modifikator.
   Die Unicode-Normalisierung stellt sicher, dass in der gesamten Sprachausgabe nur eine Form verwendet wird, nämlich die eine Zeichenvariante.
@@ -2944,7 +2944,7 @@ Bei installierten Beta-Versionen der NVDA-Erweiterungen werden Sie beispielsweis
 
 |Option |Verhalten |
 |---|---|
-|Eingeschaltet |Benachrichtigung, wenn Updates für NVDA-Erweiterungen innerhalb desselben Kanals verfügbar sind. |
+|Benachrichtigen |Benachrichtigung, wenn Updates für NVDA-Erweiterungen innerhalb desselben Kanals verfügbar sind. |
 |Ausgeschaltet |Nicht automatisch nach Updates für NVDA-Erweiterungen suchen. |
 
 #### Die Einstellungen der Windows-Texterkennung {#Win10OcrSettings}
@@ -3656,9 +3656,7 @@ Für weitere Informationen lesen Sie bitte den ausführlichen Abschnitt: [NVDA-E
 
 ### Eine portable Version erstellen {#CreatePortableCopy}
 
-Mit dieser Option können Sie eine portable Version aus einer installierten Version erstellen.
-
-In diesem Dialogfeld werden Sie zur Auswahl des jeweiligen Zielpfads aufgefordert den Pfad für die portable bzw. für die installierte Version auszuwählen.
+Es öffnet sich ein Dialogfeld, mit dem Sie eine portable Version aus der aktuell laufenden Version erstellen können.
 
 Folgen Sie den Anweisungen in [Erstellen einer portablen Version](#CreatingAPortableCopy) für weitere Informationen.
 

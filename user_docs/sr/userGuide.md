@@ -1916,7 +1916,7 @@ Na primer, latinično slovo "h" se takođe može prikazati kao "𝐡" (podebljan
 Ovaj deo standardizacije takođe pomaže kada se čitaju zadaci u Microsoft Word uređivaču zadataka.
 
 1. Standardizacija složenih znakova.
-Na primer, znak "ü" (u sa umlautom/diaerezom), često korišćen znak u jezicima kao što su nemački i turski može se pojavljivati u dva oblika.
+Na primer, znak "ü" (u sa umlautom/diaerezom), često korišćen znak u jezicima kao što su nemački i turski može se pojavljivati u dva oblika:
   1. Pojedinačni unikodni znak (ü)
   1. Rastavljanje na dva znaka (ü), tačnije standardno latinično slovo u i diaereza kao modifikator
   Unikodna standardizacija obezbeđuje korišćenje samo jednog oblika za izgovor, a to je varijanta sa jednim znakom.
@@ -2944,7 +2944,7 @@ Na primer, za instalirane beta dodatke, dobijaćete obaveštenja samo za beta ka
 
 |Opcija |Ponašanje |
 |---|---|
-|Omogućeno |Obaveštava kada su dostupna ažuriranja za dodatke na istom kanalu |
+|Obavesti |Obaveštava kada su dostupna ažuriranja za dodatke na istom kanalu |
 |Onemogućeno |Ne vrši automatske provere ažuriranja za dodatke |
 
 #### Windows OCR podešavanja {#Win10OcrSettings}
@@ -3656,9 +3656,7 @@ Za više informacija, pročitajte obimnu sekciju: [Dodaci i prodavnica dodataka]
 
 ### Napravi prenosnu kopiju {#CreatePortableCopy}
 
-Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosnu kopiju programa NVDA iz instalirane verzije.
-
-Oba dijaloga će vas pitati da izaberete folder u kome će se napraviti prenosna kopija ili instalirati program NVDA.
+Ova opcija otvara dijalog koji će vam dozvoliti da napravite prenosnu kopiju programa NVDA iz trenutno pokrenute verzije.
 
 Pratite uputstva u delu [Pravljenje prenosne kopije](#CreatingAPortableCopy) za više informacija.
 
