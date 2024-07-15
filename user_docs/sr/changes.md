@@ -15,7 +15,7 @@ Dodate su komande bez dodeljene prečice kako biste vertikalno i horizontalno po
 Ispravljeno je nekoliko grešaka, mogu se izdvojiti ispravke za Windows 11 emodži panel i istoriju privremene memorije.
 Za Web pretraživače, ispravljeno je prijavljivanje poruka sa greškama, figura, naslova slika, oznaka tabela i stavki menija izbornih polja i radio dugmadi.
 
-Liblouis je ažuriran, dodajući nove brajeve tabele za srpsku ćirilicu, jidiš, nekoliko drevnih jezika i turski.
+Liblouis je ažuriran, dodajući nove brajeve tabele za srpsku ćirilicu, jidiš, nekoliko drevnih jezika, turski i Međunarodni fonetski alfabet.
 eSpeak je ažuriran, dodajući podršku za Karakalpak jezik.
 Unikodna CLDR baza je takođe ažurirana.
 
@@ -46,6 +46,7 @@ Unikodna CLDR baza je takođe ažurirana.
       * Jidiš.
       * Nekoliko drevnih jezika: Biblijski hebrejski, akadski, sirijski, ugarit i transliterovan sumerski.
       * Turski stepen 2. (#16735)
+      * Međunarodni fonetski alfabet. (#16773)
   * Ažuriran NSIS na 3.10 (#16674, @dpy013)
   * Ažuriran markdown na 3.6 (#16725, @dpy013)
   * Ažuriran nh3 na 0.2.17 (#16725, @dpy013)
