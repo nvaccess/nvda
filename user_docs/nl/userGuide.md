@@ -522,7 +522,7 @@ Je kunt het verzamelen van data echter handmatig in- of uitschakelen via de Inst
 Voor de meeste commando's binnen NVDA drukt u op een bepaalde toets, de NVDA programmatoets (of kortweg NVDA-toets) in combinatie met een of meer andere toetsen.
 Als uitzondering hierop noemen we de commando's die gebruikt worden om tekst te laten voorlezen. Hiervoor gebruikt u alleen de toetsen van het numerieke toetsenbord zonder de NVDA programmatoets (dit geldt voor de desktoptoetsenbordindeling). Er zijn echter nog enkele andere uitzonderingen. 
 
-U kunt NVDA zo configureren dat de `Insert`-toets, de`numerieke Insert`-toets en / of de `CapsLock`-toets als `NVDA` programmatoets worden/wordt gebruikt.
+U kunt NVDA zo configureren dat de `Insert`-toets, de`num	nerieke Insert`-toets en / of de `CapsLock`-toets als `NVDA` programmatoets worden/wordt gebruikt.
 Standaard zijn zowel de `Insert` als de `numerieke Insert`-toets als `NVDA` programmatoets ingesteld.
 
 Om een toets die u als NVDA programmatoets hebt ingesteld zijn oorspronkelijke functie te laten uitvoeren, u wilt CapsLock bij voorbeeld inschakelen om hoofdletters te typen, moet u deze toets tweemaal snel achter elkaar indrukken.
@@ -1971,7 +1971,8 @@ Door het selectievakje aan te vinken kan de synthesizer het verschil in uitspraa
 De meeste synthesizers ondersteunen deze functionaliteit.
 
 In het algemeen is het aan te bevelen dit selectievakje aan te vinken. 
-Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan. 
+Er zijn evenwel synthesizers die van de Microsoft API gebruik maken die met de uitspraak van individuele lettertekens niet goed omgaan en afwijkend gedrag vertonen. 
+Synthesizers van Code Factory, zowel de add-on en de SAPI-toepassing, gaan hiermee ook niet correct om en ze spellen gesproken tekst  waar dat niet moet (bijv in het NVDA-menu of in dialoogvensters).
 Als u problemen hiermee ondervindt, kunt u het selectievakje beter niet aanvinken.
 
 ##### Vertraagde beschrijving van (letter)tekens bij cursorverplaatsing {#delayedCharacterDescriptions}

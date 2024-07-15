@@ -15,7 +15,7 @@ Nicht zugewiesene Befehle wurden hinzugefügt, um den Touch-Ball (ähnlich dem M
 Es gibt mehrere Fehlerbehebungen, insbesondere für das Windows 11 Emoji-Panel und den Verlauf der Zwischenablage.
 Für die Web-Browser gibt es Korrekturen für Fehlermeldungen, Abbildungen, Beschriftungen, Tabellenbeschriftungen und Menüelemente mit Kontrollkästchen bzw. Auswahlschaltern.
 
-Liblouis wurde aktualisiert und um neue Braille-Tabellen für kyrillisches Serbisch, Jiddisch, mehrere alte Sprachen und Türkisch hinzugefügt.
+Der Braille-Übersetzer LibLouis wurde aktualisiert und um neue Braille-Tabellen für kyrillisches Serbisch, Jiddisch, mehrere alte Sprachen, Türkisch und das Internationale Phonetische Alphabet ergänzt.
 Die Sprachausgabe eSpeak wurde aktualisiert, Unterstützung für Karakalpakische Sprache wurde hinzugefügt.
 Unicode CLDR wurde ebenfalls aktualisiert.
 
@@ -40,12 +40,13 @@ Unicode CLDR wurde ebenfalls aktualisiert.
     * Neue Sprache Karakalpakisch hinzugefügt.
   * Unicode CLDR auf Version 45.0 aktualisiert. (#16507, @OzancanKaratas)
   * fast_diff_match_patch (zur Erkennung von Änderungen in Terminals und anderen dynamischen Inhalten) auf Version 2.1.0 aktualisiert. (#16508, @codeofdusk)
-  * Braille-Übersetzer LibLouis auf [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0) aktualisiert. (#16652, @codeofdusk)
+  * LibLouis auf [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0) aktualisiert. (#16652, @codeofdusk)
     * Neue Braille-Tabellen:
       * Serbisch (kyrillisch).
       * Jiddisch.
       * Mehrere alte Sprachen: Hebräisch (biblisch), Akkadisch, Syrisch, Ugaritisch und Keilschrift (transkribiert).
       * Türkische Kurzschrift. (#16735)
+      * Internationales Phonetisches Alphabet. (#16773)
   * NSIS auf 3.10 aktualisiert. (#16674, @dpy013)
   * Markdown auf 3.6 aktualisiert. (#16725, @dpy013)
   * Nh3 auf 0.2.17 aktualisiert (#16725, @dpy013)
