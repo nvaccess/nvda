@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Cyrille Bougot
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
@@ -93,7 +93,14 @@ class _SayAllHandler:
 		"""
 		return bool(self._getActiveSayAll())
 
-	def readObjects(self, obj: "NVDAObjects.NVDAObject"):
+	def readObjects(self, obj: "NVDAObjects.NVDAObject", startedFromScript: bool | None = False):
+		"""Start or restarts the object reader.
+		:param obj: the object to be read
+		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			the last value unmodified, e.g. when the say all action is resumed during skim reading.
+		"""
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		reader = _ObjectsReader(self, obj)
 		self._getActiveSayAll = weakref.ref(reader)
 		reader.next()
@@ -104,8 +111,19 @@ class _SayAllHandler:
 		startPos: Optional[textInfos.TextInfo] = None,
 		nextLineFunc: Optional[Callable[[textInfos.TextInfo], textInfos.TextInfo]] = None,
 		shouldUpdateCaret: bool = True,
+		startedFromScript: bool | None = False,
 	) -> None:
+		"""Start or restarts the reader
+		:param cursor: the type of cursor used for say all
+		:param startPos: start position (only used for table say all)
+		:param nextLineFunc: function called to read the next line (only used for table say all)
+		:param shouldUpdateCaret: whether the caret should be updated during say all (only used for table say all)
+		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			the last value unmodified, e.g. when the say all action is resumed during skim reading.
+		"""
 		self.lastSayAllMode = cursor
+		if startedFromScript is not None:
+			self.startedFromScript = startedFromScript
 		try:
 			if cursor == CURSOR.CARET:
 				reader = _CaretTextReader(self)

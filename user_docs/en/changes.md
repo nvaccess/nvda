@@ -12,9 +12,11 @@
 
 ### Bug Fixes
 
+* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
   * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
+
 
 ### Changes for Developers
 
