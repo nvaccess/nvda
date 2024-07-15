@@ -2355,7 +2355,7 @@ class GlobalCommands(ScriptableObject):
 	def script_review_sayAll(self, gesture: inputCore.InputGesture):
 		# This script is available on the lock screen via getSafeScripts
 		# SayAll.nextLine ensures insecure text is not announced.
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.REVIEW, startedFromScript=True)
 
 	@script(
 		# Translators: Input help mode message for say all with system caret command.
@@ -2365,7 +2365,7 @@ class GlobalCommands(ScriptableObject):
 		speakOnDemand=True,
 	)
 	def script_sayAll(self, gesture: inputCore.InputGesture):
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
+		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET, startedFromScript=True)
 
 	def _reportFormattingHelper(self, info, browseable=False):
 		# Report all formatting-related changes regardless of user settings
@@ -2927,7 +2927,7 @@ class GlobalCommands(ScriptableObject):
 	def script_speakForeground(self, gesture):
 		obj = api.getForegroundObject()
 		if obj:
-			sayAll.SayAllHandler.readObjects(obj)
+			sayAll.SayAllHandler.readObjects(obj, startedFromScript=True)
 
 	@script(
 		gesture="kb(desktop):NVDA+control+f2",
