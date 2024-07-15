@@ -24,7 +24,6 @@ from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 import locationHelper
 from logHandler import log
-import controlTypes
 
 
 class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
