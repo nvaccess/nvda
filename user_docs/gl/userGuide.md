@@ -1972,6 +1972,7 @@ A maioría dos sintetizadores sopórtano.
 
 Esta opción xeralmente debería activarse.
 Nembargantes, algúns sintetizadores Microsoft Speech API non implementan esto correctamente e funciona anómalamente cando se activa.
+Os sintetizadores de Code Factory, tanto o complemento como a aplicación SAPI, non o implementan correctamente e provocan un deletreo non desexado do texto falado (ex.: no menú NVDA ou nos diálogos).
 Se estás a ter problemas ca pronunciación de carácteres individuais,  proba desactivando esta opción.
 
 ##### Descripcións retrasadas para caracteres en movementos do cursor {#delayedCharacterDescriptions}

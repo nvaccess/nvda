@@ -2399,7 +2399,7 @@ class BrowseModeDocumentTreeInterceptor(
 		reportFormattingOptions = (
 			"reportFontName",
 			"reportFontSize",
-			"reportFontAttributes",
+			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
 			"reportHighlight",
 			"reportColor",

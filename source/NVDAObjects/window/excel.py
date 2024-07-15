@@ -1297,7 +1297,7 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 		if formatConfig["reportFontSize"]:
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontObj.size
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			formatField["bold"] = fontObj.bold
 			formatField["italic"] = fontObj.italic
 			underline = fontObj.underline

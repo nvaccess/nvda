@@ -44,6 +44,7 @@ from config.configFlags import (
 	TetherTo,
 	BrailleMode,
 	ReportTableHeaders,
+	OutputMode,
 )
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 from logHandler import log
@@ -1173,7 +1174,7 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if not formatConfig["reportFontAttributes"]:
+		if not (formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE):
 			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
