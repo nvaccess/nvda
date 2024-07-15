@@ -114,12 +114,12 @@ class _SayAllHandler:
 		startedFromScript: bool | None = False,
 	) -> None:
 		"""Start or restarts the reader
-		:cursor: the type of cursor used for say all
-		:startPos: start position (only used for table say all)
-		:nextLineFunc: function called to read the next line (only used for table say all)
-		:shouldUpdateCaret: wheter the caret should be updated during say all (only used for table say all)
-		:startedFromScript: whether the current say all action was initially started from a script; use None to keep
-			unmodified the last value, e.g. when the say all action is resumed during skim reading.
+		:param cursor: the type of cursor used for say all
+		:param startPos: start position (only used for table say all)
+		:param nextLineFunc: function called to read the next line (only used for table say all)
+		:param shouldUpdateCaret: whether the caret should be updated during say all (only used for table say all)
+		:param startedFromScript: whether the current say all action was initially started from a script; use None to keep
+			the last value unmodified, e.g. when the say all action is resumed during skim reading.
 		"""
 		self.lastSayAllMode = cursor
 		if startedFromScript is not None:
