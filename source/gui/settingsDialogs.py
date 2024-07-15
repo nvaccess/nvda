@@ -1665,7 +1665,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 		)
 		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
-			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag()),
 		)
 
 		self._appendSymbolDictionariesList(settingsSizerHelper)
@@ -1738,7 +1738,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._availableSymbolDictionaries = [
-			d for d in characterProcessing.getAvailableSymbolDictionaryDefinitions() if d.userVisible
+			d for d in characterProcessing.listAvailableSymbolDictionaryDefinitions() if d.userVisible
 		]
 		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
 			# Translators: Label of the list where user can enable or disable symbol dictionaires.
@@ -2582,7 +2582,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		fontAttributesText = _("Font attrib&utes")
 		fontAttributesOptions = [i.displayString for i in OutputMode.__members__.values()]
 		self.fontAttrsList = fontGroup.addLabeledControl(
-			fontAttributesText, wx.Choice, choices=fontAttributesOptions
+			fontAttributesText,
+			wx.Choice,
+			choices=fontAttributesOptions,
 		)
 		self.bindHelpEvent("DocumentFormattingFontAttributes", self.fontAttrsList)
 		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])

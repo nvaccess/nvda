@@ -5,9 +5,10 @@
 # See the file COPYING for more details.
 
 import dataclasses
-from enum import IntEnum
+from enum import IntEnum, StrEnum
 from functools import cached_property
 import glob
+from locale import strxfrm
 import os
 import codecs
 import collections
@@ -15,7 +16,6 @@ import re
 from typing import (
 	Callable,
 	Dict,
-	Generator,
 	Generic,
 	List,
 	Optional,
@@ -407,7 +407,7 @@ class SpeechSymbols:
 
 def _getSpeechSymbolsForLocale(locale: str) -> list[SpeechSymbols]:
 	symbols: list[SpeechSymbols] = []
-	for definition in getAvailableSymbolDictionaryDefinitions():
+	for definition in listAvailableSymbolDictionaryDefinitions():
 		if not definition.enabled:
 			continue
 		try:
@@ -760,6 +760,13 @@ def handlePostConfigProfileSwitch(prevConf=None):
 		clearSpeechSymbols()
 
 
+class _SymbolDefinitionSource(StrEnum):
+	BUILTIN = "builtin"
+	"""The name of the builtin definition source"""
+	USER = "user"
+	"""The source for user dicdictionaries"""
+
+
 @dataclasses.dataclass(frozen=True, kw_only=True)
 class SymbolDictionaryDefinition:
 	name: str
@@ -768,6 +775,8 @@ class SymbolDictionaryDefinition:
 	"""The path to the dictionary.
 	This should be a formattable string, where {locale} is replaced by the locale to fetch a dictionary for.
 	"""
+	source: str = _SymbolDefinitionSource.BUILTIN
+	"""The source of the definition."""
 	displayName: str | None = None
 	"""The translatable name of the dictionary.
 	When not provided, the dictionary can not be visible to the end user.
@@ -777,8 +786,6 @@ class SymbolDictionaryDefinition:
 	mandatory: bool = False
 	"""Whether this dictionary is mandatory.
 	Mandatory dictionaries are always enabled."""
-	user: bool = False
-	"""Whether this is a user dictionary definition."""
 	symbols: LocaleDataMap[SpeechSymbols] = dataclasses.field(init=False, repr=False, compare=False)
 
 	def __post_init__(self):
@@ -807,7 +814,7 @@ class SymbolDictionaryDefinition:
 		return self.symbols.fetchLocaleData(locale, fallback=False)
 
 	def _initSymbols(self, locale: str) -> SpeechSymbols:
-		raiseOnError = not self.user
+		raiseOnError = self.source != _SymbolDefinitionSource.USER
 		symbols = SpeechSymbols()
 		if locale not in self.availableLocales:
 			msg = f"No {self.name!r} data for locale {locale!r}"
@@ -841,21 +848,39 @@ _symbolDictionaryDefinitions: list[SymbolDictionaryDefinition] = []
 A list of available symbol dictionary definitions.
 These definitions are used to load symbol dictionaries for various locales.
 The list is filled with definitions from core and from add-ons using _addSymbolDefinitions.
-With getAvailableSymbolDictionaryDefinitions, there is a public interface to retrieve the definitions.
+With listAvailableSymbolDictionaryDefinitions, there is a public interface to retrieve the definitions.
 """
 
 
-def getAvailableSymbolDictionaryDefinitions() -> Generator[SymbolDictionaryDefinition, None, None]:
+def listAvailableSymbolDictionaryDefinitions() -> list[SymbolDictionaryDefinition]:
 	"""Get available symbol dictionary definitions as initialized in core or in add-ons."""
-	yield from _symbolDictionaryDefinitions
+	return sorted(
+		_symbolDictionaryDefinitions,
+		key=lambda dct: (dct.source != _SymbolDefinitionSource.BUILTIN, strxfrm(dct.displayName or dct.name)),
+	)
 
 
 def _addSymbolDefinitions():
-	# Add symbol dictionary definitions
+	"""
+	Adds symbol dictionary definitions to the global _symbolDictionaryDefinitions list.
+
+	This function is responsible for initializing the available symbol dictionaries that can be used for various locales.
+	It adds definitions for the built-in symbol dictionaries, as well as any symbol dictionaries defined in enabled add-ons.
+
+	The built-in symbol dictionaries include:
+	- "cldr": Unicode Consortium data (including emoji)
+	- "builtin": Built-in symbol dictionary with support for complex symbols
+
+	For each installed add-on, the function checks the add-on's manifest for any defined symbol dictionaries,
+	and adds those to the _symbolDictionaryDefinitions list as well.
+
+	Finally, a "user" symbol dictionary definition is added.
+	"""
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
 			name="cldr",
 			path=os.path.join(globalVars.appDir, "locale", "{locale}", "cldr.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
 			# Translators: The name of a symbols dictionary with data from the unicode CLDR.
 			displayName=_("Unicode Consortium data (including emoji)"),
 		),
@@ -864,6 +889,7 @@ def _addSymbolDefinitions():
 		SymbolDictionaryDefinition(
 			name="builtin",
 			path=os.path.join(globalVars.appDir, "locale", "{locale}", "symbols.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
 			allowComplexSymbols=True,
 			mandatory=True,
 		),
@@ -884,6 +910,7 @@ def _addSymbolDefinitions():
 				definition = SymbolDictionaryDefinition(
 					name=name,
 					path=os.path.join(directory, f"symbols-{name}.dic"),
+					source=addon.name,
 					displayName=dictConfig["displayName"],
 					allowComplexSymbols=False,
 					mandatory=dictConfig["mandatory"],
@@ -900,9 +927,9 @@ def _addSymbolDefinitions():
 		SymbolDictionaryDefinition(
 			name="user",
 			path=WritePaths.getSymbolsConfigFile("{locale}"),
+			source=_SymbolDefinitionSource.USER,
 			allowComplexSymbols=False,
 			mandatory=True,
-			user=True,
 		),
 	)
 
