@@ -81,6 +81,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
+* NVDA now handles add-on installation failures more gracefully. (#16704)
 
 ### Changes for Developers
 
