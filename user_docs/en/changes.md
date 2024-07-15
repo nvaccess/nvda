@@ -6,17 +6,32 @@
 
 ### New Features
 
+* Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
+* NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
+
+
 ### Bug Fixes
 
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
+* NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
+  * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
+  * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
+
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
+* It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 
 #### Deprecations
+
+* The `bool` configuration key `[documentFormatting][reportFontAttributes]` is deprecated for removal in 2025.1, instead use `[fontAttributeReporting]`. (#16748)
+  * The new key has an `int` value matching an `OutputMode` `enum` with options for speech, braille, speech and braille and off.
+  * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
+  * These keys are currently synchronized until 2025.1.
+* `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
 
 ## 2024.3
 
@@ -33,7 +48,7 @@ Unassigned commands have been added to scroll the mouse wheel vertically and hor
 There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
 For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
 
-Liblouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, and Turkish.
+LibLouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, Turkish, and the International Phonetic Alphabet.
 eSpeak has been updated, adding support for the Karakalpak language.
 Unicode CLDR has also been updated.
 
@@ -64,6 +79,7 @@ Unicode CLDR has also been updated.
       * Yiddish.
       * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
       * Turkish grade 2. (#16735)
+      * International Phonetic Alphabet. (#16773)
   * Updated NSIS to 3.10 (#16674, @dpy013)
   * Updated markdown to 3.6 (#16725, @dpy013)
   * Updated nh3 to 0.2.17 (#16725, @dpy013)
@@ -73,7 +89,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy.
-A warning message will inform you if you try writing to a non-empty directory. (#16684)
+A warning message will inform you if you try writing to a non-empty directory. (#16686)
 
 ### Bug Fixes
 
@@ -97,7 +113,6 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
-* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
 
 ### Changes for Developers

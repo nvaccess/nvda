@@ -43,6 +43,7 @@ from config.configFlags import (
 	TetherTo,
 	ShowMessages,
 	BrailleMode,
+	OutputMode,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -573,20 +574,30 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
-		# Translators: Input help mode message for toggle report font attributes command.
-		description=_("Toggles on and off the reporting of font attributes"),
+		description=_(
+			# Translators: Input help mode message for toggle report font attributes command.
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+		),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportFontAttributes(self, gesture):
-		if config.conf["documentFormatting"]["reportFontAttributes"]:
-			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes off")
-			config.conf["documentFormatting"]["reportFontAttributes"] = False
-		else:
-			# Translators: The message announced when toggling the report font attributes document formatting setting.
-			state = _("report font attributes on")
-			config.conf["documentFormatting"]["reportFontAttributes"] = True
-		ui.message(state)
+	def script_toggleReportFontAttributes(self, gesture: "inputCore.InputGesture"):
+		currentValue = config.conf["documentFormatting"]["fontAttributeReporting"]
+		nextValue = OutputMode((currentValue + 1) % len(OutputMode.__members__))
+		match nextValue:
+			case OutputMode.OFF:
+				# Translators: A state in which font attributes are not reported.
+				status = _("Do not report font attributes")
+			case OutputMode.SPEECH:
+				# Translators: A state in which font attributes are only spoken.
+				status = _("Speak font attributes")
+			case OutputMode.BRAILLE:
+				# Translators: A state in which font attributes are only brailled.
+				status = _("Braille font attributes")
+			case OutputMode.SPEECH_AND_BRAILLE:
+				# Translators: A state in which font attributes are both spoken and brailled.
+				status = _("Speak and braille font attributes")
+		config.conf["documentFormatting"]["fontAttributeReporting"] = nextValue
+		ui.message(status)
 
 	@script(
 		# Translators: Input help mode message for toggle superscripts and subscripts command.
@@ -2366,7 +2377,7 @@ class GlobalCommands(ScriptableObject):
 		reportFormattingOptions = (
 			"reportFontName",
 			"reportFontSize",
-			"reportFontAttributes",
+			"fontAttributeReporting",
 			"reportSuperscriptsAndSubscripts",
 			"reportHighlight",
 			"reportColor",
