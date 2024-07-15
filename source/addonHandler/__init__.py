@@ -432,8 +432,8 @@ def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	The bundle._installExceptions property is modified to store any raised exceptions
 	during the installation process.
 
-	:return: The installed add-on object, or None if the installation failed.
-	Regardless if installation failed or not, the created add-on object should be returned
+	:return: The extracted add-on object, or None if the add-on bundle fails to be extracted.
+	Regardless if the add-on installation failed, the created add-on object from the bundle should be returned.
 	to give caller a chance to clean-up modules imported as part of install tasks.
 	This clean-up cannot be done here, as install tasks are blocking,
 	and this function returns as soon as they're started,
