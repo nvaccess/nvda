@@ -24,6 +24,7 @@ from . import IA2TextTextInfo, IAccessible
 from compoundDocuments import CompoundTextInfo
 import locationHelper
 from logHandler import log
+import controlTypes
 
 
 class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
@@ -80,6 +81,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		uniqueID = obj.IA2UniqueID
 		if uniqueID is not None:
 			controlField["uniqueID"] = uniqueID
+		# #16631: Outlook.com /modern Outlook represent addresses in To/CC/BCC fields as labelled buttons.
+		# These buttons are non-contenteditable within a parent contenteditable.
+		# Ensure their label (name) is reported as the content
+		# as the caret cannot move through them.
+		if (
+			controlTypes.state.State.EDITABLE not in obj.states
+			and obj.parent
+			and controlTypes.state.State.EDITABLE in obj.parent.states
+		):
+			controlField['content'] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
