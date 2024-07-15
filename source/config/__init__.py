@@ -1305,7 +1305,7 @@ class AggregatedSection:
 		self.manager._markWriteProfileDirty()
 		self._cache[key] = val
 
-		# Alias [documentFormatting][reportFontAttributes] and ["speech"][]"includeCLDR"]
+		# Alias ["documentFormatting"]["reportFontAttributes"] and ["speech"]["includeCLDR"]
 		# for backwards compatibility.
 		# TODO: Comment out in 2025.1.
 		if version_year < 2025 and NVDAState._allowDeprecatedAPI():

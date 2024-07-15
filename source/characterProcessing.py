@@ -786,7 +786,7 @@ class SymbolDictionaryDefinition:
 		if self.path.count("{locale}") != 1:
 			raise ValueError(f"Invalid formatable path for dictionary: {self.path!r}")
 		if not self.displayName and not self.mandatory:
-			raise ValueError("A nonmandatory dictionary without a display name is unsupported")
+			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
 		object.__setattr__(self, "symbols", LocaleDataMap(self._getSymbols))
 
 	@cached_property
