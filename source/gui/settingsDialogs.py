@@ -2996,10 +2996,7 @@ class AudioPanel(SettingsPanel):
 		# Audio settings panel.
 		label = _("Volume of other applications")
 		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100
+			label, nvdaControls.EnhancedInputSlider, minValue=0, maxValue=100
 		)
 		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
 		volume = config.conf["audio"]["applicationsSoundVolume"]
@@ -3016,7 +3013,7 @@ class AudioPanel(SettingsPanel):
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
 			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf
+			conf=config.conf,
 		)
 		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
 		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
@@ -3108,7 +3105,9 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
 		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
+		self.appSoundVolSlider.Enable(
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled
+		)
 		self.appVolAdjusterCombo.Enable(wasapi)
 
 	def isValid(self) -> bool:

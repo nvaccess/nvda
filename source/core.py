@@ -348,7 +348,7 @@ def resetConfiguration(factoryDefaults=False):
 	# Sound split
 	log.debug("initializing sound split")
 	audio.initialize()
-	#Speech
+	# Speech
 	log.debug("initializing speech")
 	speech.initialize()
 	# braille
@@ -738,6 +738,7 @@ def main():
 	tones.initialize()
 	log.debug("Initializing sound split")
 	import audio
+
 	audio.initialize()
 	import speechDictHandler
 

@@ -39,6 +39,7 @@ class _AudioSessionEventsListener(AudioSessionEvents):
 	`_AudioSessionNotificationListener.on_session_created()` method. It calls custom logic defined in
 	`AudioSessionCallback.onSessionTerminated()` implementation and allows customers to restore audio volume.
 	"""
+
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 	pid: int
 	audioSession: AudioSession
@@ -76,6 +77,7 @@ class _AudioSessionNotificationListener(AudioSessionNotification):
 	It sets up a callback for session termination - an instance of `_AudioSessionEventsListener` class;
 	then it calls custom logic provided in `AudioSessionCallback.onSessionUpdate()` implementation.
 	"""
+
 	callback: "weakref.ReferenceType[AudioSessionCallback]"
 
 	def __init__(self, callback: "AudioSessionCallback"):
@@ -119,6 +121,7 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 		It will be called when an audio session is terminated or when unregister() is called, which
 		typically happens when NVDA quits.
 	"""
+
 	_lock: Lock = Lock()
 	_audioSessionNotification: AudioSessionNotification | None = None
 	_audioSessionEventListeners: set[_AudioSessionEventsListener] = field(default_factory=set)
@@ -163,8 +166,8 @@ class AudioSessionCallback(DummyAudioSessionCallback):
 
 
 def _applyToAllAudioSessions(
-		callback: AudioSessionCallback,
-		applyToFuture: bool = True,
+	callback: AudioSessionCallback,
+	applyToFuture: bool = True,
 ) -> None:
 	"""
 	Executes provided callback function on all active audio sessions.

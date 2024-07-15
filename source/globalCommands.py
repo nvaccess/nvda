@@ -4721,6 +4721,7 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()
 
+
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
 commands = GlobalCommands()

@@ -82,8 +82,8 @@ class VolumeSetter(AudioSessionCallback):
 
 
 def _updateAppsVolumeImpl(
-		volume: float,
-		state: AppsVolumeAdjusterFlag,
+	volume: float,
+	state: AppsVolumeAdjusterFlag,
 ):
 	global _activeCallback
 	if state == AppsVolumeAdjusterFlag.DISABLED:
@@ -104,7 +104,7 @@ def _updateAppsVolumeImpl(
 
 
 def _adjustAppsVolume(
-		volumeAdjustment: int | None = None,
+	volumeAdjustment: int | None = None,
 ):
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
