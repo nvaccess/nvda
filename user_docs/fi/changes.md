@@ -15,7 +15,7 @@ Lisätty määrittämättömiä komentoja hiiren rullan vierittämiseen pysty- j
 Useita erityisesti Windows 11:n emojipaneeliin ja leikepöytähistoriaan liittyviä bugikorjauksia.
 Verkkoselaimille on tehty korjauksia virheilmoitusten, kuvien, kuvatekstien, taulukoiden nimien ja valintaruutu/valintapainikevalikoiden kohteiden puhumiseen.
 
-Liblouis on päivitetty, ja se sisältää uuden serbian (kyrilliset aakkoset), jiddišin, useiden muinaiskielten sekä turkin pistetaulukot.
+Liblouis on päivitetty, ja se sisältää uuden serbian (kyrilliset aakkoset), jiddišin, useiden muinaiskielten, turkin sekä kansainvälisen foneettisen aakkoston pistetaulukot.
 eSpeak on päivitetty tukemaan karakalpakin kieltä.
 Myös Unicode CLDR on päivitetty.
 
@@ -46,6 +46,7 @@ Myös Unicode CLDR on päivitetty.
       * Jiddiš.
       * Useita muinaiskieliä: raamatullinen heprea, akkadi, syyria, ugarit ja translitteroitu nuolenpääkirjoitus.
       * Turkkilainen taso 2. (#16735)
+      * Kansainvälinen foneettinen aakkosto. (#16773)
   * Päivitetty NSIS versioksi 3.10. (#16674, @dpy013)
   * Päivitetty markdown versioksi 3.6. (#16725, @dpy013)
   * Päivitetty nh3 versioksi 0.2.17. (#16725, @dpy013)
