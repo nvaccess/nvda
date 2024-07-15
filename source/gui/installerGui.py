@@ -341,46 +341,48 @@ def showInstallGui():
 	gui.mainFrame.postPopup()
 
 
+def _nvdaExistsInDir(directory: str) -> bool:
+	return os.path.exists(os.path.join(directory, "nvda.exe"))
+
+
 def _warnAndConfirmForNonEmptyDirectory(portableDirectory: str) -> bool:
 	"""
 	Display a warning message if the specified directory is not empty.
 	:param portableDirectory: The directory to check.
 	:return: True if the user wants to continue, False if the user wants to cancel.
 	"""
-	if os.path.exists(portableDirectory):
-		dirContents = os.listdir(portableDirectory)
-	else:
-		dirContents = []
-	if len(dirContents) > 0:
-		if "nvda.exe" in dirContents:
-			if wx.NO == gui.messageBox(
-				_(
-					# Translators: The message displayed when the user has specified a destination directory
-					# that already has a portable copy in the Create Portable NVDA dialog.
-					f"A portable copy already exists in the directory '{portableDirectory}'. "
-					"Do you want to update it?"
-				),
-				# Translators: The title of a dialog presented when the user has specified a destination directory
-				# that already has a portable copy in the Create Portable NVDA dialog.
-				_("Portable Copy Exists"),
-				wx.YES_NO | wx.ICON_QUESTION
-			):
-				return False
-		elif wx.NO == gui.messageBox(
+	if not os.path.exists(portableDirectory):
+		# The directory does not exist, so we can proceed.
+		return True
+	if not any(os.scandir(portableDirectory)):
+		# The directory is empty, so we can proceed.
+		return True
+	if _nvdaExistsInDir(portableDirectory):
+		return wx.YES == gui.messageBox(
 			_(
 				# Translators: The message displayed when the user has specified a destination directory
-				# that already exists in the Create Portable NVDA dialog.
-				f"The specified directory '{portableDirectory}' is not empty. "
-				"Proceeding will delete and replace existing files in the directory. "
-				"Do you want to overwrite the contents of this folder? "
-			),
+				# that already has a portable copy in the Create Portable NVDA dialog.
+				"A portable copy already exists in the directory '{portableDirectory}'. "
+				"Do you want to update it?"
+			).format(portableDirectory=portableDirectory),
 			# Translators: The title of a dialog presented when the user has specified a destination directory
-			# that already exists in the Create Portable NVDA dialog.
-			_("Directory Exists"),
+			# that already has a portable copy in the Create Portable NVDA dialog.
+			_("Portable Copy Exists"),
 			wx.YES_NO | wx.ICON_QUESTION
-		):
-			return False
-	return True
+		)
+	return wx.YES == gui.messageBox(
+		_(
+			# Translators: The message displayed when the user has specified a destination directory
+			# that already exists in the Create Portable NVDA dialog.
+			"The specified directory '{portableDirectory}' is not empty. "
+			"Proceeding will delete and replace existing files in the directory. "
+			"Do you want to overwrite the contents of this folder? "
+		).format(portableDirectory=portableDirectory),
+		# Translators: The title of a dialog presented when the user has specified a destination directory
+		# that already exists in the Create Portable NVDA dialog.
+		_("Directory Exists"),
+		wx.YES_NO | wx.ICON_QUESTION
+	)
 
 
 def _getUniqueNewPortableDirectory(basePath: str) -> str:
