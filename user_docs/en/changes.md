@@ -9,7 +9,7 @@
 ### Bug Fixes
 
 * NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)
-* The Seika Notetaker driver now correctly generates braille input for space, backspace and space/backspace with dots gestures. (#16642, @school510587)
+* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
 
 ### Changes for Developers
 
