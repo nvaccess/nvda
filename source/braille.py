@@ -1155,30 +1155,32 @@ def _getFormattingTags(field: dict[str, str], fieldCache: dict[str, str], format
 		The formatting tag as a string, or None if no formatting is applied.
 	"""
 	textList = []
-	bold = field.get("bold", False)
-	oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
-	if bold and not oldBold:
-		textList.append("⠃")
-	elif oldBold and not bold:
-		textList.append("⡃")
-	italics = field.get("italic", False)
-	oldItalics = fieldCache.get("italic", False) if fieldCache is not None else False
-	if italics and not oldItalics:
-		textList.append("⠊")
-	elif oldItalics and not italics:
-		textList.append("⡊")
-	underline = field.get("underline", False)
-	oldUnderline = fieldCache.get("underline", False) if fieldCache is not None else False
-	if underline and not oldUnderline:
-		textList.append("⠥")
-	elif oldUnderline and not underline:
-		textList.append("⡥")
-	strikethrough = field.get("strikethrough", False)
-	oldStrikethrough = fieldCache.get("strikethrough", False) if fieldCache is not None else False
-	if strikethrough and not oldStrikethrough:
-		textList.append("⠎")
-	elif oldStrikethrough and not strikethrough:
-		textList.append("⡎")
+	if formatConfig['fontAttributeReporting'] & OutputMode.BRAILLE:
+		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
+		bold = field.get("bold", False)
+		oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
+		if bold and not oldBold:
+			textList.append("⠃")
+		elif oldBold and not bold:
+			textList.append("⡃")
+		italics = field.get("italic", False)
+		oldItalics = fieldCache.get("italic", False) if fieldCache is not None else False
+		if italics and not oldItalics:
+			textList.append("⠊")
+		elif oldItalics and not italics:
+			textList.append("⡊")
+		underline = field.get("underline", False)
+		oldUnderline = fieldCache.get("underline", False) if fieldCache is not None else False
+		if underline and not oldUnderline:
+			textList.append("⠥")
+		elif oldUnderline and not underline:
+			textList.append("⡥")
+		strikethrough = field.get("strikethrough", False)
+		oldStrikethrough = fieldCache.get("strikethrough", False) if fieldCache is not None else False
+		if strikethrough and not oldStrikethrough:
+			textList.append("⠎")
+		elif oldStrikethrough and not strikethrough:
+			textList.append("⡎")
 	if len(textList) > 0:
 		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
 
