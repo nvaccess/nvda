@@ -101,7 +101,6 @@ class IA2WebAnnotation(AnnotationOrigin):
 
 class Ia2Web(IAccessible):
 	IAccessibleTableUsesTableCellIndexAttrib = True
-	caretMovementDetectionUsesEvents = False
 
 	def isDescendantOf(self, obj: "NVDAObjects.NVDAObject") -> bool:
 		if obj.windowHandle != self.windowHandle:

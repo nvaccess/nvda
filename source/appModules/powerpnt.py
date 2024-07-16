@@ -1111,7 +1111,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % font.size
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			formatField["bold"] = bool(font.bold)
 			formatField["italic"] = bool(font.italic)
 			formatField["underline"] = bool(font.underline)

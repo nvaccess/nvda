@@ -287,7 +287,7 @@ class WinConsoleTextInfo(textInfos.offsets.OffsetsTextInfo):
 				if formatConfig["reportColor"]:
 					formatField["color"] = CONSOLE_COLORS_TO_RGB[c.Attributes & 0x0F]
 					formatField["background-color"] = CONSOLE_COLORS_TO_RGB[(c.Attributes >> 4) & 0x0F]
-				if formatConfig["reportFontAttributes"] and c.Attributes & COMMON_LVB_UNDERSCORE:
+				if formatConfig["fontAttributeReporting"] and c.Attributes & COMMON_LVB_UNDERSCORE:
 					formatField["underline"] = True
 				if formatField:
 					if lastText:
