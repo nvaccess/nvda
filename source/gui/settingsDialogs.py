@@ -2996,7 +2996,8 @@ class AudioPanel(SettingsPanel):
 		# Audio settings panel.
 		label = _("Volume of other applications")
 		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label, nvdaControls.EnhancedInputSlider,
+			label,
+			nvdaControls.EnhancedInputSlider,
 			minValue=0,
 			maxValue=100,
 		)

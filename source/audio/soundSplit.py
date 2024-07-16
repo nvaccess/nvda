@@ -3,21 +3,15 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import atexit
 import config
 from enum import IntEnum, unique
 import globalVars
 from logHandler import log
 import nvwave
-from pycaw.api.audiopolicy import IAudioSessionManager2
-from pycaw.callbacks import AudioSessionNotification, AudioSessionEvents
-from pycaw.utils import AudioSession, AudioUtilities
+from pycaw.utils import AudioSession
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
-from comtypes import COMError
-from threading import Lock
-import core
 from .utils import AudioSessionCallback, DummyAudioSessionCallback
 
 VolumeTupleT = tuple[float, float]
