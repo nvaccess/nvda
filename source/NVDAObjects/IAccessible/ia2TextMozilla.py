@@ -85,7 +85,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		# Ensure their label (name) is reported as the content
 		# as the caret cannot move through them.
 		if (
-			controlTypes.state.State.EDITABLE not in obj.states
+			obj.role == controlTypes.role.Role.BUTTON
+			and controlTypes.state.State.EDITABLE not in obj.states
 			and obj.parent
 			and controlTypes.state.State.EDITABLE in obj.parent.states
 		):
