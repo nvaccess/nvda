@@ -8,7 +8,7 @@ These tests help to ensure that code changes do not unintentionally break functi
 [Pre-commit hooks](https://pre-commit.com/) can be used to automatically run linting, translatable string checks and unit tests on files staged for commit.
 This will automatically apply lint fixes where possible, and will cancel the commit on lint issues and other test failures.
 
-From a shell, set up pre-commit scripts for your NVDA python environment:
+From a shell, [set up pre-commit scripts](https://pre-commit.com/#pre-commit-install) for your NVDA python environment:
 
 1. `venvUtils\ensureAndActivate.bat`
 1. `pre-commit install`
@@ -20,6 +20,13 @@ Alternatively, set up pre-commit scripts globally:
 
 To skip pre-commit hooks from triggering, use the `--no-verify` CLI option.
 Example: `git commit -m "message" --no-verify`.
+
+#### Manually running pre-commit hooks
+
+You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit.com/#pre-commit-run).
+
+- You can filter files with `--files` and `--all-files`- You can also compare two revisions:
+`precommit run --from-ref origin/master --to-ref HEAD`
 
 ### Translatable string checks
 
