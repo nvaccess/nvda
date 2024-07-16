@@ -1154,7 +1154,7 @@ def _getFormattingTags(field: dict[str, str], fieldCache: dict[str, str], format
 	Returns:
 		The formatting tag as a string, or None if no formatting is applied.
 	"""
-	textList = []
+	textList: list[str]  = []
 	if formatConfig['fontAttributeReporting'] & OutputMode.BRAILLE:
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
 		bold = field.get("bold", False)
