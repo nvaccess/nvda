@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
 
 """High-level functions to speak information."""
@@ -66,6 +66,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import aria
 from .priorities import Spri
@@ -1087,11 +1088,13 @@ def speak(  # noqa: C901
 		from .sayAll import SayAllHandler
 
 		script = getCurrentScript()
-		if not (
+		if (
 			(script and getattr(script, "speakOnDemand", False))
 			or inputCore.manager.isInputHelpActive
-			or SayAllHandler.isRunning()
+			or (SayAllHandler.isRunning() and SayAllHandler.startedFromScript)
 		):
+			pass  # Do nothing and continue
+		else:
 			return
 	_speechState.beenCanceled = False
 	# Filter out redundant LangChangeCommand objects
@@ -2781,12 +2784,12 @@ def getFormatFieldSpeech(  # noqa: C901
 				else _("not emphasised")
 			)
 			textList.append(text)
-	if formatConfig["reportFontAttributes"]:
+	if formatConfig["fontAttributeReporting"] & OutputMode.SPEECH:
 		bold = attrs.get("bold")
 		oldBold = attrsCache.get("bold") if attrsCache is not None else None
 		if (bold or oldBold is not None) and bold != oldBold:
-			# Translators: Reported when text is bolded.
 			text = (
+				# Translators: Reported when text is bolded.
 				_("bold")
 				if bold
 				# Translators: Reported when text is not bolded.
