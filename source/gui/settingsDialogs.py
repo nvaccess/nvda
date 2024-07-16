@@ -2992,6 +2992,17 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
+		# Translators: This is a label for the applications volume adjuster combo box in settings.
+		label = _("&Application volume adjuster mode")
+		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["audio", "applicationsVolumeMode"],
+			conf=config.conf,
+		)
+		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
+		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
+
 		# Translators: This is the label for a slider control in the
 		# Audio settings panel.
 		label = _("Volume of other applications")
@@ -3009,17 +3020,6 @@ class AudioPanel(SettingsPanel):
 			log.error("Invalid volume level: {}", volume)
 			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
 			self.appSoundVolSlider.SetValue(defaultVolume)
-
-		# Translators: This is a label for the applications volume adjuster combo box in settings.
-		label = _("&Application volume adjuster mode")
-		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf,
-		)
-		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
-		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
