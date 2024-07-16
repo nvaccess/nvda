@@ -1160,27 +1160,43 @@ def _getFormattingTags(field: dict[str, str], fieldCache: dict[str, str], format
 		bold = field.get("bold", False)
 		oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
 		if bold and not oldBold:
-			textList.append("⠃")
+			# Translators: Brailled at the start of bold text.
+			# This is the English letter "B" in braille.
+			textList.append(_("⠃"))
 		elif oldBold and not bold:
-			textList.append("⡃")
+			# Translators: Brailled at the end of bold text.
+			# This is the English letter "B" plus dot 7 in braille.
+			textList.append(_("⡃"))
 		italics = field.get("italic", False)
 		oldItalics = fieldCache.get("italic", False) if fieldCache is not None else False
 		if italics and not oldItalics:
-			textList.append("⠊")
+			# Translators: Brailled at the start of italic text.
+			# This is the English letter "I" in braille.
+			textList.append(_("⠊"))
 		elif oldItalics and not italics:
-			textList.append("⡊")
+			# Translators: Brailled at the end of italic text.
+			# This is the English letter "I" plus dot 7 in braille.
+			textList.append(_("⡊"))
 		underline = field.get("underline", False)
 		oldUnderline = fieldCache.get("underline", False) if fieldCache is not None else False
 		if underline and not oldUnderline:
-			textList.append("⠥")
+			# Translators: Brailled at the start of underlined text.
+			# This is the English letter "U" in braille.
+			textList.append(_("⠥"))
 		elif oldUnderline and not underline:
-			textList.append("⡥")
+			# Translators: Brailled at the end of underlined text.
+			# This is the English letter "U" plus dot 7 in braille.
+			textList.append(_("⡥"))
 		strikethrough = field.get("strikethrough", False)
 		oldStrikethrough = fieldCache.get("strikethrough", False) if fieldCache is not None else False
 		if strikethrough and not oldStrikethrough:
-			textList.append("⠎")
+			# Translators: Brailled at the start of strikethrough text.
+			# This is the English letter "S" in braille.
+			textList.append(_("⠎"))
 		elif oldStrikethrough and not strikethrough:
-			textList.append("⡎")
+			# Translators: Brailled at the end of strikethrough text.
+			# This is the English letter "S" plus dot 7 in braille.
+			textList.append(_("⡎"))
 	if len(textList) > 0:
 		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
 
