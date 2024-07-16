@@ -2993,7 +2993,7 @@ class AudioPanel(SettingsPanel):
 		self._appendSoundSplitModesList(sHelper)
 
 		# Translators: This is a label for the applications volume adjuster combo box in settings.
-		label = _("&Application volume adjuster mode")
+		label = _("&Application volume adjuster status")
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,

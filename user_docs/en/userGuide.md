@@ -2389,19 +2389,6 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
-This volume can also be controlled via the following keyboard commands from anywhere:
-
-| Name | Key | Description |
-|---|---|---|
-| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
-| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
 ##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
 
 This combo box allows you to select the status of the applications volume adjuster.
@@ -2417,6 +2404,19 @@ The following keyboard command can also be used from anywhere:
 |---|---|---|
 | Toggle Applications volume adjuster status | `NVDA+alt+delete` | Cycles through options of Applications volume adjuster status. |
 If this option is set to Muted, then its value will not be stored and it will be restored to Enabled upon next restart of NVDA.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Volume of other applications {#OtherAppVolume}
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
