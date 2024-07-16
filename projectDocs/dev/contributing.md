@@ -90,10 +90,9 @@ For instance:
 
 * Added a command to announce useful thing. (#1234, #4321, @myGitHub)
 
-
 ### Changes
 
-* Old command, now also uses new useful command. (#1234)
+* Old command now also uses new useful command. (#1234)
 ```
 
 You may add descriptions for multiple sections.
