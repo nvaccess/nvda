@@ -328,7 +328,7 @@ INPUT_START_IND = "⣏"
 INPUT_END_IND = " ⣹"
 
 # Delimiters for the start and end of format tags.
-FORMAT_TAG_START_IND = "⣏"
+FORMAT_TAG_START_IND = "⣋"
 """Unicode braille indicator at the start of a formatt tag."""
 FORMAT_TAG_END_IND = "⣙"
 """Unicode braille indicator at the end of a formatt tag."""
