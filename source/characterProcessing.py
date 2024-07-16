@@ -764,7 +764,7 @@ class _SymbolDefinitionSource(StrEnum):
 	BUILTIN = "builtin"
 	"""The name of the builtin definition source"""
 	USER = "user"
-	"""The source for user dicdictionaries"""
+	"""The source for user dictionaries"""
 
 
 @dataclasses.dataclass(frozen=True, kw_only=True)
