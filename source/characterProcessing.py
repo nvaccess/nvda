@@ -405,7 +405,7 @@ class SpeechSymbols:
 		return "\t".join(fields)
 
 
-def _getSpeechSymbolsForLocale(locale: str) -> list[SpeechSymbols]:
+def _getSpeechSymbolsForLocale(locale: str) -> tuple[SpeechSymbols, SpeechSymbols, ...]:
 	symbols: list[SpeechSymbols] = []
 	for definition in _symbolDictionaryDefinitions:
 		if not definition.enabled:
@@ -419,7 +419,7 @@ def _getSpeechSymbolsForLocale(locale: str) -> list[SpeechSymbols]:
 			)
 	if len(symbols) <= 1:
 		raise LookupError(f"No symbol information for locale {locale!r}")
-	return symbols
+	return tuple(symbols)
 
 
 class SpeechSymbolProcessor:
@@ -429,7 +429,9 @@ class SpeechSymbolProcessor:
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols: LocaleDataMap[list[SpeechSymbols]] = LocaleDataMap(_getSpeechSymbolsForLocale)
+	localeSymbols: LocaleDataMap[tuple[SpeechSymbols, SpeechSymbols, ...]] = LocaleDataMap(
+		_getSpeechSymbolsForLocale,
+	)
 	sources: list[SpeechSymbols]
 
 	def __init__(self, locale: str):
@@ -443,7 +445,7 @@ class SpeechSymbolProcessor:
 		fetched = self.localeSymbols.fetchLocaleData(locale, fallback=False)
 		# A slice that reverses a list and ignores the last item (which is the user dictionary)
 		builtinSlice = slice(-2, None, -1)
-		self.builtinSources = fetched[builtinSlice]
+		self.builtinSources = list(fetched[builtinSlice])
 		self.userSymbols = fetched[-1]
 		sources.append(self.userSymbols)
 		sources.extend(self.builtinSources)
@@ -878,6 +880,7 @@ def _addSymbolDefinitions():
 
 	Finally, a "user" symbol dictionary definition is added.
 	"""
+	# Add builtin symbols
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
 			name="cldr",
@@ -897,6 +900,7 @@ def _addSymbolDefinitions():
 		),
 	)
 
+	# Add add-on symbols
 	import addonHandler
 
 	for addon in addonHandler.getRunningAddons():
@@ -920,11 +924,14 @@ def _addSymbolDefinitions():
 				if not definition.availableLocales:
 					log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
 					continue
-				_symbolDictionaryDefinitions.append(definition)
 			except Exception:
 				log.exception(
 					f"Error while applying custom symbol dictionaries config from addon {addon.name!r}",
 				)
+			else:
+				_symbolDictionaryDefinitions.append(definition)
+
+	# Add user symbols
 	_symbolDictionaryDefinitions.append(
 		SymbolDictionaryDefinition(
 			name="user",
