@@ -9,8 +9,8 @@
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
 * It is now possible to change the way NVDA displays certain text formatting attributes in braille. The available options are:
   * Liblouis: Uses formatting markers defined in your selected braille table.
+  * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
-
 
 ### Bug Fixes
 
