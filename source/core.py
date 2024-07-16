@@ -806,12 +806,15 @@ def main():
 		)
 	elif globalVars.appArgs.portablePath and (globalVars.appArgs.createPortable or globalVars.appArgs.createPortableSilent):
 		import gui.installerGui
+		isUpdate = gui.installerGui._nvdaExistsInDir(globalVars.appArgs.portablePath)
+		# If we are updating, we don't want to warn for non-empty directory.
+		warnForNonEmptyDirectory = not isUpdate and not globalVars.appArgs.createPortableSilent
 		wx.CallAfter(
 			gui.installerGui.doCreatePortable,
 			portableDirectory=globalVars.appArgs.portablePath,
 			silent=globalVars.appArgs.createPortableSilent,
 			startAfterCreate=not globalVars.appArgs.createPortableSilent,
-			warnForNonEmptyDirectory=not globalVars.appArgs.createPortableSilent,
+			warnForNonEmptyDirectory=warnForNonEmptyDirectory,
 		)
 	elif not globalVars.appArgs.minimal:
 		try:
