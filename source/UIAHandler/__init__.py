@@ -1037,6 +1037,37 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 
+		# #16871: some elements do not report native window handle when in fact
+		# native window handle is shown via runtime ID.
+		# This is seen when handling Windows 11 Voice Access notifications.
+		if not (window := self.getNearestWindowHandle(sender)):
+			if _isDebug():
+				log.debugWarning(
+					"HandleNotificationEvent: native window handle not found, consulting runtime ID: "
+					f"NotificationProcessing={NotificationProcessing} "
+					f"displayString={displayString} "
+					f"activityId={activityId}"
+				)
+			if any(runtimeID := sender.getRuntimeID()):
+				# Second item in runtime ID array is native window handle.
+				window = runtimeID[1]
+				if _isDebug():
+					log.debugWarning(
+						f"HandleNotificationEvent: native window handle is {window}: "
+						f"NotificationProcessing={NotificationProcessing} "
+						f"displayString={displayString} "
+						f"activityId={activityId}"
+					)
+			else:
+				# No runtime ID (tuple is empty).
+				if _isDebug():
+					log.debugWarning(
+						"HandleNotificationEvent: native window handle not found in runtime ID: "
+						f"NotificationProcessing={NotificationProcessing} "
+						f"displayString={displayString} "
+						f"activityId={activityId}"
+					)
+					return
 		try:
 			obj = NVDAObjects.UIA.UIA(UIAElement=sender)
 		except Exception:
