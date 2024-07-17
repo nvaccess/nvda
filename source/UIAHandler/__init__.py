@@ -1019,7 +1019,7 @@ class UIAHandler(COMObject):
 		NotificationKind: int,
 		NotificationProcessing: int,
 		displayString: str,
-		activityId: str
+		activityId: str,
 	) -> None:
 		if _isDebug():
 			log.debug(
