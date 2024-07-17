@@ -48,8 +48,8 @@ If you are new to the project, or looking for some way to help take a look at:
 		- Please fill out the Pull Request template, including the checklist of considerations.
 		The checklist asks you to confirm that you have thought about each of the items, if any of the items are missing it is helpful to explain elsewhere in the PR why it has been left out.
 	1. Submission process:
-		- When you think a contribution is ready, or you would like feedback, open a draft pull request.
-		When you would like a review, mark the PR as "ready for review".
+		- If you would like to publish unfinished work to seek early feedback or demonstrate an approach, open a draft pull request.
+		When you would like a code review or response from NV Access, mark the PR as "ready for review".
 		- All pull requests submitted must have their "Allow edits from maintainers" checkbox ticked.
 		This is the GitHub default for new pull requests, except for organisation forks.
 		Organisation forks must invite NV Access developers to collaborate directly.
@@ -59,7 +59,7 @@ If you are new to the project, or looking for some way to help take a look at:
 		A commit may be pushed applying linting fixes.
 		- AppVeyor will build a copy of NVDA when changes are pushed to your PR.
 		A build artifact will be created for a successful build to allow for testing the PR.
-		- AppVeyor will run system tests and other tests..
+		- AppVeyor will run system tests and other tests.
 		If these fail, please review them.
 		Sometimes system tests fail unexpectedly.
 		If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
@@ -104,7 +104,7 @@ Changes
 
 You may add descriptions for multiple sections.
 The sections are:
- 
+
 * New features
 * Changes
 * Bug fixes
