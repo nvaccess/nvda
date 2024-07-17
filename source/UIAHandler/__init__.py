@@ -1037,8 +1037,10 @@ class UIAHandler(COMObject):
 			return
 		import NVDAObjects.UIA
 
-		# #16871: some elements do not report native window handle when in fact
-		# native window handle is shown via runtime ID.
+		# #16871: some elements do not report native window handle.
+		# Sometimes native window handle is reported by runtime ID (typically a tuple of four items)
+		# but runtime ID tuple might be empty or may have different lengths sometimes.
+		# Therefore, handle runtime ID tuple of four elements.
 		# This is seen when handling Windows 11 Voice Access notifications.
 		if not (window := self.getNearestWindowHandle(sender)):
 			if _isDebug():
@@ -1048,8 +1050,8 @@ class UIAHandler(COMObject):
 					f"displayString={displayString} "
 					f"activityId={activityId}"
 				)
-			if any(runtimeID := sender.getRuntimeID()):
-				# Second item in runtime ID array is native window handle.
+			if len(runtimeID := sender.getRuntimeID()) == 4:
+				# Second item in four element runtime ID array is native window handle.
 				window = runtimeID[1]
 				if _isDebug():
 					log.debugWarning(
