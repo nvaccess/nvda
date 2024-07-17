@@ -95,11 +95,13 @@ Our processing will automatically link the issue number to the GitHub page, and 
 
 For instance:
 ```md
-New features
-- Added a command to announce useful thing. (#1234, #4321, @myGitHub)
+### New Features
 
-Changes
-- Old command, now also uses new useful command. (#1234)
+* Added a command to announce useful thing. (#1234, #4321, @myGitHub)
+
+### Changes
+
+* Old command now also uses new useful command. (#1234)
 ```
 
 You may add descriptions for multiple sections.

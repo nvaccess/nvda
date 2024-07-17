@@ -11,7 +11,11 @@ The vision and principles should be always considered when planning features and
 
 NVDA is available under a modified GNU General Public License version 2.
 Please refer to [our license](./copying.txt) for more information.
- 
+
+## Acknowledgements
+We would like to extend our sincere gratitude to [SignPath](https://www.signpath.io/) for their generous support in providing code signing services to many open source projects, including NVDA.
+Their contribution helps us maintain the security and integrity of our releases.
+
 ## NVDA Community
 * [Support and information for NVDA users](https://www.nvaccess.org/get-help/)
 * [Report an issue or feature request](./projectDocs/issues/readme.md)
