@@ -270,6 +270,18 @@ class WordDocumentTextInfo(UIATextInfo):
 			t = t.replace(END_OF_ROW_MARK, "")
 		return t
 
+	def _getTextForCodepointMovement(self) -> str:
+		"""
+		#8576, #10960: In Word, list bullets are exposed in text but are ignored when moving by character.
+		Therefore in `getTextWithFields`, the bullets are stripped from the text and exposed in the `line-prefix` field.
+		To stay compatible with this, we can't simply use the `text` property,
+		as it can potentially contain bullets that should be stripped.
+		"""
+		t = super()._getTextForCodepointMovement()
+		if not t:
+			return t
+		return "".join(f for f in self.getTextWithFields(formatConfig=dict()) if isinstance(f, str))
+
 	def _isEndOfRow(self):
 		"""Is this textInfo positioned on an end-of-row mark?"""
 		info = self.copy()
@@ -648,7 +660,7 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		description=_(
 			# Translators: a description for a script that reports the comment at the caret.
 			"Reports the text of the comment where the system caret is located."
-			" If pressed twice, presents the information in a browsable message"
+			" If pressed twice, presents the information in a browsable message",
 		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
