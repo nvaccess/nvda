@@ -25,7 +25,8 @@ Example: `git commit -m "message" --no-verify`.
 
 You can run pre-commit hooks manually with [`pre commit run`](https://pre-commit.com/#pre-commit-run).
 
-- You can filter files with `--files` and `--all-files`- You can also compare two revisions:
+- You can filter files with `--files` and `--all-files`
+- You can also compare two revisions:
 `pre-commit run --from-ref origin/master --to-ref HEAD`
 
 ### Translatable string checks
