@@ -1177,40 +1177,40 @@ def _getFormattingTags(
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
 		fontAttributes: tuple[formattingSymbol] = (
 			formattingSymbol(
-				"bold",
+				attribute="bold",
 				# Translators: Brailled at the start of bold text.
 				# This is the English letter "B" in braille.
-				_("⠃"),
+				startSymbol=pgettext("braille formatting symbol", "⠃"),
 				# Translators: Brailled at the end of bold text.
 				# This is the English letter "B" plus dot 7 in braille.
-				_("⡃"),
+				endSymbol=pgettext("braille formatting symbol", "⡃"),
 			),
 			formattingSymbol(
-				"italic",
+				attribute="italic",
 				# Translators: Brailled at the start of italic text.
 				# This is the English letter "I" in braille.
-				_("⠊"),
+				startSymbol=pgettext("braille formatting symbol", "⠊"),
 				# Translators: Brailled at the end of italic text.
 				# This is the English letter "I" plus dot 7 in braille.
-				_("⡊"),
+				endSymbol=pgettext("braille formatting symbol", "⡊"),
 			),
 			formattingSymbol(
-				"underline",
+				attribute="underline",
 				# Translators: Brailled at the start of underlined text.
 				# This is the English letter "U" in braille.
-				_("⠥"),
+				startSymbol=pgettext("braille formatting symbol", "⠥"),
 				# Translators: Brailled at the end of underlined text.
 				# This is the English letter "U" plus dot 7 in braille.
-				_("⡥"),
+				endSymbol=pgettext("braille formatting symbol", "⡥"),
 			),
 			formattingSymbol(
-				"strikethrough",
+				attribute="strikethrough",
 				# Translators: Brailled at the start of strikethrough text.
 				# This is the English letter "S" in braille.
-				_("⠎"),
+				startSymbol=pgettext("braille formatting symbol", "⠎"),
 				# Translators: Brailled at the end of strikethrough text.
 				# This is the English letter "S" plus dot 7 in braille.
-				_("⡎"),
+				endSymbol=pgettext("braille formatting symbol", "⡎"),
 			),
 		)
 		for fontAttribute in fontAttributes:
