@@ -440,7 +440,6 @@ Finally, open Notepad and move the focus around the application; e.g. move along
 You should hear beeps each time the focus changes.
 Note though that if you move outside of Notepad - for instance, to Windows Explorer - you do not hear beeps.
 ```py
---- start ---
 # Notepad App Module for NVDA
 # Developer guide example 1
 
@@ -451,8 +450,6 @@ class AppModule(appModuleHandler.AppModule):
 		import tones
 		tones.beep(550, 50)
 		nextHandler()
-
---- end ---
 ```
 
 This App Module file starts with two comment lines, which describe what the file is for.
@@ -483,7 +480,6 @@ By default, apps employing Edge WebView2 such as modern Outlook (olk.exe) are di
 
 The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
 ```py
---- start ---
 # wwahost/test App Module for NVDA
 # Developer guide example 2
 
@@ -494,8 +490,6 @@ class AppModule(AppModule):
 		import tones
 		tones.beep(550, 50)
 		nextHandler()
-
---- end ---
 ```
 The biggest difference from Notepad app module is where wwahost app module comes from.
 As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
@@ -543,7 +537,6 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
 
 From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
 ```py
---- start ---
 # Version announcement plugin for NVDA
 # Developer guide example 3
 
@@ -556,7 +549,6 @@ class GlobalPlugin(globalPluginHandler.GlobalPlugin):
 	@script(gesture="kb:NVDA+shift+v")
 	def script_announceNVDAVersion(self, gesture):
 		ui.message(versionInfo.version)
---- end ---
 ```
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
@@ -685,14 +677,12 @@ from scriptHandler import script
 After that, just above your script definition, add the script decorator, providing it the desired arguments.
 For example:
 ```py
---- start ---
 	@script(
 		description=_("Speaks the date and time"),
 		category=inputCore.SCRCAT_MISC,
 		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
 	)
 	def script_sayDateTime(self, gesture):
---- end ---
 ```
 In this example, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
 It will have the description "Speaks the date and time", and will be bound to the "NVDA+shift+t" and "NVDA+alt+r" key combinations on the keyboard.
@@ -830,14 +820,11 @@ This is done by providing an App Module for that application which simply sets s
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
 As always, the file must have a .py extension.
 ```py
---- start ---
 import appModuleHandler
 
 class AppModule(appModuleHandler.AppModule):
 
 	sleepMode = True
-
---- end ---
 ```
 ### Providing Custom NVDA Object Classes {#customNVDAObjectClasses}
 
@@ -915,7 +902,6 @@ That is, when it receives focus, NVDA will say "Content edit".
 
 The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
 ```py
---- start ---
 import appModuleHandler
 from NVDAObjects.window import Window
 
@@ -924,7 +910,6 @@ class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
 			obj.name = "Content"
---- end ---
 ```
 ### Parsing additional command line arguments in your plugin {#PluginCLIArgs}
 
@@ -1013,7 +998,6 @@ Please refer to the [braille translation tables section](#BrailleTables) later o
 
 #### An Example Manifest File {#manifestExample}
 ```ini
---- start ---
 name = "myTestAddon"
 summary = "Cool Test Add-on"
 version = "1.0.0"
@@ -1023,7 +1007,6 @@ url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
 docFileName = "readme.html"
 minimumNVDAVersion = "2021.1"
 lastTestedNVDAVersion = "2022.3.3"
---- end ---
 ```
 ### Plugins and Drivers {#pluginsAndDrivers}
 
