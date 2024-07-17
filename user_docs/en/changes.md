@@ -12,12 +12,12 @@
 
 ### Bug Fixes
 
-* NVDA once again relies on UIA events for caret movement in XAML and WPF text controls, rather than only on manual querying of the caret position. (#16817, @LeonarddeR)
-* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
-* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
   * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
+  * UIA in Windows Terminal. (#16873, @codeofdusk)
+* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
+* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 
 
 ### Changes for Developers
