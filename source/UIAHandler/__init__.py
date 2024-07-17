@@ -1015,12 +1015,12 @@ class UIAHandler(COMObject):
 
 	def IUIAutomationNotificationEventHandler_HandleNotificationEvent(
 		self,
-		sender,
-		NotificationKind,
-		NotificationProcessing,
-		displayString,
-		activityId,
-	):
+		sender: UIA.IUIAutomationElement,
+		NotificationKind: int,
+		NotificationProcessing: int,
+		displayString: str,
+		activityId: str
+	) -> None:
 		if _isDebug():
 			log.debug(
 				"handleNotificationEvent called "
