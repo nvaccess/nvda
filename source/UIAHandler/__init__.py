@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
