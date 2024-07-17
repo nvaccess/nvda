@@ -37,3 +37,41 @@ jobs:
             # Don't run pre-commit again on the commit
             git commit -m "Apply pre-commit fixes"  --no-verify || echo "No changes to commit"
             git push
+
+      - name: Check for remaining issues
+        if: always()
+        id: check_issues
+        uses: pre-commit/action@v3.0.1
+        with:
+          extra_args: -c .pre-commit-PR-reports.yaml --from-ref ${{ github.event.pull_request.base.sha }} --to-ref HEAD
+
+      - name: Upload license check results
+        uses: actions/upload-artifact@v4
+        with:
+          name: licenseCheckResults.md
+          path: .\testOutput\license\licenseCheckResults.md
+
+      - name: Publish Test Results
+        uses: EnricoMi/publish-unit-test-result-action@v2
+        if: always()
+        with:
+          files: |
+            .\testOutput\lint\PR-lint.xml
+            .\testOutput\unit\unitTests.xml
+
+      - name: Post comment if check fails
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issue_number = context.issue.number;
+            const actionsUrl = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const commentBody = `Static tests and linting found issues that could not be automatically fixed. Please review and fix them manually. For more details, see the [actions log](${actionsUrl}).`;
+            const comment = {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue_number,
+              body: commentBody
+            };
+            github.rest.issues.createComment(comment);
