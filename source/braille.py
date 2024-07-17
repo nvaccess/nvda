@@ -1433,7 +1433,8 @@ class TextInfoRegion(Region):
 		"""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		for i, curPos in enumerate(range(pos, max(-1, pos - 3), -1)):
+		maxIterations = 10
+		for i, curPos in enumerate(range(pos, max(-1, pos - maxIterations), -1)):
 			if curPos == 0:
 				# Not necessary to find offset.
 				break
@@ -1444,7 +1445,7 @@ class TextInfoRegion(Region):
 			try:
 				return self._readingInfo.moveToCodepointOffset(curPos)
 			except RuntimeError:
-				if i < 2:
+				if i + 1 < maxIterations:
 					logFunc = log.debug
 				else:
 					logFunc = log.error
