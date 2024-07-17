@@ -14,6 +14,7 @@ from typing import (
 	Generator,
 	Iterable,
 	List,
+	NamedTuple,
 	Optional,
 	Set,
 	Tuple,
@@ -384,6 +385,12 @@ USB_PORT = ("usb", _("USB"))
 #: @type: tuple
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT = ("bluetooth", _("Bluetooth"))
+
+
+class formattingSymbol(NamedTuple):
+	attribute: str
+	startSymbol: str
+	endSymbol: str
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
@@ -1156,49 +1163,58 @@ def _getFormattingTags(
 	Returns:
 		The formatting tag as a string, or None if no formatting is applied.
 	"""
+
+	def appendFormatSymbol(attribute: str, startSymbol: str, endSymbol: str) -> None:
+		newVal = field.get(attribute, False)
+		oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
+		if newVal and not oldVal:
+			textList.append(startSymbol)
+		elif oldVal and not newVal:
+			textList.append(endSymbol)
+
 	textList: list[str] = []
 	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
-		bold = field.get("bold", False)
-		oldBold = fieldCache.get("bold", False) if fieldCache is not None else False
-		if bold and not oldBold:
-			# Translators: Brailled at the start of bold text.
-			# This is the English letter "B" in braille.
-			textList.append(_("⠃"))
-		elif oldBold and not bold:
-			# Translators: Brailled at the end of bold text.
-			# This is the English letter "B" plus dot 7 in braille.
-			textList.append(_("⡃"))
-		italics = field.get("italic", False)
-		oldItalics = fieldCache.get("italic", False) if fieldCache is not None else False
-		if italics and not oldItalics:
-			# Translators: Brailled at the start of italic text.
-			# This is the English letter "I" in braille.
-			textList.append(_("⠊"))
-		elif oldItalics and not italics:
-			# Translators: Brailled at the end of italic text.
-			# This is the English letter "I" plus dot 7 in braille.
-			textList.append(_("⡊"))
-		underline = field.get("underline", False)
-		oldUnderline = fieldCache.get("underline", False) if fieldCache is not None else False
-		if underline and not oldUnderline:
-			# Translators: Brailled at the start of underlined text.
-			# This is the English letter "U" in braille.
-			textList.append(_("⠥"))
-		elif oldUnderline and not underline:
-			# Translators: Brailled at the end of underlined text.
-			# This is the English letter "U" plus dot 7 in braille.
-			textList.append(_("⡥"))
-		strikethrough = field.get("strikethrough", False)
-		oldStrikethrough = fieldCache.get("strikethrough", False) if fieldCache is not None else False
-		if strikethrough and not oldStrikethrough:
-			# Translators: Brailled at the start of strikethrough text.
-			# This is the English letter "S" in braille.
-			textList.append(_("⠎"))
-		elif oldStrikethrough and not strikethrough:
-			# Translators: Brailled at the end of strikethrough text.
-			# This is the English letter "S" plus dot 7 in braille.
-			textList.append(_("⡎"))
+		fontAttributes: tuple[formattingSymbol] = (
+			formattingSymbol(
+				"bold",
+				# Translators: Brailled at the start of bold text.
+				# This is the English letter "B" in braille.
+				_("⠃"),
+				# Translators: Brailled at the end of bold text.
+				# This is the English letter "B" plus dot 7 in braille.
+				_("⡃"),
+			),
+			formattingSymbol(
+				"italic",
+				# Translators: Brailled at the start of italic text.
+				# This is the English letter "I" in braille.
+				_("⠊"),
+				# Translators: Brailled at the end of italic text.
+				# This is the English letter "I" plus dot 7 in braille.
+				_("⡊"),
+			),
+			formattingSymbol(
+				"underline",
+				# Translators: Brailled at the start of underlined text.
+				# This is the English letter "U" in braille.
+				_("⠥"),
+				# Translators: Brailled at the end of underlined text.
+				# This is the English letter "U" plus dot 7 in braille.
+				_("⡥"),
+			),
+			formattingSymbol(
+				"strikethrough",
+				# Translators: Brailled at the start of strikethrough text.
+				# This is the English letter "S" in braille.
+				_("⠎"),
+				# Translators: Brailled at the end of strikethrough text.
+				# This is the English letter "S" plus dot 7 in braille.
+				_("⡎"),
+			),
+		)
+		for fontAttribute in fontAttributes:
+			appendFormatSymbol(fontAttribute.attribute, fontAttribute.startSymbol, fontAttribute.endSymbol)
 	if len(textList) > 0:
 		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
 
