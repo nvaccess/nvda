@@ -393,6 +393,46 @@ class formattingSymbol(NamedTuple):
 	endSymbol: str
 
 
+fontAttributeBrailleTags: tuple[formattingSymbol] = (
+	formattingSymbol(
+		attribute="bold",
+		# Translators: Brailled at the start of bold text.
+		# This is the English letter "B" in braille.
+		startSymbol=pgettext("braille formatting symbol", "⠃"),
+		# Translators: Brailled at the end of bold text.
+		# This is the English letter "B" plus dot 7 in braille.
+		endSymbol=pgettext("braille formatting symbol", "⡃"),
+	),
+	formattingSymbol(
+		attribute="italic",
+		# Translators: Brailled at the start of italic text.
+		# This is the English letter "I" in braille.
+		startSymbol=pgettext("braille formatting symbol", "⠊"),
+		# Translators: Brailled at the end of italic text.
+		# This is the English letter "I" plus dot 7 in braille.
+		endSymbol=pgettext("braille formatting symbol", "⡊"),
+	),
+	formattingSymbol(
+		attribute="underline",
+		# Translators: Brailled at the start of underlined text.
+		# This is the English letter "U" in braille.
+		startSymbol=pgettext("braille formatting symbol", "⠥"),
+		# Translators: Brailled at the end of underlined text.
+		# This is the English letter "U" plus dot 7 in braille.
+		endSymbol=pgettext("braille formatting symbol", "⡥"),
+	),
+	formattingSymbol(
+		attribute="strikethrough",
+		# Translators: Brailled at the start of strikethrough text.
+		# This is the English letter "S" in braille.
+		startSymbol=pgettext("braille formatting symbol", "⠎"),
+		# Translators: Brailled at the end of strikethrough text.
+		# This is the English letter "S" plus dot 7 in braille.
+		endSymbol=pgettext("braille formatting symbol", "⡎"),
+	),
+)
+
+
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
 	"""Does obj contain useful text to display in braille
 
@@ -1175,45 +1215,7 @@ def _getFormattingTags(
 	textList: list[str] = []
 	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
-		fontAttributes: tuple[formattingSymbol] = (
-			formattingSymbol(
-				attribute="bold",
-				# Translators: Brailled at the start of bold text.
-				# This is the English letter "B" in braille.
-				startSymbol=pgettext("braille formatting symbol", "⠃"),
-				# Translators: Brailled at the end of bold text.
-				# This is the English letter "B" plus dot 7 in braille.
-				endSymbol=pgettext("braille formatting symbol", "⡃"),
-			),
-			formattingSymbol(
-				attribute="italic",
-				# Translators: Brailled at the start of italic text.
-				# This is the English letter "I" in braille.
-				startSymbol=pgettext("braille formatting symbol", "⠊"),
-				# Translators: Brailled at the end of italic text.
-				# This is the English letter "I" plus dot 7 in braille.
-				endSymbol=pgettext("braille formatting symbol", "⡊"),
-			),
-			formattingSymbol(
-				attribute="underline",
-				# Translators: Brailled at the start of underlined text.
-				# This is the English letter "U" in braille.
-				startSymbol=pgettext("braille formatting symbol", "⠥"),
-				# Translators: Brailled at the end of underlined text.
-				# This is the English letter "U" plus dot 7 in braille.
-				endSymbol=pgettext("braille formatting symbol", "⡥"),
-			),
-			formattingSymbol(
-				attribute="strikethrough",
-				# Translators: Brailled at the start of strikethrough text.
-				# This is the English letter "S" in braille.
-				startSymbol=pgettext("braille formatting symbol", "⠎"),
-				# Translators: Brailled at the end of strikethrough text.
-				# This is the English letter "S" plus dot 7 in braille.
-				endSymbol=pgettext("braille formatting symbol", "⡎"),
-			),
-		)
-		for fontAttribute in fontAttributes:
+		for fontAttribute in fontAttributeBrailleTags:
 			appendFormatSymbol(fontAttribute.attribute, fontAttribute.startSymbol, fontAttribute.endSymbol)
 	if len(textList) > 0:
 		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
