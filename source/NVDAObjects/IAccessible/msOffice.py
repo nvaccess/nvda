@@ -168,7 +168,6 @@ class CommandBarListItem(IAccessible):
 		if matchRGB:
 			import colors
 
-			rgb = colors.RGB.fromString(name)  # noqa: F841
 			# Translators: a color, broken down into its RGB red, green, blue parts.
 			return _("RGB red {rgb.red}, green {rgb.green}, blue {rgb.blue}").format(
 				rgb=colors.RGB.fromString(name),
