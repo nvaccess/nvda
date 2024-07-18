@@ -2979,7 +2979,7 @@ Palauta oletukset -painike palauttaa asetusten oletusarvot, vaikka vahvistusvali
 Oletusarvojen palauttaminen voi olla joskus tarpeen, kun asetuksia on muutettu.
 Näin voi tehdä myös silloin, jos ei ole varma, onko asetuksia muutettu.
 
-##### Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
+##### Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
 
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
 Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä, pistenäyttö- ja syntetisaattoriajureita sekä näönparannuksen tarjoajia erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
@@ -2987,7 +2987,7 @@ Kuten niiden vastineet lisäosissa, nämä moduulit ladataan NVDA:ta käynnistet
 Tämä asetus on oletusarvoisesti poissa käytöstä, mikä varmistaa, ettei NVDA suorita testaamatonta koodia käyttäjän tietämättä.
 Jos haluat jakaa koodiasi muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
 
-##### Avaa kehittäjien scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
+##### Avaa kehittäjän Scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
 
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjien scratchpad-hakemistosta.
