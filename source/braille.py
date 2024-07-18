@@ -403,34 +403,34 @@ class FormattingMarker(NamedTuple):
 fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
 	"bold": FormattingMarker(
 		# Translators: Brailled at the start of bold text.
-		# This is the English letter "B" in braille.
+		# This is the English letter "b" in braille.
 		start=pgettext("braille formatting symbol", "⠃"),
 		# Translators: Brailled at the end of bold text.
-		# This is the English letter "B" plus dot 7 in braille.
+		# This is the English letter "b" plus dot 7 in braille.
 		end=pgettext("braille formatting symbol", "⡃"),
 	),
 	"italic": FormattingMarker(
 		# Translators: Brailled at the start of italic text.
-		# This is the English letter "I" in braille.
+		# This is the English letter "i" in braille.
 		start=pgettext("braille formatting symbol", "⠊"),
 		# Translators: Brailled at the end of italic text.
-		# This is the English letter "I" plus dot 7 in braille.
+		# This is the English letter "i" plus dot 7 in braille.
 		end=pgettext("braille formatting symbol", "⡊"),
 	),
 	"underline": FormattingMarker(
 		# Translators: Brailled at the start of underlined text.
-		# This is the English letter "U" in braille.
+		# This is the English letter "u" in braille.
 		start=pgettext("braille formatting symbol", "⠥"),
 		# Translators: Brailled at the end of underlined text.
-		# This is the English letter "U" plus dot 7 in braille.
+		# This is the English letter "u" plus dot 7 in braille.
 		end=pgettext("braille formatting symbol", "⡥"),
 	),
 	"strikethrough": FormattingMarker(
 		# Translators: Brailled at the start of strikethrough text.
-		# This is the English letter "S" in braille.
+		# This is the English letter "s" in braille.
 		start=pgettext("braille formatting symbol", "⠎"),
 		# Translators: Brailled at the end of strikethrough text.
-		# This is the English letter "S" plus dot 7 in braille.
+		# This is the English letter "s" plus dot 7 in braille.
 		end=pgettext("braille formatting symbol", "⡎"),
 	),
 }
