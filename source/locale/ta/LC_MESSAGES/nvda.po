@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 04:18+0000\n"
-"PO-Revision-Date: 2024-07-15 00:36\n"
+"POT-Creation-Date: 2024-07-17 08:37+0000\n"
+"PO-Revision-Date: 2024-07-18 02:26\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -3290,14 +3290,14 @@ msgstr "நீட்சிநிரல்கள் மீதான சில ச
 #. for a vision enhancement provider
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: core.py:118 updateCheck.py:302 updateCheck.py:577 updateCheck.py:733
-#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:144
-#: gui\addonGui.py:236 gui\addonGui.py:252 gui\configProfiles.py:176
+#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:142
+#: gui\addonGui.py:249 gui\addonGui.py:264 gui\configProfiles.py:176
 #: gui\configProfiles.py:202 gui\configProfiles.py:252
 #: gui\configProfiles.py:263 gui\configProfiles.py:268
 #: gui\configProfiles.py:305 gui\configProfiles.py:466
 #: gui\configProfiles.py:478 gui\configProfiles.py:484 gui\inputGestures.py:799
-#: gui\inputGestures.py:813 gui\installerGui.py:100 gui\installerGui.py:472
-#: gui\installerGui.py:487 gui\installerGui.py:559 gui\logViewer.py:100
+#: gui\inputGestures.py:813 gui\installerGui.py:100 gui\installerGui.py:474
+#: gui\installerGui.py:489 gui\installerGui.py:561 gui\logViewer.py:100
 #: gui\logViewer.py:128 gui\message.py:142 gui\settingsDialogs.py:977
 #: gui\settingsDialogs.py:4625 gui\settingsDialogs.py:4969
 #: gui\startupDialogs.py:122
@@ -3344,7 +3344,7 @@ msgid "Loading NVDA. Please wait..."
 msgstr "என்விடிஏ ஏற்றப்படுகிறது. அருள்கூர்ந்து காத்திருக்கவும்..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:819
+#: core.py:822
 msgid "NVDA started"
 msgstr "என்விடிஏ துவங்கிவிட்டது"
 
@@ -7916,7 +7916,7 @@ msgstr "பிறகு நினைவூட்டுக (&L)"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:445 gui\addonGui.py:344
+#: updateCheck.py:445 gui\addonGui.py:356
 msgid "&Close"
 msgstr "மூடுக (&C)"
 
@@ -8077,7 +8077,7 @@ msgstr "நீட்சிநிரல்க்கு ஆதரவில்ல�
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #. The %s will be replaced with the path to the add-on that could not be installed.
-#: addonStore\install.py:97
+#: addonStore\install.py:96
 #, python-format
 msgctxt "addonStore"
 msgid "Failed to install add-on from %s"
@@ -11247,19 +11247,19 @@ msgstr "அருள்கூர்ந்து காத்திருக்�
 
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
-#: gui\addonGui.py:30
+#: gui\addonGui.py:31
 msgid "Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"
 msgstr "நீட்சிநிரல்களில் மாற்றங்கள் செய்யப்பட்டுள்ளன. மாற்றங்களைச் செயலிற்குக் கொண்டு வர என்விடிஏவை மறுதுவக்க வேண்டும். இப்பொழுது மறுதுவக்க விரும்புகிறீர்களா?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:35
+#: gui\addonGui.py:36
 msgid "Restart NVDA"
 msgstr "என்விடிஏவை மறுதுவக்குக"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:340
+#: gui\addonGui.py:65 gui\addonGui.py:103 gui\addonGui.py:352
 msgid "&About add-on..."
 msgstr "நீட்சிநிரல் குறித்து... (&A)"
 
@@ -11268,7 +11268,7 @@ msgstr "நீட்சிநிரல் குறித்து... (&A)"
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. agree to enabling the curtain.
-#: gui\addonGui.py:72 gui\startupDialogs.py:303
+#: gui\addonGui.py:73 gui\startupDialogs.py:303
 #: visionEnhancementProviders\screenCurtain.py:180
 msgid "&Yes"
 msgstr "ஆம் (&Y)"
@@ -11278,91 +11278,91 @@ msgstr "ஆம் (&Y)"
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. disagree to enabling the curtain.
-#: gui\addonGui.py:82 gui\startupDialogs.py:307
+#: gui\addonGui.py:83 gui\startupDialogs.py:307
 #: visionEnhancementProviders\screenCurtain.py:189
 msgid "&No"
 msgstr "இல்லை (&N)"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:260
+#: gui\addonGui.py:111 gui\nvdaControls.py:260
 msgid "OK"
 msgstr "சரி"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
-#: gui\addonGui.py:142
+#: gui\addonGui.py:140
 #, python-format
 msgid "Failed to open add-on package file at %s - missing file or invalid file format"
 msgstr "%s நீட்சிநிரல் தொகுப்பினைத் திறப்பதில் தோல்வி - இல்லாத கோப்பு அல்லது ஏற்க முடியாத வடிவூட்டம்"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:172
+#: gui\addonGui.py:170
 msgid "Add-on Installation"
 msgstr "நீட்சிநிரல் நிறுவுதல்"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#: gui\addonGui.py:177
+#: gui\addonGui.py:175
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "{summary} நீட்சிநிரலின் {newVersion} பதிப்பை நிறுவ இருக்கிறீர்கள், இது ஏற்கெனவே நிறுவப்பட்டுள்ளதாகத் தோன்றுகிறது. இருப்பினும் இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:185
+#: gui\addonGui.py:183
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "{summary} நீட்சிநிரலின் ஒரு பதிப்பு ஏற்கெனவே நிறுவப்பட்டுள்ளது. {curVersion} பதிப்பை, {newVersion} என்கிற புதியப் பதிப்பைக் கொண்டு  இற்றைப்படுத்த விரும்புகிறீர்களா?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:214
+#: gui\addonGui.py:226
 msgid "Installing Add-on"
 msgstr "நீட்சிநிரல் நிறுவப்படுகிறது"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:216
+#: gui\addonGui.py:228
 msgid "Please wait while the add-on is being installed."
 msgstr "நீட்சிநிரல் நிறுவப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:234
+#: gui\addonGui.py:247
 #, python-format
 msgid "Failed to install add-on from %s"
 msgstr "%s தொகுப்பில் இருக்கும் நீட்சிநிரலின் நிறுவுதல் தோல்வியடைந்தது"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-#: gui\addonGui.py:250
+#: gui\addonGui.py:262
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "விண்டோஸ் ஸ்டோர் பதிப்பு என்விடிஏவில் நீட்சிநிரல்களை நிறுவ இயலாது"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:306
+#: gui\addonGui.py:318
 msgid "Incompatible Add-ons"
 msgstr "இணக்கமற்ற நீட்சிநிரல்கள்"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:316
+#: gui\addonGui.py:328
 msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "கீழ் காணப்படும் நீட்சிநிரல்கள் என்விடிஏ {} பதிப்புடன் இணக்கமாக இல்லை. இவைகளை முடுக்க இயலாது. நீட்சிநிரலின் பதிப்பாளரை உதவிக்கு தொடர்புகொள்ளவும்."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:324
+#: gui\addonGui.py:336
 msgid "Incompatible add-ons"
 msgstr "இணக்கமற்ற நீட்சிநிரல்கள்"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:332
+#: gui\addonGui.py:344
 msgid "Package"
 msgstr "தொகுப்பு"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:334
+#: gui\addonGui.py:346
 msgid "Version"
 msgstr "பதிப்பு"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:336
+#: gui\addonGui.py:348
 msgid "Incompatible reason"
 msgstr "இணக்கமின்மையின் காரணம்"
 
@@ -11767,7 +11767,7 @@ msgstr "கோப்பினை நீக்கவோ, அழித்தெழ
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:85 gui\installerGui.py:551
+#: gui\installerGui.py:85 gui\installerGui.py:553
 msgid "File in Use"
 msgstr "கோப்பு பயன்பாட்டில் உள்ளது"
 
@@ -11794,7 +11794,7 @@ msgstr "தற்பொழுது நிறுவப்பட்டுள்�
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
-#: gui\installerGui.py:113 gui\installerGui.py:570 gui\settingsDialogs.py:980
+#: gui\installerGui.py:113 gui\installerGui.py:572 gui\settingsDialogs.py:980
 msgid "Success"
 msgstr "வெற்றி"
 
@@ -11848,7 +11848,7 @@ msgid "Copy &portable configuration to current user account"
 msgstr "கொண்டுசெல்லத்தக்க அமைவடிவத்தை தற்போதைய பயனர் கணக்கிற்குப் படியெடுக்கவும் (&P)"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui\installerGui.py:240 gui\installerGui.py:452
+#: gui\installerGui.py:240 gui\installerGui.py:454
 msgid "&Continue"
 msgstr "தொடர்க (&C)"
 
@@ -11866,114 +11866,114 @@ msgstr "நிறுவுதலைத் தொடருங்கள் (பர
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:360
+#: gui\installerGui.py:365
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr "'{portableDirectory}' அடைவில் கொண்டுசெல்லத்தக்க படி ஒன்று ஏற்கெனவே உள்ளது. அதைத் தாங்கள் இற்றாக்க வேண்டுமா?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:365
+#: gui\installerGui.py:370
 msgid "Portable Copy Exists"
 msgstr "கொண்டுசெல்லத்தக்கப் படி ஏற்கெனவே உள்ளது"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:373
+#: gui\installerGui.py:377
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr "குறிப்பிட்ட '{portableDirectory}' அடைவு வெறுமையாக இல்லை. மேற்கொண்டு தொடர்ந்தால், இவ்வடைவில் இருக்கும் கோப்புகள் அழிக்கப்பட்டு, புது கோப்புகள் மாற்றியமர்த்தப்படும். இக்கோப்புறையின் உள்ளடக்கங்களை அழித்தெழுத விரும்புகிறீர்களா? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:379
+#: gui\installerGui.py:383
 msgid "Directory Exists"
 msgstr "அடைவு உள்ளது"
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:409
+#: gui\installerGui.py:411
 msgid "Create Portable NVDA"
 msgstr "கொண்டுசெல்லத்தக்க என்விடிஏவை உருவாக்குக"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:414
+#: gui\installerGui.py:416
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படியை உருவாக்க, வழிதடத்தையும், பிற விருப்பத் தேர்வுகளையும் தெரிவுச் செய்த பின்னர், 'தொடர்க' பொத்தானை அழுத்தவும்"
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:419
+#: gui\installerGui.py:421
 msgid "Portable directory:"
 msgstr "கொண்டுசெல்லத்தக்க அடைவு:"
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:424
+#: gui\installerGui.py:426
 msgid "Browse..."
 msgstr "உலாவுக..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:427
+#: gui\installerGui.py:429
 msgid "Select portable directory"
 msgstr "கொண்டுசெல்லத்தக்க அடைவைத் தெரிவுச் செய்க"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:435
+#: gui\installerGui.py:437
 msgid "Create a &new folder for the portable copy"
 msgstr "புதிய கொண்டுசெல்லத்தக்கப் படிக்கான கோப்புறையை உருவாக்குக"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:440
+#: gui\installerGui.py:442
 msgid "Copy current &user configuration"
 msgstr "தற்போதைய பயனர் அமைவடிவத்தைப் படியெடுத்திடுக (&U)"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:446
+#: gui\installerGui.py:448
 msgid "&Start the new portable copy after creation"
 msgstr "புதிய கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்பட்டவுடன் அதை இயக்குக (&S)"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:470
+#: gui\installerGui.py:472
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "கொண்டுசெல்லத்தக்கப் படியை உருவாக்க வேண்டிய அடைவைக் குறிப்பிடவும்."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:482
+#: gui\installerGui.py:484
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (%temp%, %homepath%, etc.)."
 msgstr "கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்பட வேண்டிய அறுதியானப் பாதையைக் குறிப்பிடவும். %temp%, %homepath% போன்ற கணினி மாறிகளும் இதில் உள்ளடங்கலாம்."
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:533
+#: gui\installerGui.py:535
 msgid "Portable copy creation cancelled."
 msgstr "கொண்டுசெல்லத்தக்கப் படியின் உருவாக்கம் விலக்கப்பட்டது."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:538
+#: gui\installerGui.py:540
 msgid "Creating Portable Copy"
 msgstr "கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்படுகிறது"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:540
+#: gui\installerGui.py:542
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படி உருவாக்கப்படுகிறது, அருள்கூர்ந்து காத்திருக்கவும்."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:549
+#: gui\installerGui.py:551
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "கோப்பினை நீக்கவோ, அழித்தெழுதவோ என்விடிஏவினால் இயலவில்லை."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:557
+#: gui\installerGui.py:559
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr "கொண்டுசெல்லத்தக்க என்விடிஏ உருவாக்குவதில் தோல்வி: {error}."
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:568
+#: gui\installerGui.py:570
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr "என்விடிஏவின் கொண்டுசெல்லத்தக்கப் படி இவ்விடத்தில் வெற்றிகரமாக உருவாக்கப்பட்டுள்ளது: {dir}"
