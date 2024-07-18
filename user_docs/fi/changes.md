@@ -1687,7 +1687,7 @@ Tässä versiossa on korjattu seuraavat bugit:
 Tämän version merkittävimpiä uusia ominaisuuksia ovat suorituskyvyn parannukset sekä Microsoft wordia että Exceliä käytettäessä, vakauden ja tietoturvan parannukset, kuten tuki versioyhteensopivuustietoja sisältäville lisäosille, sekä monet muut ohjelmavirheiden korjaukset.
 
 Huom: Tästä versiosta alkaen käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriajureita ei enää ladata automaattisesti NVDA:n asetushakemistosta. 
-Ne tulisi asentaa osana NVDA:n lisäosaa. Lisäosien kehittäjät voivat testata koodiaan sijoittamalla sen scratchpad-hakemistoon, joka löytyy NVDA:n asetushakemistosta, jos Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta -asetus on otettu käyttöön NVDA:n uudesta Lisäasetukset-asetuspaneelista.
+Ne tulisi asentaa osana NVDA:n lisäosaa. Lisäosien kehittäjät voivat testata koodiaan sijoittamalla sen Scratchpad-hakemistoon, joka löytyy NVDA:n asetushakemistosta, jos "Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta" -asetus on otettu käyttöön NVDA:n uudesta Lisäasetukset-asetuspaneelista.
 Nämä muutokset ovat välttämättömiä mukautetun koodin yhteensopivuuden varmistamiseksi, jotta NVDA ei lakkaa toimimasta, kun tällainen koodi ei ole enää yhteensopivaa uudempien versioiden kanssa.
 Saat lisätietoja tästä sekä lisäosien paremmasta versioinnista lukemalla alta tehdyistä muutoksista.
 
