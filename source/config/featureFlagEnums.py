@@ -132,9 +132,9 @@ class FontAttributesBrailleModeFlag(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self) -> dict["FontAttributesBrailleModeFlag", str]:
 		return {
-			# Translators: The label for a braille mode
+			# Translators: Label for a way of outputting formatting in braille.
 			FontAttributesBrailleModeFlag.LIBLOUIS: _("Liblouis"),
-			# Translators: The label for a braille mode
+			# Translators: Label for a way of outputting formatting in braille.
 			FontAttributesBrailleModeFlag.TAGS: _("Tags"),
 		}
 

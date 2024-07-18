@@ -1197,16 +1197,18 @@ def _getFormattingTags(
 	fieldCache: dict[str, str],
 	formatConfig: dict[str, bool],
 ) -> str | None:
-	"""
-	Get the formatting tags for the given field and cache.
+	"""Get the formatting tags for the given field and cache.
 
-	Args:
-		field: The format field.
-		fieldCache (dict): The previous format field.
-		formatConfig: The user's format config.
+	Formatting tags are calculated according to the preferences passed in :param:`formatConfig`.
 
-	Returns:
-		The formatting tag as a string, or None if no formatting is applied.
+	:param field: The format current field.
+	:type field: dict[str, str]
+	:param fieldCache: The previous format field.
+	:type fieldCache: dict[str, str]
+	:param formatConfig: The user's formatting preferences.
+	:type formatConfig: dict[str, bool]
+	:return: The braille formatting tag as a string, or None if no pertinant formatting is applied.
+	:rtype: str | None
 	"""
 	textList: list[str] = []
 	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
@@ -1217,6 +1219,19 @@ def _getFormattingTags(
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
 
 def _appendFormattingMarker(attribute: str, marker: FormattingMarker, textList: list[str], field: dict[str, str], fieldCache: dict[str, str]) -> None:
+	"""Append a formatting marker to the text list if the attribute has changed.
+
+	:param attribute: The attribute to check.
+	:type attribute: str
+	:param marker: The formatting marker to use.
+	:type marker: FormattingMarker
+	:param textList: The list of marker strings to append to.
+	:type textList: list[str]
+	:param field: The current format field.
+	:type field: dict[str, str]
+	:param fieldCache: The previous format field.
+	:type fieldCache: dict[str, str]
+	"""
 	newVal = field.get(attribute, False)
 	oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
 	if newVal and not oldVal:
