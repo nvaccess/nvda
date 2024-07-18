@@ -1190,7 +1190,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 
 
 def _getFormattingTags(
-	field: dict[str, str], fieldCache: dict[str, str], formatConfig: dict[str, bool]
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+	formatConfig: dict[str, bool],
 ) -> str | None:
 	"""
 	Get the formatting tags for the given field and cache.
