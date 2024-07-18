@@ -94,7 +94,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			and obj.parent
 			and controlTypes.state.State.EDITABLE in obj.parent.states
 		):
-			controlField['content'] = obj.name
+			controlField["content"] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
