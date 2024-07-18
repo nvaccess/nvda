@@ -1536,7 +1536,7 @@ Selecting a form field and pressing enter or the Move to button moves to that fi
 #### Reporting Notes {#ExcelReportingComments}
 
 <!-- KC:beginInclude -->
-To report any notes for the currently focused cell, press NVDA+alt+c.
+To report any notes for the currently focused cell, press `NVDA+alt+c`.
 Pressing twice shows the information in a browsable message.
 In Microsoft 2016, 365 and newer, the classic comments in Microsoft Excel have been renamed to "notes".
 <!-- KC:endInclude -->
