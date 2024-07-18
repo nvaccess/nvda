@@ -1845,10 +1845,9 @@ class ExcelCell(ExcelBase):
 	# In Office 2016, 365 and newer, comments are now called notes.
 	# Thus, messages dialog title and so on should refer to notes.
 	@script(
-		# Translators: the description  for a script for Excel
 		description=_(
 			# Translators: the description for a script for Excel
-			"Reports the note on the current cell" "If pressed twice, presents the information in browse mode"
+			"Reports the note on the current cell. If pressed twice, presents the information in browse mode"
 		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
