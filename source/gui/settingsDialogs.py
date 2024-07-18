@@ -4432,7 +4432,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			# Translators: This is a label for a combo-box in the Braille settings panel.
 			labelText=_("Formatting &display"),
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=("braille", "fontAttributeDisplay"),
+			keyPath=("braille", "fontFormattingDisplay"),
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsFormattingDisplay", self.formattingDisplayCombo)

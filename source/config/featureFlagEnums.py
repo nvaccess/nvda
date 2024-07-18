@@ -122,7 +122,7 @@ class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	NOTIFICATIONS = enum.auto()
 
 
-class FontAttributesBrailleModeFlag(DisplayStringEnum):
+class FontFormattingBrailleModeFlag(DisplayStringEnum):
 	"""Enumeration containing the possible ways to display formatting changes in braille."""
 
 	DEFAULT = enum.auto()
@@ -130,12 +130,12 @@ class FontAttributesBrailleModeFlag(DisplayStringEnum):
 	TAGS = enum.auto()
 
 	@property
-	def _displayStringLabels(self) -> dict["FontAttributesBrailleModeFlag", str]:
+	def _displayStringLabels(self) -> dict["FontFormattingBrailleModeFlag", str]:
 		return {
 			# Translators: Label for a way of outputting formatting in braille.
-			FontAttributesBrailleModeFlag.LIBLOUIS: _("Liblouis"),
+			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
 			# Translators: Label for a way of outputting formatting in braille.
-			FontAttributesBrailleModeFlag.TAGS: _("Tags"),
+			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
 		}
 
 

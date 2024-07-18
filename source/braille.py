@@ -48,7 +48,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 )
-from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontAttributesBrailleModeFlag
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
 import controlTypes
 import api
@@ -1182,7 +1182,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				textList.append(text)
 
 	if (
-		config.conf["braille"]["fontAttributeDisplay"].calculated() == FontAttributesBrailleModeFlag.TAGS
+		config.conf["braille"]["fontFormattingDisplay"].calculated() == FontFormattingBrailleModeFlag.TAGS
 		and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None
 	):
 		textList.append(formattingTags)
@@ -1288,8 +1288,8 @@ class TextInfoRegion(Region):
 		if not (
 			(formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE)
 			and (
-				config.conf["braille"]["fontAttributeDisplay"].calculated()
-				== FontAttributesBrailleModeFlag.LIBLOUIS
+				config.conf["braille"]["fontFormattingDisplay"].calculated()
+				== FontFormattingBrailleModeFlag.LIBLOUIS
 			)
 		):
 			return typeform
