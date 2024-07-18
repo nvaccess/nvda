@@ -18,7 +18,7 @@
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
   * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
-* When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille as part of table header information defined with the set row header and set column header commands. (#7212)
+* When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
 
 
 ### Changes for Developers
