@@ -391,14 +391,14 @@ USB_PORT = ("usb", _("USB"))
 BLUETOOTH_PORT = ("bluetooth", _("Bluetooth"))
 
 
-class formattingSymbol(NamedTuple):
+class FormattingSymbol(NamedTuple):
 	attribute: str
 	startSymbol: str
 	endSymbol: str
 
 
-fontAttributeBrailleTags: tuple[formattingSymbol] = (
-	formattingSymbol(
+fontAttributeBrailleTags: tuple[FormattingSymbol] = (
+	FormattingSymbol(
 		attribute="bold",
 		# Translators: Brailled at the start of bold text.
 		# This is the English letter "B" in braille.
@@ -407,7 +407,7 @@ fontAttributeBrailleTags: tuple[formattingSymbol] = (
 		# This is the English letter "B" plus dot 7 in braille.
 		endSymbol=pgettext("braille formatting symbol", "⡃"),
 	),
-	formattingSymbol(
+	FormattingSymbol(
 		attribute="italic",
 		# Translators: Brailled at the start of italic text.
 		# This is the English letter "I" in braille.
@@ -416,7 +416,7 @@ fontAttributeBrailleTags: tuple[formattingSymbol] = (
 		# This is the English letter "I" plus dot 7 in braille.
 		endSymbol=pgettext("braille formatting symbol", "⡊"),
 	),
-	formattingSymbol(
+	FormattingSymbol(
 		attribute="underline",
 		# Translators: Brailled at the start of underlined text.
 		# This is the English letter "U" in braille.
@@ -425,7 +425,7 @@ fontAttributeBrailleTags: tuple[formattingSymbol] = (
 		# This is the English letter "U" plus dot 7 in braille.
 		endSymbol=pgettext("braille formatting symbol", "⡥"),
 	),
-	formattingSymbol(
+	FormattingSymbol(
 		attribute="strikethrough",
 		# Translators: Brailled at the start of strikethrough text.
 		# This is the English letter "S" in braille.
