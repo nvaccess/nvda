@@ -1916,7 +1916,7 @@ For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" 
 Dit aspect van normalisering biedt tevens steun bij het lezen van vergelijkingen in de  equation editor van Microsoft Word.
 
 1. Normalisering mbt samengestelde (letter)tekens.
-Het letterteken "ü" (u with umlaut/diaeresis) bijvoorbeeld, een veelvoorkomend letterteken in talen zoals Duits en Turks kan op twee manieren worden weergegeven.
+Het letterteken "ü" (u with umlaut/diaeresis) bijvoorbeeld, een veelvoorkomend letterteken in talen zoals Duits en Turks kan op twee manieren worden weergegeven:
   1. Een op zichzelfstaand unicode-letterteken (ü)
   1. Een uitsplitsing in twee lettertekens (ü), namelijk de normale latijnse letter u en een diakritisch, modificerend teken
   Unicodenormalisering zorgt ervoor dat er bij alle spraakuitvoer maar een vorm wordt gebruikt, te weten het enkelvoudige letterteken.
@@ -2944,7 +2944,7 @@ Zo krijg je voor geïnstalleerde beta add-ons, alleen meldingen  over updates bi
 
 |Optie |Gedrag |
 |---|---|
-|Ingeschakeld |Melden als er updates voor add-ons binnen hetzelfde kanaal beschikbaar zijn |
+|Melden |Melden als er updates voor add-ons binnen hetzelfde kanaal beschikbaar zijn |
 |Uitgeschakeld |Niet automatisch controleren op updates van add-ons |
 
 #### Windows OCR {#Win10OcrSettings}
@@ -3656,7 +3656,7 @@ Hierover vindt u meer informatie in de uitgebreide rubriek: [Add-ons en de Add-o
 
 ### Draagbare versie aanmaken {#CreatePortableCopy}
 
-Hiermee opent u een dialoogvenster dat u in staat stelt een draagbare kopie van NVDA aan te maken vanuit de geïnstalleerde versie.
+Hiermee open je een dialoogvenster waarmee je een draagbare kopie van NVDA aan kunt maken vanuit de  versie die op dit moment actief is.
 
 Het dialoogvenster dat u in staat stelt een draagbare versie van NVDA aan te maken of NVDA op deze PC te installeren, laat u een pad naar een map kiezen waarin NVDA de draagbare versie moet aanmaken of waarin NVDA moet worden geïnstalleerd.
 
