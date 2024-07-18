@@ -329,6 +329,7 @@ INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
 INPUT_END_IND = " ⣹"
 
+
 class FormatTagDelimiter(StrEnum):
 	"""Delimiters for the start and end of format tags.
 
@@ -337,6 +338,7 @@ class FormatTagDelimiter(StrEnum):
 
 	START = "⣋"
 	END = "⣙"
+
 
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
@@ -396,6 +398,7 @@ class FormattingMarker(NamedTuple):
 
 	As these are shapes, they should be provided in unicode braille.
 	"""
+
 	start: str
 	end: str
 
@@ -1218,7 +1221,14 @@ def _getFormattingTags(
 	if len(textList) > 0:
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
 
-def _appendFormattingMarker(attribute: str, marker: FormattingMarker, textList: list[str], field: dict[str, str], fieldCache: dict[str, str]) -> None:
+
+def _appendFormattingMarker(
+	attribute: str,
+	marker: FormattingMarker,
+	textList: list[str],
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+) -> None:
 	"""Append a formatting marker to the text list if the attribute has changed.
 
 	:param attribute: The attribute to check.
