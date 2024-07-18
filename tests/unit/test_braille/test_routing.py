@@ -202,3 +202,81 @@ class TestTextInfoRegionRouting(unittest.TestCase):
 		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		ti.expand(textInfos.UNIT_CHARACTER)
 		self.assertEqual(ti.text, testText[1:4])
+
+	def test_routeToMultipleEmoji(self):
+		testText = "👩🏽‍🚀👨🏻‍🚒"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[:2])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[2:4])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 4  # Position of the second emoji
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[4:6])
+
+	def test_routeToZeroWidthJoiner(self):
+		testText = "👨‍👩‍👧‍👦"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[:1])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:2])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 2  # Position of the second family member
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[2:3])
+
+	def test_routeToVariationSelector(self):
+		testText = "✌️"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[:1])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:2])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 1  # Position of the variation selector
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:2])
+
+	def test_routeToMixedContent(self):
+		testText = "Hello 👋, how are you? רָבּ"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[:1])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:2])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 6  # Position of the emoji
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[6:7])
+		index = 18  # Position of the Hebrew composite character
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[18:21])
