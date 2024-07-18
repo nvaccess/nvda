@@ -1208,22 +1208,21 @@ def _getFormattingTags(
 	Returns:
 		The formatting tag as a string, or None if no formatting is applied.
 	"""
-
-	def appendFormatSymbol(attribute: str, startSymbol: str, endSymbol: str) -> None:
-		newVal = field.get(attribute, False)
-		oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
-		if newVal and not oldVal:
-			textList.append(startSymbol)
-		elif oldVal and not newVal:
-			textList.append(endSymbol)
-
 	textList: list[str] = []
 	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
 		for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
-			appendFormatSymbol(fontAttribute, formattingMarker.start, formattingMarker.end)
+			_appendFormattingMarker(fontAttribute, formattingMarker, textList, field, fieldCache)
 	if len(textList) > 0:
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
+
+def _appendFormattingMarker(attribute: str, marker: FormattingMarker, textList: list[str], field: dict[str, str], fieldCache: dict[str, str]) -> None:
+	newVal = field.get(attribute, False)
+	oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
+	if newVal and not oldVal:
+		textList.append(marker.start)
+	elif oldVal and not newVal:
+		textList.append(marker.end)
 
 
 class TextInfoRegion(Region):
