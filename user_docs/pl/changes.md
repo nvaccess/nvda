@@ -19,7 +19,7 @@ Dodano nieprzydzielone skróty klawiszowe do pionowej i poziomej nawigacji kół
 Naprawione niektóre błędy ogólnie w panelu Emoji w systemie Windows 11 i historii schowka.
 Naprawiono błędy także w przeglądarkach internetowych.  Poprawki dotyczą komunikatów o zgłaszaniu błędów, odczytu figur i podpisów, oznaczeń tabel a także elementów meni pól wyboru/przycisków opcji.
 
-Liblouis został zaktualizowany z dodanymi nowymi tablicami brajlowskimi dla serbskiej cyrylicy, Jidysz, kilka starożytnych języków i tureckiego.
+Liblouis został zaktualizowany z dodanymi nowymi tablicami brajlowskimi dla serbskiej cyrylicy, Jidysz, kilka starożytnych języków, tureckiego i międzynarodowego alfabetu fonetycznego.
 eSpeak został zaktualizowany z dodanym wsparciem dla języka karakałpackiego.
 Unicode CLDR także został zaktualizowany.
 
@@ -50,6 +50,7 @@ Unicode CLDR także został zaktualizowany.
       * Jidysz.
       * niektóre języki starożytne: hebrajski biblijny, akadyjski, syryjski, ugarycki i transliterowany tekst pisma klinowego.
       * tureckie skróty. (#16735)
+      * międzynarodowy alfabet fonetyczny. (#16773)
   * Zaktualizowano NSIS do wersji 3.10 (#16674, @dpy013)
   * Zaktualizowano markdown do wersji 3.6 (#16725, @dpy013)
   * Zaktualizowano nh3 to 0.2.17 (#16725, @dpy013)
