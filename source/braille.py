@@ -4,6 +4,7 @@
 # Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
+from enum import StrEnum
 import itertools
 import typing
 from typing import (
@@ -328,11 +329,14 @@ INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
 INPUT_END_IND = " ⣹"
 
-# Delimiters for the start and end of format tags.
-FORMAT_TAG_START_IND = "⣋"
-"""Unicode braille indicator at the start of a formatt tag."""
-FORMAT_TAG_END_IND = "⣙"
-"""Unicode braille indicator at the end of a formatt tag."""
+class FormatTagDelimiter(StrEnum):
+	"""Delimiters for the start and end of format tags.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+
+	START = "⣋"
+	END = "⣙"
 
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
@@ -1220,7 +1224,7 @@ def _getFormattingTags(
 		for fontAttribute in fontAttributeBrailleTags:
 			appendFormatSymbol(fontAttribute.attribute, fontAttribute.startSymbol, fontAttribute.endSymbol)
 	if len(textList) > 0:
-		return f"{FORMAT_TAG_START_IND}{''.join(textList)}{FORMAT_TAG_END_IND}"
+		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
 
 
 class TextInfoRegion(Region):
