@@ -391,50 +391,49 @@ USB_PORT = ("usb", _("USB"))
 BLUETOOTH_PORT = ("bluetooth", _("Bluetooth"))
 
 
-class FormattingSymbol(NamedTuple):
-	attribute: str
-	startSymbol: str
-	endSymbol: str
+class FormattingMarker(NamedTuple):
+	"""A pair of braille symbols that indicate the start and end of a particular type of font formatting.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+	start: str
+	end: str
 
 
-fontAttributeBrailleTags: tuple[FormattingSymbol] = (
-	FormattingSymbol(
-		attribute="bold",
+fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
+	"bold": FormattingMarker(
 		# Translators: Brailled at the start of bold text.
 		# This is the English letter "B" in braille.
-		startSymbol=pgettext("braille formatting symbol", "⠃"),
+		start=pgettext("braille formatting symbol", "⠃"),
 		# Translators: Brailled at the end of bold text.
 		# This is the English letter "B" plus dot 7 in braille.
-		endSymbol=pgettext("braille formatting symbol", "⡃"),
+		end=pgettext("braille formatting symbol", "⡃"),
 	),
-	FormattingSymbol(
-		attribute="italic",
+	"italic": FormattingMarker(
 		# Translators: Brailled at the start of italic text.
 		# This is the English letter "I" in braille.
-		startSymbol=pgettext("braille formatting symbol", "⠊"),
+		start=pgettext("braille formatting symbol", "⠊"),
 		# Translators: Brailled at the end of italic text.
 		# This is the English letter "I" plus dot 7 in braille.
-		endSymbol=pgettext("braille formatting symbol", "⡊"),
+		end=pgettext("braille formatting symbol", "⡊"),
 	),
-	FormattingSymbol(
-		attribute="underline",
+	"underline": FormattingMarker(
 		# Translators: Brailled at the start of underlined text.
 		# This is the English letter "U" in braille.
-		startSymbol=pgettext("braille formatting symbol", "⠥"),
+		start=pgettext("braille formatting symbol", "⠥"),
 		# Translators: Brailled at the end of underlined text.
 		# This is the English letter "U" plus dot 7 in braille.
-		endSymbol=pgettext("braille formatting symbol", "⡥"),
+		end=pgettext("braille formatting symbol", "⡥"),
 	),
-	FormattingSymbol(
-		attribute="strikethrough",
+	"strikethrough": FormattingMarker(
 		# Translators: Brailled at the start of strikethrough text.
 		# This is the English letter "S" in braille.
-		startSymbol=pgettext("braille formatting symbol", "⠎"),
+		start=pgettext("braille formatting symbol", "⠎"),
 		# Translators: Brailled at the end of strikethrough text.
 		# This is the English letter "S" plus dot 7 in braille.
-		endSymbol=pgettext("braille formatting symbol", "⡎"),
+		end=pgettext("braille formatting symbol", "⡎"),
 	),
-)
+}
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
@@ -1221,8 +1220,8 @@ def _getFormattingTags(
 	textList: list[str] = []
 	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
 		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
-		for fontAttribute in fontAttributeBrailleTags:
-			appendFormatSymbol(fontAttribute.attribute, fontAttribute.startSymbol, fontAttribute.endSymbol)
+		for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
+			appendFormatSymbol(fontAttribute, formattingMarker.start, formattingMarker.end)
 	if len(textList) > 0:
 		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
 
