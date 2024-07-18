@@ -80,6 +80,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		uniqueID = obj.IA2UniqueID
 		if uniqueID is not None:
 			controlField["uniqueID"] = uniqueID
+		# #16631: Outlook.com /modern Outlook represent addresses in To/CC/BCC fields as labelled buttons.
+		# These buttons are non-contenteditable within a parent contenteditable.
+		# Ensure their label (name) is reported as the content
+		# as the caret cannot move through them.
+		if (
+			obj.role == controlTypes.role.Role.BUTTON
+			and controlTypes.state.State.EDITABLE not in obj.states
+			and obj.parent
+			and controlTypes.state.State.EDITABLE in obj.parent.states
+		):
+			controlField['content'] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
