@@ -20,7 +20,7 @@ Dodane su nedodijeljene geste za pomicanje kotačića miša vertikalno ili horiz
 Ispravljeno je nekoliko pogrešaka, prije svega u Windows 11 emoji panelu i povijesti međuspremnika.
 Dodane su ispravke u web preglednicima za čitanje poruka o pogreškama, figure, crteže, oznake tablica te potvrdne okvire i izborne gumbe.
 
-Liblouis je nadograđen sa dodanom podrškom za srpsku ćirilicu, Jidiš, nekoliko drevnih jezika i turski.
+Liblouis je nadograđen sa dodanom podrškom za srpsku ćirilicu, Jidiš, nekoliko drevnih jezika, turski i međunarodnu fonetsku abecedu.
 eSpeak je nadograđen sa dodanom podrškom za karakalpački.
 Unicode CLDR je također nadograđen.
 
@@ -31,8 +31,8 @@ Unicode CLDR je također nadograđen.
 * Dodana podrška za Unicode normalizaciju za govor i brajicu. (#11570, #16466 @LeonarddeR).
   * To može biti korisno kada je određeni znak nepoznat za govornu jedinicu ili ne postoji u brajičnoj tablici, ali ima kompatibilnu alternativu kao što su to na primjer podebljani ili kosi znakovi koji se uobičajeno koriste na društvenim mrežama.
   * To također omogućuje čitanje jednadžbi u Microsoft Word uređivaču jednadžbi. (#4631)
-  * Ovu funkciju možete uključiti za govor i brajicu u dijaloškom okviru postavki u pripadajućim kategorijama.
-* Od sada ćete biti podrazumijeavano obavješteni o novim ažuriranjima dodataka prilikom pokretanja NVDA. (#15035)
+  * Ovu značajku možete uključiti za govor i brajicu u dijaloškom okviru postavki u pripadajućim kategorijama.
+* Od sada ćete biti podrazumijevano obavješteni o novim ažuriranjima dodataka prilikom pokretanja NVDA. (#15035)
   * To se može isključiti u "Add-on Store" kategoriji u postavkama.
   * NVDA provjerava svakodnevno za ažuriranje NVDA dodataka.
   * Provjeravat će se ažuriranja samo za jedan kanal (na primjer instalirani beta dodaci će biti provjeravani iz beta kanala).
@@ -45,12 +45,13 @@ Unicode CLDR je također nadograđen.
     * Dodan novi jezik: karakalpački.
   * Nadograđen Unicode CLDR na inačicu 45.0. (#16507, @OzancanKaratas)
   * Nadograđen fast_diff_match_patch (koristi se za otkrivanje izmjena u naredbenom redku i drugom dinamičkom sadržaju) na inačicu 2.1.0. (#16508, @codeofdusk)
-  * Updated LibLouis brajični prevoditelj na inačicu [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+  * Nadograđen LibLouis brajični prevoditelj na inačicu [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
     * nove brajične tablice:
       * Srpski ćirilica.
       * Jidiš.
       * Nekoliko drevnih jezika: biblijski hebrejski, akadski, sirijski, ugaricki te transliterirani klinopis.
       * Turski kratkopis. (#16735)
+      * Međunarodna fonetska abeceda. (#16773)
   * Nadograđen NSIS na inačicu 3.10 (#16674, @dpy013)
   * Nadograđen markdown na inačicu 3.6 (#16725, @dpy013)
   * Nadograđen nh3 na inačicu 0.2.17 (#16725, @dpy013)
@@ -60,7 +61,7 @@ Unicode CLDR je također nadograđen.
 * U Python konzoli, zadnja neizvršena komanda više neće biti izgubljena prilikom kretanja po povijesti ulaza. (#16653, @CyrilleB79)
 * Unikatan anonimni identifikator sada se šalje kao dio neobaveznih statistika korištenja NVDA. (#16266)
 * Pri stvaranju prijenosne kopije, podrazumijevano će se automatski stvarati nova mapa.
-Od sada će se prikazivati upozorenje ako pokušate pisati unutar mape koja nije prazna. (#16684)
+Od sada će se prikazivati upozorenje ako pokušate pisati unutar mape koja nije prazna. (#16686)
 
 ### Ispravke grešaka
 
@@ -73,8 +74,8 @@ Od sada će se prikazivati upozorenje ako pokušate pisati unutar mape koja nije
   * Poruke o pogrešci zabilježene kao `aria-errormessage` sada se izgovaraju u Google Chromeu i Mozilla Firefoxu. (#8318)
   * Ako postoji, NVDA će sada koristiti `aria-labelledby` atribut za  dohvaćanje pristupačnih naziva tablica u Mozilla Firefoxu. (#5183)
   * NVDA će ispravno izgovarati stavke izbornika u obliku izbornih gumbi i potvrdnih okvira prilikom prvog otvaranja podizbornika u Google Chromeu i Mozilla Firefoxu. (#14550)
-  * Funkcionalnost pretrage u modusu čitanja NVDA čitača zaslona sada je točnija kada stranica sadrži emoji znakove. (#16317, @LeonarddeR)
-  * U Mozilla Firefoxu, NVDA sada ispravno čita trenutni znak, trenutnu riječ i trenutni redak kada se kursor nalazi na točci umetanja na kraju redka. (#3156, @jcsteh)
+  * Značajka pretrage u modusu čitanja NVDA čitača zaslona sada je točnija kada stranica sadrži emoji znakove. (#16317, @LeonarddeR)
+  * U Mozilla Firefoxu, NVDA sada ispravno čita trenutni znak, trenutnu riječ i trenutni redak kada se kursor nalazi na točki umetanja na kraju redka. (#3156, @jcsteh)
 * NVDA će sada ispravno čitati prijedloge automatskog popunjavanja u Eclipse i drugim okruženjima baziranima na Eclipseu u Windowsima 11. (#16416, @thgcode)
 * Unapređena pouzdanost automatskog čitanja teksta, osobito u aplikacijama naredbenog redka. (#15850, #16027, @Danstiv)
 * NVDA će ispravno izgovarati promjene u označavanju pri uređivanju teksta ćelije u Microsoft Excelu. (#15843)
@@ -84,8 +85,9 @@ Od sada će se prikazivati upozorenje ako pokušate pisati unutar mape koja nije
 * Pri ljepljenju u  Windows 10/11 kalkulator, NVDA sada ispravno čita cijeli broj koji je zalijepljen. (#16573, @TristanBurchett)
 * Govor se više ne gubi prilikom ponovnog povezivanja u sesiju udaljene radne površine. (#16722, @jcsteh)
 * Dodana je podrška za prečace za pregledavanje teksta za ime objekta u Visual Studio Codeu. (#16248, @Cary-Rowen)
-* U Mozilla Firefoxu, NVDA sada ispravno čita trenutni znak, trenutnu riječ i trenutni redak kada se kursor nalazi na točki umetanja na kraju redka. (#3156, @jcsteh)
 * Zvukovi NVDA sada se reproduciraju i na Mono audiouređajima. (#16770, @jcsteh)
+* NVDA će od sada čitati adrese prilikom kretanja po poljima do/kopija/skrivena kopija u prgramu outlook.com i suvremenom Outlooku. (#16856)
+* NVDA sada bolje rukuje pogreškama pri instalaciji dodataka. (#16704)
 
 ## 2024.2
 

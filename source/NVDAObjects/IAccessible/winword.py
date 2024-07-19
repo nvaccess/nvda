@@ -219,7 +219,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 							tempColumnNumber -= 1
 							continue
 						break
-					textList.append(headerCell.range.text)
+					# 7212: Filter the carriage return and bell character from header text.
+					textList.append(headerCell.range.text.removesuffix("\r\a"))
 			else:
 				for headerColumnNumber in range(info.columnNumber, info.columnNumber + info.colSpan):
 					tempRowNumber = rowNumber
@@ -230,7 +231,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 							tempRowNumber -= 1
 							continue
 						break
-					textList.append(headerCell.range.text)
+					# 7212: Filter the carriage return and bell character from header text.
+					textList.append(headerCell.range.text.removesuffix("\r\a"))
 			text = " ".join(textList)
 			if text:
 				return text
