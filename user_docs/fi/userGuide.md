@@ -437,7 +437,7 @@ Tällä asetuksella voit valita, kopioidaanko käynnissä olevan NVDA:n asetukse
 Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana tai [muissa suojatuissa ruuduissa](#SecureScreens) käytettäväksi.
 Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
 
-### Massamuistiversion luominen {#CreatingAPortableCopy}
+### Massamuistiversion luonti {#CreatingAPortableCopy}
 
 Jos luot massamuistiversion suoraan ladatusta NVDA:n asennuspaketista, paina Luo massamuistiversio -painiketta.
 Mikäli olet jo sulkenut tämän valintaikkunan tai käytät NVDA:n asennettua versiota, valitse Luo massamuistiversio -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
@@ -2944,7 +2944,7 @@ Esimerkiksi asennetuille lisäosien beetaversioille ilmoitetaan vain beetakanava
 
 | Asetus | Toiminta |
 |---|---|
-| Käytössä | Ilmoita, kun lisäosille on saatavilla päivityksiä samassa kanavassa |
+| Ilmoita | Ilmoita, kun lisäosille on saatavilla päivityksiä samassa kanavassa. |
 | Ei käytössä | Älä tarkista lisäosapäivityksiä automaattisesti |
 
 #### Windowsin tekstintunnistusasetukset {#Win10OcrSettings}
@@ -2979,7 +2979,7 @@ Palauta oletukset -painike palauttaa asetusten oletusarvot, vaikka vahvistusvali
 Oletusarvojen palauttaminen voi olla joskus tarpeen, kun asetuksia on muutettu.
 Näin voi tehdä myös silloin, jos ei ole varma, onko asetuksia muutettu.
 
-##### Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
+##### Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
 
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
 Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä, pistenäyttö- ja syntetisaattoriajureita sekä näönparannuksen tarjoajia erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
@@ -2987,7 +2987,7 @@ Kuten niiden vastineet lisäosissa, nämä moduulit ladataan NVDA:ta käynnistet
 Tämä asetus on oletusarvoisesti poissa käytöstä, mikä varmistaa, ettei NVDA suorita testaamatonta koodia käyttäjän tietämättä.
 Jos haluat jakaa koodiasi muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
 
-##### Avaa kehittäjien scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
+##### Avaa kehittäjän Scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
 
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjien scratchpad-hakemistosta.
@@ -3357,7 +3357,7 @@ Uudelleennimeä tai poista profiili painamalla Nimeä uudelleen- tai Poista-pain
 
 Sulje valintaikkuna painamalla Sulje-painiketta.
 
-#### Profiilin luominen {#ProfilesCreating}
+#### Profiilin luonti {#ProfilesCreating}
 
 Luo profiili painamalla Uusi-painiketta.
 
@@ -3656,11 +3656,9 @@ Lisätietoja saat lukemalla yksityiskohtaisen [Lisäosat ja lisäosakauppa](#Add
 
 ### Luo massamuistiversio {#CreatePortableCopy}
 
-Tämä vaihtoehto avaa valintaikkunan, jossa voit luoda NVDA:n asennetusta versiosta massamuistiversion.
+Tämä vaihtoehto avaa valintaikkunan, jossa voit luoda NVDA:n käynnissä olevasta versiosta massamuistiversion.
 
-Massamuistiversion luonti- tai asennusvalintaikkuna kehottaa valitsemaan kansiopolun, johon massamuistiversio luodaan tai asennettava versio asennetaan.
-
-Saat lisätietoja massamuistiversion luomisesta kohdasta [Massamuistiversion luominen](#CreatingAPortableCopy).
+Saat lisätietoja massamuistiversion luonnista kohdasta [Massamuistiversion luonti](#CreatingAPortableCopy).
 
 ### Suorita COM-rekisteröintien korjaustyökalu... {#RunCOMRegistrationFixingTool}
 

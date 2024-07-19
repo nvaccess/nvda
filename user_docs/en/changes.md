@@ -6,20 +6,29 @@
 
 ### New Features
 
+* Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
+* Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+
 
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
   * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
+  * UIA in Windows Terminal. (#16873, @codeofdusk)
+* When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
+* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
+* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
+
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
+* It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 
 #### Deprecations
 
@@ -85,7 +94,7 @@ Unicode CLDR has also been updated.
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
 * By default, a new folder will be created when making a portable copy.
-A warning message will inform you if you try writing to a non-empty directory. (#16684)
+A warning message will inform you if you try writing to a non-empty directory. (#16686)
 
 ### Bug Fixes
 
@@ -109,8 +118,9 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
-* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
+* NVDA will report addresses when arrowing through To/CC/BCC fields in outlook.com / Modern Outlook. (#16856)
+* NVDA now handles add-on installation failures more gracefully. (#16704)
 
 ### Changes for Developers
 

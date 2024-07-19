@@ -46,6 +46,7 @@ Unicode CLDR has also been updated.
       * Yiddish.
       * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
       * Turkish grade 2. (#16735)
+      * International Phonetic Alphabet. (#16773)
   * Updated NSIS to 3.10 (#16674, @dpy013)
   * Updated markdown to 3.6 (#16725, @dpy013)
   * Updated nh3 to 0.2.17 (#16725, @dpy013)
@@ -79,8 +80,9 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
 * Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
 * Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
-* In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
+* NVDA will report addresses when arrowing through To/CC/BCC fields in outlook.com / Modern Outlook. (#16856)
+* NVDA now handles add-on installation failures more gracefully. (#16704)
 
 ### Changes for Developers
 

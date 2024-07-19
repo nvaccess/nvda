@@ -1972,6 +1972,7 @@ A maioría dos sintetizadores sopórtano.
 
 Esta opción xeralmente debería activarse.
 Nembargantes, algúns sintetizadores Microsoft Speech API non implementan esto correctamente e funciona anómalamente cando se activa.
+Os sintetizadores de Code Factory, tanto o complemento como a aplicación SAPI, non o implementan correctamente e provocan un deletreo non desexado do texto falado (ex.: no menú NVDA ou nos diálogos).
 Se estás a ter problemas ca pronunciación de carácteres individuais,  proba desactivando esta opción.
 
 ##### Descripcións retrasadas para caracteres en movementos do cursor {#delayedCharacterDescriptions}
@@ -2939,7 +2940,7 @@ Por exemplo, para complementos beta instalados, só se che notificará de actual
 
 |Opción |Comportamento |
 |---|---|
-|Habilitada |Notifica cando as actualizacións están dispoñibles para un cpomplemento dentro da mesma canle |
+|Notificar |Notifica cando as actualizacións están dispoñibles para un cpomplemento dentro da mesma canle |
 |Deshabilitada |Non comproba automáticamente as actualizacións de complementos |
 
 #### Opcións do OCR de Windows {#Win10OcrSettings}
@@ -3651,9 +3652,7 @@ Para máis información, le o capítulo en profundidade: [Complementos e a Tenda
 
 ### Crear copia portable {#CreatePortableCopy}
 
-Esto abrirá un diálogo que che permite crear unha copia portable do NVDA a partires da versión instalada.
-
-O diálogo para crear unha copia portable do NVDA ou para instalar NVDA neste PC indicarache para selecionar unha ruta do cartafol na que debería crear a copia portable ou na que o NVDA debería instalarse.
+Esto abrirá un diálogo que che permitirá crear unha copia portable do NVDA a partires da versión en execución.
 
 Segue as instrucións para [Crear unha copia portable](#CreatingAPortableCopy) para máis información.
 

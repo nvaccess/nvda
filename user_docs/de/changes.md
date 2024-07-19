@@ -15,7 +15,7 @@ Nicht zugewiesene Befehle wurden hinzugefügt, um den Touch-Ball (ähnlich dem M
 Es gibt mehrere Fehlerbehebungen, insbesondere für das Windows 11 Emoji-Panel und den Verlauf der Zwischenablage.
 Für die Web-Browser gibt es Korrekturen für Fehlermeldungen, Abbildungen, Beschriftungen, Tabellenbeschriftungen und Menüelemente mit Kontrollkästchen bzw. Auswahlschaltern.
 
-Liblouis wurde aktualisiert und um neue Braille-Tabellen für kyrillisches Serbisch, Jiddisch, mehrere alte Sprachen und Türkisch hinzugefügt.
+Der Braille-Übersetzer LibLouis wurde aktualisiert und um neue Braille-Tabellen für kyrillisches Serbisch, Jiddisch, mehrere alte Sprachen, Türkisch und das Internationale Phonetische Alphabet ergänzt.
 Die Sprachausgabe eSpeak wurde aktualisiert, Unterstützung für Karakalpakische Sprache wurde hinzugefügt.
 Unicode CLDR wurde ebenfalls aktualisiert.
 
@@ -40,22 +40,23 @@ Unicode CLDR wurde ebenfalls aktualisiert.
     * Neue Sprache Karakalpakisch hinzugefügt.
   * Unicode CLDR auf Version 45.0 aktualisiert. (#16507, @OzancanKaratas)
   * fast_diff_match_patch (zur Erkennung von Änderungen in Terminals und anderen dynamischen Inhalten) auf Version 2.1.0 aktualisiert. (#16508, @codeofdusk)
-  * Braille-Übersetzer LibLouis auf [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0) aktualisiert. (#16652, @codeofdusk)
+  * LibLouis auf [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0) aktualisiert. (#16652, @codeofdusk)
     * Neue Braille-Tabellen:
       * Serbisch (kyrillisch).
       * Jiddisch.
       * Mehrere alte Sprachen: Hebräisch (biblisch), Akkadisch, Syrisch, Ugaritisch und Keilschrift (transkribiert).
       * Türkische Kurzschrift. (#16735)
+      * Internationales Phonetisches Alphabet. (#16773)
   * NSIS auf 3.10 aktualisiert. (#16674, @dpy013)
   * Markdown auf 3.6 aktualisiert. (#16725, @dpy013)
   * Nh3 auf 0.2.17 aktualisiert (#16725, @dpy013)
 * Die Fallback-Eingabe-Tabelle ist nun gleich der Fallback-Ausgabe-Tabelle, die der Englischen Vollschrift entspricht. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA teilt nun Abbildungen mit, die nicht zugänglich sind, aber mit einer Beschriftung oder Beschreibung versehen sind. (#14514)
 * Beim zeilenweisen Lesen im Lesemodus wird "Groß" nicht mehr in jeder Zeile einer langen Abbildung oder Tabellenüberschrift angezeigt. (#14874)
-* In der Python-Konsole geht der zuletzt nicht ausgeführte Befehl nicht mehr verloren, wenn dieser in den Verlauf verschoben wurde. (#16653, @CyrilleB79)
+* In der Python-Konsole geht der zuletzt ausgeführte Befehl nicht mehr verloren, wenn dieser in den Verlauf verschoben wurde. (#16653, @CyrilleB79)
 * Eine eindeutige anonyme ID wird nun als Teil der optionalen NVDA-Nutzungsstatistiken gesendet. (#16266)
 * Standardmäßig wird beim Erstellen einer portablen Version ein neuer Ordner angelegt.
-Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichnis zu schreiben. (#16684)
+Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichnis zu schreiben. (#16686)
 
 ### Fehlerbehebungen
 
@@ -79,8 +80,9 @@ Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichn
 * Beim Einfügen im Rechner von Windows 10/11 meldet NVDA jetzt korrekt die gesamte eingefügte Zahl. (#16573, @TristanBurchett)
 * Die Sprachausgabe bleibt nicht mehr stumm, nachdem die Verbindung zu einer Remote-Desktop-Sitzung getrennt und wiederhergestellt wurde. (#16722, @jcsteh)
 * Unterstützung für Befehle zum Textbetrachten für den Namen eines Objekts in Visual Studio Code hinzugefügt. (#16248, @Cary-Rowen)
-* In Mozilla Firefox teilt NVDA jetzt korrekt das aktuelle Zeichen, Wort und die Zeile mit, wenn sich der Cursor an der Einfügemarke am Ende einer Zeile befindet. (#3156, @jcsteh)
-* Die Wiedergabe von NVDA-Sounds schlägt auf einem Audiogerät in Mono nicht mehr fehl. (#16770, @jcsteh)
+* Die Wiedergabe von NVDA-Sounds schläg auf einem Audiogerät in Mono nicht mehr fehl. (#16770, @jcsteh)
+* NVDA teilt Adressen mit, wenn man mit dem Pfeiltasten durch die Felder An/CC/BCC auf outlook.com bzw. im modernen Outlook navigiert. (#16856)
+* Besserer Umgang in NVDA mit Fehlern bei der Installation von NVDA-Erweiterungen. (#16704)
 
 ### Änderungen für Entwickler
 

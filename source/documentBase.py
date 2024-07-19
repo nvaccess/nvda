@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2022 NV Access Limited
+# Copyright (C) 2017-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -473,7 +473,13 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 			trueCol=oldSelection.trueCol if bothAxesRow else cell.col,
 			colSpan=oldSelection.colSpan if bothAxesRow else cell.colSpan,
 		)
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.TABLE, info, nextLineFunc, updateCaret)
+		sayAll.SayAllHandler.readText(
+			sayAll.CURSOR.TABLE,
+			info,
+			nextLineFunc,
+			updateCaret,
+			startedFromScript=True,
+		)
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.NEXT)
