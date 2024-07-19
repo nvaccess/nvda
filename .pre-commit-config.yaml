@@ -35,7 +35,7 @@ repos:
 - repo: local
   hooks:
     - id: scons-source
-      name: running build system
+      name: build c/c++ files
       entry: cmd.exe /c "scons source -j 0"
       language: system
       pass_filenames: false
@@ -46,6 +46,7 @@ repos:
       language: system
       pass_filenames: false
       types: [python]
+      files: ^source/.*$
     - id: unitTest
       name: unit tests
       entry: ./rununittests.bat
