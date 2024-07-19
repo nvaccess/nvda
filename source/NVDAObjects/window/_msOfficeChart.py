@@ -519,12 +519,12 @@ class OfficeChartElementList(Window):
 			ui.message(self.name)
 		else:
 			if self.activeElement == None:  # noqa: E711
-				self.activeElement = self.elementList[0]  # noqa: E701, E711
+				self.activeElement = self.elementList[0]
 			else:
 				if direction == "previous":
-					self.activeElement = self.activeElement.previous  # noqa: E701
+					self.activeElement = self.activeElement.previous
 				elif direction == "next":
-					self.activeElement = self.activeElement.next  # noqa: E701
+					self.activeElement = self.activeElement.next
 			self.activeElement.select()
 			eventHandler.queueEvent("gainFocus", self.activeElement)
 
@@ -1064,7 +1064,7 @@ class OfficeChartElementTrendline(OfficeChartElementBase):
 		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
 			label = self.currentTrendline.DataLabel.Text
 			# Translators: Substitute superscript two by square for R square value
-			label = label.replace("²", _(" square "))
+			label = label.replace("Â²", _(" square "))
 			label = re.sub(r"([a-zA-Z]+)([2])", r"\1 square", label)
 			label = re.sub(r"([a-zA-Z]+)([3])", r"\1 cube", label)
 			label = re.sub(r"([a-zA-Z]+)([-]*[04-9][0-9]*)", r"\1 to the power \2", label)

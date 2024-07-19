@@ -139,7 +139,7 @@ class TouchInputGesture(inputCore.InputGesture):
 
 	def _get_speechEffectWhenExecuted(self):
 		if self.tracker.action in (touchTracker.action_hover, touchTracker.action_hoverUp):
-			return None  # noqa: E701
+			return None
 		return super(TouchInputGesture, self).speechEffectWhenExecuted
 
 	def _get_reportInInputHelp(self):

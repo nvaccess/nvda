@@ -1118,7 +1118,7 @@ dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir("dictsource")
 # Create compile commands for all languages
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	if langCode in excludeLangs:
-		continue  # noqa: E701
+		continue
 
 	dictFilePath = espeakRepo.Dir("espeak-ng-data").File(dictFileName)
 
