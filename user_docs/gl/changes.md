@@ -15,7 +15,7 @@ Engadíronse ordes sen asignar para desprazar a roda do rato verticalmente e hor
 Hai varios arranxos de fallos, particularmente para o panel emoji de Windows 11 e para o histórico do portapapeis.
 Para navegadores web, hai arranxos para o anunciado de mensaxes de erro, figuras, pes de foto, etiquetas de táboa e  elementos de menú con caixas de verificación e botóns de opción.
 
-Liblouis actualizouse,  engadindo novas táboas braille para Serbio cirílico, Yiddish, varias linguas antigas e Turco.
+Liblouis actualizouse,  engadindo novas táboas braille para Serbio cirílico, Yiddish, varias linguas antigas, Turco e o alfabeto fonético internacional.
 eSpeak actualizouse, engadindo soporte para a lingua Karakalpak.
 Unicode CLDR tamén se actualizou.
 
@@ -46,6 +46,7 @@ Unicode CLDR tamén se actualizou.
       * Yiddish.
       * Varias linguas antigas: hebreo bíblico, acadio, sirio, Ugarítico e texto cuneiforme transliteralizado.
       * Turco grao 2. (#16735)
+      * Alfabeto Fonético Internacional. (#16773)
   * Actualizado NSIS a 3.10 (#16674, @dpy013)
   * Actualizado markdown a 3.6 (#16725, @dpy013)
   * Actualizado nh3 a 0.2.17 (#16725, @dpy013)

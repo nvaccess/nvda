@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-12 04:18+0000\n"
-"PO-Revision-Date: 2024-07-15 00:36\n"
+"POT-Creation-Date: 2024-07-17 08:37+0000\n"
+"PO-Revision-Date: 2024-07-18 02:26\n"
 "Last-Translator: \n"
 "Language-Team: Slovenian\n"
 "Language: sl_SI\n"
@@ -3295,14 +3295,14 @@ msgstr ""
 #. for a vision enhancement provider
 #. Translators: The title of an error message box displayed when validating the startup dialog
 #: core.py:118 updateCheck.py:302 updateCheck.py:577 updateCheck.py:733
-#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:144
-#: gui\addonGui.py:236 gui\addonGui.py:252 gui\configProfiles.py:176
+#: gui\__init__.py:217 gui\__init__.py:229 gui\addonGui.py:142
+#: gui\addonGui.py:249 gui\addonGui.py:264 gui\configProfiles.py:176
 #: gui\configProfiles.py:202 gui\configProfiles.py:252
 #: gui\configProfiles.py:263 gui\configProfiles.py:268
 #: gui\configProfiles.py:305 gui\configProfiles.py:466
 #: gui\configProfiles.py:478 gui\configProfiles.py:484 gui\inputGestures.py:799
-#: gui\inputGestures.py:813 gui\installerGui.py:100 gui\installerGui.py:472
-#: gui\installerGui.py:487 gui\installerGui.py:559 gui\logViewer.py:100
+#: gui\inputGestures.py:813 gui\installerGui.py:100 gui\installerGui.py:474
+#: gui\installerGui.py:489 gui\installerGui.py:561 gui\logViewer.py:100
 #: gui\logViewer.py:128 gui\message.py:142 gui\settingsDialogs.py:977
 #: gui\settingsDialogs.py:4625 gui\settingsDialogs.py:4969
 #: gui\startupDialogs.py:122
@@ -3349,7 +3349,7 @@ msgid "Loading NVDA. Please wait..."
 msgstr "Nalaganje NVDA. Prosimo, počakajte..."
 
 #. Translators: This is shown on a braille display (if one is connected) when NVDA starts.
-#: core.py:819
+#: core.py:822
 msgid "NVDA started"
 msgstr "NVDA je v pogonu"
 
@@ -7927,7 +7927,7 @@ msgstr "&Opomni me pozneje"
 
 #. Translators: The label of a button to close a dialog.
 #. Translators: The close button on an NVDA dialog. This button will dismiss the dialog.
-#: updateCheck.py:445 gui\addonGui.py:344
+#: updateCheck.py:445 gui\addonGui.py:356
 msgid "&Close"
 msgstr "&Zapri"
 
@@ -8080,7 +8080,7 @@ msgstr ""
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
 #. The %s will be replaced with the path to the add-on that could not be installed.
-#: addonStore\install.py:97
+#: addonStore\install.py:96
 #, python-format
 msgctxt "addonStore"
 msgid "Failed to install add-on from %s"
@@ -11288,19 +11288,19 @@ msgstr "Prosimo, počakajte"
 
 #. Translators: A message asking the user if they wish to restart NVDA
 #. as addons have been added, enabled/disabled or removed.
-#: gui\addonGui.py:30
+#: gui\addonGui.py:31
 msgid "Changes were made to add-ons. You must restart NVDA for these changes to take effect. Would you like to restart now?"
 msgstr "V dodatkih so se zaznale spremembe. Če jih želite uveljaviti, morate ponovno zagnati NVDA. Želite to storiti zdaj?"
 
 #. Translators: Title for message asking if the user wishes to restart NVDA as addons have been added or removed.
-#: gui\addonGui.py:35
+#: gui\addonGui.py:36
 msgid "Restart NVDA"
 msgstr "NVDA ponovno zaženi"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
 #. Translators: The label for a button in Add-ons Manager dialog to show information about the selected add-on.
-#: gui\addonGui.py:64 gui\addonGui.py:102 gui\addonGui.py:340
+#: gui\addonGui.py:65 gui\addonGui.py:103 gui\addonGui.py:352
 msgid "&About add-on..."
 msgstr "&O dodatku..."
 
@@ -11309,7 +11309,7 @@ msgstr "&O dodatku..."
 #. Translators: The label of a Yes button in a dialog
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. agree to enabling the curtain.
-#: gui\addonGui.py:72 gui\startupDialogs.py:303
+#: gui\addonGui.py:73 gui\startupDialogs.py:303
 #: visionEnhancementProviders\screenCurtain.py:180
 msgid "&Yes"
 msgstr "&Da"
@@ -11319,91 +11319,91 @@ msgstr "&Da"
 #. Translators: The label of a No button in a dialog
 #. Translators: A button in the screen curtain warning dialog which allows the user to
 #. disagree to enabling the curtain.
-#: gui\addonGui.py:82 gui\startupDialogs.py:307
+#: gui\addonGui.py:83 gui\startupDialogs.py:307
 #: visionEnhancementProviders\screenCurtain.py:189
 msgid "&No"
 msgstr "&Ne"
 
 #. Translators: A button in the addon installation blocked dialog which will dismiss the dialog.
 #. Translators: An ok button on a message dialog.
-#: gui\addonGui.py:110 gui\nvdaControls.py:260
+#: gui\addonGui.py:111 gui\nvdaControls.py:260
 msgid "OK"
 msgstr "V redu"
 
 #. Translators: The message displayed when an error occurs when opening an add-on package for adding.
-#: gui\addonGui.py:142
+#: gui\addonGui.py:140
 #, python-format
 msgid "Failed to open add-on package file at %s - missing file or invalid file format"
 msgstr "Spodletelo odpiranje paketa z dodatkom v %s - manjkajoča datoteka ali napačen tip datoteke"
 
 #. Translators: A title for the dialog asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:172
+#: gui\addonGui.py:170
 msgid "Add-on Installation"
 msgstr "Namestitev dodatka"
 
 #. Translators: A message asking if the user wishes to update an add-on with the same version
 #. currently installed according to the version number.
-#: gui\addonGui.py:177
+#: gui\addonGui.py:175
 #, python-brace-format
 msgid "You are about to install version {newVersion} of {summary}, which appears to be already installed. Would you still like to update?"
 msgstr "Ste pred namestitvijo različice dodatka {newVersion} {summary}, za katero izgleda, da je že nameščena. Še vedno želite posodobiti?"
 
 #. Translators: A message asking if the user wishes to update a previously installed
 #. add-on with this one.
-#: gui\addonGui.py:185
+#: gui\addonGui.py:183
 #, python-brace-format
 msgid "A version of this add-on is already installed. Would you like to update {summary} version {curVersion} to version {newVersion}?"
 msgstr "Različica tega dodatka je že nameščena. Ali želite posodobiti dodatek {summary} iz različice {curVersion} na različico {newVersion}?"
 
 #. Translators: The title of the dialog presented while an Addon is being installed.
-#: gui\addonGui.py:214
+#: gui\addonGui.py:226
 msgid "Installing Add-on"
 msgstr "Nameščanje dodatka"
 
 #. Translators: The message displayed while an addon is being installed.
-#: gui\addonGui.py:216
+#: gui\addonGui.py:228
 msgid "Please wait while the add-on is being installed."
 msgstr "Prosimo, počakajte medtem, ko se dodatek namešča."
 
 #. Translators: The message displayed when an error occurs when installing an add-on package.
-#: gui\addonGui.py:234
+#: gui\addonGui.py:247
 #, python-format
 msgid "Failed to install add-on from %s"
 msgstr "Spodletela namestitev dodatka iz %s"
 
 #. Translators: The message displayed when an add-on cannot be installed due to NVDA running as a Windows Store app
-#: gui\addonGui.py:250
+#: gui\addonGui.py:262
 msgid "Add-ons cannot be installed in the Windows Store version of NVDA"
 msgstr "Dodatkov ni možno namestiti v različico NVDA iz trgovine Windows"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:306
+#: gui\addonGui.py:318
 msgid "Incompatible Add-ons"
 msgstr "Nezdružljivi dodatki"
 
 #. Translators: The title of the Incompatible Addons Dialog
-#: gui\addonGui.py:316
+#: gui\addonGui.py:328
 msgid "The following add-ons are incompatible with NVDA version {}. These add-ons can not be enabled. Please contact the add-on author for further assistance."
 msgstr "Sledeči dodatki so nezdružljivi  z različico NVDA {}. Ti dodatki ne bodo mogli biti omogočeni. Prosimo, stopite v stik z avtorji tega dodatka za nadaljnje informacije."
 
 #. Translators: the label for the addons list in the incompatible addons dialog.
-#: gui\addonGui.py:324
+#: gui\addonGui.py:336
 msgid "Incompatible add-ons"
 msgstr "Nezdružljivi dodatki"
 
 #. Translators: The label for a column in add-ons list used to identify add-on package name (example: package is OCR).
-#: gui\addonGui.py:332
+#: gui\addonGui.py:344
 msgid "Package"
 msgstr "Paket"
 
 #. Translators: The label for a column in add-ons list used to identify add-on's running status (example: status is running).
-#: gui\addonGui.py:334
+#: gui\addonGui.py:346
 msgid "Version"
 msgstr "Različica"
 
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
-#: gui\addonGui.py:336
+#: gui\addonGui.py:348
 msgid "Incompatible reason"
 msgstr "Razlog nezdružljivosti"
 
@@ -11810,7 +11810,7 @@ msgstr "Program za namestitev ne more odstraniti ali prepisati datoteke. Verjetn
 
 #. Translators: the title of a retry cancel dialog when NVDA installation fails
 #. Translators: the title of a retry cancel dialog when NVDA portable copy creation  fails
-#: gui\installerGui.py:85 gui\installerGui.py:551
+#: gui\installerGui.py:85 gui\installerGui.py:553
 msgid "File in Use"
 msgstr "Datoteka v uporabi"
 
@@ -11837,7 +11837,7 @@ msgstr "Prosimo, pritisnite V redu, da zaženete nameščeno kopijo."
 
 #. Translators: The title of a dialog presented to indicate a successful operation.
 #. Translators: Title of a dialog shown when a portable copy of NVDA is created.
-#: gui\installerGui.py:113 gui\installerGui.py:570 gui\settingsDialogs.py:980
+#: gui\installerGui.py:113 gui\installerGui.py:572 gui\settingsDialogs.py:980
 msgid "Success"
 msgstr "Uspešnost"
 
@@ -11891,7 +11891,7 @@ msgid "Copy &portable configuration to current user account"
 msgstr "Preslikaj &prenosljivo konfiguracijo na ta uporabniški račun"
 
 #. Translators: The label of a button to continue with the operation.
-#: gui\installerGui.py:240 gui\installerGui.py:452
+#: gui\installerGui.py:240 gui\installerGui.py:454
 msgid "&Continue"
 msgstr "&Nadaljuj"
 
@@ -11909,114 +11909,114 @@ msgstr "&Nadaljuj z namistitvijo (ni priporočljivo)"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:360
+#: gui\installerGui.py:365
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
 msgstr ""
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
-#: gui\installerGui.py:365
+#: gui\installerGui.py:370
 msgid "Portable Copy Exists"
 msgstr ""
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:373
+#: gui\installerGui.py:377
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
 msgstr ""
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
-#: gui\installerGui.py:379
+#: gui\installerGui.py:383
 msgid "Directory Exists"
 msgstr ""
 
 #. Translators: The title of the Create Portable NVDA dialog.
-#: gui\installerGui.py:409
+#: gui\installerGui.py:411
 msgid "Create Portable NVDA"
 msgstr "Ustvari prenosljivo NVDA"
 
 #. Translators: An informational message displayed in the Create Portable NVDA dialog.
-#: gui\installerGui.py:414
+#: gui\installerGui.py:416
 msgid "To create a portable copy of NVDA, please select the path and other options and then press Continue"
 msgstr "Če želite ustvariti prenosljivo kopijo NVDA, potem vas prosimo, da izberete pot ter druge možnosti in pritisnite Nadaljuj."
 
 #. Translators: The label of a grouping containing controls to select the destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:419
+#: gui\installerGui.py:421
 msgid "Portable directory:"
 msgstr ""
 
 #. Translators: The label of a button to browse for a directory.
-#: gui\installerGui.py:424
+#: gui\installerGui.py:426
 msgid "Browse..."
 msgstr "Prebrskaj..."
 
 #. Translators: The title of the dialog presented when browsing for the
 #. destination directory when creating a portable copy of NVDA.
-#: gui\installerGui.py:427
+#: gui\installerGui.py:429
 msgid "Select portable directory"
 msgstr ""
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:435
+#: gui\installerGui.py:437
 msgid "Create a &new folder for the portable copy"
 msgstr ""
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:440
+#: gui\installerGui.py:442
 msgid "Copy current &user configuration"
 msgstr "Preslikaj trenutno &uporabniško konfiguracijo"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
-#: gui\installerGui.py:446
+#: gui\installerGui.py:448
 msgid "&Start the new portable copy after creation"
 msgstr "&Zaženi novo prenosljivo kopijo po njeni stvaritvi"
 
 #. Translators: The message displayed when the user has not specified a destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:470
+#: gui\installerGui.py:472
 msgid "Please specify a directory in which to create the portable copy."
 msgstr "Prosimo, določite imenik, kjer se naj naredi prenosljiva kopija."
 
 #. Translators: The message displayed when the user has not specified an absolute destination directory
 #. in the Create Portable NVDA dialog.
-#: gui\installerGui.py:482
+#: gui\installerGui.py:484
 msgid "Please specify the absolute path where the portable copy should be created. It may include system variables (%temp%, %homepath%, etc.)."
 msgstr ""
 
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
-#: gui\installerGui.py:533
+#: gui\installerGui.py:535
 msgid "Portable copy creation cancelled."
 msgstr ""
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
-#: gui\installerGui.py:538
+#: gui\installerGui.py:540
 msgid "Creating Portable Copy"
 msgstr "Ustvarjanje prenosljive kopije"
 
 #. Translators: The message displayed while a portable copy of NVDA is being created.
-#: gui\installerGui.py:540
+#: gui\installerGui.py:542
 msgid "Please wait while a portable copy of NVDA is created."
 msgstr "Prosimo, počakajte, med tem, ko se gradi prenosljiva kopija."
 
 #. Translators: a message dialog asking to retry or cancel when NVDA portable copy creation fails
-#: gui\installerGui.py:549
+#: gui\installerGui.py:551
 msgid "NVDA is unable to remove or overwrite a file."
 msgstr "NVDA ne more odstraniti ali prepisati datoteke."
 
 #. Translators: The message displayed when an error occurs while creating a portable copy of NVDA.
 #. {error} will be replaced with the specific error message.
-#: gui\installerGui.py:557
+#: gui\installerGui.py:559
 #, python-brace-format
 msgid "Failed to create portable copy: {error}."
 msgstr ""
 
 #. Translators: The message displayed when a portable copy of NVDA has been successfully created.
 #. {dir} will be replaced with the destination directory.
-#: gui\installerGui.py:568
+#: gui\installerGui.py:570
 #, python-brace-format
 msgid "Successfully created a portable copy of NVDA at {dir}"
 msgstr ""

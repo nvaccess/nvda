@@ -279,7 +279,7 @@ class Logger(logging.Logger):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg: str = "", exc_info: Literal[True] | _excInfo_t = True, **kwargs):
+	def exception(self, msg: str = "", exc_info: Literal[True] | _excInfo_t | BaseException = True, **kwargs):
 		"""Log an exception at an appropriate level.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
@@ -288,8 +288,11 @@ class Logger(logging.Logger):
 
 		if exc_info is True:
 			exc_info = sys.exc_info()
+		if isinstance(exc_info, tuple):
+			exc = exc_info[1]
+		else:
+			exc = exc_info
 
-		exc = exc_info[1]
 		if (
 			(
 				isinstance(exc, WindowsError)

@@ -56,7 +56,7 @@ Unikodna CLDR baza je takođe ažurirana.
 * U Python konzoli, poslednja neizvršena komanda više neće biti izgubljena kada se krećete kroz istoriju unosa. (#16653, @CyrilleB79)
 * Jedinstveni anonimni ID se sada šalje kao deo opcionog prikupljanja NVDA statistika korišćenja. (#16266)
 * Po podrazumevanim podešavanjima, novi folder će biti napravljen kada se pravi prenosna kopija.
-Upozorenje će vas informisati kada se pravi u folderu koji nije prazan. (#16684)
+Upozorenje će vas informisati kada se pravi u folderu koji nije prazan. (#16686)
 
 ### Ispravljene greške
 
@@ -80,8 +80,9 @@ Upozorenje će vas informisati kada se pravi u folderu koji nije prazan. (#16684
 * Kada nalepite tekst u Windows 10/11 Kalkulator, NVDA sada ispravno prijavljuje celi broj koji je nalepljen. (#16573, @TristanBurchett)
 * Govor se više ne gubi nakon što prekinete vezu ili se ponovo povežete na sesiju sa udaljenim računarom. (#16722, @jcsteh)
 * Dodata podrška za komande pregleda teksta za ime objekta u programu Visual Studio Code. (#16248, @Cary-Rowen)
-* U programu Mozilla Firefox, NVDA sada ispravno prijavljuje trenutni znak, reč i red kada je kursor na kraju reda. (#3156, @jcsteh)
-* * Reprodukovanje NVDA zvukova više neće biti neuspešno na mono audio uređaju. (#16770, @jcsteh)
+* Reprodukovanje NVDA zvukova više neće biti neuspešno na mono audio uređaju. (#16770, @jcsteh)
+* NVDA će prijaviti adrese kada se strelicama krećete kroz polja za upisivanje primaoca/CC/BCC na sajtu outlook.com  ili u modernoj Outlook aplikaciji. (#16856)
+* NVDA sada bolje obrađuje greške prilikom instalacije dodataka. (#16704)
 
 ### Promene za programere (engleski)
 
