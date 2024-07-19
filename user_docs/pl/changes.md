@@ -60,7 +60,7 @@ Unicode CLDR także został zaktualizowany.
 * W konsoli  Pythona ostatnie niewypełnione polecenie nie będzie stracone podczas przemieszczania się po historii wejścia. (#16653, @CyrilleB79)
 * Od teraz podczas zbierania statystyk do NV access wysyłany jest unikatowy identyfikator użytkownika. (#16266)
 * Podczas tworzenia przenośnej kopii, będzie tworzony nowy katalog.
-Od teraz, jeżeli zostanei podjęta próba pisania do pełnego katalogu, będzei pokazane ostrzeżenie. (#16684)
+Od teraz, jeżeli zostanie podjęta próba pisania do pełnego katalogu, będzie pokazane ostrzeżenie. (#16686)
 
 ### Poprawki błędów
 
@@ -84,8 +84,9 @@ Od teraz, jeżeli zostanei podjęta próba pisania do pełnego katalogu, będzei
 * Podczas wklejania do Kalkulatora w systemach Windows 10/11 NVDA od teraz przeczyta pełną liczbę. (#16573, @TristanBurchett)
 * Mowa już nigdy więcej nie zniknie podczas ponownego podłączenia do sesji pulpitu zdalnego. (#16722, @jcsteh)
 * Dodano wsparcie poleceń przeglądu tekstu dla nazwy obiektu w Visual Studio Code. (#16248, @Cary-Rowen)
-* W przeglądarce  Mozilla Firefox, NVDA od teraz poprawnie odczytuje bieżący znak, słowo oraz wiersz gdy kursor znajduje się w punkcie wstawiania na końcu wiersza. (#3156, @jcsteh)
-* Od teraz dźwięk będzie poprawnie odtwarzany na mono urządzeniach audio. (#16770, @jcsteh)
+* Od teraz dźwięk będzie poprawnie odtwarzany na audiourządzeniach mono. (#16770, @jcsteh)
+* NVDA od teraz przeczyta adresy podczas nawigacji po polach do/dw/UDW w programach outlook.com i współczesnym Outlooku. (#16856)
+* NVDA od teraz lepiej radzi z niepoprawnie zainstalowanymi dodatkami. (#16704)
 
 ## 2024.2
 
