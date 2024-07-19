@@ -26,6 +26,10 @@ reviews:
       This project uses tabs instead of spaces, do not suggest usage of spaces over tabs.
       Are there any 'red flags' in this code that might warrant closer investigation from a security standpoint?
       Explain what makes them suspicious.
+      When providing in line code suggestions, always use the following format:
+      ```suggestion
+      <code changes>
+      ```
       "
     - path: "**/*.py"
       instructions: "
