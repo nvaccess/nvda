@@ -170,7 +170,7 @@ if numJobs < numCores:
 		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
 		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
-		"Running SCONS with parameter '-j0' will automatically pick all available cores."
+		"Running SCONS with parameter '-j0' will automatically pick all available cores. "
 	)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
