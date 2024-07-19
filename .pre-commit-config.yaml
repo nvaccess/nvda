@@ -54,7 +54,7 @@ repos:
       types_or: [python, c, c++, batch]
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
-      files: requirements.txt
+      files: ^(requirements\.txt|runlicensecheck\.bat)$
       entry: ./runlicensecheck.bat
       language: script
       pass_filenames: false
