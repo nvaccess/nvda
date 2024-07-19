@@ -56,7 +56,7 @@ Myös Unicode CLDR on päivitetty.
 * Viimeinen suorittamaton komento ei enää katoa Python-konsolissa syötehistoriaa selattaessa. (#16653, @CyrilleB79)
 * Anonyymi yksilöllinen tunniste lähetetään nyt osana valinnaista NVDA:n käyttötilastojen keräämistä. (#16266)
 * Massamuistiversiota luotaessa luodaan oletusarvoisesti uusi hakemisto.
-Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä. (#16684)
+Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä. (#16686)
 
 ### Bugikorjaukset
 
@@ -70,7 +70,6 @@ Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä
   * Mikäli saatavilla, NVDA käyttää `aria-labelledby`-attribuuttia taulukoiden saavutettavien nimien ilmaisemiseen Mozilla Firefoxissa. (#5183)
   * NVDA puhuu oikein valintaruutu- ja valintapainikevalikon kohteet siirryttäessä ensimmäistä kertaa alivalikkoihin Google Chromessa ja Mozilla Firefoxissa. (#14550)
   * NVDA:n selaustilan hakutoiminto on nyt tarkempi, kun sivu sisältää emojeita. (#16317, @LeonarddeR)
-  * NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
 * NVDA puhuu oikein automaattisen täydennyksen ehdotukset Eclipsessä ja muissa Eclipse-pohjaisissa ympäristöissä Windows 11:ssä. (#16416, @thgcode)
 * Paranneltu automaattisen tekstin lukemisen luotettavuutta erityisesti päätesovelluksissa. (#15850, #16027, @Danstiv)
 * NVDA ilmaisee oikein valinnan muutokset Microsoft Excelissä solun tekstiä muokattaessa. (#15843)
@@ -82,6 +81,8 @@ Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä
 * Lisätty Visual Studio Codeen tuki objektin nimen lukemiselle tekstintarkastelukomennoilla. (#16248, @Cary-Rowen)
 * NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
 * NVDA-äänien toisto ei enää epäonnistu monoäänilaitteella. (#16770, @jcsteh)
+* NVDA puhuu osoitteet siirryttäessä nuolinäppäimillä Outlook.comin/uuden Outlookin Vastaanottaja/Kopio/Piilokopio-kentissä. (#16856)
+* NVDA käsittelee nyt lisäosien asennusvirheet sulavammin. (#16704)
 
 ### Muutokset kehittäjille
 
