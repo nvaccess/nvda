@@ -1916,7 +1916,7 @@ Par exemple, la lettre latine "h" peut également être présentée comme "𝐡"
 Cet aspect de la normalisation facilite également la lecture des équations dans l'éditeur d'équations Microsoft Word.
 
 1. Normalisation appliquée aux caractères composés.
-Par exemple, le caractère "é" (e avec un accent aigu), un caractère courant dans des langues comme le français et l'espagnol peut être représenté sous deux formes.
+Par exemple, le caractère "é" (e avec un accent aigu), un caractère courant dans des langues comme le français et l'espagnol peut être représenté sous deux formes:
   1. Un caractère Unicode unique (é)
   1. Une décomposition en deux caractères (é), à savoir la lettre latine normale e et un modificateur accent aigu
   La normalisation Unicode garantit qu'une seule forme sera utilisée pour la sortie vocale, à savoir la variante à un caractère.
@@ -2944,7 +2944,7 @@ Par exemple, pour les extensions installés en version beta, vous ne serez infor
 
 |Option |Comportement |
 |---|---|
-|Activé |Notifier lorsque des mises à jour sont disponibles pour les extensions dans le même canal |
+|Notifier |Notifier lorsque des mises à jour sont disponibles pour les extensions dans le même canal |
 |Désactivé |Ne pas vérifier automatiquement les mises à jour des extensions |
 
 #### Reconnaissance Optique de Caractères de Windows {#Win10OcrSettings}
@@ -3656,9 +3656,7 @@ Pour plus d'informations, lisez la section détaillée : [Extensions et Add-on S
 
 ### Créer une copie portable {#CreatePortableCopy}
 
-Ceci ouvrira un dialogue vous permettant de créer une copie portable de NVDA à partir de la version installée.
-
-Le dialogue de création d'une copie portable ou d'installation de NVDA sur ce PC vous demandera de choisir un dossier où créer la copie portable ou installer NVDA.
+Ceci ouvrira un dialogue vous permettant de créer une copie portable de NVDA à partir de la version en cours d'exécution.
 
 Suivez les instructions dans [Création d'une copie portable](#CreatingAPortableCopy) pour plus d'informations.
 

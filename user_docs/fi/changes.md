@@ -56,7 +56,7 @@ Myös Unicode CLDR on päivitetty.
 * Viimeinen suorittamaton komento ei enää katoa Python-konsolissa syötehistoriaa selattaessa. (#16653, @CyrilleB79)
 * Anonyymi yksilöllinen tunniste lähetetään nyt osana valinnaista NVDA:n käyttötilastojen keräämistä. (#16266)
 * Massamuistiversiota luotaessa luodaan oletusarvoisesti uusi hakemisto.
-Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä. (#16684)
+Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä. (#16686)
 
 ### Bugikorjaukset
 
@@ -70,7 +70,6 @@ Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä
   * Mikäli saatavilla, NVDA käyttää `aria-labelledby`-attribuuttia taulukoiden saavutettavien nimien ilmaisemiseen Mozilla Firefoxissa. (#5183)
   * NVDA puhuu oikein valintaruutu- ja valintapainikevalikon kohteet siirryttäessä ensimmäistä kertaa alivalikkoihin Google Chromessa ja Mozilla Firefoxissa. (#14550)
   * NVDA:n selaustilan hakutoiminto on nyt tarkempi, kun sivu sisältää emojeita. (#16317, @LeonarddeR)
-  * NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
 * NVDA puhuu oikein automaattisen täydennyksen ehdotukset Eclipsessä ja muissa Eclipse-pohjaisissa ympäristöissä Windows 11:ssä. (#16416, @thgcode)
 * Paranneltu automaattisen tekstin lukemisen luotettavuutta erityisesti päätesovelluksissa. (#15850, #16027, @Danstiv)
 * NVDA ilmaisee oikein valinnan muutokset Microsoft Excelissä solun tekstiä muokattaessa. (#15843)
@@ -82,6 +81,8 @@ Näkyviin tulee varoitus, jos yrität kirjoittaa hakemistoon, joka ei ole tyhjä
 * Lisätty Visual Studio Codeen tuki objektin nimen lukemiselle tekstintarkastelukomennoilla. (#16248, @Cary-Rowen)
 * NVDA puhuu nyt oikein nykyisen merkin, sanan ja rivin Mozilla Firefoxissa, kun kohdistin on rivin lopussa. (#3156, @jcsteh)
 * NVDA-äänien toisto ei enää epäonnistu monoäänilaitteella. (#16770, @jcsteh)
+* NVDA puhuu osoitteet siirryttäessä nuolinäppäimillä Outlook.comin/uuden Outlookin Vastaanottaja/Kopio/Piilokopio-kentissä. (#16856)
+* NVDA käsittelee nyt lisäosien asennusvirheet sulavammin. (#16704)
 
 ### Muutokset kehittäjille
 
@@ -1687,7 +1688,7 @@ Tässä versiossa on korjattu seuraavat bugit:
 Tämän version merkittävimpiä uusia ominaisuuksia ovat suorituskyvyn parannukset sekä Microsoft wordia että Exceliä käytettäessä, vakauden ja tietoturvan parannukset, kuten tuki versioyhteensopivuustietoja sisältäville lisäosille, sekä monet muut ohjelmavirheiden korjaukset.
 
 Huom: Tästä versiosta alkaen käyttäjän omia sovellusmoduuleita, yleisliitännäisiä tai pistenäyttö- ja syntetisaattoriajureita ei enää ladata automaattisesti NVDA:n asetushakemistosta. 
-Ne tulisi asentaa osana NVDA:n lisäosaa. Lisäosien kehittäjät voivat testata koodiaan sijoittamalla sen scratchpad-hakemistoon, joka löytyy NVDA:n asetushakemistosta, jos Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta -asetus on otettu käyttöön NVDA:n uudesta Lisäasetukset-asetuspaneelista.
+Ne tulisi asentaa osana NVDA:n lisäosaa. Lisäosien kehittäjät voivat testata koodiaan sijoittamalla sen Scratchpad-hakemistoon, joka löytyy NVDA:n asetushakemistosta, jos "Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta" -asetus on otettu käyttöön NVDA:n uudesta Lisäasetukset-asetuspaneelista.
 Nämä muutokset ovat välttämättömiä mukautetun koodin yhteensopivuuden varmistamiseksi, jotta NVDA ei lakkaa toimimasta, kun tällainen koodi ei ole enää yhteensopivaa uudempien versioiden kanssa.
 Saat lisätietoja tästä sekä lisäosien paremmasta versioinnista lukemalla alta tehdyistä muutoksista.
 
