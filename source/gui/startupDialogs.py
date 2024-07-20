@@ -15,7 +15,6 @@ from documentationUtils import getDocFilePath
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import gui.guiHelper
 import keyboardHandler
 from logHandler import log
 import versionInfo

@@ -13,7 +13,6 @@ import wx
 import globalVars
 import gui
 import gui.contextHelp
-import gui.guiHelper
 from logHandler import log
 import speechDictHandler
 

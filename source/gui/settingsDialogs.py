@@ -249,12 +249,11 @@ class SettingsDialog(
 		# destroyed.
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
-		guiHelper.enableDarkMode(self)
-
 		self.postInit()
 		if resizeable:
 			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
+		guiHelper.enableDarkMode(self)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))
 
