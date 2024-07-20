@@ -56,6 +56,7 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
+	Generator,
 	List,
 	Optional,
 	Set,
@@ -83,6 +84,24 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 #: The size that settings panel text descriptions should be wrapped at.
 # Ensure self.scaleSize is used to adjust for OS scaling adjustments.
 PANEL_DESCRIPTION_WIDTH = 544
+
+
+def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
+	yield widget
+	if hasattr(widget, "GetChildren"):
+		for child in widget.GetChildren():
+			for descendant in _getDescendants(child):
+				yield descendant
+
+
+def _applyDarkMode(widget : wx.Window):
+	if wx.SystemSettings.GetAppearance().IsDark():
+		fgColor, bgColor = "White", "Dark Grey"
+	else:
+		fgColor, bgColor = "Black", "White"
+	for child in _getDescendants(widget):
+		child.SetBackgroundColour(bgColor)
+		child.SetForegroundColour(fgColor)
 
 
 class SettingsDialog(
@@ -248,6 +267,8 @@ class SettingsDialog(
 		# destroyed.
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
+		_applyDarkMode(self)
+
 		self.postInit()
 		if resizeable:
 			self.SetMinSize(self.mainSizer.GetMinSize())
@@ -368,6 +389,7 @@ class SettingsPanel(
 		super().__init__(parent)
 
 		self._buildGui()
+		_applyDarkMode(self)
 
 		if gui._isDebug():
 			elapsedSeconds = time.time() - startTime
@@ -391,7 +413,7 @@ class SettingsPanel(
 		raise NotImplementedError
 
 	def onPanelActivated(self):
-		"""Called after the panel has been activated (i.e. de corresponding category is selected in the list of categories).
+		"""Called after the panel has been activated (i.e. the corresponding category is selected in the list of categories).
 		For example, this might be used for resource intensive tasks.
 		Sub-classes should extend this method.
 		"""
