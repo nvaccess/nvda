@@ -56,7 +56,6 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
-	Generator,
 	List,
 	Optional,
 	Set,

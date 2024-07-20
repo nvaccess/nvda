@@ -93,8 +93,8 @@ def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
 				yield descendant
 
 
-def enableDarkMode(widget : wx.Window):
-	systemAppearance : wx.SystemAppearance = wx.SystemSettings.GetAppearance()
+def enableDarkMode(widget: wx.Window):
+	systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
 	if systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground():
 		fgColor, bgColor = "White", "Dark Grey"
 	else:
