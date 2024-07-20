@@ -120,6 +120,7 @@ class ProfilesDialog(
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
 		self.CentreOnScreen()
+		guiHelper.enableDarkMode(self)
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -407,6 +408,7 @@ class TriggersDialog(
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.CentreOnScreen()
+		guiHelper.enableDarkMode(self)
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -482,6 +484,8 @@ class NewProfileDialog(
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
 		self.CentreOnScreen()
+		# Note: we don't call guiHelper.enableDarkMode() here because wx.RadioBox doesn't support
+		# changing the foreground color
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles

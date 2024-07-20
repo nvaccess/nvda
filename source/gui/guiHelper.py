@@ -46,6 +46,7 @@ class myDialog(wx.Dialog):
 from contextlib import contextmanager
 import weakref
 from typing import (
+	Generator,
 	Generic,
 	Optional,
 	Type,
@@ -82,6 +83,25 @@ def autoThaw(control: wx.Window):
 	control.Freeze()
 	yield
 	control.Thaw()
+
+
+def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
+	yield widget
+	if hasattr(widget, "GetChildren"):
+		for child in widget.GetChildren():
+			for descendant in _getDescendants(child):
+				yield descendant
+
+
+def enableDarkMode(widget : wx.Window):
+	systemAppearance : wx.SystemAppearance = wx.SystemSettings.GetAppearance()
+	if systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground():
+		fgColor, bgColor = "White", "Dark Grey"
+	else:
+		fgColor, bgColor = "Black", "White"
+	for child in _getDescendants(widget):
+		child.SetBackgroundColour(bgColor)
+		child.SetForegroundColour(fgColor)
 
 
 class ButtonHelper(object):

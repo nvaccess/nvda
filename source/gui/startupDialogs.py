@@ -15,6 +15,7 @@ from documentationUtils import getDocFilePath
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+import gui.guiHelper
 import keyboardHandler
 from logHandler import log
 import versionInfo
@@ -106,6 +107,7 @@ class WelcomeDialog(
 		self.SetSizer(mainSizer)
 		self.kbdList.SetFocus()
 		self.CentreOnScreen()
+		gui.guiHelper.enableDarkMode(self)
 
 	def onOk(self, evt):
 		layout = self.kbdNames[self.kbdList.GetSelection()]
@@ -220,6 +222,7 @@ class LauncherDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+		gui.guiHelper.enableDarkMode(self)
 
 	def _createLicenseAgreementGroup(self) -> wx.StaticBoxSizer:
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
@@ -326,6 +329,7 @@ class AskAllowUsageStatsDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+		gui.guiHelper.enableDarkMode(self)
 
 	def onYesButton(self, evt):
 		log.debug("Usage stats gathering has been allowed")

@@ -86,25 +86,6 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 PANEL_DESCRIPTION_WIDTH = 544
 
 
-def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
-	yield widget
-	if hasattr(widget, "GetChildren"):
-		for child in widget.GetChildren():
-			for descendant in _getDescendants(child):
-				yield descendant
-
-
-def _applyDarkMode(widget : wx.Window):
-	systemAppearance : wx.SystemAppearance = wx.SystemSettings.GetAppearance()
-	if systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground():
-		fgColor, bgColor = "White", "Dark Grey"
-	else:
-		fgColor, bgColor = "Black", "White"
-	for child in _getDescendants(widget):
-		child.SetBackgroundColour(bgColor)
-		child.SetForegroundColour(fgColor)
-
-
 class SettingsDialog(
 	DpiScalingHelperMixinWithoutInit,
 	gui.contextHelp.ContextHelpMixin,
@@ -268,7 +249,7 @@ class SettingsDialog(
 		# destroyed.
 		self.Bind(wx.EVT_WINDOW_DESTROY, self._onWindowDestroy)
 
-		_applyDarkMode(self)
+		guiHelper.enableDarkMode(self)
 
 		self.postInit()
 		if resizeable:
@@ -390,7 +371,7 @@ class SettingsPanel(
 		super().__init__(parent)
 
 		self._buildGui()
-		_applyDarkMode(self)
+		guiHelper.enableDarkMode(self)
 
 		if gui._isDebug():
 			elapsedSeconds = time.time() - startTime

@@ -10,6 +10,7 @@ import globalVars
 import gui
 import gui.contextHelp
 from gui import blockAction
+import gui.guiHelper
 
 
 #: The singleton instance of the log viewer UI.
@@ -65,6 +66,7 @@ class LogViewer(
 
 		self.refresh()
 		self.outputCtrl.SetFocus()
+		gui.guiHelper.enableDarkMode(self)
 
 	def refresh(self, evt=None):
 		# Ignore if log is not initialized
