@@ -252,15 +252,15 @@ class PoeditListItem(NVDAObject):
 	appModule: AppModule
 
 	def _get__warningControlToReport(self) -> int | None:
-		obj = self.appModule._needsWorkObj
-		if obj and controlTypes.State.CHECKED in obj.states:
-			return _WindowControlId.NEEDS_WORK_SWITCH
 		obj = self.appModule._previousSourceTextObj
 		if obj and not obj.hasIrrelevantLocation:
 			return _WindowControlId.PREVIOUS_SOURCE_TEXT
 		obj = self.appModule._translationIssueObj
 		if obj and obj.parent and obj.parent.parent and not obj.parent.parent.hasIrrelevantLocation:
 			return _WindowControlId.TRANSLATION_ISSUE_TEXT
+		obj = self.appModule._needsWorkObj
+		if obj and controlTypes.State.CHECKED in obj.states:
+			return _WindowControlId.NEEDS_WORK_SWITCH
 		return None
 
 	def _get_name(self):
