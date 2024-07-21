@@ -1696,6 +1696,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			raise LookupError("Buffer position not in window")
 		return bufferPos - self.windowStartPos
 
+	def windowPosToBufferPos(self, windowPos: int):
+		"""
+		Converts a position relative to the  braille window to a position relative to the braille buffer.
+		"""
+		return self.windowStartPos + windowPos
+
 	def _get_windowEndPos(self):
 		endPos = self.windowStartPos + self.handler.displaySize
 		cellsLen = len(self.brailleCells)
@@ -1854,14 +1860,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return self.brailleCells[self.windowStartPos : self.windowEndPos]
 
 	def routeTo(self, windowPos):
-		pos = self.windowStartPos + windowPos
+		pos = self.windowPosToBufferPos(windowPos)
 		if pos >= self.windowEndPos:
 			return
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
 
 	def getTextInfoForWindowPos(self, windowPos):
-		pos = self.windowStartPos + windowPos
+		pos = self.windowPosToBufferPos(windowPos)
 		if pos >= self.windowEndPos:
 			return None
 		region, pos = self.bufferPosToRegionPos(pos)
