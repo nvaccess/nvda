@@ -2944,7 +2944,7 @@ Na przykład, jeżeli zainstalowałeś dodatki z kanału aktualizacji beta, zost
 
 |Opcja |Zachowanie |
 |---|---|
-|włączone |powiadamia o aktualizacjach wewnątrz tego ssamego kanału aktualizacji |
+|Powiadamiaj |powiadamia o aktualizacjach wewnątrz tego ssamego kanału aktualizacji |
 |Wyłączone |nie sprawdza aktualizacji dodatków |
 
 #### Ustawienia Windows OCR {#Win10OcrSettings}
@@ -3656,9 +3656,7 @@ Aby się dowiedzieć więcej, przeczytaj szczegółowy rozdział: [Dodatki i Add
 
 ### Utwórz kopię przenośną {#CreatePortableCopy}
 
-Polecenie to pozwala otworzyć okno, przy pomocy którego można utworzyć kopię przenośną NVDA z zainstalowanej na dysku wersji.
-
-Okno dialogowe tworzenia przenośnej kopii lub instalowania NVDA z przenośnej wersji pozwala wybrać użytkownikowi katalog w którym zostanie utworzona przenośna wersja, albo katalog, w którym program zostanie zainstalowany.
+Ta opcja spowoduje otwarcie okna dialogowego, umożliwiającego tworzenie przenośnej kopii z poziomu uruchomionej kopii NVDA.
 
 Po więcej instrukcji, przeczytaj [rozdział o tworzeniu kopii przenośnej.](#CreatingAPortableCopy)
 

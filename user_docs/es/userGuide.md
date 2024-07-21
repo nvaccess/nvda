@@ -2875,7 +2875,7 @@ Puedes configurar el anunciado de:
   * Regiones
   * Artículos
   * Marcos
-  * Figuras y pies de foto
+  * Figuras y subtítulos
   * Cliqueable
 
 Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada](#InputGestures).
@@ -2940,7 +2940,7 @@ Por ejemplo, para complementos beta instalados, sólo se te notificará de actua
 
 |Opción |Comportamiento |
 |---|---|
-|Habilitada |Notifica cuando las actualizaciones están disponibles para un cpomplemento dentro del mismo canal |
+|Notificar |Notifica cuando las actualizaciones están disponibles para un cpomplemento dentro del mismo canal |
 |Deshabilitada |No comprueba automáticamente las actualizaciones de complementos |
 
 #### Opciones del OCR de Windows {#Win10OcrSettings}
@@ -3652,9 +3652,7 @@ Para más información, lee el capítulo en profundidad: [Complementos y la Tien
 
 ### Crear copia portable {#CreatePortableCopy}
 
-Esto abrirá un diálogo que te permite crear una copia portable de NVDA a partir de la versión instalada.
-
-El diálogo para crear una copia portable de NVDA o para instalar NVDA en este PC te indicará para seleccionar una ruta de la carpeta en la cual debería crear la copia portable o en la que NVDA debería instalarse.
+Esto abrirá un diálogo que te permitirá crear una copia portable de NVDA a partir de la versión en ejecución.
 
 Sigue las instrucciones para [Crear una copia portable](#CreatingAPortableCopy) para más información.
 

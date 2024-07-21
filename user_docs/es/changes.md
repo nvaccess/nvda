@@ -15,7 +15,7 @@ Se han añadido órdenes sin asignar para desplazar la rueda del ratón vertical
 Hay varias correcciones de fallos, particularmente para el panel emoji de Windows 11 y para el histórico del portapapeles.
 Para navegadores web, hay correcciones para el anunciado de mensajes de error, figuras, pies de foto, etiquetas de tabla y elementos de menú con casillas de verificación y botones de opción.
 
-Liblouis se ha actualizado, añadiendo nuevas tablas braille para Serbio cirílico, Yiddish, varios idiomas antiguos y Turco.
+Liblouis se ha actualizado, añadiendo nuevas tablas braille para Serbio cirílico, Yiddish, varios idiomas antiguos, Turco y el alfabeto fonético internacional.
 eSpeak se ha actualizado, añadiendo soporte para el idioma Karakalpak.
 Unicode CLDR también se ha actualizado.
 
@@ -46,6 +46,7 @@ Unicode CLDR también se ha actualizado.
       * Yiddish.
       * Varios idiomas antiguos: hebreo bíblico, acadio, sirio, Ugarítico y texto cuneiforme transliteralizado.
       * Turco grado 2. (#16735)
+      * Alfabeto Fonético Internacional. (#16773)
   * Actualizado NSIS a 3.10 (#16674, @dpy013)
   * Actualizado markdown a 3.6 (#16725, @dpy013)
   * Actualizado nh3 a 0.2.17 (#16725, @dpy013)
