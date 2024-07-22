@@ -1985,9 +1985,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		)
 		# Translators: The label for a setting in keyboard settings to change maximum delay between two key press
 		# to perform a double key press.
-		maxRepeatedDelayText = _(
-			"Maximum &delay between two key presses for a repeated key press (ms):"
-		)
+		maxRepeatedDelayText = _("Maximum &delay between two key presses for a repeated key press (ms):")
 		self.maxRepeatedDelayEdit = sHelper.addLabeledControl(
 			maxRepeatedDelayText,
 			nvdaControls.SelectOnFocusSpinCtrl,
