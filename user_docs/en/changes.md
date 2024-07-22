@@ -9,6 +9,7 @@
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 * Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
+* The maximum delay between two keypresses to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairement. (#11929, @CyrilleB79)
 
 
 ### Bug Fixes
