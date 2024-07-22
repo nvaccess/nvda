@@ -1594,9 +1594,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
+		self._windowRowBufferOffsets: dict[tuple[int, int]] = {}
 		#: The position in L{brailleCells} where the display window starts (inclusive).
 		#: @type: int
-		self.windowStartPos = 0
 
 	def clear(self):
 		"""Clear the entire buffer.
@@ -1692,33 +1692,47 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return ""
 
 	def bufferPosToWindowPos(self, bufferPos):
-		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
-			raise LookupError("Buffer position not in window")
-		return bufferPos - self.windowStartPos
+		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
+			print(f"{row=}, {start=}, {end=}")
+			if start <= bufferPos < end:
+				return row * self.handler.display.numCols + (bufferPos - start)
+		raise LookupError("buffer pos not in window")
 
 	def windowPosToBufferPos(self, windowPos: int):
 		"""
 		Converts a position relative to the  braille window to a position relative to the braille buffer.
 		"""
-		return self.windowStartPos + windowPos
+		windowPos = max(min(windowPos, self.handler.displaySize), 0)
+		row, col = divmod(windowPos, self.handler.display.numCols) 
+		if row < len(self._windowRowBufferOffsets):
+			start, end = self._windowRowBufferOffsets[row]
+			return min(start + col, end - 1)
+		raise ValueError("Position outside window")
+
+	def _get_windowStartPos(self):
+		return self.windowPosToBufferPos(0)
+
+	def _set_windowStartPos(self, pos):
+		self._windowRowBufferOffsets.clear()
+		if len(self.brailleCells) == 0:
+			# Initialising with no actual braille content.
+			self._windowRowBufferOffsets = [(0, 0)] * self.handler.display.numRows
+			return
+		doWordWrap = config.conf["braille"]["wordWrap"]
+		start = pos
+		for row in range(self.handler.display.numRows):
+			end = start + self.handler.display.numCols
+			if doWordWrap:
+				try:
+					end = rindex(self.brailleCells, 0, start, end) + 1
+				except (ValueError, IndexError):
+					pass # No space on line
+			self._windowRowBufferOffsets.append((start, end))
+			start = end
 
 	def _get_windowEndPos(self):
-		endPos = self.windowStartPos + self.handler.displaySize
-		cellsLen = len(self.brailleCells)
-		if endPos >= cellsLen:
-			return cellsLen
-		if not config.conf["braille"]["wordWrap"]:
-			return endPos
-		try:
-			# Try not to split words across windows.
-			# To do this, break after the furthest possible space.
-			return min(
-				rindex(self.brailleCells, 0, self.windowStartPos, endPos) + 1,
-				endPos,
-			)
-		except ValueError:
-			pass
-		return endPos
+		start, end = self._windowRowBufferOffsets[-1]
+		return end
 
 	def _set_windowEndPos(self, endPos):
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
@@ -1840,6 +1854,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start += len(cells)
 		if log.isEnabledFor(log.IO):
 			log.io("Braille regions text: %r" % logRegions)
+		# Ensure that braille cells are padded up to display size.
+		self.brailleCells.extend([0 for x in range(len(self.brailleCells), self.handler.displaySize)])
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
@@ -1857,7 +1873,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return self.bufferPositionsToRawText(self.windowStartPos, self.windowEndPos)
 
 	def _get_windowBrailleCells(self):
-		return self.brailleCells[self.windowStartPos : self.windowEndPos]
+		windowCells = []
+		for start, end in self._windowRowBufferOffsets:
+			rowCells = self.brailleCells[start: end]
+			remaining = self.handler.display.numCols  - len(rowCells)
+			if remaining > 0:
+				rowCells.extend([0] * remaining)
+			windowCells.extend(rowCells)
+		return windowCells
 
 	def routeTo(self, windowPos):
 		pos = self.windowPosToBufferPos(windowPos)
