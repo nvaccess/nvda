@@ -1515,6 +1515,7 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	// However in the unlikely case terminate can't run,
 	// it will be deleted along with the backend, but in an RPC thread!
 	// Therefore in this case deliberately leak the COM object, which is better than a crash. 
+	nhAssert(!rootDocAcc);
 	if(this->rootDocAcc) {
 		this->rootDocAcc.Detach();
 	}
