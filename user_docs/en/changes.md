@@ -83,6 +83,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
 * Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
 * NVDA will report addresses when arrowing through To/CC/BCC fields in outlook.com / Modern Outlook. (#16856)
 * NVDA now handles add-on installation failures more gracefully. (#16704)
+* No longer cause Google Chrome to crash when closing a document or exiting Chrome. (#16893)
 
 ### Changes for Developers
 
