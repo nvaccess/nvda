@@ -1513,8 +1513,9 @@ GeckoVBufBackend_t::~GeckoVBufBackend_t() {
 	// See https://issues.chromium.org/issues/41487612
 	// In most cases this will be released in renderThread_terminate.
 	// However in the unlikely case terminate can't run,
-	// it will be deleted along with the backend, but in an RPC thread!
-	// Therefore in this case deliberately leak the COM object, which is better than a crash. 
+	// We must detach and leak the COM pointer here,
+	// Otherwise it  would be automatically  deleted along with the backend which would cause a crash,
+	// as the COM object would be released from within an RPC worker thread.
 	nhAssert(!rootDocAcc);
 	if(this->rootDocAcc) {
 		this->rootDocAcc.Detach();
