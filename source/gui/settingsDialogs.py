@@ -4395,6 +4395,16 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
+		self.formattingDisplayCombo: nvdaControls.FeatureFlagCombo = followCursorGroupHelper.addLabeledControl(
+			# Translators: This is a label for a combo-box in the Braille settings panel.
+			labelText=_("Formatting &display"),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=("braille", "fontFormattingDisplay"),
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4427,15 +4437,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsInterruptSpeech", self.brailleInterruptSpeechCombo)
-
-		self.formattingDisplayCombo = sHelper.addLabeledControl(
-			# Translators: This is a label for a combo-box in the Braille settings panel.
-			labelText=_("Formatting &display"),
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=("braille", "fontFormattingDisplay"),
-			conf=config.conf,
-		)
-		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
 
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
