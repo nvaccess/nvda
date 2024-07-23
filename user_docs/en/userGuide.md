@@ -2243,7 +2243,7 @@ Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-##### Formatting display {#BrailleSettingsFormattingDisplay}
+##### Formatting display {#BrailleFormattingDisplay}
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2258,9 +2258,9 @@ The following options are supported:
 |---|---|
 | Default | The default setting, as specified by NVDA. |
 | Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
-| [Tags](#BrailleSettingsFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
+| [Tags](#BrailleFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
 
-###### Tags {#BrailleSettingsFormattingDisplayTags}
+###### Tags {#BrailleFormattingDisplayTags}
 
 In tags mode, a formatting tag is displayed in braille when a change in formatting is detected.
 These tags start with ⣋ and end with ⣙.

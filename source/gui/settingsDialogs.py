@@ -4435,7 +4435,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			keyPath=("braille", "fontFormattingDisplay"),
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrailleSettingsFormattingDisplay", self.formattingDisplayCombo)
+		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
 
 		if gui._isDebug():
 			log.debug("Finished making settings, now at %.2f seconds from start" % (time.time() - startTime))
