@@ -2187,14 +2187,14 @@ The following symbols are defined:
 
 | Symbol | Meaning |
 |---|---|
-| ⠃ | Start bold |
-| ⡃ | End bold |
-| ⠊ | Start italic |
-| ⡊ | End italic |
-| ⠥ | Start underline |
-| ⡥ | End underline |
-| ⠎ | Start strikethrough |
-| ⡎ | End strikethrough |
+| ⠃ ("b") | Start bold |
+| ⡃ ("b" with dot 7) | End bold |
+| ⠊ ("i") | Start italic |
+| ⡊ ("i" with dot 7) | End italic |
+| ⠥ ("u") | Start underline |
+| ⡥ ("u" with dot 7) | End underline |
+| ⠎ ("s")| Start strikethrough |
+| ⡎ ("s" with dot 7) | End strikethrough |
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
