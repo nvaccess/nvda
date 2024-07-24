@@ -2518,8 +2518,10 @@ This option is on by default, though certain users may wish to turn this off, su
 
 ##### Maximum delay between two key presses for a repeated key press {#MaxRepeatedKeyDelay}
 
-This option allows to control the maximum delay between two key presses to perform a double or triple key presses.
-Increasing this delay may be especially useful for people using sticky keys or having some physical disability.
+Some NVDA keyboard gestures perform different actions based upon how many times the same key is pressed in rapid succession.
+An example of this is the Report current character of navigator object command, which reports the character if pressed once, a phonetic description of the character if pressed twice, and the numeric value of the character if pressed three times.
+This option configures the timeout after which an additional press of the same key will start a new gesture, rather than being taken as an additional press of the first one.
+Increasing this delay may be especially useful for people using sticky keys, or who have a physical disability.
 
 #### Mouse {#MouseSettings}
 
