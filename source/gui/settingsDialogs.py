@@ -4363,7 +4363,21 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText),
 		)
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
+		self.readByParagraphCheckBox.Bind(wx.EVT_CHECKBOX, self.onReadByParagraphChange)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
+
+		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = followCursorGroupHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				"Show para&graph start",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showParagraphStart"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("BrailleShowParagraphStart", self.showParagraphStartCombo)
+		if not self.readByParagraphCheckBox.GetValue():
+			self.showParagraphStartCombo.Disable()
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
@@ -4459,6 +4473,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.setTether(tetherChoice, auto=False)
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
+		self.showParagraphStartCombo.saveCurrentValueToConf()
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
@@ -4483,6 +4498,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
+
+	def onReadByParagraphChange(self, evt):
+		self.showParagraphStartCombo.Enable(evt.IsChecked())
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())

@@ -330,6 +330,9 @@ INPUT_END_IND = " ⣹"
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
+# Indicator at the start of paragraphs
+PARAGRAPH_START = "  "
+
 #: Identifier for a focus context presentation setting that
 #: only shows as much as possible focus context information when the context has changed.
 CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
@@ -1083,6 +1086,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""
 	textList = []
 	if isAtStart:
+		brailleConfig = config.conf["braille"]
+		if brailleConfig["readByParagraph"] and brailleConfig["showParagraphStart"]:
+			textList.append(PARAGRAPH_START)
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:

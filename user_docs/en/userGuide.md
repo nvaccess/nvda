@@ -2163,6 +2163,10 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
+##### Show paragraphs start {#BrailleSettingsShhowParagraphStart}
+
+If enabled and read by paragraph is checked, two spaces will be displayed to indicate paragraph start.
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
