@@ -2165,7 +2165,7 @@ It is disabled by default.
 
 ##### Show paragraphs start {#BrailleSettingsShowParagraphStart}
 
-If enabled and read by paragraph is checked, two spaces will be displayed to indicate paragraph start.
+- If enabled and "Read by paragraph" is checked, two spaces will be displayed to indicate the start of a paragraph.
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
