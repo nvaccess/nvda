@@ -1979,7 +1979,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 
 		minTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["min"])
 		maxTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["max"])
-		# Translators: The label for a control in keyboard settings to modify the timeout for a double keypress.
+		# Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 		multiPressTimeoutText = _("&Multiple press timeout (ms):")
 		self.multiPressTimeoutEdit = sHelper.addLabeledControl(
 			multiPressTimeoutText,
