@@ -9,7 +9,7 @@
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 * Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
-* NVDA can now be configured to indicate the start of paragraphs in braille when the reading by paragraph option is enabled (#16895,  @nvdaes)
+* When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
 
 
 ### Bug Fixes

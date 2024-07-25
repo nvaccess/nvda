@@ -2163,7 +2163,7 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
-##### Show paragraphs start {#BrailleSettingsShowParagraphStart}
+##### Show paragraphs start {#BrailleShowParagraphStart}
 
 - If enabled and "Read by paragraph" is checked, two spaces will be displayed to indicate the start of a paragraph.
 

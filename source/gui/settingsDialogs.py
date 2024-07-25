@@ -4375,7 +4375,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			keyPath=["braille", "showParagraphStart"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("BrailleSettingsShowParagraphStart", self.showParagraphStartCombo)
+		self.bindHelpEvent("BrailleShowParagraphStart", self.showParagraphStartCombo)
 		if not self.readByParagraphCheckBox.GetValue():
 			self.showParagraphStartCombo.Disable()
 
