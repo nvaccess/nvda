@@ -1081,7 +1081,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				# player is paused. Don't treat this player as idle.
 				continue
 			if player._lastActiveTime <= threshold:
-				NVDAHelper.localLib.wasPlay_idle(player._player)
+				try:
+					NVDAHelper.localLib.wasPlay_idle(player._player)
+				except OSError:
+					# #16125: IAudioClock::GetPosition sometimes fails with an access
+					# violation on a device which has been invalidated. This shouldn't happen
+					# and suggests a bug somewhere in NVDA's C++ WASAPI code. Nevertheless,
+					# we want to catch this because otherwise, we'll just keep trying to call
+					# this every few seconds, which is pointless and annoying. Hopefully, a
+					# proper fix for this bug can be found eventually.
+					log.exception("Error calling wasPlay_idle")
 				player._lastActiveTime = None
 			else:
 				stillActiveStream = True
