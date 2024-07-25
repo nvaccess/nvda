@@ -4369,7 +4369,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = (
 			followCursorGroupHelper.addLabeledControl(
 				labelText=_(
-					# Translators: This is a label for a combo-box in the Braille settings panel.
+					# Translators: This is a label for a combo-box in the Braille settings panel to select if start of paragraphs will be reported in braille.
 					"Show para&graph start",
 				),
 				wxCtrlClass=nvdaControls.FeatureFlagCombo,
