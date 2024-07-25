@@ -5,6 +5,7 @@
 ### Important notes
 
 ### New Features
+* In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 
 ### Bug Fixes
 
