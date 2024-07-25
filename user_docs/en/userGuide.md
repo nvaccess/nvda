@@ -2163,14 +2163,15 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
-##### Show paragraphs start {#BrailleShowParagraphStart}
+##### Show paragraph start {#BrailleShowParagraphStart}
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Disabled), Enabled, Disabled|
 |Default |Disabled|
 
 If enabled and "Read by paragraph" is checked, two spaces will be displayed to indicate the start of a paragraph.
-This can be specially helpful in applications used to read large pieces of text like structured documents or books, where reporting paragraphs start maybe important to understand the structure of the read contents, and even to set bookmarks or annotations based on paragraph position.
+This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
+In such documents, knowing where paragraphs start maybe important to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
