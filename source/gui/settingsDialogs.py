@@ -4366,16 +4366,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.readByParagraphCheckBox.Bind(wx.EVT_CHECKBOX, self.onReadByParagraphChange)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
-		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = (
-			followCursorGroupHelper.addLabeledControl(
-				labelText=_(
-					# Translators: This is a label for a combo-box in the Braille settings panel to select if start of paragraphs will be reported in braille.
-					"Show para&graph start",
-				),
-				wxCtrlClass=nvdaControls.FeatureFlagCombo,
-				keyPath=["braille", "showParagraphStart"],
-				conf=config.conf,
-			)
+		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = followCursorGroupHelper.addLabeledControl(
+			labelText=_(
+				# Translators: This is a label for a combo-box in the Braille settings panel to select if start of paragraphs will be reported in braille.
+				"Show para&graph start",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["braille", "showParagraphStart"],
+			conf=config.conf,
 		)
 		self.bindHelpEvent("BrailleSettingsShowParagraphStart", self.showParagraphStartCombo)
 		if not self.readByParagraphCheckBox.GetValue():
