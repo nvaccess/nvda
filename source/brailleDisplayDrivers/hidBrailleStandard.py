@@ -107,7 +107,8 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 			cellValueCaps = self._findCellValueCaps()
 			if cellValueCaps:
 				self._cellValueCaps = cellValueCaps
-				self.numCells = cellValueCaps.ReportCount
+				self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
+				self.numCells = self._maxNumberOfCells = cellValueCaps.ReportCount
 				# A display responded.
 				log.info(
 					"Found display with {cells} cells connected via {type} ({port})".format(
@@ -135,6 +136,17 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
 					BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
 				)
+				and valueCaps.ReportCount > 0
+			):
+				return valueCaps
+		return None
+
+	def _findNumberOfCellsValueCaps(self) -> Optional[hidpi.HIDP_VALUE_CAPS]:
+		for valueCaps in self._dev.inputValueCaps:
+			if (
+				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
+				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
+				and valueCaps.u1.NotRange.Usage == BraillePageUsageID.NUMBER_OF_BRAILLE_CELLS
 				and valueCaps.ReportCount > 0
 			):
 				return valueCaps
@@ -187,6 +199,8 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		for dataItem in report.getDataItems():
 			if dataItem.DataIndex in self._inputButtonCapsByDataIndex and dataItem.u1.On:
 				keys.append(dataItem.DataIndex)
+			elif self._numberOfCellsValueCaps and dataItem.DataIndex == self._numberOfCellsValueCaps.u1.NotRange.DataIndex:
+				self.numCells = dataItem.u1.RawValue
 		if len(keys) > len(self._keysDown):
 			# Press. This begins a new key combination.
 			self._ignoreKeyReleases = False
@@ -207,7 +221,8 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cellBytes = b"".join(intToByte(cell) for cell in cells)
+		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
+		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)
 		report = hwIo.hid.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
 		report.setUsageValueArray(
 			HID_USAGE_PAGE_BRAILLE,
