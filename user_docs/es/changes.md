@@ -80,8 +80,9 @@ Un mensaje de advertencia te avisará si intentas escribir en un directorio no v
 * Al pegar en la calculadora de Windows 10/11, NVDA ahora anuncia correctamente el número entero pegado. (#16573, @TristanBurchett)
 * La voz ya no queda en silencio después de desconectarse y volver a conectarse a una sesión de Escritorio Remoto. (#16722, @jcsteh)
 * Añadido soporte para órdenes de revisión de texto para el nombre de un objeto en Visual Studio Code. (#16248, @Cary-Rowen)
-* En Mozilla Firefox, NVDA ahora anuncia correctamente el carácter, palabra y línea actuales cuando el cursor esté en el punto de inserción al final de una línea. (#3156, @jcsteh)
 * Reproducir sonidos de NVDA ya no falla en un dispositivo de audio mono. (#16770, @jcsteh)
+* NVDA anunciará las direcciones cuando te muevas con las flechas por los campos PARA/CC/BCC en outlook.com  y Outlook moderno. (#16856)
+* NVDA ahora maneja los fallos de instalación de complementos con más elegancia. (#16704)
 
 ### Cambios para Desarrolladores
 
