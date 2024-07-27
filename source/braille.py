@@ -1765,12 +1765,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		# Prevent that paragraph start indicator is skipped
 		brailleConfig = config.conf["braille"]
 		if (
-			brailleConfig["readByParagraph"] and brailleConfig["showParagraphStart"]
+			brailleConfig["readByParagraph"]
+			and brailleConfig["showParagraphStart"]
 			and self.regions[-1].rawText.startswith(PARAGRAPH_START)
 		):
 			startPos -= 1
 		self.windowStartPos = startPos
-
 
 	def _nextWindow(self):
 		oldStart = self.windowStartPos
