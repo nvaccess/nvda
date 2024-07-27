@@ -331,7 +331,7 @@ INPUT_END_IND = " ⣹"
 TEXT_SEPARATOR = " "
 
 # Indicator at the start of paragraphs
-PARAGRAPH_START = " "
+PARAGRAPH_START = "  "
 
 #: Identifier for a focus context presentation setting that
 #: only shows as much as possible focus context information when the context has changed.
