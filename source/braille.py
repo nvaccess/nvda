@@ -1767,7 +1767,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if (
 			brailleConfig["readByParagraph"]
 			and brailleConfig["showParagraphStart"]
-			and self.regions[-1].rawText.startswith(PARAGRAPH_START)
+			and self.regions[-1].rawText.startswith(PARAGRAPH_START + TEXT_SEPARATOR)
 		):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
 			startPos = self.regionPosToBufferPos(region, regionStart)
