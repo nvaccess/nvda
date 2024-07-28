@@ -73,6 +73,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
   * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
+* It is once again possible to reset the configuration to factory defaults reliably. (#16755, @Emil-18)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
