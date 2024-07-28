@@ -1769,7 +1769,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			and brailleConfig["showParagraphStart"]
 			and self.regions[-1].rawText.startswith(PARAGRAPH_START)
 		):
-			startPos -= 1
+			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
+			startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 
 	def _nextWindow(self):
