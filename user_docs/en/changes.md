@@ -69,6 +69,7 @@ Unicode CLDR has also been updated.
   * NVDA checks daily for add-on updates.
   * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
 * Added support for the Help Tech Activator Pro displays. (#16668)
+* Added support for dark mode. (#16683)
 
 ### Changes
 

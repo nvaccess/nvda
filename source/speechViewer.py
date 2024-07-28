@@ -65,6 +65,7 @@ class SpeechViewerFrame(
 
 		# Don't let speech viewer to steal keyboard focus when opened
 		self.ShowWithoutActivating()
+		gui.guiHelper.enableDarkMode(self)
 
 	def onSessionLockStateChange(self, isNowLocked: bool):
 		"""
