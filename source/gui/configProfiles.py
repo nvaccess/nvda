@@ -485,7 +485,7 @@ class NewProfileDialog(
 		self.profileName.SetFocus()
 		self.CentreOnScreen()
 		# Note: we don't call guiHelper.enableDarkMode() here because wx.RadioBox doesn't support
-		# changing the foreground color
+		# changing the foreground color (https://github.com/wxWidgets/Phoenix/issues/1512)
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles

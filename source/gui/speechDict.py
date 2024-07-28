@@ -78,7 +78,8 @@ class DictionaryEntryDialog(
 		self.setType(speechDictHandler.ENTRY_TYPE_ANYWHERE)
 		self.patternTextCtrl.SetFocus()
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
-		# Note: don't call guiHelper.enableDarkMode() here because wx.RadioBox doesn't support changing the foreground color
+		# Note: don't call guiHelper.enableDarkMode() here because wx.RadioBox doesn't support
+		# changing the foreground color (https://github.com/wxWidgets/Phoenix/issues/1512)
 
 	def getType(self):
 		typeRadioValue = self.typeRadioBox.GetSelection()
