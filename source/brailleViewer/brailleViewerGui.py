@@ -485,6 +485,7 @@ class BrailleViewerFrame(
 		"""Ensure all GUI updates happen in one place to create a smooth update, all changes should happen
 		between freeze and thaw.
 		"""
+		gui.guiHelper.enableDarkMode(self)
 		self.Freeze()
 		if self._newBraille is not None:
 			self._brailleOutput.SetValue(self._newBraille)
