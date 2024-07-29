@@ -4,6 +4,7 @@
 # Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
+from enum import StrEnum
 import itertools
 import typing
 from typing import (
@@ -14,6 +15,7 @@ from typing import (
 	Generator,
 	Iterable,
 	List,
+	NamedTuple,
 	Optional,
 	Set,
 	Tuple,
@@ -46,7 +48,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 )
-from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
 import controlTypes
 import api
@@ -327,6 +329,17 @@ INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
 INPUT_END_IND = " ⣹"
 
+
+class FormatTagDelimiter(StrEnum):
+	"""Delimiters for the start and end of format tags.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+
+	START = "⣋"
+	END = "⣙"
+
+
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
@@ -381,6 +394,52 @@ USB_PORT = ("usb", _("USB"))
 #: @type: tuple
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT = ("bluetooth", _("Bluetooth"))
+
+
+class FormattingMarker(NamedTuple):
+	"""A pair of braille symbols that indicate the start and end of a particular type of font formatting.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+
+	start: str
+	end: str
+
+
+fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
+	"bold": FormattingMarker(
+		# Translators: Brailled at the start of bold text.
+		# This is the English letter "b" in braille.
+		start=pgettext("braille formatting symbol", "⠃"),
+		# Translators: Brailled at the end of bold text.
+		# This is the English letter "b" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡃"),
+	),
+	"italic": FormattingMarker(
+		# Translators: Brailled at the start of italic text.
+		# This is the English letter "i" in braille.
+		start=pgettext("braille formatting symbol", "⠊"),
+		# Translators: Brailled at the end of italic text.
+		# This is the English letter "i" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡊"),
+	),
+	"underline": FormattingMarker(
+		# Translators: Brailled at the start of underlined text.
+		# This is the English letter "u" in braille.
+		start=pgettext("braille formatting symbol", "⠥"),
+		# Translators: Brailled at the end of underlined text.
+		# This is the English letter "u" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡥"),
+	),
+	"strikethrough": FormattingMarker(
+		# Translators: Brailled at the start of strikethrough text.
+		# This is the English letter "s" in braille.
+		start=pgettext("braille formatting symbol", "⠎"),
+		# Translators: Brailled at the end of strikethrough text.
+		# This is the English letter "s" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡎"),
+	),
+}
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
@@ -1130,9 +1189,62 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: brailled when text contains a bookmark
 				text = _("bkmk")
 				textList.append(text)
+
+	if (
+		config.conf["braille"]["fontFormattingDisplay"].calculated() == FontFormattingBrailleModeFlag.TAGS
+		and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None
+	):
+		textList.append(formattingTags)
+
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
+
+def _getFormattingTags(
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+	formatConfig: dict[str, bool],
+) -> str | None:
+	"""Get the formatting tags for the given field and cache.
+
+	Formatting tags are calculated according to the preferences passed in formatConfig.
+
+	:param field: The format current field.
+	:param fieldCache: The previous format field.
+	:param formatConfig: The user's formatting preferences.
+	:return: The braille formatting tag as a string, or None if no pertinant formatting is applied.
+	"""
+	textList: list[str] = []
+	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
+		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
+		for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
+			_appendFormattingMarker(fontAttribute, formattingMarker, textList, field, fieldCache)
+	if len(textList) > 0:
+		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
+
+
+def _appendFormattingMarker(
+	attribute: str,
+	marker: FormattingMarker,
+	textList: list[str],
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+) -> None:
+	"""Append a formatting marker to the text list if the attribute has changed.
+
+	:param attribute: The attribute to check.
+	:param marker: The formatting marker to use.
+	:param textList: The list of marker strings to append to.
+	:param field: The current format field.
+	:param fieldCache: The previous format field.
+	"""
+	newVal = field.get(attribute, False)
+	oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
+	if newVal and not oldVal:
+		textList.append(marker.start)
+	elif oldVal and not newVal:
+		textList.append(marker.end)
 
 
 class TextInfoRegion(Region):
@@ -1180,7 +1292,13 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if not (formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE):
+		if not (
+			(formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE)
+			and (
+				config.conf["braille"]["fontFormattingDisplay"].calculated()
+				== FontFormattingBrailleModeFlag.LIBLOUIS
+			)
+		):
 			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold

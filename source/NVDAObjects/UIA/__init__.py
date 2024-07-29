@@ -509,7 +509,7 @@ class UIATextInfo(textInfos.TextInfo):
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj:
-				raise LookupError  # noqa: E701
+				raise LookupError
 		elif isinstance(position, locationHelper.Point):
 			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(
 				position.toPOINT(),
@@ -522,9 +522,9 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def __eq__(self, other: "UIATextInfo"):
 		if self is other:
-			return True  # noqa: E701
+			return True
 		if self.__class__ is not other.__class__:
-			return False  # noqa: E701
+			return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
@@ -2538,7 +2538,7 @@ class UIItem(UIA):
 					UIAHandler.UIA_SelectionItemSelectionContainerPropertyId,
 				)
 				if e:
-					e = e.QueryInterface(UIAHandler.IUIAutomationElement)  # noqa: E701
+					e = e.QueryInterface(UIAHandler.IUIAutomationElement)
 			except COMError:
 				e = None
 			if e:

@@ -2164,6 +2164,7 @@ This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
 ##### Show paragraph start {#BrailleShowParagraphStart}
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Disabled), Enabled, Disabled|
@@ -2172,6 +2173,40 @@ It is disabled by default.
 If enabled and "Read by paragraph" is checked, two spaces will be displayed to indicate the start of a paragraph.
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start maybe important to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
+
+##### Formatting display {#BrailleFormattingDisplay}
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Liblouis), Liblouis, Tags |
+| Default | Liblouis |
+
+This setting determines how NVDA will display text formatting in braille.
+This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
+The following options are supported:
+
+| Option | Behaviour |
+|---|---|
+| Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
+| [Tags](#BrailleFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
+
+###### Tags {#BrailleFormattingDisplayTags}
+
+When "Formatting display" is set to "Tags", a formatting tag is displayed in braille when a change in formatting is detected.
+These tags start with ⣋ and end with ⣙.
+A formatting tag will contain one or more symbols which describe the text formatting.
+The following symbols are defined:
+
+| Symbol | Meaning |
+|---|---|
+| ⠃ ("b") | Start bold |
+| ⡃ ("b" with dot 7) | End bold |
+| ⠊ ("i") | Start italic |
+| ⡊ ("i" with dot 7) | End italic |
+| ⠥ ("u") | Start underline |
+| ⡥ ("u" with dot 7) | End underline |
+| ⠎ ("s")| Start strikethrough |
+| ⡎ ("s" with dot 7) | End strikethrough |
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
