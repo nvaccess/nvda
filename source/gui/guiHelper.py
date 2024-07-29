@@ -58,6 +58,8 @@ from typing import (
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
+import config
+from config.configFlags import ColorTheme
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS = 10
@@ -94,8 +96,14 @@ def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
 
 
 def enableDarkMode(widget: wx.Window):
-	systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
-	if systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground():
+	curTheme = config.conf["vision"]["colorTheme"]
+	if curTheme == ColorTheme.AUTO:
+		systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
+		isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
+	else:
+		isDark = curTheme == ColorTheme.DARK
+
+	if isDark:
 		fgColor, bgColor = "White", "Dark Grey"
 	else:
 		fgColor, bgColor = "Black", "White"

@@ -98,6 +98,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Vision enhancement provider settings
 [vision]
+	colorTheme = option("auto", "light", "dark", default="auto")
 
 	# Vision enhancement provider settings
 	[[__many__]]
