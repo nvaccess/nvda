@@ -2404,6 +2404,8 @@ This mode may differ from "Sound split disabled" mode in case other audio proces
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
@@ -2420,6 +2422,40 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
+
+This combo box allows you to select the status of the applications volume adjuster.
+The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+
+Possible values are:
+
+* Disabled: NVDA doesn't interfere with volume levels of other applications.
+* Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
+* Muted: all other applications are muted.
+
+The following keyboard command can also be used from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Toggle "Applications volume adjuster" status | `NVDA+alt+delete` | Cycles through statuses for "Applications volume adjuster" |
+
+If this option is set to muted, then its value will not be stored and it will be restored to enabled upon next restart of NVDA.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Volume of other applications {#OtherAppVolume}
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}

@@ -2992,6 +2992,34 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
+		# Translators: This is a label for the applications volume adjuster combo box in settings.
+		label = _("&Application volume adjuster status")
+		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["audio", "applicationsVolumeMode"],
+			conf=config.conf,
+		)
+		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
+		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
+
+		# Translators: This is the label for a slider control in the
+		# Audio settings panel.
+		label = _("Volume of other applications")
+		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100,
+		)
+		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
+		volume = config.conf["audio"]["applicationsSoundVolume"]
+		if 0 <= volume <= 100:
+			self.appSoundVolSlider.SetValue(volume)
+		else:
+			log.error("Invalid volume level: {}", volume)
+			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
+			self.appSoundVolSlider.SetValue(defaultVolume)
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3052,6 +3080,13 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
+		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
+		self.appVolAdjusterCombo.saveCurrentValueToConf()
+		audio.appsVolume._updateAppsVolumeImpl(
+			volume=self.appSoundVolSlider.GetValue() / 100.0,
+			state=self.appVolAdjusterCombo._getControlCurrentValue(),
+		)
+
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -3072,6 +3107,11 @@ class AudioPanel(SettingsPanel):
 		)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
+		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
+		self.appSoundVolSlider.Enable(
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled
+		)
+		self.appVolAdjusterCombo.Enable(wasapi)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems

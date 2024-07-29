@@ -5,6 +5,8 @@
 ### Important notes
 
 ### New Features
+* The volume of the other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. (#16052, @mltony)
+* The sound of the other applications can be muted with `NVDA+alt+delete`. (#16052, @mltony)
 
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 * Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
