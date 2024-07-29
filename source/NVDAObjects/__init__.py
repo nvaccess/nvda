@@ -84,7 +84,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		if chooseBestAPI:
 			APIClass = self.findBestAPIClass(kwargs)
 			if not APIClass:
-				return None  # noqa: E701
+				return None
 		else:
 			APIClass = self
 
@@ -1023,7 +1023,7 @@ class NVDAObject(
 			return None
 		presType = child.presentationType
 		if presType != self.presType_content:
-			return child._findSimpleNext(useChild=(presType != self.presType_unavailable), useParent=False)  # noqa: E701
+			return child._findSimpleNext(useChild=(presType != self.presType_unavailable), useParent=False)
 		return child
 
 	def _get_simpleLastChild(self):
@@ -1036,7 +1036,7 @@ class NVDAObject(
 				useChild=(presType != self.presType_unavailable),
 				useParent=False,
 				goPrevious=True,
-			)  # noqa: E701
+			)
 		return child
 
 	def _get_childCount(self):

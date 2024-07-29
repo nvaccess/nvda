@@ -9,7 +9,10 @@
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 * Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
-
+* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+The available options are:
+  * Liblouis (default): Uses formatting markers defined in the selected braille table.
+  * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 
 ### Bug Fixes
 
@@ -20,6 +23,7 @@
 * When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
 * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
+* In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
 
 
 ### Changes for Developers
@@ -108,6 +112,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
   * NVDA will correctly announce radio and checkbox menu items when first entering sub-menus in Google Chrome and Mozilla Firefox. (#14550)
   * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
   * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
+  * No longer cause Google Chrome to crash when closing a document or exiting Chrome. (#16893)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)

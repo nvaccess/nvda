@@ -2204,6 +2204,39 @@ To toggle show selection from anywhere, please assign a custom gesture using the
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
 
+##### Formatting display {#BrailleFormattingDisplay}
+
+This setting determines how NVDA will display text formatting in braille.
+This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Liblouis), Liblouis, Tags |
+| Default | Liblouis |
+
+| Option | Behaviour |
+|---|---|
+| Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
+| [Tags](#BrailleFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
+
+###### Tags {#BrailleFormattingDisplayTags}
+
+When "Formatting display" is set to "Tags", a formatting tag is displayed in braille when a change in formatting is detected.
+These tags start with ⣋ and end with ⣙.
+A formatting tag will contain one or more symbols which describe the text formatting.
+The following symbols are defined:
+
+| Symbol | Meaning |
+|---|---|
+| ⠃ ("b") | Start bold |
+| ⡃ ("b" with dot 7) | End bold |
+| ⠊ ("i") | Start italic |
+| ⡊ ("i" with dot 7) | End italic |
+| ⠥ ("u") | Start underline |
+| ⡥ ("u" with dot 7) | End underline |
+| ⠎ ("s")| Start strikethrough |
+| ⡎ ("s" with dot 7) | End strikethrough |
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.

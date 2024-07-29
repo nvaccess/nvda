@@ -89,6 +89,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
     	excludedDisplays = string_list(default=list())
 
@@ -206,7 +207,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	# Deprecated in 2025.1
-	reportFontAttributes = boolean(default=false)                                                                   
+	reportFontAttributes = boolean(default=false)
 	# 0: Off, 1: Speech, 2: Braille, 3: Speech and Braille
 	fontAttributeReporting = integer(0, 3, default=0)
 	reportRevisions = boolean(default=true)

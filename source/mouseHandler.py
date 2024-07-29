@@ -202,13 +202,13 @@ def getTotalWidthAndHeightAndMinimumPosition(displays):
 	for screenRect in displays:
 		(screenMin, screenMax) = getMinMaxPoints(screenRect)
 		if smallestX == None or screenMin.x < smallestX:  # noqa: E711
-			smallestX = screenMin.x  # noqa: E701, E711
+			smallestX = screenMin.x
 		if smallestY == None or screenMin.y < smallestY:  # noqa: E711
-			smallestY = screenMin.y  # noqa: E701, E711
+			smallestY = screenMin.y
 		if largestX == None or screenMax.x > largestX:  # noqa: E711
-			largestX = screenMax.x  # noqa: E701, E711
+			largestX = screenMax.x
 		if largestY == None or screenMax.y > largestY:  # noqa: E711
-			largestY = screenMax.y  # noqa: E701, E711
+			largestY = screenMax.y
 
 	# get full range, including any "blank space" between monitors
 	totalWidth = largestX - smallestX

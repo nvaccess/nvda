@@ -275,7 +275,7 @@ def setReviewPosition(
 	globalVars.reviewPosition = reviewPosition.copy()
 	globalVars.reviewPositionObj = reviewPosition.obj
 	if clearNavigatorObject:
-		globalVars.navigatorObject = None  # noqa: E701
+		globalVars.navigatorObject = None
 	# When the review cursor follows the caret and braille is auto tethered to review,
 	# we should not update braille with the new review position as a tether to focus is due.
 	if not (braille.handler.shouldAutoTether and isCaret):
