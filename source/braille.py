@@ -344,7 +344,7 @@ class FormatTagDelimiter(StrEnum):
 TEXT_SEPARATOR = " "
 
 # Indicator at the start of paragraphs
-PARAGRAPH_START = " "
+PARAGRAPH_START = config.conf["braille"]["paragraphStart"]
 
 #: Identifier for a focus context presentation setting that
 #: only shows as much as possible focus context information when the context has changed.
@@ -1888,8 +1888,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			and self.regions[-1].rawText.startswith(PARAGRAPH_START + TEXT_SEPARATOR)
 		):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
-			# Show two spaces
-			if startPos <= 2:
+			# Show paragraph start indicator
+			if startPos <= len(PARAGRAPH_START) + 1:
 				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 

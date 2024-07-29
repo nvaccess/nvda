@@ -4366,18 +4366,33 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.readByParagraphCheckBox.Bind(wx.EVT_CHECKBOX, self.onReadByParagraphChange)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
-		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = followCursorGroupHelper.addLabeledControl(
-			labelText=_(
-				# Translators: This is a label for a combo-box in the Braille settings panel to select if start of paragraphs will be reported in braille.
-				"Show para&graph start",
-			),
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["braille", "showParagraphStart"],
-			conf=config.conf,
+		labelText = _(
+			# Translators: This is a label for a combo-box in the Braille settings panel to select if start of paragraphs will be reported in braille.
+			"Show para&graph start"
+		)
+		self.showParagraphStartCombo: nvdaControls.FeatureFlagCombo = (
+			followCursorGroupHelper.addLabeledControl(
+				labelText,
+				wxCtrlClass=nvdaControls.FeatureFlagCombo,
+				keyPath=["braille", "showParagraphStart"],
+				conf=config.conf,
+			)
 		)
 		self.bindHelpEvent("BrailleShowParagraphStart", self.showParagraphStartCombo)
 		if not self.readByParagraphCheckBox.GetValue():
 			self.showParagraphStartCombo.Disable()
+
+		# Translators: This is a label for an edit box in the Braille settings panel to customize the paragraph start indicator.
+		paragraphStartLabelText = _("Paragraph st&art indicator")
+		self.paragraphStartEdit = followCursorGroupHelper.addLabeledControl(
+			paragraphStartLabelText,
+			wxCtrlClass=wx.TextCtrl,
+			size=(self.Parent.scaleSize(300), -1),
+		)
+		self.paragraphStartEdit.SetValue(config.conf["braille"]["paragraphStart"])
+		self.bindHelpEvent("ParagraphStartEdit", self.paragraphStartEdit)
+		if not self.readByParagraphCheckBox.GetValue():
+			self.paragraphStartEdit.Disable()
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
@@ -4486,6 +4501,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
 		self.showParagraphStartCombo.saveCurrentValueToConf()
+		config.conf["braille"]["paragraphStart"] = self.paragraphStartEdit.GetValue()
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
@@ -4514,6 +4530,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onReadByParagraphChange(self, evt: wx.CommandEvent):
 		self.showParagraphStartCombo.Enable(evt.IsChecked())
+		self.paragraphStartEdit.Enable(evt.IsChecked())
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())
