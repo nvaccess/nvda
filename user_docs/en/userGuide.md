@@ -2135,11 +2135,6 @@ In this case, Braille  will not follow system focus and system caret.
 
 ##### Move system caret when routing review cursor {#BrailleSettingsReviewRoutingMovesSystemCaret}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Never), Never, Only when tethered automatically, Always|
-|Default |Never|
-
 This setting determines if the system caret should also be moved with a routing button press.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
@@ -2154,6 +2149,11 @@ In that case, pressing a cursor routing key will only move the system caret or f
 This option is shown only if "[tether braille](#BrailleTether)" is set to "automatically" or "to review".
 
 To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Never), Never, Only when tethered automatically, Always|
+|Default |Never|
 
 ##### Read by Paragraph {#BrailleSettingsReadByParagraph}
 
@@ -2192,17 +2192,17 @@ To toggle focus context presentation from anywhere, please assign a custom gestu
 
 ##### Show selection {#BrailleSettingsShowSelection}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Enabled, Disabled|
-|Default |Enabled|
-
 This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
 The option is enabled by default so the selection indicator is shown.
 The selection indicator might be a distraction while reading.
 Disabling this option may improve readability.
 
 To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
@@ -2218,10 +2218,6 @@ When you scroll the display, you will then be able to read the rest of the word.
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
 This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
@@ -2229,12 +2225,12 @@ Other benefits of unicode normalization are explained in greater detail in the [
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Enabled), Enabled, Disabled|
-|Default |Enabled|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
 Previous/next line commands always interrupt speech.
@@ -2243,6 +2239,11 @@ On-going speech might be a distraction while reading Braille.
 For this reason the option is enabled by default, interrupting speech when scrolling braille.
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
