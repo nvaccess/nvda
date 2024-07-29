@@ -447,7 +447,7 @@ class SynthDriver(SynthDriver):
 	def _get_voice(self):
 		curVoice = getattr(self, "_voice", None)
 		if curVoice:
-			return curVoice  # noqa: E701
+			return curVoice
 		curVoice = _espeak.getCurrentVoice()
 		if not curVoice:
 			return ""

@@ -108,7 +108,7 @@ class SettingsDialog(
 	"""
 
 	class MultiInstanceError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	class MultiInstanceErrorWithDialog(MultiInstanceError):
 		dialog: "SettingsDialog"
@@ -496,7 +496,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	def __init__(self, parent, initialCategory=None):
 		"""
@@ -4409,6 +4409,18 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
+		self.formattingDisplayCombo: nvdaControls.FeatureFlagCombo = (
+			followCursorGroupHelper.addLabeledControl(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				labelText=_("Formatting &display"),
+				wxCtrlClass=nvdaControls.FeatureFlagCombo,
+				keyPath=("braille", "fontFormattingDisplay"),
+				conf=config.conf,
+			)
+		)
+		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4480,6 +4492,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
+		self.formattingDisplayCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())

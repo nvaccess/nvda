@@ -72,7 +72,7 @@ def doInstall(
 			handleAlreadyElevated=True,
 		)
 		if res == 2:
-			raise installer.RetriableFailure  # noqa: E701
+			raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath = config.getInstalledUserConfigPath()
 			if installedUserConfigPath:

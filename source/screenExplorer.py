@@ -64,7 +64,7 @@ class ScreenExplorer(object):
 			except (NotImplementedError, LookupError):
 				pass
 			if pos:
-				pos.expand(unit)  # noqa: E701
+				pos.expand(unit)
 		if pos and self.updateReview:
 			api.setReviewPosition(pos)
 		speechCanceled = False

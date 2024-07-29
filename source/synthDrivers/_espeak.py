@@ -283,7 +283,7 @@ def getVoiceList():
 	voiceList = []
 	for voice in voices:
 		if not voice:
-			break  # noqa: E701
+			break
 		voiceList.append(voice.contents)
 	return voiceList
 
