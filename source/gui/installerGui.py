@@ -276,6 +276,7 @@ class InstallerDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+		gui.guiHelper.enableDarkMode(self)
 
 	def onInstall(self, evt):
 		self.Hide()
@@ -487,6 +488,7 @@ class PortableCreaterDialog(
 		self.Sizer = mainSizer
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
+		gui.guiHelper.enableDarkMode(self)
 
 	def onCreatePortable(self, evt):
 		if not self.portableDirectoryEdit.Value:
