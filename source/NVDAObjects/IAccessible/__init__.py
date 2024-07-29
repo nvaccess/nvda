@@ -2393,7 +2393,7 @@ class SysLink(IAccessible):
 			# Remove any data after the null character
 			i = name.find("\0")
 			if i >= 0:
-				name = name[:i]  # noqa: E701
+				name = name[:i]
 		return name
 
 

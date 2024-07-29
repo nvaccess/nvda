@@ -108,7 +108,7 @@ class SettingsDialog(
 	"""
 
 	class MultiInstanceError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	class MultiInstanceErrorWithDialog(MultiInstanceError):
 		dialog: "SettingsDialog"
@@ -496,7 +496,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	def __init__(self, parent, initialCategory=None):
 		"""

@@ -56,13 +56,13 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		for l in localeList:  # noqa: E741
 			data = self._dataMap.get(l)
 			if data:
-				return data  # noqa: E701
+				return data
 			try:
 				data = self._localeDataFactory(l)
 			except LookupError:
 				data = None
 			if not data:
-				continue  # noqa: E701
+				continue
 			self._dataMap[l] = data
 			return data
 		raise LookupError(locale)
