@@ -1064,7 +1064,7 @@ class OfficeChartElementTrendline(OfficeChartElementBase):
 		if self.currentTrendline.DisplayEquation or self.currentTrendline.DisplayRSquared:
 			label = self.currentTrendline.DataLabel.Text
 			# Translators: Substitute superscript two by square for R square value
-			label = label.replace("Â²", _(" square "))
+			label = label.replace("²", _(" square "))
 			label = re.sub(r"([a-zA-Z]+)([2])", r"\1 square", label)
 			label = re.sub(r"([a-zA-Z]+)([3])", r"\1 cube", label)
 			label = re.sub(r"([a-zA-Z]+)([-]*[04-9][0-9]*)", r"\1 to the power \2", label)
