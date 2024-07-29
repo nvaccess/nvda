@@ -2054,7 +2054,7 @@ class ExcelDropdown(Window):
 		gesture.send()
 		newFocus = self.selection or self
 		if eventHandler.lastQueuedFocusObject is newFocus:
-			return  # noqa: E701
+			return
 		eventHandler.queueEvent("gainFocus", newFocus)
 
 	@script(gestures=("kb:escape", "kb:enter", "kb:space"), canPropagate=True)
@@ -2242,7 +2242,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	@property
 	def label(self):
 		if self._label:
-			return self._label  # noqa: E701
+			return self._label
 		alternativeText = self.excelItemObject.AlternativeText
 		if alternativeText:
 			self._label = (
@@ -2269,7 +2269,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	@property
 	def nvdaObj(self):
 		if self._nvdaObj:
-			return self._nvdaObj  # noqa: E701
+			return self._nvdaObj
 		formControlType = self.excelItemObject.formControlType
 		if formControlType == xlListBox:
 			self._nvdaObj = ExcelFormControlListBox(

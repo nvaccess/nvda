@@ -465,10 +465,10 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				except COMError:
 					pass
 				if foundCell:
-					break  # noqa: E701
+					break
 				curThisIndex = incdecFunc(curThisIndex, 1)
 			if foundCell:
-				break  # noqa: E701
+				break
 			curOtherIndex -= 1
 		if not foundCell:
 			ui.message(_("Edge of table"))
@@ -577,7 +577,7 @@ class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 		for field in fields:
 			if isinstance(field, str):
 				if inBold:
-					textList.append(field)  # noqa: E701
+					textList.append(field)
 			elif field.field:
 				inBold = field.field.get("bold", False)
 			if not inBold and len(textList) > 0:

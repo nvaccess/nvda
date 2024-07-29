@@ -43,9 +43,9 @@ def detectStringDirection(s):
 	direction = 0
 	for b in (unicodedata.bidirectional(ch) for ch in s):
 		if b == "L":
-			direction += 1  # noqa: E701
+			direction += 1
 		if b in ("R", "AL"):
-			direction -= 1  # noqa: E701
+			direction -= 1
 	return direction
 
 
@@ -124,12 +124,12 @@ def processFieldsAndRectsRangeReadingdirection(
 		# As no rtl text was ever seen, then there is nothing else to do
 		return
 	if overallDirection == 0:
-		overallDirection = 1  # noqa: E701
+		overallDirection = 1
 	# following the calculated over all reading direction of the passage, correct all weak/neutral fields to have the same reading direction as the field preceeding them
 	lastDirection = overallDirection
 	for index in range(startIndex, endIndex):
 		if overallDirection < 0:
-			index = endIndex - index - 1  # noqa: E701
+			index = endIndex - index - 1
 		item = commandList[index]
 		if isinstance(item, textInfos.FieldCommand) and isinstance(item.field, textInfos.FormatField):
 			direction = item.field["direction"]

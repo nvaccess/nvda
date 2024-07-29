@@ -106,7 +106,7 @@ class IndexCommand(SynthCommand):
 		@type index: integer
 		"""
 		if not isinstance(index, int):
-			raise ValueError("index must be int, not %s" % type(index))  # noqa: E701
+			raise ValueError("index must be int, not %s" % type(index))
 		self.index = index
 
 	def __repr__(self):
@@ -139,7 +139,7 @@ class CharacterModeCommand(SynthParamCommand):
 		@type state: boolean
 		"""
 		if not isinstance(state, bool):
-			raise ValueError("state must be boolean, not %s" % type(state))  # noqa: E701
+			raise ValueError("state must be boolean, not %s" % type(state))
 		self.state = state
 		self.isDefault = not state
 

@@ -861,7 +861,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 				containerField = field
 				break
 		if not containerField:
-			return None  # noqa: E701
+			return None
 		docHandle = int(containerField["controlIdentifier_docHandle"])
 		ID = int(containerField["controlIdentifier_ID"])
 		offsets = textRange._getOffsetsFromFieldIdentifier(docHandle, ID)

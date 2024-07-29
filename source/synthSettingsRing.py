@@ -207,7 +207,7 @@ class SynthSettingsRing(baseObject.AutoPropertyObject):
 		list: list[SynthSetting] = []  # noqa: F823
 		for s in synth.supportedSettings:
 			if not s.availableInSettingsRing:
-				continue  # noqa: E701
+				continue
 			if prevID == s.id:  # restore the last setting
 				self._current = len(list)
 			if isinstance(s, NumericDriverSetting):
