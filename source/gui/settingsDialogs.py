@@ -4499,7 +4499,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
 
-	def onReadByParagraphChange(self, evt):
+	def onReadByParagraphChange(self, evt: wx.CommandEvent):
 		self.showParagraphStartCombo.Enable(evt.IsChecked())
 
 	def _onModeChange(self, evt: wx.CommandEvent):
