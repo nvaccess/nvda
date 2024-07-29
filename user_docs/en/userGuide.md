@@ -2393,7 +2393,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
 
 This combo box allows you to select the status of the applications volume adjuster.
-Applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
 
 Possible values are:
 
