@@ -290,9 +290,8 @@ def executeScript(script, gesture):
 	try:
 		scriptTime = time.time()
 		scriptRef = weakref.ref(scriptFunc)
-		if (scriptTime - _lastScriptTime) * 1000 <= config.conf["keyboard"][
-			"multiPressTimeout"
-		] and scriptFunc == lastScriptRef:
+		timeDiffMs = (scriptTime - _lastScriptTime) * 1000
+		if timeDiffMs <= config.conf["keyboard"]["multiPressTimeout"] and scriptFunc == lastScriptRef:
 			_lastScriptCount += 1
 		else:
 			_lastScriptCount = 0
