@@ -2174,6 +2174,12 @@ If enabled and "Read by paragraph" is checked, two spaces will be displayed to i
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start maybe important to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
+##### Paragraph start indicator{#BrailleParagraphStartEdit}
+
+Allows to customize the paragraph start indicator. The text contained in this edit box will be displayed before a space when the {#BrailleShowParagraphStart} option is enabled.
+
+A maximum of 6 characters can be entered. If the edit box is empty, the default value will be used, so that 2 spaces will be displayed before the text of each paragraph.
+
 ##### Formatting display {#BrailleFormattingDisplay}
 
 | . {.hideHeaderRow} |.|

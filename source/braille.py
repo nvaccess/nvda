@@ -343,9 +343,6 @@ class FormatTagDelimiter(StrEnum):
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
-# Indicator at the start of paragraphs
-PARAGRAPH_START = config.conf["braille"]["paragraphStart"]
-
 #: Identifier for a focus context presentation setting that
 #: only shows as much as possible focus context information when the context has changed.
 CONTEXTPRES_CHANGEDCONTEXT = "changedContext"
@@ -1147,7 +1144,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	if isAtStart:
 		brailleConfig = config.conf["braille"]
 		if brailleConfig["readByParagraph"] and brailleConfig["showParagraphStart"]:
-			textList.append(PARAGRAPH_START)
+			textList.append(brailleConfig["paragraphStart"])
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
@@ -1885,11 +1882,11 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		if (
 			brailleConfig["readByParagraph"]
 			and brailleConfig["showParagraphStart"]
-			and self.regions[-1].rawText.startswith(PARAGRAPH_START + TEXT_SEPARATOR)
+			and self.regions[-1].rawText.startswith(brailleConfig["paragraphStart"] + TEXT_SEPARATOR)
 		):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
 			# Show paragraph start indicator
-			if startPos <= len(PARAGRAPH_START) + 1:
+			if startPos <= len(brailleConfig["paragraphStart"]) + 1:
 				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 
