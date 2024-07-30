@@ -182,6 +182,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
+	multiPressTimeout = integer(default=500, min=100, max=20000)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)

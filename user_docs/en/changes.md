@@ -13,6 +13,7 @@
 The available options are:
   * Liblouis (default): Uses formatting markers defined in the selected braille table.
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
+* The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
 ### Bug Fixes
 
@@ -5004,3 +5005,4 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
+  

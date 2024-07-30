@@ -1984,6 +1984,19 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
+		minTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["min"])
+		maxTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["max"])
+		# Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
+		multiPressTimeoutText = _("&Multiple key press timeout (ms):")
+		self.multiPressTimeoutEdit = sHelper.addLabeledControl(
+			multiPressTimeoutText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTimeout,
+			max=maxTimeout,
+			initial=config.conf["keyboard"]["multiPressTimeout"],
+		)
+		self.bindHelpEvent("MultiPressTimeout", self.multiPressTimeoutEdit)
+
 	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
@@ -2015,6 +2028,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["speakCommandKeys"] = self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"] = self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"] = self.handleInjectedKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["multiPressTimeout"] = self.multiPressTimeoutEdit.GetValue()
 
 
 class MouseSettingsPanel(SettingsPanel):
