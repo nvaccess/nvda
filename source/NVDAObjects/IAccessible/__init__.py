@@ -275,6 +275,10 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return offset
 
 	def _setCaretOffset(self, offset):
+		iaTextObject = self.obj.IAccessibleTextObject
+		if offset > (nCharacters := iaTextObject.nCharacters):
+			log.debugWarning(f"{offset=} is greater than IAccessibleText::{nCharacters=}. Clamping to {nCharacters}.", stack_info=True)
+			offset = nCharacters
 		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
 
 	def _getSelectionOffsets(self):
