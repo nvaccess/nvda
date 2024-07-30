@@ -1887,7 +1887,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			and self.regions[-1].rawText.startswith(brailleConfig["paragraphStart"] + TEXT_SEPARATOR)
 		):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
-			# Show paragraph start indicator
+			# Show paragraph start indicator if it is now at the left of the current braille window
 			if startPos <= len(brailleConfig["paragraphStart"]) + 1:
 				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
