@@ -39,8 +39,17 @@ NV Access YouTube 체널에 업로드된 ["What is NVDA?"](https://www.youtube.c
 
 ### 시스템 요구사항 {#SystemRequirements}
 
+#### 권장 요구사항 {#MinimumSystemRequirements}
+* 운영체제: 윈도우 10/11 64비트 (윈도우 서버 2022 이상 지원)
+  * AMD64 및 ARM64 버전 지원.
+* 약 150 MB 이상의 설치공간
+* 4 GB 이상의 RAM
+
+#### 최소 요구사항 {#MinimumSystemRequirements}
 * 운영체제: 윈도우 8.1/10/11 32비트 또는 64비트 (윈도우 서버 2012 R2 이상 지원)
- * AMD64 및 ARM64 버전 지원.
+  * AMD64 및 ARM64 버전 지원.
+  * 주의: 32비트 운영체제는 지원하지 않습니다.
+  * 주의: 윈도우 8.1 및 2022 이전 서버 버전은 지원하지 않습니다.
 * 약 150 MB 이상의 설치공간
 
 ### 국제화 {#Internationalization}
@@ -237,7 +246,7 @@ NVDA가 동작하는 동안 터치 지원이 꺼져있지 않는한 모든 터�
 본 설명서를 읽으면서 가끔식 NVDA가 사용하는 터치 명령을 접하실 수 있습니다.
 NVDA에서 사용하는 터치 제스추어 및 그 제스추어의 사용 요령은 다음과 같습니다.
 
-##### 태핑 {#toc27}
+##### 태핑 {#Taps}
 
 터치스크린 어디에든지 한개 이상의 손가락으로 태핑하십시요.
 
@@ -247,7 +256,7 @@ NVDA에서 사용하는 터치 제스추어 및 그 제스추어의 사용 요�
 즉 여러 손가락으로 두번 태핑아면 "두번 태핑", 세번 태핑하면 '세번 태핑" 등으로 처리됩니다.
 NVDA 사용시 여러 손가락을 이용한 다중 태핑도 가능합니다 (예: 두손가락으로 두번 태핑, 네손가락으로 한번 태핑 등).
 
-##### 쓸어내리기 {#toc28}
+##### 쓸어내리기 {#Flicks}
 
 한개 이상의 손가락을 화면 어디에서든지 쓸어내리는 동작을 의미합니다.
 
@@ -2734,7 +2743,7 @@ NVDA에서는  [hedo Reha-Technik](https://www.hedo.de/) 에서 출시한 hedo M
 다음은 이 디스플레이에 할당된 NVDA 기능키 목록입니다.
 각 키의 위치에 대해서는 디스플레이의 사용설명서를 참고하십시요.
 
-#### 모든 모델에 적용된 명령 목록 {#toc242}
+#### 모든 모델에 적용된 명령 목록 {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -2763,7 +2772,7 @@ NVDA에서는  [hedo Reha-Technik](https://www.hedo.de/) 에서 출시한 hedo M
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 32, BI 40, B 80 {#toc243}
+#### Brailliant BI 32, BI 40, B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -2775,7 +2784,7 @@ NVDA에서는  [hedo Reha-Technik](https://www.hedo.de/) 에서 출시한 hedo M
 
 <!-- KC:endInclude -->
 
-#### Brailliant BI 14 {#toc244}
+#### Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -3392,9 +3401,9 @@ nvda -q
 |-h |--help |실행 옵션 출력후 종료|
 |-q |--quit |NVDA 종료|
 |-k |--check-running |NVDA 실행 여부 확인(0=실행중, 1=실행하지 않음)|
-|-f LOGFILENAME |--log-file=LOGFILENAME |로그 파일 지정|
-|-l LOGLEVEL |--log-level=LOGLEVEL |최소 로그 레벨 지정(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100, 기본으로 warning)|
-|-c CONFIGPATH |--config-path=CONFIGPATH |NVDA 환경 파일 경로 지정|
+|-f LOGFILENAME |--log-file=LOGFILENAME |로그 파일 지정(보안 모드에서는 로그 접근 불가)|
+|-l LOGLEVEL |--log-level=LOGLEVEL |최소 로그 레벨 지정(debug 10, input/output 12, debug warning 15, info 20, warning 30, error 40, critical 50, disabled 100, 기본으로 warning, 보안 모드에서는 로그 접근 불가)|
+|-c CONFIGPATH |--config-path=CONFIGPATH |NVDA 환경 파일 경로 지정(보안 모드 사용시 기본 경로를 사용함)|
 |-m |--minimal |최소한으로 시작(시작 및 종료음 재생 해제, 인터페이스 미사용, 시작 메시지 출력 해제 등)|
 |-s |--secure |보안 모드(Python Console 실행 불가)|
 |없음 |--disable-addons |추가 기능 미사용|
