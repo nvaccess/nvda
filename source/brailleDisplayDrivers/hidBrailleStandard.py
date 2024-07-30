@@ -141,7 +141,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				return valueCaps
 		return None
 
-	def _findNumberOfCellsValueCaps(self) -> Optional[hidpi.HIDP_VALUE_CAPS]:
+	def _findNumberOfCellsValueCaps(self) -> hidpi.HIDP_VALUE_CAPS | None:
 		for valueCaps in self._dev.inputValueCaps:
 			if (
 				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
