@@ -686,13 +686,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 	def move(
 		self,
-		unit: int,
-		direction: str,
+		unit: str,
+		direction: int,
 		endPoint: str | None = None,
 	) -> int:
 		if direction == 0:
 			return 0
-		if self._makeRawTextInfo(self.obj, textInfos.POSITION_ALL)._getStoryLength() == 0:
+		if self.obj.IAccessibleTextObject.nCharacters == 0:
 			return 0
 
 		if not endPoint or endPoint == "start":
