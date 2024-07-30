@@ -1143,8 +1143,8 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	textList = []
 	if isAtStart:
 		brailleConfig = config.conf["braille"]
-		if brailleConfig["readByParagraph"] and brailleConfig["showParagraphStart"]:
-			textList.append(brailleConfig["paragraphStart"])
+		if brailleConfig["readByParagraph"] and brailleConfig["paragraphStartMarker"]:
+			textList.append(brailleConfig["paragraphStartMarker"])
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
@@ -1883,12 +1883,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		brailleConfig = config.conf["braille"]
 		if (
 			brailleConfig["readByParagraph"]
-			and brailleConfig["showParagraphStart"]
-			and self.regions[-1].rawText.startswith(brailleConfig["paragraphStart"] + TEXT_SEPARATOR)
+			and brailleConfig["paragraphStartMarker"]
+			and self.regions[-1].rawText.startswith(brailleConfig["paragraphStartMarker"] + TEXT_SEPARATOR)
 		):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
 			# Show paragraph start indicator if it is now at the left of the current braille window
-			if startPos <= len(brailleConfig["paragraphStart"]) + 1:
+			if startPos <= len(brailleConfig["paragraphStartMarker"]) + 1:
 				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 

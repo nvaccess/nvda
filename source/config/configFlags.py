@@ -251,3 +251,20 @@ class OutputMode(DisplayStringIntFlag):
 			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
 		}
+
+
+class ParagraphStartMarker(DisplayStringStrEnum):
+	NONE = ""
+	SPACE = " "
+	PILCROW = "¶"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for a paragraph start marker.
+			self.NONE: _("Don't use paragraph start markers (default)"),
+			# Translators: This is a label for a paragraph start marker.
+			self.SPACE: _("Double space (  )"),
+			# Translators: This is a label for a paragraph start marker.
+			self.PILCROW: _("Pilcrow (¶)"),
+		}
