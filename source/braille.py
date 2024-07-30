@@ -1877,7 +1877,9 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
-		# Prevent that paragraph start indicator is skipped
+		# When word wrap is enabled, the first block of spaces maybe removed from the current window
+		# This may prevent to display start of paragraphs
+		# Check if this case should be handled
 		brailleConfig = config.conf["braille"]
 		if (
 			brailleConfig["readByParagraph"]
