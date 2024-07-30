@@ -94,7 +94,7 @@ def populate():
 			"-m",
 			"pip",
 			"install",
-			"setuptools==69.5.1",
+			"setuptools==72.0",
 			"wheel",
 			"&&",
 			# Install required packages with pip
