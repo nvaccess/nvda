@@ -684,7 +684,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				pass
 		return ti, obj
 
-	def move(self, unit, direction, endPoint=None):
+	def move(
+		self,
+		unit: int,
+		direction: str,
+		endPoint: str | None = None,
+	) -> int:
 		if direction == 0:
 			return 0
 		if self._makeRawTextInfo(self.obj, textInfos.POSITION_ALL)._getStoryLength() == 0:
