@@ -1,6 +1,12 @@
 # Documentation: https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
 # Usage: git config --local blame.ignoreRevsFile .git-blame-ignore-revs
 
+# #12649: Replace internal controlTypes.ROLE_* usages with controlTypes.Role.*
+defed0ef2317cf3192922692a40cc2eb92d41143
+# #12712: replace controlTypes.STATE_* with controlTypes.State.*
+17e52866e1dfc353edcc7dc9d466449e7920a155
+# #12836: Remove usages of deprecated characterProcessing.SYMLVL_ constants and controlTypes helper functions
+48f502257182356549f22a4095016b37dacdaf9f
 # Normalize line endings in t2t files
 e6a639bfe237ff7f98c4cbec2094a34ac4b879db
 # Migrate t2t to markdown

@@ -1476,6 +1476,12 @@ void GeckoVBufBackend_t::renderThread_initialize() {
 void GeckoVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_terminate();
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released here, in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Release();
+	}
 }
 
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
@@ -1502,6 +1508,18 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 }
 
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	// In most cases this will be released in renderThread_terminate.
+	// However in the unlikely case terminate can't run,
+	// we must detach and leak the COM pointer here.
+	// Otherwise it would be automatically deleted along with the backend which would cause a crash,
+	// as the COM object would be released from within an RPC worker thread.
+	nhAssert(!rootDocAcc);
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Detach();
+	}
 }
 
 VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {

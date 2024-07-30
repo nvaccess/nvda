@@ -84,7 +84,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 	def _get_previous(self):
 		item = super(MSCandUI21_candidateMenuItem, self).previous
 		if not item or controlTypes.State.INVISIBLE in item.states:
-			return  # noqa: E701
+			return
 		return MSCandUI21_candidateMenuItem(
 			IAccessibleObject=item.IAccessibleObject,
 			IAccessibleChildID=item.IAccessibleChildID,
@@ -93,7 +93,7 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 	def _get_next(self):
 		item = super(MSCandUI21_candidateMenuItem, self).next
 		if not item or controlTypes.State.INVISIBLE in item.states:
-			return  # noqa: E701
+			return
 		return MSCandUI21_candidateMenuItem(
 			IAccessibleObject=item.IAccessibleObject,
 			IAccessibleChildID=item.IAccessibleChildID,
@@ -115,13 +115,13 @@ class MSCandUI21_candidateMenuItem(BaseCandidateItem):
 	def script_nextItem(self, gesture):
 		item = self.next
 		if not item or not isinstance(item.candidateNumber, int):
-			return  # noqa: E701
+			return
 		reportSelectedCandidate(item)
 
 	def script_previousItem(self, gesture):
 		item = self.previous
 		if not item or not isinstance(item.candidateNumber, int):
-			return  # noqa: E701
+			return
 		reportSelectedCandidate(item)
 
 	def script_changePage(self, gesture):
@@ -167,7 +167,7 @@ class MSCandUI21(IAccessible):
 	def event_show(self):
 		candidateList = self.simpleFirstChild
 		if not candidateList:
-			return  # noqa: E701
+			return
 		role = candidateList.role
 		if role == controlTypes.Role.LIST:
 			item = candidateList.firstChild

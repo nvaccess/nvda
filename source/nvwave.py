@@ -546,12 +546,12 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 							self._setCurrentDevice(self._preferredDeviceName)
 							self.open()
 			if self._audioDucker:
-				self._audioDucker.disable()  # noqa: E701
+				self._audioDucker.disable()
 
 	def stop(self):
 		"""Stop playback."""
 		if self._audioDucker:
-			self._audioDucker.disable()  # noqa: E701
+			self._audioDucker.disable()
 		if self._minBufferSize:
 			self._buffer = b""
 		with self._waveout_lock:
@@ -709,7 +709,7 @@ def playWaveFile(
 	global fileWavePlayer, fileWavePlayerThread
 	f = wave.open(fileName, "r")
 	if f is None:
-		raise RuntimeError("can not open file %s" % fileName)  # noqa: E701
+		raise RuntimeError("can not open file %s" % fileName)
 	if fileWavePlayer is not None:
 		# There are several race conditions where the background thread might feed
 		# audio after we call stop here in the main thread. Some of these are
@@ -1081,7 +1081,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				# player is paused. Don't treat this player as idle.
 				continue
 			if player._lastActiveTime <= threshold:
-				NVDAHelper.localLib.wasPlay_idle(player._player)
+				try:
+					NVDAHelper.localLib.wasPlay_idle(player._player)
+				except OSError:
+					# #16125: IAudioClock::GetPosition sometimes fails with an access
+					# violation on a device which has been invalidated. This shouldn't happen
+					# and suggests a bug somewhere in NVDA's C++ WASAPI code. Nevertheless,
+					# we want to catch this because otherwise, we'll just keep trying to call
+					# this every few seconds, which is pointless and annoying. Hopefully, a
+					# proper fix for this bug can be found eventually.
+					log.exception("Error calling wasPlay_idle")
 				player._lastActiveTime = None
 			else:
 				stillActiveStream = True
