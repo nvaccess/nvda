@@ -1665,23 +1665,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 		)
 		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
-			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag()),
 		)
 
-		includeCLDRText = _(
-			# Translators: This is the label for a checkbox in the
-			# voice settings panel (if checked, data from the unicode CLDR will be used
-			# to speak emoji descriptions).
-			"Include Unicode Consortium data (including emoji) when processing characters and symbols",
-		)
-		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
-			wx.CheckBox(self, label=includeCLDRText),
-		)
-		self.bindHelpEvent(
-			"SpeechSettingsCLDR",
-			self.includeCLDRCheckbox,
-		)
-		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+		self._appendSymbolDictionariesList(settingsSizerHelper)
 
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
@@ -1749,6 +1736,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self._appendSpeechModesList(settingsSizerHelper)
 
+	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._availableSymbolDictionaries = [
+			d for d in characterProcessing.listAvailableSymbolDictionaryDefinitions() if d.userVisible
+		]
+		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable symbol dictionaires.
+			_("E&xtra dictionaries for character and symbol processing:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[d.displayName for d in self._availableSymbolDictionaries],
+		)
+		self.bindHelpEvent("SpeechSymbolDictionaries", self.symbolDictionariesList)
+		self.symbolDictionariesList.CheckedItems = [
+			i for i, d in enumerate(self._availableSymbolDictionaries) if d.enabled
+		]
+		self.symbolDictionariesList.Select(0)
+
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
@@ -1789,10 +1792,14 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
-		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
-		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
-		if currentIncludeCLDR is not newIncludeCldr:
-			# Either included or excluded CLDR data, so clear the cache.
+		currentSymbolDictionaries = config.conf["speech"]["symbolDictionaries"]
+		config.conf["speech"]["symbolDictionaries"] = newSymbolDictionaries = [
+			d.name
+			for i, d in enumerate(self._availableSymbolDictionaries)
+			if i in self.symbolDictionariesList.CheckedItems
+		]
+		if set(currentSymbolDictionaries) != set(newSymbolDictionaries):
+			# Either included or excluded symbol dictionaries, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
@@ -1977,6 +1984,19 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
+		minTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["min"])
+		maxTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["max"])
+		# Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
+		multiPressTimeoutText = _("&Multiple key press timeout (ms):")
+		self.multiPressTimeoutEdit = sHelper.addLabeledControl(
+			multiPressTimeoutText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTimeout,
+			max=maxTimeout,
+			initial=config.conf["keyboard"]["multiPressTimeout"],
+		)
+		self.bindHelpEvent("MultiPressTimeout", self.multiPressTimeoutEdit)
+
 	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
@@ -2008,6 +2028,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["speakCommandKeys"] = self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"] = self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"] = self.handleInjectedKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["multiPressTimeout"] = self.multiPressTimeoutEdit.GetValue()
 
 
 class MouseSettingsPanel(SettingsPanel):
@@ -2575,7 +2596,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		fontAttributesText = _("Font attrib&utes")
 		fontAttributesOptions = [i.displayString for i in OutputMode.__members__.values()]
 		self.fontAttrsList = fontGroup.addLabeledControl(
-			fontAttributesText, wx.Choice, choices=fontAttributesOptions
+			fontAttributesText,
+			wx.Choice,
+			choices=fontAttributesOptions,
 		)
 		self.bindHelpEvent("DocumentFormattingFontAttributes", self.fontAttrsList)
 		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])

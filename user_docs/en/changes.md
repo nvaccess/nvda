@@ -14,6 +14,7 @@ The available options are:
   * Liblouis (default): Uses formatting markers defined in the selected braille table.
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 * When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
+* The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
 
 ### Bug Fixes
@@ -33,6 +34,10 @@ The available options are:
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
+* Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
+  * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
+  * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
+  * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 
 #### Deprecations
@@ -117,6 +122,7 @@ A warning message will inform you if you try writing to a non-empty directory. (
   * No longer cause Google Chrome to crash when closing a document or exiting Chrome. (#16893)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
+* It is once again possible to reset the configuration to factory defaults reliably. (#16755, @Emil-18)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
@@ -5001,3 +5007,4 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
+  

@@ -1,10 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2010-2024 NV Access Limited, World Light Information Limited,
-# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import IntEnum
+import dataclasses
+from enum import IntEnum, StrEnum
+from functools import cached_property
+import glob
+from locale import strxfrm
 import os
 import codecs
 import collections
@@ -15,7 +19,6 @@ from typing import (
 	Generic,
 	List,
 	Optional,
-	Tuple,
 	TypeVar,
 )
 
@@ -53,17 +56,17 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		localeList = [locale]
 		if fallback and "_" in locale:
 			localeList.append(locale.split("_")[0])
-		for l in localeList:  # noqa: E741
-			data = self._dataMap.get(l)
+		for loc in localeList:
+			data = self._dataMap.get(loc)
 			if data:
 				return data
 			try:
-				data = self._localeDataFactory(l)
+				data = self._localeDataFactory(loc)
 			except LookupError:
 				data = None
 			if not data:
 				continue
-			self._dataMap[l] = data
+			self._dataMap[loc] = data
 			return data
 		raise LookupError(locale)
 
@@ -220,7 +223,7 @@ class SpeechSymbol(object):
 		return "SpeechSymbol(%s)" % ", ".join(attrs)
 
 
-class SpeechSymbols(object):
+class SpeechSymbols:
 	"""
 	Contains raw information about the pronunciation of symbols.
 	It does not handle inheritance of data from other sources, processing of text, etc.
@@ -235,9 +238,9 @@ class SpeechSymbols(object):
 
 	def load(self, fileName: str, allowComplexSymbols: bool = True) -> None:
 		"""Load symbol information from a file.
-		@param fileName: The name of the file from which to load symbol information.
-		@param allowComplexSymbols: Whether to allow complex symbols.
-		@raise IOError: If the file cannot be read.
+		:param fileName: The name of the file from which to load symbol information.
+		:param allowComplexSymbols: Whether to allow complex symbols.
+		:raise IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
@@ -402,82 +405,57 @@ class SpeechSymbols(object):
 		return "\t".join(fields)
 
 
-_noSymbolLocalesCache = set()
-_noCLDRLocalesCache = set()
-
-
-def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
-	if locale in _noSymbolLocalesCache and (
-		locale in _noCLDRLocalesCache or not config.conf["speech"]["includeCLDR"]
-	):
-		raise LookupError
-	builtinDataImported = False
-	builtin = SpeechSymbols()
-	if config.conf["speech"]["includeCLDR"]:
-		# Try to load CLDR data when processing is on.
-		# Load the data before loading other symbols,
-		# in order to allow translators to override them.
+def _getSpeechSymbolsForLocale(locale: str) -> tuple[SpeechSymbols, SpeechSymbols, ...]:
+	symbols: list[SpeechSymbols] = []
+	for definition in _symbolDictionaryDefinitions:
+		if not definition.enabled:
+			continue
 		try:
-			builtin.load(
-				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
-				allowComplexSymbols=False,
+			symbols.append(definition.getSymbols(locale))
+		except (LookupError, FileNotFoundError):
+			log.debugWarning(
+				f"Error loading {definition.name!r} symbols for locale {locale!r}",
+				exc_info=True,
 			)
-			builtinDataImported = True
-		except IOError:
-			_noCLDRLocalesCache.add(locale)
-			log.debugWarning("No CLDR data for locale %s" % locale)
-	try:
-		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
-		builtinDataImported = True
-	except IOError:
-		_noSymbolLocalesCache.add(locale)
-		log.debugWarning("No symbol data for locale %s" % locale)
-	if not builtinDataImported:
-		raise LookupError("No symbol information for locale %s" % locale)
-	user = SpeechSymbols()
-	pathToSymbolsDic = WritePaths.getSymbolsConfigFile(locale)
-	try:
-		# Don't allow users to specify complex symbols
-		# because an error will cause the whole processor to fail.
-		user.load(pathToSymbolsDic, allowComplexSymbols=False)
-	except IOError:
-		# An empty user SpeechSymbols is okay.
-		pass
-	return builtin, user
+	if len(symbols) <= 1:
+		raise LookupError(f"No symbol information for locale {locale!r}")
+	return tuple(symbols)
 
 
-class SpeechSymbolProcessor(object):
+class SpeechSymbolProcessor:
 	"""
 	Handles processing of symbol pronunciation for a locale.
 	Pronunciation information is taken from one or more L{SpeechSymbols} instances.
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols: LocaleDataMap[Tuple[SpeechSymbols, SpeechSymbols]] = LocaleDataMap(
+	localeSymbols: LocaleDataMap[tuple[SpeechSymbols, SpeechSymbols, ...]] = LocaleDataMap(
 		_getSpeechSymbolsForLocale,
 	)
+	sources: list[SpeechSymbols]
 
-	def __init__(self, locale):
+	def __init__(self, locale: str):
 		"""Constructor.
 		@param locale: The locale for which symbol pronunciation should be processed.
-		@type locale: str
 		"""
 		self.locale = locale
 
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
-		builtin, user = self.localeSymbols.fetchLocaleData(locale, fallback=False)
-		self.builtinSources = [builtin]
-		self.userSymbols = user
-		sources.append(user)
-		sources.append(builtin)
+		fetched = self.localeSymbols.fetchLocaleData(locale, fallback=False)
+		# A slice that reverses a list and ignores the last item (which is the user dictionary)
+		builtinSlice = slice(-2, None, -1)
+		self.builtinSources = list(fetched[builtinSlice])
+		self.userSymbols = fetched[-1]
+		sources.append(self.userSymbols)
+		sources.extend(self.builtinSources)
 
 		# Always use English as a base.
 		if locale != "en":
 			# Only the builtin data.
-			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[0]
-			sources.append(enBaseSymbols)
-			self.builtinSources.append(enBaseSymbols)
+			enBuiltin = self.localeSymbols.fetchLocaleData("en")[builtinSlice]
+			sources.extend(enBuiltin)
+			self.builtinSources.extend(enBuiltin)
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
@@ -779,9 +757,198 @@ def clearSpeechSymbols():
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
 		return
-	if prevConf["speech"]["includeCLDR"] is not config.conf["speech"]["includeCLDR"]:
-		# Either included or excluded CLDR data, so clear the cache.
+	if set(prevConf["speech"]["symbolDictionaries"]) != set(config.conf["speech"]["symbolDictionaries"]):
+		# Either included or excluded dictionaries, so clear the cache.
 		clearSpeechSymbols()
 
 
-config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+class _SymbolDefinitionSource(StrEnum):
+	BUILTIN = "builtin"
+	"""The name of the builtin definition source"""
+	USER = "user"
+	"""The source for user dictionaries"""
+
+
+@dataclasses.dataclass(frozen=True, kw_only=True)
+class SymbolDictionaryDefinition:
+	name: str
+	"""The name of the dictionary."""
+	path: str
+	"""The path to the dictionary.
+	This should be a formattable string, where {locale} is replaced by the locale to fetch a dictionary for.
+	"""
+	source: str = _SymbolDefinitionSource.BUILTIN
+	"""The source of the definition."""
+	displayName: str | None = None
+	"""The translatable name of the dictionary.
+	When not provided, the dictionary can not be visible to the end user.
+	"""
+	allowComplexSymbols: bool = False
+	"""Whether this dictionary allows complex symbols."""
+	mandatory: bool = False
+	"""Whether this dictionary is mandatory.
+	Mandatory dictionaries are always enabled."""
+	symbols: LocaleDataMap[SpeechSymbols] = dataclasses.field(init=False, repr=False, compare=False)
+
+	def __post_init__(self):
+		if self.path.count("{locale}") != 1:
+			raise ValueError(
+				f"Invalid formattable path for dictionary, locale must be included in: {self.path!r}",
+			)
+		if not self.displayName and not self.mandatory:
+			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
+		object.__setattr__(self, "symbols", LocaleDataMap(self._initSymbols))
+
+	@cached_property
+	def userVisible(self) -> bool:
+		"""Whether this dictionary is visible to end users (i.e. in the GUI).
+		Mandatory dictionaries are hidden.
+		"""
+		return not self.mandatory and bool(self.displayName)
+
+	@property
+	def enabled(self) -> bool:
+		return self.mandatory or self.name in config.conf["speech"]["symbolDictionaries"]
+
+	def getSymbols(self, locale: str) -> SpeechSymbols:
+		"""Gets the symbols for a given locale.
+		:param locale: The locale to get symbols for.
+		:raises FileNotFoundError: When this is not a user dictionary and the locale wasn't found.
+		"""
+		return self.symbols.fetchLocaleData(locale, fallback=False)
+
+	def _initSymbols(self, locale: str) -> SpeechSymbols:
+		raiseOnError = self.source != _SymbolDefinitionSource.USER
+		symbols = SpeechSymbols()
+		if locale not in self.availableLocales:
+			msg = f"No {self.name!r} data for locale {locale!r}"
+			if raiseOnError:
+				raise FileNotFoundError(msg)
+			log.debug(msg)
+		else:
+			try:
+				symbols.load(self.path.format(locale=locale), self.allowComplexSymbols)
+			except IOError:
+				if raiseOnError:
+					raise
+				log.error(f"Error loading {self.name!r} data for locale {locale!r}", exc_info=True)
+		return symbols
+
+	@cached_property
+	def availableLocales(self) -> dict[str, str]:
+		"""Gets dictionary paths for all available locales."""
+		prefix, suffix = self.path.split("{locale}", 1)
+		pattern = f"{prefix}*{suffix}"
+		paths = glob.glob(pattern)
+		dct = {}
+		for p in paths:
+			locale = p[len(prefix) : (-1 * len(suffix))]
+			dct[locale] = p
+		return dct
+
+
+_symbolDictionaryDefinitions: list[SymbolDictionaryDefinition] = []
+"""
+A list of available symbol dictionary definitions.
+These definitions are used to load symbol dictionaries for various locales.
+The list is filled with definitions from core and from add-ons using _addSymbolDefinitions.
+With listAvailableSymbolDictionaryDefinitions, there is a public interface to retrieve the definitions.
+"""
+
+
+def listAvailableSymbolDictionaryDefinitions() -> list[SymbolDictionaryDefinition]:
+	"""Get available symbol dictionary definitions as initialized in core or in add-ons."""
+	return sorted(
+		_symbolDictionaryDefinitions,
+		key=lambda dct: (dct.source != _SymbolDefinitionSource.BUILTIN, strxfrm(dct.displayName or dct.name)),
+	)
+
+
+def _addSymbolDefinitions():
+	"""
+	Adds symbol dictionary definitions to the global _symbolDictionaryDefinitions list.
+
+	This function is responsible for initializing the available symbol dictionaries that can be used for various locales.
+	It adds definitions for the built-in symbol dictionaries, as well as any symbol dictionaries defined in enabled add-ons.
+
+	The built-in symbol dictionaries include:
+	- "cldr": Unicode Consortium data (including emoji)
+	- "builtin": Built-in symbol dictionary with support for complex symbols
+
+	For each installed add-on, the function checks the add-on's manifest for any defined symbol dictionaries,
+	and adds those to the _symbolDictionaryDefinitions list as well.
+
+	Finally, a "user" symbol dictionary definition is added.
+	"""
+	# Add builtin symbols
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="cldr",
+			path=os.path.join(globalVars.appDir, "locale", "{locale}", "cldr.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
+			# Translators: The name of a symbols dictionary with data from the unicode CLDR.
+			displayName=_("Unicode Consortium data (including emoji)"),
+		),
+	)
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="builtin",
+			path=os.path.join(globalVars.appDir, "locale", "{locale}", "symbols.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
+			allowComplexSymbols=True,
+			mandatory=True,
+		),
+	)
+
+	# Add add-on symbols
+	import addonHandler
+
+	for addon in addonHandler.getRunningAddons():
+		symbolsDict = addon.manifest.get("symbolDictionaries")
+		if not symbolsDict:
+			continue
+		log.debug(
+			f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}",
+		)
+		directory = os.path.join(addon.path, "locale", "{locale}")
+		for name, dictConfig in symbolsDict.items():
+			try:
+				definition = SymbolDictionaryDefinition(
+					name=name,
+					path=os.path.join(directory, f"symbols-{name}.dic"),
+					source=addon.name,
+					displayName=dictConfig["displayName"],
+					allowComplexSymbols=False,
+					mandatory=dictConfig["mandatory"],
+				)
+				if not definition.availableLocales:
+					log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
+					continue
+			except Exception:
+				log.exception(
+					f"Error while applying custom symbol dictionaries config from addon {addon.name!r}",
+				)
+			else:
+				_symbolDictionaryDefinitions.append(definition)
+
+	# Add user symbols
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="user",
+			path=WritePaths.getSymbolsConfigFile("{locale}"),
+			source=_SymbolDefinitionSource.USER,
+			allowComplexSymbols=False,
+			mandatory=True,
+		),
+	)
+
+
+def initialize():
+	_addSymbolDefinitions()
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+
+
+def terminate():
+	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
+	clearSpeechSymbols()
+	_symbolDictionaryDefinitions.clear()

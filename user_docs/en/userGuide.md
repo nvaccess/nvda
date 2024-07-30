@@ -2135,11 +2135,6 @@ In this case, Braille  will not follow system focus and system caret.
 
 ##### Move system caret when routing review cursor {#BrailleSettingsReviewRoutingMovesSystemCaret}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Never), Never, Only when tethered automatically, Always|
-|Default |Never|
-
 This setting determines if the system caret should also be moved with a routing button press.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
@@ -2154,6 +2149,11 @@ In that case, pressing a cursor routing key will only move the system caret or f
 This option is shown only if "[tether braille](#BrailleTether)" is set to "automatically" or "to review".
 
 To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Never), Never, Only when tethered automatically, Always|
+|Default |Never|
 
 ##### Read by Paragraph {#BrailleSettingsReadByParagraph}
 
@@ -2174,22 +2174,56 @@ If enabled and "Read by paragraph" is checked, two spaces will be displayed to i
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start maybe important to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-##### Paragraph start indicator{#BrailleParagraphStartEdit}
+##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
-Allows to customize the paragraph start indicator. The text contained in this edit box will be displayed before a space when the {#BrailleShowParagraphStart} option is enabled.
+This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
+Context information refers to the hierarchy of objects containing the focus.
+For example, when you focus a list item, this list item is part of a list.
+This list might be contained by a dialog, etc.
+Please consult the section about [object navigation](#ObjectNavigation) for more information about the hierarchy that applies to objects in NVDA.
 
-A maximum of 6 characters can be entered. If the edit box is empty, the default value will be used, so that 2 spaces will be displayed before the text of each paragraph.
+When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
+For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
+Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
+If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
+Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
+In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
+This has the advantage that NVDA will fit as much information as possible on the display.
+However, the downside is that there is always a difference in the position where the focus starts on the braille display.
+This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
+This was the default behaviour for NVDA 2017.2 and before.
+
+When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
+Thus, in the example above, NVDA will display that you focused a list item.
+However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
+
+To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Show selection {#BrailleSettingsShowSelection}
+
+This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
+The option is enabled by default so the selection indicator is shown.
+The selection indicator might be a distraction while reading.
+Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 ##### Formatting display {#BrailleFormattingDisplay}
+
+This setting determines how NVDA will display text formatting in braille.
+This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
 
 | . {.hideHeaderRow} |.|
 |---|---|
 | Options | Default (Liblouis), Liblouis, Tags |
 | Default | Liblouis |
-
-This setting determines how NVDA will display text formatting in braille.
-This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
-The following options are supported:
 
 | Option | Behaviour |
 |---|---|
@@ -2228,10 +2262,6 @@ When you scroll the display, you will then be able to read the rest of the word.
 Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
 
 ##### Unicode normalization {#BrailleUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
 
 When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
 This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
@@ -2239,39 +2269,12 @@ Other benefits of unicode normalization are explained in greater detail in the [
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
-
-This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
-Context information refers to the hierarchy of objects containing the focus.
-For example, when you focus a list item, this list item is part of a list.
-This list might be contained by a dialog, etc.
-Please consult the section about [object navigation](#ObjectNavigation) for more information about the hierarchy that applies to objects in NVDA.
-
-When set to fill display for context changes, NVDA will try to display as much context information as possible on the braille display, but only for the parts of the context that have changed.
-For the example above, this means that when changing focus to the list, NVDA will show the list item on the braille display.
-Furthermore, if there is enough space left on the braille display, NVDA will try to show that the list item is part of a list.
-If you then start moving through the list with your arrow keys, it is assumed that you are aware that you are still in the list.
-Thus, for the remaining list items you focus, NVDA will only show the focused list item on the display.
-In order for you to read the context again (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
-
-When this option is set to always fill the display, NVDA will try to show as much context information as possible on the braille display, regardless of whether you have seen the same context information before.
-This has the advantage that NVDA will fit as much information as possible on the display.
-However, the downside is that there is always a difference in the position where the focus starts on the braille display.
-This can make it difficult to skim a long list of items, for example, as you will need to continually move your finger to find the start of the item.
-This was the default behaviour for NVDA 2017.2 and before.
-
-When you set the focus context presentation option to only show the context information when scrolling back, NVDA never shows context information on your braille display by default.
-Thus, in the example above, NVDA will display that you focused a list item.
-However, in order for you to read the context (i.e. that you are in a list and that the list is part of a dialog), you will have to scroll your braille display back.
-
-To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
-##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
-
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Enabled), Enabled, Disabled|
-|Default |Enabled|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
 Previous/next line commands always interrupt speech.
@@ -2281,19 +2284,10 @@ For this reason the option is enabled by default, interrupting speech when scrol
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
 
-##### Show selection {#BrailleSettingsShowSelection}
-
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
-
-This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
-The option is enabled by default so the selection indicator is shown.
-The selection indicator might be a distraction while reading.
-Disabling this option may improve readability.
-
-To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
@@ -2566,6 +2560,16 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA.
 This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
+
+##### Multiple key press timeout {#MultiPressTimeout}
+
+Some NVDA keyboard gestures perform different actions based upon how many times the same key is pressed in rapid succession.
+An example of this is the "Report current character of navigator object" command.
+This command reports the character if pressed once, a phonetic description of the character if pressed twice, and the numeric value of the character if pressed three times.
+This option configures the timeout after which an additional press of the same key will start a new gesture, rather than being taken as a subsequent press of the first one.
+For the example command, a too short timeout will cause two presses to report the current character twice, rather than the phonetic description.
+The default timeout is 500 ms, i.e. half a second.
+Increasing this timeout may be especially useful for people using sticky keys, or who have a physical disability.
 
 #### Mouse {#MouseSettings}
 
