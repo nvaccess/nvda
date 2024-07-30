@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 12
+latestSchemaVersion = 13
 
 #: The configuration specification string
 #: @type: String
@@ -37,7 +37,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trustVoiceLanguage = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
+	# Deprecated in 2025.1
 	includeCLDR = boolean(default=True)
+	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)

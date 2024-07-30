@@ -86,6 +86,9 @@ import vision  # noqa: E402
 
 vision.initialize()
 
+import characterProcessing  # noqa: E402
+
+characterProcessing.initialize()
 import speech  # noqa: E402
 
 speech.initialize()

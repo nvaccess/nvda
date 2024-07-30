@@ -31,6 +31,10 @@ The available options are:
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
+* Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
+  * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
+  * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
+  * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 
 #### Deprecations
