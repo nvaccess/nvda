@@ -24,7 +24,7 @@
 ### Changes
 
 * Component updates:
-  * Updated py2exe to 0.13.0.2. (#16907, @dpy013)
+  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
   * Updated setuptools to 72.0 (#16907, @dpy013)
 
 ### Changes for Developers
