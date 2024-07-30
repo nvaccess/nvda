@@ -199,7 +199,10 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		for dataItem in report.getDataItems():
 			if dataItem.DataIndex in self._inputButtonCapsByDataIndex and dataItem.u1.On:
 				keys.append(dataItem.DataIndex)
-			elif self._numberOfCellsValueCaps and dataItem.DataIndex == self._numberOfCellsValueCaps.u1.NotRange.DataIndex:
+			elif (
+				self._numberOfCellsValueCaps
+				and dataItem.DataIndex == self._numberOfCellsValueCaps.u1.NotRange.DataIndex
+			):
 				self.numCells = dataItem.u1.RawValue
 		if len(keys) > len(self._keysDown):
 			# Press. This begins a new key combination.
