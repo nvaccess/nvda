@@ -1434,7 +1434,7 @@ class TextInfoRegion(Region):
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
 		maxIterations = 10
-		start_time = time.time()
+		startTime = time.time()
 		for i, curPos in enumerate(range(pos, max(-1, pos - maxIterations), -1)):
 			if curPos == 0:
 				# Not necessary to find offset.
@@ -1447,7 +1447,7 @@ class TextInfoRegion(Region):
 				return self._readingInfo.moveToCodepointOffset(curPos)
 			except RuntimeError:
 				msg = f"Error in moveToCodepointOffset in iteration {i + 1} (position {curPos}"
-				if i + 1 >= maxIterations or (exceeded := time.time() - start_time > 0.5):
+				if i + 1 >= maxIterations or (exceeded := time.time() - startTime > 0.5):
 					logFunc = log.exception
 					curPos = pos
 					if exceeded:
