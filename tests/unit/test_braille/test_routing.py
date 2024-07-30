@@ -196,7 +196,7 @@ class TestTextInfoRegionRouting(unittest.TestCase):
 		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		ti.expand(textInfos.UNIT_CHARACTER)
 		self.assertEqual(ti.text, testText[1:4])
-		index = 3  # Position of ּ
+		index = 3  # Position of ּ (\u5bc)
 		pos = region.rawToBraillePos[index]
 		region.routeTo(pos)
 		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
