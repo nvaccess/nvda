@@ -21,6 +21,10 @@
 * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 
+### Changes
+
+* Component updates:
+  * Updated py2exe to 0.13.0.2. (#16907, @dpy013)
 
 ### Changes for Developers
 
