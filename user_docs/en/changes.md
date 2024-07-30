@@ -24,7 +24,7 @@ The available options are:
 * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
-
+* NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 
 ### Changes for Developers
 
