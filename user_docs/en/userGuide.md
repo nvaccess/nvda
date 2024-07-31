@@ -2135,11 +2135,6 @@ In this case, Braille  will not follow system focus and system caret.
 
 ##### Move system caret when routing review cursor {#BrailleSettingsReviewRoutingMovesSystemCaret}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Never), Never, Only when tethered automatically, Always|
-|Default |Never|
-
 This setting determines if the system caret should also be moved with a routing button press.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
@@ -2155,6 +2150,11 @@ This option is shown only if "[tether braille](#BrailleTether)" is set to "autom
 
 To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Never), Never, Only when tethered automatically, Always|
+|Default |Never|
+
 ##### Read by Paragraph {#BrailleSettingsReadByParagraph}
 
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -2162,31 +2162,6 @@ Also, the next and previous line commands will move by paragraph accordingly.
 This means that you do not have to scroll the display at the end of each line even where more text would fit on the display.
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
-
-##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
-
-If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
-Instead, there will be some blank space at the end of the display.
-When you scroll the display, you will be able to read the entire word.
-This is sometimes called "word wrap".
-Note that if the word is too large to fit on the display even by itself, the word must still be split.
-
-If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
-When you scroll the display, you will then be able to read the rest of the word.
-
-Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
-
-##### Unicode normalization {#BrailleUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
-
-When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
-This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
-Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
-
-To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2215,12 +2190,80 @@ However, in order for you to read the context (i.e. that you are in a list and t
 
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
+##### Show selection {#BrailleSettingsShowSelection}
+
+This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
+The option is enabled by default so the selection indicator is shown.
+The selection indicator might be a distraction while reading.
+Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
+
+##### Formatting display {#BrailleFormattingDisplay}
+
+This setting determines how NVDA will display text formatting in braille.
+This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Liblouis), Liblouis, Tags |
+| Default | Liblouis |
+
+| Option | Behaviour |
+|---|---|
+| Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
+| [Tags](#BrailleFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
+
+###### Tags {#BrailleFormattingDisplayTags}
+
+When "Formatting display" is set to "Tags", a formatting tag is displayed in braille when a change in formatting is detected.
+These tags start with ⣋ and end with ⣙.
+A formatting tag will contain one or more symbols which describe the text formatting.
+The following symbols are defined:
+
+| Symbol | Meaning |
+|---|---|
+| ⠃ ("b") | Start bold |
+| ⡃ ("b" with dot 7) | End bold |
+| ⠊ ("i") | Start italic |
+| ⡊ ("i" with dot 7) | End italic |
+| ⠥ ("u") | Start underline |
+| ⡥ ("u" with dot 7) | End underline |
+| ⠎ ("s")| Start strikethrough |
+| ⡎ ("s" with dot 7) | End strikethrough |
+
+##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+
+If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+Instead, there will be some blank space at the end of the display.
+When you scroll the display, you will be able to read the entire word.
+This is sometimes called "word wrap".
+Note that if the word is too large to fit on the display even by itself, the word must still be split.
+
+If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
+When you scroll the display, you will then be able to read the rest of the word.
+
+Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+##### Unicode normalization {#BrailleUnicodeNormalization}
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
 Previous/next line commands always interrupt speech.
@@ -2230,19 +2273,10 @@ For this reason the option is enabled by default, interrupting speech when scrol
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
 
-##### Show selection {#BrailleSettingsShowSelection}
-
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
-
-This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
-The option is enabled by default so the selection indicator is shown.
-The selection indicator might be a distraction while reading.
-Disabling this option may improve readability.
-
-To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 #### Select Braille Display {#SelectBrailleDisplay}
 
@@ -2515,6 +2549,16 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA.
 This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
+
+##### Multiple key press timeout {#MultiPressTimeout}
+
+Some NVDA keyboard gestures perform different actions based upon how many times the same key is pressed in rapid succession.
+An example of this is the "Report current character of navigator object" command.
+This command reports the character if pressed once, a phonetic description of the character if pressed twice, and the numeric value of the character if pressed three times.
+This option configures the timeout after which an additional press of the same key will start a new gesture, rather than being taken as a subsequent press of the first one.
+For the example command, a too short timeout will cause two presses to report the current character twice, rather than the phonetic description.
+The default timeout is 500 ms, i.e. half a second.
+Increasing this timeout may be especially useful for people using sticky keys, or who have a physical disability.
 
 #### Mouse {#MouseSettings}
 

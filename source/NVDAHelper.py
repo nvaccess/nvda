@@ -532,7 +532,7 @@ def handleInputConversionModeUpdate(oldFlags, newFlags, lcid):
 			x = 2**x
 			msgs = inputConversionModeMessages.get(x)
 			if not msgs:
-				continue  # noqa: E701
+				continue
 			newOn = bool(newFlags & x)
 			oldOn = bool(oldFlags & x)
 			if newOn != oldOn:
@@ -619,7 +619,7 @@ def nvdaControllerInternal_inputLangChangeNotify(threadID, hkl, layoutString):
 		for stringCode in layoutStringCodes:
 			inputMethodName = _lookupKeyboardLayoutNameWithHexString(stringCode)
 			if inputMethodName:
-				break  # noqa: E701
+				break
 	if not inputMethodName:
 		log.debugWarning("Could not find layout name for keyboard layout, reporting as unknown")
 		# Translators: The label for an unknown input method when switching input methods.
