@@ -1,16 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2023-2024 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the move system caret when routing review cursor braille setting."""
+"""Unit tests for braille cursor routing."""
 
 import config
 import braille
 import textInfos
 import api
 import controlTypes
-from ..textProvider import CursorManager
+from ..textProvider import CursorManager, BasicTextProvider
 import unittest
 import time
 from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
@@ -147,3 +147,58 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		self.assertGreaterEqual(self.cm.lastActivateTime, curTime)
 		caret = self.cm.makeTextInfo(textInfos.POSITION_CARET)
 		self.assertEquals(caret, review)
+
+
+class TestTextInfoRegionRouting(unittest.TestCase):
+	"""A test for TextInfoRegion.getTextInfoForBraillePos, which is used in braille cursor routing.
+	This test ensures that braille routes to the expected character when dealing with emoji
+	or other composites.
+	These glyphs are threated as one character by uniscribe, however they span multiple characters
+	on a braille display.
+	Note that due to the nature of this test, it relies on uniscribe to be available.
+	"""
+
+	def test_routeToEmoji(self):
+		testText = "⚠️test"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[:2])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[2])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 3  # Position of e
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[index])
+
+	def test_routeToComposite(self):
+		testText = "רבְּר"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[0])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[4])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 1  # Position of ב
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])
+		index = 3  # Position of ּ (\u5bc)
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])

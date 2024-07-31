@@ -72,7 +72,7 @@ def getScreenPosition(obj):
 	while focus and not isinstance(focus, Window):
 		focus = focus.parent
 	if not focus:
-		return None  # noqa: E701
+		return None
 	w = winUser.getAncestor(focus.windowHandle, winUser.GA_ROOT) or focus.windowHandle
 	s = Window(windowHandle=w)
 	if s:
