@@ -13,6 +13,7 @@ It sets up logging, and then starts the core.
 import logging
 import sys
 import os
+import threading
 
 from typing import IO
 
@@ -532,6 +533,17 @@ finally:
 		easeOfAccess.notify(2)
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
+
+	# Log any remaining background threads
+	# In a perfect world there should be none.
+	# join on any non-daemon non-dummy thread here,
+	# Before releasing our mutex, otherwise this process may continue running after the mutex is released.
+	# This would cause issues for rpc / nvdaHelper.
+	for thr in threading.enumerate():
+		if not thr.daemon and thr is not threading.current_thread():
+			log.info(f"Waiting on {thr}...")
+			thr.join()
+			log.info(f"Thread {thr.name} complete")
 
 	# From MS docs; "Multiple processes can have handles of the same mutex object"
 	# > Use the CloseHandle function to close the handle.
