@@ -792,7 +792,7 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
 | Ad |Masaüstü Kısayol tuşu |Dizüstü Kısayol tuşu |Dokunma hareketi |Tarif|
 |---|---|---|---|---|
-|Geçerli nesnenin bildir |NVDA+numaratör5 |NVDA+şift+o |yok |Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır.|
+|Geçerli nesneyi bildir |NVDA+numaratör5 |NVDA+şift+o |yok |Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır.|
 |Ana nesneye git |NVDA+numaratör8 |NVDA+şift+YukarıOk| yukarı fiske |nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider|
 |önceki nesneye git |NVDA+numaratör4 |NVDA+şift+sol yön tuşu |sola fiske |nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir önceki nesneye taşır|
 |Düzleştirilmiş görünümde önceki nesneye git |NVDA+numaratör9 |NVDA+şift+Ğ |sola fiske (object mode) |Düzleştirilmiş nesne sunum hiyerarşisinde önceki nesneye gider|
@@ -846,7 +846,7 @@ Metni incelerken, aşağıdaki komutlar kullanılabilir:
 |İnceleme imlecinin bulunduğu yere kadar seçme ve kopyalama |NVDA+f10 |NVDA+f10 |yok |metnin başladığı yer olarak ayarlanan noktadan, inceleme imlecinin mevcut konumuna kadar olan metni seçer. İki kez basılırsa, metin panoya kopyalanır|
 |Kopyalanmak üzere işaretlenmiş kısmın başına taşı |NVDA+şift+f9 |NVDA+şift+f9 |none |inceleme imlecini, kopya için önceden belirlenmiş kısmın başlangıç konumuna taşır|
 |Metin biçimini söyle |NVDA+şift+f |NVDA+şift+f |yok |İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir. İki kez basılırsa, biçim bilgisi tarama kipinde gösterilir|
-|Mevcut sembol için belirlenmiş okunuşu seslendir |None |None |none |inceleme imlecinin bulunduğu konumdaki sembolü söyler. Pressed twice, shows the symbol and the text used to speak it in browse mode.|
+|Mevcut sembol için belirlenmiş okunuşu seslendir |None |None |none |inceleme imlecinin bulunduğu konumdaki sembolü söyler. İki kez basıldığında, tarama kipinde sembolü ve söylenen metni gösterir.|
 
 <!-- KC:endInclude -->
 
@@ -4983,7 +4983,7 @@ Following are the current key assignments for these displays.
 <!-- KC:endInclude -->
 
 ## İleri Düzey Konular {#AdvancedTopics}
-### Güvenli Mcod {#SecureMode}
+### Güvenli Mod {#SecureMode}
 
 Sistem yöneticileri, yetkisiz sistem erişimini kısıtlamak için NVDA'yı yapılandırmak isteyebilir.
 NVDA, yönetici ayrıcalıklarına yükseltildiği durumlar da dahil olmak üzere isteğe bağlı kod çalıştırabilen özel eklentilerin yüklenmesine izin verir.

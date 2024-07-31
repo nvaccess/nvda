@@ -519,11 +519,11 @@ Du kan aktivere eller deaktivere denne indstilling i NVDAs generelle indstilling
 ### Om NVDA tastaturkommandoer {#AboutNVDAKeyboardCommands}
 #### NVDA-tasten {#TheNVDAModifierKey}
 
-De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA/tasten, samtidig med en eller flere andre taster.
+De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA-tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
-NVDA kan konfigureres således, at enten Insert, den numeriske Insert, eller Caps Lock-tasten kan bruges som NVDA-tast.
-Som standard er både Insert og Numerisk Insert tasterne indstillet som NVDA-tast.
+NVDA kan konfigureres således, at enten `Insert`, den `numeriske Insert`, eller `Caps Lock-tasten` kan bruges som NVDA-tast.
+Som standard er både `Insert` og `Numerisk Insert` tasterne indstillet som NVDA-tast.
 
 Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at slå Caps Lock til og fra, når du har valgt Caps Lock som en NVDA-tast) kan du trykke på tasten to gange i hurtig rækkefølge.
 
@@ -917,6 +917,7 @@ Disse ekstra musefunktioner er ikke slået til som standard i NVDA
 Hvis du ønsker at drage fordel af dem, kan de konfigureres fra [Indstillingskategorien Mus,](#MouseSettings) som findes i dialogen [Indstillinger](#NVDASettings) i NVDA-menuen.
 
 Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen, har NVDA et par vigtige kommandoer relateret til brugen af mus:
+
 <!-- KC:beginInclude -->
 
 | Navn |Desktop tast |Laptop tast |Touchbevægelse |Beskrivelse|
@@ -925,6 +926,10 @@ Selv om du bør bruge en fysisk mus eller et pegefelt til at navigere med musen,
 |Lås venstre museknap |Shift+Numpad-divideret-med |NVDA+ctrl+[ |Ingen |Låser venstre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer.|
 |Højre museklik |Numpad-stjerne |NVDA+] |Tryk og hold |Klikker en enkelt gang med højre museknap.|
 |Lås højre museknap |Shift+Numpad-stjerne |NVDA+ctrl+] |Ingen |Låser højre museknap i nedtrykket tilstand. Tryk igen for at slippe den. Hvis du vil trække med musen, så tryk på denne tast for at låse museknappen, og flyt så musen, enten fysisk eller med en af de andre musekommandoer.|
+|Rul opad ved musens position |ingen |ingen |ingen |Ruller musen opad ved musens aktuelle position|
+|Rul nedad ved musens position |ingen |ingen |ingen |Ruller musen nedad ved musens aktuelle position|
+|Rul til venstre ved musens position |ingen |ingen |ingen |Ruller musen til Venstre ved musens aktuelle position|
+|Rul nedad ved musens position |ingen |ingen |ingen |Ruller musen nedad ved musens aktuelle position|
 |Flyt musen til det aktuelle navigatorobjekt |NVDA+Numpad-skråstreg |NVDA+Shift+m |Ingen |Flytter musen til positionen for det aktuelle navigatorobjekt og læsemarkøren|
 |Flyt til objektet ved musen |NVDA+Numpad-stjerne |NVDA+Shift+n |Ingen |Flytter navigatorobjektet til objektet ved musens aktuelle position|
 
@@ -1802,6 +1807,7 @@ Hvis dette er aktiveret, bruger NV Access oplysningerne indsendt under søgning 
 Bemærk, at selvom din IP-adresse vil blive brugt til at beregne dit land under opdateringskontrollen, bliver IP-adressen aldrig gemt.
 Bortset fra de obligatoriske oplysninger, der kræves for at kontrollere efter opdateringer, er følgende yderligere oplysninger også sendt i øjeblikket:
 
+* Et unikt ID-nummer for brugeren af NVDA. Dette ændres hver måned.
 * NVDAs aktuelle sprog
 * Om denne kopi af NVDA er flytbar eller installeret
 * Navn på den aktuelle talesyntese i brug (herunder navnet på tilføjelsesprogrammet, som driveren tilhører)
@@ -1895,6 +1901,39 @@ Denne indstilling gælder for alle talesynteser og ikke kun den, der er aktiv i 
 Med den indstilling, som er slået til som standard, kan du vælge om du vil benytte sproget for den aktuelle stemme til udtale af tegn og symboler.
 Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bestemt talesyntese eller stemme, kan du slå denne indstilling fra for at tvinge NVDA til at benytte sin globale sprogindstilling.
 
+##### Unicode-normalisering {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Muligheder |Standard (Deaktiveret), Aktiveret, Deaktiveret|
+|Standard |Deaktiveret|
+
+Når denne indstilling er aktiveret, udføres unicode-normalisering på den tekst, der tales af NVDA.
+Dette er gavnligt, når der siges tegn, der kan repræsenteres i flere former.
+NVDA bruger NFKC (Normalization Form Compatibility Composition) algoritme, som giver følgende fordele blandt andre:
+
+1. De fede og kursiverede versioner af tegn, der er en del af unicode-standarden og almindeligt anvendes på sociale medier, normaliseres til deres mest almindelige kompatible ækvivalent.
+For eksempel kan det latinske bogstav "h" også præsenteres som "𝐡" (fed), "ℎ" (kursiv) osv., men vil altid blive talt som "h", når normalisering er aktiveret.
+Dette aspekt af normalisering hjælper også med at læse ligninger i Microsoft Word ligningseditor.
+
+1. Normalisering til sammensatte tegn.
+For eksempel kan tegnet "ü" (u med trema), et almindeligt tegn i sprog som tysk og tyrkisk, repræsenteres i to former:
+  1. Et enkeltstående unicode-tegn (ü)
+  1. En dekomponering i to tegn (ü), nemlig det normale latinske bogstav u og en trema-modifikator
+  Unicode-normalisering sikrer, at kun én form vil blive brugt i hele taleoutputtet, hvilket er den ene tegn-variant.
+
+1. Dekomponering af nogle ligaturer, herunder "ĳ" (ligatur ij) til deres to bogstav-form ("ij").
+
+1. Stabil rækkefølge af modifikatorer i sammensatte tegn, for eksempel på oldhebraisk.
+
+For at aktivere eller deaktivere unicode-normalisering fra ethvert sted, bedes du tildele en brugerdefineret kommando ved hjælp af [Input Gestures dialogen](#InputGestures).
+
+##### Rapportér "Normaliseret" ved navigation efter tegn {#SpeechReportNormalizedForCharacterNavigation}
+
+Denne indstilling er en check box, der, når den er markeret, fortæller NVDA eksplicit at rapportere, at et tegn er normaliseret, når det tales som et enkelt tegn, f.eks. når der staves.
+For eksempel, når denne indstilling er aktiveret, vil stavning af tegnet "ĳ" udtale det som "i j normaliseret".
+
+Bemærk, at denne indstilling kun er tilgængelig, når "[Unicode normalisering](#SpeechUnicodeNormalization)" er aktiveret.
+
 ##### Benyt Unicode Consortium data (herunder emoji) under behandling af tegn og symboler {#SpeechSettingsCLDR}
 
 Når denne check box er valgt, vil NVDA benytte yderligere udtaleordbøger til udtale af symboler og tegn. 
@@ -1933,6 +1972,7 @@ De fleste synteser understøtter denne funktion.
 
 Denne indstilling bør generelt være slået til.
 Nogle Microsoft Speech API synteser anvender dog ikke denne funktion korrekt og opfører sig mærkeligt når indstillingen er slået til.
+Talesynteser fra Code Factory implementerer heller ikke dette korrekt. Dette gælder både for NVDA-tilføjelsen og SAPI-syntesen. Dette vil også forårsage unødvendig stavning af tekst i f.eks. menuer og dialoger.
 Hvis du har problemer med udtalen af diverse bogstaver kan du prøve at deaktivere denne indstilling.
 
 ##### Forsinkede beskrivelser af tegn ved markørbevægelser {#delayedCharacterDescriptions}
@@ -2133,6 +2173,18 @@ Hvis indstillingen er slået fra, vil så meget af ordet som muligt blive vist, 
 Når du så ruller displayet videre, kan du læse resten af ordet.
 
 Hvis du slår denne indstilling til, kan det give en mere flydende læsning, men generelt medfører det, at du skal skifte linje på displayet hyppigere.
+
+##### Unicode-normalisering {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Muligheder |Standard (Deaktiveret), Aktiveret, Deaktiveret|
+|Standard |Deaktiveret|
+
+Når denne indstilling er aktiveret, udføres unicode-normalisering på den tekst, der vises på dit punktdisplay.
+Dette er gavnligt, når man støder på tegn i punktskrift, der er ukendte i en bestemt punktskrifttabel og som har et kompatibelt alternativ, såsom de fede og kursiverede tegn, der ofte bruges på sociale medier.
+Andre fordele ved unicode-normalisering er forklaret mere detaljeret i [afsnittet for den tilsvarende taleindstilling](#SpeechUnicodeNormalization).
+
+For at aktivere eller deaktivere unicode-normalisering fra ethvert sted, bedes du tildele en brugerdefineret kommando ved hjælp af [Input Gestures dialogen](#InputGestures).
 
 ##### fokuskontekstpræsentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2874,6 +2926,27 @@ Bemærk, at du ikke kan benytte denne indstilling i Microsoft Word eller Outlook
 
 Du kan skifte mellem disse indstillinger fra hvor som helst, hvis du tilknytter en kommando til funktionen via [dialogen Håndter kommandoer](#InputGestures).
 
+#### Indstillinger for Tilføjelsescenter {#AddonStoreSettings}
+
+Denne kategori giver dig mulighed for at justere adfærden for Tilføjelsescenteret.
+
+##### Opdateringsmeddelelser {#AutomaticAddonUpdates}
+
+Når denne indstilling er sat til "Underret", vil Tilføjelsescenteret underrette dig efter NVDA opstart, hvis der er tilgængelige opdateringer til tilføjelser.
+Denne kontrol udføres hver 24. time.
+Underretninger vil kun forekomme for tilføjelser med tilgængelige opdateringer inden for samme kanal.
+For eksempel vil du for installerede beta-tilføjelser kun blive underrettet om opdateringer inden for beta-kanalen.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Muligheder |Underret (Standard), Deaktiveret |
+|Standard |Underret |
+
+|Indstilling |Adfærd |
+|---|---|
+|Underret |Underret når der er tilgængelige opdateringer til tilføjelser inden for samme kanal |
+|Deaktiveret |Kontrollér ikke automatisk for opdateringer til tilføjelser |
+
 #### Windows Tekstgenkendelse {#Win10OcrSettings}
 
 Indstillingerne i denne kategori lader dig konfigurere [Windows Tekstgenkendelse](#Win10Ocr).
@@ -3459,6 +3532,9 @@ Hvis NVDA er installeret og kører på dit system, kan du også åbne en tilføj
 Når en tilføjelse installeres fra en ekstern kilde, vil NVDA bede dig om at bekræfte installationen.
 Når tilføjelsen er installeret, skal NVDA genstartes for, at tilføjelsen kan starte, selvom du kan udskyde genstarten af NVDA, hvis du har andre tilføjelser at installere eller opdatere.
 
+Som standard, vil du få besked om opdateringer for tilføjelser, når NVDA starter.
+For at lære mere om, hvordan denne indstilling konfigureres, læs ["Opdateringsmeddelelser"](#AutomaticAddonUpdates).
+
 #### Fjernelse af tilføjelser {#AddonStoreRemoving}
 
 For at fjerne en tilføjelse skal du vælge tilføjelsen fra listen og bruge fjernelseshandlingen.
@@ -3581,14 +3657,8 @@ For flere informationer, læse afnisttet [Tilføjelser og tilføjelsescenteret](
 ### Opret flytbar kopi {#CreatePortableCopy}
 
 Dette vil åbne en dialog, således du kan oprette en flytbar kopi fra den installerede version af NVDA.
-Når du kører en flytbar kopi, vil dette menu punkt hedde "Installér NVDA på denne PC".
 
-Den tilsvarende dialog der vil åbne, vil bede om en sti, hvor NVDA skal oprette en flytbar kopi eller installeres på PC'en.
-
-I denne dialog kan du deaktivere følgende:
-
-* Kopiér aktuelle brugerindstillinger (dette inkluderer filerne i %appdata%\roaming\NVDA eller brugerkonfigurationen for din flytbare kopi samt installerede tilføjelser og andre moduler)
-* "Start den nye flytbare kopi efter oprettelse" eller "Start NVDA efter installation" (starter NVDA automatisk efter oprettelse af den flytbare kopi eller efter installation på computeren)
+Følg vejledningen [Opret en flytbar kopi](#CreatingAPortableCopy) for yderligere oplysninger.
 
 ### Kør værktøj til løsning af almindelige problemer... {#RunCOMRegistrationFixingTool}
 
@@ -4018,6 +4088,7 @@ Følgende yderligere enheder understøttes også, men kræver ingen driver for a
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+* Bemærk, at Zoomax ikke er Understøtet uden tredjepartsdrivere
 
 Dette er tastekombinationerne til Brailliant BI/B og BrailleNote Touch displays til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.

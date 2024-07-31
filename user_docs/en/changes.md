@@ -15,6 +15,12 @@ The available options are:
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
+### Changes
+
+* Component updates:
+  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
+  * Updated setuptools to 72.0 (#16907, @dpy013)
+
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
@@ -26,12 +32,7 @@ The available options are:
 * Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
-
-### Changes
-
-* Component updates:
-  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
-  * Updated setuptools to 72.0 (#16907, @dpy013)
+* NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 
 ### Changes for Developers
 
