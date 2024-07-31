@@ -534,11 +534,12 @@ finally:
 	if globalVars.appArgs.changeScreenReaderFlag:
 		winUser.setSystemScreenReaderFlag(False)
 
-	# Log any remaining background threads
+	# Log and join any remaining non-daemon threads here,
+	# before releasing our mutex and exiting.
 	# In a perfect world there should be none.
-	# join on any non-daemon non-dummy thread here,
-	# Before releasing our mutex, otherwise this process may continue running after the mutex is released.
-	# This would cause issues for rpc / nvdaHelper.
+	# If we don't do this, the NvDA process may stay alive after the mutex is released,
+	# which would cause issues for rpc / nvdaHelper.
+	# See issue #16933.
 	for thr in threading.enumerate():
 		if not thr.daemon and thr is not threading.current_thread():
 			log.info(f"Waiting on {thr}...")
