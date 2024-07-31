@@ -1547,14 +1547,39 @@ class TextInfoRegion(Region):
 			self._brailleInputIndStart = None
 
 	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
-		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
+		"""Fetches a collapsed TextInfo at the specified braille position in the region.
+		:param braillePos: The braille position.
+			If no textInfo could be found at braillePos,
+			try to find one at braillePos - 1 until a position has been found.
+		"""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
+		maxIterations = 10
+		startTime = time.time()
+		for i, curPos in enumerate(range(pos, max(-1, pos - maxIterations), -1)):
+			if curPos == 0:
+				# Not necessary to find offset.
+				break
+			# Move curPos code points from the start.
+			# Note that, as liblouis uses 32 bit encoding internally,
+			# it is really safe to assume that one code point offset is equal to one character within liblouis.
+			# If an attempt fails, we try to move to the previous character
+			try:
+				return self._readingInfo.moveToCodepointOffset(curPos)
+			except RuntimeError:
+				msg = f"Error in moveToCodepointOffset in iteration {i + 1} (position {curPos}"
+				if i + 1 >= maxIterations or (exceeded := time.time() - startTime > 0.5):
+					logFunc = log.exception
+					curPos = pos
+					if exceeded:
+						msg += ", exceeded time limit of 0.5 seconds"
+				else:
+					logFunc = log.debug
+				logFunc(msg)
 		dest = self._readingInfo.copy()
 		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
+		if curPos > 0:
+			dest.move(textInfos.UNIT_CHARACTER, curPos)
 		return dest
 
 	def routeTo(self, braillePos: int):
