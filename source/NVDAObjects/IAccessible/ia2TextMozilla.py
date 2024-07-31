@@ -684,8 +684,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				pass
 		return ti, obj
 
-	def move(self, unit, direction, endPoint=None):
+	def move(
+		self,
+		unit: str,
+		direction: int,
+		endPoint: str | None = None,
+	) -> int:
 		if direction == 0:
+			return 0
+		if self.obj.IAccessibleTextObject.nCharacters == 0:
 			return 0
 
 		if not endPoint or endPoint == "start":

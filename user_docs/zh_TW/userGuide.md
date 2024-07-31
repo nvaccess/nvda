@@ -1,4 +1,4 @@
-# ﻿NVDA_VERSION 用戶指南
+# NVDA NVDA_VERSION 用戶指南
 
 [TOC]
 
@@ -39,8 +39,17 @@ NV Access YouTube 頻道上有一段簡短的影片展示[「What is NVDA?」](h
 
 ### 系統需求 {#SystemRequirements}
 
+#### 建議系統需求 {#MinimumSystemRequirements}
+* 作業系統：64 位元的 Windows 10、Windows 11 及 Windows Server 2022
+  * 支援 AMD64 與 ARM64 架構下執行的 Windows。
+* 至少 150 MB 的儲存空間。
+* 至少 4 GB 的記憶體。
+
+#### 最低系統需求 {#MinimumSystemRequirements}
 * 作業系統：32 和 64 位元的 Microsoft Windows 8.1、Windows 10、Windows 11 及 Windows Server 2012 R2 以上的所有伺服器作業系統。
   * 支援 AMD64 與 ARM64 架構下執行的 Windows。
+  * 不再主動支援 32 位元作業系統。
+  * 不再主動支援 Windows 8.1 與 Windows Server 2022 以前的版本。
 * 至少 150 MB 的儲存空間。
 
 ### 國際化 {#Internationalization}
@@ -352,6 +361,9 @@ capsLock 鍵也可以設定為 NVDA 組合鍵。
 此清單將顯示目前安裝版本和可用版本，
 在附加元件上按 Enter 開啟動作功能表，選擇「更新」。
 
+預設情況下，NVDA 啟動後如果有任何可用的附加元件更新，您將收到通知，
+要了解有關此行為的更多資訊及設定，請參考[「更新通知」](#AutomaticAddonUpdates)。
+
 ### 社群 {#Community}
 
 NVDA 擁有充滿活力的使用者社群，
@@ -432,8 +444,14 @@ NV Access 還銷售[電話支援](https://www.nvaccess.org/product/nvda-telephon
 
 建立可攜式版對話框允許您選擇建立可攜式版的位置，
 可以是硬碟上的目錄，也可以是 USB 隨身碟或其他可攜式媒體上的位置，
+預設情況下會為可攜式版建立一個新目錄，
+您也可以選擇使用現有目錄，這會覆寫該目錄中的檔案，
+如果現有目錄是 NVDA 的可攜式版，則該版本將會更新。
+
 還有一個選項是可以選擇是否複製登入使用者目前的 NVDA 組態到新建立的可攜式版，此選項只有從 NVDA 的安裝版本建立可攜式版時才有，
+這也包括附加元件，
 若是從安裝程式進行安裝時則無此選項。
+
 按「繼續」按鈕將開始建立可攜式版，
 一旦完成安裝將出現一個訊息告知已成功完成，
 按「確認」按鈕關閉對話框。
@@ -493,8 +511,7 @@ NVDA 的安裝版本其組態預設儲存在目前使用者的 roaming applicati
 
 #### 使用資料收集對話框 {#UsageStatsDialog}
 
-從 NVDA 2018.3 開始，使用者會被詢問是否同意將使用資料傳送給 NV Access 以協助改進未來的 NVDA 版本。
-當第一次啟動 NVDA 會出現一個對話框，詢問是否同意在使用 NVDA 時將使用資料傳給 NV Access，
+當第一次啟動 NVDA 會出現一個對話框，詢問是否同意在使用 NVDA 時將使用資料傳給 NV Access 以協助改進未來的 NVDA 版本。
 您可以在以下「一般」類別設定一節中的[允許 NV Access 收集 NVDA 使用情況統計](#GeneralSettingsGatherUsageStats)閱讀更多有關 NV Access 收集的資訊。
 附註：按下「是」或「否」按鈕後將會儲存此設定，直到您重新安裝 NVDA 才會再次詢問，
 不過您可以在 NVDA 的「一般」類別設定中手動啟用或停用資料收集，要變更此設定您可以勾選或取消勾選名為「[允許 NVDA 專案收集 NVDA 使用情況統計](#GeneralSettingsGatherUsageStats)」的核取方塊。
@@ -505,8 +522,8 @@ NVDA 的安裝版本其組態預設儲存在目前使用者的 roaming applicati
 大多數 NVDA 特定的鍵盤指令由按下一個名為「NVDA 組合鍵 (簡稱 NVDA 鍵)」的特殊按鍵與一個或多個其他按鍵所組成，
 但顯著的例外是桌上型電腦鍵盤配置的文字檢閱指令，只單獨使用數字鍵盤的按鍵，不過也有一些其他的例外。
 
-NVDA 可以設定數字鍵盤的 Insert、主鍵盤的 Insert 及 Caps Lock 鍵作為 NVDA 鍵，
-預設情況下數字鍵盤的 Insert 與主鍵盤的 Insert 皆設定為 NVDA 鍵。
+NVDA 可以設定 Insert 鍵、數字鍵盤的 Insert 鍵 及/或 Caps Lock 鍵作為 NVDA 鍵，
+預設情況下 Insert 鍵及數字鍵盤的 Insert 鍵皆設定為 NVDA 鍵。
 
 如果您想要使其中一個 NVDA 鍵的行為與 NVDA 沒有執行時一樣，例如當您已設定 Caps Lock 鍵作為 NVDA 鍵，但又要用來切換大寫鎖定狀態，您可以快速連按此鍵兩下。
 
@@ -900,6 +917,7 @@ NVDA 提供了一種方法讓使用者藉由播放目前滑鼠座標的嗶嗶聲
 如果您想利用此功能可在 [NVDA 設定](#NVDASettings)對話框中的[滑鼠設定](#MouseSettings)類別進行設定。
 
 雖然應使用實體的滑鼠或觸控板來進行滑鼠導覽，NVDA 仍提供以下幾個與滑鼠相關的指令：
+
 <!-- KC:beginInclude -->
 
 | 名稱 |桌電快速鍵 |筆電快速鍵 |觸控 |說明|
@@ -908,6 +926,10 @@ NVDA 提供了一種方法讓使用者藉由播放目前滑鼠座標的嗶嗶聲
 |鎖定滑鼠左鍵 |Shift+數字鍵盤除號 |NVDA+Ctrl+左中括號 |無 |鎖定滑鼠左鍵，再按一次則解鎖。要拖曳滑鼠請鎖定左鍵，然後實際移動滑鼠或使用其他滑鼠定位指令。|
 |點擊滑鼠右鍵 |數字鍵盤乘號 |NVDA+右中括號 |點兩下並按住 |點擊滑鼠右鍵一次，通常用於在滑鼠位置開啟快顯功能表。|
 |鎖定滑鼠右鍵 |Shift+數字鍵盤乘號 |NVDA+Ctrl+右中括號 |無 |鎖定滑鼠右鍵，再按一次則解鎖。要拖曳滑鼠請鎖定右鍵，然後實際移動滑鼠或使用其他滑鼠定位指令。|
+|在滑鼠位置向上滾動 |無 |無 |無 |在目前滑鼠位置向上滾動滑鼠滾輪|
+|在滑鼠位置向下滾動 |無 |無 |無 |在目前滑鼠位置向下滾動滑鼠滾輪|
+|在滑鼠位置向左滾動 |無 |無 |無 |在目前滑鼠位置向左滾動滑鼠滾輪|
+|在滑鼠位置向右滾動 |無 |無 |無 |在目前滑鼠位置向右滾動滑鼠滾輪|
 |移動滑鼠到目前導覽物件 |NVDA+數字鍵盤除號 |NVDA+Shift+M |無 |移動滑鼠到目前導覽物件及檢閱游標位置。|
 |導覽到滑鼠所在物件 |NVDA+數字鍵盤乘號 |NVDA+Shift+N |無 |導覽物件移到目前滑鼠所在的物件。|
 
@@ -1785,6 +1807,7 @@ NVDA 設定對話框中的「一般」類別可以設定 NVDA 的整體行為，
 雖然您的 IP 位址在更新檢查時將用於得到國別資訊，但 IP 位址從未保留。
 除了更新所需檢查的強制性資訊之外，還會發送下列額外資訊：
 
+* 目前 NVDA 使用者的唯一 ID，每月改變一次
 * NVDA 介面語言
 * 此 NVDA 是可攜式或安裝版本
 * 目前正在使用的語音合成器名稱 (包括來自附加元件的驅動程式名稱)
@@ -1878,6 +1901,39 @@ ESpeak NG 的變聲聽起來更像語音，因為他們提供的屬性與 ESpeak
 此選項預設開啟，告訴 NVDA 在處理字元與符號時依靠目前使用語音的語言，
 如果您發現 NVDA 在讀出標點符號時使用不正確的合成器或語音的語言來朗讀，可以將此選項關閉，強制 NVDA 使用本身的語言設定。
 
+##### Unicode 正規化 {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|選項 |預設 (停用)、啟用、停用|
+|預設 |停用|
+
+當啟用此選項，將對 NVDA 讀出的文字進行 unicode 正規化，
+這在讀出的字元可以用多種型式來表示時非常有用。
+NVDA 使用 NFKC (Normalization Form Compatibility Composition) 演算法，具有以下效益：
+
+1. 屬於 Unicode 標準的一部分且在社交媒體上經常使用的粗體或斜體字元被正規化為最常見的相容等價字元，
+例如拉丁字母「h」也可以表示為「𝐡」 (粗體)、「ℎ」 (斜體) 等，但啟用正規化則都會讀作「h」。
+這方面的正規化也有助於在 Microsoft Word 方程式編輯器中閱讀方程式。
+
+1. 組合字元正規化，
+例如字元「ü」 (帶有變音/分音符號的 u) 是德文和土耳其文等語言中常見的字元，可以用兩種形式表示：
+  1. 一個獨立的 Unicode 字元 (ü)
+  1. 分解為兩個字元 (ü)，即普通拉丁字母 u 和分音修飾符號。
+  Unicode 正規化確保在所有語音輸出中使用唯一形式，也就是單一字元變體。
+
+1. 一些連字的分解，包括「ĳ」 (連字 ij) 分解為兩個字母形式 (「ij」)。
+
+1. 複合字元中修飾符號的固定順序，例如古希伯來文。
+
+要在任何地方切換 Unicode 正規化，請使用[輸入手勢對話框](#InputGestures)來指派手勢。
+
+##### 逐字元導覽時讀出「正規化」 {#SpeechReportNormalizedForCharacterNavigation}
+
+當勾選此核取方塊，告訴 NVDA 在個別字元朗讀時 (例如拼讀) 明確讀出正規化。
+例如當啟用此選項，拼讀字元「ĳ」的讀音會是「i j 正規化」。
+
+附註：此設定僅在啟用「[Unicode 正規化](#SpeechUnicodeNormalization)」時可用。
+
 ##### 處理字元及符號時包含 Unicode Consortium 資料 (含表情符號) {#SpeechSettingsCLDR}
 
 勾選此核取方塊，NVDA 將加入額外的符號讀音對照表來讀出字元及符號，
@@ -1915,7 +1971,8 @@ ESpeak NG 的變聲聽起來更像語音，因為他們提供的屬性與 ESpeak
 多數的合成器均有支援此項功能。
 
 通常這個選項應該要啟用，
-然而某些 Microsoft Speech API 合成器無法正確實作此功能，在啟用後反而表現異常，
+然而某些 Microsoft Speech API 合成器無法正確實作此功能，在啟用後反而表現異常。
+Code Factory 的合成器無論是附加元件或 SAPI 應用程式都無法正確實作，並會導致朗讀文字出現不必要的拼字 (例如在 NVDA 功能表或對話框中)。
 如果您在個別字元的讀音上遇到問題，請嘗試停用此選項。
 
 ##### 游標移動時延遲讀出字元說明 {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ NVDA 設定對話框中「點字」類別的「變更...」按鈕，會開啟[�
 當您捲動點顯器仍然可摸讀到該單字的其餘部分。
 
 啟用此選項可讓摸讀起來更順暢，但通常需要多捲動數次來顯示。
+
+##### Unicode 正規化 {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|選項 |預設 (停用)、啟用、停用|
+|預設 |停用|
+
+當啟用此選項，將對點顯器上的點字文字進行 unicode 正規化，
+這在當遇到特定點字轉譯表中未知的點字字元且有相容的替代字元 (例如社交媒體上常用的粗體和斜體字元) 時非常有用。
+在[等價語音設定一節](#SpeechUnicodeNormalization)中更詳細地解釋了 unicode 正規化的其他效益。
+
+要在任何地方切換 Unicode 正規化，請使用[輸入手勢對話框](#InputGestures)來指派手勢。
 
 ##### 焦點脈絡呈現方式 {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2926,27 @@ NVDA 設定對話框中的「瀏覽模式」類別用於設定當您閱讀和導
 
 您可以在[輸入手勢對話框](#InputGestures)中指派快速鍵來在任何地方循環切換可用的段落樣式。
 
+#### 附加元件商店設定 {#AddonStoreSettings}
+
+此類別可讓您調整附加元件商店的行為。
+
+##### 更新通知 {#AutomaticAddonUpdates}
+
+當此選項設定為「通知」，如果有任何可用的附加元件更新，附加元件商店會在 NVDA 啟動後通知您，
+此檢查每 24 小時進行一次。
+只有當附加元件在同一通道內有可用更新時才會發出通知，
+例如對於已安裝的 Beta 版附加元件，您只會收到 Beta 版通道內的更新通知。
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|選項 |通知 (預設)、停用 |
+|預設 |通知 |
+
+|選項 |行為 |
+|---|---|
+|通知 |同一通道內的附加元件有可用的更新時通知 |
+|停用 |不自動檢查附加元件的更新 |
+
 #### Windows OCR 設定 {#Win10OcrSettings}
 
 此類別的設定允許您對 [Windows OCR](#Win10Ocr) 進行設定，
@@ -3442,6 +3532,9 @@ NVDA alpha 測試者可能需要使用其附加元件的 dev 版本。
 從外部來源安裝附加元件時，NVDA 會要求您確認是否安裝。
 安裝附加元件後必須重新啟動 NVDA 才能使附加元件開始執行，但如果您有其他附加元件需要安裝或更新，則可以延後重新啟動 NVDA。
 
+預設情況下，NVDA 啟動後如果有任何可用的附加元件更新您就會收到通知，
+要了解有關此行為的更多資訊及設定，請參考[「更新通知」](#AutomaticAddonUpdates)。
+
 #### 移除附加元件 {#AddonStoreRemoving}
 
 要移除附加元件，請從清單中選擇附加元件並使用「移除」動作，
@@ -3563,15 +3656,9 @@ NVDA 將要求您確認移除，
 
 ### 建立可攜式版 {#CreatePortableCopy}
 
-這將會開啟一個對話框允許您從安裝的版本建立 NVDA 可攜式版，
-當執行的是 NVDA 可攜式版，在「工具」子功能表中出現的項目則會是「安裝 NVDA」而不是「建立可攜式版」。
+這將會開啟一個對話框允許您從目前執行的版本建立 NVDA 可攜式版。
 
-建立 NVDA 可攜式版或是安裝 NVDA 到這台電腦的對話框會引導您選擇要建立可攜式版或是安裝 NVDA 的資料夾位置，
-
-在此對話框您可以勾選或取消勾選下列選項：
-
-* 複製目前的使用者組態 (這包括在 %appdata%\roaming\NVDA 中的檔案或是在可攜式版的 userConfig 中的檔案，還包括附加元件及其他的模組)
-* 建立完成後以新的可攜式版執行或安裝後啟動 NVDA (建立可攜式版或安裝完成後自動啟動 NVDA)
+有關祥細資訊請按照[建立可攜式版](#CreatingAPortableCopy)一節中的說明進行操作。
 
 ### 執行 COM 註冊修復工具... {#RunCOMRegistrationFixingTool}
 
@@ -3712,7 +3799,7 @@ NVDA 的點顯器自動偵測功能也將會辨識 USB 或藍牙上的點顯器�
 |點顯器向下捲動 |topRouting20/40/80 (點顯器最後一方)|
 |點顯器向上捲動 |左邊 AdvanceBar|
 |點顯器向下捲動 |右邊 AdvanceBar|
-|切換點字游標跟隨 |左邊 GDFButton加右邊 GDFButton|
+|切換點字游標跟隨 |左邊 GDFButton 加右邊 GDFButton|
 |切換左邊滾輪操控 |左邊滾輪按下|
 |使用左邊滾輪向上捲動 |左邊滾輪向上|
 |使用左邊滾輪向下捲動 |左邊滾輪向下|
@@ -4001,6 +4088,7 @@ NVDA 也支援下列點顯器 (且不需安裝任何特殊驅動程式)：
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * 請注意，如果沒有外部驅動程式，目前不支援 Zoomax
 
 以下是 Brailliant BI/B 和 BrailleNote touch 點顯器在 NVDA 的按鍵指派，
 這些按鍵的實際位置請參見點顯器的說明文件。
@@ -4996,7 +5084,7 @@ NVDA 使用者偏好設定可以[複製到安全畫面使用](#GeneralSettingsCo
 |無 |`--enable-start-on-logon=True|False` |安裝時啟用[在登入畫面使用 NVDA](#StartAtWindowsLogon)|
 |無 |`--copy-portable-config` |安裝時將指定路徑下的可攜式版組態 (config-path, -c) 複製到目前的使用者帳戶中|
 |無 |`--create-portable` |建立 NVDA 可攜式版 (啟動新建立的版本)。需要指定 --portable-path|
-|無 |`--create-portable-silent` |建立 NVDA 可攜式版 (不啟動新安裝的版本)。需要指定 --portable-path|
+|無 |`--create-portable-silent` |建立 NVDA 可攜式版 (不啟動新建立的版本)。需要指定 --portable-path|
 |無 |`--portable-path=PORTABLEPATH` |將建立可攜式版的路徑|
 
 ### 全系統參數 {#SystemWideParameters}
