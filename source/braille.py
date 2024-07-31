@@ -1877,9 +1877,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
-		# When word wrap is enabled, the first block of spaces maybe removed from the current window
-		# This may prevent to display start of paragraphs
-		# Check if this case should be handled
+		# When word wrap is enabled, the first block of spaces may be removed from the current window.
+		# This may prevent displaying the start of paragraphs.
 		brailleConfig = config.conf["braille"]
 		if (
 			brailleConfig["readByParagraph"]

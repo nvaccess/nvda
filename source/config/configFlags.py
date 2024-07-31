@@ -262,7 +262,7 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: This is a label for a paragraph start marker.
-			self.NONE: _("Don't use paragraph start markers (default)"),
+			self.NONE: _("No paragraph start marker (default)"),
 			# Translators: This is a label for a paragraph start marker.
 			self.SPACE: _("Double space (  )"),
 			# Translators: This is a label for a paragraph start marker.

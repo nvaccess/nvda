@@ -4391,7 +4391,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
 
 		# Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
-		labelText = _("Paragraph start markers:")
+		labelText = _("Paragraph start marker:")
 		self.paragraphStartMarkersComboBox = followCursorGroupHelper.addLabeledControl(
 			labelText,
 			wx.Choice,
