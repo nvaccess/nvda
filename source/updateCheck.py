@@ -243,19 +243,21 @@ def _executeUpdate(destPath):
 
 	_setStateToNone(state)
 	saveState()
+	executeFlags: set[str] = set()
+	executeOptions: dict[str, str] = {}
 	if config.isInstalledCopy():
-		executeParams = "--install -m"
+		executeFlags.update("--install", "-m")
 	else:
 		portablePath = globalVars.appDir
 		if os.access(portablePath, os.W_OK):
-			executeParams = (
-				'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
-					portablePath=portablePath,
-					configPath=WritePaths.configDir,
-				)
+			executeFlags.update("--create-portable", "-m")
+			executeOptions.update(
+				("--portable-path", f'"{portablePath}"'),
+				("--config-path", '"{WritePaths.configDir}"'),
 			)
 		else:
-			executeParams = "--launcher"
+			executeFlags.add("--launcher")
+	executeParams = f"{' '.join(executeOptions)} {' '.join(' '.join(i) for i in executeOptions.items())}"
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
