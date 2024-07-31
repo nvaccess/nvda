@@ -88,8 +88,7 @@ def populate():
 			"--upgrade",
 			"pip",
 			"&&",
-			# py2exe is now compatible with setuptools 72.0
-			# There is now no need to manually install the wheel when creating non-isolated builds using a customized version of setuptools.
+			# wheel must be manually installed when creating an non-isolated build with a custom setuptools version.
 			"py",
 			"-m",
 			"pip",
