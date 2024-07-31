@@ -2165,14 +2165,14 @@ It is disabled by default.
 
 ##### Paragraph start marker {#BrailleParagraphStartMarkers}
 
+If "Read by paragraph" is checked, the selected start marker will be displayed to indicate the start of a paragraph.
+This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
+In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
+
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |No paragraph start marker, Double space, Pilcrow|
 |Default |No paragraph start marker|
-
-If "Read by paragraph" is checked, the selected start marker will be displayed to indicate the start of a paragraph.
-This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
-In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
