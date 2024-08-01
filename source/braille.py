@@ -1143,12 +1143,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""
 	textList = []
 	if isAtStart:
-		brailleConfig = config.conf["braille"]
-		if brailleConfig["readByParagraph"]:
-			index = brailleConfig["paragraphStartMarker"]
-			paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
-		else:
-			paragraphStartMarker = None
+		paragraphStartMarker = getParagraphStartMarker()
 		if paragraphStartMarker:
 			textList.append(paragraphStartMarker)
 		if formatConfig["reportLineNumber"]:
@@ -1202,6 +1197,26 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
+
+def getParagraphStartMarker() -> Optional[str]:
+	brailleConfig = config.conf["braille"]
+	if brailleConfig["readByParagraph"]:
+		index = brailleConfig["paragraphStartMarker"]
+		paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
+		if paragraphStartMarker == "¶":
+			# Translators: This is a paragraph start marker used in braille.
+			# The default symbol is the pilcrow,
+			# a symbol also known as "paragraph symbol" or "paragraph marker".
+			# This symbol should translate in braille via LibLouis automatically.
+			# If there is a more appropriate character for your locale,
+			# consider overwriting this (e.g. for Ge'ez ፨).
+			# You can also use Unicode Braille such as ⠘⠏.
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			paragraphStartMarker = pgettext("paragraphMarker", "¶")
+	else:
+		paragraphStartMarker = None
+	return paragraphStartMarker
 
 
 def _getFormattingTags(
@@ -1910,12 +1925,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			pass
 		# When word wrap is enabled, the first block of spaces may be removed from the current window.
 		# This may prevent displaying the start of paragraphs.
-		brailleConfig = config.conf["braille"]
-		if brailleConfig["readByParagraph"]:
-			index = brailleConfig["paragraphStartMarker"]
-			paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
-		else:
-			paragraphStartMarker = None
+		paragraphStartMarker = getParagraphStartMarker()
 		if paragraphStartMarker and self.regions[-1].rawText.startswith(
 			paragraphStartMarker + TEXT_SEPARATOR,
 		):

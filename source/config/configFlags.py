@@ -264,7 +264,7 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 	# consider overwriting this (e.g. for Ge'ez ፨).
 	# You can also use Unicode Braille such as ⠘⠏.
 	# Ensure this is consistent with other strings with the context "paragraphMarker".
-	PILCROW = pgettext("paragraphMarker", "¶")
+	PILCROW = "¶"
 
 	@property
 	def _displayStringLabels(self):
