@@ -385,7 +385,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		description=_(
 			# Translators: a description for a script
 			"Reports the text of the comment where the system caret is located."
-			"If pressed twice, presents the information in browse mode."
+			"If pressed twice, presents the information in browse mode.",
 		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,

@@ -576,7 +576,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for toggle report font attributes command.
-			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off.",
 		),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
