@@ -148,7 +148,7 @@ VBufStorage_fieldNode_t* WebKitVBufBackend_t::fillVBuf(int docHandle, IAccessibl
 		if ((role != ROLE_SYSTEM_TEXT || !(states & STATE_SYSTEM_FOCUSABLE)) && role != ROLE_SYSTEM_COMBOBOX
 				&& pacc->get_accName(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;
-		} 
+		}
 		tempBstr.Empty();
 		if (content.empty()&&pacc->get_accValue(varChild, &tempBstr) == S_OK && tempBstr) {
 			content = tempBstr;

@@ -4,7 +4,7 @@ This document provides rough guidelines for the process of developing NVDA relea
 All current and potential developers, add-on developers and translators should read and follow this document.
 These guidelines may be broken under special circumstances.
 Any concerns should be discussed via [GitHub Discussion](https://github.com/nvaccess/nvda/discussions), issue or pull request.
- 
+
 ## Release Workflow
 This is the general release workflow.
 Information for specific community groups is provided in later sections.
@@ -41,7 +41,7 @@ The production of a release consists of the following:
 * Once a pull request has been reviewed and approved by at least one NV Access employee and all relevant build checks have passed, NV Access will squash merge the pull request into master.
 * If the merging of a pull request to `master` causes any build checks on `master` to fail, the pull request is reverted without question.
 This is however unlikely to be an issue as build checks on the pull request itself must have already passed.
-* If a merged pull request has been identified as causing a regression, new bug, or does not work as originally reported, the pull request may be reverted at the discretion of the lead developers. Reasons in favor of not reverting the pull request may be: 
+* If a merged pull request has been identified as causing a regression, new bug, or does not work as originally reported, the pull request may be reverted at the discretion of the lead developers. Reasons in favor of not reverting the pull request may be:
   * The pull request was submitted by an active collaborator who is likely to follow up with a suitable pull request to address the issues.
   * The bug is trivial enough to be fixed by a collaborator.
   * Use the [PR revert template](../../.github/PULL_REQUEST_TEMPLATE/revert.md) when reverting.
@@ -50,7 +50,7 @@ This is however unlikely to be an issue as build checks on the pull request itse
 ### Beta phase
 * A commit without any known serious issues, will be selected from the 'master' branch and merged into 'beta', this draws the line for features included in the release.
 * Documentation changes will be reviewed. A release summary will be added to the change log for the beta.
-* A tagged 'beta release' will be created for wider testing. 
+* A tagged 'beta release' will be created for wider testing.
 * New pull requests may be now considered for squash merging straight to beta.
   - If addressing regression introduced in this release.
   - If addressing a bug in a "must have" feature for this release.
