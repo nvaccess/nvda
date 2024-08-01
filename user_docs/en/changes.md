@@ -45,7 +45,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
-* Running SCons with the parameter `-j0` will automatically pick the maximum number of available CPU cores. (#16868, @LeonarddeR)
+* Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16868, @LeonarddeR)
 
 #### Deprecations
 

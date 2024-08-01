@@ -159,18 +159,23 @@ env = Environment(
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider("MD5-timestamp")
 
+AddOption(
+	"--all-cores",
+	action="store_true",
+	dest="all_cores",
+	default=False,
+	help="always use the maximum number of available processor cores",
+)
 # Warn to run the build on multiple threads so it runs faster
-numJobs = env.GetOption("num_jobs")
 numCores = multiprocessing.cpu_count()
-if numJobs == 0:
-	numJobs = numCores
-	env.SetOption("num_jobs", numJobs)
-if numJobs < numCores:
+if (allCores := GetOption("all_cores")):
+	SetOption("num_jobs", numCores)
+if (numJobs := GetOption("num_jobs")) < numCores:
 	print(
 		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
 		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
-		"Running SCONS with parameter '-j0' will automatically pick all available cores. "
+		"Running SCONS with parameter '--all-cores' will automatically pick all available cores. "
 	)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
