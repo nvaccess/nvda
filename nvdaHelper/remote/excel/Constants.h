@@ -13,7 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 #pragma once
 
-// from XLDvType enumeration 
+// from XLDvType enumeration
 const long xlValidateList=3;
 
 // Excel IDispatch IDs

@@ -53,7 +53,7 @@ This is the kind of information that might help when investigating the issue fur
 	- an error noise
 	- A log message
 	- If there was an error noise or log message, was there any unexpected behaviour aside from this? For example, did NVDA fail to report something it should have?
-- Even if it seems obvious, what should happen instead? 
+- Even if it seems obvious, what should happen instead?
 	- Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
 - What version of NVDA was being used. Its good to get something like: stable, beta, rc, alpha. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". "alpha-28931,186a8d70"
 - In which version of NVDA did this work as expected?
@@ -183,14 +183,14 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   - UX inefficient (e.g. double speaking)
   - Web standard not followed causing app/web authors to require workarounds
 - `P5`
-  - Other feature requests affecting a small subset of users 
+  - Other feature requests affecting a small subset of users
 
 ## Legacy issues
 Many older issues do not follow our issue template and have missing information.
 Often they have conversation spanning years.
 Summarising this information and opening a new issue filling out the issue template would be extremely useful in triaging these issues.
 
-NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`. 
+NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`.
 
 ### Missing attachments
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not.

@@ -46,7 +46,7 @@ class FeatureFlag:
 	):
 		self.value = value
 		self.enumClassType: typing.Type[FlagValueEnum] = type(value)
-		assert self.enumClassType == type(behaviorOfDefault)
+		assert self.enumClassType is type(behaviorOfDefault)
 		assert behaviorOfDefault != value.DEFAULT
 		self.behaviorOfDefault = behaviorOfDefault
 
