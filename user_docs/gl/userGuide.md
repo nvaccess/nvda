@@ -39,8 +39,17 @@ O máis subliñable inclúe:
 
 ### Requerimentos do Sistema {#SystemRequirements}
 
+#### Requerimentos do Sistema Recomendados {#MinimumSystemRequirements}
+* Sistemas Operativos: edicións de 64 bits de Windows 10, Windows 11 e Windows Server 2022
+  * admítense ambas variantes de AMD64 e ARM64 de Windows.
+* ao menos 150 MB de espazo de almacenamento.
+* ao menos 4 GB de RAM.
+
+#### Requerimentos Mínimos do Sistema {#MinimumSystemRequirements}
 * Sistemas operativos: todas as edicións de 32 e 64 bits do Windows 8.1, Windows 10 Windows 11 e todos os sistemas operativos servidor comezando dende o Windows Server 2008 R2..
  * As variantes AMD64 e ARM64 de Windows están soportadas.
+  * Nota que os sistemas operativos de 32 bits xa non están baixo soporte activo.
+  * Ten en conta que Windows 8.1 e Windows Server versións máis vellas que 2022 xa non están baixo soporte activo.
 * - Polo menos 150 MB de espazo de almacenamento.
 
 ### Internacionalización {#Internationalization}
@@ -352,6 +361,9 @@ O estado do complemento aparecerá como "Actualización dispoñible".
 A listaxe amosará a versión actual instalada e a versión dispoñible.
 Preme `intro` sobre o complemento para abrir a listaxe de acións; escolle "Actualizar".
 
+Por defecto, despois de que o NVDA arranque, deberá notificárseche se está dispoñible calquera actualización de complemento.
+Para deprender máis acerca de como configurar este comportamento, consulta ["Notificacións de Actualización"](#AutomaticAddonUpdates).
+
 ### Comunidade {#Community}
 
 O NVDA ten unha vibrante comunidade de usuarios.
@@ -432,8 +444,14 @@ Se xa pechaches este diálogo ou estás a executar unha copia instalada do NVDA,
 
 O diálogo que aparece permíteche escoller onde debería crearse a copia portable.
 Esto pode ser un directorio no teu disco duro, ou un lugar nun lapis USB ou outro medio portátil.
+Por defecto, c´créase un novo directorio para a copia portable.
+Tamén podes escoller usar un directorio existente, esto sobreescribirá os ficheiros no directorio.
+Se o directorio existente é unha copia portable do NVDA, esa copia actualizarase.
+
 Tamén hai unha opción para escoller se NVDA debería copiar a sesión de configuración actual do usuario do NVDA para utilizala coa nova copia portable creada.
+Esto tamén inclúe complementos.
 Esta opción só está dispoñible cando se crea unha copia portable dende unha copia instalada, non cando se crea dende o paquete descargado.
+
 Premendo Continuar crearás a copia portable.
 Unha vez a creación estea compretada, aparecerá unha mensaxe dicíndoche que foi exitosa.
 Preme Aceptar para pechar este diálogo.
@@ -493,8 +511,7 @@ A terceira permíteche controlar se esta caixa de benvida debería aparecer cada
 
 #### Diálogo Estadísticas de Datos de Uso {#UsageStatsDialog}
 
-A partir do NVDA 2018.3, pregúntase ao usuario se quere permitir que os datos de uso se envíen a NV Access para axudar a melloralo no futuro. 
-Ao comezar NVDA por primeira vez, aparecerá un diálogo que che preguntará se queres aceptar o envío de datos a NV Access mentres o usas.
+Ao arrancar o NVDA por primeira vez, aparecerá un diálogo que che preguntará se queres aceptar o envío de datos a NV Access mentres o usas, para axudar a mellorar ao NVDA no futuro.
 Podes ler máis información sobre a recopilación de datos por NV Access na seción Opcións Xerais, [Permitir a NV Access recopilar estadísticas de uso do NVDA](#GeneralSettingsGatherUsageStats).
 Nota: ao premer en "si" ou "non" gardarase este axuste e o diálogo non aparecerá nunca máis a menos que reinstales o NVDA.
 Sen embargo, podes activar ou desactivar o proceso de recopilación de datos manualmente no panel das opcións xerais do NVDA. Para cambiar esta opción manualmente, podes marcar ou desmarcar a caixa de verificación chamada [Permitir ao proxecto de NVDA recolectar estadísticas de uso do NVDA](#GeneralSettingsGatherUsageStats).
@@ -900,6 +917,7 @@ Estas características extra do rato non están activadas de forma predeterminad
 Se desexas tirar partido delas, podes configuralas dende a categoría [Opcións do Rato](#MouseSettings) do diálogo [Opcións do NVDA](#NVDASettings) que se atopa no menú Preferencias do NVDA.
 
 Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NVDA proporciona algunhas ordes relacionadas con el:
+
 <!-- KC:beginInclude -->
 
 | Nome |Tecla Escritorio |Tecla Portátil |Tactil |Descripción|
@@ -908,6 +926,10 @@ Se ben se poderían usar un rato físico ou un trackpad para navegar co rato, NV
 |Bloquear botón esquerdo do rato |shift+Dividir teclado numérico |NVDA+control+` (acento grave) |Non |Mantén premedo o botón esquerdo do rato. Prémeo de novo para liberalo. Para arrastrar o rato, preme esta tecla para bloquear o botón esquerdo e entón move o rato físicamente ou usa unha das outras ordes de movemento do rato|
 |Clic botón dereito do rato |Multiplicar teclado numérico |NVDA++ (signo máis) |Tap e manter |Fai clic no botón dereito do rato unha vez, principalmente útil para abrir un menú de contexto na posición do rato.|
 |Bloquear botón dereito do rato |shift+Multiplicar teclado numérico |NVDA+control++ (signo máis) |Non |Mantén premedo o botón dereito do rato. Preme outra vez para liberalo. Para arrastrar o rato, preme esta tecla  para bloquear o botón dereito e entón move o rato físicamente ou usa unha das outras ordes de movemento do rato|
+|Desprazar arriba na posición do rato |non |non |non |Despraza a roda do rato arriba na posición actual do rato|
+|Desprazar abaixo na posición do rato|non |non |non |Despraza a roda do rato abaixo na posición actual do rato|
+|Desprazar á esquerda na posición do rato |non |non |non |Despraza a roda do rato á esquerda na posición actual do rato|
+|Desprazar á dereita na posición do rato |non |non |non |Despraza a roda do rato á dereita na posición actual do rato|
 |Mover rato a navegador de obxectos actual |NVDA+Dividir teclado numérico |NVDA+shift+m |Non |Move o rato á posición do navegador de obxectos actual e cursor de revisión|
 |navegar ao obxecto baixo o rato |NVDA+Multiplicar teclado numérico |NVDA+shift+n |Non |Pon o navegador de obxectos no obxecto localizado na posición do rato|
 
@@ -1785,6 +1807,7 @@ Se esto está activado, NV Access usará a información das procuras de actualiz
 Ten en conta que aíndaque o teu enderezo IP usarase para calcular o teu país durante a procura de actualizacións, o enderezo IP nunca se conservará.
 Ademáis da información obrigatoria necesaria para procurar actualizacións, tamén se envía a seguinte información adicional actualmente:
 
+* Unha ID única para o usuario actual do NVDA, esto cambia unha vez ao mes
 * Lingua da interfaz do NVDA
 * Se esta copia do NVDA é portable ou instalada
 * O nome do sintetizador de voz actual en uso (incluíndo o nome do complemento que ven co controlador)
@@ -1878,6 +1901,39 @@ Esta opción aplícase a todos os sintetizadores, non só ao sintetizador activo
 Activada de xeito predeterminado, esta opción di ao NVDA se a lingua da voz actual pode ser de confianza ao procesar símbolos e caracteres.
 Se notas que o NVDA está lendo a puntuación nunha lingua incorrecta para un sintetizador ou voz en particular, poderás querer desactivar esta opción para forzar ao NVDA a usar a súa lingua global configurada no su lugar.
 
+##### Normalización Unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcións |Predeterminada (Deshabilitada), Habilitada, Deshabilitada|
+|Predeterminado |Deshabilitada|
+
+Cando esta opción estea habilitada, realízase a normalización unicode no texto que estea falándose polo NVDA.
+Esto é beneficioso cando se falan caracteres que se poden representar de varios xeitos.
+O NVDA usa o algoritmo NFKC (Normalization Form Compatibility Composition en inglés), que proporciona os seguintes beneficios, entre outros:
+
+1. As versións negriña e cursiva de caracteres que son parte do estándar unicode e son comunmente usados nas redes sociais normalízanse aos seus equivalentes máis compatibles.
+Por exemplo, a letra latina "h" tamén pode presentarse como "𝐡" (negria), "ℎ" (cursiva), etc. pero sempre se falará como "h" cando a normalización estea habilitada.
+Este aspecto da normalización tamén axuda a ler ecuacións no editor de ecuacións de Microsoft Word.
+
+1. Normalización a caracteres compostos.
+Por exemplo, o carácter  "ü" (u con diérese), un carácter común en linguas como alemán e turco pode representarse en dúas formas.
+  1. Un carácter autónomo unicode (ü)
+  1. Unha descomposición en dous caracteres (ü), a saber, a letra latina normal u e unha modificadora diérese
+  A normalización Unicode asegúrase de que só se usará unha forma en toda a saída de voz, que é a variante dun carácter.
+
+1. Descomposición de algunha ligadura, Incluindo "ĳ" (ligadura ij) a súa forma de dúas letras ("ij").
+
+1. Ordenación estable de modificadores en caracteres compostos, por exemplo en hebreo antigo.
+
+Para conmutar a normalización Unicode dende calquera lugar, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada](#InputGestures).
+
+##### Anunciar "Normalizado" ao navegar por caracteres {#SpeechReportNormalizedForCharacterNavigation}
+
+Esta opción é unha caixa de verificación que, cando se marca, di ao NVDA que anuncie explícitamente que un carácter se normalizou cando se falou coma un carácter individual según cando se deletrea.
+Por exemplo, cando esta opción se habilita, deletrear o carácter  "ĳ" pronunciaráo como "i j normalizado".
+
+Ten en conta que esta opción só está dispoñible cando "[Normalización Unicode](#SpeechUnicodeNormalization)" estea habilitada.
+
 ##### Incluir datos Unicode Consortium (incluindo emoji) ao procesar caracteres e símbolos {#SpeechSettingsCLDR}
 
 Cando esta caixa de verificación estea activada, o NVDA incluirá os diccionarios de pronunciación de símbolos adicional cando pronuncie caracteres e símbolos.
@@ -1916,6 +1972,7 @@ A maioría dos sintetizadores sopórtano.
 
 Esta opción xeralmente debería activarse.
 Nembargantes, algúns sintetizadores Microsoft Speech API non implementan esto correctamente e funciona anómalamente cando se activa.
+Os sintetizadores de Code Factory, tanto o complemento como a aplicación SAPI, non o implementan correctamente e provocan un deletreo non desexado do texto falado (ex.: no menú NVDA ou nos diálogos).
 Se estás a ter problemas ca pronunciación de carácteres individuais,  proba desactivando esta opción.
 
 ##### Descripcións retrasadas para caracteres en movementos do cursor {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Se esto está deshabilitado, amosarase tanto como sexa posible da palabra, pero 
 Cando despraces a pantalla, entón poderás ler o resto da palabra.
 
 Habilitar esto podería permitir unha maior fluidez na lectura, pero normalmente require desprazar a pantalla máis.
+
+##### Normalización Unicode braille {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcións |Predeterminada (Deshabilitada), Habilitada, Deshabilitada|
+|Predeterminada |Deshabilitada|
+
+Cando esta opción estea habilitada, a normalización unicode realízase no texto que se braillifica na pantalla braille.
+Esto é beneficioso cando se atope con caracteres en braille que sexan descoñecidos nunha táboa braille en particular e que teña unha alternativa compatible, coma os caracteres en negriña e cursiva comúnmente utilizados nas redes sociais.
+Outros beneficios da normalización unicode explícanse con máis detalle na [seción para a opción de voz equivalente](#SpeechUnicodeNormalization).
+
+Para conmutar a normalización Unicode dende calquera lugar, por favor asigna un xesto persoalizado usando o [diálogo Xestos de Entrada ](#InputGestures).
 
 ##### Presentación de Contexto do Foco {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2926,23 @@ Ten en conta que este estilo de parágrafo non pode usarse en Microsoft Word ou 
 
 Podes cambiar entre os estilos de parágrafo dispoñibles dende calquera lugar asignando unha tecla no [diálogo Xestos de Entrada](#InputGestures).
 
+##### Notificacións de Actualización {#AutomaticAddonUpdates}
+
+Cando esta opción está axustada a "Notificar", a Tenda de Complementos notificarache antes de que o NVDA arranque se calquera actualización de complemento está dispoñible.
+Esta comprobación realízase cada 24 horas.
+As notificacións só ocorrirán para complementos con actualizacións dispoñibles dentro da mesma canle.
+Por exemplo, para complementos beta instalados, só se che notificará de actualizacións dentro da canle beta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcións |Notificar (Predeterminado), Deshabilitada |
+|Predeterminada |Notificar |
+
+|Opción |Comportamento |
+|---|---|
+|Notificar |Notifica cando as actualizacións están dispoñibles para un cpomplemento dentro da mesma canle |
+|Deshabilitada |Non comproba automáticamente as actualizacións de complementos |
+
 #### Opcións do OCR de Windows {#Win10OcrSettings}
 
 As opcións nesta categoría permítenche configurar [o OCR de Windows](#Win10Ocr).
@@ -3442,6 +3528,9 @@ Se o NVDA está instalado e executándose no teu sistema, tamén podes abrir un 
 Cando se instala un complemento dende unha fonte externa, o NVDA pedirache que confirmes a instalación.
 Unha vez que o complemento estea instalado, o NVDA debe reiniciarse para que comece a funcionar, aíndaque podes pospor o reinicio se tes outros para instalar ou para actualizar.
 
+Por defecto, despois de que o NVDA arranque, notificaráseche se calquera actualización de complemento está dispoñible.
+Para deprender máis acerca de configurar este comportamento, consulta ["Notificacións de Actualización"](#AutomaticAddonUpdates).
+
 #### Borrar Complementos {#AddonStoreRemoving}
 
 Para borrar un complemento, seleciónao da listaxe e usa a Acción Borrar.
@@ -3563,15 +3652,9 @@ Para máis información, le o capítulo en profundidade: [Complementos e a Tenda
 
 ### Crear copia portable {#CreatePortableCopy}
 
-Esto abrirá un diálogo que che permite crear unha copia portable do NVDA a partires da versión instalada.
-De calquer xeito, ao executar unha copia portable do NVDA, no submenú Ferramentas extra o elemento de menú chamarase "instalar NVDA neste PC" en lugar de "crear copia portable).
+Esto abrirá un diálogo que che permitirá crear unha copia portable do NVDA a partires da versión en execución.
 
-O diálogo para crear unha copia portable do NVDA ou para instalar NVDA neste PC indicarache para selecionar unha ruta do cartafol na que debería crear a copia portable ou na que o NVDA debería instalarse.
-
-Neste diálogo podes habilitar ou deshabilitar o seguinte:
-
-* Copiar a configuración actual do usuario (esto inclúe os ficheiros en %appdata%\roaming\NVDA ou na configuración do usuario da túa copia portable e tamén inclúe os complementos e outros módulos)
-* Arrancar a nova copia portable despois da creación ou arrancar o NVDA despois da instalación (inicia o NVDA automáticamente despois da creación da copia portable ou da instalación)
+Segue as instrucións para [Crear unha copia portable](#CreatingAPortableCopy) para máis información.
 
 ### Executar a ferramenta COM registration fixing... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4084,7 @@ Tamén se admiten os seguintes dispositivos extra (e non requiren ningún contro
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Ten en conta que a Zoomax actualmente non está admitida sen controladores externos
 
 Seguidamente van as asignacións de teclas para as pantallas Brailliant BI/B e BrailleNote touch co NVDA.
 Por favor consulta a documentación da pantalla para descripcións de onde poden atoparse estas teclas.
@@ -4995,8 +5079,8 @@ Seguidamente van as opcións de liña de ordes para o NVDA:
 |`Non` |`--install-silent` |Instala en silenzo NVDA (Non comeza a nova copia instalada)|
 |`Non` |`--enable-start-on-logon=True|False` |Ao instalar, habilita [arrancar na pantalla de inicio](#StartAtWindowsLogon) do NVDA|
 |`Non` |`--copy-portable-config` |Ao instalar, copia a configuración portable dende a ruta proporcionada (--config-path, -c) á actual conta de usuario|
-|`Non` |`--create-portable` |Crea unha copia portable do NVDA (comezando a copia recentemente creada). Require especificarse --portable-path|
-|`Non` |`--create-portable-silent` |Crea unha copia portable do NVDA (non comeza a copia recentemente instalada). Require expecificarse --portable-path|
+|`Non` |`--create-portable` |Crea unha copia portable do NVDA (comezando a nova copia creada). Require especificarse --portable-path|
+|`Non` |`--create-portable-silent` |Crea unha copia portable do NVDA (sen comezar a nova copia instalada). Require expecificarse --portable-path.  Esta opción suprime  as advertencias ao escrebir en directorios non valdeiros e pode sobreescribir ficheiros sen avisar. |
 |`Non` |`--portable-path=PORTABLEPATH` |A ruta onde se creará unha copia portable|
 
 ### Parámetros do Sistema {#SystemWideParameters}

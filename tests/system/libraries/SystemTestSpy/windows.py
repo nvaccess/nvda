@@ -3,8 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""This module provides functions to interact with the Windows system.
-"""
+"""This module provides functions to interact with the Windows system."""
 
 from ctypes.wintypes import LPARAM
 from ctypes import (
@@ -41,7 +40,7 @@ class Window(NamedTuple):
 def _GetWindowTitle(hwnd: HWNDVal) -> str:
 	length = windll.user32.GetWindowTextLengthW(hwnd)
 	if not length:
-		return ''
+		return ""
 	buff = create_unicode_buffer(length + 1)
 	if not windll.user32.GetWindowTextW(hwnd, buff, length + 1):
 		raise WinError()
@@ -49,7 +48,7 @@ def _GetWindowTitle(hwnd: HWNDVal) -> str:
 
 
 def _GetWindows(
-		filterUsingWindow: Callable[[Window], bool] = lambda _: True,
+	filterUsingWindow: Callable[[Window], bool] = lambda _: True,
 ) -> List[Window]:
 	windows: List[Window] = []
 
@@ -72,7 +71,7 @@ def _GetWindows(
 
 def _GetVisibleWindows() -> List[Window]:
 	return _GetWindows(
-		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title)
+		filterUsingWindow=lambda window: windll.user32.IsWindowVisible(window.hwndVal) and bool(window.title),
 	)
 
 
@@ -81,9 +80,11 @@ def CloseWindow(window: Window) -> bool:
 	@return: True if the window exists and the message was sent.
 	"""
 	if windowWithHandleExists(window.hwndVal):
-		return bool(windll.user32.CloseWindow(
-			window.hwndVal,
-		))
+		return bool(
+			windll.user32.CloseWindow(
+				window.hwndVal,
+			),
+		)
 	return False
 
 
@@ -111,7 +112,7 @@ def SetForegroundWindow(window: Window, logger: Logger) -> bool:
 
 def GetWindowWithTitle(targetTitle: re.Pattern, logger: Logger) -> Optional[Window]:
 	windows = _GetWindows(
-		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title))
+		filterUsingWindow=lambda _window: bool(re.match(targetTitle, _window.title)),
 	)
 	if len(windows) == 1:
 		logger(f"Found window (HWND: {windows[0].hwndVal}) (title: {windows[0].title})")

@@ -39,8 +39,17 @@ NVDA'nın kısaca tanıtıldığı şu [videoya (ingilizce)](https://www.youtube
 
 ### sistem gereksinimleri {#SystemRequirements}
 
+#### Önerilen Sistem Gereksinimleri {#MinimumSystemRequirements}
+* İşletim Sistemleri: Windows 10, Windows 11 ve Windows Server 2022'nin 64 bit sürümleri
+  * .Windows'un AMD64 ve ARM64 olmak üzere iki sürümü de desteklenir.
+* en az 150 MB depolama alanı.
+* En az 4 gb RAM.
+
+#### minimum sistem gereksinimleri {#MinimumSystemRequirements}
 * İşletim Sistemleri: Windows 8.1, Windows 10, Windows 11'in tüm 32 bit ve 64 bit sürümleri ve Windows Server 2012 R2'den başlayarak tüm server İşletim Sistemleri. 
   * .Windows'un AMD64 ve ARM64 olmak üzere iki sürümü de desteklenir.
+  *  32 bit işletim sistemleri aktif olarak desteklenmez.
+  * 2022'den eski Windows 8.1 ve Windows Server sürümleri aktif olarak desteklenmez.
 * en az 150 MB depolama alanı.
 
 ### Yerel Dil Desteği {#Internationalization}
@@ -288,7 +297,7 @@ Kurulumdan önce eklentileri doğrulamanın yolları için lütfen [Eklentileri 
 
 Eklenti Mağazası ilk açıldığında, NVDA eklentiler hakkında bir uyarı görüntüler.Eklentiler NV Access tarafından incelenmez ve sınırsız işlevselliğe ve bilgiye erişime sahip olabilir.
 Eklentiler NV Access tarafından denetlenmez ve kısıtlanmamış işlevselliğe ve bilgiye erişime sahip olabilir.
-Uyarıyı okuduysanız ve bir daha görmek istemiyorsanız `boşluk" tuş`'na basın.
+Uyarıyı okuduysanız ve bir daha görmek istemiyorsanız `boşluk" tuşu`'na basın.
 "Tamam" düğmesine ulaşmak için `sekme` tuşuna, ardından uyarıyı kapatmak ve mağazaya dönmek için `enter` tuşuna basın.
 Kullanıcı Rehberinin  "[Eklentiler ve Eklenti Mağazası](#AddonsManager)" Eklenti Mağazasının her özelliği hakkında bilgi bulunmaktadır.
 
@@ -351,6 +360,9 @@ Eklenti Mağazası'ndaki herhangi bir yerden bu sekmeye ulaşmak için `control+
 Eklentinin durumu "Güncelleme mevcut" olarak listelenecektir.
 Listede  mevcut kurulu sürüm ve yüklenebilir güncel sürüm görüntülenecektir.
 Eylem listesini açmak için eklentide `enter` tuşuna basın ve "Güncelle" yi seçin.
+
+Varsayılan olarak, NVDA başlatıldıktan sonra herhangi bir eklenti güncellemesi mevcutsa bilgilendirilirsiniz.
+Bu davranış hakkında daha fazla bilgi edinmek ve değiştirmek için ["güncelleme bildirimleri"](#AutomaticAddonUpdates) bölümüne bakın.
 
 ### Topluluk {#Community}
 
@@ -430,10 +442,16 @@ Bu seçenek yalnızca kurulumu NVDA taşınabilir kopyası üzerinden yaparken s
 Doğrudan indirdiğiniz dosyayı çalıştırarak NVDA taşınabilir kopyasını oluşturmak istiyorsanız, Taşınabilir Kopya Oluştur düğmesine basmanız yeterli.
 Bu iletişim kutusunu kapattıysanız ya da bilgisayarınızda NVDA kurulu durumdaysa, lütfen NVDA Araçlar menüsü altında bulunan Taşınabilir Kopya Oluştur menü ögesini bulup çalıştırın.
 
-Karşınıza çıkacak iletişim kutusu, taşınabilir kopyanın oluşturulacağı yeri belirlemenize olanak tanır.
-Bu, yerel diskinizde bulunan bir klasör ya da USB bellek benzeri taşınabilir ortamda bulunan bir konum olabilir.
+Görüntülenen iletişim kutusu, taşınabilir kopyanın nerede oluşturulacağını seçmenize yarar.
+Bu, sabit sürücünüzde, USB flash sürücünüzde veya başka bir taşınabilir ortamdaki bir konum olabilir.
+Varsayılan olarak taşınabilir kopya için yeni bir klasör oluşturulur.
+Buna ek olarak mevcut bir klasörü de seçebilirsiniz. Ancak bu klasörün üzerine yazacaktır.
+Eğer seçili klasör NVDA'nın taşınabilir bir kopyasını içeriyorsa bu kopya güncellenecektir.
+
 Burada, aktif kullanıcının NVDA konfigürasyonunu, yeni oluşturulacak taşınabilir kopya için de geçerli kılmanızı sağlayacak bir seçenek de bulunmaktadır.
+Bu seçenek eklentileride kopyalar.
 Seçenek yalnızca, taşınabilir kopya oluşturma işlemini kurulu bir NVDA üzerinden yapıyorsanız geçerlidir, ana kurulum paketi üzerinden yapılan oluşturma işlemlerinde gösterilmez.
+
 Devam düğmesine basmanız taşınabilir kopyayı oluşturacaktır.
 Oluşturma işlemi bittiğinde, sürecin başarıyla tamamlandığını bildiren bir mesajla karşılaşırsınız.
 Bu iletişim kutusunu kapatmak için Tamam'a basabilirsiniz.
@@ -493,7 +511,6 @@ ikincisi, NVDA'nın Windows başladıktan sonra otomatik olarak devreye girmesiy
 
 #### Veri kullanım istatistikleri iletişim kutusu {#UsageStatsDialog}
 
-2018.3 sürümünden itibaren, kullanıcılara NVDA'yı iyileştirmek için kullanım verilerinin NV Access'e gönderilmesine izin vermek isteyip istemedikleri sorulur. 
 NVDA'yı ilk kez başlatırken, NVDA'yı kullanırken NV Access'e veri göndermeyi kabul etmek isteyip istemediğinizi soran bir iletişim kutusu açılacaktır.
 NV Access tarafından toplanan veriler hakkında daha fazla bilgiyi genel ayarlar bölümünde, [NV Access'in NVDA kullanım istatistiklerini toplamasına izin verin](#GeneralSettingsGatherUsageStats) diyerek okuyabilirsiniz.
 Not: "evet" veya "hayır" a basmak bu ayarı kaydeder ve NVDA'yı yeniden yüklemediğiniz sürece iletişim kutusu bir daha asla gösterilmez.
@@ -505,8 +522,8 @@ Ancak NVDA'nın genel ayarlar panelinde veri toplama işlemini manuel olarak etk
 NVDA'ya özel birçok klavye komutu NVDA değişken tuşu adı verilen özel bir tuş ile klavyedeki başka tuşlara basılarak meydana gelen kombinasyonlardan oluşmaktadır.
 Masaüstü klavye düzeninde sadece numaratördeki tuşları kullanan metin inceleme komutları istisnai durumlardandır ve elbette başka istisnalar da olabilir.
 
-Numaratördeki insert, diğer insert, veya büyük harf kilidi tuşlarından birisi NVDA değişken tuşu olarak ayarlanabilir.
-Varsayılan olarak, numaratördeki insert ve diğer insert tuşlarının her ikisi NVDA değişken tuşu olarak atanmıştır.
+Numaratördeki `insert`, diğer `insert`, veya `büyük harf kilidi` tuşlarından birisi `NVDA` değişken tuşu olarak ayarlanabilir.
+Varsayılan olarak, `numaratör insert` ve `diğer insert` tuşlarının her ikisi NVDA değişken tuşu olarak atanmıştır.
 
 NVDA değişken tuşu olarak atadığınız bir tuşun, kendi özgün görevini yapmasını istiyorsanız, (Örneğin NVDA tuşu olarak büyük harfkilidi tuşunu ayarladıysanız, büyük harf kilidini açabilmek için), bu tuşa peşpeşe 2 kez basmanız gerekir.
 
@@ -775,7 +792,7 @@ Nesneler arasında dolaşmak için aşağıdaki komutları kullanın:
 
 | Ad |Masaüstü Kısayol tuşu |Dizüstü Kısayol tuşu |Dokunma hareketi |Tarif|
 |---|---|---|---|---|
-|Geçerli nesnenin bildir |NVDA+numaratör5 |NVDA+şift+o |yok |Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır.|
+|Geçerli nesneyi bildir |NVDA+numaratör5 |NVDA+şift+o |yok |Nesne sunucusunun üzerinde bulunduğu nesneyi okur. İki kez basıldığında bilgi kodlanır, ve 3 kez basıldığında nesnenin adı ve değeri panoya kopyalanır.|
 |Ana nesneye git |NVDA+numaratör8 |NVDA+şift+YukarıOk| yukarı fiske |nesne sunucusunun Üzerinde bulunduğu nesnenin bir üst düzeyindeki ana nesneye gider|
 |önceki nesneye git |NVDA+numaratör4 |NVDA+şift+sol yön tuşu |sola fiske |nesne sunucusunu, üzerinde bulunulan nesneyle aynı seviyede bulunan bir önceki nesneye taşır|
 |Düzleştirilmiş görünümde önceki nesneye git |NVDA+numaratör9 |NVDA+şift+Ğ |sola fiske (object mode) |Düzleştirilmiş nesne sunum hiyerarşisinde önceki nesneye gider|
@@ -829,7 +846,7 @@ Metni incelerken, aşağıdaki komutlar kullanılabilir:
 |İnceleme imlecinin bulunduğu yere kadar seçme ve kopyalama |NVDA+f10 |NVDA+f10 |yok |metnin başladığı yer olarak ayarlanan noktadan, inceleme imlecinin mevcut konumuna kadar olan metni seçer. İki kez basılırsa, metin panoya kopyalanır|
 |Kopyalanmak üzere işaretlenmiş kısmın başına taşı |NVDA+şift+f9 |NVDA+şift+f9 |none |inceleme imlecini, kopya için önceden belirlenmiş kısmın başlangıç konumuna taşır|
 |Metin biçimini söyle |NVDA+şift+f |NVDA+şift+f |yok |İnceleme imlecinin pozisyonundaki metnin biçimi hakkında bilgi verir. İki kez basılırsa, biçim bilgisi tarama kipinde gösterilir|
-|Mevcut sembol için belirlenmiş okunuşu seslendir |None |None |none |inceleme imlecinin bulunduğu konumdaki sembolü söyler. Pressed twice, shows the symbol and the text used to speak it in browse mode.|
+|Mevcut sembol için belirlenmiş okunuşu seslendir |None |None |none |inceleme imlecinin bulunduğu konumdaki sembolü söyler. İki kez basıldığında, tarama kipinde sembolü ve söylenen metni gösterir.|
 
 <!-- KC:endInclude -->
 
@@ -900,6 +917,7 @@ Bu ekstra fare seçenekleri varsayılan olarak kapalıdır.
 Ancak bunların avantajlarından faydalanmak isterseniz, tercihler menüsü içinde bulunan [NVDA ayarlar](#NVDASettings) iletişim kutusundaki [Fare ayarları](#MouseSettings) kategorisinden    bu özellikleri konfigüre edebilirsiniz.
 
 NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fare veya dizüstü bilgisayarlarda fare pedlerini kullanabilirsiniz. Ancak farenin nesne sunucusunun konumuna ya da nesne sunucusunun fare konumuna taşınması, sol tık, sağ tık gibi çeşitli işlevler için kullanılan  bazı  komutlar bulunmaktadır:
+
 <!-- KC:beginInclude -->
 
 | Ad |Masaüstü Kısayol tuşu |Dizüstü Kısayol tuşu |Dokunma |Tarif|
@@ -908,6 +926,10 @@ NVDA, fareyi hareket ettirmek için, ek bir işleve sahip değildir. Fiziksel fa
 |Sol fare kilidi |şift+numaratörbölü |NVDA+kontrol+ğ |yok |Sol fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. bulunulan yeri taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin|
 |Sağ fare tıklaması |numaratörÇarpı |NVDA+ü |dokun ve tut |sağ fare düğmesine bir kez tıklar.|
 |sağ fare kilidi |şift+numaratörÇarpı |NVDA+kontrol+ü |yok |sağ fareyi kilitler. kilidi açmak için tuşa tekrar basılmalıdır. fareyi taşımak için, bu tuşla fareyi kilitleyin ve fareyi fiziksel olarak veya diğer fare komutlarıyla hareket ettirin|
+|Fare konumunda yukarı kaydır |yok |yok |yok |fare tekerleğini mevcut konumda yukarı kaydırır|
+|Fare konumunda aşağı kaydır |yok |yok |yok |fare tekerleğini mevcut konumda aşağı kaydırır|
+|Fare konumunda sola kaydır |yok |yok |yok |fare tekerleğini mevcut konumda sola kaydırır|
+|Fare konumunda sağa kaydır |yok |yok |yok |fare tekerleğini mevcut konumda sağa kaydırır|
 |Fareyi nesne sunucusunun üzerinde bulunduğu nesneye taşıma |NVDA+numaratörbölü |NVDA+şift+m |yok |Fareyi nesne sunucusunun konumundaki nesnenin üzerine taşır|
 |farenin altındaki nesneye gitme |NVDA+numaratörÇarpı |NVDA+şift+n |yok |nesne sunucusunu farenin konumundaki nesneye taşır.|
 
@@ -1785,6 +1807,7 @@ Etkinleştirilmişse, NV Access NVDA kullanıcı sayısını takip etmek için g
 Ülkenizi belirlemek için IP adresi kullanılıyor olsa da, bu bilginin hiçbir suretle kaydedilmediğini not edin.
 Güncellemeleri kontrol etmek için zorunlu olan bilgilerin yanında, aşağıdaki ek bilgiler de gönderilir:
 
+* Mevcut NVDA kullanıcısı için benzersiz bir kimlik; bu kimlik ayda bir değişir
 * NVDA arayüz dili
 * NVDA kopyasının kurulu mu yoksa taşınabilir mi olduğu
 * Kullanılan geçerli konuşma sentezleyici adı (eklentinin adı ve kaynağı dahil)
@@ -1878,6 +1901,39 @@ Bu ayardan sadece halihazırda kullanılan sentezleyici değil; tüm sentezleyic
 Bu seçenek varsayılan olarak etkindir ve NVDA'ya karakter ve semboller seslendirilirken seçili sesin dilinin dikkate alınıp alınmayacağını söyler.
 NVDA'nın noktalama işaretlerini herhangi bir sentezleyici ya da ses için yanlış dilde seslendirdiğini fark ederseniz, bu seçeneği NVDA global ayarlarının kullanılmasını sağlamak için kapatabilirsiniz.
 
+##### Unicode normalleştirme {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Seçenekler |Varsayılan (Devre Dışı), Etkin, Devre Dışı|
+|varsayılan |devre dışı|
+
+Bu seçenek etkinleştirildiğinde, NVDA'nın konuştuğu metin üzerinde unicode normalleştirmesi yapılır.
+Bu, birden fazla şekilde gösterilebilen karakterleri konuşurken yararlıdır.
+NVDA, çeşitli avantajlar sunan NFKC (Normalization Form Compatibility Composition) algoritmasını kullanır:
+
+1. Unicode standardının bir parçası olan ve sosyal medyada sıkça kullanılan kalın ve italik karakterler en yaygın uyumlu eşdeğerlerine normalleştirilir.
+Örneğin, latin harfi "h", "𝐡" (kalın), "ℎ" (italik) vb. olarak sunulabilir, ancak normalizasyon etkinleştirildiğinde her zaman "h" olarak konuşulur.
+Unicode Normalleştirme, Microsoft Word denklem düzenleyicisinde denklemlerin okunmasına da yardımcı olur.
+
+1. Bileşik karakterlere normalleştirme.
+Örneğin Almanca ve Türkçe gibi dillerde ortak bir karakter olan "ü" (noktalı/iki noktalı u) karakteri iki biçimde temsil edilebilmektedir.
+  1. Tek başına bir unicode karakter (ü)
+  1. Normal latin harfi u ve diaeresis değiştirici olarak iki karaktere ayrışma (ü)
+  Unicode normalleştirme, tüm konuşma boyunca yalnızca tek bir formun, tek karakterli varyantın kullanılmasını sağlar.
+
+1. Bazı ligatürlerin, "ĳ" (ligatür ij) gibi iki harfli formlarına ("ij") ayrıştırılması.
+
+1. Eski İbranice gibi bileşik karakterlerdeki değiştiricilerin sabit sıralanışı.
+
+Unicode normalleştirmeyi istediğiniz yerden değiştirmek için lütfen [Girdi Hareketleri iletişim kutusunu](#InputGestures) kullanarak bir hareket atayın.
+
+##### Karaktere karakter gezinirken unicode normalleştirme durumunu bildir {#SpeechReportNormalizedForCharacterNavigation}
+
+Bu seçenek etkinleştirildiğinde, NVDA karakter karakter gezinirken karakterin normalleştirilmiş olup olmadığını bildirir. 
+Örneğin, "ĳ" karakterinin üzerine geldiğinizde "i j normalleştirilmiş" o seslendirilir.
+
+Bu ayar sadece "[Unicode normalleştirme](#SpeechUnicodeNormalization)" etkinse görüntülenir.
+
 ##### Karakter ve sembooleri işlerken (emoji dahil) Unicode Konsorsiyumu verisini dahil et {#SpeechSettingsCLDR}
 
 Bu onay kutusu etkinleştirildiğinde, NVDA karakter ve sembolleri tellaffuz ederken  ek  telaffuz sözlüklerini kullanır.
@@ -1916,6 +1972,7 @@ Birçok sentezleyici bu işlevi destekler.
 
 Bu seçenek genel olarak etkin olmalıdır.
 Öte yandan, bazı Microsoft SAPI sentezleyiciler bu işlevi desteklemezler ve bu seçenek etkin olduğunda, yazarken ve okurken karakterlerin seslendirilmemesi gibi tuhaf tepkiler verebilirler.
+Code Factory'nin hem SAPI hem de NVDA sentezleyicileri bu seçenekle düzgün çalışmayabiliyor ve örneğin NVDA menüsünde veya iletişim kutularında metnin yanlış seslendirilmesine neden olabiliyorlar.
 Eğer karakterlerin seslendirilmemesi gibi bir sorun yaşıyorsanız bu seçeneği etkisizleştirmeniz problemi çözecektir.
 
 ##### İmleç hareketi sırasında karakter tanımını bildir {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Bu etkinleştirilmemişse, satıra mümkün olduğunca fazla karakter sığdır�
 Ekranı kaydırdığınızda bölünmüş sözcüğün kalanını okuyabilirsiniz.
 
 Bunu etkinleştirmek daha akıcı bir okuma olanağı sunmakla birlikte, ekranı kaydırmak için ilgili tuşlara daha fazla basmanızı gerektirecektir.
+
+##### Unicode normalleştirme {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Seçenekler |Varsayılan (Devre Dışı), Etkin, Devre Dışı|
+|Varsayılan |Devre Dışı|
+
+Bu seçenek etkinleştirildiğinde, braille ekranında braille ile yazılan metin üzerinde unicode normalleştirme yapılır.
+Bu seçenek, belirli bir braille tablosunda bilinmeyen ve sosyal medyada yaygın olarak kullanılan kalın ve italik karakterler gibi uyumlu bir alternatifi olan braille karakterleriyle karşılaştığınızda işe yarar.
+Unicode normalleştirmeyle ilgili daha fazla bilgi için, rehberin konuşma bölümünde olan [unicode normalleştirme](#SpeechUnicodeNormalization) kısmına bakabilirsiniz.
+
+Unicode normalleştirmeyi istediğiniz yerden değiştirmek için lütfen [Girdi Hareketleri iletişim kutusunu](#InputGestures) kullanarak bir hareket atayın.
 
 ##### Odak bağlam sunumu {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2926,27 @@ Microsoft Word denetimlerine erişmek için UIA kullanmıyorsanız, bu paragraf 
 
 Mevcut paragraf kipleri arasında hızlıca geçiş yapmak için [Girdi hareketleri iletişim kutusu](#InputGestures) üzerinden bir kısayol atayabilirsiniz. 
 
+#### Eklenti Mağazası Ayarları {#AddonStoreSettings}
+
+Bu kategori Eklenti mağazasıyla ilgili ayarları yapmanıza yarar.
+
+##### Güncelleme bildirimleri {#AutomaticAddonUpdates}
+
++Bu seçenek "Bildir" olarak ayarlandığında, Eklenti Mağazası, NVDA başlatıldıktan sonra herhangi bir eklenti güncellemesi olup olmadığını size bildirecektir.
+Bu kontrol 24 saatte bir yapılır.
+Bildirimler yalnızca aynı kanalda güncellemeleri bulunan eklentiler için gerçekleşecektir.
+Örneğin, kurulu beta eklentiler için yalnızca beta kanalındaki güncellemelerden haberdar olursunuz.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Seçenekler |Bildir (Varsayılan), Devre Dışı |
+|Varsayılan |Bildir |
+
+|Seçenek |Davranış |
+|---|---|
+|Bildir |Aynı kanaldaki eklentiler için güncellemeler mevcut olduğunda bildirir |
+|Devre Dışı |Eklenti güncellemelerini otomatik olarak kontrol etme |
+
 #### Windows OCR Ayarları {#Win10OcrSettings}
 
 Bu kategori altındaki seçenekler [Windows OCR ayarlarını](#Win10Ocr) yapılandırmanızı sağlar.
@@ -3442,6 +3532,9 @@ NVDA sisteminizde kurulu ve çalışıyorsa, kurulum sürecini başlatmak için 
 Dış kaynaktan bir eklenti kurulurken, NVDA sizden kurulumu onaylamanızı isteyecektir.
 Eklenti kurulduktan sonra, eklentinin çalışmaya başlaması için NVDA'nın yeniden başlatılması gerekir, ancak yüklemeniz veya güncellemeniz gereken başka eklentileriniz varsa NVDA'nın yeniden başlatılmasını erteleyebilirsiniz.
 
+Varsayılan olarak, NVDA başlatıldıktan sonra herhangi bir eklenti güncellemesi olup olmadığı konusunda bilgilendirilirsiniz.
+Güncelleme bildirimleri hakkında daha fazla bilgi edinmek ve seçenekleri değiştirmek için ["Güncelleme Bildirimleri"](#AutomaticAddonUpdates) bölümüne bakın.
+
 #### Eklentileri Kaldırma {#AddonStoreRemoving}
 
 Bir eklentiyi kaldırmak için listeden eklentiyi seçin ve Kaldır eylemini kullanın.
@@ -3564,14 +3657,8 @@ Daha fazla bilgi için [Eklentiler ve Eklenti Mağazası](#AddonsManager) bölü
 ### Taşınabilir kopya oluştur {#CreatePortableCopy}
 
 Bu, kurulu sürümden NVDA'nın taşınabilir bir kopyasını oluşturmanıza izin veren bir iletişim kutusu açar.
-Her iki şekilde de, NVDA'nın taşınabilir bir kopyasını çalıştırıyorsanız, ekstra araç alt menüsünde menü öğesine "taşınabilir kopya oluştur" yerine "NVDA'yı bu bilgisayara kur" adı verilir.
 
-NVDA'nın taşınabilir bir kopyasını oluşturma veya bu bilgisayara NVDA'yı kurma iletişim kutusu, NVDA'nın taşınabilir kopyayı oluşturması gereken veya NVDA'nın yüklenmesi gereken bir klasör seçmenizi sağlayacaktır.
-
-Bu iletişim kutusunda aşağıdakileri etkinleştirebilir veya devre dışı bırakabilirsiniz:
-
-* Mevcut kullanıcı konfigürasyonunu kopyala (% appdata% \ roaming \ NVDA içindeki dosyaları veya taşınabilir kopyanızın kullanıcı yapılandırmasındaki dosyaları içerir ve ayrıca eklentileri ve diğer modülleri içerir)
-* Oluşturulduktan sonra yeni taşınabilir kopyayı başlat veya kurulumdan sonra NVDA'yı başlat (taşınabilir kopya oluşturulduktan veya kurulumdan sonra NVDA'yı otomatik olarak başlatır)
+Daha fazla bilgi için [Taşınabilir kopya oluşturma](#CreatingAPortableCopy) bölümündeki talimatları izleyin.
 
 ### COM kayıt tamir aracını çalıştır... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Ek olarak aşağıdaki aygıtlar da desteklenir (ve herhangi bir özel sürücü
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Zoomax'ın şu anda harici sürücüler olmadan desteklenmediğini unutmayın
 
 Aşağıda Brailliant BI/B ve BrailleNote touch braille ekranları NVDA ile hangi tuşlarla kullanabileceğinizi bulabilirsiniz.
 Tuşların yeri ve tarifi için Braille ekranın dokümantasyonunu inceleyin.
@@ -4895,7 +4983,7 @@ Following are the current key assignments for these displays.
 <!-- KC:endInclude -->
 
 ## İleri Düzey Konular {#AdvancedTopics}
-### Güvenli Mcod {#SecureMode}
+### Güvenli Mod {#SecureMode}
 
 Sistem yöneticileri, yetkisiz sistem erişimini kısıtlamak için NVDA'yı yapılandırmak isteyebilir.
 NVDA, yönetici ayrıcalıklarına yükseltildiği durumlar da dahil olmak üzere isteğe bağlı kod çalıştırabilen özel eklentilerin yüklenmesine izin verir.
@@ -4996,7 +5084,7 @@ Aşağıdakiler NVDA komut satırı seçenekleridir:
 |None |--`enable-start-on-logon=True|False` |Yüklerken, NVDA'nın [oturum açma ekranında başlamasını](#StartAtWindowsLogon) etkinleştirir|
 |None |`--copy-portable-config` |Yüklerken, taşınabilir yapılandırmayı sağlanan yoldan (`config-path`, `-c`) geçerli kullanıcı hesabına kopyalar|
 |None |`--create-portable` |NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılır). `--portable-path` belirtilmesi gerekir|
-|None |`--create-portable-silent` |NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılmaz). `--portable-path` belirtilmesi gerekir|
+|None |`--create-portable-silent` |NVDA'nın taşınabilir bir kopyasını oluşturur (işlem sonunda yeni kopya çalıştırılmaz). `--portable-path` belirtilmesi gerekir. Bu seçenek boş olmayan klasörlerin üzerine yazarkan uyarı göstermez ve bu yüzden uyarmaksızın mevcut dosyaların üzerine yazabilir.|
 |None |--`portable-path=PORTABLEPATH` |taşınabilir kopyanın oluşturulacağı adres|
 
 ### Sistem Çapında Geçerli Parametreler {#SystemWideParameters}

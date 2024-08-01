@@ -20,10 +20,10 @@ if not PROJECT_ID:
 
 
 def request(
-		path: str,
-		method=requests.get,
-		headers: dict[str, str] | None = None,
-		**kwargs
+	path: str,
+	method=requests.get,
+	headers: dict[str, str] | None = None,
+	**kwargs,
 ) -> requests.Response:
 	if headers is None:
 		headers = {}
@@ -31,7 +31,7 @@ def request(
 	r = method(
 		f"https://api.crowdin.com/api/v2/{path}",
 		headers=headers,
-		**kwargs
+		**kwargs,
 	)
 	# Convert errors to exceptions, but print the response before raising.
 	try:
@@ -54,14 +54,14 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 			"storages",
 			method=requests.post,
 			headers={"Crowdin-API-FileName": fn},
-			data=f
+			data=f,
 		)
 	storageID = r.json()["data"]["id"]
 	print(f"Updating file {crowdinFileID} on Crowdin with storage ID {storageID}")
 	r = projectRequest(
 		f"files/{crowdinFileID}",
 		method=requests.put,
-		json={"storageId": storageID}
+		json={"storageId": storageID},
 	)
 	revisionId = r.json()["data"]["revisionId"]
 	print(f"Updated to revision {revisionId}")
@@ -69,12 +69,12 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 
 def main():
 	parser = argparse.ArgumentParser(
-		description="Syncs translations with Crowdin."
+		description="Syncs translations with Crowdin.",
 	)
 	commands = parser.add_subparsers(dest="command", required=True)
 	uploadCommand = commands.add_parser(
 		"uploadSourceFile",
-		help="Upload a source file to Crowdin."
+		help="Upload a source file to Crowdin.",
 	)
 	uploadCommand.add_argument("crowdinFileID", type=int, help="The Crowdin file ID.")
 	uploadCommand.add_argument("localFilePath", help="The path to the local file.")

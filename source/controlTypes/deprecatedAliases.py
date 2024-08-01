@@ -23,7 +23,7 @@ from .state import (
 )
 from .processAndLabelStates import (
 	_processNegativeStates,
-	_processPositiveStates
+	_processPositiveStates,
 )
 
 # Do not extend
@@ -248,19 +248,11 @@ def getDeprecatedLabellingAliasNames() -> typing.List[str]:
 
 
 def getDeprecatedRoleAliasNames() -> typing.List[str]:
-	return [
-		symbol
-		for symbol, thing in globals().items()
-		if symbol.startswith("ROLE_")
-	]
+	return [symbol for symbol, thing in globals().items() if symbol.startswith("ROLE_")]
 
 
 def getDeprecatedStateAliasNames() -> typing.List[str]:
-	return [
-		symbol
-		for symbol, thing in globals().items()
-		if symbol.startswith("STATE_")
-	]
+	return [symbol for symbol, thing in globals().items() if symbol.startswith("STATE_")]
 
 
 # Ensure only the aliases are exposed when deprecations are imported.

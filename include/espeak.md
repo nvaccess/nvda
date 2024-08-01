@@ -64,7 +64,7 @@ If the last thing is compiling some dictionary try excluding it.
 This can be done in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak/sconscript).
 Remember to report this to the eSpeak-ng project.
 
-If the build fails, take note of the error, compare the diff of the `Makefile.am` file and mirror 
+If the build fails, take note of the error, compare the diff of the `Makefile.am` file and mirror
 any changes in our `sconscript` file.
 
 ### Known issues

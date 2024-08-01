@@ -26,18 +26,19 @@ if TYPE_CHECKING:
 
 
 def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility.
-	"""
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	import NVDAState
+
 	if NVDAState._allowDeprecatedAPI():
 		if attrName == "isObjectAboveLockScreen":
 			log.warning(
-				"isObjectAboveLockScreen(obj) is deprecated. "
-				"Instead use obj.isBelowLockScreen. "
+				"isObjectAboveLockScreen(obj) is deprecated. " "Instead use obj.isBelowLockScreen. ",
 			)
 			return _isObjectAboveLockScreen
 		if attrName == "postSessionLockStateChanged":
-			log.warning("postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.")
+			log.warning(
+				"postSessionLockStateChanged is deprecated, use post_sessionLockStateChanged instead.",
+			)
 			return post_sessionLockStateChanged
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
@@ -70,20 +71,18 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 	# We need to import this here because this might be the first import of this module
 	# and it might be needed by global maps.
 	from globalCommands import commands
+
 	return {
 		# The focus object should not cache secure content
 		# due to handling in `api.setFocusObject`.
 		commands.script_reportCurrentFocus,
-		
 		# Reports the foreground window.
 		# The foreground object should not cache secure content
 		# due to handling in `api.setForegroundObject`.
 		commands.script_title,
-		
 		# Reports system information that should be accessible from the lock screen.
 		commands.script_dateTime,
 		commands.script_say_battery_status,
-		
 		# Mouse navigation is required to ensure controls
 		# on the lock screen are accessible.
 		# Preventing mouse navigation outside the lock screen
@@ -95,7 +94,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		# rather than passing a click event to an NVDAObject / HWND.
 		commands.script_leftMouseClick,
 		commands.script_rightMouseClick,
-		
 		# Braille commands are safe, and required to interact
 		# on the lock screen using braille.
 		commands.script_braille_scrollBack,
@@ -103,7 +101,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_braille_routeTo,
 		commands.script_braille_previousLine,
 		commands.script_braille_nextLine,
-		
 		# Object navigation is required to ensure controls
 		# on the lock screen are accessible.
 		# Preventing object navigation outside the lock screen
@@ -118,7 +115,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_navigatorObject_firstChild,
 		commands.script_navigatorObject_nextInFlow,
 		commands.script_navigatorObject_previousInFlow,
-		
 		# Moving the review cursor is required to ensure controls
 		# on the lock screen are accessible.
 		# Preventing review cursor navigation outside the lock screen
@@ -138,7 +134,6 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 		commands.script_review_nextCharacter,
 		commands.script_review_endOfLine,
 		commands.script_review_sayAll,
-		
 		# Using the touch screen is required to ensure controls
 		# on the lock screen are accessible.
 		# Preventing touch navigation outside the lock screen
@@ -152,8 +147,8 @@ def getSafeScripts() -> Set["scriptHandler._ScriptFunctionT"]:
 
 
 def objectBelowLockScreenAndWindowsIsLocked(
-		obj: "NVDAObjects.NVDAObject",
-		shouldLog: bool = True,
+	obj: "NVDAObjects.NVDAObject",
+	shouldLog: bool = True,
 ) -> bool:
 	"""
 	While Windows is locked, the current user session is still running, and below the lock screen
@@ -177,7 +172,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 
 	if isObjectBelowLockScreen:
 		if shouldLog and log.isEnabledFor(log.DEBUG):
-			devInfo = '\n'.join(obj.devInfo)
+			devInfo = "\n".join(obj.devInfo)
 			log.debug(f"Attempt at navigating to an object below the lock screen: {devInfo}")
 		return True
 
@@ -186,8 +181,7 @@ def objectBelowLockScreenAndWindowsIsLocked(
 
 def _isObjectAboveLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 	log.error(
-		"This function is deprecated. "
-		"Instead use obj.isBelowLockScreen. "
+		"This function is deprecated. " "Instead use obj.isBelowLockScreen. ",
 	)
 	return not obj.isBelowLockScreen
 
@@ -227,9 +221,10 @@ def _isObjectBelowLockScreen(obj: "NVDAObjects.NVDAObject") -> bool:
 		return False
 
 	from NVDAObjects.window import Window
+
 	if not isinstance(obj, Window):
 		log.debug(
-			"Cannot detect if object is below lock app, considering object as safe. "
+			"Cannot detect if object is below lock app, considering object as safe. ",
 		)
 		# Must be a window instance to get the HWNDVal, other NVDAObjects do not support this.
 		return False
@@ -267,7 +262,7 @@ def _isObjectBelowLockScreenCheckZOrder(objWindowHandle: int) -> bool:
 	except _UnexpectedWindowCountError:
 		log.debugWarning(
 			"Couldn't determine lock screen and NVDA object relative z-order",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -277,12 +272,13 @@ class _UnexpectedWindowCountError(Exception):
 	Raised when a window which matches the expected condition
 	is not found by _isWindowBelowWindowMatchesCond
 	"""
+
 	pass
 
 
 def _isWindowBelowWindowMatchesCond(
-		window: winUser.HWNDVal,
-		matchCond: Callable[[winUser.HWNDVal], bool]
+	window: winUser.HWNDVal,
+	matchCond: Callable[[winUser.HWNDVal], bool],
 ) -> bool:
 	"""
 	This is a risky hack.
@@ -328,7 +324,7 @@ def _isWindowBelowWindowMatchesCond(
 		raise _UnexpectedWindowCountError(
 			"Windows found\n"
 			f" - window 1 indexes: {window1Indexes} (expects len 1)\n"
-			f" - window 2 index: {window2Index}\n"
+			f" - window 2 index: {window2Index}\n",
 		)
 	if window1Indexes[0] >= window2Index:
 		return False
@@ -342,7 +338,7 @@ _hasSessionLockStateUnknownWarningBeenGiven = False
 
 
 def warnSessionLockStateUnknown() -> None:
-	""" Warn the user that the lock state of the computer can not be determined.
+	"""Warn the user that the lock state of the computer can not be determined.
 	NVDA will not be able to determine if Windows is on the lock screen
 	(LockApp on Windows 10/11), and will not be able to ensure privacy/security
 	of the signed-in user against unauthenticated users.
@@ -358,7 +354,7 @@ def warnSessionLockStateUnknown() -> None:
 		" While this instance of NVDA is running,"
 		" your desktop will not be secure when Windows is locked."
 		" Restarting Windows may address this."
-		" If this error is ongoing then disabling the Windows lock screen is recommended."
+		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
 	unableToDetermineSessionLockStateMsg = _(
@@ -368,11 +364,12 @@ def warnSessionLockStateUnknown() -> None:
 		" While this instance of NVDA is running,"
 		" your desktop will not be secure when Windows is locked."
 		" Restarting Windows may address this."
-		" If this error is ongoing then disabling the Windows lock screen is recommended."
+		" If this error is ongoing then disabling the Windows lock screen is recommended.",
 	)
 
 	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
+
 	log.debug("Presenting session lock tracking failure warning.")
 	gui.messageBox(
 		unableToDetermineSessionLockStateMsg,
@@ -394,9 +391,9 @@ def sha256_checksum(binaryReadModeFile: BinaryIO, blockSize: int = SHA_BLOCK_SIZ
 	@returns: The sha256 hex digest.
 	"""
 	sha256sum = hashlib.sha256()
-	assert binaryReadModeFile.readable() and binaryReadModeFile.mode == 'rb'
+	assert binaryReadModeFile.readable() and binaryReadModeFile.mode == "rb"
 	f = binaryReadModeFile
-	for block in iter(lambda: f.read(blockSize), b''):
+	for block in iter(lambda: f.read(blockSize), b""):
 		sha256sum.update(block)
 	return sha256sum.hexdigest()
 

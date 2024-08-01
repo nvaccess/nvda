@@ -19,7 +19,7 @@ import systemUtils
 
 @contextmanager
 def FaultTolerantFile(name):
-	'''Used to write out files in a more fault tolerant way. A temporary file is used, and replaces the 
+	"""Used to write out files in a more fault tolerant way. A temporary file is used, and replaces the
 	file `name' when the context manager scope ends and the the context manager __exit__ is called. This
 	means writing out the complete file can be performed with less concern of corrupting the original file
 	if the process is interrupted by windows shutting down.
@@ -29,13 +29,13 @@ def FaultTolerantFile(name):
 		with FaultTolerantFile("myFile.txt") as f:
 			f.write("This is a test")
 
-	This creates a temporary file, and the writes actually happen on this temp file. At the end of the 
+	This creates a temporary file, and the writes actually happen on this temp file. At the end of the
 	`with` block, when `f` goes out of context the temporary file is closed and, this temporary file replaces "myFile.txt"
-	'''
+	"""
 	if not isinstance(name, text_type):
 		raise TypeError("name must be an unicode string")
 	dirpath, filename = os.path.split(name)
-	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix='.tmp', delete=False) as f:
+	with NamedTemporaryFile(dir=dirpath, prefix=filename, suffix=".tmp", delete=False) as f:
 		log.debug(f.name)
 		yield f
 		f.flush()
@@ -53,6 +53,7 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 	This is necessary when fetching file version info since NVDA is a 32-bit application
 	and without redirection disabled we would either access a wrong file or not be able to access it at all.
 	"""
+
 	@wraps(func)
 	def funcWrapper(filePath, *attributes):
 		nativeSys32 = shlobj.SHGetKnownFolderPath(shlobj.FolderId.SYSTEM)
@@ -65,6 +66,7 @@ def _suspendWow64RedirectionForFileInfoRetrieval(func):
 				return func(filePath, *attributes)
 		else:
 			return func(filePath, *attributes)
+
 	return funcWrapper
 
 
@@ -87,20 +89,26 @@ def getFileVersionInfo(name, *attributes):
 	r = ctypes.c_uint()
 	l = ctypes.c_uint()  # noqa: E741
 	# Look for codepages
-	ctypes.windll.version.VerQueryValueW(res, u'\\VarFileInfo\\Translation',
-		ctypes.byref(r), ctypes.byref(l))
+	ctypes.windll.version.VerQueryValueW(
+		res,
+		"\\VarFileInfo\\Translation",
+		ctypes.byref(r),
+		ctypes.byref(l),
+	)
 	if not l.value:
 		raise RuntimeError("No codepage")
 	# Take the first codepage (what else ?)
-	codepage = array.array('H', ctypes.string_at(r.value, 4))
+	codepage = array.array("H", ctypes.string_at(r.value, 4))
 	codepage = "%04x%04x" % tuple(codepage)
 	for attr in attributes:
-		if not ctypes.windll.version.VerQueryValueW(res,
-			u'\\StringFileInfo\\%s\\%s' % (codepage, attr),
-			ctypes.byref(r), ctypes.byref(l)
+		if not ctypes.windll.version.VerQueryValueW(
+			res,
+			"\\StringFileInfo\\%s\\%s" % (codepage, attr),
+			ctypes.byref(r),
+			ctypes.byref(l),
 		):
 			log.warning("Invalid or unavailable version info attribute for %r: %s" % (name, attr))
 			fileVersionInfo[attr] = None
 		else:
-			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value-1)
+			fileVersionInfo[attr] = ctypes.wstring_at(r.value, l.value - 1)
 	return fileVersionInfo

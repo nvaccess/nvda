@@ -1,15 +1,15 @@
-#appModules/javaw.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2014 NV Access Limited
+# appModules/javaw.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2014 NV Access Limited
 
-"""Support for app specific modules for Java apps hosted by javaw.exe.
-"""
+"""Support for app specific modules for Java apps hosted by javaw.exe."""
 
 import os
 import shlex
 import appModuleHandler
+
 
 def _getEntryPoint(cmd):
 	cmd = iter(shlex.split(cmd))
@@ -30,6 +30,7 @@ def _getEntryPoint(cmd):
 		# Class.
 		return arg
 	raise LookupError
+
 
 def getAppNameFromHost(processId):
 	# Some apps have launcher executables which launch javaw.exe to run the app.

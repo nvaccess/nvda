@@ -10,7 +10,6 @@ get a property value of an element,
 and navigate the UI Automation tree.
 """
 
-
 from __future__ import annotations
 from typing import cast
 from dataclasses import dataclass
@@ -30,7 +29,8 @@ class IsElement(_TypedInstruction):
 
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		registers[self.result.operandId] = isinstance(
-			registers[self.target.operandId], POINTER(UIA.IUIAutomationElement)
+			registers[self.target.operandId],
+			POINTER(UIA.IUIAutomationElement),
 		)
 
 

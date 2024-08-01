@@ -112,16 +112,16 @@ displayModelsMap_t<HWND> displayModelsByWindow;
 
 /**
  * Fetches and or creates a new displayModel for the window of the given device context.
- * If this function returns a displayModel, you must call release on it when you no longer need it. 
+ * If this function returns a displayModel, you must call release on it when you no longer need it.
  * @param hdc a handle of the device context who's window the displayModel is for.
- * @param noCreate If true a display model will not be created if it does not exist. 
- * @return a pointer to the  new/existing displayModel, NULL if gdiHooks is not initialized or has been terminated. 
+ * @param noCreate If true a display model will not be created if it does not exist.
+ * @return a pointer to the  new/existing displayModel, NULL if gdiHooks is not initialized or has been terminated.
  */
 inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 	//If we are allowed, acquire use of the displayModel maps
 	displayModel_t* model=NULL;
 	//If the DC has a window, then either get an existing displayModel using the window, or create a new one and store it by its window.
-	//If  the DC does not have a window, try and get the displayModel from our existing Memory DC displayModels. 
+	//If  the DC does not have a window, try and get the displayModel from our existing Memory DC displayModels.
 	HWND hwnd=WindowFromDC(hdc);
 	LOG_DEBUG(L"window from DC is "<<hwnd);
 	if(hwnd) {
@@ -148,14 +148,14 @@ inline displayModel_t* acquireDisplayModel(HDC hdc, BOOL noCreate=FALSE) {
 }
 
 /**
- * converts given points from dc coordinates to screen coordinates. 
+ * converts given points from dc coordinates to screen coordinates.
  * @param hdc a handle to a device context
  * @param points a pointer to the points you wish to convert.
  * @param count the number of points you want to convert.
  */
 void dcPointsToScreenPoints(HDC hdc, POINT* points, int count,bool relative) {
-	//Convert to logical points to device points 
-	//Includes origins and scaling for window and viewport, and also world transformation 
+	//Convert to logical points to device points
+	//Includes origins and scaling for window and viewport, and also world transformation
 	LPtoDP(hdc,points,count);
 	if(relative) {
 		//Do what we did with the points, but with 0,0, and then subtract that from all points
@@ -336,7 +336,7 @@ class GlyphTranslatorCache : protected LockableObject {
 		while(i!=_glyphTranslatorsByFontChecksum.end()) {
 			i->second->decRef();
 			_glyphTranslatorsByFontChecksum.erase(i++);
-		}    
+		}
 		release();
 	}
 };
@@ -374,7 +374,7 @@ std::pair<std::vector<POINT>, SIZE> calcCharExtentsVec(
 
 	std::vector<int>characterExtentsXVec(cbCount);
 	int* characterExtentsX = characterExtentsXVec.data();
-	
+
 	if(fromGlyphs) {
 		LPWORD lpwszString = reinterpret_cast<LPWORD>(const_cast<wchar_t*>(lpString));
 		GetTextExtentExPointI(
@@ -486,8 +486,8 @@ void ExtTextOutHelper(
 		calcCharExtentsVec(cbCount, tm, fromGlyphs, hdc, lpString, newText);
 	POINT* characterExtents = characterExtentsVec.data();
 	*resultTextSize = textSize; // resultTextSize is an out-param and must be calculated before early exit.
-	
-	
+
+
 	//Convert the character extents from logical to physical points, but keep them relative
 	dcPointsToScreenPoints(hdc,characterExtents,cbCount,true);
 
@@ -500,7 +500,7 @@ void ExtTextOutHelper(
 		}
 		return cached_transparentBackground.value();
 	};
-	
+
 	if(tm.tmCharSet != SYMBOL_CHARSET && isBackgroundTransparent()) {
 		//Find out if the text we're writing is just whitespace
 		BOOL whitespace=TRUE;
@@ -550,7 +550,7 @@ void ExtTextOutHelper(
 		LOGFONT logFont;
 		HGDIOBJ fontObj = GetCurrentObject(hdc, OBJ_FONT);
 		GetObject(fontObj, sizeof(LOGFONT), &logFont);
-		
+
 		int fontSize = 0;
 		if (logFont.lfHeight != 0) {
 			const auto pixelsPerInchY = GetDeviceCaps(hdc, LOGPIXELSY);
@@ -567,7 +567,7 @@ void ExtTextOutHelper(
 			displayModelFormatColor_t(GetTextColor(hdc)), // color
 			displayModelFormatColor_t(GetBkColor(hdc), isBackgroundTransparent()) // backgroundColor
 		};
-		
+
 		model->insertChunk(textRect,baselinePoint.y,newText,characterExtents,formatInfo,direction,(fuOptions&ETO_CLIPPED)?&clearRect:NULL);
 		TextInsertionTracker::reportTextInsertion();
 		HWND hwnd=WindowFromDC(hdc);
@@ -628,7 +628,7 @@ template<typename charType> int  WINAPI hookClass_TextOut<charType>::fakeFunctio
 	//Call the real function
 	BOOL res;
 	{
-		TextInsertionTracker tracker; 
+		TextInsertionTracker tracker;
 		res=realFunction(hdc,x,y,lpString,cbCount);
 		if(tracker.hasTrackedTextInsertion()) return res;
 	}
@@ -689,7 +689,7 @@ template<typename WA_POLYTEXT> BOOL WINAPI hookClass_PolyTextOut<WA_POLYTEXT>::f
 		if(textAlign&TA_UPDATECP) {
 			curPos.x+=curTextSize.cx;
 			curPos.y+=curTextSize.cy;
-		} 
+		}
 	}
 	//Release model and return
 	model->release();
@@ -815,7 +815,7 @@ template<typename charType> BOOL __stdcall hookClass_ExtTextOut<charType>::fakeF
 		res=realFunction(hdc,x,y,fuOptions,lprc,lpString,cbCount,lpDx);
 		if(tracker.hasTrackedTextInsertion()) return res;
 	}
-	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here. 
+	//If the real function did not work, or the arguments are not sane, or only glyphs were provided, then stop here.
 	if(res==0) return res;
 	//try to get or create a displayModel for this device context
 	displayModel_t* model=acquireDisplayModel(hdc);
@@ -841,8 +841,8 @@ CreateCompatibleDC_funcType real_CreateCompatibleDC=NULL;
 HDC WINAPI fake_CreateCompatibleDC(HDC hdc) {
 	//Call the real CreateCompatibleDC
 	HDC newHdc=real_CreateCompatibleDC(hdc);
-	//If the creation was successful, and the DC that was used in the creation process is a window DC, 
-	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC. 
+	//If the creation was successful, and the DC that was used in the creation process is a window DC,
+	//we should create a displayModel for this DC so that text writes can be tracked in case  its ever bit blitted to a window DC.
 	//We also need to acquire access to the model maps while we do this
 	if(!newHdc) return NULL;
 	displayModel_t* model=new displayModel_t();
@@ -938,7 +938,7 @@ void StretchBlt_helper(HDC hdcDest, int nXDest, int nYDest, int nWidthDest, int 
 }
 
 //BitBlt hook function
-//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC). 
+//Hooked so we can tell when content from one DC is being copied (bit blitted) to another (most likely from a memory DC to a window DC).
 typedef BOOL(WINAPI *BitBlt_funcType)(HDC,int,int,int,int,HDC,int,int,DWORD);
 BitBlt_funcType real_BitBlt=NULL;
 BOOL WINAPI fake_BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop) {
@@ -960,7 +960,7 @@ BOOL WINAPI fake_StretchBlt(HDC hdcDest, int nXDest, int nYDest, int nWidthDest,
 	//#2989: KMPlayer uses stretchBlt with SRCCOPY  to place a graphic over the top of its menu items replacing the real text.
 	//Therefore at the moment don't allow stretchBlt SRCCOPY to clear previous text -- change it to SRCAND if blitting directly to a menu window
 	HWND hwnd=NULL;
-	wchar_t className[7]; 
+	wchar_t className[7];
 	if(hdcDest&&dwRop==SRCCOPY&&(hwnd=WindowFromDC(hdcDest))&&GetClassName(hwnd,className,ARRAYSIZE(className))>0&&wcscmp(className,L"#32768")==0) {
 		dwRop=SRCAND;
 	}
@@ -1073,7 +1073,7 @@ HRESULT WINAPI fake_ScriptStringFree(SCRIPT_STRING_ANALYSIS* pssa) {
 	//Get rid of unneeded info
 	ScriptStringAnalyseArgsByAnalysis.erase(*pssa);
 	LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
-	return res; 
+	return res;
 }
 
 //ScriptStringOut hook function
@@ -1101,7 +1101,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 	if(i==ScriptStringAnalyseArgsByAnalysis.end()) {
 		LeaveCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 		return res;
-	} 
+	}
 	//Try and get/create a displayModel for this DC, and if we can, then record the origianl text for these glyphs
 		displayModel_t* model=acquireDisplayModel(i->second.hdc);
 	if(!model) {
@@ -1109,7 +1109,7 @@ HRESULT WINAPI fake_ScriptStringOut(SCRIPT_STRING_ANALYSIS ssa,int iX,int iY,UIN
 		return res;
 	}
 	BOOL stripHotkeyIndicator=(i->second.dwFlags&SSA_HIDEHOTKEY||i->second.dwFlags&SSA_HOTKEY);
-	//The next two extTextOutHelper calls must keep their direction argument as 1. 
+	//The next two extTextOutHelper calls must keep their direction argument as 1.
 	//This is because ScriptStringAnalyze gave us a string in logical order and therefore we need to make sure that NVDA does not try to detect and possibly reverse.
 	if(i->second.iCharset==-1) { //Unicode
 		ExtTextOutHelper(model,i->second.hdc,iX,iY,prc,uOptions,GetTextAlign(i->second.hdc),stripHotkeyIndicator,(wchar_t*)(i->second.pString),CP_THREAD_ACP,NULL,i->second.cString,NULL,1);
@@ -1161,7 +1161,7 @@ BOOL WINAPI fake_ScrollWindow(HWND hwnd, int XAmount, int YAmount, const RECT* l
 	model->release();
 	return res;
 }
- 
+
 //ScrollWindowEx hook function
 typedef BOOL(WINAPI *ScrollWindowEx_funcType)(HWND,int,int,const RECT*, const RECT*, HRGN, LPRECT,UINT);
 ScrollWindowEx_funcType real_ScrollWindowEx=NULL;
@@ -1256,14 +1256,14 @@ void gdiHooks_inProcess_terminate() {
 	while(i!=displayModelsByWindow.end()) {
 		i->second->requestDelete();
 		displayModelsByWindow.erase(i++);
-	}  
+	}
 	displayModelsByWindow.release();
 	displayModelsByMemoryDC.acquire();
 	displayModelsMap_t<HDC>::iterator j=displayModelsByMemoryDC.begin();
 	while(j!=displayModelsByMemoryDC.end()) {
 		j->second->requestDelete();
 		displayModelsByMemoryDC.erase(j++);
-	}  
+	}
 	displayModelsByMemoryDC.release();
 	EnterCriticalSection(&criticalSection_ScriptStringAnalyseArgsByAnalysis);
 	allow_ScriptStringAnalyseArgsByAnalysis=FALSE;

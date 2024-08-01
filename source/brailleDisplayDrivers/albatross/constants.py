@@ -85,6 +85,7 @@ class Keys(IntEnum):
 	"""Defines key names and values.
 	For routing keys see L{RoutingKeyRange}.
 	"""
+
 	attribute1 = 1
 	attribute2 = 42
 	f1 = 83
@@ -156,7 +157,7 @@ CONTROL_KEY_CODES: FrozenSet[Keys] = frozenset(
 		Keys.end2,
 		Keys.eCursor2,
 		Keys.cursor2,
-	}
+	},
 )
 """Ctrl keys which may start key combination."""
 
@@ -207,6 +208,7 @@ class KeyLayout(IntEnum):
 
 	See also L{KEY_LAYOUT_MASK}.
 	"""
+
 	normal = 0
 	bothSidesAsRight = 1
 	switched = 4
@@ -222,6 +224,7 @@ class RoutingKeyRange:
 	L{indexOffset} which are used to get real button index on the row.
 	See also L{ROUTING_KEY_RANGES}.
 	"""
+
 	name: str
 	start: int
 	end: int
@@ -233,8 +236,8 @@ ROUTING_KEY_RANGES: FrozenSet[RoutingKeyRange] = frozenset(
 		RoutingKeyRange("routing", 2, 41, indexOffset=2),
 		RoutingKeyRange("secondRouting", 43, 82, indexOffset=43),
 		RoutingKeyRange("routing", 111, 150, indexOffset=71),
-		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112)
-	}
+		RoutingKeyRange("secondRouting", 152, 191, indexOffset=112),
+	},
 )
 """Defines routing key ranges. See L{RoutingKeyRange}."""
 

@@ -10,14 +10,13 @@ Braille display drivers must be thread-safe to use this, as it utilises a backgr
 See L{braille.BrailleDisplayDriver.isThreadSafe}.
 """
 
-
 from .base import (  # noqa: F401
 	IoBase,
 	Serial,
 	Bulk,
 	boolToByte,
 	intToByte,
-	getByte
+	getByte,
 )
 from .hid import Hid  # noqa: F401
 from .ioThread import IoThread

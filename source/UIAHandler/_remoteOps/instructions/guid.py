@@ -8,7 +8,6 @@ This module contains the instructions that operate on GUID values.
 Including to create new GUID values, and check if an object is a GUID.
 """
 
-
 from __future__ import annotations
 from dataclasses import dataclass
 from comtypes import GUID

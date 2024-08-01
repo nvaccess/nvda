@@ -17,6 +17,7 @@ class TestCheckPot(unittest.TestCase):
 
 	def setUp(self):
 		from ... import checkPot
+
 		self.checkPot = checkPot
 		self.saved_EXPECTED_MESSAGES_WITHOUT_COMMENTS = checkPot.EXPECTED_MESSAGES_WITHOUT_COMMENTS
 		checkPot.EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
@@ -51,9 +52,9 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"0 errors, 0 unexpected successes, 0 expected errors, "
 					"2 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)
 
 	def test_checkPot_firstMessage(self):
@@ -65,9 +66,9 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"1 errors, 0 unexpected successes, 0 expected errors, "
 					"2 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)
 
 	def test_checkPot_lastMessage(self):
@@ -79,9 +80,9 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"1 errors, 0 unexpected successes, 0 expected errors, "
 					"2 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)
 
 	def test_checkPot_shortMessages(self):
@@ -93,9 +94,9 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"3 errors, 0 unexpected successes, 0 expected errors, "
 					"2 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)
 
 	def test_checkPot_longMessages(self):
@@ -107,8 +108,8 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"3 errors, 0 unexpected successes, 0 expected errors, "
 					"2 messages marked as expected errors not present in the source code"
-				)
-			)
+				),
+			),
 		)
 
 	def test_checkPot_expectedErrors(self):
@@ -120,9 +121,9 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"0 errors, 0 unexpected successes, 2 expected errors, "
 					"1 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)
 
 	def test_checkPot_unexpectedSuccesses(self):
@@ -134,7 +135,7 @@ class TestCheckPot(unittest.TestCase):
 				(
 					"0 errors, 2 unexpected successes, 0 expected errors, "
 					"1 messages marked as expected errors not present in the source code"
-				)
+				),
 			),
-			"checkPot error count and/or status message do not meet expectations."
+			"checkPot error count and/or status message do not meet expectations.",
 		)

@@ -62,11 +62,13 @@ SEIKA_KEYS = b"\xff\xff\xa6"
 SEIKA_KEYS_ROU = b"\xff\xff\xa8"
 
 BAUD = 9600
-SEIKA_HID_FEATURES = b"".join([
-	b"\x50\x00\x00",
-	int.to_bytes(BAUD, length=2, byteorder="big", signed=False),  # b"\x25\x80"
-	b"\x00\x00\x03\x00",
-])
+SEIKA_HID_FEATURES = b"".join(
+	[
+		b"\x50\x00\x00",
+		int.to_bytes(BAUD, length=2, byteorder="big", signed=False),  # b"\x25\x80"
+		b"\x00\x00\x03\x00",
+	],
+)
 SEIKA_CMD_ON = b"\x41\x01"
 """ Unknown why this is required. Used for HID (via setFeature), but not for serial.
 """
@@ -88,10 +90,7 @@ def isSeikaBluetoothDeviceInfo(deviceInfo: typing.Dict[str, str]) -> bool:
 	# bluetoothName is listed in information from L{hwPortUtils.listComPorts} when 'hwIo' debug logging
 	# category is enabled.
 	btNameKey = "bluetoothName"
-	return (
-		btNameKey in deviceInfo
-		and isSeikaBluetoothName(deviceInfo["bluetoothName"])
-	)
+	return btNameKey in deviceInfo and isSeikaBluetoothName(deviceInfo["bluetoothName"])
 
 
 def isSeikaBluetoothDeviceMatch(match: DeviceMatch) -> bool:
@@ -107,16 +106,18 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(DeviceType.HID, {
-			vidpid,  # Seika Notetaker
-		})
+		driverRegistrar.addUsbDevices(
+			DeviceType.HID,
+			{
+				vidpid,  # Seika Notetaker
+			},
+		)
 
 		driverRegistrar.addBluetoothDevices(isSeikaBluetoothDeviceMatch)
 
 	@classmethod
 	def getManualPorts(cls) -> typing.Iterator[typing.Tuple[str, str]]:
-		"""@return: An iterator containing the name and description for each port.
-		"""
+		"""@return: An iterator containing the name and description for each port."""
 		return braille.getSerialPorts(isSeikaBluetoothDeviceInfo)
 
 	def __init__(self, port: typing.Union[None, str, DeviceMatch]):
@@ -140,7 +141,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					log.info("Trying Seika notetaker on USB-HID")
 					self._dev = dev = hwIo.Hid(
 						path=match.port,  # for a Hid match type 'port' is actually 'path'.
-						onReceive=self._onReceiveHID
+						onReceive=self._onReceiveHID,
 					)
 					dev.setFeature(SEIKA_HID_FEATURES)  # baud rate, stop bit usw
 					dev.setFeature(SEIKA_CMD_ON)  # device on
@@ -176,9 +177,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise RuntimeError("No MINI-SEIKA display found, no response")
 		else:
 			log.info(
-				f"Seika notetaker,"
-				f" Cells {self.numCells}"
-				f" Buttons {self.numBtns}"
+				f"Seika notetaker," f" Cells {self.numCells}" f" Buttons {self.numBtns}",
 			)
 
 	def _getDeviceInfo(self, dev: hwIo.IoBase) -> bool:
@@ -245,14 +244,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		hasCommandBeenCollected = self._command is not None
 		hasArgLenBeenCollected = self._argsLen is not None
 		if (  # still collecting command bytes
-			not hasCommandBeenCollected
-			and len(self._hidBuffer) == COMMAND_LEN
+			not hasCommandBeenCollected and len(self._hidBuffer) == COMMAND_LEN
 		):
 			self._command = self._hidBuffer  # command found reset and wait for args length
 			self._hidBuffer = b""
 		elif (  # next byte gives the command + args length
-			hasCommandBeenCollected
-			and not hasArgLenBeenCollected  # argsLen has not
+			hasCommandBeenCollected and not hasArgLenBeenCollected  # argsLen has not
 		):
 			# the data is sent with the following structure
 			# - command name (3 bytes)
@@ -261,9 +258,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._argsLen = ord(newByte)
 			self._hidBuffer = b""
 		elif (  # now collect the args,
-			hasCommandBeenCollected
-			and hasArgLenBeenCollected
-			and len(self._hidBuffer) == self._argsLen
+			hasCommandBeenCollected and hasArgLenBeenCollected and len(self._hidBuffer) == self._argsLen
 		):
 			arg = self._hidBuffer
 			command = self._command
@@ -311,10 +306,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		brailleDots = arg[0]
 		key = arg[1] | (arg[2] << 8)
 		gestures = []
-		if key:
-			gestures.append(InputGesture(keys=key))
 		if brailleDots:
-			gestures.append(InputGesture(dots=brailleDots))
+			if key in (1, 2, 3):  # bk:space+dots
+				key = 0
+				gestures.append(InputGesture(dots=brailleDots, space=True))
+			else:  # bk:dots
+				gestures.append(InputGesture(dots=brailleDots, space=False))
+		if key:
+			if key in (1, 2):  # bk:space
+				gestures.append(InputGesture(dots=0, space=True))
+			else:  # br(seikantk):XXX
+				gestures.append(InputGesture(keys=key))
 		for gesture in gestures:
 			try:
 				inputCore.manager.executeGesture(gesture)
@@ -325,39 +327,40 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self._handleRouting(arg[3:])
 		self._handleKeys(arg[:3])
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_routeTo": ("br(seikantk):routing",),
-			"braille_scrollBack": ("br(seikantk):LB",),
-			"braille_scrollForward": ("br(seikantk):RB",),
-			"braille_previousLine": ("br(seikantk):LJ_UP",),
-			"braille_nextLine": ("br(seikantk):LJ_DOWN",),
-			"braille_toggleTether": ("br(seikantk):LJ_CENTER",),
-			"sayAll": ("br(seikantk):SPACE+BACKSPACE",),
-			"showGui": ("br(seikantk):RB+LB",),
-			"kb:tab": ("br(seikantk):LJ_RIGHT",),
-			"kb:shift+tab": ("br(seikantk):LJ_LEFT",),
-			"kb:upArrow": ("br(seikantk):RJ_UP",),
-			"kb:downArrow": ("br(seikantk):RJ_DOWN",),
-			"kb:leftArrow": ("br(seikantk):RJ_LEFT",),
-			"kb:rightArrow": ("br(seikantk):RJ_RIGHT",),
-			"kb:shift+upArrow": ("br(seikantk):SPACE+RJ_UP", "br(seikantk):BACKSPACE+RJ_UP"),
-			"kb:shift+downArrow": ("br(seikantk):SPACE+RJ_DOWN", "br(seikantk):BACKSPACE+RJ_DOWN"),
-			"kb:shift+leftArrow": ("br(seikantk):SPACE+RJ_LEFT", "br(seikantk):BACKSPACE+RJ_LEFT"),
-			"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
-			"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
-			"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
-			"kb:space": ("br(seikantk):BACKSPACE", "br(seikantk):SPACE",),
-			"kb:backspace": ("br(seikantk):d7",),
-			"kb:pageup": ("br(seikantk):SPACE+LJ_RIGHT",),
-			"kb:pagedown": ("br(seikantk):SPACE+LJ_LEFT",),
-			"kb:home": ("br(seikantk):SPACE+LJ_UP",),
-			"kb:end": ("br(seikantk):SPACE+LJ_DOWN",),
-			"kb:control+home": ("br(seikantk):BACKSPACE+LJ_UP",),
-			"kb:control+end": ("br(seikantk):BACKSPACE+LJ_DOWN",),
-			"kb:enter": ("br(seikantk):RJ_CENTER", "br(seikantk):d8"),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_routeTo": ("br(seikantk):routing",),
+				"braille_scrollBack": ("br(seikantk):LB",),
+				"braille_scrollForward": ("br(seikantk):RB",),
+				"braille_previousLine": ("br(seikantk):LJ_UP",),
+				"braille_nextLine": ("br(seikantk):LJ_DOWN",),
+				"braille_toggleTether": ("br(seikantk):LJ_CENTER",),
+				"sayAll": ("br(seikantk):SPACE+BACKSPACE",),
+				"showGui": ("br(seikantk):RB+LB",),
+				"kb:tab": ("br(seikantk):LJ_RIGHT",),
+				"kb:shift+tab": ("br(seikantk):LJ_LEFT",),
+				"kb:upArrow": ("br(seikantk):RJ_UP",),
+				"kb:downArrow": ("br(seikantk):RJ_DOWN",),
+				"kb:leftArrow": ("br(seikantk):RJ_LEFT",),
+				"kb:rightArrow": ("br(seikantk):RJ_RIGHT",),
+				"kb:shift+upArrow": ("br(seikantk):SPACE+RJ_UP", "br(seikantk):BACKSPACE+RJ_UP"),
+				"kb:shift+downArrow": ("br(seikantk):SPACE+RJ_DOWN", "br(seikantk):BACKSPACE+RJ_DOWN"),
+				"kb:shift+leftArrow": ("br(seikantk):SPACE+RJ_LEFT", "br(seikantk):BACKSPACE+RJ_LEFT"),
+				"kb:shift+rightArrow": ("br(seikantk):SPACE+RJ_RIGHT", "br(seikantk):BACKSPACE+RJ_RIGHT"),
+				"kb:escape": ("br(seikantk):SPACE+RJ_CENTER",),
+				"kb:windows": ("br(seikantk):BACKSPACE+RJ_CENTER",),
+				"kb:backspace": ("br(seikantk):d7",),
+				"kb:pageup": ("br(seikantk):SPACE+LJ_RIGHT",),
+				"kb:pagedown": ("br(seikantk):SPACE+LJ_LEFT",),
+				"kb:home": ("br(seikantk):SPACE+LJ_UP",),
+				"kb:end": ("br(seikantk):SPACE+LJ_DOWN",),
+				"kb:control+home": ("br(seikantk):BACKSPACE+LJ_UP",),
+				"kb:control+end": ("br(seikantk):BACKSPACE+LJ_DOWN",),
+				"kb:enter": ("br(seikantk):RJ_CENTER", "br(seikantk):d8"),
+			},
 		},
-	})
+	)
 
 
 class InputGestureRouting(braille.BrailleDisplayGesture):
@@ -379,7 +382,7 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 	bitsPerByte = 8
 	# Convert bytes into a single bitset int
 	combinedRoutingKeysBitSet = sum(
-		[value << (bitsPerByte * bitIndex) for bitIndex, value in enumerate(routingKeyBytes)]
+		[value << (bitsPerByte * bitIndex) for bitIndex, value in enumerate(routingKeyBytes)],
 	)
 	numRoutingKeys = len(routingKeyBytes) * bitsPerByte
 	return {i for i in range(numRoutingKeys) if (1 << i) & combinedRoutingKeysBitSet}
@@ -402,5 +405,5 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
 			self.routingIndex = routing
-			names.add('routing')
+			names.add("routing")
 		self.id = "+".join(names)

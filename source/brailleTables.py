@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Julien Cochuyt, Leonard de Ruijter
 
-"""Manages information about available braille translation tables.
-"""
+"""Manages information about available braille translation tables."""
 
 import collections
 from enum import StrEnum
@@ -30,15 +29,17 @@ class TableSource(StrEnum):
 	"""The name of the scratchpad table source"""
 
 
-_tablesDirs = collections.ChainMap({
-	TableSource.BUILTIN: TABLES_DIR
-})
+_tablesDirs = collections.ChainMap(
+	{
+		TableSource.BUILTIN: TABLES_DIR,
+	},
+)
 """Chainmap of directories for braille tables lookup, including custom tables."""
 
 
 class BrailleTable(NamedTuple):
-	"""Information about a braille table.
-	"""
+	"""Information about a braille table."""
+
 	fileName: str
 	"""The file name of the table."""
 
@@ -70,12 +71,12 @@ and cleared when calling L{terminate}.
 
 
 def addTable(
-		fileName: str,
-		displayName: str,
-		contracted: bool = False,
-		output: bool = True,
-		input: bool = True,
-		source: str = TableSource.BUILTIN
+	fileName: str,
+	displayName: str,
+	contracted: bool = False,
+	output: bool = True,
+	input: bool = True,
+	source: str = TableSource.BUILTIN,
 ):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
@@ -106,7 +107,7 @@ def listTables() -> list[BrailleTable]:
 	"""
 	return sorted(
 		_tables.values(),
-		key=lambda table: (table.source != TableSource.BUILTIN, strxfrm(table.displayName))
+		key=lambda table: (table.source != TableSource.BUILTIN, strxfrm(table.displayName)),
 	)
 
 
@@ -392,6 +393,9 @@ addTable("hu-hu-g2.ctb", _("Hungarian grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("is.ctb", _("Icelandic 8 dot computer braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("IPA.utb", _("International Phonetic Alphabet"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("it-it-comp6.utb", _("Italian 6 dot computer braille"))
@@ -739,6 +743,7 @@ def initialize():
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
 	import addonHandler
+
 	for addon in addonHandler.getRunningAddons():
 		try:
 			tablesDict = addon.manifest.get("brailleTables")
@@ -753,10 +758,7 @@ def initialize():
 			log.exception(f"Error while applying custom braille tables config from addon {addon.name!r}")
 
 	# Load the custom tables from the scratchpad last so it takes precedence over add-ons
-	if (
-		not globalVars.appArgs.secure
-		and config.conf["development"]["enableScratchpadDir"]
-	):
+	if not globalVars.appArgs.secure and config.conf["development"]["enableScratchpadDir"]:
 		scratchpad = config.getScratchpadDir()
 		directory = os.path.join(scratchpad, "brailleTables")
 		if os.path.isdir(directory):
@@ -778,7 +780,7 @@ def initialize():
 			except Exception:
 				log.exception(
 					"Error while applying custom braille tables config from scratchpad manifest: "
-					f"{manifestPath}"
+					f"{manifestPath}",
 				)
 
 

@@ -64,7 +64,7 @@ def _getCacheHashURL() -> str:
 class AddonFileDownloader:
 	OnCompleteT = Callable[
 		["AddonListItemVM[_AddonStoreModel]", Optional[os.PathLike]],
-		None
+		None,
 	]
 
 	def __init__(self):
@@ -74,13 +74,13 @@ class AddonFileDownloader:
 			Tuple[
 				"AddonListItemVM[_AddonStoreModel]",
 				AddonFileDownloader.OnCompleteT,
-				"DisplayableError.OnDisplayableErrorT"
-			]
+				"DisplayableError.OnDisplayableErrorT",
+			],
 		] = {}
 		self.complete: Dict[
 			"AddonListItemVM[_AddonStoreModel]",
 			# Path to downloaded file
-			Optional[os.PathLike]
+			Optional[os.PathLike],
 		] = {}
 		self._executor = ThreadPoolExecutor(
 			max_workers=10,
@@ -95,15 +95,16 @@ class AddonFileDownloader:
 			pathlib.Path(WritePaths.addonStoreDownloadDir).mkdir(parents=True, exist_ok=True)
 
 	def download(
-			self,
-			addonData: "AddonListItemVM[_AddonStoreModel]",
-			onComplete: OnCompleteT,
-			onDisplayableError: "DisplayableError.OnDisplayableErrorT",
+		self,
+		addonData: "AddonListItemVM[_AddonStoreModel]",
+		onComplete: OnCompleteT,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT",
 	):
 		self.progress[addonData] = 0
 		assert self._executor
 		f: Future[Optional[os.PathLike]] = self._executor.submit(
-			self._download, addonData,
+			self._download,
+			addonData,
 		)
 		self._pending[f] = addonData, onComplete, onDisplayableError
 		f.add_done_callback(self._done)
@@ -132,13 +133,14 @@ class AddonFileDownloader:
 		if downloadAddonFutureException:
 			cacheFilePath = None
 			from gui.message import DisplayableError
+
 			if not isinstance(downloadAddonFutureException, DisplayableError):
 				log.error("Unhandled exception in _download", exc_info=downloadAddonFuture.exception())
 			else:
 				callLater(
 					delay=0,
 					callable=onDisplayableError.notify,
-					displayableError=downloadAddonFutureException
+					displayableError=downloadAddonFutureException,
 				)
 		else:
 			cacheFilePath = downloadAddonFuture.result()
@@ -163,9 +165,9 @@ class AddonFileDownloader:
 		shutil.rmtree(WritePaths.addonStoreDownloadDir)
 
 	def _downloadAddonToPath(
-			self,
-			addonData: "AddonListItemVM[_AddonStoreModel]",
-			downloadFilePath: str
+		self,
+		addonData: "AddonListItemVM[_AddonStoreModel]",
+		downloadFilePath: str,
 	) -> bool:
 		"""
 		@return: True if the add-on is downloaded successfully,
@@ -178,7 +180,7 @@ class AddonFileDownloader:
 		# 1GB at 0.5 MB/s takes 4.5hr to download.
 		MAX_ADDON_DOWNLOAD_TIME = 60 * 60 * 6  # 6 hours
 		with requests.get(addonData.model.URL, stream=True, timeout=MAX_ADDON_DOWNLOAD_TIME) as r:
-			with open(downloadFilePath, 'wb') as fd:
+			with open(downloadFilePath, "wb") as fd:
 				# Most add-ons are small. This value was chosen quite arbitrarily, but with the intention to allow
 				# interrupting the download. This is particularly important on a slow connection, to provide
 				# a responsive UI when cancelling.
@@ -198,6 +200,7 @@ class AddonFileDownloader:
 
 	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> Optional[os.PathLike]:
 		from gui.message import DisplayableError
+
 		# Translators: A title for a dialog notifying a user of an add-on download failure.
 		_addonDownloadFailureMessageTitle = pgettext("addonStore", "Add-on download failure")
 
@@ -221,7 +224,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to download add-on: {name}"
+					"Unable to download add-on: {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
@@ -231,7 +234,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download fails
-					"Unable to save add-on as a file: {name}"
+					"Unable to save add-on as a file: {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)
@@ -242,7 +245,7 @@ class AddonFileDownloader:
 				pgettext(
 					"addonStore",
 					# Translators: A message to the user if an add-on download is not safe
-					"Add-on download not safe: checksum failed for {name}"
+					"Add-on download not safe: checksum failed for {name}",
 				).format(name=addonData.displayName),
 				_addonDownloadFailureMessageTitle,
 			)

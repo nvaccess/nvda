@@ -1,26 +1,28 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2006-2010 NVDA contributers.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
-Import([
-	'env',
-	'detoursLib',
-	'apiHookObj',
-])
+Import(
+	[
+		"env",
+		"detoursLib",
+		"apiHookObj",
+	]
+)
 
-winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
+winIPCUtilsObj = env.Object("./winIPCUtils", "../common/winIPCUtils.cpp")
 
-controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
+controllerRPCHeader, controllerRPCServerSource = env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
 		"../interfaces/nvdaController/nvdaController.idl",
@@ -30,7 +32,7 @@ controllerRPCHeader,controllerRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaController_",
 )
 
-controllerInternalRPCHeader,controllerInternalRPCServerSource=env.MSRPCStubs(
+controllerInternalRPCHeader, controllerInternalRPCServerSource = env.MSRPCStubs(
 	target="./nvdaControllerInternal",
 	source=[
 		"../interfaces/nvdaControllerInternal/nvdaControllerInternal.idl",
@@ -40,7 +42,7 @@ controllerInternalRPCHeader,controllerInternalRPCServerSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaControllerInternal_",
 )
 
-vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
+vbufRPCHeader, vbufRPCClientSource = env.MSRPCStubs(
 	target="./vbuf",
 	source=[
 		"../interfaces/vbuf/vbuf.idl",
@@ -49,7 +51,7 @@ vbufRPCHeader,vbufRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="VBuf_",
 )
 
-nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCClientSource=env.MSRPCStubs(
+nvdaInProcUtilsRPCHeader, nvdaInProcUtilsRPCClientSource = env.MSRPCStubs(
 	target="./nvdaInProcUtils",
 	source=[
 		"../interfaces/nvdaInProcUtils/nvdaInProcUtils.idl",
@@ -59,7 +61,7 @@ nvdaInProcUtilsRPCHeader,nvdaInProcUtilsRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="nvdaInProcUtils_",
 )
 
-displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
+displayModelRPCHeader, displayModelRPCClientSource = env.MSRPCStubs(
 	target="./displayModel",
 	source=[
 		"../interfaces/displayModel/displayModel.idl",
@@ -69,21 +71,21 @@ displayModelRPCHeader,displayModelRPCClientSource=env.MSRPCStubs(
 	MSRPCStubs_prefix="displayModel_",
 )
 
-localLib=env.SharedLibrary(
+localLib = env.SharedLibrary(
 	target="nvdaHelperLocal",
 	source=[
-		env['projectResFile'],
+		env["projectResFile"],
 		apiHookObj,
 		"nvdaHelperLocal.cpp",
 		"beeps.cpp",
 		vbufRPCClientSource,
 		nvdaInProcUtilsRPCClientSource,
 		displayModelRPCClientSource,
-		'rpcSrv.cpp',
-		'nvdaController.cpp',
+		"rpcSrv.cpp",
+		"nvdaController.cpp",
 		winIPCUtilsObj,
 		controllerRPCServerSource,
-		'nvdaControllerInternal.c',
+		"nvdaControllerInternal.c",
 		controllerInternalRPCServerSource,
 		"dllImportTableHooks.cpp",
 		"nvdaHelperLocal.def",
@@ -108,4 +110,4 @@ localLib=env.SharedLibrary(
 	],
 )
 
-Return('localLib')
+Return("localLib")

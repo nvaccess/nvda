@@ -39,8 +39,17 @@ Najważniejsze właściwości NVDA to:
 
 ### Wymagania systemowe {#SystemRequirements}
 
+#### Zalecane wymagania systemowe {#MinimumSystemRequirements}
+* Systemy operacyjne: 64-bitowe wydania systemu Windows 10, Windows 11, i Windows Server 2022
+  * Wydania AMD64 jak i  ARM64 systemu Windws są wspierane.
+* Co najmniej 150 MB miejsca na twardym dysku.
+* Co najmniej 4 GB pamięci Ram.
+
+#### Minimalne wymagania systemowe {#MinimumSystemRequirements}
 * Systemy operacyjne: wsparcie wszystkich 32-bitowych i 64-bitowych wersji systemu Windows 8.1, Windows 10 i Windows 11 (w tym systemów operacyjnych dla serwerów od Windows Server 2012 R2).
   * Obie architektury AMD64 jak i ARM64 systemu Windows są wspierane.
+  * Uwaga 32-bitowe systemy operacyjne nie są aktywnie wspierane.
+  * Miewaj na uwadze, że wersje systemu operacyjnego Windows 8.1 i Windows Server  starsze niż 2022 nie są aktywnie wspierane.
 * Co najmniej 150 MB wolnej przestrzeni dyskowej.
 
 ### Wersje językowe {#Internationalization}
@@ -352,6 +361,9 @@ Stan dodatku w Add-on store zostanie wyświetlony jako "aktualizacja jest dostę
 Na liście pokaże się informacja o bieżącej i dostępnej wersji.
 Naciśnij `enter` na dodatku, aby otworzyć spis działań. Wybierz "Zaktualizuj".
 
+Domyśnie będziesz powiadamiany po uruchomieniu NVDA, gdy aktualizacje dodatków zostaną dostępne.
+Aby się dowiedzieć więcej o tej opcji i odpowiednio ją skonfigurować, zajrzyj do rozdziału ["Powiadomienie o aktualizacji"](#AutomaticAddonUpdates).
+
 ### Społeczność {#Community}
 
 NVDA posiada bardzo aktywną społeczność.  
@@ -432,8 +444,14 @@ Jeśli okno pakietu zostało zamknięte lub korzystasz z już zainstalowanej wer
 
 Pojawi się okno pozwalające wybrać katalog w którym wersja przenośna ma zostać umieszczona. 
 Może to być dowolna lokalizacja na dysku twardym lub na dysku zewnętrznym, pamięci przenośnej itd. 
+Domyślnie zostanie stworzony nowy katalog dla kopii przenośnej.
+Można także wybrać istniejący katalog. To spowoduje nadpisanie istniejących plików.
+Jeżeli w istniejącym katalogu znajduje sie przenośna kopia NVDA, ta kopia zostanei zaktualizowana.
+
 Można tu również określić, czy program ma skopiować aktualnie używaną konfigurację zalogowanego użytkownika jako konfigurację tworzonej kopii przenośnej.
+Dodatki także zostaną skopiowane.
 Ta opcja będzie dostępna tylko, gdy tworzona jest kopia przenośna z wersji zainstalowanej, nie pojawi się przy generowaniu kopii przenośnej z pobranego pakietu.
+
 Wciśnięcie przycisku "Kontynuuj" utworzy wersję przenośną w podanej lokalizacji.
 Po zakończeniu tworzenia kopii przenośnej, pojawi się informacja o sukcesie operacji.
 Naciśnij "OK" aby zamknąć tę informację.
@@ -493,8 +511,7 @@ Trzecie pole wyboru określa, czy to okienko dialogowe ma się pojawiać przy ka
 
 #### Statystyki diagnostyczne {#UsageStatsDialog}
 
-Od wersji programu NVDA 2018.3, użytkownik jest pytany czy czytnik ekranu może wysyłać pewne anonimowe dane diagnostyczne  swoim twórcom, w celu jego ulepszania w przyszłości.
-Gdy uruchomisz program po raz pierwszy, zostaniesz zapytany czy chcesz zezwolić fundacji NV Access na zbieranie danych.
+Podczas pierwszego uruchamiania NVDA, zostaniesz zapytany o tym, czy chcesz wysyłać anonimowe dane statystyczne w celu przyszłego ulepszania NVDA.
 Możesz przeczytać więcej informacji o zbieranych danych w rozdziale o ustawieniach ogólnych w [podrozdziale Zezwól NVAccessowi na zbieranie statystyk](#GeneralSettingsGatherUsageStats).
 Kiedy wybierzesz jakąś opcję ustawienie zostanie zachowane, a okno dialogowe nigdy więcej się nie pojawi, chyba że dokonasz reinstalacji programu.
 Jednakże, możliwe jest ręczne włączenie lub wyłączenie tej opcji w ustawieniach ogólnych w [sekcji jej poświęconej](#GeneralSettingsGatherUsageStats).
@@ -505,8 +522,8 @@ Jednakże, możliwe jest ręczne włączenie lub wyłączenie tej opcji w ustawi
 Większość poleceń programu NVDA wymaga naciśnięcia specjalnego klawisza zwanego klawiszem NVDA w połączeniu z innymi klawiszami.
 Wyjątkiem są polecenia przeglądu tekstu, które przypisane są do pojedynczych klawiszy numerycznych, oraz niektóre inne polecenia.
 
-Można skonfigurować NVDA tak, by klawisz Insert znajdujący się na klawiaturze numerycznej, klawisz Insert znajdujący się w pobliżu klawiszy strzałek, albo klawisz CapsLock - mogły zostać użyte jako specjalny klawisz poleceń NVDA.
-Domyślnie obydwa klawisze Insert są ustawione jako klawisz poleceń NVDA.
+Można skonfigurować NVDA tak, by  `insert` i numeryczny `Insert` albo klawisz `CapsLock` - mogły zostać użyte jako specjalny klawisz poleceń `NVDA`.
+Domyślnie numeryczny `insert`i  `Insert` są ustawione jako klawisz poleceń NVDA.
 
 Aby którykolwiek z klawiszy poleceń NVDA wykonał oryginalnie przypisaną mu funkcję (np. dla przełączenia CapsLock, gdy jest on wybrany jako klawisz NVDA), należy nacisnąć ten klawisz dwukrotnie w krótkim odstępie czasu.
 
@@ -900,6 +917,7 @@ Wyżej opisane opcje dotyczące nawigacji myszą nie są domyślnie włączone.
 Możesz skonfigurować je, korzystając z kategorii [Ustawienia myszy](#MouseSettings) w oknie [Preferencji NVDA](#NVDASettings), znajdującym się w podmenu Ustawienia w menu NVDA.
 
 Do właściwego korzystania z funkcji oferowanych przez urządzenia wskazujące powinno się używać fizycznej myszy lub touch pada, pomimo tego NVDA posiada kilka funkcji które ułatwiają korzystanie z myszy.
+
 <!-- KC:beginInclude -->
 
 | Nazwa |skrót układu desktop |Skrót układu laptop |Gest dotykowy |Opis|
@@ -908,6 +926,10 @@ Do właściwego korzystania z funkcji oferowanych przez urządzenia wskazujące 
 |Zablokowanie lewego przycisku myszy |shift+numeryczny slesz |NVDA+kontrol+[ |brak |Blokuje lewy przycisk myszy. Naciśnij ten skrót ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrótu|
 |Prawy przycisk myszy |Numeryczna gwiazdka |NVDA+] |długie naciśnięcie |Wykonuje kliknięcie prawym przyciskiem myszy. Skrót ten jest używany do otwierania menu kontekstowego w niektórych aplikacjach.|
 |Zablokowanie prawego przycisku myszy |shift+Numeryczna Gwiazdka |NVDA+kontrol+] |brak |Blokuje prawy przycisk myszy. Naciśnij ten skrót ponownie, aby go odblokować. W celu przeciągnięcia myszy przesuń fizyczne urządzenie w dane miejsce lub użyj innego przeznaczonego do tego skrótu|
+|Przenieś do góry na pozycji myszy |brak |brak |brak |przenosi kółko miszy do góry na bieżącej pozycji myszy|
+|Przenieś do dołu na pozycji myszy|brak |brak |brak |przenosi kółko myszy do dołu na bieżacej pozycji myszy|
+|Przenieś w lewo na pozycji myszy |brak |brak |brak |przenosi kółko myszy w lewo do bieżącej pozycji myszy|
+|przenieś w prawo na pozycji myszy |brak |brak |brak |przenosi kółko myszy w prawo na bieżacej pozycji myszy|
 |Przeniesienie myszy do aktualnego obiektu nawigatora |NVDA+Numeryczny slesz |NVDA+shift+m |brak |Przenosi kursor myszy do pozycji aktualnego obiektu nawigatora.|
 |Przeniesienie pozycji nawigatora do obiektu pod myszą |NVDA+Numeryczna gwiazdka |NVDA+shift+n |brak |Przenosi obiekt nawigatora do aktualnej pozycji myszy.|
 
@@ -1781,10 +1803,11 @@ Poniższe informacje są zawsze przesyłane:
 
 ##### Zezwól NVAccessowi na zbieranie statystyk używania programu {#GeneralSettingsGatherUsageStats}
 
-Gdy włączone, NV Access będzie używać informacji przesyłanych przy sprawdzaniu dostępności aktualizacji, dla określania liczby użytkowników NVDA włączając w to informacje demograficzne, takie jak kraj i system operacyjny.
-O ile twój adres IP będzie użyty do określenia kraju przy sprawdzaniu aktualizacji, to nie jest przechowywany.
+Gdy włączone, NV Access będzie używać informacji przesyłanych przy sprawdzaniu dostępności aktualizacji w celu oszacowania liczby użytkowników NVDA, włączając w to informacje demograficzne, takie jak kraj i system operacyjny.
+O ile twój adres IP będzie użyty do określenia kraju przy sprawdzaniu aktualizacji, nie będzie on przechowywany.
 Prócz niezbędnych informacji umożliwiających sprawdzanie aktualizacji,  poniższe dodatkowe informacje są aktualnie przesyłane:
 
+* Unikatowy identyfikator użytkownika, zmieniający się co miesiąc
 * Język interfejsu NVDA
 * Czy dana kopia NVDA jest przenośna czy zainstalowana
 * Nazwa aktualnie używanego syntezatora mowy (włączając w to nazwę dodatku, z którego pochodzi sterownik)
@@ -1878,6 +1901,39 @@ Dotyczy to wszystkich syntezatorów, nie tylko tego aktywnego w tym momencie.
 Domyślnie włączona, ta opcja informuje NVDA, że bieżący głos prawidłowo przetwarza znaki i symbole.
 Jeśli okaże się, że interpunkcja jest odczytywana w nieprawidłowym języku dla konkretnego głosu lub syntezatora, możesz tę opcję wyłączyć, aby zmusić NVDA do używania globalnie ustawionego języka.
 
+##### Normalizacja znaków Unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcje |Domyślnie (Wyłączone), Włączone, Wyłączone|
+|Domyślnie |Wyłączone|
+
+Gdy ta opcja jest włączona, tekst wymawiany zostanie znormalizowany.
+Jest to kluczowe dla znaków, które mogą istnieć w kilku formach.
+NVDA używa algorytmu NFKC (ang. Normalization Form Compatibility Composition) który przynosi następujące korzyści, między innymi:
+
+1. Pogrubione i kursywne wersje znaków które są częścią standartu Unicode i są używane w mediach społecznościowych są normalizowane do ich zgodnych równoważników.
+Na przykład, łacińska litera "h" może być wyświetlana jako "𝐡" (pogrubiona), "ℎ" (kursywna), itd. ale zawsze będzie wymówiona jako "h" gdy normalizacja jest włączona.
+Ten aspekt normalizacji także pomaga przy odczytu równań w edytorze równań w programie Microsoft Word.
+
+1. Normalizacja do znaków kombinowanych.
+Na przykład, znak "ü" (u z dierezą), częsty znak w językach takich jak niemiecki i turecki może być wyświetlony w następujących formach.
+  1. jeden samodzielny znak unicode (ü)
+  1. Dekompozycja do dwóch znaków (ü), mianowicie zwykłą litera u alfabetu łacińskiego i modyfikator dierezy
+  Normalizacja unicode zapewnia używanie jednej formy znaku podczas wymawiania znaku.
+
+1. Dekompozycja niektórych ligatur, włącznie z "ĳ" (ligatura ij) do ich form dwuznakowych ("ij").
+
+1. Stabilny porządek modyfikatorów w znakach komponowanych, na przykład starożytnym hebrajskim.
+
+Aby móc zarządzać normalizacją unicode globalnie, skojarz skrót klawiszowy używając [okna dialogowego zdarzenia wejścia](#InputGestures).
+
+##### Wymawiaj "normalizowane" podczas nawigacji po znakach {#SpeechReportNormalizedForCharacterNavigation}
+
+To ustawienie jest polem wyboru, po oznaczeniu które spowoduje, że słowo "normalizowane" będzie wymówione po pojedyńczym znaku na przykład podczas literowania.
+Na przykład, gdy ta opcja zostanie włączona, literowanie znaku "ĳ" zabrzmi jak "i j normalizowane".
+
+Miewaj na uwadze, że ta opcja jest dostępna gdy "[Normalizacja unicode](#SpeechUnicodeNormalization)" jest włączona.
+
 ##### Używaj bazy danych Unicode do przetwarzania znaków i symboli (włączając w to emoji) {#SpeechSettingsCLDR}
 
 Gdy to pole wyboru jest zaznaczone, NVDA będzie używał dodatkowych słowników wymowy  symboli.
@@ -1916,6 +1972,7 @@ Ta funkcjonalność jest wspierana w większości syntezatorów.
 
 Ta opcja na ogół powinna być włączona.
 Niektóre syntezatory pracujące w standardzie Microsoft Speech API (SAPI)  nie obsługują prawidłowo tej funkcjonalności i zachowują się dziwnie, gdy jest ona włączona.
+Syntezatory firmy Code Factory, dodatek i aplikacja oparta na protokole sapi, nie implementują prawidłowo tej funkcji i nieprawidłowo literują (np. w meni NVDA lub oknach dialogowych).
 Jeśli napotykasz na problemy z wymową pojedynczych znaków, spróbuj wyłączyć tę opcję.
 
 ##### Opisy po nazwie liter podczas ruchu kursora {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Jeśli opcja jest wyłączona, wyświetlona zostanie część słowa, tak duża 
 Po przesunięciu wyświetlacza, możliwe będzie przeczytanie reszty słowa.
 
 Włączenie tej opcji umożliwia bardziej płynne czytanie, ale zmusza do częstszego przewijania wyświetlacza.
+
+##### Normalizacja unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcje |Domyślnie (Wyłączone), Włączone, Wyłączone|
+|Domyślnie |Wyłączone|
+
+Gdy ta opcja jest włączona, będzie zastosowana normalizacja tekstu do treści wyświetlanej na monitorze brajlowskim.
+Jest to ważne podczas odczytu znaków w brajlu, nieznanych w określonej tablicy brajlowskiej i które mają zgodne równoważniki. Są to na przykład znaki the pogrubione i kursywne zazwyczaj używane w sieciach społecznościowych.
+Inne korzyści normalizacji unicode zostały wyczerpująco wyjaśnione w [rozdziale równoważnika tego ustawienia dla mowy](#SpeechUnicodeNormalization).
+
+Aby móc sterować normalizacją unicode globalnie, skojarz skrót klawiszowy używając [okna dialowego zdarzenia wejścia](#InputGestures).
 
 ##### Kontekstowa prezentacja fokusa {#BrailleSettingsFocusContextPresentation}
 
@@ -2855,7 +2924,28 @@ Ten styl najlepiej działa w aplikacjach, które nie wspierają natywną nawigac
 Ten styl najlepiej działa gdy pracujemy z dokumentami, w których używane są akapity blokowe.
 Miejcie na uwadze, że ten styl akapitu nie może być używany w programach Microsoft Word i Microsoft Outlook, chyba że włączone jest wsparcie UIA dla dostępu do kontrolek Microsoft Word.
 
-Style akapitów można przełączać z jakiegokolwiek miejsca przydzielając skrót klawiszowy w [oknie dialogowym zdarzenia wejścia](#InputGestures).
+Style akapitów można przełączać globalnie przydzielając skrót klawiszowy w [oknie dialogowym zdarzenia wejścia](#InputGestures).
+
+#### Ustawienia Add-on Store {#AddonStoreSettings}
+
+To ustawienie umożliwia dostosowanie zachowania Add-on store.
+
+##### Powiadomienia o aktualizacjach {#AutomaticAddonUpdates}
+
+Gdy ta opcja jest ustawiona na "powiadamiaj", Add-on store powiadomi o dostępnych aktualizacjach po uruchomieniu NVDA.
+Aktualizacje dodatków są sprawdzane co 24 godzin.
+Powiadomienia zostaną wyświetlone dla dodatków z dostępnymi aktualizacjami tylko w jednym kanale aktualizacji.
+Na przykład, jeżeli zainstalowałeś dodatki z kanału aktualizacji beta, zostanieś powiadomiony o aktualizacjach wewnątrz kanału beta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcje |powiadom (domyślnie), wyłączone |
+|domyślnie |powiadom |
+
+|Opcja |Zachowanie |
+|---|---|
+|Powiadamiaj |powiadamia o aktualizacjach wewnątrz tego ssamego kanału aktualizacji |
+|Wyłączone |nie sprawdza aktualizacji dodatków |
 
 #### Ustawienia Windows OCR {#Win10OcrSettings}
 
@@ -3440,7 +3530,10 @@ Gdy otworzysz pakiet dodatku dla NVDA, rozpocznie się instalacja.
 Jeżeli NVDA jest już zainstalowana w twoim systemie, możesz także otworzyć plik dodatku bezpośrednio z przeglądarki lub systemu plików, aby rozpocząć proces jego instalacji.
 
 Gdy dodatek jest instalowany z pliku, NVDA zapyta cie o potwierdzenie chęci instalacji dodatku.
-Kiedy dodatek zostanie zainstalowany, program NVDA musi być ponownie uruchomiony, aby dodatek zaczął działać. Jeżeli chcesz zainstalować lub zaktualizować inne dodatki, możesz odłożyć ponowne uruchomienie NVDA na później.
+Po instalacji dodatku, program NVDA musi być ponownie uruchomiony, aby dodatek zaczął działać. Jeżeli chcesz zainstalować lub zaktualizować inne dodatki, możesz odłożyć ponowne uruchomienie NVDA na później.
+
+Domyślnie, po uruchomieniu NVDA zostanieś powiodomiony o dostępności aktualizacji dodatków.
+Aby móc skonfigurować zachowanie tej opcji i dowiedzieć się więcej, przeczytaj ["zozdział o powiadomieniach dotyczących aktualizacji"](#AutomaticAddonUpdates).
 
 #### Usuwanie dodatków {#AddonStoreRemoving}
 
@@ -3563,15 +3656,9 @@ Aby się dowiedzieć więcej, przeczytaj szczegółowy rozdział: [Dodatki i Add
 
 ### Utwórz kopię przenośną {#CreatePortableCopy}
 
-Polecenie to pozwala otworzyć okno, przy pomocy którego można utworzyć kopię przenośną NVDA z zainstalowanej na dysku wersji.
-Natomiast w wypadku, gdy NVDA jest już zainstalowane nazwa opcji będzie brzmiała "Zainstaluj przenośną kopię na dysku" zamiast "Utwórz przenośną kopię".
+Ta opcja spowoduje otwarcie okna dialogowego, umożliwiającego tworzenie przenośnej kopii z poziomu uruchomionej kopii NVDA.
 
-Okno dialogowe tworzenia przenośnej kopii lub instalowania NVDA z przenośnej wersji pozwala wybrać użytkownikowi katalog w którym zostanie utworzona przenośna wersja, albo katalog, w którym program zostanie zainstalowany.
-
-W oknie tym można również zmienić opcje takie jak:
-
-* Skopiuj aktualną konfigurację użytkownika: pozwala skopiować ustawienia, dodatki oraz inne moduły do nowo instalowanej wersji programu.
-* Uruchom nowo powstałą kopię przenośną NVDA lub uruchom nowo zainstalowaną kopię NVDA: pozwala uruchomić program po zakończeniu jego instalatora.
+Po więcej instrukcji, przeczytaj [rozdział o tworzeniu kopii przenośnej.](#CreatingAPortableCopy)
 
 ### uruchom narzędzie do naprawy błędów rejestracji COM... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Następujące urządzenia również nie wymagają instalacji dodatkowych sterown
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Miewaj na uwadze, że Zoomax aktualnie nie jest wspierany bez sterowników zewnętrznych
 
 Poniżej skróty klawiszowe dla Brailliant BI/B i BrailleNote touch, które działają w NVDA.
 Aby odnaleźć opisywane klawisze, zajrzyj do dokumentacji urządzenia.
@@ -4995,8 +5083,8 @@ Poniżej wymieniono wszystkie opcje linii poleceń dla NVDA:
 |Brak |`--install-silent` |Po cichu instaluje NVDA (nie uruchamia zainstalowanej kopii)|
 |Brak |`--enable-start-on-logon=True|False` |Przy instalacji włącz funkcję NVDA [Uruchamiaj na ekranie logowania](#StartAtWindowsLogon)|
 |Brak |`copy-portable-config` |Podczas instalacji kopiuję konfigurację wersji przenośnej z określonej ścieżki (`config-path`, `-c`) do aktualnego konta użytkownika|
-|Brak |`--create-portable` |Tworzy przenośną kopię NVDA (uruchamiając nowo utworzoną kopię). Wymaga określenia parametru `--portable-path`|
-|Brak |`--create-portable-silent` |Tworzy przenośną kopię NVDA (nie uruchamiając nowo utworzonej kopii). Wymaga określenia parametru `--portable-path`|
+|brak |`--create-portable` |Tworzy przenośną kopię NVDA i uruchamia ją. Wymaga określenia `--portable-path` |
+|brak |`--create-portable-silent` |Tworzy kopię przenośną NVDA  bez uruchamiania kopii przenośnej. Wymaga określenia `--portable-path`. Ta opcja ucisza ostrzeżenia podczas pisania do pełnych katalogów i może nadpisywać pliki bez ostrzeżenia.|
 |Brak |`--portable-path=SCIEZKA` |Ścieżka, w której zostanie utworzona przenośna kopia|
 
 ### Parametry systemu {#SystemWideParameters}

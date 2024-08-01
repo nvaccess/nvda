@@ -1,6 +1,12 @@
 # Documentation: https://git-scm.com/docs/git-blame#Documentation/git-blame.txt---ignore-revs-fileltfilegt
 # Usage: git config --local blame.ignoreRevsFile .git-blame-ignore-revs
 
+# #12649: Replace internal controlTypes.ROLE_* usages with controlTypes.Role.*
+defed0ef2317cf3192922692a40cc2eb92d41143
+# #12712: replace controlTypes.STATE_* with controlTypes.State.*
+17e52866e1dfc353edcc7dc9d466449e7920a155
+# #12836: Remove usages of deprecated characterProcessing.SYMLVL_ constants and controlTypes helper functions
+48f502257182356549f22a4095016b37dacdaf9f
 # Normalize line endings in t2t files
 e6a639bfe237ff7f98c4cbec2094a34ac4b879db
 # Migrate t2t to markdown
@@ -11,3 +17,13 @@ e6a639bfe237ff7f98c4cbec2094a34ac4b879db
 # Lint the repository with Ruff
 d3ce6b8879b14464058d5eaf3f914f803e8f22ac
 8bdfbc2e8da78945e20c3b203b39b9a81227d596
+d7b29daceb98e717aeb4828eb9e71e34e9e33b5e
+55fb00ad342b0cd4b0a8913cfc75e0ea61b28100
+b31c94cf5856832f2fff2c6270e1d5e44c9cd6af
+b9ebcbf5a9ef408372b2dc3073b2bfa4226a2586
+# Fix trailing whitespaces
+f227ca64c7f4cb41f83f531436c6dd11cf3c1d58
+# Add trailing commas
+be112ed44cb68f622a770c72fd29dd10899e9d07
+# Fix E721
+73a3529d8b10eb73a45117eead906c0a9cb4c41b

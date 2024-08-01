@@ -19,7 +19,8 @@ from logHandler import log
 TIMEOUT = 0.2
 BAUDRATE = 9600
 READ_INTERVAL = 50
-BUF_START = b"\xFF\xFF"
+BUF_START = b"\xff\xff"
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "seika"
@@ -51,7 +52,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					writeTimeout=TIMEOUT,
 					parity=serial.PARITY_ODD,
 					bytesize=serial.EIGHTBITS,
-					stopbits=serial.STOPBITS_ONE
+					stopbits=serial.STOPBITS_ONE,
 				)
 			except serial.SerialException:
 				continue
@@ -59,7 +60,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(f"serial port open {port}")
 
 			# get the version information
-			VERSION_INFO_REQUEST = b"\x1C"
+			VERSION_INFO_REQUEST = b"\x1c"
 			self._ser.write(BUF_START + VERSION_INFO_REQUEST)
 			self._ser.flush()
 
@@ -85,17 +86,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 			# is it a old Seika3?
 			log.debug("test if it is a old Seika3")
-			LEGACY_VERSION_REQUEST = b"\x0A"
+			LEGACY_VERSION_REQUEST = b"\x0a"
 			self._ser.write(BUF_START + LEGACY_VERSION_REQUEST)
 			self._ser.flush()
 
 			# Read out the input buffer
 			versionS = self._ser.read(12)
 			log.debug(f"receive {versionS}")
-			if versionS.startswith((
-				b'\x00\x05(\x08v5.0\x01\x01\x01\x01',
-				b'\x00\x05(\x08seika\x00'
-			)):
+			if versionS.startswith(
+				(
+					b"\x00\x05(\x08v5.0\x01\x01\x01\x01",
+					b"\x00\x05(\x08seika\x00",
+				),
+			):
 				log.info(f"Found Seika3 old Version connected via {port} Version {versionS}")
 				self.numCells = 40
 				self._maxCellRead = 10
@@ -133,7 +136,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 		chars: bytes = self._ser.read(2)
 		isCursorRoutingBlock = not chars[0] & 0x60
-		
+
 		if not isCursorRoutingBlock:  # normal key
 			self._handleNormalKey(chars)
 		else:  # Cursor Routing Block
@@ -184,21 +187,23 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(f"No Action for keys {data}")
 			pass
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(seika):left",),
-			"braille_scrollForward": ("br(seika):right",),
-			"braille_previousLine": ("br(seika):b3",),
-			"braille_nextLine": ("br(seika):b4",),
-			"braille_toggleTether": ("br(seika):b5",),
-			"sayAll": ("br(seika):b6",),
-			"kb:tab": ("br(seika):b1",),
-			"kb:shift+tab": ("br(seika):b2",),
-			"kb:alt+tab": ("br(seika):b1+b2",),
-			"showGui": ("br(seika):left+right",),
-			"braille_routeTo": ("br(seika):routing",),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(seika):left",),
+				"braille_scrollForward": ("br(seika):right",),
+				"braille_previousLine": ("br(seika):b3",),
+				"braille_nextLine": ("br(seika):b4",),
+				"braille_toggleTether": ("br(seika):b5",),
+				"sayAll": ("br(seika):b6",),
+				"kb:tab": ("br(seika):b1",),
+				"kb:shift+tab": ("br(seika):b2",),
+				"kb:alt+tab": ("br(seika):b1+b2",),
+				"showGui": ("br(seika):left+right",),
+				"braille_routeTo": ("br(seika):routing",),
+			},
 		},
-	})
+	)
 
 
 class InputGestureKeys(braille.BrailleDisplayGesture):

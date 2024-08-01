@@ -39,8 +39,17 @@ Ses points forts sont :
 
 ### Configuration Système Requise {#SystemRequirements}
 
+#### Configuration système recommandée {#MinimumSystemRequirements}
+* Systèmes d'exploitation : éditions 64 bits de Windows 10, Windows 11 et Windows Server 2022
+  * Les variantes AMD64 et ARM64 de Windows sont prises en charge.
+* au moins 150 Mo d'espace de stockage.
+* au moins 4 Go de RAM.
+
+#### Configuration système minimale requise {#MinimumSystemRequirements}
 * Systèmes d'Exploitation : toutes les éditions 32-bit et 64-bit de Windows 8.1, Windows 10, Windows 11, et toutes les versions serveur à partir de Windows Server 2012 R2.
   * les variantes AMD64 et ARM64 de Windows sont prises en charge.
+  * Remarque : les systèmes d'exploitation 32 bits ne sont plus pris en charge activement.
+  * Veuillez noter que les versions de Windows 8.1 et Windows Server antérieures à 2022 ne sont plus prises en charge activement.
 * au moins 150 Mo d'espace de stockage.
 
 ### Internationalisation {#Internationalization}
@@ -352,6 +361,9 @@ L'état de l'extension sera "Mise à jour disponible".
 La liste indiquera la version actuellement installée et la version disponible.
 Appuyez sur `entrée` sur l'extension pour ouvrir la liste d'actions ; choisissez "Mettre à jour".
 
+Par défaut, après le démarrage de NVDA, vous serez averti si des mises à jour d'extensions sont disponibles.
+Pour en savoir plus et configurer ce comportement, reportez-vous à ["Notifications de mise à jour"](#AutomaticAddonUpdates).
+
 ### Communauté {#Community}
 
 NVDA a une communauté d'utilisateurs dynamique.
@@ -432,8 +444,14 @@ Si vous avez déjà fermé ce dialogue ou si vous exécutez une copie installée
 
 Le dialogue qui apparaît vous permet de choisir où la copie portable doit être créée.
 Il peut s'agir d'un répertoire sur votre disque dur ou d'un emplacement sur une clé USB ou un autre support portable.
+Par défaut, un nouveau répertoire est créé pour la copie portable.
+Vous pouvez également choisir d'utiliser un répertoire existant, cela écrasera les fichiers de ce répertoire.
+Si le répertoire existant est une copie portable de NVDA, cette copie sera mise à jour.
+
 Il existe également une option pour choisir si NVDA doit copier la configuration NVDA actuelle de l'utilisateur connecté pour l'utiliser avec la copie portable nouvellement créée.
+Cela inclut également les extensions.
 Cette option n'est disponible que lors de la création d'une copie portable à partir d'une copie installée, pas lors de la création à partir du package de téléchargement.
+
 Appuyer sur Continuer créera la copie portable.
 Une fois la création terminée, un message apparaîtra vous indiquant qu'elle a réussi.
 Appuyez sur OK pour fermer ce dialogue.
@@ -493,8 +511,7 @@ La troisième permet d'indiquer si ce dialogue d'accueil doit apparaître à cha
 
 #### Dialogue de statistiques d'utilisation des données {#UsageStatsDialog}
 
-Depuis NVDA 2018.3, il est demandé à l'utilisateur s'il veut autoriser l'envoi de données d'utilisation à NV Access afin d'aider à l'amélioration de NVDA à l'avenir.
-Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra.
+Au premier démarrage de NVDA, un dialogue vous demandant si vous désirer envoyer des données à NV Access durant l'utilisation de NVDA apparaîtra, afin d'aider à l'amélioration de NVDA à l'avenir.
 Vous pouvez obtenir plus d'informations concernant les données recueillies par NV Access dans la section paramètres généraux, [Autoriser NV Access à recueillir des statistiques d'utilisation](#GeneralSettingsGatherUsageStats).
 Note : l'appui sur "oui" ou "non" sauvegardera ce choix et ce dialogue n'apparaîtra plus à moins que vous réinstalliez NVDA.
 Cependant, vous pouvez activer ou désactiver le processus de collecte de données manuellement dans l'écran de paramètres généraux de NVDA. Pour modifier ce paramètre manuellement, vous pouvez cocher ou décocher la case appelée [Autoriser le projet NVDA à recueillir des statistiques d'utilisation](#GeneralSettingsGatherUsageStats).
@@ -505,10 +522,10 @@ Cependant, vous pouvez activer ou désactiver le processus de collecte de donné
 La plupart des commandes spécifiques de NVDA se font en appuyant sur la touche NVDA en conjonction avec une ou plusieurs autres touches.
 Les fonctions de revue de texte qui n'utilisent que le pavé numérique constituent une des quelques exceptions.
 
-NVDA peut être configuré pour que les touches "Insert" du pavé numérique, "Insert" du clavier étendu ou verrouillage majuscules puissent être utilisées comme touche NVDA.
-Par défaut, les touches "Insert" du pavé numérique et du clavier étendu sont définies comme touche NVDA.
+NVDA peut être configuré pour que les touches `insert`, `pavnumInsert` ou `verrouillageMajuscule` puissent être utilisées comme touche `NVDA`.
+Par défaut, les touches `insert` et `pavnumInsert` sont définies comme touche NVDA.
 
-Si vous souhaitez que l'une des touches NVDA se comporte comme d'habitude, comme si NVDA n'était pas en cours d'exécution (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscules après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur la touche.
+Si vous souhaitez que l'une des touches NVDA se comporte comme d'habitude, comme si NVDA n'était pas en cours d'exécution (par exemple si vous voulez utiliser verrouillage majuscules pour verrouiller les majuscules après l'avoir définie comme touche NVDA) vous devrez appuyer deux fois rapidement sur cette touche.
 
 #### Les Configurations Clavier {#KeyboardLayouts}
 
@@ -900,6 +917,7 @@ Par défaut, ces fonctions additionnelles de la souris ne sont pas activées.
 Si vous voulez en tirer profit, vous pouvez les configurer dans la catégorie [Souris](#MouseSettings) du dialogue [Paramètres](#NVDASettings) qui se trouve dans le menu "Préférences" de NVDA.
 
 Bien qu'une souris physique ou un pavé tactile devrait être utilisée pour naviguer à la souris, NVDA possède quelques commandes clavier liées à la souris :
+
 <!-- KC:beginInclude -->
 
 | Nom |Ordinateur de bureau |Ordinateur portable |Tactile |Description|
@@ -908,6 +926,10 @@ Bien qu'une souris physique ou un pavé tactile devrait être utilisée pour nav
 |Verrouillage du bouton gauche de la souris |maj+pavnumDiviser |NVDA+maj+uAccentGrave |Aucun |Verrouille le bouton gauche de la souris en position enfoncée. Un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet|
 |Clic droit |pavnumMultiplier |NVDA+astérisque |Taper et maintenir |Simple clic droit|
 |Verrouillage du bouton droit de la souris |maj+pavnumMultiplier |NVDA+maj+astérisque |Aucun |Verrouille le bouton droit de la souris en position enfoncée, un second appui déverrouille le bouton. Pour glisser-déposer avec la souris, verrouillez le bouton puis déplacez la souris soit physiquement ou par l'une des commandes NVDA prévues à cet effet|
+|Faire défiler vers le haut à la position de la souris |aucun |aucun |aucun |Faire défiler avec la molette de la souris vers le haut à la position courante de la souris|
+|Faire défiler vers le bas à la position de la souris |aucun |aucun |aucun |Faire défiler avec la molette de la souris vers le bas à la position courante de la souris|
+|Faire défiler vers la gauche à la position de la souris |aucun |aucun |aucun |Faire défiler avec la molette de la souris vers la gauche à la position courante de la souris|
+|Faire défiler vers la droite à la position de la souris |aucun |aucun |aucun |Faire défiler avec la molette de la souris vers la droite à la position courante de la souris|
 |Amener la souris à l'objet navigateur courant |NVDA+pavnumDiviser |NVDA+maj+m |Aucun |Amène la souris à la position de l'objet navigateur courant puis au curseur de revue|
 |Aller à l'objet sous la souris |NVDA+pavnumMultiplier |NVDA+maj+n |Aucun |Amène l'objet navigateur à l'objet situé à la position de la souris|
 
@@ -1785,6 +1807,7 @@ Si ceci est activé, NV Access utilisera les informations de la vérification de
 Bien que votre adresse IP soit utilisée pour déterminer votre pays durant la mise à jour, elle ne sera jamais conservée.
 En plus des informations obligatoires nécessaires à la mise à jour, les informations supplémentaires suivantes sont également envoyées :
 
+* Un identifiant unique pour l'utilisateur courant de NVDA, il change une fois par mois
 * La langue d'interface de NVDA
 * Copie en cours de NVDA installée ou portables
 * Le nom du synthétiseur vocal actuellement utilisé (incluant le nom de l'extension dont provient le pilote)
@@ -1878,6 +1901,39 @@ Cette option s'applique à tous les synthétiseurs, pas uniquement au synthétis
 Activée par défaut, cette option indique à NVDA si la langue de la voix en cours peut être utilisée pour le traitement des symboles et caractères.
 Si vous trouvez que NVDA lit les ponctuations dans la mauvaise langue pour une voix ou un synthétiseur particulier, vous pouvez désactiver ce comportement pour forcer NVDA à utiliser ses paramètres généraux de langue à la place.
 
+##### Normalisation Unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Defaut (Désactivé), Activé, Désactivé|
+|Défaut |Désactivé|
+
+Lorsque cette option est activée, la normalisation Unicode est appliqué au texte annoncé par NVDA.
+Ceci est utile lors de l'annonce de caractères pouvant être représentés sous plusieurs formes.
+NVDA utilise l'algorithme NFKC (Normalization Form Compatibility Composition), qui offre, entre autres, les avantages suivants :
+
+1. Les versions en gras et en italique des caractères qui font partie de la norme Unicode et sont couramment utilisées sur les réseaux sociaux sont normalisées selon leur équivalent compatible le plus courant.
+Par exemple, la lettre latine "h" peut également être présentée comme "𝐡" (gras), "ℎ" (italique), etc. mais sera toujours prononcée comme "h" lorsque la normalisation est activée.
+Cet aspect de la normalisation facilite également la lecture des équations dans l'éditeur d'équations Microsoft Word.
+
+1. Normalisation appliquée aux caractères composés.
+Par exemple, le caractère "é" (e avec un accent aigu), un caractère courant dans des langues comme le français et l'espagnol peut être représenté sous deux formes:
+  1. Un caractère Unicode unique (é)
+  1. Une décomposition en deux caractères (é), à savoir la lettre latine normale e et un modificateur accent aigu
+  La normalisation Unicode garantit qu'une seule forme sera utilisée pour la sortie vocale, à savoir la variante à un caractère.
+
+1. Décomposition de certaines ligatures, dont "ĳ" (ligature ij néérlandaise) en leur forme à deux lettres ("ij").
+
+1. Ordre stable des modificateurs dans les caractères composites, par exemple en hébreu ancien.
+
+Pour activer/désactiver la normalisation Unicode depuis n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue des Gestes de Commandes](#InputGestures).
+
+##### Annoncer "Normalisé" lors de la navigation par caractère {#SpeechReportNormalizedForCharacterNavigation}
+
+Ce paramètre est une case à cocher qui, lorsqu'elle est cochée, indique à NVDA d'annoncer explicitement qu'un caractère est normalisé lorsqu'il est prononcé comme un caractère individuel, par exemple lors de l'épellation.
+Par exemple, lorsque cette option est activée, si on épelle le caractère "ĳ", il sera annoncé comme "i j normalisé".
+
+Notez que ce paramètre n'est disponible que lorsque l'option "[Normalisation Unicode](#SpeechUnicodeNormalization)" est activée.
+
 ##### Inclure les données du Consortium Unicode (incluant les emoji) dans le traitement des caractères et symboles {#SpeechSettingsCLDR}
 
 Quand cette case est cochée, NVDA inclura des dictionnaires de prononciation de symboles additionels lorsqu'il prononce des caractères et des symboles.
@@ -1889,7 +1945,7 @@ Notez que les descriptions de caractères ajoutées manuellement ou modifiées s
 Ainsi, si vous changez la description d'un emoji particulier, votre description personnalisée sera annoncée pour cet emoji que cette option soit activée ou non.
 Vous pouvez ajouter, modifier ou supprimer des descriptions de symboles par le dialogue [Prononciation des ponctuations et symboles](#SymbolPronunciation) de NVDA.
 
-Pour activer/désactiver l'inclusion des données du Consortium Unicode de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue des Gestes de Commandes](#InputGestures).
+Pour activer/désactiver l'inclusion des données du Consortium Unicode depuis n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue des Gestes de Commandes](#InputGestures).
 
 ##### Pourcentage de changement de la hauteur pour indiquer les majuscules {#SpeechSettingsCapPitchChange}
 
@@ -1915,8 +1971,9 @@ Cette option permet au synthétiseur de différencier les deux cas si le synthé
 La plupart des synthétiseurs la supportent.
 
 En général, cette option devrait être activée.
-Cependant, certains synthétiseurs utilisant les API de parole Microsoft se comportent bizarrement quand cette option est activée.
-Si vous rencontrez des problèmes à l'épellation de caractères, essayez de désactiver cette option.
+Cependant, certains synthétiseurs utilisant les API de parole Microsoft ne l'implémentent pas correctement et se comportent bizarrement quand cette option est activée.
+Les synthétiseurs de chez Code Factory, aussi bien l'extension que l'application SAPI, ne l'implémentent pas non plus correctement et provoquent une épellation indésirable du texte annoncé (par exemple dans le menu ou les boîtes de dialogue NVDA).
+Si vous rencontrez des problèmes avec l'épellation de caractères, essayez de désactiver cette option.
 
 ##### Description différée des caractères lors du mouvement du curseur {#delayedCharacterDescriptions}
 
@@ -2052,7 +2109,7 @@ L'indicateur de sélection n'est pas affecté par cette option, c'est toujours l
 
 C'est une liste déroulante qui vous permet de choisir si NVDA doit afficher les messages en braille et quand ils doivent disparaître automatiquement.
 
-Pour basculer l'affichage des messages de n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
+Pour basculer l'affichage des messages depuis n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
 
 ##### Durée d'affichage des messages (sec) {#BrailleSettingsMessageTimeout}
 
@@ -2117,6 +2174,18 @@ En faisant défiler l'affichage, vous pourrez lire le reste du mot.
 
 Activer cette option peut rendre la lecture plus fluide mais vous obligera à faire défiler plus souvent.
 
+##### Normalisation Unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Défaut (Désactivé), Activé, Désactivé|
+|Défaut |Désactivé|
+
+Lorsque cette option est activée, la normalisation Unicode est appliqué au texte à afficher sur la plage braille.
+Ceci est utile lorsque vous rencontrez des caractères en braille qui sont inconnus dans une table braille particulière et qui ont une alternative compatible, comme les caractères gras et italiques couramment utilisés sur les réseaux sociaux.
+Les autres avantages de la normalisation Unicode sont expliqués plus en détail dans la [section relative au paramètre de parole équivalent](#SpeechUnicodeNormalization).
+
+Pour activer/désactiver la normalisation Unicode depuis n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue des Gestes de Commandes](#InputGestures).
+
 ##### Afficher le contexte du focus {#BrailleSettingsFocusContextPresentation}
 
 Cette option vous permet de choisir quelles informations contextuelles NVDA affiche en braille quand un objet prend le focus.
@@ -2142,7 +2211,7 @@ Quand l'option est sur "Seulement lors du défilement arrière", NVDA ne montre 
 Ainsi, dans l'exemple ci-dessus, NVDA affiche l'élément de liste que vous avez focalisé.
 Cependant, si vous voulez lire le contexte (ex : que vous êtes dans une liste et que la liste fait partie d'un dialogue), vous devrez activer le défilement arrière de votre terminal.
 
-Pour modifier l'option "Afficher le contexte du focus" de n'importe où, veuillez assigner un geste de commande personnalisé en utilisant [le dialogue Gestes de Commandes](#InputGestures).
+Pour modifier l'option "Afficher le contexte du focus" depuis n'importe où, veuillez assigner un geste de commande personnalisé en utilisant [le dialogue Gestes de Commandes](#InputGestures).
 
 ##### Interrompre la parole pendant le défilement {#BrailleSettingsInterruptSpeech}
 
@@ -2171,7 +2240,7 @@ L'option est activée par défaut, donc l'indicateur de sélection est affiché.
 L'indicateur de sélection peut être une distraction lors de la lecture.
 La désactivation de cette option peut améliorer la lisibilité.
 
-Pour basculer l'affichage de la sélection de n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
+Pour basculer l'affichage de la sélection depuis n'importe où, veuillez attribuer un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
 
 #### Choisir l'afficheur braille {#SelectBrailleDisplay}
 
@@ -2474,7 +2543,7 @@ Quand cette case est cochée, NVDA annonce le texte présent sous le pointeur so
 Si NVDA est configuré pour annoncer le texte sous la souris quand vous la déplacez, cette option vous permet de choisir précisément la quantité de texte qui sera lue.
 Les options sont caractère, mot, ligne ou paragraphe.
 
-Pour activer la résolution d'unités de texte de n'importe où, veuillez assigner un geste de commande personnalisé en utilisant le dialogue [Gestes de Commandes](#InputGestures).
+Pour activer la résolution d'unités de texte depuis n'importe où, veuillez assigner un geste de commande personnalisé en utilisant le dialogue [Gestes de Commandes](#InputGestures).
 
 ##### Annoncer l'objet quand la souris y entre {#MouseSettingsRole}
 
@@ -2716,7 +2785,7 @@ Lorsqu'elle est désactivée, ces tableaux ne seront ni annoncés ni trouvés pa
 Cependant, le contenu des tableaux sera toujours inclus sous forme de texte normal.
 Cette option est désactivée par défaut.
 
-Pour activer/désactiver l'inclusion des tables de disposition de n'importe où, veuillez assigner un geste personnalisé en utilisant [le dialogue Gestes de commandes](#InputGestures).
+Pour activer/désactiver l'inclusion des tables de disposition depuis n'importe où, veuillez assigner un geste personnalisé en utilisant [le dialogue Gestes de commandes](#InputGestures).
 
 ##### Configurer l'annonce de champs tels que liens et titres {#BrowseModeLinksAndHeadings}
 
@@ -2809,7 +2878,7 @@ On peut configurer les annonces suivantes :
   * Figures et légendes
   * Cliquable
 
-Pour modifier ces paramètres de n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes](#InputGestures).
+Pour modifier ces paramètres depuis n'importe où, veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes](#InputGestures).
 
 ##### Annonce des changements de mise en forme après le curseur {#DocumentFormattingDetectFormatAfterCursor}
 
@@ -2856,6 +2925,27 @@ Ce style fonctionne mieux lorsque vous travaillez avec des documents qui utilise
 Notez que ce style de paragraphe ne peut pas être utilisé dans Microsoft Word ou Microsoft Outlook, sauf si vous utilisez l'UIA pour accéder aux contrôles de Microsoft Word.
 
 Vous pouvez basculer entre les styles de paragraphe disponibles de n'importe où en attribuant une touche dans la [boîte de dialogue Gestes de commandes](#InputGestures).
+
+#### Paramètres de l'Add-on Store {#AddonStoreSettings}
+
+Cette catégorie vous permet d'ajuster le comportement de l'Add-on Store.
+
+##### Notifications de mises à jour {#AutomaticAddonUpdates}
+
+Lorsque cette option est réglée sur "Notifier, l'Add-on Store vous avertira après le démarrage de NVDA si des mises à jour d'extension sont disponibles.
+Cette vérification est effectuée toutes les 24 heures.
+Les notifications ne se produiront que pour les extensions dont les mises à jour sont disponibles sur le même canal.
+Par exemple, pour les extensions installés en version beta, vous ne serez informé que des mises à jour dans le canal bêta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notifier (Défaut), Désactivé |
+|Défaut |Notifier |
+
+|Option |Comportement |
+|---|---|
+|Notifier |Notifier lorsque des mises à jour sont disponibles pour les extensions dans le même canal |
+|Désactivé |Ne pas vérifier automatiquement les mises à jour des extensions |
 
 #### Reconnaissance Optique de Caractères de Windows {#Win10OcrSettings}
 
@@ -3318,7 +3408,7 @@ Parfois, il peut être utile de désactiver temporairement les déclencheurs.
 Par exemple, vous voudrez peut-être modifier un profil activé manuellement ou votre configuration normale sans profils déclenchés interférents.
 Vous pouvez le faire en cochant la case "Désactiver temporairement tous les déclencheurs" dans le dialogue "Profils de configuration".
 
-Pour activer ou désactiver les déclencheurs de n'importe où, veuillez assigner un geste de commande en utilisant le dialogue [Gestes de Commandes](#InputGestures).
+Pour activer ou désactiver les déclencheurs depuis n'importe où, veuillez assigner un geste de commande en utilisant le dialogue [Gestes de Commandes](#InputGestures).
 
 #### Activer un profil en utilisant les gestes de commandes {#ConfigProfileGestures}
 
@@ -3359,7 +3449,7 @@ Les synthétiseurs vocaux commerciaux sont un exemple de ce type d'extension.
 Si vous installez une extension avec des composants payants et que vous changez d'avis quant à son utilisation, l'extension peut être facilement supprimée.
 
 L'Add-on Store est accessible depuis le sous-menu Outils du menu NVDA.
-Pour accéder à l'Add-on Store de n'importe où, attribuez un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
+Pour accéder à l'Add-on Store depuis n'importe où, attribuez un geste personnalisé à l'aide de la [boîte de dialogue Gestes de commandes](#InputGestures).
 
 ### Parcourir les extensions {#AddonStoreBrowsing}
 
@@ -3441,6 +3531,9 @@ Si NVDA est installé et en cours d'exécution sur votre système, vous pouvez �
 
 Lorsqu'une extension est installée depuis une source externe, NVDA vous demandera de confirmer l'installation.
 Une fois l'extension installée, NVDA doit être redémarré pour que l'extension démarre, bien que vous puissiez reporter le redémarrage de NVDA si vous avez d'autres extensions à installer ou à mettre à jour.
+
+Par défaut, après le démarrage de NVDA, vous serez averti si des mises à jour d'extension sont disponibles.
+Pour en savoir plus et configurer ce comportement, reportez-vous à ["Notifications de mises à jour"](#AutomaticAddonUpdates).
 
 #### Suppression des extensions {#AddonStoreRemoving}
 
@@ -3524,7 +3617,7 @@ La fenêtre de la visionneuse de parole essaiera toujours de s'ouvrir à la mêm
 Pendant que la visionneuse de parole est active, elle se met constamment à jour, vous permettant de voir les dernières paroles prononcées par NVDA.
 Cependant, si vous déplacez la souris ou mettez le focus sur la visionneuse, NVDA arrêtera momentanément de mettre à jour le texte, vous pourrez ainsi sélectionner ou copier le contenu.
 
-Pour activer la visionneuse de parole de n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes](#InputGestures).
+Pour activer la visionneuse de parole depuis n'importe où, Veuillez assigner un geste personnalisé en utilisant le [dialogue Gestes de Commandes](#InputGestures).
 
 ### Visionneuse Braille {#BrailleViewer}
 
@@ -3549,7 +3642,7 @@ Pour empêcher des routages cellules non intentionnels, la commande s'exécute a
 La souris doit survoler jusqu'à ce que la cellule devienne verte.
 La cellule commencera avec une couleur jaune clair, virera à l'orange, puis deviendra brusquement verte.
 
-Pour activer/désactiver la visionneuse braille de n'importe où, Veuillez assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de commandes](#InputGestures).
+Pour activer/désactiver la visionneuse braille depuis n'importe où, Veuillez assigner un geste de commande personnalisé en utilisant le [dialogue Gestes de commandes](#InputGestures).
 
 ### Console Python {#PythonConsole}
 
@@ -3563,15 +3656,9 @@ Pour plus d'informations, lisez la section détaillée : [Extensions et Add-on S
 
 ### Créer une copie portable {#CreatePortableCopy}
 
-Ceci ouvrira un dialogue vous permettant de créer une copie portable de NVDA à partir de la version installée.
-Au contraire, lors de l'exécution d'une copie portable de NVDA, dans le sous-menu Outils l'élément s'intitulera "installer NVDA sur ce PC" au lieu de "créer une copie portable".
+Ceci ouvrira un dialogue vous permettant de créer une copie portable de NVDA à partir de la version en cours d'exécution.
 
-Le dialogue de création d'une copie portable ou d'installation de NVDA sur ce PC vous demandera de choisir un dossier où créer la copie portable ou installer NVDA.
-
-Dans ce dialogue vous pourrez activer ou désactiver ce qui suit :
-
-* Copier la configuration utilisateur actuelle (Ceci inclut les fichiers contenus dans %appdata%\roaming\NVDA ou dans la configuration utilisateur de votre copie portable et inclut également les extensions ou autres modules)
-* Démarrer la nouvelle copie portable après création ou démarrer NVDA après installation (démarre automatiquement NVDA après création de la copie portable ou après installation)
+Suivez les instructions dans [Création d'une copie portable](#CreatingAPortableCopy) pour plus d'informations.
 
 ### Exécuter l'outil de correction d'enregistrements COM... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Les terminaux suivants sont également supportés (et ne nécessitent aucun pilo
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Notez que le Zoomax n'est actuellement pas pris en charge sans pilotes externes
 
 Voici les assignations de touches pour Brailliant BI/B et BrailleNote touch sous NVDA.
 Veuillez consulter la documentation du terminal pour savoir où se situent ces touches.
@@ -4995,8 +5083,8 @@ Voici les options de ligne de commande de NVDA :
 |Aucune |`--install-silent` |Installe NVDA silencieusement (sans démarrer la copie nouvellement installée)|
 |Aucune |`--enable-start-on-logon=True|False` |Durant l'installation, active le [démarrage sur l'écran de connexion](#StartAtWindowsLogon) de NVDA|
 |Aucune |`--copy-portable-config` |À l'installation, copie la configuration portable depuis le chemin indiqué (`--config-path`, `-c`) vers le compte utilisateur courant|
-|Aucune |`--create-portable` |Crée une copie portable de NVDA (puis démarre la copie nouvellement créée). `--portable-path` doit être spécifié|
-|Aucune |`--create-portable-silent` |Crée une copie portable de NVDA (sans démarrer la copie nouvellement créée). `--portable-path` doit être spécifié|
+|Aucune |`--create-portable` |Crée une copie portable de NVDA (et démarre cette nouvelle copie). `--portable-path` doit être spécifié|
+|Aucune |`--create-portable-silent` |Crée une copie portable de NVDA (sans démarrer cette nouvelle copie). `--portable-path` doit être spécifié. Cette option supprime les avertissements lors de l'écriture dans des répertoires non vides et peut écraser les fichiers sans avertissement.|
 |Aucune |`--portable-path=PORTABLEPATH` |L'emplacement où la copie portable sera créée|
 
 ### Paramètres Système {#SystemWideParameters}

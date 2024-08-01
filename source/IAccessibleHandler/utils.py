@@ -18,11 +18,11 @@ _winEventNameCache = {}
 
 
 def getWinEventName(eventID):
-	""" Looks up the name of an EVENT_* winEvent constant. """
+	"""Looks up the name of an EVENT_* winEvent constant."""
 	global _winEventNameCache
 	if not _winEventNameCache:
-		_winEventNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('EVENT_')}
-		_winEventNameCache.update({y: x for x, y in vars(IA2).items() if x.startswith('IA2_EVENT_')})
+		_winEventNameCache = {y: x for x, y in vars(winUser).items() if x.startswith("EVENT_")}
+		_winEventNameCache.update({y: x for x, y in vars(IA2).items() if x.startswith("IA2_EVENT_")})
 	name = _winEventNameCache.get(eventID)
 	if not name:
 		name = "unknown event ({eventID})"
@@ -33,10 +33,10 @@ _objectIDNameCache = {}
 
 
 def getObjectIDName(objectID):
-	""" Looks up the name of an OBJID_* winEvent constant. """
+	"""Looks up the name of an OBJID_* winEvent constant."""
 	global _objectIDNameCache
 	if not _objectIDNameCache:
-		_objectIDNameCache = {y: x for x, y in vars(winUser).items() if x.startswith('OBJID_')}
+		_objectIDNameCache = {y: x for x, y in vars(winUser).items() if x.startswith("OBJID_")}
 	name = _objectIDNameCache.get(objectID)
 	if not name:
 		name = str(objectID)
@@ -62,7 +62,7 @@ def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
 		messageList.append(f"{eventName}")
 	messageList.append(
 		f"window {window} ({windowClassName}), objectID {objectIDName}, childID {childID}, "
-		f"process {processID} ({processName})"
+		f"process {processID} ({processName})",
 	)
 	if threadID is not None:
 		messageList.append(f"thread {threadID}")
@@ -70,5 +70,5 @@ def getWinEventLogInfo(window, objectID, childID, eventID=None, threadID=None):
 
 
 def isMSAADebugLoggingEnabled():
-	""" Whether the user has configured NVDA to log extra information about MSAA events. """
+	"""Whether the user has configured NVDA to log extra information about MSAA events."""
 	return config.conf["debugLog"]["MSAA"]

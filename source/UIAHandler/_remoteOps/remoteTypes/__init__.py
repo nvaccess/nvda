@@ -13,7 +13,7 @@ from typing import (
 	Iterable,
 	Generic,
 	TypeVar,
-	cast
+	cast,
 )
 from types import NoneType
 import ctypes
@@ -26,7 +26,7 @@ from ctypes import (
 from comtypes import (
 	GUID,
 	IUnknown,
-	COMError
+	COMError,
 )
 import enum
 from UIAHandler import UIA
@@ -35,21 +35,20 @@ from .. import instructions
 from .. import builder
 from ..remoteFuncWrapper import (
 	remoteMethod,
-	remoteMethod_mutable
+	remoteMethod_mutable,
 )
 from .. import operation
 
 
-_remoteFunc_self = TypeVar('_remoteFunc_self', bound=builder._RemoteBase)
-_remoteFunc_paramSpec = ParamSpec('_remoteFunc_paramSpec')
-_remoteFunc_return = TypeVar('_remoteFunc_return')
+_remoteFunc_self = TypeVar("_remoteFunc_self", bound=builder._RemoteBase)
+_remoteFunc_paramSpec = ParamSpec("_remoteFunc_paramSpec")
+_remoteFunc_return = TypeVar("_remoteFunc_return")
 
 
-LocalTypeVar = TypeVar('LocalTypeVar')
+LocalTypeVar = TypeVar("LocalTypeVar")
 
 
 class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
-
 	_IsTypeInstruction: Type[builder.InstructionBase]
 	LocalType: Type[LocalTypeVar] | None = None
 	_initialValue: LocalTypeVar | None = None
@@ -69,14 +68,14 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		raise NotImplementedError()
 
-	def _initOperand(self, initialValue: LocalTypeVar | None = None, const: bool =False):
+	def _initOperand(self, initialValue: LocalTypeVar | None = None, const: bool = False):
 		if initialValue is not None:
 			if self.LocalType is None:
 				raise TypeError(f"{type(self).__name__} does not support an initial value")
 			if not isinstance(initialValue, self.LocalType):
 				raise TypeError(
 					f"initialValue must be of type {self.LocalType.__name__} "
-					f"not {type(initialValue).__name__}"
+					f"not {type(initialValue).__name__}",
 				)
 		self._initialValue = initialValue
 		self._mutable = not const
@@ -86,11 +85,11 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 
 	@classmethod
 	def createNew(
-			cls,
-			rob: builder.RemoteOperationBuilder,
-			initialValue: LocalTypeVar | None = None,
-			operandId: lowLevel.OperandId | None = None,
-			const: bool = False
+		cls,
+		rob: builder.RemoteOperationBuilder,
+		initialValue: LocalTypeVar | None = None,
+		operandId: lowLevel.OperandId | None = None,
+		const: bool = False,
 	) -> Self:
 		if operandId is None:
 			operandId = rob.requestNewOperandId()
@@ -113,7 +112,7 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 			if not issubclass(RemoteType, cls):
 				raise TypeError(
 					f"The RemoteType of {type(obj).__name__} is {RemoteType.__name__} "
-					f"which is not a subclass of {cls.__name__}"
+					f"which is not a subclass of {cls.__name__}",
 				)
 		cacheKey = (RemoteType, obj)
 		cachedRemoteObj = rob._remotedArgCache.get(cacheKey)
@@ -121,13 +120,13 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 			if not isinstance(cachedRemoteObj, RemoteType):
 				raise RuntimeError(f"Cache entry for {cacheKey} is not of type {RemoteType.__name__}")
 			rob.getDefaultInstructionList().addComment(
-				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}"
+				f"Using cached {cachedRemoteObj} for constant value {repr(obj)}",
 			)
 			return cast(RemoteType, cachedRemoteObj)
-		with rob.overrideDefaultSection('const'):
+		with rob.overrideDefaultSection("const"):
 			remoteObj = RemoteType.createNew(rob, obj, const=True)
 		rob.getDefaultInstructionList().addComment(
-			f"Using cached {remoteObj} for constant value {repr(obj)}"
+			f"Using cached {remoteObj} for constant value {repr(obj)}",
 		)
 		rob._remotedArgCache[cacheKey] = remoteObj
 		return remoteObj
@@ -154,8 +153,8 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Set(
 				target=self,
-				value=type(self).ensureRemote(self.rob, other)
-			)
+				value=type(self).ensureRemote(self.rob, other),
+			),
 		)
 
 	@remoteMethod
@@ -164,8 +163,8 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Set(
 				target=copy,
-				value=self
-			)
+				value=self,
+			),
 		)
 		return copy
 
@@ -176,8 +175,8 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 				result=result,
 				left=self,
 				right=type(self).ensureRemote(self.rob, other),
-				comparisonType=comparisonType
-			)
+				comparisonType=comparisonType,
+			),
 		)
 		return result
 
@@ -195,17 +194,16 @@ class RemoteBaseObject(builder.Operand, Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.Stringify(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
 
 class RemoteVariant(RemoteBaseObject):
-
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewNull(
-			result=self
+			result=self,
 		)
 
 	def _isType(self, RemoteClass: Type[RemoteBaseObject]) -> RemoteBool:
@@ -215,8 +213,8 @@ class RemoteVariant(RemoteBaseObject):
 		self.rob.getDefaultInstructionList().addInstruction(
 			RemoteClass._IsTypeInstruction(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
@@ -256,7 +254,7 @@ class RemoteVariant(RemoteBaseObject):
 	def isElement(self) -> RemoteBool:
 		return self._isType(RemoteElement)
 
-	_TV_asType = TypeVar('_TV_asType', bound=RemoteBaseObject)
+	_TV_asType = TypeVar("_TV_asType", bound=RemoteBaseObject)
 
 	def asType(self, remoteClass: Type[_TV_asType]) -> _TV_asType:
 		return remoteClass(self.rob, self.operandId)
@@ -265,21 +263,20 @@ class RemoteVariant(RemoteBaseObject):
 class RemoteNull(RemoteBaseObject):
 	_IsTypeInstruction = instructions.IsNull
 
-	def _generateInitInstructions(self,) -> Iterable[instructions.InstructionBase]:
+	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewNull(
-			result=self
+			result=self,
 		)
 
 
 class RemoteIntegral(RemoteBaseObject[LocalTypeVar], Generic[LocalTypeVar]):
-
 	_NewInstruction: Type[builder.InstructionBase]
 	_ctype: Type[_SimpleCData]
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield self._NewInstruction(
 			result=self,
-			value=self._ctype(self.initialValue)
+			value=self._ctype(self.initialValue),
 		)
 
 
@@ -296,8 +293,8 @@ class RemoteBool(RemoteIntegral[bool]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.BoolNot(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
@@ -308,8 +305,8 @@ class RemoteBool(RemoteIntegral[bool]):
 			instructions.BoolAnd(
 				result=result,
 				left=self,
-				right=RemoteBool.ensureRemote(self.rob, other)
-			)
+				right=RemoteBool.ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -320,8 +317,8 @@ class RemoteBool(RemoteIntegral[bool]):
 			instructions.BoolAnd(
 				result=result,
 				left=self,
-				right=RemoteBool.ensureRemote(self.rob, other)
-			)
+				right=RemoteBool.ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -332,8 +329,8 @@ class RemoteBool(RemoteIntegral[bool]):
 			instructions.BoolOr(
 				result=result,
 				left=self,
-				right=RemoteBool.ensureRemote(self.rob, other)
-			)
+				right=RemoteBool.ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -344,14 +341,13 @@ class RemoteBool(RemoteIntegral[bool]):
 			instructions.BoolOr(
 				result=result,
 				left=self,
-				right=RemoteBool.ensureRemote(self.rob, other)
-			)
+				right=RemoteBool.ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
 
 class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
-
 	@remoteMethod
 	def __gt__(self, other: Self | LocalTypeVar) -> RemoteBool:
 		return self._doCompare(lowLevel.ComparisonType.GreaterThan, other)
@@ -375,8 +371,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryAdd(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -387,8 +383,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinarySubtract(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -399,8 +395,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryMultiply(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -411,14 +407,14 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryDivide(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
 	@remoteMethod
 	def __mod__(self, other: Self | LocalTypeVar) -> Self:
-		return (self - (self / other) * other)
+		return self - (self / other) * other
 
 	@remoteMethod
 	def __radd__(self, other: Self | LocalTypeVar) -> Self:
@@ -427,8 +423,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryAdd(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -439,8 +435,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinarySubtract(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -451,8 +447,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryMultiply(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -463,22 +459,22 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 			instructions.BinaryDivide(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
 	@remoteMethod
 	def __rmod__(self, other: Self | LocalTypeVar) -> Self:
-		return (other - (other / self) * self)
+		return other - (other / self) * self
 
 	@remoteMethod_mutable
 	def __iadd__(self, other: Self | LocalTypeVar) -> Self:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceAdd(
 				target=self,
-				value=type(self).ensureRemote(self.rob, other)
-			)
+				value=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return self
 
@@ -487,8 +483,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceSubtract(
 				target=self,
-				value=type(self).ensureRemote(self.rob, other)
-			)
+				value=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return self
 
@@ -497,8 +493,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceMultiply(
 				target=self,
-				value=type(self).ensureRemote(self.rob, other)
-			)
+				value=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return self
 
@@ -507,8 +503,8 @@ class RemoteNumber(RemoteIntegral[LocalTypeVar], Generic[LocalTypeVar]):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.InplaceDivide(
 				target=self,
-				value=type(self).ensureRemote(self.rob, other)
-			)
+				value=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return self
 
@@ -560,7 +556,7 @@ class RemoteString(RemoteBaseObject[str]):
 		yield instructions.NewString(
 			result=self,
 			length=c_ulong(stringLen),
-			value=stringVal
+			value=stringVal,
 		)
 
 	def _concat(self, other: Self | str) -> Self:
@@ -569,8 +565,8 @@ class RemoteString(RemoteBaseObject[str]):
 			instructions.StringConcat(
 				result=result,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return result
 
@@ -588,8 +584,8 @@ class RemoteString(RemoteBaseObject[str]):
 			instructions.StringConcat(
 				result=self,
 				left=self,
-				right=type(self).ensureRemote(self.rob, other)
-			)
+				right=type(self).ensureRemote(self.rob, other),
+			),
 		)
 		return self
 
@@ -599,8 +595,8 @@ class RemoteString(RemoteBaseObject[str]):
 			instructions.NewString(
 				result=self,
 				length=c_ulong(1),
-				value=ctypes.create_unicode_buffer("")
-			)
+				value=ctypes.create_unicode_buffer(""),
+			),
 		)
 		self += other
 
@@ -612,10 +608,9 @@ class RemoteString(RemoteBaseObject[str]):
 
 
 class RemoteArray(RemoteBaseObject):
-
 	_LOCAL_COM_INTERFACES = [
 		UIA.IUIAutomationElement,
-		UIA.IUIAutomationTextRange
+		UIA.IUIAutomationTextRange,
 	]
 
 	def _correctCOMPointers(self, *items: object) -> list:
@@ -640,7 +635,7 @@ class RemoteArray(RemoteBaseObject):
 
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewArray(
-			result=self
+			result=self,
 		)
 
 	@remoteMethod
@@ -650,8 +645,8 @@ class RemoteArray(RemoteBaseObject):
 			instructions.ArrayGetAt(
 				result=result,
 				target=self,
-				index=RemoteIntBase.ensureRemote(self.rob, index)
-			)
+				index=RemoteIntBase.ensureRemote(self.rob, index),
+			),
 		)
 		return result
 
@@ -661,8 +656,8 @@ class RemoteArray(RemoteBaseObject):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySize(
 				result=result,
-				target=self
-			)
+				target=self,
+			),
 		)
 		return result
 
@@ -671,22 +666,22 @@ class RemoteArray(RemoteBaseObject):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayAppend(
 				target=self,
-				value=RemoteBaseObject.ensureRemote(self.rob, value)
-			)
+				value=RemoteBaseObject.ensureRemote(self.rob, value),
+			),
 		)
 
 	@remoteMethod_mutable
 	def __setitem__(
-			self,
-			index: RemoteIntBase | int,
-			value: RemoteBaseObject | int | float | str
+		self,
+		index: RemoteIntBase | int,
+		value: RemoteBaseObject | int | float | str,
 	) -> None:
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArraySetAt(
 				target=self,
 				index=RemoteIntBase.ensureRemote(self.rob, index),
-				value=RemoteBaseObject.ensureRemote(self.rob, value)
-			)
+				value=RemoteBaseObject.ensureRemote(self.rob, value),
+			),
 		)
 
 	@remoteMethod_mutable
@@ -694,8 +689,8 @@ class RemoteArray(RemoteBaseObject):
 		self.rob.getDefaultInstructionList().addInstruction(
 			instructions.ArrayRemoveAt(
 				target=self,
-				index=RemoteIntBase.ensureRemote(self.rob, index)
-			)
+				index=RemoteIntBase.ensureRemote(self.rob, index),
+			),
 		)
 
 
@@ -710,7 +705,7 @@ class RemoteGuid(RemoteBaseObject[GUID]):
 	def _generateInitInstructions(self) -> Iterable[instructions.InstructionBase]:
 		yield instructions.NewGuid(
 			result=self,
-			value=self.initialValue
+			value=self.initialValue,
 		)
 
 

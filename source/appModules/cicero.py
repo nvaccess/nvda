@@ -1,7 +1,7 @@
-"""App module to sleep for Dolphin Cicero
-"""
+"""App module to sleep for Dolphin Cicero"""
 
 import appModuleHandler
+
 
 class AppModule(appModuleHandler.AppModule):
 	sleepMode = True

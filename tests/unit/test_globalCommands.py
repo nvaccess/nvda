@@ -14,7 +14,6 @@ import speech
 
 
 class _FakeInputGesture(inputCore.InputGesture):
-
 	"""An input gesture which does nothing, but can be passed to scripts."""
 
 	def _get_identifiers(self):
@@ -23,7 +22,6 @@ class _FakeInputGesture(inputCore.InputGesture):
 
 
 class SpeechModeSwitching(unittest.TestCase):
-
 	"""Verifies that switching between speech modes with `NVDA+s` works.
 
 	Ideally we will also ensure that name of the new speech mode is presented to the user,

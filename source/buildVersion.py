@@ -54,7 +54,7 @@ def formatVersionForGUI(year, major, minor):
 	"""
 	if None in (year, major, minor):
 		raise ValueError(
-			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor)
+			"Three values must be provided. Got year={}, major={}, minor={}".format(year, major, minor),
 		)
 	if minor == 0:
 		return "{y}.{M}".format(y=year, M=major)

@@ -13,29 +13,28 @@ from .. import NVDAObject
 from logHandler import log
 import watchdog
 
-TV_FIRST=0x1100
-TVIS_STATEIMAGEMASK=0xf000
+TV_FIRST = 0x1100
+TVIS_STATEIMAGEMASK = 0xF000
 
-#Window messages
-TVM_GETITEMSTATE=TV_FIRST+39
-TVM_GETITEM=TV_FIRST+62
-TVM_MAPACCIDTOHTREEITEM=TV_FIRST+42
-TVM_MAPHTREEITEMTOACCID=TV_FIRST+43
-TVM_GETNEXTITEM=TV_FIRST+10
+# Window messages
+TVM_GETITEMSTATE = TV_FIRST + 39
+TVM_GETITEM = TV_FIRST + 62
+TVM_MAPACCIDTOHTREEITEM = TV_FIRST + 42
+TVM_MAPHTREEITEMTOACCID = TV_FIRST + 43
+TVM_GETNEXTITEM = TV_FIRST + 10
 
-#item mask flags
-TVIF_CHILDREN=0x40
+# item mask flags
+TVIF_CHILDREN = 0x40
 
-#Relation codes
-TVGN_ROOT=0
-TVGN_NEXT=1
-TVGN_PREVIOUS=2
-TVGN_PARENT=3
-TVGN_CHILD=4
+# Relation codes
+TVGN_ROOT = 0
+TVGN_NEXT = 1
+TVGN_PREVIOUS = 2
+TVGN_PARENT = 3
+TVGN_CHILD = 4
 
 
 class TreeView(IAccessible):
-
 	def _get_firstChild(self):
 		try:
 			return super(TreeView, self).firstChild
@@ -43,32 +42,42 @@ class TreeView(IAccessible):
 			# Broken commctrl 5 tree view.
 			return BrokenCommctrl5Item.getFirstItem(self)
 
-class TreeViewItem(IAccessible):
 
+class TreeViewItem(IAccessible):
 	def _get_role(self):
 		return controlTypes.Role.TREEVIEWITEM
 
 	def _get_treeview_hItem(self):
-		if not hasattr(self,'_treeview_hItem'):
-			self._treeview_hItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPACCIDTOHTREEITEM,self.IAccessibleChildID,0)
+		if not hasattr(self, "_treeview_hItem"):
+			self._treeview_hItem = watchdog.cancellableSendMessage(
+				self.windowHandle,
+				TVM_MAPACCIDTOHTREEITEM,
+				self.IAccessibleChildID,
+				0,
+			)
 			if not self._treeview_hItem:
 				# Tree views from comctl < 6.0 use the hItem as the child ID.
-				self._treeview_hItem=self.IAccessibleChildID
+				self._treeview_hItem = self.IAccessibleChildID
 		return self._treeview_hItem
 
 	def _get_treeview_level(self):
 		return int(self.IAccessibleObject.accValue(self.IAccessibleChildID))
 
 	def _get_states(self):
-		states=super(TreeViewItem,self)._get_states()
-		hItem=self.treeview_hItem
-		itemStates=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETITEMSTATE,hItem,TVIS_STATEIMAGEMASK)
-		ch=(itemStates>>12)&3
-		if ch>0:
+		states = super(TreeViewItem, self)._get_states()
+		hItem = self.treeview_hItem
+		itemStates = watchdog.cancellableSendMessage(
+			self.windowHandle,
+			TVM_GETITEMSTATE,
+			hItem,
+			TVIS_STATEIMAGEMASK,
+		)
+		ch = (itemStates >> 12) & 3
+		if ch > 0:
 			states.add(controlTypes.State.CHECKABLE)
-		if ch==2:
+		if ch == 2:
 			states.add(controlTypes.State.CHECKED)
-		elif ch==3:
+		elif ch == 3:
 			states.add(controlTypes.State.HALFCHECKED)
 		return states
 
@@ -76,114 +85,146 @@ class TreeViewItem(IAccessible):
 		return None
 
 	def _get_parent(self):
-		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_parent()
-		hItem=self.treeview_hItem
+		if self.IAccessibleChildID == 0:
+			return super(TreeViewItem, self)._get_parent()
+		hItem = self.treeview_hItem
 		if not hItem:
-			return super(TreeViewItem,self)._get_parent()
-		parentItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PARENT,hItem)
-		if parentItem<=0:
-			return super(TreeViewItem,self)._get_parent()
-		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,parentItem,0)
+			return super(TreeViewItem, self)._get_parent()
+		parentItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_PARENT, hItem)
+		if parentItem <= 0:
+			return super(TreeViewItem, self)._get_parent()
+		newID = watchdog.cancellableSendMessage(self.windowHandle, TVM_MAPHTREEITEMTOACCID, parentItem, 0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
-			newID=parentItem
-		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+			newID = parentItem
+		return IAccessible(
+			windowHandle=self.windowHandle,
+			IAccessibleObject=self.IAccessibleObject,
+			IAccessibleChildID=newID,
+		)
 
 	def _get_firstChild(self):
-		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_firstChild()
-		hItem=self.treeview_hItem
+		if self.IAccessibleChildID == 0:
+			return super(TreeViewItem, self)._get_firstChild()
+		hItem = self.treeview_hItem
 		if not hItem:
-			return super(TreeViewItem,self)._get_firstChild()
-		childItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_CHILD,hItem)
-		if childItem<=0:
-			return super(TreeViewItem,self)._get_firstChild()
-		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,childItem,0)
+			return super(TreeViewItem, self)._get_firstChild()
+		childItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_CHILD, hItem)
+		if childItem <= 0:
+			return super(TreeViewItem, self)._get_firstChild()
+		newID = watchdog.cancellableSendMessage(self.windowHandle, TVM_MAPHTREEITEMTOACCID, childItem, 0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
-			newID=childItem
-		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+			newID = childItem
+		return IAccessible(
+			windowHandle=self.windowHandle,
+			IAccessibleObject=self.IAccessibleObject,
+			IAccessibleChildID=newID,
+		)
 
 	def _get_next(self):
-		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_next()
-		hItem=self.treeview_hItem
+		if self.IAccessibleChildID == 0:
+			return super(TreeViewItem, self)._get_next()
+		hItem = self.treeview_hItem
 		if not hItem:
 			return None
-		nextItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,hItem)
-		if nextItem<=0:
+		nextItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_NEXT, hItem)
+		if nextItem <= 0:
 			return None
-		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,nextItem,0)
+		newID = watchdog.cancellableSendMessage(self.windowHandle, TVM_MAPHTREEITEMTOACCID, nextItem, 0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
-			newID=nextItem
-		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+			newID = nextItem
+		return IAccessible(
+			windowHandle=self.windowHandle,
+			IAccessibleObject=self.IAccessibleObject,
+			IAccessibleChildID=newID,
+		)
 
 	def _get_previous(self):
-		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_previous()
-		hItem=self.treeview_hItem
+		if self.IAccessibleChildID == 0:
+			return super(TreeViewItem, self)._get_previous()
+		hItem = self.treeview_hItem
 		if not hItem:
 			return None
-		prevItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,hItem)
-		if prevItem<=0:
+		prevItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_PREVIOUS, hItem)
+		if prevItem <= 0:
 			return None
-		newID=watchdog.cancellableSendMessage(self.windowHandle,TVM_MAPHTREEITEMTOACCID,prevItem,0)
+		newID = watchdog.cancellableSendMessage(self.windowHandle, TVM_MAPHTREEITEMTOACCID, prevItem, 0)
 		if not newID:
 			# Tree views from comctl < 6.0 use the hItem as the child ID.
-			newID=prevItem
-		return IAccessible(windowHandle=self.windowHandle,IAccessibleObject=self.IAccessibleObject,IAccessibleChildID=newID)
+			newID = prevItem
+		return IAccessible(
+			windowHandle=self.windowHandle,
+			IAccessibleObject=self.IAccessibleObject,
+			IAccessibleChildID=newID,
+		)
 
 	def _get_children(self):
-		children=[]
-		child=self.firstChild
+		children = []
+		child = self.firstChild
 		while child:
 			children.append(child)
-			child=child.next
+			child = child.next
 		return children
 
 	def _get_childCount(self):
-		hItem=self.treeview_hItem
+		hItem = self.treeview_hItem
 		if not hItem:
 			return 0
-		childItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_CHILD,hItem)
-		if childItem<=0:
+		childItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_CHILD, hItem)
+		if childItem <= 0:
 			return 0
-		numItems=0
-		while childItem>0:
-			numItems+=1
-			childItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,childItem)
+		numItems = 0
+		while childItem > 0:
+			numItems += 1
+			childItem = watchdog.cancellableSendMessage(
+				self.windowHandle,
+				TVM_GETNEXTITEM,
+				TVGN_NEXT,
+				childItem,
+			)
 		return numItems
 
 	def _get_positionInfo(self):
-		if self.IAccessibleChildID==0:
-			return super(TreeViewItem,self)._get_positionInfo()
-		info={}
-		info['level']=self.treeview_level
-		hItem=self.treeview_hItem
+		if self.IAccessibleChildID == 0:
+			return super(TreeViewItem, self)._get_positionInfo()
+		info = {}
+		info["level"] = self.treeview_level
+		hItem = self.treeview_hItem
 		if not hItem:
 			return info
-		newItem=hItem
-		index=0
-		while newItem>0:
-			index+=1
-			newItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_PREVIOUS,newItem)
-		newItem=hItem
-		numItems=index-1
-		while newItem>0:
-			numItems+=1
-			newItem=watchdog.cancellableSendMessage(self.windowHandle,TVM_GETNEXTITEM,TVGN_NEXT,newItem)
-		info['indexInGroup']=index
-		info['similarItemsInGroup']=numItems
+		newItem = hItem
+		index = 0
+		while newItem > 0:
+			index += 1
+			newItem = watchdog.cancellableSendMessage(
+				self.windowHandle,
+				TVM_GETNEXTITEM,
+				TVGN_PREVIOUS,
+				newItem,
+			)
+		newItem = hItem
+		numItems = index - 1
+		while newItem > 0:
+			numItems += 1
+			newItem = watchdog.cancellableSendMessage(self.windowHandle, TVM_GETNEXTITEM, TVGN_NEXT, newItem)
+		info["indexInGroup"] = index
+		info["similarItemsInGroup"] = numItems
 		return info
 
 	def event_stateChange(self):
-		announceContains = self is api.getFocusObject() and controlTypes.State.EXPANDED in self.states and controlTypes.State.EXPANDED not in getattr(self,'_speakObjectPropertiesCache',{}).get('states',frozenset())
-		super(TreeViewItem,self).event_stateChange()
+		announceContains = (
+			self is api.getFocusObject()
+			and controlTypes.State.EXPANDED in self.states
+			and controlTypes.State.EXPANDED
+			not in getattr(self, "_speakObjectPropertiesCache", {}).get("states", frozenset())
+		)
+		super(TreeViewItem, self).event_stateChange()
 		if announceContains:
 			# Translators: a message reported when opening when expanding a node in a tree view.
 			speech.speakMessage(ngettext("%s item", "%s items", self.childCount) % self.childCount)
+
 
 class BrokenCommctrl5Item(IAccessible):
 	"""Handle broken CommCtrl v5 SysTreeView32 items in 64 bit applications.
@@ -201,8 +242,8 @@ class BrokenCommctrl5Item(IAccessible):
 
 	def initOverlayClass(self):
 		self._uiaObj = None
-		if UIAHandler.handler: 
-			parent=super(BrokenCommctrl5Item, self).parent
+		if UIAHandler.handler:
+			parent = super(BrokenCommctrl5Item, self).parent
 			if parent and parent.hasFocus:
 				try:
 					kwargs = {}
@@ -236,7 +277,12 @@ class BrokenCommctrl5Item(IAccessible):
 		# We need to wrap related UIA objects so that the ancestry will return to IAccessible for the tree view itself.
 		if not uiaObj:
 			return None
-		return BrokenCommctrl5Item(IAccessibleObject=self.IAccessibleObject, IAccessibleChildID=self.IAccessibleChildID, windowHandle=self.windowHandle, _uiaObj=uiaObj)
+		return BrokenCommctrl5Item(
+			IAccessibleObject=self.IAccessibleObject,
+			IAccessibleChildID=self.IAccessibleChildID,
+			windowHandle=self.windowHandle,
+			_uiaObj=uiaObj,
+		)
 
 	def _get_parent(self):
 		if self._uiaObj:
@@ -264,8 +310,7 @@ class BrokenCommctrl5Item(IAccessible):
 
 	@classmethod
 	def getFirstItem(cls, treeObj):
-		"""Get an instance for the first item in a given tree view.
-		"""
+		"""Get an instance for the first item in a given tree view."""
 		if not UIAHandler.handler:
 			return None
 		# Get a UIA object for the tree view by getting the root object for the window.
@@ -282,4 +327,9 @@ class BrokenCommctrl5Item(IAccessible):
 			return None
 		# The IAccessibleChildID for this object isn't really used.
 		# However, it must not be 0, as 0 is the tree view itself.
-		return cls(IAccessibleObject=treeObj.IAccessibleObject, IAccessibleChildID=1, windowHandle=treeObj.windowHandle, _uiaObj=uiaObj)
+		return cls(
+			IAccessibleObject=treeObj.IAccessibleObject,
+			IAccessibleChildID=1,
+			windowHandle=treeObj.windowHandle,
+			_uiaObj=uiaObj,
+		)

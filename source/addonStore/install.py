@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -41,13 +41,11 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 				"addonStore",
 				# Translators: The message displayed when an error occurs when opening an add-on package for adding.
 				# The %s will be replaced with the path to the add-on that could not be opened.
-				"Failed to open add-on package file at {filePath} - missing file or invalid file format"
-			).format(filePath=addonPath)
+				"Failed to open add-on package file at {filePath} - missing file or invalid file format",
+			).format(filePath=addonPath),
 		)
 
-	if not bundle.isCompatible and not (
-		bundle.canOverrideCompatibility and bundle._hasOverriddenCompat
-	):
+	if not bundle.isCompatible and not (bundle.canOverrideCompatibility and bundle._hasOverriddenCompat):
 		# This should not happen, only compatible or overridable add-ons are
 		# intended to be presented in the add-on store.
 		raise DisplayableError(
@@ -55,8 +53,9 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 				"addonStore",
 				# Translators: The message displayed when an add-on is not supported by this version of NVDA.
 				# The %s will be replaced with the path to the add-on that is not supported.
-				"Add-on not supported %s"
-			) % addonPath
+				"Add-on not supported %s",
+			)
+			% addonPath,
 		)
 	return bundle
 
@@ -70,7 +69,7 @@ def _getPreviouslyInstalledAddonById(addon: "AddonBundle") -> Optional["AddonHan
 
 
 def installAddon(addonPath: PathLike) -> None:
-	""" Installs the addon at path.
+	"""Installs the addon at path.
 	Any error messages / warnings are presented to the user via a GUI message box.
 	If attempting to install an addon that is pending removal, it will no longer be pending removal.
 	@note See also L{gui.addonGui.installAddon}
@@ -83,20 +82,22 @@ def installAddon(addonPath: PathLike) -> None:
 	bundle = _getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
-	try:
-		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
-		if prevAddon:
-			prevAddon.requestRemove()
-	except addonHandler.AddonError:  # Handle other exceptions as they are known
-		log.error("Error installing addon bundle from %s" % addonPath, exc_info=True)
+	addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+	if bundle._installExceptions:
+		log.error(f"Error(s) installing addon bundle from {addonPath}")
+		for e in bundle._installExceptions:
+			log.error(e, exc_info=True)
 		raise DisplayableError(
 			displayMessage=pgettext(
 				"addonStore",
 				# Translators: The message displayed when an error occurs when installing an add-on package.
 				# The %s will be replaced with the path to the add-on that could not be installed.
-				"Failed to install add-on from %s"
-			) % addonPath
+				"Failed to install add-on from %s",
+			)
+			% addonPath,
 		)
-	finally:
-		if addonObj is not None:
-			addonObj._cleanupAddonImports()
+	else:
+		if prevAddon:
+			prevAddon.requestRemove()
+	if addonObj is not None:
+		addonObj._cleanupAddonImports()

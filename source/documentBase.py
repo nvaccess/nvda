@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2022 NV Access Limited
+# Copyright (C) 2017-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -34,12 +34,13 @@ class _Movement(str, Enum):
 @dataclass
 class _TableSelection:
 	"""
-		Caches information about user navigating around the table.
-		This class is used to store true row/column number when navigating through merged cells.
-		lastRow/lastCol store coordinates of the last cell user explicitly navigated to.
-		If they don't match current selection we invalidate this cache.
-		If they match, we use trueRow/trueCol to maintain row/column through merged cells.
+	Caches information about user navigating around the table.
+	This class is used to store true row/column number when navigating through merged cells.
+	lastRow/lastCol store coordinates of the last cell user explicitly navigated to.
+	If they don't match current selection we invalidate this cache.
+	If they match, we use trueRow/trueCol to maintain row/column through merged cells.
 	"""
+
 	axis: _Axis
 	lastRow: int
 	lastCol: int
@@ -54,6 +55,7 @@ class _TableCell:
 	"""
 	Contains information about a cell in the table with matching tableID
 	"""
+
 	tableID: _TableID
 	row: int
 	col: int
@@ -71,17 +73,18 @@ class TextContainerObject(AutoPropertyObject):
 		raise NotImplementedError
 
 	def makeTextInfo(self, position) -> textInfos.TextInfo:
-		return self.TextInfo(self,position)
+		return self.TextInfo(self, position)
 
 	selection: textInfos.TextInfo
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
 
-	def _set_selection(self,info):
+	def _set_selection(self, info):
 		info.updateSelection()
 
-class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
+
+class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 	"""
 	A document that supports standard table navigiation comments (E.g. control+alt+arrows to move between table cells).
 	The document could be an NVDAObject, or a BrowseModeDocument treeIntercepter for example.
@@ -106,16 +109,16 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				if (
 					isinstance(field, textInfos.FieldCommand)
 					and field.command == "controlStart"
-					and field.field.get('table-layout')
+					and field.field.get("table-layout")
 				):
-					tableID = field.field.get('table-id')
+					tableID = field.field.get("table-id")
 					if tableID is not None:
 						layoutIDs.add(tableID)
 		return layoutIDs
 
 	def _getTableCellCoords(
-			self,
-			info: textInfos.TextInfo,
+		self,
+		info: textInfos.TextInfo,
 	) -> _TableCell:
 		"""
 		Fetches information about the deepest table cell at the given position.
@@ -126,17 +129,17 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		if info.isCollapsed:
 			info = info.copy()
 			info.expand(textInfos.UNIT_CHARACTER)
-		fields=list(info.getTextWithFields())
+		fields = list(info.getTextWithFields())
 		layoutIDs = self._maybeGetLayoutTableIds(info)
 		for field in reversed(fields):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "controlStart"):
 				# Not a control field.
 				continue
 			attrs = field.field
-			tableID=attrs.get('table-id')
+			tableID = attrs.get("table-id")
 			if tableID is None or tableID in layoutIDs:
 				continue
-			if "table-columnnumber" in attrs and not attrs.get('table-layout'):
+			if "table-columnnumber" in attrs and not attrs.get("table-layout"):
 				break
 		else:
 			raise LookupError("Not in a table cell")
@@ -149,9 +152,9 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		)
 
 	def _getTableCellCoordsCached(
-			self,
-			info: textInfos.TextInfo,
-			axis: Optional[_Axis] = None,
+		self,
+		info: textInfos.TextInfo,
+		axis: Optional[_Axis] = None,
 	) -> _TableCell:
 		cell = self._getTableCellCoords(info)
 
@@ -208,7 +211,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				# Not a table control field.
 				continue
 			attrs = field.field
-			tableID = attrs.get('table-id')
+			tableID = attrs.get("table-id")
 			if tableID is None or tableID in layoutIDs:
 				continue
 			break
@@ -221,7 +224,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			raise LookupError("Not in a table cell")
 		return (nRows, nCols)
 
-	def _getTableCellAt(self,tableID,startPos,row,column):
+	def _getTableCellAt(self, tableID, startPos, row, column):
 		"""
 		Starting from the given start position, Locates the table cell with the given row and column coordinates and table ID.
 		@param startPos: the position to start searching from.
@@ -233,18 +236,18 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		@type column: int
 		@returns: the table cell's position in the document
 		@rtype: L{textInfos.TextInfo}
-		@raises: LookupError if the cell does not exist 
+		@raises: LookupError if the cell does not exist
 		"""
 		raise NotImplementedError
 
-	_missingTableCellSearchLimit=3 #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
+	_missingTableCellSearchLimit = 3  #: The number of missing  cells L{_getNearestTableCell} is allowed to skip over to locate the next available cell
 
 	def _getNearestTableCell(
-			self,
-			startPos: textInfos.TextInfo,
-			cell: _TableCell,
-			movement: _Movement,
-			axis: _Axis,
+		self,
+		startPos: textInfos.TextInfo,
+		cell: _TableCell,
+		movement: _Movement,
+		axis: _Axis,
 	) -> textInfos.TextInfo:
 		"""
 		Locates the nearest table cell relative to another table cell in a given direction, given its coordinates.
@@ -268,14 +271,14 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			destCol += cell.colSpan if movement == _Movement.NEXT else -1
 
 		# Try and fetch the cell at these coordinates, though  if a  cell is missing, try  several more times moving the coordinates on by one cell each time
-		limit=self._missingTableCellSearchLimit
-		while limit>0:
-			limit-=1
-			if destCol < 1 or destRow<1:
+		limit = self._missingTableCellSearchLimit
+		while limit > 0:
+			limit -= 1
+			if destCol < 1 or destRow < 1:
 				# Optimisation: We're definitely at the edge of the column or row.
 				raise LookupError
 			try:
-				return self._getTableCellAt(tableID,startPos,destRow,destCol)
+				return self._getTableCellAt(tableID, startPos, destRow, destCol)
 			except LookupError:
 				pass
 			if axis == _Axis.ROW:
@@ -285,11 +288,11 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		raise LookupError
 
 	def _getFirstOrLastTableCell(
-			self,
-			startPos: textInfos.TextInfo,
-			cell: _TableCell,
-			movement: _Movement,
-			axis: _Axis
+		self,
+		startPos: textInfos.TextInfo,
+		cell: _TableCell,
+		movement: _Movement,
+		axis: _Axis,
 	) -> textInfos.TextInfo:
 		"""
 		Locates the first or last cell in current row or column given coordinates of current cell.
@@ -335,14 +338,15 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			)
 
 	def _tableFindNewCell(
-			self,
-			movement: Optional[_Movement] = None,
-			axis: Optional[_Axis] = None,
-			selection: Optional[textInfos.TextInfo] = None,
-			raiseOnEdge: bool = False,
+		self,
+		movement: Optional[_Movement] = None,
+		axis: Optional[_Axis] = None,
+		selection: Optional[textInfos.TextInfo] = None,
+		raiseOnEdge: bool = False,
 	) -> Tuple[_TableCell, textInfos.TextInfo, Optional[_TableSelection]]:
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		import ui
+
 		if not selection:
 			selection = self.selection
 		try:
@@ -366,7 +370,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 					self.selection,
 					cell,
 					movement,
-					axis
+					axis,
 				)
 			elif movement is None:
 				info = self._getTableCellAt(cell.tableID, self.selection, cell.row, cell.col)
@@ -385,21 +389,25 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			except LookupError as e:
 				raise RuntimeError("Unable to find current cell.", e)
 			newCell = self._getTableCellCoords(info)
-		tableSelection = _TableSelection(
-			lastRow=newCell.row,
-			lastCol=newCell.col,
-			axis=axis,
-			trueRow=cell.row if axis == _Axis.COLUMN else newCell.row,
-			rowSpan=cell.rowSpan if axis == _Axis.COLUMN else newCell.rowSpan,
-			trueCol=cell.col if axis == _Axis.ROW else newCell.col,
-			colSpan=cell.colSpan if axis == _Axis.ROW else newCell.colSpan,
-		) if movement is not None else None
+		tableSelection = (
+			_TableSelection(
+				lastRow=newCell.row,
+				lastCol=newCell.col,
+				axis=axis,
+				trueRow=cell.row if axis == _Axis.COLUMN else newCell.row,
+				rowSpan=cell.rowSpan if axis == _Axis.COLUMN else newCell.rowSpan,
+				trueCol=cell.col if axis == _Axis.ROW else newCell.col,
+				colSpan=cell.colSpan if axis == _Axis.ROW else newCell.colSpan,
+			)
+			if movement is not None
+			else None
+		)
 		return newCell, info, tableSelection
 
 	def _tableMovementScriptHelper(
-			self,
-			movement: _Movement = _Movement.NEXT,
-			axis: Optional[_Axis] = None
+		self,
+		movement: _Movement = _Movement.NEXT,
+		axis: Optional[_Axis] = None,
 	):
 		# documentBase is a core module and should not depend on these UI modules and so they are imported
 		# at run-time. (#12404)
@@ -426,10 +434,10 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 		self._lastTableSelection = tableSelection
 
 	def _tableSayAll(
-			self,
-			movement: _Movement,
-			axis: _Axis,
-			updateCaret: bool = True,
+		self,
+		movement: _Movement,
+		axis: _Axis,
+		updateCaret: bool = True,
 	) -> None:
 		try:
 			cell, info, _tableSelection = self._tableFindNewCell(
@@ -452,6 +460,7 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 				return newInfo
 			except LookupError as e:
 				raise StopIteration(e)
+
 		oldSelection = self._lastTableSelection
 		bothAxesColumn = oldSelection is not None and axis == _Axis.COLUMN and axis == oldSelection.axis
 		bothAxesRow = oldSelection is not None and axis == _Axis.ROW and axis == oldSelection.axis
@@ -459,104 +468,123 @@ class DocumentWithTableNavigation(TextContainerObject,ScriptableObject):
 			lastRow=cell.row,
 			lastCol=cell.col,
 			axis=axis,
-			trueRow=oldSelection .trueRow if bothAxesColumn else cell.row,
-			rowSpan=oldSelection .rowSpan if bothAxesColumn else cell.rowSpan,
+			trueRow=oldSelection.trueRow if bothAxesColumn else cell.row,
+			rowSpan=oldSelection.rowSpan if bothAxesColumn else cell.rowSpan,
 			trueCol=oldSelection.trueCol if bothAxesRow else cell.col,
-			colSpan=oldSelection .colSpan if bothAxesRow else cell.colSpan,
+			colSpan=oldSelection.colSpan if bothAxesRow else cell.colSpan,
 		)
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.TABLE, info, nextLineFunc, updateCaret)
+		sayAll.SayAllHandler.readText(
+			sayAll.CURSOR.TABLE,
+			info,
+			nextLineFunc,
+			updateCaret,
+			startedFromScript=True,
+		)
 
 	def script_nextRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.NEXT)
+
 	# Translators: the description for the next table row script on browseMode documents.
 	script_nextRow.__doc__ = _("moves to the next table row")
 
 	def script_previousRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.PREVIOUS)
+
 	# Translators: the description for the previous table row script on browseMode documents.
 	script_previousRow.__doc__ = _("moves to the previous table row")
 
 	def script_nextColumn(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.NEXT)
+
 	# Translators: the description for the next table column script on browseMode documents.
 	script_nextColumn.__doc__ = _("moves to the next table column")
 
 	def script_previousColumn(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.PREVIOUS)
+
 	# Translators: the description for the previous table column script on browseMode documents.
 	script_previousColumn.__doc__ = _("moves to the previous table column")
 
 	def script_firstRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.FIRST)
+
 	# Translators: the description for the first table row script on browseMode documents.
 	script_firstRow.__doc__ = _("moves to the first table row")
 
 	def script_lastRow(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.ROW, movement=_Movement.LAST)
+
 	# Translators: the description for the last table row script on browseMode documents.
 	script_lastRow.__doc__ = _("moves to the last table row")
 
 	def script_firstColumn(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.FIRST)
+
 	# Translators: the description for the first table column script on browseMode documents.
 	script_firstColumn.__doc__ = _("moves to the first table column")
 
 	def script_lastColumn(self, gesture):
 		self._tableMovementScriptHelper(axis=_Axis.COLUMN, movement=_Movement.LAST)
+
 	# Translators: the description for the last table column script on browseMode documents.
 	script_lastColumn.__doc__ = _("moves to the last table column")
 
 	def script_sayAllRow(self, gesture):
 		self._tableSayAll(_Movement.NEXT, _Axis.COLUMN)
+
 	script_sayAllRow.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads the row horizontally from the current cell rightwards to the last cell in the row."
+		"Reads the row horizontally from the current cell rightwards to the last cell in the row.",
 	)
 	script_sayAllRow.speakOnDemand = True
-	
 
 	def script_sayAllColumn(self, gesture):
 		self._tableSayAll(_Movement.NEXT, _Axis.ROW)
+
 	script_sayAllColumn.__doc__ = _(
 		# Translators: the description for the sayAll row command
-		"Reads the column vertically from the current cell downwards to the last cell in the column."
+		"Reads the column vertically from the current cell downwards to the last cell in the column.",
 	)
 	script_sayAllColumn.speakOnDemand = True
 
 	def script_speakRow(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.COLUMN, updateCaret=False)
+
 	script_speakRow.__doc__ = _(
 		# Translators: the description for the speak row command
-		"Reads the current row horizontally from left to right "
-		"without moving the system caret."
+		"Reads the current row horizontally from left to right " "without moving the system caret.",
 	)
 	script_speakRow.speakOnDemand = True
 
 	def script_speakColumn(self, gesture):
 		self._tableSayAll(_Movement.FIRST, _Axis.ROW, updateCaret=False)
+
 	script_speakColumn.__doc__ = _(
 		# Translators: the description for the speak column command
-		"Reads the current column vertically from top to bottom "
-		"without moving the system caret."
+		"Reads the current column vertically from top to bottom " "without moving the system caret.",
 	)
 	script_speakColumn.speakOnDemand = True
 
-	def script_toggleIncludeLayoutTables(self,gesture):
+	def script_toggleIncludeLayoutTables(self, gesture):
 		# documentBase is a core module and should not depend on UI, so it is imported at run-time. (#12404)
 		import ui
+
 		if config.conf["documentFormatting"]["includeLayoutTables"]:
 			# Translators: The message announced when toggling the include layout tables browse mode setting.
 			state = _("layout tables off")
-			config.conf["documentFormatting"]["includeLayoutTables"]=False
+			config.conf["documentFormatting"]["includeLayoutTables"] = False
 		else:
 			# Translators: The message announced when toggling the include layout tables browse mode setting.
 			state = _("layout tables on")
-			config.conf["documentFormatting"]["includeLayoutTables"]=True
+			config.conf["documentFormatting"]["includeLayoutTables"] = True
 		ui.message(state)
-	# Translators: Input help mode message for include layout tables command.
-	script_toggleIncludeLayoutTables.__doc__=_("Toggles on and off the inclusion of layout tables in browse mode")
 
-	__gestures={
+	script_toggleIncludeLayoutTables.__doc__ = _(
+		# Translators: Input help mode message for include layout tables command.
+		"Toggles on and off the inclusion of layout tables in browse mode",
+	)
+
+	__gestures = {
 		"kb:control+alt+downArrow": "nextRow",
 		"kb:control+alt+upArrow": "previousRow",
 		"kb:control+alt+rightArrow": "nextColumn",

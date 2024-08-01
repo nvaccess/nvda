@@ -7,6 +7,7 @@
 """Types used in IAccessibleHander.
 Kept here so they can be re-used without having to worry about circular imports.
 """
+
 import enum
 from typing import Tuple
 

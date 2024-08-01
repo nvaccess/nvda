@@ -64,7 +64,7 @@ def getPrimaryDisplayOrientation() -> OrientationState:
 	return OrientationState(
 		width,
 		height,
-		_getOrientationStyle(width=width, height=height)
+		_getOrientationStyle(width=width, height=height),
 	)
 
 
@@ -73,9 +73,9 @@ def _getOrientationStyle(height: int, width: int) -> Orientation:
 
 
 def _getNewOrientationStyle(
-		previousState: OrientationState,
-		height: int,
-		width: int,
+	previousState: OrientationState,
+	height: int,
+	width: int,
 ) -> Optional[Orientation]:
 	"""
 	@returns: Orientation if there has been an orientation state change, otherwise None

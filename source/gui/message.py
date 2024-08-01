@@ -52,6 +52,7 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
 	from gui import mainFrame
+
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1
@@ -70,10 +71,10 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 
 
 def messageBox(
-		message: str,
-		caption: str = wx.MessageBoxCaptionStr,
-		style: int = wx.OK | wx.CENTER,
-		parent: Optional[wx.Window] = None
+	message: str,
+	caption: str = wx.MessageBoxCaptionStr,
+	style: int = wx.OK | wx.CENTER,
+	parent: Optional[wx.Window] = None,
 ) -> int:
 	"""Display a message dialog.
 	Avoid using C{wx.MessageDialog} and C{wx.MessageBox} directly.
@@ -99,6 +100,7 @@ def messageBox(
 	from gui import mainFrame
 	import core
 	from logHandler import log
+
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1

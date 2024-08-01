@@ -1,9 +1,9 @@
 # -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/baum.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
+# brailleDisplayDrivers/baum.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2010-2017 NV Access Limited, Babbage B.V.
 
 from io import BytesIO
 from typing import Union, List, Optional
@@ -33,7 +33,7 @@ BAUM_ROUTING_KEY = b"\x27"
 BAUM_BRAILLE_KEYS = b"\x33"
 BAUM_JOYSTICK_KEYS = b"\x34"
 BAUM_DEVICE_ID = b"\x84"
-BAUM_SERIAL_NUMBER = b"\x8A"
+BAUM_SERIAL_NUMBER = b"\x8a"
 
 BAUM_RSP_LENGTHS = {
 	BAUM_CELL_COUNT: 1,
@@ -51,10 +51,27 @@ KEY_NAMES = {
 	BAUM_ROUTING_KEYS: None,
 	BAUM_ROUTING_KEY: None,
 	BAUM_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
-	BAUM_BRAILLE_KEYS: ("b9", "b10", "b11", None, "c1", "c2", "c3", "c4", # byte 1
-		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"), # byte 2
+	BAUM_BRAILLE_KEYS: (
+		"b9",
+		"b10",
+		"b11",
+		None,
+		"c1",
+		"c2",
+		"c3",
+		"c4",  # byte 1
+		"b1",
+		"b2",
+		"b3",
+		"b4",
+		"b5",
+		"b6",
+		"b7",
+		"b8",
+	),  # byte 2
 	BAUM_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
@@ -66,63 +83,74 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.HID, {
-			"VID_0904&PID_3001",  # RefreshaBraille 18
-			"VID_0904&PID_6101",  # VarioUltra 20
-			"VID_0904&PID_6103",  # VarioUltra 32
-			"VID_0904&PID_6102",  # VarioUltra 40
-			"VID_0904&PID_4004",  # Pronto! 18 V3
-			"VID_0904&PID_4005",  # Pronto! 40 V3
-			"VID_0904&PID_4007",  # Pronto! 18 V4
-			"VID_0904&PID_4008",  # Pronto! 40 V4
-			"VID_0904&PID_6001",  # SuperVario2 40
-			"VID_0904&PID_6002",  # SuperVario2 24
-			"VID_0904&PID_6003",  # SuperVario2 32
-			"VID_0904&PID_6004",  # SuperVario2 64
-			"VID_0904&PID_6005",  # SuperVario2 80
-			"VID_0904&PID_6006",  # Brailliant2 40
-			"VID_0904&PID_6007",  # Brailliant2 24
-			"VID_0904&PID_6008",  # Brailliant2 32
-			"VID_0904&PID_6009",  # Brailliant2 64
-			"VID_0904&PID_600A",  # Brailliant2 80
-			"VID_0904&PID_6201",  # Vario 340
-			"VID_0483&PID_A1D3",  # Orbit Reader 20
-			"VID_0904&PID_6301",  # Vario 4
-		})
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.HID,
+			{
+				"VID_0904&PID_3001",  # RefreshaBraille 18
+				"VID_0904&PID_6101",  # VarioUltra 20
+				"VID_0904&PID_6103",  # VarioUltra 32
+				"VID_0904&PID_6102",  # VarioUltra 40
+				"VID_0904&PID_4004",  # Pronto! 18 V3
+				"VID_0904&PID_4005",  # Pronto! 40 V3
+				"VID_0904&PID_4007",  # Pronto! 18 V4
+				"VID_0904&PID_4008",  # Pronto! 40 V4
+				"VID_0904&PID_6001",  # SuperVario2 40
+				"VID_0904&PID_6002",  # SuperVario2 24
+				"VID_0904&PID_6003",  # SuperVario2 32
+				"VID_0904&PID_6004",  # SuperVario2 64
+				"VID_0904&PID_6005",  # SuperVario2 80
+				"VID_0904&PID_6006",  # Brailliant2 40
+				"VID_0904&PID_6007",  # Brailliant2 24
+				"VID_0904&PID_6008",  # Brailliant2 32
+				"VID_0904&PID_6009",  # Brailliant2 64
+				"VID_0904&PID_600A",  # Brailliant2 80
+				"VID_0904&PID_6201",  # Vario 340
+				"VID_0483&PID_A1D3",  # Orbit Reader 20
+				"VID_0904&PID_6301",  # Vario 4
+			},
+		)
 
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_0403&PID_FE70",  # Vario 40
-			"VID_0403&PID_FE71",  # PocketVario
-			"VID_0403&PID_FE72",  # SuperVario/Brailliant 40
-			"VID_0403&PID_FE73",  # SuperVario/Brailliant 32
-			"VID_0403&PID_FE74",  # SuperVario/Brailliant 64
-			"VID_0403&PID_FE75",  # SuperVario/Brailliant 80
-			"VID_0904&PID_2001",  # EcoVario 24
-			"VID_0904&PID_2002",  # EcoVario 40
-			"VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
-			"VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
-			"VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
-			"VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
-			"VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
-			"VID_0904&PID_2014",  # EcoVario 32
-			"VID_0904&PID_2015",  # EcoVario 64
-			"VID_0904&PID_2016",  # EcoVario 80
-			"VID_0904&PID_3000",  # RefreshaBraille 18
-		})
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.SERIAL,
+			{
+				"VID_0403&PID_FE70",  # Vario 40
+				"VID_0403&PID_FE71",  # PocketVario
+				"VID_0403&PID_FE72",  # SuperVario/Brailliant 40
+				"VID_0403&PID_FE73",  # SuperVario/Brailliant 32
+				"VID_0403&PID_FE74",  # SuperVario/Brailliant 64
+				"VID_0403&PID_FE75",  # SuperVario/Brailliant 80
+				"VID_0904&PID_2001",  # EcoVario 24
+				"VID_0904&PID_2002",  # EcoVario 40
+				"VID_0904&PID_2007",  # VarioConnect/BrailleConnect 40
+				"VID_0904&PID_2008",  # VarioConnect/BrailleConnect 32
+				"VID_0904&PID_2009",  # VarioConnect/BrailleConnect 24
+				"VID_0904&PID_2010",  # VarioConnect/BrailleConnect 64
+				"VID_0904&PID_2011",  # VarioConnect/BrailleConnect 80
+				"VID_0904&PID_2014",  # EcoVario 32
+				"VID_0904&PID_2015",  # EcoVario 64
+				"VID_0904&PID_2016",  # EcoVario 80
+				"VID_0904&PID_3000",  # RefreshaBraille 18
+			},
+		)
 
-		driverRegistrar.addBluetoothDevices(lambda m: any(m.id.startswith(prefix) for prefix in (
-			"Baum SuperVario",
-			"Baum PocketVario",
-			"Baum SVario",
-			"HWG Brailliant",
-			"Refreshabraille",
-			"VarioConnect",
-			"BrailleConnect",
-			"Pronto!",
-			"VarioUltra",
-			"Orbit Reader 20",
-			"Vario 4",
-		)))
+		driverRegistrar.addBluetoothDevices(
+			lambda m: any(
+				m.id.startswith(prefix)
+				for prefix in (
+					"Baum SuperVario",
+					"Baum PocketVario",
+					"Baum SVario",
+					"HWG Brailliant",
+					"Refreshabraille",
+					"VarioConnect",
+					"BrailleConnect",
+					"Pronto!",
+					"VarioUltra",
+					"Orbit Reader 20",
+					"Vario 4",
+				)
+			),
+		)
 
 	@classmethod
 	def getManualPorts(cls):
@@ -141,7 +169,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
 				else:
-					self._dev = hwIo.Serial(port, baudrate=BAUD_RATE, timeout=TIMEOUT, writeTimeout=TIMEOUT, onReceive=self._onReceive)
+					self._dev = hwIo.Serial(
+						port,
+						baudrate=BAUD_RATE,
+						timeout=TIMEOUT,
+						writeTimeout=TIMEOUT,
+						onReceive=self._onReceive,
+					)
 			except EnvironmentError:
 				log.debugWarning("", exc_info=True)
 				continue
@@ -155,7 +189,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Explicitly request device info.
 				# Even where it's supported, BAUM_PROTOCOL_ONOFF doesn't always return device info.
 				self._sendRequest(BAUM_REQUEST_INFO, 0)
-			else: # Serial
+			else:  # Serial
 				# If the protocol is already on, sending protocol on won't return anything.
 				# First ensure it's off.
 				self._sendRequest(BAUM_PROTOCOL_ONOFF, False)
@@ -170,8 +204,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					break
 			if self.numCells:
 				# A display responded.
-				log.info("Found {device} connected via {type} ({port})".format(
-					device=self._deviceID, type=portType, port=port))
+				log.info(
+					"Found {device} connected via {type} ({port})".format(
+						device=self._deviceID,
+						type=portType,
+						port=port,
+					),
+				)
 				break
 			self._dev.close()
 
@@ -215,11 +254,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.write(command + arg)
 		else:
 			arg = arg.replace(ESCAPE, ESCAPE * 2)
-			data = b"".join([
-				ESCAPE,
-				command,
-				arg
-			])
+			data = b"".join(
+				[
+					ESCAPE,
+					command,
+					arg,
+				],
+			)
 			self._dev.write(data)
 
 	def _onReceive(self, data: bytes):
@@ -291,59 +332,61 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		arg = bytes(cells)
 		self._sendRequest(BAUM_DISPLAY_DATA, arg)
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(baum):d2",),
-			"braille_scrollForward": ("br(baum):d5",),
-			"braille_previousLine": ("br(baum):d1",),
-			"braille_nextLine": ("br(baum):d3",),
-			"braille_routeTo": ("br(baum):routing",),
-			"kb:upArrow": ("br(baum):up",),
-			"kb:downArrow": ("br(baum):down",),
-			"kb:leftArrow": ("br(baum):left",),
-			"kb:rightArrow": ("br(baum):right",),
-			"kb:enter": ("br(baum):select",),
-			"showGui": (
-				"br(baum):b9+b1+b3+b4+b5",
-				"br(baum):b10+b1+b3+b4+b5",
-			),
-			"kb:shift+tab": (
-				"br(baum):b9+b1+b3",
-				"br(baum):b10+b1+b3",
-			),
-			"kb:tab": (
-				"br(baum):b9+b4+b6",
-				"br(baum):b10+b4+b6",
-			),
-			"kb:alt": (
-				"br(baum):b9+b1+b3+b4",
-				"br(baum):b10+b1+b3+b4",
-			),
-			"kb:escape": (
-				"br(baum):b9+b1+b5",
-				"br(baum):b10+b1+b5",
-			),
-			"kb:windows+d": (
-				"br(baum):b9+b1+b4+b5",
-				"br(baum):b10+b1+b4+b5",
-			),
-			"kb:windows": (
-				"br(baum):b9+b3+b4",
-				"br(baum):b10+b3+b4",
-			),
-			"kb:alt+tab": (
-				"br(baum):b9+b2+b3+b4+b5",
-				"br(baum):b10+b2+b3+b4+b5",
-			),
-			"sayAll": (
-				"br(baum):b9+b1+b2+b3+b4+b5+b6",
-				"br(baum):b10+b1+b2+b3+b4+b5+b6",
-			),
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(baum):d2",),
+				"braille_scrollForward": ("br(baum):d5",),
+				"braille_previousLine": ("br(baum):d1",),
+				"braille_nextLine": ("br(baum):d3",),
+				"braille_routeTo": ("br(baum):routing",),
+				"kb:upArrow": ("br(baum):up",),
+				"kb:downArrow": ("br(baum):down",),
+				"kb:leftArrow": ("br(baum):left",),
+				"kb:rightArrow": ("br(baum):right",),
+				"kb:enter": ("br(baum):select",),
+				"showGui": (
+					"br(baum):b9+b1+b3+b4+b5",
+					"br(baum):b10+b1+b3+b4+b5",
+				),
+				"kb:shift+tab": (
+					"br(baum):b9+b1+b3",
+					"br(baum):b10+b1+b3",
+				),
+				"kb:tab": (
+					"br(baum):b9+b4+b6",
+					"br(baum):b10+b4+b6",
+				),
+				"kb:alt": (
+					"br(baum):b9+b1+b3+b4",
+					"br(baum):b10+b1+b3+b4",
+				),
+				"kb:escape": (
+					"br(baum):b9+b1+b5",
+					"br(baum):b10+b1+b5",
+				),
+				"kb:windows+d": (
+					"br(baum):b9+b1+b4+b5",
+					"br(baum):b10+b1+b4+b5",
+				),
+				"kb:windows": (
+					"br(baum):b9+b3+b4",
+					"br(baum):b10+b3+b4",
+				),
+				"kb:alt+tab": (
+					"br(baum):b9+b2+b3+b4+b5",
+					"br(baum):b10+b2+b3+b4+b5",
+				),
+				"sayAll": (
+					"br(baum):b9+b1+b2+b3+b4+b5+b6",
+					"br(baum):b10+b1+b2+b3+b4+b5+b6",
+				),
+			},
 		},
-	})
+	)
+
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
@@ -351,12 +394,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")
-			assert(self.model.isalnum())
+			assert self.model.isalnum()
 		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
-			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xfc:
+			if group == BAUM_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xFC:
 				# This is braille input.
 				# 0xfc covers command keys. The space bars are covered by 0x3.
 				self.dots = groupKeysDown >> 8
