@@ -17,10 +17,6 @@ The available options are:
 
 ### Changes
 
-* Component updates:
-  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
-  * Updated setuptools to 72.0 (#16907, @dpy013)
-
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
@@ -38,6 +34,10 @@ The available options are:
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
+* Component updates:
+  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
+  * Updated setuptools to 72.0 (#16907, @dpy013)
+  * Updated Ruff to 0.5.5. (#16868, @LeonarddeR)
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
 * Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
   * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
@@ -45,7 +45,6 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `-j0` will automatically pick the maximum number of available CPU cores. (#16868, @LeonarddeR)
-* Updated Ruff to version 0.5.2. (#16868, @LeonarddeR)
 
 #### Deprecations
 
