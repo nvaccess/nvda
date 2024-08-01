@@ -9,7 +9,17 @@
 * Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
 * Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
+* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+The available options are:
+  * Liblouis (default): Uses formatting markers defined in the selected braille table.
+  * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
+* The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
+### Changes
+
+* Component updates:
+  * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
+  * Updated setuptools to 72.0 (#16907, @dpy013)
 
 ### Bug Fixes
 
@@ -19,15 +29,23 @@
   * UIA in Windows Terminal. (#16873, @codeofdusk)
 * When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
 * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
+* Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
-
+* In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
+* NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
 
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
+* Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
+  * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
+  * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
+  * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
+* Running SCons with the parameter `-j0` will automatically pick the maximum number of available CPU cores. (#16868, @LeonarddeR)
+* Updated Ruff to version 0.5.2. (#16868, @LeonarddeR)
 
 #### Deprecations
 
@@ -108,8 +126,10 @@ A warning message will inform you if you try writing to a non-empty directory. (
   * NVDA will correctly announce radio and checkbox menu items when first entering sub-menus in Google Chrome and Mozilla Firefox. (#14550)
   * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
   * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
+  * No longer cause Google Chrome to crash when closing a document or exiting Chrome. (#16893)
 * NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
 * Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
+* It is once again possible to reset the configuration to factory defaults reliably. (#16755, @Emil-18)
 * NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
 * In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
 * In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
@@ -4994,3 +5014,4 @@ Major highlights of this release include support for 64 bit editions of Windows;
 * NVDA now asks if it should save configuration and restart if the user has just changed the language in the User Interface Settings Dialog. NVDA must be restarted for the language change to fully take effect.
 * If a synthesizer can not be loaded, when choosing it from the synthesizer dialog, a message box alerts the user to the fact.
 * When loading a synthesizer for the first time, NVDA lets the synthesizer choose the most suitable voice, rate and pitch parameters, rather than forcing it to defaults it thinks are ok. This fixes a problem where Eloquence and Viavoice sapi4 synths start speaking way too fast for the first time.
+  
