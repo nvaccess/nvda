@@ -261,7 +261,7 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 	# a symbol also known as "paragraph symbol" or "paragraph marker".
 	# This symbol should translate in braille via LibLouis automatically.
 	# If there is a more appropriate character for your locale,
-	# consider overwriting this (e.g. the reversed pilcrow ⁋).
+	# consider overwriting this (e.g. for Ge'ez ፨).
 	# You can also use Unicode Braille such as ⠘⠏.
 	# Ensure this is consistent with other strings with the context "paragraphMarker".
 	PILCROW = pgettext("paragraphMarker", "¶")
