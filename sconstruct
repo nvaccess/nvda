@@ -164,7 +164,7 @@ numJobs = env.GetOption("num_jobs")
 numCores = multiprocessing.cpu_count()
 if numJobs == 0:
 	numJobs = numCores
-	env.SetOption('num_jobs', numJobs)
+	env.SetOption("num_jobs", numJobs)
 if numJobs < numCores:
 	print(
 		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "

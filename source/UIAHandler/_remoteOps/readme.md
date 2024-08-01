@@ -25,12 +25,12 @@ def code(ra: RemoteAPI):
 	element = ra.newElement(focusElement)
 	# Create a new array to hold the names we collect.
 	names = ra.newArray()
-	# Declare a while loop that will walk up the ancestors and collect the names. 
+	# Declare a while loop that will walk up the ancestors and collect the names.
 	with ra.whileBlock(lambda: element.isNull().inverse()):
 		# Fetch the name property of this element and store it in the array.
 		name = element.getPropertyValue(UIA.UIA_NamePropertyId)
 		names.append(name)
-		# Fetch the element's parent and point element to it. 
+		# Fetch the element's parent and point element to it.
 		parent = element.getParentElement()
 		element.set(parent)
 	# Now back outside the while loop.
@@ -101,7 +101,7 @@ This will be covered more in further sections about control flow.
 But the most important thing to remember here is that you should avoid using any of Python's own control flow (such as if or while, as it most likely will not do what you expected).
 The remote API has all the control flow you need, such as ifBlock, elseBlock, whileBlock, tryBlock, again covered in later sections.
 
-### Method arguments 
+### Method arguments
 When providing arguments to methods, you can use remote values previously declared in the operation, or you can use literal Python values.
 When using literal Python values, these will be automatically remoted as special constant values for you.
 For example:
@@ -248,7 +248,7 @@ element.set(parent)
 This is useful when walking the element tree in a loop.
 
 ### UI Automation text ranges
-#### Declaring a text range 
+#### Declaring a text range
 To create a new remote text range, call `ra.newTextRange`, giving it an existing IUIAutomationTextRange comtypes pointer as its argument:
 ```py
 textRange = ra.newElement(UIATextRange)
@@ -300,10 +300,10 @@ with ra.whileBlock(lambda: counter < 20):
 	# If it fails, break out of the loop.
 	with ra.ifBlock(logicalTempRange.end.moveByUnit(TextUnit_Word, 1) == 0):
 		ra.breakLoop()
-	# If our temp range has passed the end of the original text range, break out of the loop. 
+	# If our temp range has passed the end of the original text range, break out of the loop.
 	with ra.ifBlock(logicalTempRange.end > logicalTextRange.end):
 		ra.breakLoop()
-	# collect the text and add it to the words array. 
+	# collect the text and add it to the words array.
 	text = logicalTempRange.textRange.getText(-1)
 	words.append(text)
 	# collapse the range to the end.
@@ -349,7 +349,7 @@ with ra.whileBlock(lambda: counter < 5):
 `ra.breakLoop` and `ra.continueLoop` methods can be called within the loop body to break or continue respectively.
 
 Please note that the condition of the while loop must be placed in a lambda as it needs to be fully evaluated within the top of the loop.
-If this was not done, the instructions that produced the final boolean condition would appear before the loop and never get re-run on subsequent iterations. 
+If this was not done, the instructions that produced the final boolean condition would appear before the loop and never get re-run on subsequent iterations.
 
 #### try-catch
 If an action causes an error, it is possible to catch the error by placing those actions in a `with` statement using the `ra.tryBlock` method.
@@ -453,7 +453,7 @@ Although the `for` loop will see each yielded value separately, they will only p
 ## Debugging
 It can be tricky to debug a remote operation as it executes in the remote provider.
 Therefore the library contains several features which can help.
- 
+
 ### Dumping instructions
 The library can dump all the instructions to NVDA's log each time an operation is built, by setting the Operation's `enableCompiletimeLogging` keyword argument to True.
 Even if left as False, instructions will still be automatically dumped to NVDA's log if there is an uncaught error while executing, or the instruction limit is reached and it has run out of tries.
@@ -463,7 +463,7 @@ counter = ra.newInt(0, static=True)
 with ra.whileBlock(lambda: counter < 20000):
 	with ra.ifBlock((counter % 1000) == 0):
 		ra.Yield(counter)
-	counter += 1 
+	counter += 1
 ```
 
 And now the instruction dump:
@@ -521,7 +521,7 @@ main:
 --- End --
 ```
 
-Looking at the dump we can see the library stores instructions in three specific sections: 
+Looking at the dump we can see the library stores instructions in three specific sections:
 * `static`: for initializing static instructions. this section is replaced before each execution.
 * `const`: This section holds values which have been automatically remoted, and are used through out the rest of the instructions.
 * `main`: the instructions implementing the main logic of the operation.
@@ -543,13 +543,13 @@ It takes one or more literal strings and or remote values, and concatinates them
 For remote values that are not strings, `logRuntimeMessage` uses the remote value's `stringify` method to produce a string representation of the value.
 
 After the operation is executed, the remote log is marshalled back and dumped to NvDA's log, thereby giving the ability to trace what is happening during the execution.
-Though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled. 
+Though be aware that as remote logging itself involves creating and manipulating remote values, then the number of instructions can change quite significantly with remote logging enabled.
 
 ### Local mode
 When unit testing this library, or in a scenario where remote operations is unavailable but you want to use the exact same algorithm but locally, you can set the Operation's `localMode` keyword argument to True.
 This causes all instructions to be executed locally, rather than in a remote provider.
 This will of course be significantly slower, as every instruction that manipulates an element or text range will be itself one cross-process call.
-However, it is a useful means of testing and debugging, and much care has been taken to ensure that the results and side-effects are identical to executing it remotely. 
+However, it is a useful means of testing and debugging, and much care has been taken to ensure that the results and side-effects are identical to executing it remotely.
 
 This differs some what from Microsoft's original remote operations library which implemented its local mode so that instructions were executed locally at build time, and executing did nothing.
 This library produces instructions just as it would remotely, but it is these low-level instructions that are executed locally at execution time, following all the same rules and limitations that executing remotely would.

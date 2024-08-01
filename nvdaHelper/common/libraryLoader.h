@@ -17,7 +17,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 // A Smart Library handle.
 // Construct it with a handle returned by LoadLibrary or similar.
-// Once the object goes out of scope, FreeLibrary will automatically be called on the handle. 
+// Once the object goes out of scope, FreeLibrary will automatically be called on the handle.
 class CLoadedLibrary {
 	private:
 	HMODULE _hModule {nullptr};
@@ -54,4 +54,3 @@ class CLoadedLibrary {
 	}
 
 };
-

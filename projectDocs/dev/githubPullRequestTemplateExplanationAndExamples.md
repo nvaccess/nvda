@@ -14,12 +14,12 @@ which points to this wiki page, it can be left in place and will not appear once
 Feel free to delete it, i.e. all text up to and including `-->`.
 
 ### Link to issue number:
-Please include the issue number here, including information on how this pull request is related to 
+Please include the issue number here, including information on how this pull request is related to
 it.
 This helps us to keep the information linked together.
 If this is a minor/trivial change an issue does not need to be created.
 If in doubt, please create one.
-Note that Github 
+Note that Github
 [allows you to automatically close issues using keywords](https://help.github.com/en/articles/closing-issues-using-keywords).
 For example, when writing `closes #7777` or `fixes #4242` in the body of the description,
 the mentioned issue will automatically be closed when the pull request is merged into the master
@@ -53,8 +53,8 @@ More broadly, try to answer the following questions:
 - Have you ensured testing coverage across all supported operating systems?
 - Have you considered possible regressions (related features or behaviours that may break)?
 
-Please use this section as an opportunity to try to convince us (and yourself) that your proposed 
-change should be merged. 
+Please use this section as an opportunity to try to convince us (and yourself) that your proposed
+change should be merged.
 
 Often in face to face development it's useful to demonstrate a change, quite often bugs are noticed
 at this point when the new person asks for some variation in testing approach.
