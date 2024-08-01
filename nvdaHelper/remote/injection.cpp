@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <sstream>
 #include <set>
 #include <map>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <shlwapi.h>
 #include <sddl.h>
@@ -101,7 +101,7 @@ HHOOK WINAPI fake_SetWindowsHookExA(int IdHook, HOOKPROC lpfn, HINSTANCE hMod, D
 	inprocThreadsLock.acquire();
 	map<long,HHOOK>::iterator i=hooksByThread->find(dwThreadId);
 	if(i!=hooksByThread->end()) {
-		//Unhook our previous hook for this thread and rehook it again, placing our hook before the non-NVDA hook just registered 
+		//Unhook our previous hook for this thread and rehook it again, placing our hook before the non-NVDA hook just registered
 		if(UnhookWindowsHookEx(i->second)) {
 			i->second=SetWindowsHookEx(IdHook,ourHookProc,NULL,dwThreadId);
 		} else {
@@ -137,7 +137,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		wostringstream mutexNameStream;
 		mutexNameStream<<L"NVDAHelperRemote_inprocMgrThread_"<<GetCurrentProcessId();
 		//Create/open the mutex and wait to gain access.
-		threadMutex=CreateMutex(NULL,FALSE,mutexNameStream.str().c_str()); 
+		threadMutex=CreateMutex(NULL,FALSE,mutexNameStream.str().c_str());
 	}
 	if(!threadMutex) {
 		LOG_ERROR(L"CreateMutex failed, GetLastError returned "<<GetLastError());
@@ -153,7 +153,7 @@ DWORD WINAPI inprocMgrThreadFunc(LPVOID data) {
 		return 0;
 	}
 	nhAssert(dllHandle==tempHandle);
-	// Flush any log messages from other threads queued before the manager thread was started. 
+	// Flush any log messages from other threads queued before the manager thread was started.
 	log_flushQueue();
 	//Register for all winEvents in this process.
 	inprocWinEventHookID=SetWinEventHook(EVENT_MIN,EVENT_MAX,dllHandle,inproc_winEventCallback,GetCurrentProcessId(),0,WINEVENT_INCONTEXT);
@@ -294,8 +294,8 @@ void CALLBACK injection_winEventCallback(HWINEVENTHOOK hookID, DWORD eventID, HW
 //As some incontext callbacks may be called out of context due to 32/64 bit boundaries, and or security issues.
 //We don't want them clogging up NVDA's main message queue.
 DWORD WINAPI outprocMgrThreadFunc(LPVOID data) {
-	HWINEVENTHOOK winEventHookFocusID=0; 
-	HWINEVENTHOOK winEventHookForegroundID=0; 
+	HWINEVENTHOOK winEventHookFocusID=0;
+	HWINEVENTHOOK winEventHookForegroundID=0;
 //Register focus/foreground winEvents
 	if((winEventHookFocusID=SetWinEventHook(EVENT_OBJECT_FOCUS,EVENT_OBJECT_FOCUS,dllHandle,injection_winEventCallback,0,0,WINEVENT_INCONTEXT))==0) {
 		MessageBox(NULL,L"Error registering focus winEvent hook",L"nvdaHelperRemote (outprocMgrThreadFunc)",0);
@@ -325,8 +325,8 @@ DWORD outprocMgrThreadID=0;
 BOOL outprocInitialized=FALSE;
 
 /**
- * Initializes the out-of-process code for NVDAHelper 
- */ 
+ * Initializes the out-of-process code for NVDAHelper
+ */
 BOOL injection_initialize() {
 	if(outprocInitialized) {
 		MessageBox(NULL,L"Already initialized",L"nvdaHelperRemote (injection_initialize)",0);
@@ -390,7 +390,7 @@ BOOL WINAPI DllMain(HINSTANCE hModule,DWORD reason,LPVOID lpReserved) {
 				//Unregister any current windows hooks
 				killRunningWindowsHooks();
 				//Unregister winEvents for this process
-				if(inprocWinEventHookID) { 
+				if(inprocWinEventHookID) {
 					UnhookWinEvent(inprocWinEventHookID);
 					inprocWinEventHookID=0;
 				}
