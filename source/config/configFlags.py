@@ -256,15 +256,25 @@ class OutputMode(DisplayStringIntFlag):
 class ParagraphStartMarker(DisplayStringStrEnum):
 	NONE = ""
 	SPACE = " "
-	PILCROW = "¶"
+	# Translators: This is a paragraph start marker used in braille.
+	# The default symbol is the pilcrow,
+	# a symbol also known as "paragraph symbol" or "paragraph marker".
+	# This symbol should translate in braille via LibLouis automatically.
+	# If there is a more appropriate character for your locale,
+	# consider overwriting this (e.g. the reversed pilcrow ⁋).
+	# You can also use Unicode Braille such as ⠘⠏.
+	# Ensure this is consistent with other strings with the context "paragraphMarker".
+	PILCROW = pgettext("paragraphMarker", "¶")
 
 	@property
 	def _displayStringLabels(self):
 		return {
 			# Translators: This is a label for a paragraph start marker.
-			self.NONE: _("No paragraph start marker (default)"),
+			self.NONE: pgettext("paragraphMarker", "No paragraph start marker (default)"),
 			# Translators: This is a label for a paragraph start marker.
-			self.SPACE: _("Double space (  )"),
+			self.SPACE: pgettext("paragraphMarker", "Double space (  )"),
 			# Translators: This is a label for a paragraph start marker.
-			self.PILCROW: _("Pilcrow (¶)"),
+			# Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
 		}
