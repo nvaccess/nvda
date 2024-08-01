@@ -168,7 +168,7 @@ AddOption(
 )
 # Warn to run the build on multiple threads so it runs faster
 numCores = multiprocessing.cpu_count()
-if (allCores := GetOption("all_cores")):
+if allCores := GetOption("all_cores"):
 	SetOption("num_jobs", numCores)
 if (numJobs := GetOption("num_jobs")) < numCores:
 	msg = "Warning: "
