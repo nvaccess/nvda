@@ -44,6 +44,7 @@ import config
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
+	ParagraphStartMarker,
 	BrailleMode,
 	ReportTableHeaders,
 	OutputMode,
@@ -1143,7 +1144,12 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	textList = []
 	if isAtStart:
 		brailleConfig = config.conf["braille"]
-		if brailleConfig["readByParagraph"] and brailleConfig["paragraphStartMarker"]:
+		if brailleConfig["readByParagraph"] :
+			index = brailleConfig["paragraphStartMarker"]
+			paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
+		else:
+			paragraphStartMarker = None
+		if paragraphStartMarker:
 			textList.append(brailleConfig["paragraphStartMarker"])
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
@@ -1905,11 +1911,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		# When word wrap is enabled, the first block of spaces may be removed from the current window.
 		# This may prevent displaying the start of paragraphs.
 		brailleConfig = config.conf["braille"]
-		if (
-			brailleConfig["readByParagraph"]
-			and brailleConfig["paragraphStartMarker"]
-			and self.regions[-1].rawText.startswith(brailleConfig["paragraphStartMarker"] + TEXT_SEPARATOR)
-		):
+		if brailleConfig["readByParagraph"]:
+			index = brailleConfig["paragraphStartMarker"]
+			paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
+		else:
+			paragraphStartMarker = None
+		if paragraphStartMarker and self.regions[-1].rawText.startswith(paragraphStartMarker + TEXT_SEPARATOR):
 			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
 			# Show paragraph start indicator if it is now at the left of the current braille window
 			if startPos <= len(brailleConfig["paragraphStartMarker"]) + 1:

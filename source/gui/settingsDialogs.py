@@ -4398,7 +4398,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			choices=[marker.displayString for marker in ParagraphStartMarker],
 		)
 		self.bindHelpEvent("BrailleParagraphStartMarkers", self.paragraphStartMarkersComboBox)
-		index = [x.value for x in ParagraphStartMarker].index(config.conf["braille"]["paragraphStartMarker"])
+		index = config.conf["braille"]["paragraphStartMarker"]
 		self.paragraphStartMarkersComboBox.SetSelection(index)
 		if not self.readByParagraphCheckBox.GetValue():
 			self.paragraphStartMarkersComboBox.Disable()
@@ -4509,8 +4509,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.setTether(tetherChoice, auto=False)
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
-		index = self.paragraphStartMarkersComboBox.GetSelection()
-		config.conf["braille"]["paragraphStartMarker"] = [x.value for x in ParagraphStartMarker][index]
+		config.conf["braille"]["paragraphStartMarker"] = self.paragraphStartMarkersComboBox.GetSelection()
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
