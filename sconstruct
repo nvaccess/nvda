@@ -164,7 +164,7 @@ AddOption(
 	action="store_true",
 	dest="all_cores",
 	default=False,
-	help="always use the maximum number of available processor cores",
+	help="Use the maximum number of available processor cores",
 )
 # Warn to run the build on multiple threads so it runs faster
 numCores = multiprocessing.cpu_count()
