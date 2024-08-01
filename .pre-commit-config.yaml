@@ -17,6 +17,7 @@ repos:
   hooks:
     # Checks python syntax
     - id: check-ast
+      exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     - id: check-case-conflict
     - id: check-merge-conflict
     - id: trailing-whitespace
