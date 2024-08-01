@@ -243,24 +243,28 @@ def _executeUpdate(destPath):
 
 	_setStateToNone(state)
 	saveState()
-	executeFlags: set[str] = set()
-	executeOptions: dict[str, str] = {}
-	if config.isInstalledCopy():
-		executeFlags.update("--install", "-m")
-	else:
-		portablePath = globalVars.appDir
-		if os.access(portablePath, os.W_OK):
-			executeFlags.update("--create-portable", "-m")
-			executeOptions.update(
-				("--portable-path", f'"{portablePath}"'),
-				("--config-path", '"{WritePaths.configDir}"'),
-			)
-		else:
-			executeFlags.add("--launcher")
-	executeParams = f"{' '.join(executeOptions)} {' '.join(' '.join(i) for i in executeOptions.items())}"
+	executeParams = _generate_executionParameters()
+	log.info(f"Execution parameters: {executeParams}")
 	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
+
+def _generate_executionParameters():
+    executeFlags: set[str] = set()
+    executeOptions: dict[str, str] = {}
+    if config.isInstalledCopy():
+     executeFlags.update(("--install", "-m"))
+    else:
+     portablePath = globalVars.appDir
+     if os.access(portablePath, os.W_OK):
+      executeFlags.update(("--create-portable", "-m"))
+      executeOptions["--portable-path"] = f'"{portablePath}"'
+     else:
+      executeFlags.add("--launcher")
+    if globalVars.appArgs.disableAddons:
+     executeFlags.add("--disable-addons")
+    executeOptions["--config-path"] = f'"{WritePaths.configDir}"'
+    return f"{' '.join(executeFlags)} {' '.join(' '.join(i) for i in executeOptions.items())}"
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
