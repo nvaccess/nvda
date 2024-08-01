@@ -162,11 +162,15 @@ env.Decider("MD5-timestamp")
 # Warn to run the build on multiple threads so it runs faster
 numJobs = env.GetOption("num_jobs")
 numCores = multiprocessing.cpu_count()
+if numJobs == 0:
+	numJobs = numCores
+	env.SetOption('num_jobs', numJobs)
 if numJobs < numCores:
 	print(
 		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
-		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
+		"Running SCONS with parameter '-j0' will automatically pick all available cores. "
 	)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
