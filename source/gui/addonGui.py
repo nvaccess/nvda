@@ -421,7 +421,7 @@ class IncompatibleAddonsDialog(
 	def onAbout(self, evt: wx.EVT_BUTTON):
 		index: int = self.addonsList.GetFirstSelected()
 		if index < 0:
-			return  # noqa: E701
+			return
 		addon = self.curAddons[index]
 		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 

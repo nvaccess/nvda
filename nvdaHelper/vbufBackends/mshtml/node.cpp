@@ -329,7 +329,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(
 			pHTMLDOMNode2->get_ownerDocument(&pDispDoc);
 			pHTMLDOMNode2->Release();
 			if(pDispDoc) {
-				pDispDoc->QueryInterface(IID_IMarkupContainer2,(void**)&(this->pMarkupContainer2)); 
+				pDispDoc->QueryInterface(IID_IMarkupContainer2,(void**)&(this->pMarkupContainer2));
 				pDispDoc->Release();
 				if(this->pMarkupContainer2) {
 					this->pHTMLChangeSink=new CHTMLChangeSink(this);
@@ -354,7 +354,7 @@ MshtmlVBufStorage_controlFieldNode_t::MshtmlVBufStorage_controlFieldNode_t(
 		SysFreeString(nodeName);
 	}
 }
- 
+
 MshtmlVBufStorage_controlFieldNode_t::~MshtmlVBufStorage_controlFieldNode_t() {
 	if(this->propChangeSink) {
 		if(!(static_cast<CDispatchChangeSink*>(this->propChangeSink)->disconnect())) {

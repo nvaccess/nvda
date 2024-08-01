@@ -16,7 +16,7 @@ There are also several terms in HID which may be confusing to those just beginni
 * Collections
 * Caps (Capabilities)
 
-These terms are described in the subsections below. 
+These terms are described in the subsections below.
 
 #### HID descriptors
 At connection time, a HID device must expose a block of data over the connection called a descriptor.
@@ -46,7 +46,7 @@ On Windows the report ID can be found in the `HIDP_VALUE_CAPS` (value capabiliti
 
 #### HID collections
 HID controls are grouped into collections.
-Some examples might be all the keys on a keyboard, or all the cells in a line of Braille. 
+Some examples might be all the keys on a keyboard, or all the cells in a line of Braille.
 Each defined collection has a Usage Page and a Usage ID so it can be uniquely identified.
 All HID devices have a top-level collection, which is the main point of entry for gathering information about the device, including fetching other collections.
 These other collections are known as Linked collections.
@@ -57,7 +57,7 @@ E.g. `HidP_GetCaps` gets the capabilities of the HID device.
 These include things like the number of input buttons or output values on the device, the size of reports, and the Usage and Usage Page for the device.
 Similarly `HidP_GetButtonCaps` gets the capabilities of all buttons on the device.
 Capabilities of buttons and values include such things as their Usage and Usage Page, whether they represent a range of Usages, and whether they have a NULL state etc.
- 
+
 ### General pattern for supporting HID on Windows
 #### Enumerating HID devices
 * Fetch the class guid for HID devices with `HidD_GetHidGuid`
@@ -66,14 +66,14 @@ Capabilities of buttons and values include such things as their Usage and Usage 
 * For each data structure fetched, call `SetupDiGetDeviceInterfaceDetail` to get a `SP_DEVICE_INTERFACE_DETAIL_DATA` structure.
 * The `SP_DEVICE_INTERFACE_DETAIL_DATA` structure's devicePath member  is the path that should be used to open the device for reading / writing later.
 * Some other properties such as hardwareID may be required to further identify the device, these can be fetched with `SetupDiGetDeviceRegistryProperty`.
-* For an implementation see `listHidDevices` in NVDA's source/hwPortUtils.py 
+* For an implementation see `listHidDevices` in NVDA's source/hwPortUtils.py
 
 #### Opening a HID device
 * Use `CreateFile` to open a HID device, giving it the DevicePath as the file path.
  Note overlapped IO is possible; See `CreateFile` documentation.
  * If this device may need to be opened by other processes at the same time, you will want to specify `FILE_SHARE_READ | FILE_SHARE_WRITE` as well.
 * Once the open device handle is no longer needed, it can be closed with `CloseHandle`.
-* For an implementation see the `Hid` class in NVDA's source/hwIo/base.py 
+* For an implementation see the `Hid` class in NVDA's source/hwIo/base.py
 
 #### Fetching device attributes
 * To fetch info such as vendorID, productID and versionNumber, call `HidD_GetAttributes` on the open device handle.
@@ -85,7 +85,7 @@ Fetching device capabilities, getting data from reports and setting data in repo
 Windows represents the HID descriptor as an opaque value referred to as the preparsed data.
 * Fetch the device's preparsed data with `HidD_GetPreparsedData`, giving it the open device handle.
 Note this must be freed once it is no longer needed with `HidD_FreePreparsedData`.
- 
+
 #### Fetching device capabilities
 * To find out a top-level collection's Usage Page, Usage, number of input and output values, and report sizes, fetch a `HIDP_CAPS` structure for the device with `HidP_GetCaps`, giving the open device handle and the preparsed data.
 
@@ -95,7 +95,7 @@ An array of these structures can be fetched with `HidP_GetValueCaps` for input o
 Sometimes a `HIDP_VALUE_CAPS` structure can represent a range of buttons or values, where minimum and maximum Usage IDs and Data indices are exposed, rather than a specific value.
 Examples of these might be the way that Braille dot input keys are exposed.
 There is only one `HIDP_VALUE_CAPS` structure, covering values from dot1 to dot8.
- 
+
 #### Reading data from the device
 * Use `ReadFile` to read the next available input report from the device.
 The size of data to read in bytes must be equal to the `InputReportByteLength` member of the device's `HIDP_CAPS` structure.
@@ -146,7 +146,7 @@ In other words, the index within its collection.
 this is needed in some implementations to work out which routing key a value represents, as the Usage ID for the value will be just ROUTING_KEY and the collection will be one of the ROUTER_SET_* collection Usage IDs.
 
 #### Writing cells to the device
-* Create a HID output report (block of memory), setting the report ID (first byte) to the value of the ReportID member of the Braille cell `HIDP_VALUE_CAPS` structure found at construction time. 
+* Create a HID output report (block of memory), setting the report ID (first byte) to the value of the ReportID member of the Braille cell `HIDP_VALUE_CAPS` structure found at construction time.
 * Call `HidP_SetUsageValueArray` to place the data (braille cell dot patterns) into the report at the appropriate place, Using the Usage ID and collection number etc from the cell `HIDP_VALUE_CAPS` structure.
 * Send the report to the Braille display using `WriteFile`.
 The number of bytes written will be the value of `HIDP_CAPS.OutputReportByteLength`.

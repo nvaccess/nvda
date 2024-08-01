@@ -330,7 +330,7 @@ class DocumentWindow(PaneClassDC):
 
 	def _get_currentSlide(self):
 		if self.ppActivePaneViewType in (ppViewSlideSorter, ppViewThumbnails, ppViewMasterThumbnails):
-			return None  # noqa: E701
+			return None
 		return super(DocumentWindow, self).currentSlide
 
 	def _get_ppSelection(self):
@@ -1380,7 +1380,7 @@ class SlideShowWindow(PaneClassDC):
 					yield text
 			return
 		if cellShape:
-			return  # noqa: E701
+			return
 		shapeType = shape.type
 		if shapeType == msoGroup:
 			for childShape in shape.groupItems:

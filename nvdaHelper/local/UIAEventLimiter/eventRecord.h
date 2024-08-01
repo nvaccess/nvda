@@ -26,7 +26,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 // which is used to detect and remove duplicate events.
 // The key is made up of the element's runtime ID,
 // plus any extra event params that make the event unique,
-// E.g. event ID, property ID etc. 
+// E.g. event ID, property ID etc.
 
 struct AutomationEventRecord_t {
 	CComPtr<IUIAutomationElement> sender;
@@ -98,7 +98,7 @@ using EventRecordVariant_t = std::variant<AutomationEventRecord_t, FocusChangedE
 
 // @brief A concept to be used with the above event record types
 // that ensures the type has a generateCoalescingKey method,
-// and that the type appears in the EventRecordVariant_t type. 
+// and that the type appears in the EventRecordVariant_t type.
 template<typename T>
 concept EventRecordConstraints = requires(T t) {
 	{ t.generateCoalescingKey() } -> std::same_as<std::vector<int>>;
