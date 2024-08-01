@@ -208,9 +208,7 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField["strikethrough"] = bool(val)
 
 	def _getFormatFieldSuperscriptsAndSubscripts(
-		self,
-		fetch: Callable[[int], int],
-		formatField: textInfos.FormatField,
+		self, fetch: Callable[[int], int], formatField: textInfos.FormatField
 	):
 		textPosition = None
 		val = fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
@@ -302,10 +300,7 @@ class UIATextInfo(textInfos.TextInfo):
 			formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
 
 	def _getFormatFieldAnnotationTypes(
-		self,
-		fetch: Callable[[int], int],
-		formatField: textInfos.FormatField,
-		formatConfig: Dict,
+		self, fetch: Callable[[int], int], formatField: textInfos.FormatField, formatConfig: Dict
 	):
 		annotationTypes = fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
 		# Some UIA implementations return a single value rather than a tuple.

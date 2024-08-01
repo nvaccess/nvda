@@ -31,7 +31,7 @@ In order to improve the NVDA API, changes that will break future compatibility m
 
 This can be done by using a version check to automate deprecation.
 For example, if you wish to replace usages of `deprecatedSymbolName` with `newSymbolName`.
-When we begin work on `NEXT_YEAR`, `deprecatedSymbolName` will no longer be part of the NVDA API and all internal usages must be removed prior.
+When we begin work on `NEXT_YEAR`, `deprecatedSymbolName` will no longer be part of the NVDA API and all internal usages must be removed prior. 
 
 ```python
 from buildVersion import version_year
@@ -65,7 +65,7 @@ import controlTypes
 dir(controlTypes)
 ```
 
-Changes different to moving or renaming symbols need to be considered carefully with a different approach.
+Changes different to moving or renaming symbols need to be considered carefully with a different approach. 
 
 Any API breaking changes such as deprecations marked for removal should be commented with the year of intended removal, and notes on how to implement the API change as an add-on developer and NVDA developer.
 

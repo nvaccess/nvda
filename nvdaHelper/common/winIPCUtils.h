@@ -18,7 +18,7 @@ http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 #ifdef __cplusplus
 extern "C" {
 #endif
-
+ 
 #include <wchar.h>
 
 /**
@@ -33,3 +33,4 @@ size_t generateDesktopSpecificNamespace(wchar_t* buf, size_t cch);
 #endif
 
 #endif
+ 
