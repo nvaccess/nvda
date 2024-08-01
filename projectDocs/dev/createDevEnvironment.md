@@ -46,7 +46,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 
 #### Microsoft Visual Studio
 * Microsoft Visual Studio 2022
-	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022). 
+	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022).
 	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor
 	* The Professional and Enterprise versions are also supported
@@ -93,7 +93,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [wil](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 
-Additionally, the following build time dependencies are included in the miscDeps git submodule: 
+Additionally, the following build time dependencies are included in the miscDeps git submodule:
 
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 

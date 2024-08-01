@@ -97,7 +97,7 @@ For instance:
 
 You may add descriptions for multiple sections.
 The sections are:
- 
+
 * New features
 * Changes
 * Bug fixes

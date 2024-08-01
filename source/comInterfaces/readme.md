@@ -1,5 +1,5 @@
 The comInterfaces package is generated via SCons.
-The logic for this is in `comInterfaces_sconscript`, which uses `comtypes.gen` to read `*.tlb` 
+The logic for this is in `comInterfaces_sconscript`, which uses `comtypes.gen` to read `*.tlb`
 files or via interface IDs.
 
 The interface files have an ID named file (a GUID, followed by a version number) as well as a

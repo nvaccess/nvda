@@ -26,7 +26,7 @@ template <typename t> class displayModelsMap_t: public std::map<t,displayModel_t
 	}
 };
 
-extern std::map<HWND,int> windowsForTextChangeNotifications; 
+extern std::map<HWND,int> windowsForTextChangeNotifications;
 extern displayModelsMap_t<HWND> displayModelsByWindow;
 
 void gdiHooks_inProcess_initialize();

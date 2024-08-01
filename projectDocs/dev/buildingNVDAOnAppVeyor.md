@@ -395,7 +395,7 @@ notifications:
         {{/jobs}}</p></div>
     on_build_success: true
     on_build_failure: true
-    on_build_status_changed: true  
+    on_build_status_changed: true
 ```
 
 Save your edit, and you should now receive detailed email notifications to the committer email address you use with git, whenever a build succeeds or fails.
