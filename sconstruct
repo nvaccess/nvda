@@ -171,12 +171,16 @@ numCores = multiprocessing.cpu_count()
 if (allCores := GetOption("all_cores")):
 	SetOption("num_jobs", numCores)
 if (numJobs := GetOption("num_jobs")) < numCores:
-	print(
-		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+	msg = "Warning: "
+	if allCores:
+		msg += "Providing both the '--all-cores' and '-j'/'--num-jobs' parameters is not supported. "
+	msg += (
+		f"Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
 		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
-		"Running SCONS with parameter '--all-cores' will automatically pick all available cores. "
+		"Running SCONS with parameter '--all-cores' will automatically pick all available cores."
 	)
+	print(msg)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
 
