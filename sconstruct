@@ -178,7 +178,7 @@ if (numJobs := GetOption("num_jobs")) < numCores:
 		f"Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
 		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
-		"Running SCONS with parameter '--all-cores' will automatically pick all available cores."
+		"Running SCONS with parameter '--all-cores' will automatically pick all available cores. "
 	)
 	print(msg)
 else:
