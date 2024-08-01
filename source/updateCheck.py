@@ -241,14 +241,13 @@ def _executeUpdate(destPath: str) -> None:
 	"""Execute the update process.
 
 	:param destPath: The path to the update executable.
-	:raises ValueError: If destPath is empty or not given.
 	"""
 	if not destPath:
-		raise ValueError("destPath must be a non-empty string")
+		log.error("destPath must be a non-empty string.", exc_info=True)
+		return
 
 	_setStateToNone(state)
 	saveState()
-	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
 	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, _generate_updateParameters())):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
 
