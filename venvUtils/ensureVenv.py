@@ -178,7 +178,7 @@ def ensureVenvAndRequirements():
 			"This means that transitive dependencies can get out of sync "
 			"with those used in automated builds. "
 			"Would you like to continue recreating the environment?",
-			default=True,
+			default=False,
 		):
 			return createVenvAndPopulate()
 		return populate()

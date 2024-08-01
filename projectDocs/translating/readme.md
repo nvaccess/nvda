@@ -8,7 +8,7 @@ There are several tasks to be done, and this document hopes to give you an overv
 
 Translators should subscribe to the [NVDA translations mailing list](https://groups.io/g/nvda-translations) hosted at Groups.IO.
 
-It is an English low traffic list devoted to the discussion of translation. 
+It is an English low traffic list devoted to the discussion of translation.
 Important messages that relate to translators will also be sent here, e.g. before official NVDA releases, to remind translators to make sure their localization is up to date.
 
 ## Important Dates
@@ -44,7 +44,7 @@ Read [Files to be Localized](#files-to-be-localized) to learn the translation fo
 You should contact the existing maintainer of your language, and discuss your suggestions and changes.
 Together you should be able to agree on the best translation and terms to be used, and the necessary changes can be made.
 
-You can send an email to the translation mailing list to find out the correct person. 
+You can send an email to the translation mailing list to find out the correct person.
 
 If your language is no longer maintained, you can request to be the new maintainer for the language via the [NVDA translations mailing list](https://groups.io/g/nvda-translations).
 

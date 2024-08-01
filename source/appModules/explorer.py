@@ -70,7 +70,7 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		if not res:
 			return False
 		focus = eventHandler.lastQueuedFocusObject
-		if type(focus) != type(self) or (
+		if type(focus) is not type(self) or (
 			self.event_windowHandle,
 			self.event_objectID,
 			self.event_childID,

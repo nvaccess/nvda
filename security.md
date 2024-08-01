@@ -6,7 +6,7 @@ Please use [our advisory template](./projectDocs/issues/securityAdvisoryTemplate
 Alternatively, please report security issues via an email to [info@nvaccess.org](mailto:info@nvaccess.org).
 
 You should receive an acknowledgement in the advisory or via email response within 3 business days.
-If for some reason you do not, please follow up via email to ensure we received your original message. 
+If for some reason you do not, please follow up via email to ensure we received your original message.
 
 Please include the requested information listed below (as much as you can provide) to help us better understand the nature and scope of the possible issue.
 This information will help us triage your report more quickly.
@@ -61,4 +61,3 @@ As details of the vulnerability will be available in the code repository, immedi
 
 * P1 (Critical): Immediate attention from core developers and/or the Security Advisory Group. Other development tasks may be temporarily deprioritised.
 * P2 (High): Dedicated resources will be allocated, with prioritisation based on severity and available development bandwidth.
-

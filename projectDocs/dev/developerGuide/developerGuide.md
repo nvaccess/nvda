@@ -377,7 +377,7 @@ Both App Modules and Global Plugins share a common look and feel.
 They are both Python source files (with a .py extension), they both define a special class containing all events, scripts and bindings, and they both may define custom classes to access controls, text content and complex documents.
 However, they do differ in some ways.
 
-Custom appModules and globalPlugins can be packaged into NVDA add-ons. 
+Custom appModules and globalPlugins can be packaged into NVDA add-ons.
 This allows easy distribution, and provides a safe way for the user to install and uninstall the custom code.
 Please refer to the [Add-ons section](#Addons) later on in this document.
 
@@ -416,14 +416,14 @@ For example to map the App Module named "time_app_mod" to the "time" executable 
 
     import appModuleHandler
     import globalPluginHandler
-    
-    
+
+
     class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
+
     	def __init__(self, *args, **kwargs):
     		super().__init__(*args, **kwargs)
     		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
-    
+
     	def terminate(self, *args, **kwargs):
     		super().terminate(*args, **kwargs)
     		appModuleHandler.unregisterExecutable("time")
@@ -444,16 +444,16 @@ Note though that if you move outside of Notepad - for instance, to Windows Explo
     --- start ---
     # Notepad App Module for NVDA
     # Developer guide example 1
-    
+
     import appModuleHandler
-    
+
     class AppModule(appModuleHandler.AppModule):
-    
+
     	def event_gainFocus(self, obj, nextHandler):
     		import tones
     		tones.beep(550, 50)
     		nextHandler()
-    
+
     --- end ---
 
 This App Module file starts with two comment lines, which describe what the file is for.
@@ -487,16 +487,16 @@ The following example is same as Notepad app module above except this is for an 
     --- start ---
     # wwahost/test App Module for NVDA
     # Developer guide example 2
-    
+
     from nvdaBuiltin.appModules.wwahost import *
-    
+
     class AppModule(AppModule):
-    
+
     	def event_gainFocus(self, obj, nextHandler):
     		import tones
     		tones.beep(550, 50)
     		nextHandler()
-    
+
     --- end ---
 
 The biggest difference from Notepad app module is where wwahost app module comes from.
@@ -548,18 +548,18 @@ From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and 
     --- start ---
     # Version announcement plugin for NVDA
     # Developer guide example 3
-    
+
     import globalPluginHandler
     from scriptHandler import script
     import ui
     import versionInfo
-    
+
     class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
+
     	@script(gesture="kb:NVDA+shift+v")
     	def script_announceNVDAVersion(self, gesture):
     		ui.message(versionInfo.version)
-    
+
     --- end ---
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
@@ -695,7 +695,7 @@ For example:
     		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
     	)
     	def script_sayDateTime(self, gesture):
-    
+
     --- end ---
 
 In this example, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
@@ -750,14 +750,14 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
     --- start ---
     #Window utility scripts for NVDA
     #Developer guide example 4
-    
+
     import globalPluginHandler
     from scriptHandler import script
     import ui
     import api
-    
+
     class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
+
     	@script(
     		description=_("Announces the window class name of the current focus object"),
     		gesture="kb:NVDA+leftArrow"
@@ -767,7 +767,7 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
     		name = focusObj.name
     		windowClassName = focusObj.windowClassName
     		ui.message("class for %s window: %s" % (name, windowClassName))
-    
+
     	@script(
     		description=_("Announces the window control ID of the current focus object"),
     		gesture="kb:NVDA+rightArrow"
@@ -777,7 +777,7 @@ Once saved in the right place, either restart NVDA or choose Reload Plugins foun
     		name = focusObj.name
     		windowControlID = focusObj.windowControlID
     		ui.message("Control ID for %s window: %d" % (name, windowControlID))
-    
+
     --- end ---
 ### Events {#events}
 
@@ -838,11 +838,11 @@ As always, the file must have a .py extension.
 
     --- start ---
     import appModuleHandler
-    
+
     class AppModule(appModuleHandler.AppModule):
-    
+
     	sleepMode = True
-    
+
     --- end ---
 ### Providing Custom NVDA Object Classes {#customNVDAObjectClasses}
 
@@ -887,19 +887,19 @@ The following code can be copied and pasted in to a text file, then saved in the
     from NVDAObjects.IAccessible import IAccessible
     import controlTypes
     import ui
-    
+
     class AppModule(appModuleHandler.AppModule):
-    
+
     	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
     		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
     			clsList.insert(0, EnhancedEditField)
-    
+
     class EnhancedEditField(IAccessible):
-    
+
     	@script(gesture="kb:NVDA+l")
     	def script_reportLength(self, gesture):
     		ui.message("%d" % len(self.value))
-    
+
     --- end ---
 ### Making Small Changes to an NVDA Object in App Modules {#smallChangesToNVDAObjectInAppModules}
 
@@ -924,9 +924,9 @@ The following code can be copied and pasted in to a text file, then saved in the
     --- start ---
     import appModuleHandler
     from NVDAObjects.window import Window
-    
+
     class AppModule(appModuleHandler.AppModule):
-    
+
     	def event_NVDAObject_init(self, obj):
     		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
     			obj.name = "Content"
@@ -1047,7 +1047,7 @@ The following plugins and drivers can be included in an add-on:
 
 If you need to execute code as your add-on is being installed or uninstalled from NVDA (e.g. to validate license information or to copy files to a custom location), you can provide a Python file called installTasks.py in the archive which contains special functions that NVDA will call while installing or uninstalling your add-on.
 This file should avoid loading any modules that are not absolutely necessary, especially Python C extensions or dlls from your own add-on, as this could cause later removal of the add-on to fail.
-However, if this does happen, the add-on directory will be renamed and then deleted after the next restart of NVDA. 
+However, if this does happen, the add-on directory will be renamed and then deleted after the next restart of NVDA.
 Finally, it should not depend on the existence or state of other add-ons, as they may not be installed, have already been removed or not yet be initialized.
 
 #### the onInstall function {#onInstall}
@@ -1201,7 +1201,7 @@ See [Snapshot Variables](#PythonConsoleSnapshotVariables) for more details.
 
 The console is similar to the standard interactive Python interpreter.
 Input is accepted one line at a time and processed when enter is pressed.
-Multiple lines can be pasted at once from the clipboard and will be processed one by one. 
+Multiple lines can be pasted at once from the clipboard and will be processed one by one.
 You can navigate through the history of previously entered lines using the up and down arrow keys.
 
 Output (responses from the interpreter) will be spoken when enter is pressed.
