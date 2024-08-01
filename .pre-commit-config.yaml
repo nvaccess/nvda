@@ -1,5 +1,13 @@
 exclude: ^user_docs/(?!en/).*$
 
+# https://pre-commit.ci/
+# Configuration for Continuous Integration service
+ci:
+  skip: [scons-source, checkPot]
+  submodules: true
+  autoupdate_commit_msg: "Pre-commit autoupdate"
+  autofix_commit_msg: "Pre-commit autofix"
+
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
