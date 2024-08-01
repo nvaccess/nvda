@@ -3,7 +3,9 @@ exclude: ^user_docs/(?!en/).*$
 # https://pre-commit.ci/
 # Configuration for Continuous Integration service
 ci:
-  skip: [scons-source, checkPot]
+  # Can't run Windows scripts on Linux
+  # These also do not apply fixes, only run tests
+  skip: [scons-source, checkPot, unitTest, licenseCheck]
   submodules: true
   autoupdate_commit_msg: "Pre-commit autoupdate"
   autofix_commit_msg: "Pre-commit autofix"
