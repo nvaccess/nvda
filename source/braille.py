@@ -1150,7 +1150,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 		else:
 			paragraphStartMarker = None
 		if paragraphStartMarker:
-			textList.append(brailleConfig["paragraphStartMarker"])
+			textList.append(paragraphStartMarker)
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
