@@ -57,6 +57,8 @@ If you are new to the project, or looking for some way to help take a look at:
 	1. CI/CD testing:
 		- Every time a PR has a commit pushed to it, CI/CD checks will be run
 		- [pre-commit.ci](https://pre-commit.ci/) will apply linting fixes.
+			- re-run pre-commit on a pull request by commenting `pre-commit.ci run`.
+			- prevent pre-commit from pushing by putting `[skip ci]`, `[ci skip]`, `[skip pre-commit.ci]`, or `[pre-commit.ci skip]` in the commit message.
 		- AppVeyor will build a copy of NVDA when changes are pushed to your PR.
 		A build artifact will be created for a successful build to allow for testing the PR.
 		- AppVeyor will run system tests and other tests.
