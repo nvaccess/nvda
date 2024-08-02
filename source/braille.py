@@ -1199,7 +1199,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	return TEXT_SEPARATOR.join([x for x in textList if x])
 
 
-def getParagraphStartMarker() -> Optional[str]:
+def getParagraphStartMarker() -> str | None:
 	brailleConfig = config.conf["braille"]
 	if brailleConfig["readByParagraph"]:
 		index = brailleConfig["paragraphStartMarker"]
