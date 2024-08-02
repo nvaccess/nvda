@@ -28,7 +28,7 @@ def __getattr__(attrName: str) -> Any:
 
 ## Required API breaking changes
 
-In order to improve the NVDA API, changes that will break future compatibility may be implemented, as long they retain backwards compatibility until the `20XX.1` release.
+In order to improve the NVDA API, changes that will break future compatibility may be implemented, as long as they retain backwards compatibility until the `20XX.1` release.
 
 This can be done by using a version check to automate deprecation.
 For example, if you wish to replace usages of `deprecatedSymbolName` with `newSymbolName`.
@@ -36,7 +36,7 @@ When we begin work on `NEXT_YEAR`, we update `BACK_COMPAT_TO`, which introduces 
 At this stage, `deprecatedSymbolName` will no longer be part of the NVDA API and all internal usages must be removed prior.
 
 ```python
-from addonAPIversion import BACK_COMPAT_TO
+from addonAPIVersion import BACK_COMPAT_TO
 import NVDAState
 if BACK_COMPAT_TO < (NEXT_YEAR, 1, 0) and NVDAState._allowDeprecatedAPI():
 	deprecatedSymbolName = newSymbolName
