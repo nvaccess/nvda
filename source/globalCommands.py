@@ -3594,6 +3594,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for speak on routing command.
+		description=_("Toggles speaking the character under the cursor when routing cursor in text"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_braille_toggleSpeakOnRouting(self, gesture):
+		state = config.conf["braille"]["speakOnRouting"] = not config.conf["braille"]["speakOnRouting"]
+		if state:
+			# Translators: The message announced when toggling on speaking character when routing.
+			state = _("Speak character when routing cursor in text on")
+		else:
+			# Translators: The message announced when toggling off speaking character when routing.
+			state = _("Speak character when routing cursor in text off")
+		ui.message(state)
+
+	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE,

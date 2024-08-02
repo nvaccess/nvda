@@ -4447,6 +4447,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
 
+		# Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
+		speakOnRoutingText = _("Spea&k character when routing cursor in text")
+		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self, label=speakOnRoutingText),
+		)
+		self.bindHelpEvent("BrailleSettingsSpeakOnRouting", self.speakOnRoutingCheckBox)
+		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4514,6 +4522,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["paragraphStartMarker"] = [marker.value for marker in ParagraphStartMarker][
 			self.paragraphStartMarkersComboBox.GetSelection()
 		]
+		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
