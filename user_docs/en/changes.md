@@ -30,6 +30,7 @@ The available options are:
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
 * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
+* NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
 
 ### Changes for Developers
@@ -46,7 +47,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
-* Running SCons with the parameter `-j0` will automatically pick the maximum number of available CPU cores. (#16868, @LeonarddeR)
+* Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
 
 #### Deprecations
 
