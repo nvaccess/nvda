@@ -1,7 +1,7 @@
 name: Assign Milestone on Close
 
 env:
-  MILESTONE_ID: 80  # 2024.4
+  MILESTONE_ID: ${{ secrets.MILESTONE_ID }}
 
 on:
   issues:
