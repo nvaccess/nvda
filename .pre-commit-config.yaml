@@ -48,13 +48,13 @@ repos:
   hooks:
     - id: scons-source
       name: build c/c++ files
-      entry: cmd.exe /c "scons source -j 0"
+      entry: cmd.exe /c "scons source --all-cores"
       language: system
       pass_filenames: false
       types_or: [c, c++]
     - id: checkPot
       name: translation string check
-      entry: cmd.exe /c "scons checkPot -j 0"
+      entry: cmd.exe /c "scons checkPot --all-cores"
       language: system
       pass_filenames: false
       types: [python]
