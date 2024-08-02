@@ -2163,6 +2163,19 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
+##### Paragraph start marker {#BrailleParagraphStartMarkers}
+
+If "Read by paragraph" is checked, the selected start marker will be displayed to indicate the start of a paragraph.
+This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
+In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
+
+The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, Pilcrow (¶), for more obvious paragraph breaks.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |No paragraph start marker, Double space (  ), Pilcrow (¶)|
+|Default |No paragraph start marker|
+
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
 This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.

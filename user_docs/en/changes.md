@@ -13,6 +13,7 @@
 The available options are:
   * Liblouis (default): Uses formatting markers defined in the selected braille table.
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
+* When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
 ### Changes
