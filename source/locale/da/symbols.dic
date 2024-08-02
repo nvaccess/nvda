@@ -12,6 +12,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -26,6 +28,7 @@ symbols:
 ? sentence ending	spørgsmålstegn	all	always
 ; phrase ending	semikolon	most	always
 : phrase ending	kolon	most	always
+multiple .	flere prikker	all	always
 decimal point		none	always
 in-word '	apostrof	all	norep
 negative number	minus	none	norep
