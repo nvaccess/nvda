@@ -1202,8 +1202,7 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 def getParagraphStartMarker() -> str | None:
 	brailleConfig = config.conf["braille"]
 	if brailleConfig["readByParagraph"]:
-		index = brailleConfig["paragraphStartMarker"]
-		paragraphStartMarker = [x.value for x in ParagraphStartMarker][index]
+		paragraphStartMarker = brailleConfig["paragraphStartMarker"]
 		if paragraphStartMarker == "¶":
 			# Translators: This is a paragraph start marker used in braille.
 			# The default symbol is the pilcrow,

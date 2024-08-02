@@ -85,7 +85,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
-	paragraphStartMarker = integer(min=0, max=2, default=0)
+	paragraphStartMarker = option("", " ", "¶", default="")
 	wordWrap = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
