@@ -44,7 +44,6 @@ import config
 from config.configFlags import (
 	ShowMessages,
 	TetherTo,
-	ParagraphStartMarker,
 	BrailleMode,
 	ReportTableHeaders,
 	OutputMode,
