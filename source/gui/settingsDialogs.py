@@ -4400,7 +4400,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleParagraphStartMarkers", self.paragraphStartMarkersComboBox)
 		paragraphStartMarker = config.conf["braille"]["paragraphStartMarker"]
 		self.paragraphStartMarkersComboBox.SetSelection(
-			[marker.value for marker in ParagraphStartMarker].index(paragraphStartMarker)
+			[marker.value for marker in ParagraphStartMarker].index(paragraphStartMarker),
 		)
 		if not self.readByParagraphCheckBox.GetValue():
 			self.paragraphStartMarkersComboBox.Disable()
