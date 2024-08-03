@@ -4,32 +4,38 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
-const args = window.dialogArguments;
+// Though these should be constants, MSHTML does not support const as of 2024
+var args = window.dialogArguments;
+var copyStatusTimeout = 5000;  // milliseconds before copy status message goes away
 
 function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
-	} else if (e.altKey && e.keyCode === 67) {  // Code for Alt+c for copy button
+	} else if (e.altKey && e.keyCode == 67) {  // Code for Alt+c for copy button
 		onCopyButtonPress();
 	}
 }
 
 function onCopyButtonPress() {
 	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
-	const rng = document.body.createTextRange();
+	var rng = document.body.createTextRange();
 	rng.moveToElementText(messageID);
 	rng.scrollIntoView();
 	rng.select();
-	const success = rng.execCommand("Copy");
+	var success = rng.execCommand("Copy");
 	rng.collapse(false);
 	rng.select();
-	if (args) {  // Notify the user about the copy result
-		if (success) {
-			alert(args.item('copySuccessfulAlertText'));
+	if (args) {
+		if (success) {  // Notify the user about the copy result
+			copyStatusDiv.innerHTML = '<p id="copyStatusText"><strong>' + args.item('copySuccessfulAlertText') + '</strong></p>';
 		} else {
-			alert(args.item('copyFailedAlertText'));
+			copyStatusDiv.innerHTML = '<p id="copyStatusText"><strong>' + args.item('copyFailedAlertText') + '</strong></p>';
 		}
+		// Time out the user alert message
+		setTimeout(function() {
+			copyStatusDiv.innerHTML = '';
+		}, copyStatusTimeout);
 	}
 }
 
@@ -46,13 +52,14 @@ function windowOnLoad() {
 		if (args.item('closeButtonText') != null) {
 			closeButton.innerHTML = args.item('closeButtonText');  // Assign the (translated) label
 			closeButton.style.display = 'inline';  // Display the button
-			buttonDiv.style.display = 'block';  // Display the div
+			buttonDiv.style.display = 'block';  // Display the button section
 		}
 		// If caller wants a copy to clip button
 		if (args.item('copyButtonText') != null) {
 			copyButton.innerHTML = args.item('copyButtonText');  // Assign the (translated) label
 			copyButtonSpan.style.display = 'inline';  // Display the button
-			buttonDiv.style.display = 'block';  // Display the div
+			copyStatusDiv.style.display = 'block';  // Display the copy status
+			buttonDiv.style.display = 'block';  // Display the section
 		}
 	}
 } 
@@ -62,6 +69,7 @@ function windowOnLoad() {
 <body tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
 <div id=messageID></div>
 <div id="buttonDiv" style="display: none;"><hr>
+<div id="copyStatusDiv" role="status" aria-live="polite"></div>
 <span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>
 <span><button id="closeButton" style="display: none;" onclick="onCloseButtonPress();"></button></span>
 </div>
