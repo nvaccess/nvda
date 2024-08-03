@@ -462,6 +462,7 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 
 	pass
 
+
 def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
 	yield window
 	if hasattr(window, "GetChildren"):
