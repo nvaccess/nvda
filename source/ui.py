@@ -88,6 +88,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -
 		style=wx.ICON_ERROR | wx.OK,
 	)
 
+
 def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 	"""Warn the user that a browsable message could not be shown because of a component failure.
 
@@ -128,6 +129,7 @@ def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 		style=wx.ICON_ERROR | wx.OK,
 	)
 
+
 def browseableMessage(
 	message: str,
 	title: str | None = None,
@@ -150,6 +152,7 @@ def browseableMessage(
 
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
+
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return
 
@@ -204,7 +207,7 @@ def browseableMessage(
 		_warnBrowsableMessageComponentFailure(title)
 		return
 	finally:
-			gui.mainFrame.postPopup()
+		gui.mainFrame.postPopup()
 
 
 def message(
