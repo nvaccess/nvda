@@ -46,7 +46,6 @@ class myDialog(wx.Dialog):
 from contextlib import contextmanager
 import weakref
 from typing import (
-	Generator,
 	Generic,
 	Optional,
 	Type,
@@ -58,8 +57,6 @@ from typing import (
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
-import config
-from config.configFlags import ColorTheme
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS = 10

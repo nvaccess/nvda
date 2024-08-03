@@ -255,13 +255,12 @@ class OutputMode(DisplayStringIntFlag):
 
 @unique
 class ColorTheme(DisplayStringStrEnum):
-	"""Enumeration for what foreground and background colors to use.
-	"""
+	"""Enumeration for what foreground and background colors to use."""
 
 	AUTO = "auto"
 	DARK = "dark"
 	LIGHT = "light"
-  
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -273,12 +272,13 @@ class ColorTheme(DisplayStringStrEnum):
 			self.DARK: _("Dark"),
 		}
 
+
 @unique
 class ParagraphStartMarker(DisplayStringStrEnum):
 	NONE = ""
 	SPACE = " "
 	PILCROW = "¶"
-  
+
 	@property
 	def _displayStringLabels(self):
 		return {

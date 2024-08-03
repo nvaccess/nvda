@@ -14,7 +14,7 @@ from typing import (
 	List,
 	Optional,
 )
-from config.configFlags import (ColorTheme)
+from config.configFlags import ColorTheme
 import comtypes
 import sys
 import winVersion
@@ -636,11 +636,11 @@ def _setUpWxApp() -> "wx.App":
 			"""
 			pass
 
-		def FilterEvent(self, event:wx.Event):
+		def FilterEvent(self, event: wx.Event):
 			"""FilterEvent is called for every UI event in the entire application.  Keep it quick to
 			avoid slowing everything down."""
 			if isinstance(event, wx.ShowEvent):
-				window : wx.Window = event.EventObject
+				window: wx.Window = event.EventObject
 				_enableDarkMode(window.GetTopLevelParent())
 				window.Refresh()
 			return -1
