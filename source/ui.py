@@ -46,7 +46,7 @@ HTMLDLG_PRINT_TEMPLATE = 0x0080
 HTMLDLG_VERIFY = 0x0100
 
 
-def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> None:
+def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -> None:
 	"""Warn the user that a browsable message could not be shown on a secure screen (sign-on screen / UAC
 	prompt).
 
@@ -88,7 +88,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 		style=wx.ICON_ERROR | wx.OK,
 	)
 
-def _warnBrowsableMessageComponentFailure(title: Optional[str]) -> None:
+def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 	"""Warn the user that a browsable message could not be shown because of a component failure.
 
 	:param title: If provided, the title of the browsable message to give the user more context.
@@ -137,6 +137,7 @@ def browseableMessage(
 ) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
+
 	:param message: The message in either html or text.
 	:param title: The title for the message, defaults to "NVDA Message".
 	:param isHtml: Whether the message is html, defaults to False.
