@@ -144,37 +144,42 @@ def browseableMessage(
 	:param closeButton: Whether to include a "close" button, defaults to False.
 	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
 	"""
+	if title is None:
+		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
+		title = _("NVDA Message")
+
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
-
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return
 
 	htmlFileName = os.path.join(globalVars.appDir, "message.html")
 	if not os.path.isfile(htmlFileName):
+		_warnBrowsableMessageComponentFailure(title)
 		raise LookupError(htmlFileName)
+
 	moniker = POINTER(IUnknown)()
-	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
-	if title is None:
-		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
-		title = _("NVDA Message")
+	try:
+		windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
+	except Exception as e:
+		log.error(f"Failed to create URL moniker: {e}")
+		_warnBrowsableMessageComponentFailure(title)
+		return
+
 	if not isHtml:
 		message = f"<pre>{escape(message)}</pre>"
+
 	try:
 		d = comtypes.client.CreateObject("Scripting.Dictionary")
 	except (COMError, OSError):
 		log.error("Scripting.Dictionary component unavailable", exc_info=True)
-		# Store the module level message function in a new variable since it is masked by a local variable with
-		# the same name
-		messageFunction = globals()["message"]
-		# Translators: reported when unable to display a browsable message.
-		messageFunction(_("Unable to display browseable message"))
+		_warnBrowsableMessageComponentFailure(title)
 		return
 	d.add("title", title)
 	d.add("message", message)
-	# Translators: A notice to the user that the copy operation succeeded.
+	# Translators: A notice to the user that a copy operation succeeded.
 	d.add("copySuccessfulAlertText", _("Text copied."))
-	# Translators: Notice to the user that the copy operation failed.
+	# Translators: A notice to the user that a copy operation failed.
 	d.add("copyFailedAlertText", _("Couldn't copy to clipboard."))
 	if closeButton:
 		# Translators: The text of a button which closes the window.
@@ -182,17 +187,24 @@ def browseableMessage(
 	if copyButton:
 		# Translators: The text of a button to copy the text of the window to the clipboard.
 		d.add("copyButtonText", _("Copy"))
+
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup()
-	windll.mshtml.ShowHTMLDialogEx(
-		gui.mainFrame.Handle,
-		moniker,
-		HTMLDLG_MODELESS,
-		byref(dialogArgsVar),
-		DIALOG_OPTIONS,
-		None,
-	)
-	gui.mainFrame.postPopup()
+	try:
+		windll.mshtml.ShowHTMLDialogEx(
+			gui.mainFrame.Handle,
+			moniker,
+			HTMLDLG_MODELESS,
+			byref(dialogArgsVar),
+			DIALOG_OPTIONS,
+			None,
+		)
+	except Exception as e:
+		log.error(f"Failed to show HTML dialog: {e}")
+		_warnBrowsableMessageComponentFailure(title)
+		return
+	finally:
+			gui.mainFrame.postPopup()
 
 
 def message(
