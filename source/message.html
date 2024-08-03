@@ -12,6 +12,8 @@ function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
+	} else if (e.altKey && e.keyCode == 67) { // code for Alt+C
+		onCopyButtonPress();
 	}
 }
 
@@ -64,7 +66,7 @@ function windowOnLoad() {
 //-->
 </SCRIPT>
 </HEAD>
-<body tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return handleKeyPress()" >
+<body tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeydown="return handleKeyPress()" >
 <div id=messageID></div>
 <div id="buttonDiv" style="display: none;"><hr>
 <div id="copyStatusDiv" role="status" aria-live="polite"></div>
