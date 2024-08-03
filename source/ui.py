@@ -49,7 +49,8 @@ HTMLDLG_VERIFY = 0x0100
 def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> None:
 	"""Warn the user that a browsable message could not be shown on a secure screen (sign-on screen / UAC
 	prompt).
-	@param title: If provided, the title of the browsable message to give the user more context.
+
+	:param title: If provided, the title of the browsable message to give the user more context.
 	"""
 	log.warning(
 		"While on secure screens browsable messages can not be used."
@@ -87,6 +88,45 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 		style=wx.ICON_ERROR | wx.OK,
 	)
 
+def _warnBrowsableMessageComponentFailure(title: Optional[str]) -> None:
+	"""Warn the user that a browsable message could not be shown because of a component failure.
+
+	:param title: If provided, the title of the browsable message to give the user more context.
+	"""
+	log.warning(
+		"A browsable message could not be shown because of a component failure."
+		f" Attempted to open message with title: {title!r}",
+	)
+
+	if not title:
+		browsableMessageUnavailableMsg: str = _(
+			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+			# because of a component failure.
+			"An error has caused this feature to be unavailable at this time. "
+			"Restarting NVDA or Windows may solve this problem.",
+		)
+	else:
+		browsableMessageUnavailableMsg: str = _(
+			# Translators: This is the message for a warning shown if NVDA cannot open a browsable message window
+			# because of a component failure. This prompt includes the title
+			# of the Window that could not be opened for context.
+			# The {title} will be replaced with the title.
+			# The title may be something like "Formatting".
+			"An error has caused this feature ({title}) to be unavailable at this time. "
+			"Restarting NVDA or Windows may solve this problem.",
+		)
+		browsableMessageUnavailableMsg = browsableMessageUnavailableMsg.format(title=title)
+
+	import wx  # Late import to prevent circular dependency.
+	import gui  # Late import to prevent circular dependency.
+
+	log.debug("Presenting browsable message unavailable warning.")
+	gui.messageBox(
+		browsableMessageUnavailableMsg,
+		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
+		caption=_("Feature unavailable."),
+		style=wx.ICON_ERROR | wx.OK,
+	)
 
 def browseableMessage(
 	message: str,
