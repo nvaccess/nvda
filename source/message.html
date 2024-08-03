@@ -12,8 +12,6 @@ function handleKeyPress(e) {
 	e = e || window.event;
 	if(e.keyCode == 27){ // code for escape
 		window.close();
-	} else if (e.altKey && e.keyCode == 67) {  // Code for Alt+c for copy button
-		onCopyButtonPress();
 	}
 }
 
