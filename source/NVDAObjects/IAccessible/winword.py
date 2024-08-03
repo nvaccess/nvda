@@ -219,7 +219,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 							tempColumnNumber -= 1
 							continue
 						break
-					textList.append(headerCell.range.text)
+					# 7212: Filter the carriage return and bell character from header text.
+					textList.append(headerCell.range.text.removesuffix("\r\a"))
 			else:
 				for headerColumnNumber in range(info.columnNumber, info.columnNumber + info.colSpan):
 					tempRowNumber = rowNumber
@@ -230,7 +231,8 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 							tempRowNumber -= 1
 							continue
 						break
-					textList.append(headerCell.range.text)
+					# 7212: Filter the carriage return and bell character from header text.
+					textList.append(headerCell.range.text.removesuffix("\r\a"))
 			text = " ".join(textList)
 			if text:
 				return text
@@ -380,13 +382,16 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		braille.handler.handleCaretMove(self)
 
 	@script(
-		# Translators: a description for a script
-		description=_("Reports the text of the comment where the system caret is located."),
+		description=_(
+			# Translators: a description for a script
+			"Reports the text of the comment where the system caret is located."
+			"If pressed twice, presents the information in browse mode.",
+		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCurrentComment(self, gesture):
+	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
 		info = self.makeTextInfo(textInfos.POSITION_CARET)
 		info.expand(textInfos.UNIT_CHARACTER)
 		fields = info.getTextWithFields(formatConfig={"reportComments": True})
@@ -401,7 +406,15 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 					except COMError:
 						break
 					if text:
-						ui.message(text)
+						repeats = scriptHandler.getLastScriptRepeatCount()
+						if repeats == 0:
+							ui.message(text)
+						elif repeats == 1:
+							ui.browseableMessage(
+								text,
+								# Translators: title for Word comment dialog.
+								_("Comment"),
+							)
 						return
 		# Translators: a message when there is no comment to report in Microsoft Word
 		ui.message(_("No comments"))
@@ -452,10 +465,10 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				except COMError:
 					pass
 				if foundCell:
-					break  # noqa: E701
+					break
 				curThisIndex = incdecFunc(curThisIndex, 1)
 			if foundCell:
-				break  # noqa: E701
+				break
 			curOtherIndex -= 1
 		if not foundCell:
 			ui.message(_("Edge of table"))
@@ -564,7 +577,7 @@ class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 		for field in fields:
 			if isinstance(field, str):
 				if inBold:
-					textList.append(field)  # noqa: E701
+					textList.append(field)
 			elif field.field:
 				inBold = field.field.get("bold", False)
 			if not inBold and len(textList) > 0:

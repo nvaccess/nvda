@@ -84,6 +84,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		uniqueID = obj.IA2UniqueID
 		if uniqueID is not None:
 			controlField["uniqueID"] = uniqueID
+		# #16631: Outlook.com /modern Outlook represent addresses in To/CC/BCC fields as labelled buttons.
+		# These buttons are non-contenteditable within a parent contenteditable.
+		# Ensure their label (name) is reported as the content
+		# as the caret cannot move through them.
+		if (
+			obj.role == controlTypes.role.Role.BUTTON
+			and controlTypes.state.State.EDITABLE not in obj.states
+			and obj.parent
+			and controlTypes.state.State.EDITABLE in obj.parent.states
+		):
+			controlField["content"] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
@@ -100,10 +111,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# means this is not the insertion point at the end of a line.
 			if start != end:
 				return False
-			# If there is a line feed before us, this is an empty line. We don't want
-			# to do any special adjustment in this case. Otherwise, we will report the
-			# previous line instead of the empty one.
-			if start > 0 and caretObj.IAccessibleTextObject.text(start - 1, start) == "\n":
+			# If this is the end of the object, it might be the end of a line, but it
+			# might just be the end of the object on a line containing multiple objects.
+			# It's also possible that this is an empty last line, in which case any
+			# adjustment would cause us to report the previous line instead of the empty
+			# one. Either way, we don't need the special end of line adjustment.
+			if start > 0 and start == caretObj.IAccessibleTextObject.nCharacters:
 				return False
 			return True
 		except COMError:
@@ -671,8 +684,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				pass
 		return ti, obj
 
-	def move(self, unit, direction, endPoint=None):
+	def move(
+		self,
+		unit: str,
+		direction: int,
+		endPoint: str | None = None,
+	) -> int:
 		if direction == 0:
+			return 0
+		if self.obj.IAccessibleTextObject.nCharacters == 0:
 			return 0
 
 		if not endPoint or endPoint == "start":

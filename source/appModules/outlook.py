@@ -519,7 +519,7 @@ class UIAGridRow(RowWithFakeNavigation, UIA):
 				unread = False
 			# Translators: when an email is unread
 			if unread:
-				textList.append(_("unread"))  # noqa: E701
+				textList.append(_("unread"))
 			try:
 				mapiObject = selection.mapiObject
 			except COMError:
@@ -543,14 +543,14 @@ class UIAGridRow(RowWithFakeNavigation, UIA):
 				attachmentCount = 0
 			# Translators: when an email has attachments
 			if attachmentCount > 0:
-				textList.append(_("has attachment"))  # noqa: E701
+				textList.append(_("has attachment"))
 			try:
 				importance = selection.importance
 			except COMError:
 				importance = 1
 			importanceLabel = importanceLabels.get(importance)
 			if importanceLabel:
-				textList.append(importanceLabel)  # noqa: E701
+				textList.append(importanceLabel)
 			try:
 				messageClass = selection.messageClass
 			except COMError:
@@ -587,7 +587,7 @@ class UIAGridRow(RowWithFakeNavigation, UIA):
 			if selection and UIAClassName == "FlagField":
 				try:
 					if not selection.flagIcon and not selection.flagStatus:
-						continue  # noqa: E701
+						continue
 				except COMError:
 					continue
 			# the category field should only be reported if the objectModel's categories property actually contains a valid string.
@@ -595,7 +595,7 @@ class UIAGridRow(RowWithFakeNavigation, UIA):
 			elif selection and UIAClassName == "CategoryField":
 				try:
 					if not selection.categories:
-						continue  # noqa: E701
+						continue
 				except COMError:
 					continue
 			# And we don't care about anything else that is not a text element.
@@ -636,7 +636,7 @@ class UIAGridRow(RowWithFakeNavigation, UIA):
 	def _get_positionInfo(self):
 		info = super(UIAGridRow, self).positionInfo
 		if info is None:
-			info = {}  # noqa: E701
+			info = {}
 		UIAClassName = self.UIAElement.cachedClassName
 		if UIAClassName == "ThreadHeader":
 			info["level"] = 1

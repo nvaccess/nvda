@@ -58,27 +58,27 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 // Definition from Win98DDK version of IMM.H
 typedef struct tagINPUTCONTEXT2 {
-    HWND            hWnd;                           
-    BOOL            fOpen;                          
-    POINT           ptStatusWndPos;                 
-    POINT           ptSoftKbdPos;                   
-    DWORD           fdwConversion;                  
-    DWORD           fdwSentence;                    
-    union {                                           
-        LOGFONTA    A;                              
-        LOGFONTW    W;                              
-    } lfFont;                                           
-    COMPOSITIONFORM cfCompForm;                     
-    CANDIDATEFORM   cfCandForm[4];                  
-    HIMCC           hCompStr;                       
-    HIMCC           hCandInfo;                      
-    HIMCC           hGuideLine;                     
-    HIMCC           hPrivate;                       
-    DWORD           dwNumMsgBuf;                    
-    HIMCC           hMsgBuf;                        
-    DWORD           fdwInit;                        
-    DWORD           dwReserve[3];                   
-} INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;  
+    HWND            hWnd;
+    BOOL            fOpen;
+    POINT           ptStatusWndPos;
+    POINT           ptSoftKbdPos;
+    DWORD           fdwConversion;
+    DWORD           fdwSentence;
+    union {
+        LOGFONTA    A;
+        LOGFONTW    W;
+    } lfFont;
+    COMPOSITIONFORM cfCompForm;
+    CANDIDATEFORM   cfCandForm[4];
+    HIMCC           hCompStr;
+    HIMCC           hCandInfo;
+    HIMCC           hGuideLine;
+    HIMCC           hPrivate;
+    DWORD           dwNumMsgBuf;
+    HIMCC           hMsgBuf;
+    DWORD           fdwInit;
+    DWORD           dwReserve[3];
+} INPUTCONTEXT2, *PINPUTCONTEXT2, NEAR *NPINPUTCONTEXT2, FAR *LPINPUTCONTEXT2;
 
 HWND curIMEWindow=NULL;
 static HWND candidateIMEWindow=0;

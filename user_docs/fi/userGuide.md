@@ -39,8 +39,17 @@ Tärkeimpiä ominaisuuksia ovat:
 
 ### Järjestelmävaatimukset {#SystemRequirements}
 
+#### Suositeltavat vaatimukset {#MinimumSystemRequirements}
+* Käyttöjärjestelmät: Windows 10:n, 11:n ja Server 2022:n 64-bittiset versiot
+  * Sekä  AMD64- että ARM64-versioita tuetaan.
+* Vähintään 150 Mt tallennustilaa.
+* Vähintään 4 Gt RAM-muistia.
+
+#### Vähimmäisvaatimukset {#MinimumSystemRequirements}
 * Käyttöjärjestelmät: kaikki 32- ja 64-bittiset Windows 8.1:n, 10:n ja 11:n versiot sekä palvelinversiot Windows Server 2012 R2:sta alkaen.
   * Sekä AMD64- että ARM64-versioita tuetaan.
+  * Huom: 32-bittiset käyttöjärjestelmät eivät enää ole aktiivisen tuen piirissä.
+  * Huomaa, että Windows 8.1 ja Server  2022:ta vanhemmat versiot eivät enää ole aktiivisen tuen piirissä.
 * Vähintään 150 Mt tallennustilaa.
 
 ### Kansainvälisyys {#Internationalization}
@@ -352,6 +361,9 @@ Lisäosan tilana näkyy "Päivitys saatavilla".
 Luettelossa näytetään tällä hetkellä asennettuna oleva  ja saatavilla oleva versio.
 Avaa Toiminnot-valikko painamalla lisäosan kohdalla `Enteriä` ja valitse "Päivitä"-vaihtoehto.
 
+Saat oletusarvoisesti NVDA:n käynnistyksen jälkeen ilmoituksen, jos lisäosapäivityksiä on saatavilla.
+Lisätietoja tästä toiminnosta ja sen asetuksista löytyy kohdasta [Päivitysilmoitukset](#AutomaticAddonUpdates).
+
 ### Yhteisö {#Community}
 
 NVDA:lla on vilkas käyttäjäyhteisö.
@@ -425,15 +437,21 @@ Tällä asetuksella voit valita, kopioidaanko käynnissä olevan NVDA:n asetukse
 Asetuksia ei kopioida tietokoneen muille käyttäjille eikä Windowsin sisäänkirjautumisen aikana tai [muissa suojatuissa ruuduissa](#SecureScreens) käytettäväksi.
 Tämä vaihtoehto on käytettävissä vain massamuistiversiosta asennettaessa.
 
-### Massamuistiversion luominen {#CreatingAPortableCopy}
+### Massamuistiversion luonti {#CreatingAPortableCopy}
 
 Jos luot massamuistiversion suoraan ladatusta NVDA:n asennuspaketista, paina Luo massamuistiversio -painiketta.
 Mikäli olet jo sulkenut tämän valintaikkunan tai käytät NVDA:n asennettua versiota, valitse Luo massamuistiversio -vaihtoehto, joka löytyy NVDA-valikosta Työkalut-valikon alta.
 
-Valitse näkyviin tulevassa valintaikkunassa sijainti, jonne massamuistiversio luodaan.
+Näkyviin tulevassa valintaikkunassa voit valita, minne massamuistiversio luodaan.
 Sijainti voi olla kiintolevyllä, USB-muistitikulla tai muulla siirrettävällä tallennusvälineellä oleva hakemisto.
+Massamuistiversiolle luodaan oletusarvoisesti uusi hakemisto.
+Voit myös käyttää olemassa olevaa hakemistoa, jolloin koko sen sisältö korvataan.
+Mikäli olemassa oleva hakemisto sisältää NVDA:n massamuistiversion, se päivitetään.
+
 Tässä valintaikkunassa on myös vaihtoehto, jolla voit valita, kopioidaanko kirjautuneen käyttäjän asetukset massamuistiversiossa käytettäviksi.
+Se sisältää myös lisäosat.
 Vaihtoehto on käytettävissä vain luotaessa massamuistiversiota asennetusta versiosta.
+
 Aloita massamuistiversion luonti painamalla Jatka.
 Kun luonti on valmis, näkyviin tulee ilmoitus onnistumisesta.
 Sulje valintaikkuna painamalla OK.
@@ -493,8 +511,7 @@ Kolmannella määritetään, tuleeko Tervetuloa-valintaikkuna näkyviin AINA NVD
 
 #### Käyttötilastojen keräämisen valintaikkuna {#UsageStatsDialog}
 
-NVDA 2018.3:sta lähtien käyttäjältä kysytään, haluaako hän sallia käyttötietojen lähettämisen NV Accessille NVDA:n parantamiseksi tulevaisuudessa.
-Kun NVDA käynnistetään ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa kysytään, hyväksytkö tietojen lähettämisen.
+Kun NVDA käynnistetään ensimmäistä kertaa, näkyviin tulee valintaikkuna, jossa kysytään, hyväksytkö    tietojen lähettämisen NV Accessille, jotta NVDA:ta voidaan parannella tulevaisuudessa.
 Voit lukea lisätietoja NV Accessin keräämistä tiedoista yleisten asetusten kohdasta [Salli NV Accessin kerätä NVDA:n käyttötilastoja](#GeneralSettingsGatherUsageStats).
 Huom: Asetus tallennetaan painaessasi "Kyllä" tai "Ei", eikä valintaikkunaa enää näytetä, ellet asenna NVDA:ta uudelleen.
 Voit kuitenkin ottaa käyttöön tai poistaa käytöstä tiedonkeruun manuaalisesti NVDA:n yleisten asetusten paneelista. Muuta asetusta valitsemalla tai poistamalla valinta [Salli NV Accessin kerätä NVDA:n käyttötilastoja](#GeneralSettingsGatherUsageStats) -valintaruudusta.
@@ -505,8 +522,8 @@ Voit kuitenkin ottaa käyttöön tai poistaa käytöstä tiedonkeruun manuaalise
 Useimmat NVDA:n näppäinkomennot koostuvat yleensä tietyn NVDA-näppäimeksi kutsutun näppäimen painamisesta yhdessä yhden tai useamman muun näppäimen kanssa.
 Poikkeuksia ovat pöytäkoneissa käytettävän näppäinasettelun tekstintarkastelukomennot sekä muutamat muut, joissa käytetään pelkkiä laskinnäppäimistön näppäimiä.
 
-NVDA on mahdollista määrittää käyttämään sekä laskinnäppäimistön että laajennettua Insertiä ja/tai Caps Lockia NVDA-näppäimenä.
-Oletusarvoisesti käytetään sekä laajennettua että laskinnäppäimistön Insertiä.
+NVDA on mahdollista määrittää käyttämään sekä `tavallista` että `laskinnäppäimistön Insertiä` ja/tai `Caps Lockia` `NVDA`-näppäimenä.
+Oletusarvoisesti käytetään sekä `tavallista` että `laskinnäppäimistön Insertiä`.
 
 Mikäli haluat jonkin NVDA-näppäimen toimivan samalla tavalla kuin silloin, kun NVDA ei ole käynnissä (haluat esim. ottaa Caps Lockin käyttöön, kun se on määritetty NVDA-näppäimeksi), paina sitä kaksi kertaa nopeasti peräkkäin.
 
@@ -900,6 +917,7 @@ Nämä lisäominaisuudet eivät ole oletusarvoisesti käytössä.
 Voit halutessasi ottaa ne käyttöön [Hiiri](#MouseSettings)-kategoriasta [Asetukset](#NVDASettings)-valintaikkunasta, johon pääsee NVDA:n Asetukset-valikosta.
 
 Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kosketuslevyä, on NVDA:ssa joitakin hiiren käyttöön tarkoitettuja näppäinkomentoja:
+
 <!-- KC:beginInclude -->
 
 | Nimi | Näppäinkomento pöytäkoneissa | Näppäinkomento kannettavissa | Kosketusele | Kuvaus |
@@ -908,6 +926,10 @@ Vaikka hiiren avulla liikkumiseen tulisikin käyttää fyysistä hiirtä tai kos
 | Vasemman hiiripainikkeen lukitus | Vaihto+Laskinnäppäimistön jakomerkki (/) | NVDA+Ctrl+Ö | Ei mitään | Lukitsee vasemman hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä näppäinkomentoa vasemman painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
 | Oikean hiiripainikkeen napsautus | Laskinnäppäimistön kertomerkki (*) | NVDA+Ä | Napauta ja pidä | Napsauttaa kerran hiiren oikeaa painiketta. Käytetään useimmiten pikavalikon avaamiseen hiiren sijainnissa. |
 | Oikean hiiripainikkeen lukitus | Vaihto+Laskinnäppäimistön kertomerkki (*) | NVDA+Ctrl+Ä | Ei mitään | Lukitsee oikean hiiripainikkeen alas. Lukitus vapautetaan painamalla tätä näppäinkomentoa uudelleen. Hiirellä vetäminen tehdään painamalla tätä komentoa oikean painikkeen lukitsemiseksi ja siirtämällä sitten hiirtä joko fyysisesti tai käyttämällä jotakin muista hiiren siirtämiskomennoista. |
+| Vieritä ylöspäin hiiren nykyisessä sijainnissa | Ei mitään | Ei mitään | Ei mitään | Vierittää hiiren rullaa ylöspäin nykyisessä hiiren sijainnissa. |
+| Vieritä alaspäin hiiren nykyisessä sijainnissa | Ei mitään | Ei mitään | Ei mitään | Vierittää hiiren rullaa alaspäin nykyisessä hiiren sijainnissa. |
+| Vieritä vasemmalle hiiren nykyisessä sijainnissa | Ei mitään | Ei mitään | Ei mitään | Vierittää hiiren rullaa vasemmalle hiiren nykyisessä sijainnissa. |
+| Vieritä oikealle hiiren nykyisessä sijainnissa | Ei mitään | Ei mitään | Ei mitään | Vierittää hiiren rullaa oikealle hiiren nykyisessä sijainnissa. |
 | Siirrä hiiri nykyiseen navigointiobjektiin | NVDA+Laskinnäppäimistön jakomerkki (/) | NVDA+Vaihto+M | Ei mitään | Siirtää hiiren nykyisen navigointiobjektin ja tarkastelukohdistimen sijaintiin. |
 | Siirrä hiiren alla olevaan objektiin | NVDA+Laskinnäppäimistön kertomerkki (*) | NVDA+Vaihto+N | Ei mitään | Siirtää navigointiobjektin hiiren alla olevaan objektiin. |
 
@@ -1781,10 +1803,11 @@ Seuraavat tiedot lähetetään aina:
 
 ##### Salli NV Accessin kerätä NVDA:n käyttötilastoja {#GeneralSettingsGatherUsageStats}
 
-Jos tämä on käytössä, NV Access käyttää päivitystarkistusten tietoja NVDA-käyttäjien määrän seuraamiseen, mukaan lukien tietyt väestötilastolliset tiedot kuten käyttöjärjestelmä sekä alkuperämaa.
+Jos tämä on käytössä, NV Access käyttää päivitystarkistuksista saatua tietoa NVDA-käyttäjien määrän seuraamiseen, mukaan lukien tietyt väestötilastolliset tiedot kuten käyttöjärjestelmä sekä alkuperämaa.
 Huom: IP-osoitetta ei säilytetä, vaikka sitä käytetäänkin päivitystarkistuksen aikana käyttäjän maan selvittämiseen.
 Päivitysten tarkistamiseen tarvittavien pakollisten tietojen lisäksi lähetetään tällä hetkellä myös seuraavat lisätiedot:
 
+* Nykyisen NVDA-käyttäjän yksilöllinen tunniste, joka vaihtuu kerran kuukaudessa
 * NVDA:n käyttöliittymän kieli
 * Käytetäänkö NVDA:n asennettua vai massamuistiversiota
 * Käytössä olevan puhesyntetisaattorin nimi (mukaan lukien lisäosan nimi, johon ajuri kuuluu)
@@ -1878,6 +1901,39 @@ Tämä asetus vaikuttaa kaikkiin syntetisaattoreihin.
 Tämä asetus, joka on oletusarvoisesti käytössä, määrittää, että NVDA käyttää puheäänen kieltä merkkien ja symbolien puhumiseen.
 Mikäli välimerkit luetaan väärällä kielellä tiettyä syntetisaattoria tai puheääntä käytettäessä, tämän asetuksen käytöstä poistaminen pakottaa NVDA:n käyttämään yleistä kieliasetusta.
 
+##### Unicode-normalisointi {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+| Asetukset | Oletus (Ei käytössä), Käytössä, Ei käytössä |
+| Oletus | Ei käytössä |
+
+Kun tämä asetus on käytössä, NVDA:n puhumalle tekstille suoritetaan Unicode-normalisointi.
+Tämä on hyödyllistä puhuttaessa merkkejä, jotka voidaan esittää useissa eri muodoissa.
+NVDA käyttää NFKC (Normalization Form Compatibility Composition) -algoritmia, joka tarjoaa muiden muassa seuraavat edut:
+
+1. Lihavoidut ja kursivoidut merkit, jotka ovat osa Unicode-standardia ja joita käytetään yleisesti sosiaalisessa mediassa, normalisoidaan niiden yleisimpään yhteensopivaan vastineeseen.
+Esimerkiksi latinalainen h-kirjain voidaan esittää myös muodossa "𝐡" (lihavoitu), "ℎ" (kursivoitu) jne., mutta ne kaikki lausutaan h:na normalisoinnin ollessa käytössä.
+Tämä normalisoinnin osa-alue auttaa myös lukemaan kaavoja Microsoft Wordin kaavaeditorissa.
+
+1. Normalisointi yhdistetyiksi merkeiksi.
+Esimerkiksi "ü" (u, jossa on treema/diakriittinen piste), yleinen saksan ja turkin kielissä, voidaan esittää kahdessa muodossa.
+  1. Yksi itsenäinen Unicode-merkki (ü)
+  1. Kaksi merkkiä (ü), eli tavallinen latinalainen u-kirjain ja treema-muunnin
+  Unicode-normalisointi varmistaa, että puhuttaessa käytetään vain yhtä muotoa, joka on yksimerkkinen muunnelma.
+
+1. Joidenkin ligatuurien, kuten "ĳ" (ligatuuri ij), purkaminen kahdeksi kirjaimeksi (ij).
+
+1. Vakaa muuntimien järjestys esimerkiksi muinaisheprean yhdistetyissä merkeissä.
+
+Voit vaihtaa Unicode-normalisoinnin tilaa mistä tahansa määrittämällä mukautetun näppäinkomennon [Näppäinkomennot-valintaikkunaa](#InputGestures) käyttäen.
+
+##### Ilmaise normalisointi merkeittäin liikuttaessa {#SpeechReportNormalizedForCharacterNavigation}
+
+Kun tämä valintaruutu on valittuna, NVDA ilmaisee normalisoidun merkin, kun se puhutaan yksittäisenä, esimerkiksi tavattaessa.
+Tämän asetuksen ollessa käytössä "ĳ"-merkki tavataan muodossa "i j normalisoitu".
+
+Huom: Asetus on käytettävissä vain, kun [Unicode-normalisointi](#SpeechUnicodeNormalization) on käytössä.
+
 ##### Käytä Unicode-konsortion dataa (emojit mukaan lukien) merkkejä ja symboleita käsiteltäessä {#SpeechSettingsCLDR}
 
 Kun tämä valintaruutu on valittuna, NVDA käyttää symbolien lisäsanastoja merkkejä ja symboleita puhuttaessa.
@@ -1909,20 +1965,21 @@ Jos tämä valintaruutu on valittuna, NVDA antaa pienen äänimerkin aina isoa k
 
 ##### Käytä tavaustoimintoa (jos mahdollista) {#SpeechSettingsUseSpelling}
 
-Jotkin sanat koostuvat vain yhdestä kirjaimesta, mutta se lausutaan eri tavalla riippuen siitä, puhutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
-Esim. englanninkielessä "a" on sekä kirjain että sana, mutta se lausutaan kussakin tilanteessa eri tavalla.
-Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tilanteet toisistaan, mikäli se vain tukee toimintoa.
-Useimmat syntetisaattorit tukevat asetusta.
+Jotkut sanat koostuvat vain yhdestä merkistä, mutta ääntämys on erilainen riippuen siitä, lausutaanko se yksittäisenä merkkinä (kuten tavattaessa) vai sanana.
+Esimerkiksi englannin kielessä "a" on sekä kirjain että sana, ja se äännetään eri tavoin kummassakin tapauksessa.
+Tämän asetuksen avulla syntetisaattori pystyy erottamaan nämä tapaukset toisistaan, mikäli se vain tukee toimintoa.
+Useimmat syntetisaattorit tukevat sitä.
 
-Tämä asetus tulisi tavallisesti ottaa käyttöön.
-Jotkin SAPI-syntetisaattorit toimivat kuitenkin kummallisesti tämän ollessa käytössä, koska ominaisuutta ei ole toteutettu niissä kunnolla.
+Tämä asetus tulisi yleensä ottaa käyttöön.
+Jotkin SAPI-syntetisaattorit toimivat kuitenkin oudosti tämän ollessa käytössä, koska toimintoa ei ole toteutettu niissä oikein.
+Code Factoryn syntetisaattorit, sekä lisäosa- että SAPI-versio, eivät myöskään toteuta asetusta oikein ja aiheuttavat ei-toivottua tekstin kirjaimittain lukemista (esim. NVDA-valikossa tai -valintaikkunoissa).
 Asetus kannattaa poistaa käytöstä, jos yksittäisten kirjainten lausumisessa on ongelmia.
 
 ##### Viivästetyt merkkien kuvaukset kohdistinta siirrettäessä {#delayedCharacterDescriptions}
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Käytössä, Ei käytössä |
+| Asetukset | –  Käytössä, Ei käytössä |
 | Oletus | Ei käytössä |
 
 Kun tämä asetus on käytössä, NVDA sanoo merkin kuvauksen liikkuessasi tekstissä merkki kerrallaan.
@@ -2078,7 +2135,7 @@ Tällöin pistenäyttö ei seuraa järjestelmän kohdistusta eikä kohdistinta.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Ei koskaan), Ei koskaan, Vain kun pistenäyttö seuraa automaattisesti, Aina |
+| Asetukset | –  Oletus (Ei koskaan), Ei koskaan, Vain kun pistenäyttö seuraa automaattisesti, Aina |
 | Oletus | Ei koskaan |
 
 Tämä asetus määrittää, siirretäänkö järjestelmäkohdistinta kosketuskohdistinnäppäimen painalluksella.
@@ -2117,6 +2174,18 @@ Sanan loppuosa luetaan vierittämällä näyttöä.
 
 Asetuksen käyttöön ottaminen saattaa mahdollistaa sujuvamman lukemisen, mutta vaatii yleensä enemmän näytön vierittämistä.
 
+##### Unicode-normalisointi {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+| Asetukset | Oletus (Ei käytössä), Käytössä, Ei käytössä |
+| Oletus | Ei käytössä |
+
+Kun tämä asetus on käytössä, pistenäytöllä näytettävälle tekstille suoritetaan Unicode-normalisointi.
+Tämä on hyödyllistä, kun pistekirjoituksessa esiintyy merkkejä, jotka ovat tuntemattomia tietyssä pistetaulukossa ja joille on olemassa yhteensopiva vaihtoehto, kuten lihavoidut ja kursivoidut merkit, joita käytetään yleisesti sosiaalisessa mediassa.
+Muita Unicode-normalisoinnin etuja selitetään tarkemmin [vastaavan puheasetuksen osiossa](#SpeechUnicodeNormalization).
+
+Voit vaihtaa Unicode-normalisoinnin tilaa mistä tahansa määrittämällä mukautetun näppäinkomennon [Näppäinkomennot-valintaikkunaa](#InputGestures) käyttäen.
+
 ##### Kohdistuskontekstin näyttäminen {#BrailleSettingsFocusContextPresentation}
 
 Tällä asetuksella voidaan valita, mitä kontekstitietoja NVDA näyttää pistenäytöllä kohdistuksen siirtyessä objektiin.
@@ -2148,7 +2217,7 @@ Kohdistuskontekstin näyttäminen -asetusta voidaan vaihtaa mistä tahansa liitt
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Käytössä), Käytössä, Ei käytössä |
+| Asetukset | –  Oletus (Käytössä), Käytössä, Ei käytössä |
 | Oletus | Käytössä |
 
 Tämä asetus määrittää, keskeytetäänkö puhe vieritettäessä pistenäyttöä eteen/taaksepäin.
@@ -2163,7 +2232,7 @@ Tämän asetuksen poistaminen käytöstä sallii puheen kuulumisen samalla, kun 
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Käytössä), Käytössä, Ei käytössä |
+| Asetukset | –  Oletus (Käytössä), Käytössä, Ei käytössä |
 | Oletus | Käytössä |
 
 Tämä asetus määrittää, näytetäänkö valinnan ilmaisin (pisteet 7 ja 8) pistenäytöllä.
@@ -2258,7 +2327,7 @@ Massamuisti- ja tilapäisversiot eivät tue äänenvaimennusta.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Ei käytössä, Käytössä |
+| Asetukset | –  Ei käytössä, Käytössä |
 | Oletus | Ei käytössä |
 
 Kun tämä asetus on käytössä, NVDA:n äänien ja piippausten voimakkuus mukautuu käytettävän puheäänen voimakkuusasetukseen.
@@ -2841,7 +2910,7 @@ Tästä kategoriasta voit säätää asiakirjan selauksen asetuksia.
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja |
+| Asetukset | –  Oletus (Sovelluksen määrittämä), Sovelluksen määrittämä, Yksi rivinvaihto, Useita rivinvaihtoja |
 | Oletus | Sovelluksen määrittämä |
 
 Tästä yhdistelmäruudusta voit valita kappaletyylin, jota käytetään liikuttaessa kappaleittain näppäinkomennoilla `Ctrl+Nuoli ylös` ja `Ctrl+Nuoli alas`.
@@ -2856,6 +2925,27 @@ Tämä tyyli toimii parhaiten asiakirjoissa, joissa käytetään lohkokappaleita
 Huom: Tätä tyyliä ei voi käyttää Microsoft Wordissa eikä Outlookissa, ellei "Käytä UI Automation -rajapintaa Microsoft Wordin asiakirjasäätimissä" -asetus ole käytössä.
 
 Voit vaihtaa käytettävissä olevien kappaletyylien välillä mistä tahansa määrittämällä näppäinkomennon [Näppäinkomennot-valintaikkunassa](#InputGestures).
+
+#### Lisäosakauppa {#AddonStoreSettings}
+
+Tästä kategoriasta voit muuttaa lisäosakaupan toimintaa.
+
+##### Päivitysilmoitukset {#AutomaticAddonUpdates}
+
+Kun tämän asetuksen arvoksi on määritetty "Ilmoita", lisäosakauppa ilmoittaa NVDA:n käynnistyksen jälkeen, jos lisäosapäivityksiä on saatavilla.
+Tarkistus suoritetaan kerran vuorokaudessa.
+Ilmoitukset näytetään vain sellaisille lisäosille, joille on saatavilla päivityksiä samassa kanavassa.
+Esimerkiksi asennetuille lisäosien beetaversioille ilmoitetaan vain beetakanavan päivityksistä.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Asetukset | Ilmoita (Oletus), Ei käytössä |
+| Oletus | Ilmoita |
+
+| Asetus | Toiminta |
+|---|---|
+| Ilmoita | Ilmoita, kun lisäosille on saatavilla päivityksiä samassa kanavassa. |
+| Ei käytössä | Älä tarkista lisäosapäivityksiä automaattisesti |
 
 #### Windowsin tekstintunnistusasetukset {#Win10OcrSettings}
 
@@ -2889,7 +2979,7 @@ Palauta oletukset -painike palauttaa asetusten oletusarvot, vaikka vahvistusvali
 Oletusarvojen palauttaminen voi olla joskus tarpeen, kun asetuksia on muutettu.
 Näin voi tehdä myös silloin, jos ei ole varma, onko asetuksia muutettu.
 
-##### Lataa käyttäjän oma koodi kehittäjien scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
+##### Lataa mukautettu koodi kehittäjän Scratchpad-hakemistosta {#AdvancedSettingsEnableScratchpad}
 
 Koodin testaaminen on hyödyllistä NVDA:n lisäosia kehitettäessä.
 Tämä asetus sallii käytössä ollessaan NVDA:n ladata mukautettuja sovellusmoduuleita, yleisliitännäisiä, pistenäyttö- ja syntetisaattoriajureita sekä näönparannuksen tarjoajia erityisestä kehittäjille tarkoitetusta scratchpad-nimisestä hakemistosta, joka sijaitsee NVDA:n käyttäjän asetushakemistossa.
@@ -2897,7 +2987,7 @@ Kuten niiden vastineet lisäosissa, nämä moduulit ladataan NVDA:ta käynnistet
 Tämä asetus on oletusarvoisesti poissa käytöstä, mikä varmistaa, ettei NVDA suorita testaamatonta koodia käyttäjän tietämättä.
 Jos haluat jakaa koodiasi muille käyttäjille, se tulee paketoida NVDA:n lisäosaksi.
 
-##### Avaa kehittäjien scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
+##### Avaa kehittäjän Scratchpad-hakemisto {#AdvancedSettingsOpenScratchpadDir}
 
 Tämä painike avaa hakemiston, johon kehittäjä voi sijoittaa koodiaan.
 Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua koodia kehittäjien scratchpad-hakemistosta.
@@ -2906,7 +2996,7 @@ Se on käytettävissä vain, jos NVDA on määritetty lataamaan mukautettua kood
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Automaattinen, Valikoiva, Yleinen |
+| Asetukset | –  Automaattinen, Valikoiva, Yleinen |
 | Oletus | Automaattinen |
 
 Tä	mä asetus muuttaa tapaa, jolla NVDA rekisteröi Microsoft UI Automation -saavutettavuusrajapinnan käynnistämiä tapahtumia.
@@ -2943,7 +3033,7 @@ Excelin UI automation -rajapinnan toteutus muuttuu jatkuvasti, eivätkä Microso
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Käytössä), Ei käytössä, Käytössä |
+| Asetukset | –  Oletus (Käytössä), Ei käytössä, Käytössä |
 | Oletus | Käytössä |
 
 Kun tämä asetus on käytössä, NVDA:n pitäisi reagoida nopeasti komentoihin, vaikka se vastaanottaisi runsaasti UI Automation -tapahtumia, kuten paljon tekstiä päätteessä.
@@ -2953,7 +3043,7 @@ Kun asetusta on muutettu, NVDA on käynnistettävä uudelleen, jotta muutos tule
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Automaattinen, UIA kun käytettävissä, Vanha |
+| Asetukset | –  Automaattinen, UIA kun käytettävissä, Vanha |
 | Oletus | Automaattinen |
 
 Tämä asetus määrittää, miten NVDA toimii vuorovaikutuksessa Windows-konsolin kanssa, jota Komentokehote, PowerShell ja Windowsin Linux-alijärjestelmä käyttävät.
@@ -3006,7 +3096,7 @@ Seuraavat vaihtoehdot ovat käytettävissä:
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Käytössä), Ei käytössä, Käytössä |
+| Asetukset | –  Oletus (Käytössä), Ei käytössä, Käytössä |
 | Oletus | Käytössä |
 
 Tällä asetuksella voidaan valita, näyttääkö NVDA tietyt verkkosivulla tapahtuvat dynaamiset muutokset pistenäytöllä.
@@ -3044,7 +3134,7 @@ Kohdistimen jälkeinen teksti kuitenkin luetaan päätteissä, kun rivin keskell
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset |
+| Asetukset | –  Oletus (Muutosten havaitseminen), Muutosten havaitseminen, UIA-ilmoitukset |
 | Oletus | Muutosten havaitseminen |
 
 Tämä asetus valitsee, miten NVDA määrittää "uuden" tekstin (ja näin ollen sen, mitä puhutaan "Puhu dynaamisen sisällön muutokset" -asetuksen ollessa käytössä) Windows-päätteessä sekä sen WPF-säätimessä, jota käytetään Visual Studio 2022:ssa.
@@ -3081,7 +3171,7 @@ Useiden historiallisesti suosittujen käyttöliittymärajapintojen avulla teksti
 
 | . {.hideHeaderRow} | . |
 |---|---|
-| Vaihtoehdot | Oletus (Käytössä), Ei käytössä, Käytössä |
+| Asetukset | –  Oletus (Käytössä), Ei käytössä, Käytössä |
 | Oletus | Käytössä |
 
 Tämä asetus mahdollistaa äänentoiston Windowsin äänentoistorajapinnan (WASAPI) kautta.
@@ -3267,7 +3357,7 @@ Uudelleennimeä tai poista profiili painamalla Nimeä uudelleen- tai Poista-pain
 
 Sulje valintaikkuna painamalla Sulje-painiketta.
 
-#### Profiilin luominen {#ProfilesCreating}
+#### Profiilin luonti {#ProfilesCreating}
 
 Luo profiili painamalla Uusi-painiketta.
 
@@ -3442,6 +3532,9 @@ Jos NVDA on asennettu ja käynnissä, voit myös aloittaa asennuksen avaamalla l
 Kun lisäosa asennetaan ulkoisesta lähteestä, NVDA pyytää vahvistamaan asennuksen.
 Kun asennus on suoritettu, NVDA on käynnistettävä uudelleen, jotta lisäosa alkaa toimia, tai voit lykätä uudelleenkäynnistystä, mikäli sinulla on muita lisäosia asennettavana tai päivitettävänä.
 
+Saat oletusarvoisesti NVDA:n käynnistyksen jälkeen ilmoituksen, jos lisäosille on saatavilla päivityksiä.
+Lisätietoja tästä toiminnosta ja sen määrittämisestä löytyy kohdasta [Päivitysilmoitukset](#AutomaticAddonUpdates).
+
 #### Lisäosien poistaminen {#AddonStoreRemoving}
 
 Poista lisäosa valitsemalla se luettelosta ja käyttämällä Poista-toimintoa.
@@ -3563,15 +3656,9 @@ Lisätietoja saat lukemalla yksityiskohtaisen [Lisäosat ja lisäosakauppa](#Add
 
 ### Luo massamuistiversio {#CreatePortableCopy}
 
-Tämä vaihtoehto avaa valintaikkunan, jossa voit luoda NVDA:n asennetusta versiosta massamuistiversion.
-Massamuistiversiota käytettäessä Työkalut-alivalikossa on "Luo massamuistiversio" -valikkokohteen sijaan vaihtoehto "Asenna NVDA".
+Tämä vaihtoehto avaa valintaikkunan, jossa voit luoda NVDA:n käynnissä olevasta versiosta massamuistiversion.
 
-Massamuistiversion luomisen tai NVDA:n asentava valintaikkuna kehottaa valitsemaan kansiopolun, johon massamuistiversio luodaan tai asennettava versio asennetaan.
-
-Tässä valintaikkunassa voit ottaa käyttöön tai poistaa käytöstä seuraavat vaihtoehdot:
-
-* Kopioi nykyisen käyttäjän asetukset (tämä sisältää tiedostot sijainnista %appdata%\roaming\NVDA tai massamuistiversion asetushakemistosta, ja sisältää lisäosat sekä muut moduulit)
-* Käynnistä uusi massamuistiversio luonnin jälkeen tai käynnistä NVDA asennuksen jälkeen (käynnistää NVDA:n automaattisesti massamuistiversion luonnin tai asennuksen jälkeen)
+Saat lisätietoja massamuistiversion luonnista kohdasta [Massamuistiversion luonti](#CreatingAPortableCopy).
 
 ### Suorita COM-rekisteröintien korjaustyökalu... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Myös seuraavia laitteita tuetaan, eikä niitä varten tarvitse asentaa ajureita
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Huom: Zoomaxia ei tueta tällä hetkellä ilman ulkoisia ajureita
 
 Seuraavassa on Brailliant BI/B- ja BrailleNote Touch -näyttöjen näppäinkomennot NVDA:ta käytettäessä.
 Katso laitteiden käyttöohjeista kuvaukset näppäinten paikoista.
@@ -4995,8 +5083,8 @@ Seuraavassa on luettelo NVDA:n komentorivivalitsimista:
 | Ei mitään | `--install-silent` | Asentaa NVDA:n ilman kehotteita ja asennetun kopion käynnistämistä. |
 | Ei mitään | `--enable-start-on-logon=True | False` | Ottaa asennettaessa käyttöön NVDA:n [Käytä sisäänkirjautumisen aikana -asetuksen.](#StartAtWindowsLogon) |
 | Ei mitään | `--copy-portable-config` | Kopioi asennettaessa massamuistiversion asetukset annetusta hakemistopolusta (`--config-path`, `-c`) nykyiseen käyttäjätiliin. |
-| Ei mitään | `--create-portable` | Luo ja käynnistää NVDA:n massamuistiversion. Parametri `--portable-path` on myös määritettävä. |
-| Ei mitään | `--create-portable-silent` | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri `--portable-path` on myös määritettävä. |
+| Ei mitään | `--create-portable` |Luo ja käynnistää NVDA:n massamuistiversion. Parametri `--portable-path` on myös määritettävä. |
+| Ei mitään | `--create-portable-silent` | Luo NVDA:n massamuistiversion eikä käynnistä sitä luonnin jälkeen. Parametri `--portable-path` on myös määritettävä. Tämä vaihtoehto estää varoitukset kirjoitettaessa ei-tyhjiin hakemistoihin ja saattaa korvata tiedostoja varoituksetta. |
 | Ei mitään | `--portable-path=POLKU` | Hakemistopolku, johon massamuistiversio luodaan. |
 
 ### Järjestelmänlaajuiset parametrit {#SystemWideParameters}

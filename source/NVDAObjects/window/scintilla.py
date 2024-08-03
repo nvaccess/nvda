@@ -154,7 +154,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = self._getLineNumFromOffset(offset) + 1
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			formatField["bold"] = bool(
 				watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_STYLEGETBOLD, style, 0),
 			)
@@ -297,7 +297,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getCharacterOffsets(self, offset):
 		if offset >= self._getStoryLength():
-			return offset, offset + 1  # noqa: E701
+			return offset, offset + 1
 		end = watchdog.cancellableSendMessage(self.obj.windowHandle, SCI_POSITIONAFTER, offset, 0)
 		start = offset
 		tempOffset = offset - 1

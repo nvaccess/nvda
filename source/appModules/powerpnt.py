@@ -330,7 +330,7 @@ class DocumentWindow(PaneClassDC):
 
 	def _get_currentSlide(self):
 		if self.ppActivePaneViewType in (ppViewSlideSorter, ppViewThumbnails, ppViewMasterThumbnails):
-			return None  # noqa: E701
+			return None
 		return super(DocumentWindow, self).currentSlide
 
 	def _get_ppSelection(self):
@@ -1111,7 +1111,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportFontSize"]:
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % font.size
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			formatField["bold"] = bool(font.bold)
 			formatField["italic"] = bool(font.italic)
 			formatField["underline"] = bool(font.underline)
@@ -1380,7 +1380,7 @@ class SlideShowWindow(PaneClassDC):
 					yield text
 			return
 		if cellShape:
-			return  # noqa: E701
+			return
 		shapeType = shape.type
 		if shapeType == msoGroup:
 			for childShape in shape.groupItems:

@@ -122,6 +122,23 @@ class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	NOTIFICATIONS = enum.auto()
 
 
+class FontFormattingBrailleModeFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to display formatting changes in braille."""
+
+	DEFAULT = enum.auto()
+	LIBLOUIS = enum.auto()
+	TAGS = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["FontFormattingBrailleModeFlag", str]:
+		return {
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
+		}
+
+
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:
 	for name, value in globals().items():
 		if (

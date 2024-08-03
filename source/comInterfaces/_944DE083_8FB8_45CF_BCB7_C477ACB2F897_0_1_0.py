@@ -73,7 +73,7 @@ IUIAutomationTextEditTextChangedEventHandler._methods_ = [
 # class IUIAutomationTextEditTextChangedEventHandler_Impl(object):
 #     def HandleTextEditTextChangedEvent(self, sender, TextEditChangeType, eventStrings):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 # values for enumeration 'StructureChangeType'
 StructureChangeType_ChildAdded = 0
@@ -195,7 +195,7 @@ IUIAutomationFocusChangedEventHandler._methods_ = [
 # class IUIAutomationFocusChangedEventHandler_Impl(object):
 #     def HandleFocusChangedEvent(self, sender):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_Transform2CanZoomPropertyId = 30133  # Constant c_int
 
@@ -311,7 +311,7 @@ IUIAutomationChangesEventHandler._methods_ = [
 # class IUIAutomationChangesEventHandler_Impl(object):
 #     def HandleChangesEvent(self, sender, uiaChanges, changesCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_IsTextPattern2AvailablePropertyId = 30119  # Constant c_int
 UIA_StylesExtendedPropertiesPropertyId = 30126  # Constant c_int
@@ -565,7 +565,7 @@ IUIAutomationNotificationEventHandler._methods_ = [
 # class IUIAutomationNotificationEventHandler_Impl(object):
 #     def HandleNotificationEvent(self, sender, NotificationKind, NotificationProcessing, displayString, activityId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_Transform2ZoomMinimumPropertyId = 30146  # Constant c_int
 
@@ -665,7 +665,7 @@ IUIAutomationMultipleViewPattern._methods_ = [
 #
 #     def SetCurrentView(self, view):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCurrentView(self):
@@ -1089,7 +1089,7 @@ IUIAutomationTogglePattern._methods_ = [
 # class IUIAutomationTogglePattern_Impl(object):
 #     def Toggle(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentToggleState(self):
@@ -1339,7 +1339,7 @@ IAccessible._methods_ = [
 #
 #     def accSelect(self, flagsSelect, varChild):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def accLocation(self, varChild):
 #         '-no docstring-'
@@ -1355,7 +1355,7 @@ IAccessible._methods_ = [
 #
 #     def accDoDefaultAction(self, varChild):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_StrikethroughStyleAttributeId = 40026  # Constant c_int
 UIA_IsItalicAttributeId = 40014  # Constant c_int
@@ -1555,15 +1555,15 @@ IUIAutomationTransformPattern._methods_ = [
 # class IUIAutomationTransformPattern_Impl(object):
 #     def Move(self, x, y):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Resize(self, width, height):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Rotate(self, degrees):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanMove(self):
@@ -2253,43 +2253,43 @@ IUIAutomation._methods_ = [
 #
 #     def AddAutomationEventHandler(self, eventId, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveAutomationEventHandler(self, eventId, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandlerNativeArray(self, element, scope, cacheRequest, handler, propertyArray, propertyCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandler(self, element, scope, cacheRequest, handler, propertyArray):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemovePropertyChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddStructureChangedEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveStructureChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddFocusChangedEventHandler(self, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFocusChangedEventHandler(self, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveAllEventHandlers(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def IntNativeArrayToSafeArray(self, array, arrayCount):
 #         '-no docstring-'
@@ -2522,7 +2522,7 @@ IUIAutomationValuePattern._methods_ = [
 # class IUIAutomationValuePattern_Impl(object):
 #     def SetValue(self, val):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentValue(self):
@@ -2723,27 +2723,27 @@ IUIAutomationProxyFactoryMapping._methods_ = [
 #
 #     def SetTable(self, factoryList):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def InsertEntries(self, before, factoryList):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def InsertEntry(self, before, factory):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveEntry(self, index):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ClearTable(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RestoreDefaultTable(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_GridPatternId = 10006  # Constant c_int
 UIA_ValuePatternId = 10002  # Constant c_int
@@ -3336,7 +3336,7 @@ IUIAutomationElement._methods_ = [
 # class IUIAutomationElement_Impl(object):
 #     def SetFocus(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetRuntimeId(self):
 #         '-no docstring-'
@@ -3834,7 +3834,7 @@ IUIAutomationElement3._methods_ = [
 # class IUIAutomationElement3_Impl(object):
 #     def ShowContextMenu(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentIsPeripheral(self):
@@ -3896,11 +3896,11 @@ IUIAutomation3._methods_ = [
 # class IUIAutomation3_Impl(object):
 #     def AddTextEditTextChangedEventHandler(self, element, scope, TextEditChangeType, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveTextEditTextChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 IUIAutomation4._methods_ = [
@@ -3929,11 +3929,11 @@ IUIAutomation4._methods_ = [
 # class IUIAutomation4_Impl(object):
 #     def AddChangesEventHandler(self, element, scope, changeTypes, changesCount, pCacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveChangesEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_TextPattern2Id = 10024  # Constant c_int
 UIA_Text_TextSelectionChangedEventId = 20014  # Constant c_int
@@ -4195,7 +4195,7 @@ IUIAutomationWindowPattern._methods_ = [
 # class IUIAutomationWindowPattern_Impl(object):
 #     def Close(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def WaitForInputIdle(self, milliseconds):
 #         '-no docstring-'
@@ -4203,7 +4203,7 @@ IUIAutomationWindowPattern._methods_ = [
 #
 #     def SetWindowVisualState(self, state):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanMaximize(self):
@@ -4478,11 +4478,11 @@ IUIAutomationScrollPattern._methods_ = [
 # class IUIAutomationScrollPattern_Impl(object):
 #     def Scroll(self, horizontalAmount, verticalAmount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def SetScrollPercent(self, horizontalPercent, verticalPercent):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentHorizontalScrollPercent(self):
@@ -4729,11 +4729,11 @@ IUIAutomationTransformPattern2._methods_ = [
 # class IUIAutomationTransformPattern2_Impl(object):
 #     def Zoom(self, zoomValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ZoomByUnit(self, ZoomUnit):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanZoom(self):
@@ -4813,11 +4813,11 @@ IUIAutomation5._methods_ = [
 # class IUIAutomation5_Impl(object):
 #     def AddNotificationEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveNotificationEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_MenuModeEndEventId = 20019  # Constant c_int
 
@@ -4986,7 +4986,7 @@ IUIAutomationTextRange._methods_ = [
 #
 #     def ExpandToEnclosingUnit(self, TextUnit):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def FindAttribute(self, attr, val, backward):
 #         '-no docstring-'
@@ -5022,23 +5022,23 @@ IUIAutomationTextRange._methods_ = [
 #
 #     def MoveEndpointByRange(self, srcEndPoint, range, targetEndPoint):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Select(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddToSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFromSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ScrollIntoView(self, alignToTop):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetChildren(self):
 #         '-no docstring-'
@@ -5054,7 +5054,7 @@ IUIAutomationTextRange2._methods_ = [
 # class IUIAutomationTextRange2_Impl(object):
 #     def ShowContextMenu(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_AnnotationAnnotationTypeIdPropertyId = 30113  # Constant c_int
 
@@ -5149,31 +5149,31 @@ IUIAutomationEventHandlerGroup._methods_ = [
 # class IUIAutomationEventHandlerGroup_Impl(object):
 #     def AddActiveTextPositionChangedEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddAutomationEventHandler(self, eventId, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddChangesEventHandler(self, scope, changeTypes, changesCount, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddNotificationEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddStructureChangedEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddTextEditTextChangedEventHandler(self, scope, TextEditChangeType, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_CulturePropertyId = 30015  # Constant c_int
 
@@ -5482,7 +5482,7 @@ IUIAutomationRangeValuePattern._methods_ = [
 # class IUIAutomationRangeValuePattern_Impl(object):
 #     def SetValue(self, val):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentValue(self):
@@ -5658,7 +5658,7 @@ IUIAutomationInvokePattern._methods_ = [
 # class IUIAutomationInvokePattern_Impl(object):
 #     def Invoke(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -5703,7 +5703,7 @@ IUIAutomationDockPattern._methods_ = [
 # class IUIAutomationDockPattern_Impl(object):
 #     def SetDockPosition(self, dockPos):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentDockPosition(self):
@@ -5732,7 +5732,7 @@ IUIAutomationScrollItemPattern._methods_ = [
 # class IUIAutomationScrollItemPattern_Impl(object):
 #     def ScrollIntoView(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -5857,11 +5857,11 @@ IUIAutomationExpandCollapsePattern._methods_ = [
 # class IUIAutomationExpandCollapsePattern_Impl(object):
 #     def Expand(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Collapse(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentExpandCollapseState(self):
@@ -6312,11 +6312,11 @@ IUIAutomation6._methods_ = [
 #
 #     def AddEventHandlerGroup(self, element, handlerGroup):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveEventHandlerGroup(self, element, handlerGroup):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def _get(self):
 #         '-no docstring-'
@@ -6334,11 +6334,11 @@ IUIAutomation6._methods_ = [
 #
 #     def AddActiveTextPositionChangedEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveActiveTextPositionChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_IsSpreadsheetPatternAvailablePropertyId = 30128  # Constant c_int
 UIA_ControllerForPropertyId = 30104  # Constant c_int
@@ -6414,7 +6414,7 @@ IUIAutomationVirtualizedItemPattern._methods_ = [
 # class IUIAutomationVirtualizedItemPattern_Impl(object):
 #     def Realize(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 AnnotationType_EditingLockedChange = 60016  # Constant c_int
 
@@ -6697,7 +6697,7 @@ IUIAutomationEventHandler._methods_ = [
 # class IUIAutomationEventHandler_Impl(object):
 #     def HandleAutomationEvent(self, sender, eventId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -6752,7 +6752,7 @@ IUIAutomationPropertyChangedEventHandler._methods_ = [
 # class IUIAutomationPropertyChangedEventHandler_Impl(object):
 #     def HandlePropertyChangedEvent(self, sender, propertyId, newValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -6813,7 +6813,7 @@ IUIAutomationStructureChangedEventHandler._methods_ = [
 # class IUIAutomationStructureChangedEventHandler_Impl(object):
 #     def HandleStructureChangedEvent(self, sender, changeType, runtimeId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_FlowsToPropertyId = 30106  # Constant c_int
 
@@ -6865,7 +6865,7 @@ IUIAutomationActiveTextPositionChangedEventHandler._methods_ = [
 # class IUIAutomationActiveTextPositionChangedEventHandler_Impl(object):
 #     def HandleActiveTextPositionChangedEvent(self, sender, range):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 # values for enumeration 'ProviderOptions'
 ProviderOptions_ClientSideProvider = 1
@@ -6977,15 +6977,15 @@ IUIAutomationSelectionItemPattern._methods_ = [
 # class IUIAutomationSelectionItemPattern_Impl(object):
 #     def Select(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddToSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFromSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentIsSelected(self):
@@ -7180,15 +7180,15 @@ IUIAutomationLegacyIAccessiblePattern._methods_ = [
 # class IUIAutomationLegacyIAccessiblePattern_Impl(object):
 #     def Select(self, flagsSelect):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def DoDefaultAction(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def SetValue(self, szValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentChildId(self):
@@ -7337,11 +7337,11 @@ IUIAutomationSynchronizedInputPattern._methods_ = [
 # class IUIAutomationSynchronizedInputPattern_Impl(object):
 #     def StartListening(self, inputType):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Cancel(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_StylesFillPatternColorPropertyId = 30125  # Constant c_int
 UIA_StylesFillPatternStylePropertyId = 30123  # Constant c_int
@@ -7580,7 +7580,7 @@ IUIAutomationProxyFactoryEntry._methods_ = [
 #
 #     def SetWinEventsForAutomationEvent(self, eventId, propertyId, winEvents):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetWinEventsForAutomationEvent(self, eventId, propertyId):
 #         '-no docstring-'
@@ -7736,11 +7736,11 @@ IUIAutomationCacheRequest._methods_ = [
 # class IUIAutomationCacheRequest_Impl(object):
 #     def AddProperty(self, propertyId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPattern(self, patternId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Clone(self):
 #         '-no docstring-'
@@ -8178,4 +8178,3 @@ __all__ = [
 ]
 
 _check_version('1.2.0', 1691570609.765831)
-

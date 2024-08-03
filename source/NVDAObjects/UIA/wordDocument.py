@@ -11,7 +11,9 @@ from typing import (
 
 import enum
 from comtypes import COMError
+import inputCore
 import mathPres
+import scriptHandler
 from scriptHandler import isScriptWaiting
 import textInfos
 import UIAHandler
@@ -267,6 +269,18 @@ class WordDocumentTextInfo(UIATextInfo):
 			# Remove end-of-row markers from the text - they are not useful
 			t = t.replace(END_OF_ROW_MARK, "")
 		return t
+
+	def _getTextForCodepointMovement(self) -> str:
+		"""
+		#8576, #10960: In Word, list bullets are exposed in text but are ignored when moving by character.
+		Therefore in `getTextWithFields`, the bullets are stripped from the text and exposed in the `line-prefix` field.
+		To stay compatible with this, we can't simply use the `text` property,
+		as it can potentially contain bullets that should be stripped.
+		"""
+		t = super()._getTextForCodepointMovement()
+		if not t:
+			return t
+		return "".join(f for f in self.getTextWithFields(formatConfig=dict()) if isinstance(f, str))
 
 	def _isEndOfRow(self):
 		"""Is this textInfo positioned on an end-of-row mark?"""
@@ -643,15 +657,28 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 	@script(
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the system caret is located."),
+		description=_(
+			# Translators: a description for a script that reports the comment at the caret.
+			"Reports the text of the comment where the system caret is located."
+			" If pressed twice, presents the information in a browsable message",
+		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCurrentComment(self, gesture):
+	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		commentInfo = getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
-			ui.message(getPresentableCommentInfoFromPosition(commentInfo))
+			text = getPresentableCommentInfoFromPosition(commentInfo)
+			repeats = scriptHandler.getLastScriptRepeatCount()
+			if repeats == 0:
+				ui.message(text)
+			elif repeats == 1:
+				ui.browseableMessage(
+					text,
+					# Translators: title for Word comment dialog.
+					_("Comment"),
+				)
 		else:
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))

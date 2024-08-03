@@ -43,11 +43,11 @@ HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 		auto coalescingKey = record.generateCoalescingKey();
 		auto existingKeyIter = m_eventRecordsByKey.find(coalescingKey);
 		if(existingKeyIter != m_eventRecordsByKey.end()) {
-			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: found existing event with same key"); 
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: found existing event with same key");
 			auto& [existingRecordVarIter,existingCoalesceCount] = existingKeyIter->second;
 			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: updating key and count to "<<(existingCoalesceCount+1));
 			existingKeyIter->second = {recordVarIter, existingCoalesceCount + 1};
-			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: erasing old item"); 
+			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: erasing old item");
 			m_eventRecords.erase(existingRecordVarIter);
 		} else {
 			LOG_DEBUG(L"RateLimitedUIAEventHandler::queueEvent: Adding key");
@@ -58,7 +58,7 @@ HRESULT RateLimitedEventHandler::queueEvent(EventRecordArgTypes&&... args) {
 			m_needsFlush = true;
 			m_flushConditionVar.notify_one();
 		}
-	} // m_mtx released. 
+	} // m_mtx released.
 	return S_OK;
 }
 
@@ -156,9 +156,9 @@ RateLimitedEventHandler::~RateLimitedEventHandler() {
 
 RateLimitedEventHandler::RateLimitedEventHandler(IUnknown* pExistingHandler):
 	m_pExistingAutomationEventHandler(pExistingHandler),
-	m_pExistingFocusChangedEventHandler(pExistingHandler), 
+	m_pExistingFocusChangedEventHandler(pExistingHandler),
 	m_pExistingPropertyChangedEventHandler(pExistingHandler),
-	m_pExistingNotificationEventHandler(pExistingHandler), 
+	m_pExistingNotificationEventHandler(pExistingHandler),
 	m_pExistingActiveTextPositionChangedEventHandler(pExistingHandler),
 	m_flusherThread([this](std::stop_token st){ this->flusherThreadFunc(st); })
 {

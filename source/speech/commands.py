@@ -80,7 +80,7 @@ class _CancellableSpeechCommand(SpeechCommand):
 	def __repr__(self):
 		return (
 			f"CancellableSpeech ("
-			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid' }"
+			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid'}"
 			f"{self._getFormattedDevInfo()}"
 			f")"
 		)
@@ -106,7 +106,7 @@ class IndexCommand(SynthCommand):
 		@type index: integer
 		"""
 		if not isinstance(index, int):
-			raise ValueError("index must be int, not %s" % type(index))  # noqa: E701
+			raise ValueError("index must be int, not %s" % type(index))
 		self.index = index
 
 	def __repr__(self):
@@ -139,7 +139,7 @@ class CharacterModeCommand(SynthParamCommand):
 		@type state: boolean
 		"""
 		if not isinstance(state, bool):
-			raise ValueError("state must be boolean, not %s" % type(state))  # noqa: E701
+			raise ValueError("state must be boolean, not %s" % type(state))
 		self.state = state
 		self.isDefault = not state
 

@@ -362,7 +362,7 @@ NVDAUnitsToWordUnits = {
 formatConfigFlagsMap = {
 	"reportFontName": 0x1,
 	"reportFontSize": 0x2,
-	"reportFontAttributes": 0x4,
+	"fontAttributeReporting": 0x4,
 	"reportColor": 0x8,
 	"reportAlignment": 0x10,
 	"reportStyle": 0x20,
@@ -843,7 +843,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		if self.isCollapsed:
-			return []  # noqa: E701
+			return []
 		if self.obj.ignoreFormatting:
 			return [self.text]
 		extraDetail = formatConfig.get("extraDetail", False) if formatConfig else False
@@ -951,7 +951,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						field["name"] = fieldTitle
 						field["alwaysReportName"] = True
 		if role is not None:
-			field["role"] = role  # noqa: E701
+			field["role"] = role
 		if role == controlTypes.Role.TABLE and field.get("longdescription"):
 			field["states"] = set([controlTypes.State.HASLONGDESC])
 		storyType = int(field.pop("wdStoryType", 0))
@@ -1043,7 +1043,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		for x in ("first-line-indent", "left-indent", "right-indent", "hanging-indent"):
 			v = field.get(x)
 			if not v:
-				continue  # noqa: E701
+				continue
 			v = float(v)
 			if abs(v) < 0.001:
 				v = None
@@ -1481,7 +1481,7 @@ class WordDocument(Window):
 		if not getattr(self, "_WinwordDocumentObject", None):
 			windowObject = self.WinwordWindowObject
 			if not windowObject:
-				return None  # noqa: E701
+				return None
 			self._WinwordDocumentObject = windowObject.document
 		return self._WinwordDocumentObject
 
@@ -1494,7 +1494,7 @@ class WordDocument(Window):
 		if not getattr(self, "_WinwordSelectionObject", None):
 			windowObject = self.WinwordWindowObject
 			if not windowObject:
-				return None  # noqa: E701
+				return None
 			self._WinwordSelectionObject = windowObject.selection
 		return self._WinwordSelectionObject
 
@@ -1864,7 +1864,7 @@ class WordDocument_WwN(WordDocument):
 	def _get_WinwordWindowObject(self):
 		window = super(WordDocument_WwN, self).WinwordWindowObject
 		if not window:
-			return None  # noqa: E701
+			return None
 		try:
 			return window.application.activeWindow.activePane
 		except COMError:

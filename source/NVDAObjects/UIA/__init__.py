@@ -13,6 +13,7 @@ from typing import (
 	Optional,
 	Dict,
 	Tuple,
+	Callable,
 )
 import array
 from ctypes.wintypes import POINT
@@ -21,12 +22,12 @@ import time
 import numbers
 import colors
 import languageHandler
+import NVDAState
 import UIAHandler
 import UIAHandler.customProps
 import UIAHandler.customAnnotations
 import controlTypes
 from controlTypes import TextPosition, TextAlign
-import inputCore
 import config
 import speech
 import api
@@ -181,252 +182,66 @@ class UIATextInfo(textInfos.TextInfo):
 			return True
 		return False
 
-	# C901 '_getFormatFieldAtRange' is too complex
-	# Note: when working on _getFormatFieldAtRange, look for opportunities to simplify
-	# and move logic out into smaller helper functions.
-	def _getFormatFieldAtRange(  # noqa: C901
-		self,
-		textRange: IUIAutomationTextRangeT,
-		formatConfig: Dict,
-		ignoreMixedValues: bool = False,
-	) -> textInfos.FormatField:
-		"""
-		Fetches formatting for the given UI Automation Text range.
-		@param textRange: the text range whos formatting should be fetched.
-		@param formatConfig: the types of formatting requested.
-		@type formatConfig: a dictionary of NVDA document formatting configuration keys
-			with values set to true for those types that should be fetched.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
-			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
-			a mixed attribute value signifying that the caller may want to try again with a smaller range.
-		@return: The formatting for the given text range.
-		"""
-		formatField = textInfos.FormatField()
-		if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
-			raise ValueError("%s is not a text range" % textRange)
-		fetchAnnotationTypes = (
-			formatConfig["reportSpellingErrors"]
-			or formatConfig["reportComments"]
-			or formatConfig["reportRevisions"]
-			or formatConfig["reportBookmarks"]
-		)
-		try:
-			textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
-		except (COMError, AttributeError):
-			fetcher = UIATextRangeAttributeValueFetcher(textRange)
-		else:
-			# Precalculate all the IDs we could possibly need so that they can be fetched in one cross-process call where supported
-			IDs = set()
-			if formatConfig["reportFontName"]:
-				IDs.add(UIAHandler.UIA_FontNameAttributeId)
-			if formatConfig["reportFontSize"]:
-				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
-			if formatConfig["reportFontAttributes"]:
-				IDs.update(
-					{
-						UIAHandler.UIA_FontWeightAttributeId,
-						UIAHandler.UIA_IsItalicAttributeId,
-						UIAHandler.UIA_UnderlineStyleAttributeId,
-						UIAHandler.UIA_StrikethroughStyleAttributeId,
-					},
-				)
-			if formatConfig["reportSuperscriptsAndSubscripts"]:
-				IDs.update(
-					{
-						UIAHandler.UIA_IsSuperscriptAttributeId,
-						UIAHandler.UIA_IsSubscriptAttributeId,
-					},
-				)
-			if formatConfig["reportParagraphIndentation"]:
-				IDs.update(set(paragraphIndentIDs))
-			if formatConfig["reportAlignment"]:
-				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
-			if formatConfig["reportColor"]:
-				IDs.add(UIAHandler.UIA_BackgroundColorAttributeId)
-				IDs.add(UIAHandler.UIA_ForegroundColorAttributeId)
-			if formatConfig["reportLineSpacing"]:
-				IDs.add(UIAHandler.UIA_LineSpacingAttributeId)
-			if formatConfig["reportLinks"]:
-				IDs.add(UIAHandler.UIA_LinkAttributeId)
-			if formatConfig["reportStyle"]:
-				IDs.add(UIAHandler.UIA_StyleNameAttributeId)
-			if formatConfig["reportHeadings"]:
-				IDs.add(UIAHandler.UIA_StyleIdAttributeId)
-			if fetchAnnotationTypes:
-				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
-			IDs.add(UIAHandler.UIA_CultureAttributeId)
-			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange, IDs)
-		if formatConfig["reportFontName"]:
-			val = fetcher.getValue(UIAHandler.UIA_FontNameAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField["font-name"] = val
-		if formatConfig["reportFontSize"]:
-			val = fetcher.getValue(UIAHandler.UIA_FontSizeAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if isinstance(val, numbers.Number):
-				# Translators: Abbreviation for points, a measurement of font size.
-				formatField["font-size"] = pgettext("font size", "%s pt") % float(val)
-		if formatConfig["reportFontAttributes"]:
-			val = fetcher.getValue(UIAHandler.UIA_FontWeightAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if isinstance(val, int):
-				formatField["bold"] = val >= 700
-			val = fetcher.getValue(UIAHandler.UIA_IsItalicAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField["italic"] = val
-			val = fetcher.getValue(
-				UIAHandler.UIA_UnderlineStyleAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField["underline"] = bool(val)
-			val = fetcher.getValue(
-				UIAHandler.UIA_StrikethroughStyleAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField["strikethrough"] = bool(val)
-		if formatConfig["reportSuperscriptsAndSubscripts"]:
-			textPosition = None
-			val = fetcher.getValue(
-				UIAHandler.UIA_IsSuperscriptAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			if val != UIAHandler.handler.reservedNotSupportedValue and val:
-				textPosition = TextPosition.SUPERSCRIPT
-			else:
-				val = fetcher.getValue(
-					UIAHandler.UIA_IsSubscriptAttributeId,
-					ignoreMixedValues=ignoreMixedValues,
-				)
-				if val != UIAHandler.handler.reservedNotSupportedValue and val:
-					textPosition = TextPosition.SUBSCRIPT
-				else:
-					textPosition = TextPosition.BASELINE
-			formatField["text-position"] = textPosition
-		if formatConfig["reportStyle"]:
-			val = fetcher.getValue(UIAHandler.UIA_StyleNameAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				formatField["style"] = val
-		if formatConfig["reportParagraphIndentation"]:
-			formatField.update(self._getFormatFieldIndent(fetcher, ignoreMixedValues=ignoreMixedValues))
-		if formatConfig["reportAlignment"]:
-			val = fetcher.getValue(
-				UIAHandler.UIA_HorizontalTextAlignmentAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			textAlign = textAlignLabels.get(val)
-			if textAlign:
-				formatField["text-align"] = textAlign
-		if formatConfig["reportColor"]:
-			val = fetcher.getValue(
-				UIAHandler.UIA_BackgroundColorAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			if isinstance(val, int):
-				formatField["background-color"] = colors.RGB.fromCOLORREF(val)
-			val = fetcher.getValue(
-				UIAHandler.UIA_ForegroundColorAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			if isinstance(val, int):
-				formatField["color"] = colors.RGB.fromCOLORREF(val)
-		if formatConfig["reportLineSpacing"]:
-			val = fetcher.getValue(UIAHandler.UIA_LineSpacingAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				if val:
-					formatField["line-spacing"] = val
-		if formatConfig["reportLinks"]:
-			val = fetcher.getValue(UIAHandler.UIA_LinkAttributeId, ignoreMixedValues=ignoreMixedValues)
-			if val != UIAHandler.handler.reservedNotSupportedValue:
-				if val:
-					formatField["link"] = True
-		if formatConfig["reportHeadings"]:
-			styleIDValue = fetcher.getValue(
-				UIAHandler.UIA_StyleIdAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			# #9842: styleIDValue can sometimes be a pointer to IUnknown.
-			# In Python 3, comparing an int with a pointer raises a TypeError.
-			if (
-				isinstance(styleIDValue, int)
-				and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9
-			):
-				formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
-		if fetchAnnotationTypes:
-			annotationTypes = fetcher.getValue(
-				UIAHandler.UIA_AnnotationTypesAttributeId,
-				ignoreMixedValues=ignoreMixedValues,
-			)
-			# Some UIA implementations return a single value rather than a tuple.
-			# Always mutate to a tuple to allow for a generic x in y matching
-			if not isinstance(annotationTypes, tuple):
-				annotationTypes = (annotationTypes,)
-			if formatConfig["reportSpellingErrors"]:
-				if UIAHandler.AnnotationType_SpellingError in annotationTypes:
-					formatField["invalid-spelling"] = True
-				if UIAHandler.AnnotationType_GrammarError in annotationTypes:
-					formatField["invalid-grammar"] = True
-			if formatConfig["reportComments"]:
-				cats = self.obj._UIACustomAnnotationTypes
-				if (
-					cats.microsoftWord_draftComment.id
-					and cats.microsoftWord_draftComment.id in annotationTypes
-				):
-					formatField["comment"] = textInfos.CommentType.DRAFT
-				elif (
-					cats.microsoftWord_resolvedComment.id
-					and cats.microsoftWord_resolvedComment.id in annotationTypes
-				):
-					formatField["comment"] = textInfos.CommentType.RESOLVED
-				elif UIAHandler.AnnotationType_Comment in annotationTypes:
-					formatField["comment"] = True
-			if formatConfig["reportRevisions"]:
-				if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
-					formatField["revision-insertion"] = True
-				elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
-					formatField["revision-deletion"] = True
-			if formatConfig["reportBookmarks"]:
-				cats = self.obj._UIACustomAnnotationTypes
-				if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
-					formatField["bookmark"] = True
-		cultureVal = fetcher.getValue(UIAHandler.UIA_CultureAttributeId, ignoreMixedValues=ignoreMixedValues)
-		if cultureVal and isinstance(cultureVal, int):
-			try:
-				formatField["language"] = languageHandler.windowsLCIDToLocaleName(cultureVal)
-			except:  # noqa: E722
-				log.debugWarning("language error", exc_info=True)
-				pass
-		return textInfos.FieldCommand("formatChange", formatField)
+	def _getFormatFieldFontName(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_FontNameAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["font-name"] = val
 
-	def _getFormatFieldIndent(
+	def _getFormatFieldFontSize(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_FontSizeAttributeId)
+		if isinstance(val, numbers.Number):
+			# Translators: Abbreviation for points, a measurement of font size.
+			formatField["font-size"] = pgettext("font size", "%s pt") % float(val)
+
+	def _getFormatFieldFontAttributes(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_FontWeightAttributeId)
+		if isinstance(val, int):
+			formatField["bold"] = val >= 700
+		val = fetch(UIAHandler.UIA_IsItalicAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["italic"] = val
+		val = fetch(UIAHandler.UIA_UnderlineStyleAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["underline"] = bool(val)
+		val = fetch(UIAHandler.UIA_StrikethroughStyleAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["strikethrough"] = bool(val)
+
+	def _getFormatFieldSuperscriptsAndSubscripts(
 		self,
-		fetcher: UIATextRangeAttributeValueFetcher,
-		ignoreMixedValues: bool,
-	) -> textInfos.FormatField:
+		fetch: Callable[[int], int],
+		formatField: textInfos.FormatField,
+	):
+		textPosition = None
+		val = fetch(UIAHandler.UIA_IsSuperscriptAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue and val:
+			textPosition = TextPosition.SUPERSCRIPT
+		else:
+			val = fetch(UIAHandler.UIA_IsSubscriptAttributeId)
+			if val != UIAHandler.handler.reservedNotSupportedValue and val:
+				textPosition = TextPosition.SUBSCRIPT
+			else:
+				textPosition = TextPosition.BASELINE
+		formatField["text-position"] = textPosition
+
+	def _getFormatFieldStyle(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_StyleNameAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			formatField["style"] = val
+
+	def _getFormatFieldIndent(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
 		"""
-		Helper function to get indent formatting from the fetcher passed as parameter.
+		Helper function to get indent formatting from UIA, using the fetch function passed as parameter.
 		The indent formatting is reported according to MS Word's convention.
-		@param fetcher: the UIA fetcher used to get all formatting information.
-		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
-			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
-			a mixed attribute value signifying that the caller may want to try again with a smaller range.
+		@param fetch: gets formatting information from UIA.
 		@return: The indent formatting informations corresponding to what has been retrieved via the fetcher.
 		"""
 
-		formatField = textInfos.FormatField()
-		val = fetcher.getValue(
-			UIAHandler.UIA_IndentationFirstLineAttributeId,
-			ignoreMixedValues=ignoreMixedValues,
-		)
+		val = fetch(UIAHandler.UIA_IndentationFirstLineAttributeId)
 		uiaIndentFirstLine = val if isinstance(val, float) else None
-		val = fetcher.getValue(
-			UIAHandler.UIA_IndentationLeadingAttributeId,
-			ignoreMixedValues=ignoreMixedValues,
-		)
+		val = fetch(UIAHandler.UIA_IndentationLeadingAttributeId)
 		uiaIndentLeading = val if isinstance(val, float) else None
-		val = fetcher.getValue(
-			UIAHandler.UIA_IndentationTrailingAttributeId,
-			ignoreMixedValues=ignoreMixedValues,
-		)
+		val = fetch(UIAHandler.UIA_IndentationTrailingAttributeId)
 		uiaIndentTrailing = val if isinstance(val, float) else None
 		if uiaIndentFirstLine is not None and uiaIndentLeading is not None:
 			reportedFirstLineIndent = uiaIndentFirstLine - uiaIndentLeading
@@ -449,7 +264,183 @@ class UIATextInfo(textInfos.TextInfo):
 				formatField["hanging-indent"] = self._getIndentValueDisplayString(reportedHangingIndent)
 		if uiaIndentTrailing:
 			formatField["right-indent"] = self._getIndentValueDisplayString(uiaIndentTrailing)
-		return formatField
+
+	def _getFormatFieldAlignment(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
+		textAlign = textAlignLabels.get(val)
+		if textAlign:
+			formatField["text-align"] = textAlign
+
+	def _getFormatFieldColor(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_BackgroundColorAttributeId)
+		if isinstance(val, int):
+			formatField["background-color"] = colors.RGB.fromCOLORREF(val)
+		val = fetch(UIAHandler.UIA_ForegroundColorAttributeId)
+		if isinstance(val, int):
+			formatField["color"] = colors.RGB.fromCOLORREF(val)
+
+	def _getFormatFieldLineSpacing(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_LineSpacingAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			if val:
+				formatField["line-spacing"] = val
+
+	def _getFormatFieldLinks(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		val = fetch(UIAHandler.UIA_LinkAttributeId)
+		if val != UIAHandler.handler.reservedNotSupportedValue:
+			if val:
+				formatField["link"] = True
+
+	def _getFormatFieldHeadings(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		styleIDValue = fetch(UIAHandler.UIA_StyleIdAttributeId)
+		# #9842: styleIDValue can sometimes be a pointer to IUnknown.
+		# In Python 3, comparing an int with a pointer raises a TypeError.
+		if (
+			isinstance(styleIDValue, int)
+			and UIAHandler.StyleId_Heading1 <= styleIDValue <= UIAHandler.StyleId_Heading9
+		):
+			formatField["heading-level"] = (styleIDValue - UIAHandler.StyleId_Heading1) + 1
+
+	def _getFormatFieldAnnotationTypes(
+		self,
+		fetch: Callable[[int], int],
+		formatField: textInfos.FormatField,
+		formatConfig: Dict,
+	):
+		annotationTypes = fetch(UIAHandler.UIA_AnnotationTypesAttributeId)
+		# Some UIA implementations return a single value rather than a tuple.
+		# Always mutate to a tuple to allow for a generic x in y matching
+		if not isinstance(annotationTypes, tuple):
+			annotationTypes = (annotationTypes,)
+		if formatConfig["reportSpellingErrors"]:
+			if UIAHandler.AnnotationType_SpellingError in annotationTypes:
+				formatField["invalid-spelling"] = True
+			if UIAHandler.AnnotationType_GrammarError in annotationTypes:
+				formatField["invalid-grammar"] = True
+		if formatConfig["reportComments"]:
+			cats = self.obj._UIACustomAnnotationTypes
+			if cats.microsoftWord_draftComment.id and cats.microsoftWord_draftComment.id in annotationTypes:
+				formatField["comment"] = textInfos.CommentType.DRAFT
+			elif (
+				cats.microsoftWord_resolvedComment.id
+				and cats.microsoftWord_resolvedComment.id in annotationTypes
+			):
+				formatField["comment"] = textInfos.CommentType.RESOLVED
+			elif UIAHandler.AnnotationType_Comment in annotationTypes:
+				formatField["comment"] = True
+		if formatConfig["reportRevisions"]:
+			if UIAHandler.AnnotationType_InsertionChange in annotationTypes:
+				formatField["revision-insertion"] = True
+			elif UIAHandler.AnnotationType_DeletionChange in annotationTypes:
+				formatField["revision-deletion"] = True
+		if formatConfig["reportBookmarks"]:
+			cats = self.obj._UIACustomAnnotationTypes
+			if cats.microsoftWord_bookmark.id and cats.microsoftWord_bookmark.id in annotationTypes:
+				formatField["bookmark"] = True
+
+	def _getFormatFieldCulture(self, fetch: Callable[[int], int], formatField: textInfos.FormatField):
+		cultureVal = fetch(UIAHandler.UIA_CultureAttributeId)
+		if cultureVal and isinstance(cultureVal, int):
+			try:
+				formatField["language"] = languageHandler.windowsLCIDToLocaleName(cultureVal)
+			except:  # noqa: E722
+				log.debugWarning("language error", exc_info=True)
+				pass
+
+	def _getFormatFieldAtRange(  # noqa: C901
+		self,
+		textRange: IUIAutomationTextRangeT,
+		formatConfig: Dict,
+		ignoreMixedValues: bool = False,
+	) -> textInfos.FormatField:
+		"""
+		Fetches formatting for the given UI Automation Text range.
+		@param textRange: the text range whos formatting should be fetched.
+		@param formatConfig: the types of formatting requested.
+		@type formatConfig: a dictionary of NVDA document formatting configuration keys
+			with values set to true for those types that should be fetched.
+		@param ignoreMixedValues: If True, formatting that is mixed according to UI Automation will not be included.
+			If False, L{UIAHandler.utils.MixedAttributeError} will be raised if UI Automation gives back
+			a mixed attribute value signifying that the caller may want to try again with a smaller range.
+		@return: The formatting for the given text range.
+		"""
+		if not isinstance(textRange, UIAHandler.IUIAutomationTextRange):
+			raise ValueError("%s is not a text range" % textRange)
+		fetchAnnotationTypes = (
+			formatConfig["reportSpellingErrors"]
+			or formatConfig["reportComments"]
+			or formatConfig["reportRevisions"]
+			or formatConfig["reportBookmarks"]
+		)
+		try:
+			textRange = textRange.QueryInterface(UIAHandler.IUIAutomationTextRange3)
+		except (COMError, AttributeError):
+			fetcher = UIATextRangeAttributeValueFetcher(textRange)
+		else:
+			# Precalculate all the IDs we could possibly need so that they can be fetched in one cross-process call where supported
+			IDs = set()
+			if formatConfig["reportFontName"]:
+				IDs.add(UIAHandler.UIA_FontNameAttributeId)
+			if formatConfig["reportFontSize"]:
+				IDs.add(UIAHandler.UIA_FontSizeAttributeId)
+			if formatConfig["fontAttributeReporting"]:
+				IDs.add(UIAHandler.UIA_FontWeightAttributeId)
+				IDs.add(UIAHandler.UIA_IsItalicAttributeId)
+				IDs.add(UIAHandler.UIA_UnderlineStyleAttributeId)
+				IDs.add(UIAHandler.UIA_StrikethroughStyleAttributeId)
+			if formatConfig["reportSuperscriptsAndSubscripts"]:
+				IDs.add(UIAHandler.UIA_IsSuperscriptAttributeId)
+				IDs.add(UIAHandler.UIA_IsSubscriptAttributeId)
+			if formatConfig["reportParagraphIndentation"]:
+				IDs.update(set(paragraphIndentIDs))
+			if formatConfig["reportAlignment"]:
+				IDs.add(UIAHandler.UIA_HorizontalTextAlignmentAttributeId)
+			if formatConfig["reportColor"]:
+				IDs.add(UIAHandler.UIA_BackgroundColorAttributeId)
+				IDs.add(UIAHandler.UIA_ForegroundColorAttributeId)
+			if formatConfig["reportLineSpacing"]:
+				IDs.add(UIAHandler.UIA_LineSpacingAttributeId)
+			if formatConfig["reportLinks"]:
+				IDs.add(UIAHandler.UIA_LinkAttributeId)
+			if formatConfig["reportStyle"]:
+				IDs.add(UIAHandler.UIA_StyleNameAttributeId)
+			if formatConfig["reportHeadings"]:
+				IDs.add(UIAHandler.UIA_StyleIdAttributeId)
+			if fetchAnnotationTypes:
+				IDs.add(UIAHandler.UIA_AnnotationTypesAttributeId)
+			IDs.add(UIAHandler.UIA_CultureAttributeId)
+			fetcher = BulkUIATextRangeAttributeValueFetcher(textRange, IDs)
+
+		def fetch(id):
+			return fetcher.getValue(id, ignoreMixedValues=ignoreMixedValues)
+
+		formatField = textInfos.FormatField()
+		if formatConfig["reportFontName"]:
+			self._getFormatFieldFontName(fetch, formatField)
+		if formatConfig["reportFontSize"]:
+			self._getFormatFieldFontSize(fetch, formatField)
+		if formatConfig["fontAttributeReporting"]:
+			self._getFormatFieldFontAttributes(fetch, formatField)
+		if formatConfig["reportSuperscriptsAndSubscripts"]:
+			self._getFormatFieldSuperscriptsAndSubscripts(fetch, formatField)
+		if formatConfig["reportStyle"]:
+			self._getFormatFieldStyle(fetch, formatField)
+		if formatConfig["reportParagraphIndentation"]:
+			self._getFormatFieldIndent(fetch, formatField)
+		if formatConfig["reportAlignment"]:
+			self._getFormatFieldAlignment(fetch, formatField)
+		if formatConfig["reportColor"]:
+			self._getFormatFieldColor(fetch, formatField)
+		if formatConfig["reportLineSpacing"]:
+			self._getFormatFieldLineSpacing(fetch, formatField)
+		if formatConfig["reportLinks"]:
+			self._getFormatFieldLinks(fetch, formatField)
+		if formatConfig["reportHeadings"]:
+			self._getFormatFieldHeadings(fetch, formatField)
+		if fetchAnnotationTypes:
+			self._getFormatFieldAnnotationTypes(fetch, formatField, formatConfig)
+		self._getFormatFieldCulture(fetch, formatField)
+		return textInfos.FieldCommand("formatChange", formatField)
 
 	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info.
@@ -523,7 +514,7 @@ class UIATextInfo(textInfos.TextInfo):
 				raise LookupError
 			# sometimes rangeFromChild can return a NULL range
 			if not self._rangeObj:
-				raise LookupError  # noqa: E701
+				raise LookupError
 		elif isinstance(position, locationHelper.Point):
 			self._rangeObj: IUIAutomationTextRangeT = self.obj.UIATextPattern.RangeFromPoint(
 				position.toPOINT(),
@@ -536,9 +527,9 @@ class UIATextInfo(textInfos.TextInfo):
 
 	def __eq__(self, other: "UIATextInfo"):
 		if self is other:
-			return True  # noqa: E701
+			return True
 		if self.__class__ is not other.__class__:
-			return False  # noqa: E701
+			return False
 		return bool(self._rangeObj.compare(other._rangeObj))
 
 	# As __eq__ was defined on this class, we must provide __hash__ to remain hashable.
@@ -2482,27 +2473,13 @@ class UIA(Window):
 			ui.message(dropTargetEffect)
 
 
-class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
-	# XAML and WPF fire UIA textSelectionChange events before the caret position change is reflected
-	# in the related UIA text pattern.
-	# This means that, apart from deleting text, NVDA cannot rely on textSelectionChange (caret) events
-	# in XAML or WPF to detect if the caret has moved, as it occurs too early.
-	caretMovementDetectionUsesEvents = False
+if NVDAState._allowDeprecatedAPI():
 
-	def _backspaceScriptHelper(self, unit: str, gesture: inputCore.InputGesture):
-		"""As UIA text range objects from XAML or WPF don't mutate with backspace,
-		comparing a text range copied from before backspace with a text range fetched after backspace
-		isn't reliable, as the ranges compare equal.
-		Therefore, we must always rely on events for caret change detection in this case.
-		"""
-		self.caretMovementDetectionUsesEvents = True
-		try:
-			super()._backspaceScriptHelper(unit, gesture)
-		finally:
-			self.caretMovementDetectionUsesEvents = False
+	class InaccurateTextChangeEventEmittingEditableText(EditableTextBase, UIA):
+		"""InaccurateTextChangeEventEmittingEditableText is deprecated without a replacement."""
 
 
-class XamlEditableText(InaccurateTextChangeEventEmittingEditableText):
+class XamlEditableText(EditableTextBase, UIA):
 	"""An UIA element with editable text exposed by the XAML framework."""
 
 	...
@@ -2566,7 +2543,7 @@ class UIItem(UIA):
 					UIAHandler.UIA_SelectionItemSelectionContainerPropertyId,
 				)
 				if e:
-					e = e.QueryInterface(UIAHandler.IUIAutomationElement)  # noqa: E701
+					e = e.QueryInterface(UIAHandler.IUIAutomationElement)
 			except COMError:
 				e = None
 			if e:
@@ -2687,7 +2664,7 @@ class ToolTip(ToolTip, UIA):
 	event_UIA_toolTipOpened = ToolTip.event_show
 
 
-class WpfTextView(InaccurateTextChangeEventEmittingEditableText):
+class WpfTextView(EditableTextBase, UIA):
 	"""WpfTextView fires name state changes once a second,
 	plus when IUIAutomationTextRange::GetAttributeValue is called.
 	This causes major lag when using this control with Braille in NVDA. (#2759)

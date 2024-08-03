@@ -423,31 +423,45 @@ def getAvailableAddons(
 def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	"""Extracts an Addon bundle in to a unique subdirectory of the user addons directory,
 	marking the addon as needing 'install completion' on NVDA restart.
+
+	:param bundle: The add-on bundle to install.
+	The bundle._installExceptions property is modified to store any raised exceptions
+	during the installation process.
+
+	:return: The extracted add-on object, or None if the add-on bundle fails to be extracted.
+	Regardless if the add-on installation failed, the created add-on object from the bundle should be returned
+	to give caller a chance to clean-up modules imported as part of install tasks.
+	This clean-up cannot be done here, as install tasks are blocking,
+	and this function returns as soon as they're started,
+	so removing modules before they're done may cause unpredictable effects.
 	"""
-	addon: Addon | None = None
 	try:
 		bundle.extract()
 		addon = Addon(bundle.pendingInstallPath)
-		# #2715: The add-on must be added to _availableAddons here so that
-		# translations can be used in installTasks module.
-		_availableAddons[addon.path] = addon
+	except Exception as extractException:
+		bundle._installExceptions.append(extractException)
+		log.error(f"Error extracting add-on bundle {bundle}", exc_info=True)
+		return None
+
+	# #2715: The add-on must be added to _availableAddons here so that
+	# translations can be used in installTasks module.
+	_availableAddons[addon.path] = addon
+	try:
+		addon.runInstallTask("onInstall")
+	except Exception as onInstallException:
+		bundle._installExceptions.append(onInstallException)
+		# Broad except used, since we can not know what exceptions might be thrown by the install tasks.
+		log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)
+		del _availableAddons[addon.path]
 		try:
-			addon.runInstallTask("onInstall")
-			# Broad except used, since we can not know what exceptions might be thrown by the install tasks.
-		except Exception:
-			log.error(f"task 'onInstall' on addon '{addon.name}' failed", exc_info=True)
-			del _availableAddons[addon.path]
 			addon.completeRemove(runUninstallTask=False)
-			raise AddonError("Installation failed")
+		except Exception as removeException:
+			log.error(f"Failed to remove add-on {addon.name}", exc_info=True)
+			bundle._installExceptions.append(removeException)
+	else:
 		state[AddonStateCategory.PENDING_INSTALL].add(bundle.manifest["name"])
 		state.save()
-	finally:
-		# Regardless if installation failed or not, the created add-on object should be returned
-		# to give caller a hance to clean-up modules imported as part of install tasks.
-		# This clean-up cannot be done here, as install tasks are blocking,
-		# and this function returns as soon as they're started,
-		# so removing modules before they're done may cause unpredictable effects.
-		return addon
+	return addon
 
 
 class AddonError(Exception):
@@ -882,6 +896,9 @@ class AddonBundle(AddonBase):
 		"""Constructs an L{AddonBundle} from a filename.
 		@param bundlePath: The path for the bundle file.
 		"""
+		self._installExceptions: list[Exception] = []
+		"""Exceptions thrown during the installation process."""
+
 		self._path = bundlePath
 		# Read manifest:
 		translatedInput = None
@@ -1014,6 +1031,13 @@ docFileName = string(default=None)
 		input = boolean(default=true)
 		output = boolean(default=true)
 
+# Symbol Pronunciation
+[symbolDictionaries]
+	# The key is the symbol dictionary file name (not the full path)
+	[[__many__]]
+		displayName = string()
+		mandatory = boolean(default=false)
+
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
@@ -1054,6 +1078,10 @@ docFileName = string(default=None)
 				value = tableConfig.get("displayName")
 				if value:
 					self["brailleTables"][fileName]["displayName"] = value
+			for fileName, dictConfig in self._translatedConfig.get("symbolDictionaries", {}).items():
+				value = dictConfig.get("displayName")
+				if value:
+					self["symbolDictionaries"][fileName]["displayName"] = value
 
 	@property
 	def errors(self):

@@ -16,7 +16,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #define VIRTUALBUFFER_BACKEND_H
 
 #include <set>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include "storage.h"
 #include <common/lock.h>
@@ -55,7 +55,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
 
 /**
  * the list of control field nodes that should be re-rendered the next time the backend is updated.
- * the list is in an order such that any parent is before any child. 
+ * the list is in an order such that any parent is before any child.
  */
 	VBufStorage_controlFieldNodeList_t pendingInvalidSubtreesList;
 
@@ -100,12 +100,12 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * @param buffer the buffer to render content in.
  * @param docHandle the doc handle to start from
  * @param ID the ID to start from.
- * @param oldNode an optional node that will be replaced by the rendered content (useful for retreaving cached data) 
+ * @param oldNode an optional node that will be replaced by the rendered content (useful for retreaving cached data)
  */
 	virtual void render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode=NULL)=0;
 
 /**
- * Updates the content of the buffer. 
+ * Updates the content of the buffer.
  * If no content yet exists it renders the entire document. If content exists it only re-renders nodes marked as invalid.
  */
 	void update();
@@ -170,7 +170,7 @@ static LRESULT CALLBACK destroy_callWndProcHook(int code, WPARAM wParam, LPARAM 
  * Fetches an existing node from this backend, so that it can be added to a temporary buffer as a reference node during a partial render.
  * This method should only be called from within a backend's render method.
  * If the node exists but it is currently marked for re-rendering,
- * The node is unmarked for re-rendering, but not returned. 
+ * The node is unmarked for re-rendering, but not returned.
  * this allows the current render in progress (that called this method) to go ahead and re-render that node itself like it had never existed.
   */
 	VBufStorage_controlFieldNode_t* reuseExistingNodeInRender(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID) ;

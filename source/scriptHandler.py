@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2007-2024 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -290,7 +290,8 @@ def executeScript(script, gesture):
 	try:
 		scriptTime = time.time()
 		scriptRef = weakref.ref(scriptFunc)
-		if (scriptTime - _lastScriptTime) <= 0.5 and scriptFunc == lastScriptRef:
+		timeDiffMs = (scriptTime - _lastScriptTime) * 1000
+		if timeDiffMs <= config.conf["keyboard"]["multiPressTimeout"] and scriptFunc == lastScriptRef:
 			_lastScriptCount += 1
 		else:
 			_lastScriptCount = 0
@@ -302,7 +303,7 @@ def executeScript(script, gesture):
 	finally:
 		_isScriptRunning = False
 		if resumeSayAllMode is not None:
-			sayAll.SayAllHandler.readText(resumeSayAllMode)
+			sayAll.SayAllHandler.readText(resumeSayAllMode, startedFromScript=None)
 
 
 def getLastScriptRepeatCount():
@@ -311,7 +312,7 @@ def getLastScriptRepeatCount():
 	@returns: a value greater or equal to 0. If the script has not been repeated it is 0, if it has been repeated once its 1, and so forth.
 	@rtype: integer
 	"""
-	if (time.time() - _lastScriptTime) > 0.5:
+	if (time.time() - _lastScriptTime) * 1000 > config.conf["keyboard"]["multiPressTimeout"]:
 		return 0
 	else:
 		return _lastScriptCount

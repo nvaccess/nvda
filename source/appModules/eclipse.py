@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2010-2024 NV Access Limited, Cyrille Bougot
 
 import controlTypes
 import appModuleHandler
@@ -57,6 +57,7 @@ class EclipseTextArea(EditableTextWithSuggestions, IAccessible):
 		description=_("Tries to read documentation for the selected autocompletion item."),
 		gesture="kb:nvda+d",
 		category=SCRCAT_ECLIPSE,
+		speakOnDemand=True,
 	)
 	def script_readDocumentation(self, gesture):
 		rootDocumentationWindow = None

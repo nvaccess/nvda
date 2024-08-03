@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2023 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
+# Copyright (C) 2012-2024 NV Access Limited, Beqa Gozalishvili, Joseph Lee,
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import weakref
@@ -10,6 +10,7 @@ import addonAPIVersion
 import wx
 import core
 import config
+from contextlib import contextmanager
 import gui
 from addonHandler import Addon
 from logHandler import log
@@ -119,9 +120,6 @@ class ErrorAddonInstallDialog(nvdaControls.MessageDialog):
 		)
 
 
-# C901 'installAddon' is too complex (16)
-# Note: when working on installAddon, look for opportunities to simplify
-# and move logic out into smaller helper functions.
 def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	"""Installs the addon bundle at path.
 	Only used for installing external add-on bundles.
@@ -205,20 +203,34 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		):
 			return False
 
-	from contextlib import contextmanager
+	return _performExternalAddonBundleInstall(parentWindow, bundle, prevAddon)
 
-	@contextmanager
-	def doneAndDestroy(window):
-		try:
-			yield window
-		except:
-			# pass on any exceptions
-			raise
-		finally:
-			# but ensure that done and Destroy are called.
-			window.done()
-			window.Destroy()
 
+@contextmanager
+def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
+	try:
+		yield window
+	except Exception as e:
+		# pass on any exceptions
+		raise e
+	finally:
+		# but ensure that done and Destroy are called.
+		window.done()
+		window.Destroy()
+
+
+def _performExternalAddonBundleInstall(
+	parentWindow: wx.Window,
+	bundle: addonHandler.AddonBundle,
+	prevAddon: addonHandler.Addon | None,
+) -> bool:
+	"""
+	Perform the installation of an add-on bundle.
+	:param parentWindow: The parent window for the progress dialog.
+	:param bundle: The add-on bundle to install.
+	:param prevAddon: The previously installed add-on, if any.
+	:return: True if the installation was successful, False otherwise.
+	"""
 	#  use a progress dialog so users know that something is happening.
 	progressDialog = gui.IndeterminateProgressDialog(
 		parentWindow,
@@ -228,34 +240,34 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 		_("Please wait while the add-on is being installed."),
 	)
 
-	try:
-		# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
-		with doneAndDestroy(progressDialog):
-			addonObj = systemUtils.ExecAndPump[addonHandler.Addon](
-				addonHandler.installAddonBundle,
-				bundle,
-			).funcRes
-			if prevAddon:
-				from addonStore.dataManager import addonDataManager
+	# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
+	with _doneAndDestroy(progressDialog):
+		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](
+			addonHandler.installAddonBundle,
+			bundle,
+		).funcRes
+	if not bundle._installExceptions:
+		if prevAddon:
+			from addonStore.dataManager import addonDataManager
 
-				assert addonDataManager
-				# External install should remove cached add-on
-				addonDataManager._deleteCacheInstalledAddon(prevAddon.name)
-				prevAddon.requestRemove()
-			return True
-	except:  # noqa: E722
-		log.error("Error installing  addon bundle from %s" % addonPath, exc_info=True)
+			assert addonDataManager
+			# External install should remove cached add-on store data
+			addonDataManager._deleteCacheInstalledAddon(prevAddon.name)
+			prevAddon.requestRemove()
+	else:
+		log.error(f"Error(s) installing addon bundle from {bundle}")
+		for e in bundle._installExceptions:
+			log.error(e, exc_info=True)
 		gui.messageBox(
 			# Translators: The message displayed when an error occurs when installing an add-on package.
-			_("Failed to install add-on from %s") % addonPath,
+			_("Failed to install add-on from %s") % bundle._path,
 			# Translators: The title of a dialog presented when an error occurs.
 			_("Error"),
 			wx.OK | wx.ICON_ERROR,
 		)
-	finally:
-		if addonObj is not None:
-			addonObj._cleanupAddonImports()
-	return False
+	if addonObj is not None:
+		addonObj._cleanupAddonImports()
+	return not bool(bundle._installExceptions)
 
 
 def handleRemoteAddonInstall(addonPath: str):
@@ -409,7 +421,7 @@ class IncompatibleAddonsDialog(
 	def onAbout(self, evt: wx.EVT_BUTTON):
 		index: int = self.addonsList.GetFirstSelected()
 		if index < 0:
-			return  # noqa: E701
+			return
 		addon = self.curAddons[index]
 		from gui.addonStoreGui.controls.messageDialogs import _showAddonInfo
 

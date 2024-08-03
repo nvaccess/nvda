@@ -334,18 +334,18 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		charFormat = None
 		if formatConfig["reportFontName"]:
 			if charFormat is None:
-				charFormat = self._getCharFormat(offset)  # noqa: E701
+				charFormat = self._getCharFormat(offset)
 			formatField["font-name"] = charFormat.szFaceName
 		if formatConfig["reportFontSize"]:
 			if charFormat is None:
-				charFormat = self._getCharFormat(offset)  # noqa: E701
+				charFormat = self._getCharFormat(offset)
 			# Font size is supposed to be an integral value
 			fontSize = charFormat.yHeight // 20
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontSize
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			if charFormat is None:
-				charFormat = self._getCharFormat(offset)  # noqa: E701
+				charFormat = self._getCharFormat(offset)
 			formatField["bold"] = bool(charFormat.dwEffects & CFE_BOLD)
 			formatField["italic"] = bool(charFormat.dwEffects & CFE_ITALIC)
 			formatField["underline"] = bool(charFormat.dwEffects & CFE_UNDERLINE)
@@ -361,13 +361,13 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 				formatField["text-position"] = TextPosition.BASELINE
 		if formatConfig["reportColor"]:
 			if charFormat is None:
-				charFormat = self._getCharFormat(offset)  # noqa: E701
+				charFormat = self._getCharFormat(offset)
 			self._setFormatFieldColor(charFormat, formatField)
 		if formatConfig["reportLineNumber"]:
 			formatField["line-number"] = self._getLineNumFromOffset(offset) + 1
 		if formatConfig["reportLinks"]:
 			if charFormat is None:
-				charFormat = self._getCharFormat(offset)  # noqa: E701
+				charFormat = self._getCharFormat(offset)
 			formatField["link"] = bool(charFormat.dwEffects & CFM_LINK)
 		return formatField, (startOffset, endOffset)
 
@@ -712,7 +712,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 				fontObj = textRange.font
 			# Translators: Abbreviation for points, a measurement of font size.
 			formatField["font-size"] = pgettext("font size", "%s pt") % fontObj.size
-		if formatConfig["reportFontAttributes"]:
+		if formatConfig["fontAttributeReporting"]:
 			if not fontObj:
 				fontObj = textRange.font
 			formatField["bold"] = bool(fontObj.bold)
@@ -868,7 +868,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 		for offset in range(len(bufText)):
 			if ord(bufText[offset]) == ord(textUtils.OBJ_REPLACEMENT_CHAR):
 				if embedRangeObj is None:
-					embedRangeObj = rangeObj.duplicate  # noqa: E701
+					embedRangeObj = rangeObj.duplicate
 				embedRangeObj.setRange(start + offset, start + offset + 1)
 				label = self._getEmbeddedObjectLabel(embedRangeObj)
 				if label:
