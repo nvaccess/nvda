@@ -1,5 +1,107 @@
 # NVDA'daki Yenilikler
 
+## 2024.3
+
+Eklenti Mağazası, NVDA başlangıcında herhangi bir eklenti güncellemesi olup olmadığını bildirecek.
+
+Konuşma ve braille çıktısına Unicode normalleştirmesi uygulamak için seçenekler eklendi.
+Bu, belirli bir konuşma sentezleyicisi veya braille tablosu tarafından tanınmayan ve sosyal medyada yaygın olarak kullanılan kalın ve italik karakterler gibi uygun bir alternatife sahip karakterleri okurken yararlı olabilir.
+Microsoft Word denklem düzenleyicisindeki denklemlerin okunmasını da sağlar.
+
+Help Tech Activator Pro braille ekranları için destek eklendi.
+
+Fare tekerleğini dikey ve yatay olarak kaydırmak için kısayolu atanmamış komutlar eklendi.
+
+Özellikle Windows 11 Emoji Paneli ve Pano geçmişi için birkaç hata düzeltmesi yapıldı.
+Web tarayıcılarında hata mesajlarının, figürlerin, resim yazılarının, tablo etiketlerinin ve onay kutusu/radyo düğmesi menü öğelerinin seslendirilmesiyle ilgili düzeltmeler yapıldı.
+
+LibLouis güncellendi, Kiril Sırpçası, Yidiş, birkaç eski dil, Türkçe ve Uluslararası Fonetik Alfabesi için yeni Braille tabloları eklendi.
+ESpeak güncellendi, Karakalpak dili desteği eklendi.
+Unicode CLDR de güncellendi.
+
+### Yeni Özellikler
+
+* Yeni tuş komutları:
+  * Web sayfalarında ve Dism++ gibi dinamik içeriğe sahip uygulamalarda dolaşımı geliştirmek amacıyla fare tekerleğinin dikey ve yatay kaydırılması için kısayol tuşu atanmamış komutlar eklendi. (#16462, @ Cary - Rowen)
+* Konuşma ve braille çıktısı için Unicode Normalleştirmesi desteği eklendi. (#11570, #16466 @ LeonarddeR).
+  * Bu, herhangi bir konuşma sentezleyicisi veya braille tablosu tarafından tanınmayan ve sosyal medyada yaygın olarak kullanılan kalın ve italik karakterler gibi uygun bir alternatife sahip karakterleri okurken yararlı olabilir.
+  * Microsoft Word denklem düzenleyicisindeki denklemlerin okunmasını da sağlar. 4631
+  * Bu işlevi, NVDA Ayarları iletişim kutusundaki ilgili ayar kategorilerinden konuşma ve braille için etkinleştirebilirsiniz.
+* Varsayılan olarak, NVDA başlangıcından sonra herhangi bir eklenti güncellemesi olup olmadığı konusunda bilgilendirileceksiniz. (#15035)
+  * Bu işlev NVDA ayarlarındaki "Eklenti Mağazası" kategorisinden devre dışı bırakılabilir.
+  * NVDA eklenti güncellemelerini günlük olarak kontrol eder.
+  * Güncellemeler Yalnızca aynı kanal bazında kontrol edilecektir (örneğin, beta eklentiler için yalnızca beta kanalındaki güncellemeler bildirilecektir).
+* Help Tech Activator Pro ekranları için destek eklendi. (#16668)
+
+### Değişiklikler
+
+* Bileşen güncellemeleri:
+  * eSpeak NG 1.52 - dev commit `cb62d93fd7` sürümüne güncellendi. (#16495)
+    * Karakalpak dili eklendi.
+  * Unicode CLDR 45.0 sürümüne güncellendi. (# 16507, @OzancanKaratas)
+  * FAST_DIFF_MATCH_PATCH (terminallerdeki ve diğer dinamik içerikteki değişiklikleri algılamak için kullanılır) 2.1.0 sürümüne güncellendi. (#16508, @codeofdusk)
+  * LibLouis braille translator [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0) sürümüne güncellendi. (#16652, @codeofdusk)
+    * Yeni braille tabloları:
+      * Sırpça Kiril.
+      * Yidiş.
+      * Çeşitli eski diller: Kutsal İbranice, Akadça, Süryanice, Ugaritçe ve latin alfabesine çevrilmiş Çivi Yazısı.
+      * Türkçe derece 2. (#16735)
+      * Uluslararası Fonetik Alfabe. (#16773)
+  * NSIS 3.10 sürümüne güncellendi (#16674, @dpy013)
+  * Markdown 3.6 sürümüne güncellendi (#16725, @dpy013)
+  * Nh3 0.2.17 sürümüne güncellendi (#16725, @dpy013)
+* Yedek braille çıktı tablosu birleşik İngilizce Braille Kod derece 1 olarak ayarlı. Yedek Braille girdi tablosu  da aynı şekilde birleşik İngilizce Braille Kod derece 1 olarak ayarlandı. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA erişilebilir alt nesneleri olmayan ancak etiketi veya açıklaması olan figürleri seslendirecektir. (#14514)
+* Tarama kipinde satır satır okurken, "tablo başlığı" ifadesi uzun bir figürün veya tablo başlığının her satırında seslendirilmeyecek. (#14874)
+* Python konsolunda, giriş geçmişinde dolaşıldığında son çalıştırılmayan komut silinmeyecek. (#16653, @CyrilleB79)
+* İsteğe bağlı NVDA kullanım istatistiklerinin toplanmasının bir parçası olarak benzersiz bir anonim kimlik de gönderilecek. (#16266)
+* Varsayılan olarak, taşınabilir kopya oluşturulurken yeni bir klasör oluşturulacak.
+Taşınabilir kopyayı boş olmayan bir klasöre oluşturmaya çalıştığınızda uyarı mesajıyla bilgilendirileceksiniz. (#16686)
+
+### Hata düzeltmeleri
+
+* Windows 11 düzeltmeleri:
+  * Pano geçmişi ve emoji paneli kapatıldığında NVDA donuyormuş gibi hareket etmeyecek. (# 16346, # 16347, @josephsl)
+  * NVDA, IME arayüzü açıldığında görünür önerileri tekrar seslendirecek. (#14023, @josephsl)
+  * Emoji paneli menü öğeleri arasında dolaşılırken NVDA artık "pano geçmişi" ifadesini iki kez seslendirmeyecek. (#16532, @josephsl)
+  * NVDA, emoji panelindeki kaomojiler ve semboller incelenirken konuşmayı ve braille çıktısını bölmeyecek. (#16533, @josephsl)
+* Web tarayıcısı düzeltmeleri:
+  * `Aria -errormessage` ile  gösterilen hata mesajları Google Chrome ve Mozilla Firefox'ta seslendirilecek. (#8318)
+  * Varsa, NVDA Mozilla Firefox'taki tablolarda  erişilebilir adlar sağlamak için `aria-labelledby` özelliğini kullanacaktır. (#5183)
+  * NVDA, Google Chrome ve Mozilla Firefox'taki alt menülere ilk kez girilddiğinde radyo ve onay kutusu menü öğelerini doğru bir şekilde seslendirecek. (#14550)
+  * NVDA'nın tarama kipinde bulma işlevi, sayfa emoji içerdiğinde daha düzgün çalışacak. (# 16317, @LeonarddeR)
+  * Mozilla Firefox'ta, NVDA imleç bir satırın sonundaki ekleme noktasındayken geçerli karakteri, kelimeyi ve satırı doğru bir şekilde seslendirecek. (#3156, @jcsteh)
+* NVDA, Eclipse ve Windows 11 'deki diğer Eclipse tabanlı ortamlardaki otomatik tamamlama önerilerini doğru bir şekilde seslendirecek. (#16416, @thgcode)
+* Özellikle terminal uygulamalarında otomatik metin okumanın güvenilirliği artırıldı. (#15850, #16027, @Danstiv)
+* NVDA, Microsoft Excel'de bir hücrenin metnini düzenlerken seçim değişikliklerini doğru bir şekilde seslendirecek. (#15843)
+* Java Access Bridge kullanan uygulamalarda, NVDA bir önceki satırı tekrarlamak yerine metnin son boş satırını doğru bir şekilde okuyacak. (#9376, @ dmitrii - drobotov)
+* LibreOffice Writer 24.8 ve üzeri sürümlerinde, ilgili klavye kısayolunu kullanarak metin biçimlendirmeyi (kalın , italik, altı çizili, alt simge/üst simge, hizalama) değiştirirken, NVDA yeni biçimlendirme özelliğini (örneğin "Kalın açık", "Kalın kapalı ") seslendirecek. (#4248, @ michaelweghorn)
+* UI Otomasyonu kullanan uygulamaların metin kutularında ok tuşlarıyla dolaşırken, NVDA bazen yanlış karakteri, kelimeyi vb. seslendirmeyecek. (#16711, @jcsteh)
+* Windows 10/11 hesap makinesinde panodan yapıştırıldığında, NVDA yapıştırılan tam sayıyı doğru bir şekilde seslendirecek. (#16573, @TristanBurchett)
+* Uzak Masaüstü oturumu bağlantısı kesilip yeniden bağlanıldığında konuşma durmayacak. (#16722, @jcsteh)
+* Visual Studio Code'da bir nesnenin adı için metin inceleme komutları için destek eklendi. (# 16248, @ Cary - Rowen)
+* NVDA sesleri mono ses cihazında da çalınabilecek. (#16770, @jcsteh)
+* Outlook.com ve yeni Outlook'ta kimden, gizli ve BCC alanlarında ok tuşlarıyla dolaşıldığında NVDA adresleri seslendirecek. (#16856)
+* NVDA eklenti kurulumunda hata oluştuğu durumlarda daha doğru biçimde davranacak. (#16704)
+
+### Changes for Developers
+
+* NVDA now uses Ruff instead of flake8 for linting. (#14817)
+* Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
+* A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
+It is especially useful to read the error location markers in tracebacks. (#16321, @CyrilleB79)
+* Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * Tables can be provided in the `brailleTables` folder in an add-on package.
+  * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
+  * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
+* When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
+* NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
+* `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+* It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
 
 ## 2024.2
 
@@ -122,6 +224,7 @@ Yeni Tayca, Filipin dili ve Rumence braille tabloları eklendi.
 Özellikle eklenti mağazası, braille, Libre Office, Microsoft Office ve ses için birçok hata düzeltmesi yapıldı.
 
 ### Önemli notlar
+
 * Bu sürüm mevcut eklentilerle uyumluluğu bozar
 * Windows 7 ve Windows 8 artık desteklenmiyor.
 Desteklenen asgari Windows sürümü Windows 8.1'dir.

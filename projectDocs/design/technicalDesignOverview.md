@@ -41,7 +41,7 @@ See also:
 - [The Linux Foundation IA2 reference](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/)
 - [IA2 event constants](https://accessibility.linuxfoundation.org/a11yspecs/ia2/docs/html/_accessible_event_i_d_8idl.html)
   - From the perspective of Windows, the IA2 event constants are considered custom "application specific" event IDs.
-- [IA2 Project (IDL files)](https://github.com/LinuxA11y/IAccessible2) 
+- [IA2 Project (IDL files)](https://github.com/LinuxA11y/IAccessible2)
 - [Windows event constants](https://docs.microsoft.com/en-us/windows/win32/winauto/event-constants)
 
 
@@ -88,7 +88,7 @@ Refer to [startupShutdown documentation](./startupShutdown.md).
 The core (in the function `core.main`) loads the configuration, initialises all other components and then enters the main loop.
 In each iteration of the main loop, the core pumps the [API](#api-handlers) and [input](#input-handlers) handlers, [registered generators](#registered-generators) and the main queue.
 All events, scripts, etc. are indirectly queued to this main queue by API and input handlers, so pumping the main queue causes these to be executed.
-At the end of the iteration, the core then goes to sleep until more work is added to the main queue, at which point the core will again wake and perform another iteration. 
+At the end of the iteration, the core then goes to sleep until more work is added to the main queue, at which point the core will again wake and perform another iteration.
 The main loop continues to iterate / sleep until NVDA is instructed to exit either by the user or a newly started copy of NVDA.
 Once NVDA is instructed to exit, the core terminates all other components, saves the configuration if appropriate and then exits.
 
@@ -148,7 +148,7 @@ NVDA objects that might be used in any application are contained in the NVDAObje
 A part from properties such as a widget's name, role, states etc, NVDA objects also include relational properties such as parent, next, previous and first child.
 These allow both the user and code to navigate the entire Operating System and its applications in a tree-like structure.
 The root of the tree being the Desktop, whose children is all the top-level windows for all open applications, each containing further subtrees of more widgets representing an application's user interface.
- 
+
 ### Text Ranges
 When working with editable text controls, NVDA needs to be able to obtain information about the text in the widget.
 Aside from just retrieving the entire text, proper navigation requires retrieval of specific units of text (e.g. paragraphs, lines, words and characters), as well as the ability to find and set the location of the caret and selection.
@@ -161,9 +161,9 @@ TextInfo objects contain properties and methods to:
 * Move or expand the range by units such as character, word, line and paragraph
 * compare the start and end of a range with itself or another range
 * Fetch the text and formatting of the range
- 
+
 You can fetch a TextInfo object from an NVDA object via its `makeTextInfo` method, passing in the particular `textInfos.POSITION_*` constant depending on whether you want to fetch a range representing the position of the caret, selection, start or end of the text, or the entire text.
- 
+
 ### Global Commands
 The global commands object (`globalCommands.GlobalCommands`) contains built-in global scripts; i.e.
 they can be executed everywhere.
@@ -227,7 +227,7 @@ Adding controls to a ``wx.StaticBoxSizer`` by adding them to its parent causes u
 This has caused problems with users with right-to-left language locales.
 wxWidgets requires that these items be added directly to the `StaticBox` associated with the `wx.StaticBoxSizer` via `GetStaticBox()`.
 
-**Before (buggy behaviour):** 
+**Before (buggy behaviour):**
 
 ```python
 sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
@@ -235,7 +235,7 @@ sizer.Add(wx.StaticText(parent, wx.ID_ANY, "Where am I?"))
 sizer.Add(wx.Button(parent, wx.ID_ADD))
 ```
 
-**After:** 
+**After:**
 
 ```python
 sizer = new wx.StaticBoxSizer(wx.VERTICAL, parent, "Test")
@@ -271,12 +271,12 @@ Global plugins, app modules and tree interceptors are passed a handler function 
 e.g. the object itself.
 
 Although an event is always for a particular NVDA object, it first has a chance of being handled by global plugins, app modules or tree interceptors.
-If an event is handled by one of these, meaning that an `event_*` method was found and executed, the event stops there and does not go further, unless the method that handled it specifically calls the `nextHandler` function object passed to it. 
+If an event is handled by one of these, meaning that an `event_*` method was found and executed, the event stops there and does not go further, unless the method that handled it specifically calls the `nextHandler` function object passed to it.
 
 The chain of handlers is as follows:
 * The first found global plugin
 * The next found global plugin (until no more are found)
-* The app module containing the NVDA object the event is for, I.e. fetched from the NVDA object's `appModule` property. 
+* The app module containing the NVDA object the event is for, I.e. fetched from the NVDA object's `appModule` property.
 * The tree interceptor containing the NVDA object the event is for. I.e. fetched from the NVDA object's `treeInterceptor` property if the property is not `None`
 * The NVDA object itself.
 
@@ -290,7 +290,7 @@ These are inherited from `baseObject.ScriptableObject`.
 
 Similar to events, input gestures have a chance to be handled by a script at one of many levels.
 But unlike events, once an input gesture finds and executes a script, there is no clean way to have the input gesture handled by a subsequent level.
- 
+
 The chain of handlers is as follows:
 * The first found global plugin
 * The next found global plugin (until no more are found)
@@ -300,7 +300,7 @@ The chain of handlers is as follows:
 * the first ancestor (parent) of the currently focused NVDAObject, if the found script's `canPropagate` property is `True`
 * the next ancestor of the currently focused NVDAObject, if the found script's `canPropagate` property is `True`...
  * Global commands
- 
+
 ## Inter-process Communication
 In general terms, every running application or service on a computer, including NVDA, is a separate process.
 No process can access data in another process except via special operating system mechanisms.

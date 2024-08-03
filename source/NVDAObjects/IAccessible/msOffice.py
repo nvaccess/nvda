@@ -75,7 +75,7 @@ class SDM(IAccessible):
 			):
 				obj = getNVDAObjectFromEvent(hwndFocus, winUser.OBJID_CLIENT, 0)
 				if not obj:
-					return None  # noqa: E701
+					return None
 				if getattr(obj, "parentSDMCanOverrideName", True):
 					obj.name = self.name
 				obj.keyboardShortcut = self.keyboardShortcut

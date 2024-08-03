@@ -14,7 +14,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #ifndef WINWORD_LINKS_H
 #define WINWORD_LINKS_H
 
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <vector>
 #include <optional>
 

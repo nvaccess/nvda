@@ -385,7 +385,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		description=_(
 			# Translators: a description for a script
 			"Reports the text of the comment where the system caret is located."
-			"If pressed twice, presents the information in browse mode."
+			"If pressed twice, presents the information in browse mode.",
 		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
@@ -465,10 +465,10 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				except COMError:
 					pass
 				if foundCell:
-					break  # noqa: E701
+					break
 				curThisIndex = incdecFunc(curThisIndex, 1)
 			if foundCell:
-				break  # noqa: E701
+				break
 			curOtherIndex -= 1
 		if not foundCell:
 			ui.message(_("Edge of table"))
@@ -577,7 +577,7 @@ class SpellCheckErrorField(IAccessible, winWordWindowModule.WordDocument_WwN):
 		for field in fields:
 			if isinstance(field, str):
 				if inBold:
-					textList.append(field)  # noqa: E701
+					textList.append(field)
 			elif field.field:
 				inBold = field.field.get("bold", False)
 			if not inBold and len(textList) > 0:

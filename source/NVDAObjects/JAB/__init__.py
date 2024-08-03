@@ -730,16 +730,16 @@ class TableCell(JAB):
 				if cellInfo and cellInfo.jabContext:
 					obj = JAB(jabContext=cellInfo.jabContext)
 					if obj.name:
-						textList.append(obj.name)  # noqa: E701
+						textList.append(obj.name)
 					if obj.description:
-						textList.append(obj.description)  # noqa: E701
+						textList.append(obj.description)
 			jabContext = self.table._jabTableInfo.jabTable.getAccessibleTableRowDescription(row)
 			if jabContext:
 				obj = JAB(jabContext=jabContext)
 				if obj.name:
-					textList.append(obj.name)  # noqa: E701
+					textList.append(obj.name)
 				if obj.description:
-					textList.append(obj.description)  # noqa: E701
+					textList.append(obj.description)
 			return " ".join(textList)
 
 	def _get_columnHeaderText(self):
@@ -752,14 +752,14 @@ class TableCell(JAB):
 				if cellInfo and cellInfo.jabContext:
 					obj = JAB(jabContext=cellInfo.jabContext)
 					if obj.name:
-						textList.append(obj.name)  # noqa: E701
+						textList.append(obj.name)
 					if obj.description:
-						textList.append(obj.description)  # noqa: E701
+						textList.append(obj.description)
 			jabContext = self.table._jabTableInfo.jabTable.getAccessibleTableColumnDescription(col)
 			if jabContext:
 				obj = JAB(jabContext=jabContext)
 				if obj.name:
-					textList.append(obj.name)  # noqa: E701
+					textList.append(obj.name)
 				if obj.description:
-					textList.append(obj.description)  # noqa: E701
+					textList.append(obj.description)
 			return " ".join(textList)

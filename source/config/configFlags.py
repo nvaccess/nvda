@@ -261,7 +261,7 @@ class ColorTheme(DisplayStringStrEnum):
 	AUTO = "auto"
 	DARK = "dark"
 	LIGHT = "light"
-
+  
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -271,4 +271,23 @@ class ColorTheme(DisplayStringStrEnum):
 			self.LIGHT: _("Light"),
 			# Translators: One of the color theme choices in the visual settings category panel (this choice uses dark background with light text).
 			self.DARK: _("Dark"),
+		}
+
+@unique
+class ParagraphStartMarker(DisplayStringStrEnum):
+	NONE = ""
+	SPACE = " "
+	PILCROW = "¶"
+  
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for a paragraph start marker.
+			self.NONE: pgettext("paragraphMarker", "No paragraph start marker (default)"),
+			# Translators: This is a label for a paragraph start marker.
+			self.SPACE: pgettext("paragraphMarker", "Double space (  )"),
+			# Translators: This is a label for a paragraph start marker.
+			# Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
 		}

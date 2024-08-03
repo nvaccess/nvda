@@ -52,10 +52,10 @@ typedef std::list<std::pair<VBufStorage_controlFieldNodeIdentifier_t,int>> VBufS
 /**
  * a list of control field nodes.
  */
-typedef std::list<VBufStorage_controlFieldNode_t*> VBufStorage_controlFieldNodeList_t; 
+typedef std::list<VBufStorage_controlFieldNode_t*> VBufStorage_controlFieldNodeList_t;
 
-/** 
- * Holds values that can together uniquely identify a control field in a buffer. 
+/**
+ * Holds values that can together uniquely identify a control field in a buffer.
  * It can also be compaired with others of its type as being less, greater, equal, or not equal, based on its values.
  */
 class VBufStorage_controlFieldNodeIdentifier_t {
@@ -75,7 +75,7 @@ class VBufStorage_controlFieldNodeIdentifier_t {
  * constructor.
  * @param docHandle the value you wish for the C{docHandle} member.
  * @param ID the value you wish for the C{ID} member.
- */ 
+ */
 	VBufStorage_controlFieldNodeIdentifier_t(int docHandle=0, int ID=0);
 
 	bool operator<(const VBufStorage_controlFieldNodeIdentifier_t&) const;
@@ -106,7 +106,7 @@ class VBufStorage_fieldNode_t {
 	VBufStorage_controlFieldNode_t* parent;
 
 /**
- * points to the node directly before this node that shares the same parent as this node. 
+ * points to the node directly before this node that shares the same parent as this node.
  */
 	VBufStorage_fieldNode_t* previous;
 
@@ -116,7 +116,7 @@ class VBufStorage_fieldNode_t {
 	VBufStorage_fieldNode_t* next;
 
 /**
- * points to this node's first child. 
+ * points to this node's first child.
  * The child will have no previous node, and it will have this node as its parent.
  */
 	VBufStorage_fieldNode_t* firstChild;
@@ -148,7 +148,7 @@ class VBufStorage_fieldNode_t {
 	VBufStorage_fieldNode_t* nextNodeInTree(int direction, VBufStorage_fieldNode_t* limitNode, int *relativeStartOffset);
 
 /**
- * Calculates the offset for this node relative to the surrounding tree. 
+ * Calculates the offset for this node relative to the surrounding tree.
  * @return the offset of the node.
  */
 	int calculateOffsetInTree() const;
@@ -158,7 +158,7 @@ class VBufStorage_fieldNode_t {
  * @param offset the offset with in this node.
  * @param relativeOffset memory where the   offset relative to the  found node can be placed
  * @return the descendant textFieldNode at that offset, or NULL if none there.
- */ 
+ */
 	virtual VBufStorage_textFieldNode_t*locateTextFieldNodeAtOffset(int offset, int *relativeOffset);
 
 /**
@@ -170,16 +170,16 @@ class VBufStorage_fieldNode_t {
 /**
  * Generates the attributes within a markup opening tag.
  * @param text where to place the generated text
- * @param the offset within the node where text is being requested from 
- * @param the offset within the node the text is being requested to. 
+ * @param the offset within the node where text is being requested from
+ * @param the offset within the node the text is being requested to.
  */
 	virtual void generateAttributesForMarkupOpeningTag(std::wstring& text, int startOffset, int endOffset);
 
 /**
  * generates a markup opening tag for this field.
  * @param text a string to append the tag to.
- * @param the offset within the node where text is being requested from 
- * @param the offset within the node the text is being requested to. 
+ * @param the offset within the node where text is being requested from
+ * @param the offset within the node the text is being requested to.
  */
 	 void generateMarkupOpeningTag(std::wstring& text,int startOffset, int endOffset);
 
@@ -237,7 +237,7 @@ class VBufStorage_fieldNode_t {
 	inline VBufStorage_controlFieldNode_t* getParent() { return this->parent; }
 
 /**
- * points to the node directly before this node that shares the same parent as this node. 
+ * points to the node directly before this node that shares the same parent as this node.
  */
 	inline VBufStorage_fieldNode_t* getPrevious() { return this->previous; }
 
@@ -248,7 +248,7 @@ class VBufStorage_fieldNode_t {
 
 
 /**
- * points to this node's first child. 
+ * points to this node's first child.
  * The child will have no previous node, and it will have this node as its parent.
  */
 	inline VBufStorage_fieldNode_t* getFirstChild() { return this->firstChild; }
@@ -282,12 +282,12 @@ class VBufStorage_fieldNode_t {
 /**
  * fetches the text between given offsets in this node and its descendants, with optional markup.
  * @param startOffset the offset to start from.
- * @param endOffset the offset to end at. Use -1 to mean node's end offset. 
+ * @param endOffset the offset to end at. Use -1 to mean node's end offset.
  * @param text a string in whish to append the text.
  * @param useMarkup if true then markup indicating opening and closing of fields will be included.
  * @param filter: a function that takes the current recursive node and returns true if text should be fetched and false if it should be skipped.
  * @return true if successfull, false otherwize.
- */ 
+ */
 	virtual void getTextInRange(int startOffset, int endOffset, std::wstring& text, bool useMarkup=false,bool(*filter)(VBufStorage_fieldNode_t*)=NULL);
 
 /**
@@ -335,22 +335,22 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 	const VBufStorage_controlFieldNodeIdentifier_t identifier;
 
 /**
- * If true, When this node is invalidated in a backend, its parent will be invalidated instead. 
- * Parent invalidation is also recursive, so that if the parent node sets this variable to true, then the first ancestor that does not set this to true is used for invalidation. 
+ * If true, When this node is invalidated in a backend, its parent will be invalidated instead.
+ * Parent invalidation is also recursive, so that if the parent node sets this variable to true, then the first ancestor that does not set this to true is used for invalidation.
  * An example where this might be set is on parts of a table where it is necessary for the table itself to be re-rendered if any part changes.
  */
 	bool requiresParentUpdate {false};
 
 /**
- * If true, this node is allowing itself to be reused within a subtree that is being re-rendered. 
+ * If true, this node is allowing itself to be reused within a subtree that is being re-rendered.
  * This is true by default, but may be set to false if this node or a descendant needs to be re-rendered but its requiresParentUpdate is true.
- * In that case, the re-render will happen higher up in the ancestors, but ensures that this node is not reused. 
+ * In that case, the re-render will happen higher up in the ancestors, but ensures that this node is not reused.
  */
 	bool allowReuseInAncestorUpdate {true};
 
 /**
  * If True, this node cannot be moved and reused within a subtree being re-rendered, if its previous siblings have changed in anyway.
- * An example might be where a table is re-rendered and a new row is added in the middle. 
+ * An example might be where a table is re-rendered and a new row is added in the middle.
  * In this case, all rows and cells after the new row must not be reused as their table coordinates would have changed.
  */
 	bool denyReuseIfPreviousSiblingsChanged {false};
@@ -379,7 +379,7 @@ class VBufStorage_controlFieldNode_t : public VBufStorage_fieldNode_t {
 
 /**
  * a node that represents a field of text in a buffer.
- * It holds the actual text it represents, and also sets its length accordingly. 
+ * It holds the actual text it represents, and also sets its length accordingly.
  */
 class VBufStorage_textFieldNode_t : public VBufStorage_fieldNode_t {
 	protected:
@@ -418,13 +418,13 @@ class VBufStorage_referenceNode_t: public VBufStorage_controlFieldNode_t {
 	public:
 	VBufStorage_controlFieldNode_t* referenceNode;
 	VBufStorage_referenceNode_t(int docHandle, int ID, VBufStorage_controlFieldNode_t* r): VBufStorage_controlFieldNode_t(docHandle,ID,false), referenceNode(r) {};
-	void generateMarkupTagName(std::wstring& text) { text.append(L"reference"); }; 
+	void generateMarkupTagName(std::wstring& text) { text.append(L"reference"); };
 };
 
 /**
  * a buffer that can store text with overlaying fields.
  * it stores the text and fields in an internal tree of nodes.
- */ 
+ */
 class VBufStorage_buffer_t {
 	protected:
 
@@ -459,7 +459,7 @@ class VBufStorage_buffer_t {
 
 /**
  * the offset at where the current selection starts.
- */ 
+ */
 	int selectionStart;
 
 /**
@@ -477,7 +477,7 @@ class VBufStorage_buffer_t {
  * @param parent a control field already in the buffer that should be the inserted node's parent, note if also specifying previous then parent can be NULL.
  * @param previous the field already in the buffer that the inserted node will come directly after, note previous's parent will always be used over the parent argument.
  * @param node the node being inserted.
- */ 
+ */
 	bool insertNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_fieldNode_t* node);
 
 /**
@@ -513,13 +513,13 @@ class VBufStorage_buffer_t {
  * @param parent the control field which should be the new field's parent, note that if also specifying previous parent can be NULL.
  * @param previous the field which the new field  should come directly after, note that previous's parent  will be used over the parent argument, and previous can also not be the buffer's root node (first field added).
  * @param docHandle the docHandle you wish the new control field node to have
- * @param ID the ID you wish the new control field node to have.  
+ * @param ID the ID you wish the new control field node to have.
  * @param isBlock if true then the buffer will force a line break at the start and end of the new control.
  * @return the newly added control field.
  */
 	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, int docHandle, int ID, bool isBlock);
- 
-	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node); 
+
+	VBufStorage_controlFieldNode_t* addControlFieldNode(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node);
 
 /**
  * Adds a text field in to the buffer.
@@ -541,7 +541,7 @@ class VBufStorage_buffer_t {
 
 /**
  * Removes the given nodes from the buffer and then merges the content of the new buffers in the removed node's position. It also tries to keep the selection relative to the control field it was in before the replacement.
- * @param m the map of nodes to buffers 
+ * @param m the map of nodes to buffers
  */
 	bool replaceSubtrees(std::map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m);
 
@@ -594,7 +594,7 @@ class VBufStorage_buffer_t {
  * @return the located control field node.
  */
 	virtual VBufStorage_controlFieldNode_t* locateControlFieldNodeAtOffset(int offset, int *startOffset, int *endOffset, int* docHandle, int* ID);
- 
+
 /**
  * locates the controlFieldNode with the given identifier
  * @param docHandle the docHandle of the control field node you wish to find
@@ -664,7 +664,7 @@ class VBufStorage_buffer_t {
  * @param startOffset memory to place the calculated line start offset
  * @param endOffset memory to place the calculated line end offset
   * @return true if successfull, false otherwize.
- */ 
+ */
 	virtual bool getLineOffsets(int offset, int maxLineLength, bool useScreenLayout, int *startOffset, int *endOffset);
 
 /**
@@ -687,7 +687,7 @@ class VBufStorage_buffer_t {
  * @param previous the previous node in this buffer of the added reference node.
  * @param node the existing node from another buffer that the reference node should point to.
  */
-	VBufStorage_referenceNode_t*  addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node); 
+	VBufStorage_referenceNode_t*  addReferenceNodeToBuffer(VBufStorage_controlFieldNode_t* parent, VBufStorage_fieldNode_t* previous, VBufStorage_controlFieldNode_t* node);
 
 	virtual std::wstring getDebugInfo() const;
 
