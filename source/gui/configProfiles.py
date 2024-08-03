@@ -120,7 +120,6 @@ class ProfilesDialog(
 		self.Sizer = mainSizer
 		self.profileList.SetFocus()
 		self.CentreOnScreen()
-		guiHelper.enableDarkMode(self)
 
 	def __del__(self):
 		ProfilesDialog._instance = None
@@ -408,7 +407,6 @@ class TriggersDialog(
 		mainSizer.Fit(self)
 		self.Sizer = mainSizer
 		self.CentreOnScreen()
-		guiHelper.enableDarkMode(self)
 
 	def onTriggerListChoice(self, evt):
 		trig = self.triggers[self.triggerList.Selection]
@@ -462,14 +460,13 @@ class NewProfileDialog(
 		# in the new configuration profile dialog.
 		self.triggers = triggers = [(None, _("Manual activation"), True)]
 		triggers.extend(parent.getSimpleTriggers())
-		self.triggerChoice = sHelper.addItem(
-			wx.RadioBox(
-				self,
-				label=_("Use this profile for:"),
-				choices=[trig[1] for trig in triggers],
-			),
+		self.triggerChoice = sHelper.addLabeledControl(
+			_("Use this profile for:"),
+			wx.Choice,
+			choices=[trig[1] for trig in triggers],
 		)
-		self.triggerChoice.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
+		self.triggerChoice.Bind(wx.EVT_CHOICE, self.onTriggerChoice)
+		self.triggerChoice.SetSelection(0)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
@@ -484,8 +481,6 @@ class NewProfileDialog(
 		self.Sizer = mainSizer
 		self.profileName.SetFocus()
 		self.CentreOnScreen()
-		# Note: we don't call guiHelper.enableDarkMode() here because wx.RadioBox doesn't support
-		# changing the foreground color (https://github.com/wxWidgets/Phoenix/issues/1512)
 
 	def onOk(self, evt):
 		confTrigs = config.conf.triggersToProfiles

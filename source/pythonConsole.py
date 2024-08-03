@@ -330,7 +330,6 @@ class ConsoleUI(
 		mainSizer.Add(inputSizer, proportion=1, flag=wx.EXPAND)
 		self.SetSizer(mainSizer)
 		mainSizer.Fit(self)
-		gui.guiHelper.enableDarkMode(self)
 
 		self.console = PythonConsole(
 			outputFunc=self.output,

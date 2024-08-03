@@ -10,9 +10,11 @@ from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
 	Any,
+	Generator,
 	List,
 	Optional,
 )
+from config.configFlags import (ColorTheme)
 import comtypes
 import sys
 import winVersion
@@ -589,6 +591,29 @@ def _setUpWxApp() -> "wx.App":
 	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
 	wx.Log.EnableLogging(not globalVars.appArgs.secure)
 
+	def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
+		yield window
+		if hasattr(window, "GetChildren"):
+			for child in window.GetChildren():
+				for descendant in _getDescendants(child):
+					yield descendant
+
+	def _enableDarkMode(window: wx.Window):
+		curTheme = config.conf["vision"]["colorTheme"]
+		if curTheme == ColorTheme.AUTO:
+			systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
+			isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
+		else:
+			isDark = curTheme == ColorTheme.DARK
+
+		if isDark:
+			fgColor, bgColor = "White", "Dark Grey"
+		else:
+			fgColor, bgColor = "Black", "White"
+		for child in _getDescendants(window):
+			child.SetBackgroundColour(bgColor)
+			child.SetForegroundColour(fgColor)
+
 	class App(wx.App):
 		def OnAssert(self, file: str, line: str, cond: str, msg: str):
 			message = f"{file}, line {line}:\nassert {cond}: {msg}"
@@ -604,6 +629,15 @@ def _setUpWxApp() -> "wx.App":
 			This code may need to be revisited when we update Python / wxPython.
 			"""
 			pass
+
+		def FilterEvent(self, event:wx.Event):
+			"""FilterEvent is called for every UI event in the entire application.  Keep it quick to
+			avoid slowing everything down."""
+			if isinstance(event, wx.ShowEvent):
+				window : wx.Window = event.EventObject
+				_enableDarkMode(window.GetTopLevelParent())
+				window.Refresh()
+			return -1
 
 	app = App(redirect=False)
 

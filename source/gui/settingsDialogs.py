@@ -253,7 +253,6 @@ class SettingsDialog(
 		if resizeable:
 			self.SetMinSize(self.mainSizer.GetMinSize())
 		self.CentreOnScreen()
-		guiHelper.enableDarkMode(self)
 		if gui._isDebug():
 			log.debug("Loading %s took %.2f seconds" % (self.__class__.__name__, time.time() - startTime))
 
@@ -370,7 +369,6 @@ class SettingsPanel(
 		super().__init__(parent)
 
 		self._buildGui()
-		guiHelper.enableDarkMode(self)
 
 		if gui._isDebug():
 			elapsedSeconds = time.time() - startTime
@@ -4778,7 +4776,6 @@ class VisionSettingsPanel(SettingsPanel):
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
 		config.conf["vision"]["colorTheme"] = colorTheme.value
-		guiHelper.enableDarkMode(self.TopLevelParent)
 		self.TopLevelParent.Refresh()
 
 

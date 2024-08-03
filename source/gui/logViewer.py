@@ -65,7 +65,6 @@ class LogViewer(
 
 		self.refresh()
 		self.outputCtrl.SetFocus()
-		gui.guiHelper.enableDarkMode(self)
 
 	def refresh(self, evt=None):
 		# Ignore if log is not initialized

@@ -120,7 +120,6 @@ class ExitDialog(wx.Dialog):
 		self.Sizer = mainSizer
 		self.actionsList.SetFocus()
 		self.CentreOnScreen()
-		guiHelper.enableDarkMode(self)
 
 	def onOk(self, evt):
 		action = [a for a in _ExitAction if a.displayString == self.actionsList.GetStringSelection()][0]

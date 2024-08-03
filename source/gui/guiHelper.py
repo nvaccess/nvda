@@ -87,31 +87,6 @@ def autoThaw(control: wx.Window):
 	control.Thaw()
 
 
-def _getDescendants(widget: wx.Window) -> Generator[wx.Window, None, None]:
-	yield widget
-	if hasattr(widget, "GetChildren"):
-		for child in widget.GetChildren():
-			for descendant in _getDescendants(child):
-				yield descendant
-
-
-def enableDarkMode(widget: wx.Window):
-	curTheme = config.conf["vision"]["colorTheme"]
-	if curTheme == ColorTheme.AUTO:
-		systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
-		isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
-	else:
-		isDark = curTheme == ColorTheme.DARK
-
-	if isDark:
-		fgColor, bgColor = "White", "Dark Grey"
-	else:
-		fgColor, bgColor = "Black", "White"
-	for child in _getDescendants(widget):
-		child.SetBackgroundColour(bgColor)
-		child.SetForegroundColour(fgColor)
-
-
 class ButtonHelper(object):
 	"""Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
 	arrangement. This class should be used for groups of buttons. While it won't cause problems to use this class with a
