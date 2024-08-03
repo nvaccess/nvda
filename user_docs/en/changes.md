@@ -18,6 +18,8 @@ The available options are:
 
 ### Changes
 
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
+
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
@@ -48,6 +50,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#16369, @XLTechie)
 
 #### Deprecations
 
@@ -112,7 +115,6 @@ Unicode CLDR has also been updated.
 * When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
 * In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
 * A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
-* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
 * By default, a new folder will be created when making a portable copy.
 A warning message will inform you if you try writing to a non-empty directory. (#16686)
 
@@ -162,7 +164,6 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 * It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
-* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and a button for closing the window. (#16369, @XLTechie)
 
 ## 2024.2
 
