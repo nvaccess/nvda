@@ -4835,6 +4835,7 @@ class VisionSettingsPanel(SettingsPanel):
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
 		config.conf["vision"]["colorTheme"] = colorTheme.value
+		guiHelper.applyColorTheme(self.TopLevelParent)
 		self.TopLevelParent.Refresh()
 
 

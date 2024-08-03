@@ -46,6 +46,7 @@ class myDialog(wx.Dialog):
 from contextlib import contextmanager
 import weakref
 from typing import (
+	Generator,
 	Generic,
 	Optional,
 	Type,
@@ -57,6 +58,8 @@ from typing import (
 import wx
 from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
+import config
+from config.configFlags import ColorTheme
 
 #: border space to be used around all controls in dialogs
 BORDER_FOR_DIALOGS = 10
@@ -458,3 +461,27 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 	pass
+
+def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
+	yield window
+	if hasattr(window, "GetChildren"):
+		for child in window.GetChildren():
+			for descendant in _getDescendants(child):
+				yield descendant
+
+
+def applyColorTheme(window: wx.Window):
+	curTheme = config.conf["vision"]["colorTheme"]
+	if curTheme == ColorTheme.AUTO:
+		systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
+		isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
+	else:
+		isDark = curTheme == ColorTheme.DARK
+
+	if isDark:
+		fgColor, bgColor = "White", "Dark Grey"
+	else:
+		fgColor, bgColor = "Black", "White"
+	for child in _getDescendants(window):
+		child.SetBackgroundColour(bgColor)
+		child.SetForegroundColour(fgColor)

@@ -10,11 +10,9 @@ from dataclasses import dataclass
 from typing import (
 	TYPE_CHECKING,
 	Any,
-	Generator,
 	List,
 	Optional,
 )
-from config.configFlags import ColorTheme
 import comtypes
 import sys
 import winVersion
@@ -590,35 +588,13 @@ def _setUpWxApp() -> "wx.App":
 	import config
 	import nvwave
 	import speech
+	import gui.guiHelper
 
 	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
 
 	# Disables wx logging in secure mode due to a security issue: GHSA-h7pp-6jqw-g3pj
 	# This is due to the wx.LogSysError dialog allowing a file explorer dialog to be opened.
 	wx.Log.EnableLogging(not globalVars.appArgs.secure)
-
-	def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
-		yield window
-		if hasattr(window, "GetChildren"):
-			for child in window.GetChildren():
-				for descendant in _getDescendants(child):
-					yield descendant
-
-	def _enableDarkMode(window: wx.Window):
-		curTheme = config.conf["vision"]["colorTheme"]
-		if curTheme == ColorTheme.AUTO:
-			systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
-			isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
-		else:
-			isDark = curTheme == ColorTheme.DARK
-
-		if isDark:
-			fgColor, bgColor = "White", "Dark Grey"
-		else:
-			fgColor, bgColor = "Black", "White"
-		for child in _getDescendants(window):
-			child.SetBackgroundColour(bgColor)
-			child.SetForegroundColour(fgColor)
 
 	class App(wx.App):
 		def OnAssert(self, file: str, line: str, cond: str, msg: str):
@@ -641,7 +617,7 @@ def _setUpWxApp() -> "wx.App":
 			avoid slowing everything down."""
 			if isinstance(event, wx.ShowEvent):
 				window: wx.Window = event.EventObject
-				_enableDarkMode(window.GetTopLevelParent())
+				gui.guiHelper.applyColorTheme(window.GetTopLevelParent())
 				window.Refresh()
 			return -1
 
