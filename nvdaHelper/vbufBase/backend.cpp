@@ -13,7 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
 #include <map>
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <remote/nvdaHelperRemote.h>
 #include <common/log.h>
@@ -154,7 +154,7 @@ bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 		LOG_DEBUGWARNING(L"Node at "<<node<<L" not in buffer at "<<this);
 		return false;
 	}
-	// If this node requires its parent to be updated, Invalidate the closest ancestor that does not require its parent to be updated. 
+	// If this node requires its parent to be updated, Invalidate the closest ancestor that does not require its parent to be updated.
 	while(node->requiresParentUpdate) {
 		node->allowReuseInAncestorUpdate=false;
 		auto parent=node->getParent();
@@ -173,7 +173,7 @@ bool VBufBackend_t::invalidateSubtree(VBufStorage_controlFieldNode_t* node) {
 		}
 	}
 	// If this node is an ancestor of one or more already invalid nodes,
-	// Ensure that the already invalid node and any of its ancestors (up to but not including) this node, are marked as non-reusable. 
+	// Ensure that the already invalid node and any of its ancestors (up to but not including) this node, are marked as non-reusable.
 	// Then remove those nodes from the invalidation list.
 	pendingInvalidSubtreesList.remove_if([node](auto i){
 		return markNodeAsNonreusableIfInAncestor(i,node);
@@ -251,7 +251,7 @@ void VBufBackend_t::destroy() {
 }
 
 VBufBackend_t::~VBufBackend_t() {
-	LOG_DEBUG(L"base Backend destructor called"); 
+	LOG_DEBUG(L"base Backend destructor called");
 	nhAssert(runningBackends.count(this) == 0);
 }
 

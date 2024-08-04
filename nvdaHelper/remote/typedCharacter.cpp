@@ -12,7 +12,7 @@ This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <wchar.h>
 #include "nvdaHelperRemote.h"
@@ -31,7 +31,7 @@ LRESULT CALLBACK typedCharacter_getMessageHook(int code, WPARAM wParam, LPARAM l
 	if(pmsg->message==WM_KEYDOWN) {
 		typedCharacter_window=pmsg->hwnd;
 		lastCharacter=0;
-	} else if((typedCharacter_window!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==typedCharacter_window)&&(pmsg->wParam!=lastCharacter)) { 
+	} else if((typedCharacter_window!=0)&&(pmsg->message==WM_CHAR)&&(pmsg->hwnd==typedCharacter_window)&&(pmsg->wParam!=lastCharacter)) {
 		// Instruct NVDA's inproc manager thread to report the typed character to NVDA via rpc.
 
 		// If we were to call the rpc function directly, it might cause a deadlock

@@ -1,5 +1,15 @@
 exclude: ^user_docs/(?!en/).*$
 
+# https://pre-commit.ci/
+# Configuration for Continuous Integration service
+ci:
+  # Can't run Windows scripts on Linux
+  # These also do not apply fixes, only run tests
+  skip: [scons-source, checkPot, unitTest, licenseCheck]
+  submodules: true
+  autoupdate_commit_msg: "Pre-commit auto-update"
+  autofix_commit_msg: "Pre-commit auto-fix"
+
 repos:
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
@@ -7,6 +17,8 @@ repos:
   hooks:
     # Checks python syntax
     - id: check-ast
+      # File uses encoding not supported in Linux
+      exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     - id: check-case-conflict
     - id: check-merge-conflict
     - id: trailing-whitespace
@@ -24,7 +36,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.5.2
+  rev: v0.5.5
   hooks:
     - id: ruff
       name: lint with ruff
@@ -36,13 +48,13 @@ repos:
   hooks:
     - id: scons-source
       name: build c/c++ files
-      entry: cmd.exe /c "scons source -j 0"
+      entry: cmd.exe /c "scons source --all-cores"
       language: system
       pass_filenames: false
       types_or: [c, c++]
     - id: checkPot
       name: translation string check
-      entry: cmd.exe /c "scons checkPot -j 0"
+      entry: cmd.exe /c "scons checkPot --all-cores"
       language: system
       pass_filenames: false
       types: [python]

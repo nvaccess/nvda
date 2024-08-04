@@ -15,9 +15,9 @@ if ERRORLEVEL 1 goto :EOF
 rem Set the necessary environment variables to have Python use this virtual environment.
 rem This should set all the necessary environment variables that the standard .venv\scripts\activate.bat does
 rem Except that we set VIRTUAL_ENV to a path relative to this script,
-rem rather than it being hard-coded to where the virtual environment was first created. 
+rem rather than it being hard-coded to where the virtual environment was first created.
 
-rem unset the PYTHONHOME variable so as to ensure that Python does not use a customized Python standard library. 
+rem unset the PYTHONHOME variable so as to ensure that Python does not use a customized Python standard library.
 set PYTHONHOME=
 rem set the VIRTUAL_ENV variable instructing Python to use a virtual environment
 rem py.exe will honor VIRTUAL_ENV and launch the python.exe that it finds in %VIRTUAL_ENV%\scripts.

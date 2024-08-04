@@ -4,7 +4,7 @@ This page is meant to serve as an explanation for how to fill out our
 [Github issue templates](https://github.com/nvaccess/nvda/blob/master/.github/ISSUE_TEMPLATE/).
 
 The template uses github markdown, to provide formatting for headings, lists, quotes etc.
-If you are not familiar, please take some time to learn about 
+If you are not familiar, please take some time to learn about
 [Github markdown](https://guides.github.com/features/mastering-markdown/)
 
 **Warning**: In all but exceptional circumstances we require one of these templates to be completed.
@@ -40,7 +40,7 @@ remember to attach one.
 More [instructions are available on the wiki](https://github.com/nvaccess/nvda/wiki/LogFilesAndCrashDumps). If you are getting a crash dump file (nvda_crash.dmp) please also include it.
 
 #### Screenshots
-While we welcome **images/screenshots** to help explain a problem, be aware that many of the 
+While we welcome **images/screenshots** to help explain a problem, be aware that many of the
 developers of NVDA are blind and will greatly appreciate this image being described in text.
 Most tools allow you to copy text out of them.
 
@@ -224,7 +224,7 @@ Include links to discussion threads if applicable, for example:
 - https://nvda.groups.io/g/nvda
 
 ### Steps to reproduce or illustrate the issue (if applicable)
-If possible, provide steps to demonstrate or reproduce the issue. 
+If possible, provide steps to demonstrate or reproduce the issue.
 Refer to [Steps to reproduce](#steps-to-reproduce) for more information.
 If this or the following sections are not applicable, write "N/A."
 

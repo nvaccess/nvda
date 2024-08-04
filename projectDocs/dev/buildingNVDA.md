@@ -18,6 +18,12 @@ scons source user_docs
 
 While simply testing or committing changes, it may be faster usually just doing `scons source` as user documentation will change each time the revision number changes.
 
+You can speed up scons calls by appending the `--all-cores` parameter to the call, however note that output will be scrambled:
+
+```cmd
+scons source --all-cores
+```
+
 ## Running the Source Code
 It is possible to run NVDA directly from source without having to build the full binary package and launcher.
 To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root of the repository.

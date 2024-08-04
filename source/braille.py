@@ -1142,6 +1142,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""
 	textList = []
 	if isAtStart:
+		paragraphStartMarker = getParagraphStartMarker()
+		if paragraphStartMarker:
+			textList.append(paragraphStartMarker)
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
@@ -1193,6 +1196,25 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
+
+def getParagraphStartMarker() -> str | None:
+	brailleConfig = config.conf["braille"]
+	if brailleConfig["readByParagraph"]:
+		paragraphStartMarker = brailleConfig["paragraphStartMarker"]
+		if paragraphStartMarker == "¶":
+			# Translators: This is a paragraph start marker used in braille.
+			# The default symbol is the pilcrow,
+			# a symbol also known as "paragraph symbol" or "paragraph marker".
+			# This symbol should translate in braille via LibLouis automatically.
+			# If there is a more appropriate character for your locale,
+			# consider overwriting this (e.g. for Ge'ez ፨).
+			# You can also use Unicode Braille such as ⠘⠏.
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			paragraphStartMarker = pgettext("paragraphMarker", "¶")
+	else:
+		paragraphStartMarker = None
+	return paragraphStartMarker
 
 
 def _getFormattingTags(
@@ -1919,6 +1941,16 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
+		# When word wrap is enabled, the first block of spaces may be removed from the current window.
+		# This may prevent displaying the start of paragraphs.
+		paragraphStartMarker = getParagraphStartMarker()
+		if paragraphStartMarker and self.regions[-1].rawText.startswith(
+			paragraphStartMarker + TEXT_SEPARATOR,
+		):
+			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
+			# Show paragraph start indicator if it is now at the left of the current braille window
+			if startPos <= len(paragraphStartMarker) + 1:
+				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 
 	def _nextWindow(self):

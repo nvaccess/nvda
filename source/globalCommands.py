@@ -576,7 +576,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for toggle report font attributes command.
-			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off.",
 		),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
@@ -3156,7 +3156,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		message = ""
 		mod = focus.appModule
-		if isinstance(mod, appModuleHandler.AppModule) and type(mod) != appModuleHandler.AppModule:
+		if isinstance(mod, appModuleHandler.AppModule) and type(mod) is not appModuleHandler.AppModule:
 			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
 			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
