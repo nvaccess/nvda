@@ -2463,7 +2463,7 @@ The check boxes in the Visual Highlight grouping control the behaviour of NVDA's
 * Highlight navigator object: toggles whether the [navigator object](#ObjectNavigation) will be highlighted.
 * Highlight browse mode cursor: Toggles whether the [virtual browse mode cursor](#BrowseMode) will be highlighted.
 
-Note that checking and unchecking the "Enable Highlighting" check box wil also change the state of the tree other check boxes accordingly.
+Note that checking and unchecking the "Enable Highlighting" check box will also change the state of the tree other check boxes accordingly.
 Therefore, if "Enable Highlighting" is off and you check this check box, the other tree check boxes will also be checked automatically.
 If you only want to highlight the focus and leave the navigator object and browse mode check boxes unchecked, the state of the "Enable Highlighting" check box will be half checked.
 
@@ -2479,6 +2479,14 @@ You can always restore the warning by checking the "Always show a warning when l
 
 By default, sounds are played when the Screen Curtain is toggled.
 When you want to change this behaviour, you can uncheck the "Play sound when toggling Screen Curtain" check box.
+
+##### Color Theme {#VisionSettingsColorTheme}
+
+You can control whether NVDA dialogs use a light background (the "Light" theme) or a dark background (the "Dark" theme).
+The default theme is "Auto", which causes NVDA to match your operating system's "dark mode" setting.
+
+You can try out a different theme by changing the selected theme and then pressing the "Apply" button.
+This will cause the color of the settings dialog to update immediately.
 
 ##### Settings for third party visual aids {#VisionSettingsThirdPartyVisualAids}
 
