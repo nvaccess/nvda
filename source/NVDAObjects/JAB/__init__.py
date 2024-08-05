@@ -15,7 +15,7 @@ import JABHandler
 import controlTypes
 import textUtils
 from controlTypes import TextPosition
-from .. import NVDAObject
+from .. import NVDAObject, InvalidNVDAObject
 from ..window import Window
 from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
