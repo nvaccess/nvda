@@ -526,12 +526,14 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_normalizedInSymbolDict_normalizeOff(self):
-		expected = repr([
-			'·',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"·",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='·',
+			text="·",
 			locale="en",
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -543,12 +545,14 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_normalizedInSymbolDict_normalizeOnDontReport(self):
-		expected = repr([
-			processSpeechSymbol("en", "·"),
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				processSpeechSymbol("en", "·"),
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='·',
+			text="·",
 			locale="en",
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -560,13 +564,15 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_normalizedInSymbolDict_normalizeOnReport(self):
-		expected = repr([
-			processSpeechSymbol("en", "·"),
-			' normalized',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				processSpeechSymbol("en", "·"),
+				" normalized",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='·',
+			text="·",
 			locale="en",
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
