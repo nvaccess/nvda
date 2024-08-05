@@ -60,6 +60,9 @@ function windowOnLoad() {
 			copyButtonSpan.style.display = 'inline';  // Display the button
 			copyStatusDiv.style.display = 'block';  // Display the copy status
 			buttonDiv.style.display = 'block';  // Display the section
+			if (args.item('copyButtonAcceleratorAccessibilityLabel') != null) {  // If translated text for the accelerator is provided
+				copyButtonAcceleratorAccessibilityLabel.innerHTML = args.item('copyButtonAcceleratorAccessibilityLabel');
+			}
 		}
 	}
 } 
@@ -70,7 +73,9 @@ function windowOnLoad() {
 <div id=messageID></div>
 <div id="buttonDiv" style="display: none;"><hr>
 <div id="copyStatusDiv" role="status" aria-live="polite"></div>
-<span id="copyButtonSpan" style="display: none;"><button id="copyButton" onclick="onCopyButtonPress();"></button>&nbsp;</span>
+<span id="copyButtonSpan" style="display: none;">
+<span id="copyButtonAcceleratorAccessibilityLabel" style="visibility: hidden;"></span>
+<button id="copyButton" onclick="onCopyButtonPress();" aria-labelledby="copyButton copyButtonAcceleratorAccessibilityLabel"></button>&nbsp;</span>
 <span><button id="closeButton" style="display: none;" onclick="onCloseButtonPress();"></button></span>
 </div>
 </body>

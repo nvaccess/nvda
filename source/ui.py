@@ -188,8 +188,11 @@ def browseableMessage(
 		# Translators: The text of a button which closes the window.
 		d.add("closeButtonText", _("Close"))
 	if copyButton:
-		# Translators: The text of a button to copy the text of the window to the clipboard.
+		# Translators: The label of a button to copy the text of the window to the clipboard.
 		d.add("copyButtonText", _("Copy"))
+		# Translators: A portion of an accessibility label for the "Copy" button,
+		# describing the key to press to activate the button. Currently, this key may only be Alt+C.
+		d.add("copyButtonAcceleratorAccessibilityLabel", _("Alt+C"))
 
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup()
