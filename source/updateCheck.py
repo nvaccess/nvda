@@ -33,6 +33,7 @@ if not versionInfo.updateVersionType:
 import gui.contextHelp  # noqa: E402
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
 import sys  # noqa: E402
+import subprocess
 import os
 import inspect
 import threading
@@ -262,24 +263,22 @@ def _generate_updateParameters() -> str:
 
 	:return: The parameters to pass to the new NVDA instance.
 	"""
-	executeFlags: set[str] = set()
-	executeOptions: dict[str, str] = {}
+	executeParams: list[str] = []
 	if config.isInstalledCopy():
-		executeFlags.update(("--install", "-m"))
+		executeParams.extend(("--install", "-m"))
 	else:
 		portablePath = globalVars.appDir
 		if os.access(portablePath, os.W_OK):
-			executeFlags.update(("--create-portable", "-m"))
-			executeOptions["--portable-path"] = f'"{portablePath}"'
+			executeParams.extend(("--create-portable", "-m", "--portable-path", portablePath))
 		else:
 			# We can't write to the currently running portable copy's directory, so just run the launcher.
-			executeFlags.add("--launcher")
+			executeParams.append("--launcher")
 	if globalVars.appArgs.disableAddons:
-		executeFlags.add("--disable-addons")
+		executeParams.append("--disable-addons")
 	# pass the config path to the new instance, so that if a custom config path is in use, it will be inherited.
 	# If the default con fig path is in use, the new instance would use it anyway, so there is no harm in passing it.
-	executeOptions["--config-path"] = f'"{WritePaths.configDir}"'
-	return f"{' '.join(executeFlags)} {' '.join(' '.join(i) for i in executeOptions.items())}"
+	executeParams.extend(("--config-path", WritePaths.configDir))
+	return subprocess.list2cmdline(executeParams)
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
