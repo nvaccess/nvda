@@ -10,6 +10,7 @@ import typing
 import unittest
 
 import config
+from characterProcessing import processSpeechSymbol
 from speech import (
 	_getSpellingCharAddCapNotification,
 	_getSpellingSpeechAddCharMode,
@@ -515,6 +516,58 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		output = _getSpellingSpeechWithoutCharMode(
 			text="É",
 			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOff(self):
+		expected = repr([
+			'·',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='·',
+			locale="en",
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOnDontReport(self):
+		expected = repr([
+			processSpeechSymbol("en", "·"),
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='·',
+			locale="en",
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOnReport(self):
+		expected = repr([
+			processSpeechSymbol("en", "·"),
+			' normalized',
+			EndUtteranceCommand(),
+		])
+		output = _getSpellingSpeechWithoutCharMode(
+			text='·',
+			locale="en",
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
 			capPitchChange=0,
