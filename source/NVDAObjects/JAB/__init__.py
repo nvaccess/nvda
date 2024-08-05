@@ -6,7 +6,8 @@
 import ctypes
 import re
 from typing import (
-	Dict, Any,
+	Dict,
+	Any,
 )
 import eventHandler
 import keyLabels
