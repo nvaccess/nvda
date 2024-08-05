@@ -530,7 +530,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			[
 				"·",
 				EndUtteranceCommand(),
-			]
+			],
 		)
 		output = _getSpellingSpeechWithoutCharMode(
 			text="·",
@@ -549,7 +549,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			[
 				processSpeechSymbol("en", "·"),
 				EndUtteranceCommand(),
-			]
+			],
 		)
 		output = _getSpellingSpeechWithoutCharMode(
 			text="·",
@@ -569,7 +569,7 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 				processSpeechSymbol("en", "·"),
 				" normalized",
 				EndUtteranceCommand(),
-			]
+			],
 		)
 		output = _getSpellingSpeechWithoutCharMode(
 			text="·",
