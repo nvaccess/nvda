@@ -6,7 +6,7 @@ ci:
   # Can't run Windows scripts on Linux
   # These also do not apply fixes, only run tests
   skip: [scons-source, checkPot, unitTest, licenseCheck]
-  submodules: true
+  autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
 
@@ -36,7 +36,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.5.5
+  rev: v0.5.6
   hooks:
     - id: ruff
       name: lint with ruff
