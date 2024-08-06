@@ -203,6 +203,8 @@ class Hid(IoBase):
 			return self._inputButtonCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputButtonCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberInputButtonCaps)
+		if numValueCaps.value == 0:
+			return valueCapsList
 		check_HidP_status(
 			hidDll.HidP_GetButtonCaps,
 			hidpi.HIDP_REPORT_TYPE.INPUT,
@@ -219,6 +221,8 @@ class Hid(IoBase):
 			return self._inputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputValueCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberInputValueCaps)
+		if numValueCaps.value == 0:
+			return valueCapsList
 		check_HidP_status(
 			hidDll.HidP_GetValueCaps,
 			hidpi.HIDP_REPORT_TYPE.INPUT,
@@ -235,6 +239,8 @@ class Hid(IoBase):
 			return self._outputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberOutputValueCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberOutputValueCaps)
+		if numValueCaps.value == 0:
+			return valueCapsList
 		check_HidP_status(
 			hidDll.HidP_GetValueCaps,
 			hidpi.HIDP_REPORT_TYPE.OUTPUT,
