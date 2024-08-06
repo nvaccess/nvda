@@ -198,7 +198,7 @@ class Hid(IoBase):
 		return self._caps
 
 	@property
-	def inputButtonCaps(self):
+	def inputButtonCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
 		if hasattr(self, "_inputButtonCaps"):
 			return self._inputButtonCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputButtonCaps)()
@@ -216,7 +216,7 @@ class Hid(IoBase):
 		return self._inputButtonCaps
 
 	@property
-	def inputValueCaps(self):
+	def inputValueCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
 		if hasattr(self, "_inputValueCaps"):
 			return self._inputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputValueCaps)()
@@ -234,7 +234,7 @@ class Hid(IoBase):
 		return self._inputValueCaps
 
 	@property
-	def outputValueCaps(self):
+	def outputValueCaps(self) -> ctypes.Array[hidpi.HIDP_VALUE_CAPS]:
 		if hasattr(self, "_outputValueCaps"):
 			return self._outputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberOutputValueCaps)()
