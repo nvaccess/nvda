@@ -3603,10 +3603,10 @@ class GlobalCommands(ScriptableObject):
 		state = config.conf["braille"]["speakOnRouting"] = not config.conf["braille"]["speakOnRouting"]
 		if state:
 			# Translators: The message announced when toggling on speaking character when routing.
-			state = _("Toggled on speak character when routing cursor in text")
+			state = _("Enabled speak character when routing cursor in text")
 		else:
 			# Translators: The message announced when toggling off speaking character when routing.
-			state = _("Toggled off speak character when routing cursor in text")
+			state = _("Disabled speak character when routing cursor in text")
 		ui.message(state)
 
 	@script(
