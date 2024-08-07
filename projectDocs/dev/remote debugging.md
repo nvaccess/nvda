@@ -7,7 +7,7 @@ It is recommended that you use the [Visual Studio Code Workspace Configuration f
 
 ## You will need
 
-* Development machine: The machine with the [NVDA build environment], VS Code, and all required extensions installed.
+* Development machine: The machine with the [NVDA dev environment], VS Code, and all required extensions installed.
   This is where the copy of NVDA to be debugged will run.
   * To remotely debug NVDA, you must have the debug extension for the language you want to debug installed--[Python Debugger] for python and [C/C++] for C++.
     The [Python C++ Debugger] is recommended for debugging Python and C++ at the same time.
@@ -31,7 +31,9 @@ Popular hypervisors for windows include [Oracle VM VirtualBox], [VMware Workstat
    E.g. in a terminal `cd` to the NVDA repo and run `code .`.
 2. Set up a Remote tunnel so that another VS code can control this VS code:  
    1. Open the Command Palette (`Ctrl`+`Shift`+`P`) and select "Remote Tunnels: Turn on Remote Tunnel Access...".
-   2. Choose whether you want the tunnel to be open just for this session (until you close VS Code), or as a service (whenever you're logged in to VS Code).
+   2. Choose whether you want the tunnel to be open for this session (only when VS Code is open), or as a service (whenever you're logged in to this machine).
+      * Installing the tunnel as a service will result in the tunnel continuing to remain active in the background.
+        This option is not recommended.
    3. Choose how you will publish the tunnel.
       GitHub is probably easiest if you're already using GitHub for development.
       If you're not already logged in, log in when asked.
@@ -59,7 +61,26 @@ If you prefer, you can set up the tunnel [at the command line instead](https://c
 
 If you prefer, you can also debug the remote copy of NVDA in a browser by entering the vscode.dev URL that was generated on the development machine.
 
-[NVDA build environment]: createDevEnvironment.md
+### When you're done
+
+When you're done, it's a good idea to disconnect from the remote tunnel on your debug machine, and close the tunnel on your development machine.
+
+* On your debug machine, make sure you've saved any changes you have made, then open the Remote menu (`Ctrl`+`Alt`+`O`) and choose "Close Remote Connection".
+* On your development machine, open the Command Palette (`Ctrl`+`Shift`+`P`) and run "Remote Tunnels: Turn off Remote Tunnel Access...".
+  Press "Yes" when prompted.
+  * If you chose to create a session tunnel, closing VS Code without turning off remote tunnel access will close the tunnel until you open VS Code again.
+  * If you created the tunnel as a service, the tunnel will continue to remain active in the background until you turn off remote tunnel access.
+
+## Further reading
+
+The following resources may be of use:
+
+* [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging)
+* [Debugging configurations for Python apps in Visual Studio Code](https://code.visualstudio.com/docs/python/debugging)
+* [Debug C++ in Visual Studio Code](https://code.visualstudio.com/docs/cpp/cpp-debug)
+* [Remote Tunnels documentation](https://code.visualstudio.com/docs/remote/tunnels)
+
+[NVDA dev environment]: createDevEnvironment.md
 [Visual Studio Code]: https://code.visualstudio.com/
 [Remote - Tunnels]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.remote-server
 [Visual Studio Code Workspace Configuration for NVDA]: https://github.com/nvaccess/vscode-nvda
@@ -67,4 +88,5 @@ If you prefer, you can also debug the remote copy of NVDA in a browser by enteri
 [C/C++]: https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools
 [Oracle VM VirtualBox]: https://www.virtualbox.org/
 [VMware Workstation]: https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion
-[Hyper-V]: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/
+[Microsoft Hyper-V]: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/
+[Python Debugger]: https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy
