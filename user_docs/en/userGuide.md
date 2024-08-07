@@ -2250,7 +2250,7 @@ The following symbols are defined:
 | ⠎ ("s")| Start strikethrough |
 | ⡎ ("s" with dot 7) | End strikethrough |
 
-##### Speak character when routing cursor in text {#BrailleSettingsSpeakOnRouting}
+##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
 
 If this is enabled, NVDA will automatically speak the character at the cursor when routing to it with braille cursor routing keys.
 

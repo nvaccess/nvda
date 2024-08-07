@@ -4452,7 +4452,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
 			wx.CheckBox(self, label=speakOnRoutingText),
 		)
-		self.bindHelpEvent("BrailleSettingsSpeakOnRouting", self.speakOnRoutingCheckBox)
+		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
 		self.followCursorGroupBox.Enable(
