@@ -33,6 +33,7 @@ if not versionInfo.updateVersionType:
 import gui.contextHelp  # noqa: E402
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
 import sys  # noqa: E402
+import subprocess
 import os
 import inspect
 import threading
@@ -237,28 +238,47 @@ def executePendingUpdate():
 		_executeUpdate(updateTuple[0])
 
 
-def _executeUpdate(destPath):
+def _executeUpdate(destPath: str) -> None:
+	"""Execute the update process.
+
+	:param destPath: The path to the update executable.
+	"""
 	if not destPath:
+		log.error("destPath must be a non-empty string.", exc_info=True)
 		return
 
 	_setStateToNone(state)
 	saveState()
+	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, _generate_updateParameters())):
+		log.error("NVDA already in process of exiting, this indicates a logic error.")
+
+
+def _generate_updateParameters() -> str:
+	"""Generate parameters to pass to the new NVDA instance for the update process.
+
+	We generate parameters that specify:
+	- Whether to install, update a portable copy, or run the launcher.
+	- Whether to disable addons.
+	- The path to the configuration directory.
+
+	:return: The parameters to pass to the new NVDA instance.
+	"""
+	executeParams: list[str] = []
 	if config.isInstalledCopy():
-		executeParams = "--install -m"
+		executeParams.extend(("--install", "-m"))
 	else:
 		portablePath = globalVars.appDir
 		if os.access(portablePath, os.W_OK):
-			executeParams = (
-				'--create-portable --portable-path "{portablePath}" --config-path "{configPath}" -m'.format(
-					portablePath=portablePath,
-					configPath=WritePaths.configDir,
-				)
-			)
+			executeParams.extend(("--create-portable", "-m", "--portable-path", portablePath))
 		else:
-			executeParams = "--launcher"
-	# #4475: ensure that the new process shows its first window, by providing SW_SHOWNORMAL
-	if not core.triggerNVDAExit(core.NewNVDAInstance(destPath, executeParams)):
-		log.error("NVDA already in process of exiting, this indicates a logic error.")
+			# We can't write to the currently running portable copy's directory, so just run the launcher.
+			executeParams.append("--launcher")
+	if globalVars.appArgs.disableAddons:
+		executeParams.append("--disable-addons")
+	# pass the config path to the new instance, so that if a custom config path is in use, it will be inherited.
+	# If the default con fig path is in use, the new instance would use it anyway, so there is no harm in passing it.
+	executeParams.extend(("--config-path", WritePaths.configDir))
+	return subprocess.list2cmdline(executeParams)
 
 
 class UpdateChecker(garbageHandler.TrackedObject):
