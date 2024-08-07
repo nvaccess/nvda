@@ -11,10 +11,12 @@ ci:
   autofix_commit_msg: "Pre-commit auto-fix"
 
 repos:
-
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.6.0
   hooks:
+    # Prevents commits to certain branches
+    - id: no-commit-to-branch
+      args: ["--branch", "master", "--branch", "beta", "--branch", "rc"]
     # Checks python syntax
     - id: check-ast
       # File uses encoding not supported in Linux
