@@ -18,6 +18,8 @@ The available options are:
 
 ### Changes
 
+* The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
+
 ### Bug Fixes
 
 * NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
