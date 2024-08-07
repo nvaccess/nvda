@@ -255,7 +255,7 @@ class JAB(Window):
 		clsList.append(JAB)
 
 	@classmethod
-	def kwargsFromSuper(cls, kwargs, relation: str = None) -> bool:
+	def kwargsFromSuper(cls, kwargs, relation: str | None = None) -> bool:
 		jabContext = None
 		windowHandle = kwargs["windowHandle"]
 		if relation == "focus":
