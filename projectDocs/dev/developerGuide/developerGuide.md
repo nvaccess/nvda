@@ -219,7 +219,7 @@ Generally, the key names are the characters that can be input without the help o
 * The original gesture takes advantage of the keys physical location on the English keyboard layout, but this advantage does not exist with the locale keyboard layout.
 * The original gesture is defined to match a native shortcut in Windows or in an application, but the shortcut in the local version of Windows or of this application is not the same as the English one.
 
-In all of these cases, NVDA allows to remap this gesture for this specific locale.
+In all of these cases, NVDA allows remapping of this gesture for this specific locale.
 
 #### Examples {#TranslatingGesturesExamples}
 
