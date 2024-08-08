@@ -28,6 +28,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
+	ColorTheme,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -392,7 +393,7 @@ class SettingsPanel(
 		raise NotImplementedError
 
 	def onPanelActivated(self):
-		"""Called after the panel has been activated (i.e. de corresponding category is selected in the list of categories).
+		"""Called after the panel has been activated (i.e. the corresponding category is selected in the list of categories).
 		For example, this might be used for resource intensive tasks.
 		Sub-classes should extend this method.
 		"""
@@ -4753,6 +4754,21 @@ class VisionSettingsPanel(SettingsPanel):
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
+		# Translators: label for a choice in the vision settings category panel
+		colorThemeLabelText = _("&Color theme")
+		self.colorThemeList = self.settingsSizerHelper.addLabeledControl(
+			colorThemeLabelText,
+			wx.Choice,
+			choices=[theme.displayString for theme in ColorTheme],
+		)
+		self.bindHelpEvent("VisionSettingsColorTheme", self.colorThemeList)
+		curTheme = config.conf["vision"]["colorTheme"]
+		for i, theme in enumerate(ColorTheme):
+			if theme == curTheme:
+				self.colorThemeList.SetSelection(i)
+		else:
+			log.debugWarning("Could not set color theme list to current theme")
+
 	def safeInitProviders(
 		self,
 		providers: List[vision.providerInfo.ProviderInfo],
@@ -4826,6 +4842,10 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
+		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
+		config.conf["vision"]["colorTheme"] = colorTheme.value
+		guiHelper.applyColorTheme(self.TopLevelParent)
+		self.TopLevelParent.Refresh()
 
 
 class VisionProviderSubPanel_Settings(

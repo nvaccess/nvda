@@ -588,6 +588,7 @@ def _setUpWxApp() -> "wx.App":
 	import config
 	import nvwave
 	import speech
+	import gui.guiHelper
 
 	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
 
@@ -610,6 +611,15 @@ def _setUpWxApp() -> "wx.App":
 			This code may need to be revisited when we update Python / wxPython.
 			"""
 			pass
+
+		def FilterEvent(self, event: wx.Event):
+			"""FilterEvent is called for every UI event in the entire application.  Keep it quick to
+			avoid slowing everything down."""
+			if isinstance(event, wx.ShowEvent):
+				window: wx.Window = event.EventObject
+				gui.guiHelper.applyColorTheme(window.GetTopLevelParent())
+				window.Refresh()
+			return -1
 
 	app = App(redirect=False)
 
