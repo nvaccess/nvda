@@ -5,6 +5,9 @@ In such cases, using a secondary machine to debug the running copy of NVDA can b
 This document explains how to use [Visual Studio Code] (VS Code) to remotely debug NVDA.
 It is recommended that you use the [Visual Studio Code Workspace Configuration for NVDA] when using VS Code as your IDE for NVDA development.
 
+Note: keyboard shortcuts used in this guide assume you are using VS Code in English with a QWERTY keyboard, and that you haven't customised your keymap.
+If they don't work, search the action in the Command Palette or Keyboard Shortcuts settings to find or change the key binding on your system.
+
 ## You will need
 
 * Development machine: The machine with VS Code and all required extensions installed.
