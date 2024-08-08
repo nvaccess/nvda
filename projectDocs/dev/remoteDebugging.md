@@ -80,9 +80,29 @@ When you're done, it's a good idea to disconnect from the remote tunnel on your 
   * If you created the tunnel at the CLI, use `Ctrl`+`C` to close it.
     If you created it as a service, run `code tunnel kill` to close the tunnel, or `code tunnel service uninstall` to remove it.
 
+## Example session: debug the date/time command
+
+1. Set up your development and secondary machines as above.
+2. On your development machine, navigate to `source/globalCommands.py`.
+   Use the Explorer view (`Ctrl`+`Shift`+`E`) to browse there, or the "Go to File..." command (`Ctrl`+`P`) to enter the path directly.
+3. go to the date/time script (`script_dateTime`).
+   Search (`Ctrl`+`F`) or use the breadcrumbs view (`Ctrl`+`Shift`+`.`) to browse through the symbols in the file (you can type to filter in this list).
+4. Insert a breakpoint (`F9`) in the `dateTime` script, for instance at the last line, and save the file (`Ctrl`+`S`).
+5. Open the Debug view (`Ctrl`+`Shift`+`D`) and ensure the appropriate debug launch configuration is selected (if you are using the pre-configured NVDA VS Code workspace, this is "NVDA (Python)").
+6. Start debugging with the "Start Debugging" button (`F5`).
+   NVDA should start up on your secondary machine.
+7. On your secondary machine, execute the report time/date script (`NVDA`+`F12`).
+   On your secondary machine, you will not hear anything, as NVDA will hit a breakpoint before it has the chance to speak.
+   On your development machine, VS Code will let you know you have hit a breakpoint.
+8. Now you can inspect NVDA's state (variables, stack frames etc) in the Debug view.
+9. To continue debugging, run "Debug: Continue" (`F5`).
+   On your secondary machine, NVDA should report the time.
+10. To stop debugging, run "Debug: Stop" (`Shift`+`F5`).
+   When you're done with your breakpoint, toggle it off (`F9`) or remove it through the Debug view.
+
 ## Further reading
 
-The following resources may be of use:
+To learn more about debugging in VS Code, check out the following resources:
 
 * [Debugging in Visual Studio Code](https://code.visualstudio.com/Docs/editor/debugging)
 * [Debugging configurations for Python apps in Visual Studio Code](https://code.visualstudio.com/docs/python/debugging)
