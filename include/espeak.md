@@ -13,10 +13,7 @@ The `*.vcxproj` files in [`include/espeak/src/windows/`](./espeak/src/windows/) 
 however these are not always kept up to date.
 
 We don't use the auto make files or the visual studio files, we maintain our own method of building eSpeak.
-Modifications will need to be made in [`nvdaHelper/espeak`](../nvdaHelper/espeak)
-
-* `sconscript` for the build process.
-* `config.h` to set the eSpeak-ng version that NVDA outputs to the log file.
+Modifications will need to be made in [`nvdaHelper/espeak/sconscript`](../nvdaHelper/espeak)
 
 ### Updating the version used by NVDA
 
