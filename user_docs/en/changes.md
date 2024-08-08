@@ -15,6 +15,8 @@ The available options are:
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 * When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
+* When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
+  * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
 
 ### Changes
 
@@ -52,6 +54,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#16369, @XLTechie)
+* Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
 
 #### Deprecations
 

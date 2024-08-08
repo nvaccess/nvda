@@ -2250,6 +2250,12 @@ The following symbols are defined:
 | ⠎ ("s")| Start strikethrough |
 | ⡎ ("s" with dot 7) | End strikethrough |
 
+##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
+
+If this is enabled, NVDA will automatically speak the character at the cursor when routing to it with braille cursor routing keys.
+
+To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
