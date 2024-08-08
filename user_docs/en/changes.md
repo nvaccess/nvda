@@ -21,6 +21,7 @@ The available options are:
 ### Changes
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
 
@@ -54,6 +55,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#16369, @XLTechie)
 * Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
 
 #### Deprecations
