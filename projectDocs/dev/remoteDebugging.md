@@ -60,9 +60,9 @@ If you prefer, you can set up the tunnel [at the command line instead](https://c
    * The first time you connect, this may take some time as VS Code downloads necessary components.
    * Even if you have the required extensions installed locally, VS Code may prompt you to install them in the remote workspace.
      If prompted, procede with the installation of the extensions.
-5. Go to the Explorer view (`Ctrl`+`Shift`+`E`), select "Open Folder" and browse to the NVDA repository on the development machine (or type its path).
+5. Go to the Explorer view (`Ctrl`+`Shift`+`E`), select "Open Folder" and browse to the NVDA repository on the secondary machine (or type its path).
 6. VS Code on your development machine is now acting as a remote control for your secondary machine.
-   Anything you do now will be carried out on your development machine.
+   Anything you do now will be carried out on your secondary machine.
 7. With an appropriate `launch.json` (such as that in the NVDA VS Code workspace configuration) in the secondary machine's `.vscode` directory in the NVDA repository, you can now run and debug NVDA.
    NVDA will run on the secondary machine, and you can interact with the Debug view on the development machine.
 
