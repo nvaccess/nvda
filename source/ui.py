@@ -192,6 +192,8 @@ def browseableMessage(
 		d.add("copyButtonText", _("Copy"))
 		# Translators: A portion of an accessibility label for the "Copy" button,
 		# describing the key to press to activate the button. Currently, this key may only be Alt+C.
+		# Only translate to set the key to an empty string (no key), because Alt+C does not make
+		# sense for a language's keyboard; or, e.g. because the Alt key is called something else.
 		d.add("copyButtonAcceleratorAccessibilityLabel", _("Alt+C"))
 
 	dialogArgsVar = automation.VARIANT(d)
