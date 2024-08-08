@@ -48,18 +48,18 @@ function windowOnLoad() {
 		messageID.innerHTML = args.item('message');
 		// If caller wants a close button
 		if (args.item('closeButtonText') != null) {
-			closeButton.innerHTML = args.item('closeButtonText');  // Assign the (translated) label
+			closeButton.innerText = args.item('closeButtonText');  // Assign the (translated) label
 			closeButton.style.display = 'inline';  // Display the button
 			buttonDiv.style.display = 'block';  // Display the button section
 		}
 		// If caller wants a copy to clip button
 		if (args.item('copyButtonText') != null) {
-			copyButton.innerHTML = args.item('copyButtonText');  // Assign the (translated) label
+			copyButton.innerText = args.item('copyButtonText');  // Assign the (translated) label
 			copyButtonSpan.style.display = 'inline';  // Display the button
 			copyStatusDiv.style.display = 'block';  // Display the copy status
 			buttonDiv.style.display = 'block';  // Display the section
 			if (args.item('copyButtonAcceleratorAccessibilityLabel') != null) {  // If translated text for the accelerator is provided
-				copyButtonAcceleratorAccessibilityLabel.innerHTML = args.item('copyButtonAcceleratorAccessibilityLabel');
+				copyButtonAcceleratorAccessibilityLabel.innerText = args.item('copyButtonAcceleratorAccessibilityLabel');
 			}
 		}
 	}
