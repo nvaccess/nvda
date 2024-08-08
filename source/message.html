@@ -20,7 +20,7 @@ function handleKeyPress(e) {
 function onCopyButtonPress() {
 	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
 	var rng = document.body.createTextRange();
-	rng.moveToElementText(messageID);
+	rng.moveToElementText(messageDiv);
 	rng.scrollIntoView();
 	rng.select();
 	var success = rng.execCommand("Copy");
