@@ -69,6 +69,8 @@ function windowOnLoad() {
 				copyButtonAcceleratorAccessibilityLabel.innerText = args.item('copyButtonAcceleratorAccessibilityLabel');
 			}
 		}
+	} else {  // If args wasn't provided, we can do nothing. Just exit
+		window.close();
 	}
 } 
 //-->
