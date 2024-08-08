@@ -21,6 +21,8 @@ The available options are:
 ### Changes
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
+* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+  * Added new languages Faroese and Xextan.
 
 ### Bug Fixes
 
