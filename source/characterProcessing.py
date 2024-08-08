@@ -34,6 +34,8 @@ _LocaleDataT = TypeVar("_LocaleDataT")
 class LocaleDataMap(Generic[_LocaleDataT], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
+	_noDataLocalesCache: set[str]
+
 	def __init__(
 		self,
 		localeDataFactory: Callable[[str], _LocaleDataT],
@@ -43,6 +45,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		"""
 		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
 		self._dataMap: Dict[str, _LocaleDataT] = {}
+		self._noDataLocalesCache = set()
 
 	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
 		"""
@@ -60,10 +63,14 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 			data = self._dataMap.get(loc)
 			if data:
 				return data
-			try:
-				data = self._localeDataFactory(loc)
-			except LookupError:
+			elif loc in self._noDataLocalesCache:
 				data = None
+			else:
+				try:
+					data = self._localeDataFactory(loc)
+				except LookupError:
+					self._noDataLocalesCache.add(loc)
+					data = None
 			if not data:
 				continue
 			self._dataMap[loc] = data
@@ -79,12 +86,17 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 			del self._dataMap[locale]
 		except KeyError:
 			pass
+		try:
+			self._noDataLocalesCache.remove(locale)
+		except KeyError:
+			pass
 
 	def invalidateAllData(self):
 		"""Invalidate all data within this locale map.
 		This will cause a new data object to be created for every locale that is next requested.
 		"""
 		self._dataMap.clear()
+		self._noDataLocalesCache.clear()
 
 
 class CharacterDescriptions(object):
