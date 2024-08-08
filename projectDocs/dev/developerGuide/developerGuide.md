@@ -950,7 +950,7 @@ def processArgs(cliArgument: str) -> bool:
 	return False  # unknown argument - NVDA should warn user
 ```
 
-Then the handler needs to be registered--preferably in the constructor of your global plugin:
+Then the handler needs to be registered, preferably in the constructor of your global plugin:
 
 ```py
 import addonHandler
