@@ -40,7 +40,7 @@
 # Start of NVDA config
 
 # By default auto request review from NV Access developer team.
-* @nvaccess/developers
+* @nvaccess/nvda-code-reviews
 
 # For changes to the userGuide auto request review from userDocs team
 /user_docs/en/userGuide.md @nvaccess/userDocs
@@ -48,8 +48,8 @@
 
 # For various project documentation, require appropriate teams
 /projectDocs/community/ @nvaccess/userDocs
-/projectDocs/testing/ @nvaccess/userDocs @nvaccess/developers
-/projectDocs/issues/ @nvaccess/userDocs @nvaccess/developers
+/projectDocs/testing/ @nvaccess/userDocs @nvaccess/nvda-code-reviews
+/projectDocs/issues/ @nvaccess/userDocs @nvaccess/nvda-code-reviews
 /readme.md @nvaccess/userDocs @nvaccess/developers
 security.md @nvaccess/userDocs @nvaccess/developers
 CODE_OF_CONDUCT.md @nvaccess/userDocs @nvaccess/developers
