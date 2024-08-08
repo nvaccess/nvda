@@ -26,17 +26,16 @@ function onCopyButtonPress() {
 	var success = rng.execCommand("Copy");
 	rng.collapse(false);
 	rng.select();
-	if (args) {
-		if (success) {  // Notify the user about the copy result
-			copyStatusDiv.innerHTML = '<p id="copyStatusText"><strong>' + args.item('copySuccessfulAlertText') + '</strong></p>';
-		} else {
-			copyStatusDiv.innerHTML = '<p id="copyStatusText"><strong>' + args.item('copyFailedAlertText') + '</strong></p>';
-		}
-		// Time out the user alert message
-		setTimeout(function() {
-			copyStatusDiv.innerHTML = '';
-		}, copyStatusTimeout);
+	copyStatusDiv.innerHTML = '<p id="copyStatusText" style="font-weight:bold; text-align:center;"></p>';
+	if (success) {  // Notify the user about the copy result
+		copyStatusText.innerText = args.item('copySuccessfulAlertText');
+	} else {
+		copyStatusText.innerText = args.item('copyFailedAlertText');
 	}
+	// Time out the user alert message
+	setTimeout(function() {
+		copyStatusDiv.innerHTML = '';
+	}, copyStatusTimeout);
 }
 
 function onCloseButtonPress() {
