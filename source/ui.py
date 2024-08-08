@@ -169,9 +169,6 @@ def browseableMessage(
 		_warnBrowsableMessageComponentFailure(title)
 		return
 
-	if not isHtml:
-		message = f"<pre>{escape(message)}</pre>"
-
 	try:
 		d = comtypes.client.CreateObject("Scripting.Dictionary")
 	except (COMError, OSError):
@@ -179,7 +176,14 @@ def browseableMessage(
 		_warnBrowsableMessageComponentFailure(title)
 		return
 	d.add("title", title)
+
+	if not isHtml:
+		message = escape(message)
+	else:
+		d.add("messageUsesRawHTML", "true")  # Value doesn't matter, as long as there is one
+		log.warning("Passing raw HTML to ui.browseableMessage!")
 	d.add("message", message)
+
 	# Translators: A notice to the user that a copy operation succeeded.
 	d.add("copySuccessfulAlertText", _("Text copied."))
 	# Translators: A notice to the user that a copy operation failed.
@@ -192,8 +196,8 @@ def browseableMessage(
 		d.add("copyButtonText", _("Copy"))
 		# Translators: A portion of an accessibility label for the "Copy" button,
 		# describing the key to press to activate the button. Currently, this key may only be Alt+C.
-		# Only translate to set the key to an empty string (no key), because Alt+C does not make
-		# sense for a language's keyboard; or, e.g. because the Alt key is called something else.
+		# Translation makes sense here if the Alt key is called something else in a given language;
+		# or to set this to the empty string if that key combination is unavailable on some keyboard.
 		d.add("copyButtonAcceleratorAccessibilityLabel", _("Alt+C"))
 
 	dialogArgsVar = automation.VARIANT(d)
