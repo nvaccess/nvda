@@ -45,7 +45,7 @@ Popular hypervisors for windows include [Oracle VM VirtualBox], [VMware Workstat
    4. A notification should appear informing you that your tunnel is available.
       Take note of the tunnel's name.
 
-If you prefer, you can set up the tunnel [at the command line instead](https://code.visualstudio.com/docs/editor/command-line#_create-remote-tunnel).
+If you prefer, you can set up the tunnel [at the command line instead][CLI create tunnel].
 
 * `code tunnel` to create a session tunnel.
 * `code tunnel service install` to create a background service tunnel.
@@ -123,3 +123,4 @@ To learn more about debugging in VS Code, check out the following resources:
 [Microsoft Hyper-V]: https://learn.microsoft.com/en-us/virtualization/hyper-v-on-windows/about/
 [Python Debugger]: https://marketplace.visualstudio.com/items?itemName=ms-python.debugpy
 [VS Code Standalone CLI]: https://code.visualstudio.com/docs/remote/tunnels#_alternative-downloads
+[CLI create tunnel]: https://code.visualstudio.com/docs/editor/command-line#_create-remote-tunnel
