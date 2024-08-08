@@ -22,6 +22,8 @@ The available options are:
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#16369, @XLTechie)
+* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+  * Added new languages Faroese and Xextan.
 
 ### Bug Fixes
 

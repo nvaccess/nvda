@@ -23,7 +23,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPr = context.payload.issue || context.payload.pull_request_target;
+            const issueOrPr = context.payload.issue || context.payload.pull_request;
             if (!issueOrPr.milestone) {
               core.setOutput('milestoneNotSet', 'true');
             } else {
@@ -36,7 +36,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPrNumber = (context.payload.issue || context.payload.pull_request_target).number;
+            const issueOrPrNumber = (context.payload.issue || context.payload.pull_request).number;
             const repository = context.repo;
             await github.rest.issues.update({
               ...repository,
