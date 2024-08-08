@@ -6,8 +6,12 @@ env:
 on:
   issues:
     types: [closed]
-  pull_request:
+  pull_request_target:
     types: [closed]
+
+permissions:
+  issues: write
+  pull-requests: write
 
 jobs:
   assign-milestone:
@@ -19,7 +23,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPr = context.payload.issue || context.payload.pull_request;
+            const issueOrPr = context.payload.issue || context.payload.pull_request_target;
             if (!issueOrPr.milestone) {
               core.setOutput('milestoneNotSet', 'true');
             } else {
@@ -32,7 +36,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueOrPrNumber = (context.payload.issue || context.payload.pull_request).number;
+            const issueOrPrNumber = (context.payload.issue || context.payload.pull_request_target).number;
             const repository = context.repo;
             await github.rest.issues.update({
               ...repository,
