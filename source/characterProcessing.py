@@ -34,8 +34,6 @@ _LocaleDataT = TypeVar("_LocaleDataT")
 class LocaleDataMap(Generic[_LocaleDataT], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
-	_noDataLocalesCache: set[str]
-
 	def __init__(
 		self,
 		localeDataFactory: Callable[[str], _LocaleDataT],
@@ -45,7 +43,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 		"""
 		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
 		self._dataMap: Dict[str, _LocaleDataT] = {}
-		self._noDataLocalesCache = set()
+		self._noDataLocalesCache: set[str] = set()
 
 	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
 		"""
