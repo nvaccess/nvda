@@ -84,10 +84,7 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 			del self._dataMap[locale]
 		except KeyError:
 			pass
-		try:
-			self._noDataLocalesCache.remove(locale)
-		except KeyError:
-			pass
+		self._noDataLocalesCache.discard(locale)
 
 	def invalidateAllData(self):
 		"""Invalidate all data within this locale map.
