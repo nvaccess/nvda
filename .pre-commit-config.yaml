@@ -33,6 +33,24 @@ repos:
     - id: check-toml
     - id: check-yaml
     - id: check-xml
+    - id: check-vcs-permalinks
+    - id: name-tests-test
+      args: ["--unittest"]
+      # Exclude Python files under `tests/` that aren't unittest files.
+      # This is a Python verbose regular expression.
+      # See https://docs.python.org/3/library/re.html#re.VERBOSE
+      exclude: |
+        (?x)^tests/(
+          checkPot.py |  # Doesn't use unittest
+          system |  # Uses robot
+          unit/ (
+            # Test helpers
+            textProvider.py |
+            extensionPointTestHelpers.py |
+            objectProvider.py |
+            test_speechManager/speechManagerTestHarness.py
+          )
+        )
 
 - repo: https://github.com/asottile/add-trailing-comma
   rev: v3.1.0
