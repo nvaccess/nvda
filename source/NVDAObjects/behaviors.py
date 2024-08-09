@@ -653,7 +653,6 @@ class CandidateItem(NVDAObject):
 		return _("{number} {candidate}").format(number=number, candidate=candidate)
 
 	def getFormattedCandidateDescription(self, candidate):
-		descriptions = []  # noqa: F841
 		numSymbols = len(candidate) if candidate else 0
 		if numSymbols != 1:
 			return ""

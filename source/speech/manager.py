@@ -328,7 +328,6 @@ class SpeechManager(object):
 		enteredTriggers = []
 		outSeqs = []
 		paramsToReplay = []
-		currentSynth = getSynth()  # noqa: F841
 
 		outSeq = []
 		for command in inSeq:

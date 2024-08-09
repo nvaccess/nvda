@@ -451,7 +451,6 @@ class NewProfileDialog(
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		sHelper = guiHelper.BoxSizerHelper(self, orientation=wx.VERTICAL)
 
-		sizer = wx.BoxSizer(wx.HORIZONTAL)  # noqa: F841
 		# Translators: The label of a field to enter the name of a new configuration profile.
 		profileNameText = _("Profile name:")
 		self.profileName = sHelper.addLabeledControl(profileNameText, wx.TextCtrl)

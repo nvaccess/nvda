@@ -59,12 +59,10 @@ def DoxyfileParse(file_contents):
 	lex.whitespace = lex.whitespace.replace("\n", "")
 	lex.escape = ""
 
-	lineno = lex.lineno  # noqa: F841
 	token = lex.get_token()
 	key = token  # the first token should be a key
 	last_token = ""
 	key_token = False
-	next_key = False  # noqa: F841
 	new_data = True
 
 	def append_data(data, key, new_data, token):

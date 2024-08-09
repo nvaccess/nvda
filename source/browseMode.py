@@ -1498,7 +1498,6 @@ class ElementsListDialog(
 		elif key == wx.WXK_F2:
 			item = self.tree.GetSelection()
 			if item:
-				selectedItemType = self.tree.GetItemData(item).item  # noqa: F841
 				self.tree.EditLabel(item)
 				evt.Skip()
 

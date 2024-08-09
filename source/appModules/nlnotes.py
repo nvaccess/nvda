@@ -45,7 +45,6 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName = obj.windowClassName
 		role = obj.role
-		states = obj.states  # noqa: F841
 		if windowClassName == "NotesSubprog" and role == controlTypes.Role.DOCUMENT:
 			clsList.insert(0, NotesSubprog)
 		elif windowClassName == "NotesRichText" and role in (

@@ -421,12 +421,12 @@ class EditTextInfo(textInfos.offsets.OffsetsTextInfo):
 		else:
 			start = ctypes.c_uint()
 			end = ctypes.c_uint()
-			res = watchdog.cancellableSendMessage(  # noqa: F841
+			watchdog.cancellableSendMessage(
 				self.obj.windowHandle,
 				winUser.EM_GETSEL,
 				ctypes.byref(start),
 				ctypes.byref(end),
-			)  # noqa: F841
+			)
 			return start.value, end.value
 
 	def _setSelectionOffsets(self, start, end):
@@ -840,7 +840,7 @@ class ITextDocumentTextInfo(textInfos.TextInfo):
 			dataObj = None
 		if dataObj:
 			text = comtypes.BSTR()
-			res = NVDAHelper.localLib.getOleClipboardText(dataObj, ctypes.byref(text))  # noqa: F841
+			NVDAHelper.localLib.getOleClipboardText(dataObj, ctypes.byref(text))
 			label = text.value
 		if label:
 			return label

@@ -25,8 +25,7 @@ class TestWinVersion(unittest.TestCase):
 	def test_getWinVerFromNonExistentRelease(self):
 		# Test the fact that there is no Windows 10 2003 (2004 exists, however).
 		with self.assertRaises(AttributeError):
-			# Flake8 F841: local variable name is assigned to but never used
-			may2020Update = winVersion.WIN10_2003  # NOQA: F841
+			winVersion.WIN10_2003
 
 	def test_moreRecentWinVer(self):
 		# Specifically to test operators.
