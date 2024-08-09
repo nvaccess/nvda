@@ -93,7 +93,7 @@ When you're done, it's a good idea to disconnect from the remote tunnel on your 
 4. Insert a breakpoint (`F9`) in the `dateTime` script, for instance at the last line, and save the file (`Ctrl`+`S`).
 5. Open the Debug view (`Ctrl`+`Shift`+`D`) and ensure the appropriate debug launch configuration is selected (if you are using the pre-configured NVDA VS Code workspace, this is "NVDA (Python)").
    Note that to get to the launch selector, you need to press right arrow when focused on the "Start Debugging" button.
-   The selector is not currently reachable with tab. 
+   The selector is not currently reachable with tab.
 6. Start debugging with the "Start Debugging" button (`F5`).
    NVDA should start up on your secondary machine.
 7. On your secondary machine, execute the report time/date script (`NVDA`+`F12`).
