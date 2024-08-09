@@ -39,7 +39,7 @@ Najvýznamnejšie prednosti programu:
 
 ### Systémové požiadavky {#SystemRequirements}
 
-#### Odporúčané systémové požiadavky {#RecommendedSystemRequirements}
+#### Odporúčané systémové požiadavky {#MinimumSystemRequirements}
 * Operačné systémy: 64-bitové edície systémov Windows 10, Windows 11 a Window Server 2022
   * Podporované sú AMD64 a ARM64 varianty operačného systému Windows.
 * Mali by ste mať aspoň 150 MB voľného miesta úložného priestoru.
