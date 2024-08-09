@@ -23,9 +23,12 @@ repos:
       exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     - id: check-case-conflict
     - id: check-merge-conflict
+    - id: debug-statements
     - id: trailing-whitespace
       types_or: [python, c, c++, batch, markdown]
     - id: end-of-file-fixer
+      types_or: [python, c, c++, batch, markdown]
+    - id: fix-byte-order-marker
       types_or: [python, c, c++, batch, markdown]
     - id: check-toml
     - id: check-yaml
