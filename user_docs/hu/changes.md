@@ -1,6 +1,92 @@
 # Újdonságok az NVDA-ban
 
 
+## 2024.3
+
+Az NVDA elindulás után most már figyelmeztet, ha frissítés érhető el valamelyik telepített bővítményéhez.
+
+Az Unicode normalizáció elérhetővé vált a beszéd és a braille kimeneten egyaránt.
+Ez olyankor lehet hasznos, amikor olyan karaktereket akarunk olvastatni, amelyeket az adott beszédszintetizátor vagy braille tábla alapvetően nem képes értelmezni, viszont rendelkeznek megfelelő, kompatibilis alternatívával.
+  Egyúttal lehetővé teszi az egyenletek olvasását a Microsoft Word egyenletszerkesztőjében.
+  
+A Help Tech Activator Pro braille kijelzők már támogatottak.
+
+Billentyűparancs rendelhető az egérgörgő függőleges és vízszintes mozgatásának emulálására.
+
+Számos hibajavítás többek között a Windows 11 beviteli élmény paneléhez és a vágólap előzményeihez.
+A böngészők hibajavításai között találjuk a  hibaüzenetek bejelentését. Ezen kívül az olyan elemek kezelése is javult, mint alakzatok, feliratok, táblázat címkék, illetve választógombokat és jelölőnégyzeteket tartalmazó menüelemek.
+
+Frissült a LibLouis Braille fordító új táblák: Szerb (cirill), Jiddis, török, nemzetközi fonetikus ABC és még néhány ókori nyelvhez.
+Frissült az eSpeak, új támogatott nyelv: karakalpak.
+Frissült az Unicode CLDR is.
+
+### Újdonságok
+
+* Új billentyűparancsok:
+  * Új parancsok az egérgörgő vízszintes és függőleges mozgatásához. Alapértelmezetten nincs billentyűparancs hozzárendelve. (#16462, @Cary-Rowen)
+* Támogatás az Unicode normalizációhoz a beszéd és Braille kimeneten egyaránt. (#11570, #16466 @LeonarddeR).
+  * Ez olyankor lehet hasznos, amikor olyan karaktereket akarunk olvastatni, amelyeket az adott beszédszintetizátor vagy braille tábla alapvetően nem képes értelmezni, viszont rendelkeznek megfelelő, kompatibilis alternatívával. Ilyenek pl. a közösségi médiában oly elterjedt félkövér és dőlt karakterek.
+  * Egyúttal lehetővé teszi az egyenletek olvasását a Microsoft Word egyenletszerkesztőjében. (#4631)
+  * A funkciót az NVDA beállításai között a kapcsolódó kategóriákban kezelhetjük. Értelemszerűen a beszédkimenet normalizációt a Beszéd kategóriában, a Braille kimenet normalizációját pedig a Braille kategóriában.
+* Az NVDA az indulása után már figyelmeztet, ha valamely telepített bővítményhez frissítés áll rendelkezésre. (#15035)
+  * Ez a funkció az NVDA beállításai között a Bővítménykezelő kategóriában szabályozható.
+  * Az NVDA napi rendszerességgel ellenőrzi a bővítményfrissítéseket.
+  * Csak az azonos csatornán elérhető frissítéseket ellenőrzi a rendszer. Pl. ha egy bővítmény béta verzióját telepítettük a béta csatornán keresztül, akkor az NVDA csak a béta csatornán elérhető frissítéseket fogja ellenőrizni az adott bővítményhez.
+* Támogatás a Help Tech Activator Pro Braille kijelzőkhöz. (#16668)
+
+### Változások
+
+* Frissített összetevők:
+  * Frissült az eSpeak NG, új verzió: 1.52-dev commit `54ee11a79`. (#16495)
+    * Új nyelvet adtak hozzá: Karakalpak.
+  * Frissült az Unicode CLDR, új verzió: 45.0. (#16507, @OzancanKaratas)
+  * Frissült a fast_diff_match_patch (amit arra használnak, hogy detektálja a változásokat különböző terminál programokban ill. egyéb dinamikus tartalmak kezelésekor). Új verzió: 2.1.0. (#16508, @codeofdusk)
+  * Frissült a LibLouis braille fordító, új verzió: [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Új braille táblák:
+      * Szerb cirill betűs.
+      * Jiddis.
+      * Néhány ókori nyelv: Bibliai héber, akkád, szír, Ugarit és transzliterális ékírás.
+      * Török, rövidítési fokozat 2. (#16735)
+      * nemzetközi fonetikus ABC. (#16773)
+  * Frissült az NSIS, új verzió: 3.10 (#16674, @dpy013)
+  * Frissült a markdown, új verzió: 3.6 (#16725, @dpy013)
+  * Frissült az nh3, új verzió: 0.2.17 (#16725, @dpy013)
+* Az a Braille tábla,amihez az NVDA minden olyan esetben automatikusan visszatérhet, amikor bármi probléma adódik az aktuálisan beállított braille táblával mostantól az Egységesített angol braille kód a beviteli és a kimeneti tábla esetében egyaránt. (#9863, @JulienCochuyt, @LeonarddeR)
+* Az NVDA már bemondja az olyan alakzatokat,amikhez nem tartozik gyerekelem, viszont felirat vagy leírás igen. (#14514)
+* Böngészőmódban, soronkénti olvasás közben Már nem hangzik el minden egyes sorban a "felirat" szó az olyan alakzatok és táblázatok esetében, melyekhez hosszú, többsoros felirat tartozik. (#14874)
+* Python konzol: Már nem veszik el az utolsó végre nem hajtott parancs, amikor belépünk a bevitel előzményei közé. (#16653, @CyrilleB79)
+* Most már egy egyedi de továbbra is a névtelenséget biztosító azonosító is a része az NVDA által gyűjtött használati adatoknak. Az adatgyűjtés az NVDA Beállításai között az általános kategóriában kapcsolható be vagy ki. (#16266)
+* Alapértelmezés szerint az NVDA már létrehoz egy új mappát amikor hordozható verziót készít.
+Az NVDA már figyelmeztet, ha olyan mappában akarunk hordozható verziót létrehozni, ami nem üres. (#16686)
+
+### Hibajavítások
+
+* Windows 11 javítások:
+  * Az NVDA már nem akad meg a vágólap előzményeinek és a Windows beviteli élmény panelének bezárásakor. (#16346, #16347, @josephsl)
+  * Az NVDA már bemondja a megjelenő lehetőségeket a beviteli mód kiválasztására szolgáló panelen. (#14023, @josephsl)
+  * Az NVDA már nem mondja be kétszer a vágólap előzményeit, amikor a Windows beviteli élmény panelének menüelemein navigálunk. (#16532, @josephsl)
+  * Az NVDA már nem szakítja meg sem a beszédet sem a Braille-t, amikor a Windows beviteli élmény panelén a kaomojikon vagy szimbólumokon navigálunk. (#16533, @josephsl)
+* Böngésző javítások:
+  * Az "aria-errormessage" tulajdonsággal megjelölt hibaüzeneteket az NVDA már bemondja Google Chrome és Mozilla Firefox esetén is. (#8318)
+  * Mozilla firefox: amennyiben rendelkezésre áll, az NVDA már az "aria-labelledby" tulajdonságot használja a táblázatok akadálymentes elnevezésének meghatározására. (#5183)
+  * Az NVDA már helyesen jelenti be a választógombokat és jelölőnégyzeteket tartalmazó menüelemeket, amikor először nyitunk meg egy almenüt a Google Chrome és Mozilla Firefox böngészőkben. (#14550)
+  * Az NVDA böngészőmódjának keresője most már  hatékonyabban működik az olyan lapokon is,amik emodzsikat tartalmaznak. (#16317, @LeonarddeR)
+  * Mozilla Firefoxban az NVDA már helyesen jelenti be az aktuális karaktert, szót vagy sort amennyiben a kurzor a sor végén található beszúrási ponton van. (#3156, @jcsteh)
+  * Már nem okozza a Chrome összeomlását egy dokumentum vagy magának a böngészőnek a bezárása. (#16893)
+* Az NVDA már bejelenti az automatikus kiegészítési javaslatokat az Eclipse alkalmazásban és más Eclipse-alapú környezetekben windows 11 alatt. (#16416, @thgcode)
+* Javult az automatikusan változó szövegek kezelése főleg különbőző terminál programokban. (#15850, #16027, @Danstiv)
+* Ismét problémamentesen működik a konfiguráció visszaállítása a gyári értékekre. (#16755, @Emil-18)
+* Microsoft Excel: Az NVDA már helyesen jelenti be a kijelölés változásait egy cella szövegének szerkesztése közben. (#15843)
+* Java Access Bridge-t használó alkalmazások esetén az NVDA már helyesen jelenti be egy szöveg utolsó üres sorát, és már nem mondja be ilyenkor az előző sort. (#9376, @dmitrii-drobotov)
+* LibreOffice Writer (24.8 és újabb verziók esetében), Ha billentyűparanccsal változtatunk meg olyan szövegformátum tulajdonságokat, mint félkövér, dőlt, aláhúzott, alsó index/felső index vagy igazítás, akkor az NVDA már bemondja a tulajdonság új állapotát. Pl. félkövér ki. (#4248, @michaelweghorn)
+* Ha a kurzormozgató billentyűkkel navigálunk UI automationt használó alkalmazások szövegmezőiben, az NVDA már nem mond be helytelen karaktert vagy szót. (#16711, @jcsteh)
+* Windows 10/11 Számológép: Számok beillesztése esetén az NVDA már helyesen jelenti be a teljes beillesztett számot. (#16573, @TristanBurchett)
+* A beszéd már nem némul el ha csatlakozunk vagy éppen bontjuk a kapcsolatot egy távoli asztalkapcsolati folyamatban. (#16722, @jcsteh)
+* Visual Studio Code: Támogatás objektumok nevének szövegáttekintő parancsokkal való eléréséhez. (#16248, @Cary-Rowen)
+* Az NVDA hangjelzéseinek lejátszása már nem ütközik problémába mono hangeszközök esetén. (#16770, @jcsteh)
+* Az NVDA már bejelenti a címeket amikor a Címzett, másolatot kap és a titkos másolatot kap címkéjű mezőkön navigálunk az Outlook webes felületén vagy a Modern Outlook alkalmazásban. (#16856)
+* Az NVDA már sokkal jobban kezeli a bővítmények telepítése során esetlegesen fellépő hibákat. (#16704)
+
 ## 2024.2
 
 Új opció az Audio beállítások között: osztott hang.
