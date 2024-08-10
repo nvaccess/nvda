@@ -4729,14 +4729,24 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles other applications volume and mute status",
+			"Toggles other applications volume adjuster status",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+delete",
 	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()
 
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Mutes or unmutes other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture=None,
+	)
+	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeMute()
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}

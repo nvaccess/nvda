@@ -3044,6 +3044,11 @@ class AudioPanel(SettingsPanel):
 			log.error("Invalid volume level: {}", volume)
 			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
 			self.appSoundVolSlider.SetValue(defaultVolume)
+		
+		# Translators: Mute other apps checkbox in settings
+		self.muteOtherAppsCheckBox = wx.CheckBox(self, label=_("Mute other apps"))
+		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
+
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3105,9 +3110,11 @@ class AudioPanel(SettingsPanel):
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
 		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
+		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
 		self.appVolAdjusterCombo.saveCurrentValueToConf()
 		audio.appsVolume._updateAppsVolumeImpl(
 			volume=self.appSoundVolSlider.GetValue() / 100.0,
+			muted=self.muteOtherAppsCheckBox.GetValue(),
 			state=self.appVolAdjusterCombo._getControlCurrentValue(),
 		)
 
@@ -3131,10 +3138,11 @@ class AudioPanel(SettingsPanel):
 		)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
+		
 		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
 		self.appSoundVolSlider.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
+		self.muteOtherAppsCheckBox.Enable(wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 		self.appVolAdjusterCombo.Enable(wasapi)
 
 	def isValid(self) -> bool:

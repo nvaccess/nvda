@@ -74,14 +74,11 @@ class AppsVolumeAdjusterFlag(DisplayStringEnum):
 			self.DISABLED: _("Disabled Applications volume adjuster"),
 			# Translators: Label for applications volume adjuster in NVDA settings.
 			self.ENABLED: _("Enabled Applications volume adjuster"),
-			# Translators: Label for applications volume adjuster in NVDA settings.
-			self.MUTED: _("Mute other applications"),
 		}
 
 	DEFAULT = enum.auto()
 	DISABLED = enum.auto()
 	ENABLED = enum.auto()
-	MUTED = enum.auto()
 
 
 class ParagraphNavigationFlag(DisplayStringEnum):
