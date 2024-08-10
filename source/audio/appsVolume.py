@@ -94,7 +94,7 @@ def _updateAppsVolumeImpl(
 			volumeAndMute=VolumeAndMute(
 				volume=volume,
 				mute=state == AppsVolumeAdjusterFlag.MUTED,
-			)
+			),
 		)
 		runTerminators = False
 	if _activeCallback is not None:
@@ -110,7 +110,7 @@ def _adjustAppsVolume(
 		message = _(
 			# Translators: error message when wasapi is turned off.
 			"Other applications' volume cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
 		)
 		ui.message(message)
 		return
@@ -145,7 +145,7 @@ def _toggleAppsVolumeState():
 		message = _(
 			# Translators: error message when wasapi is turned off.
 			"Other applications' volume cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
 		)
 		ui.message(message)
 		return

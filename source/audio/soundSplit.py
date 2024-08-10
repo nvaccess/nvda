@@ -130,7 +130,7 @@ class ChannelVolumeSetter(AudioSessionCallback):
 			channelCount = channelVolume.GetChannelCount()
 			if channelCount != 2:
 				log.warning(
-					f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!"
+					f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!",
 				)
 				return
 			channelVolume.SetChannelVolume(0, 1.0, None)

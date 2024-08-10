@@ -3133,7 +3133,7 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Enable(wasapi)
 		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
 		self.appSoundVolSlider.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
 		)
 		self.appVolAdjusterCombo.Enable(wasapi)
 
