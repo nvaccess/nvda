@@ -3145,7 +3145,7 @@ class AudioPanel(SettingsPanel):
 			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
 		)
 		self.muteOtherAppsCheckBox.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
 		)
 		self.appVolAdjusterCombo.Enable(wasapi)
 
