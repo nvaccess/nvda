@@ -58,7 +58,7 @@ envelopeNames = {
 class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if not isinstance(obj, Window):
-			return  # noqa: E701
+			return
 		controlID = obj.windowControlID
 		windowHandle = obj.windowHandle
 		parentWindow = winUser.getAncestor(windowHandle, winUser.GA_PARENT)

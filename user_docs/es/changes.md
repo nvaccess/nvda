@@ -71,8 +71,10 @@ Un mensaje de advertencia te avisará si intentas escribir en un directorio no v
   * NVDA anunciará correctamente elementos de menú con botones de opción y casillas de verificación al entrar por primera vez en submenús en Google Chrome y en Mozilla Firefox. (#14550)
   * La funcionalidad de búsqueda en modo exploración en NVDA ahora es más precisa cuando la página contiene emojis. (#16317, @LeonarddeR)
   * En Mozilla Firefox, NVDA ahora anuncia correctamente el carácter, palabra y línea actuales cuando el cursor esté en el punto de inserción al final de una línea. (#3156, @jcsteh)
+  * Ya no causa que Google Chrome se cuelgue al cerrar un documento o al salir de Chrome. (#16893)
 * NVDA anunciará correctamente el autocompletado de sugerencias en Eclipse y otros entornos basados en él en Windows 11. (#16416, @thgcode)
 * Mejorada la fiabilidad de la lectura automática de texto, especialmente  en aplicaciones de terminal. (#15850, #16027, @Danstiv)
+* Es posible una vez más reiniciar la configuración a los valores predeterminados de fábrica de forma fiable. (#16755, @Emil-18)
 * NVDA anunciará correctamente los cambios de selección al editar una celda de texto en Microsoft Excel. (#15843)
 * En aplicaciones que utilicen Java Access Bridge, NVDA ahora leerá correctamente la última línea en blanco de un texto en lugar de repetir la línea anterior. (#9376, @dmitrii-drobotov)
 * En LibreOffice Writer (versión 24.8 y más modernas), al conmutar el formateado de texto (negrita, cursiva, subrayado, subíndice/superíndice, alineación) utilizando los atajos de teclado correspondientes, NVDA anuncia el nuevo atributo de formato (ej.: "negrita activada", "negrita desactivada"). (#4248, @michaelweghorn)
@@ -80,8 +82,9 @@ Un mensaje de advertencia te avisará si intentas escribir en un directorio no v
 * Al pegar en la calculadora de Windows 10/11, NVDA ahora anuncia correctamente el número entero pegado. (#16573, @TristanBurchett)
 * La voz ya no queda en silencio después de desconectarse y volver a conectarse a una sesión de Escritorio Remoto. (#16722, @jcsteh)
 * Añadido soporte para órdenes de revisión de texto para el nombre de un objeto en Visual Studio Code. (#16248, @Cary-Rowen)
-* En Mozilla Firefox, NVDA ahora anuncia correctamente el carácter, palabra y línea actuales cuando el cursor esté en el punto de inserción al final de una línea. (#3156, @jcsteh)
 * Reproducir sonidos de NVDA ya no falla en un dispositivo de audio mono. (#16770, @jcsteh)
+* NVDA anunciará las direcciones cuando te muevas con las flechas por los campos PARA/CC/BCC en outlook.com  y Outlook moderno. (#16856)
+* NVDA ahora maneja los fallos de instalación de complementos con más elegancia. (#16704)
 
 ### Cambios para Desarrolladores
 

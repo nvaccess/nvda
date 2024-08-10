@@ -240,7 +240,7 @@ def locateHTMLElementByID(document, ID):
 			continue
 		childElement = locateHTMLElementByID(childElement.document, ID)
 		if not childElement:
-			continue  # noqa: E701
+			continue
 		return childElement
 
 
@@ -253,7 +253,7 @@ def getChildHTMLNodeFromFrame(frame):
 		return
 	res = IAccessibleHandler.accChild(pacc, 1)
 	if not res:
-		return  # noqa: E701
+		return
 	return HTMLNodeFromIAccessible(res[0])
 
 
@@ -470,7 +470,7 @@ class MSHTML(IAccessible):
 
 	def event_caret(self):
 		if self._ignoreCaretEvents:
-			return  # noqa: E701
+			return
 		if self.TextInfo is not MSHTMLTextInfo and not self._UIAControl:
 			return
 		try:
@@ -1069,7 +1069,7 @@ class MSHTML(IAccessible):
 			if nodeName:
 				nodeName = nodeName.upper()
 			if nodeName == "TABLE":
-				return MSHTML(HTMLNode=HTMLNode)  # noqa: E701
+				return MSHTML(HTMLNode=HTMLNode)
 			HTMLNode = HTMLNode.parentNode
 		return None
 

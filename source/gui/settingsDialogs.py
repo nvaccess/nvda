@@ -31,6 +31,7 @@ from config.configFlags import (
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
+	ParagraphStartMarker,
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
@@ -108,7 +109,7 @@ class SettingsDialog(
 	"""
 
 	class MultiInstanceError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	class MultiInstanceErrorWithDialog(MultiInstanceError):
 		dialog: "SettingsDialog"
@@ -496,7 +497,7 @@ class MultiCategorySettingsDialog(SettingsDialog):
 	categoryClasses: typing.List[typing.Type[SettingsPanel]] = []
 
 	class CategoryUnavailableError(RuntimeError):
-		pass  # noqa: E701
+		pass
 
 	def __init__(self, parent, initialCategory=None):
 		"""
@@ -1665,23 +1666,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			config.conf["speech"]["reportNormalizedForCharacterNavigation"],
 		)
 		self.reportNormalizedForCharacterNavigationCheckBox.Enable(
-			bool(self.unicodeNormalizationCombo._getControlCurrentFlag())
+			bool(self.unicodeNormalizationCombo._getControlCurrentFlag()),
 		)
 
-		includeCLDRText = _(
-			# Translators: This is the label for a checkbox in the
-			# voice settings panel (if checked, data from the unicode CLDR will be used
-			# to speak emoji descriptions).
-			"Include Unicode Consortium data (including emoji) when processing characters and symbols",
-		)
-		self.includeCLDRCheckbox = settingsSizerHelper.addItem(
-			wx.CheckBox(self, label=includeCLDRText),
-		)
-		self.bindHelpEvent(
-			"SpeechSettingsCLDR",
-			self.includeCLDRCheckbox,
-		)
-		self.includeCLDRCheckbox.SetValue(config.conf["speech"]["includeCLDR"])
+		self._appendSymbolDictionariesList(settingsSizerHelper)
 
 		self._appendDelayedCharacterDescriptions(settingsSizerHelper)
 
@@ -1749,6 +1737,22 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self._appendSpeechModesList(settingsSizerHelper)
 
+	def _appendSymbolDictionariesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
+		self._availableSymbolDictionaries = [
+			d for d in characterProcessing.listAvailableSymbolDictionaryDefinitions() if d.userVisible
+		]
+		self.symbolDictionariesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
+			# Translators: Label of the list where user can enable or disable symbol dictionaires.
+			_("E&xtra dictionaries for character and symbol processing:"),
+			nvdaControls.CustomCheckListBox,
+			choices=[d.displayName for d in self._availableSymbolDictionaries],
+		)
+		self.bindHelpEvent("SpeechSymbolDictionaries", self.symbolDictionariesList)
+		self.symbolDictionariesList.CheckedItems = [
+			i for i, d in enumerate(self._availableSymbolDictionaries) if d.enabled
+		]
+		self.symbolDictionariesList.Select(0)
+
 	def _appendSpeechModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSpeechModes = list(speech.SpeechMode)
 		self.speechModesList: nvdaControls.CustomCheckListBox = settingsSizerHelper.addLabeledControl(
@@ -1789,10 +1793,14 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["reportNormalizedForCharacterNavigation"] = (
 			self.reportNormalizedForCharacterNavigationCheckBox.IsChecked()
 		)
-		currentIncludeCLDR = config.conf["speech"]["includeCLDR"]
-		config.conf["speech"]["includeCLDR"] = newIncludeCldr = self.includeCLDRCheckbox.IsChecked()
-		if currentIncludeCLDR is not newIncludeCldr:
-			# Either included or excluded CLDR data, so clear the cache.
+		currentSymbolDictionaries = config.conf["speech"]["symbolDictionaries"]
+		config.conf["speech"]["symbolDictionaries"] = newSymbolDictionaries = [
+			d.name
+			for i, d in enumerate(self._availableSymbolDictionaries)
+			if i in self.symbolDictionariesList.CheckedItems
+		]
+		if set(currentSymbolDictionaries) != set(newSymbolDictionaries):
+			# Either included or excluded symbol dictionaries, so clear the cache.
 			characterProcessing.clearSpeechSymbols()
 		delayedDescriptions = self.delayedCharacterDescriptionsCheckBox.IsChecked()
 		config.conf["speech"]["delayedCharacterDescriptions"] = delayedDescriptions
@@ -1977,6 +1985,19 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsHandleKeys", self.handleInjectedKeysCheckBox)
 		self.handleInjectedKeysCheckBox.SetValue(config.conf["keyboard"]["handleInjectedKeys"])
 
+		minTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["min"])
+		maxTimeout = int(config.conf.getConfigValidation(("keyboard", "multiPressTimeout")).kwargs["max"])
+		# Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
+		multiPressTimeoutText = _("&Multiple key press timeout (ms):")
+		self.multiPressTimeoutEdit = sHelper.addLabeledControl(
+			multiPressTimeoutText,
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=minTimeout,
+			max=maxTimeout,
+			initial=config.conf["keyboard"]["multiPressTimeout"],
+		)
+		self.bindHelpEvent("MultiPressTimeout", self.multiPressTimeoutEdit)
+
 	def isValid(self) -> bool:
 		# #2871: check whether at least one key is the nvda key.
 		if not self.modifierList.CheckedItems:
@@ -2008,6 +2029,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["speakCommandKeys"] = self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"] = self.alertForSpellingErrorsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"] = self.handleInjectedKeysCheckBox.IsChecked()
+		config.conf["keyboard"]["multiPressTimeout"] = self.multiPressTimeoutEdit.GetValue()
 
 
 class MouseSettingsPanel(SettingsPanel):
@@ -2575,7 +2597,9 @@ class DocumentFormattingPanel(SettingsPanel):
 		fontAttributesText = _("Font attrib&utes")
 		fontAttributesOptions = [i.displayString for i in OutputMode.__members__.values()]
 		self.fontAttrsList = fontGroup.addLabeledControl(
-			fontAttributesText, wx.Choice, choices=fontAttributesOptions
+			fontAttributesText,
+			wx.Choice,
+			choices=fontAttributesOptions,
 		)
 		self.bindHelpEvent("DocumentFormattingFontAttributes", self.fontAttrsList)
 		self.fontAttrsList.SetSelection(config.conf["documentFormatting"]["fontAttributeReporting"])
@@ -4403,7 +4427,23 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText),
 		)
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
+		self.readByParagraphCheckBox.Bind(wx.EVT_CHECKBOX, self.onReadByParagraphChange)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
+
+		# Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
+		labelText = _("Paragraph start marker:")
+		self.paragraphStartMarkersComboBox = followCursorGroupHelper.addLabeledControl(
+			labelText,
+			wx.Choice,
+			choices=[marker.displayString for marker in ParagraphStartMarker],
+		)
+		self.bindHelpEvent("BrailleParagraphStartMarkers", self.paragraphStartMarkersComboBox)
+		paragraphStartMarker = config.conf["braille"]["paragraphStartMarker"]
+		self.paragraphStartMarkersComboBox.SetSelection(
+			[marker.value for marker in ParagraphStartMarker].index(paragraphStartMarker),
+		)
+		if not self.readByParagraphCheckBox.GetValue():
+			self.paragraphStartMarkersComboBox.Disable()
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
@@ -4435,6 +4475,26 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		)
 		self.bindHelpEvent("BrailleSettingsShowSelection", self.brailleShowSelectionCombo)
+
+		self.formattingDisplayCombo: nvdaControls.FeatureFlagCombo = (
+			followCursorGroupHelper.addLabeledControl(
+				# Translators: This is a label for a combo-box in the Braille settings panel.
+				labelText=_("Formatting &display"),
+				wxCtrlClass=nvdaControls.FeatureFlagCombo,
+				keyPath=("braille", "fontFormattingDisplay"),
+				conf=config.conf,
+			)
+		)
+		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
+
+		# Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
+		speakOnRoutingText = _("Spea&k character when routing cursor in text")
+		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self, label=speakOnRoutingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
+		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4499,6 +4559,10 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.setTether(tetherChoice, auto=False)
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
+		config.conf["braille"]["paragraphStartMarker"] = [marker.value for marker in ParagraphStartMarker][
+			self.paragraphStartMarkersComboBox.GetSelection()
+		]
+		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
@@ -4506,6 +4570,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		]
 		self.brailleInterruptSpeechCombo.saveCurrentValueToConf()
 		self.brailleShowSelectionCombo.saveCurrentValueToConf()
+		self.formattingDisplayCombo.saveCurrentValueToConf()
 
 	def onShowCursorChange(self, evt):
 		self.cursorBlinkCheckBox.Enable(evt.IsChecked())
@@ -4523,6 +4588,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
+
+	def onReadByParagraphChange(self, evt: wx.CommandEvent):
+		self.paragraphStartMarkersComboBox.Enable(evt.IsChecked())
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())

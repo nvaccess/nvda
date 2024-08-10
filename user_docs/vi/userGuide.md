@@ -39,14 +39,23 @@ Một số tính năng nổi bật bao gồm:
 
 ### Yêu Cầu Hệ Thống {#SystemRequirements}
 
+#### Yêu Cầu Hệ Thống Được Đề Xuất {#MinimumSystemRequirements}
+* Hệ điều hành: các phiên bản 64-bit của Windows 10, Windows 11, và Window Server 2022
+  * đã hỗ trợ cả hai biến thể AMD64 và ARM64 của Windows.
+* tối thiểu 150 MB không gian lưu trữ.
+* tối thiểu 4 GB RAM.
+
+#### Yêu cầu Hệ Thống Tối Thiểu {#MinimumSystemRequirements}
 * Hệ điều hành: tất cả các phiên bản 32bit và 64bit của Windows 8.1,  Windows 10, Windows 11 và các bản máy chủ từ bản Windows Server 2012 R2.
-  * đã hỗ trợ các biến thể AMD64 và ARM64 của Windows.
+  * đã hỗ trợ cả hai biến thể AMD64 và ARM64 của Windows.
+  * Lưu ý rằng hệ điều hành 32-bit không còn được hỗ trợ tích cực nữa.
+  * Lưu ý rằng các phiên bản Windows 8.1 và Windows Server cũ hơn 2022 không còn được hỗ trợ tích cực nữa.
 * Không gian lưu trữ tối thiểu là 150 MB
 
 ### Tính quốc tế {#Internationalization}
 
 Một điều quan trọng là tất cả mọi người trên thế giới đều có quyền ngang nhau trong việc tiếp cận với công nghệ; cho dù họ đang giao tiếp bằng ngôn ngữ nào.
-Bên cạnh tiếng anh, NVDA đã được dịch sang 54 ngôn ngữ khác nhau bao gồm: Ailen, Albanian, Amharic, Aragon, Ả Rập, Ba Lan, Ba Tư, Bulgaria, Bồ Đào Nha (Brazil và Portugal), Catalan, Croatia, Czech, Do Thái, Đan Mạch, Đức (Đức và Thụy Sỹ), Farsi, Galicia, Gruzia, Hindi, Hungary, Hy Lạp, Hà Lan, Hàn Quốc, Iceland, Kannada, Kyrgyz, Lithuanian, Macedonian, Myanmar, Mông Cổ, Na Uy, Nam Phi, Nepal, Nga, Nhật, Pháp, Phần Lan, Rumani, Serbia, Slovak, Slovenian, Tamil, Thái Lan, Thổ Nhĩ Kỳ, Thụy Điển, Trung Quốc (giản thể và truyền thông), Tây Ban Nha (Colombia và Spain), Ukraina, Việt Nam và tiếng Ý.
+Bên cạnh tiếng anh, NVDA đã được dịch sang 54 ngôn ngữ khác nhau bao gồm: Ailen, Albanian, Amharic, Aragon, Ả Rập, Ba Lan, Ba Tư, Bulgaria, Bồ Đào Nha (Brazil và Portugal), Catalan, Croatia, Czech, Do Thái, Đan Mạch, Đức (Đức và Thụy Sỹ), Farsi, Galicia, Gruzia, Hindi, Hungary, Hy Lạp, Hà Lan, Hàn Quốc, Iceland, Kannada, Kyrgyz, Lithuanian, Macedonian, Myanmar, Mông Cổ, Na Uy, Nam Phi, Nepal, Nga, Nhật, Pháp, Phần Lan, Rumani, Serbia, Slovak, Slovenian, Tamil, Thái Lan, Thổ Nhĩ Kỳ, Thụy Điển, Trung Quốc (giản thể và truyền thống), Tây Ban Nha (Colombia và Spain), Ukraina, Việt Nam và tiếng Ý.
 
 ### Hỗ trợ các bộ tổng hợp tiếng nói {#SpeechSynthesizerSupport}
 
@@ -352,6 +361,9 @@ Trạng thái của add-on sẽ được liệt kê là "Có bản cập nhật"
 Danh sách sẽ liệt kê phiên bản hiện được cài đặt và bản cập nhật.
 Bấm `enter` trên add-on để mở danh sách hành động; chọn "Cập nhật".
 
+Mặc Định, sau khi khởi động NVDA, bạn sẽ được thông báo nếu có cập nhật cho bất cứ add-on nào.
+Để tìm hiểu và cấu hình cho tùy chọn này, hãy tham khảo phần ["Thông báo cập nhật"](#AutomaticAddonUpdates).
+
 ### Cộng đồng {#Community}
 
 NVDA có một cộng đồng người dùng sôi động. 
@@ -432,8 +444,14 @@ Nếu bạn đã đóng hộp thoại này hay đang sử dụng NVDA được c
 
 Một hộp thoại xuất hiện cho phép bạn chọn nơi sẽ tạo bản chạy trực tiếp.
 Đó có thể là một thư mục trên ổ đĩa cứng, trên ổ USB hay một phương tiện lưu trữ bất kỳ.
+Mặc định, một thư mục mới sẽ được tạo cho bản chạy trực tiếp.
+Bạn cũng có thể chọn dùng một thư mục có sẵn. Nó sẽ ghi đè các tập tin trong thư mục đó.
+Nếu thư mục có sẵn là một bản chạy trực tiếp của NVDA, bản chạy đó sẽ được cập nhật.
+
 Ở đây cũng có tùy chọn chép thư mục cấu hình của người dùng hiện tại sang phiên bản chạy trực tiếp.
+Điều này cũng bao gồm luôn các add-on.
 Tùy chọn này chỉ có khi bạn tạo bản chạy trực tiếp từ bản NVDA đã cài đặt trên máy, không tồn tại khi tạo bản chạy trực tiếp từ gói cài đặt.
+
 Bấm nút "Tiếp tục" để tiến hành tạo bản NVDA chạy trực tiếp.
 Khi hoàn tất, sẽ có một thông báo xác nhận là việc tạo bản chạy trực tiếp đã thành công.
 Bấm Đồng ý để đóng hộp thoại này.
@@ -493,8 +511,7 @@ Hộp kiểm thứ ba cho phép bạn hiển thị hộp thoại chào mừng n�
 
 #### Hộp thoại thống kê sử dụng dữ liệu {#UsageStatsDialog}
 
-Từ phiên bản NVDA 2018.3, người dùng được yêu cầu gửi dữ liệu sử dụng cho NV Access, giúp cải thiện các bản NVDA trong tương lai.
-Ở lần khởi động đầu tiên, sẽ xuất hiện một hộp thoại yêu cầu bạn chấp nhận gửi dữ liệu cho NV Access trong khi dùng NVDA.
+Ở lần khởi động đầu tiên, sẽ xuất hiện một hộp thoại yêu cầu bạn chấp nhận gửi dữ liệu cho NV Access trong khi dùng NVDA, nhằm mục đích giúp cải thiện NVDA trong tương lai.
 Bạn có thể xem thêm thông tin về việc thu thập dữ liệu bởi NV Access trong phần thiết lập chung, [Cho phép dự án NVDA thu thập thống kê sử dụng NVDA](#GeneralSettingsGatherUsageStats).
 Lưu ý: chọn "có" hay "không" đều lưu thiết lập và hộp thoại sẽ không xuất hiện lại cho tới khi bạn cài lại NVDA.
 Tuy nhiên, bạn có thể bật hay tắt thủ công việc thu thập dữ liệu trong bản cài đặt chung của NVDA. Để thay đổi thiết lập này, bạn có thể chọn hay bỏ chọn hộp kiểm [Cho phép dự án NVDA thu thập thống kê sử dụng NVDA](#GeneralSettingsGatherUsageStats).
@@ -502,11 +519,11 @@ Tuy nhiên, bạn có thể bật hay tắt thủ công việc thu thập dữ l
 ### Giới thiệu về các lệnh bàn phím của NVDA {#AboutNVDAKeyboardCommands}
 #### phím bổ trợ NVDA {#TheNVDAModifierKey}
 
-Các phím tắt trong NVDA thường là một tổ hợp phím với sự kết hợp của một phím gọi là phím bổ trợ NVDA với một hay nhiều phím khác.
+Hầu hết các phím tắt trong NVDA là một tổ hợp phím với sự kết hợp của một phím gọi là phím bổ trợ NVDA với một hay nhiều phím khác.
 Ngoại trừ trường hợp duyệt văn bản trong kiểu bàn phím Desktop sử dụng các phím số bên bàn phím số và một vài trường hợp ngoại lệ khác.
 
-NVDA cho phép bạn chọn phím Insert bên bàn phím số, Insert mở rộng hay phím Khóa hoa là phím bổ trợ cho NVDA.
-Mặc định thì cả hai phím Insert đều được chọn là phím bổ trợ cho NVDA.
+Có thể cấu hình NVDA để dùng phím `Insert`, `Insert bên bàn phím số (numpad Insert)` hay `phím Khóa hoa (Caps Lock)` làm phím bổ trợ `NVDA`.
+Mặc định thì cả phím `Insert` và `Insert bàn phím số`đều được chọn là phím bổ trợ cho NVDA.
 
 Nếu muốn phím bổ trợ hoạt động theo đúng chức năng của nó(ví dụ phím Khóa hoa) thì bạn bấm nhanh hai lần phím đó 
 
@@ -899,7 +916,8 @@ Còn khi chuột thay đổi vị trí theo chiều ngang (trái hoặc phải) 
 Tính năng này mặc định không được bật.
 Để bật tính năng này, bạn có thể cấu hình trong phân loại [Chuột](#MouseSettings) của hộp thoại [cấu hình NVDA](#NVDASettings), được tìm thấy trong trình đơn tùy chọn của NVDA.
 
-Bên cạnh sử dụng trực tiếp chuột thì NVDA cũng cung cấp cho bạn một số phím lệnh liên quan đến chuột:
+Dù rằng phải dùng chuột vật lí khi muốn điều hướng bằng chuột, NVDA cũng cung cấp cho bạn một số phím lệnh liên quan đến chuột:
+
 <!-- KC:beginInclude -->
 
 | Chức năng |Phím máy bàn |Phím xách tay |Cảm ứng |Mô tả|
@@ -908,6 +926,10 @@ Bên cạnh sử dụng trực tiếp chuột thì NVDA cũng cung cấp cho b�
 |Khóa nút chuột trái |shift+dấu chia bàn phím số |NVDA+control+[ |không có |Khóa nút chuột trái, bấm lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột trái rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột|
 |Kích hoạt nút chuột phải |dấu nhân bàn phím số |NVDA+] |Bấm và giữ |Kích hoạt nút chuột phải, thường dùng để mở thực đơn ngữ cảnh tại vị trí chuột.|
 |Khóa nút chuột phải |shift+dấu nhân bàn phím số |NVDA+control+] |không có |Khóa nút chuột phải, bấm một lần nữa để mở lại. Để kéo chuột, bấm lệnh này để khóa nút chuột phải rồi di chuyển bằng chuột  trên máy tính hoặc dùng các phím lệnh di chuyển chuột|
+|Cuộn lên từ vị trí chuột |không có |không có |không có |Cuộn con lăn chuột lên từ vị trí chuột hiện tại|
+|Cuộn xuống từ vị trí chuột|không có |không có |không có |Cuộn con lăn chuột xuống từ vị trí chuột hiện tại|
+|Cuộn qua trái từ vị trí chuột |không có |không có |không có |Cuộn con lăn chuột qua trái từ vị trí chuột hiện tại|
+|Cuộn qua phải từ vị trí chuột |không có |không có |không có |Cuộn con lăn chuột qua phải từ vị trí chuột hiện tại|
 |Di chuyển chuột đến vị trí đối tượng điều hướng |NVDA+dấu chia bàn phím số |NVDA+shift+m |không có |Di chuyển chuột đến vị trí đối tượng điều hướng hiện tại và con trỏ duyệt|
 |Chuyển đến đối tượng dưới con trỏ chuột |NVDA+dấu nhân bàn phím số |NVDA+shift+n |không có |Đưa đối tượng điều hướng đến đối tượng tại vị trí chuột|
 
@@ -1785,6 +1807,7 @@ Nếu bật tùy  chọn này, NV Access sẽ dùng các thông tin từ việc 
 Lưu ý rằng cho dù địa chỉ IP sẽ được dùng  để lấy số liệu thống kê tại quốc gia của bạn khi kiểm tra cập nhật, nhưng nó không bao giờ được lưu giữ.
 Ngoài những thông tin bắt buộc cho việc kiểm tra cập nhật, các thông tin sau đây cũng được gửi đi:
 
+* Một ID riêng biệt cho người dùng NVDA hiện tại, ID này thay đổi mỗi tháng một lần
 * Ngôn ngữ giao diện của NVDA
 * NVDA được cài đặt hay chạy trực tiếp
 * Tên bộ đọc đang dùng (bao gồm tên add-on và trình điều khiển (driver) của nó)
@@ -1878,6 +1901,39 @@ Tùy chọn này áp dụng cho tất cả các bộ đọc chứ không chỉ r
 Mặc định, tùy chọn này được bật, cho NVDA biết rằng có thể sử dụng ngôn ngữ của giọng đọc hiện tại để đọc các ký tự và ký hiệu hay không.
 Nếu bạn thấy NVDA đọc dấu câu không đúng cho một ngôn ngữ với bộ đọc hoặc giọng đọc đang dùng, bạn có thể tắt tùy chọn này để NVDA dùng các thiết lập ngôn ngữ chung.
 
+##### Chuẩn hóa unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Tùy chọn |Mặc định (Tắt), Bật, Tắt|
+|Mặc định |Tắt|
+
+Khi bật tùy chọn này, việc chuẩn hóa unicode được thực hiện trên văn bản được đọc bởi NVDA.
+Điều này có lợi khi đọc các ký tự có thể được thể hiện dưới nhiều hình thức.
+NVDA dùng thuật toán NFKC (Normalization Form Compatibility Composition), mang lại những lợi ích sau, trong số những lợi ích khác:
+
+1. Phiên bản in đậm và in nghiêng của các ký tự là một phần của unicode tiêu chuẩn và thường được sử dụng trên mạng xã hội được chuẩn hóa thành tương đương tương thích phổ biến nhất của chúng.
+Ví dụ: chữ "h" trong mẫu tự Latinh cũng có thể được trình bày dưới dạng "𝐡" (in đậm), "ℎ" (in nghiêng), v.v. nhưng sẽ luôn được đọc là "h" khi tính năng chuẩn hóa được bật.
+Khía cạnh chuẩn hóa này cũng hỗ trợ việc đọc các công thức trong trình biên soạn công thức của Microsoft Word.
+
+1. Chuẩn hóa thành các ký tự đã được soạn.
+Ví dụ: ký tự "ü" (u với âm sắc/diaeresis), một ký tự phổ biến trong các ngôn ngữ như tiếng Đức và tiếng Thổ Nhĩ Kỳ có thể được thể hiện dưới hai dạng:
+  1. Một ký tự unicode độc ​​lập (ü)
+  1. Sự phân tách thành hai ký tự (ü), cụ thể là chữ cái Latinh thông thường u và một từ bổ nghĩa diaeresis
+  Chuẩn hóa Unicode đảm bảo rằng chỉ một dạng sẽ được sử dụng trong toàn bộ đầu ra giọng nói, đó là biến thể một ký tự.
+
+1. Phân tách một số chữ ghép, Bao gồm "ĳ" (chữ ghép ij) thành dạng hai chữ cái ("ij").
+
+1. Thứ tự ổn định của các từ bổ nghĩa trong các ký tự tổng hợp, ví dụ như trong tiếng Do Thái cổ.
+
+Để bật tắt tính năng chuẩn hóa unicode ở bất cứ đâu, vui lòng gán thao tác / phím tắt thông qua [hộp thoại Quản lý các thao tác](#InputGestures).
+
+##### Thông báo "Đã chuẩn hóa" khi duyệt theo kí tự {#SpeechReportNormalizedForCharacterNavigation}
+
+Đây là một tùy chọn dạng hộp kiểm mà khi đánh dấu chọn, sẽ cho NVDA thông báo là một kí tự đã được chuẩn hóa khi đọc một kí tự nhất định như là lúc đánh vần.
+Ví dụ, khi bật tùy chọn này, đánh vần kí tự "ĳ" sẽ phát âm là "i j đã chuẩn hóa".
+
+Lưu ý là tùy chọn này chỉ có tác dụng khi  "[chuẩn hóa unicode](#SpeechUnicodeNormalization)" được bật.
+
 ##### Tích hợp dữ liệu của Unicode Consortium (bao gồm biểu tượng cảm xúc) khi xử lý kí hiệu và kí tự {#SpeechSettingsCLDR}
 
 Bật hộp kiểm này, NVDA sẽ bao gồm thêm các  từ điển phát âm kí hiệu khi phát âm kí tự và kí hiệu.
@@ -1916,6 +1972,7 @@ Phần lớn các bộ đọc đều hỗ trợ chức năng này.
 
 Thường thì tùy chọn này được bật.
 Tuy nhiên, một số bộ đọc của Microsoft không phát triển tính năng này nên hoạt động không chính xác.
+Các bộ đọc từ Code Factory, cả add-on và ứng dụng SAPI, đều không thực hiện nó một cách chính xác và gây ra lỗi đánh vần ngoài ý muốn trong văn bản được đọc (ví dụ, trong trình đơn hay hộp thoại của NVDA).
 Nếu bạn gặp trục trặc khi phát âm một số kí tự nhất định, hãy thử tắt nó đi.
 
 ##### Chờ để mô tả cho kí tự khi di chuyển con trỏ {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Nếu tùy chọn được tắt, phần lớn của một từ sẽ được hi
 Khi cuộn màn hình, bạn sẽ đọc được phần còn lại của từ.
 
 Bật tùy chọn này có thể giúp bạn đọc trôi chảy hơn, nhưng cũng đòi hỏi thực hiện thao tác cuộn màn hình nhiều lần hơn.
+
+##### Chuẩn hóa Unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Tùy chọn |Mặc định (Tắt), Bật, Tắt|
+|Mặc định |Tắt|
+
+Khi tùy chọn này được bật, quá trình chuẩn hóa unicode sẽ được thực hiện trên văn bản có thể hiện bằng chữ nổi trên màn hình chữ nổi.
+Điều này có lợi khi gặp các ký tự bằng chữ nổi chưa được biết đến trong một bảng chữ nổi cụ thể và có ký tự thay thế tương thích, chẳng hạn như các ký tự in đậm và in nghiêng thường được sử dụng trên mạng xã hội.
+Các lợi ích khác của việc chuẩn hóa unicode đã được giải thích trong greater chi tiết trong [phần dành cho cài đặt tiếng nói tương đương](#SpeechUnicodeNormalization).
+
+Để bật / tắt tính năng chuẩn hóa unicode ở mọi nơi, vui lòng gán thao tác / phím tắt thông qua [hộp thoại Quản lý các thao tác](#InputGestures).
 
 ##### Trình Bày Ngữ Cảnh tại Focus {#BrailleSettingsFocusContextPresentation}
 
@@ -2855,7 +2924,28 @@ Kiểu này hoạt động tốt nhất khi đọc tài liệu trong một ứng
 Kiểu này hoạt động tốt khi làm việc với một tài liệu sử dụng các khối đoạn văn bản.
 Lưu ý là kiểu đoạn này không dùng được trong Microsoft Word hay Microsoft Outlook, trừ khi bạn đang dùng UIA để truy cập các điều khiển của Microsoft Word.
 
-Bạn có thể chuyển qua lại giữa các kiểu đoạn được hỗ trợ ở bất cứ đâu bằng cách gán thao tác trong [Hộp thoại quản lý các thao tác](#InputGestures).
+Bạn có thể chuyển qua lại giữa các kiểu đoạn được hỗ trợ ở bất cứ đâu bằng cách gán thao tác / phím tắt trong [Hộp thoại quản lý các thao tác](#InputGestures).
+
+#### Cài Đặt Cửa Hàng Add-on {#AddonStoreSettings}
+
+Phân loại này cho phép bạn điều chỉnh cách mà Cửa Hàng Add-on hoạt động.
+
+##### Thông báo cập nhật {#AutomaticAddonUpdates}
+
+Khi tùy chọn này được chỉnh là "Thông báo", Cửa Hàng Add-on sẽ báo cho bạn sau khi khởi động NVDA nếu có bản cập nhật cho bất cứ add-on nào.
+Việc kiểm tra này được thực hiện mỗi 24 giờ.
+Việc thông báo sẽ chỉ xảy ra đối với các add-on có bản cập nhật ở cùng kênh.
+Ví dụ, với các bản beta của add-on, bạn sẽ chỉ nhận thông báo nếu có cập nhật từ kênh beta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Tùy chọn |Thông báo (Mặc định), Tắt |
+|Mặc định |Tắt |
+
+|Tùy chọn |Hoạt động |
+|---|---|
+|Thông báo |Thông báo khi có cập nhật cho các add-on ở cùng kênh |
+|Tắt |Không kiểm tra cập nhật tự động cho các add-on |
 
 #### Cài Đặt Windows OCR {#Win10OcrSettings}
 
@@ -3442,6 +3532,9 @@ Nếu đã cài NVDA vào hệ thống, bạn cũng có thể mở trực tiếp
 Khi cài đặt add-on từ các nguồn bên ngoài, NVDA sẽ yêu cầu bạn xác nhận việc cài đặt.
 Sau khi cài đặt một add-on, NVDA phải được khởi động lại để add-on đó bắt đầu hoạt động, dù rằng bạn cũng có thể hoãn lại để cài đặt hoặc cập nhật một add-on khác.
 
+Mặc định, sau khi khởi động NVDA, bạn sẽ được thông báo nếu có cập nhật cho bất cứ add-on nào.
+Để tìm hiểu thêm và cấu hình cho hoạt động này, vui lòng tham khảo phần ["Thông Báo Cập Nhật"](#AutomaticAddonUpdates).
+
 #### Gỡ Add-on {#AddonStoreRemoving}
 
 Để gỡ một add-on, hãy chọn nó từ danh sách và dùng hành động Gỡ.
@@ -3563,15 +3656,9 @@ Mục này sẽ mở [Cửa Hàng Add-on của NVDA](#AddonsManager).
 
 ### Tạo bản chạy trực tiếp {#CreatePortableCopy}
 
-Tùy chọn này sẽ mở một hộp thoại để bạn tạo một bản chạy trực tiếp từ bản NVDA đang được cài đặt.
-Tương tự, khi đang dùng một bản NVDA chạy trực tiếp, mục này sẽ có tên là "cài đặt NVDA vào máy tính này" thay vì "tạo bản chạy trực tiếp".
+Tùy chọn này sẽ mở một hộp thoại cho phép bạn tạo một bản NVDA chạy trực tiếp từ phiên bản đang chạy.
 
-Hộp thoại tạo bản NVDA chạy trực tiếp hay cài đặt NVDA vào máy sẽ yêu cầu bạn chọn đường dẫn đến thư mục để tạo bản chạy trực tiếp hay cài đặt NVDA.
-
-Trong hộp thoại này, bạn có thể bật hay tắt các tùy chọn sau:
-
-* Sao chép cấu hình người dùng hiện tại (bao gồm các tập tin trong %appdata%\roaming\NVDA hay trong thư mục cấu hình người dùng của bản chạy trực tiếp và cũng bao gồm addon và các module khác)
-* Khởi động bản chạy trực tiếp mới sau khi tạo hoặc chạy NVDA sau khi cài đặt (Chạy NVDA sau khi cài đặt hoặc tạo bản chạy trực tiếp)
+Xem hướng dẫn trong phần [tạo bản chạy trực tiếp](#CreatingAPortableCopy) để biết thêm thông tin.
 
 ### Chạy công cụ sửa đăng ký COM... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Các thiết bị thêm vào sau đây cũng được hỗ trợ, và không yê
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Lưu ý là Zoomax hiện không được hỗ trợ khi không có trình điều khiển bên ngoài
 
 Sau đây là danh sách các phím được gán của mẫu màn hình chữ nổi này trong NVDA.
 Vui lòng xem tài liệu hướng dẫn của màn hình chữ nổi để biết các phím tương ứng.
@@ -4996,7 +5084,7 @@ Sau đây là các tùy chọn dòng lệnh cho NVDA:
 |Không có |`--enable-start-on-logon=True|False` |trong khi cài đặt, cho NVDA [chạy trong khi đăng nhập Windows](#StartAtWindowsLogon)|
 |Không có |`--copy-portable-config` |Trong khi cài đặt, chép cấu hình bản chạy trực tiếp từ đường dẫn được cung cấp (`--config-path`, `-c`) vào tài khoản người dùng hiện tại|
 |Không có |`--create-portable` |Tạo bản NVDA chạy trực tiếp (chạy lên sau khi tạo). Yêu cầu khai báo đường dẫn `--portable-path` cho bản chạy trực tiếp|
-|Không có |`--create-portable` |Tạo bản NVDA chạy trực tiếp (chạy lên sau khi cài). yêu cầu khai báo đường dẫn `--portable-path` cho bản chạy trực tiếp|
+|Không có |`--create-portable-silent` |Tạo bản NVDA chạy trực tiếp (không chạy lên sau khi tạo). yêu cầu khai báo đường dẫn `--portable-path` cho bản chạy trực tiếp. Tùy chọn này không cảnh báo khi ghi vào một thư mục không rỗng và có thể ghi đè tập tin mà không cảnh báo|
 |Không có |`--portable-path=PORTABLEPATH` |đường dẫn để tạo bản chạy trực tiếp|
 
 ### Các Tham Số Mở Rộng Hệ Thống {#SystemWideParameters}

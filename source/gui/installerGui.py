@@ -5,6 +5,8 @@
 # Bill Dengler, Joseph Lee, Takuya Nishimoto
 
 import os
+import subprocess
+import sys
 
 import winUser
 import wx
@@ -72,7 +74,7 @@ def doInstall(
 			handleAlreadyElevated=True,
 		)
 		if res == 2:
-			raise installer.RetriableFailure  # noqa: E701
+			raise installer.RetriableFailure
 		if copyPortableConfig:
 			installedUserConfigPath = config.getInstalledUserConfigPath()
 			if installedUserConfigPath:
@@ -131,9 +133,29 @@ def doInstall(
 	if startAfterInstall:
 		newNVDA = core.NewNVDAInstance(
 			filePath=os.path.join(installer.defaultInstallPath, "nvda.exe"),
+			parameters=_generate_executionParameters(),
 		)
 	if not core.triggerNVDAExit(newNVDA):
 		log.error("NVDA already in process of exiting, this indicates a logic error.")
+
+
+def _generate_executionParameters() -> str:
+	executeParams: list[str] = []
+	if globalVars.appArgs.disableAddons:
+		executeParams.append("--disable-addons")
+	# pass the config path to the new instance, so that if a custom config path is in use, it will be
+	# inherited. We can't rely on WritePaths.configDir or appArgs.configPath here, as they could be set to
+	# the default path, which may be a temporary directory, so we must sniff sys.argv.
+	# Read sys.argv backwards, since the last instance of a CLI option takes effect.
+	# We start from len-2 as the -c option must have a value, so it is guaranteed to take up 2 items in argv.
+	for i in range(len(sys.argv) - 2, 0, -1):
+		if sys.argv[i] in ("-c", "--config-path"):
+			# We don't absolutise -c here because if it was provided by a previous copy of NVDA this will
+			# have already been done, and if it was provided by the user absolutising it now will result in
+			# it being in a temporary directory, which is almost certainly not what they want.
+			executeParams.extend(("--config-path", sys.argv[i + 1]))
+			break
+	return subprocess.list2cmdline(executeParams)
 
 
 def doSilentInstall(
@@ -600,6 +622,7 @@ def doCreatePortable(
 		if startAfterCreate:
 			newNVDA = core.NewNVDAInstance(
 				filePath=os.path.join(portableDirectory, "nvda.exe"),
+				parameters=_generate_executionParameters(),
 			)
 		if not core.triggerNVDAExit(newNVDA):
 			log.error("NVDA already in process of exiting, this indicates a logic error.")

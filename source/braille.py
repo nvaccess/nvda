@@ -4,6 +4,7 @@
 # Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
+from enum import StrEnum
 import itertools
 import typing
 from typing import (
@@ -14,6 +15,7 @@ from typing import (
 	Generator,
 	Iterable,
 	List,
+	NamedTuple,
 	Optional,
 	Set,
 	Tuple,
@@ -46,7 +48,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	OutputMode,
 )
-from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
+from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag, FontFormattingBrailleModeFlag
 from logHandler import log
 import controlTypes
 import api
@@ -327,6 +329,17 @@ INPUT_START_IND = "⣏"
 #: Unicode braille indicator at the end of untranslated braille input.
 INPUT_END_IND = " ⣹"
 
+
+class FormatTagDelimiter(StrEnum):
+	"""Delimiters for the start and end of format tags.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+
+	START = "⣋"
+	END = "⣙"
+
+
 # used to separate chunks of text when programmatically joined
 TEXT_SEPARATOR = " "
 
@@ -378,6 +391,52 @@ USB_PORT = ("usb", _("USB"))
 #: @type: tuple
 # Translators: String representing the Bluetooth port selection for braille displays.
 BLUETOOTH_PORT = ("bluetooth", _("Bluetooth"))
+
+
+class FormattingMarker(NamedTuple):
+	"""A pair of braille symbols that indicate the start and end of a particular type of font formatting.
+
+	As these are shapes, they should be provided in unicode braille.
+	"""
+
+	start: str
+	end: str
+
+
+fontAttributeFormattingMarkers: dict[str, FormattingMarker] = {
+	"bold": FormattingMarker(
+		# Translators: Brailled at the start of bold text.
+		# This is the English letter "b" in braille.
+		start=pgettext("braille formatting symbol", "⠃"),
+		# Translators: Brailled at the end of bold text.
+		# This is the English letter "b" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡃"),
+	),
+	"italic": FormattingMarker(
+		# Translators: Brailled at the start of italic text.
+		# This is the English letter "i" in braille.
+		start=pgettext("braille formatting symbol", "⠊"),
+		# Translators: Brailled at the end of italic text.
+		# This is the English letter "i" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡊"),
+	),
+	"underline": FormattingMarker(
+		# Translators: Brailled at the start of underlined text.
+		# This is the English letter "u" in braille.
+		start=pgettext("braille formatting symbol", "⠥"),
+		# Translators: Brailled at the end of underlined text.
+		# This is the English letter "u" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡥"),
+	),
+	"strikethrough": FormattingMarker(
+		# Translators: Brailled at the start of strikethrough text.
+		# This is the English letter "s" in braille.
+		start=pgettext("braille formatting symbol", "⠎"),
+		# Translators: Brailled at the end of strikethrough text.
+		# This is the English letter "s" plus dot 7 in braille.
+		end=pgettext("braille formatting symbol", "⡎"),
+	),
+}
 
 
 def NVDAObjectHasUsefulText(obj: "NVDAObject") -> bool:
@@ -1083,6 +1142,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 	"""
 	textList = []
 	if isAtStart:
+		paragraphStartMarker = getParagraphStartMarker()
+		if paragraphStartMarker:
+			textList.append(paragraphStartMarker)
 		if formatConfig["reportLineNumber"]:
 			lineNumber = field.get("line-number")
 			if lineNumber:
@@ -1124,9 +1186,81 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: brailled when text contains a bookmark
 				text = _("bkmk")
 				textList.append(text)
+
+	if (
+		config.conf["braille"]["fontFormattingDisplay"].calculated() == FontFormattingBrailleModeFlag.TAGS
+		and (formattingTags := _getFormattingTags(field, fieldCache, formatConfig)) is not None
+	):
+		textList.append(formattingTags)
+
 	fieldCache.clear()
 	fieldCache.update(field)
 	return TEXT_SEPARATOR.join([x for x in textList if x])
+
+
+def getParagraphStartMarker() -> str | None:
+	brailleConfig = config.conf["braille"]
+	if brailleConfig["readByParagraph"]:
+		paragraphStartMarker = brailleConfig["paragraphStartMarker"]
+		if paragraphStartMarker == "¶":
+			# Translators: This is a paragraph start marker used in braille.
+			# The default symbol is the pilcrow,
+			# a symbol also known as "paragraph symbol" or "paragraph marker".
+			# This symbol should translate in braille via LibLouis automatically.
+			# If there is a more appropriate character for your locale,
+			# consider overwriting this (e.g. for Ge'ez ፨).
+			# You can also use Unicode Braille such as ⠘⠏.
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			paragraphStartMarker = pgettext("paragraphMarker", "¶")
+	else:
+		paragraphStartMarker = None
+	return paragraphStartMarker
+
+
+def _getFormattingTags(
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+	formatConfig: dict[str, bool],
+) -> str | None:
+	"""Get the formatting tags for the given field and cache.
+
+	Formatting tags are calculated according to the preferences passed in formatConfig.
+
+	:param field: The format current field.
+	:param fieldCache: The previous format field.
+	:param formatConfig: The user's formatting preferences.
+	:return: The braille formatting tag as a string, or None if no pertinant formatting is applied.
+	"""
+	textList: list[str] = []
+	if formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE:
+		# Only calculate font attribute tags if the user has enabled font attribute reporting in braille.
+		for fontAttribute, formattingMarker in fontAttributeFormattingMarkers.items():
+			_appendFormattingMarker(fontAttribute, formattingMarker, textList, field, fieldCache)
+	if len(textList) > 0:
+		return f"{FormatTagDelimiter.START}{''.join(textList)}{FormatTagDelimiter.END}"
+
+
+def _appendFormattingMarker(
+	attribute: str,
+	marker: FormattingMarker,
+	textList: list[str],
+	field: dict[str, str],
+	fieldCache: dict[str, str],
+) -> None:
+	"""Append a formatting marker to the text list if the attribute has changed.
+
+	:param attribute: The attribute to check.
+	:param marker: The formatting marker to use.
+	:param textList: The list of marker strings to append to.
+	:param field: The current format field.
+	:param fieldCache: The previous format field.
+	"""
+	newVal = field.get(attribute, False)
+	oldVal = fieldCache.get(attribute, False) if fieldCache is not None else False
+	if newVal and not oldVal:
+		textList.append(marker.start)
+	elif oldVal and not newVal:
+		textList.append(marker.end)
 
 
 class TextInfoRegion(Region):
@@ -1174,7 +1308,13 @@ class TextInfoRegion(Region):
 
 	def _getTypeformFromFormatField(self, field, formatConfig):
 		typeform = louis.plain_text
-		if not (formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE):
+		if not (
+			(formatConfig["fontAttributeReporting"] & OutputMode.BRAILLE)
+			and (
+				config.conf["braille"]["fontFormattingDisplay"].calculated()
+				== FontFormattingBrailleModeFlag.LIBLOUIS
+			)
+		):
 			return typeform
 		if field.get("bold", False):
 			typeform |= louis.bold
@@ -1426,14 +1566,39 @@ class TextInfoRegion(Region):
 			self._brailleInputIndStart = None
 
 	def getTextInfoForBraillePos(self, braillePos: int) -> textInfos.TextInfo:
-		"""Fetches a collapsed TextInfo at the specified braille position in the region."""
+		"""Fetches a collapsed TextInfo at the specified braille position in the region.
+		:param braillePos: The braille position.
+			If no textInfo could be found at braillePos,
+			try to find one at braillePos - 1 until a position has been found.
+		"""
 		pos = self._rawToContentPos[self.brailleToRawPos[braillePos]]
 		# pos is relative to the start of the reading unit.
-		# Therefore, get the start of the reading unit...
+		maxIterations = 10
+		startTime = time.time()
+		for i, curPos in enumerate(range(pos, max(-1, pos - maxIterations), -1)):
+			if curPos == 0:
+				# Not necessary to find offset.
+				break
+			# Move curPos code points from the start.
+			# Note that, as liblouis uses 32 bit encoding internally,
+			# it is really safe to assume that one code point offset is equal to one character within liblouis.
+			# If an attempt fails, we try to move to the previous character
+			try:
+				return self._readingInfo.moveToCodepointOffset(curPos)
+			except RuntimeError:
+				msg = f"Error in moveToCodepointOffset in iteration {i + 1} (position {curPos}"
+				if i + 1 >= maxIterations or (exceeded := time.time() - startTime > 0.5):
+					logFunc = log.exception
+					curPos = pos
+					if exceeded:
+						msg += ", exceeded time limit of 0.5 seconds"
+				else:
+					logFunc = log.debug
+				logFunc(msg)
 		dest = self._readingInfo.copy()
 		dest.collapse()
-		# and move pos characters from there.
-		dest.move(textInfos.UNIT_CHARACTER, pos)
+		if curPos > 0:
+			dest.move(textInfos.UNIT_CHARACTER, curPos)
 		return dest
 
 	def routeTo(self, braillePos: int):
@@ -1475,6 +1640,7 @@ class TextInfoRegion(Region):
 					pass
 				return
 		self._setCursor(info)
+		_speakOnRouting(info.copy())
 
 	def nextLine(self):
 		dest = self._readingInfo.copy()
@@ -1756,6 +1922,16 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 					break
 		except ValueError:
 			pass
+		# When word wrap is enabled, the first block of spaces may be removed from the current window.
+		# This may prevent displaying the start of paragraphs.
+		paragraphStartMarker = getParagraphStartMarker()
+		if paragraphStartMarker and self.regions[-1].rawText.startswith(
+			paragraphStartMarker + TEXT_SEPARATOR,
+		):
+			region, regionStart, regionEnd = list(self.regionsWithPositions)[-1]
+			# Show paragraph start indicator if it is now at the left of the current braille window
+			if startPos <= len(paragraphStartMarker) + 1:
+				startPos = self.regionPosToBufferPos(region, regionStart)
 		self.windowStartPos = startPos
 
 	def _nextWindow(self):
@@ -3504,3 +3680,17 @@ def getDisplayDrivers(
 			continue
 		if not filterFunc or filterFunc(display):
 			yield display
+
+
+def _speakOnRouting(info: textInfos.TextInfo):
+	"""Speaks the character at the cursor position after routing.
+
+	:param info: The TextInfo at the cursor position after routing.
+	"""
+	if not config.conf["braille"]["speakOnRouting"]:
+		return
+	# Import late to avoid circular import.
+	from speech.speech import spellTextInfo
+
+	info.expand(textInfos.UNIT_CHARACTER)
+	spellTextInfo(info)

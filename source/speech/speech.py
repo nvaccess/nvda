@@ -483,7 +483,9 @@ def _getSpellingSpeechWithoutCharMode(
 				speakCharAs = symbol
 			elif not isNormalized and unicodeNormalization:
 				if (normalized := unicodeNormalize(speakCharAs)) != speakCharAs:
-					speakCharAs = " ".join(normalized)
+					speakCharAs = " ".join(
+						characterProcessing.processSpeechSymbol(locale, normChar) for normChar in normalized
+					)
 					isNormalized = True
 		if config.conf["speech"]["autoLanguageSwitching"]:
 			yield LangChangeCommand(locale)
@@ -1110,7 +1112,7 @@ def speak(  # noqa: C901
 	for item in oldSpeechSequence:
 		if isinstance(item, LangChangeCommand):
 			if not autoLanguageSwitching:
-				continue  # noqa: E701
+				continue
 			curLanguage = item.lang
 			if not curLanguage or (
 				not autoDialectSwitching and curLanguage.split("_")[0] == defaultLanguageRoot
@@ -1121,7 +1123,7 @@ def speak(  # noqa: C901
 				continue
 		elif isinstance(item, str):
 			if not item:
-				continue  # noqa: E701
+				continue
 			if autoLanguageSwitching and curLanguage != prevLanguage:
 				speechSequence.append(LangChangeCommand(curLanguage))
 				prevLanguage = curLanguage
@@ -1790,7 +1792,7 @@ def getTextInfoSpeech(  # noqa: C901
 		else:
 			speechSequence.extend(indentationSpeech)
 		if speakTextInfoState:
-			speakTextInfoState.indentationCache = allIndentation  # noqa: E701
+			speakTextInfoState.indentationCache = allIndentation
 	# Don't add this text if it is blank.
 	relativeBlank = True
 	for x in relativeSpeechSequence:

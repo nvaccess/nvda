@@ -158,7 +158,7 @@ bool VBufStorage_fieldNode_t::matchAttributes(const std::vector<std::wstring>& a
 	for (vector<wstring>::const_iterator attribName = attribs.begin(); attribName != attribs.end(); ++attribName) {
 		outputEscapedAttribute(regexpInput, *attribName);
 		regexpInput << L":";
-		// A given attribute can start with a parent prefix, which means the parent node will be checked for that attribute instead of this one. 
+		// A given attribute can start with a parent prefix, which means the parent node will be checked for that attribute instead of this one.
 		// E.g. "parent::IAccessible2::role".
 		// Although we will only redirect  the attribute to the parent if the parent prefix is found at the very beginning of the string (I.e. index 0),
 		// an attribute like "blah_grandparent::color" is not an error and will be processed literally like any other attribute.
@@ -291,7 +291,7 @@ void VBufStorage_fieldNode_t::getTextInRange(int startOffset, int endOffset, std
 		childLength=child->length;
 		nhAssert(childLength>=0); //length can't be negative
 		childEnd+=childLength;
-		LOG_DEBUG(L"child with offsets of "<<childStart<<L" and "<<childEnd); 
+		LOG_DEBUG(L"child with offsets of "<<childStart<<L" and "<<childEnd);
 		if(childEnd>startOffset&&endOffset>childStart&&(!filter||filter(child))) {
 			LOG_DEBUG(L"child offsets overlap requested offsets");
 			child->getTextInRange(max(startOffset,childStart)-childStart,min(endOffset-childStart,childLength),text,useMarkup,filter);
@@ -370,8 +370,8 @@ void VBufStorage_controlFieldNode_t::disassociateFromBuffer(VBufStorage_buffer_t
 	this->VBufStorage_fieldNode_t::disassociateFromBuffer(buffer);
 }
 
-VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlockArg): VBufStorage_fieldNode_t(0,isBlockArg), identifier(docHandle,ID) {  
-	LOG_DEBUG(L"controlFieldNode initialization at "<<this<<L", with docHandle of "<<identifier.docHandle<<L" and ID of "<<identifier.ID); 
+VBufStorage_controlFieldNode_t::VBufStorage_controlFieldNode_t(int docHandle, int ID, bool isBlockArg): VBufStorage_fieldNode_t(0,isBlockArg), identifier(docHandle,ID) {
+	LOG_DEBUG(L"controlFieldNode initialization at "<<this<<L", with docHandle of "<<identifier.docHandle<<L" and ID of "<<identifier.ID);
 }
 
 bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
@@ -382,7 +382,7 @@ bool VBufStorage_controlFieldNode_t::getIdentifier(int* docHandle, int* ID) {
 
 std::wstring VBufStorage_controlFieldNode_t::getDebugInfo() const {
 	std::wostringstream s;
-	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID<<L", requiresParentUpdate "<<requiresParentUpdate<<L", allowReuseInAncestorUpdate "<<allowReuseInAncestorUpdate<<L", denyReuseIfPreviousSiblingsChanged "<<denyReuseIfPreviousSiblingsChanged<<L", alwaysRerenderChildren "<<alwaysRerenderChildren;  
+	s<<L"control "<<this->VBufStorage_fieldNode_t::getDebugInfo()<<L", docHandle "<<identifier.docHandle<<L", ID is "<<identifier.ID<<L", requiresParentUpdate "<<requiresParentUpdate<<L", allowReuseInAncestorUpdate "<<allowReuseInAncestorUpdate<<L", denyReuseIfPreviousSiblingsChanged "<<denyReuseIfPreviousSiblingsChanged<<L", alwaysRerenderChildren "<<alwaysRerenderChildren;
 	return s.str();
 }
 
@@ -477,7 +477,7 @@ bool VBufStorage_buffer_t::insertNode(VBufStorage_controlFieldNode_t* parent, VB
 	if(parent==NULL) {
 		LOG_DEBUG(L"making node root node of buffer");
 		this->rootNode=node;
-	} else { 
+	} else {
 		if(previous==NULL) {
 			LOG_DEBUG(L"Making node first child of parent");
 			parent->firstChild=node;
@@ -526,7 +526,7 @@ void VBufStorage_buffer_t::deleteNode(VBufStorage_fieldNode_t* node) {
 void VBufStorage_buffer_t::deleteSubtree(VBufStorage_fieldNode_t* node) {
 	nhAssert(node); //node can't be null
 	LOG_DEBUG(L"deleting subtree starting at "<<node->getDebugInfo());
-	//Save off next before deleting the subtree 
+	//Save off next before deleting the subtree
 	for(VBufStorage_fieldNode_t* child=node->firstChild;child!=NULL;) {
 		VBufStorage_fieldNode_t* next=child->next;
 		deleteSubtree(child);
@@ -565,7 +565,7 @@ VBufStorage_controlFieldNode_t*  VBufStorage_buffer_t::addControlFieldNode(VBufS
 	}
 	LOG_DEBUG(L"Add controlFieldNode using parent at "<<parent<<L", previous at "<<previous<<L", node at "<<controlFieldNode);
 	if(controlFieldNodesByIdentifier.count(controlFieldNode->identifier)>0) {
-		LOG_DEBUGWARNING(L"Buffer at "<<this<<L" already has a node with the same identifier as node "<<controlFieldNode->getDebugInfo()<<L". Returning NULL"); 
+		LOG_DEBUGWARNING(L"Buffer at "<<this<<L" already has a node with the same identifier as node "<<controlFieldNode->getDebugInfo()<<L". Returning NULL");
 		return NULL;
 	}
 	LOG_DEBUG(L"Inserting controlFieldNode in to buffer");
@@ -589,14 +589,14 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 	bool needsStrip=false;
 	size_t i;
 	for(i=0;i<textLength;++i) {
-		if(!isPrivateCharacter(text[i])) { 
+		if(!isPrivateCharacter(text[i])) {
 			break;
 		}
 		needsStrip=true;
 	}
 	size_t subStart=i;
 	for(i=0;i<textLength;++i) {
-		if(!isPrivateCharacter(text[(textLength-1)-i])) { 
+		if(!isPrivateCharacter(text[(textLength-1)-i])) {
 			break;
 		}
 		needsStrip=true;
@@ -642,7 +642,7 @@ VBufStorage_textFieldNode_t*  VBufStorage_buffer_t::addTextFieldNode(VBufStorage
 bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStorage_buffer_t*>& m) {
 	VBufStorage_controlFieldNode_t* parent=NULL;
 	VBufStorage_fieldNode_t* previous=NULL;
-	//Using the current selection start, record a list of ancestor fields by their identifier, 
+	//Using the current selection start, record a list of ancestor fields by their identifier,
 	//and a relative offset of the selection start to those fields, so that the selection can be corrected after the replacement.
 	VBufStorage_relativeSelection_t identifierList;
 	if(this->getTextLength()>0) {
@@ -657,7 +657,7 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 	// For each buffer in the map,
 	// Reverse iterate over all reference nodes, replacing them with the existing nodes in the original buffer they point to.
 	// We must iterate in reverse as new nodes are always inserted using parent and previous as the location,
-	// iterating forward would cause a future reference node's previous to be come invalid as it had been replaced. 
+	// iterating forward would cause a future reference node's previous to be come invalid as it had been replaced.
 	for(auto subtreeEntryIter=m.cbegin();subtreeEntryIter!=m.cend();++subtreeEntryIter) {
 		auto node=subtreeEntryIter->first;
 		auto buffer=subtreeEntryIter->second;
@@ -739,8 +739,8 @@ bool VBufStorage_buffer_t::replaceSubtrees(map<VBufStorage_fieldNode_t*,VBufStor
 		}
 	}
 	m.clear();
-	//Find the deepest field the selection started in that still exists, 
-	//and correct the selection so its still positioned accurately relative to that field. 
+	//Find the deepest field the selection started in that still exists,
+	//and correct the selection so its still positioned accurately relative to that field.
 	if(!identifierList.empty()) {
 		VBufStorage_controlFieldNode_t* lastAncestorNode=NULL;
 		int lastRelativeSelectionStart=0;
@@ -902,7 +902,7 @@ VBufStorage_controlFieldNode_t* VBufStorage_buffer_t::locateControlFieldNodeAtOf
 	if(nodeEndOffset) *nodeEndOffset=endOffset;
 	if(docHandle) *docHandle=controlFieldNode->identifier.docHandle;
 	if(ID) *ID=controlFieldNode->identifier.ID;
-	LOG_DEBUG(L"Found node, returning "<<controlFieldNode->getDebugInfo()); 
+	LOG_DEBUG(L"Found node, returning "<<controlFieldNode->getDebugInfo());
 	return controlFieldNode;
 	}
 
@@ -1031,7 +1031,7 @@ VBufStorage_fieldNode_t* VBufStorage_buffer_t::findNodeByAttributes(int offset, 
 			bufferEnd=bufferStart+node->length;
 			LOG_DEBUG(L"start is now "<<bufferStart<<L" and end is now "<<bufferEnd);
 			if(node->length>0&&!(node->isHidden)&&node->matchAttributes(attribsList,regexObj)) {
-				//Skip first containing parent match or parent match where offset hasn't changed 
+				//Skip first containing parent match or parent match where offset hasn't changed
 				if((bufferStart==offset)||(!skippedFirstMatch&&bufferStart<offset&&bufferEnd>offset)) {
 					LOG_DEBUG(L"skipping initial parent");
 					skippedFirstMatch=true;

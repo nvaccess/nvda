@@ -251,3 +251,22 @@ class OutputMode(DisplayStringIntFlag):
 			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
 		}
+
+
+class ParagraphStartMarker(DisplayStringStrEnum):
+	NONE = ""
+	SPACE = " "
+	PILCROW = "¶"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for a paragraph start marker.
+			self.NONE: pgettext("paragraphMarker", "No paragraph start marker (default)"),
+			# Translators: This is a label for a paragraph start marker.
+			self.SPACE: pgettext("paragraphMarker", "Double space (  )"),
+			# Translators: This is a label for a paragraph start marker.
+			# Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
+		}

@@ -369,7 +369,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo, self).__init__()
-		self._obj = weakref.ref(obj) if type(obj) != weakref.ProxyType else obj
+		self._obj = weakref.ref(obj) if type(obj) is not weakref.ProxyType else obj
 		#: The position with which this instance was constructed.
 		self.basePosition = position
 
@@ -711,6 +711,10 @@ class TextInfo(baseObject.AutoPropertyObject):
 		"""
 		raise NotImplementedError
 
+	def _getTextForCodepointMovement(self) -> str:
+		"""Gets the text as used in moveToCodepointOffset."""
+		return self.text
+
 	def moveToCodepointOffset(
 		self,
 		codepointOffset: int,
@@ -803,7 +807,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			we reduce the count of characters in order to make sure
 			the algorithm makes some progress on each iteration.
 		"""
-		text = self.text
+		text = self._getTextForCodepointMovement()
 		if codepointOffset < 0 or codepointOffset > len(text):
 			raise ValueError
 		if codepointOffset == 0 or codepointOffset == len(text):
@@ -845,7 +849,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 					moveCharacters = codepointOffsetLeft
 				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="end")
 				lastMove = moveCharacters
-				tmpText = tmpInfo.text
+				tmpText = tmpInfo._getTextForCodepointMovement()
 				actualCodepointOffset = len(tmpText)
 				if not text.startswith(tmpText):
 					raise RuntimeError(
@@ -865,7 +869,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 					moveCharacters = -codepointOffsetRight
 				code = tmpInfo.move(UNIT_CHARACTER, moveCharacters, endPoint="start")
 				lastMove = moveCharacters
-				tmpText = tmpInfo.text
+				tmpText = tmpInfo._getTextForCodepointMovement()
 				actualCodepointOffset = totalCodepointOffset - len(tmpText)
 				if not text.endswith(tmpText):
 					raise RuntimeError(

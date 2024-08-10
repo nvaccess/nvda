@@ -577,7 +577,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for toggle report font attributes command.
-			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off.",
 		),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
@@ -3157,7 +3157,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		message = ""
 		mod = focus.appModule
-		if isinstance(mod, appModuleHandler.AppModule) and type(mod) != appModuleHandler.AppModule:
+		if isinstance(mod, appModuleHandler.AppModule) and type(mod) is not appModuleHandler.AppModule:
 			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
 			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
@@ -3592,6 +3592,22 @@ class GlobalCommands(ScriptableObject):
 			config.conf["braille"]["showCursor"] = True
 		# To hide or show cursor immediately on braille line
 		braille.handler._updateDisplay()
+		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for speak on routing command.
+		description=_("Toggles speaking the character under the cursor when routing cursor in text"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_braille_toggleSpeakOnRouting(self, gesture):
+		state = config.conf["braille"]["speakOnRouting"] = not config.conf["braille"]["speakOnRouting"]
+		if state:
+			# Translators: The message announced when toggling on speaking character when routing.
+			state = _("Enabled speak character when routing cursor in text")
+		else:
+			# Translators: The message announced when toggling off speaking character when routing.
+			state = _("Disabled speak character when routing cursor in text")
 		ui.message(state)
 
 	@script(

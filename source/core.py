@@ -294,6 +294,7 @@ def resetConfiguration(factoryDefaults=False):
 	import brailleInput
 	import brailleTables
 	import speech
+	import characterProcessing
 	import vision
 	import inputCore
 	import bdDetect
@@ -311,6 +312,8 @@ def resetConfiguration(factoryDefaults=False):
 	brailleTables.terminate()
 	log.debug("terminating speech")
 	speech.terminate()
+	log.debug("terminating character processing")
+	characterProcessing.terminate()
 	log.debug("terminating tones")
 	tones.terminate()
 	log.debug("terminating sound split")
@@ -346,8 +349,11 @@ def resetConfiguration(factoryDefaults=False):
 	# Tones
 	tones.initialize()
 	# Sound split
-	log.debug("initializing sound split")
+	log.debug("initializing audio")
 	audio.initialize()
+	# Character processing
+	log.debug("initializing character processing")
+	characterProcessing.initialize()
 	# Speech
 	log.debug("initializing speech")
 	speech.initialize()
@@ -744,6 +750,10 @@ def main():
 
 	log.debug("Speech Dictionary processing")
 	speechDictHandler.initialize()
+	import characterProcessing
+
+	log.debug("Character processing")
+	characterProcessing.initialize()
 	import speech
 
 	log.debug("Initializing speech")
@@ -1047,6 +1057,7 @@ def main():
 	_terminate(braille)
 	_terminate(brailleTables)
 	_terminate(speech)
+	_terminate(characterProcessing)
 	_terminate(bdDetect)
 	_terminate(hwIo)
 	_terminate(addonHandler)
@@ -1073,10 +1084,21 @@ def main():
 			pass
 	# We cannot terminate nvwave until after we perform nvwave.playWaveFile
 	_terminate(nvwave)
-	# #5189: Destroy the message window as late as possible
+	_terminate(NVDAHelper)
+	# Log and join any remaining non-daemon threads here,
+	# before releasing our mutex and exiting.
+	# In a perfect world there should be none.
+	# If we don't do this, the NvDA process may stay alive after the mutex is released,
+	# which would cause issues for rpc / nvdaHelper.
+	# See issue #16933.
+	for thr in threading.enumerate():
+		if not thr.daemon and thr is not threading.current_thread():
+			log.info(f"Waiting on {thr}...")
+			thr.join()
+			log.info(f"Thread {thr.name} complete")
+	# #5189: Destroy the message window as the very last action
 	# so new instances of NVDA can find this one even if it freezes during exit.
 	messageWindow.destroy()
-	_terminate(NVDAHelper)
 	log.debug("core done")
 
 

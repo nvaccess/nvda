@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-17 08:37+0000\n"
-"PO-Revision-Date: 2024-07-18 02:26\n"
+"POT-Creation-Date: 2024-07-31 02:46+0000\n"
+"PO-Revision-Date: 2024-08-05 01:02\n"
 "Last-Translator: \n"
 "Language-Team: Vietnamese\n"
 "Language: vi_VN\n"
@@ -1317,7 +1317,7 @@ msgstr "Iceland chữ nổi máy tính 8 chấm"
 #. braille settings dialog.
 #: brailleTables.py:397
 msgid "International Phonetic Alphabet"
-msgstr ""
+msgstr "Bảng chữ cái ngữ âm quốc tế"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -7884,7 +7884,7 @@ msgstr "&Xem các add-on..."
 #: updateCheck.py:412
 #, python-brace-format
 msgid "&Update to NVDA {version}"
-msgstr ""
+msgstr "&Cập nhật NVDA {version}"
 
 #. Translators: The label of a button to re-download a pending NVDA update.
 #: updateCheck.py:422
@@ -7918,12 +7918,12 @@ msgstr "Đó&ng"
 #: updateCheck.py:502
 #, python-brace-format
 msgid "Update to NVDA version {version} is ready to be applied.\n"
-msgstr ""
+msgstr "Cập nhật cho NVDA {version} đã sẵn sàng để áp dụng.\n"
 
 #. Translators: The label of a button to update NVDA.
 #: updateCheck.py:525
 msgid "&Update now"
-msgstr ""
+msgstr "&Cập nhật bây giờ"
 
 #. Translators: The label of a button to postpone an NVDA update.
 #: updateCheck.py:538
@@ -8338,7 +8338,7 @@ msgstr "Yêu cầu một bản cập nhật của NVDA. NVDA phiên bản {nvdaV
 #, python-brace-format
 msgctxt "addonStore"
 msgid "An updated version of this add-on is required. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
-msgstr ""
+msgstr "Yêu cầu một bản cập nhật của add-on này. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. You can enable this add-on at your own risk. "
 
 #. Translators: A message indicating that some add-ons will be disabled
 #. unless reviewed before installation.
@@ -9126,13 +9126,13 @@ msgstr "{firstAddress} qua {lastAddress}"
 #: appModules\soffice.py:379
 #, python-brace-format
 msgid "{textAttribute} on"
-msgstr ""
+msgstr "{textAttribute} bật"
 
 #. Translators: a message when toggling formatting (e.g. bold, italic) in LibreOffice
 #: appModules\soffice.py:382
 #, python-brace-format
 msgid "{textAttribute} off"
-msgstr ""
+msgstr "{textAttribute} tắt"
 
 #. Translators: a measurement in inches
 #: appModules\soffice.py:403
@@ -9227,17 +9227,17 @@ msgstr "Chia âm thanh đã tắt"
 #: audio\soundSplit.py:45
 msgctxt "SoundSplit"
 msgid "NVDA in both channels and applications in both channels"
-msgstr ""
+msgstr "NVDA ở hai kênh và ứng dụng ở hai kênh"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:48
 msgid "NVDA on the left and applications on the right"
-msgstr ""
+msgstr "NVDA bên trái và các ứng dụng bên phải"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:50
 msgid "NVDA on the left and applications in both channels"
-msgstr ""
+msgstr "NVDA bên trái và các ứng dụng ở hai kênh"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:52
@@ -9252,12 +9252,12 @@ msgstr "NVDA ở bên phải và các ứng dụng ở hai kênh"
 #. Translators: Sound split state
 #: audio\soundSplit.py:56
 msgid "NVDA in both channels and applications on the left"
-msgstr ""
+msgstr "NVDA ở hai kênh và ứng dụng ở bên trái"
 
 #. Translators: Sound split state
 #: audio\soundSplit.py:58
 msgid "NVDA in both channels and applications on the right"
-msgstr ""
+msgstr "NVDA ở hai kênh và ứng dụng ở bên phải"
 
 #. Translators: error message when wasapi is turned off.
 #: audio\soundSplit.py:213
@@ -9453,7 +9453,7 @@ msgstr "&Lướt để đưa đến ô"
 #: config\configFlags.py:64 config\configFlags.py:221
 #: config\featureFlagEnums.py:49
 msgid "Disabled"
-msgstr "Đã tắt"
+msgstr "Tắt"
 
 #. Translators: One of the show states of braille messages
 #. (the timeout mode shows messages for the specific time).
@@ -9487,12 +9487,12 @@ msgstr "đến con trỏ duyệt"
 #. Translators: The label for a braille mode
 #: config\configFlags.py:113
 msgid "follow cursors"
-msgstr ""
+msgstr "đi theo các con trỏ"
 
 #. Translators: The label for a braille mode
 #: config\configFlags.py:115
 msgid "display speech output"
-msgstr ""
+msgstr "hiện đầu ra giọng đọc"
 
 #. Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
 #: config\configFlags.py:136
@@ -9561,7 +9561,7 @@ msgstr "Cả Màu và Kiểu Dáng"
 #. It will notify the user when updates are available.
 #: config\configFlags.py:218
 msgid "Notify"
-msgstr ""
+msgstr "Thông báo"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:51
@@ -11370,7 +11370,7 @@ msgstr "Hành động không sẵn sàng trong phiên bản tạm thời của N
 #. Translators: Reported when trying to toggle an unsupported setting in speech output mode.
 #: gui\blockAction.py:57
 msgid "Action unavailable while the braille mode is set to speech output"
-msgstr ""
+msgstr "Hành động không sẵn sàng trong khi chế độ chữ nổi được đặt là đầu ra giọng đọc"
 
 #. Translators: The title of the Configuration Profiles dialog.
 #: gui\configProfiles.py:36
@@ -11841,26 +11841,26 @@ msgstr "&Tiếp tục cài đặt (không khuyến khích)"
 #: gui\installerGui.py:365
 #, python-brace-format
 msgid "A portable copy already exists in the directory '{portableDirectory}'. Do you want to update it?"
-msgstr ""
+msgstr "Đã có một bản chạy trực tiếp tại đường dẫn '{portableDirectory}'. Bạn có muốn cập nhật nó không?"
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already has a portable copy in the Create Portable NVDA dialog.
 #: gui\installerGui.py:370
 msgid "Portable Copy Exists"
-msgstr ""
+msgstr "Có bản chạy trực tiếp"
 
 #. Translators: The message displayed when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
 #: gui\installerGui.py:377
 #, python-brace-format
 msgid "The specified directory '{portableDirectory}' is not empty. Proceeding will delete and replace existing files in the directory. Do you want to overwrite the contents of this folder? "
-msgstr ""
+msgstr "Đường dẫn '{portableDirectory}' không phải là thư mục rỗng. Việc tiếp tục sẽ xóa và thay thế các tập tin hiện có trong thư mục. Bạn có muốn ghi đè lên nội dung của thư mục này không? "
 
 #. Translators: The title of a dialog presented when the user has specified a destination directory
 #. that already exists in the Create Portable NVDA dialog.
 #: gui\installerGui.py:383
 msgid "Directory Exists"
-msgstr ""
+msgstr "Thư mục tồn tại"
 
 #. Translators: The title of the Create Portable NVDA dialog.
 #: gui\installerGui.py:411
@@ -11887,12 +11887,12 @@ msgstr "Chọn thư mục..."
 #. destination directory when creating a portable copy of NVDA.
 #: gui\installerGui.py:429
 msgid "Select portable directory"
-msgstr ""
+msgstr "Chọn đường dẫn cho bản chạy trực tiếp"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui\installerGui.py:437
 msgid "Create a &new folder for the portable copy"
-msgstr ""
+msgstr "Tạo thư mục &mới cho bản chạy trực tiếp"
 
 #. Translators: The label of a checkbox option in the Create Portable NVDA dialog.
 #: gui\installerGui.py:442
@@ -11919,7 +11919,7 @@ msgstr "Vui lòng nhập đường dẫn chính xác để tạo bản chạy tr
 #. Translators: The message displayed when the user cancels the creation of a portable copy of NVDA.
 #: gui\installerGui.py:535
 msgid "Portable copy creation cancelled."
-msgstr ""
+msgstr "Đã hủy bỏ việc tạo bản chạy trực tiếp."
 
 #. Translators: The title of the dialog presented while a portable copy of NVDA is being created.
 #: gui\installerGui.py:540
@@ -12005,12 +12005,14 @@ msgstr "Mặc định ({})"
 msgid "{message}\n\n"
 "Category: \"{category}\"\n"
 "Option: \"{option}\""
-msgstr ""
+msgstr "{message}\n\n"
+"Category: \"{category}\"\n"
+"Tùy chọn: \"{option}\""
 
 #. Translators: The title of the message box when a setting's configuration is not valid.
 #: gui\settingsDialogs.py:437
 msgid "Invalid configuration"
-msgstr ""
+msgstr "Lỗi cài đặt cấu hình"
 
 #. Translators: The label for the list of categories in a multi category settings dialog.
 #: gui\settingsDialogs.py:545
@@ -12192,7 +12194,7 @@ msgstr "Khởi động lại &sau"
 #. Translators: A label for the synthesizer on the speech panel.
 #: gui\settingsDialogs.py:1060
 msgid "Synthesizer"
-msgstr ""
+msgstr "Bộ đọc"
 
 #. Translators: This is the label for the button used to change synthesizer,
 #. it appears in the context of a synthesizer group on the speech settings panel.
@@ -12247,13 +12249,13 @@ msgstr "Sử dụng giọng đọc của ngôn ngữ để xử lý ký hiệu v
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:1595 gui\settingsDialogs.py:4175
 msgid "Unicode normali&zation"
-msgstr ""
+msgstr "&Chuẩn hóa Unicode"
 
 #. Translators: This is the label for a checkbox in the
 #. speech settings panel.
 #: gui\settingsDialogs.py:1606
 msgid "Report '&Normalized' when navigating by character"
-msgstr ""
+msgstr "Thông báo 'Đã &chuẩn hóa' khi điều hướng theo kí tự"
 
 #. Translators: This is the label for a checkbox in the
 #. voice settings panel (if checked, data from the unicode CLDR will be used
@@ -12310,7 +12312,7 @@ msgstr "Phải chọn tối thiểu hai chế độ đọc."
 #. be available in Speech Settings, but without keyboard accelerator (& character) nor final colon.
 #: gui\settingsDialogs.py:1792
 msgid "Modes available in the Cycle speech mode command"
-msgstr ""
+msgstr "Các chế độ hiện có trong lệnh chuyển chế độ đọc"
 
 #. Translators: This is the label for the keyboard settings panel.
 #: gui\settingsDialogs.py:1801
@@ -12393,7 +12395,7 @@ msgstr "Cần sử dụng ít nhất 1 phím làm phím bổ trợ NVDA."
 #. keys in Keyboard Settings, but without keyboard accelerator (& character).
 #: gui\settingsDialogs.py:1911
 msgid "Select NVDA Modifier Keys"
-msgstr ""
+msgstr "Chọn các phím bổ trợ NVDA"
 
 #. Translators: This is the label for a checkbox in the
 #. mouse settings panel.
@@ -12889,7 +12891,7 @@ msgstr "&Khung"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2636
 msgid "&Figures and captions"
-msgstr ""
+msgstr "&Nhóm hình ảnh và phụ đề"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -12963,7 +12965,7 @@ msgstr "&Chế độ chia âm thanh:"
 #. to change how long the audio device is kept awake after speech
 #: gui\settingsDialogs.py:2806
 msgid "Time to &keep audio device awake after speech (seconds)"
-msgstr ""
+msgstr "Thời gian &giữ cho thiết bị âm thanh hoạt động sau khi đọc (giây)"
 
 #. Translators: Label of the list where user can select sound split modes that will be available.
 #: gui\settingsDialogs.py:2824
@@ -12989,7 +12991,7 @@ msgstr "Cửa hàng Add-on"
 #. Translators: This is a label for the automatic updates combo box in the Add-on Store Settings dialog.
 #: gui\settingsDialogs.py:2905
 msgid "&Update notifications:"
-msgstr ""
+msgstr "Thông báo &cập nhật:"
 
 #. Translators: This is the label for the touch interaction settings panel.
 #: gui\settingsDialogs.py:2924
@@ -13342,13 +13344,13 @@ msgstr "Có"
 #. advanced settings panel.
 #: gui\settingsDialogs.py:3460
 msgid "Regular expression for text paragraph navigation"
-msgstr ""
+msgstr "Biểu thức phổ thông để điều hướng văn bản"
 
 #. Translators: Message shown when invalid text paragraph regex entered
 #: gui\settingsDialogs.py:3480
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
-msgstr ""
+msgstr "Không thể biên dịch biểu thức phổ thông điều hướng văn bản: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
 #: gui\settingsDialogs.py:3595
@@ -13379,7 +13381,7 @@ msgstr "Khôi phục về cài đặt mặc định"
 #. Translators: A label for the braille display on the braille panel.
 #: gui\settingsDialogs.py:3689
 msgid "Braille display"
-msgstr ""
+msgstr "Màn hình chữ nổi"
 
 #. Translators: This is the label for the braille display selection dialog.
 #: gui\settingsDialogs.py:3758
@@ -13427,7 +13429,7 @@ msgstr "bảng mã đầu &vào:"
 #. Translators: The label for a setting in braille settings to select which braille mode to use
 #: gui\settingsDialogs.py:3958
 msgid "Braille mode:"
-msgstr ""
+msgstr "Chế độ chữ nổi:"
 
 #. Translators: The label for a setting in braille settings to expand the current word under cursor to computer braille.
 #: gui\settingsDialogs.py:3974
@@ -13791,7 +13793,11 @@ msgid "Most commands for controlling NVDA require you to hold down the NVDA key 
 "You can also configure NVDA to use the CapsLock as the NVDA key.\n"
 "Press NVDA+n at any time to activate the NVDA menu.\n"
 "From this menu, you can configure NVDA, get help, and access other NVDA functions."
-msgstr ""
+msgstr "Hầu hết các phím lệnh để điều khiển NVDA yêu cầu bạn giữ phím NVDA trong khi bấm các phím khác.\n"
+"Mặc định, phím Insert và phím Insert bàn phím số được chọn là phím NVDA.\n"
+"Bạn cũng có thể chọn phím khóa Hoa (CapsLock) làm phím NVDA.\n"
+"bấm NVDA + N bất cứ lúc nào để mở trình đơn của NVDA..\n"
+"Từ trình đơn này, bạn có thể cấu hình cho NVDA, xem trợ giúp hay truy cập các chức năng khác của NVDA."
 
 #. Translators: The title of the Welcome dialog when user starts NVDA for the first time.
 #: gui\startupDialogs.py:47
@@ -13973,13 +13979,13 @@ msgstr "Phiên bản đã cài đặt:"
 #: gui\addonStoreGui\controls\details.py:272
 msgctxt "addonStore"
 msgid "Minimum NVDA version:"
-msgstr ""
+msgstr "Bản NVDA thấp nhất:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:278
 msgctxt "addonStore"
 msgid "Last tested NVDA version:"
-msgstr ""
+msgstr "Bản NVDA thử nghiệm sau cùng:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:285
@@ -14076,7 +14082,7 @@ msgstr "Cảnh báo: việc cài đặt add-on có thể cho kết quả là h�
 #: gui\addonStoreGui\controls\messageDialogs.py:173
 msgctxt "addonStore"
 msgid "Install add-on"
-msgstr ""
+msgstr "Cài đặt add-on"
 
 #. Translators: Presented when attempting to remove the selected add-on.
 #. {addon} is replaced with the add-on name.
@@ -14090,7 +14096,7 @@ msgstr "Bạn có chắc chắn muốn xóa Add-on {addon} ra khỏi NVDA không
 #: gui\addonStoreGui\controls\messageDialogs.py:140
 msgctxt "addonStore"
 msgid "Remove add-on"
-msgstr ""
+msgstr "Gỡ add-on"
 
 #. Translators: The message displayed when installing an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -14099,7 +14105,8 @@ msgstr ""
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr ""
+msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầuthis add-on phải được thử nghiệm với NVDA {nvdaVersion} hay cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
+"Vẫn tiếp tục cài đặt? "
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
 #. because the add-on is too old for the running version of NVDA.
@@ -14108,13 +14115,14 @@ msgstr ""
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr ""
+msgstr "Cảnh báo: add-on không tương thích: {name} {version}. Hãy kiểm tra và cập nhật add-on này nếu có thể. Add-on này đã được thử nghiệm lần cuối với NVDA {lastTestedNVDAVersion}. NVDA yêu cầuthis add-on phải được thử nghiệm với NVDA {nvdaVersion} hay cao hơn. Việc cài đặt có thể gây ra hoạt động không ổn định trong NVDA.\n"
+"Vẫn tiếp tục bật lên? "
 
 #. Translators: The title of a dialog presented when an error occurs.
 #: gui\addonStoreGui\controls\messageDialogs.py:206
 msgctxt "addonStore"
 msgid "Enable add-on"
-msgstr ""
+msgstr "Bật add-on"
 
 #. Translators: The message displayed when installing an add-on package is prohibited,
 #. because it requires a later version of NVDA than is currently installed.
@@ -14127,7 +14135,7 @@ msgstr "Quá trình cài đặt của {summary} {version} đã bị chặn. Phi�
 #: gui\addonStoreGui\controls\messageDialogs.py:233
 msgctxt "addonStore"
 msgid "Add-on installation failure"
-msgstr ""
+msgstr "Lỗi cài đặt add-on"
 
 #. Translators: A message asking the user if they really wish to install an addon.
 #: gui\addonStoreGui\controls\messageDialogs.py:245
@@ -14142,7 +14150,7 @@ msgstr "Bạn có muốn cài đặt add-on này không? Chỉ cài các add-on 
 #: gui\addonStoreGui\controls\messageDialogs.py:256
 msgctxt "addonStore"
 msgid "Add-on Installation"
-msgstr ""
+msgstr "Cài Đặt Add-on"
 
 #. Translators: message shown in the Addon Information dialog.
 #: gui\addonStoreGui\controls\messageDialogs.py:268
@@ -14222,19 +14230,19 @@ msgstr "Đồ&ng ý"
 #: gui\addonStoreGui\controls\messageDialogs.py:372
 msgctxt "addonStore"
 msgid "Add-on updates available"
-msgstr ""
+msgstr "Có bản cập nhật add-on"
 
 #. Translators: Message displayed when updates are available for some installed add-ons.
 #: gui\addonStoreGui\controls\messageDialogs.py:401
 msgctxt "addonStore"
 msgid "Updates are available for some of your installed add-ons. "
-msgstr ""
+msgstr "Có bản cập nhật cho một trong số các add-on đã cài đặt. "
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:414
 msgctxt "addonStore"
 msgid "Open Add-on &Store"
-msgstr ""
+msgstr "Mở &Cửa Hàng Add-on"
 
 #. Translators: The label of a button in a dialog
 #: gui\addonStoreGui\controls\messageDialogs.py:419
@@ -14246,13 +14254,13 @@ msgstr "&Cập nhật tất cả"
 #: gui\addonStoreGui\controls\messageDialogs.py:423
 msgctxt "addonStore"
 msgid "&Close"
-msgstr ""
+msgstr "Đó&ng"
 
 #. Translators: the label for the addons list in the updatable addons dialog.
 #: gui\addonStoreGui\controls\messageDialogs.py:428
 msgctxt "addonStore"
 msgid "Updatable Add-ons"
-msgstr ""
+msgstr "Các add-on có bản cập nhật"
 
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains names of addons.
@@ -14299,7 +14307,7 @@ msgstr "Trạng thái"
 #: gui\addonStoreGui\controls\messageDialogs.py:477
 msgctxt "addonStore"
 msgid "Updating add-ons..."
-msgstr ""
+msgstr "Đang cập nhật add-on..."
 
 #. Translators: Message shown prior to installing add-ons when closing the add-on store dialog
 #. The placeholder {} will be replaced with the number of add-ons to be installed
@@ -16582,7 +16590,7 @@ msgstr "Phân cách dòng 1.5"
 #: NVDAObjects\window\winword.py:1633
 #, python-brace-format
 msgid "{val:g} pt space before paragraph"
-msgstr ""
+msgstr "{val:g} pt khoảng trắng trước đoạn"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:96
@@ -16619,7 +16627,7 @@ msgstr "%s hoa"
 #: speech\speech.py:374
 #, python-format
 msgid "%s normalized"
-msgstr ""
+msgstr "%s đã chuẩn hóa"
 
 #. Translators: This is spoken when the given line has no indentation.
 #: speech\speech.py:996
