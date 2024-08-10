@@ -96,7 +96,7 @@ def _updateAppsVolumeImpl(
 			volumeAndMute=VolumeAndMute(
 				volume=volume,
 				mute=muted,
-			)
+			),
 		)
 		runTerminators = False
 	if _activeCallback is not None:
@@ -164,12 +164,13 @@ def _toggleAppsVolumeState():
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	ui.message(state.displayString)
 
+
 def _toggleAppsVolumeMute():
 	if not nvwave.usingWasapiWavePlayer():
 		message = _(
 			# Translators: error message when wasapi is turned off.
 			"Other applications' mute status cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
 		)
 		ui.message(message)
 		return
