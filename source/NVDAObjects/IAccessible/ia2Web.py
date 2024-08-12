@@ -213,7 +213,29 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
+		if self.isInternalLink:
+			states.add(controlTypes.State.INTERNAL_LINK)
 		return states
+
+	@property
+	def isInternalLink(self) -> bool:
+		if self.role != controlTypes.Role.LINK:
+			return False
+		if (
+			not hasattr(self, "treeInterceptor")
+			or self.treeInterceptor is None
+			or not self.treeInterceptor.documentConstantIdentifier
+		):
+			return False
+		documentConstantIdentifier = self.treeInterceptor.documentConstantIdentifier
+		if documentConstantIdentifier.endswith("/"):
+			documentConstantIdentifier = documentConstantIdentifier[:-1]
+		queryParamCharPos = documentConstantIdentifier.find("?")
+		if queryParamCharPos > 0:
+			documentConstantIdentifier = documentConstantIdentifier[:queryParamCharPos]
+		if self.value.startswith(f"{documentConstantIdentifier}#"):
+			return True
+		return False
 
 	def _get_landmark(self):
 		xmlRoles = self.IA2Attributes.get("xml-roles", "").split(" ")

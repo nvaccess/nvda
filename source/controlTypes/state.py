@@ -102,6 +102,7 @@ class State(DisplayStringIntEnum):
 	HASPOPUP_GRID = setBit(48)
 	HASPOPUP_LIST = setBit(49)
 	HASPOPUP_TREE = setBit(50)
+	INTERNAL_LINK = setBit(51)
 
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
@@ -204,6 +205,9 @@ _stateLabels: Dict[State, str] = {
 	State.HASPOPUP_LIST: _("opens list"),
 	# Translators: Presented when a control has a pop-up tree.
 	State.HASPOPUP_TREE: _("opens tree"),
+	# Translators: Presented when a link destination points to the page containing the link.
+	# For example, links of a table of contents of a document with different sections.
+	State.INTERNAL_LINK: _("same page"),
 }
 
 
