@@ -12,7 +12,7 @@ If they don't work, search the action in the Command Palette or Keyboard Shortcu
 
 * Development machine: The machine with VS Code and all required extensions installed.
   * It is recommended that you use VS Code with the [Remote - Tunnels] extension installed.
-  * To remotely debug NVDA, you must have the debug extension for the language you want to debug installed--[Python Debugger] for python and [C/C++] for C++.
+  * To remotely debug NVDA, you must have the debug extension for the language you want to debug installed - [Python Debugger] for python and [C/C++] for C++.
     The [Python C++ Debugger] is recommended for debugging Python and C++ simultaneously.
   * Consider using the pre-configured NVDA VS Code workspace, which recommends all required extensions, and has other necessary settings configured.
   * Alternatively, you can use Visual Studio Code for the Web to debug the remote copy of NVDA in a web browser if you wish.
