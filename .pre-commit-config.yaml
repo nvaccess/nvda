@@ -27,7 +27,7 @@ repos:
     - id: check-ast
       # File uses encoding not supported in Linux
       exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
-    # Checks for filenames that will conflict on case insensative filesystems (most windows filesystems, most of the time)
+    # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
     - id: check-case-conflict
     # Checks for artifacts from resolving merge conflicts.
     - id: check-merge-conflict
