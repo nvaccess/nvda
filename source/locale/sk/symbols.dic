@@ -1,5 +1,5 @@
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2023 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
@@ -11,6 +11,8 @@ complexSymbols:
 # Phrase endings.
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -25,6 +27,7 @@ symbols:
 ? sentence ending	otáznik	all	always
 ; phrase ending	bodkočiarka	most	always
 : phrase ending	dvojbodka	most	always
+multiple .	multiple dots	all	always
 decimal point		none	always
 in-word '	apostrof	all	norep
 negative number	mínus	none	norep
@@ -41,8 +44,10 @@ negative number	mínus	none	norep
 
 # Standard punctuation/symbols
 !	výkričník	all
+！	široký výkričník	all
 "	úvodzovky	most
-\#	krížik	some
+\#	mriežka	some
+❌	krížik	some
 $	dolár	all	norep
 £	libra	all	norep
 €	euro	all	norep
@@ -63,12 +68,16 @@ $	dolár	all	norep
 ،	arabská čiarka	all	always
 -	spojovník	most	always
 .	bodka	some
+．	široká bodka	some
 /	lomka	some
 :	dvojbodka	most	norep
+：	široká dvojbodka	most	norep
 ;	bodkočiarka	most
 ؛	arabská bodkočiarka	most
+；	široká bodkočiarka	most
 ?	otáznik	all
 ؟	arabský otáznik	all
+？	široký otáznik	all
 @	zavináč	some
 [	hranatá zátvorka	most
 ]	hranatá zatvoriť	most
