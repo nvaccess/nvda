@@ -33,6 +33,8 @@ repos:
     - id: check-merge-conflict
     # Checks Python files for debug statements, such as python's breakpoint function, or those inserted by some IDEs.
     - id: debug-statements
+      # File uses encoding not supported in Linux
+      exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     # Removes trailing whitespace.
     - id: trailing-whitespace
       types_or: [python, c, c++, batch, markdown]
