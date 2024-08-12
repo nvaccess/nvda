@@ -235,6 +235,20 @@ class SymphonyText(IAccessible, EditableText):
 			return {"level": int(level)}
 		return super(SymphonyText, self).positionInfo
 
+	def _get_flowsFrom(self) -> IAccessible | None:
+		# Open Office and Libre Office only present a partial accessibility tree at any given time.
+		# In particular, flow relationships are sometimes not present.
+		# Attempt to scroll the screen to the first sibling of the current focus to force the flow relations to be updated.
+		self.parent.children[0].scrollIntoView()
+		return super()._get_flowsFrom()
+
+	def _get_flowsTo(self) -> IAccessible | None:
+		# Open Office and Libre Office only present a partial accessibility tree at any given time.
+		# In particular, flow relationships are sometimes not present.
+		# Attempt to scroll the screen to the last sibling of the current focus to force the flow relations to be updated.
+		self.parent.children[-1].scrollIntoView()
+		return super()._get_flowsTo()
+
 
 class SymphonyTableCell(IAccessible):
 	"""Silences particular states, and redundant column/row numbers"""
