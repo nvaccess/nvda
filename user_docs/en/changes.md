@@ -24,6 +24,7 @@ The available options are:
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#placeholder, @XLTechie)
 
 ### Bug Fixes
 
@@ -59,6 +60,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
 * Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#placeholder, @XLTechie)
 
 #### Deprecations
 
