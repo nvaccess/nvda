@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 
+import sys
 import os
 import contextlib
 import lxml.etree
@@ -241,7 +242,8 @@ class Result_translateXliff:
 
 
 def translateXliff(
-	xliffPath: str, skelPath: str, lang: str, pretranslatedMdPath: str, outputPath: str
+	xliffPath: str, skelPath: str, lang: str, pretranslatedMdPath: str, outputPath: str,
+	allowBadAnchors: bool=False,
 ) -> Result_translateXliff:
 	print(
 		f"Creating {lang} translated xliff file {outputPath} from {xliffPath} using {skelPath} and {pretranslatedMdPath}..."
@@ -268,6 +270,10 @@ def translateXliff(
 					raise ValueError(
 						f'Line {lineNo} of translation does not start with "{prefix}", {pretranslatedLine=}, {skelLine=}'
 					)
+				if suffix and not pretranslatedLine.endswith(suffix):
+					if allowBadAnchors and (m:= re_heading.match(pretranslatedLine)):
+						print(f"Warning: ignoring bad anchor in line {lineNo}: {pretranslatedLine}")
+						suffix = m.group(3)
 				if suffix and not pretranslatedLine.endswith(suffix):
 					raise ValueError(
 						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}'
@@ -341,13 +347,20 @@ def generateMarkdown(xliffPath: str, skeletonPath: str, outputPath: str):
 		return res
 
 
-def ensureFilesMatch(path1: str, path2: str):
+def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool=False):
 	print(f"Ensuring files {path1} and {path2} match...")
 	with contextlib.ExitStack() as stack:
 		file1 = stack.enter_context(open(path1, "r", encoding="utf8"))
 		file2 = stack.enter_context(open(path2, "r", encoding="utf8"))
 		for lineNo, (line1, line2) in enumerate(zip_longest(file1.readlines(), file2.readlines())):
-			if line1.rstrip() != line2.rstrip():
+			line1 = line1.rstrip()
+			line2 = line2.rstrip()
+			if line1 != line2:
+				if allowBadAnchors and (m1:= re_heading.match(line1)) and (m2:= re_heading.match(line2)):
+					print(f"Warning: ignoring bad anchor in headings at line {lineNo}: {line1}, {line2}") 
+					line1 = m1.group(1) + m1.group(2)
+					line2 = m2.group(1) + m2.group(2)
+			if line1 != line2:
 				raise ValueError(f"Files do not match at line {lineNo + 1}: {line1=} {line2=}")
 		print("Files match")
 
@@ -409,6 +422,54 @@ def runTests(testDir: str):
 		os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
 		os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
 	)
+
+
+def pretranslateAllPossibleLanguages(langsDir: str):
+	# This function walks through all language directories in the given directory, skipping en (English) and translates the English xlif and skel file along with the lang's pretranslated md file 
+	for langDir in os.listdir(langsDir):
+		if langDir == "en":
+			continue
+		langDirPath = os.path.join(langsDir, langDir)
+		if not os.path.isdir(langDirPath):
+			continue
+		enSkelPath = os.path.join(langsDir, "en", "userGuide.skel")
+		enXliffPath = os.path.join(langsDir, "en", "userGuide.xliff")
+		langXliffPath = os.path.join(langDirPath, "userGuide.xliff")
+		langPretranslatedMdPath = os.path.join(langDirPath, "userGuide.md")
+		if os.path.exists(langXliffPath):
+			print(f"Skipping {langDir} as the xliff file already exists")
+			continue
+		try:
+			translateXliff(
+				xliffPath=enXliffPath,
+				skelPath=enSkelPath,
+				lang=langDir,
+				pretranslatedMdPath=langPretranslatedMdPath,
+				outputPath=langXliffPath,
+				allowBadAnchors=True,
+			)
+		except Exception as e:
+			print(f"Failed to translate {langDir}: {e}")
+			continue
+		rebuiltLangMdPath = os.path.join(langDirPath, "rebuilt_userGuide.md")
+		try:
+			generateMarkdown(
+				xliffPath=langXliffPath,
+				skeletonPath=enSkelPath,
+				outputPath=rebuiltLangMdPath,
+			)
+		except Exception as e:
+			print(f"Failed to rebuild {langDir} markdown: {e}")
+			os.remove(langXliffPath)
+			continue
+		try:
+			ensureFilesMatch(rebuiltLangMdPath, langPretranslatedMdPath)
+		except Exception as e:
+			print(f"Rebuilt {langDir} markdown does not match pretranslated markdown: {e}")
+			os.remove(langXliffPath)
+			continue
+		os.remove(rebuiltLangMdPath)
+		print(f"Successfully pretranslated {langDir}")
 
 
 if __name__ == "__main__":
