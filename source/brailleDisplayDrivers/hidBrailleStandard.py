@@ -90,7 +90,8 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 
 	def __init__(self, port="auto"):
 		super().__init__()
-		self.numCells = 0
+		self.numRows = 1
+		self.numCols = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			if portType != bdDetect.DeviceType.HID:
@@ -103,16 +104,27 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				continue  # Couldn't connect.
 			if self._dev.usagePage != HID_USAGE_PAGE_BRAILLE:
 				log.debug("Not braille")
+				self._dev.close()
 				continue
 			cellValueCaps = self._findCellValueCaps()
-			if cellValueCaps:
+			if len(cellValueCaps) > 0:
+				if any(x.ReportCount != cellValueCaps[0].ReportCount for x in cellValueCaps):
+					log.warn("Found multi-line display with an irregular shape, ignoring.")
+					self._dev.close()
+					continue
+				self.numRows = len(cellValueCaps)
+				self.numCols = cellValueCaps[0].ReportCount
+				self._maxNumberOfCells = self.numCells
 				self._cellValueCaps = cellValueCaps
-				self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
-				self.numCells = self._maxNumberOfCells = cellValueCaps.ReportCount
+				if self.numRows == 1:
+					self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
+				elif self._findNumberOfCellsValueCaps():
+					log.warn("The number of braille cells usage is not supported on multi-line displays")
 				# A display responded.
 				log.info(
-					"Found display with {cells} cells connected via {type} ({port})".format(
-						cells=self.numCells,
+					"Found display with {rows}x{cells} cells connected via {type} ({port})".format(
+						rows=self.numRows,
+						cells=self.numCols,
 						type=portType,
 						port=port,
 					),
@@ -126,20 +138,17 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
 
-	def _findCellValueCaps(self) -> Optional[hidpi.HIDP_VALUE_CAPS]:
-		for valueCaps in self._dev.outputValueCaps:
-			if (
-				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
-				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
-				and valueCaps.u1.NotRange.Usage
-				in (
-					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
-					BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
-				)
-				and valueCaps.ReportCount > 0
-			):
-				return valueCaps
-		return None
+	def _findCellValueCaps(self) -> List[hidpi.HIDP_VALUE_CAPS]:
+		return [valueCaps for valueCaps in self._dev.outputValueCaps if (
+			valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
+			and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
+			and valueCaps.u1.NotRange.Usage
+			in (
+				BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
+				BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
+			)
+			and valueCaps.ReportCount > 0
+		)]
 
 	def _findNumberOfCellsValueCaps(self) -> hidpi.HIDP_VALUE_CAPS | None:
 		for valueCaps in self._dev.inputValueCaps:
@@ -226,13 +235,20 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
 		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)
-		report = hwIo.hid.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
-		report.setUsageValueArray(
-			HID_USAGE_PAGE_BRAILLE,
-			self._cellValueCaps.LinkCollection,
-			self._cellValueCaps.u1.NotRange.Usage,
-			cellBytes,
-		)
+		reportID = self._cellValueCaps[0].ReportID
+		report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
+		for valueCap in self._cellValueCaps:
+			if valueCap.ReportID != reportID:
+				self._dev.write(report.data)
+				reportID = valueCap.ReportID
+				report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
+			report.setUsageValueArray(
+				HID_USAGE_PAGE_BRAILLE,
+				valueCap.LinkCollection,
+				valueCap.u1.NotRange.Usage,
+				cellBytes[:valueCap.ReportCount],
+			)
+			cellBytes = cellBytes[valueCap.ReportCount:]
 		self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap(
