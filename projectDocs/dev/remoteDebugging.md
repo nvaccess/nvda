@@ -91,7 +91,8 @@ When you're done, it's a good idea to disconnect from the remote tunnel on your 
 3. go to the date/time script (`script_dateTime`).
    Search (`control+f`) or use the breadcrumbs view (`control+shift+.`) to browse through the symbols in the file (you can type to filter in this list).
 4. Insert a breakpoint (`f9`) in the `dateTime` script, for instance at the last line, and save the file (`control+s`).
-5. Open the Debug view (`control+shift+d`) and ensure the appropriate debug launch configuration is selected (if you are using the pre-configured NVDA VS Code workspace, this is "NVDA (Python)").
+5. Open the Debug view (`control+shift+d`) and ensure the appropriate debug launch configuration is selected.
+   If you are using the pre-configured NVDA VS Code workspace, this is "NVDA (Python)".
    Note that to get to the launch selector, you need to press `rightArrow` when focused on the "Start Debugging" button.
    The selector is not currently reachable with tab.
 6. Start debugging with the "Start Debugging" button (`f5`).
