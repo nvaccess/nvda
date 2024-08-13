@@ -1906,8 +1906,8 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 ##### Unicode normalization {#SpeechUnicodeNormalization}
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
