@@ -194,15 +194,12 @@ def generateXliff(
 		fileID = os.path.basename(mdPath)
 		if ghRepo:
 			mdUri = getRawGithubURLForPath(ghRepo, mdPath)
-			skelUri = getRawGithubURLForPath(ghRepo, skelPath)
 		else:
 			mdUri = mdPath
-			skelUri = skelPath
 		outputFile.write(
 			'<?xml version="1.0"?>\n'
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
 			f'<file id="{fileID}" original="{mdUri}">\n'
-			f'<skeleton href="{skelUri}"/>\n'
 		)
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(zip_longest(mdFile.readlines(), skelFile.readlines())):
