@@ -167,9 +167,20 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["roleTextBraille"] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
-		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
-			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
-			role = controlTypes.Role.TEXTFRAME
+		if role == controlTypes.Role.LINK:
+			if controlTypes.State.LINKED not in states:
+				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
+				role = controlTypes.Role.TEXTFRAME
+			else:
+				attrs["value"] = self.NVDAObjectAtStart.value
+				documentConstantIdentifier = self.obj.documentConstantIdentifier
+				value = attrs.get("value", "")
+				if (
+					value
+					and documentConstantIdentifier
+					and value.startswith(f"{documentConstantIdentifier}#")
+				):
+					states.add(controlTypes.State.INTERNAL_LINK)
 		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
@@ -210,6 +221,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["detailsRoles"] = set(self._normalizeDetailsRole(detailsRoles))
 			if config.conf["debugLog"]["annotations"]:
 				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
+		log.info(attrs)
 		return super()._normalizeControlField(attrs)
 
 	def _normalizeDetailsRole(self, detailsRoles: str) -> Iterable[Optional[controlTypes.Role]]:
