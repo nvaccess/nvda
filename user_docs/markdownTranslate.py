@@ -26,7 +26,7 @@ re_heading = re.compile(r"^(#+\s+)(.+?)((?:\s+\{#.+\})?)$")
 re_bullet = re.compile(r"^(\s*\*\s+)(.+)$")
 re_number = re.compile(r"^(\s*[0-9]+\.\s+)(.+)$")
 re_hiddenHeaderRow = re.compile(r"^\|\s*\.\s*\{\.hideHeaderRow\}\s*(\|\s*\.\s*)*\|$")
-re_postTableHeaderLine = re.compile(r"^(\|---)+\|$")
+re_postTableHeaderLine = re.compile(r"^(\|\s*-+\s*)+\|$")
 re_tableRow = re.compile(r"^(\|)(.+)(\|)$")
 re_translationID = re.compile(r"^(.*)\$\(ID:([0-9a-f-]+)\)(.*)$")
 
@@ -356,6 +356,12 @@ def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool=False):
 			line1 = line1.rstrip()
 			line2 = line2.rstrip()
 			if line1 != line2:
+				if re_postTableHeaderLine.match(line1) and re_postTableHeaderLine.match(line2) and line1.count('|') == line2.count('|'):
+					print(f"Warning: ignoring cell padding of post table header line at line {lineNo}: {line1}, {line2}")
+					continue
+				if re_hiddenHeaderRow.match(line1) and re_hiddenHeaderRow.match(line2) and line1.count('|') == line2.count('|'):
+					print(f"Warning: ignoring cell padding of hidden header row at line {lineNo}: {line1}, {line2}")
+					continue
 				if allowBadAnchors and (m1:= re_heading.match(line1)) and (m2:= re_heading.match(line2)):
 					print(f"Warning: ignoring bad anchor in headings at line {lineNo}: {line1}, {line2}") 
 					line1 = m1.group(1) + m1.group(2)
@@ -424,7 +430,7 @@ def runTests(testDir: str):
 	)
 
 
-def pretranslateAllPossibleLanguages(langsDir: str):
+def pretranslateAllPossibleLanguages(langsDir: str, mdBaseName: str):
 	# This function walks through all language directories in the given directory, skipping en (English) and translates the English xlif and skel file along with the lang's pretranslated md file 
 	for langDir in os.listdir(langsDir):
 		if langDir == "en":
@@ -432,10 +438,12 @@ def pretranslateAllPossibleLanguages(langsDir: str):
 		langDirPath = os.path.join(langsDir, langDir)
 		if not os.path.isdir(langDirPath):
 			continue
-		enSkelPath = os.path.join(langsDir, "en", "userGuide.skel")
-		enXliffPath = os.path.join(langsDir, "en", "userGuide.xliff")
-		langXliffPath = os.path.join(langDirPath, "userGuide.xliff")
-		langPretranslatedMdPath = os.path.join(langDirPath, "userGuide.md")
+		langPretranslatedMdPath = os.path.join(langDirPath, f"{mdBaseName}.md")
+		if not os.path.exists(langPretranslatedMdPath):
+			continue
+		enSkelPath = os.path.join(langsDir, "en", f"{mdBaseName}.skel")
+		enXliffPath = os.path.join(langsDir, "en", f"{mdBaseName}.xliff")
+		langXliffPath = os.path.join(langDirPath, f"{mdBaseName}.xliff")
 		if os.path.exists(langXliffPath):
 			print(f"Skipping {langDir} as the xliff file already exists")
 			continue
@@ -451,7 +459,7 @@ def pretranslateAllPossibleLanguages(langsDir: str):
 		except Exception as e:
 			print(f"Failed to translate {langDir}: {e}")
 			continue
-		rebuiltLangMdPath = os.path.join(langDirPath, "rebuilt_userGuide.md")
+		rebuiltLangMdPath = os.path.join(langDirPath, f"rebuilt_{mdBaseName}.md")
 		try:
 			generateMarkdown(
 				xliffPath=langXliffPath,
@@ -463,7 +471,7 @@ def pretranslateAllPossibleLanguages(langsDir: str):
 			os.remove(langXliffPath)
 			continue
 		try:
-			ensureFilesMatch(rebuiltLangMdPath, langPretranslatedMdPath)
+			ensureFilesMatch(rebuiltLangMdPath, langPretranslatedMdPath, allowBadAnchors=True)
 		except Exception as e:
 			print(f"Rebuilt {langDir} markdown does not match pretranslated markdown: {e}")
 			os.remove(langXliffPath)
