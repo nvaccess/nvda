@@ -4,7 +4,7 @@
 # Copyright (C) 2021 NV Access Limited
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 import enum
 import braille
 import inputCore
@@ -139,16 +139,20 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self._ignoreKeyReleases = False
 
 	def _findCellValueCaps(self) -> List[hidpi.HIDP_VALUE_CAPS]:
-		return [valueCaps for valueCaps in self._dev.outputValueCaps if (
-			valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
-			and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
-			and valueCaps.u1.NotRange.Usage
-			in (
-				BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
-				BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
+		return [
+			valueCaps
+			for valueCaps in self._dev.outputValueCaps
+			if (
+				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
+				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
+				and valueCaps.u1.NotRange.Usage
+				in (
+					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
+					BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
+				)
+				and valueCaps.ReportCount > 0
 			)
-			and valueCaps.ReportCount > 0
-		)]
+		]
 
 	def _findNumberOfCellsValueCaps(self) -> hidpi.HIDP_VALUE_CAPS | None:
 		for valueCaps in self._dev.inputValueCaps:
@@ -246,9 +250,9 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				HID_USAGE_PAGE_BRAILLE,
 				valueCap.LinkCollection,
 				valueCap.u1.NotRange.Usage,
-				cellBytes[:valueCap.ReportCount],
+				cellBytes[: valueCap.ReportCount],
 			)
-			cellBytes = cellBytes[valueCap.ReportCount:]
+			cellBytes = cellBytes[valueCap.ReportCount :]
 		self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap(
