@@ -1243,6 +1243,7 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 |btrot |botón rotatorio|
 |btdiv |botón divisor|
 |tlo |título|
+|rtlo |rótulo|
 |btcom |botón conmutable|
 |cc |cuadro combinado|
 |cv |casilla de verificación|
@@ -2875,7 +2876,7 @@ Puedes configurar el anunciado de:
   * Regiones
   * Artículos
   * Marcos
-  * Figuras y subtítulos
+  * Figuras y rótulos
   * Cliqueable
 
 Para conmutar estas  opciones desde cualquier lugar, por favor asigna gestos personalizados utilizando el [diálogo Gestos de Entrada](#InputGestures).

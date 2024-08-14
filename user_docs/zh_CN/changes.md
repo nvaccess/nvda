@@ -1,5 +1,109 @@
 # NVDA 更新日志
 
+## 2024.3
+
+插件商店现在会在 NVDA 启动时提示您是否有可用的插件更新。
+
+现在可以选择对语音和盲文输出应用 Unicode 正规化。
+该功能对于阅读某些语音合成器或盲文表无法识别的字符会非常有用，这些字符可能有兼容的替代字符，如社交媒体上常用的粗体和斜体字符。
+此外，该功能也支持在 Microsoft Word 公式编辑器中读取公式。
+
+本版还支持了 Help Tech Activator Pro 盲文点显器。
+
+新增了未分配的命令，用于垂直和水平滚动鼠标滚轮。
+
+修复了多个问题，尤其在 Windows 11 表情符号面板和剪贴板历史记录方面。
+对于浏览器，修复了错误消息朗读、图形、标题、表格标签以及复选框/单选按钮菜单项的一系列问题。
+
+LibLouis 已更新，新增了塞尔维亚西里尔字母、意第绪语、多种古语盲文表、以及土耳其语和国际音标新盲文表。
+eSpeak 已更新，增加了对卡拉卡尔帕克语的支持。
+Unicode CLDR 也得到了更新。
+
+### 新特性
+
+* 新增快捷键命令：
+  * 为垂直和水平滚动鼠标滚轮增加了未分配命令，以增强在网页和应用程序中的导航体验，例如 Dism++。(#16462, @Cary-Rowen)
+* 语音和盲文输出新增 Unicode 正规化支持。(#11570, #16466 @LeonarddeR)
+  * 该功能对于阅读某些语音合成器或盲文表无法识别的字符会非常有用，这些字符可能有兼容的替代字符，如社交媒体上常用的粗体和斜体字符。
+  * 该功能也支持在 Microsoft Word 公式编辑器中读取公式。(#4631)
+  * 可以在 NVDA 设置对话框中的相应设置类别中为盲文或语音启用此功能。
+* 默认情况下，NVDA 启动后，会提醒您是否有可用的插件更新。(#15035)
+  * 该功能也可以在“插件商店”的设置类别中禁用。
+  * NVDA 每天检查插件更新。
+  * 仅检查同一通道内的更新（例如，已安装的 Beta 插件将仅通知 Beta 通道中的更新）。
+* 新增对 Help Tech Activator Pro 点显器的支持。(#16668)
+
+### 改进
+
+* 组件更新：
+  * eSpeak NG 已更新至 1.52-dev commit `54ee11a79`。(#16495)
+    * 新增语言：卡拉卡尔帕克语。
+  * Unicode CLDR 已更新至 45.0 版本。(#16507, @OzancanKaratas)
+  * fast_diff_match_patch（用于检测终端和其他动态内容的差异）已更新至 2.1.0 版本。(#16508, @codeofdusk)
+  * LibLouis 盲文翻译器已更新至 [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0)。(#16652, @codeofdusk)
+    * 新增盲文表：
+      * 塞尔维亚西里尔字母。
+      * 意第绪语。
+      * 多种古语盲文表：圣经希伯来语、阿卡德语、叙利亚语、乌加里特语以及楔形文字转写。
+      * 土耳其语二级盲文。(#16735)
+      * 国际音标。(#16773)
+  * NSIS 更新至 3.10 版本。(#16674, @dpy013)
+  * markdown 更新至 3.6 版本。(#16725, @dpy013)
+  * nh3 更新至 0.2.17 版本。(#16725, @dpy013)
+* 备用盲文输入表现在与备用输出表相同，为统一英语盲文一级。(#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA 现在会读出没有可访问子元素但带有标签或描述的插图。(#14514)
+* 在浏览模式下按行阅读时，插图或表格的长说明不再重复朗读“详细信息”。(#14874)
+* 在 Python 控制台中，在输入的历史记录之间移动时，最后一条未执行的命令不会丢失。(#16653, @CyrilleB79)
+* NVDA 收集的使用统计信息中现在会包含唯一的匿名 ID。(#16266)
+* 默认情况下，创建便携版时，会创建一个新文件夹。
+如果尝试写入非空目录，会显示警告消息。 (#16686)
+
+### 错误修复
+
+* Windows 11 修复：
+  * 修复了关闭剪贴板历史记录和表情符号面板时，NVDA 卡住的问题。(#16346, #16347, @josephsl)
+  * 修复了 NVDA 在输入候选界面无法读出可见候选词的错误。(#14023, @josephsl)
+  * 修复了在浏览表情符号面板菜单项时，NVDA 会重复朗读“剪贴板历史记录”的问题。(#16532, @josephsl)
+  * 修复了在表情符号面板中查看颜文字和符号时，NVDA 的语音和盲文输出被打断的问题。(#16533, @josephsl)
+* 浏览器修复：
+  * 修复了在 Google Chrome 和 Mozilla Firefox 中，未读出使用 `aria-errormessage` 引用的错误消息的问题。(#8318)
+  * 现在 NVDA 会在 Mozilla Firefox 中使用 `aria-labelledby` 来作为表格的可访问名称（如果存在）。(#5183)
+  * 修复了在 Google Chrome 和 Mozilla Firefox 中首次进入子菜单时，NVDA 未正确读出单选按钮和复选框菜单项的问题。(#14550)
+  * 修复了当页面包含表情符号时，NVDA 的浏览模式查找功能不太准确的问题。(#16317, @LeonarddeR)
+  * 修复了在 Mozilla Firefox 中，当光标位于行末插入点时，NVDA 无法准确读出当前字符、单词/行的问题。(#3156, @jcsteh)
+  * 修复了在关闭文档或退出 Chrome 时，可能导致 Google Chrome 崩溃的问题。(#16893)
+* 修复了在 Windows 11 中无法正确朗读 Eclipse 和其他基于 Eclipse 的环境中的自动完成建议的问题。(#16416, @thgcode)
+* 大幅提高了动态内容朗读功能的稳定性，尤其在命令终端环境下。(#15850, #16027, @Danstiv)
+* 提高了“重置设置为默认值”功能的稳定性。(#16755, @Emil-18)
+* 修复了在 Microsoft Excel 中编辑单元格文本时，不朗读已选择文本的问题。(#15843)
+* 修复了在使用 Java Access Bridge 的应用程序中，NVDA 在最后一行会重复朗读前一行内容的问题。(#9376, @dmitrii-drobotov)
+* 在 LibreOffice Writer（版本 24.8 及更新版本）中，使用相应的键盘快捷键切换文本格式（如粗体、斜体、下划线、下标/上标、对齐方式）时，NVDA 会读出格式属性变化（例如“粗体开”、“粗体关”）。(#4248, @michaelweghorn)
+* 修复了使用 UIA 的应用程序中，在文本框中使用光标键导航时，NVDA 有时未正确朗读当前字符/单词的错误。(#16711, @jcsteh)
+* 修复了在 Windows 10/11 计算器中粘贴内容时，NVDA 未正确读出粘贴的完整数字的问题。(#16573, @TristanBurchett)
+* 修复了在断开连接后再次连接到远程桌面会话，NVDA 语音无声的错误。(#16722, @jcsteh)
+* 修复了在 Visual Studio Code 中，对象名称不支持使用文本查看命令的问题。(#16248, @Cary-Rowen)
+* 修复了在单声道音频设备上 NVDA 声音输出可能出现故障的问题。(#16770, @jcsteh)
+* 修复了在 outlook.com / Modern Outlook 中，在 To/CC/BCC 字段之间导航时，NVDA 无法读出地址的错误。(#16856)
+* 改进了插件安装失败时的处理，使 NVDA 的处理更加优雅。(#16704)
+
+### 开发者需要了解的变化
+
+* NVDA 代码库现在使用 Ruff 代替 flake8 进行代码质量检查。(#14817)
+* 修复了 NVDA 的构建系统，使其在使用 Visual Studio 2022 版本 17.10 及以上版本时能够正常工作。(#16480, @LeonarddeR)
+* 在日志查看器和 NVDA Python 控制台中，现在使用等宽字体，以便在垂直导航时光标可以保持在同一列。
+这对于阅读 traceback 中的错误位置标记尤其有用。(#16321, @CyrilleB79)
+* 添加了自定义盲文表的功能。(#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * 盲文表可以放置在插件包中的 `brailleTables` 目录中。
+  * 可以在插件 manifest 文件或与 `brailleTables` 子目录相同格式的 `.ini` 文件中，添加表的元数据。
+  * 详情请参考[开发者指南中的 Braille translation tables 章节](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables)。
+* 当 `gainFocus` 事件排队处理带有有效 `focusRedirect` 属性的对象时，现在由 `eventHandler.lastQueuedFocusObject` 持有 `focusRedirect` 属性指向的对象，而不是最初排队的对象。(#15843)
+* NVDA 现在在启动时会记录其可执行文件的架构（x86）。(#16432, @josephsl)
+* `wx.CallAfter`（在 `monkeyPatches/wxMonkeyPatches.py` 中包装）现在包含适当的 `functools.wraps` 标记。(#16520, @XLTechie)
+* 新增了一个用于任务调度的模块 `utils.schedule`，使用了 pip 模块 `schedule`。(#16636)
+  * 您可以使用 `scheduleThread.scheduleDailyJobAtStartUp` 来自动计划一个任务，该任务在 NVDA 启动后以及之后的每 24 小时运行一次。
+  任务会延迟执行以避免冲突。
+  * 可以使用 `scheduleThread.scheduleDailyJob` 和 `scheduleJob` 计划自定义时间任务，如果任务计划发生冲突将抛出 `JobClashError`。
+* 现在支持为托管 Edge WebView2（msedgewebview2.exe）控件的应用程序创建应用模块。(#16705, @josephsl)
 
 ## 2024.2
 
@@ -46,7 +150,7 @@ LibLouis 更新后，增加了新的详细（以大写字母表示）白俄罗�
 * 声音拆分：(#12985, @mltony)
   * 可以将 NVDA 的声音拆分到一个声道（例如左侧），而其他所有应用程序的声音则放在另一个声道（例如右侧）。
   * 通过 `NVDA+alt+s` 切换。
-* 支持了在 contenteditable HTML 元素中报告行和列标题。(#14113)
+* 支持了在 contenteditable HTML 元素中朗读行/列标题。(#14113)
 * 在文档格式设置中添加了切换是否读出插图和说明文本的选项。(#10826, #14349)
 * 在 Windows 11 22H2 及更高版本中，当电话号码等兼容的数据复制到剪贴板时，NVDA 会读出建议的操作（Windows 11 2022 Update 及以后）。(#16009, @josephsl)
 * NVDA 在语音朗读停止后可以保持音频设备唤醒，以防止某些音频设备（如蓝牙耳机）在下一次开始朗读时出现漏读的现象。(#14386, @jcsteh, @mltony)
