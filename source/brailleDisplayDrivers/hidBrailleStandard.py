@@ -119,7 +119,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				if self.numRows == 1:
 					self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
 				elif self._findNumberOfCellsValueCaps():
-					log.warning("The number of braille cells usage is not supported on multi-line displays")
+					log.warning("Reserved braille cells are not supported on multi-line displays")
 				# A display responded.
 				log.info(
 					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
@@ -250,9 +250,9 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				HID_USAGE_PAGE_BRAILLE,
 				valueCap.LinkCollection,
 				valueCap.u1.NotRange.Usage,
-				cellBytes[:valueCap.ReportCount],
+				cellBytes[: valueCap.ReportCount],
 			)
-			cellBytes = cellBytes[valueCap.ReportCount:]
+			cellBytes = cellBytes[valueCap.ReportCount :]
 		self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap(
