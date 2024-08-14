@@ -17,7 +17,9 @@ The available options are:
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 * When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
   * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
-* It is now possible to use braille display routing keys to move the text cursor in Microsoft PowerPoint. (#9101)
+* Improvements in PowerPoint: (#17004)
+  * It is now possible to use braille display routing keys to move the text cursor in Microsoft PowerPoint. (#9101)
+  * It is now possible to use NVDA's review cursor selection commands to select text in Microsoft PowerPoint.
 
 ### Changes
 
