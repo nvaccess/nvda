@@ -230,11 +230,11 @@ class Ia2Web(IAccessible):
 		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
 			return False
 		documentConstantIdentifier = ti.documentConstantIdentifier
-		if self.valueToSamePage(value, documentConstantIdentifier):
+		if self._valueToSamePage(value, documentConstantIdentifier):
 			return True
 		return False
 
-	def valueToSamePage(self, value: str, constantIdentifier: str) -> bool:
+	def _valueToSamePage(self, value: str, constantIdentifier: str) -> bool:
 		"""Function used to check if link destination points to the same page"""
 		if not value or not constantIdentifier:
 			return False
