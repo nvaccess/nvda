@@ -31,6 +31,7 @@ import api
 import speech
 import config
 import NVDAObjects
+from utils import urlUtils
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -230,20 +231,7 @@ class Ia2Web(IAccessible):
 		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
 			return False
 		documentConstantIdentifier = ti.documentConstantIdentifier
-		if self._valueToSamePage(value, documentConstantIdentifier):
-			return True
-		return False
-
-	def _valueToSamePage(self, value: str, constantIdentifier: str) -> bool:
-		"""Function used to check if link destination points to the same page"""
-		if not value or not constantIdentifier:
-			return False
-		if constantIdentifier.endswith("/"):
-			constantIdentifier = constantIdentifier[:-1]
-		queryParamCharPos = constantIdentifier.find("?")
-		if queryParamCharPos > 0:
-			constantIdentifier = constantIdentifier[:queryParamCharPos]
-		if value.startswith(f"{constantIdentifier}#"):
+		if urlUtils._valueToSamePage(value, documentConstantIdentifier):
 			return True
 		return False
 
