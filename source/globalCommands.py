@@ -903,6 +903,31 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for cycle through report link type command.
+		description=_("Cycles through the report link type states"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_cyclesReportLinkType(self, gesture: inputCore.InputGesture) -> None:
+		"""Set next state of report link type and reports it with ui.message."""
+		featureFlag: FeatureFlag = config.conf["documentFormatting"]["reportLinkType"]
+		boolFlag: BoolFlag = featureFlag.enumClassType
+		values = [x.value for x in boolFlag]
+		currentValue = featureFlag.value.value
+		nextValueIndex = (currentValue % len(values)) + 1
+		nextName: str = boolFlag(nextValueIndex).name
+		config.conf["documentFormatting"]["reportLinkType"] = nextName
+		featureFlag = config.conf["documentFormatting"]["reportLinkType"]
+		if featureFlag.isDefault():
+			# Translators: Used to announce reporting link type state
+			# (default behavior).
+			msg = _("Report link type default (%s)") % featureFlag.behaviorOfDefault.displayString
+		else:
+			# Translators: Announces which report link type state is used
+			# (disabled or enabled).
+			msg = _("Report link type %s") % BoolFlag[nextName].displayString
+		ui.message(msg)
+
+	@script(
 		# Translators: Input help mode message for toggle report graphics command.
 		description=_("Toggles on and off the reporting of graphics"),
 		category=SCRCAT_DOCUMENTFORMATTING,

@@ -213,7 +213,7 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
-		if self.isInternalLink:
+		if config.conf["documentFormatting"]["reportLinkType"] and self.isInternalLink:
 			states.add(controlTypes.State.INTERNAL_LINK)
 		return states
 
