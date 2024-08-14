@@ -109,7 +109,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 			cellValueCaps = self._findCellValueCaps()
 			if len(cellValueCaps) > 0:
 				if any(x.ReportCount != cellValueCaps[0].ReportCount for x in cellValueCaps):
-					log.warn("Found multi-line display with an irregular shape, ignoring.")
+					log.warning("Found multi-line display with an irregular shape, ignoring.")
 					self._dev.close()
 					continue
 				self.numRows = len(cellValueCaps)
@@ -122,9 +122,9 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 					log.warn("The number of braille cells usage is not supported on multi-line displays")
 				# A display responded.
 				log.info(
-					"Found display with {rows}x{cells} cells connected via {type} ({port})".format(
+					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
 						rows=self.numRows,
-						cells=self.numCols,
+						cols=self.numCols,
 						type=portType,
 						port=port,
 					),
@@ -138,7 +138,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
 
-	def _findCellValueCaps(self) -> List[hidpi.HIDP_VALUE_CAPS]:
+	def _findCellValueCaps(self) -> list[hidpi.HIDP_VALUE_CAPS]:
 		return [
 			valueCaps
 			for valueCaps in self._dev.outputValueCaps
@@ -250,9 +250,9 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				HID_USAGE_PAGE_BRAILLE,
 				valueCap.LinkCollection,
 				valueCap.u1.NotRange.Usage,
-				cellBytes[: valueCap.ReportCount],
+				cellBytes[:valueCap.ReportCount],
 			)
-			cellBytes = cellBytes[valueCap.ReportCount :]
+			cellBytes = cellBytes[valueCap.ReportCount:]
 		self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap(
