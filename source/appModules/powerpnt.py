@@ -1130,7 +1130,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _setCaretOffset(self, offset: int):
 		if not 0 <= offset <= (maxLength := self._getStoryLength()):
-			log.debugWarning(f"Got out of range {offset=} (min 0, max {maxLength}. Clamping.", stack_inf=True)
+			log.debugWarning(
+				f"Got out of range {offset=} (min 0, max {maxLength}. Clamping.",
+				stack_info=True,
+			)
 			offset = max(0, min(offset, maxLength))
 		# Use the TextRange.select method to move the text caret to a 0-length TextRange.
 		# The TextRange.characters method is 1-indexed.
