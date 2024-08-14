@@ -2799,7 +2799,22 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.linksCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Lin&ks")))
+		self.linksCheckBox.Bind(wx.EVT_CHECKBOX, self.onLinksChange)
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
+
+		self.reportLinkTypeCombo: nvdaControls.FeatureFlagCombo = elementsGroup.addLabeledControl(
+			labelText=_(
+				# Translators: This is the label for a combo box in the
+				# document formatting settings panel.
+				"Report link type",
+			),
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["documentFormatting", "reportLinkType"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("DocumentFormattingReportLinkType", self.reportLinkTypeCombo)
+		if not self.linksCheckBox.GetValue():
+			self.reportLinkTypeCombo.Disable()
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2867,6 +2882,9 @@ class DocumentFormattingPanel(SettingsPanel):
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
+	def onLinksChange(self, evt: wx.CommandEvent):
+		self.reportLinkTypeCombo.Enable(evt.IsChecked())
+
 	def onSave(self):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"] = (
 			self.detectFormatAfterCursorCheckBox.IsChecked()
@@ -2901,6 +2919,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportTableCellCoords"] = self.tableCellCoordsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportCellBorders"] = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportLinks"] = self.linksCheckBox.IsChecked()
+		self.reportLinkTypeCombo.saveCurrentValueToConf()
 		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"] = self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"] = self.listsCheckBox.IsChecked()
