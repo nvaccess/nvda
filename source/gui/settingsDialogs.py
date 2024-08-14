@@ -2812,7 +2812,6 @@ class DocumentFormattingPanel(SettingsPanel):
 			keyPath=["documentFormatting", "reportLinkType"],
 			conf=config.conf,
 		)
-		self.bindHelpEvent("DocumentFormattingReportLinkType", self.reportLinkTypeCombo)
 		if not self.linksCheckBox.GetValue():
 			self.reportLinkTypeCombo.Disable()
 
