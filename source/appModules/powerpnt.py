@@ -1128,6 +1128,14 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["link"] = True
 		return formatField, (startOffset, endOffset)
 
+	def _setCaretOffset(self, offset: int):
+		if not 0 <= offset <= (maxLength := self.storyLength):
+			log.debugWarning(f"Got out of range {offset=} (min 0, max {maxLength}. Clamping.", stack_inf=True)
+			offset = max(0, min(offset, maxLength))
+		# Use the TextRange.select method to move the text caret to a 0-length TextRange.
+		# The TextRange.characters method is 1-indexed.
+		self.obj.ppObject.textRange.characters(offset + 1, 0).select()
+
 
 class Table(Shape):
 	"""Represents the table shape in Powerpoint. Provides row and column counts."""
