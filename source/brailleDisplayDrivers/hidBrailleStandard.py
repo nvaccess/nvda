@@ -119,7 +119,7 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				if self.numRows == 1:
 					self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
 				elif self._findNumberOfCellsValueCaps():
-					log.warn("The number of braille cells usage is not supported on multi-line displays")
+					log.warning("The number of braille cells usage is not supported on multi-line displays")
 				# A display responded.
 				log.info(
 					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
