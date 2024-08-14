@@ -171,8 +171,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if controlTypes.State.LINKED not in states:
 				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 				role = controlTypes.Role.TEXTFRAME
-			elif self.NVDAObjectAtStart.isInternalLink:
-				if config.conf["documentFormatting"]["reportLinkType"]:
+			elif config.conf["documentFormatting"]["reportLinkType"]:
+				if self.NVDAObjectAtStart.isInternalLink:
 					states.add(controlTypes.State.INTERNAL_LINK)
 		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
