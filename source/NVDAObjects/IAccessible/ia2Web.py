@@ -221,19 +221,29 @@ class Ia2Web(IAccessible):
 	def isInternalLink(self) -> bool:
 		if self.role != controlTypes.Role.LINK:
 			return False
-		if (
-			not hasattr(self, "treeInterceptor")
-			or self.treeInterceptor is None
-			or not self.treeInterceptor.documentConstantIdentifier
-		):
+		value = self.value
+		if not value:
 			return False
-		documentConstantIdentifier = self.treeInterceptor.documentConstantIdentifier
-		if documentConstantIdentifier.endswith("/"):
-			documentConstantIdentifier = documentConstantIdentifier[:-1]
-		queryParamCharPos = documentConstantIdentifier.find("?")
+		if not hasattr(self, "treeInterceptor"):
+			return False
+		ti = self.treeInterceptor
+		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
+			return False
+		documentConstantIdentifier = ti.documentConstantIdentifier
+		if self.valueToSamePage(value, documentConstantIdentifier):
+			return True
+		return False
+
+	def valueToSamePage(self, value: str, constantIdentifier: str) -> bool:
+		"""Function used to check if link destination points to the same page"""
+		if not value or not constantIdentifier:
+			return False
+		if constantIdentifier.endswith("/"):
+			constantIdentifier = constantIdentifier[:-1]
+		queryParamCharPos = constantIdentifier.find("?")
 		if queryParamCharPos > 0:
-			documentConstantIdentifier = documentConstantIdentifier[:queryParamCharPos]
-		if self.value.startswith(f"{documentConstantIdentifier}#"):
+			constantIdentifier = constantIdentifier[:queryParamCharPos]
+		if value.startswith(f"{constantIdentifier}#"):
 			return True
 		return False
 
