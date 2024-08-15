@@ -415,7 +415,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					for y in range(self.numRows):
 						cellOffset = y * self.numCols
 						lineCells = cells[cellOffset : cellOffset + self.numCols]
-						drawBrailleCells(tgBuf, 0, y * (self.cellHeight + self.vCellPadding), lineCells)
+						drawBrailleCells(
+							tgBuf,
+							0,
+							y * (self.cellHeight + self.vCellPadding),
+							lineCells,
+							hCellPadding=self.hCellPadding,
+						)
 					firstGraphicRow = 0
 					if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
 						firstGraphicRow = self._boardInformation.text.rowCount
