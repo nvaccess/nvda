@@ -5069,11 +5069,11 @@ You can configure whether NVDA displays braille on the dedicated braille display
 
 Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
 
-When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to. 
+When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
 This driver does not support auto detection.
 
 Please note that due to hardware limitations, the Dot pad will not refresh all dots correctly while your hand is on the device.
-Make sure to lift your hand entirely off the device when navigating with NvDA, and only start reading again once it has fully updated. 
+Make sure to lift your hand entirely off the device when navigating with NvDA, and only start reading again once it has fully updated.
 
 <!-- KC:beginInclude -->
 
