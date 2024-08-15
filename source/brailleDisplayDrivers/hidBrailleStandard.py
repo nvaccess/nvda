@@ -6,6 +6,7 @@
 from dataclasses import dataclass
 from typing import List
 import enum
+import itertools
 import braille
 import inputCore
 from logHandler import log
@@ -239,21 +240,22 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		# cells will already be padded up to numCells.
 		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
 		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)
-		reportID = self._cellValueCaps[0].ReportID
-		report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
-		for valueCap in self._cellValueCaps:
-			if valueCap.ReportID != reportID:
-				self._dev.write(report.data)
-				reportID = valueCap.ReportID
-				report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
-			report.setUsageValueArray(
-				HID_USAGE_PAGE_BRAILLE,
-				valueCap.LinkCollection,
-				valueCap.u1.NotRange.Usage,
-				cellBytes[: valueCap.ReportCount],
-			)
-			cellBytes = cellBytes[valueCap.ReportCount :]
-		self._dev.write(report.data)
+		# Iterate through the output reports
+		for reportID, valueCaps in itertools.groupby(self._cellValueCaps, lambda x: x.ReportID):
+			report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
+			# Iterate through each row in this report
+			for valueCap in valueCaps:
+				# Take the cells for this row from the front of the cellBytes list
+				rowCellBytes = cellBytes[: valueCap.ReportCount]
+				cellBytes = cellBytes[valueCap.ReportCount :]
+
+				report.setUsageValueArray(
+					HID_USAGE_PAGE_BRAILLE,
+					valueCap.LinkCollection,
+					valueCap.u1.NotRange.Usage,
+					rowCellBytes,
+				)
+			self._dev.write(report.data)
 
 	gestureMap = inputCore.GlobalGestureMap(
 		{
