@@ -1869,7 +1869,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		Converts a position relative to the  braille window to a position relative to the braille buffer.
 		"""
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
-		row, col = divmod(windowPos, self.handler.display.numCols) 
+		row, col = divmod(windowPos, self.handler.display.numCols)
 		if row < len(self._windowRowBufferOffsets):
 			start, end = self._windowRowBufferOffsets[row]
 			return min(start + col, end - 1)
@@ -1892,7 +1892,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				try:
 					end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
-					pass # No space on line
+					pass  # No space on line
 			self._windowRowBufferOffsets.append((start, end))
 			start = end
 
@@ -2051,8 +2051,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _get_windowBrailleCells(self):
 		windowCells = []
 		for start, end in self._windowRowBufferOffsets:
-			rowCells = self.brailleCells[start: end]
-			remaining = self.handler.display.numCols  - len(rowCells)
+			rowCells = self.brailleCells[start:end]
+			remaining = self.handler.display.numCols - len(rowCells)
 			if remaining > 0:
 				rowCells.extend([0] * remaining)
 			windowCells.extend(rowCells)
