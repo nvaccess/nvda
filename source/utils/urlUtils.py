@@ -1,23 +1,32 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
-# This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2024 NV Access Limited, Noelia Ruiz Martínez, Leonard de Ruijter
 
-from urllib.parse import urlparse
+from urllib.parse import ParseResult, urlparse
 
 
-def _valueToSamePage(value: str, constantIdentifier: str) -> bool:
-	if not value or not constantIdentifier:
+def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
+	"""Returns whether a given URL belongs to the same page as another URL.
+
+	:param urlOnPage: The URL that should be on the same page as `rootUrl`
+	:param rootUrl: The root URL of the page
+	:return: Whether `urlOnPage` belongs to the same page as `rootUrl`
+	"""
+	if not urlOnPage or not rootUrl:
 		return False
+
 	# Parse the URLs
-	valueParsed = urlparse(value)
-	constantIdentifierParsed = urlparse(constantIdentifier)
-	# Compare the netloc and path
+	urlOnPageParsed: ParseResult = urlparse(urlOnPage)
+	rootUrlParsed: ParseResult = urlparse(rootUrl)
+
 	if (
-		valueParsed.scheme == constantIdentifierParsed.scheme
-		and valueParsed.netloc == constantIdentifierParsed.netloc
-		and valueParsed.path == constantIdentifierParsed.path
-		and valueParsed.fragment
+		urlOnPageParsed.scheme == rootUrlParsed.scheme
+		and urlOnPageParsed.netloc == rootUrlParsed.netloc
+		and urlOnPageParsed.path == rootUrlParsed.path
+		and urlOnPageParsed.query == rootUrlParsed.query
+		and urlOnPageParsed.fragment
 	):
 		return True
+
 	return False

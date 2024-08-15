@@ -229,7 +229,7 @@ class Ia2Web(IAccessible):
 		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
 			return False
 		documentConstantIdentifier = ti.documentConstantIdentifier
-		if urlUtils._valueToSamePage(value, documentConstantIdentifier):
+		if urlUtils.isSamePageUrl(value, documentConstantIdentifier):
 			return True
 		return False
 
