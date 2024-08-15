@@ -37,5 +37,5 @@ class TestIsSamePageUrl(unittest.TestCase):
 
 	def test_differentQuery(self):
 		self.assertFalse(
-			isSamePageUrl("http://example.com/page?q=3#section", "http://example.com/page?q4#section")
+			isSamePageUrl("http://example.com/page?q=3#section", "http://example.com/page?q4#section"),
 		)
