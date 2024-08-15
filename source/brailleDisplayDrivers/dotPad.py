@@ -212,7 +212,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				*struct.pack(">H", cmd.value),
 				seqNum,
 				*data,
-			]
+			],
 		)
 		checksum = functools.reduce(operator.xor, packetBody, DP_CHECKSUM_BASE)
 		packetBody.append(checksum)
@@ -223,7 +223,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				# Length of packet body
 				*struct.pack(">H", len(packetBody)),
 				*packetBody,
-			]
+			],
 		)
 		self._dev.write(packet)
 		if rspCmd is not None:
@@ -275,7 +275,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if oldData == data:
 			return
 		code = self._sendCommand(
-			DP_Command.REQ_DISPLAY_LINE, data, dest, seqNum, rspCmd=DP_Command.RSP_DISPLAY_LINE
+			DP_Command.REQ_DISPLAY_LINE,
+			data,
+			dest,
+			seqNum,
+			rspCmd=DP_Command.RSP_DISPLAY_LINE,
 		)
 		code = DP_DisplayResponse(ord(code))
 		if code == DP_DisplayResponse.ACK:
@@ -425,8 +429,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"globalCommands.GlobalCommands": {
 				"braille_scrollBack": ("br(dotPad):pan_left",),
 				"braille_scrollForward": ("br(dotPad):pan_right",),
-			}
-		}
+			},
+		},
 	)
 
 
@@ -447,7 +451,7 @@ class DPKeyGesture(braille.BrailleDisplayGesture):
 				raise ValueError("No function key")
 		elif cmd == DP_Command.NTF_KEYS_PERKINS:
 			for key in DP_PerkinsKey:
-				dataIndex, bitIndex  = divmod(key.value, 8)
+				dataIndex, bitIndex = divmod(key.value, 8)
 				bitIndex = 7 - bitIndex
 				if data[dataIndex] & 1 << bitIndex:
 					self.id = key.name.lower()
