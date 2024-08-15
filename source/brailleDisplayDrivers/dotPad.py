@@ -172,7 +172,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "dotPad"
 	# Translators: Names of braille displays.
 	isThreadSafe = True
-	description = _("DotPad Braille / Tactile Grahic display")
+	# Translators: Description of the DotPad Braille / Tactile Graphic display.
+	description = _("DotPad Braille / Tactile Graphic display")
 	supportsAutomaticDetection = False
 	receivesAckPackets = False
 	timeout = 0.2
@@ -190,6 +191,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	supportedSettings = [
 		DriverSetting(
 			"brailleDestination",
+			# Translators: Label for a setting that allows the user to choose the destination for braille output.
 			_("Braille destination"),
 			useConfig=False,
 		),
@@ -336,9 +338,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return {}
 		dests = {}
 		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
-			dests["text"] = StringParameterInfo(BrailleDestination.text, _("Text"))
+			dests["text"] = StringParameterInfo(
+				BrailleDestination.text,
+				# Translators: A destination for braille output.
+				_("Text"),
+			)
 		if self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
-			dests["graphic"] = StringParameterInfo(BrailleDestination.graphic, _("Graphic"))
+			dests["graphic"] = StringParameterInfo(
+				BrailleDestination.graphic,
+				# Translators: A destination for braille output.
+				_("Graphic"),
+			)
 		return dests
 
 	def _get_brailleDestination(self):
