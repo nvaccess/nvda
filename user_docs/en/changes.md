@@ -60,6 +60,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
 * Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
 * In the gecko_ia2 virtual buffer backend, the accValue is exposed for links (#141, @LeonarddeR).
+* Anew utils/urlUtils/isSamePageUrl function has been added to check links (#141, @LeonarddeR)
 * A new INTERNAL_LINK state has been added to controlTypes.states.State (#141, @nvdaes)
 * A new isInternalLink property has been added for NVDAObjects.IAccessible.ia2Web.Ia2Web objects (#141, @nvdaes)
 
