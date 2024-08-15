@@ -38,6 +38,9 @@ The available options are:
 * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
+* Improvements in Microsoft PowerPoint: (#17004)
+  * It is now possible to use braille display routing keys to move the text cursor. (#9101)
+  * It is now possible to use the review cursor selection commands to select text.
 
 ### Changes for Developers
 
