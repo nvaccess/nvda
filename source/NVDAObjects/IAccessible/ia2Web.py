@@ -225,9 +225,7 @@ class Ia2Web(IAccessible):
 		value = self.value
 		if not value:
 			return False
-		if not hasattr(self, "treeInterceptor"):
-			return False
-		ti = self.treeInterceptor
+		ti = getattr(self, "treeInterceptor", None)
 		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
 			return False
 		documentConstantIdentifier = ti.documentConstantIdentifier
