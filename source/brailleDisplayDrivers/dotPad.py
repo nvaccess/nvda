@@ -182,7 +182,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	cellHeight = 4
 	hCellPadding = 1
 	vCellPadding = 1
-	_brailleDestination: BrailleDestination | None = None
+	_brailleDestination: BrailleDestination
 
 	@classmethod
 	def getManualPorts(cls):
@@ -193,7 +193,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			"brailleDestination",
 			# Translators: Label for a setting that allows the user to choose the destination for braille output.
 			_("Braille destination"),
-			useConfig=False,
+			useConfig=True,
 		),
 	]
 
@@ -339,20 +339,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		dests = {}
 		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
 			dests["text"] = StringParameterInfo(
-				BrailleDestination.text,
+				BrailleDestination.text.value,
 				# Translators: A destination for braille output.
 				_("Text"),
 			)
 		if self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
 			dests["graphic"] = StringParameterInfo(
-				BrailleDestination.graphic,
+				BrailleDestination.graphic.value,
 				# Translators: A destination for braille output.
 				_("Graphic"),
 			)
 		return dests
 
 	def _get_brailleDestination(self):
-		return self._brailleDestination
+		return self._brailleDestination.value
 
 	def _set_brailleDestination(self, value: str):
 		value = BrailleDestination(value)
