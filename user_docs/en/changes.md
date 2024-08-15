@@ -15,8 +15,14 @@ The available options are:
   * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
 * When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
+* When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
+  * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
 
 ### Changes
+
+* The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
+* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+  * Added new languages Faroese and Xextan.
 
 ### Bug Fixes
 
@@ -32,6 +38,9 @@ The available options are:
 * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
+* Improvements in Microsoft PowerPoint: (#17004)
+  * It is now possible to use braille display routing keys to move the text cursor. (#9101)
+  * It is now possible to use the review cursor selection commands to select text.
 
 ### Changes for Developers
 
@@ -40,7 +49,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Component updates:
   * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
   * Updated setuptools to 72.0 (#16907, @dpy013)
-  * Updated Ruff to 0.5.5. (#16868, @LeonarddeR)
+  * Updated Ruff to 0.5.6. (#16868, @LeonarddeR)
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
 * Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
   * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
@@ -48,6 +57,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
+* Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
 
 #### Deprecations
 

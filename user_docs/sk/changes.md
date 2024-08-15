@@ -1,6 +1,93 @@
 # Čo je nové v NVDA 
 
 
+## 2024.3
+
+NVDA odteraz môže upozorňovať na dostupné aktualizácie doplnkov.
+
+Odteraz je možné použiť normalizovanie znakov unicode pri čítaní na braillovom riadku aj pri používaní hlasového výstupu.
+
+Toto je užitočné pri čítaní znakov, ktoré hlasový výstup alebo brailová tabuľka nedokáže interpretovať. Tučné verzie znakov a verzie znakov s kurzívou, ktoré sú súčasťou štandardu Unicode a bežne sa používajú v príspevkoch uverejňovaných na sociálnych sieťach, sú normalizované na ich najbežnejší kompatibilný ekvivalent.
+Normalizovanie znakov tiež umožňuje čítať rovnice v programe MS Word.
+
+Pridaná podpora pre brailové riadky Help Tech Activator Pro.
+
+Pridali sme skratky na pohyb kolieskom myši v horizontálnom i vertikálnom smere.
+
+Opravili sme problémy v Emoji panely Windows 11 a histórii schránky.
+Pri prezeraní webového obsahu bolo opravené oznamovanie chýb, ilustrácií, popisov tabuliek, a položiek v menu, ktoré sú začiarkávacími poliami alebo prepínačmi.
+
+Aktualizovali sme brailovú prekladovú tabuľku LibLouis, kde sú pridané nové tabuľky pre Srbskú azbuku, Jidiš, viacero starovekých jazykov, turečtinu a medzinárodnú fonetickú abecedu (IPA).
+Tiež sme aktualizovali hlasový výstup eSpeak, čo prinieslo podporu pre Karakalpačtinu.
+Napokon bola aktualizovaná aj databáza znakov Unicode CLDR.
+
+### Nové vlastnosti
+
+* Nové klávesové skratky:
+  * Pridané príkazy na pohyb kolieska myši hore, dole, doprava a doľava. Toto môže zlepšiť navigáciu vo webových dokumentoch a aplikáciách s dynamickým obsahom, ako napríklad Dism++. (#16462, @Cary-Rowen)
+* Pridaná možnosť normalizácie Unicode znakov rovnako pre hlasový výstup aj brailové riadky. (#11570, #16466 @LeonarddeR).
+  * Toto je užitočné pri čítaní znakov, ktoré hlasový výstup alebo brailová tabuľka nedokáže interpretovať. Tučné verzie znakov a verzie znakov s kurzívou, ktoré sú súčasťou štandardu Unicode a bežne sa používajú v príspevkoch uverejňovaných na sociálnych sieťach, sú normalizované na ich najbežnejší kompatibilný ekvivalent.
+  * Normalizovanie znakov tiež umožňuje čítať rovnice v programe MS Word. (#4631)
+  * Normalizovanie znakov je možné zapnúť samostatne pre reč aj brailový výstup v príslušných kategóriách nastavení.
+* Po štarte NVDA budete odteraz informovaní, ak sú dostupné aktualizácie doplnkov, ktoré používate. (#15035)
+  * Toto je možné vypnúť v kategórii "Katalóg s doplnkami" v nastaveniach NVDA.
+  * NVDA kontroluje dostupnosť aktualizácii denne.
+  * Kontrolované sú len aktualizácie v konkrétnom kanály. Ak máte teda nainštalovaný doplnok vo verzii Beta, NVDA bude kontrolovať len nové beta verzie.
+* Pridaná podpora pre brailové riadky Help Tech Activator Pro. (#16668)
+
+### Zmeny
+
+* Aktualizované komponenty:
+  * Hlasový výstup eSpeak NG aktualizovaný na verziu 1.52-dev commit `54ee11a79`. (#16495)
+    * Pridaný nový jazyk Karakalpačtina.
+  * Databáza znakov Unicode CLDR aktualizovaná na verziu 45.0. (#16507, @OzancanKaratas)
+  * Aktualizované fast_diff_match_patch (používa sa na identifikáciu zmien v termináloch a pri inom dynamickom obsahu) na verziu 2.1.0. (#16508, @codeofdusk)
+  * Brailová prekladová tabuľka LibLouis aktualizovaná na verziu [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Nové brailové tabuľky:
+      * Srbská azbuka.
+      * Jidiš.
+      * Viaceré staroveké jazyky: Biblická Hebrejčina, Akkadčina, Sýrčina, ugaritština a klynové písmo.
+      * Turečtina skratkopis (#16735)
+      * Medzinárodná fonetická abeceda (IPA). (#16773)
+  * NSIS aktualizované na verziu 3.10 (#16674, @dpy013)
+  * markdown aktualizovaný na verziu  3.6 (#16725, @dpy013)
+  * nh3 aktualizované na verziu 0.2.17 (#16725, @dpy013)
+* Ak nie je dostupná zvolená vstupná prekladová brailová tabuľka, zvolí sa tá istá, ktorá sa predvolene používa ako výstupná, konkrétne jednotný anglický brail plnopis. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA odteraz oznamuje ilustrácie, aj ak nemajú podradený objekt s popisom, ale majú popis. (#14514)
+* Pri čítaní po riadkoch NVDA viac neoznamuje slovo "popis" pri každom riadku, ak je popis tabuľky alebo ilustrácie dlhší. (#14874)
+* Posledný nespustený príkaz v Python konzole sa viac nestratí pri pohybe po histórii vstupu. (#16653, @CyrilleB79)
+* Pri zasielaní štatistík sa odteraz posiela anonymizované ID. (#16266)
+* Predvolene sa odteraz pri vytváraní prenosnej verzie vytvára nový priečinok.
+NVDA upozorní, ak sa pokúsite vytvoriť prenosnú verziu v priečinku, ktorý nie je prázdny. (#16686)
+
+### Opravy
+
+* Opravy pre Windows 11:
+  * NVDA sa viac nezasekne pri zatváraní Emoji panela a histórie schránky. (#16346, #16347, @josephsl)
+  * NVDA opäť oznamuje návrhy pri použití rozhrania IME. (#14023, @josephsl)
+  * NVDA viac neoznamuje "história schránky" dvakrát, pri navigácii v emoji panely. (#16532, @josephsl)
+  * NVDA viac neprerušuje reč a výstup na brailovom riadku pri prechádzaní znakov kaomoji a symbolov v emoji panely. (#16533, @josephsl)
+* Opravy pre webové prehliadače:
+  * NVDA v prehliadačoch Mozilla Firefox a Google Chrome oznamuje chyby, ak sú označené `aria-errormessage`. (#8318)
+  * V prehliadači Mozilla Firefox NVDA ako názov tabuľky použije `aria-labelledby`, ak je uvedené. (#5183)
+  * NVDA odteraz správne oznamuje začiarkávacie polia a prepínače pri vstupe do podmenu v prehliadačoh Google Chrome a Mozilla Firefox. (#14550)
+  * Vyhľadávanie v režime prehliadania je presné, aj ak dokument obsahuje emoji. (#16317, @LeonarddeR)
+  * NVDA v prehliadači Mozilla Firefox správne oznamuje znaky, slová a riadky, ak sa kurzor nachádza na mieste vloženia na konci riadka. (#3156, @jcsteh)
+  * NVDA viac nespôsobí pád Google Chrome pri zatvorení dokumentu alebo ukončení prehliadača. (#16893)
+* NVDA odteraz správne oznamuje návrhy pri dopĺňaní v Eclipse a iných prostrediach postavených na Eclipse v systéme Windows 11. (#16416, @thgcode)
+* Zlepšená presnosť pri automatickom čítaní textu v termináloch. (#15850, #16027, @Danstiv)
+* Opäť je možné resetovať nastavenia NVDA na predvolené hodnoty. (#16755, @Emil-18)
+* NVDA správne oznamuje výber pri úpravách buniek v MS Excely. (#15843)
+* V aplikáciách postavených na Java Access Bridge, NVDA správne oznamuje posledný prázdny riadok a neopakuje opätovne predchádzajúci riadok. (#9376, @dmitrii-drobotov)
+* V LibreOffice Writer (od verzie 24.8), NVDA oznamuje nastavené  formátovanie textu po použití príslušných skratiek (napríklad tučné zapnuté, tučné vypnuté, kurzíva zapnuté, kurzíva vypnuté...) (#4248, @michaelweghorn)
+* Pri navigácii v aplikáciách, ktoré využívajú UI Automation, NVDA viac neoznamuje nesprávny znak, slovo a pod. (#16711, @jcsteh)
+* Pri prilepení obsahu do kalkulačky v systéme Windows 10/11, NVDA oznámi celé vložené číslo. (#16573, @TristanBurchett)
+* NVDA viac neostane ticho po odpojení a opätovnom pripojení k vzdialenej pracovnej ploche. (#16722, @jcsteh)
+* Pridaná podpora pre príkazy na čítanie textu v názvoch objektov v aplikácii Visual Studio Code. (#16248, @Cary-Rowen)
+* Prehrávanie zvukov NVDA viac nezlyhá, ak je zariadenie mono. (#16770, @jcsteh)
+* NVDA oznamuje mailové adresy pri pohybe po adresách na outlook.com / modernom Outlooku. (#16856)
+* NVDA lepšie zvláda prípadné zlyhania inštalácie doplnkov. (#16704)
+
 ## 2024.2
 
 Táto verzia prináša novú funkciu, oddelenie zvukov a hlasového výstupu.

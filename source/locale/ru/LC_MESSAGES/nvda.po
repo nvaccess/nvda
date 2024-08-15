@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-30 06:54+0000\n"
-"PO-Revision-Date: 2024-07-31 00:58\n"
+"POT-Creation-Date: 2024-08-05 02:08+0000\n"
+"PO-Revision-Date: 2024-08-12 00:15\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -655,7 +655,7 @@ msgid "Bluetooth"
 msgstr "Bluetooth"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
-#: braille.py:585 speech\speech.py:2013
+#: braille.py:585 speech\speech.py:2015
 msgid "details"
 msgstr "⠏⠕⠙⠗⠕⠃⠝⠕⠎⠞⠊"
 
@@ -663,7 +663,7 @@ msgstr "⠏⠕⠙⠗⠕⠃⠝⠕⠎⠞⠊"
 #. %s specifies the type of details (e.g. "has comment suggestion")
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
 #. %s specifies the type of details (e.g. "comment, suggestion, details")
-#: braille.py:595 speech\speech.py:2018
+#: braille.py:595 speech\speech.py:2020
 #, python-format
 msgid "has %s"
 msgstr "⠎⠕⠙⠑⠗⠚⠊⠞ %s"
@@ -686,7 +686,7 @@ msgstr "⠏⠎⠭⠎⠇⠅"
 #. Translators: Spoken to indicate the position of an item in a group of items (such as a list).
 #. {number} is replaced with the number of the item in the group.
 #. {total} is replaced with the total number of items in the group.
-#: braille.py:684 speech\speech.py:2035
+#: braille.py:684 speech\speech.py:2037
 #, python-brace-format
 msgid "{number} of {total}"
 msgstr "{number} из {total}"
@@ -3712,7 +3712,7 @@ msgstr "Читает выделенный текст в полях редакт�
 #. Translators: This is spoken to indicate what has just been selected.
 #. The text preceding 'selected' is intentional.
 #. For example 'hello world selected'
-#: globalCommands.py:333 speech\speech.py:1187
+#: globalCommands.py:333 speech\speech.py:1189
 #, python-format
 msgid "%s selected"
 msgstr "%s выделено"
@@ -7835,7 +7835,7 @@ msgstr "Не удаётся отобразить сообщение в режи�
 #. Translators: Spoken instead of a lengthy text when copied to clipboard.
 #. Translators: This is spoken when the user has selected a large portion of text.
 #. Example output "1000 characters"
-#: ui.py:179 speech\speech.py:1212
+#: ui.py:179 speech\speech.py:1214
 #, python-format
 msgid "%d character"
 msgid_plural "%d characters"
@@ -10034,7 +10034,7 @@ msgid "tool tip"
 msgstr "всплывающая подсказка"
 
 #. Translators: Identifies a link in webpage documents.
-#: controlTypes\role.py:249 speech\speech.py:2841
+#: controlTypes\role.py:249 speech\speech.py:2843
 msgid "link"
 msgstr "ссылка"
 
@@ -10573,13 +10573,13 @@ msgstr "размер шрифта"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is bolded.
-#: controlTypes\role.py:477 speech\speech.py:2727
+#: controlTypes\role.py:477 speech\speech.py:2729
 msgid "bold"
 msgstr "полужирный"
 
 #. Translators: Describes text formatting.
 #. Translators: Reported when text is italicized.
-#: controlTypes\role.py:479 speech\speech.py:2735
+#: controlTypes\role.py:479 speech\speech.py:2737
 msgid "italic"
 msgstr "курсивный"
 
@@ -10657,13 +10657,13 @@ msgstr "элемент диаграммы"
 
 #. Translators: Identifies deleted content.
 #. Translators: Reported when text is marked as having been deleted
-#: controlTypes\role.py:511 speech\speech.py:2668
+#: controlTypes\role.py:511 speech\speech.py:2670
 msgid "deleted"
 msgstr "удалено"
 
 #. Translators: Identifies inserted content.
 #. Translators: Reported when text is marked as having been inserted
-#: controlTypes\role.py:513 speech\speech.py:2660
+#: controlTypes\role.py:513 speech\speech.py:2662
 msgid "inserted"
 msgstr "вставлено"
 
@@ -10909,7 +10909,7 @@ msgstr "содержит формулу"
 
 #. Translators: a state that denotes the existance of a comment.
 #. Translators: Reported when text contains a generic comment.
-#: controlTypes\state.py:183 speech\speech.py:2856
+#: controlTypes\state.py:183 speech\speech.py:2858
 msgid "has comment"
 msgstr "содержит примечание"
 
@@ -10986,7 +10986,7 @@ msgstr "перетаскивание завершено"
 #. Translators: This is spoken when NVDA moves to an empty line.
 #. Translators: This is spoken when the line is considered blank.
 #: documentNavigation\paragraphHelper.py:126 speech\speech.py:223
-#: speech\speech.py:434 speech\speech.py:1791
+#: speech\speech.py:434 speech\speech.py:1793
 msgid "blank"
 msgstr "пусто"
 
@@ -11457,7 +11457,7 @@ msgstr "Профили конфигурации"
 #. Translators: The label of a button to create a new configuration profile.
 #: gui\configProfiles.py:73
 msgid "&New"
-msgstr "&Новый"
+msgstr "&Создать"
 
 #. Translators: The label of a button to rename a configuration profile.
 #: gui\configProfiles.py:78
@@ -15953,7 +15953,7 @@ msgstr "тонкий, вертикальный штриховой"
 
 #. Translators: A type of background pattern in Microsoft Excel.
 #. No pattern
-#: NVDAObjects\window\excel.py:267 speech\speech.py:2644
+#: NVDAObjects\window\excel.py:267 speech\speech.py:2646
 msgid "none"
 msgstr "отсутствует"
 
@@ -16750,73 +16750,73 @@ msgid "%s normalized"
 msgstr "%s нормализована"
 
 #. Translators: This is spoken when the given line has no indentation.
-#: speech\speech.py:996
+#: speech\speech.py:998
 msgid "no indent"
 msgstr "нет отступа"
 
 #. Translators: This is spoken to indicate that some text is already selected.
 #. 'selected' preceding text is intentional.
 #. For example 'selected hello world'
-#: speech\speech.py:1168
+#: speech\speech.py:1170
 #, python-format
 msgid "selected %s"
 msgstr "выделено %s"
 
 #. Translators: This is spoken to indicate what has been unselected. for example 'hello unselected'
-#: speech\speech.py:1286
+#: speech\speech.py:1288
 #, python-format
 msgid "%s unselected"
 msgstr "%s не выделено"
 
 #. Translators: This is spoken to indicate when the previous selection was removed and a new selection was made. for example 'hello world selected instead'
-#: speech\speech.py:1293
+#: speech\speech.py:1295
 #, python-format
 msgid "%s selected instead"
 msgstr "%s выделено взамен"
 
 #. Translators: Reported when selection is removed.
-#: speech\speech.py:1296
+#: speech\speech.py:1298
 msgid "selection removed"
 msgstr "выделение удалено"
 
 #. Translators: Speaks current row number (example output: row 3).
-#: speech\speech.py:1960 speech\speech.py:2954
+#: speech\speech.py:1962 speech\speech.py:2956
 #, python-format
 msgid "row %s"
 msgstr "строка %s"
 
 #. Translators: Speaks the row span added to the current row number (example output: through 5).
-#: speech\speech.py:1964
+#: speech\speech.py:1966
 #, python-brace-format
 msgid "through {endRow}"
 msgstr "по {endRow}"
 
 #. Translators: Speaks current column number (example output: column 3).
-#: speech\speech.py:1978 speech\speech.py:2950
+#: speech\speech.py:1980 speech\speech.py:2952
 #, python-format
 msgid "column %s"
 msgstr "столбец %s"
 
 #. Translators: Speaks the column span added to the current column number (example output: through 5).
-#: speech\speech.py:1982
+#: speech\speech.py:1984
 #, python-brace-format
 msgid "through {endCol}"
 msgstr "по {endCol}"
 
 #. Translators: Speaks the row and column span added to the current row and column numbers
 #. (example output: through row 5 column 3).
-#: speech\speech.py:1989
+#: speech\speech.py:1991
 #, python-brace-format
 msgid "through row {row} column {column}"
 msgstr "по строку {row} столбец {column}"
 
 #. Translators: Speaks when there are further details/annotations that can be fetched manually.
-#: speech\speech.py:2023
+#: speech\speech.py:2025
 msgid "has details"
 msgstr "содержит подробности"
 
 #. Translators: Speaks the item level in treeviews (example output: level 2).
-#: speech\speech.py:2045
+#: speech\speech.py:2047
 #, python-format
 msgid "level %s"
 msgstr "уровень %s"
@@ -16824,13 +16824,13 @@ msgstr "уровень %s"
 #. Translators: Main part of the compound string to speak number of columns and rows in a table
 #. Example: If the reported compound string is "with 3 rows and 2 columns", {rowCountTranslation} will be
 #. replaced by "3 rows" and {colCountTranslation} by "2 columns"
-#: speech\speech.py:2069
+#: speech\speech.py:2071
 #, python-brace-format
 msgid "with {rowCountTranslation} and {colCountTranslation}"
 msgstr "из {rowCountTranslation} и {colCountTranslation}"
 
 #. Translators: Speaks number of columns (example output: with 4 columns).
-#: speech\speech.py:2075
+#: speech\speech.py:2077
 #, python-format
 msgid "with %s column"
 msgid_plural "with %s columns"
@@ -16840,7 +16840,7 @@ msgstr[2] "из %s столбцов"
 msgstr[3] "из %s столбцов"
 
 #. Translators: Speaks number of rows (example output: with 2 rows).
-#: speech\speech.py:2078
+#: speech\speech.py:2080
 #, python-format
 msgid "with %s row"
 msgid_plural "with %s rows"
@@ -16851,7 +16851,7 @@ msgstr[3] "из %s строк"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "3 rows".
-#: speech\speech.py:2086
+#: speech\speech.py:2088
 #, python-brace-format
 msgid "{rowCount} row"
 msgid_plural "{rowCount} rows"
@@ -16862,7 +16862,7 @@ msgstr[3] "{rowCount} строк"
 
 #. Translators: Sub-part of the compound string to speak number of rows and columns in a table.
 #. Example: If the full compound string is "table with 3 rwos and 2 columns", this substring is "2 columns".
-#: speech\speech.py:2096
+#: speech\speech.py:2098
 #, python-brace-format
 msgid "{columnCount} column"
 msgid_plural "{columnCount} columns"
@@ -16872,7 +16872,7 @@ msgstr[2] "{columnCount} столбцов"
 msgstr[3] "{columnCount} столбцов"
 
 #. Translators: Number of items in a list (example output: list with 5 items).
-#: speech\speech.py:2286
+#: speech\speech.py:2288
 #, python-format
 msgid "with %s item"
 msgid_plural "with %s items"
@@ -16882,21 +16882,21 @@ msgstr[2] "из %s элементов"
 msgstr[3] "из %s элементов"
 
 #. Translators: Indicates end of something (example output: at the end of a list, speaks out of list).
-#: speech\speech.py:2428 speech\speech.py:2841
+#: speech\speech.py:2430 speech\speech.py:2843
 #, python-format
 msgid "out of %s"
 msgstr "вне %s"
 
 #. Translators: Indicates the page number in a document.
 #. %s will be replaced with the page number.
-#: speech\speech.py:2494
+#: speech\speech.py:2496
 #, python-format
 msgid "page %s"
 msgstr "страница %s"
 
 #. Translators: Indicates the section number in a document.
 #. %s will be replaced with the section number.
-#: speech\speech.py:2501
+#: speech\speech.py:2503
 #, python-format
 msgid "section %s"
 msgstr "раздел %s"
@@ -16904,14 +16904,14 @@ msgstr "раздел %s"
 #. Translators: Indicates the text column number in a document.
 #. {0} will be replaced with the text column number.
 #. {1} will be replaced with the number of text columns.
-#: speech\speech.py:2520
+#: speech\speech.py:2522
 #, python-brace-format
 msgid "column {0} of {1}"
 msgstr "колонка {0} из {1}"
 
 #. Translators: Indicates the text column number in a document.
 #. %s will be replaced with the number of text columns.
-#: speech\speech.py:2525
+#: speech\speech.py:2527
 #, python-format
 msgid "%s column"
 msgid_plural "%s columns"
@@ -16921,37 +16921,37 @@ msgstr[2] "%s колонок"
 msgstr[3] "%s колонок"
 
 #. Translators: Indicates the text column number in a document.
-#: speech\speech.py:2529
+#: speech\speech.py:2531
 #, python-brace-format
 msgid "column {columnNumber}"
 msgstr "колонка {columnNumber}"
 
-#: speech\speech.py:2535
+#: speech\speech.py:2537
 msgid "continuous section break"
 msgstr "разрыв раздела и новый раздел на той же странице"
 
-#: speech\speech.py:2537
+#: speech\speech.py:2539
 msgid "new column section break"
 msgstr "разрыв раздела и новый раздел на следующей колонке"
 
-#: speech\speech.py:2539
+#: speech\speech.py:2541
 msgid "new page section break"
 msgstr "разрыв раздела и новый раздел на следующей странице"
 
-#: speech\speech.py:2541
+#: speech\speech.py:2543
 msgid "even pages section break"
 msgstr "разрыв раздела и новый раздел на следующей чётной странице"
 
-#: speech\speech.py:2543
+#: speech\speech.py:2545
 msgid "odd pages section break"
 msgstr "разрыв раздела и новый раздел на следующей нечётной странице"
 
-#: speech\speech.py:2549
+#: speech\speech.py:2551
 msgid "column break"
 msgstr "разрыв колонки"
 
 #. Translators: Speaks the heading level (example output: heading level 2).
-#: speech\speech.py:2567
+#: speech\speech.py:2569
 #, python-format
 msgid "heading level %d"
 msgstr "заголовок уровня %d"
@@ -16959,19 +16959,19 @@ msgstr "заголовок уровня %d"
 #. Translators: Indicates the style of text.
 #. A style is a collection of formatting settings and depends on the application.
 #. %s will be replaced with the name of the style.
-#: speech\speech.py:2577
+#: speech\speech.py:2579
 #, python-format
 msgid "style %s"
 msgstr "стиль %s"
 
 #. Translators: Indicates that text has reverted to the default style.
 #. A style is a collection of formatting settings and depends on the application.
-#: speech\speech.py:2581
+#: speech\speech.py:2583
 msgid "default style"
 msgstr "стиль по умолчанию"
 
 #. Translators: Indicates that cell does not have border lines.
-#: speech\speech.py:2591
+#: speech\speech.py:2593
 msgid "no border lines"
 msgstr "нет границ"
 
@@ -16979,7 +16979,7 @@ msgstr "нет границ"
 #. This occurs when, for example, a gradient pattern is applied to a spreadsheet cell.
 #. {color1} will be replaced with the first background color.
 #. {color2} will be replaced with the second background color.
-#: speech\speech.py:2622
+#: speech\speech.py:2624
 #, python-brace-format
 msgid "{color1} to {color2}"
 msgstr "{color1} на {color2}"
@@ -16987,248 +16987,248 @@ msgstr "{color1} на {color2}"
 #. Translators: Reported when both the text and background colors change.
 #. {color} will be replaced with the text color.
 #. {backgroundColor} will be replaced with the background color.
-#: speech\speech.py:2627
+#: speech\speech.py:2629
 #, python-brace-format
 msgid "{color} on {backgroundColor}"
 msgstr "{color} на {backgroundColor}"
 
 #. Translators: Reported when the text color changes (but not the background color).
 #. {color} will be replaced with the text color.
-#: speech\speech.py:2633
+#: speech\speech.py:2635
 #, python-brace-format
 msgid "{color}"
 msgstr "{color}"
 
 #. Translators: Reported when the background color changes (but not the text color).
 #. {backgroundColor} will be replaced with the background color.
-#: speech\speech.py:2637
+#: speech\speech.py:2639
 #, python-brace-format
 msgid "{backgroundColor} background"
 msgstr "цвет фона {backgroundColor}"
 
-#: speech\speech.py:2645
+#: speech\speech.py:2647
 #, python-brace-format
 msgid "background pattern {pattern}"
 msgstr "узор {pattern}"
 
 #. Translators: Indicates the line number of the text.
 #. %s will be replaced with the line number.
-#: speech\speech.py:2652
+#: speech\speech.py:2654
 #, python-format
 msgid "line %s"
 msgstr "строка %s"
 
 #. Translators: Reported when text is no longer marked as having been inserted.
-#: speech\speech.py:2662
+#: speech\speech.py:2664
 msgid "not inserted"
 msgstr "нет вставленного"
 
 #. Translators: Reported when text is no longer marked as having been  deleted.
-#: speech\speech.py:2670
+#: speech\speech.py:2672
 msgid "not deleted"
 msgstr "нет удалённого"
 
 #. Translators: Reported when text is revised.
-#: speech\speech.py:2677
+#: speech\speech.py:2679
 #, python-format
 msgid "revised %s"
 msgstr "исправлено %s"
 
 #. Translators: Reported when text is not revised.
-#: speech\speech.py:2680
+#: speech\speech.py:2682
 #, python-format
 msgid "no revised %s"
 msgstr "нет исправлений %s"
 
 #. Translators: Reported when text is marked
-#: speech\speech.py:2688
+#: speech\speech.py:2690
 msgid "marked"
 msgstr "отмеченный"
 
 #. Translators: Reported when text is no longer marked
-#: speech\speech.py:2690
+#: speech\speech.py:2692
 msgid "not marked"
 msgstr "не отмеченный"
 
 #. Translators: Reported when text is color-highlighted
-#: speech\speech.py:2699
+#: speech\speech.py:2701
 #, python-brace-format
 msgid "highlighted in {color}"
 msgstr "подсвечено {color}"
 
 #. Translators: Reported when text is no longer marked
-#: speech\speech.py:2701
+#: speech\speech.py:2703
 msgid "not highlighted"
 msgstr "не подсвечено"
 
 #. Translators: Reported when text is marked as strong (e.g. bold)
-#: speech\speech.py:2709
+#: speech\speech.py:2711
 msgid "strong"
 msgstr "сильное акцентирование"
 
 #. Translators: Reported when text is no longer marked as strong (e.g. bold)
-#: speech\speech.py:2711
+#: speech\speech.py:2713
 msgid "not strong"
 msgstr "нет сильного акцентирования"
 
 #. Translators: Reported when text is marked as emphasised
-#: speech\speech.py:2718
+#: speech\speech.py:2720
 msgid "emphasised"
 msgstr "акцентирование"
 
 #. Translators: Reported when text is no longer marked as emphasised
-#: speech\speech.py:2720
+#: speech\speech.py:2722
 msgid "not emphasised"
 msgstr "нет акцентирования"
 
 #. Translators: Reported when text is not bolded.
-#: speech\speech.py:2729
+#: speech\speech.py:2731
 msgid "no bold"
 msgstr "нет полужирного"
 
 #. Translators: Reported when text is not italicized.
-#: speech\speech.py:2737
+#: speech\speech.py:2739
 msgid "no italic"
 msgstr "нет курсивного"
 
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
-#: speech\speech.py:2745
+#: speech\speech.py:2747
 msgid "double strikethrough"
 msgstr "двойное зачёркивание"
 
 #. Translators: Reported when text is formatted with strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
-#: speech\speech.py:2748
+#: speech\speech.py:2750
 msgid "strikethrough"
 msgstr "зачёркивание"
 
 #. Translators: Reported when text is formatted without strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough
-#: speech\speech.py:2752
+#: speech\speech.py:2754
 msgid "no strikethrough"
 msgstr "нет зачёркивания"
 
 #. Translators: Reported when text is underlined.
-#: speech\speech.py:2758
+#: speech\speech.py:2760
 msgid "underlined"
 msgstr "подчёркивание"
 
 #. Translators: Reported when text is not underlined.
-#: speech\speech.py:2760
+#: speech\speech.py:2762
 msgid "not underlined"
 msgstr "нет подчёркивания"
 
 #. Translators: Reported when text is hidden.
-#: speech\speech.py:2767
+#: speech\speech.py:2769
 msgid "hidden"
 msgstr "скрытый"
 
 #. Translators: Reported when text is not hidden.
-#: speech\speech.py:2769
+#: speech\speech.py:2771
 msgid "not hidden"
 msgstr "нет скрытого"
 
 #. Translators: the label for paragraph format left indent
-#: speech\speech.py:2800
+#: speech\speech.py:2802
 msgid "left indent"
 msgstr "отступ слева"
 
 #. Translators: the message when there is no paragraph format left indent
-#: speech\speech.py:2802
+#: speech\speech.py:2804
 msgid "no left indent"
 msgstr "нет отступа слева"
 
 #. Translators: the label for paragraph format right indent
-#: speech\speech.py:2806
+#: speech\speech.py:2808
 msgid "right indent"
 msgstr "отступ справа"
 
 #. Translators: the message when there is no paragraph format right indent
-#: speech\speech.py:2808
+#: speech\speech.py:2810
 msgid "no right indent"
 msgstr "нет отступа справа"
 
 #. Translators: the label for paragraph format hanging indent
-#: speech\speech.py:2812
+#: speech\speech.py:2814
 msgid "hanging indent"
 msgstr "висячий отступ"
 
 #. Translators: the message when there is no paragraph format hanging indent
-#: speech\speech.py:2814
+#: speech\speech.py:2816
 msgid "no hanging indent"
 msgstr "нет висячего отступа"
 
 #. Translators: the label for paragraph format first line indent
-#: speech\speech.py:2818
+#: speech\speech.py:2820
 msgid "first line indent"
 msgstr "отступ первой строки"
 
 #. Translators: the message when there is no paragraph format first line indent
-#: speech\speech.py:2820
+#: speech\speech.py:2822
 msgid "no first line indent"
 msgstr "нет отступа первой строки"
 
 #. Translators: a type of line spacing (E.g. single line spacing)
-#: speech\speech.py:2836
+#: speech\speech.py:2838
 #, python-format
 msgid "line spacing %s"
 msgstr "межстрочный интервал %s"
 
 #. Translators: Reported when text contains a draft comment.
-#: speech\speech.py:2850
+#: speech\speech.py:2852
 msgid "has draft comment"
 msgstr "содержит черновое примечания"
 
 #. Translators: Reported when text contains a resolved comment.
-#: speech\speech.py:2853
+#: speech\speech.py:2855
 msgid "has resolved comment"
 msgstr "содержит разрешённое примечание"
 
 #. Translators: Reported when text no longer contains a comment.
-#: speech\speech.py:2860
+#: speech\speech.py:2862
 msgid "out of comment"
 msgstr "вне примечания"
 
 #. Translators: Reported when text contains a bookmark
-#: speech\speech.py:2868
+#: speech\speech.py:2870
 msgid "bookmark"
 msgstr "закладка"
 
 #. Translators: Reported when text no longer contains a bookmark
-#: speech\speech.py:2872
+#: speech\speech.py:2874
 msgid "out of bookmark"
 msgstr "вне закладки"
 
 #. Translators: Reported when text contains a spelling error.
-#: speech\speech.py:2880
+#: speech\speech.py:2882
 msgid "spelling error"
 msgstr "орфографическая ошибка"
 
 #. Translators: Reported when moving out of text containing a spelling error.
-#: speech\speech.py:2883
+#: speech\speech.py:2885
 msgid "out of spelling error"
 msgstr "вне орфографической ошибки"
 
 #. Translators: Reported when text contains a grammar error.
-#: speech\speech.py:2893
+#: speech\speech.py:2895
 msgid "grammar error"
 msgstr "грамматическая ошибка"
 
 #. Translators: Reported when moving out of text containing a grammar error.
-#: speech\speech.py:2896
+#: speech\speech.py:2898
 msgid "out of grammar error"
 msgstr "вне грамматической ошибки"
 
 #. Translators: Indicates end of a table.
-#: speech\speech.py:2927
+#: speech\speech.py:2929
 msgid "out of table"
 msgstr "вне таблицы"
 
 #. Translators: Main part of the compound string to report a table
 #. Example: If the reported compound string is "table with 2 columns and 3 rows", {colCountTranslation}
 #. will be replaced by "2 columns" and {rowCountTranslation} by "3 rows"
-#: speech\speech.py:2942
+#: speech\speech.py:2944
 #, python-brace-format
 msgid "table with {columnCountText} and {rowCountText}"
 msgstr "таблица из {columnCountText} и {rowCountText}"

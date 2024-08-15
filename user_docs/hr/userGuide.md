@@ -2944,8 +2944,8 @@ Na primjer, za instalirane beta dodatke, biti ćete obaviješteni samo o Beta ka
 
 |Opcija |ponašanje |
 |---|---|
-|omogućeno |obavještava o dostupnosti ažuriranja unutar istog kanala |
-|onemogućeno |ne provjerava automatski za ažuriranja dodataka |
+|Obavijesti |obavještava o dostupnosti ažuriranja unutar istog kanala |
+|Onemogućeno |ne provjerava automatski za ažuriranja dodataka |
 
 #### Windows OCR postavke {#Win10OcrSettings}
 
@@ -3656,9 +3656,7 @@ Za više informacija, pročitajte opširno poglavlje: [Dodaci i Add-on store](#A
 
 ### Stvori prijenosnu kopiju {#CreatePortableCopy}
 
-Ovo otvara dijaloški okvir koji služi za stvaranje prijenosne verzije iz instalacijske.
-
-Dijaloški okvir za stvaranje prijenosne verzije  NVDA odnosno instalacije NVDA na ovaj Pc će vas pitati gdje želite stvoriti prijenosnu kopiju odnosno instalirati NVDA.
+Ova će opcija otvoriti dijaloški okvir koji služi za stvaranje prijenosne inačice iz trenutno pokrenute kopije NVDA.
 
 Za više informacija, slijedite upute u [poglavlju stvaranje prijenosne kopije.](#CreatingAPortableCopy)
 

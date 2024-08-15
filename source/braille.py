@@ -1640,6 +1640,7 @@ class TextInfoRegion(Region):
 					pass
 				return
 		self._setCursor(info)
+		_speakOnRouting(info.copy())
 
 	def nextLine(self):
 		dest = self._readingInfo.copy()
@@ -3708,3 +3709,17 @@ def getDisplayDrivers(
 			continue
 		if not filterFunc or filterFunc(display):
 			yield display
+
+
+def _speakOnRouting(info: textInfos.TextInfo):
+	"""Speaks the character at the cursor position after routing.
+
+	:param info: The TextInfo at the cursor position after routing.
+	"""
+	if not config.conf["braille"]["speakOnRouting"]:
+		return
+	# Import late to avoid circular import.
+	from speech.speech import spellTextInfo
+
+	info.expand(textInfos.UNIT_CHARACTER)
+	spellTextInfo(info)
