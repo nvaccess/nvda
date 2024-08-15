@@ -39,3 +39,7 @@ class TestIsSamePageUrl(unittest.TestCase):
 		self.assertFalse(
 			isSamePageUrl("http://example.com/page?q=3#section", "http://example.com/page?q4#section"),
 		)
+
+	def test_fragmentHasPath(self):
+		"""URLs whose fragments contain paths are not considered the same page."""
+		self.assertFalse(isSamePageUrl("http://example.com/page#fragment/path", "http://example.com/page"))
