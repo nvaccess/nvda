@@ -277,6 +277,8 @@ positiveStateLabels = {
 	controlTypes.State.HASCOMMENT: _("cmnt"),
 	# Translators: Displayed in braille when a control is switched on
 	controlTypes.State.ON: "⣏⣿⣹",
+	# Translators: Displayed in braille when a link destination pointsto the same page
+	controlTypes.State.INTERNAL_LINK: _("smp"),
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
