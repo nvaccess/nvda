@@ -1760,7 +1760,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		self._windowRowBufferOffsets: dict[tuple[int, int]] = {}
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
 		#: The position in L{brailleCells} where the display window starts (inclusive).
 		#: @type: int
 
