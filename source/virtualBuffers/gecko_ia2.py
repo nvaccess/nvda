@@ -172,7 +172,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 				role = controlTypes.Role.TEXTFRAME
 			elif config.conf["documentFormatting"]["reportLinkType"]:
-				if (value := attrs.get("IAccessible::value")) is not None) and urlUtils._valueToSamePage(value, self.obj.documentConstantIdentifier):
+				if self.NVDAObjectAtStart.isInternalLink:
 					states.add(controlTypes.State.INTERNAL_LINK)
 		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
