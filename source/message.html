@@ -45,6 +45,8 @@ function onCloseButtonPress() {
 function windowOnLoad() {
 	if (args) {
 		document.title = args.item('title');
+		// We can't use innerText, even for text-only nodes,
+		// because of #12004.
 		messageDiv.innerHTML = args.item('message');
 		// If caller wants a close button
 		if (args.item('closeButtonText') != null) {

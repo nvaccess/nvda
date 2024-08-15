@@ -73,17 +73,16 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: str | None = None) -
 			# The title may be something like "Formatting".
 			"This feature ({title}) is unavailable while on secure screens"
 			" such as the sign-on screen or UAC prompt.",
-		)
-		browsableMessageUnavailableMsg = browsableMessageUnavailableMsg.format(title=title)
+		).format(title=title)
 
 	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
 
 	log.debug("Presenting browsable message unavailable warning.")
-	gui.messageBox(
+	wx.CallAfter(
+		gui.messageBox,
 		browsableMessageUnavailableMsg,
-		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message
-		# dialog.
+		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
 		caption=_("Feature unavailable."),
 		style=wx.ICON_ERROR | wx.OK,
 	)
@@ -115,14 +114,13 @@ def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 			# The title may be something like "Formatting".
 			"An error has caused this feature ({title}) to be unavailable at this time. "
 			"Restarting NVDA or Windows may solve this problem.",
-		)
-		browsableMessageUnavailableMsg = browsableMessageUnavailableMsg.format(title=title)
-
-	import wx  # Late import to prevent circular dependency.
-	import gui  # Late import to prevent circular dependency.
+		).format(title=title)
 
 	log.debug("Presenting browsable message unavailable warning.")
-	gui.messageBox(
+	import wx  # Late import to prevent circular dependency.
+	import gui  # Late import to prevent circular dependency.
+	wx.CallAfter(
+		gui.messageBox,
 		browsableMessageUnavailableMsg,
 		# Translators: This is the title for a warning dialog, shown if NVDA cannot open a browsable message.
 		caption=_("Feature unavailable."),
@@ -146,14 +144,8 @@ def browseableMessage(
 	:param closeButton: Whether to include a "close" button, defaults to False.
 	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
 	"""
-	if title is None:
-		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
-		title = _("NVDA Message")
-
 	if isRunningOnSecureDesktop():
-		import wx  # Late import to prevent circular dependency.
-
-		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
+		_warnBrowsableMessageNotAvailableOnSecureScreens(title)
 		return
 
 	htmlFileName = os.path.join(globalVars.appDir, "message.html")
@@ -175,6 +167,10 @@ def browseableMessage(
 		log.error("Scripting.Dictionary component unavailable", exc_info=True)
 		_warnBrowsableMessageComponentFailure(title)
 		return
+
+	if title is None:
+		# Translators: The title for the dialog used to present general NVDA messages in browse mode.
+		title = _("NVDA Message")
 	d.add("title", title)
 
 	if not isHtml:
