@@ -129,7 +129,7 @@ repos:
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
       files: ^requirements\.txt$
-      entry: py -m licensecheck -0 --format ansi
+      entry: python -m licensecheck -0 --format ansi
       language: python
       additional_dependencies: [licensecheck]
       pass_filenames: false
