@@ -20,13 +20,14 @@ def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
 	urlOnPageParsed: ParseResult = urlparse(urlOnPage)
 	rootUrlParsed: ParseResult = urlparse(rootUrl)
 
+	fragmentInvalidChars: str = "%/"  # Characters not considered valid in fragments
 	if (
 		urlOnPageParsed.scheme == rootUrlParsed.scheme
 		and urlOnPageParsed.netloc == rootUrlParsed.netloc
 		and urlOnPageParsed.path == rootUrlParsed.path
 		and urlOnPageParsed.query == rootUrlParsed.query
 		and urlOnPageParsed.fragment
-		and urlOnPageParsed.fragment.isalnum()
+		and not any(char in urlOnPageParsed.fragment for char in fragmentInvalidChars)
 	):
 		return True
 
