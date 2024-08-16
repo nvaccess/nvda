@@ -213,7 +213,11 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
-		if self.role == controlTypes.Role.LINK and self.isInternalLink:
+		if (
+			self.role == controlTypes.Role.LINK
+			and controlTypes.State.LINKED in states
+			and self.isInternalLink
+		):
 			states.add(controlTypes.State.INTERNAL_LINK)
 		return states
 
