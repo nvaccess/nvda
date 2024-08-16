@@ -62,6 +62,9 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Anew utils/urlUtils/isSamePageUrl function has been added to check links (#141, @LeonarddeR)
 * A new INTERNAL_LINK state has been added to controlTypes.states.State (#141, @nvdaes)
 * A new isInternalLink property has been added on `NVDAObject`. It queries the treeInterceptor by default, if any. (#141, @LeonarddeR, @nvdaes)
+* BrowseModeTreeInterceptor object has a new documentUrl property (#141, @LeonarddeR)
+* BrowseModeTreeInterceptor object has a new isInternalLinkInDocument method which accepts an URL, to check if it corresponds to an internal link (#141, @LeonarddeR)
+
 
 #### Deprecations
 
