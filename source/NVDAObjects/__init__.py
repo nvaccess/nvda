@@ -1627,3 +1627,17 @@ class NVDAObject(
 		if not isLockScreenModeActive():
 			return False
 		return _isObjectBelowLockScreen(self)
+
+	isInternalLink: bool
+	"""Typing information for auto property _get_isInternalLink
+	"""
+
+	def _get_isInternalLink(self) -> bool:
+		if self.role != controlTypes.Role.LINK:
+			return False
+		from browseMode import BrowseModeDocumentTreeInterceptor
+
+		ti = getattr(self, "treeInterceptor", None)
+		if not isinstance(ti, BrowseModeDocumentTreeInterceptor):
+			return False
+		return ti.isInternalLinkInDocument(self.value)

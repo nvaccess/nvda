@@ -66,10 +66,19 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 class ChromiumUIA(web.UIAWeb):
 	_TextInfo = ChromiumUIATextInfo
 
+	def _get_states(self):
+		states = super().states
+		if self.role == controlTypes.Role.LINK and self.isInternalLink:
+			states.add(controlTypes.State.INTERNAL_LINK)
+		return states
+
 
 class ChromiumUIATreeInterceptor(web.UIAWebTreeInterceptor):
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
+
+	def _get_documentUrl(self):
+		return self.rootNVDAObject.value
 
 
 class ChromiumUIADocument(ChromiumUIA):

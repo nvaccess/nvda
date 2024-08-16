@@ -54,6 +54,7 @@ from NVDAObjects import NVDAObject
 import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
+from utils import urlUtils
 from typing import Optional
 
 
@@ -304,6 +305,14 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG)
+	documentUrl: str | None = None
+	"""The URL of the current browse mode document.
+	C{None} when there is no URL or it is unknown.
+	"""
+
+	def isInternalLinkInDocument(self, url: str) -> bool:
+		"""Returns whether the given url is a same page link within the current browse mode document."""
+		return urlUtils.isSamePageUrl(url, self.documentUrl)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError

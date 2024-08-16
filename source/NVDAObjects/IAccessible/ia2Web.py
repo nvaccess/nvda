@@ -31,7 +31,6 @@ import api
 import speech
 import config
 import NVDAObjects
-from utils import urlUtils
 
 
 class IA2WebAnnotationTarget(AnnotationTarget):
@@ -214,24 +213,9 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
-		if config.conf["documentFormatting"]["reportLinkType"] and self.isInternalLink:
+		if self.role == controlTypes.Role.LINK and self.isInternalLink:
 			states.add(controlTypes.State.INTERNAL_LINK)
 		return states
-
-	@property
-	def isInternalLink(self) -> bool:
-		if self.role != controlTypes.Role.LINK:
-			return False
-		value = self.value
-		if not value:
-			return False
-		ti = getattr(self, "treeInterceptor", None)
-		if ti is None or not hasattr(ti, "documentConstantIdentifier"):
-			return False
-		documentConstantIdentifier = ti.documentConstantIdentifier
-		if urlUtils.isSamePageUrl(value, documentConstantIdentifier):
-			return True
-		return False
 
 	def _get_landmark(self):
 		xmlRoles = self.IA2Attributes.get("xml-roles", "").split(" ")
