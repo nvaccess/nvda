@@ -26,7 +26,7 @@ def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
 		and urlOnPageParsed.path == rootUrlParsed.path
 		and urlOnPageParsed.query == rootUrlParsed.query
 		and urlOnPageParsed.fragment
-		and "/" not in urlOnPageParsed.fragment
+		and urlOnPageParsed.fragment.isalnum()
 	):
 		return True
 
