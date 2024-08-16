@@ -6,8 +6,10 @@ ci:
   # Can't run Windows scons scripts on Linux.
   # unit testing requires our python environment,
   # which cannot be configured with pre-commit.ci:
-  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment
-  skip: [scons-source, checkPot, unitTest]
+  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
+  # Can't run licenseCheck as it relies on telemetry,
+  # which CI blocks.
+  skip: [scons-source, checkPot, unitTest, licenseCheck]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
@@ -128,8 +130,7 @@ repos:
       types_or: [python, c, c++, batch]
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
-      files: ^requirements\.txt$
-      entry: python -m licensecheck -0 --format ansi
-      language: python
-      additional_dependencies: [licensecheck]
+      files: ^(requirements\.txt|runlicensecheck\.bat)$
+      entry: ./runlicensecheck.bat
+      language: script
       pass_filenames: false
