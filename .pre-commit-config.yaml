@@ -25,7 +25,9 @@ repos:
 
 - repo: meta
   hooks:
+    # ensures that exclude directives apply to any file in the repository.
     - id: check-useless-excludes
+    # ensures that the configured hooks apply to at least one file in the repository.
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
