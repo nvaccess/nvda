@@ -17,6 +17,11 @@ The available options are:
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 * When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
   * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
+* Improvements in Microsoft PowerPoint text objects:
+  * It is now possible to use braille display routing keys to move the text cursor. (#9101, #17004)
+  * It is now possible to use the review cursor selection commands to select text. (#17004)
+  * Screen coordinate reporting is now accurate per character. (#17015, @LeonarddeR)
+  * You can now move per sentence in Text frames. (#17015, @LeonarddeR)
 
 ### Changes
 
@@ -39,11 +44,7 @@ The available options are:
 * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
-* Improvements in Microsoft PowerPoint: (#17004)
-  * It is now possible to use braille display routing keys to move the text cursor. (#9101)
-  * It is now possible to use the review cursor selection commands to select text.
-  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
-  * Screen coordinate reporting is now accurate per character. (#17006 , @LeonarddeR)
+* In Microsoft PowerPoint, caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
 
 ### Changes for Developers
 

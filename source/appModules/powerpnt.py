@@ -12,6 +12,8 @@ import comtypes
 from comtypes.automation import IDispatch
 import comtypes.client
 import ctypes
+
+import comtypes.client.lazybind
 import oleacc
 import comHelper
 import ui
@@ -1053,8 +1055,8 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return start, end
 
 	def _getPptTextRange(self, start: int, end: int, clamp: bool = False):
-		if not start < end:
-			log.debug(f"start must be less than end. Got {start=}, {end=}.", stack_info=True)
+		if not start <= end:
+			log.debug(f"start must be less than or equal to end. Got {start=}, {end=}.", stack_info=True)
 			return
 		maxLength = self._getStoryLength()
 		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
@@ -1085,45 +1087,29 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			return start, end
 		return offset, offset + 1
 
-	def _getWordOffsets(self, offset) -> tuple[int, int]:
-		words = self.obj.ppObject.textRange.words()
-		for word in words:
-			start = word.start - 1
-			end = start + word.length
+	@staticmethod
+	def _getOffsets(ranges: comtypes.client.lazybind.Dispatch, offset: int) -> tuple[int, int, int]:
+		for i, chunk in enumerate(ranges):
+			start = chunk.start - 1
+			end = start + chunk.length
 			if start <= offset < end:
-				return start, end
-		return offset, offset + 1
-
-	def _getLineNumAndOffsets(self, offset) -> tuple[int, int, int]:
-		# Seems to be no direct way to find the line offsets for a given offset.
-		# Therefore walk through all the lines until one surrounds  the offset.
-		lines = self.obj.ppObject.textRange.lines()
-		length = lines.length
-		# #3403: handle case where offset is at end of the text in in a control with only one line
-		# The offset should be limited to the last offset in the text, but only if the text does not end in a line feed.
-		if length and offset >= length and self._getTextRange(length - 1, length) != "\n":
-			offset = min(offset, length - 1)
-		for lineNum, line in enumerate(lines):
-			start = line.start - 1
-			end = start + line.length
-			if start <= offset < end:
-				return lineNum, start, end
+				return i, start, end
 		return 0, offset, offset + 1
 
+	def _getWordOffsets(self, offset) -> tuple[int, int]:
+		return self._getOffsets(self.obj.ppObject.textRange.words(), offset)[1:]
+
 	def _getLineNumFromOffset(self, offset: int) -> int:
-		return self._getLineNumAndOffsets(offset)[0]
+		return self._getOffsets(self.obj.ppObject.textRange.lines(), offset)[0]
 
 	def _getLineOffsets(self, offset):
-		return self._getLineNumAndOffsets(offset)[1:]
+		return self._getOffsets(self.obj.ppObject.textRange.lines(), offset)[1:]
 
 	def _getParagraphOffsets(self, offset):
-		paragraphs = self.obj.ppObject.textRange.paragraphs()
-		for paragraph in paragraphs:
-			start = paragraph.start - 1
-			end = start + paragraph.length
-			if start <= offset < end:
-				return start, end
-		return offset, offset + 1
+		return self._getOffsets(self.obj.ppObject.textRange.paragraphs(), offset)[1:]
+
+	def _getSentenceOffsets(self, offset):
+		return self._getOffsets(self.obj.ppObject.textRange.sentences(), offset)[1:]
 
 	def _getBoundingRectFromOffset(self, offset: int):
 		range = self.obj.ppObject.textRange.characters(offset + 1, 1)
