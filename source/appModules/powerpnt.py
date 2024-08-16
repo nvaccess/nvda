@@ -1056,8 +1056,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getPptTextRange(self, start: int, end: int, clamp: bool = False):
 		if not start <= end:
-			log.debug(f"start must be less than or equal to end. Got {start=}, {end=}.", stack_info=True)
-			return
+			raise RuntimeError(
+				f"start must be less than or equal to end. Got {start=}, {end=}.",
+				stack_info=True,
+			)
 		maxLength = self._getStoryLength()
 		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
 		if not (0 <= start < maxLength) and clamp:
