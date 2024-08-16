@@ -43,3 +43,15 @@ class TestIsSamePageUrl(unittest.TestCase):
 	def test_fragmentHasPath(self):
 		"""URLs whose fragments contain paths are not considered the same page."""
 		self.assertFalse(isSamePageUrl("http://example.com/page#fragment/path", "http://example.com/page"))
+
+	def test_unusualCharacters(self):
+		"""Test URLs with unusual characters."""
+		self.assertFalse(isSamePageUrl("http://example.com/page#%E2%9C%93", "http://example.com/page"))
+
+	def test_ftpScheme(self):
+		"""Test URLs with different schemes like FTP."""
+		self.assertFalse(isSamePageUrl("ftp://example.com/page#section", "http://example.com/page"))
+
+	def test_mailtoScheme(self):
+		"""Test URLs with different schemes like mailto."""
+		self.assertFalse(isSamePageUrl("mailto://example.com/page#section", "http://example.com/page"))

@@ -1630,6 +1630,8 @@ class NVDAObject(
 
 	isInternalLink: bool
 	"""Typing information for auto property _get_isInternalLink
+	Indicates whether the current link is an internal link within the document.
+	Determines if the link points to the same page based on its value and the document context.
 	"""
 
 	def _get_isInternalLink(self) -> bool:
