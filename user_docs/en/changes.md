@@ -42,6 +42,8 @@ The available options are:
 * Improvements in Microsoft PowerPoint: (#17004)
   * It is now possible to use braille display routing keys to move the text cursor. (#9101)
   * It is now possible to use the review cursor selection commands to select text.
+  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+  * Screen coordinate reporting is now accurate per character. (#17006 , @LeonarddeR)
 
 ### Changes for Developers
 
