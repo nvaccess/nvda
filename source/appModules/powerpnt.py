@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2022 NV Access Limited
+# Copyright (C) 2012-2024 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1052,19 +1052,49 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end = start + sel.length
 		return start, end
 
-	def _getTextRange(self, start, end):
-		# #4619: First let's "normalise" the text, i.e. get rid of the CR/LF mess
-		text = self.obj.ppObject.textRange.text
-		text = text.replace("\r\n", "\n")
-		# Now string slicing will be okay
-		text = text[start:end].replace("\x0b", "\n")
-		text = text.replace("\r", "\n")
-		return text
+	def _getPptTextRange(self, start: int, end: int, clamp: bool = False):
+		if not start < end:
+			log.debug(f"start must be less than end. Got {start=}, {end=}.", stack_info=True)
+			return
+		maxLength = self._getStoryLength()
+		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
+		if not (0 <= start < maxLength) and clamp:
+			log.debugWarning(
+				f"Got out of range {start=} (min 0, max {maxLength - 1}. Clamping.",
+				stack_info=True,
+			)
+			start = max(0, min(start, maxLength - 1))
+		# Having end = 0 does not make sense, as there will be no selection if this is the case.
+		if not (0 < end <= maxLength) and clamp:
+			log.debugWarning(f"Got out of range {end=} (min 1, max {maxLength}. Clamping.", stack_info=True)
+			end = max(1, min(end, maxLength))
+		# The TextRange.characters method is 1-indexed.
+		return self.obj.ppObject.textRange.characters(start + 1, end - start)
 
-	def _getStoryLength(self):
+	def _getTextRange(self, start: int, end: int) -> str:
+		return self._getPptTextRange(start, end).text.replace("\x0b", "\n")
+
+	def _getStoryLength(self) -> int:
 		return self.obj.ppObject.textRange.length
 
-	def _getLineOffsets(self, offset):
+	def _getCharacterOffsets(self, offset: int) -> tuple[int, int]:
+		range = self.obj.ppObject.textRange.characters(offset + 1, 1)
+		start = range.start - 1
+		end = start + range.length
+		if start <= offset < end:
+			return start, end
+		return offset, offset + 1
+
+	def _getWordOffsets(self, offset) -> tuple[int, int]:
+		words = self.obj.ppObject.textRange.words()
+		for word in words:
+			start = word.start - 1
+			end = start + word.length
+			if start <= offset < end:
+				return start, end
+		return offset, offset + 1
+
+	def _getLineNumAndOffsets(self, offset) -> tuple[int, int, int]:
 		# Seems to be no direct way to find the line offsets for a given offset.
 		# Therefore walk through all the lines until one surrounds  the offset.
 		lines = self.obj.ppObject.textRange.lines()
@@ -1073,12 +1103,42 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# The offset should be limited to the last offset in the text, but only if the text does not end in a line feed.
 		if length and offset >= length and self._getTextRange(length - 1, length) != "\n":
 			offset = min(offset, length - 1)
-		for line in lines:
+		for lineNum, line in enumerate(lines):
 			start = line.start - 1
 			end = start + line.length
 			if start <= offset < end:
+				return lineNum, start, end
+		return 0, offset, offset + 1
+
+	def _getLineNumFromOffset(self, offset: int) -> int:
+		return self._getLineNumAndOffsets(offset)[0]
+
+	def _getLineOffsets(self, offset):
+		return self._getLineNumAndOffsets(offset)[1:]
+
+	def _getParagraphOffsets(self, offset):
+		paragraphs = self.obj.ppObject.textRange.paragraphs()
+		for paragraph in paragraphs:
+			start = paragraph.start - 1
+			end = start + paragraph.length
+			if start <= offset < end:
 				return start, end
 		return offset, offset + 1
+
+	def _getBoundingRectFromOffset(self, offset: int):
+		range = self.obj.ppObject.textRange.characters(offset + 1, 1)
+		try:
+			rangeLeft = range.BoundLeft
+			rangeTop = range.boundTop
+			rangeWidth = range.BoundWidth
+			rangeHeight = range.BoundHeight
+		except comtypes.COMError as e:
+			raise LookupError from e
+		left = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsX(rangeLeft)
+		top = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsY(rangeTop)
+		right = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsX(rangeLeft + rangeWidth)
+		bottom = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsY(rangeTop + rangeHeight)
+		return RectLTRB(left, top, right, bottom)
 
 	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
 		formatField = textInfos.FormatField()
@@ -1129,34 +1189,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return formatField, (startOffset, endOffset)
 
 	def _setCaretOffset(self, offset: int):
-		if not (0 <= offset <= (maxLength := self._getStoryLength())):
-			log.debugWarning(
-				f"Got out of range {offset=} (min 0, max {maxLength}. Clamping.",
-				stack_info=True,
-			)
-			offset = max(0, min(offset, maxLength))
-		# Use the TextRange.select method to move the text caret to a 0-length TextRange.
-		# The TextRange.characters method is 1-indexed.
-		self.obj.ppObject.textRange.characters(offset + 1, 0).select()
+		return self._setSelectionOffsets(offset, offset)
 
 	def _setSelectionOffsets(self, start: int, end: int):
-		if not start < end:
-			log.debug(f"start must be less than end. Got {start=}, {end=}.", stack_info=True)
-			return
-		maxLength = self._getStoryLength()
-		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
-		if not (0 <= start < maxLength):
-			log.debugWarning(
-				f"Got out of range {start=} (min 0, max {maxLength - 1}. Clamping.",
-				stack_info=True,
-			)
-			start = max(0, min(start, maxLength - 1))
-		# Having end = 0 does not make sense, as there will be no selection if this is the case.
-		if not (0 < end <= maxLength):
-			log.debugWarning(f"Got out of range {end=} (min 1, max {maxLength}. Clamping.", stack_info=True)
-			end = max(1, min(end, maxLength))
-		# The TextRange.characters method is 1-indexed.
-		self.obj.ppObject.textRange.characters(start + 1, end - start).select()
+		self._getPptTextRange(start, end, clamp=True).select()
 
 
 class Table(Shape):
