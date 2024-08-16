@@ -3,14 +3,33 @@ exclude: ^user_docs/(?!en/).*$
 # https://pre-commit.ci/
 # Configuration for Continuous Integration service
 ci:
-  # Can't run Windows scripts on Linux
-  # These also do not apply fixes, only run tests
+  # Can't run Windows scons scripts on Linux.
+  # unit testing requires our python environment,
+  # which cannot be configured with pre-commit.ci:
+  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment .
+  # Can't run licenseCheck as it relies on telemetry,
+  # which CI blocks.
   skip: [scons-source, checkPot, unitTest, licenseCheck]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
 
+default_language_version:
+  python: python3.11
+
 repos:
+- repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+  rev: v1.6.1
+  hooks:
+    - id: check-pre-commit-ci-config
+
+- repo: meta
+  hooks:
+    # ensures that exclude directives apply to any file in the repository.
+    - id: check-useless-excludes
+    # ensures that the configured hooks apply to at least one file in the repository.
+    - id: check-hooks-apply
+
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.6.0
   hooks:
