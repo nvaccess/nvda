@@ -31,7 +31,6 @@ import config
 from NVDAObjects.IAccessible import normalizeIA2TextFormatField, IA2TextTextInfo
 import documentBase
 import locationHelper
-from utils import urlUtils
 
 
 def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str, typing.Any]:
@@ -173,10 +172,8 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if controlTypes.State.LINKED not in states:
 				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 				role = controlTypes.Role.TEXTFRAME
-			elif (
-				config.conf["documentFormatting"]["reportLinkType"]
-				and (value := attrs.get("IAccessible::value")) is not None
-				and urlUtils.isSamePageUrl(value, self.obj.documentConstantIdentifier)
+			elif (value := attrs.get("IAccessible::value")) is not None and self.obj.isInternalLinkInDocument(
+				value,
 			):
 				states.add(controlTypes.State.INTERNAL_LINK)
 		level = attrs.get("IAccessible2::attribute_level", "")
@@ -330,6 +327,9 @@ class Gecko_ia2(VirtualBuffer):
 			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
 			isDefunct = True
 		return not isDefunct
+
+	def _get_documentUrl(self) -> str:
+		return self.documentConstantIdentifier
 
 	def getNVDAObjectFromIdentifier(
 		self,
