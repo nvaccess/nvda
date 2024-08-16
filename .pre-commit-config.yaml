@@ -3,14 +3,24 @@ exclude: ^user_docs/(?!en/).*$
 # https://pre-commit.ci/
 # Configuration for Continuous Integration service
 ci:
-  # Can't run Windows scripts on Linux
-  # These also do not apply fixes, only run tests
-  skip: [scons-source, checkPot, unitTest, licenseCheck]
+  # Can't run Windows scons scripts on Linux.
+  # unit testing requires our python environment,
+  # which cannot be configured with pre-commit.ci:
+  # https://stackoverflow.com/questions/70778806/pre-commit-not-using-virtual-environment
+  skip: [scons-source, checkPot, unitTest]
   autoupdate_schedule: monthly
   autoupdate_commit_msg: "Pre-commit auto-update"
   autofix_commit_msg: "Pre-commit auto-fix"
 
+default_language_version:
+  python: python3.11
+
 repos:
+- repo: https://github.com/pre-commit-ci/pre-commit-ci-config
+  rev: v1.6.1
+  hooks:
+    - id: check-pre-commit-ci-config
+
 - repo: https://github.com/pre-commit/pre-commit-hooks
   rev: v4.6.0
   hooks:
@@ -113,7 +123,8 @@ repos:
       types_or: [python, c, c++, batch]
     - id: licenseCheck
       name: Check license compatibility of pip dependencies
-      files: ^(requirements\.txt|runlicensecheck\.bat)$
-      entry: ./runlicensecheck.bat
-      language: script
+      files: ^requirements\.txt$
+      entry: py -m licensecheck -0 --format ansi
+      language: python
+      additional_dependencies: [licensecheck]
       pass_filenames: false
