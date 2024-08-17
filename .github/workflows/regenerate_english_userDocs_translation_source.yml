@@ -51,18 +51,17 @@ jobs:
             $rebuiltMarkdown = "user_docs/en/rebuilt_$file"
             $newSkeleton = "user_docs/en/new_$baseName.skel"
 
-            python user_docs/markdownTranslate.py generateMarkdown -x $xliff -s $skeleton -o $rebuiltMarkdown
+            python user_docs/markdownTranslate.py generateMarkdown -x $xliff -o $rebuiltMarkdown -u
+            python user_docs/markdownTranslate.py extractSkeleton -x $xliff -o $skeleton
             python user_docs/markdownTranslate.py updateSkeleton -m $rebuiltMarkdown -n $markdown -s $skeleton -o $newSkeleton
-            Remove-Item $skeleton
-            Move-Item -Path $newSkeleton -Destination $skeleton
-            python user_docs/markdownTranslate.py generateXliff -m $markdown -s $skeleton -o $xliff
+            python user_docs/markdownTranslate.py generateXliff -m $markdown -s $newSkeleton -o $xliff
         }
 
     - name: Commit changes
       run: |
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        git add user_docs/en/*.skel user_docs/en/*.xliff
+        git add user_docs/en/*.xliff
         git commit -m "Update user documentation files"
       if: success()
 
