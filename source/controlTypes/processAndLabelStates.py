@@ -6,7 +6,7 @@
 from typing import Dict, List, Optional, Set
 
 from .role import Role, clickableRoles
-from .state import State, STATES_SORTED
+from .state import State, STATES_SORTED, STATES_LINK_TYPE
 from .outputReason import OutputReason
 
 
@@ -49,7 +49,8 @@ def _processPositiveStates(
 		# or the user has explicitly requested no reporting clickable
 		positiveStates.discard(State.CLICKABLE)
 	if not config.conf["documentFormatting"]["reportLinkType"]:
-		positiveStates.discard(State.INTERNAL_LINK)
+		for state in STATES_LINK_TYPE:
+			positiveStates.discard(state)
 	if reason == OutputReason.QUERY:
 		return positiveStates
 	positiveStates.discard(State.DEFUNCT)

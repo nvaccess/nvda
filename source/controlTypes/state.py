@@ -107,6 +107,8 @@ class State(DisplayStringIntEnum):
 
 STATES_SORTED = frozenset([State.SORTED, State.SORTED_ASCENDING, State.SORTED_DESCENDING])
 
+STATES_LINK_TYPE = frozenset([State.INTERNAL_LINK])
+
 
 _stateLabels: Dict[State, str] = {
 	# Translators: This is presented when a control or document is unavailable.
