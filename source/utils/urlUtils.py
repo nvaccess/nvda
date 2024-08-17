@@ -4,7 +4,8 @@
 # Copyright (C) 2024 NV Access Limited, Noelia Ruiz Martínez, Leonard de Ruijter
 
 import controlTypes
-from urllib.parse import ParseResult, urlparse
+from urllib.parse import ParseResult, urlparse, urlunparse
+from logHandler import log
 
 
 def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
@@ -15,9 +16,13 @@ def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
 	:return: A controlTypes.State corresponding to the link type, or C{None} if the state cannot be determined
 	"""
 	if not url or not rootUrl:
+		log.debug("getLinkType: Either url or rootUrl is empty.")
 		return None
 	if isSamePageUrl(url, rootUrl):
+		log.debug(f"getLinkType: {url} is an internal link.")
 		return controlTypes.State.INTERNAL_LINK
+	log.debug(f"getLinkType: {url} type is unknown.")
+	return None
 
 
 def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
@@ -34,15 +39,12 @@ def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
 	urlOnPageParsed: ParseResult = urlparse(urlOnPage)
 	rootUrlParsed: ParseResult = urlparse(rootUrl)
 
+	# Reconstruct URLs without fragments for comparison
+	urlOnPageWithoutFragment = urlunparse(urlOnPageParsed._replace(fragment=""))
+	rootUrlWithoutFragment = urlunparse(rootUrlParsed._replace(fragment=""))
 	fragmentInvalidChars: str = "%/"  # Characters not considered valid in fragments
-	if (
-		urlOnPageParsed.scheme == rootUrlParsed.scheme
-		and urlOnPageParsed.netloc == rootUrlParsed.netloc
-		and urlOnPageParsed.path == rootUrlParsed.path
-		and urlOnPageParsed.query == rootUrlParsed.query
+	return (
+		urlOnPageWithoutFragment == rootUrlWithoutFragment
 		and urlOnPageParsed.fragment
 		and not any(char in urlOnPageParsed.fragment for char in fragmentInvalidChars)
-	):
-		return True
-
-	return False
+	)
