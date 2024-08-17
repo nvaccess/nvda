@@ -1628,18 +1628,17 @@ class NVDAObject(
 			return False
 		return _isObjectBelowLockScreen(self)
 
-	isInternalLink: bool
-	"""Typing information for auto property _get_isInternalLink
-	Indicates whether the current link is an internal link within the document.
-	Determines if the link points to the same page based on its value and the document context.
+	linkType: controlTypes.State | None
+	"""Typing information for auto property _get_linkType
+	Determines the link type based on the link and document URLs.
 	"""
 
-	def _get_isInternalLink(self) -> bool:
+	def _get_linkType(self) -> controlTypes.State | None:
 		if self.role != controlTypes.Role.LINK:
-			return False
+			return None
 		from browseMode import BrowseModeDocumentTreeInterceptor
 
 		ti = getattr(self, "treeInterceptor", None)
 		if not isinstance(ti, BrowseModeDocumentTreeInterceptor):
-			return False
-		return ti.isInternalLinkInDocument(self.value)
+			return None
+		return ti.getLinkTypeInDocument(self.value)

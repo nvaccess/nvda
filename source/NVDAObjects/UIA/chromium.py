@@ -68,8 +68,8 @@ class ChromiumUIA(web.UIAWeb):
 
 	def _get_states(self):
 		states = super().states
-		if self.role == controlTypes.Role.LINK and self.isInternalLink:
-			states.add(controlTypes.State.INTERNAL_LINK)
+		if self.role == controlTypes.Role.LINK and self.linkType:
+			states.add(self.linkType)
 		return states
 
 

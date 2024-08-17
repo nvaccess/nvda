@@ -3,7 +3,21 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited, Noelia Ruiz Martínez, Leonard de Ruijter
 
+import controlTypes
 from urllib.parse import ParseResult, urlparse
+
+
+def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
+	"""Returns the link type corresponding to a given URL.
+
+	:param url: The URL of the link destination
+	:param rootUrl: The root URL of the page
+	:return: A controlTypes.State corresponding to the link type, or C{None} if the state cannot be determined
+	"""
+	if not url or not rootUrl:
+		return None
+	if isSamePageUrl(url, rootUrl):
+		return controlTypes.State.INTERNAL_LINK
 
 
 def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:

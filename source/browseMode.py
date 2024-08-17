@@ -311,9 +311,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	Used to determine if a link is internal to the document.
 	"""
 
-	def isInternalLinkInDocument(self, url: str) -> bool:
-		"""Returns whether the given url is a same page link within the current browse mode document."""
-		return urlUtils.isSamePageUrl(url, self.documentUrl)
+	def getLinkTypeInDocument(self, url: str) -> controlTypes.State | None:
+		"""Returns the type of a link in the document, or C{None} if the link type cannot be determined."""
+		return urlUtils.getLinkType(url, self.documentUrl)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
