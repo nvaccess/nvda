@@ -308,7 +308,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	documentUrl: str | None = None
 	"""The URL of the current browse mode document.
 	C{None} when there is no URL or it is unknown.
-	Used to determine if a link is internal to the document.
+	Used to determine the type of a link in the document.
 	"""
 
 	def getLinkTypeInDocument(self, url: str) -> controlTypes.State | None:
