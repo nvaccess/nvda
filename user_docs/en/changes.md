@@ -20,7 +20,7 @@ The available options are:
 * Improvements in Microsoft PowerPoint text objects:
   * It is now possible to use braille display routing keys to move the text cursor. (#9101, #17004)
   * It is now possible to use the review cursor selection commands to select text. (#17004)
-  * Screen coordinate reporting is now accurate per character. (#17015, @LeonarddeR)
+  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
   * You can now move per sentence in Text frames. (#17015, @LeonarddeR)
 
 ### Changes
