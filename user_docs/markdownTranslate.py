@@ -219,9 +219,12 @@ def generateXliff(
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
 			f'<file id="{fileID}" original="{mdUri}">\n'
 		)
+		skelContent = skelFile.read()
+		if embedSkeleton:
+			outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
-			zip_longest(mdFile.readlines(), skelFile.readlines()), start=1
+			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)), start=1
 		):
 			mdLine = mdLine.rstrip()
 			skelLine = skelLine.rstrip()
@@ -250,10 +253,6 @@ def generateXliff(
 			else:
 				if mdLine != skelLine:
 					raise ValueError(f"Line {lineNo}: {mdLine=} does not match {skelLine=}")
-		if embedSkeleton:
-			skelFile.seek(0)
-			skelContent = skelFile.read()
-			outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}</skeleton>\n")
 		outputFile.write("</file>\n" "</xliff>")
 		print(f"Generated xliff file with {res.numTranslatableStrings} translatable strings")
 		return res
@@ -539,7 +538,6 @@ def pretranslateAllPossibleLanguages(langsDir: str, mdBaseName: str):
 	if len(skippedLangs) > 0:
 		print(f"Skipped {len(skippedLangs)} languages already pretranslated.")
 	print(f"Pretranslated {len(succeededLangs)} out of {len(allLangs) - len(skippedLangs)} languages.")
-
 
 
 if __name__ == "__main__":
