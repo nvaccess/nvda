@@ -2453,12 +2453,6 @@ Possible values are:
 * Disabled: NVDA doesn't interfere with volume levels of other applications.
 * Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
 
-The following keyboard command can also be used from anywhere:
-
-| Name | Key | Description |
-|---|---|---|
-| Toggle "Applications volume adjuster" status | `NVDA+alt+delete` | Cycles through statuses for "Applications volume adjuster" |
-
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Volume of other applications {#OtherAppVolume}
@@ -2478,7 +2472,12 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 
 This check box allows you to mute or unmute all applications except NVDA at once.
 This mute setting will apply to all other applications sound output, even if they start after this setting is changed.
-This volume can be controlled by a keyboard command that needs to be manually assigned in  [Input Gestures dialog](#InputGestures).
+
+The following keyboard command can also be used from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Mute or unmute other applications | `NVDA+alt+delete` | Cycles through statuses for "Applications volume adjuster" |
 
 Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 

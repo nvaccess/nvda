@@ -4732,7 +4732,7 @@ class GlobalCommands(ScriptableObject):
 			"Toggles other applications volume adjuster status",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+delete",
+		gesture=None,
 	)
 	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()
@@ -4743,7 +4743,7 @@ class GlobalCommands(ScriptableObject):
 			"Mutes or unmutes other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture=None,
+		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeMute()

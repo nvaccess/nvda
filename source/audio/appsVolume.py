@@ -187,8 +187,8 @@ def _toggleAppsVolumeMute():
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	if muted:
 		# Translators: Announcing new applications' mute status message
-		msg = _("Other applications muted")
+		msg = _("Muted other applications")
 	else:
 		# Translators: Announcing new applications' mute status message
-		msg = _("Other applications unmuted")
+		msg = _("Unmuted other applications")
 	ui.message(msg)
