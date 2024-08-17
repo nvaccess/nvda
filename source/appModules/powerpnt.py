@@ -1128,6 +1128,36 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["link"] = True
 		return formatField, (startOffset, endOffset)
 
+	def _setCaretOffset(self, offset: int):
+		if not (0 <= offset <= (maxLength := self._getStoryLength())):
+			log.debugWarning(
+				f"Got out of range {offset=} (min 0, max {maxLength}. Clamping.",
+				stack_info=True,
+			)
+			offset = max(0, min(offset, maxLength))
+		# Use the TextRange.select method to move the text caret to a 0-length TextRange.
+		# The TextRange.characters method is 1-indexed.
+		self.obj.ppObject.textRange.characters(offset + 1, 0).select()
+
+	def _setSelectionOffsets(self, start: int, end: int):
+		if not start < end:
+			log.debug(f"start must be less than end. Got {start=}, {end=}.", stack_info=True)
+			return
+		maxLength = self._getStoryLength()
+		# Having start = maxLength does not make sense, as there will be no selection if this is the case.
+		if not (0 <= start < maxLength):
+			log.debugWarning(
+				f"Got out of range {start=} (min 0, max {maxLength - 1}. Clamping.",
+				stack_info=True,
+			)
+			start = max(0, min(start, maxLength - 1))
+		# Having end = 0 does not make sense, as there will be no selection if this is the case.
+		if not (0 < end <= maxLength):
+			log.debugWarning(f"Got out of range {end=} (min 1, max {maxLength}. Clamping.", stack_info=True)
+			end = max(1, min(end, maxLength))
+		# The TextRange.characters method is 1-indexed.
+		self.obj.ppObject.textRange.characters(start + 1, end - start).select()
+
 
 class Table(Shape):
 	"""Represents the table shape in Powerpoint. Provides row and column counts."""
