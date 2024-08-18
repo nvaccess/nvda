@@ -5,8 +5,13 @@
 
 """Dark mode makes UI elements have a dark background with light text.
 
-If the darkModeCanUseUndocumentedAPIs config setting is true, then we are 
-able to get proper styling for popup context menus.
+Note: Config settings must be in a non-profile-specific config section (e.g. "general").
+Profile-specific config sections (e.g. "vision") aren't available to read until after
+the main app window is created.  But _SetPreferredAppMode must be called BEFORE the main
+window is created in order for popup context menus to be properly styled.
+
+TODO: dictionary dialogs and the add-on store look bad because column titles aren't styled.
+These are wx.Notebook controls.
 """
 
 import ctypes.wintypes
@@ -67,6 +72,32 @@ def initialize():
 		logging.debug("Will not use undocumented windows api SetPreferredAppMode: " + str(err))
 
 
+def DwmSetWindowAttribute_ImmersiveDarkMode(window: wx.Window, isDark: bool):
+	"""This makes title bars dark"""
+	useDarkMode = ctypes.wintypes.BOOL(isDark)
+	_DwmSetWindowAttribute(
+		window.Handle,
+		DWMWA_USE_IMMERSIVE_DARK_MODE,
+		ctypes.byref(useDarkMode),
+		ctypes.sizeof(ctypes.c_int32))
+
+
+def SetPreferredAppMode(curTheme: ColorTheme):
+	"""This makes popup context menus dark"""
+	if _SetPreferredAppMode and config.conf["general"]["darkModeCanUseUndocumentedAPIs"]:
+		if curTheme == ColorTheme.AUTO:
+			_SetPreferredAppMode(1)
+		elif curTheme == ColorTheme.DARK:
+			_SetPreferredAppMode(2)
+		else:
+			_SetPreferredAppMode(0)
+
+
+def SetWindowTheme(window: wx.Window, theme: str):
+	_SetWindowTheme(window.Handle, theme, None)
+	_SendMessageW(window.Handle, WM_THEMECHANGED, 0, 0)
+
+
 def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
 	yield window
 	if hasattr(window, "GetChildren"):
@@ -75,7 +106,7 @@ def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
 				yield descendant
 
 
-def applyColorTheme(window: wx.Window):
+def handleEvent(window: wx.Window, eventType):
 	if not _initialized:
 		return
 	curTheme = config.conf["general"]["colorTheme"]
@@ -84,54 +115,44 @@ def applyColorTheme(window: wx.Window):
 		isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
 	else:
 		isDark = (curTheme == ColorTheme.DARK)
-
 	if isDark:
 		fgColor, bgColor, themePrefix = "White", "Dark Grey", "DarkMode"
 	else:
 		fgColor, bgColor, themePrefix = "Black", "Very Light Grey", "LightMode"
 
-	# This config setting MUST be in a non-profile-specific config section, otherwise it
-	# won't be available until after the main window is created, which is too late.
-	canUseUndocumentedAPIs = config.conf["general"]["darkModeCanUseUndocumentedAPIs"]
-	if _SetPreferredAppMode and canUseUndocumentedAPIs:
-		# This makes context menus dark.
-		if curTheme == ColorTheme.AUTO:
-			_SetPreferredAppMode(1)
-		elif curTheme == ColorTheme.DARK:
-			_SetPreferredAppMode(2)
-		else:
-			_SetPreferredAppMode(0)
+	if eventType == wx.wxEVT_CREATE:
+		SetPreferredAppMode(curTheme)
+		if (
+			# Necessary for background of ListBoxes such as Settings >> Audio >> Cycle sound split mode.
+			# TODO: this breaks lists of checkboxes
+			isinstance(window, wx.ListBox)
 
-	descendants = list(_getDescendants(window))
-	for child in descendants:
-		child.SetBackgroundColour(bgColor)
-		child.SetForegroundColour(fgColor)
-
-		if isinstance(child, wx.Frame) or isinstance(child, wx.Dialog):
-			# This makes title bars dark
-			useDarkMode = ctypes.wintypes.BOOL(isDark)
-			_DwmSetWindowAttribute(
-				child.Handle,
-				DWMWA_USE_IMMERSIVE_DARK_MODE,
-				ctypes.byref(useDarkMode),
-				ctypes.sizeof(ctypes.c_int32))
-		elif (
-			isinstance(child, wx.Button) 
-			or isinstance(child, wx.ScrolledWindow) 
-			or isinstance(child, wx.ToolTip) 
-			or isinstance(child, wx.TextEntry)
+			# Necessary for Add-on store >> Documentation >> Other details.
+			# TODO: this fixes Add-on store >> Documentation >> Other details, but breaks the 
+			# ExpandoTextCtrl used by the debug log, python console, etc
+			#or isinstance(window, wx.TextCtrl)
 		):
-			_SetWindowTheme(child.Handle, themePrefix + "_Explorer", None)
-			_SendMessageW(child.Handle, WM_THEMECHANGED, 0, 0)
-		elif isinstance(child, wx.Choice):
-			_SetWindowTheme(child.Handle, themePrefix + "_CFD", None)
-			_SendMessageW(child.Handle, WM_THEMECHANGED, 0, 0)
-		elif isinstance(child, wx.ListCtrl):
-			_SetWindowTheme(child.Handle, themePrefix + "_ItemsView", None)
-			_SendMessageW(child.Handle, WM_THEMECHANGED, 0, 0)
-		else:
-			print(child.ClassName)
-			_SetWindowTheme(child.Handle, themePrefix, None)
-			_SendMessageW(child.Handle, WM_THEMECHANGED, 0, 0)
+			window.SetBackgroundColour(bgColor)
+			window.SetForegroundColour(fgColor)
+	elif eventType == wx.wxEVT_SHOW:
+		for child in _getDescendants(window):
+			child.SetBackgroundColour(bgColor)
+			child.SetForegroundColour(fgColor)
 
-	window.Refresh()
+			if isinstance(child, wx.Frame) or isinstance(child, wx.Dialog):
+				DwmSetWindowAttribute_ImmersiveDarkMode(child, isDark)
+			elif (
+				isinstance(child, wx.Button)
+				or isinstance(child, wx.ScrolledWindow)
+				or isinstance(child, wx.ToolTip)
+				or isinstance(child, wx.TextEntry)
+			):
+				SetWindowTheme(child, themePrefix + "_Explorer")
+			elif isinstance(child, wx.Choice):
+				SetWindowTheme(child, themePrefix + "_CFD")
+			elif isinstance(child, wx.ListCtrl):
+				SetWindowTheme(child, themePrefix + "_ItemsView")
+			else:
+				SetWindowTheme(child, themePrefix)
+
+		window.Refresh()

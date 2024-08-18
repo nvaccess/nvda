@@ -615,8 +615,10 @@ def _setUpWxApp() -> "wx.App":
 		def FilterEvent(self, event: wx.Event):
 			"""FilterEvent is called for every UI event in the entire application.  Keep it quick to
 			avoid slowing everything down."""
-			if isinstance(event, wx.ShowEvent):
-				gui.darkMode.applyColorTheme(event.EventObject)
+			if isinstance(event, wx.WindowCreateEvent):
+				gui.darkMode.handleEvent(event.EventObject, event.EventType)
+			elif isinstance(event, wx.ShowEvent) and event.IsShown:
+				gui.darkMode.handleEvent(event.EventObject, event.EventType)
 			return -1
 
 	app = App(redirect=False)

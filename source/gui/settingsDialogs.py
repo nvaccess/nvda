@@ -4726,14 +4726,14 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.makeVisionProviderSettings(settingsSizer)
+		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 		self.makeDarkModeSettings(settingsSizer)
+		self.makeVisionProviderSettings(settingsSizer)
 
 	def makeVisionProviderSettings(self, settingsSizer: wx.BoxSizer):
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		self.providerPanelInstances = []
-		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
 
 		for providerInfo in vision.handler.getProviderList(reloadFromSystem=True):
 			providerSizer = self.settingsSizerHelper.addItem(
@@ -4853,7 +4853,7 @@ class VisionSettingsPanel(SettingsPanel):
 		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
 		config.conf["general"]["colorTheme"] = colorTheme.value
 		config.conf["general"]["darkModeCanUseUndocumentedAPIs"] = self.darkModeCanUseUnsupportedAPIs.Value
-		gui.darkMode.applyColorTheme(self.TopLevelParent)
+		gui.darkMode.handleEvent(self.TopLevelParent, wx.wxEVT_SHOW)
 
 
 class VisionProviderSubPanel_Settings(
