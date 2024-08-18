@@ -317,9 +317,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.model = self._requestDeviceName()
 		self._boardInformation = self._requestBoardInformation()
 		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
-			self._brailleDestination = BrailleDestination.text
+			self._brailleDestination = BrailleDestination.TEXT
 		elif self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
-			self._brailleDestination = BrailleDestination.graphic
+			self._brailleDestination = BrailleDestination.GRAPHIC
 		else:
 			raise RuntimeError("No text or graphics displays")
 		super().__init__()
@@ -338,13 +338,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		dests = {}
 		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
 			dests[BrailleDestination.TEXT.value] = StringParameterInfo(
-				BrailleDestination.text.value,
+				BrailleDestination.TEXT.value,
 				# Translators: A destination for braille output.
 				_("Text"),
 			)
 		if self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
 			dests[BrailleDestination.GRAPHIC.value] = StringParameterInfo(
-				BrailleDestination.graphic.value,
+				BrailleDestination.GRAPHIC.value,
 				# Translators: A destination for braille output.
 				_("Graphic"),
 			)
@@ -360,12 +360,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		if value != self._brailleDestination:
 			self.display([0] * self.numRows * self.numCols)
 		if (
-			value == BrailleDestination.text
+			value == BrailleDestination.TEXT
 			and self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY
 		):
 			self._brailleDestination = value
 		elif (
-			value == BrailleDestination.graphic
+			value == BrailleDestination.GRAPHIC
 			and self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY
 		):
 			self._brailleDestination = value
@@ -375,7 +375,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numRows(self) -> int:
 		if self._boardInformation is None:
 			return 0
-		if self._brailleDestination == BrailleDestination.graphic:
+		if self._brailleDestination == BrailleDestination.GRAPHIC:
 			return (self._boardInformation.graphic.rowCount * self.cellHeight) // (
 				self.cellHeight + self.vCellPadding
 			)
@@ -385,7 +385,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _get_numCols(self) -> int:
 		if self._boardInformation is None:
 			return 0
-		if self._brailleDestination == BrailleDestination.graphic:
+		if self._brailleDestination == BrailleDestination.GRAPHIC:
 			return (self._boardInformation.graphic.columnCount * self.cellWidth) // (
 				self.cellWidth + self.hCellPadding
 			)
@@ -406,7 +406,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			while self._pendingCells is not None:
 				cells = self._pendingCells
 				self._pendingCells = None
-				if self._brailleDestination == BrailleDestination.graphic:
+				if self._brailleDestination == BrailleDestination.GRAPHIC:
 					tgBuf = DpTactileGraphicsBuffer(
 						hCellCount=self._boardInformation.graphic.columnCount,
 						vCellCount=self._boardInformation.graphic.rowCount,
