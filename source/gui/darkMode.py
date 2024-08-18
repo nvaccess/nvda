@@ -58,7 +58,7 @@ def initialize():
 	_DwmSetWindowAttribute.restype = ctypes.HRESULT
 	_DwmSetWindowAttribute.argtypes = [wintypes.HWND, wintypes.DWORD, wintypes.LPCVOID, wintypes.DWORD]
 
-	global _SendMessageW	
+	global _SendMessageW
 	user32 = ctypes.cdll.LoadLibrary("user32")
 	_SendMessageW = user32.SendMessageW
 	_SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
@@ -79,7 +79,8 @@ def DwmSetWindowAttribute_ImmersiveDarkMode(window: wx.Window, isDark: bool):
 		window.Handle,
 		DWMWA_USE_IMMERSIVE_DARK_MODE,
 		ctypes.byref(useDarkMode),
-		ctypes.sizeof(ctypes.c_int32))
+		ctypes.sizeof(ctypes.c_int32),
+	)
 
 
 def SetPreferredAppMode(curTheme: ColorTheme):
@@ -114,7 +115,7 @@ def handleEvent(window: wx.Window, eventType):
 		systemAppearance: wx.SystemAppearance = wx.SystemSettings.GetAppearance()
 		isDark = systemAppearance.IsDark() or systemAppearance.IsUsingDarkBackground()
 	else:
-		isDark = (curTheme == ColorTheme.DARK)
+		isDark = curTheme == ColorTheme.DARK
 	if isDark:
 		fgColor, bgColor, themePrefix = "White", "Dark Grey", "DarkMode"
 	else:
@@ -126,11 +127,10 @@ def handleEvent(window: wx.Window, eventType):
 			# Necessary for background of ListBoxes such as Settings >> Audio >> Cycle sound split mode.
 			# TODO: this breaks lists of checkboxes
 			isinstance(window, wx.ListBox)
-
 			# Necessary for Add-on store >> Documentation >> Other details.
-			# TODO: this fixes Add-on store >> Documentation >> Other details, but breaks the 
+			# TODO: this fixes Add-on store >> Documentation >> Other details, but breaks the
 			# ExpandoTextCtrl used by the debug log, python console, etc
-			#or isinstance(window, wx.TextCtrl)
+			# or isinstance(window, wx.TextCtrl)
 		):
 			window.SetBackgroundColour(bgColor)
 			window.SetForegroundColour(fgColor)

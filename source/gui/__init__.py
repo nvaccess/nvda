@@ -812,6 +812,7 @@ def initialize():
 		raise RuntimeError("GUI already initialized")
 
 	from gui import darkMode
+
 	# Dark mode must be initialized before creating main frame
 	# otherwise context menus will not be styled correctly
 	darkMode.initialize()
