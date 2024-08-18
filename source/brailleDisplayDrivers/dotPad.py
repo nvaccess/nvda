@@ -170,7 +170,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	"""
 
 	name = "dotPad"
-	# Translators: Names of braille displays.
 	isThreadSafe = True
 	# Translators: Description of the DotPad Braille / Tactile Graphic display.
 	description = _("DotPad Braille / Tactile Graphic display")
