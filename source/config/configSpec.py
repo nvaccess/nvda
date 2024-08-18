@@ -27,6 +27,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	colorTheme = option("auto", "light", "dark", default="light")
+	darkModeCanUseUndocumentedAPIs = boolean(default=false)
 
 # Speech settings
 [speech]
@@ -102,7 +104,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Vision enhancement provider settings
 [vision]
-	colorTheme = option("auto", "light", "dark", default="auto")
 
 	# Vision enhancement provider settings
 	[[__many__]]

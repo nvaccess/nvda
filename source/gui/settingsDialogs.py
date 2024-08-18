@@ -43,6 +43,7 @@ import speech
 import systemUtils
 import gui
 import gui.contextHelp
+import gui.darkMode
 import globalVars
 from logHandler import log
 import nvwave
@@ -4725,6 +4726,10 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
+		self.makeVisionProviderSettings(settingsSizer)
+		self.makeDarkModeSettings(settingsSizer)
+
+	def makeVisionProviderSettings(self, settingsSizer: wx.BoxSizer):
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		self.providerPanelInstances = []
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -4745,15 +4750,27 @@ class VisionSettingsPanel(SettingsPanel):
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
 
-		# Translators: label for a choice in the vision settings category panel
-		colorThemeLabelText = _("&Color theme")
-		self.colorThemeList = self.settingsSizerHelper.addLabeledControl(
-			colorThemeLabelText,
+	def makeDarkModeSettings(self, settingsSizer: wx.BoxSizer):
+		sizer = self.settingsSizerHelper.addItem(
+			wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Dark Mode")),
+			flag=wx.EXPAND,
+		)
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self.colorThemeList = sHelper.addLabeledControl(
+			# Translators: label for a choice in the vision settings category panel
+			_("&Color theme"),
 			wx.Choice,
 			choices=[theme.displayString for theme in ColorTheme],
 		)
+		self.darkModeCanUseUnsupportedAPIs = wx.CheckBox(
+			sizer.GetStaticBox(),
+			# Translators: label for a checkbox in the vision settings category panel
+			label=_("Allow use of undocumented windows APIs (unsafe)"),
+		)
+		self.darkModeCanUseUnsupportedAPIs.Value = config.conf["general"]["darkModeCanUseUndocumentedAPIs"]
+		sHelper.addItem(self.darkModeCanUseUnsupportedAPIs)
 		self.bindHelpEvent("VisionSettingsColorTheme", self.colorThemeList)
-		curTheme = config.conf["vision"]["colorTheme"]
+		curTheme = config.conf["general"]["colorTheme"]
 		for i, theme in enumerate(ColorTheme):
 			if theme == curTheme:
 				self.colorThemeList.SetSelection(i)
@@ -4834,9 +4851,9 @@ class VisionSettingsPanel(SettingsPanel):
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
 		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
-		config.conf["vision"]["colorTheme"] = colorTheme.value
-		guiHelper.applyColorTheme(self.TopLevelParent)
-		self.TopLevelParent.Refresh()
+		config.conf["general"]["colorTheme"] = colorTheme.value
+		config.conf["general"]["darkModeCanUseUndocumentedAPIs"] = self.darkModeCanUseUnsupportedAPIs.Value
+		gui.darkMode.applyColorTheme(self.TopLevelParent)
 
 
 class VisionProviderSubPanel_Settings(
