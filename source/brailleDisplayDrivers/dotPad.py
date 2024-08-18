@@ -269,7 +269,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		data = self._sendCommand(DP_Command.REQ_BOARD_INFORMATION, rspCmd=DP_Command.RSP_BOARD_INFORMATION)
 		return DP_BoardInformation.from_buffer_copy(data)
 
-	_displayLineCache = {}
+	_displayLineCache: dict[int, bytes] = {}
 
 	def _requestDisplayLine(self, dest: int, data: bytes, seqNum: int = 0):
 		oldData = self._displayLineCache.get(dest)
@@ -393,7 +393,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return self._boardInformation.text.columnCount
 
 	_inDisplay = False
-	_pendingCells = None
+	_pendingCells: list[int] | None = None
 
 	def display(self, cells: list[int]):
 		if self._boardInformation is None:
