@@ -119,6 +119,7 @@ def _warnBrowsableMessageComponentFailure(title: str | None = None) -> None:
 	log.debug("Presenting browsable message unavailable warning.")
 	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
+
 	wx.CallAfter(
 		gui.messageBox,
 		browsableMessageUnavailableMsg,
