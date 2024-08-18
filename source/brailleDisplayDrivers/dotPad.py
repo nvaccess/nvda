@@ -60,7 +60,7 @@ class DP_DisplayResponse(enum.IntEnum):
 	CHECKSUM = 3
 
 
-class DP_Features(enum.IntEnum):
+class DP_Features(enum.IntFlag):
 	HAS_GRAPHIC_DISPLAY = 0x80
 	HAS_TEXT_DISPLAY = 0x40
 	HAS_PERKINS_KEYS = 0x20
@@ -138,7 +138,7 @@ class DpTactileGraphicsBuffer(TactileGraphicsBuffer):
 		super().__init__(hPixelCount, vPixelCount)
 
 	def setDot(self, x: int, y: int):
-		if x < 0 or x >= self.width or y < 0 or y >= self.height:
+		if not (0 <= x < self.width) or not (0 <= y < self.height):
 			return
 		vCellIndex = int(y / self.cellHeight)
 		hCellIndex = int(x / self.cellWidth)
@@ -159,9 +159,9 @@ class CommandResponse:
 	seqNum: int
 
 
-class BrailleDestination(str, enum.Enum):
-	text = "text"
-	graphic = "graphic"
+class BrailleDestination(enum.StrEnum):
+	TEXT = "text"
+	GRAPHIC = "graphic"
 
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
@@ -206,7 +206,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		dest: int = 0,
 		seqNum: int = 0,
 		rspCmd: DP_Command | None = None,
-	):
+	) -> bytes:
 		log.debug(f"Sending command  {cmd.name}, {dest=}, {seqNum=}, data={bytes(data)}")
 		packetBody = bytearray(
 			[
@@ -240,7 +240,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return response.data
 		return b""
 
-	def _onReceive(self, header1):
+	def _onReceive(self, header1: bytes):
 		if ord(header1) != DP_PacketSyncByte.SYNC1:
 			raise RuntimeError(f"Bad {header1=}")
 		header2 = self._dev.read(1)
@@ -262,11 +262,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def _recordCommandResponse(self, cmd: DP_Command, data: bytes, dest: int = 0, seqNum: int = 0):
 		self._lastResponse[dest] = CommandResponse(cmd, data, dest, seqNum)
 
-	def _requestDeviceName(self):
+	def _requestDeviceName(self) -> str:
 		data = self._sendCommand(DP_Command.REQ_DEVICE_NAME, rspCmd=DP_Command.RSP_DEVICE_NAME)
 		return data.decode("ascii")
 
-	def _requestBoardInformation(self):
+	def _requestBoardInformation(self) -> DP_BoardInformation:
 		data = self._sendCommand(DP_Command.REQ_BOARD_INFORMATION, rspCmd=DP_Command.RSP_BOARD_INFORMATION)
 		return DP_BoardInformation.from_buffer_copy(data)
 
@@ -327,7 +327,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def terminate(self):
 		try:
-			super(BrailleDisplayDriver, self).terminate()
+			super().terminate()
 		finally:
 			# Make sure the device gets closed.
 			# If it doesn't, we may not be able to re-open it later.
@@ -338,20 +338,20 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			return {}
 		dests = {}
 		if self._boardInformation.features & DP_Features.HAS_TEXT_DISPLAY:
-			dests["text"] = StringParameterInfo(
+			dests[BrailleDestination.TEXT.value] = StringParameterInfo(
 				BrailleDestination.text.value,
 				# Translators: A destination for braille output.
 				_("Text"),
 			)
 		if self._boardInformation.features & DP_Features.HAS_GRAPHIC_DISPLAY:
-			dests["graphic"] = StringParameterInfo(
+			dests[BrailleDestination.GRAPHIC.value] = StringParameterInfo(
 				BrailleDestination.graphic.value,
 				# Translators: A destination for braille output.
 				_("Graphic"),
 			)
 		return dests
 
-	def _get_brailleDestination(self):
+	def _get_brailleDestination(self) -> str:
 		return self._brailleDestination.value
 
 	def _set_brailleDestination(self, value: str):
@@ -373,7 +373,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			raise ValueError(f"Unsupported destination {value}")
 
-	def _get_numRows(self):
+	def _get_numRows(self) -> int:
 		if self._boardInformation is None:
 			return 0
 		if self._brailleDestination == BrailleDestination.graphic:
@@ -383,7 +383,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			return self._boardInformation.text.rowCount
 
-	def _get_numCols(self):
+	def _get_numCols(self) -> int:
 		if self._boardInformation is None:
 			return 0
 		if self._brailleDestination == BrailleDestination.graphic:
