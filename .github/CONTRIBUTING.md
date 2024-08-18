@@ -12,5 +12,4 @@ There are several ways in which you can contribute to the NVDA project:
 - [Testing](../projectDocs/testing/contributing.md)
 - [Translating NVDA](../projectDocs/translating/readme.md)
 - [Code or documentation contributions](../projectDocs/dev/contributing.md)
-- [Setting up a development environment](../projectDocs/dev/contributing.md#overview-of-contribution-process)
 - [Creating add-ons](../projectDocs/dev/addons.md)
