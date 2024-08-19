@@ -1882,18 +1882,25 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self._windowRowBufferOffsets.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [(0, 0)] * self.handler.display.numRows
+			self._windowRowBufferOffsets = [(0, 0)]
 			return
 		doWordWrap = config.conf["braille"]["wordWrap"]
+		bufferEnd = len(self.brailleCells)
 		start = pos
-		for row in range(self.handler.display.numRows):
-			end = start + self.handler.display.numCols
-			if doWordWrap:
+		clippedEnd = False
+		for row in range(self.handler.displayNumRows):
+			end = start + self.handler.displayNumCols
+			if end > bufferEnd:
+				end = bufferEnd
+				clippedEnd = True
+			elif doWordWrap:
 				try:
 					end = rindex(self.brailleCells, 0, start, end) + 1
 				except (ValueError, IndexError):
 					pass  # No space on line
 			self._windowRowBufferOffsets.append((start, end))
+			if clippedEnd:
+				break
 			start = end
 
 	def _get_windowEndPos(self) -> int:
@@ -2030,8 +2037,6 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start += len(cells)
 		if log.isEnabledFor(log.IO):
 			log.io("Braille regions text: %r" % logRegions)
-		# Ensure that braille cells are padded up to display size.
-		self.brailleCells.extend([0 for x in range(len(self.brailleCells), self.handler.displaySize)])
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
