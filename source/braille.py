@@ -1858,14 +1858,13 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			)
 			return ""
 
-	def bufferPosToWindowPos(self, bufferPos):
+	def bufferPosToWindowPos(self, bufferPos: int) -> int:
 		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
-			print(f"{row=}, {start=}, {end=}")
 			if start <= bufferPos < end:
 				return row * self.handler.display.numCols + (bufferPos - start)
 		raise LookupError("buffer pos not in window")
 
-	def windowPosToBufferPos(self, windowPos: int):
+	def windowPosToBufferPos(self, windowPos: int) -> int:
 		"""
 		Converts a position relative to the  braille window to a position relative to the braille buffer.
 		"""
@@ -1897,7 +1896,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			self._windowRowBufferOffsets.append((start, end))
 			start = end
 
-	def _get_windowEndPos(self):
+	def _get_windowEndPos(self) -> int:
 		start, end = self._windowRowBufferOffsets[-1]
 		return end
 
