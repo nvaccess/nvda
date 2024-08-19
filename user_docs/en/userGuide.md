@@ -5059,7 +5059,7 @@ Following are the current key assignments for these displays.
 
 <!-- KC:endInclude -->
 
-### Dot Pad  {#dotPad}
+### Dot Pad {#dotPad}
 
 The Dot Pad from Dot Inc is a device that can display refreshable tactile graphics and braille.
 NVDA can display either a single line of braille on the devices dedicated braille display line, or multiple lines of braille on its tactile graphics area.
