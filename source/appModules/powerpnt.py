@@ -1054,9 +1054,23 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		end = start + sel.length
 		return start, end
 
-	def _getPptTextRange(self, start: int, end: int, clamp: bool = False):
+	def _getPptTextRange(
+		self,
+		start: int,
+		end: int,
+		clamp: bool = False,
+	) -> comtypes.client.lazybind.Dispatch:
+		"""
+		Retrieves a text range from the PowerPoint object, with optional clamping of the start and end indices.
+		:param start: The starting character index of the text range (zero based).
+		:param end: The ending character index (zero based) of the text range.
+		:param clamp: If True, the start and end indices will be clamped to valid values within the text range. Defaults to False.
+		:Returns: The text range object as a comtypes.client.lazybind.Dispatch object.
+		:Raises ValueError: If the start index is greater than the end index.
+		:note: For more information about text ranges, see https://learn.microsoft.com/en-us/office/vba/api/powerpoint.textrange
+		"""
 		if not start <= end:
-			raise RuntimeError(
+			raise ValueError(
 				f"start must be less than or equal to end. Got {start=}, {end=}.",
 				stack_info=True,
 			)
@@ -1076,6 +1090,12 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return self.obj.ppObject.textRange.characters(start + 1, end - start)
 
 	def _getTextRange(self, start: int, end: int) -> str:
+		"""
+		Retrieves the text content of a PowerPoint text range, replacing any newline characters with standard newline characters.
+		:param start: The starting character index of the text range (zero based).
+		:param end: The ending character index (zero based) of the text range.
+		:Returns: The text content of the specified text range, with newline characters normalized.
+		"""
 		return self._getPptTextRange(start, end).text.replace("\x0b", "\n")
 
 	def _getStoryLength(self) -> int:
@@ -1091,6 +1111,13 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	@staticmethod
 	def _getOffsets(ranges: comtypes.client.lazybind.Dispatch, offset: int) -> tuple[int, int, int]:
+		"""
+		Retrieves the start and end offsets of a range of elements (e.g. words, lines, paragraphs) within a text range, given a specific offset.
+		:param ranges: The collection of elements (e.g. words, lines, paragraphs) to search.
+			These are retrieved by calling a method on the text range object, such as textRange.words(), textRange.lines(), or textRange.paragraphs().
+		:param offset: The zero based character offset to search for within the text range.
+		:Returns: A tuple containing the index of the element that contains the given offset, the zero based start offset of that element, and the zero based end offset of that element.
+		"""
 		for i, chunk in enumerate(ranges):
 			start = chunk.start - 1
 			end = start + chunk.length
