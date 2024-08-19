@@ -48,6 +48,9 @@ def drawBrailleCells(tgBuf: TactileGraphicsBuffer, x: int, y: int, cells: list[i
 			if 1 << dot & cell:
 				dotX, dotY = _brailleDotCoords[dot]
 				# Check if the coordinates are within bounds
-				if 0 <= x + dotX < tgBuf.width and 0 <= y + dotY < tgBuf.height:
+				if (
+					0 <= (x + dotX) < tgBuf.width
+					and 0 <= (y + dotY) < tgBuf.height
+				):
 					tgBuf.setDot(x + dotX, y + dotY)
 		x += CELL_WIDTH + hCellPadding
