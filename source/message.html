@@ -23,21 +23,18 @@ function handleKeyPress(e) {
 }
 
 function onCopyButtonPress() {
-	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
-	var rng = document.body.createTextRange();
-	rng.moveToElementText(messageDiv);
-	rng.scrollIntoView();
-	rng.select();
-	var success = rng.execCommand("Copy");
-	rng.collapse(false);
-	rng.select();
-	copyStatusDiv.innerHTML = '<p id="copyStatusText" style="font-weight:bold; text-align:center;"></p>';
-	if (success) {  // Notify the user about the copy result
-		copyStatusText.innerText = args.item('copySuccessfulAlertText');
-	} else {
+	var range = document.createRange();
+	var selection = window.getSelection();
+	range.selectNodeContents(messageDiv);
+	selection.removeAllRanges();
+	selection.addRange(range);
+	try {
+		var success = document.execCommand('copy');
+		copyStatusDiv.innerHTML = '<p id="copyStatusText" style="font-weight:bold; text-align:center;"></p>';
+		copyStatusText.innerText = success ? args.item('copySuccessfulAlertText') : args.item('copyFailedAlertText');
+	} catch (err) {
 		copyStatusText.innerText = args.item('copyFailedAlertText');
 	}
-	// Time out the user alert message
 	setTimeout(function() {
 		copyStatusDiv.innerHTML = '';
 	}, copyStatusTimeout);
