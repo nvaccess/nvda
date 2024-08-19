@@ -1760,9 +1760,10 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
+		#: A list representing the rows in the braille window,
+		#: each item being a tuple of start and end braille buffer offsets.
+		#: Splitting the window into independent rows allows for optional avoidance of  splitting words across rows.
 		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
-		#: The position in L{brailleCells} where the display window starts (inclusive).
-		#: @type: int
 
 	def clear(self):
 		"""Clear the entire buffer.
