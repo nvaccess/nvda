@@ -157,8 +157,12 @@ def browseableMessage(
 	moniker = POINTER(IUnknown)()
 	try:
 		windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
+	except OSError as e:
+		log.error(f"OS error during URL moniker creation: {e}")
+		_warnBrowsableMessageComponentFailure(title)
+		return
 	except Exception as e:
-		log.error(f"Failed to create URL moniker: {e}")
+		log.error(f"Unexpected error during URL moniker creation: {e}")
 		_warnBrowsableMessageComponentFailure(title)
 		return
 
