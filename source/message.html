@@ -9,10 +9,15 @@ var args = window.dialogArguments;
 var copyStatusTimeout = 5000;  // milliseconds before copy status message goes away
 
 function handleKeyPress(e) {
+	/*
+	This code should be effective for modern browsers (EdgeWebView2),
+	while also serving in old IE (MSHTML) contexts.
+	*/
 	e = e || window.event;
-	if(e.keyCode == 27){ // code for escape
-		window.close();
-	} else if (e.shiftKey && e.ctrlKey && e.keyCode == 67) { // code for Ctrl+Shift+C
+	var key = e.key || e.keyCode;
+	if (key === 'Escape' || key === 27) { // code for escape
+		onCloseButtonPress();
+	} else if (e.shiftKey && e.ctrlKey && (key === 'C' || key === 67)) { // code for Ctrl+Shift+C
 		onCopyButtonPress();
 	}
 }
