@@ -45,6 +45,7 @@ The available options are:
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
 * In Microsoft PowerPoint, caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+* Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
 
 ### Changes for Developers
 
@@ -54,6 +55,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
   * Updated setuptools to 72.0 (#16907, @dpy013)
   * Updated Ruff to 0.5.6. (#16868, @LeonarddeR)
+  * Updated nh3 0.2.17 to 0.2.18 (#17020, @dpy013)
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
 * Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
   * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
