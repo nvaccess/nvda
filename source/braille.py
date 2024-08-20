@@ -2520,16 +2520,21 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			numCols=self.display.numCols if self.display else 0,
 		)
 		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
+		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
 		calculatedDisplaySize = filteredDisplayDimensions.numRows * filteredDisplayDimensions.numCols
-		filteredDisplaySize = filter_displaySize.apply(calculatedDisplaySize)
-		if filteredDisplaySize != calculatedDisplaySize:
-			filteredDisplayDimensions = DisplayDimensions(
-				numRows=1,
-				numCols=filteredDisplaySize,
-			)
+		if len(list(filter_displaySize.handlers)):
+			# There is technically a race condition here if a handler is unregistered before the apply call.
+			# But worse case is that a multiline display will be singleline for a short time.
+			filteredDisplaySize = filter_displaySize.apply(calculatedDisplaySize)
+			if filteredDisplaySize != calculatedDisplaySize:
+				calculatedDisplaySize = filteredDisplaySize
+				filteredDisplayDimensions = DisplayDimensions(
+					numRows=1,
+					numCols=filteredDisplaySize,
+				)
 		if self._displayDimensions != filteredDisplayDimensions:
 			displaySizeChanged.notify(
-				displaySize=filteredDisplaySize,
+				displaySize=calculatedDisplaySize,
 				numRows=filteredDisplayDimensions.numRows,
 				numCols=filteredDisplayDimensions.numCols,
 			)
