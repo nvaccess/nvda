@@ -1763,7 +1763,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: A list representing the rows in the braille window,
 		#: each item being a tuple of start and end braille buffer offsets.
 		#: Splitting the window into independent rows allows for optional avoidance of  splitting words across rows.
-		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
 
 	def clear(self):
 		"""Clear the entire buffer.
@@ -1879,10 +1879,20 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		return self.windowPosToBufferPos(0)
 
 	def _set_windowStartPos(self, pos):
+		self._calculateWindowRowBufferOffsets(pos)
+
+	def _calculateWindowRowBufferOffsets(self, pos):
+		"""
+		Calculates the start and end positions of each row in the braille window.
+		Ensures that words are not split across rows when word wrap is enabled.
+		Ensures that the window does not extend past the end of the braille buffer.
+		:param pos: The start position of the braille window.
+		"""
+		print(f"Calculating window row buffer offsets for position {pos}")
 		self._windowRowBufferOffsets.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [(0, 0)]
+			self._windowRowBufferOffsets = [(0, 1)]
 			return
 		doWordWrap = config.conf["braille"]["wordWrap"]
 		bufferEnd = len(self.brailleCells)
@@ -2037,6 +2047,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start += len(cells)
 		if log.isEnabledFor(log.IO):
 			log.io("Braille regions text: %r" % logRegions)
+		self._calculateWindowRowBufferOffsets(self.windowStartPos)
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
