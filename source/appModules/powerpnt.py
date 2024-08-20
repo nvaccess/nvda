@@ -1069,7 +1069,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		:raises ValueError: If the start index is greater than the end index.
 		:note: For more information about text ranges, see https://learn.microsoft.com/en-us/office/vba/api/powerpoint.textrange
 		"""
-		if not start <= end:
+		if not (start <= end):
 			raise ValueError(
 				f"start must be less than or equal to end. Got {start=}, {end=}.",
 				stack_info=True,

@@ -17,11 +17,11 @@ The available options are:
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 * When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
   * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
-* Improvements when editing Microsoft PowerPoint text boxes:
+* Improvements when editing in Microsoft PowerPoint text boxes:
   * It is now possible to use braille display routing keys to move the text cursor. (#9101, #17004)
   * It is now possible to use the review cursor selection commands to select text. (#17004)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
-  * You can now move per sentence in Text boxes. (#17015, @LeonarddeR)
+  * You can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 
 ### Changes
 
