@@ -40,6 +40,8 @@ A binary build of NVDA can be run on a system without Python and all of NVDA's o
 
 Binary archives and bundles can be created using scons from the root of the NVDA source distribution. To build any of the following, open a command prompt and change to that directory.
 
+### Building without Archiving
+
 To make a non-archived binary build (equivalent to an extracted portable archive), type:
 
 ```cmd
