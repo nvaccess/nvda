@@ -20,10 +20,16 @@ scons source user_docs
 
 While simply testing or committing changes, it may be faster usually just doing `scons source` as user documentation will change each time the revision number changes.
 
-You can speed up scons calls by appending the `--all-cores` or `-j N` (where `N` is the number of cores to use) parameter to the call, however note that this can cause errors, and output will be scrambled:
+You can speed up scons calls by appending the following CLI parameters:
+
+- `-j N`, where `N` is the number of cores to use while building
+- `--all-cores` to use all cores.
+
+However note that building across cores can cause errors, and output will be scrambled.
 
 ```cmd
 scons source --all-cores
+scons checkPot -j 1
 ```
 
 If you are experiencing errors building NVDA with threading enabled, please force a serial build with the `-j 1` parameter.
