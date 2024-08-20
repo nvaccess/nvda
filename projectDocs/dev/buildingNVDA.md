@@ -34,7 +34,7 @@ To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root o
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
 These arguments are also documented in the [user guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions).
 
-## Building NVDA
+## Making Binary Builds
 
 A binary build of NVDA can be run on a system without Python and all of NVDA's other dependencies installed (as we do for snapshots and releases).
 
