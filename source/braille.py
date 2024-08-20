@@ -2282,7 +2282,15 @@ Note: filter_displayDimensions should now be used in place of this filter.
 If this filter is used, NVDA will assume that the display has 1 row of `displaySize` cells.
 """
 
-DisplayDimensions = NamedTuple("DisplayDimensions", [("numRows", int), ("numCols", int)])
+
+class DisplayDimensions(NamedTuple):
+	numRows: int
+	numCols: int
+
+	@property
+	def displaySize(self):
+		return self.numCols * self.numRows
+
 
 filter_displayDimensions = extensionPoints.Filter[DisplayDimensions]()
 """
@@ -2495,8 +2503,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		Handlers can register themselves to L{filter_displayDimensions} to change this value on the fly.
 		Therefore, this is a read only property and can't be set.
 		"""
-		numRows, numCols = self.displayDimensions
-		displaySize = numRows * numCols
+		displaySize = self.displayDimensions.displaySize
 		# For backwards compatibility, we still set the internal cache.
 		self._displaySize = displaySize
 		return displaySize
@@ -2521,7 +2528,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		)
 		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
 		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
-		calculatedDisplaySize = filteredDisplayDimensions.numRows * filteredDisplayDimensions.numCols
+		calculatedDisplaySize = filteredDisplayDimensions.displaySize
 		if len(list(filter_displaySize.handlers)):
 			# There is technically a race condition here if a handler is unregistered before the apply call.
 			# But worse case is that a multiline display will be singleline for a short time.
