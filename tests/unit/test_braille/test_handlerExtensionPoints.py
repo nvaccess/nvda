@@ -51,7 +51,9 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler.setDisplayByName("noBraille")
 
 	def test_filter_displaySize(self):
-		cachedDisplaySize = braille.handler._displayDimensions.numRows * braille.handler._displayDimensions.numCols
+		cachedDisplaySize = (
+			braille.handler._displayDimensions.numRows * braille.handler._displayDimensions.numCols
+		)
 		with filterTester(
 			self,
 			braille.filter_displaySize,
