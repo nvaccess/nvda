@@ -1173,7 +1173,7 @@ output = True
 input = True
 ```
 
-In the above example, `fr-bfu-tabmod-comp8.utb` is a new table,  while `no-no-8dot.utb` replaces a table that is already included in NVDA.
+In the above example, `fr-bfu-tabmod-comp8.utb` is a new table, while `no-no-8dot.utb` replaces a table that is already included in NVDA.
 Both tables need to be shipped in the brailleTables directory of the add-on.
 It is also possible to include a table in the manifest that is shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
 In that case, the table does not need to be shipped in the add-on's brailleTables directory.
