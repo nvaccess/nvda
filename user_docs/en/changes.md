@@ -55,7 +55,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Updated Ruff to 0.5.6. (#16868, @LeonarddeR)
   * Updated nh3 to 0.2.18 (#17020, @dpy013)
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
-* Added support for custom speech symbol dictionaries. (#16739, @LeonarddeR)
+* Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
   * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
   * Dictionary metadata can be added to an optional `symbolDictionaries` section in the add-on manifest.
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.

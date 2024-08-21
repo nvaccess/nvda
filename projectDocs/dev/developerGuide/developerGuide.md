@@ -230,7 +230,7 @@ Below are three detailed examples of `gestures.ini` files corresponding to the t
 In the original English version, the scripts for left and right mouse click (laptop layout) are executed with `NVDA+[` and `NVDA+]`, respectively.
 
 * On an English keyboard layout, the `[` and `]` keys are the two keys to the right of the `p` key.
-* On an Italian keyboard layout, `[` and `]` characters can only be input with the help of the `altGr` modifier: `altGr+è` and `altGr++`, respectively.
+* On an Italian keyboard layout, `[` and `]` characters can only be input with the help of the `altGr` modifier: `altGr+è` and `altGr+plus`, respectively.
 
 Thus, the Italian translators decided to remap these scripts using the two keys at the right of the `p` key on the Italian keyboard layout, i.e. `è` and `+`.
 To do this, they have added the following lines in the `gestures.ini` file:
