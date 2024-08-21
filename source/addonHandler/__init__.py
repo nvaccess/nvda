@@ -337,7 +337,7 @@ def _getAvailableAddonsFromPath(
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
 		if p.endswith(DELETEDIR_SUFFIX):
-			if isFirstLoad:
+			if isFirstLoad and NVDAState.shouldWriteToDisk():
 				removeFailedDeletion(os.path.join(path, p))
 			continue
 		addon_path = os.path.join(path, p)
@@ -351,6 +351,7 @@ def _getAvailableAddonsFromPath(
 					name = a.manifest["name"]
 					if (
 						isFirstLoad
+						and NVDAState.shouldWriteToDisk()
 						and name in state[AddonStateCategory.PENDING_REMOVE]
 						and not a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 					):
@@ -360,9 +361,13 @@ def _getAvailableAddonsFromPath(
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
 							_failedPendingRemovals.add(name)
-					if isFirstLoad and (
-						name in state[AddonStateCategory.PENDING_INSTALL]
-						or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+					if (
+						isFirstLoad
+						and NVDAState.shouldWriteToDisk()
+						and (
+							name in state[AddonStateCategory.PENDING_INSTALL]
+							or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+						)
 					):
 						newPath = a.completeInstall()
 						if newPath:

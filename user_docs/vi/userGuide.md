@@ -42,7 +42,7 @@ Một số tính năng nổi bật bao gồm:
 #### Yêu Cầu Hệ Thống Được Đề Xuất {#MinimumSystemRequirements}
 * Hệ điều hành: các phiên bản 64-bit của Windows 10, Windows 11, và Window Server 2022
   * đã hỗ trợ cả hai biến thể AMD64 và ARM64 của Windows.
-* tối thiểu 150 MB không gian lưu trử.
+* tối thiểu 150 MB không gian lưu trữ.
 * tối thiểu 4 GB RAM.
 
 #### Yêu cầu Hệ Thống Tối Thiểu {#MinimumSystemRequirements}
@@ -55,7 +55,7 @@ Một số tính năng nổi bật bao gồm:
 ### Tính quốc tế {#Internationalization}
 
 Một điều quan trọng là tất cả mọi người trên thế giới đều có quyền ngang nhau trong việc tiếp cận với công nghệ; cho dù họ đang giao tiếp bằng ngôn ngữ nào.
-Bên cạnh tiếng anh, NVDA đã được dịch sang 54 ngôn ngữ khác nhau bao gồm: Ailen, Albanian, Amharic, Aragon, Ả Rập, Ba Lan, Ba Tư, Bulgaria, Bồ Đào Nha (Brazil và Portugal), Catalan, Croatia, Czech, Do Thái, Đan Mạch, Đức (Đức và Thụy Sỹ), Farsi, Galicia, Gruzia, Hindi, Hungary, Hy Lạp, Hà Lan, Hàn Quốc, Iceland, Kannada, Kyrgyz, Lithuanian, Macedonian, Myanmar, Mông Cổ, Na Uy, Nam Phi, Nepal, Nga, Nhật, Pháp, Phần Lan, Rumani, Serbia, Slovak, Slovenian, Tamil, Thái Lan, Thổ Nhĩ Kỳ, Thụy Điển, Trung Quốc (giản thể và truyền thông), Tây Ban Nha (Colombia và Spain), Ukraina, Việt Nam và tiếng Ý.
+Bên cạnh tiếng anh, NVDA đã được dịch sang 54 ngôn ngữ khác nhau bao gồm: Ailen, Albanian, Amharic, Aragon, Ả Rập, Ba Lan, Ba Tư, Bulgaria, Bồ Đào Nha (Brazil và Portugal), Catalan, Croatia, Czech, Do Thái, Đan Mạch, Đức (Đức và Thụy Sỹ), Farsi, Galicia, Gruzia, Hindi, Hungary, Hy Lạp, Hà Lan, Hàn Quốc, Iceland, Kannada, Kyrgyz, Lithuanian, Macedonian, Myanmar, Mông Cổ, Na Uy, Nam Phi, Nepal, Nga, Nhật, Pháp, Phần Lan, Rumani, Serbia, Slovak, Slovenian, Tamil, Thái Lan, Thổ Nhĩ Kỳ, Thụy Điển, Trung Quốc (giản thể và truyền thống), Tây Ban Nha (Colombia và Spain), Ukraina, Việt Nam và tiếng Ý.
 
 ### Hỗ trợ các bộ tổng hợp tiếng nói {#SpeechSynthesizerSupport}
 
@@ -444,8 +444,8 @@ Nếu bạn đã đóng hộp thoại này hay đang sử dụng NVDA được c
 
 Một hộp thoại xuất hiện cho phép bạn chọn nơi sẽ tạo bản chạy trực tiếp.
 Đó có thể là một thư mục trên ổ đĩa cứng, trên ổ USB hay một phương tiện lưu trữ bất kỳ.
-Mặc định, một thư mục mới sẽ được tạo cho bản chạy trực tiếp..
-Bạn cũng có thể chọn dùng một thư mục có sẵn, nó sẽ ghi đè các tập tin trong thư mục đó.
+Mặc định, một thư mục mới sẽ được tạo cho bản chạy trực tiếp.
+Bạn cũng có thể chọn dùng một thư mục có sẵn. Nó sẽ ghi đè các tập tin trong thư mục đó.
 Nếu thư mục có sẵn là một bản chạy trực tiếp của NVDA, bản chạy đó sẽ được cập nhật.
 
 Ở đây cũng có tùy chọn chép thư mục cấu hình của người dùng hiện tại sang phiên bản chạy trực tiếp.

@@ -50,9 +50,9 @@ from typing import (
 	Set,
 	Tuple,
 )
+from addonAPIVersion import BACK_COMPAT_TO
 import NVDAState
 from NVDAState import WritePaths
-from buildVersion import version_year
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
 isAppX = False
@@ -1308,7 +1308,7 @@ class AggregatedSection:
 		# Alias ["documentFormatting"]["reportFontAttributes"] and ["speech"]["includeCLDR"]
 		# for backwards compatibility.
 		# TODO: Comment out in 2025.1.
-		if version_year < 2025 and NVDAState._allowDeprecatedAPI():
+		if BACK_COMPAT_TO < (2025, 1, 0) and NVDAState._allowDeprecatedAPI():
 			self._linkDeprecatedValues(key, val)
 
 	def _linkDeprecatedValues(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):

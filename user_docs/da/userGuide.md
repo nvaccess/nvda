@@ -39,7 +39,7 @@ Af væsentlige funktioner kan nævnes:
 
 ### Systemkrav {#SystemRequirements}
 
-#### Anbefalede Systemkrav {#RecommendedSystemRequirements}
+#### Anbefalede Systemkrav {#MinimumSystemRequirements}
 * Operativsystemer: 64-bit udgaver af Windows 10, Windows 11, og Windows Server 2022
   * både AMD64 og ARM64 varianter af Windows understøttes.
 * mindst 150 MB lagerplads.
@@ -522,7 +522,7 @@ Du kan aktivere eller deaktivere denne indstilling i NVDAs generelle indstilling
 De fleste NVDA-specifikke tastaturkommandoer består normalt af at trykke på en særlig tast kaldet NVDA-tasten, samtidig med en eller flere andre taster.
 Bemærkelsesværdige undtagelser herfra er tekstlæsekommandoerne i desktop-tastaturlayoutet, som kun består af tasterne i det numeriske tastatur alene, men der er også andre undtagelser.
 
-NVDA kan konfigureres således, at enten `Insert`, den `numeriske Insert`, eller `Caps Lock-tasten` kan bruges som NVDA-tast.
+NVDA kan konfigureres således, at enten `Insert`, den `numeriske Insert`, eller `Caps Lock-tasten` kan bruges som `NVDA`-tast.
 Som standard er både `Insert` og `Numerisk Insert` tasterne indstillet som NVDA-tast.
 
 Hvis du ønsker at få en af NVDA-tasterne til at brue dens oprindelige funktion (for eksempel, hvis du ønsker at slå Caps Lock til og fra, når du har valgt Caps Lock som en NVDA-tast) kan du trykke på tasten to gange i hurtig rækkefølge.
@@ -1907,9 +1907,9 @@ Hvis du opdager, at NVDA læser tegn og symboler på et forkert sprog med en bes
 |Muligheder |Standard (Deaktiveret), Aktiveret, Deaktiveret|
 |Standard |Deaktiveret|
 
-Når denne indstilling er aktiveret, udføres unicode-normalisering på den tekst, der tales af NVDA.
+Når denne indstilling er aktiveret, udføres unicode-normalisering på den tekst, der siges af NVDA.
 Dette er gavnligt, når der siges tegn, der kan repræsenteres i flere former.
-NVDA bruger NFKC (Normalization Form Compatibility Composition) algoritme, som giver følgende fordele blandt andre:
+NVDA bruger NFKC (Normalization Form Compatibility Composition) algoritmen, som giver følgende fordele blandt andre:
 
 1. De fede og kursiverede versioner af tegn, der er en del af unicode-standarden og almindeligt anvendes på sociale medier, normaliseres til deres mest almindelige kompatible ækvivalent.
 For eksempel kan det latinske bogstav "h" også præsenteres som "𝐡" (fed), "ℎ" (kursiv) osv., men vil altid blive talt som "h", når normalisering er aktiveret.
@@ -1925,12 +1925,12 @@ For eksempel kan tegnet "ü" (u med trema), et almindeligt tegn i sprog som tysk
 
 1. Stabil rækkefølge af modifikatorer i sammensatte tegn, for eksempel på oldhebraisk.
 
-For at aktivere eller deaktivere unicode-normalisering fra ethvert sted, bedes du tildele en brugerdefineret kommando ved hjælp af [Input Gestures dialogen](#InputGestures).
+For at aktivere eller deaktivere unicode-normalisering fra ethvert sted, bedes du tildele en brugerdefineret kommando ved hjælp af [Dialogen Håndter Kommandoer](#InputGestures).
 
 ##### Rapportér "Normaliseret" ved navigation efter tegn {#SpeechReportNormalizedForCharacterNavigation}
 
-Denne indstilling er en check box, der, når den er markeret, fortæller NVDA eksplicit at rapportere, at et tegn er normaliseret, når det tales som et enkelt tegn, f.eks. når der staves.
-For eksempel, når denne indstilling er aktiveret, vil stavning af tegnet "ĳ" udtale det som "i j normaliseret".
+Dette er en check box, der, når den er markeret, får NVDA til at oplyse, at et tegn er normaliseret, når det udtales som et enkelt tegn, f.eks. under stavning.
+Når denne indstilling er aktiveret, vil stavning af tegnet 'ĳ' for eksempel få det udtalt som 'i j normaliseret'.
 
 Bemærk, at denne indstilling kun er tilgængelig, når "[Unicode normalisering](#SpeechUnicodeNormalization)" er aktiveret.
 
@@ -2932,7 +2932,7 @@ Denne kategori giver dig mulighed for at justere adfærden for Tilføjelsescente
 
 ##### Opdateringsmeddelelser {#AutomaticAddonUpdates}
 
-Når denne indstilling er sat til "Underret", vil Tilføjelsescenteret underrette dig efter NVDA opstart, hvis der er tilgængelige opdateringer til tilføjelser.
+Når denne indstilling er indstillet til "Underret", vil Tilføjelsescenteret underrette dig efter NVDA opstart, hvis der er tilgængelige opdateringer til tilføjelser.
 Denne kontrol udføres hver 24. time.
 Underretninger vil kun forekomme for tilføjelser med tilgængelige opdateringer inden for samme kanal.
 For eksempel vil du for installerede beta-tilføjelser kun blive underrettet om opdateringer inden for beta-kanalen.
@@ -2944,7 +2944,7 @@ For eksempel vil du for installerede beta-tilføjelser kun blive underrettet om 
 
 |Indstilling |Adfærd |
 |---|---|
-|Underret |Underret når der er tilgængelige opdateringer til tilføjelser inden for samme kanal |
+|Underret |Underret, når der er tilgængelige opdateringer til tilføjelser inden for samme kanal |
 |Deaktiveret |Kontrollér ikke automatisk for opdateringer til tilføjelser |
 
 #### Windows Tekstgenkendelse {#Win10OcrSettings}
@@ -4088,7 +4088,7 @@ Følgende yderligere enheder understøttes også, men kræver ingen driver for a
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
-* Bemærk, at Zoomax ikke er Understøtet uden tredjepartsdrivere
+  * Bemærk, at Zoomax ikke er Understøtet uden tredjepartsdrivere
 
 Dette er tastekombinationerne til Brailliant BI/B og BrailleNote Touch displays til brug med NVDA.
 Se venligst dokumentationen til dit display for at finde ud af, hvor du kan finde knapperne.

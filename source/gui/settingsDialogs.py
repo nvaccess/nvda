@@ -31,6 +31,7 @@ from config.configFlags import (
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
+	ParagraphStartMarker,
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
@@ -4386,7 +4387,23 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			wx.CheckBox(self.followCursorGroupBox, label=readByParagraphText),
 		)
 		self.bindHelpEvent("BrailleSettingsReadByParagraph", self.readByParagraphCheckBox)
+		self.readByParagraphCheckBox.Bind(wx.EVT_CHECKBOX, self.onReadByParagraphChange)
 		self.readByParagraphCheckBox.Value = config.conf["braille"]["readByParagraph"]
+
+		# Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
+		labelText = _("Paragraph start marker:")
+		self.paragraphStartMarkersComboBox = followCursorGroupHelper.addLabeledControl(
+			labelText,
+			wx.Choice,
+			choices=[marker.displayString for marker in ParagraphStartMarker],
+		)
+		self.bindHelpEvent("BrailleParagraphStartMarkers", self.paragraphStartMarkersComboBox)
+		paragraphStartMarker = config.conf["braille"]["paragraphStartMarker"]
+		self.paragraphStartMarkersComboBox.SetSelection(
+			[marker.value for marker in ParagraphStartMarker].index(paragraphStartMarker),
+		)
+		if not self.readByParagraphCheckBox.GetValue():
+			self.paragraphStartMarkersComboBox.Disable()
 
 		# Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 		focusContextPresentationLabelText = _("Focus context presentation:")
@@ -4429,6 +4446,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			)
 		)
 		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
+
+		# Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
+		speakOnRoutingText = _("Spea&k character when routing cursor in text")
+		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self, label=speakOnRoutingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
+		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
@@ -4494,6 +4519,10 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			braille.handler.setTether(tetherChoice, auto=False)
 		self.brailleReviewRoutingMovesSystemCaretCombo.saveCurrentValueToConf()
 		config.conf["braille"]["readByParagraph"] = self.readByParagraphCheckBox.Value
+		config.conf["braille"]["paragraphStartMarker"] = [marker.value for marker in ParagraphStartMarker][
+			self.paragraphStartMarkersComboBox.GetSelection()
+		]
+		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
@@ -4519,6 +4548,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		"""Shows or hides "Move system caret when routing review cursor" braille setting."""
 		tetherChoice = [x.value for x in TetherTo][evt.GetSelection()]
 		self.brailleReviewRoutingMovesSystemCaretCombo.Enable(tetherChoice != TetherTo.FOCUS.value)
+
+	def onReadByParagraphChange(self, evt: wx.CommandEvent):
+		self.paragraphStartMarkersComboBox.Enable(evt.IsChecked())
 
 	def _onModeChange(self, evt: wx.CommandEvent):
 		self.followCursorGroupBox.Enable(not evt.GetSelection())

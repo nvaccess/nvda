@@ -25,7 +25,7 @@ Unicode CLDR de güncellendi.
   * Web sayfalarında ve Dism++ gibi dinamik içeriğe sahip uygulamalarda dolaşımı geliştirmek amacıyla fare tekerleğinin dikey ve yatay kaydırılması için kısayol tuşu atanmamış komutlar eklendi. (#16462, @ Cary - Rowen)
 * Konuşma ve braille çıktısı için Unicode Normalleştirmesi desteği eklendi. (#11570, #16466 @ LeonarddeR).
   * Bu, herhangi bir konuşma sentezleyicisi veya braille tablosu tarafından tanınmayan ve sosyal medyada yaygın olarak kullanılan kalın ve italik karakterler gibi uygun bir alternatife sahip karakterleri okurken yararlı olabilir.
-  * Microsoft Word denklem düzenleyicisindeki denklemlerin okunmasını da sağlar. 4631
+  * Microsoft Word denklem düzenleyicisindeki denklemlerin okunmasını da sağlar. (#4631)
   * Bu işlevi, NVDA Ayarları iletişim kutusundaki ilgili ayar kategorilerinden konuşma ve braille için etkinleştirebilirsiniz.
 * Varsayılan olarak, NVDA başlangıcından sonra herhangi bir eklenti güncellemesi olup olmadığı konusunda bilgilendirileceksiniz. (#15035)
   * Bu işlev NVDA ayarlarındaki "Eklenti Mağazası" kategorisinden devre dışı bırakılabilir.
@@ -71,8 +71,10 @@ Taşınabilir kopyayı boş olmayan bir klasöre oluşturmaya çalıştığını
   * NVDA, Google Chrome ve Mozilla Firefox'taki alt menülere ilk kez girilddiğinde radyo ve onay kutusu menü öğelerini doğru bir şekilde seslendirecek. (#14550)
   * NVDA'nın tarama kipinde bulma işlevi, sayfa emoji içerdiğinde daha düzgün çalışacak. (# 16317, @LeonarddeR)
   * Mozilla Firefox'ta, NVDA imleç bir satırın sonundaki ekleme noktasındayken geçerli karakteri, kelimeyi ve satırı doğru bir şekilde seslendirecek. (#3156, @jcsteh)
+  * NVDA, belge kapatıldığında veya Google Chrome'dan çıkıldığında Google Chrome'un çökmesine neden olmayacak. (#16893)
 * NVDA, Eclipse ve Windows 11 'deki diğer Eclipse tabanlı ortamlardaki otomatik tamamlama önerilerini doğru bir şekilde seslendirecek. (#16416, @thgcode)
 * Özellikle terminal uygulamalarında otomatik metin okumanın güvenilirliği artırıldı. (#15850, #16027, @Danstiv)
+* Konfigürasyonu fabrika ayarlarına güvenilir şekilde geri döndürmek yeniden mümkün. (#16755, @Emil-18)
 * NVDA, Microsoft Excel'de bir hücrenin metnini düzenlerken seçim değişikliklerini doğru bir şekilde seslendirecek. (#15843)
 * Java Access Bridge kullanan uygulamalarda, NVDA bir önceki satırı tekrarlamak yerine metnin son boş satırını doğru bir şekilde okuyacak. (#9376, @ dmitrii - drobotov)
 * LibreOffice Writer 24.8 ve üzeri sürümlerinde, ilgili klavye kısayolunu kullanarak metin biçimlendirmeyi (kalın , italik, altı çizili, alt simge/üst simge, hizalama) değiştirirken, NVDA yeni biçimlendirme özelliğini (örneğin "Kalın açık", "Kalın kapalı ") seslendirecek. (#4248, @ michaelweghorn)
