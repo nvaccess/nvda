@@ -24,7 +24,7 @@ The available options are:
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
-* The stability of NVDA's Poedit has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889)
+* The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
 
 ### Bug Fixes
 
