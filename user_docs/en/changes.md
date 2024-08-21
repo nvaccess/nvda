@@ -2,22 +2,20 @@
 
 ## 2024.4
 
-### Important notes
-
 ### New Features
 
-* Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
-* Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
+* New braille features:
+  * It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+    The available options are:
+    * Liblouis (default): Uses formatting markers defined in the selected braille table.
+    * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
+  * When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895, @nvdaes)
+  * When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
+    * This option is disabled by default.
+      You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
+* The comment command in Microsoft Word and notes command in Microsoft Excel can now be pressed twice to show the comment or note in a browsable message. (#16800, #16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
-* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
-The available options are:
-  * Liblouis (default): Uses formatting markers defined in the selected braille table.
-  * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
-* When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895, @nvdaes)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
-* When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
-  * This option is disabled by default.
-    You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
 
 ### Changes
 
@@ -32,17 +30,18 @@ The available options are:
   * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
   * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
   * UIA in Windows Terminal. (#16873, @codeofdusk)
-* When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
-* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
-* Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
+* Braille fixes:
+  * In Microsoft PowerPoint: (#17004)
+    * It is now possible to use braille display routing keys to move the text cursor. (#9101)
+    * It is now possible to use the review cursor selection commands to select text.
+  * When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in table headers defined with the set row and column header commands. (#7212)
+  * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
+  * Cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
+  * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#12885)
+  * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
 * In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
-* NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#12885)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
-* NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
-* Improvements in Microsoft PowerPoint: (#17004)
-  * It is now possible to use braille display routing keys to move the text cursor. (#9101)
-  * It is now possible to use the review cursor selection commands to select text.
 * Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
 
 ### Changes for Developers
