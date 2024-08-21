@@ -49,7 +49,7 @@ Major highlights include:
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
   * both AMD64 and ARM64 variants of Windows are supported.
 * at least 150 MB of storage space.
 * at least 4 GB of RAM.
