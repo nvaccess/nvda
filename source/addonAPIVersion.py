@@ -24,7 +24,7 @@ CURRENT: AddonApiVersionT = (
 	buildVersion.version_minor,
 )
 
-BACK_COMPAT_TO: AddonApiVersionT = (2024, 1, 0)
+BACK_COMPAT_TO: AddonApiVersionT = (2025, 1, 0)
 """
 As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning should be added below.
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
