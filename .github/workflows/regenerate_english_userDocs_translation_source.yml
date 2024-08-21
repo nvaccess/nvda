@@ -51,14 +51,14 @@ jobs:
             $rebuiltMarkdown = "user_docs/en/rebuilt_$file"
             $newSkeleton = "user_docs/en/new_$baseName.skel"
 
-            // Generate an untranslated markdown file from the xliff file
+            # Generate an untranslated markdown file from the xliff file
             python user_docs/markdownTranslate.py generateMarkdown -x $xliff -o $rebuiltMarkdown -u
-            // Extract the skeleton file from the xliff file
+            # Extract the skeleton file from the xliff file
             python user_docs/markdownTranslate.py extractSkeleton -x $xliff -o $skeleton
-            // Update the skeleton file with the structure of the markdown file
-            // Keeping existing translation IDs in tact
+            # Update the skeleton file with the structure of the markdown file
+            # Keeping existing translation IDs in tact
             python user_docs/markdownTranslate.py updateSkeleton -m $rebuiltMarkdown -n $markdown -s $skeleton -o $newSkeleton
-            // Generate a new xliff file from the updated skeleton file and markdown file
+            # Generate a new xliff file from the updated skeleton file and markdown file
             python user_docs/markdownTranslate.py generateXliff -m $markdown -s $newSkeleton -o $xliff -r "${{ github.repository }}"
         }
 
