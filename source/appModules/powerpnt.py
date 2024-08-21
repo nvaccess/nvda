@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 from typing import (
+	Any,
 	Optional,
 	Dict,
 )
@@ -1045,10 +1046,10 @@ class ChartShape(Shape):
 
 
 class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
-	def _getCaretOffset(self):
+	def _getCaretOffset(self) -> int:
 		return self.obj.documentWindow.ppSelection.textRange.start - 1
 
-	def _getSelectionOffsets(self):
+	def _getSelectionOffsets(self) -> tuple[int, int]:
 		sel = self.obj.documentWindow.ppSelection.textRange
 		start = sel.start - 1
 		end = start + sel.length
@@ -1132,16 +1133,16 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 	def _getLineNumFromOffset(self, offset: int) -> int:
 		return self._getOffsets(self.obj.ppObject.textRange.lines(), offset)[0]
 
-	def _getLineOffsets(self, offset):
+	def _getLineOffsets(self, offset: int) -> tuple[int, int]:
 		return self._getOffsets(self.obj.ppObject.textRange.lines(), offset)[1:]
 
-	def _getParagraphOffsets(self, offset):
+	def _getParagraphOffsets(self, offset: int) -> tuple[int, int]:
 		return self._getOffsets(self.obj.ppObject.textRange.paragraphs(), offset)[1:]
 
-	def _getSentenceOffsets(self, offset):
+	def _getSentenceOffsets(self, offset: int) -> tuple[int, int]:
 		return self._getOffsets(self.obj.ppObject.textRange.sentences(), offset)[1:]
 
-	def _getBoundingRectFromOffset(self, offset: int):
+	def _getBoundingRectFromOffset(self, offset: int) -> RectLTRB:
 		range = self.obj.ppObject.textRange.characters(offset + 1, 1)
 		try:
 			rangeLeft = range.BoundLeft
@@ -1156,7 +1157,12 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		bottom = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsY(rangeTop + rangeHeight)
 		return RectLTRB(left, top, right, bottom)
 
-	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+	def _getFormatFieldAndOffsets(
+		self,
+		offset: int,
+		formatConfig: dict[str, Any],
+		calculateOffsets: bool = True,
+	) -> tuple[textInfos.FormatField, tuple[int, int]]:
 		formatField = textInfos.FormatField()
 		curRun = None
 		if calculateOffsets:
@@ -1204,10 +1210,10 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 			formatField["link"] = True
 		return formatField, (startOffset, endOffset)
 
-	def _setCaretOffset(self, offset: int):
+	def _setCaretOffset(self, offset: int) -> None:
 		return self._setSelectionOffsets(offset, offset)
 
-	def _setSelectionOffsets(self, start: int, end: int):
+	def _setSelectionOffsets(self, start: int, end: int) -> None:
 		self._getPptTextRange(start, end, clamp=True).select()
 
 
