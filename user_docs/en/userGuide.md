@@ -7,7 +7,7 @@
 
 
 ## Introduction {#Introduction}
-Test string 2 for crowdin source updates
+Test string 1 for crowdin source updates
 
 
 
@@ -5188,5 +5188,4 @@ The following values can be set under this registry key:
 
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
-blah blah blah
 This site also provides information and resources concerning NVDA development.
