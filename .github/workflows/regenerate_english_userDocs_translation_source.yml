@@ -46,12 +46,13 @@ jobs:
         foreach ($file in $changedFiles) {
             $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
             $xliff = "user_docs/en/$baseName.xliff"
+            $tempXliff = "user_docs/en/$baseName.xliff.temp"
             $markdown = "user_docs/en/$file"
 
             # Update the xliff file with the changes from the new markdown file 
             # Keeping existing translation IDs in tact
-            python user_docs/markdownTranslate.py updateXliff -x ${xliff} -m ${markdown} -o ${xliff}.updated
-            move-item -Path ${xliff}.updated -Destination ${xliff} -Force
+            python user_docs/markdownTranslate.py updateXliff -x $xliff -m $markdown -o $tempXliff
+            move-item -Path $tempXliff -Destination $xliff -Force
         }
 
     - name: Crowdin upload
