@@ -244,7 +244,7 @@ def generateXliff(
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
 			f'<file id="{fileID}" original="{mdUri}">\n'
 		)
-		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}</skeleton>\n")
+		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}\n</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
 			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)), start=1
