@@ -61,7 +61,7 @@ jobs:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
       run: |
-        python appVeyor/crowdinSync.py uploadSourceFile 17 user_docs/en/userguide.xliff
+        python appVeyor/crowdinSync.py uploadSourceFile 18 user_docs/en/userguide.xliff
 
     - name: Commit changes
       run: |
