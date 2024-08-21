@@ -339,9 +339,8 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.xliff')):
 	if lang == 'en':
 		continue
 	mdFile = os.path.splitext(xliffFile.path)[0] + '.md'
-	enSkelFile = os.path.join(userDocsDir.path, 'en', os.path.basename(os.path.splitext(mdFile)[0]))+'.skel'
 	env.Command(mdFile, xliffFile, [
-		f'{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -s "{enSkelFile}" -o "{mdFile}"'
+		f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'
 	])
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):

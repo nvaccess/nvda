@@ -649,14 +649,6 @@ if __name__ == "__main__":
 		help="The xliff file to generate the markdown file for",
 	)
 	generateMarkdownParser.add_argument(
-		"-s",
-		"--skeleton",
-		dest="skeleton",
-		type=str,
-		required=True,
-		help="The skeleton file to generate the markdown file for",
-	)
-	generateMarkdownParser.add_argument(
 		"-o",
 		"--output",
 		dest="output",
