@@ -3,84 +3,84 @@ name: Update User Documentation
 on:
   push:
     paths:
-      - "user_docs/en/userGuide.md"
-      - "user_docs/en/changes.md"
+      - 'user_docs/en/userGuide.md'
+      - 'user_docs/en/changes.md'
 
 jobs:
   update-documentation:
     runs-on: windows-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 2
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 2
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.x"
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.x'
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install lxml
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install lxml
 
-      - name: Identify changed files
-        id: identify_changes
-        shell: pwsh
-        run: |
-          $changedFiles = @()
-          if (git diff --name-only HEAD~1 HEAD | Select-String -Pattern '^user_docs/en/userGuide.md') {
-              $changedFiles += 'userGuide.md'
-          }
-          if (git diff --name-only HEAD~1 HEAD | Select-String -Pattern '^user_docs/en/changes.md') {
-              $changedFiles += 'changes.md'
-          }
-          $changedFiles | Out-File -FilePath changed_files.txt
+    - name: Identify changed files
+      id: identify_changes
+      shell: pwsh
+      run: |
+        $changedFiles = @()
+        if (git diff --name-only HEAD~1 HEAD | Select-String -Pattern '^user_docs/en/userGuide.md') {
+            $changedFiles += 'userGuide.md'
+        }
+        if (git diff --name-only HEAD~1 HEAD | Select-String -Pattern '^user_docs/en/changes.md') {
+            $changedFiles += 'changes.md'
+        }
+        $changedFiles | Out-File -FilePath changed_files.txt
 
-      - name: Process each changed file
-        shell: pwsh
-        run: |
-          $changedFiles = Get-Content changed_files.txt
-          foreach ($file in $changedFiles) {
-              $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
-              $skeleton = "user_docs/en/$baseName.skel"
-              $xliff = "user_docs/en/$baseName.xliff"
-              $markdown = "user_docs/en/$file"
-              $rebuiltMarkdown = "user_docs/en/rebuilt_$file"
-              $newSkeleton = "user_docs/en/new_$baseName.skel"
+    - name: Process each changed file
+      shell: pwsh
+      run: |
+        $changedFiles = Get-Content changed_files.txt
+        foreach ($file in $changedFiles) {
+            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
+            $skeleton = "user_docs/en/$baseName.skel"
+            $xliff = "user_docs/en/$baseName.xliff"
+            $markdown = "user_docs/en/$file"
+            $rebuiltMarkdown = "user_docs/en/rebuilt_$file"
+            $newSkeleton = "user_docs/en/new_$baseName.skel"
 
-              // Generate an untranslated markdown file from the xliff file
-              python user_docs/markdownTranslate.py generateMarkdown -x $xliff -o $rebuiltMarkdown -u
-              // Extract the skeleton file from the xliff file
-              python user_docs/markdownTranslate.py extractSkeleton -x $xliff -o $skeleton
-              // Update the skeleton file with the structure of the markdown file
-              // Keeping existing translation IDs in tact
-              python user_docs/markdownTranslate.py updateSkeleton -m $rebuiltMarkdown -n $markdown -s $skeleton -o $newSkeleton
-              // Generate a new xliff file from the updated skeleton file and markdown file
-              python user_docs/markdownTranslate.py generateXliff -m $markdown -s $newSkeleton -o $xliff -r "${{ github.repository }}"
-          }
+            // Generate an untranslated markdown file from the xliff file
+            python user_docs/markdownTranslate.py generateMarkdown -x $xliff -o $rebuiltMarkdown -u
+            // Extract the skeleton file from the xliff file
+            python user_docs/markdownTranslate.py extractSkeleton -x $xliff -o $skeleton
+            // Update the skeleton file with the structure of the markdown file
+            // Keeping existing translation IDs in tact
+            python user_docs/markdownTranslate.py updateSkeleton -m $rebuiltMarkdown -n $markdown -s $skeleton -o $newSkeleton
+            // Generate a new xliff file from the updated skeleton file and markdown file
+            python user_docs/markdownTranslate.py generateXliff -m $markdown -s $newSkeleton -o $xliff -r "${{ github.repository }}"
+        }
 
-      - name: Crowdin upload
-        env:
-          crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
-          crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
-        run: |
-          python appVeyor/crowdinSync.py uploadSourcefile 16 user_docs/en/userguide.xliff
+    - name: Crowdin upload
+      env:
+        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+      run: |
+        python appVeyor/crowdinSync.py uploadSourcefile 16 user_docs/en/userguide.xliff
 
-      - name: Commit changes
-        run: |
-          git config --local user.name "GitHub Actions"
-          git config --local user.email "actions@github.com"
-          git add user_docs/en/*.xliff
-          git commit -m "Update user documentation files"
-        if: success()
+    - name: Commit changes
+      run: |
+        git config --local user.name "GitHub Actions"
+        git config --local user.email "actions@github.com"
+        git add user_docs/en/*.xliff
+        git commit -m "Update user documentation files"
+      if: success()
 
-      - name: Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-          git push origin HEAD
-        if: success()
+    - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
+        git push origin HEAD
+      if: success()
