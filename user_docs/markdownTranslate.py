@@ -3,7 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-
+from typing import Generator
+import tempfile
 import os
 import contextlib
 import lxml.etree
@@ -17,7 +18,7 @@ import difflib
 from dataclasses import dataclass
 import subprocess
 
-RAW_GITHUB_URL = "https://raw.githubusercontent.com"
+RAW_GITHUB_REPO_URL = "https://raw.githubusercontent.com/nvaccess/nvda"
 re_kcTitle = re.compile(r"^(<!--\s+KC:title:\s*)(.+?)(\s*-->)$")
 re_kcSettingsSection = re.compile(r"^(<!--\s+KC:settingsSection:\s*)(.+?)(\s*-->)$")
 re_comment = re.compile(r"^<!--.+-->$")
@@ -28,6 +29,22 @@ re_hiddenHeaderRow = re.compile(r"^\|\s*\.\s*\{\.hideHeaderRow\}\s*(\|\s*\.\s*)*
 re_postTableHeaderLine = re.compile(r"^(\|\s*-+\s*)+\|$")
 re_tableRow = re.compile(r"^(\|)(.+)(\|)$")
 re_translationID = re.compile(r"^(.*)\$\(ID:([0-9a-f-]+)\)(.*)$")
+
+
+def prettyPathString(path: str) -> str:
+	return os.path.relpath(path, os.getcwd())
+
+
+@contextlib.contextmanager
+def createAndDeleteTempFilePath_contextManager(
+	dir: str | None = None, prefix: str | None = None, suffix: str | None = None
+) -> Generator[str, None, None]:
+	"""A context manager that creates a temporary file and deletes it when the context is exited"""
+	with tempfile.NamedTemporaryFile(dir=dir, prefix=prefix, suffix=suffix, delete=False) as tempFile:
+		tempFilePath = tempFile.name
+		tempFile.close()
+		yield tempFilePath
+		os.remove(tempFilePath)
 
 
 def getLastCommitID(filePath) -> str:
@@ -55,14 +72,12 @@ def getGitDir() -> str:
 	return gitDir
 
 
-def getRawGithubURLForPath(ghRepo: str, filePath: str):
-	if not re.match(r"^[a-zA-Z0-9_.-]+/[a-zA-Z0-9_.-]+$", ghRepo):
-		raise ValueError(f"Invalid GitHub repository: '{ghRepo}'")
+def getRawGithubURLForPath(filePath: str):
 	gitDirPath = getGitDir()
 	commitID = getLastCommitID(filePath)
 	relativePath = os.path.relpath(os.path.abspath(filePath), gitDirPath)
 	relativePath = relativePath.replace("\\", "/")
-	return f"{RAW_GITHUB_URL }/{ghRepo}/{commitID}/{relativePath}"
+	return f"{RAW_GITHUB_REPO_URL}/{commitID}/{relativePath}"
 
 
 def skeletonizeLine(mdLine: str) -> str | None:
@@ -100,7 +115,7 @@ class Result_generateSkeleton:
 
 
 def generateSkeleton(mdPath: str, outputPath: str) -> Result_generateSkeleton:
-	print(f"Generating skeleton file {outputPath} from {mdPath}...")
+	print(f"Generating skeleton file {prettyPathString(outputPath)} from {prettyPathString(mdPath)}...")
 	res = Result_generateSkeleton()
 	with (
 		open(mdPath, "r", encoding="utf8") as mdFile,
@@ -131,7 +146,7 @@ class Result_updateSkeleton:
 
 
 def extractSkeleton(xliffPath: str, outputPath: str):
-	print(f"Extracting skeleton from {xliffPath} to {outputPath}...")
+	print(f"Extracting skeleton from {prettyPathString(xliffPath)} to {prettyPathString(outputPath)}...")
 	with contextlib.ExitStack() as stack:
 		outputFile = stack.enter_context(open(outputPath, "w", encoding="utf8", newline=""))
 		xliff = lxml.etree.parse(xliffPath)
@@ -144,14 +159,14 @@ def extractSkeleton(xliffPath: str, outputPath: str):
 			raise ValueError("No skeleton found in xliff file")
 		skeletonContent = skeletonNode.text.strip()
 		outputFile.write(xmlUnescape(skeletonContent))
-		print(f"Extracted skeleton to {outputPath}")
+		print(f"Extracted skeleton to {prettyPathString(outputPath)}")
 
 
 def updateSkeleton(
 	origMdPath: str, newMdPath: str, origSkelPath: str, outputPath: str
 ) -> Result_updateSkeleton:
 	print(
-		f"Creating updated skeleton file {outputPath} from {origSkelPath} with changes from {origMdPath} to {newMdPath}..."
+		f"Creating updated skeleton file {prettyPathString(outputPath)} from {prettyPathString(origSkelPath)} with changes from {prettyPathString(origMdPath)} to {prettyPathString(newMdPath)}..."
 	)
 	res = Result_updateSkeleton()
 	with contextlib.ExitStack() as stack:
@@ -198,30 +213,38 @@ class Result_generateXliff:
 
 def generateXliff(
 	mdPath: str,
-	skelPath: str,
 	outputPath: str,
-	embedSkeleton: bool = True,
-	ghRepo: str | None = None,
+	skelPath: str | None = None,
 ) -> Result_generateXliff:
-	print(f"Generating xliff file {outputPath} from {mdPath} and {skelPath}...")
+	# If a skeleton file is not provided, first generate one
+	with contextlib.ExitStack() as stack:
+		if not skelPath:
+			skelPath = stack.enter_context(
+				createAndDeleteTempFilePath_contextManager(
+					dir=os.path.dirname(outputPath),
+					prefix=os.path.basename(mdPath),
+					suffix=".skel",
+				)
+			)
+			generateSkeleton(mdPath=mdPath, outputPath=skelPath)
+		with open(skelPath, "r", encoding="utf8") as skelFile:
+			skelContent = skelFile.read()
 	res = Result_generateXliff()
+	print(
+		f"Generating xliff file {prettyPathString(outputPath)} from {prettyPathString(mdPath)} and {prettyPathString(skelPath)}..."
+	)
 	with contextlib.ExitStack() as stack:
 		mdFile = stack.enter_context(open(mdPath, "r", encoding="utf8"))
-		skelFile = stack.enter_context(open(skelPath, "r", encoding="utf8"))
 		outputFile = stack.enter_context(open(outputPath, "w", encoding="utf8", newline=""))
 		fileID = os.path.basename(mdPath)
-		if ghRepo:
-			mdUri = getRawGithubURLForPath(ghRepo, mdPath)
-		else:
-			mdUri = mdPath
+		mdUri = getRawGithubURLForPath(mdPath)
+		print(f"Including Github raw URL: {mdUri}")
 		outputFile.write(
 			'<?xml version="1.0"?>\n'
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
 			f'<file id="{fileID}" original="{mdUri}">\n'
 		)
-		skelContent = skelFile.read()
-		if embedSkeleton:
-			outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}</skeleton>\n")
+		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
 			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)), start=1
@@ -263,6 +286,42 @@ class Result_translateXliff:
 	numTranslatedStrings: int = 0
 
 
+def updateXliff(
+	xliffPath: str,
+	mdPath: str,
+	outputPath: str,
+):
+	# uses generateMarkdown, extractSkeleton, updateSkeleton, and generateXliff to generate an updated xliff file.
+	outputDir = os.path.dirname(outputPath)
+	print(
+		f"Generating updated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} and {prettyPathString(mdPath)}..."
+	)
+	with contextlib.ExitStack() as stack:
+		origMdPath = stack.enter_context(
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="generated_", suffix=".md")
+		)
+		generateMarkdown(xliffPath=xliffPath, outputPath=origMdPath, translated=False)
+		origSkelPath = stack.enter_context(
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="extracted_", suffix=".skel")
+		)
+		extractSkeleton(xliffPath=xliffPath, outputPath=origSkelPath)
+		updatedSkelPath = stack.enter_context(
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="updated_", suffix=".skel")
+		)
+		updateSkeleton(
+			origMdPath=origMdPath,
+			newMdPath=mdPath,
+			origSkelPath=origSkelPath,
+			outputPath=updatedSkelPath,
+		)
+		generateXliff(
+			mdPath=mdPath,
+			skelPath=updatedSkelPath,
+			outputPath=outputPath,
+		)
+		print(f"Generated updated xliff file {prettyPathString(outputPath)}")
+
+
 def translateXliff(
 	xliffPath: str,
 	lang: str,
@@ -271,7 +330,7 @@ def translateXliff(
 	allowBadAnchors: bool = False,
 ) -> Result_translateXliff:
 	print(
-		f"Creating {lang} translated xliff file {outputPath} from {xliffPath} using {pretranslatedMdPath}..."
+		f"Creating {lang} translated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} using {prettyPathString(pretranslatedMdPath)}..."
 	)
 	res = Result_translateXliff()
 	with contextlib.ExitStack() as stack:
@@ -333,7 +392,7 @@ class Result_generateMarkdown:
 
 
 def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True):
-	print(f"Generating markdown file {outputPath} from {xliffPath}...")
+	print(f"Generating markdown file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)}...")
 	res = Result_generateMarkdown()
 	with contextlib.ExitStack() as stack:
 		outputFile = stack.enter_context(open(outputPath, "w", encoding="utf8", newline=""))
@@ -381,7 +440,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True):
 
 
 def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool = False):
-	print(f"Ensuring files {path1} and {path2} match...")
+	print(f"Ensuring files {prettyPathString(path1)} and {prettyPathString(path2)} match...")
 	with contextlib.ExitStack() as stack:
 		file1 = stack.enter_context(open(path1, "r", encoding="utf8"))
 		file2 = stack.enter_context(open(path2, "r", encoding="utf8"))
@@ -416,65 +475,71 @@ def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool = False):
 		print("Files match")
 
 
+def markdownTranslateCommand(command: str, *args):
+	print(f"Running markdownTranslate command: {command} {' '.join(args)}")
+	subprocess.run(["python", __file__, command, *args], check=True)
+
+
 def runTests(testDir: str):
 	outDir = os.path.join(testDir, "output")
 	os.makedirs(outDir, exist_ok=True)
-	generateSkeleton(
-		mdPath=os.path.join(testDir, "en_2024.2_userGuide.md"),
-		outputPath=os.path.join(outDir, "en_2024.2_userGuide.skel"),
+	markdownTranslateCommand(
+		"generateXliff",
+		"-m",
+		os.path.join(testDir, "en_2024.2_userGuide.md"),
+		"-o",
+		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
 	)
-	generateXliff(
-		mdPath=os.path.join(testDir, "en_2024.2_userGuide.md"),
-		skelPath=os.path.join(outDir, "en_2024.2_userGuide.skel"),
-		outputPath=os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-	)
-	generateMarkdown(
-		xliffPath=os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-		outputPath=os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
-		translated=False,
+	markdownTranslateCommand(
+		"generateMarkdown",
+		"-x",
+		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
+		"-o",
+		os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
+		"-u",
 	)
 	ensureFilesMatch(
 		os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
 		os.path.join(testDir, "en_2024.2_userGuide.md"),
 	)
-	extractSkeleton(
-		xliffPath=os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-		outputPath=os.path.join(outDir, "extracted_en_2024.2_userGuide.skel"),
+	markdownTranslateCommand(
+		"updateXliff",
+		"-x",
+		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
+		"-m",
+		os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
+		"-o",
+		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
 	)
-	ensureFilesMatch(
-		os.path.join(outDir, "extracted_en_2024.2_userGuide.skel"),
-		os.path.join(outDir, "en_2024.2_userGuide.skel"),
-	)
-	updateSkeleton(
-		origMdPath=os.path.join(testDir, "en_2024.2_userGuide.md"),
-		newMdPath=os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
-		origSkelPath=os.path.join(outDir, "extracted_en_2024.2_userGuide.skel"),
-		outputPath=os.path.join(outDir, "en_2024.3beta6_userGuide.skel"),
-	)
-	generateXliff(
-		mdPath=os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
-		skelPath=os.path.join(outDir, "en_2024.3beta6_userGuide.skel"),
-		outputPath=os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-	)
-	generateMarkdown(
-		xliffPath=os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-		outputPath=os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
-		translated=False,
+	markdownTranslateCommand(
+		"generateMarkdown",
+		"-x",
+		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
+		"-o",
+		os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
+		"-u",
 	)
 	ensureFilesMatch(
 		os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
 		os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
 	)
-	translateXliff(
-		xliffPath=os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-		lang="fr",
-		pretranslatedMdPath=os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
-		outputPath=os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
+	markdownTranslateCommand(
+		"translateXliff",
+		"-x",
+		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
+		"-l",
+		"fr",
+		"-p",
+		os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
+		"-o",
+		os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
 	)
-	generateMarkdown(
-		xliffPath=os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
-		outputPath=os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
-		translated=True,
+	markdownTranslateCommand(
+		"generateMarkdown",
+		"-x",
+		os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
+		"-o",
+		os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
 	)
 	ensureFilesMatch(
 		os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
@@ -543,18 +608,6 @@ def pretranslateAllPossibleLanguages(langsDir: str, mdBaseName: str):
 if __name__ == "__main__":
 	mainParser = argparse.ArgumentParser()
 	commandParser = mainParser.add_subparsers(title="commands", dest="command", required=True)
-	generateSkeletonParser = commandParser.add_parser("generateSkeleton")
-	generateSkeletonParser.add_argument(
-		"-m",
-		"--markdown",
-		dest="md",
-		type=str,
-		required=True,
-		help="The markdown file to generate a skeleton for",
-	)
-	generateSkeletonParser.add_argument(
-		"-o", "--output", dest="output", type=str, required=True, help="The file to output the skeleton to"
-	)
 	generateXliffParser = commandParser.add_parser("generateXliff")
 	generateXliffParser.add_argument(
 		"-m",
@@ -565,60 +618,26 @@ if __name__ == "__main__":
 		help="The markdown file to generate the xliff file for",
 	)
 	generateXliffParser.add_argument(
-		"-s",
-		"--skeleton",
-		dest="skel",
-		type=str,
-		required=True,
-		help="The skeleton file to generate the xliff file for",
-	)
-	generateXliffParser.add_argument(
 		"-o", "--output", dest="output", type=str, required=True, help="The file to output the xliff file to"
 	)
-	generateXliffParser.add_argument(
-		"-r",
-		"--repo",
-		dest="repo",
-		type=str,
-		required=False,
-		help="The GitHub repository to use for the raw file URL",
+	updateXliffParser = commandParser.add_parser("updateXliff")
+	updateXliffParser.add_argument(
+		"-x", "--xliff", dest="xliff", type=str, required=True, help="The original xliff file"
 	)
-	extractSkeletonParser = commandParser.add_parser("extractSkeleton")
-	extractSkeletonParser.add_argument(
-		"-x",
-		"--xliff",
-		dest="xliff",
-		type=str,
-		required=True,
-		help="The xliff file to extract the skeleton from",
+	updateXliffParser.add_argument(
+		"-m", "--newMarkdown", dest="md", type=str, required=True, help="The new markdown file"
 	)
-	extractSkeletonParser.add_argument(
-		"-o", "--output", dest="output", type=str, required=True, help="The file to output the skeleton to"
-	)
-	updateSkeletonParser = commandParser.add_parser("updateSkeleton")
-	updateSkeletonParser.add_argument(
-		"-m", "--markdown", dest="md", type=str, required=True, help="The original markdown file"
-	)
-	updateSkeletonParser.add_argument(
-		"-n", "--newMarkdown", dest="newMd", type=str, required=True, help="The new markdown file"
-	)
-	updateSkeletonParser.add_argument(
-		"-s", "--skeleton", dest="skel", type=str, required=True, help="The original skeleton file"
-	)
-	updateSkeletonParser.add_argument(
+	updateXliffParser.add_argument(
 		"-o",
 		"--output",
 		dest="output",
 		type=str,
 		required=True,
-		help="The file to output the updated skeleton to",
+		help="The file to output the updated xliff to",
 	)
 	translateXliffParser = commandParser.add_parser("translateXliff")
 	translateXliffParser.add_argument(
 		"-x", "--xliff", dest="xliff", type=str, required=True, help="The xliff file to translate"
-	)
-	translateXliffParser.add_argument(
-		"-s", "--skeleton", dest="skeleton", type=str, required=True, help="The skeleton file to translate"
 	)
 	translateXliffParser.add_argument(
 		"-l", "--lang", dest="lang", type=str, required=True, help="The language to translate to"
@@ -672,16 +691,31 @@ if __name__ == "__main__":
 		required=True,
 		help="The directory containing the test files",
 	)
+	pretranslateLangsParser = commandParser.add_parser("pretranslateLangs")
+	pretranslateLangsParser.add_argument(
+		"-d",
+		"--langs-dir",
+		dest="langsDir",
+		type=str,
+		required=True,
+		help="The directory containing the language directories",
+	)
+	pretranslateLangsParser.add_argument(
+		"-b",
+		"--md-base-name",
+		dest="mdBaseName",
+		type=str,
+		required=True,
+		help="The base name of the markdown files to pretranslate",
+	)
 	args = mainParser.parse_args()
-	if args.command == "generateSkeleton":
-		generateSkeleton(mdPath=args.md, outputPath=args.output)
-	elif args.command == "updateSkeleton":
-		updateSkeleton(
-			origMdPath=args.md, newMdPath=args.newMd, origSkelPath=args.skel, outputPath=args.output
-		)
-	elif args.command == "generateXliff":
-		generateXliff(
-			mdPath=args.md, skelPath=args.skel, outputPath=args.output, ghRepo=args.repo, embedSkeleton=True
+	if args.command == "generateXliff":
+		generateXliff(mdPath=args.md, outputPath=args.output)
+	elif args.command == "updateXliff":
+		updateXliff(
+			xliffPath=args.xliff,
+			mdPath=args.md,
+			outputPath=args.output,
 		)
 	elif args.command == "generateMarkdown":
 		generateMarkdown(xliffPath=args.xliff, outputPath=args.output, translated=args.translated)
@@ -692,6 +726,8 @@ if __name__ == "__main__":
 			pretranslatedMdPath=args.pretranslatedMd,
 			outputPath=args.output,
 		)
+	elif args.command == "pretranslateLangs":
+		pretranslateAllPossibleLanguages(langsDir=args.langsDir, mdBaseName=args.mdBaseName)
 	elif args.command == "runTests":
 		runTests(args.testDir)
 	else:
