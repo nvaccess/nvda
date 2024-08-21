@@ -2,6 +2,24 @@
 
 ## 2024.4
 
+This release includes a number of improvements to braille.
+You can now configure how NVDA shows text formatting in braille, and set NVDA to show the start of paragraphs in braille.
+NVDA can now speak the character at the cursor when performing a braille cursor routing action.
+Cursor routing reliability has been improved, and support for routing keys in PowerPoint has been added.
+All lines of cells will now be used when using a multi-line braille display via HID braille.
+The Seika Notetaker driver now correctly generates braille input for space, backspace, and dots with space/backspace gestures.
+And NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan.
+
+NVDA can now be configured to report font attributes in speech and braille separately.
+And a new setting has been added to configure the timeout to perform a multiple press gesture, such as the report time/date command.
+
+There have been improvements in Microsoft Word, Excel, and PowerPoint, including the ability to double-press the comment gesture to read the comment or note in a browsable dialog in Word or PowerPoint, and to use the review cursor selection command to select text in PowerPoint.
+NVDA also no longer brailles garbage characters when showing row or column header text in tables in Word when using the object model.
+
+eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
+
+There have also been a number of fixes, including to the on-demand speech mode, caret reporting in browsers and Windows Terminal, and mouse tracking in Firefox.
+
 ### New Features
 
 * New braille features:
