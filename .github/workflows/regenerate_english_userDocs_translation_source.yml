@@ -42,6 +42,7 @@ jobs:
     - name: Process each changed file
       shell: pwsh
       run: |
+        $ErrorActionPreference = 'Stop'
         $changedFiles = Get-Content changed_files.txt
         foreach ($file in $changedFiles) {
             $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
@@ -60,10 +61,11 @@ jobs:
         crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
         crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
       run: |
-        python appVeyor/crowdinSync.py uploadSourcefile 16 user_docs/en/userguide.xliff
+        python appVeyor/crowdinSync.py uploadSourceFile 16 user_docs/en/userguide.xliff
 
     - name: Commit changes
       run: |
+        $ErrorActionPreference = 'Stop'
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
         git add user_docs/en/*.xliff
@@ -74,6 +76,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
+        $ErrorActionPreference = 'Stop'
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         git push origin HEAD
       if: success()
