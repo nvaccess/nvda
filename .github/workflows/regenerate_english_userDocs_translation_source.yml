@@ -50,8 +50,8 @@ jobs:
 
             # Update the xliff file with the changes from the new markdown file 
             # Keeping existing translation IDs in tact
-            python user_docs/markdownTranslate.py updateXliff -x $xliff -m $markdown -o $xliff.updated
-            move-item -Path $xliff.updated -Destination $xliff -Force
+            python user_docs/markdownTranslate.py updateXliff -x ${xliff} -m ${markdown} -o ${xliff}.updated
+            move-item -Path ${xliff}.updated -Destination ${xliff} -Force
         }
 
     - name: Crowdin upload
