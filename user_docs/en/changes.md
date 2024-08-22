@@ -15,7 +15,7 @@ NVDA can now be configured to report font attributes in speech and braille separ
 A new setting has been added to configure the timeout to perform a multiple press gesture, such as the report time/date command.
 
 There have been improvements in Microsoft Word, Excel, and PowerPoint.
-There is now the ability to double-press the comment gesture to read the comment or note in a browsable dialog in Word or PowerPoint.
+In Word or Excel, it is now possible to double-press the comment gesture to read the comment or note in a browsable dialog.
 You can now use the review cursor selection command to select text in PowerPoint.
 NVDA also no longer brailles garbage characters when showing row or column header text in tables in Word when using the object model.
 
@@ -59,7 +59,7 @@ There have also been a number of fixes, including to the on-demand speech mode, 
   * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#12885)
   * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
 * It is now possible to use the review cursor selection commands to select text in Microsoft PowerPoint. (#17004)
-* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
+* In on-demand speech mode, NVDA does not talk any more when a message is opened in Outlook, when a new page is loaded in a browser, or when displaying a new slide in a PowerPoint slideshow. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)

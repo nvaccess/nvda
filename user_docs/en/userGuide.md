@@ -2171,7 +2171,7 @@ If "Read by paragraph" is checked, the selected start marker will be displayed t
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, pilcrow (¶), for more obvious paragraph breaks.
+The options include using double-spaces for softer paragraph breaks, and the paragraph symbol, pilcrow (¶), for more obvious paragraph breaks.
 
 | . {.hideHeaderRow} |.|
 |---|---|
