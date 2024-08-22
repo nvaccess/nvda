@@ -9,7 +9,7 @@
 ## Introduction {#Introduction}
 
 Welcome to NVDA!
-Crowdin test string 1
+
 NonVisual Desktop Access (NVDA) is a free and open source screen reader for the Microsoft Windows operating system.
 Providing feedback via synthetic speech and Braille, it enables blind or vision impaired people to access computers running Windows for no more cost than a sighted person.
 NVDA is developed by [NV Access](https://www.nvaccess.org/), with contributions from the community.
