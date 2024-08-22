@@ -2463,7 +2463,7 @@ class UIA(Window):
 			speechPriority=speechPriority,
 			messageID=messageID,
 			speakOnlyMostRecentWithSameID=speakOnlyMostRecentWithSameID,
-			interuptCurrentWithSameID=interuptCurrentWithSameID
+			interuptCurrentWithSameID=interuptCurrentWithSameID,
 		)
 
 	def event_UIA_dragDropEffect(self):
