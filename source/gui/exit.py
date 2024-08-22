@@ -46,11 +46,11 @@ class _ExitAction(DisplayStringEnum):
 			self.RESTART: _("Restart"),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING: _(
-				"Restart with add-ons disabled and debug logging"
+				"Restart with add-ons disabled and debug logging",
 			),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_ADDONS_DISABLED: _(
-				"Restart with add-ons disabled"
+				"Restart with add-ons disabled",
 			),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_DEBUG_LOGGING: _("Restart with debug logging"),
@@ -148,11 +148,16 @@ class ExitDialog(wx.Dialog):
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart)
 		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED:
 			queueHandler.queueFunction(
-				queueHandler.eventQueue, core.restart, disableAddons=True
-			)		
+				queueHandler.eventQueue,
+				core.restart,
+				disableAddons=True,
+			)
 		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING:
 			queueHandler.queueFunction(
-				queueHandler.eventQueue, core.restart, disableAddons=True, debugLogging=True
+				queueHandler.eventQueue,
+				core.restart,
+				disableAddons=True,
+				debugLogging=True,
 			)
 		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING:
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
