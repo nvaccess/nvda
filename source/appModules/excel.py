@@ -7,13 +7,16 @@
 import time
 import config
 import eventHandler
+import core
 import api
 import UIAHandler
+from NVDAObjects import NVDAObject
 from NVDAObjects.UIA import UIA
 import winUser
 import winVersion
 import controlTypes
 import appModuleHandler
+from scriptHandler import script
 from NVDAObjects.window import DisplayModelEditableText
 from NVDAObjects.window.edit import UnidentifiedEdit
 from NVDAObjects.window import Window
@@ -55,10 +58,61 @@ class Excel6_WhenUIAEnabled(IAccessible):
 
 	shouldAllowIAccessibleFocusEvent = False
 
+class BrokenDataValidationSysListView32(UIA):
+	"""
+	#15138: Broken data validation SysListView32 control in Excel.
+	If a cell has a data validation type of list, the dropdown list shown when pressing alt+down arrow is not accessible.
+	IAccessibleObjectFromEvent fails for all focus winEvents (most likely proxied from a broken UIA implementation).
+	Even when this appModule treats this window as native UIA,
+	the parent chain loops between the SysListView32 and the `__XLACOOUTER` window causing a never ending focus ancestry.
+	Therefore, this class is used to override the parent of the SysListView32 control to go straight to the desktop.
+	"""
+
+	@classmethod
+	def windowMatches(cls, hwnd: int) -> bool:
+		""" Identifies if the given window is a broken data validation SysListView32 control. """
+		if winUser.getClassName(hwnd) == 'SysListView32':
+			parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
+			if winUser.getClassName(parentHwnd) == '__XLACOOUTER':
+				return True
+		return False
+
+	@classmethod
+	def matchesNVDAObject(cls, obj: NVDAObject) -> bool:
+		""" Identifies if the given NVDAObject is a broken data validation SysListView32 control. """
+		if isinstance(obj, UIA) and obj.UIAIsWindowElement and cls.windowMatches(obj.windowHandle):
+			return True
+		return False
+
+	def _get_parent(self) -> NVDAObject:
+		return api.getDesktopObject()
+
+	def _correctFocus(self):
+			eventHandler.queueEvent("gainFocus", NVDAObject.objectWithFocus())
+
+	@script(
+		gestures=["kb:enter", "kb:space", "kb:escape"],
+		canPropagate=True,
+	)
+	def script_close(self, gesture):
+		""" Correct focus when the user presses Enter, Space or Escape. """
+		gesture.send()
+		core.callLater(100, self._correctFocus)
+
 
 class AppModule(appModuleHandler.AppModule):
+
 	def isGoodUIAWindow(self, hwnd: int) -> bool:
+		if BrokenDataValidationSysListView32.windowMatches(hwnd):
+			# #15138: Broken data validation SysListView32 control in Excel.
+			# If a cell has a data validation type of list, the dropdown list shown when pressing alt+down arrow is not accessible.
+			# IAccessibleObjectFromEvent fails for all focus winEvents (most likely proxied from a broken UIA implementation).
+			# Therefore treat this window as native UIA.
+			return True
 		windowClass = winUser.getClassName(hwnd)
+		if windowClass == "SysListView32":
+			import tones; tones.beep(550, 50)
+			return True
 		versionMajor = int(self.productVersion.split(".")[0])
 		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
@@ -69,6 +123,9 @@ class AppModule(appModuleHandler.AppModule):
 		return False
 
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if BrokenDataValidationSysListView32.matchesNVDAObject(obj):
+			clsList.insert(0, BrokenDataValidationSysListView32)
+			return
 		windowClass = obj.windowClassName
 		# #9042: Edit fields in Excel have to be accessed via displayModel.
 		if windowClass == "EDTBX":
