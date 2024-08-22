@@ -2,6 +2,8 @@ name: Update User Documentation
 
 on:
   push:
+    branches:
+      - beta
     paths:
       - 'user_docs/en/userGuide.md'
       - 'user_docs/en/changes.md'
