@@ -7,6 +7,7 @@
 // Though these should be constants, MSHTML does not support const as of 2024
 var args = window.dialogArguments;
 var copyStatusTimeout = 5000;  // milliseconds before copy status message goes away
+var copyEnabled = false;
 
 function handleKeyPress(e) {
 	/*
@@ -23,6 +24,7 @@ function handleKeyPress(e) {
 }
 
 function onCopyButtonPress() {
+	if (!copyEnabled) return;
 	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
 	var rng = document.body.createTextRange();
 	rng.moveToElementText(messageDiv);
@@ -61,6 +63,7 @@ function windowOnLoad() {
 		}
 		// If caller wants a copy to clip button
 		if (args.item('copyButtonText') != null) {
+			copyEnabled = true;
 			copyButton.innerText = args.item('copyButtonText');  // Assign the (translated) label
 			copyButtonSpan.style.display = 'inline';  // Display the button
 			copyStatusDiv.style.display = 'block';  // Display the copy status
