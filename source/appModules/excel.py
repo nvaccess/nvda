@@ -58,6 +58,7 @@ class Excel6_WhenUIAEnabled(IAccessible):
 
 	shouldAllowIAccessibleFocusEvent = False
 
+
 class BrokenDataValidationSysListView32(UIA):
 	"""
 	#15138: Broken data validation SysListView32 control in Excel.
@@ -70,16 +71,16 @@ class BrokenDataValidationSysListView32(UIA):
 
 	@classmethod
 	def windowMatches(cls, hwnd: int) -> bool:
-		""" Identifies if the given window is a broken data validation SysListView32 control. """
-		if winUser.getClassName(hwnd) == 'SysListView32':
+		"""Identifies if the given window is a broken data validation SysListView32 control."""
+		if winUser.getClassName(hwnd) == "SysListView32":
 			parentHwnd = winUser.getAncestor(hwnd, winUser.GA_PARENT)
-			if winUser.getClassName(parentHwnd) == '__XLACOOUTER':
+			if winUser.getClassName(parentHwnd) == "__XLACOOUTER":
 				return True
 		return False
 
 	@classmethod
 	def matchesNVDAObject(cls, obj: NVDAObject) -> bool:
-		""" Identifies if the given NVDAObject is a broken data validation SysListView32 control. """
+		"""Identifies if the given NVDAObject is a broken data validation SysListView32 control."""
 		if isinstance(obj, UIA) and obj.UIAIsWindowElement and cls.windowMatches(obj.windowHandle):
 			return True
 		return False
@@ -88,20 +89,19 @@ class BrokenDataValidationSysListView32(UIA):
 		return api.getDesktopObject()
 
 	def _correctFocus(self):
-			eventHandler.queueEvent("gainFocus", NVDAObject.objectWithFocus())
+		eventHandler.queueEvent("gainFocus", NVDAObject.objectWithFocus())
 
 	@script(
 		gestures=["kb:enter", "kb:space", "kb:escape"],
 		canPropagate=True,
 	)
 	def script_close(self, gesture):
-		""" Correct focus when the user presses Enter, Space or Escape. """
+		"""Correct focus when the user presses Enter, Space or Escape."""
 		gesture.send()
 		core.callLater(100, self._correctFocus)
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def isGoodUIAWindow(self, hwnd: int) -> bool:
 		if BrokenDataValidationSysListView32.windowMatches(hwnd):
 			# #15138: Broken data validation SysListView32 control in Excel.
@@ -111,7 +111,9 @@ class AppModule(appModuleHandler.AppModule):
 			return True
 		windowClass = winUser.getClassName(hwnd)
 		if windowClass == "SysListView32":
-			import tones; tones.beep(550, 50)
+			import tones
+
+			tones.beep(550, 50)
 			return True
 		versionMajor = int(self.productVersion.split(".")[0])
 		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
