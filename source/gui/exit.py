@@ -44,12 +44,12 @@ class _ExitAction(DisplayStringEnum):
 			self.EXIT: _("Exit"),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART: _("Restart"),
-			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING: _(
+				# Translators: An option in the combo box to choose exit action.
 				"Restart with add-ons disabled and debug logging",
 			),
-			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_ADDONS_DISABLED: _(
+				# Translators: An option in the combo box to choose exit action.
 				"Restart with add-ons disabled",
 			),
 			# Translators: An option in the combo box to choose exit action.
