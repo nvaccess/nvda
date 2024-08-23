@@ -165,8 +165,9 @@ Para más detalles sobre las opciones disponibles, por favor consulta [Opciones 
 
 1. Desde el lanzador, asegúrate de que la casilla de verificación para aceptar la licencia esté marcada.
 1. Pulsa `Tab` y activa el botón "Instalar NVDA en este ordenador".
-1. Seguidamente, van las opciones para que NVDA utilice durante el inicio de sesión de windows y para crear un acceso directo en el escritorio.
-Están marcadas predeterminadamente.
+1. Seguidamente, van las opciones para utilizar NVDA durante el inicio de sesión de windows y para crear un acceso directo en el escritorio.
+Están marcadas de forma predeterminada.
+Si lo deseas, pulsa `tab` y `barra espaciadora` para cambiar cualquiera de estas opciones, o dejarlas como vienen por defecto.
 1. Pulsa `intro` para continuar.
 Si lo deseas, pulsa `tab` y `barra espaciadora` para cambiar cualquiera de estas opciones, o déjalas como están por omisión.
 1. Aparece un diálogo de Windows "Control de Cuenta de Usuario (UAC en inglés)" preguntándote "¿Quiere permitir que esta app haga cambios a su ordenador?".
@@ -257,7 +258,7 @@ Las órdenes reales no se ejecutarán mientras se esté en modo ayuda de entrada
 |Moverse a la siguiente opción del anillo del sintetizador |`NVDA+control+flecha derecha` |`NVDA+shift+control+flecha derecha` |Se desplaza a la siguiente opción de voz disponible después de la actual, volviendo a la primera opción de nuevo tras la última|
 |Moverse a la anterior opción del anillo del sintetizador |`NVDA+control+flecha izquierda` |`NVDA+shift+control+flecha izquierda` |Se desplaza a la siguiente opción de voz disponible antes de la actual, volviendo a la última opción tras la primera|
 |Aumentar la opción actual del sintetizador |`NVDA+control+flecha arriba` |`NVDA+shift+control+flecha arriba` |Aumenta la opción de voz actual en la que estés. Ej.: aumenta la velocidad, elige la siguiente voz, aumenta el volumen|
-|Aumentar la opción actual del sintetizador en un paso largo | ``NVDA+control+rePág`` | ``NVDA+shift+control+rePág`` | aumenta el valor de la actual opción de voz sobre la que estés en pasos más largos. EJ.: cuando estés sobre una opción de voz, saltarás hacia adelante cada 20 voces; cuando estés en opciones de un deslizador (velocidad, tono, etc) saltará adelante el valor de 20% |
+|Aumentar la opción actual del sintetizador en un paso largo | `NVDA+control+rePág` | `NVDA+shift+control+rePág` | aumenta el valor de la actual opción de voz sobre la que estés en pasos más largos. EJ.: cuando estés sobre una opción de voz, saltarás hacia adelante cada 20 voces; cuando estés en opciones de un deslizador (velocidad, tono, etc) saltará adelante el valor de 20% |
 |Disminuir la opción actual del sintetizador |`NVDA+control+flecha abajo` |`NVDA+shift+control+flecha abajo` |Disminuye la opción de voz actual en la que estés. Ej.: disminuye la velocidad, elige la voz anterior, disminuye el volumen|
 |Disminuir la actual opción del sintetizador en un paso largo | ``NVDA+control+avPág`` | ``NVDA+shift+control+avPág`` | Disminuye el valor de la actual opción de voz sobre la que estés en pasos más largos. ej.: cuando estés sobre una opción de voz, saltará hacia atrás cada 20 voces; cuando estés sobre una opción de deslizador, saltará atrás el valor de 20%. |
 
@@ -1243,7 +1244,6 @@ Con el fin de tener la mayor cantidad de información posible en una pantalla br
 |btrot |botón rotatorio|
 |btdiv |botón divisor|
 |tlo |título|
-|rtlo |rótulo|
 |btcom |botón conmutable|
 |cc |cuadro combinado|
 |cv |casilla de verificación|
