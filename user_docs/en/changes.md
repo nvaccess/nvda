@@ -22,7 +22,7 @@ NVDA is no longer unstable after restarting NVDA during an automatic Braille Blu
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
-There have also been a number of fixes, including to the on-demand speech mode and mouse tracking in Firefox.
+There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
 
 ### New Features
 
