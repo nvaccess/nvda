@@ -22,7 +22,7 @@ NVDA is no longer unstable after restarting NVDA during an automatic Braille Blu
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
-There have also been a number of fixes, including to the on-demand speech mode, caret reporting in browsers and Windows Terminal, and mouse tracking in Firefox.
+There have also been a number of fixes, including to the on-demand speech mode and mouse tracking in Firefox.
 
 ### New Features
 
@@ -48,10 +48,6 @@ There have also been a number of fixes, including to the on-demand speech mode, 
 
 ### Bug Fixes
 
-* NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
-  * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
-  * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
-  * UIA in Windows Terminal. (#16873, @codeofdusk)
 * Braille fixes:
   * It is now possible to use braille display routing keys to move the text cursor in Microsoft PowerPoint. (#9101)
   * When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in table headers defined with the set row and column header commands. (#7212)
