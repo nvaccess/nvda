@@ -4752,6 +4752,8 @@ class VisionSettingsPanel(SettingsPanel):
 
 	def makeDarkModeSettings(self, settingsSizer: wx.BoxSizer):
 		sizer = self.settingsSizerHelper.addItem(
+			# Translators: this is a label for a group of controls appearing on
+			# the vision settings panel.
 			wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Dark Mode")),
 			flag=wx.EXPAND,
 		)
