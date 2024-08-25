@@ -5,13 +5,28 @@
 
 """Dark mode makes UI elements have a dark background with light text.
 
+This is a best-effort attempt to implement dark mode.  There are some remaining known issues:
+
+1) MessageBox'es are not themed.  An example is the NVDA About dialog.
+
+2) Menu bars are not themed.  An example can be seen in the Debug Log.  Supporting themed
+menu bars would require intercepting several undocumented events and drawing the menu items
+ourselves.  An example implementation is described in
+https://github.com/adzm/win32-custom-menubar-aero-theme
+
+3) Column titles are not themed.  An example can be seen in the Dictionary dialogs.
+This is implemented by the wx.ListCtrl class.  The C++ implementation of
+wxListCtrl::OnPaint hardcodes penColour, and there is no way to override it.
+See https://github.com/wxWidgets/wxWidgets/blob/master/src/msw/listctrl.cpp
+
+4) Tab controls are not themed.  An example can be seen at the top of the Add-In Store.
+This is implemented by the wx.Notebook class.  I have not been able to figure out how
+to influence the colors it uses.
+
 Note: Config settings must be in a non-profile-specific config section (e.g. "general").
 Profile-specific config sections (e.g. "vision") aren't available to read until after
 the main app window is created.  But _SetPreferredAppMode must be called BEFORE the main
 window is created in order for popup context menus to be properly styled.
-
-TODO: dictionary dialogs and the add-on store look bad because column titles aren't styled.
-These are wx.Notebook controls.
 """
 
 import ctypes.wintypes
@@ -134,20 +149,20 @@ def handleEvent(window: wx.Window, eventType):
 			else:
 				window.SetBackgroundColour("White")
 			window.SetForegroundColour(fgColor)
-		elif isinstance(window, wx.TextCtrl):
+		elif isinstance(window, wx.TextCtrl) or isinstance(window, wx.ListCtrl):
 			window.SetBackgroundColour(bgColor)
 			# Foreground colors for TextCtrls are surprisingly tricky, because their behavior is
 			# inconsistent.  In particular, the Add-On Store Details pane behaves differently than
 			# the Debug Log, Python Console, etc.  Here is a table of what happens with different
 			# possibilites:
 			#
-			# Color         Add-on Store     Everything else      Usable?
-			# -----         ------------     ---------------      -------
-			# white         white            black                no
-			# light grey    black            white                no
-			# yellow        yellow           white                no
-			# 0xFEFEFE      white            white                YES
-			# black         black            black                YES
+			# Color           Add-on Store     Debug Log      Usable?
+			# -----           ------------     ---------      -------
+			# white           white            black          no
+			# light grey      black            white          no
+			# yellow          yellow           white          no
+			# 0xFEFEFE        white            white          YES
+			# black           black            black          YES
 			if isDark:
 				window.SetForegroundColour(wx.Colour(254, 254, 254))
 			else:
