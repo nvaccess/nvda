@@ -7,7 +7,9 @@
 
 This is a best-effort attempt to implement dark mode.  There are some remaining known issues:
 
-1) MessageBox'es are not themed.  An example is the NVDA About dialog.
+1) MessageBox'es are not themed.  An example is the NVDA About dialog.  These dialogs
+are extremely modal, and there is no way to gain control until after the user dismisses
+the message box.
 
 2) Menu bars are not themed.  An example can be seen in the Debug Log.  Supporting themed
 menu bars would require intercepting several undocumented events and drawing the menu items
@@ -61,22 +63,25 @@ def initialize():
 	global _initialized
 	_initialized = True
 
-	global _SetWindowTheme
-	uxtheme = ctypes.cdll.LoadLibrary("uxtheme")
-	_SetWindowTheme = uxtheme.SetWindowTheme
-	_SetWindowTheme.restype = ctypes.HRESULT
-	_SetWindowTheme.argtypes = [wintypes.HWND, wintypes.LPCWSTR, wintypes.LPCWSTR]
+	try:
+		global _SetWindowTheme
+		uxtheme = ctypes.cdll.LoadLibrary("uxtheme")
+		_SetWindowTheme = uxtheme.SetWindowTheme
+		_SetWindowTheme.restype = ctypes.HRESULT
+		_SetWindowTheme.argtypes = [wintypes.HWND, wintypes.LPCWSTR, wintypes.LPCWSTR]
 
-	global _DwmSetWindowAttribute
-	dwmapi = ctypes.cdll.LoadLibrary("dwmapi")
-	_DwmSetWindowAttribute = dwmapi.DwmSetWindowAttribute
-	_DwmSetWindowAttribute.restype = ctypes.HRESULT
-	_DwmSetWindowAttribute.argtypes = [wintypes.HWND, wintypes.DWORD, wintypes.LPCVOID, wintypes.DWORD]
+		global _DwmSetWindowAttribute
+		dwmapi = ctypes.cdll.LoadLibrary("dwmapi")
+		_DwmSetWindowAttribute = dwmapi.DwmSetWindowAttribute
+		_DwmSetWindowAttribute.restype = ctypes.HRESULT
+		_DwmSetWindowAttribute.argtypes = [wintypes.HWND, wintypes.DWORD, wintypes.LPCVOID, wintypes.DWORD]
 
-	global _SendMessageW
-	user32 = ctypes.cdll.LoadLibrary("user32")
-	_SendMessageW = user32.SendMessageW
-	_SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
+		global _SendMessageW
+		user32 = ctypes.cdll.LoadLibrary("user32")
+		_SendMessageW = user32.SendMessageW
+		_SendMessageW.argtypes = [wintypes.HWND, wintypes.UINT, wintypes.WPARAM, wintypes.LPARAM]
+	except Exception as err:
+		logging.debug("Error initializing dark mode: " + str(err))
 
 	try:
 		global _SetPreferredAppMode
@@ -89,29 +94,39 @@ def initialize():
 
 def DwmSetWindowAttribute_ImmersiveDarkMode(window: wx.Window, isDark: bool):
 	"""This makes title bars dark"""
-	useDarkMode = ctypes.wintypes.BOOL(isDark)
-	_DwmSetWindowAttribute(
-		window.Handle,
-		DWMWA_USE_IMMERSIVE_DARK_MODE,
-		ctypes.byref(useDarkMode),
-		ctypes.sizeof(ctypes.c_int32),
-	)
+	if _DwmSetWindowAttribute:
+		try:
+			useDarkMode = ctypes.wintypes.BOOL(isDark)
+			_DwmSetWindowAttribute(
+				window.Handle,
+				DWMWA_USE_IMMERSIVE_DARK_MODE,
+				ctypes.byref(useDarkMode),
+				ctypes.sizeof(ctypes.c_int32),
+			)
+		except Exception as err:
+			logging.debug("Error calling DwmSetWindowAttribute: " + str(err))
 
 
 def SetPreferredAppMode(curTheme: ColorTheme):
 	"""This makes popup context menus dark"""
 	if _SetPreferredAppMode and config.conf["general"]["darkModeCanUseUndocumentedAPIs"]:
-		if curTheme == ColorTheme.AUTO:
-			_SetPreferredAppMode(1)
-		elif curTheme == ColorTheme.DARK:
-			_SetPreferredAppMode(2)
-		else:
-			_SetPreferredAppMode(0)
-
+		try:
+			if curTheme == ColorTheme.AUTO:
+				_SetPreferredAppMode(1)
+			elif curTheme == ColorTheme.DARK:
+				_SetPreferredAppMode(2)
+			else:
+				_SetPreferredAppMode(0)
+		except Exception as err:
+			logging.debug("Error calling SetPreferredAppMode: " + str(err))
 
 def SetWindowTheme(window: wx.Window, theme: str):
-	_SetWindowTheme(window.Handle, theme, None)
-	_SendMessageW(window.Handle, WM_THEMECHANGED, 0, 0)
+	if _SetWindowTheme and _SendMessageW:
+		try:
+			_SetWindowTheme(window.Handle, theme, None)
+			_SendMessageW(window.Handle, WM_THEMECHANGED, 0, 0)
+		except Exception as err:
+			logging.debug("Error calling SetWindowTheme: " + str(err))
 
 
 def _getDescendants(window: wx.Window) -> Generator[wx.Window, None, None]:
