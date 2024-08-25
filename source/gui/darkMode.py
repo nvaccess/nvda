@@ -120,6 +120,7 @@ def SetPreferredAppMode(curTheme: ColorTheme):
 		except Exception as err:
 			logging.debug("Error calling SetPreferredAppMode: " + str(err))
 
+
 def SetWindowTheme(window: wx.Window, theme: str):
 	if _SetWindowTheme and _SendMessageW:
 		try:
