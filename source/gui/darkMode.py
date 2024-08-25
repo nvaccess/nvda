@@ -123,17 +123,36 @@ def handleEvent(window: wx.Window, eventType):
 
 	if eventType == wx.wxEVT_CREATE:
 		SetPreferredAppMode(curTheme)
-		if (
-			# Necessary for background of ListBoxes such as Settings >> Audio >> Cycle sound split mode.
-			# TODO: this breaks lists of checkboxes
-			isinstance(window, wx.ListBox)
-			# Necessary for Add-on store >> Documentation >> Other details.
-			# TODO: this fixes Add-on store >> Documentation >> Other details, but breaks the
-			# ExpandoTextCtrl used by the debug log, python console, etc
-			# or isinstance(window, wx.TextCtrl)
-		):
-			window.SetBackgroundColour(bgColor)
+
+		# For some controls, colors must be set in EVT_CREATE otherwise it has no effect.
+		if isinstance(window, wx.CheckListBox):
+			# Unfortunately CheckListBoxes always seem to use a black foreground color for the labels,
+			# which means they become illegible if you make the background too dark.  So we compromise
+			# by setting the background to be a little bit darker while still being readable.
+			if isDark:
+				window.SetBackgroundColour("Light Grey")
+			else:
+				window.SetBackgroundColour("White")
 			window.SetForegroundColour(fgColor)
+		elif isinstance(window, wx.TextCtrl):
+			window.SetBackgroundColour(bgColor)
+			# Foreground colors for TextCtrls are surprisingly tricky, because their behavior is
+			# inconsistent.  In particular, the Add-On Store Details pane behaves differently than
+			# the Debug Log, Python Console, etc.  Here is a table of what happens with different
+			# possibilites:
+			#
+			# Color         Add-on Store     Everything else      Usable?
+			# -----         ------------     ---------------      -------
+			# white         white            black                no
+			# light grey    black            white                no
+			# yellow        yellow           white                no
+			# 0xFEFEFE      white            white                YES
+			# black         black            black                YES
+			if isDark:
+				window.SetForegroundColour(wx.Colour(254, 254, 254))
+			else:
+				window.SetForegroundColour("Black")
+
 	elif eventType == wx.wxEVT_SHOW:
 		for child in _getDescendants(window):
 			child.SetBackgroundColour(bgColor)
