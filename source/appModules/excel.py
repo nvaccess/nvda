@@ -110,11 +110,6 @@ class AppModule(appModuleHandler.AppModule):
 			# Therefore treat this window as native UIA.
 			return True
 		windowClass = winUser.getClassName(hwnd)
-		if windowClass == "SysListView32":
-			import tones
-
-			tones.beep(550, 50)
-			return True
 		versionMajor = int(self.productVersion.split(".")[0])
 		if versionMajor >= 16 and windowClass == "RICHEDIT60W" and winVersion.getWinVer() >= winVersion.WIN10:
 			# RICHEDIT60W In Excel 2016+ on Windows 10+
