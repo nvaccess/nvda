@@ -24,7 +24,7 @@ The available options are:
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
-* The exit dialog now allow to restart NVDA with add-ons disabled and debug logging simultaneously. (#11538, @CyrilleB79)
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 
 ### Bug Fixes
 
