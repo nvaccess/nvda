@@ -32,9 +32,9 @@ except RuntimeError:
 class _ExitAction(DisplayStringEnum):
 	EXIT = auto()
 	RESTART = auto()
-	RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING = auto()
+	RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED = auto()
 	RESTART_WITH_ADDONS_DISABLED = auto()
-	RESTART_WITH_DEBUG_LOGGING = auto()
+	RESTART_WITH_DEBUG_LOGGING_ENABLED = auto()
 	INSTALL_PENDING_UPDATE = auto()
 
 	@property
@@ -44,16 +44,16 @@ class _ExitAction(DisplayStringEnum):
 			self.EXIT: _("Exit"),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART: _("Restart"),
-			self.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING: _(
+			self.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED: _(
 				# Translators: An option in the combo box to choose exit action.
-				"Restart with add-ons disabled and debug logging",
+				"Restart with add-ons disabled and debug logging enabled",
 			),
 			self.RESTART_WITH_ADDONS_DISABLED: _(
 				# Translators: An option in the combo box to choose exit action.
 				"Restart with add-ons disabled",
 			),
 			# Translators: An option in the combo box to choose exit action.
-			self.RESTART_WITH_DEBUG_LOGGING: _("Restart with debug logging"),
+			self.RESTART_WITH_DEBUG_LOGGING_ENABLED: _("Restart with debug logging enabled"),
 			# Translators: An option in the combo box to choose exit action.
 			self.INSTALL_PENDING_UPDATE: _("Install pending update"),
 		}
@@ -105,13 +105,13 @@ class ExitDialog(wx.Dialog):
 		allowedActions = list(_ExitAction)
 		# Windows Store version of NVDA does not support add-ons yet.
 		if config.isAppX:
-			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING)
+			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
 		# Changing debug level on secure screen is not allowed.
 		# Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
 		if globalVars.appArgs.secure:
-			allowedActions.remove(_ExitAction.RESTART_WITH_DEBUG_LOGGING)
+			allowedActions.remove(_ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED)
 			try:
-				allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING)
+				allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
 			except ValueError:  # If already removed before
 				pass
 		else:
@@ -152,14 +152,14 @@ class ExitDialog(wx.Dialog):
 				core.restart,
 				disableAddons=True,
 			)
-		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING:
+		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED:
 			queueHandler.queueFunction(
 				queueHandler.eventQueue,
 				core.restart,
 				disableAddons=True,
 				debugLogging=True,
 			)
-		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING:
+		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED:
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
 		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
 			if updateCheck:
