@@ -43,7 +43,7 @@ The available options are:
   * It is now possible to use braille display routing keys to move the text cursor. (#9101)
   * It is now possible to use the review cursor selection commands to select text.
 * Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
-* NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word. (#16812)
+* NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word and Microsoft Outlook. (#16812)
 
 ### Changes for Developers
 
