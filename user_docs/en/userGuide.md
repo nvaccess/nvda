@@ -39,18 +39,18 @@ Major highlights include:
 
 ### System Requirements {#SystemRequirements}
 
-#### Recommended System Requirements {#MinimumSystemRequirements}
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
-  * both AMD64 and ARM64 variants of Windows are supported.
-* at least 150 MB of storage space.
-* at least 4 GB of RAM.
-
 #### Minimum System Requirements {#MinimumSystemRequirements}
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
   * Note 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 150 MB of storage space.
+
+#### Recommended System Requirements {#RecommendedSystemRequirements}
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+  * both AMD64 and ARM64 variants of Windows are supported.
+* at least 150 MB of storage space.
+* at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
 
@@ -2163,6 +2163,19 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
+##### Paragraph start marker {#BrailleParagraphStartMarkers}
+
+If "Read by paragraph" is checked, the selected start marker will be displayed to indicate the start of a paragraph.
+This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
+In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
+
+The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, Pilcrow (¶), for more obvious paragraph breaks.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |No paragraph start marker, Double space (  ), Pilcrow (¶)|
+|Default |No paragraph start marker|
+
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
 This option allows you to choose what context information NVDA will show on the braille display when an object gets focus.
@@ -2236,6 +2249,12 @@ The following symbols are defined:
 | ⡥ ("u" with dot 7) | End underline |
 | ⠎ ("s")| Start strikethrough |
 | ⡎ ("s" with dot 7) | End strikethrough |
+
+##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
+
+If this is enabled, NVDA will automatically speak the character at the cursor when routing to it with braille cursor routing keys.
+
+To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 

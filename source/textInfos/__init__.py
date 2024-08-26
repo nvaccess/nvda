@@ -369,7 +369,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		@param obj: The object containing the range of text being represented.
 		"""
 		super(TextInfo, self).__init__()
-		self._obj = weakref.ref(obj) if type(obj) != weakref.ProxyType else obj
+		self._obj = weakref.ref(obj) if type(obj) is not weakref.ProxyType else obj
 		#: The position with which this instance was constructed.
 		self.basePosition = position
 

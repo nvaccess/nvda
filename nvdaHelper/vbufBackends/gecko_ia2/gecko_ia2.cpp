@@ -140,7 +140,7 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	if(pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv)!=S_OK) {
 		pacc->Release();
 		return NULL;
-	}  
+	}
 	pacc->Release();
 	pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
 	pserv->Release();
@@ -642,7 +642,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
 	}
-	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec.
 	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
 			IA2States-=IA2_STATE_EDITABLE;
 	}
@@ -767,14 +767,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		return id;
 	};
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK 
-		|| role == ROLE_SYSTEM_PUSHBUTTON 
-		|| role == IA2_ROLE_TOGGLE_BUTTON 
-		|| role == ROLE_SYSTEM_MENUITEM 
-		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
-		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
-		|| role == IA2_ROLE_HEADING 
-		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_LINK
+		|| role == ROLE_SYSTEM_PUSHBUTTON
+		|| role == IA2_ROLE_TOGGLE_BUTTON
+		|| role == ROLE_SYSTEM_MENUITEM
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap)
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable)
+		|| role == IA2_ROLE_HEADING
+		|| role == ROLE_SYSTEM_PAGETAB
 		|| role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisibleCached());
 	// Whether this node has a visible label somewhere else in the tree
@@ -882,10 +882,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if(!paccTableCell) { // just rows and row groups
 			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
 			// its parent will also be invalidated.
-			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
+			// For example, if this is a table row group, its rerendering may change the number of rows inside.
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected.
 			if(role!=ROLE_SYSTEM_ROW) {
 				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
 				parentNode->requiresParentUpdate=true;
@@ -951,7 +951,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				paccTable2 = curNodePaccTable2;
 			}
 
-			
+
 			{ // Add the table summary if one is present and the table is visible.
 				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
 				if (isVisible && description.has_value() && !description.value().empty()) {
@@ -1008,7 +1008,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	if(nameIsContent) {
-		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
+		// We may render an accessible name for this node if it has been explicitly set or it has no useful content.
 		parentNode->alwaysRerenderDescendants=true;
 	}
 

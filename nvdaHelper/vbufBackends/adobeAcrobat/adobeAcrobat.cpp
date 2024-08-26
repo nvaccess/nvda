@@ -52,7 +52,7 @@ long getAccID(IServiceProvider* servprov) {
 	if((res=servprov->QueryService(SID_AccID,IID_IAccID,(void**)(&paccID)))!=S_OK) {
 		LOG_DEBUG(L"IServiceProvider::QueryService returned "<<res);
 		return 0;
-	} 
+	}
 	LOG_DEBUG(L"IAccID at "<<paccID);
 
 	// IAccID::get_accID takes a longlong on 64 bit and a long on 32 bit.
@@ -61,7 +61,7 @@ long getAccID(IServiceProvider* servprov) {
 	// LONG_PTR docs:
 	// A signed long type for pointer precision.
 	// Use when casting a pointer to a long to perform pointer arithmetic.
-	LONG_PTR ID = 0;  // LONG_PTR is 'long' on x86, 'long long' on x64. 
+	LONG_PTR ID = 0;  // LONG_PTR is 'long' on x86, 'long long' on x64.
 
 	LOG_DEBUG(L"Calling get_accID");
 	if ((res = paccID->get_accID(&ID)) != S_OK) {
@@ -84,7 +84,7 @@ IPDDomNode* getPDDomNode(VARIANT& varChild, IServiceProvider* servprov) {
 	if((res=servprov->QueryService(SID_GetPDDomNode,IID_IGetPDDomNode,(void**)(&pget)))!=S_OK) {
 		LOG_DEBUG(L"IServiceProvider::QueryService returned "<<res);
 		return NULL;
-	} 
+	}
 	LOG_DEBUG(L"IGetPDDomNode at "<<pget);
 
 	LOG_DEBUG(L"Calling get_PDDomNode");
@@ -309,7 +309,7 @@ inline void fillExplicitTableHeadersForCell(AdobeAcrobatVBufStorage_controlField
 wstring* AdobeAcrobatVBufBackend_t::getPageNum(IPDDomNode* domNode) {
 	// Get the page number.
 	IPDDomNodeExt* domNodeExt;
-	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK) 
+	if (domNode->QueryInterface(IID_IPDDomNodeExt, (void**)&domNodeExt) != S_OK)
 		return NULL;
 	long firstPage, lastPage;
 	// The page number is only useful if the first and last pages are the same.
@@ -326,7 +326,7 @@ wstring* AdobeAcrobatVBufBackend_t::getPageNum(IPDDomNode* domNode) {
 		SysFreeString(label);
 		return ret;
 	}
-	
+
 	// If the label couldn't be retrieved, use the page number.
 	wostringstream s;
 	// GetPageNum returns 0-based numbers, but we want 1-based.
@@ -356,7 +356,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	if((res=pacc->QueryInterface(IID_IServiceProvider,(void**)(&servprov)))!=S_OK) {
 		LOG_DEBUG(L"IAccessible::QueryInterface returned "<<res);
 		return NULL;
-	}  
+	}
 	LOG_DEBUG(L"IServiceProvider at "<<servprov);
 
 	// GET ID
@@ -373,7 +373,7 @@ AdobeAcrobatVBufStorage_controlFieldNode_t* AdobeAcrobatVBufBackend_t::fillVBuf(
 	//Add this node to the buffer
 	LOG_DEBUG(L"Adding Node to buffer");
 	AdobeAcrobatVBufStorage_controlFieldNode_t* oldParentNode = parentNode;
-	parentNode = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(buffer->addControlFieldNode(parentNode, previousNode, 
+	parentNode = static_cast<AdobeAcrobatVBufStorage_controlFieldNode_t*>(buffer->addControlFieldNode(parentNode, previousNode,
 		new AdobeAcrobatVBufStorage_controlFieldNode_t(docHandle, ID, true)));
 	nhAssert(parentNode); //new node must have been created
 	previousNode=NULL;
@@ -880,4 +880,3 @@ VBufBackend_t* AdobeAcrobatVBufBackend_t_createInstance(int docHandle, int ID) {
 	LOG_DEBUG(L"Created new backend at "<<backend);
 	return backend;
 }
-

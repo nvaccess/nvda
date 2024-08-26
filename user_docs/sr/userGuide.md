@@ -8,7 +8,7 @@
 
 ## Uvod {#Introduction}
 
-Dobrodošli u NVDA!
+Dobro došli u NVDA!
 
 NonVisual Desktop Access (NVDA) je besplatan čitač ekrana otvorenog koda za Microsoft Windows.
 Pružajući informacije koristeći sintetizatore govora i brajev red, omogućava slepim korisnicima pristup Windows operativnom sistemu uz jednake troškove videćim osobama.
@@ -55,13 +55,13 @@ Glavne karakteristike su:
 ### Internacionalizacija {#Internationalization}
 
 Važno je da ljudi gde god da se nalaze na svetu, bez obzira koji jezik govore, dobiju jednak pristup tehnologiji.
-Pored Engleskog, NVDA je preveden na 54 jezika uključujući: Afrikanski, Albanski, Amharski, Arapski, Aragoneski, Bugarski, Burmese, Katalonski, Kineski (pojednostavljen i tradicionalni), Hrvatski, Češki, Danski, Holandski, Farsi, Finski, Francuski, Galski, Gruzijski, Nemački (Nemačka i Švajcarska), Grčki, Hebrejski, Indijski, Mađarski, Islandski, Irski, Italijanski, Japanski, Kannada, Korejski, Kirgijški, Litvanski, Makedonski, Mongolski, Nepali, Norveški, Poljski, Portugalski (Brazil i Portugal), Pundžabi, Rumunski, Ruski, Srpski, Slovački, Slovenački, Španski (Kolumbija i Španija), Švedski, Tamil, Tajvanski, Turski, Ukrajinski i Vijetnamski.
+Pored engleskog, NVDA je preveden na 54 jezika uključujući: afrikanski, albanski, amharski, arapski, aragoneski, bugarski, burmese, katalonski, kineski (pojednostavljen i tradicionalni), hrvatski, češki, danski, holandski, farsi, finski, francuski, galski, gruzijski, nemački (Nemačka i Švajcarska), grčki, hebrejski, hindi, mađarski, islandski, irski, italijanski, japanski, kannada, korejski, kirgijški, litvanski, makedonski, mongolski, nepalski, norveški, poljski, portugalski (Brazil i Portugal), pundžabi, rumunski, ruski, srpski, slovački, slovenački, španski (Kolumbija i Španija), švedski, tamil, tajvanski, turski, ukrajinski i vijetnamski.
 
 ### Podrška za sintetizatore govora {#SpeechSynthesizerSupport}
 
 Pored pružanja svojih poruka i interfejsa na jednom od podržanih jezika, NVDA takođe dozvoljava korisnicima da čitaju tekst na bilo kom jeziku, dokle god imaju sintetizator koji podržava taj jezik.
 
-Uz NVDA dolazi [eSpeak NG](https://github.com/espeak-ng/espeak-ng), besplatan, višejezičan i sintetizator otvorenog koda.
+Uz NVDA dolazi [eSpeak NG](https://github.com/espeak-ng/espeak-ng), besplatan, višejezični sintetizator otvorenog koda.
 
 Informacije o sintezama koje NVDA podržava možete pronaći u delu [Podržani sintetizatori govora](#SupportedSpeechSynths).
 
@@ -263,7 +263,7 @@ Same komande neće biti izvršene dok ste u režimu pomoći za unos.
 
 Takođe je moguće podesiti vrednost na prvu ili poslednju u krugu govornih podešavanja tako što ćete dodati prilagođene prečice u [dialogu ulaznih komandi](#InputGestures), u kategoriji govor.
 Ovo znači, na primer, kada ste na podešavanju brzine, podesiće brzinu na 0 ili 100.
-+When you're on a voice setting, it will set the first or last voice.
+Kada ste na podešavanju glasa, podesiće prvi ili poslednji glas.
 
 #### Web navigacija {#WebNavigation}
 

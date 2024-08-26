@@ -483,7 +483,9 @@ def _getSpellingSpeechWithoutCharMode(
 				speakCharAs = symbol
 			elif not isNormalized and unicodeNormalization:
 				if (normalized := unicodeNormalize(speakCharAs)) != speakCharAs:
-					speakCharAs = " ".join(normalized)
+					speakCharAs = " ".join(
+						characterProcessing.processSpeechSymbol(locale, normChar) for normChar in normalized
+					)
 					isNormalized = True
 		if config.conf["speech"]["autoLanguageSwitching"]:
 			yield LangChangeCommand(locale)
