@@ -65,6 +65,7 @@ def reportNoDocumentation(fileName: str, useMsgBox: bool = False) -> None:
 	if useMsgBox:
 		from gui.message import messageBox
 		import wx
+
 		messageBox(
 			noDocMessage,
 			# Translators: the title of an error message dialog
