@@ -43,6 +43,7 @@ The available options are:
   * It is now possible to use braille display routing keys to move the text cursor. (#9101)
   * It is now possible to use the review cursor selection commands to select text.
 * Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
+* NVDA is no longer as sluggish when arrowing up and down through large files in VS Code. (#17039)
 
 ### Changes for Developers
 
