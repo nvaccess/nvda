@@ -792,7 +792,7 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendSubMenu(self.helpMenu, _("&Help"))
 
-	def _openDocumentationFile(self, fileName):
+	def _openDocumentationFile(self, fileName: str) -> None:
 		helpFile = getDocFilePath(fileName)
 		if helpFile is None:
 			reportNoDocumentation(fileName, useMsgBox=True)
