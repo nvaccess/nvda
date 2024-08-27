@@ -18,7 +18,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 #### API Breaking Changes
 
 These are breaking API changes.
-Please open a GitHub issue if your Add-on has an issue with updating to the new API.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 #### Deprecations
 
