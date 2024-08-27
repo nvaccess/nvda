@@ -30,6 +30,7 @@ As BACK_COMPAT_TO is incremented, the changed / removed parts / or reasoning sho
 These only serve to act as a reminder, the changelog should be consulted for a comprehensive listing.
 EG: (x, y, z): Large changes to speech.py
 ---
+(2025, 1, 0): HTML passed to browsableMessage is now sanitised, and various changes to the settings schema
 (2024, 1, 0): upgrade to python 3.11
 (2023, 1, 0): speech as str was dropped in favor of only SpeechCommand, and security changes.
 (2022, 1, 0): various constants moved to enums, notably a controlTypes refactor.
