@@ -175,7 +175,7 @@ class ScheduleThread(threading.Thread):
 				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
 					t = threading.Thread(target=task, args=args, kwargs=kwargs, daemon=True, name=f"{task.__name__}")
 					log.debug(f"Starting thread for job: {task.__name__} on thread {t.ident}")
-					t.run()
+					t.start()
 			case ThreadTarget.CUSTOM:
 				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
 					log.debug(f"Starting thread for job: {task.__name__} on custom thread")

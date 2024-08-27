@@ -17,5 +17,5 @@ __all__ = [
 def initialize():
 	scheduleThread.scheduleDailyJobAtStartUp(
 		UpdatableAddonsDialog._checkForUpdatableAddons,
-		queueToThread=ThreadTarget.GUI,
+		queueToThread=ThreadTarget.DAEMON,
 	)
