@@ -556,4 +556,4 @@ class UpdatableAddonsDialog(
 		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
 		if addonsPendingUpdate:
 			log.debug("updatable add-ons found")
-			displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+			wx.CallAfter(displayDialogAsModal, cls(gui.mainFrame, addonsPendingUpdate))
