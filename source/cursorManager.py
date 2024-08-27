@@ -18,7 +18,7 @@ from gui import guiHelper
 import gui.contextHelp
 from speech import sayAll
 import review
-from scriptHandler import willSayAllResume, script
+from scriptHandler import willSayAllResume, script, isScriptWaiting
 import textInfos
 import speech
 import config
@@ -145,6 +145,10 @@ class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObjec
 		extraDetail=False,
 		handleSymbols=False,
 	):
+		if isScriptWaiting():
+			# Moving / reporting is quite costly, so we don't want to do it if there are more scripts waiting.
+			# Otherwise, NVDA could become unusable while it processes many backed up scripts.
+			return
 		oldInfo = self.makeTextInfo(posConstant)
 		info = oldInfo.copy()
 		info.collapse(end=self.isTextSelectionAnchoredAtStart)

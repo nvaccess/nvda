@@ -14,7 +14,7 @@ from buildVersion import *  # noqa: F403
 longName = _("NonVisual Desktop Access")
 description = _("A free and open source screen reader for Microsoft Windows")
 url = "https://www.nvaccess.org"
-copyrightYears = "2006-2024"
+copyrightYears = "2006-2025"
 copyright = _("Copyright (C) {years} NVDA Contributors").format(
 	years=copyrightYears,
 )
