@@ -14,6 +14,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* Updated Comtypes to 1.4.6. (#?????, @LeonarddeR)
 
 #### API Breaking Changes
 
