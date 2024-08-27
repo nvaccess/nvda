@@ -43,6 +43,8 @@ Major highlights include:
 
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
+  * Note 32-bit operating systems are no longer under active support.
+  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
 * at least 150 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
