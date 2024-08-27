@@ -3,7 +3,6 @@
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
-There are also a number of other new features and fixes across the board.
 
 In Word or Excel, it is now possible to double-press the comment gesture to read the comment or note in a browsable dialog.
 You can now use the review cursor selection command to select text in PowerPoint.
@@ -17,7 +16,6 @@ You can now configure how NVDA shows text formatting in braille, and set NVDA to
 NVDA can now speak the character at the cursor when performing a braille cursor routing action.
 Cursor routing reliability has been improved, and support for routing keys in PowerPoint has been added.
 All lines of cells will now be used when using a multi-line braille display via HID braille.
-The Seika Notetaker driver now correctly generates braille input for space, backspace, and dots with space/backspace gestures.
 NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan.
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
