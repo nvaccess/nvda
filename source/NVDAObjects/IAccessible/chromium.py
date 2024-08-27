@@ -166,6 +166,25 @@ class Figure(ia2Web.Ia2Web):
 		return controlTypes.Role.FIGURE
 
 
+class EditorTextInfo(ia2Web.MozillaCompoundTextInfo):
+	"""The TextInfo for edit areas such as edit fields and documents in Chromium."""
+
+	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
+		# Detecting if the caret is at the end of the line in Chromium is not currently possible
+		# as Chromium's IAccessibleText::textAtOffset with IA2_OFFSET_CARET returns the first character of the next line,
+		# which is what we are trying to avoid in the first place.
+		# #17039: In some scenarios such as in large files in VS Code,
+		# this call is extreamly costly for no actual bennifit right now,
+		# so we are disabling it for Chromium.
+		return False
+
+
+class Editor(ia2Web.Editor):
+	"""The NVDAObject for edit areas such as edit fields and documents in Chromium."""
+
+	TextInfo = EditorTextInfo
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
@@ -188,3 +207,5 @@ def findExtraOverlayClasses(obj, clsList):
 		clsList,
 		documentClass=Document,
 	)
+	if ia2Web.Editor in clsList:
+		clsList.insert(0, Editor)
