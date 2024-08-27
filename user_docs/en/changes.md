@@ -58,6 +58,7 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
 * Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
+* NVDA is no longer as sluggish when arrowing up and down through large files in VS Code. (#17039)
 * NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word and Microsoft Outlook. (#16812)
 
 ### Changes for Developers
