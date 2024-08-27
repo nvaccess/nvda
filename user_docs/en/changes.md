@@ -1,5 +1,27 @@
 # What's New in NVDA
 
+## 2025.1
+
+### Important notes
+
+### New Features
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+#### Deprecations
+
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
