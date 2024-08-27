@@ -8,6 +8,7 @@ This module contains the instructions that perform arithmetic operations,
 such as addition, subtraction, multiplication, and division.
 Both binary and in-place operations are supported.
 """
+
 from __future__ import annotations
 from dataclasses import dataclass
 from .. import lowLevel

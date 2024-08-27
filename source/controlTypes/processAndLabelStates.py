@@ -11,10 +11,10 @@ from .outputReason import OutputReason
 
 
 def _processPositiveStates(
-		role: Role,
-		states: Set[State],
-		reason: OutputReason,
-		positiveStates: Optional[Set[State]] = None
+	role: Role,
+	states: Set[State],
+	reason: OutputReason,
+	positiveStates: Optional[Set[State]] = None,
 ) -> Set[State]:
 	"""Processes the states for an object and returns the positive states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is checked.
@@ -41,7 +41,8 @@ def _processPositiveStates(
 		# Combo boxes inherently have a popup, so don't report it.
 		positiveStates.discard(State.HASPOPUP)
 	import config
-	if not config.conf['documentFormatting']['reportClickable'] or role in clickableRoles:
+
+	if not config.conf["documentFormatting"]["reportClickable"] or role in clickableRoles:
 		# This control is clearly clickable according to its role,
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
@@ -56,13 +57,17 @@ def _processPositiveStates(
 	positiveStates.discard(State.INDETERMINATE)
 	if reason != OutputReason.CHANGE:
 		positiveStates.discard(State.LINKED)
-		if role in (
-			Role.LISTITEM,
-			Role.TREEVIEWITEM,
-			Role.MENUITEM,
-			Role.TABLEROW,
-			Role.CHECKBOX,
-		) and State.SELECTABLE in states:
+		if (
+			role
+			in (
+				Role.LISTITEM,
+				Role.TREEVIEWITEM,
+				Role.MENUITEM,
+				Role.TABLEROW,
+				Role.CHECKBOX,
+			)
+			and State.SELECTABLE in states
+		):
 			positiveStates.discard(State.SELECTED)
 	if role not in (Role.EDITABLETEXT, Role.CHECKBOX):
 		positiveStates.discard(State.READONLY)
@@ -78,10 +83,10 @@ def _processPositiveStates(
 
 
 def _processNegativeStates(
-		role: Role,
-		states: Set[State],
-		reason: OutputReason,
-		negativeStates: Optional[Set[State]] = None
+	role: Role,
+	states: Set[State],
+	reason: OutputReason,
+	negativeStates: Optional[Set[State]] = None,
 ) -> Set[State]:
 	"""Processes the states for an object and returns the negative states to output for a specified reason.
 	For example, if C{State.CHECKED} is in the returned states, it means that the processed object is not
@@ -108,7 +113,8 @@ def _processNegativeStates(
 		# Only include  if reporting the focus or when states are changing on the focus.
 		# This is to avoid exposing it for things like caret movement in browse mode.
 		and (reason == OutputReason.FOCUS or (reason == OutputReason.CHANGE and State.FOCUSED in states))
-		and role in (
+		and role
+		in (
 			Role.LISTITEM,
 			Role.TREEVIEWITEM,
 			Role.TABLEROW,
@@ -120,7 +126,7 @@ def _processNegativeStates(
 	):
 		speakNegatives.add(State.SELECTED)
 	# Restrict "not checked" in a similar way to "not selected".
-	if(
+	if (
 		(role in (Role.CHECKBOX, Role.RADIOBUTTON, Role.CHECKMENUITEM) or State.CHECKABLE in states)
 		and (State.HALFCHECKED not in states)
 		and (reason != OutputReason.CHANGE or State.FOCUSED in states)
@@ -138,7 +144,7 @@ def _processNegativeStates(
 		# i.e. the states in both sets.
 		speakNegatives &= negativeStates
 		# #6946: if HALFCHECKED is present but CHECKED isn't, we should make sure we add CHECKED to speakNegatives.
-		if (State.HALFCHECKED in negativeStates and State.CHECKED not in states):
+		if State.HALFCHECKED in negativeStates and State.CHECKED not in states:
 			speakNegatives.add(State.CHECKED)
 		if State.HALF_PRESSED in negativeStates and State.PRESSED not in states:
 			speakNegatives.add(State.PRESSED)
@@ -155,13 +161,13 @@ def _processNegativeStates(
 
 
 def processAndLabelStates(
-		role: Role,
-		states: Set[State],
-		reason: OutputReason,
-		positiveStates: Optional[Set[State]] = None,
-		negativeStates: Optional[Set[State]] = None,
-		positiveStateLabelDict: Dict[State, str] = {},
-		negativeStateLabelDict: Dict[State, str] = {},
+	role: Role,
+	states: Set[State],
+	reason: OutputReason,
+	positiveStates: Optional[Set[State]] = None,
+	negativeStates: Optional[Set[State]] = None,
+	positiveStateLabelDict: Dict[State, str] = {},
+	negativeStateLabelDict: Dict[State, str] = {},
 ) -> List[str]:
 	"""Processes the states for an object and returns the appropriate state labels for both positive and
 	negative states.

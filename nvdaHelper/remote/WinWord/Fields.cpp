@@ -11,7 +11,7 @@ Copyright 2006-2010 NVDA contributers.
 This license can be found at:
 http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
-#define WIN32_LEAN_AND_MEAN 
+#define WIN32_LEAN_AND_MEAN
 
 #include <sstream>
 #include <vector>
@@ -61,10 +61,10 @@ Fields::Fields(IDispatch* pRange) {
 		Fields can be of many types, to get this we look at Type property. We care about:
 		  Ref - a Reference to some other part of the file
 		  Hyperlink - a link to another part of the file or to an external URL
-		
+
 		The following are defined on msdn (WdFieldType Enumeration - https://msdn.microsoft.com/en-us/library/office/ff192211.aspx)
 		*/
-		const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef 
+		const int CROSS_REFERENCE_TYPE_VALUE = 3; // wdFieldRef
 		const int HYPERLINK_TYPE_VALUE = 88; // wdFieldHyperlink
 		const int PAGE_NUMBER_TYPE_VALUE = 33; // wdFieldPage
 		int type = -1;

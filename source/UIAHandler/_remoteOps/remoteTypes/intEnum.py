@@ -15,13 +15,13 @@ from typing import (
 )
 from ctypes import (
 	_SimpleCData,
-	c_long
+	c_long,
 )
 import enum
 from .. import builder
 from . import (
 	RemoteInt,
-	remoteMethod
+	remoteMethod,
 )
 
 
@@ -67,7 +67,7 @@ def _makeRemoteEnum(enumType: Type[enum.IntEnum]) -> Type[RemoteInt]:
 	return cls
 
 
-_RemoteIntEnum_LocalTypeVar = TypeVar('_RemoteIntEnum_LocalTypeVar', bound=enum.IntEnum)
+_RemoteIntEnum_LocalTypeVar = TypeVar("_RemoteIntEnum_LocalTypeVar", bound=enum.IntEnum)
 
 
 class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
@@ -76,16 +76,18 @@ class RemoteIntEnum(RemoteInt, Generic[_RemoteIntEnum_LocalTypeVar]):
 
 	def _initOperand(self, initialValue: _RemoteIntEnum_LocalTypeVar, const: bool = False):
 		if not isinstance(initialValue, enum.IntEnum):
-			raise TypeError(f"initialValue must be of type {enum.IntEnum.__name__} not {type(initialValue).__name__}")
+			raise TypeError(
+				f"initialValue must be of type {enum.IntEnum.__name__} not {type(initialValue).__name__}",
+			)
 		self.LocalType = type(initialValue)
 		self._ctype = _makeCtypeIntEnum(type(initialValue))
 		super()._initOperand(initialValue=initialValue, const=const)
 
 	@classmethod
 	def ensureRemote(
-			cls,
-			rob: builder.RemoteOperationBuilder,
-			obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar
+		cls,
+		rob: builder.RemoteOperationBuilder,
+		obj: RemoteIntEnum[_RemoteIntEnum_LocalTypeVar] | _RemoteIntEnum_LocalTypeVar,
 	) -> RemoteIntEnum[_RemoteIntEnum_LocalTypeVar]:
 		remoteObj = super().ensureRemote(rob, cast(Any, obj))
 		return cast(RemoteIntEnum[_RemoteIntEnum_LocalTypeVar], remoteObj)

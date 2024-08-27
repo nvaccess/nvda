@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_instructionLimit(TestCase):
-
 	def test_instructionLimitExceeded(self):
 		op = operation.Operation(localMode=True)
 

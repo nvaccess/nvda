@@ -47,6 +47,7 @@ from .network import (
 
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
+
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
 	from .models.addon import AddonGUICollectionT, _AddonGUIModel, _AddonStoreModel  # noqa: F401
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM  # noqa: F401
@@ -86,7 +87,10 @@ class _DataManager:
 		self._lang = languageHandler.getLanguage()
 		self._preferredChannel = Channel.ALL
 		self._cacheLatestFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheLatestFilename)
-		self._cacheCompatibleFile = os.path.join(WritePaths.addonStoreDir, _DataManager._cacheCompatibleFilename)
+		self._cacheCompatibleFile = os.path.join(
+			WritePaths.addonStoreDir,
+			_DataManager._cacheCompatibleFilename,
+		)
 		self._installedAddonDataCacheDir = WritePaths.addonsDir
 
 		if NVDAState.shouldWriteToDisk():
@@ -122,7 +126,7 @@ class _DataManager:
 		if response.status_code != requests.codes.OK:
 			log.error(
 				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}"
+				f" response ({response.status_code}): {response.content}",
 			)
 			return None
 		return response.content
@@ -138,7 +142,7 @@ class _DataManager:
 		if response.status_code != requests.codes.OK:
 			log.error(
 				f"Unable to get data from API ({url}),"
-				f" response ({response.status_code}): {response.content}"
+				f" response ({response.status_code}): {response.content}",
 			)
 			return None
 		cacheHash = response.json()
@@ -155,7 +159,7 @@ class _DataManager:
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": addonAPIVersion.CURRENT,
 		}
-		with open(self._cacheCompatibleFile, 'w', encoding='utf-8') as cacheFile:
+		with open(self._cacheCompatibleFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _cacheLatestAddons(self, addonData: str, cacheHash: Optional[str]):
@@ -169,14 +173,14 @@ class _DataManager:
 			"cachedLanguage": self._lang,
 			"nvdaAPIVersion": _LATEST_API_VER,
 		}
-		with open(self._cacheLatestFile, 'w', encoding='utf-8') as cacheFile:
+		with open(self._cacheLatestFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
 	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
 		if not os.path.exists(cacheFilePath):
 			return None
 		try:
-			with open(cacheFilePath, 'r', encoding='utf-8') as cacheFile:
+			with open(cacheFilePath, "r", encoding="utf-8") as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
 			log.exception("Invalid add-on store cache")
@@ -205,8 +209,8 @@ class _DataManager:
 	_updateFailureMessage = pgettext("addonStore", "Add-on data update failure")
 
 	def getLatestCompatibleAddons(
-			self,
-			onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		self,
+		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -232,6 +236,7 @@ class _DataManager:
 				)
 			elif onDisplayableError is not None:
 				from gui.message import DisplayableError
+
 				displayableError = DisplayableError(
 					# Translators: A message shown when fetching add-on data from the store fails
 					pgettext("addonStore", "Unable to fetch latest add-on data for compatible add-ons."),
@@ -244,8 +249,8 @@ class _DataManager:
 		return deepcopy(self._compatibleAddonCache.cachedAddonData)
 
 	def getLatestAddons(
-			self,
-			onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
+		self,
+		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
 	) -> "AddonGUICollectionT":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
@@ -270,10 +275,11 @@ class _DataManager:
 				)
 			elif onDisplayableError is not None:
 				from gui.message import DisplayableError
+
 				displayableError = DisplayableError(
 					# Translators: A message shown when fetching add-on data from the store fails
 					pgettext("addonStore", "Unable to fetch latest add-on data for incompatible add-ons."),
-					self._updateFailureMessage
+					self._updateFailureMessage,
 				)
 				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
@@ -292,7 +298,7 @@ class _DataManager:
 		if not addonData:
 			return
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonData.addonId}.json")
-		with open(addonCachePath, 'w', encoding='utf-8') as cacheFile:
+		with open(addonCachePath, "w", encoding="utf-8") as cacheFile:
 			json.dump(addonData.asdict(), cacheFile, ensure_ascii=False)
 
 	def _getCachedInstalledAddonData(self, addonId: str) -> Optional[InstalledAddonStoreModel]:
@@ -300,7 +306,7 @@ class _DataManager:
 		if not os.path.exists(addonCachePath):
 			return None
 		try:
-			with open(addonCachePath, 'r', encoding='utf-8') as cacheFile:
+			with open(addonCachePath, "r", encoding="utf-8") as cacheFile:
 				cacheData = json.load(cacheFile)
 		except Exception:
 			log.exception(f"Invalid cached installed add-on data: {addonCachePath}")
@@ -338,6 +344,7 @@ class _InstalledAddonsCache(AutoPropertyObject):
 		Therefore addon IDs should be treated as case insensitive.
 		"""
 		from addonHandler import getAvailableAddons
+
 		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
 
 	def _get_installedAddonGUICollection(self) -> "AddonGUICollectionT":

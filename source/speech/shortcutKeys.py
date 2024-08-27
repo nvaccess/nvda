@@ -3,9 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited, Cyrille Bougot
 
-"""Functions to create speech sequences for shortcut keys.
-"""
-
+"""Functions to create speech sequences for shortcut keys."""
 
 import re
 
@@ -25,6 +23,7 @@ from typing import (
 
 def speakKeyboardShortcuts(keyboardShortcutsStr: Optional[str]) -> None:
 	from .speech import speak
+
 	speak(getKeyboardShortcutsSpeech(keyboardShortcutsStr))
 
 
@@ -32,8 +31,8 @@ def getKeyboardShortcutsSpeech(keyboardShortcutsStr: Optional[str]) -> SpeechSeq
 	"""Gets the speech sequence for a shortcuts string containing one or more shortcuts.
 	@param keyboardShortcutsStr: the shortcuts string.
 	"""
-	
-	SHORTCUT_KEY_LIST_SEPARATOR = '  '
+
+	SHORTCUT_KEY_LIST_SEPARATOR = "  "
 	seq = []
 	if not keyboardShortcutsStr:
 		return seq
@@ -65,9 +64,9 @@ def _getKeyboardShortcutSpeech(keyboardShortcut: str) -> SpeechSequence:
 	@param keyboardShortcut: the shortcuts string.
 	"""
 
-	if ', ' in keyboardShortcut:
+	if ", " in keyboardShortcut:
 		keyList, separators = _splitSequentialShortcut(keyboardShortcut)
-	elif '+' in keyboardShortcut and len(keyboardShortcut) > 1:
+	elif "+" in keyboardShortcut and len(keyboardShortcut) > 1:
 		keyList, separator = _splitShortcut(keyboardShortcut)
 		separators = [separator] * (len(keyList) - 1)
 	else:
@@ -94,6 +93,7 @@ def _getKeySpeech(key: str) -> SpeechSequence:
 	if len(key) > 1:
 		return [key]
 	from .speech import getCurrentLanguage
+
 	locale = getCurrentLanguage()
 	keySymbol = characterProcessing.processSpeechSymbol(locale, key)
 	if keySymbol != key:
@@ -115,16 +115,16 @@ def _splitShortcut(shortcut: str) -> Tuple[List[str], str]:
 	@return: 2-tuple containing the list of the keys and the separator used between them.
 		E.g. (['NVDA', 'R'], ' + ')
 	"""
-	
-	if ' + ' in shortcut:
-		separator = ' + '
-	elif '+' in shortcut:
-		separator = '+'
+
+	if " + " in shortcut:
+		separator = " + "
+	elif "+" in shortcut:
+		separator = "+"
 	else:
 		raise RuntimeError(f'The shortcut "{shortcut}" needs to contain a "+" symbol.')
-	if shortcut[-1] == '+':  # E.g. "Ctrl+Shift++"
+	if shortcut[-1] == "+":  # E.g. "Ctrl+Shift++"
 		keyList = shortcut[:-1].split(separator)
-		keyList[-1] = keyList[-1] + '+'
+		keyList[-1] = keyList[-1] + "+"
 	else:
 		keyList = shortcut.split(separator)
 	return keyList, separator
@@ -140,14 +140,14 @@ def _splitSequentialShortcut(shortcut: str) -> Tuple[List[str], List[str]]:
 
 	keys = []
 	separators = []
-	RE_SEQ_SHORTCUT_SPLITTING = re.compile(r'^(?P<key>[^, ]+)(?P<sep> |, )(?P<tail>.+)')
+	RE_SEQ_SHORTCUT_SPLITTING = re.compile(r"^(?P<key>[^, ]+)(?P<sep> |, )(?P<tail>.+)")
 	tail = shortcut
 	while len(tail) > 0:
 		m = RE_SEQ_SHORTCUT_SPLITTING.match(tail)
 		if not m:
 			keys.append(tail)
 			return keys, separators
-		keys.append(m['key'])
-		separators.append(m['sep'])
-		tail = m['tail']
-	raise RuntimeError(f'Wrong sequential shortcut string format: {shortcut}')
+		keys.append(m["key"])
+		separators.append(m["sep"])
+		tail = m["tail"]
+	raise RuntimeError(f"Wrong sequential shortcut string format: {shortcut}")

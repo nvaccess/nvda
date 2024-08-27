@@ -23,39 +23,40 @@ from utils.displayString import (
 class NVDAKey(DisplayStringIntFlag):
 	"""IntFlag enumeration containing the possible config values for "Select NVDA Modifier Keys" option in
 	keyboard settings.
-	
+
 	Use NVDAKey.MEMBER.value to compare with the config;
 	the config stores a bitwise combination of one or more of these values.
 	use NVDAKey.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	CAPS_LOCK = 1
 	NUMPAD_INSERT = 2
 	EXTENDED_INSERT = 4
-	
+
 	@property
 	def _displayStringLabels(self):
 		# Imported lazily since this module is imported before gettext translation is installed.
 		from keyLabels import localizedKeyLabels
+
 		return {
-			NVDAKey.CAPS_LOCK: localizedKeyLabels['capslock'],
-			NVDAKey.NUMPAD_INSERT: localizedKeyLabels['numpadinsert'],
-			NVDAKey.EXTENDED_INSERT: localizedKeyLabels['insert'],
+			NVDAKey.CAPS_LOCK: localizedKeyLabels["capslock"],
+			NVDAKey.NUMPAD_INSERT: localizedKeyLabels["numpadinsert"],
+			NVDAKey.EXTENDED_INSERT: localizedKeyLabels["insert"],
 		}
 
 
 @unique
 class ShowMessages(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values for "Show messages" option in braille settings.
-	
+
 	Use ShowMessages.MEMBER.value to compare with the config;
 	use ShowMessages.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	DISABLED = 0
 	USE_TIMEOUT = 1
 	SHOW_INDEFINITELY = 2
-	
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -74,15 +75,15 @@ class ShowMessages(DisplayStringIntEnum):
 @unique
 class TetherTo(DisplayStringStrEnum):
 	"""Enumeration containing the possible config values for "Tether to" option in braille settings.
-	
+
 	Use TetherTo.MEMBER.value to compare with the config;
 	use TetherTo.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	AUTO = "auto"
 	FOCUS = "focus"
 	REVIEW = "review"
-	
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -103,6 +104,7 @@ class BrailleMode(DisplayStringStrEnum):
 	Use BrailleMode.MEMBER.value to compare with the config;
 	use BrailleMode.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
+
 	FOLLOW_CURSORS = "followCursors"
 	SPEECH_OUTPUT = "speechOutput"
 
@@ -112,53 +114,56 @@ class BrailleMode(DisplayStringStrEnum):
 			# Translators: The label for a braille mode
 			BrailleMode.FOLLOW_CURSORS: _("follow cursors"),
 			# Translators: The label for a braille mode
-			BrailleMode.SPEECH_OUTPUT: _("display speech output")
+			BrailleMode.SPEECH_OUTPUT: _("display speech output"),
 		}
 
 
 @unique
 class ReportLineIndentation(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report line indent.
-	
+
 	Use ReportLineIndentation.MEMBER.value to compare with the config;
 	use ReportLineIndentation.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	OFF = 0
 	SPEECH = 1
 	TONES = 2
 	SPEECH_AND_TONES = 3
-	
+
 	@property
 	def _displayStringLabels(self):
 		return {
 			# Translators: A choice in a combo box in the document formatting dialog to report No line Indentation.
-			ReportLineIndentation.OFF: pgettext('line indentation setting', "Off"),
+			ReportLineIndentation.OFF: pgettext("line indentation setting", "Off"),
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with Speech.
-			ReportLineIndentation.SPEECH: pgettext('line indentation setting', "Speech"),
+			ReportLineIndentation.SPEECH: pgettext("line indentation setting", "Speech"),
 			# Translators: A choice in a combo box in the document formatting dialog to report indentation
 			# with tones.
-			ReportLineIndentation.TONES: pgettext('line indentation setting', "Tones"),
-			# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
-			# Speech and tones.
-			ReportLineIndentation.SPEECH_AND_TONES: pgettext('line indentation setting', "Both Speech and Tones"),
+			ReportLineIndentation.TONES: pgettext("line indentation setting", "Tones"),
+			ReportLineIndentation.SPEECH_AND_TONES: pgettext(
+				"line indentation setting",
+				# Translators: A choice in a combo box in the document formatting dialog to report indentation with both
+				# Speech and tones.
+				"Both Speech and Tones",
+			),
 		}
 
 
 @unique
 class ReportTableHeaders(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report table headers.
-	
+
 	Use ReportTableHeaders.MEMBER.value to compare with the config;
 	use ReportTableHeaders.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	OFF = 0
 	ROWS_AND_COLUMNS = 1
 	ROWS = 2
 	COLUMNS = 3
-	
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -180,15 +185,15 @@ class ReportTableHeaders(DisplayStringIntEnum):
 @unique
 class ReportCellBorders(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report cell borders.
-	
+
 	Use ReportCellBorders.MEMBER.value to compare with the config;
 	use ReportCellBorders.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
-	
+
 	OFF = 0
 	STYLE = 1
 	COLOR_AND_STYLE = 2
-	
+
 	@property
 	def _displayStringLabels(self):
 		return {
@@ -219,4 +224,49 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 			# self.UPDATE: _("Update Automatically"),
 			# Translators: This is a label for the automatic update behaviour for add-ons.
 			self.DISABLED: _("Disabled"),
+		}
+
+
+@unique
+class OutputMode(DisplayStringIntFlag):
+	"""Enumeration for ways to output information, such as formatting.
+	Use OutputMode.MEMBER.value to compare with the config;
+	use OutputMode.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = 0b0
+	SPEECH = 0b01
+	BRAILLE = 0b10
+	SPEECH_AND_BRAILLE = SPEECH | BRAILLE
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
+			self.OFF: _("Off"),
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
+			self.SPEECH: _("Speech"),
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
+			self.BRAILLE: _("Braille"),
+			# Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
+			self.SPEECH_AND_BRAILLE: _("Speech and braille"),
+		}
+
+
+class ParagraphStartMarker(DisplayStringStrEnum):
+	NONE = ""
+	SPACE = " "
+	PILCROW = "¶"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for a paragraph start marker.
+			self.NONE: pgettext("paragraphMarker", "No paragraph start marker (default)"),
+			# Translators: This is a label for a paragraph start marker.
+			self.SPACE: pgettext("paragraphMarker", "Double space (  )"),
+			# Translators: This is a label for a paragraph start marker.
+			# Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
+			# Ensure this is consistent with other strings with the context "paragraphMarker".
+			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
 		}

@@ -6,6 +6,7 @@
 """Support for the IAccessible2 rich text model first implemented by Mozilla.
 This is now used by other applications as well.
 """
+
 import typing
 from typing import (
 	Optional,
@@ -33,20 +34,23 @@ class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
 		return self.obj.childCount
 
 	def _iterTextWithEmbeddedObjects(
-			self,
-			withFields,
-			formatConfig=None
+		self,
+		withFields,
+		formatConfig=None,
 	) -> typing.Generator[int, None, None]:
 		yield from range(self._startOffset, self._endOffset)
 
-	def _getUnitOffsets(self,unit,offset):
-		if unit in (textInfos.UNIT_WORD,textInfos.UNIT_LINE):
-			unit=textInfos.UNIT_CHARACTER
-		return super(FakeEmbeddingTextInfo,self)._getUnitOffsets(unit,offset)
+	def _getUnitOffsets(self, unit, offset):
+		if unit in (textInfos.UNIT_WORD, textInfos.UNIT_LINE):
+			unit = textInfos.UNIT_CHARACTER
+		return super(FakeEmbeddingTextInfo, self)._getUnitOffsets(unit, offset)
 
 
 def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
-	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (controlTypes.Role.TABLE, controlTypes.Role.TABLEROW):
+	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (
+		controlTypes.Role.TABLE,
+		controlTypes.Role.TABLEROW,
+	):
 		return FakeEmbeddingTextInfo
 	elif obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
@@ -67,8 +71,8 @@ def _getEmbedded(obj, offset) -> typing.Optional[IAccessible]:
 		pass
 	return None
 
-class MozillaCompoundTextInfo(CompoundTextInfo):
 
+class MozillaCompoundTextInfo(CompoundTextInfo):
 	def _getControlFieldForObject(self, obj, ignoreEditableText=True):
 		controlField = super()._getControlFieldForObject(obj, ignoreEditableText=ignoreEditableText)
 		if controlField is None:
@@ -90,7 +94,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			and obj.parent
 			and controlTypes.state.State.EDITABLE in obj.parent.states
 		):
-			controlField['content'] = obj.name
+			controlField["content"] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
@@ -100,7 +104,8 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		# determine whether we are at this position.
 		try:
 			start, end, text = caretObj.IAccessibleTextObject.textAtOffset(
-				IA2.IA2_TEXT_OFFSET_CARET, IA2.IA2_TEXT_BOUNDARY_CHAR
+				IA2.IA2_TEXT_OFFSET_CARET,
+				IA2.IA2_TEXT_BOUNDARY_CHAR,
 			)
 			# If the offsets are different, this means there is a character, which
 			# means this is not the insertion point at the end of a line.
@@ -117,7 +122,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		except COMError:
 			log.debugWarning(
 				"Couldn't determine if caret is at end of line insertion point",
-				exc_info=True
+				exc_info=True,
 			)
 		return False
 
@@ -168,7 +173,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			except LookupError:
 				raise RuntimeError("No caret")
 			self._isEndOfLineInsertionPoint = self._isCaretAtEndOfLine(caretObj)
-			if caretObj is not obj and caretObj.IA2Attributes.get("display") == "inline" and caretTi.compareEndPoints(self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL), "startToEnd") == 0:
+			if (
+				caretObj is not obj
+				and caretObj.IA2Attributes.get("display") == "inline"
+				and caretTi.compareEndPoints(
+					self._makeRawTextInfo(caretObj, textInfos.POSITION_ALL),
+					"startToEnd",
+				)
+				== 0
+			):
 				# The caret is at the end of an inline object.
 				# This will report "blank", but we want to report the character just after the caret.
 				try:
@@ -184,7 +197,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				self._start = self._end = tempTi
 				self._startObj = self._endObj = tempObj
 			else:
-				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(tempTi, position)
+				self._start, self._startObj, self._end, self._endObj = self._findUnitEndpoints(
+					tempTi,
+					position,
+				)
 		elif isinstance(position, locationHelper.Point):
 			startObj = api.getDesktopObject().objectFromPoint(position.x, position.y)
 			while startObj and startObj.role == controlTypes.Role.STATICTEXT:
@@ -270,14 +286,23 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		textInfos.POSITION_CARET: 1,
 		textInfos.POSITION_LAST: 2,
 	}
+
 	def _findContentDescendant(self, obj, position):
 		import ctypes
 		import NVDAHelper
 		import NVDAObjects.IAccessible
-		descendantID=ctypes.c_int()
-		descendantOffset=ctypes.c_int()
+
+		descendantID = ctypes.c_int()
+		descendantOffset = ctypes.c_int()
 		what = self.FINDCONTENTDESCENDANT_POSITIONS.get(position, position)
-		NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(obj.appModule.helperLocalBindingHandle,obj.windowHandle,obj.IAccessibleObject.uniqueID,what,ctypes.byref(descendantID),ctypes.byref(descendantOffset))
+		NVDAHelper.localLib.nvdaInProcUtils_IA2Text_findContentDescendant(
+			obj.appModule.helperLocalBindingHandle,
+			obj.windowHandle,
+			obj.IAccessibleObject.uniqueID,
+			what,
+			ctypes.byref(descendantID),
+			ctypes.byref(descendantOffset),
+		)
 		if descendantID.value == 0:
 			# No descendant.
 			raise LookupError("Object has no text descendants")
@@ -291,7 +316,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				obj = cached
 				break
 		else:
-			obj=NVDAObjects.IAccessible.getNVDAObjectFromEvent(obj.windowHandle,winUser.OBJID_CLIENT,descendantID.value)
+			obj = NVDAObjects.IAccessible.getNVDAObjectFromEvent(
+				obj.windowHandle,
+				winUser.OBJID_CLIENT,
+				descendantID.value,
+			)
 		if position == textInfos.POSITION_CARET:
 			# If the compound TextInfo is for the current focus,
 			# We should cache the caret object as we know it will probably be needed again.
@@ -300,9 +329,9 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			if self.obj is api.getFocusObject():
 				self.obj._lastCaretObj = obj
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
-		ti=self._makeRawTextInfo(obj,textInfos.POSITION_FIRST)
-		ti._startOffset=ti._endOffset=descendantOffset.value
-		return ti,obj
+		ti = self._makeRawTextInfo(obj, textInfos.POSITION_FIRST)
+		ti._startOffset = ti._endOffset = descendantOffset.value
+		return ti, obj
 
 	def _iterRecursiveText(self, ti: offsets.OffsetsTextInfo, controlStack, formatConfig):
 		if ti.obj == self._endObj:
@@ -313,10 +342,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 
 		for item in ti._iterTextWithEmbeddedObjects(controlStack is not None, formatConfig=formatConfig):
 			if item is None:
-				yield u""
+				yield ""
 			elif isinstance(item, str):
 				yield item
-			elif isinstance(item, int): # Embedded object.
+			elif isinstance(item, int):  # Embedded object.
 				embedded: typing.Optional[IAccessible] = _getEmbedded(ti.obj, item)
 				if embedded is None:
 					continue
@@ -339,7 +368,11 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 					# results in '"0xFFFC' being displayed on the braille device.
 					yield " "
 				else:
-					for subItem in self._iterRecursiveText(self._makeRawTextInfo(embedded, textInfos.POSITION_ALL), controlStack, formatConfig):
+					for subItem in self._iterRecursiveText(
+						self._makeRawTextInfo(embedded, textInfos.POSITION_ALL),
+						controlStack,
+						formatConfig,
+					):
 						yield subItem
 						if subItem is None:
 							return
@@ -380,8 +413,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				ti = self._getEmbedding(obj)
 				if not ti:
 					log.debugWarning(
-						"_getEmbedding returned None while getting initial fields. "
-						"Object probably dead."
+						"_getEmbedding returned None while getting initial fields. " "Object probably dead.",
 					)
 					return []
 				obj = ti.obj
@@ -415,8 +447,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			ti = self._getEmbedding(obj)
 			if not ti:
 				log.debugWarning(
-					"_getEmbedding returned None while ascending to get more text. "
-					"Object probably dead."
+					"_getEmbedding returned None while ascending to get more text. " "Object probably dead.",
 				)
 				return []
 			obj = ti.obj
@@ -453,14 +484,16 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return self._getText(True, formatConfig)
 
 	def _adjustIfEndOfLine(
-			self,
-			expandTi: offsets.OffsetsTextInfo,
-			unit: str,
-			obj: IAccessible
+		self,
+		expandTi: offsets.OffsetsTextInfo,
+		unit: str,
+		obj: IAccessible,
 	) -> None:
 		if (
-			self._isEndOfLineInsertionPoint and unit != textInfos.UNIT_CHARACTER
-			and obj is self._startObj and expandTi._startOffset > 0
+			self._isEndOfLineInsertionPoint
+			and unit != textInfos.UNIT_CHARACTER
+			and obj is self._startObj
+			and expandTi._startOffset > 0
 		):
 			# #3156: This is the insertion point at the end of a line. If we use
 			# this offset, we'll get the unit at the start of the next line.
@@ -590,7 +623,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		return start, startObj, end, endObj
 
 	def expand(self, unit):
-		if unit in ( textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
+		if unit in (textInfos.UNIT_CHARACTER, textInfos.UNIT_OFFSET):
 			self._end = self._start
 			self._endObj = self._startObj
 			if self._isEndOfLineInsertionPoint:
@@ -629,7 +662,7 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# We're at the root. Don't go any further.
 				raise LookupError
 			if limitToInline:
-				if obj.IA2Attributes.get('display') != 'inline':
+				if obj.IA2Attributes.get("display") != "inline":
 					# The caller requested to limit to inline objects.
 					# As this container is not inline,
 					# We cannot go above this container.
@@ -642,14 +675,24 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		embedded = _getEmbedded(obj, ti._startOffset)
 		if embedded:
 			try:
-				return self._findContentDescendant(embedded, textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST)
+				return self._findContentDescendant(
+					embedded,
+					textInfos.POSITION_LAST if moveBack else textInfos.POSITION_FIRST,
+				)
 			except LookupError:
 				# No text descendants, so we don't descend.
 				pass
 		return ti, obj
 
-	def move(self, unit, direction, endPoint=None):
+	def move(
+		self,
+		unit: str,
+		direction: int,
+		endPoint: str | None = None,
+	) -> int:
 		if direction == 0:
+			return 0
+		if self.obj.IAccessibleTextObject.nCharacters == 0:
 			return 0
 
 		if not endPoint or endPoint == "start":
@@ -666,7 +709,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				# We're just moving end. We don't want start to be affected.
 				moveTi = moveTi.copy()
 			moveTi.collapse(end=True)
-			if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+			if (
+				moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd")
+				== 0
+			):
 				# We're at the end of the object, so move to the start of the next.
 				try:
 					moveTi, moveObj = self._findNextContent(moveObj)
@@ -694,7 +740,13 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			else:
 				# Collapse to the start of the next unit.
 				moveTi.collapse(end=True)
-				if moveTi.compareEndPoints(self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL), "endToEnd") == 0:
+				if (
+					moveTi.compareEndPoints(
+						self._makeRawTextInfo(moveObj, textInfos.POSITION_ALL),
+						"endToEnd",
+					)
+					== 0
+				):
 					# We're at the end of the object.
 					if remainingMovement == 1 and endPoint == "end":
 						# We've moved the required number of units.
@@ -777,7 +829,10 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		otherAncs = self._getAncestors(otherTi, otherObj)
 		# Find the first common ancestor.
 		maxAncIndex = min(len(selfAncs), len(otherAncs)) - 1
-		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in zip(selfAncs[maxAncIndex::-1], otherAncs[maxAncIndex::-1]):
+		for (selfAncTi, selfAncObj), (otherAncTi, otherAncObj) in zip(
+			selfAncs[maxAncIndex::-1],
+			otherAncs[maxAncIndex::-1],
+		):
 			if selfAncObj == otherAncObj:
 				break
 		else:

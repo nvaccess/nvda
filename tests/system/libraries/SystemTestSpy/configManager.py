@@ -19,12 +19,13 @@ from robot.libraries.OperatingSystem import OperatingSystem as _OpSysLib
 from robot.libraries.Process import Process as _Process
 
 builtIn: BuiltIn = BuiltIn()
-opSys: _OpSysLib = _getLib('OperatingSystem')
-process: _Process = _getLib('Process')
+opSys: _OpSysLib = _getLib("OperatingSystem")
+process: _Process = _getLib("Process")
 
 
 def _findDepPath(depFileName, searchPaths):
 	import os
+
 	for path in searchPaths:
 		filePath = _pJoin(path, f"{depFileName}.py")
 		if os.path.isfile(filePath):
@@ -35,7 +36,7 @@ def _findDepPath(depFileName, searchPaths):
 
 
 def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
-	""" Assembles the required files for the system test spy.
+	"""Assembles the required files for the system test spy.
 	Most notably this includes:
 	- speechSpyGlobalPlugin - The actual remote Robot library used to get information out of NVDA
 	- speechSpySynthDriver - A synth driver that captures and caches speech to provide to speechSpyGlobalPlugin
@@ -49,7 +50,7 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 		pythonImports=[  # relative to the python path
 			r"robotremoteserver",
 		],
-		libsDest=spyPackageLibsDir
+		libsDest=spyPackageLibsDir,
 	)
 
 	try:
@@ -60,28 +61,29 @@ def _installSystemTestSpyToScratchPad(repoRoot: str, scratchPadDir: str):
 			pythonImports=[  # relative to the python path
 				"xmlrpc",
 			],
-			libsDest=spyPackageLibsDir
+			libsDest=spyPackageLibsDir,
 		)
 
 	# install the global plugin
 	# Despite duplication, specify full paths for clarity.
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "speechSpyGlobalPlugin.py"),
-		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin", "__init__.py")
+		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin", "__init__.py"),
 	)
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "blockUntilConditionMet.py"),
-		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin")
+		_pJoin(scratchPadDir, "globalPlugins", "speechSpyGlobalPlugin"),
 	)
 	# install the test spy speech synth
 	opSys.copy_file(
 		_pJoin(repoRoot, "tests", "system", "libraries", "SystemTestSpy", "speechSpySynthDriver.py"),
-		_pJoin(scratchPadDir, "synthDrivers", "speechSpySynthDriver.py")
+		_pJoin(scratchPadDir, "synthDrivers", "speechSpySynthDriver.py"),
 	)
 
 
 def _copyPythonLibs(pythonImports, libsDest):
 	import os
+
 	searchPaths = sys.path
 	for lib in pythonImports:
 		libSource = _findDepPath(lib, searchPaths)
@@ -92,37 +94,37 @@ def _copyPythonLibs(pythonImports, libsDest):
 
 
 def setupProfile(
-		repoRoot: str,
-		settingsFileName: str,
-		stagingDir: str,
-		gesturesFileName: Optional[str] = None,
+	repoRoot: str,
+	settingsFileName: str,
+	stagingDir: str,
+	gesturesFileName: Optional[str] = None,
 ):
-	builtIn.log("Copying files into NVDA profile", level='DEBUG')
+	builtIn.log("Copying files into NVDA profile", level="DEBUG")
 	opSys.copy_file(
 		# Despite duplication, specify full paths for clarity.
 		_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", settingsFileName),
-		_pJoin(stagingDir, "nvdaProfile", "nvda.ini")
+		_pJoin(stagingDir, "nvdaProfile", "nvda.ini"),
 	)
 	if gesturesFileName is not None:
 		opSys.copy_file(
 			# Despite duplication, specify full paths for clarity.
 			_pJoin(repoRoot, "tests", "system", "nvdaSettingsFiles", gesturesFileName),
-			_pJoin(stagingDir, "nvdaProfile", "gestures.ini")
+			_pJoin(stagingDir, "nvdaProfile", "gestures.ini"),
 		)
 	# create a package to use as the globalPlugin
 	_installSystemTestSpyToScratchPad(
 		repoRoot,
-		_pJoin(stagingDir, "nvdaProfile", "scratchpad")
+		_pJoin(stagingDir, "nvdaProfile", "scratchpad"),
 	)
 
 
 def teardownProfile(stagingDir: str):
-	""" Cleans up the profile directory
+	"""Cleans up the profile directory
 	@todo: this could have an option to preserve the profile for debugging purposes.
 	@param stagingDir: Where the profile was constructed
 	"""
-	builtIn.log("Cleaning up NVDA profile", level='DEBUG')
+	builtIn.log("Cleaning up NVDA profile", level="DEBUG")
 	opSys.remove_directory(
 		_pJoin(stagingDir, "nvdaProfile"),
-		recursive=True
+		recursive=True,
 	)

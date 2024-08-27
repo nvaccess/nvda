@@ -1,10 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2010-2024 NV Access Limited, World Light Information Limited,
-# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot
+# Hong Kong Blind Union, Babbage B.V., Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import IntEnum
+import dataclasses
+from enum import IntEnum, StrEnum
+from functools import cached_property
+import glob
+from locale import strxfrm
 import os
 import codecs
 import collections
@@ -15,7 +19,6 @@ from typing import (
 	Generic,
 	List,
 	Optional,
-	Tuple,
 	TypeVar,
 )
 
@@ -32,36 +35,43 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 	"""Allows access to locale-specific data objects, dynamically loading them if needed on request"""
 
 	def __init__(
-			self,
-			localeDataFactory: Callable[[str], _LocaleDataT]
+		self,
+		localeDataFactory: Callable[[str], _LocaleDataT],
 	):
 		"""
 		@param localeDataFactory: the factory to create data objects for the requested locale.
-		""" 
+		"""
 		self._localeDataFactory: Callable[[str], _LocaleDataT] = localeDataFactory
 		self._dataMap: Dict[str, _LocaleDataT] = {}
+		self._noDataLocalesCache: set[str] = set()
 
 	def fetchLocaleData(self, locale: str, fallback: bool = True) -> _LocaleDataT:
 		"""
-		Fetches a data object for the given locale. 
+		Fetches a data object for the given locale.
 		This may mean that the data object is first created and stored if it does not yet exist in the map.
 		The locale is also simplified (country is dropped) if the fallback argument is True and the full locale can not be used to create a data object.
 		@param locale: the locale of the data object requested
 		@param fallback: if true and there is no data for the locale, then the country (if it exists) is stripped and just the language is tried.
 		@return: the data object for the given locale
 		"""
-		localeList=[locale]
-		if fallback and '_' in locale:
-			localeList.append(locale.split('_')[0])
-		for l in localeList:  # noqa: E741
-			data=self._dataMap.get(l)
-			if data: return data  # noqa: E701
-			try:
-				data=self._localeDataFactory(l)
-			except LookupError:
-				data=None
-			if not data: continue  # noqa: E701
-			self._dataMap[l]=data
+		localeList = [locale]
+		if fallback and "_" in locale:
+			localeList.append(locale.split("_")[0])
+		for loc in localeList:
+			data = self._dataMap.get(loc)
+			if data:
+				return data
+			elif loc in self._noDataLocalesCache:
+				data = None
+			else:
+				try:
+					data = self._localeDataFactory(loc)
+				except LookupError:
+					self._noDataLocalesCache.add(loc)
+					data = None
+			if not data:
+				continue
+			self._dataMap[loc] = data
 			return data
 		raise LookupError(locale)
 
@@ -74,12 +84,15 @@ class LocaleDataMap(Generic[_LocaleDataT], object):
 			del self._dataMap[locale]
 		except KeyError:
 			pass
+		self._noDataLocalesCache.discard(locale)
 
 	def invalidateAllData(self):
 		"""Invalidate all data within this locale map.
 		This will cause a new data object to be created for every locale that is next requested.
 		"""
 		self._dataMap.clear()
+		self._noDataLocalesCache.clear()
+
 
 class CharacterDescriptions(object):
 	"""
@@ -92,17 +105,17 @@ class CharacterDescriptions(object):
 		@param locale: The characterDescriptions.dic file will be found by using this locale.
 		"""
 		self._entries: Dict[str, List[str]] = {}
-		fileName = os.path.join(globalVars.appDir, 'locale', locale, 'characterDescriptions.dic')
-		if not os.path.isfile(fileName): 
+		fileName = os.path.join(globalVars.appDir, "locale", locale, "characterDescriptions.dic")
+		if not os.path.isfile(fileName):
 			raise LookupError(fileName)
-		f = codecs.open(fileName,"r","utf_8_sig",errors="replace")
+		f = codecs.open(fileName, "r", "utf_8_sig", errors="replace")
 		for line in f:
-			if line.isspace() or line.startswith('#'):
+			if line.isspace() or line.startswith("#"):
 				continue
-			line=line.rstrip('\r\n')
-			temp=line.split("\t")
+			line = line.rstrip("\r\n")
+			temp = line.split("\t")
 			if len(temp) > 1:
-				key=temp.pop(0)
+				key = temp.pop(0)
 				self._entries[key] = temp
 			else:
 				log.warning("can't parse line '%s'" % line)
@@ -127,14 +140,14 @@ def getCharacterDescription(locale: str, character: str) -> Optional[List[str]]:
 	@return: the found description for the given character
 	"""
 	try:
-		l=_charDescLocaleDataMap.fetchLocaleData(locale)  # noqa: E741
+		l = _charDescLocaleDataMap.fetchLocaleData(locale)  # noqa: E741
 	except LookupError:
-		if not locale.startswith('en'):
-			return getCharacterDescription('en',character)
+		if not locale.startswith("en"):
+			return getCharacterDescription("en", character)
 		raise LookupError("en")
-	desc=l.getCharacterDescription(character)
-	if not desc and not locale.startswith('en'):
-		desc=getCharacterDescription('en',character)
+	desc = l.getCharacterDescription(character)
+	if not desc and not locale.startswith("en"):
+		desc = getCharacterDescription("en", character)
 	return desc
 
 
@@ -144,6 +157,7 @@ class SymbolLevel(IntEnum):
 	Note: This enum has its counterpart in the NVDAController RPC interface (nvdaController.idl).
 	Additions to this enum should also be reflected in nvdaController.idl.
 	"""
+
 	NONE = 0
 	SOME = 100
 	MOST = 200
@@ -184,10 +198,19 @@ SPEECH_SYMBOL_PRESERVE_LABELS = {
 }
 SPEECH_SYMBOL_PRESERVES = (SYMPRES_NEVER, SYMPRES_ALWAYS, SYMPRES_NOREP)
 
+
 class SpeechSymbol(object):
 	__slots__ = ("identifier", "pattern", "replacement", "level", "preserve", "displayName")
 
-	def __init__(self, identifier, pattern=None, replacement=None, level=None, preserve=None, displayName=None):
+	def __init__(
+		self,
+		identifier,
+		pattern=None,
+		replacement=None,
+		level=None,
+		preserve=None,
+		displayName=None,
+	):
 		self.identifier = identifier
 		self.pattern = pattern
 		self.replacement = replacement
@@ -198,11 +221,16 @@ class SpeechSymbol(object):
 	def __repr__(self):
 		attrs = []
 		for attr in self.__slots__:
-			attrs.append("{name}={val!r}".format(
-				name=attr, val=getattr(self, attr)))
+			attrs.append(
+				"{name}={val!r}".format(
+					name=attr,
+					val=getattr(self, attr),
+				),
+			)
 		return "SpeechSymbol(%s)" % ", ".join(attrs)
 
-class SpeechSymbols(object):
+
+class SpeechSymbols:
 	"""
 	Contains raw information about the pronunciation of symbols.
 	It does not handle inheritance of data from other sources, processing of text, etc.
@@ -210,17 +238,16 @@ class SpeechSymbols(object):
 	"""
 
 	def __init__(self):
-		"""Constructor.
-		"""
+		"""Constructor."""
 		self.complexSymbols = collections.OrderedDict()
 		self.symbols = collections.OrderedDict()
 		self.fileName = None
 
 	def load(self, fileName: str, allowComplexSymbols: bool = True) -> None:
 		"""Load symbol information from a file.
-		@param fileName: The name of the file from which to load symbol information.
-		@param allowComplexSymbols: Whether to allow complex symbols.
-		@raise IOError: If the file cannot be read.
+		:param fileName: The name of the file from which to load symbol information.
+		:param allowComplexSymbols: Whether to allow complex symbols.
+		:raise IOError: If the file cannot be read.
 		"""
 		self.fileName = fileName
 		with codecs.open(fileName, "r", "utf_8_sig", errors="replace") as f:
@@ -241,8 +268,12 @@ class SpeechSymbols(object):
 					else:
 						raise ValueError
 				except ValueError:
-					log.warning(u"Invalid line in file {file}: {line}".format(
-						file=fileName, line=line))
+					log.warning(
+						"Invalid line in file {file}: {line}".format(
+							file=fileName,
+							line=line,
+						),
+					)
 
 	def _loadComplexSymbol(self, line: str) -> None:
 		try:
@@ -280,7 +311,7 @@ class SpeechSymbols(object):
 		"all": SymbolLevel.ALL,
 		"char": SymbolLevel.CHAR,
 	}
-	LEVEL_OUTPUT = {v:k for k, v in LEVEL_INPUT.items()}
+	LEVEL_OUTPUT = {v: k for k, v in LEVEL_INPUT.items()}
 	PRESERVE_INPUT = {
 		"never": SYMPRES_NEVER,
 		"always": SYMPRES_ALWAYS,
@@ -334,15 +365,15 @@ class SpeechSymbols(object):
 
 		with codecs.open(fileName, "w", "utf_8_sig", errors="replace") as f:
 			if self.complexSymbols:
-				f.write(u"complexSymbols:\r\n")
+				f.write("complexSymbols:\r\n")
 				for identifier, pattern in self.complexSymbols.items():
-					f.write(u"%s\t%s\r\n" % (identifier, pattern))
-				f.write(u"\r\n")
+					f.write("%s\t%s\r\n" % (identifier, pattern))
+				f.write("\r\n")
 
 			if self.symbols:
-				f.write(u"symbols:\r\n")
+				f.write("symbols:\r\n")
 				for symbol in self.symbols.values():
-					f.write(u"%s\r\n" % self._saveSymbol(symbol))
+					f.write("%s\r\n" % self._saveSymbol(symbol))
 
 	def _saveSymbolField(self, output, outputMap=None):
 		if output is None:
@@ -357,14 +388,17 @@ class SpeechSymbols(object):
 	def _saveSymbol(self, symbol):
 		identifier = symbol.identifier
 		try:
-			identifier = u"\\%s%s" % (
-				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]], identifier[1:])
+			identifier = "\\%s%s" % (
+				self.IDENTIFIER_ESCAPES_OUTPUT[identifier[0]],
+				identifier[1:],
+			)
 		except KeyError:
 			pass
-		fields = [identifier,
+		fields = [
+			identifier,
 			self._saveSymbolField(symbol.replacement),
 			self._saveSymbolField(symbol.level, self.LEVEL_OUTPUT),
-			self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT)
+			self._saveSymbolField(symbol.preserve, self.PRESERVE_OUTPUT),
 		]
 		# Strip optional fields with default values.
 		for field in reversed(fields[2:]):
@@ -375,82 +409,60 @@ class SpeechSymbols(object):
 				break
 		if symbol.displayName:
 			fields.append("# %s" % symbol.displayName)
-		return u"\t".join(fields)
-
-_noSymbolLocalesCache = set()
-_noCLDRLocalesCache = set()
+		return "\t".join(fields)
 
 
-def _getSpeechSymbolsForLocale(locale: str) -> Tuple[SpeechSymbols, SpeechSymbols]:
-	if (
-		locale in _noSymbolLocalesCache
-		and (locale in _noCLDRLocalesCache or not config.conf['speech']['includeCLDR'])
-	):
-		raise LookupError
-	builtinDataImported = False
-	builtin = SpeechSymbols()
-	if config.conf['speech']['includeCLDR']:
-		# Try to load CLDR data when processing is on.
-		# Load the data before loading other symbols,
-		# in order to allow translators to override them.
+def _getSpeechSymbolsForLocale(locale: str) -> tuple[SpeechSymbols, SpeechSymbols, ...]:
+	symbols: list[SpeechSymbols] = []
+	for definition in _symbolDictionaryDefinitions:
+		if not definition.enabled:
+			continue
 		try:
-			builtin.load(
-				os.path.join(globalVars.appDir, "locale", locale, "cldr.dic"),
-				allowComplexSymbols=False
+			symbols.append(definition.getSymbols(locale))
+		except (LookupError, FileNotFoundError):
+			log.debugWarning(
+				f"Error loading {definition.name!r} symbols for locale {locale!r}",
+				exc_info=True,
 			)
-			builtinDataImported = True
-		except IOError:
-			_noCLDRLocalesCache.add(locale)
-			log.debugWarning("No CLDR data for locale %s" % locale)
-	try:
-		builtin.load(os.path.join(globalVars.appDir, "locale", locale, "symbols.dic"))
-		builtinDataImported = True
-	except IOError:
-		_noSymbolLocalesCache.add(locale)
-		log.debugWarning("No symbol data for locale %s" % locale)
-	if not builtinDataImported:
-		raise LookupError("No symbol information for locale %s" % locale)
-	user = SpeechSymbols()
-	pathToSymbolsDic = WritePaths.getSymbolsConfigFile(locale)
-	try:
-		# Don't allow users to specify complex symbols
-		# because an error will cause the whole processor to fail.
-		user.load(pathToSymbolsDic, allowComplexSymbols=False)
-	except IOError:
-		# An empty user SpeechSymbols is okay.
-		pass
-	return builtin, user
+	if len(symbols) <= 1:
+		raise LookupError(f"No symbol information for locale {locale!r}")
+	return tuple(symbols)
 
-class SpeechSymbolProcessor(object):
+
+class SpeechSymbolProcessor:
 	"""
 	Handles processing of symbol pronunciation for a locale.
 	Pronunciation information is taken from one or more L{SpeechSymbols} instances.
 	"""
 
 	#: Caches symbol data for locales.
-	localeSymbols: LocaleDataMap[Tuple[SpeechSymbols, SpeechSymbols]] = LocaleDataMap(_getSpeechSymbolsForLocale)
+	localeSymbols: LocaleDataMap[tuple[SpeechSymbols, SpeechSymbols, ...]] = LocaleDataMap(
+		_getSpeechSymbolsForLocale,
+	)
+	sources: list[SpeechSymbols]
 
-	def __init__(self, locale):
+	def __init__(self, locale: str):
 		"""Constructor.
 		@param locale: The locale for which symbol pronunciation should be processed.
-		@type locale: str
 		"""
 		self.locale = locale
 
 		# We need to merge symbol data from several sources.
 		sources = self.sources = []
-		builtin, user = self.localeSymbols.fetchLocaleData(locale,fallback=False)
-		self.builtinSources = [builtin]
-		self.userSymbols = user
-		sources.append(user)
-		sources.append(builtin)
+		fetched = self.localeSymbols.fetchLocaleData(locale, fallback=False)
+		# A slice that reverses a list and ignores the last item (which is the user dictionary)
+		builtinSlice = slice(-2, None, -1)
+		self.builtinSources = list(fetched[builtinSlice])
+		self.userSymbols = fetched[-1]
+		sources.append(self.userSymbols)
+		sources.extend(self.builtinSources)
 
 		# Always use English as a base.
 		if locale != "en":
 			# Only the builtin data.
-			enBaseSymbols = self.localeSymbols.fetchLocaleData("en")[0]
-			sources.append(enBaseSymbols)
-			self.builtinSources.append(enBaseSymbols)
+			enBuiltin = self.localeSymbols.fetchLocaleData("en")[builtinSlice]
+			sources.extend(enBuiltin)
+			self.builtinSources.extend(enBuiltin)
 
 		# The computed symbol information from all sources.
 		symbols = self.computedSymbols = collections.OrderedDict()
@@ -500,8 +512,12 @@ class SpeechSymbolProcessor(object):
 		for symbol in list(symbols.values()):
 			if symbol.replacement is None:
 				# Symbols without a replacement specified are useless.
-				log.warning(u"Replacement not defined in locale {locale} for symbol: {symbol}".format(
-					symbol=symbol.identifier, locale=self.locale))
+				log.warning(
+					"Replacement not defined in locale {locale} for symbol: {symbol}".format(
+						symbol=symbol.identifier,
+						locale=self.locale,
+					),
+				)
 				del symbols[symbol.identifier]
 				try:
 					if len(symbol.identifier) == 1:
@@ -532,21 +548,26 @@ class SpeechSymbolProcessor(object):
 		# Complex symbols.
 		# Each complex symbol has its own named group so we know which symbol matched.
 		patterns.extend(
-			u"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
-			for index, symbol in enumerate(complexSymbolsList))
-		patterns.extend([
-			# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
-			r"(?P<rstripSpace>  +$)",
-			# Repeated characters: more than 3 repeats.
-			r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters
-		])
+			"(?P<c{index}>{pattern})".format(index=index, pattern=symbol.pattern)
+			for index, symbol in enumerate(complexSymbolsList)
+		)
+		patterns.extend(
+			[
+				# Strip repeated spaces from the end of the line to stop them from being picked up by repeated.
+				r"(?P<rstripSpace>  +$)",
+				# Repeated characters: more than 3 repeats.
+				r"(?P<repeated>(?P<repTmp>%s)(?P=repTmp){3,})" % characters,
+			],
+		)
 		# Simple symbols.
 		# These are all handled in one named group.
 		# Because the symbols are just text, we know which symbol matched just by looking at the matched text.
-		patterns.append(r"(?P<simple>{multiChars}|{singleChars})".format(
-			multiChars="|".join(re.escape(identifier) for identifier in multiChars),
-			singleChars=characters
-		))
+		patterns.append(
+			r"(?P<simple>{multiChars}|{singleChars})".format(
+				multiChars="|".join(re.escape(identifier) for identifier in multiChars),
+				singleChars=characters,
+			),
+		)
 		pattern = "|".join(patterns)
 		try:
 			self._regexp = re.compile(pattern, re.UNICODE)
@@ -560,20 +581,20 @@ class SpeechSymbolProcessor(object):
 		@param m: The currently-matched group
 		@param string: The match replacement string which may contain group references
 		"""
-		result = ''
+		result = ""
 
 		in_escape = False
 		for char in string:
 			if not in_escape:
-				if char == '\\':
+				if char == "\\":
 					in_escape = True
 				else:
 					result += char
 			else:
-				if char == '\\':
-					result += '\\'
-				elif char >= '0' and char <= '9':
-					result += m.group(m.lastindex + ord(char) - ord('0'))
+				if char == "\\":
+					result += "\\"
+				elif char >= "0" and char <= "9":
+					result += m.group(m.lastindex + ord(char) - ord("0"))
 				else:
 					log.error("Invalid reference \\%string" % char)
 					raise LookupError
@@ -613,12 +634,14 @@ class SpeechSymbolProcessor(object):
 				symbol = self._computedComplexSymbolsList[index]
 				replacement = self._replaceGroups(m, symbol.replacement)
 
-			if symbol.preserve == SYMPRES_ALWAYS or (symbol.preserve == SYMPRES_NOREP and self._level < symbol.level):
+			if symbol.preserve == SYMPRES_ALWAYS or (
+				symbol.preserve == SYMPRES_NOREP and self._level < symbol.level
+			):
 				suffix = text
 			else:
 				suffix = " "
 			if self._level >= symbol.level and replacement:
-				return u" {repl}{suffix}".format(repl=replacement, suffix=suffix)
+				return " {repl}{suffix}".format(repl=replacement, suffix=suffix)
 			else:
 				return suffix
 
@@ -709,6 +732,7 @@ def processSpeechSymbols(locale: str, text: str, level: SymbolLevel):
 		raise
 	return ss.processText(text, level)
 
+
 def processSpeechSymbol(locale, symbol):
 	"""Process a single symbol according to desired pronunciation.
 	@param locale: The locale of the symbol.
@@ -728,6 +752,7 @@ def processSpeechSymbol(locale, symbol):
 		pass
 	return symbol
 
+
 def clearSpeechSymbols():
 	"""Clears the symbol data cached by the locale speech symbol processors.
 	This will cause new data to be fetched for the next request to pronounce symbols.
@@ -735,11 +760,202 @@ def clearSpeechSymbols():
 	SpeechSymbolProcessor.localeSymbols.invalidateAllData()
 	_localeSpeechSymbolProcessors.invalidateAllData()
 
+
 def handlePostConfigProfileSwitch(prevConf=None):
 	if not prevConf:
 		return
-	if prevConf["speech"]["includeCLDR"] is not config.conf["speech"]["includeCLDR"]:
-		# Either included or excluded CLDR data, so clear the cache.
+	if set(prevConf["speech"]["symbolDictionaries"]) != set(config.conf["speech"]["symbolDictionaries"]):
+		# Either included or excluded dictionaries, so clear the cache.
 		clearSpeechSymbols()
 
-config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+
+class _SymbolDefinitionSource(StrEnum):
+	BUILTIN = "builtin"
+	"""The name of the builtin definition source"""
+	USER = "user"
+	"""The source for user dictionaries"""
+
+
+@dataclasses.dataclass(frozen=True, kw_only=True)
+class SymbolDictionaryDefinition:
+	name: str
+	"""The name of the dictionary."""
+	path: str
+	"""The path to the dictionary.
+	This should be a formattable string, where {locale} is replaced by the locale to fetch a dictionary for.
+	"""
+	source: str = _SymbolDefinitionSource.BUILTIN
+	"""The source of the definition."""
+	displayName: str | None = None
+	"""The translatable name of the dictionary.
+	When not provided, the dictionary can not be visible to the end user.
+	"""
+	allowComplexSymbols: bool = False
+	"""Whether this dictionary allows complex symbols."""
+	mandatory: bool = False
+	"""Whether this dictionary is mandatory.
+	Mandatory dictionaries are always enabled."""
+	symbols: LocaleDataMap[SpeechSymbols] = dataclasses.field(init=False, repr=False, compare=False)
+
+	def __post_init__(self):
+		if self.path.count("{locale}") != 1:
+			raise ValueError(
+				f"Invalid formattable path for dictionary, locale must be included in: {self.path!r}",
+			)
+		if not self.displayName and not self.mandatory:
+			raise ValueError("A non-mandatory dictionary without a display name is unsupported")
+		object.__setattr__(self, "symbols", LocaleDataMap(self._initSymbols))
+
+	@cached_property
+	def userVisible(self) -> bool:
+		"""Whether this dictionary is visible to end users (i.e. in the GUI).
+		Mandatory dictionaries are hidden.
+		"""
+		return not self.mandatory and bool(self.displayName)
+
+	@property
+	def enabled(self) -> bool:
+		return self.mandatory or self.name in config.conf["speech"]["symbolDictionaries"]
+
+	def getSymbols(self, locale: str) -> SpeechSymbols:
+		"""Gets the symbols for a given locale.
+		:param locale: The locale to get symbols for.
+		:raises FileNotFoundError: When this is not a user dictionary and the locale wasn't found.
+		"""
+		return self.symbols.fetchLocaleData(locale, fallback=False)
+
+	def _initSymbols(self, locale: str) -> SpeechSymbols:
+		raiseOnError = self.source != _SymbolDefinitionSource.USER
+		symbols = SpeechSymbols()
+		if locale not in self.availableLocales:
+			msg = f"No {self.name!r} data for locale {locale!r}"
+			if raiseOnError:
+				raise FileNotFoundError(msg)
+			log.debug(msg)
+		else:
+			try:
+				symbols.load(self.path.format(locale=locale), self.allowComplexSymbols)
+			except IOError:
+				if raiseOnError:
+					raise
+				log.error(f"Error loading {self.name!r} data for locale {locale!r}", exc_info=True)
+		return symbols
+
+	@cached_property
+	def availableLocales(self) -> dict[str, str]:
+		"""Gets dictionary paths for all available locales."""
+		prefix, suffix = self.path.split("{locale}", 1)
+		pattern = f"{prefix}*{suffix}"
+		paths = glob.glob(pattern)
+		dct = {}
+		for p in paths:
+			locale = p[len(prefix) : (-1 * len(suffix))]
+			dct[locale] = p
+		return dct
+
+
+_symbolDictionaryDefinitions: list[SymbolDictionaryDefinition] = []
+"""
+A list of available symbol dictionary definitions.
+These definitions are used to load symbol dictionaries for various locales.
+The list is filled with definitions from core and from add-ons using _addSymbolDefinitions.
+With listAvailableSymbolDictionaryDefinitions, there is a public interface to retrieve the definitions.
+"""
+
+
+def listAvailableSymbolDictionaryDefinitions() -> list[SymbolDictionaryDefinition]:
+	"""Get available symbol dictionary definitions as initialized in core or in add-ons."""
+	return sorted(
+		_symbolDictionaryDefinitions,
+		key=lambda dct: (dct.source != _SymbolDefinitionSource.BUILTIN, strxfrm(dct.displayName or dct.name)),
+	)
+
+
+def _addSymbolDefinitions():
+	"""
+	Adds symbol dictionary definitions to the global _symbolDictionaryDefinitions list.
+
+	This function is responsible for initializing the available symbol dictionaries that can be used for various locales.
+	It adds definitions for the built-in symbol dictionaries, as well as any symbol dictionaries defined in enabled add-ons.
+
+	The built-in symbol dictionaries include:
+	- "cldr": Unicode Consortium data (including emoji)
+	- "builtin": Built-in symbol dictionary with support for complex symbols
+
+	For each installed add-on, the function checks the add-on's manifest for any defined symbol dictionaries,
+	and adds those to the _symbolDictionaryDefinitions list as well.
+
+	Finally, a "user" symbol dictionary definition is added.
+	"""
+	# Add builtin symbols
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="cldr",
+			path=os.path.join(globalVars.appDir, "locale", "{locale}", "cldr.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
+			# Translators: The name of a symbols dictionary with data from the unicode CLDR.
+			displayName=_("Unicode Consortium data (including emoji)"),
+		),
+	)
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="builtin",
+			path=os.path.join(globalVars.appDir, "locale", "{locale}", "symbols.dic"),
+			source=_SymbolDefinitionSource.BUILTIN,
+			allowComplexSymbols=True,
+			mandatory=True,
+		),
+	)
+
+	# Add add-on symbols
+	import addonHandler
+
+	for addon in addonHandler.getRunningAddons():
+		symbolsDict = addon.manifest.get("symbolDictionaries")
+		if not symbolsDict:
+			continue
+		log.debug(
+			f"Found {len(symbolsDict)} symbol dictionary entries in manifest for add-on {addon.name!r}",
+		)
+		directory = os.path.join(addon.path, "locale", "{locale}")
+		for name, dictConfig in symbolsDict.items():
+			try:
+				definition = SymbolDictionaryDefinition(
+					name=name,
+					path=os.path.join(directory, f"symbols-{name}.dic"),
+					source=addon.name,
+					displayName=dictConfig["displayName"],
+					allowComplexSymbols=False,
+					mandatory=dictConfig["mandatory"],
+				)
+				if not definition.availableLocales:
+					log.error(f"No {name!r} symbol dictionary files found for add-on {addon.name!r}")
+					continue
+			except Exception:
+				log.exception(
+					f"Error while applying custom symbol dictionaries config from addon {addon.name!r}",
+				)
+			else:
+				_symbolDictionaryDefinitions.append(definition)
+
+	# Add user symbols
+	_symbolDictionaryDefinitions.append(
+		SymbolDictionaryDefinition(
+			name="user",
+			path=WritePaths.getSymbolsConfigFile("{locale}"),
+			source=_SymbolDefinitionSource.USER,
+			allowComplexSymbols=False,
+			mandatory=True,
+		),
+	)
+
+
+def initialize():
+	_addSymbolDefinitions()
+	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
+
+
+def terminate():
+	config.post_configProfileSwitch.unregister(handlePostConfigProfileSwitch)
+	clearSpeechSymbols()
+	_symbolDictionaryDefinitions.clear()

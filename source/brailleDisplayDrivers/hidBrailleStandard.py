@@ -4,8 +4,9 @@
 # Copyright (C) 2021 NV Access Limited
 
 from dataclasses import dataclass
-from typing import List, Optional
+from typing import List
 import enum
+import itertools
 import braille
 import inputCore
 from logHandler import log
@@ -90,7 +91,8 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 
 	def __init__(self, port="auto"):
 		super().__init__()
-		self.numCells = 0
+		self.numRows = 1
+		self.numCols = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			if portType != bdDetect.DeviceType.HID:
@@ -103,14 +105,31 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 				continue  # Couldn't connect.
 			if self._dev.usagePage != HID_USAGE_PAGE_BRAILLE:
 				log.debug("Not braille")
+				self._dev.close()
 				continue
 			cellValueCaps = self._findCellValueCaps()
-			if cellValueCaps:
+			if len(cellValueCaps) > 0:
+				if any(x.ReportCount != cellValueCaps[0].ReportCount for x in cellValueCaps):
+					log.warning("Found multi-line display with an irregular shape, ignoring.")
+					self._dev.close()
+					continue
+				self.numRows = len(cellValueCaps)
+				self.numCols = cellValueCaps[0].ReportCount
+				self._maxNumberOfCells = self.numCells
 				self._cellValueCaps = cellValueCaps
-				self.numCells = cellValueCaps.ReportCount
+				if self.numRows == 1:
+					self._numberOfCellsValueCaps = self._findNumberOfCellsValueCaps()
+				elif self._findNumberOfCellsValueCaps():
+					log.warning("Reserved braille cells are not supported on multi-line displays")
 				# A display responded.
-				log.info("Found display with {cells} cells connected via {type} ({port})".format(
-					cells=self.numCells, type=portType, port=port))
+				log.info(
+					"Found display with {rows} rows, {cols} cols connected via {type} ({port})".format(
+						rows=self.numRows,
+						cols=self.numCols,
+						type=portType,
+						port=port,
+					),
+				)
 				break
 			# This device can't be initialized. Move on to the next (if any).
 			self._dev.close()
@@ -120,15 +139,28 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		self._keysDown = set()
 		self._ignoreKeyReleases = False
 
-	def _findCellValueCaps(self) -> Optional[hidpi.HIDP_VALUE_CAPS]:
-		for valueCaps in self._dev.outputValueCaps:
+	def _findCellValueCaps(self) -> list[hidpi.HIDP_VALUE_CAPS]:
+		return [
+			valueCaps
+			for valueCaps in self._dev.outputValueCaps
 			if (
 				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
 				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
-				and valueCaps.u1.NotRange.Usage in (
+				and valueCaps.u1.NotRange.Usage
+				in (
 					BraillePageUsageID.EIGHT_DOT_BRAILLE_CELL,
-					BraillePageUsageID.SIX_DOT_BRAILLE_CELL
+					BraillePageUsageID.SIX_DOT_BRAILLE_CELL,
 				)
+				and valueCaps.ReportCount > 0
+			)
+		]
+
+	def _findNumberOfCellsValueCaps(self) -> hidpi.HIDP_VALUE_CAPS | None:
+		for valueCaps in self._dev.inputValueCaps:
+			if (
+				valueCaps.LinkUsagePage == HID_USAGE_PAGE_BRAILLE
+				and valueCaps.LinkUsage == BraillePageUsageID.BRAILLE_ROW
+				and valueCaps.u1.NotRange.Usage == BraillePageUsageID.NUMBER_OF_BRAILLE_CELLS
 				and valueCaps.ReportCount > 0
 			):
 				return valueCaps
@@ -154,11 +186,17 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 			if buttonCaps.IsRange:
 				r = buttonCaps.u1.Range
 				for index in range(r.DataIndexMin, r.DataIndexMax + 1):
-					capsByDataIndex[index] = ButtonCapsInfo(buttonCaps, relativeIndexInCollection=relativeIndexInCollection)
+					capsByDataIndex[index] = ButtonCapsInfo(
+						buttonCaps,
+						relativeIndexInCollection=relativeIndexInCollection,
+					)
 			else:
 				nr = buttonCaps.u1.NotRange
 				index = nr.DataIndex
-				capsByDataIndex[index] = ButtonCapsInfo(buttonCaps, relativeIndexInCollection=relativeIndexInCollection)
+				capsByDataIndex[index] = ButtonCapsInfo(
+					buttonCaps,
+					relativeIndexInCollection=relativeIndexInCollection,
+				)
 		return capsByDataIndex
 
 	def terminate(self):
@@ -175,6 +213,11 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 		for dataItem in report.getDataItems():
 			if dataItem.DataIndex in self._inputButtonCapsByDataIndex and dataItem.u1.On:
 				keys.append(dataItem.DataIndex)
+			elif (
+				self._numberOfCellsValueCaps
+				and dataItem.DataIndex == self._numberOfCellsValueCaps.u1.NotRange.DataIndex
+			):
+				self.numCells = dataItem.u1.RawValue
 		if len(keys) > len(self._keysDown):
 			# Press. This begins a new key combination.
 			self._ignoreKeyReleases = False
@@ -195,73 +238,77 @@ class HidBrailleDriver(braille.BrailleDisplayDriver):
 
 	def display(self, cells: List[int]):
 		# cells will already be padded up to numCells.
-		cellBytes = b"".join(intToByte(cell) for cell in cells)
-		report = hwIo.hid.HidOutputReport(self._dev, reportID=self._cellValueCaps.ReportID)
-		report.setUsageValueArray(
-			HID_USAGE_PAGE_BRAILLE,
-			self._cellValueCaps.LinkCollection,
-			self._cellValueCaps.u1.NotRange.Usage,
-			cellBytes
-		)
-		self._dev.write(report.data)
+		padded_cells = cells + [0] * (self._maxNumberOfCells - len(cells))
+		cellBytes = b"".join(intToByte(cell) for cell in padded_cells)
+		# Iterate through the output reports
+		for reportID, valueCaps in itertools.groupby(self._cellValueCaps, lambda x: x.ReportID):
+			report = hwIo.hid.HidOutputReport(self._dev, reportID=reportID)
+			# Iterate through each row in this report
+			for valueCap in valueCaps:
+				# Take the cells for this row from the front of the cellBytes list
+				rowCellBytes = cellBytes[: valueCap.ReportCount]
+				cellBytes = cellBytes[valueCap.ReportCount :]
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": (
-				"br(hidBrailleStandard):panLeft",
-				"br(hidBrailleStandard):rockerUp",
-			),
-			"braille_scrollForward": (
-				"br(hidBrailleStandard):panRight",
-				"br(hidBrailleStandard):rockerDown",
-			),
-			"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
-			"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
-			"kb:upArrow": (
-				"br(hidBrailleStandard):joystickUp",
-				"br(hidBrailleStandard):dpadUp",
-				"br(hidBrailleStandard):space+dot1",
-			),
-			"kb:downArrow": (
-				"br(hidBrailleStandard):joystickDown",
-				"br(hidBrailleStandard):dpadDown",
-				"br(hidBrailleStandard):space+dot4",
-			),
-			"kb:leftArrow": (
-				"br(hidBrailleStandard):space+dot3",
-				"br(hidBrailleStandard):joystickLeft",
-				"br(hidBrailleStandard):dpadLeft",
-			),
-			"kb:rightArrow": (
-				"br(hidBrailleStandard):space+dot6",
-				"br(hidBrailleStandard):joystickRight",
-				"br(hidBrailleStandard):dpadRight",
-			),
-			"showGui": (
-				"br(hidBrailleStandard):space+dot1+dot3+dot4+dot5",
-			),
-			"kb:shift+tab": ("br(hidBrailleStandard):space+dot1+dot3",),
-			"kb:tab": ("br(hidBrailleStandard):space+dot4+dot6",),
-			"kb:alt": ("br(hidBrailleStandard):space+dot1+dot3+dot4",),
-			"kb:escape": ("br(hidBrailleStandard):space+dot1+dot5",),
-			"kb:enter": (
-				"br(hidBrailleStandard):joystickCenter",
-				"br(hidBrailleStandard):dpadCenter",
-			),
-			"kb:windows+d": (
-				"br(hidBrailleStandard):Space+dot1+dot4+dot5",
-			),
-			"kb:windows": ("br(hidBrailleStandard):space+dot3+dot4",),
-			"kb:alt+tab": ("br(hidBrailleStandard):space+dot2+dot3+dot4+dot5",),
-			"sayAll": (
-				"br(hidBrailleStandard):Space+dot1+dot2+dot3+dot4+dot5+dot6",
-			),
+				report.setUsageValueArray(
+					HID_USAGE_PAGE_BRAILLE,
+					valueCap.LinkCollection,
+					valueCap.u1.NotRange.Usage,
+					rowCellBytes,
+				)
+			self._dev.write(report.data)
+
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": (
+					"br(hidBrailleStandard):panLeft",
+					"br(hidBrailleStandard):rockerUp",
+				),
+				"braille_scrollForward": (
+					"br(hidBrailleStandard):panRight",
+					"br(hidBrailleStandard):rockerDown",
+				),
+				"braille_routeTo": ("br(hidBrailleStandard):routerSet1_routerKey",),
+				"braille_toggleTether": ("br(hidBrailleStandard):up+down",),
+				"kb:upArrow": (
+					"br(hidBrailleStandard):joystickUp",
+					"br(hidBrailleStandard):dpadUp",
+					"br(hidBrailleStandard):space+dot1",
+				),
+				"kb:downArrow": (
+					"br(hidBrailleStandard):joystickDown",
+					"br(hidBrailleStandard):dpadDown",
+					"br(hidBrailleStandard):space+dot4",
+				),
+				"kb:leftArrow": (
+					"br(hidBrailleStandard):space+dot3",
+					"br(hidBrailleStandard):joystickLeft",
+					"br(hidBrailleStandard):dpadLeft",
+				),
+				"kb:rightArrow": (
+					"br(hidBrailleStandard):space+dot6",
+					"br(hidBrailleStandard):joystickRight",
+					"br(hidBrailleStandard):dpadRight",
+				),
+				"showGui": ("br(hidBrailleStandard):space+dot1+dot3+dot4+dot5",),
+				"kb:shift+tab": ("br(hidBrailleStandard):space+dot1+dot3",),
+				"kb:tab": ("br(hidBrailleStandard):space+dot4+dot6",),
+				"kb:alt": ("br(hidBrailleStandard):space+dot1+dot3+dot4",),
+				"kb:escape": ("br(hidBrailleStandard):space+dot1+dot5",),
+				"kb:enter": (
+					"br(hidBrailleStandard):joystickCenter",
+					"br(hidBrailleStandard):dpadCenter",
+				),
+				"kb:windows+d": ("br(hidBrailleStandard):Space+dot1+dot4+dot5",),
+				"kb:windows": ("br(hidBrailleStandard):space+dot3+dot4",),
+				"kb:alt+tab": ("br(hidBrailleStandard):space+dot2+dot3+dot4+dot5",),
+				"sayAll": ("br(hidBrailleStandard):Space+dot1+dot2+dot3+dot4+dot5+dot6",),
+			},
 		},
-	})
+	)
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-
 	source = HidBrailleDriver.name
 
 	def __init__(self, driver, dataIndices):
@@ -284,7 +331,11 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			linkUsagePage = buttonCaps.LinkUsagePage
 			linkUsageID = buttonCaps.LinkUsage
 			if usagePage == HID_USAGE_PAGE_BRAILLE and isBrailleInput:
-				if BraillePageUsageID.BRAILLE_KEYBOARD_DOT_1 <= usageID <= BraillePageUsageID.BRAILLE_KEYBOARD_DOT_8:
+				if (
+					BraillePageUsageID.BRAILLE_KEYBOARD_DOT_1
+					<= usageID
+					<= BraillePageUsageID.BRAILLE_KEYBOARD_DOT_8
+				):
 					self.dots |= 1 << (usageID - BraillePageUsageID.BRAILLE_KEYBOARD_DOT_1)
 				elif usageID in (
 					BraillePageUsageID.BRAILLE_KEYBOARD_SPACE,
@@ -297,10 +348,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				isBrailleInput = False
 				self.dots = 0
 				self.space = False
-			if (
-				usagePage == HID_USAGE_PAGE_BRAILLE
-				and usageID == BraillePageUsageID.ROUTER_KEY
-			):
+			if usagePage == HID_USAGE_PAGE_BRAILLE and usageID == BraillePageUsageID.ROUTER_KEY:
 				self.routingIndex = buttonCapsInfo.relativeIndexInCollection
 				# Prefix the gesture name with the specific routing collection name (E.g. routerSet1)
 				namePrefix = self._usageIDToGestureName(linkUsagePage, linkUsageID)
@@ -323,12 +371,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			return f"brailleUsage{usageID}"
 		name = rawName.lower()
 		# Remove braille_keyboard or braille_ from the beginning of the name
-		if name.startswith('braille_keyboard_'):
-			name = name[len('braille_keyboard_'):]
-		elif name.startswith('braille_'):
-			name = name[len('braille_'):]
+		if name.startswith("braille_keyboard_"):
+			name = name[len("braille_keyboard_") :]
+		elif name.startswith("braille_"):
+			name = name[len("braille_") :]
 		# Capitalize the start of all words except the first
-		wordList = name.split('_')
+		wordList = name.split("_")
 		for index in range(1, len(wordList)):
 			wordList[index] = wordList[index].title()
 		# Join the words together as  camelcase.

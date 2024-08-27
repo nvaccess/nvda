@@ -39,7 +39,6 @@ noCalculatorEntryAnnouncements = [
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	_shouldAnnounceResult = False
 	# Name change says the same thing multiple times for some items.
 	_resultsCache = ""
@@ -65,10 +64,7 @@ class AppModule(appModuleHandler.AppModule):
 		):
 			self._shouldAnnounceResult = False
 		# For the rest:
-		elif (
-			obj.UIAAutomationId not in noCalculatorEntryAnnouncements
-			and obj.name != self._resultsCache
-		):
+		elif obj.UIAAutomationId not in noCalculatorEntryAnnouncements and obj.name != self._resultsCache:
 			# For unit conversion, both name change and notification events are fired,
 			# although UIA notification event presents much better messages.
 			# For date calculation, live region change event is also fired for difference between dates.
@@ -96,7 +92,10 @@ class AppModule(appModuleHandler.AppModule):
 			# Locate results via UIA tree traversal.
 			# Redesigned in 2019 due to introduction of "always on top" i.e. compact overlay mode.
 			clientObject = UIAHandler.handler.clientObject
-			condition = clientObject.createPropertyCondition(UIAHandler.UIA_ClassNamePropertyId, "LandmarkTarget")
+			condition = clientObject.createPropertyCondition(
+				UIAHandler.UIA_ClassNamePropertyId,
+				"LandmarkTarget",
+			)
 			walker = clientObject.createTreeWalker(condition)
 			uiItemWindow = clientObject.elementFromHandle(obj.windowHandle)
 			try:
@@ -132,7 +131,7 @@ class AppModule(appModuleHandler.AppModule):
 		"kb:numpadEnter",
 		"kb:escape",
 		"kb:delete",
-		"kb:numpadDelete"
+		"kb:numpadDelete",
 	)
 
 	@scriptHandler.script(gestures=_calculatorResultGestures)
@@ -156,14 +155,20 @@ class AppModule(appModuleHandler.AppModule):
 				queueHandler.queueFunction(queueHandler.eventQueue, ui.message, focus.name)
 			else:
 				resultsScreen = api.getForegroundObject().children[1].lastChild
-				if isinstance(resultsScreen, UIA) and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget":
+				if (
+					isinstance(resultsScreen, UIA)
+					and resultsScreen.UIAElement.cachedClassName == "LandmarkTarget"
+				):
 					# And no, do not allow focus to move.
-					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, resultsScreen.firstChild.name)
+					queueHandler.queueFunction(
+						queueHandler.eventQueue,
+						ui.message,
+						resultsScreen.firstChild.name,
+					)
 
 	# Handle both number row and numpad with num lock on.
 	@scriptHandler.script(
-		gestures=[f"kb:{i}" for i in range(10)]
-		+ [f"kb:numLockNumpad{i}" for i in range(10)]
+		gestures=[f"kb:{i}" for i in range(10)] + [f"kb:numLockNumpad{i}" for i in range(10)],
 	)
 	def script_doNotAnnounceCalculatorResults(self, gesture):
 		gesture.send()

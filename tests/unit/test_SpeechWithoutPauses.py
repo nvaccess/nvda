@@ -15,25 +15,21 @@ from logHandler import log
 
 
 class SpeechSpy:
-	"""Simple class to collect SpeechSequences as they are 'spoken'
-	"""
-	spokenSequences: List[
-		SpeechSequence
-	]
+	"""Simple class to collect SpeechSequences as they are 'spoken'"""
+
+	spokenSequences: List[SpeechSequence]
 
 	def __init__(self):
 		self.spokenSequences = []
 
 	def speak(
-			self,
-			speechSeqence: SpeechSequence
+		self,
+		speechSeqence: SpeechSequence,
 	):
 		self.spokenSequences.append(speechSeqence)
 
 
-_spokenSequences: List[
-	SpeechSequence
-] = []
+_spokenSequences: List[SpeechSequence] = []
 
 
 def speak(seq: SpeechSequence):
@@ -41,7 +37,7 @@ def speak(seq: SpeechSequence):
 
 
 def resetSpeakDest():
-	""" Save calls to speak.
+	"""Save calls to speak.
 	:return the new destination for the speak function
 	"""
 	global _spokenSequences
@@ -50,8 +46,8 @@ def resetSpeakDest():
 
 
 def old_speakWithoutPauses(  # noqa: C901
-		speechSequence: SpeechSequence,
-		detectBreaks: bool = True
+	speechSequence: SpeechSequence,
+	detectBreaks: bool = True,
 ) -> bool:
 	"""
 	Speaks the speech sequences given over multiple calls, only sending to the synth at acceptable phrase or
@@ -63,7 +59,9 @@ def old_speakWithoutPauses(  # noqa: C901
 	lastStartIndex = 0
 	# Break on all explicit break commands
 	if detectBreaks and speechSequence:
-		log.debug(f"start with seq: {speechSequence}\n and pending: {speakWithoutPauses._pendingSpeechSequence}")
+		log.debug(
+			f"start with seq: {speechSequence}\n and pending: {speakWithoutPauses._pendingSpeechSequence}",
+		)
 		sequenceLen = len(speechSequence)
 		spoke = False
 		for index in range(sequenceLen):
@@ -125,11 +123,11 @@ old_speakWithoutPauses._pendingSpeechSequence = []
 
 
 class TestOldImplVsNew(unittest.TestCase):
-	"""A test that verifies that the new implementation of SpeechWithoutPauses matches the old behavior.
-	"""
+	"""A test that verifies that the new implementation of SpeechWithoutPauses matches the old behavior."""
+
 	def test_stopsSpeakingCase(self):
 		callbackCommand = CallbackCommand(name="dummy", callback=None)
-		lang_en = LangChangeCommand('en')
+		lang_en = LangChangeCommand("en")
 		lang_default = LangChangeCommand(None)
 
 		def createInputSequences():
@@ -140,34 +138,34 @@ class TestOldImplVsNew(unittest.TestCase):
 				[
 					callbackCommand,
 					lang_en,
-					'The purpose of the wxPyWiki is to provide documentation, examples, how-tos, etc. for helping people ',
-					lang_default
+					"The purpose of the wxPyWiki is to provide documentation, examples, how-tos, etc. for helping people ",
+					lang_default,
 				],
 				[
 					callbackCommand,
 					lang_en,
-					'learn, understand and use ',
-					lang_default
+					"learn, understand and use ",
+					lang_default,
 				],
 				[
 					callbackCommand,
-					'visited',
-					'link',
-					'',
+					"visited",
+					"link",
+					"",
 					lang_en,
-					'wxPython',
+					"wxPython",
 					lang_default,
 					lang_en,
-					'. Anything that falls within those guidelines is fair game. ',
-					lang_default
+					". Anything that falls within those guidelines is fair game. ",
+					lang_default,
 				],
 				[
 					EndUtteranceCommand(),
 					callbackCommand,
 					lang_en,
-					'Note: To get to the main wxPython site click ',
-					lang_default
-				]
+					"Note: To get to the main wxPython site click ",
+					lang_default,
+				],
 			]
 
 		expectedSpeech = repr(
@@ -175,37 +173,38 @@ class TestOldImplVsNew(unittest.TestCase):
 				[
 					callbackCommand,
 					lang_en,
-					'The purpose of the wxPyWiki is to provide documentation, examples, how-tos, etc. ',
+					"The purpose of the wxPyWiki is to provide documentation, examples, how-tos, etc. ",
 				],
-				'spoke:True',
-				'spoke:False',
+				"spoke:True",
+				"spoke:False",
 				[
 					lang_en,
-					'for helping people ',
+					"for helping people ",
 					lang_default,
 					callbackCommand,
 					lang_en,
-					'learn, understand and use ',
+					"learn, understand and use ",
 					lang_default,
 					callbackCommand,
-					'visited',
-					'link',
-					'',
+					"visited",
+					"link",
+					"",
 					lang_en,
-					'wxPython',
+					"wxPython",
 					lang_default,
 					lang_en,
-					'. Anything that falls within those guidelines is fair game. '
+					". Anything that falls within those guidelines is fair game. ",
 				],
-				'spoke:True',
+				"spoke:True",
 				[
 					# this sequence seems incorrect, however it persists the "old" behavior:
 					# - it is missing a callback command
 					# - it has no speech, just a meaningless pair of lang change commands
-					lang_en, lang_default
+					lang_en,
+					lang_default,
 				],
-				'spoke:False'
-			]
+				"spoke:False",
+			],
 		)
 
 		oldSpeech = resetSpeakDest()
@@ -213,7 +212,9 @@ class TestOldImplVsNew(unittest.TestCase):
 			spoke = old_speakWithoutPauses(seq)
 			oldSpeech.append(f"spoke:{spoke}")
 
-		self.maxDiff = 5000  # text comparison is quite long, and it is handy to be able to see it in the output.
+		self.maxDiff = (
+			5000  # text comparison is quite long, and it is handy to be able to see it in the output.
+		)
 		self.assertMultiLineEqual(repr(oldSpeech), expectedSpeech, "generated old speech vs expected")
 
 		newSpeech = resetSpeakDest()

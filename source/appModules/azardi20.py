@@ -1,8 +1,8 @@
 # -*- coding: UTF-8 -*-
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2016-2017 NV Access Limited, Noelia Ruiz Martínez
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2016-2017 NV Access Limited, Noelia Ruiz Martínez
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 
 import appModuleHandler
 import controlTypes
@@ -11,9 +11,10 @@ import api
 from NVDAObjects.IAccessible.mozilla import Document
 from NVDAObjects.IAccessible.sysTreeView32 import TreeViewItem
 
-class AzardiDocument(Document):
 
+class AzardiDocument(Document):
 	role = controlTypes.Role.DOCUMENT
+
 
 class AzardiTreeViewItem(TreeViewItem):
 	"""Scripts to perform common tasks for the selected book using the keyboard, so that mouse commands aren't required."""
@@ -34,8 +35,8 @@ class AzardiTreeViewItem(TreeViewItem):
 		"kb:applications": "contextMenu",
 	}
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if obj.role == controlTypes.Role.GROUPING or obj.role == controlTypes.Role.FRAME:
 			clsList.insert(0, AzardiDocument)

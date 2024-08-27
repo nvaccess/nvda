@@ -10,7 +10,7 @@
     1. Automatically by Ease of Access after signing in to Windows
 1. For an installed copy, portable copy, installer:
     1. An exiting instance of NVDA starting a new process (see shutting down procedures)
-    1. By running the exe. 
+    1. By running the exe.
         - This can be triggered by a user or external process such as an existing NVDA instance
         - test: `startupShutdownNVDA.Starts`
 1. For source: eg runnvda.bat
@@ -29,7 +29,7 @@
     - test: `startupShutdownNVDA.Restarts on crash, Restarts on braille crash`
 1. An unhandled crash (terminates unsafely)
     - requires manual testing/confirmation
-1. An external command which kills the process (terminates unsafely) 
+1. An external command which kills the process (terminates unsafely)
 1. Windows shutting down (terminates unsafely) (uses `wx.EVT_END_SESSION`)
 
 ## Manual testing

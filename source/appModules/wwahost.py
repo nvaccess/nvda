@@ -18,7 +18,9 @@ def getAppNameFromHost(processId):
 	# Some apps that come with Windows 8 and 8.1 are hosted by wwahost.exe.
 	# App modules for these are named after the hosted app name.
 	processHandle = winKernel.openProcess(
-		winKernel.SYNCHRONIZE | winKernel.PROCESS_QUERY_INFORMATION, False, processId
+		winKernel.SYNCHRONIZE | winKernel.PROCESS_QUERY_INFORMATION,
+		False,
+		processId,
 	)
 	length = ctypes.c_uint()
 	winKernel.kernel32.GetApplicationUserModelId(processHandle, ctypes.byref(length), None)
@@ -34,7 +36,7 @@ def getAppNameFromHost(processId):
 	# Convert this into lowercase to make the file name consistent with other NVDA app modules.
 	return appModel.value.split("!")[-1].lower()
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	# WWAHost app content is treated as part of an app, not a browse mode document.
 	disableBrowseModeByDefault = True

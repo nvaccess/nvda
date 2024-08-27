@@ -8,7 +8,6 @@ This module contains the instructions that operate on all object types.
 Including to set a value, or compare two values.
 """
 
-
 from __future__ import annotations
 from dataclasses import dataclass
 from .. import lowLevel
@@ -40,17 +39,17 @@ class Compare(_TypedInstruction):
 		localRight = registers[self.right.operandId]
 		match self.comparisonType:
 			case lowLevel.ComparisonType.Equal:
-				localResult = (localLeft == localRight)
+				localResult = localLeft == localRight
 			case lowLevel.ComparisonType.NotEqual:
-				localResult = (localLeft != localRight)
+				localResult = localLeft != localRight
 			case lowLevel.ComparisonType.LessThan:
-				localResult = (localLeft < localRight)
+				localResult = localLeft < localRight
 			case lowLevel.ComparisonType.LessThanOrEqual:
-				localResult = (localLeft <= localRight)
+				localResult = localLeft <= localRight
 			case lowLevel.ComparisonType.GreaterThan:
-				localResult = (localLeft > localRight)
+				localResult = localLeft > localRight
 			case lowLevel.ComparisonType.GreaterThanOrEqual:
-				localResult = (localLeft >= localRight)
+				localResult = localLeft >= localRight
 			case _:
 				raise NotImplementedError(f"Unknown comparison type {self.comparisonType}")
 		registers[self.result.operandId] = localResult

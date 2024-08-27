@@ -55,7 +55,7 @@ _brailleGui: Optional[BrailleViewerFrame] = None
 # Callback definition: Callable(created: bool) -> None
 #   created - True for created/shown, False for hidden/destroyed.
 postBrailleViewerToolToggledAction = extensionPoints.Action()
-DEFAULT_NUM_CELLS = config.conf['brailleViewer']['defaultCellCount']
+DEFAULT_NUM_CELLS = config.conf["brailleViewer"]["defaultCellCount"]
 
 
 def isBrailleViewerActive() -> bool:
@@ -68,6 +68,7 @@ def destroyBrailleViewer():
 	_brailleGui = None  # protect against re-entrance
 	if d is not None:
 		import braille  # imported late to avoid a circular import.
+
 		if not d.isDestroyed:
 			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
 			assert updateBrailleDisplayedUnregistered
@@ -77,8 +78,7 @@ def destroyBrailleViewer():
 
 
 def _onGuiDestroyed():
-	""" Used as a callback from L{BrailleViewerFrame}, lets us know that the GUI initiated a destruction.
-	"""
+	"""Used as a callback from L{BrailleViewerFrame}, lets us know that the GUI initiated a destruction."""
 	# In case this destruction wasn't initiated by L{destroyBrailleViewer}, do any necessary clean up.
 	# the destruction may have been triggered by alt+F4 on the window,
 	# or selecting close from the taskbar jumplist.
@@ -97,6 +97,7 @@ def createBrailleViewerTool():
 		raise RuntimeError("Can not initialise the BrailleViewerGui: gui.mainFrame not yet initialised")
 
 	import braille  # imported late to avoid a circular import.
+
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
@@ -108,7 +109,7 @@ def createBrailleViewerTool():
 
 	_brailleGui = BrailleViewerFrame(
 		braille.handler.displaySize,
-		_onGuiDestroyed
+		_onGuiDestroyed,
 	)
 	braille.pre_writeCells.register(_brailleGui.updateBrailleDisplayed)
 	postBrailleViewerToolToggledAction.notify(created=True)

@@ -14,7 +14,7 @@ import sys
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
 virtualEnv = os.getenv("VIRTUAL_ENV")
-if not virtualEnv or not os.path.isdir(virtualEnv): 
+if not virtualEnv or not os.path.isdir(virtualEnv):
 	print(
 		"Error: SCons cannot detect the NVDA build system Python virtual environment.\n"
 		"SCons must be executed using scons.bat in the root of this repository."
@@ -37,46 +37,53 @@ if (
 	or installedPythonMinor != requiredPythonMinor
 ):
 	unsupportedPythonMsg = (
-		("This script is started with Python %s.%s %s, however to build NVDA you have to use Python %s.%s %s.\n"
+		"This script is started with Python %s.%s %s, however to build NVDA you have to use Python %s.%s %s.\n"
 		"Please install the needed version of Python and launch SCons again, or if you have multiple "
-		"versions of Python installed start this script with required version explicitly.")
+		"versions of Python installed start this script with required version explicitly."
 	)
-	raise RuntimeError(unsupportedPythonMsg %(
-		installedPythonMajor,
-		installedPythonMinor,
-		installedPythonArchitecture,
-		requiredPythonMajor,
-		requiredPythonMinor,
-		requiredPythonArchitecture
+	raise RuntimeError(
+		unsupportedPythonMsg
+		% (
+			installedPythonMajor,
+			installedPythonMinor,
+			installedPythonArchitecture,
+			requiredPythonMajor,
+			requiredPythonMinor,
+			requiredPythonArchitecture,
+		)
 	)
-	)
-sourceEnvPath = os.path.abspath(os.path.join(Dir('.').srcnode().path, "source"))
+sourceEnvPath = os.path.abspath(os.path.join(Dir(".").srcnode().path, "source"))
 sys.path.append(sourceEnvPath)
-import sourceEnv
-sys.path.remove(sourceEnvPath)
-import time
-import importlib.util
-import winreg
+import sourceEnv  # noqa: E402
 
-def recursiveCopy(env,targetDir,sourceDir):
-	targets=[]
-	for topDir,subDirs,files in os.walk(sourceDir.abspath):
-		relTopDir=os.path.relpath(topDir,sourceDir.abspath)
+sys.path.remove(sourceEnvPath)
+import time  # noqa: E402
+import importlib.util  # noqa: E402
+import winreg  # noqa: E402
+
+
+def recursiveCopy(env, targetDir, sourceDir):
+	targets = []
+	for topDir, subDirs, files in os.walk(sourceDir.abspath):
+		relTopDir = os.path.relpath(topDir, sourceDir.abspath)
 		for f in files:
-			fNode=targetDir.Dir(relTopDir).File(f)
-			env.Command(fNode,Dir(topDir).File(f),Copy('$TARGET','$SOURCE'))
+			fNode = targetDir.Dir(relTopDir).File(f)
+			env.Command(fNode, Dir(topDir).File(f), Copy("$TARGET", "$SOURCE"))
 			targets.append(fNode)
-		if len(files)==0:
-			dNode=targetDir.Dir(relTopDir)
-			env.Command(dNode,Dir(topDir),Mkdir('$TARGET'))
+		if len(files) == 0:
+			dNode = targetDir.Dir(relTopDir)
+			env.Command(dNode, Dir(topDir), Mkdir("$TARGET"))
 			targets.append(dNode)
 	return targets
 
+
 # Import NVDA's versionInfo module.
-import gettext
+import gettext  # noqa: E402
+
 gettext.install("nvda")
 sys.path.append("source")
-import versionInfo
+import versionInfo  # noqa: E402
+
 del sys.path[-1]
 
 makensis = os.path.abspath(os.path.join("include", "nsis", "NSIS", "makensis.exe"))
@@ -90,57 +97,109 @@ vars.Add("version", "The version of this build", versionInfo.version)
 vars.Add("version_build", "A unique number for this build.", "0")
 vars.Add(BoolVariable("release", "Whether this is a release version", False))
 vars.Add("publisher", "The publisher of this build", versionInfo.publisher)
-vars.Add("updateVersionType", "The version type for which to check for updates", versionInfo.updateVersionType or "")
-vars.Add(PathVariable("certFile", "The certificate file with which to sign executables", "",
-	lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env)))
+vars.Add(
+	"updateVersionType",
+	"The version type for which to check for updates",
+	versionInfo.updateVersionType or "",
+)
+vars.Add(
+	PathVariable(
+		"certFile",
+		"The certificate file with which to sign executables",
+		"",
+		lambda key, val, env: not val or PathVariable.PathIsFile(key, val, env),
+	)
+)
 vars.Add("certPassword", "The password for the private key in the signing certificate", "")
-vars.Add("certTimestampServer", "The URL of the timestamping server to use to timestamp authenticode signatures", "")
+vars.Add(
+	"certTimestampServer",
+	"The URL of the timestamping server to use to timestamp authenticode signatures",
+	"",
+)
 vars.Add("apiSigningToken", "The API key for the signing service", "")
-vars.Add(PathVariable("outputDir", "The directory where the final built archives and such will be placed", "output",PathVariable.PathIsDirCreate))
-vars.Add(ListVariable("nvdaHelperDebugFlags", "a list of debugging features you require", 'none', ["debugCRT","RTC","analyze"]))
-vars.Add(EnumVariable('nvdaHelperLogLevel','The level of logging you wish to see, lower is more verbose','15',allowed_values=[str(x) for x in range(60)]))
+vars.Add(
+	PathVariable(
+		"outputDir",
+		"The directory where the final built archives and such will be placed",
+		"output",
+		PathVariable.PathIsDirCreate,
+	)
+)
+vars.Add(
+	ListVariable(
+		"nvdaHelperDebugFlags",
+		"a list of debugging features you require",
+		"none",
+		["debugCRT", "RTC", "analyze"],
+	)
+)
+vars.Add(
+	EnumVariable(
+		"nvdaHelperLogLevel",
+		"The level of logging you wish to see, lower is more verbose",
+		"15",
+		allowed_values=[str(x) for x in range(60)],
+	)
+)
 
-#Base environment for this and sub sconscripts
-env = Environment(variables=vars,HOST_ARCH='x86',tools=[
-	"textfile",
-	"gettextTool",
-	"md2html",
-	"doxygen",
-	"recursiveInstall",
-	"m4",
-])
+# Base environment for this and sub sconscripts
+env = Environment(
+	variables=vars,
+	HOST_ARCH="x86",
+	tools=[
+		"textfile",
+		"gettextTool",
+		"md2html",
+		"doxygen",
+		"recursiveInstall",
+		"m4",
+	],
+)
 
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
-env.Decider('MD5-timestamp')
+env.Decider("MD5-timestamp")
 
+AddOption(
+	"--all-cores",
+	action="store_true",
+	dest="all_cores",
+	default=False,
+	help="Use the maximum number of available processor cores",
+)
 # Warn to run the build on multiple threads so it runs faster
-numJobs = env.GetOption('num_jobs')
 numCores = multiprocessing.cpu_count()
-if numJobs < numCores:
-	print(
-		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+if allCores := GetOption("all_cores"):
+	SetOption("num_jobs", numCores)
+if (numJobs := GetOption("num_jobs")) < numCores:
+	msg = "Warning: "
+	if allCores:
+		msg += "Providing both the '--all-cores' and '-j'/'--num-jobs' parameters is not supported. "
+	msg += (
+		f"Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
-		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
+		"Running SCONS with parameter '--all-cores' will automatically pick all available cores. "
 	)
+	print(msg)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
 
-#Make our recursiveCopy function available to any script using this environment
+# Make our recursiveCopy function available to any script using this environment
 env.AddMethod(recursiveCopy)
 
-#Check for any unknown variables
-unknown=vars.UnknownVariables().keys()
-if len(unknown)>0:
-	print("Unknown commandline variables: %s"%unknown)
+# Check for any unknown variables
+unknown = vars.UnknownVariables().keys()
+if len(unknown) > 0:
+	print("Unknown commandline variables: %s" % unknown)
 	Exit(1)
 
-#Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
-env['ENV']['PYTHONPATH']=";".join(sourceEnv.PYTHON_DIRS)
+# Ensure that any Python subprocesses (such as for py2exe) can find our Python directory in miscDeps
+env["ENV"]["PYTHONPATH"] = ";".join(sourceEnv.PYTHON_DIRS)
 
-env["copyright"]=versionInfo.copyright
-env['version_year']=versionInfo.version_year
-env['version_major']=versionInfo.version_major
-env['version_minor']=versionInfo.version_minor
+env["copyright"] = versionInfo.copyright
+env["version_year"] = versionInfo.version_year
+env["version_major"] = versionInfo.version_major
+env["version_minor"] = versionInfo.version_minor
 version = env["version"]
 version_build = env["version_build"]
 release = env["release"]
@@ -149,113 +208,133 @@ certFile = env["certFile"]
 certPassword = env["certPassword"]
 certTimestampServer = env["certTimestampServer"]
 apiSigningToken = env["apiSigningToken"]
-userDocsDir=Dir('user_docs')
+userDocsDir = Dir("user_docs")
 sourceDir = env.Dir("source")
-Export('sourceDir')
-clientDir=Dir('extras/controllerClient')
-Export('clientDir')
-sourceLibDir=sourceDir.Dir('lib')
-Export('sourceLibDir')
-sourceTypelibDir=sourceDir.Dir('typelibs')
-Export('sourceTypelibDir')
-sourceLibDir64=sourceDir.Dir('lib64')
-Export('sourceLibDir64')
-sourceLibDirArm64=sourceDir.Dir('libArm64')
-Export('sourceLibDirArm64')
+Export("sourceDir")
+clientDir = Dir("extras/controllerClient")
+Export("clientDir")
+sourceLibDir = sourceDir.Dir("lib")
+Export("sourceLibDir")
+sourceTypelibDir = sourceDir.Dir("typelibs")
+Export("sourceTypelibDir")
+sourceLibDir64 = sourceDir.Dir("lib64")
+Export("sourceLibDir64")
+sourceLibDirArm64 = sourceDir.Dir("libArm64")
+Export("sourceLibDirArm64")
 buildDir = Dir("build")
 outFilePrefix = "nvda{type}_{version}".format(type="" if release else "_snapshot", version=version)
-Export('outFilePrefix')
-outputDir=Dir(env['outputDir'])
-Export('outputDir')
+Export("outFilePrefix")
+outputDir = Dir(env["outputDir"])
+Export("outputDir")
 
-assert not (apiSigningToken and certFile), "Cannot specify signing with both API token (cloud) and local certificate"
+assert not (
+	apiSigningToken and certFile
+), "Cannot specify signing with both API token (cloud) and local certificate"
 if apiSigningToken:
-	# Code signing with SignPath HSM 
+	# Code signing with SignPath HSM
 	def signExecApi(target, source, env):
 		if len(target) > 1:
 			print(f"Iterating through {len(target)} files passed to signExecApi")
-		retval = 1 # error value
+		retval = 1  # error value
 		for targetFile in target:
 			if (abspath := targetFile.abspath).endswith((".exe", ".dll")):
 				ps_cmd = f"powershell -File appveyor\scripts\sign.ps1 -ApiToken {apiSigningToken} -FileToSign {abspath}"
 				if (retval := env.Execute(ps_cmd, shell=True)) != 0:
 					print(f"Error signing file: {abspath}")
 		return retval
+
 	# Export via scons environment so other libraries can be signed
 	env["signExec"] = signExecApi
 elif certFile:
 	# Local code signing with a certFile
-	def signExecCert(target,source,env):
-		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages 
+	def signExecCert(target, source, env):
+		# we encrypt with SHA256 as this is the minimum required by the Windows Store for appx packages
 		signExecCmd = ["signtool", "sign", "/fd", "SHA256", "/f", certFile]
 		if certPassword:
 			signExecCmd.extend(("/p", certPassword))
 		if certTimestampServer:
 			signExecCmd.extend(("/tr", certTimestampServer, "/td", "SHA256"))
 		print([str(x) for x in target])
-		# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try. 
-		res=0
+		# #3795: signtool can quite commonly fail with timestamping, so allow it to try up to 3 times with a 1 second delay between each try.
+		res = 0
 		for count in range(3):
-			res=env.Execute([signExecCmd+[target[0].abspath]])
+			res = env.Execute([signExecCmd + [target[0].abspath]])
 			if not res:
-				return 0 # success
+				return 0  # success
 			time.sleep(1)
-		return res # failed
-	#Export via scons environment so other libraries can be signed
-	env["signExec"] = signExecCert	
+		return res  # failed
 
-#architecture-specific environments
-archTools=['default','midl','msrpc']
-env32=env.Clone(TARGET_ARCH='x86',tools=archTools)
-env64=env.Clone(TARGET_ARCH='x86_64',tools=archTools)
-envArm64=env.Clone(TARGET_ARCH='arm64',tools=archTools)
+	# Export via scons environment so other libraries can be signed
+	env["signExec"] = signExecCert
+
+# architecture-specific environments
+archTools = ["default", "midl", "msrpc"]
+env32 = env.Clone(TARGET_ARCH="x86", tools=archTools)
+env64 = env.Clone(TARGET_ARCH="x86_64", tools=archTools)
+envArm64 = env.Clone(TARGET_ARCH="arm64", tools=archTools)
 # Hack around odd bug where some tool [after] msvc states that static and shared objects are different
-env32['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
-env64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
-envArm64['STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME'] = 1
+env32["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
+env64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
+envArm64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 
-env=env32
+env = env32
 
-projectRCSubstDict={
-	'%version_year%':env['version_year'],
-	'%version_major%':env['version_major'],
-	'%version_minor%':env['version_minor'],
-	'%version_build%':env['version_build'],
-	'%copyright%':env['copyright'],
-	'%publisher%':env['publisher'],
-	'%version%':env['version'],
-	'%productName%':"%s (%s)"%(versionInfo.name,versionInfo.longName),
+projectRCSubstDict = {
+	"%version_year%": env["version_year"],
+	"%version_major%": env["version_major"],
+	"%version_minor%": env["version_minor"],
+	"%version_build%": env["version_build"],
+	"%copyright%": env["copyright"],
+	"%publisher%": env["publisher"],
+	"%version%": env["version"],
+	"%productName%": "%s (%s)" % (versionInfo.name, versionInfo.longName),
 }
-resFile=env.RES(target='build/nvda.res',
-	source=env.Substfile(target='build/nvda.rc', source='nvdaHelper/nvda.rc.subst', SUBST_DICT=projectRCSubstDict))
-env32['projectResFile'] = resFile
-env64['projectResFile'] = resFile
-envArm64['projectResFile'] = resFile
+resFile = env.RES(
+	target="build/nvda.res",
+	source=env.Substfile(
+		target="build/nvda.rc", source="nvdaHelper/nvda.rc.subst", SUBST_DICT=projectRCSubstDict
+	),
+)
+env32["projectResFile"] = resFile
+env64["projectResFile"] = resFile
+envArm64["projectResFile"] = resFile
 
-#Fill sourceDir with anything provided for it by miscDeps
-env.recursiveCopy(sourceDir,Dir('miscdeps/source'))
+# Fill sourceDir with anything provided for it by miscDeps
+env.recursiveCopy(sourceDir, Dir("miscdeps/source"))
 # Copy in some other dependencies.
 jabDll = "windowsaccessbridge-32.dll"
-Command(sourceLibDir.File(jabDll),
-	env.Dir("#include/javaAccessBridge32").File(jabDll),
-	Copy("$TARGET", "$SOURCE"))
+Command(
+	sourceLibDir.File(jabDll), env.Dir("#include/javaAccessBridge32").File(jabDll), Copy("$TARGET", "$SOURCE")
+)
 
-env.SConscript('source/comInterfaces_sconscript',exports=['env'])
+env.SConscript("source/comInterfaces_sconscript", exports=["env"])
 
-#Process nvdaHelper scons files
-env32.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env32,'clientInstallDir':clientDir.Dir('x86'),'libInstallDir':sourceLibDir},variant_dir='build/x86')
-env64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':env64,'clientInstallDir':clientDir.Dir('x64'),'libInstallDir':sourceLibDir64},variant_dir='build/x86_64')
-envArm64.SConscript('nvdaHelper/archBuild_sconscript',exports={'env':envArm64,'clientInstallDir':clientDir.Dir('arm64'),'libInstallDir':sourceLibDirArm64},variant_dir='build/arm64')
+# Process nvdaHelper scons files
+env32.SConscript(
+	"nvdaHelper/archBuild_sconscript",
+	exports={"env": env32, "clientInstallDir": clientDir.Dir("x86"), "libInstallDir": sourceLibDir},
+	variant_dir="build/x86",
+)
+env64.SConscript(
+	"nvdaHelper/archBuild_sconscript",
+	exports={"env": env64, "clientInstallDir": clientDir.Dir("x64"), "libInstallDir": sourceLibDir64},
+	variant_dir="build/x86_64",
+)
+envArm64.SConscript(
+	"nvdaHelper/archBuild_sconscript",
+	exports={"env": envArm64, "clientInstallDir": clientDir.Dir("arm64"), "libInstallDir": sourceLibDirArm64},
+	variant_dir="build/arm64",
+)
 
-#Allow all NVDA's gettext po files to be compiled in source/locale
-for po in env.Glob(sourceDir.path+'/locale/*/lc_messages/*.po'):
+# Allow all NVDA's gettext po files to be compiled in source/locale
+for po in env.Glob(sourceDir.path + "/locale/*/lc_messages/*.po"):
 	env.gettextMoFile(po)
 
-styles = os.path.join(userDocsDir.path, 'styles.css')
+styles = os.path.join(userDocsDir.path, "styles.css")
 numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
 # Allow all markdown files to be converted to html in user_docs
-for mdFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.md')):
+for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.md2html(mdFile)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
@@ -267,17 +346,20 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.md')):
 			installedStyle,
 			numberedHeadingsStyle,
 			installedHeadingsStyle,
-		]
+		],
 	)
 	env.Depends(htmlFile, mdFile)
 
 # Create key commands files
-for userGuideFile in env.Glob(os.path.join(userDocsDir.path, '*', 'userGuide.md')):
-	keyCommandsHtmlFile = env.md2html(userGuideFile.abspath.replace("userGuide.md", "keyCommands.html"), userGuideFile)
+for userGuideFile in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.md")):
+	keyCommandsHtmlFile = env.md2html(
+		userGuideFile.abspath.replace("userGuide.md", "keyCommands.html"), userGuideFile
+	)
 	env.Depends(keyCommandsHtmlFile, userGuideFile)
 
 # Build unicode CLDR dictionaries
-env.SConscript('cldrDict_sconscript',exports=['env', 'sourceDir'])
+env.SConscript("cldrDict_sconscript", exports=["env", "sourceDir"])
+
 
 # A builder to generate an NVDA distribution.
 def NVDADistGenerator(target, source, env, for_signature):
@@ -287,16 +369,22 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# and py2exe will cause bytecode files to be created for it which scons doesn't know about.
 	updateVersionType = env["updateVersionType"] or None
 	# Any '\n' characters written are translated to the system default line separator, os.linesep.
-	action = [lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
-		'version = {version!r}\n'
-		'publisher = {publisher!r}\n'
-		'updateVersionType = {updateVersionType!r}\n'
-		'version_build = {version_build!r}\n'
-		.format(version=version, publisher=publisher, updateVersionType=updateVersionType,version_build=version_build)
-	)
-	# In Python 3 write returns the number of characters written,
-	# which scons treats as an error code.	
-	and None]
+	action = [
+		lambda target, source, env: open(buildVersionFn, "w", encoding="utf-8").write(
+			"version = {version!r}\n"
+			"publisher = {publisher!r}\n"
+			"updateVersionType = {updateVersionType!r}\n"
+			"version_build = {version_build!r}\n".format(
+				version=version,
+				publisher=publisher,
+				updateVersionType=updateVersionType,
+				version_build=version_build,
+			)
+		)
+		# In Python 3 write returns the number of characters written,
+		# which scons treats as an error code.
+		and None
+	]
 
 	buildCmd = ["cd", source[0].path, "&&", sys.executable]
 	if release:
@@ -312,16 +400,21 @@ def NVDADistGenerator(target, source, env, for_signature):
 	# #10031: Apps written in Python 3 require Universal CRT to be installed. We cannot assume users have it on their systems.
 	# Therefore , copy required libraries from Windows 10 SDK.
 	try:
-		with winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r'SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0', 0,winreg.KEY_READ|winreg.KEY_WOW64_32KEY) as SDKKey:
-			sdk_installationFolder = winreg.QueryValueEx(SDKKey, 'InstallationFolder')[0]
-			sdk_productVersion = winreg.QueryValueEx(SDKKey, 'ProductVersion')[0]
+		with winreg.OpenKey(
+			winreg.HKEY_LOCAL_MACHINE,
+			r"SOFTWARE\Microsoft\Microsoft SDKs\Windows\v10.0",
+			0,
+			winreg.KEY_READ | winreg.KEY_WOW64_32KEY,
+		) as SDKKey:
+			sdk_installationFolder = winreg.QueryValueEx(SDKKey, "InstallationFolder")[0]
+			sdk_productVersion = winreg.QueryValueEx(SDKKey, "ProductVersion")[0]
 	except WindowsError:
 		raise RuntimeError("Windows 10 SDK not found")
 	# The Universal CRT should be in an SDK version-specific directory
-	# But usually has a '.0' appended after the productVersion found in the registry. 
+	# But usually has a '.0' appended after the productVersion found in the registry.
 	# E.g. 10.0.1941 might e actually 10.0.1941.0.
 	# Thus try both.
-	CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion+".0", "ucrt", "DLLs", "x86")
+	CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion + ".0", "ucrt", "DLLs", "x86")
 	if not os.path.isdir(CRTDir):
 		CRTDir = os.path.join(sdk_installationFolder, "Redist", sdk_productVersion, "ucrt", "DLLs", "x86")
 		if not os.path.isdir(CRTDir):
@@ -333,15 +426,19 @@ def NVDADistGenerator(target, source, env, for_signature):
 
 	if certFile or apiSigningToken:
 		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
-			action.append(lambda target, source, env, progByVal=prog: env['signExec']([target[0].File(progByVal)], source, env))
+			action.append(
+				lambda target, source, env, progByVal=prog: env["signExec"](
+					[target[0].File(progByVal)], source, env
+				)
+			)
 
-	action.extend((
-		Delete(buildVersionFn),
-		Delete(importlib.util.cache_from_source(buildVersionFn))
-	))
+	action.extend((Delete(buildVersionFn), Delete(importlib.util.cache_from_source(buildVersionFn))))
 
 	return action
+
+
 env["BUILDERS"]["NVDADist"] = Builder(generator=NVDADistGenerator, target_factory=Dir)
+
 
 # A builder to generate a zip archive.
 # We roll our own instead of using env.Zip because we want to create some archives
@@ -350,21 +447,24 @@ def ZipArchiveAction(target, source, env):
 	relativeTo = env.get("relativeTo", None)
 	if relativeTo:
 		relativeTo = relativeTo.path
+
 		def getArcName(origName):
 			arcName = os.path.relpath(origName, relativeTo)
 			if arcName.startswith(".."):
 				arcName = arcName.replace(".." + os.path.sep, "")
 			return "" if arcName == "." else arcName
 	else:
-		getArcName = lambda origName: "" if origName == "." else origName
+		getArcName = lambda origName: "" if origName == "." else origName  # noqa: E731
 
 	# Nasty hack to make zipfile use best compression, since it isn't configurable.
 	# Tried setting memlevel to 9 as well, but it made compression slightly worse.
 	import zlib
+
 	origZDefComp = zlib.Z_DEFAULT_COMPRESSION
 	zlib.Z_DEFAULT_COMPRESSION = zlib.Z_BEST_COMPRESSION
 
 	import zipfile
+
 	zf = None
 	try:
 		zf = zipfile.ZipFile(target[0].path, "w", zipfile.ZIP_DEFLATED)
@@ -384,21 +484,36 @@ def ZipArchiveAction(target, source, env):
 			zf.close()
 		zlib.Z_DEFAULT_COMPRESSION = origZDefComp
 
+
 env["BUILDERS"]["ZipArchive"] = Builder(action=ZipArchiveAction)
 
-uninstFile=File("dist/uninstall.exe")
-uninstGen = env.Command(File("uninstaller/uninstGen.exe"), "uninstaller/uninst.nsi",
-	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
-	"/DUNINSTEXE=%s"%uninstFile.abspath,
-	"/DINSTEXE=${TARGET.abspath}",
-	"$SOURCE"]])
-uninstaller=env.Command(uninstFile,uninstGen,[uninstGen])
+uninstFile = File("dist/uninstall.exe")
+uninstGen = env.Command(
+	File("uninstaller/uninstGen.exe"),
+	"uninstaller/uninst.nsi",
+	[
+		[
+			makensis,
+			"/V2",
+			"/DVERSION=$version",
+			'/DPUBLISHER="$publisher"',
+			'/DCOPYRIGHT="$copyright"',
+			'/DVERSION_YEAR="$version_year"',
+			'/DVERSION_MAJOR="$version_major"',
+			'/DVERSION_MINOR="$version_minor"',
+			'/DVERSION_BUILD="$version_build"',
+			"/DUNINSTEXE=%s" % uninstFile.abspath,
+			"/DINSTEXE=${TARGET.abspath}",
+			"$SOURCE",
+		]
+	],
+)
+uninstaller = env.Command(uninstFile, uninstGen, [uninstGen])
 if certFile or apiSigningToken:
-	env.AddPostAction(uninstaller, [env['signExec']])
+	env.AddPostAction(uninstaller, [env["signExec"]])
 
-dist = env.NVDADist("dist", [sourceDir,userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
-env.Depends(dist,uninstaller)
+dist = env.NVDADist("dist", [sourceDir, userDocsDir], uiAccess=bool(certFile) or bool(apiSigningToken))
+env.Depends(dist, uninstaller)
 # dist will always be considered obsolete
 AlwaysBuild(dist)
 # Dir node targets don't get cleaned, so cleaning of the dist nodes has to be explicitly specified.
@@ -406,74 +521,104 @@ env.Clean(dist, dist)
 # Clean the intermediate build directory.
 env.Clean([dist], buildDir)
 
-launcher = env.Command(outputDir.File("%s.exe" % outFilePrefix), ["launcher/nvdaLauncher.nsi", dist],
-	[[makensis, "/V2",
-	"/DVERSION=$version", '/DPUBLISHER="$publisher"','/DCOPYRIGHT="$copyright"','/DVERSION_YEAR="$version_year"','/DVERSION_MAJOR="$version_major"','/DVERSION_MINOR="$version_minor"','/DVERSION_BUILD="$version_build"',
-	"/DNVDADistDir=${SOURCES[1].abspath}", "/DLAUNCHEREXE=${TARGET.abspath}",
-	"$SOURCE"]])
+launcher = env.Command(
+	outputDir.File("%s.exe" % outFilePrefix),
+	["launcher/nvdaLauncher.nsi", dist],
+	[
+		[
+			makensis,
+			"/V2",
+			"/DVERSION=$version",
+			'/DPUBLISHER="$publisher"',
+			'/DCOPYRIGHT="$copyright"',
+			'/DVERSION_YEAR="$version_year"',
+			'/DVERSION_MAJOR="$version_major"',
+			'/DVERSION_MINOR="$version_minor"',
+			'/DVERSION_BUILD="$version_build"',
+			"/DNVDADistDir=${SOURCES[1].abspath}",
+			"/DLAUNCHEREXE=${TARGET.abspath}",
+			"$SOURCE",
+		]
+	],
+)
 if certFile or apiSigningToken:
-	env.AddPostAction(launcher, [env['signExec']])
+	env.AddPostAction(launcher, [env["signExec"]])
 env.Alias("launcher", launcher)
 
-clientArchive = env.ZipArchive(outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir)
+clientArchive = env.ZipArchive(
+	outputDir.File("%s_controllerClient.zip" % outFilePrefix), clientDir, relativeTo=clientDir
+)
 env.Alias("client", clientArchive)
 
 outputStylesFile = env.Command(
-	outputDir.File("styles.css"),
-	userDocsDir.File("styles.css"),
-	Copy("$TARGET", "$SOURCE")
+	outputDir.File("styles.css"), userDocsDir.File("styles.css"), Copy("$TARGET", "$SOURCE")
 )
 outputHeadingStylesFile = env.Command(
 	outputDir.File("numberedHeadings.css"),
 	userDocsDir.File("numberedHeadings.css"),
-	Copy("$TARGET", "$SOURCE")
+	Copy("$TARGET", "$SOURCE"),
 )
-changesFile=env.Command(outputDir.File("%s_changes.html" % outFilePrefix),userDocsDir.File('en/changes.html'),Copy('$TARGET','$SOURCE'))
+changesFile = env.Command(
+	outputDir.File("%s_changes.html" % outFilePrefix),
+	userDocsDir.File("en/changes.html"),
+	Copy("$TARGET", "$SOURCE"),
+)
 env.Depends(changesFile, outputStylesFile)
-env.Alias('changes',changesFile)
+env.Alias("changes", changesFile)
 
-userGuideFile=env.Command(outputDir.File("userGuide.html"),userDocsDir.File('en/userGuide.html'),Copy('$TARGET','$SOURCE'))
+userGuideFile = env.Command(
+	outputDir.File("userGuide.html"), userDocsDir.File("en/userGuide.html"), Copy("$TARGET", "$SOURCE")
+)
 env.Depends(userGuideFile, outputStylesFile)
-env.Alias('userGuide', userGuideFile)
+env.Alias("userGuide", userGuideFile)
 
 keyCommandsFile = env.Command(
-	outputDir.File("keyCommands.html"),
-	userDocsDir.File('en/keyCommands.html'),
-	Copy('$TARGET', '$SOURCE')
+	outputDir.File("keyCommands.html"), userDocsDir.File("en/keyCommands.html"), Copy("$TARGET", "$SOURCE")
 )
 env.Depends(keyCommandsFile, outputStylesFile)
 env.Depends(keyCommandsFile, userGuideFile)
-env.Alias('keyCommands', keyCommandsFile)
+env.Alias("keyCommands", keyCommandsFile)
+
 
 def makePotSourceFileList(target, sourceFiles, env):
-	potSourceFiles = [
-		os.path.relpath(str(f), str(sourceDir)) for f in sourceFiles
-	]
+	potSourceFiles = [os.path.relpath(str(f), str(sourceDir)) for f in sourceFiles]
 	with open(target.abspath, "w") as fileList:
-		fileList.writelines([f + '\n' for f in potSourceFiles])
+		fileList.writelines([f + "\n" for f in potSourceFiles])
 
 
 def makePot(target, source, env):
 	potSourceFileList = outputDir.File("potSourceFileList.txt")
 	makePotSourceFileList(potSourceFileList, source, env)
 	# Generate the pot.
-	if env.Execute([
-		[
-			"cd", sourceDir, "&&",
-			XGETTEXT,
-			"-o", target[0].abspath,
-			"--package-name", versionInfo.name, "--package-version", version,
-			"--foreign-user",
-			"--add-comments=Translators:",
-			"--keyword=pgettext:1c,2",
-			"--keyword=npgettext:1c,2,3",
-			"--from-code", "utf-8",
-			# Needed because xgettext doesn't recognise the .pyw extension.
-			"--language=python",
-			# Too many files to list on commandline, use a file list instead.
-			f"--files-from={potSourceFileList.abspath}",
-		]
-	]) != 0:
+	if (
+		env.Execute(
+			[
+				[
+					"cd",
+					sourceDir,
+					"&&",
+					XGETTEXT,
+					"-o",
+					target[0].abspath,
+					"--package-name",
+					versionInfo.name,
+					"--package-version",
+					version,
+					"--foreign-user",
+					"--add-comments=Translators:",
+					"--keyword=pgettext:1c,2",
+					"--keyword=npgettext:1c,2,3",
+					"--from-code",
+					"utf-8",
+					# Needed because xgettext doesn't recognise the .pyw extension.
+					"--language=python",
+					# Too many files to list on commandline, use a file list instead.
+					f"--files-from={potSourceFileList.abspath}",
+				]
+			]
+		)
+		!= 0
+	):
 		raise RuntimeError("xgettext failed")
 
 	# Tweak the headers.
@@ -506,7 +651,8 @@ def getSubDirs(path):
 potSourceFiles = [
 	# Don't use sourceDir as the source, as this depends on comInterfaces and nvdaHelper.
 	# We only depend on the Python files.
-	f for recurseDirs in getSubDirs(sourceDir.path)
+	f
+	for recurseDirs in getSubDirs(sourceDir.path)
 	if not (
 		# Exclude comInterfaces, since these don't contain translatable strings
 		# and they cause unknown encoding warnings.
@@ -514,32 +660,36 @@ potSourceFiles = [
 		# Exclude userConfig folder which does not contain NVDA code but may contain gettext call without
 		# translator comments in add-ons or scratchpad, triggering false positive for checkpot script.
 		or recurseDirs.startswith(r"source\userConfig")
-	)	
+	)
 	for pattern in ("*.py", "*.pyw")
 	for f in env.Glob(
 		os.path.join(recurseDirs, pattern),
 	)
 ]
 
-pot = env.Command(
-	outputDir.File("nvda.pot"),
-	potSourceFiles,
-	makePot
-)
+pot = env.Command(outputDir.File("nvda.pot"), potSourceFiles, makePot)
 
 env.Alias("pot", pot)
 
-symbolsList=[]
-symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path,'*.pdb')))
-symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path,'*.pdb')))
+symbolsList = []
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir.path, "*.pdb")))
+symbolsList.extend(env.Glob(os.path.join(sourceLibDir64.path, "*.pdb")))
 symbolsArchive = env.ZipArchive(outputDir.File("%s_debugSymbols.zip" % outFilePrefix), symbolsList)
 env.Alias("symbolsArchive", symbolsArchive)
 
-appx_storeSubmission=env.SConscript("appx/sconscript",exports={'env':env,'isStoreSubmission':True},variant_dir='build\\appx_storeSubmission')
-installed_appx_storeSubmission=env.Install('output',appx_storeSubmission)
-appx_sideLoadable=env.SConscript("appx/sconscript",exports={'env':env,'isStoreSubmission':False},variant_dir='build\\appx_sideLoadable')
-installed_appx_sideLoadable=env.Install('output',appx_sideLoadable)
-env.Alias('appx',[installed_appx_storeSubmission,installed_appx_sideLoadable])
+appx_storeSubmission = env.SConscript(
+	"appx/sconscript",
+	exports={"env": env, "isStoreSubmission": True},
+	variant_dir="build\\appx_storeSubmission",
+)
+installed_appx_storeSubmission = env.Install("output", appx_storeSubmission)
+appx_sideLoadable = env.SConscript(
+	"appx/sconscript",
+	exports={"env": env, "isStoreSubmission": False},
+	variant_dir="build\\appx_sideLoadable",
+)
+installed_appx_sideLoadable = env.Install("output", appx_sideLoadable)
+env.Alias("appx", [installed_appx_storeSubmission, installed_appx_sideLoadable])
 
 env.Default(dist)
 

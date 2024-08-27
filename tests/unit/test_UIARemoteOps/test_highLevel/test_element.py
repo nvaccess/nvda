@@ -19,7 +19,6 @@ from UIAHandler._remoteOps.lowLevel import (
 
 
 class Test_element(TestCase):
-
 	def test_getName(self):
 		uiaElement = Mock(spec=POINTER(UIA.IUIAutomationElement))
 		op = operation.Operation(localMode=True)

@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2023 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2016-2024 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -10,7 +9,7 @@ complies with the latest schema (@see configSpec.py).
 
 To add a new step (after modifying the schema and incrementing the schema version number) add a new method to this
 module. The method name should be in the form "upgradeConfigFrom_X_to_Y" where X is the previous schema version, and Y
-is the current schema version. The argument profile will be a configobj.ConfigObj object. The function should ensure 
+is the current schema version. The argument profile will be a configobj.ConfigObj object. The function should ensure
 that no information is lost, while updating the ConfigObj to meet the requirements of the new schema.
 """
 
@@ -22,6 +21,7 @@ from config.configFlags import (
 	ReportLineIndentation,
 	ReportTableHeaders,
 	ReportCellBorders,
+	OutputMode,
 )
 import configobj.validate
 from configobj import ConfigObj
@@ -29,7 +29,7 @@ from configobj import ConfigObj
 
 def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
 	# Schema has been modified to set a new minimum blink rate
-	# The blink rate could previously be set to zero to disable blinking (while still 
+	# The blink rate could previously be set to zero to disable blinking (while still
 	# having a cursor)
 	try:
 		blinkRate = int(profile["braille"]["cursorBlinkRate"])
@@ -74,22 +74,22 @@ def upgradeConfigFrom_2_to_3(profile: ConfigObj) -> None:
 def upgradeConfigFrom_3_to_4(profile: ConfigObj) -> None:
 	"Reporting of superscripts and subscripts can now be configured separately to font attributes."
 	try:
-		profile['documentFormatting']['reportSuperscriptsAndSubscripts'] = (
-			profile['documentFormatting']['reportFontAttributes']
-		)
+		profile["documentFormatting"]["reportSuperscriptsAndSubscripts"] = profile["documentFormatting"][
+			"reportFontAttributes"
+		]
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportFontAttributes not present, no action taken.")
 
 
 def upgradeConfigFrom_4_to_5(profile: ConfigObj) -> None:
-	""" reporting details has become enabled by default.
+	"""reporting details has become enabled by default.
 	Discard aria-details setting, ensure users are aware of the setting.
 	The setting was used while the feature was in development.
 	Prevented reporting 'has details' with no way to report the details.
 	"""
 	try:
-		del profile['annotations']['reportDetails']
+		del profile["annotations"]["reportDetails"]
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportDetails not present, no action taken.")
@@ -100,13 +100,14 @@ def upgradeConfigFrom_5_to_6(profile: ConfigObj) -> None:
 	useInMSWordWhenAvailable in UIA section has been replaced with allowInMSWord multichoice.
 	"""
 	try:
-		useInMSWord: str = profile['UIA']['useInMSWordWhenAvailable']
-		del profile['UIA']['useInMSWordWhenAvailable']
+		useInMSWord: str = profile["UIA"]["useInMSWordWhenAvailable"]
+		del profile["UIA"]["useInMSWordWhenAvailable"]
 	except KeyError:
 		useInMSWord = False
 	if configobj.validate.is_boolean(useInMSWord):
 		from . import AllowUiaInMSWord
-		profile['UIA']['allowInMSWord'] = AllowUiaInMSWord.ALWAYS.value
+
+		profile["UIA"]["allowInMSWord"] = AllowUiaInMSWord.ALWAYS.value
 
 
 def upgradeConfigFrom_6_to_7(profile: ConfigObj) -> None:
@@ -117,12 +118,12 @@ def upgradeConfigFrom_6_to_7(profile: ConfigObj) -> None:
 	Otherwise, the default value, auto, will be used.
 	"""
 	try:
-		selectiveEventRegistration: str = profile['UIA']['selectiveEventRegistration']
-		del profile['UIA']['selectiveEventRegistration']
+		selectiveEventRegistration: str = profile["UIA"]["selectiveEventRegistration"]
+		del profile["UIA"]["selectiveEventRegistration"]
 	except KeyError:
 		selectiveEventRegistration = False
 	if configobj.validate.is_boolean(selectiveEventRegistration):
-		profile['UIA']['eventRegistration'] = "selective"
+		profile["UIA"]["eventRegistration"] = "selective"
 
 
 def upgradeConfigFrom_7_to_8(profile: ConfigObj) -> None:
@@ -130,15 +131,15 @@ def upgradeConfigFrom_7_to_8(profile: ConfigObj) -> None:
 	In Document formatting settings, "Row/column headers" check box has been replaced with "Headers" combobox.
 	"""
 	try:
-		reportTableHeaders: str = profile['documentFormatting']['reportTableHeaders']
+		reportTableHeaders: str = profile["documentFormatting"]["reportTableHeaders"]
 	except KeyError:
 		# Setting does not exist, no need for upgrade of this setting
 		log.debug("reportTableHeaders not present, no action taken.")
 	else:
 		if configobj.validate.is_boolean(reportTableHeaders):
-			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.ROWS_AND_COLUMNS.value
+			profile["documentFormatting"]["reportTableHeaders"] = ReportTableHeaders.ROWS_AND_COLUMNS.value
 		else:
-			profile['documentFormatting']['reportTableHeaders'] = ReportTableHeaders.OFF.value
+			profile["documentFormatting"]["reportTableHeaders"] = ReportTableHeaders.OFF.value
 
 
 def upgradeConfigFrom_8_to_9(profile: ConfigObj) -> None:
@@ -151,7 +152,7 @@ def upgradeConfigFrom_8_to_9(profile: ConfigObj) -> None:
 	- Show messages (in Braille settings)
 	- Tether to (in Braille settings)
 	"""
-	
+
 	_upgradeConfigFrom_8_to_9_lineIndent(profile)
 	_upgradeConfigFrom_8_to_9_cellBorders(profile)
 	_upgradeConfigFrom_8_to_9_showMessages(profile)
@@ -161,27 +162,29 @@ def upgradeConfigFrom_8_to_9(profile: ConfigObj) -> None:
 def _upgradeConfigFrom_8_to_9_lineIndent(profile: ConfigObj) -> None:
 	anySettingInConfig = False
 	try:
-		reportLineIndent: str = profile['documentFormatting']['reportLineIndentation']
+		reportLineIndent: str = profile["documentFormatting"]["reportLineIndentation"]
 		anySettingInConfig = True
 	except KeyError:
 		reportLineIndent = False
 	try:
-		reportLineIndentWithTones: str = profile['documentFormatting']['reportLineIndentationWithTones']
-		del profile['documentFormatting']['reportLineIndentationWithTones']
+		reportLineIndentWithTones: str = profile["documentFormatting"]["reportLineIndentationWithTones"]
+		del profile["documentFormatting"]["reportLineIndentationWithTones"]
 		anySettingInConfig = True
 	except KeyError:
 		reportLineIndentWithTones = False
 	if anySettingInConfig:
 		if configobj.validate.is_boolean(reportLineIndent):
 			if configobj.validate.is_boolean(reportLineIndentWithTones):
-				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.SPEECH_AND_TONES.value
+				profile["documentFormatting"]["reportLineIndentation"] = (
+					ReportLineIndentation.SPEECH_AND_TONES.value
+				)
 			else:
-				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.SPEECH.value
+				profile["documentFormatting"]["reportLineIndentation"] = ReportLineIndentation.SPEECH.value
 		else:
 			if configobj.validate.is_boolean(reportLineIndentWithTones):
-				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.TONES.value
+				profile["documentFormatting"]["reportLineIndentation"] = ReportLineIndentation.TONES.value
 			else:
-				profile['documentFormatting']['reportLineIndentation'] = ReportLineIndentation.OFF.value
+				profile["documentFormatting"]["reportLineIndentation"] = ReportLineIndentation.OFF.value
 	else:
 		log.debug("reportLineIndentation and reportLineIndentationWithTones not present, no action taken.")
 
@@ -223,39 +226,39 @@ def _upgradeConfigFrom_8_to_9_cellBorders(profile: ConfigObj) -> None:
 def _upgradeConfigFrom_8_to_9_showMessages(profile: ConfigObj) -> None:
 	upgradeNeeded = False
 	try:
-		noMessageTimeout: str = profile['braille']['noMessageTimeout']
+		noMessageTimeout: str = profile["braille"]["noMessageTimeout"]
 	except KeyError:
 		noMessageTimeoutVal = False  # Default value
 	else:
-		del profile['braille']['noMessageTimeout']
+		del profile["braille"]["noMessageTimeout"]
 		noMessageTimeoutVal = configobj.validate.is_boolean(noMessageTimeout)
 		upgradeNeeded = True
 	try:
-		messageTimeout: str = profile['braille']['messageTimeout']
+		messageTimeout: str = profile["braille"]["messageTimeout"]
 	except KeyError:
 		messageTimeoutVal = 4  # Default value
 	else:
 		messageTimeoutVal = configobj.validate.is_integer(messageTimeout)
 		if messageTimeoutVal == 0:
-			del profile['braille']['messageTimeout']
+			del profile["braille"]["messageTimeout"]
 			upgradeNeeded = True
-	
+
 	if upgradeNeeded:
 		if messageTimeoutVal == 0:
-			profile['braille']['showMessages'] = ShowMessages.DISABLED.value
+			profile["braille"]["showMessages"] = ShowMessages.DISABLED.value
 			if noMessageTimeoutVal:
 				# Invalid config with noMessageTimeout=True and messageTimeout=0." is possible (if set manually by a user)
 				# and it actually leads to disabled messages.
 				# So we fix it with ShowMessages.DISABLED but also issue a warning.
 				log.debugWarning(
 					"Invalid config found: noMessageTimeout=True and messageTimeout=0."
-					" Fixing it with setting showMessages on DISABLE."
+					" Fixing it with setting showMessages on DISABLE.",
 				)
 		else:
 			if noMessageTimeoutVal:
-				profile['braille']['showMessages'] = ShowMessages.SHOW_INDEFINITELY.value
+				profile["braille"]["showMessages"] = ShowMessages.SHOW_INDEFINITELY.value
 			else:
-				profile['braille']['showMessages'] = ShowMessages.USE_TIMEOUT.value
+				profile["braille"]["showMessages"] = ShowMessages.USE_TIMEOUT.value
 	else:
 		log.debug("messageTimeout >= 1 or not present and noMessageTimeout not present, no action taken.")
 
@@ -275,7 +278,7 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 	except KeyError:
 		tetherTo: str = TetherTo.FOCUS.value
 		isTetherToMissing = True
-	
+
 	autoTetherVal = configobj.validate.is_boolean(autoTether)
 	tetherToVal = configobj.validate.is_string(tetherTo)
 	if isAutoTetherMissing and isTetherToMissing:
@@ -286,7 +289,7 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 		# "Review") and the current profile has this option set to "Focus".
 		# In this case, tetherTo keeps the same value.
 		log.debug(
-			"autoTether not present in config but tetherTo present, no action taken (keeping tetherTo value)."
+			"autoTether not present in config but tetherTo present, no action taken (keeping tetherTo value).",
 		)
 	elif isTetherToMissing:
 		if autoTetherVal:
@@ -301,25 +304,24 @@ def _upgradeConfigFrom_8_to_9_tetherTo(profile: ConfigObj) -> None:
 
 
 def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
-	"""In NVDA config, use only one value to store NVDA keys rather than 3 distinct values.
-	"""
-	
+	"""In NVDA config, use only one value to store NVDA keys rather than 3 distinct values."""
+
 	anySettingInConfig = False
 	try:
-		capsLock: str = profile['keyboard']['useCapsLockAsNVDAModifierKey']
-		del profile['keyboard']['useCapsLockAsNVDAModifierKey']
+		capsLock: str = profile["keyboard"]["useCapsLockAsNVDAModifierKey"]
+		del profile["keyboard"]["useCapsLockAsNVDAModifierKey"]
 		anySettingInConfig = True
 	except KeyError:
 		capsLock = False
 	try:
-		numpadInsert: str = profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
-		del profile['keyboard']['useNumpadInsertAsNVDAModifierKey']
+		numpadInsert: str = profile["keyboard"]["useNumpadInsertAsNVDAModifierKey"]
+		del profile["keyboard"]["useNumpadInsertAsNVDAModifierKey"]
 		anySettingInConfig = True
 	except KeyError:
 		numpadInsert = True
 	try:
-		extendedInsert: str = profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
-		del profile['keyboard']['useExtendedInsertAsNVDAModifierKey']
+		extendedInsert: str = profile["keyboard"]["useExtendedInsertAsNVDAModifierKey"]
+		del profile["keyboard"]["useExtendedInsertAsNVDAModifierKey"]
 		anySettingInConfig = True
 	except KeyError:
 		extendedInsert = True
@@ -345,34 +347,70 @@ def upgradeConfigFrom_9_to_10(profile: ConfigObj) -> None:
 			# Thus we consider case 1 which is the only use case reachable by the user via NVDA's GUI.
 			log.debug(
 				"No True value for any of 'use*AsNVDAModifierKey',"
-				" restore caps lock (only possible case via NVDA's GUI)."
+				" restore caps lock (only possible case via NVDA's GUI).",
 			)
 			val = NVDAKey.CAPS_LOCK.value
-		profile['keyboard']['NVDAModifierKeys'] = val
+		profile["keyboard"]["NVDAModifierKeys"] = val
 	else:
 		log.debug("use*AsNVDAModifierKey values not present, no action taken.")
 
 
 def upgradeConfigFrom_10_to_11(profile: ConfigObj) -> None:
-	"""Remove the enableHidBrailleSupport braille config flag in favor of an auto detect exclusion.
-	"""
+	"""Remove the enableHidBrailleSupport braille config flag in favor of an auto detect exclusion."""
 	# Config spec entry was:
 	# enableHidBrailleSupport = integer(0, 2, default=0)  # 0:Use default/recommended value (yes), 1:yes, 2:no
 	try:
-		hidSetting: str = profile['braille']['enableHidBrailleSupport']
-		del profile['braille']['enableHidBrailleSupport']
+		hidSetting: str = profile["braille"]["enableHidBrailleSupport"]
+		del profile["braille"]["enableHidBrailleSupport"]
 	except KeyError:
 		log.debug("enableHidBrailleSupport not present in config, no action taken.")
 		return
 	if configobj.validate.is_integer(hidSetting) == 2:  # HID standard support disabled
-		if 'braille' not in profile:
-			profile['braille'] = {}
-		if 'auto' not in profile['braille']:
-			profile['braille']['auto'] = {}
-		if 'excludedDisplays' not in profile['braille']['auto']:
-			profile['braille']['auto']['excludedDisplays'] = []
-		profile['braille']['auto']['excludedDisplays'] += ["hidBrailleStandard"]
+		if "braille" not in profile:
+			profile["braille"] = {}
+		if "auto" not in profile["braille"]:
+			profile["braille"]["auto"] = {}
+		if "excludedDisplays" not in profile["braille"]["auto"]:
+			profile["braille"]["auto"]["excludedDisplays"] = []
+		profile["braille"]["auto"]["excludedDisplays"] += ["hidBrailleStandard"]
 		log.debug(
 			"hidBrailleStandard added to braille display auto detection excluded displays. "
-			f"List is now: {profile['braille']['auto']['excludedDisplays']}"
+			f"List is now: {profile['braille']['auto']['excludedDisplays']}",
 		)
+
+
+def upgradeConfigFrom_11_to_12(profile: ConfigObj) -> None:
+	"""Add a new key, documentFormatting.fontAttributeReporting, which allows users to select between speech and/or braille, and base it on documentFormatting.reportFontAttributes."""
+	try:
+		reportFontAttributes: bool = profile["documentFormatting"].as_bool("reportFontAttributes")
+	except KeyError:
+		log.debug("reportFontAttributes not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error("reportFontAttributes is not a boolean, no action taken.")
+		return
+	profile["documentFormatting"]["fontAttributeReporting"] = (
+		OutputMode.SPEECH_AND_BRAILLE if reportFontAttributes else OutputMode.OFF
+	)
+	log.debug(
+		f"documentFormatting.fontAttributeReporting added with value {profile['documentFormatting']['fontAttributeReporting']}.",
+	)
+
+
+def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
+	"""
+	If the includeCldr speech config flag is set in a profile,
+	enable the cldr dictionary in the speechSymbols list.
+	"""
+	try:
+		setting: bool = profile["speech"].as_bool("includeCLDR")
+	except KeyError:
+		log.debug("includeCLDR not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error("includeCLDR is not a boolean, no action taken.")
+		return
+	profile["speech"]["symbolDictionaries"] = ["cldr"] if setting else []
+	log.debug(
+		f"Handled cldr value of {setting!r}. List is now: {profile['speech']['symbolDictionaries']}",
+	)

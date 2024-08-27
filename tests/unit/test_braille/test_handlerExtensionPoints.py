@@ -3,9 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the extension points in the braille module.
-"""
-
+"""Unit tests for the extension points in the braille module."""
 
 import braille
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
@@ -21,7 +19,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		expectedKwargs = dict(
 			cells=cells,
 			rawText=braille.handler._rawText,
-			currentCellCount=braille.handler.displaySize
+			currentCellCount=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
@@ -29,7 +27,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 
 	def test_displaySizeChanged(self):
 		expectedKwargs = dict(
-			displaySize=braille.handler.displaySize
+			displaySize=braille.handler.displaySize,
 		)
 
 		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
@@ -41,7 +39,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 	def test_displayChanged(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			detected=None
+			detected=None,
 		)
 
 		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
@@ -55,7 +53,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			self,
 			braille.filter_displaySize,
 			braille.handler._displaySize,  # The currently cached display size
-			20,   # The filter handler should change the display size to 40
+			20,  # The filter handler should change the display size to 40
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displaySize, expectedOutput)
 

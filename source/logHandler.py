@@ -41,7 +41,7 @@ EPT_S_NOT_REGISTERED = 1753
 E_ACCESSDENIED = -2147024891
 CO_E_OBJNOTCONNECTED = -2147220995
 EVENT_E_ALL_SUBSCRIBERS_FAILED = -2147220991
-LOAD_WITH_ALTERED_SEARCH_PATH=0x8
+LOAD_WITH_ALTERED_SEARCH_PATH = 0x8
 _NVDA_CODE_PATH = os.path.dirname(__file__)
 """Store path in which NVDA code is placed.
 We cannot use `globalVars.appDir`, since for binary builds it points to the directory with NVDA binaries,
@@ -68,15 +68,14 @@ def getFormattedStacksForAllThreads() -> str:
 
 
 def isPathExternalToNVDA(path: str) -> bool:
-	""" Checks if the given path is external to NVDA (I.e. not pointing to built-in code). """
-	if(
+	"""Checks if the given path is external to NVDA (I.e. not pointing to built-in code)."""
+	if (
 		path[0] != "<"
 		and os.path.isabs(path)
 		and not os.path.normpath(path).startswith(_NVDA_CODE_PATH + "\\")
 		or (
 			# Handle messages logged before config is initialized
-			WritePaths.configDir is not None
-			and path.startswith(WritePaths.configDir)
+			WritePaths.configDir is not None and path.startswith(WritePaths.configDir)
 		)
 	):
 		# This module is external because:
@@ -96,20 +95,20 @@ def getCodePath(f):
 	@returns: the dotted module.class.attribute path
 	@rtype: string
 	"""
-	fn=f.f_code.co_filename
+	fn = f.f_code.co_filename
 	if isPathExternalToNVDA(fn):
-		path="external:"
+		path = "external:"
 	else:
-		path=""
+		path = ""
 	try:
-		path+=f.f_globals["__name__"]
+		path += f.f_globals["__name__"]
 	except KeyError:
-		path+=fn
-	funcName=f.f_code.co_name
-	if funcName.startswith('<'):
-		funcName=""
-	className=""
-	#Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
+		path += fn
+	funcName = f.f_code.co_name
+	if funcName.startswith("<"):
+		funcName = ""
+	className = ""
+	# Code borrowed from http://mail.python.org/pipermail/python-list/2000-January/020141.html
 	if f.f_code.co_argcount:
 		f_locals = f.f_locals
 		arg0 = f_locals[f.f_code.co_varnames[0]]
@@ -120,34 +119,38 @@ def getCodePath(f):
 			# Therefore clear f_locals manually.
 			f_locals.clear()
 		del f_locals
-		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any) 
+		# #6122: Check if this function is a member of its first argument's class (and specifically which base class if any)
 		# Rather than an instance member of its first argument.
 		# This stops infinite recursions if fetching data descriptors,
 		# And better reflects the actual source code definition.
-		topCls=arg0 if isinstance(arg0,type) else type(arg0)
+		topCls = arg0 if isinstance(arg0, type) else type(arg0)
 		# find the deepest class this function's name is reachable as a method from
-		if hasattr(topCls,funcName):
+		if hasattr(topCls, funcName):
 			for cls in topCls.__mro__:
-				member=cls.__dict__.get(funcName)
+				member = cls.__dict__.get(funcName)
 				if not member:
 					continue
-				memberType=type(member)
+				memberType = type(member)
 				if memberType is FunctionType and member.__code__ is f.f_code:
 					# the function was found as a standard method
-					className=cls.__name__
-				elif memberType is classmethod and type(member.__func__) is FunctionType and member.__func__.__code__ is f.f_code:
+					className = cls.__name__
+				elif (
+					memberType is classmethod
+					and type(member.__func__) is FunctionType
+					and member.__func__.__code__ is f.f_code
+				):
 					# function was found as a class method
-					className=cls.__name__
+					className = cls.__name__
 				elif memberType is property:
 					if type(member.fget) is FunctionType and member.fget.__code__ is f.f_code:
 						# The function was found as a property getter
-						className=cls.__name__
+						className = cls.__name__
 					elif type(member.fset) is FunctionType and member.fset.__code__ is f.f_code:
 						# the function was found as a property setter
-						className=cls.__name__
+						className = cls.__name__
 				if className:
 					break
-	return ".".join(x for x in (path,className,funcName) if x)
+	return ".".join(x for x in (path, className, funcName) if x)
 
 
 _onErrorSoundRequested: Optional["extensionPoints.Action"] = None
@@ -160,21 +163,21 @@ It has been encapsulated in a function to avoid circular import.
 
 
 def getOnErrorSoundRequested() -> "extensionPoints.Action":
-	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it.
-	"""
+	"""Creates _onErrorSoundRequested extension point if needed (i.e. on first use only) and returns it."""
 
 	global _onErrorSoundRequested
 
 	import extensionPoints
+
 	if not _onErrorSoundRequested:
 		_onErrorSoundRequested = extensionPoints.Action()
 	return _onErrorSoundRequested
 
 
 def shouldPlayErrorSound() -> bool:
-	"""Indicates if an error sound should be played when an error is logged.
-	"""
+	"""Indicates if an error sound should be played when an error is logged."""
 	import config
+
 	# Only play the error sound if this is a test version or if the config states it explicitly.
 	return (
 		buildVersion.isTestVersion
@@ -188,9 +191,11 @@ if NVDAState.isRunningAsSource():
 	BASE_PATH = os.path.split(__file__)[0] + os.sep
 	TB_BASE_PATH_PREFIX = '  File "'
 	TB_BASE_PATH_MATCH = TB_BASE_PATH_PREFIX + BASE_PATH
+
 	def stripBasePathFromTracebackText(text):
 		return text.replace(TB_BASE_PATH_MATCH, TB_BASE_PATH_PREFIX)
 else:
+
 	def stripBasePathFromTracebackText(text: str) -> str:
 		return text
 
@@ -212,15 +217,25 @@ class Logger(logging.Logger):
 	#: @type: C{long}
 	fragmentStart = None
 
-	def _log(self, level, msg, args, exc_info=None, extra=None, codepath=None, activateLogViewer=False, stack_info=None):
+	def _log(
+		self,
+		level,
+		msg,
+		args,
+		exc_info=None,
+		extra=None,
+		codepath=None,
+		activateLogViewer=False,
+		stack_info=None,
+	):
 		if not extra:
-			extra={}
+			extra = {}
 
 		if not codepath or stack_info is True:
-			f=inspect.currentframe().f_back.f_back
+			f = inspect.currentframe().f_back.f_back
 
 		if not codepath:
-			codepath=getCodePath(f)
+			codepath = getCodePath(f)
 		extra["codepath"] = codepath
 
 		if globalVars.appArgs.secure:
@@ -230,6 +245,7 @@ class Logger(logging.Logger):
 		if activateLogViewer:
 			# Import logViewer here, as we don't want to import GUI code when this module is imported.
 			from gui import logViewer
+
 			logViewer.activate()
 			# Move to the end of the current log text. The new text will be written at this position.
 			# This means that the user will be positioned at the start of the new log text.
@@ -239,8 +255,9 @@ class Logger(logging.Logger):
 		if stack_info:
 			if stack_info is True:
 				stack_info = traceback.extract_stack(f)
-			msg += ("\nStack trace:\n"
-				+ stripBasePathFromTracebackText("".join(traceback.format_list(stack_info)).rstrip()))
+			msg += "\nStack trace:\n" + stripBasePathFromTracebackText(
+				"".join(traceback.format_list(stack_info)).rstrip(),
+			)
 
 		res = super()._log(level, msg, args, exc_info, extra)
 
@@ -251,52 +268,59 @@ class Logger(logging.Logger):
 		return res
 
 	def debugWarning(self, msg, *args, **kwargs):
-		"""Log 'msg % args' with severity 'DEBUGWARNING'.
-		"""
+		"""Log 'msg % args' with severity 'DEBUGWARNING'."""
 		if not self.isEnabledFor(self.DEBUGWARNING):
 			return
 		self._log(log.DEBUGWARNING, msg, args, **kwargs)
 
 	def io(self, msg, *args, **kwargs):
-		"""Log 'msg % args' with severity 'IO'.
-		"""
+		"""Log 'msg % args' with severity 'IO'."""
 		if not self.isEnabledFor(self.IO):
 			return
 		self._log(log.IO, msg, args, **kwargs)
 
-	def exception(self, msg: str = "", exc_info: Literal[True] | _excInfo_t = True, **kwargs):
+	def exception(self, msg: str = "", exc_info: Literal[True] | _excInfo_t | BaseException = True, **kwargs):
 		"""Log an exception at an appropriate level.
 		Normally, it will be logged at level "ERROR".
 		However, certain exceptions which aren't considered errors (or aren't errors that we can fix) are expected and will therefore be logged at a lower level.
 		"""
 		import comtypes
+
 		if exc_info is True:
 			exc_info = sys.exc_info()
+		if isinstance(exc_info, tuple):
+			exc = exc_info[1]
+		else:
+			exc = exc_info
 
-		exc = exc_info[1]
 		if (
 			(
 				isinstance(exc, WindowsError)
-				and exc.winerror in (
+				and exc.winerror
+				in (
 					ERROR_INVALID_WINDOW_HANDLE,
 					ERROR_TIMEOUT,
 					RPCConstants.RPC.S_SERVER_UNAVAILABLE,
 					RPCConstants.RPC.S_CALL_FAILED_DNE,
 					EPT_S_NOT_REGISTERED,
-					RPCConstants.RPC.E_CALL_CANCELED
+					RPCConstants.RPC.E_CALL_CANCELED,
 				)
 			)
 			or (
 				isinstance(exc, comtypes.COMError)
 				and (
-					exc.hresult in (
+					exc.hresult
+					in (
 						E_ACCESSDENIED,
 						CO_E_OBJNOTCONNECTED,
 						EVENT_E_ALL_SUBSCRIBERS_FAILED,
 						RPCConstants.RPC.E_CALL_REJECTED,
 						RPCConstants.RPC.E_CALL_CANCELED,
-						RPCConstants.RPC.E_DISCONNECTED
-					) or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE))
+						RPCConstants.RPC.E_DISCONNECTED,
+					)
+					or exc.hresult & 0xFFFF == RPCConstants.RPC.S_SERVER_UNAVAILABLE
+				)
+			)
 			or isinstance(exc, exceptions.CallCancelled)
 		):
 			level = self.DEBUGWARNING
@@ -347,15 +371,15 @@ class Logger(logging.Logger):
 				self.fragmentStart = None
 			return fragment
 
-class RemoteHandler(logging.Handler):
 
+class RemoteHandler(logging.Handler):
 	def __init__(self):
-		#Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
+		# Load nvdaHelperRemote.dll but with an altered search path so it can pick up other dlls in lib
 		path = os.path.join(globalVars.appDir, "lib", buildVersion.version, "nvdaHelperRemote.dll")
-		h=ctypes.windll.kernel32.LoadLibraryExW(path,0,LOAD_WITH_ALTERED_SEARCH_PATH)
+		h = ctypes.windll.kernel32.LoadLibraryExW(path, 0, LOAD_WITH_ALTERED_SEARCH_PATH)
 		if not h:
-			raise OSError("Could not load %s"%path) 
-		self._remoteLib=ctypes.WinDLL("nvdaHelperRemote",handle=h)
+			raise OSError("Could not load %s" % path)
+		self._remoteLib = ctypes.WinDLL("nvdaHelperRemote", handle=h)
 		logging.Handler.__init__(self)
 
 	def emit(self, record):
@@ -365,10 +389,10 @@ class RemoteHandler(logging.Handler):
 		except WindowsError:
 			pass
 
-class FileHandler(logging.FileHandler):
 
-	def handle(self,record):
-		if record.levelno>=logging.CRITICAL:
+class FileHandler(logging.FileHandler):
+	def handle(self, record):
+		if record.levelno >= logging.CRITICAL:
 			try:
 				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
 			except:  # noqa: E722
@@ -376,6 +400,7 @@ class FileHandler(logging.FileHandler):
 		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			getOnErrorSoundRequested().notify()
 		return super().handle(record)
+
 
 class Formatter(logging.Formatter):
 	default_time_format = "%H:%M:%S"
@@ -389,7 +414,7 @@ class Formatter(logging.Formatter):
 		# Which is a clean and friendly module.class.function string.
 		# However, as NVDA's logger is also installed as the root logger to catch logging from other libraries,
 		# log calls outside of NVDA will not provide codepath.
-		if not hasattr(record, 'codepath'):
+		if not hasattr(record, "codepath"):
 			# #14315: codepath was not provided,
 			# So make up a simple one from standard record attributes we know will exist.
 			record.codepath = "{name}.{funcName}".format(**record.__dict__)
@@ -410,8 +435,7 @@ class Formatter(logging.Formatter):
 
 
 class StreamRedirector(object):
-	"""Redirects an output stream to a logger.
-	"""
+	"""Redirects an output stream to a logger."""
 
 	def __init__(self, name, logger, level):
 		"""Constructor.
@@ -434,6 +458,7 @@ class StreamRedirector(object):
 	def flush(self):
 		pass
 
+
 def redirectStdout(logger):
 	"""Redirect stdout and stderr to a given logger.
 	@param logger: The logger to which to redirect.
@@ -441,6 +466,7 @@ def redirectStdout(logger):
 	"""
 	sys.stdout = StreamRedirector("stdout", logger, logging.WARNING)
 	sys.stderr = StreamRedirector("stderr", logger, logging.ERROR)
+
 
 # Register our logging class as the class for all loggers.
 logging.setLoggerClass(Logger)
@@ -455,6 +481,7 @@ def _getDefaultLogFilePath():
 		return os.path.join(globalVars.appDir, "nvda.log")
 	else:
 		import tempfile
+
 		return os.path.join(tempfile.gettempdir(), "nvda.log")
 
 
@@ -463,7 +490,6 @@ def _excepthook(*exc_info):
 
 
 class _ThreadExceptHookArgs_t(NamedTuple):
-
 	exc_type: type[BaseException]
 	exc_value: BaseException | None
 	exc_traceback: TracebackType | None
@@ -481,7 +507,6 @@ def _threadExceptHook(excInfoObj: _ThreadExceptHookArgs_t) -> None:
 
 
 class _UnraisableHookArgs(Protocol):
-
 	exc_type: type[BaseException]
 	exc_value: BaseException | None
 	exc_traceback: TracebackType | None
@@ -494,11 +519,17 @@ def _unraisableExceptHook(unraisable: _UnraisableHookArgs) -> None:
 		msg = f"{unraisable.err_msg}: {unraisable.object!r}"
 	else:
 		msg = f"Exception ignored in: {unraisable.object!r}"
-	log.exception(exc_info=(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback), codepath=msg)
+	log.exception(
+		exc_info=(unraisable.exc_type, unraisable.exc_value, unraisable.exc_traceback),
+		codepath=msg,
+	)
 
 
 def _showwarning(message, category, filename, lineno, file=None, line=None):
-	log.debugWarning(warnings.formatwarning(message, category, filename, lineno, line).rstrip(), codepath="Python warning")
+	log.debugWarning(
+		warnings.formatwarning(message, category, filename, lineno, line).rstrip(),
+		codepath="Python warning",
+	)
 
 
 def _shouldDisableLogging() -> bool:
@@ -534,7 +565,7 @@ def initialize(shouldDoRemoteLogging=False):
 		# Input: kb(desktop):v
 		logFormatter = Formatter(
 			fmt="{levelname!s} - {codepath!s} ({asctime}) - {threadName} ({thread}):\n{message}",
-			style="{"
+			style="{",
 		)
 		if _shouldDisableLogging():
 			logHandler = logging.NullHandler()
@@ -551,7 +582,7 @@ def initialize(shouldDoRemoteLogging=False):
 					os.unlink(oldLogFileName)
 				os.rename(globalVars.appArgs.logFileName, oldLogFileName)
 			except (IOError, WindowsError):
-				pass # Probably log does not exist, don't care.
+				pass  # Probably log does not exist, don't care.
 			try:
 				logHandler = FileHandler(globalVars.appArgs.logFileName, mode="w", encoding="utf-8")
 			except IOError:
@@ -571,7 +602,7 @@ def initialize(shouldDoRemoteLogging=False):
 		logHandler = RemoteHandler()
 		logFormatter = Formatter(
 			fmt="{codepath!s}:\n{message}",
-			style="{"
+			style="{",
 		)
 	logHandler.setFormatter(logFormatter)
 	log.root.addHandler(logHandler)
@@ -584,8 +615,7 @@ def initialize(shouldDoRemoteLogging=False):
 
 
 def isLogLevelForced() -> bool:
-	"""Check if the log level was overridden either from the command line or because of secure mode.
-	"""
+	"""Check if the log level was overridden either from the command line or because of secure mode."""
 	return (
 		globalVars.appArgs.secure
 		or globalVars.appArgs.debugLogging
@@ -595,12 +625,12 @@ def isLogLevelForced() -> bool:
 
 
 def setLogLevelFromConfig():
-	"""Set the log level based on the current configuration.
-	"""
+	"""Set the log level based on the current configuration."""
 	if isLogLevelForced():
 		return
 	import config
-	levelName=config.conf["general"]["loggingLevel"]
+
+	levelName = config.conf["general"]["loggingLevel"]
 	# logging.getLevelName can give you a level number if given a name.
 	level = logging.getLevelName(levelName)
 	# The lone exception to level higher than INFO is "OFF" (100).

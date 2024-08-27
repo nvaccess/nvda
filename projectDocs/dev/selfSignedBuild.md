@@ -7,7 +7,7 @@ Copies of NVDA signed by a self-signed certificate will not function on systems 
 
 Following are instructions on how to generate and install a self-signed certificate.
 This is not supported and should only be attempted by developers who know what they are doing and are aware of the risks.
-If the private key is compromised, this poses a serious security risk to your system. 
+If the private key is compromised, this poses a serious security risk to your system.
 
 Do not forget to [remove the certificate](#remove-the-certificate) when you are done testing.
 

@@ -3,10 +3,10 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""Logic for smoketesting the settings.
-"""
+"""Logic for smoketesting the settings."""
 
 from robot.libraries.BuiltIn import BuiltIn
+
 # relative import not used for 'systemTestUtils' because the folder is added to the path for 'libraries'
 # imported methods start with underscore (_) so they don't get imported into robot files as keywords
 from SystemTestSpy import (
@@ -22,6 +22,7 @@ import os
 from typing import Optional
 import NvdaLib as _nvdaLib
 from NvdaLib import NvdaLib as _nvdaRobotLib
+
 _nvdaProcessAlias = _nvdaRobotLib.nvdaProcessAlias
 
 _builtIn: BuiltIn = BuiltIn()

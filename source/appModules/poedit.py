@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes, Cyrille Bougot
 
-"""App module for Poedit 3.4+.
-"""
+"""App module for Poedit 3.4+."""
 
 from enum import IntEnum
 
@@ -58,9 +57,9 @@ class _WindowControlIdOffsetFromSidebar(IntEnum):
 
 
 def _findDescendantObject(
-		parentWindowHandle: int,
-		controlId: int | None = None,
-		className: str | None = None,
+	parentWindowHandle: int,
+	controlId: int | None = None,
+	className: str | None = None,
 ) -> Window | None:
 	"""
 	Finds a window with the given controlId or class name,
@@ -112,20 +111,20 @@ class AppModule(appModuleHandler.AppModule):
 	def _get__isPro(self) -> bool:
 		"""Returns whether this instance of Poedit is a pro version."""
 		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
-			_WindowControlIdOffsetFromDataView.PRO_IDENTIFIER
+			_WindowControlIdOffsetFromDataView.PRO_IDENTIFIER,
 		)
 		return obj is None
 
 	def _getNVDAObjectForWindowControlIdOffsetFromDataView(
-			self,
-			windowControlIdOffset: _WindowControlIdOffsetFromDataView
+		self,
+		windowControlIdOffset: _WindowControlIdOffsetFromDataView,
 	) -> Window | None:
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
 	def _getNVDAObjectForWindowControlIdOffsetFromSidebar(
-			self,
-			windowControlIdOffset: _WindowControlIdOffsetFromSidebar
+		self,
+		windowControlIdOffset: _WindowControlIdOffsetFromSidebar,
 	) -> Window | None:
 		fg = api.getForegroundObject()
 		sidebarControlId = self._sidebarControlId
@@ -142,7 +141,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get__translatorNotesObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
-			_WindowControlIdOffsetFromSidebar.TRANSLATOR_NOTES
+			_WindowControlIdOffsetFromSidebar.TRANSLATOR_NOTES,
 		)
 
 	def _reportControlScriptHelper(self, obj: Window, description: str):
@@ -160,14 +159,14 @@ class AppModule(appModuleHandler.AppModule):
 					# to be presented to the user in Poedit.
 					# {description} is replaced by the description of the window to be reported,
 					# e.g. translator notes
-					pgettext("poedit", "No {description}").format(description=description)
+					pgettext("poedit", "No {description}").format(description=description),
 				)
 		else:
 			ui.message(
 				# Translators: this message is reported when NVDA is unable to find
 				# a requested window in Poedit.
 				# {description} is replaced by the description of the window to be reported, e.g. translator notes
-				pgettext("poedit", "Could not find {description} window.").format(description=description)
+				pgettext("poedit", "Could not find {description} window.").format(description=description),
 			)
 
 	@script(
@@ -193,7 +192,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get__commentObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
-			_WindowControlIdOffsetFromSidebar.COMMENT
+			_WindowControlIdOffsetFromSidebar.COMMENT,
 		)
 
 	@script(
@@ -220,7 +219,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get__oldSourceTextObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffsetFromSidebar(
-			_WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT
+			_WindowControlIdOffsetFromSidebar.OLD_SOURCE_TEXT,
 		)
 
 	@script(
@@ -246,7 +245,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get__translationWarningObj(self) -> Window | None:
 		return self._getNVDAObjectForWindowControlIdOffsetFromDataView(
-			_WindowControlIdOffsetFromDataView.TRANSLATION_WARNING
+			_WindowControlIdOffsetFromDataView.TRANSLATION_WARNING,
 		)
 
 	@script(
@@ -272,7 +271,7 @@ class AppModule(appModuleHandler.AppModule):
 
 	def _get__needsWorkObj(self) -> Window | None:
 		obj = self._getNVDAObjectForWindowControlIdOffsetFromDataView(
-			_WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH
+			_WindowControlIdOffsetFromDataView.NEEDS_WORK_SWITCH,
 		)
 		if obj and obj.role == controlTypes.Role.CHECKBOX:
 			return obj

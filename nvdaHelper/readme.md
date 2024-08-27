@@ -24,13 +24,13 @@ For instance:
 
 #### nvdaHelperLocalWin10.dll
 Contains code specific to Windows 10 and above, that aides in accessing newer technologies such as Windows OneCore speech synthesis, the Windows in-built OCR service.
-This code is mostly C++/WinRT. 
+This code is mostly C++/WinRT.
 
 #### nvdaHelperLocal.dll
 This dll is loaded directly in to NVDA. It provides the following features:
 *  client stub methods for several RPC interfaces allowing NVDA to execute code in-process. These interfaces include nvdaInprocUtils, vbufBackends, and displayModel, which are implemented in nvdaHelperRemote.dll.
-* Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal. 
-* Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel 
+* Server stub methods for several RPC interfaces allowing in-process code to execute code in NVDA. These interfaces include nvdaController and nvdaControllerInternal.
+* Functions to aide NVDA in hooking platform dlls to make their calls easier to cancel
 * Several small utility functions that assist in processing text (which are faster in c++).
 
 #### NVDAHelperRemote.dll
@@ -108,7 +108,7 @@ The `nvdaHelperDebugFlags` variable takes one or more of the following flags:
 
 The special keywords none and all can also be used in place of the individual flags.
 
-An example follows that enables debug CRT and runtime checks 
+An example follows that enables debug CRT and runtime checks
 
 ```cmd
 scons source nvdaHelperDebugFlags=debugCRT,RTC

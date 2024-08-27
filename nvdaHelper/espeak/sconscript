@@ -10,20 +10,25 @@ from glob import glob
 sourceDir: SCons.Node.FS.Dir
 thirdPartyEnv: SCons.Environment.Environment
 
-Import([
-	'thirdPartyEnv',
-	'sourceDir',
-])
+Import(
+	[
+		"thirdPartyEnv",
+		"sourceDir",
+	]
+)
+
 
 class AutoFreeCDLL(ctypes.CDLL):
 	def __del__(self):
 		ctypes.windll.kernel32.FreeLibrary(self._handle)
 
-synthDriversDir=sourceDir.Dir('synthDrivers')
-espeakRepo=Dir("#include/espeak")
-espeakSrcDir=espeakRepo.Dir('src')
-espeakIncludeDir=espeakSrcDir.Dir('include')
-sonicSrcDir=Dir("#include/sonic")
+
+synthDriversDir = sourceDir.Dir("synthDrivers")
+espeakRepo = Dir("#include/espeak")
+espeakSrcDir = espeakRepo.Dir("src")
+espeakIncludeDir = espeakSrcDir.Dir("include")
+sonicSrcDir = Dir("#include/sonic")
+
 
 class espeak_ERROR(enum.IntEnum):
 	EE_OK = 0
@@ -58,23 +63,24 @@ class espeak_ng_STATUS(enum.IntFlag):
 	ENS_UNKNOWN_PHONEME_FEATURE = 0x10000FFF
 	ENS_UNKNOWN_TEXT_ENCODING = 0x100010FF
 
+
 class espeak_VOICE(ctypes.Structure):
-	_fields_=[
-		('name',ctypes.c_char_p),
-		('languages',ctypes.c_char_p),
-		('identifier',ctypes.c_char_p),
-		('gender',ctypes.c_byte),
-		('age',ctypes.c_byte),
-		('variant',ctypes.c_byte),
-		('xx1',ctypes.c_byte),
-		('score',ctypes.c_int),
-		('spare',ctypes.c_void_p),
+	_fields_ = [
+		("name", ctypes.c_char_p),
+		("languages", ctypes.c_char_p),
+		("identifier", ctypes.c_char_p),
+		("gender", ctypes.c_byte),
+		("age", ctypes.c_byte),
+		("variant", ctypes.c_byte),
+		("xx1", ctypes.c_byte),
+		("score", ctypes.c_int),
+		("spare", ctypes.c_void_p),
 	]
 
 
 class espeak_AUDIO_OUTPUT(enum.IntEnum):
-	"""From '/espeak-ng/speak_lib.h'
-	"""
+	"""From '/espeak-ng/speak_lib.h'"""
+
 	#: PLAYBACK mode: plays the audio data, supplies events to the calling program
 	AUDIO_OUTPUT_PLAYBACK = 0
 	#: RETRIEVAL mode: supplies audio data and events to the calling program
@@ -84,56 +90,68 @@ class espeak_AUDIO_OUTPUT(enum.IntEnum):
 	#: Synchronous playback
 	AUDIO_OUTPUT_SYNCH_PLAYBACK = 3
 
+
 env: SCons.Environment.Environment = thirdPartyEnv.Clone()
 env.Append(
 	CCFLAGS=[
 		# Whole-program optimization causes eSpeak to distort and warble with its Klatt4 voice
 		# Therefore specifically force it off
-		'/GL-',
+		"/GL-",
 		# Ignore all warnings as the code is not ours.
-		'/W0',
+		"/W0",
 		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
-		'/DPACKAGE_VERSION=\\"1.52-dev 54ee11a7\\"',  # See 'include/espeak/src/windows/config.h'
-		'/DHAVE_STDINT_H=1',
-		'/D__WIN32__#1',
-		'/DLIBESPEAK_NG_EXPORT',
+		'/DPACKAGE_VERSION=\\"1.52-dev 961454ff\\"',  # See 'include/espeak/src/windows/config.h'
+		"/DHAVE_STDINT_H=1",
+		"/D__WIN32__#1",
+		"/DLIBESPEAK_NG_EXPORT",
 		# Define WIN32_LEAN_AND_MEAN for preprocessor to prevent windows.h including winsock causing redefinition
 		# errors when winsock2 is included by espeak\src\include\compat\endian.h
-		'/DWIN32_LEAN_AND_MEAN',
+		"/DWIN32_LEAN_AND_MEAN",
 		# Preprocessor definitions. Espeak Features
-		'/DUSE_SPEECHPLAYER=1',
-		'/DUSE_KLATT=1',
-		'/DUSE_LIBSONIC=1',
-	])
+		"/DUSE_SPEECHPLAYER=1",
+		"/DUSE_KLATT=1",
+		"/DUSE_LIBSONIC=1",
+	]
+)
 
 env.Append(
 	CPPPATH=[
-		'#nvdaHelper/espeak',  # ensure that nvdaHelper/espeak/config.h is found first.
+		"#nvdaHelper/espeak",  # ensure that nvdaHelper/espeak/config.h is found first.
 		espeakIncludeDir,
-		espeakIncludeDir.Dir('compat'),
-		espeakSrcDir.Dir('speechPlayer/include'),
+		espeakIncludeDir.Dir("compat"),
+		espeakSrcDir.Dir("speechPlayer/include"),
 		sonicSrcDir,
-		espeakSrcDir.Dir('ucd-tools/src/include')
-	])
+		espeakSrcDir.Dir("ucd-tools/src/include"),
+	]
+)
 
-def espeak_compilePhonemeData_buildEmitter(target,source,env):
-	phSourceIgnores=['error_log','error_intonation','compile_prog_log','compile_report','envelopes.png']
-	phSources=env.Flatten([[Dir(topDir).File(f) for f in files if f not in phSourceIgnores] for topDir,subdirs,files in os.walk(source[0].abspath)])
-	sources=env.Flatten([phSources])
-	targets=[target[0].File(f) for f in ['intonations','phondata','phondata-manifest','phonindex','phontab']]
-	phSideEffects=[source[0].File(x) for x in phSourceIgnores]
-	env.SideEffect(phSideEffects,targets)
-	return targets,sources
 
-def espeak_compilePhonemeData_buildAction(target,source,env):
+def espeak_compilePhonemeData_buildEmitter(target, source, env):
+	phSourceIgnores = ["error_log", "error_intonation", "compile_prog_log", "compile_report", "envelopes.png"]
+	phSources = env.Flatten(
+		[
+			[Dir(topDir).File(f) for f in files if f not in phSourceIgnores]
+			for topDir, subdirs, files in os.walk(source[0].abspath)
+		]
+	)
+	sources = env.Flatten([phSources])
+	targets = [
+		target[0].File(f) for f in ["intonations", "phondata", "phondata-manifest", "phonindex", "phontab"]
+	]
+	phSideEffects = [source[0].File(x) for x in phSourceIgnores]
+	env.SideEffect(phSideEffects, targets)
+	return targets, sources
+
+
+def espeak_compilePhonemeData_buildAction(target, source, env):
 	# We want the eSpeak dll to be freed after each dictionary.
 	# This is because it writes to stderr but doesn't flush it.
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
-	espeak=AutoFreeCDLL(espeakLib[0].abspath)
+	espeak = AutoFreeCDLL(espeakLib[0].abspath)
 	espeak.espeak_ng_InitializePath(os.fsencode(espeakRepo.abspath))
-	espeak.espeak_ng_CompileIntonation(None,None)
-	espeak.espeak_ng_CompilePhonemeData(22050,None,None)
+	espeak.espeak_ng_CompileIntonation(None, None)
+	espeak.espeak_ng_CompilePhonemeData(22050, None, None)
 	espeak.espeak_Terminate()
 
 
@@ -143,7 +161,7 @@ def removeEmoji():
 	Currently many of these simply crash eSpeak at runtime.
 	Also, our own emoji processing using CLDR data is preferred.
 	"""
-	emojiGlob = os.path.join(espeakRepo.abspath, 'dictsource', '*_emoji')
+	emojiGlob = os.path.join(espeakRepo.abspath, "dictsource", "*_emoji")
 	for f in glob(emojiGlob):
 		print(f"Removing emoji file: {f}")
 		os.remove(f)
@@ -156,146 +174,794 @@ def cleanFiles_preBuildAction(target, source, env):
 	 - dictionary artifacts listed in CLEANFILES
 	"""
 	removeEmoji()
-	# refer to CLEANFILES in include\espeak\Makefile.am 
+	# refer to CLEANFILES in include\espeak\Makefile.am
 	for f in (
-			# These files are created when we moved them from espeak/dictsource/extra/*_*.
-			os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
-			os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
-			os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
-		):
+		# These files are created when we moved them from espeak/dictsource/extra/*_*.
+		os.path.join(espeakRepo.abspath, "dictsource", "ru_listx"),
+		os.path.join(espeakRepo.abspath, "dictsource", "cmn_listx"),
+		os.path.join(espeakRepo.abspath, "dictsource", "yue_listx"),
+	):
 		if os.path.exists(f):
 			print(f"Removing listx file: {f}")
 			os.remove(f)
 
 
-env['BUILDERS']['espeak_compilePhonemeData']=Builder(action=env.Action(espeak_compilePhonemeData_buildAction,"Compiling phoneme data"),emitter=espeak_compilePhonemeData_buildEmitter)
+env["BUILDERS"]["espeak_compilePhonemeData"] = Builder(
+	action=env.Action(espeak_compilePhonemeData_buildAction, "Compiling phoneme data"),
+	emitter=espeak_compilePhonemeData_buildEmitter,
+)
 
 #: See dictionaries section of /include/espeak/Makefile.am
 espeakDictionaryCompileList: typing.Dict[
-	str, # expected dict file name EG 'es_dict'
-	typing.Tuple[str, typing.List[str]] # language code, list of input files
+	str,  # expected dict file name EG 'es_dict'
+	typing.Tuple[str, typing.List[str]],  # language code, list of input files
 ] = {
-	"af_dict": ("af", ["af_list", "af_rules", ]),
-	"am_dict": ("am", ["am_list", "am_rules", ]),
-	"an_dict": ("an", ["an_list", "an_rules", ]),
+	"af_dict": (
+		"af",
+		[
+			"af_list",
+			"af_rules",
+		],
+	),
+	"am_dict": (
+		"am",
+		[
+			"am_list",
+			"am_rules",
+		],
+	),
+	"an_dict": (
+		"an",
+		[
+			"an_list",
+			"an_rules",
+		],
+	),
 	"ar_dict": ("ar", ["ar_listx", "ar_list", "ar_rules"]),
-	"as_dict": ("as", ["as_list", "as_rules", ]),
-	"az_dict": ("az", ["az_list", "az_rules", ]),
-	"ba_dict": ("ba", ["ba_list", "ba_rules", ]),
-	"be_dict": ("be", ["be_list", "be_rules", ]),
+	"as_dict": (
+		"as",
+		[
+			"as_list",
+			"as_rules",
+		],
+	),
+	"az_dict": (
+		"az",
+		[
+			"az_list",
+			"az_rules",
+		],
+	),
+	"ba_dict": (
+		"ba",
+		[
+			"ba_list",
+			"ba_rules",
+		],
+	),
+	"be_dict": (
+		"be",
+		[
+			"be_list",
+			"be_rules",
+		],
+	),
 	"bg_dict": ("bg", ["bg_listx", "bg_list", "bg_rules"]),
-	"bn_dict": ("bn", ["bn_list", "bn_rules", ]),
-	"bpy_dict": ("bpy", ["bpy_list", "bpy_rules", ]),
-	"bs_dict": ("bs", ["bs_list", "bs_rules", ]),
-	"ca_dict": ("ca", ["ca_list", "ca_rules", ]),
-	"chr_dict": ("chr", ["chr_list", "chr_rules", ]),
+	"bn_dict": (
+		"bn",
+		[
+			"bn_list",
+			"bn_rules",
+		],
+	),
+	"bpy_dict": (
+		"bpy",
+		[
+			"bpy_list",
+			"bpy_rules",
+		],
+	),
+	"bs_dict": (
+		"bs",
+		[
+			"bs_list",
+			"bs_rules",
+		],
+	),
+	"ca_dict": (
+		"ca",
+		[
+			"ca_list",
+			"ca_rules",
+		],
+	),
+	"chr_dict": (
+		"chr",
+		[
+			"chr_list",
+			"chr_rules",
+		],
+	),
 	"cmn_dict": ("cmn", ["cmn_listx", "cmn_list", "cmn_rules"]),
-	"cs_dict": ("cs", ["cs_list", "cs_rules", ]),
-	"cv_dict": ("cv", ["cv_list", "cv_rules", ]),
-	"cy_dict": ("cy", ["cy_list", "cy_rules", ]),
-	"da_dict": ("da", ["da_list", "da_rules", ]),
-	"de_dict": ("de", ["de_list", "de_rules", ]),
-	"el_dict": ("el", ["el_list", "el_rules", ]),
-	"en_dict": ("en", ["en_list", "en_rules", ]),
-	"eo_dict": ("eo", ["eo_list", "eo_rules", ]),
-	"es_dict": ("es", ["es_list", "es_rules", ]),
-	"et_dict": ("et", ["et_list", "et_rules", ]),
-	"eu_dict": ("eu", ["eu_list", "eu_rules", ]),
-	"fa_dict": ("fa", ["fa_list", "fa_rules", ]),
-	"fi_dict": ("fi", ["fi_list", "fi_rules", ]),
-	"fr_dict": ("fr", ["fr_list", "fr_rules", ]),
-	"ga_dict": ("ga", ["ga_list", "ga_rules", ]),
-	"gd_dict": ("gd", ["gd_list", "gd_rules", ]),
-	"gn_dict": ("gn", ["gn_list", "gn_rules", ]),
-	"grc_dict": ("grc", ["grc_list", "grc_rules", ]),
-	"gu_dict": ("gu", ["gu_list", "gu_rules", ]),
-	"hak_dict": ("hak", ["hak_list", "hak_rules", ]),
-	"haw_dict": ("haw", ["haw_list", "haw_rules", ]),
+	"cs_dict": (
+		"cs",
+		[
+			"cs_list",
+			"cs_rules",
+		],
+	),
+	"cv_dict": (
+		"cv",
+		[
+			"cv_list",
+			"cv_rules",
+		],
+	),
+	"cy_dict": (
+		"cy",
+		[
+			"cy_list",
+			"cy_rules",
+		],
+	),
+	"da_dict": (
+		"da",
+		[
+			"da_list",
+			"da_rules",
+		],
+	),
+	"de_dict": (
+		"de",
+		[
+			"de_list",
+			"de_rules",
+		],
+	),
+	"el_dict": (
+		"el",
+		[
+			"el_list",
+			"el_rules",
+		],
+	),
+	"en_dict": (
+		"en",
+		[
+			"en_list",
+			"en_rules",
+		],
+	),
+	"eo_dict": (
+		"eo",
+		[
+			"eo_list",
+			"eo_rules",
+		],
+	),
+	"es_dict": (
+		"es",
+		[
+			"es_list",
+			"es_rules",
+		],
+	),
+	"et_dict": (
+		"et",
+		[
+			"et_list",
+			"et_rules",
+		],
+	),
+	"eu_dict": (
+		"eu",
+		[
+			"eu_list",
+			"eu_rules",
+		],
+	),
+	"fa_dict": (
+		"fa",
+		[
+			"fa_list",
+			"fa_rules",
+		],
+	),
+	"fi_dict": (
+		"fi",
+		[
+			"fi_list",
+			"fi_rules",
+		],
+	),
+	"fo_dict": (
+		"fo",
+		[
+			"fo_list",
+			"fo_rules",
+		],
+	),
+	"fr_dict": (
+		"fr",
+		[
+			"fr_list",
+			"fr_rules",
+		],
+	),
+	"ga_dict": (
+		"ga",
+		[
+			"ga_list",
+			"ga_rules",
+		],
+	),
+	"gd_dict": (
+		"gd",
+		[
+			"gd_list",
+			"gd_rules",
+		],
+	),
+	"gn_dict": (
+		"gn",
+		[
+			"gn_list",
+			"gn_rules",
+		],
+	),
+	"grc_dict": (
+		"grc",
+		[
+			"grc_list",
+			"grc_rules",
+		],
+	),
+	"gu_dict": (
+		"gu",
+		[
+			"gu_list",
+			"gu_rules",
+		],
+	),
+	"hak_dict": (
+		"hak",
+		[
+			"hak_list",
+			"hak_rules",
+		],
+	),
+	"haw_dict": (
+		"haw",
+		[
+			"haw_list",
+			"haw_rules",
+		],
+	),
 	"he_dict": ("he", ["he_listx", "he_list", "he_rules"]),
-	"hi_dict": ("hi", ["hi_list", "hi_rules", ]),
-	"hr_dict": ("hr", ["hr_list", "hr_rules", ]),
-	"ht_dict": ("ht", ["ht_list", "ht_rules", ]),
-	"hu_dict": ("hu", ["hu_list", "hu_rules", ]),
-	"hy_dict": ("hy", ["hy_list", "hy_rules", ]),
+	"hi_dict": (
+		"hi",
+		[
+			"hi_list",
+			"hi_rules",
+		],
+	),
+	"hr_dict": (
+		"hr",
+		[
+			"hr_list",
+			"hr_rules",
+		],
+	),
+	"ht_dict": (
+		"ht",
+		[
+			"ht_list",
+			"ht_rules",
+		],
+	),
+	"hu_dict": (
+		"hu",
+		[
+			"hu_list",
+			"hu_rules",
+		],
+	),
+	"hy_dict": (
+		"hy",
+		[
+			"hy_list",
+			"hy_rules",
+		],
+	),
 	"ia_dict": ("ia", ["ia_listx", "ia_list", "ia_rules"]),
-	"id_dict": ("id", ["id_list", "id_rules", ]),
-	"io_dict": ("io", ["io_list", "io_rules", ]),
-	"is_dict": ("is", ["is_list", "is_rules", ]),
+	"id_dict": (
+		"id",
+		[
+			"id_list",
+			"id_rules",
+		],
+	),
+	"io_dict": (
+		"io",
+		[
+			"io_list",
+			"io_rules",
+		],
+	),
+	"is_dict": (
+		"is",
+		[
+			"is_list",
+			"is_rules",
+		],
+	),
 	"it_dict": ("it", ["it_listx", "it_list", "it_rules"]),
-	"ja_dict": ("ja", ["ja_list", "ja_rules", ]),
-	"jbo_dict": ("jbo", ["jbo_list", "jbo_rules", ]),
-	"ka_dict": ("ka", ["ka_list", "ka_rules", ]),
-	"kaa_dict": ("kaa", ["kaa_list", "kaa_rules", ]),
-	"kk_dict": ("kk", ["kk_list", "kk_rules", ]),
-	"kl_dict": ("kl", ["kl_list", "kl_rules", ]),
-	"kn_dict": ("kn", ["kn_list", "kn_rules", ]),
-	"kok_dict": ("kok", ["kok_list", "kok_rules", ]),
-	"ko_dict": ("ko", ["ko_list", "ko_rules", ]),
-	"ku_dict": ("ku", ["ku_list", "ku_rules", ]),
-	"ky_dict": ("ky", ["ky_list", "ky_rules", ]),
-	"la_dict": ("la", ["la_list", "la_rules", ]),
-	"lb_dict": ("lb", ["lb_list", "lb_rules", ]),
-	"lfn_dict": ("lfn", ["lfn_list", "lfn_rules", ]),
-	"lt_dict": ("lt", ["lt_list", "lt_rules", ]),
-	"lv_dict": ("lv", ["lv_list", "lv_rules", ]),
-	"mi_dict": ("mi", ["mi_list", "mi_rules", ]),
-	"mk_dict": ("mk", ["mk_list", "mk_rules", ]),
-	"ml_dict": ("ml", ["ml_list", "ml_rules", ]),
-	"mr_dict": ("mr", ["mr_list", "mr_rules", ]),
-	"ms_dict": ("ms", ["ms_list", "ms_rules", ]),
-	"mt_dict": ("mt", ["mt_list", "mt_rules", ]),
-	"mto_dict": ("mto", ["mto_list", "mto_rules", ]),
-	"my_dict": ("my", ["my_list", "my_rules", ]),
-	"nci_dict": ("nci", ["nci_list", "nci_rules", ]),
-	"ne_dict": ("ne", ["ne_list", "ne_rules", ]),
-	"nl_dict": ("nl", ["nl_list", "nl_rules", ]),
-	"nog_dict": ("nog", ["nog_list", "nog_rules", ]),
-	"no_dict": ("no", ["no_list", "no_rules", ]),
-	"om_dict": ("om", ["om_list", "om_rules", ]),
-	"or_dict": ("or", ["or_list", "or_rules", ]),
-	"pap_dict": ("pap", ["pap_list", "pap_rules", ]),
-	"pa_dict": ("pa", ["pa_list", "pa_rules", ]),
-	"piqd_dict": ("piqd", ["piqd_list", "piqd_rules", ]),
-	"pl_dict": ("pl", ["pl_list", "pl_rules", ]),
-	"pt_dict": ("pt", ["pt_list", "pt_rules", ]),
-	"py_dict": ("py", ["py_list", "py_rules", ]),
-	"qdb_dict": ("qdb", ["qdb_list", "qdb_rules", ]),
-	"quc_dict": ("quc", ["quc_list", "quc_rules", ]),
-	"qya_dict": ("qya", ["qya_list", "qya_rules", ]),
-	"qu_dict": ("qu", ["qu_list", "qu_rules", ]),
-	"ro_dict": ("ro", ["ro_list", "ro_rules", ]),
+	"ja_dict": (
+		"ja",
+		[
+			"ja_list",
+			"ja_rules",
+		],
+	),
+	"jbo_dict": (
+		"jbo",
+		[
+			"jbo_list",
+			"jbo_rules",
+		],
+	),
+	"ka_dict": (
+		"ka",
+		[
+			"ka_list",
+			"ka_rules",
+		],
+	),
+	"kaa_dict": (
+		"kaa",
+		[
+			"kaa_list",
+			"kaa_rules",
+		],
+	),
+	"kk_dict": (
+		"kk",
+		[
+			"kk_list",
+			"kk_rules",
+		],
+	),
+	"kl_dict": (
+		"kl",
+		[
+			"kl_list",
+			"kl_rules",
+		],
+	),
+	"kn_dict": (
+		"kn",
+		[
+			"kn_list",
+			"kn_rules",
+		],
+	),
+	"kok_dict": (
+		"kok",
+		[
+			"kok_list",
+			"kok_rules",
+		],
+	),
+	"ko_dict": (
+		"ko",
+		[
+			"ko_list",
+			"ko_rules",
+		],
+	),
+	"ku_dict": (
+		"ku",
+		[
+			"ku_list",
+			"ku_rules",
+		],
+	),
+	"ky_dict": (
+		"ky",
+		[
+			"ky_list",
+			"ky_rules",
+		],
+	),
+	"la_dict": (
+		"la",
+		[
+			"la_list",
+			"la_rules",
+		],
+	),
+	"lb_dict": (
+		"lb",
+		[
+			"lb_list",
+			"lb_rules",
+		],
+	),
+	"lfn_dict": (
+		"lfn",
+		[
+			"lfn_list",
+			"lfn_rules",
+		],
+	),
+	"lt_dict": (
+		"lt",
+		[
+			"lt_list",
+			"lt_rules",
+		],
+	),
+	"lv_dict": (
+		"lv",
+		[
+			"lv_list",
+			"lv_rules",
+		],
+	),
+	"mi_dict": (
+		"mi",
+		[
+			"mi_list",
+			"mi_rules",
+		],
+	),
+	"mk_dict": (
+		"mk",
+		[
+			"mk_list",
+			"mk_rules",
+		],
+	),
+	"ml_dict": (
+		"ml",
+		[
+			"ml_list",
+			"ml_rules",
+		],
+	),
+	"mr_dict": (
+		"mr",
+		[
+			"mr_list",
+			"mr_rules",
+		],
+	),
+	"ms_dict": (
+		"ms",
+		[
+			"ms_list",
+			"ms_rules",
+		],
+	),
+	"mt_dict": (
+		"mt",
+		[
+			"mt_list",
+			"mt_rules",
+		],
+	),
+	"mto_dict": (
+		"mto",
+		[
+			"mto_list",
+			"mto_rules",
+		],
+	),
+	"my_dict": (
+		"my",
+		[
+			"my_list",
+			"my_rules",
+		],
+	),
+	"nci_dict": (
+		"nci",
+		[
+			"nci_list",
+			"nci_rules",
+		],
+	),
+	"ne_dict": (
+		"ne",
+		[
+			"ne_list",
+			"ne_rules",
+		],
+	),
+	"nl_dict": (
+		"nl",
+		[
+			"nl_list",
+			"nl_rules",
+		],
+	),
+	"nog_dict": (
+		"nog",
+		[
+			"nog_list",
+			"nog_rules",
+		],
+	),
+	"no_dict": (
+		"no",
+		[
+			"no_list",
+			"no_rules",
+		],
+	),
+	"om_dict": (
+		"om",
+		[
+			"om_list",
+			"om_rules",
+		],
+	),
+	"or_dict": (
+		"or",
+		[
+			"or_list",
+			"or_rules",
+		],
+	),
+	"pap_dict": (
+		"pap",
+		[
+			"pap_list",
+			"pap_rules",
+		],
+	),
+	"pa_dict": (
+		"pa",
+		[
+			"pa_list",
+			"pa_rules",
+		],
+	),
+	"piqd_dict": (
+		"piqd",
+		[
+			"piqd_list",
+			"piqd_rules",
+		],
+	),
+	"pl_dict": (
+		"pl",
+		[
+			"pl_list",
+			"pl_rules",
+		],
+	),
+	"pt_dict": (
+		"pt",
+		[
+			"pt_list",
+			"pt_rules",
+		],
+	),
+	"py_dict": (
+		"py",
+		[
+			"py_list",
+			"py_rules",
+		],
+	),
+	"qdb_dict": (
+		"qdb",
+		[
+			"qdb_list",
+			"qdb_rules",
+		],
+	),
+	"quc_dict": (
+		"quc",
+		[
+			"quc_list",
+			"quc_rules",
+		],
+	),
+	"qya_dict": (
+		"qya",
+		[
+			"qya_list",
+			"qya_rules",
+		],
+	),
+	"qu_dict": (
+		"qu",
+		[
+			"qu_list",
+			"qu_rules",
+		],
+	),
+	"ro_dict": (
+		"ro",
+		[
+			"ro_list",
+			"ro_rules",
+		],
+	),
 	"ru_dict": ("ru", ["ru_listx", "ru_list", "ru_rules"]),
-	"sd_dict": ("sd", ["sd_list", "sd_rules", ]),
-	"shn_dict": ("shn", ["shn_list", "shn_rules", ]),
-	"si_dict": ("si", ["si_list", "si_rules", ]),
-	"sjn_dict": ("sjn", ["sjn_list", "sjn_rules", ]),
-	"sk_dict": ("sk", ["sk_list", "sk_rules", ]),
-	"sl_dict": ("sl", ["sl_list", "sl_rules", ]),
-	"smj_dict": ("smj", ["smj_list", "smj_rules", ]),
-	"sq_dict": ("sq", ["sq_list", "sq_rules", ]),
-	"sr_dict": ("sr", ["sr_list", "sr_rules", ]),
-	"sv_dict": ("sv", ["sv_list", "sv_rules", ]),
-	"sw_dict": ("sw", ["sw_list", "sw_rules", ]),
-	"ta_dict": ("ta", ["ta_list", "ta_rules", ]),
-	"te_dict": ("te", ["te_list", "te_rules", ]),
-	"th_dict": ("th", ["th_list", "th_rules", ]),
-	"ti_dict": ("ti", ["ti_list", "ti_rules", ]),
+	"sd_dict": (
+		"sd",
+		[
+			"sd_list",
+			"sd_rules",
+		],
+	),
+	"shn_dict": (
+		"shn",
+		[
+			"shn_list",
+			"shn_rules",
+		],
+	),
+	"si_dict": (
+		"si",
+		[
+			"si_list",
+			"si_rules",
+		],
+	),
+	"sjn_dict": (
+		"sjn",
+		[
+			"sjn_list",
+			"sjn_rules",
+		],
+	),
+	"sk_dict": (
+		"sk",
+		[
+			"sk_list",
+			"sk_rules",
+		],
+	),
+	"sl_dict": (
+		"sl",
+		[
+			"sl_list",
+			"sl_rules",
+		],
+	),
+	"smj_dict": (
+		"smj",
+		[
+			"smj_list",
+			"smj_rules",
+		],
+	),
+	"sq_dict": (
+		"sq",
+		[
+			"sq_list",
+			"sq_rules",
+		],
+	),
+	"sr_dict": (
+		"sr",
+		[
+			"sr_list",
+			"sr_rules",
+		],
+	),
+	"sv_dict": (
+		"sv",
+		[
+			"sv_list",
+			"sv_rules",
+		],
+	),
+	"sw_dict": (
+		"sw",
+		[
+			"sw_list",
+			"sw_rules",
+		],
+	),
+	"ta_dict": (
+		"ta",
+		[
+			"ta_list",
+			"ta_rules",
+		],
+	),
+	"te_dict": (
+		"te",
+		[
+			"te_list",
+			"te_rules",
+		],
+	),
+	"th_dict": (
+		"th",
+		[
+			"th_list",
+			"th_rules",
+		],
+	),
+	"ti_dict": (
+		"ti",
+		[
+			"ti_list",
+			"ti_rules",
+		],
+	),
 	"tk_dict": ("tk", ["tk_listx", "tk_list", "tk_rules"]),
-	"tn_dict": ("tn", ["tn_list", "tn_rules", ]),
+	"tn_dict": (
+		"tn",
+		[
+			"tn_list",
+			"tn_rules",
+		],
+	),
 	"tr_dict": ("tr", ["tr_listx", "tr_list", "tr_rules"]),
-	"tt_dict": ("tt", ["tt_list", "tt_rules", ]),
-	"ug_dict": ("ug", ["ug_list", "ug_rules", ]),
-	"uk_dict": ("uk", ["uk_list", "uk_rules", ]),
-	"ur_dict": ("ur", ["ur_list", "ur_rules", ]),
-	"uz_dict": ("uz", ["uz_list", "uz_rules", ]),
-	"vi_dict": ("vi", ["vi_list", "vi_rules", ]),
+	"tt_dict": (
+		"tt",
+		[
+			"tt_list",
+			"tt_rules",
+		],
+	),
+	"ug_dict": (
+		"ug",
+		[
+			"ug_list",
+			"ug_rules",
+		],
+	),
+	"uk_dict": (
+		"uk",
+		[
+			"uk_list",
+			"uk_rules",
+		],
+	),
+	"ur_dict": (
+		"ur",
+		[
+			"ur_list",
+			"ur_rules",
+		],
+	),
+	"uz_dict": (
+		"uz",
+		[
+			"uz_list",
+			"uz_rules",
+		],
+	),
+	"vi_dict": (
+		"vi",
+		[
+			"vi_list",
+			"vi_rules",
+		],
+	),
+	"xex_dict": (
+		"xex",
+		[
+			"xex_list",
+			"xex_rules",
+		],
+	),
 	"yue_dict": ("yue", ["yue_list", "yue_listx", "yue_rules"]),
 }
 
+
 def espeak_compileDict_buildAction(
-		target: typing.List[SCons.Node.FS.File],
-		source: typing.List[SCons.Node.FS.File],
-		env: SCons.Environment.Environment
+	target: typing.List[SCons.Node.FS.File],
+	source: typing.List[SCons.Node.FS.File],
+	env: SCons.Environment.Environment,
 ) -> int:
 	"""
 	@param target: The langCode_dict file to build
@@ -322,7 +988,7 @@ def espeak_compileDict_buildAction(
 	# This is because it writes to stderr but doesn't flush it.
 	# Unfortunately, there's no way we can flush it or use a different stream
 	# because our eSpeak statically links the CRT.
-	espeak=AutoFreeCDLL(espeakLib[0].abspath)
+	espeak = AutoFreeCDLL(espeakLib[0].abspath)
 
 	# from: espeak-ng/speak_lib.h
 	espeakINITIALIZE_DONT_EXIT = 0x8000
@@ -330,25 +996,22 @@ def espeak_compileDict_buildAction(
 	espeak.espeak_Initialize(
 		espeak_AUDIO_OUTPUT.AUDIO_OUTPUT_PLAYBACK,  # espeak_AUDIO_OUTPUT output_type
 		0,  # int buf_length
-		os.fsencode(target.Dir('..').abspath),  # const char *path
-		espeakINITIALIZE_DONT_EXIT  # int options
+		os.fsencode(target.Dir("..").abspath),  # const char *path
+		espeakINITIALIZE_DONT_EXIT,  # int options
 	)
 
-	try: # ensure that espeak_Terminate is called
+	try:  # ensure that espeak_Terminate is called
 		lang = espeakDictionaryCompileList[target.name][0]
-		voice = espeak_VOICE(languages=lang.encode() + b'\x00')
+		voice = espeak_VOICE(languages=lang.encode() + b"\x00")
 
 		# see: espeak-ng/speak_lib.h for espeak_SetVoiceByProperties
 		# returns: espeak_ERROR
 		setVoiceResult = espeak.espeak_SetVoiceByProperties(ctypes.byref(voice))
 		if espeak_ERROR.EE_OK.value != setVoiceResult:
-			print(
-				f"Failed to switch to language: '{lang}'"
-				f"\n result: {espeak_ERROR(setVoiceResult)!s}"
-			)
+			print(f"Failed to switch to language: '{lang}'" f"\n result: {espeak_ERROR(setVoiceResult)!s}")
 			return ACTION_FAILURE
 
-		rulesPathEncoded = os.fsencode(dirForRules.abspath + '/')
+		rulesPathEncoded = os.fsencode(dirForRules.abspath + "/")
 		# see: espeak-ng/espeak_ng.h for espeak_ng_CompileDictionary
 		# returns: espeak_ng_STATUS
 		compileDictResult = espeak.espeak_ng_CompileDictionary(
@@ -370,15 +1033,16 @@ def espeak_compileDict_buildAction(
 		espeak.espeak_Terminate()
 	return ACTION_SUCCESS
 
-sonicLib=env.StaticLibrary(
-	target='sonic',
+
+sonicLib = env.StaticLibrary(
+	target="sonic",
 	srcdir=sonicSrcDir.abspath,
-	source='sonic.c',
+	source="sonic.c",
 )
 
-espeakLib=env.SharedLibrary(
-	target='espeak',
-	srcdir=espeakSrcDir.Dir('libespeak-ng').abspath,
+espeakLib = env.SharedLibrary(
+	target="espeak",
+	srcdir=espeakSrcDir.Dir("libespeak-ng").abspath,
 	source=[
 		# compare to src_libespeak_ng_la_SOURCES in espeak Makefile.am
 		"../ucd-tools/src/case.c",
@@ -390,7 +1054,7 @@ espeakLib=env.SharedLibrary(
 		"common.c",
 		"compiledata.c",
 		"compiledict.c",
-#		"compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
+		# "compilembrola.c", # we dont use MBROLA, this is a compile option in espeak
 		"dictionary.c",
 		"encoding.c",
 		"error.c",
@@ -398,8 +1062,8 @@ espeakLib=env.SharedLibrary(
 		"ieee80.c",
 		"intonation.c",
 		"langopts.c",
-		"klatt.c", # we do use KLATT, this is a compile option in espeak
-#		"mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
+		"klatt.c",  # we do use KLATT, this is a compile option in espeak
+		# "mbrowrap.c", # we don't use MBROLA, this is a compile option in espeak
 		"mnemonics.c",
 		"numbers.c",
 		"phoneme.c",
@@ -412,7 +1076,7 @@ espeakLib=env.SharedLibrary(
 		"ssml.c",
 		"synthdata.c",
 		"synthesize.c",
-		"synth_mbrola.c", # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
+		"synth_mbrola.c",  # provides symbols used by synthesize.obj, voices.obj, and wavegen.obj
 		"translate.c",
 		"translateword.c",
 		"tr_languages.c",
@@ -424,7 +1088,7 @@ espeakLib=env.SharedLibrary(
 		"../speechPlayer/src/frame.cpp",
 		"../speechPlayer/src/speechPlayer.cpp",
 		"../speechPlayer/src/speechWaveGenerator.cpp",
-		#"../speak-ng.cpp",
+		# "../speak-ng.cpp",
 		# if not OPT_SPEECHPLAYER
 		# "../speak-ng.c",
 		# espeak does not need to handle its own audio output so dont include:
@@ -436,20 +1100,17 @@ espeakLib=env.SharedLibrary(
 		# com\ttsengine.cpp
 		# We do not use the ASYNC compile option in espeak.
 	],
-	LIBS=['advapi32'],
+	LIBS=["advapi32"],
 )
 
 
-phonemeData = env.espeak_compilePhonemeData(
-	espeakRepo.Dir('espeak-ng-data'),
-	espeakRepo.Dir('phsource')
-)
-env.Depends(phonemeData,espeakLib)
+phonemeData = env.espeak_compilePhonemeData(espeakRepo.Dir("espeak-ng-data"), espeakRepo.Dir("phsource"))
+env.Depends(phonemeData, espeakLib)
 for i in phonemeData:
-	iDir = espeakRepo.Dir('espeak-ng-data').abspath
-	l = len(iDir) + 1
+	iDir = espeakRepo.Dir("espeak-ng-data").abspath
+	l = len(iDir) + 1  # noqa: E741
 	fileName = i.abspath[l:]
-	env.InstallAs(os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, fileName), i)
+	env.InstallAs(os.path.join(synthDriversDir.Dir("espeak-ng-data").abspath, fileName), i)
 
 
 # Removes files that are created when installing from dictsource/extra/*_* to dictsource.
@@ -457,46 +1118,46 @@ for i in phonemeData:
 env.AddPreAction(espeakLib, env.Action(cleanFiles_preBuildAction))
 # Move any extra dictionaries into dictsource for compilation
 env.Install(
-	espeakRepo.Dir('dictsource'),
-	env.Glob(os.path.join(espeakRepo.abspath, 'dictsource', 'extra', '*_*'))
+	espeakRepo.Dir("dictsource"), env.Glob(os.path.join(espeakRepo.abspath, "dictsource", "extra", "*_*"))
 )
 
-excludeLangs: typing.List[str] = [
-]
+excludeLangs: typing.List[str] = []
 """Used to exclude languages which don't compile.
 """
 
 # Compile all dictionaries
-dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir('dictsource')
+dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir("dictsource")
 
 
 # Create compile commands for all languages
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
-	if langCode in excludeLangs: continue
+	if langCode in excludeLangs:
+		continue
 
-	dictFilePath = espeakRepo.Dir('espeak-ng-data').File(dictFileName)
+	dictFilePath = espeakRepo.Dir("espeak-ng-data").File(dictFileName)
 
 	dictFile = env.Command(
 		target=dictFilePath,
 		source=list((dictSourcePath.File(f) for f in inputFiles)),
-		action=espeak_compileDict_buildAction
+		action=espeak_compileDict_buildAction,
 	)
 
 	env.Depends(dictFile, [espeakLib, phonemeData])
 
 	# Dictionaries can not be compiled in parallel, force SCons not to do this
-	env.SideEffect('_espeak_compileDict',dictFile)
-	env.InstallAs( # Install files to the "synthDrivers/espeak-ng-data/" dir.
-		os.path.join(synthDriversDir.Dir('espeak-ng-data').abspath, dictFileName),
-		dictFile
+	env.SideEffect("_espeak_compileDict", dictFile)
+	env.InstallAs(  # Install files to the "synthDrivers/espeak-ng-data/" dir.
+		os.path.join(synthDriversDir.Dir("espeak-ng-data").abspath, dictFileName), dictFile
 	)
 
-env.Install(synthDriversDir,espeakLib)
+env.Install(synthDriversDir, espeakLib)
 
 # install espeak-ng-data
-targetEspeakDataDir=synthDriversDir.Dir('espeak-ng-data')
-espeakDataSource=espeakRepo.Dir('espeak-ng-data')
+targetEspeakDataDir = synthDriversDir.Dir("espeak-ng-data")
+espeakDataSource = espeakRepo.Dir("espeak-ng-data")
 
 # also install the lang and voices/!v directories. Exclude the voices/mb directory since we are not using mbrola.
-env.RecursiveInstall(targetEspeakDataDir.Dir('lang'),espeakDataSource.Dir('lang').abspath)
-env.RecursiveInstall(targetEspeakDataDir.Dir('voices').Dir('!v'),espeakDataSource.Dir('voices').Dir('!v').abspath)
+env.RecursiveInstall(targetEspeakDataDir.Dir("lang"), espeakDataSource.Dir("lang").abspath)
+env.RecursiveInstall(
+	targetEspeakDataDir.Dir("voices").Dir("!v"), espeakDataSource.Dir("voices").Dir("!v").abspath
+)

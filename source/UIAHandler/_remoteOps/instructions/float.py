@@ -8,7 +8,6 @@ This module contains the instructions that operate on floating point numbers.
 Including to create new floating point numbers, and check if an object is a floating point number.
 """
 
-
 from __future__ import annotations
 from dataclasses import dataclass
 import ctypes

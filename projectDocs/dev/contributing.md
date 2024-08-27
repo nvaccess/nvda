@@ -40,19 +40,32 @@ If you are new to the project, or looking for some way to help take a look at:
 	- The lint check ensures your changes comply with our code style expectations.
 	Use `runlint.bat`.
 	- Run `scons checkPot` to ensure translatable strings have comments for the translators
+	- Run `runlicensecheck.bat` to check that you don't introduce any new python dependencies with incompatible licenses.
 1. [Create a change log entry](#change-log-entry)
-1. [Create a Pull Request (PR)](./githubPullRequestTemplateExplanationAndExamples.md)
-	- When you think a contribution is ready, or you would like feedback, open a draft pull request.
-	When you would like a review, mark the PR as "ready for review".
-	- Please fill out the Pull Request template, including the checklist of considerations.
-	The checklist asks you to confirm that you have thought about each of the items, if any of the items are missing it is helpful to explain elsewhere in the PR why it has been left out.
-	- Automated checks will be run against your PR.
-	If these fail, please review them.
-	Sometimes system tests fail unexpectedly.
-	If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
-	- All pull requests submitted must have their "Allow edits from maintainers" checkbox ticked.
-	This is the GitHub default for new pull requests.
-	- A lead developer may specifically request the pull request be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
+1. Create a Pull Request (PR)
+	1. Filling out the template:
+		- [Template guide](./githubPullRequestTemplateExplanationAndExamples.md)
+		- Please fill out the Pull Request template, including the checklist of considerations.
+		The checklist asks you to confirm that you have thought about each of the items, if any of the items are missing it is helpful to explain elsewhere in the PR why it has been left out.
+	1. Submission process:
+		- If you would like to publish unfinished work to seek early feedback or demonstrate an approach, open a draft pull request.
+		When you would like a code review or response from NV Access, mark the PR as "ready for review".
+		- All pull requests submitted must have their "Allow edits from maintainers" checkbox ticked.
+		This is the GitHub default for new pull requests, except for organisation forks.
+		Organisation forks must invite NV Access developers to collaborate directly.
+		- Consider if the PR should be made against `beta` or `rc` in the case of addressing bugs introduced in the current release cycle.
+	1. CI/CD testing:
+		- Every time a PR has a commit pushed to it, CI/CD checks will be run
+		- [pre-commit.ci](https://pre-commit.ci/) will apply linting fixes.
+			- re-run pre-commit on a pull request by commenting `pre-commit.ci run`.
+			- prevent pre-commit from pushing by putting `[skip ci]`, `[ci skip]`, `[skip pre-commit.ci]`, or `[pre-commit.ci skip]` in the commit message.
+		- AppVeyor will build a copy of NVDA when changes are pushed to your PR.
+		A build artifact will be created for a successful build to allow for testing the PR.
+		- AppVeyor will run system tests and other tests.
+		If these fail, please review them.
+		Sometimes system tests fail unexpectedly.
+		If you believe the failure is unrelated, feel free to ignore it unless it is raised by a reviewer.
+		- Security checks will be run.
 1. Participate in the code review process
 	- This process requires core NVDA developers to understand the intent of the change, read the code changes, asking questions or suggesting changes.
 	Please participate in this process, answering questions, and discussing the changes.
@@ -85,16 +98,18 @@ Our processing will automatically link the issue number to the GitHub page, and 
 
 For instance:
 ```md
-New features
-- Added a command to announce useful thing. (#1234, #4321, @myGitHub)
+### New Features
 
-Changes
-- Old command, now also uses new useful command. (#1234)
+* Added a command to announce useful thing. (#1234, #4321, @myGitHub)
+
+### Changes
+
+* Old command now also uses new useful command. (#1234)
 ```
 
 You may add descriptions for multiple sections.
 The sections are:
- 
+
 * New features
 * Changes
 * Bug fixes

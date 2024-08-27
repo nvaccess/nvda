@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 11
+latestSchemaVersion = 13
 
 #: The configuration specification string
 #: @type: String
@@ -37,7 +37,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	trustVoiceLanguage = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
+	# Deprecated in 2025.1
 	includeCLDR = boolean(default=True)
+	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -83,12 +85,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
+	paragraphStartMarker = option("", " ", "¶", default="")
 	wordWrap = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	speakOnRouting = boolean(default=false)
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
     	excludedDisplays = string_list(default=list())
 
@@ -179,6 +184,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
+	multiPressTimeout = integer(default=500, min=100, max=20000)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)
@@ -205,7 +211,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	detectFormatAfterCursor = boolean(default=false)
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
+	# Deprecated in 2025.1
 	reportFontAttributes = boolean(default=false)
+	# 0: Off, 1: Speech, 2: Braille, 3: Speech and Braille
+	fontAttributeReporting = integer(0, 3, default=0)
 	reportRevisions = boolean(default=true)
 	reportEmphasis = boolean(default=false)
 	reportHighlight = boolean(default=true)
@@ -330,5 +339,5 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 #: The configuration specification
 #: @type: ConfigObj
-confspec = ConfigObj(StringIO( configSpecString ), list_values=False, encoding="UTF-8")
+confspec = ConfigObj(StringIO(configSpecString), list_values=False, encoding="UTF-8")
 confspec.newlines = "\r\n"

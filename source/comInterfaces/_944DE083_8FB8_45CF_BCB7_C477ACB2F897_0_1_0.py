@@ -3,7 +3,7 @@
 from ctypes import *
 import comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0
 from comtypes import (
-    _check_version, BSTR, CoClass, COMMETHOD, dispid, GUID, IUnknown
+    _check_version, BSTR, CoClass, COMMETHOD, dispid, GUID, IUnknown,
 )
 from comtypes.automation import _midlSAFEARRAY, IDispatch, VARIANT
 from ctypes import HRESULT
@@ -64,7 +64,7 @@ IUIAutomationTextEditTextChangedEventHandler._methods_ = [
         'HandleTextEditTextChangedEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
         (['in'], TextEditChangeType, 'TextEditChangeType'),
-        (['in'], _midlSAFEARRAY(BSTR), 'eventStrings')
+        (['in'], _midlSAFEARRAY(BSTR), 'eventStrings'),
     ),
 ]
 
@@ -73,7 +73,7 @@ IUIAutomationTextEditTextChangedEventHandler._methods_ = [
 # class IUIAutomationTextEditTextChangedEventHandler_Impl(object):
 #     def HandleTextEditTextChangedEvent(self, sender, TextEditChangeType, eventStrings):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 # values for enumeration 'StructureChangeType'
 StructureChangeType_ChildAdded = 0
@@ -96,14 +96,14 @@ IUIAutomationElementArray._methods_ = [
         ['propget'],
         HRESULT,
         'Length',
-        (['out', 'retval'], POINTER(c_int), 'Length')
+        (['out', 'retval'], POINTER(c_int), 'Length'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetElement',
         (['in'], c_int, 'index'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
 ]
 
@@ -132,7 +132,7 @@ IUIAutomationAndCondition._methods_ = [
         ['propget'],
         HRESULT,
         'ChildCount',
-        (['out', 'retval'], POINTER(c_int), 'ChildCount')
+        (['out', 'retval'], POINTER(c_int), 'ChildCount'),
     ),
     COMMETHOD(
         [],
@@ -143,7 +143,7 @@ IUIAutomationAndCondition._methods_ = [
             POINTER(POINTER(POINTER(IUIAutomationCondition))),
             'childArray',
         ),
-        (['out'], POINTER(c_int), 'childArrayCount')
+        (['out'], POINTER(c_int), 'childArrayCount'),
     ),
     COMMETHOD(
         [],
@@ -153,7 +153,7 @@ IUIAutomationAndCondition._methods_ = [
             ['out', 'retval'],
             POINTER(_midlSAFEARRAY(POINTER(IUIAutomationCondition))),
             'childArray',
-        )
+        ),
     ),
 ]
 
@@ -186,7 +186,7 @@ IUIAutomationFocusChangedEventHandler._methods_ = [
         [],
         HRESULT,
         'HandleFocusChangedEvent',
-        (['in'], POINTER(IUIAutomationElement), 'sender')
+        (['in'], POINTER(IUIAutomationElement), 'sender'),
     ),
 ]
 
@@ -195,7 +195,7 @@ IUIAutomationFocusChangedEventHandler._methods_ = [
 # class IUIAutomationFocusChangedEventHandler_Impl(object):
 #     def HandleFocusChangedEvent(self, sender):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_Transform2CanZoomPropertyId = 30133  # Constant c_int
 
@@ -211,7 +211,7 @@ IUIAutomationOrCondition._methods_ = [
         ['propget'],
         HRESULT,
         'ChildCount',
-        (['out', 'retval'], POINTER(c_int), 'ChildCount')
+        (['out', 'retval'], POINTER(c_int), 'ChildCount'),
     ),
     COMMETHOD(
         [],
@@ -222,7 +222,7 @@ IUIAutomationOrCondition._methods_ = [
             POINTER(POINTER(POINTER(IUIAutomationCondition))),
             'childArray',
         ),
-        (['out'], POINTER(c_int), 'childArrayCount')
+        (['out'], POINTER(c_int), 'childArrayCount'),
     ),
     COMMETHOD(
         [],
@@ -232,7 +232,7 @@ IUIAutomationOrCondition._methods_ = [
             ['out', 'retval'],
             POINTER(_midlSAFEARRAY(POINTER(IUIAutomationCondition))),
             'childArray',
-        )
+        ),
     ),
 ]
 
@@ -272,7 +272,7 @@ IUIAutomationNotCondition._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'condition',
-        )
+        ),
     ),
 ]
 
@@ -302,7 +302,7 @@ IUIAutomationChangesEventHandler._methods_ = [
         'HandleChangesEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
         (['in'], POINTER(UiaChangeInfo), 'uiaChanges'),
-        (['in'], c_int, 'changesCount')
+        (['in'], c_int, 'changesCount'),
     ),
 ]
 
@@ -311,7 +311,7 @@ IUIAutomationChangesEventHandler._methods_ = [
 # class IUIAutomationChangesEventHandler_Impl(object):
 #     def HandleChangesEvent(self, sender, uiaChanges, changesCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_IsTextPattern2AvailablePropertyId = 30119  # Constant c_int
 UIA_StylesExtendedPropertiesPropertyId = 30126  # Constant c_int
@@ -360,35 +360,35 @@ IUIAutomationTreeWalker._methods_ = [
         HRESULT,
         'GetParentElement',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetFirstChildElement',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'first')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'first'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetLastChildElement',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'last')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'last'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetNextSiblingElement',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'next')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'next'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetPreviousSiblingElement',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'previous')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'previous'),
     ),
     COMMETHOD(
         [],
@@ -399,7 +399,7 @@ IUIAutomationTreeWalker._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElement)),
             'normalized',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -407,7 +407,7 @@ IUIAutomationTreeWalker._methods_ = [
         'GetParentElementBuildCache',
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent'),
     ),
     COMMETHOD(
         [],
@@ -415,7 +415,7 @@ IUIAutomationTreeWalker._methods_ = [
         'GetFirstChildElementBuildCache',
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'first')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'first'),
     ),
     COMMETHOD(
         [],
@@ -423,7 +423,7 @@ IUIAutomationTreeWalker._methods_ = [
         'GetLastChildElementBuildCache',
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'last')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'last'),
     ),
     COMMETHOD(
         [],
@@ -431,7 +431,7 @@ IUIAutomationTreeWalker._methods_ = [
         'GetNextSiblingElementBuildCache',
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'next')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'next'),
     ),
     COMMETHOD(
         [],
@@ -439,7 +439,7 @@ IUIAutomationTreeWalker._methods_ = [
         'GetPreviousSiblingElementBuildCache',
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'previous')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'previous'),
     ),
     COMMETHOD(
         [],
@@ -451,7 +451,7 @@ IUIAutomationTreeWalker._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElement)),
             'normalized',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -461,7 +461,7 @@ IUIAutomationTreeWalker._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'condition',
-        )
+        ),
     ),
 ]
 
@@ -556,7 +556,7 @@ IUIAutomationNotificationEventHandler._methods_ = [
         ([], NotificationKind, 'NotificationKind'),
         ([], NotificationProcessing, 'NotificationProcessing'),
         (['in'], BSTR, 'displayString'),
-        (['in'], BSTR, 'activityId')
+        (['in'], BSTR, 'activityId'),
     ),
 ]
 
@@ -565,7 +565,7 @@ IUIAutomationNotificationEventHandler._methods_ = [
 # class IUIAutomationNotificationEventHandler_Impl(object):
 #     def HandleNotificationEvent(self, sender, NotificationKind, NotificationProcessing, displayString, activityId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_Transform2ZoomMinimumPropertyId = 30146  # Constant c_int
 
@@ -622,37 +622,37 @@ IUIAutomationMultipleViewPattern._methods_ = [
         HRESULT,
         'GetViewName',
         (['in'], c_int, 'view'),
-        (['out', 'retval'], POINTER(BSTR), 'name')
+        (['out', 'retval'], POINTER(BSTR), 'name'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'SetCurrentView',
-        (['in'], c_int, 'view')
+        (['in'], c_int, 'view'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCurrentView',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCurrentSupportedViews',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCurrentView',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedSupportedViews',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
 ]
 
@@ -665,7 +665,7 @@ IUIAutomationMultipleViewPattern._methods_ = [
 #
 #     def SetCurrentView(self, view):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCurrentView(self):
@@ -705,7 +705,7 @@ IUIAutomationSpreadsheetPattern._methods_ = [
         HRESULT,
         'GetItemByName',
         (['in'], BSTR, 'name'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
 ]
 
@@ -735,13 +735,13 @@ IUIAutomationTextChildPattern._methods_ = [
         ['propget'],
         HRESULT,
         'TextContainer',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'container')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'container'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'TextRange',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
 ]
 
@@ -797,7 +797,7 @@ IUIAutomationTableItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -807,7 +807,7 @@ IUIAutomationTableItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -817,7 +817,7 @@ IUIAutomationTableItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -827,7 +827,7 @@ IUIAutomationTableItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
 ]
 
@@ -870,99 +870,99 @@ IUIAutomationStylesPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentStyleId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentStyleName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentFillColor',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentFillPatternStyle',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentShape',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentFillPatternColor',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentExtendedProperties',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCurrentExtendedPropertiesAsArray',
         (['out'], POINTER(POINTER(ExtendedProperty)), 'propertyArray'),
-        (['out'], POINTER(c_int), 'propertyCount')
+        (['out'], POINTER(c_int), 'propertyCount'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedStyleId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedStyleName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFillColor',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFillPatternStyle',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedShape',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFillPatternColor',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedExtendedProperties',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedExtendedPropertiesAsArray',
         (['out'], POINTER(POINTER(ExtendedProperty)), 'propertyArray'),
-        (['out'], POINTER(c_int), 'propertyCount')
+        (['out'], POINTER(c_int), 'propertyCount'),
     ),
 ]
 
@@ -1074,13 +1074,13 @@ IUIAutomationTogglePattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentToggleState',
-        (['out', 'retval'], POINTER(ToggleState), 'retVal')
+        (['out', 'retval'], POINTER(ToggleState), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedToggleState',
-        (['out', 'retval'], POINTER(ToggleState), 'retVal')
+        (['out', 'retval'], POINTER(ToggleState), 'retVal'),
     ),
 ]
 
@@ -1089,7 +1089,7 @@ IUIAutomationTogglePattern._methods_ = [
 # class IUIAutomationTogglePattern_Impl(object):
 #     def Toggle(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentToggleState(self):
@@ -1114,62 +1114,62 @@ IAccessible._methods_ = [
         [dispid(-5000), 'hidden', 'propget'],
         HRESULT,
         'accParent',
-        (['out', 'retval'], POINTER(POINTER(IDispatch)), 'ppdispParent')
+        (['out', 'retval'], POINTER(POINTER(IDispatch)), 'ppdispParent'),
     ),
     COMMETHOD(
         [dispid(-5001), 'hidden', 'propget'],
         HRESULT,
         'accChildCount',
-        (['out', 'retval'], POINTER(c_int), 'pcountChildren')
+        (['out', 'retval'], POINTER(c_int), 'pcountChildren'),
     ),
     COMMETHOD(
         [dispid(-5002), 'hidden', 'propget'],
         HRESULT,
         'accChild',
         (['in'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(POINTER(IDispatch)), 'ppdispChild')
+        (['out', 'retval'], POINTER(POINTER(IDispatch)), 'ppdispChild'),
     ),
     COMMETHOD(
         [dispid(-5003), 'hidden', 'propget'],
         HRESULT,
         'accName',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszName')
+        (['out', 'retval'], POINTER(BSTR), 'pszName'),
     ),
     COMMETHOD(
         [dispid(-5004), 'hidden', 'propget'],
         HRESULT,
         'accValue',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszValue')
+        (['out', 'retval'], POINTER(BSTR), 'pszValue'),
     ),
     COMMETHOD(
         [dispid(-5005), 'hidden', 'propget'],
         HRESULT,
         'accDescription',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszDescription')
+        (['out', 'retval'], POINTER(BSTR), 'pszDescription'),
     ),
     COMMETHOD(
         [dispid(-5006), 'hidden', 'propget'],
         HRESULT,
         'accRole',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(VARIANT), 'pvarRole')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarRole'),
     ),
     COMMETHOD(
         [dispid(-5007), 'hidden', 'propget'],
         HRESULT,
         'accState',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(VARIANT), 'pvarState')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarState'),
     ),
     COMMETHOD(
         [dispid(-5008), 'hidden', 'propget'],
         HRESULT,
         'accHelp',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszHelp')
+        (['out', 'retval'], POINTER(BSTR), 'pszHelp'),
     ),
     COMMETHOD(
         [dispid(-5009), 'hidden', 'propget'],
@@ -1177,40 +1177,40 @@ IAccessible._methods_ = [
         'accHelpTopic',
         (['out'], POINTER(BSTR), 'pszHelpFile'),
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(c_int), 'pidTopic')
+        (['out', 'retval'], POINTER(c_int), 'pidTopic'),
     ),
     COMMETHOD(
         [dispid(-5010), 'hidden', 'propget'],
         HRESULT,
         'accKeyboardShortcut',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut')
+        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut'),
     ),
     COMMETHOD(
         [dispid(-5011), 'hidden', 'propget'],
         HRESULT,
         'accFocus',
-        (['out', 'retval'], POINTER(VARIANT), 'pvarChild')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarChild'),
     ),
     COMMETHOD(
         [dispid(-5012), 'hidden', 'propget'],
         HRESULT,
         'accSelection',
-        (['out', 'retval'], POINTER(VARIANT), 'pvarChildren')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarChildren'),
     ),
     COMMETHOD(
         [dispid(-5013), 'hidden', 'propget'],
         HRESULT,
         'accDefaultAction',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction')
+        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction'),
     ),
     COMMETHOD(
         [dispid(-5014), 'hidden'],
         HRESULT,
         'accSelect',
         (['in'], c_int, 'flagsSelect'),
-        (['in', 'optional'], VARIANT, 'varChild')
+        (['in', 'optional'], VARIANT, 'varChild'),
     ),
     COMMETHOD(
         [dispid(-5015), 'hidden'],
@@ -1220,7 +1220,7 @@ IAccessible._methods_ = [
         (['out'], POINTER(c_int), 'pyTop'),
         (['out'], POINTER(c_int), 'pcxWidth'),
         (['out'], POINTER(c_int), 'pcyHeight'),
-        (['in', 'optional'], VARIANT, 'varChild')
+        (['in', 'optional'], VARIANT, 'varChild'),
     ),
     COMMETHOD(
         [dispid(-5016), 'hidden'],
@@ -1228,7 +1228,7 @@ IAccessible._methods_ = [
         'accNavigate',
         (['in'], c_int, 'navDir'),
         (['in', 'optional'], VARIANT, 'varStart'),
-        (['out', 'retval'], POINTER(VARIANT), 'pvarEndUpAt')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarEndUpAt'),
     ),
     COMMETHOD(
         [dispid(-5017), 'hidden'],
@@ -1236,27 +1236,27 @@ IAccessible._methods_ = [
         'accHitTest',
         (['in'], c_int, 'xLeft'),
         (['in'], c_int, 'yTop'),
-        (['out', 'retval'], POINTER(VARIANT), 'pvarChild')
+        (['out', 'retval'], POINTER(VARIANT), 'pvarChild'),
     ),
     COMMETHOD(
         [dispid(-5018), 'hidden'],
         HRESULT,
         'accDoDefaultAction',
-        (['in', 'optional'], VARIANT, 'varChild')
+        (['in', 'optional'], VARIANT, 'varChild'),
     ),
     COMMETHOD(
         [dispid(-5003), 'hidden', 'propput'],
         HRESULT,
         'accName',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['in'], BSTR, 'pszName')
+        (['in'], BSTR, 'pszName'),
     ),
     COMMETHOD(
         [dispid(-5004), 'hidden', 'propput'],
         HRESULT,
         'accValue',
         (['in', 'optional'], VARIANT, 'varChild'),
-        (['in'], BSTR, 'pszValue')
+        (['in'], BSTR, 'pszValue'),
     ),
 ]
 
@@ -1339,7 +1339,7 @@ IAccessible._methods_ = [
 #
 #     def accSelect(self, flagsSelect, varChild):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def accLocation(self, varChild):
 #         '-no docstring-'
@@ -1355,7 +1355,7 @@ IAccessible._methods_ = [
 #
 #     def accDoDefaultAction(self, varChild):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_StrikethroughStyleAttributeId = 40026  # Constant c_int
 UIA_IsItalicAttributeId = 40014  # Constant c_int
@@ -1388,37 +1388,37 @@ IUIAutomationDragPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentIsGrabbed',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsGrabbed',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDropEffect',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDropEffect',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDropEffects',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDropEffects',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -1428,7 +1428,7 @@ IUIAutomationDragPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1438,7 +1438,7 @@ IUIAutomationDragPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
 ]
 
@@ -1497,56 +1497,56 @@ IUIAutomationTransformPattern._methods_ = [
         HRESULT,
         'Move',
         (['in'], c_double, 'x'),
-        (['in'], c_double, 'y')
+        (['in'], c_double, 'y'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'Resize',
         (['in'], c_double, 'width'),
-        (['in'], c_double, 'height')
+        (['in'], c_double, 'height'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'Rotate',
-        (['in'], c_double, 'degrees')
+        (['in'], c_double, 'degrees'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanMove',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanResize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanRotate',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanMove',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanResize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanRotate',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -1555,15 +1555,15 @@ IUIAutomationTransformPattern._methods_ = [
 # class IUIAutomationTransformPattern_Impl(object):
 #     def Move(self, x, y):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Resize(self, width, height):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Rotate(self, degrees):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanMove(self):
@@ -1666,7 +1666,7 @@ IUIAutomation._methods_ = [
         'CompareElements',
         (['in'], POINTER(IUIAutomationElement), 'el1'),
         (['in'], POINTER(IUIAutomationElement), 'el2'),
-        (['out', 'retval'], POINTER(c_int), 'areSame')
+        (['out', 'retval'], POINTER(c_int), 'areSame'),
     ),
     COMMETHOD(
         [],
@@ -1674,40 +1674,40 @@ IUIAutomation._methods_ = [
         'CompareRuntimeIds',
         (['in'], _midlSAFEARRAY(c_int), 'runtimeId1'),
         (['in'], _midlSAFEARRAY(c_int), 'runtimeId2'),
-        (['out', 'retval'], POINTER(c_int), 'areSame')
+        (['out', 'retval'], POINTER(c_int), 'areSame'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetRootElement',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'root')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'root'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'ElementFromHandle',
         (['in'], c_void_p, 'hwnd'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'ElementFromPoint',
         (['in'], tagPOINT, 'pt'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetFocusedElement',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetRootElementBuildCache',
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'root')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'root'),
     ),
     COMMETHOD(
         [],
@@ -1715,7 +1715,7 @@ IUIAutomation._methods_ = [
         'ElementFromHandleBuildCache',
         (['in'], c_void_p, 'hwnd'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
@@ -1723,39 +1723,39 @@ IUIAutomation._methods_ = [
         'ElementFromPointBuildCache',
         (['in'], tagPOINT, 'pt'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetFocusedElementBuildCache',
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'CreateTreeWalker',
         (['in'], POINTER(IUIAutomationCondition), 'pCondition'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ControlViewWalker',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ContentViewWalker',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'RawViewWalker',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTreeWalker)), 'walker'),
     ),
     COMMETHOD(
         ['propget'],
@@ -1765,7 +1765,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'condition',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -1775,7 +1775,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'condition',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -1785,7 +1785,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'condition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1795,7 +1795,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCacheRequest)),
             'cacheRequest',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1805,7 +1805,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1815,7 +1815,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1827,7 +1827,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1840,7 +1840,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1852,7 +1852,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1863,7 +1863,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1875,7 +1875,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1887,7 +1887,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1898,7 +1898,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1910,7 +1910,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1921,7 +1921,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCondition)),
             'newCondition',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -1931,7 +1931,7 @@ IUIAutomation._methods_ = [
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -1939,7 +1939,7 @@ IUIAutomation._methods_ = [
         'RemoveAutomationEventHandler',
         (['in'], c_int, 'eventId'),
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -1950,7 +1950,7 @@ IUIAutomation._methods_ = [
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
         (['in'], POINTER(IUIAutomationPropertyChangedEventHandler), 'handler'),
         (['in'], POINTER(c_int), 'propertyArray'),
-        (['in'], c_int, 'propertyCount')
+        (['in'], c_int, 'propertyCount'),
     ),
     COMMETHOD(
         [],
@@ -1960,14 +1960,14 @@ IUIAutomation._methods_ = [
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
         (['in'], POINTER(IUIAutomationPropertyChangedEventHandler), 'handler'),
-        (['in'], _midlSAFEARRAY(c_int), 'propertyArray')
+        (['in'], _midlSAFEARRAY(c_int), 'propertyArray'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemovePropertyChangedEventHandler',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationPropertyChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationPropertyChangedEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -1976,27 +1976,27 @@ IUIAutomation._methods_ = [
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveStructureChangedEventHandler',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'AddFocusChangedEventHandler',
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationFocusChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationFocusChangedEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveFocusChangedEventHandler',
-        (['in'], POINTER(IUIAutomationFocusChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationFocusChangedEventHandler), 'handler'),
     ),
     COMMETHOD([], HRESULT, 'RemoveAllEventHandlers'),
     COMMETHOD(
@@ -2005,7 +2005,7 @@ IUIAutomation._methods_ = [
         'IntNativeArrayToSafeArray',
         (['in'], POINTER(c_int), 'array'),
         (['in'], c_int, 'arrayCount'),
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'safeArray')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'safeArray'),
     ),
     COMMETHOD(
         [],
@@ -2013,21 +2013,21 @@ IUIAutomation._methods_ = [
         'IntSafeArrayToNativeArray',
         (['in'], _midlSAFEARRAY(c_int), 'intArray'),
         (['out'], POINTER(POINTER(c_int)), 'array'),
-        (['out', 'retval'], POINTER(c_int), 'arrayCount')
+        (['out', 'retval'], POINTER(c_int), 'arrayCount'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RectToVariant',
         (['in'], tagRECT, 'rc'),
-        (['out', 'retval'], POINTER(VARIANT), 'var')
+        (['out', 'retval'], POINTER(VARIANT), 'var'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'VariantToRect',
         (['in'], VARIANT, 'var'),
-        (['out', 'retval'], POINTER(tagRECT), 'rc')
+        (['out', 'retval'], POINTER(tagRECT), 'rc'),
     ),
     COMMETHOD(
         [],
@@ -2035,7 +2035,7 @@ IUIAutomation._methods_ = [
         'SafeArrayToRectNativeArray',
         (['in'], _midlSAFEARRAY(c_double), 'rects'),
         (['out'], POINTER(POINTER(tagRECT)), 'rectArray'),
-        (['out', 'retval'], POINTER(c_int), 'rectArrayCount')
+        (['out', 'retval'], POINTER(c_int), 'rectArrayCount'),
     ),
     COMMETHOD(
         [],
@@ -2046,7 +2046,7 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationProxyFactoryEntry)),
             'factoryEntry',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -2056,21 +2056,21 @@ IUIAutomation._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationProxyFactoryMapping)),
             'factoryMapping',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetPropertyProgrammaticName',
         (['in'], c_int, 'property'),
-        (['out', 'retval'], POINTER(BSTR), 'name')
+        (['out', 'retval'], POINTER(BSTR), 'name'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetPatternProgrammaticName',
         (['in'], c_int, 'pattern'),
-        (['out', 'retval'], POINTER(BSTR), 'name')
+        (['out', 'retval'], POINTER(BSTR), 'name'),
     ),
     COMMETHOD(
         [],
@@ -2078,7 +2078,7 @@ IUIAutomation._methods_ = [
         'PollForPotentialSupportedPatterns',
         (['in'], POINTER(IUIAutomationElement), 'pElement'),
         (['out'], POINTER(_midlSAFEARRAY(c_int)), 'patternIds'),
-        (['out'], POINTER(_midlSAFEARRAY(BSTR)), 'patternNames')
+        (['out'], POINTER(_midlSAFEARRAY(BSTR)), 'patternNames'),
     ),
     COMMETHOD(
         [],
@@ -2086,26 +2086,26 @@ IUIAutomation._methods_ = [
         'PollForPotentialSupportedProperties',
         (['in'], POINTER(IUIAutomationElement), 'pElement'),
         (['out'], POINTER(_midlSAFEARRAY(c_int)), 'propertyIds'),
-        (['out'], POINTER(_midlSAFEARRAY(BSTR)), 'propertyNames')
+        (['out'], POINTER(_midlSAFEARRAY(BSTR)), 'propertyNames'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'CheckNotSupported',
         (['in'], VARIANT, 'value'),
-        (['out', 'retval'], POINTER(c_int), 'isNotSupported')
+        (['out', 'retval'], POINTER(c_int), 'isNotSupported'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ReservedNotSupportedValue',
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'notSupportedValue')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'notSupportedValue'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ReservedMixedAttributeValue',
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'mixedAttributeValue')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'mixedAttributeValue'),
     ),
     COMMETHOD(
         [],
@@ -2113,7 +2113,7 @@ IUIAutomation._methods_ = [
         'ElementFromIAccessible',
         (['in'], POINTER(IAccessible), 'accessible'),
         (['in'], c_int, 'childId'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         [],
@@ -2122,7 +2122,7 @@ IUIAutomation._methods_ = [
         (['in'], POINTER(IAccessible), 'accessible'),
         (['in'], c_int, 'childId'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
 ]
 
@@ -2253,43 +2253,43 @@ IUIAutomation._methods_ = [
 #
 #     def AddAutomationEventHandler(self, eventId, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveAutomationEventHandler(self, eventId, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandlerNativeArray(self, element, scope, cacheRequest, handler, propertyArray, propertyCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandler(self, element, scope, cacheRequest, handler, propertyArray):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemovePropertyChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddStructureChangedEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveStructureChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddFocusChangedEventHandler(self, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFocusChangedEventHandler(self, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveAllEventHandlers(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def IntNativeArrayToSafeArray(self, array, arrayCount):
 #         '-no docstring-'
@@ -2364,37 +2364,37 @@ IUIAutomation2._methods_ = [
         ['propget'],
         HRESULT,
         'AutoSetFocus',
-        (['out', 'retval'], POINTER(c_int), 'AutoSetFocus')
+        (['out', 'retval'], POINTER(c_int), 'AutoSetFocus'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'AutoSetFocus',
-        (['in'], c_int, 'AutoSetFocus')
+        (['in'], c_int, 'AutoSetFocus'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ConnectionTimeout',
-        (['out', 'retval'], POINTER(c_ulong), 'timeout')
+        (['out', 'retval'], POINTER(c_ulong), 'timeout'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'ConnectionTimeout',
-        (['in'], c_ulong, 'timeout')
+        (['in'], c_ulong, 'timeout'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'TransactionTimeout',
-        (['out', 'retval'], POINTER(c_ulong), 'timeout')
+        (['out', 'retval'], POINTER(c_ulong), 'timeout'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'TransactionTimeout',
-        (['in'], c_ulong, 'timeout')
+        (['in'], c_ulong, 'timeout'),
     ),
 ]
 
@@ -2489,31 +2489,31 @@ IUIAutomationValuePattern._methods_ = [
         [],
         HRESULT,
         'SetValue',
-        (['in'], BSTR, 'val')
+        (['in'], BSTR, 'val'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentValue',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsReadOnly',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedValue',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsReadOnly',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -2522,7 +2522,7 @@ IUIAutomationValuePattern._methods_ = [
 # class IUIAutomationValuePattern_Impl(object):
 #     def SetValue(self, val):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentValue(self):
@@ -2564,7 +2564,7 @@ IUIAutomationSpreadsheetItemPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentFormula',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -2574,19 +2574,19 @@ IUIAutomationSpreadsheetItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCurrentAnnotationTypes',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFormula',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -2596,13 +2596,13 @@ IUIAutomationSpreadsheetItemPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedAnnotationTypes',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
 ]
 
@@ -2644,7 +2644,7 @@ IUIAutomationProxyFactoryMapping._methods_ = [
         ['propget'],
         HRESULT,
         'count',
-        (['out', 'retval'], POINTER(c_uint), 'count')
+        (['out', 'retval'], POINTER(c_uint), 'count'),
     ),
     COMMETHOD(
         [],
@@ -2654,7 +2654,7 @@ IUIAutomationProxyFactoryMapping._methods_ = [
             ['out', 'retval'],
             POINTER(_midlSAFEARRAY(POINTER(IUIAutomationProxyFactoryEntry))),
             'table',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -2665,7 +2665,7 @@ IUIAutomationProxyFactoryMapping._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationProxyFactoryEntry)),
             'entry',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -2675,7 +2675,7 @@ IUIAutomationProxyFactoryMapping._methods_ = [
             ['in'],
             _midlSAFEARRAY(POINTER(IUIAutomationProxyFactoryEntry)),
             'factoryList',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -2686,20 +2686,20 @@ IUIAutomationProxyFactoryMapping._methods_ = [
             ['in'],
             _midlSAFEARRAY(POINTER(IUIAutomationProxyFactoryEntry)),
             'factoryList',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'InsertEntry',
         (['in'], c_uint, 'before'),
-        (['in'], POINTER(IUIAutomationProxyFactoryEntry), 'factory')
+        (['in'], POINTER(IUIAutomationProxyFactoryEntry), 'factory'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveEntry',
-        (['in'], c_uint, 'index')
+        (['in'], c_uint, 'index'),
     ),
     COMMETHOD([], HRESULT, 'ClearTable'),
     COMMETHOD([], HRESULT, 'RestoreDefaultTable'),
@@ -2723,27 +2723,27 @@ IUIAutomationProxyFactoryMapping._methods_ = [
 #
 #     def SetTable(self, factoryList):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def InsertEntries(self, before, factoryList):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def InsertEntry(self, before, factory):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveEntry(self, index):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ClearTable(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RestoreDefaultTable(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_GridPatternId = 10006  # Constant c_int
 UIA_ValuePatternId = 10002  # Constant c_int
@@ -2775,7 +2775,7 @@ IUIAutomationElement._methods_ = [
         [],
         HRESULT,
         'GetRuntimeId',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'runtimeId')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'runtimeId'),
     ),
     COMMETHOD(
         [],
@@ -2783,7 +2783,7 @@ IUIAutomationElement._methods_ = [
         'FindFirst',
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCondition), 'condition'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found'),
     ),
     COMMETHOD(
         [],
@@ -2795,7 +2795,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'found',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -2804,7 +2804,7 @@ IUIAutomationElement._methods_ = [
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCondition), 'condition'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found'),
     ),
     COMMETHOD(
         [],
@@ -2817,7 +2817,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'found',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -2828,14 +2828,14 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElement)),
             'updatedElement',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCurrentPropertyValue',
         (['in'], c_int, 'propertyId'),
-        (['out', 'retval'], POINTER(VARIANT), 'retVal')
+        (['out', 'retval'], POINTER(VARIANT), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -2843,14 +2843,14 @@ IUIAutomationElement._methods_ = [
         'GetCurrentPropertyValueEx',
         (['in'], c_int, 'propertyId'),
         (['in'], c_int, 'ignoreDefaultValue'),
-        (['out', 'retval'], POINTER(VARIANT), 'retVal')
+        (['out', 'retval'], POINTER(VARIANT), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedPropertyValue',
         (['in'], c_int, 'propertyId'),
-        (['out', 'retval'], POINTER(VARIANT), 'retVal')
+        (['out', 'retval'], POINTER(VARIANT), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -2858,7 +2858,7 @@ IUIAutomationElement._methods_ = [
         'GetCachedPropertyValueEx',
         (['in'], c_int, 'propertyId'),
         (['in'], c_int, 'ignoreDefaultValue'),
-        (['out', 'retval'], POINTER(VARIANT), 'retVal')
+        (['out', 'retval'], POINTER(VARIANT), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -2870,7 +2870,7 @@ IUIAutomationElement._methods_ = [
             POINTER(comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
             'riid',
         ),
-        (['out', 'retval'], POINTER(c_void_p), 'patternObject')
+        (['out', 'retval'], POINTER(c_void_p), 'patternObject'),
     ),
     COMMETHOD(
         [],
@@ -2882,27 +2882,27 @@ IUIAutomationElement._methods_ = [
             POINTER(comtypes.gen._00020430_0000_0000_C000_000000000046_0_2_0.GUID),
             'riid',
         ),
-        (['out', 'retval'], POINTER(c_void_p), 'patternObject')
+        (['out', 'retval'], POINTER(c_void_p), 'patternObject'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCurrentPattern',
         (['in'], c_int, 'patternId'),
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'patternObject')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'patternObject'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedPattern',
         (['in'], c_int, 'patternId'),
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'patternObject')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'patternObject'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCachedParent',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'parent'),
     ),
     COMMETHOD(
         [],
@@ -2912,175 +2912,175 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'children',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentProcessId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentControlType',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLocalizedControlType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAcceleratorKey',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAccessKey',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHasKeyboardFocus',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsKeyboardFocusable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsEnabled',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAutomationId',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentClassName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHelpText',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCulture',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsControlElement',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsContentElement',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsPassword',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentNativeWindowHandle',
-        (['out', 'retval'], POINTER(c_void_p), 'retVal')
+        (['out', 'retval'], POINTER(c_void_p), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentItemType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsOffscreen',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentOrientation',
-        (['out', 'retval'], POINTER(OrientationType), 'retVal')
+        (['out', 'retval'], POINTER(OrientationType), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentFrameworkId',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsRequiredForForm',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentItemStatus',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentBoundingRectangle',
-        (['out', 'retval'], POINTER(tagRECT), 'retVal')
+        (['out', 'retval'], POINTER(tagRECT), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLabeledBy',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAriaRole',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAriaProperties',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsDataValidForForm',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -3090,7 +3090,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -3100,7 +3100,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -3110,181 +3110,181 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentProviderDescription',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedProcessId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedControlType',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLocalizedControlType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAcceleratorKey',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAccessKey',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHasKeyboardFocus',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsKeyboardFocusable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsEnabled',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAutomationId',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedClassName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHelpText',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCulture',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsControlElement',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsContentElement',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsPassword',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedNativeWindowHandle',
-        (['out', 'retval'], POINTER(c_void_p), 'retVal')
+        (['out', 'retval'], POINTER(c_void_p), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedItemType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsOffscreen',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedOrientation',
-        (['out', 'retval'], POINTER(OrientationType), 'retVal')
+        (['out', 'retval'], POINTER(OrientationType), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFrameworkId',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsRequiredForForm',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedItemStatus',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedBoundingRectangle',
-        (['out', 'retval'], POINTER(tagRECT), 'retVal')
+        (['out', 'retval'], POINTER(tagRECT), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLabeledBy',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAriaRole',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAriaProperties',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsDataValidForForm',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -3294,7 +3294,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -3304,7 +3304,7 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -3314,20 +3314,20 @@ IUIAutomationElement._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedProviderDescription',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetClickablePoint',
         (['out'], POINTER(tagPOINT), 'clickable'),
-        (['out', 'retval'], POINTER(c_int), 'gotClickable')
+        (['out', 'retval'], POINTER(c_int), 'gotClickable'),
     ),
 ]
 
@@ -3336,7 +3336,7 @@ IUIAutomationElement._methods_ = [
 # class IUIAutomationElement_Impl(object):
 #     def SetFocus(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetRuntimeId(self):
 #         '-no docstring-'
@@ -3737,25 +3737,25 @@ IUIAutomationElement2._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentOptimizeForVisualContent',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedOptimizeForVisualContent',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLiveSetting',
-        (['out', 'retval'], POINTER(LiveSetting), 'retVal')
+        (['out', 'retval'], POINTER(LiveSetting), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLiveSetting',
-        (['out', 'retval'], POINTER(LiveSetting), 'retVal')
+        (['out', 'retval'], POINTER(LiveSetting), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -3765,7 +3765,7 @@ IUIAutomationElement2._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -3775,7 +3775,7 @@ IUIAutomationElement2._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
 ]
 
@@ -3819,13 +3819,13 @@ IUIAutomationElement3._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentIsPeripheral',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsPeripheral',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -3834,7 +3834,7 @@ IUIAutomationElement3._methods_ = [
 # class IUIAutomationElement3_Impl(object):
 #     def ShowContextMenu(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentIsPeripheral(self):
@@ -3876,7 +3876,7 @@ IUIAutomation3._methods_ = [
             ['in'],
             POINTER(IUIAutomationTextEditTextChangedEventHandler),
             'handler',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -3887,7 +3887,7 @@ IUIAutomation3._methods_ = [
             ['in'],
             POINTER(IUIAutomationTextEditTextChangedEventHandler),
             'handler',
-        )
+        ),
     ),
 ]
 
@@ -3896,11 +3896,11 @@ IUIAutomation3._methods_ = [
 # class IUIAutomation3_Impl(object):
 #     def AddTextEditTextChangedEventHandler(self, element, scope, TextEditChangeType, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveTextEditTextChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 IUIAutomation4._methods_ = [
@@ -3913,14 +3913,14 @@ IUIAutomation4._methods_ = [
         (['in'], POINTER(c_int), 'changeTypes'),
         (['in'], c_int, 'changesCount'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'pCacheRequest'),
-        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveChangesEventHandler',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler'),
     ),
 ]
 
@@ -3929,11 +3929,11 @@ IUIAutomation4._methods_ = [
 # class IUIAutomation4_Impl(object):
 #     def AddChangesEventHandler(self, element, scope, changeTypes, changesCount, pCacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveChangesEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_TextPattern2Id = 10024  # Constant c_int
 UIA_Text_TextSelectionChangedEventId = 20014  # Constant c_int
@@ -3956,25 +3956,25 @@ IUIAutomationElement4._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentPositionInSet',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentSizeOfSet',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLevel',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAnnotationTypes',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -3984,31 +3984,31 @@ IUIAutomationElement4._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedPositionInSet',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedSizeOfSet',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLevel',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAnnotationTypes',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_int)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -4018,7 +4018,7 @@ IUIAutomationElement4._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
 ]
 
@@ -4108,85 +4108,85 @@ IUIAutomationWindowPattern._methods_ = [
         HRESULT,
         'WaitForInputIdle',
         (['in'], c_int, 'milliseconds'),
-        (['out', 'retval'], POINTER(c_int), 'success')
+        (['out', 'retval'], POINTER(c_int), 'success'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'SetWindowVisualState',
-        (['in'], WindowVisualState, 'state')
+        (['in'], WindowVisualState, 'state'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanMaximize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanMinimize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsModal',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsTopmost',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentWindowVisualState',
-        (['out', 'retval'], POINTER(WindowVisualState), 'retVal')
+        (['out', 'retval'], POINTER(WindowVisualState), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentWindowInteractionState',
-        (['out', 'retval'], POINTER(WindowInteractionState), 'retVal')
+        (['out', 'retval'], POINTER(WindowInteractionState), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanMaximize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanMinimize',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsModal',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsTopmost',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedWindowVisualState',
-        (['out', 'retval'], POINTER(WindowVisualState), 'retVal')
+        (['out', 'retval'], POINTER(WindowVisualState), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedWindowInteractionState',
-        (['out', 'retval'], POINTER(WindowInteractionState), 'retVal')
+        (['out', 'retval'], POINTER(WindowInteractionState), 'retVal'),
     ),
 ]
 
@@ -4195,7 +4195,7 @@ IUIAutomationWindowPattern._methods_ = [
 # class IUIAutomationWindowPattern_Impl(object):
 #     def Close(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def WaitForInputIdle(self, milliseconds):
 #         '-no docstring-'
@@ -4203,7 +4203,7 @@ IUIAutomationWindowPattern._methods_ = [
 #
 #     def SetWindowVisualState(self, state):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanMaximize(self):
@@ -4287,25 +4287,25 @@ IUIAutomationElement5._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentLandmarkType',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLocalizedLandmarkType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLandmarkType',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLocalizedLandmarkType',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
 ]
 
@@ -4338,13 +4338,13 @@ IUIAutomationElement6._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentFullDescription',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFullDescription',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
 ]
 
@@ -4390,86 +4390,86 @@ IUIAutomationScrollPattern._methods_ = [
         HRESULT,
         'Scroll',
         (['in'], ScrollAmount, 'horizontalAmount'),
-        (['in'], ScrollAmount, 'verticalAmount')
+        (['in'], ScrollAmount, 'verticalAmount'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'SetScrollPercent',
         (['in'], c_double, 'horizontalPercent'),
-        (['in'], c_double, 'verticalPercent')
+        (['in'], c_double, 'verticalPercent'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHorizontalScrollPercent',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentVerticalScrollPercent',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHorizontalViewSize',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentVerticalViewSize',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHorizontallyScrollable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentVerticallyScrollable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHorizontalScrollPercent',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedVerticalScrollPercent',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHorizontalViewSize',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedVerticalViewSize',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHorizontallyScrollable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedVerticallyScrollable',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -4478,11 +4478,11 @@ IUIAutomationScrollPattern._methods_ = [
 # class IUIAutomationScrollPattern_Impl(object):
 #     def Scroll(self, horizontalAmount, verticalAmount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def SetScrollPercent(self, horizontalPercent, verticalPercent):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentHorizontalScrollPercent(self):
@@ -4569,7 +4569,7 @@ IUIAutomationElement7._methods_ = [
         (['in'], POINTER(IUIAutomationCondition), 'condition'),
         (['in'], TreeTraversalOptions, 'traversalOptions'),
         (['in'], POINTER(IUIAutomationElement), 'root'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found'),
     ),
     COMMETHOD(
         [],
@@ -4583,7 +4583,7 @@ IUIAutomationElement7._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'found',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -4594,7 +4594,7 @@ IUIAutomationElement7._methods_ = [
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
         (['in'], TreeTraversalOptions, 'traversalOptions'),
         (['in'], POINTER(IUIAutomationElement), 'root'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'found'),
     ),
     COMMETHOD(
         [],
@@ -4609,7 +4609,7 @@ IUIAutomationElement7._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'found',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -4617,7 +4617,7 @@ IUIAutomationElement7._methods_ = [
         'GetCurrentMetadataValue',
         (['in'], c_int, 'targetId'),
         (['in'], c_int, 'metadataId'),
-        (['out', 'retval'], POINTER(VARIANT), 'returnVal')
+        (['out', 'retval'], POINTER(VARIANT), 'returnVal'),
     ),
 ]
 
@@ -4666,61 +4666,61 @@ IUIAutomationTransformPattern2._methods_ = [
         [],
         HRESULT,
         'Zoom',
-        (['in'], c_double, 'zoomValue')
+        (['in'], c_double, 'zoomValue'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'ZoomByUnit',
-        (['in'], ZoomUnit, 'ZoomUnit')
+        (['in'], ZoomUnit, 'ZoomUnit'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanZoom',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanZoom',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentZoomLevel',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedZoomLevel',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentZoomMinimum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedZoomMinimum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentZoomMaximum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedZoomMaximum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
 ]
 
@@ -4729,11 +4729,11 @@ IUIAutomationTransformPattern2._methods_ = [
 # class IUIAutomationTransformPattern2_Impl(object):
 #     def Zoom(self, zoomValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ZoomByUnit(self, ZoomUnit):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentCanZoom(self):
@@ -4797,14 +4797,14 @@ IUIAutomation5._methods_ = [
         (['in'], POINTER(IUIAutomationElement), 'element'),
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveNotificationEventHandler',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler'),
     ),
 ]
 
@@ -4813,11 +4813,11 @@ IUIAutomation5._methods_ = [
 # class IUIAutomation5_Impl(object):
 #     def AddNotificationEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveNotificationEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_MenuModeEndEventId = 20019  # Constant c_int
 
@@ -4851,14 +4851,14 @@ IUIAutomationTextRange._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationTextRange)),
             'clonedRange',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'Compare',
         (['in'], POINTER(IUIAutomationTextRange), 'range'),
-        (['out', 'retval'], POINTER(c_int), 'areSame')
+        (['out', 'retval'], POINTER(c_int), 'areSame'),
     ),
     COMMETHOD(
         [],
@@ -4867,13 +4867,13 @@ IUIAutomationTextRange._methods_ = [
         (['in'], TextPatternRangeEndpoint, 'srcEndPoint'),
         (['in'], POINTER(IUIAutomationTextRange), 'range'),
         (['in'], TextPatternRangeEndpoint, 'targetEndPoint'),
-        (['out', 'retval'], POINTER(c_int), 'compValue')
+        (['out', 'retval'], POINTER(c_int), 'compValue'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'ExpandToEnclosingUnit',
-        (['in'], TextUnit, 'TextUnit')
+        (['in'], TextUnit, 'TextUnit'),
     ),
     COMMETHOD(
         [],
@@ -4882,7 +4882,7 @@ IUIAutomationTextRange._methods_ = [
         (['in'], c_int, 'attr'),
         (['in'], VARIANT, 'val'),
         (['in'], c_int, 'backward'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'found'),
     ),
     COMMETHOD(
         [],
@@ -4891,20 +4891,20 @@ IUIAutomationTextRange._methods_ = [
         (['in'], BSTR, 'text'),
         (['in'], c_int, 'backward'),
         (['in'], c_int, 'ignoreCase'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'found')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'found'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetAttributeValue',
         (['in'], c_int, 'attr'),
-        (['out', 'retval'], POINTER(VARIANT), 'value')
+        (['out', 'retval'], POINTER(VARIANT), 'value'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetBoundingRectangles',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_double)), 'boundingRects')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_double)), 'boundingRects'),
     ),
     COMMETHOD(
         [],
@@ -4914,14 +4914,14 @@ IUIAutomationTextRange._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElement)),
             'enclosingElement',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetText',
         (['in'], c_int, 'maxLength'),
-        (['out', 'retval'], POINTER(BSTR), 'text')
+        (['out', 'retval'], POINTER(BSTR), 'text'),
     ),
     COMMETHOD(
         [],
@@ -4929,7 +4929,7 @@ IUIAutomationTextRange._methods_ = [
         'Move',
         (['in'], TextUnit, 'unit'),
         (['in'], c_int, 'count'),
-        (['out', 'retval'], POINTER(c_int), 'moved')
+        (['out', 'retval'], POINTER(c_int), 'moved'),
     ),
     COMMETHOD(
         [],
@@ -4938,7 +4938,7 @@ IUIAutomationTextRange._methods_ = [
         (['in'], TextPatternRangeEndpoint, 'endpoint'),
         (['in'], TextUnit, 'unit'),
         (['in'], c_int, 'count'),
-        (['out', 'retval'], POINTER(c_int), 'moved')
+        (['out', 'retval'], POINTER(c_int), 'moved'),
     ),
     COMMETHOD(
         [],
@@ -4946,7 +4946,7 @@ IUIAutomationTextRange._methods_ = [
         'MoveEndpointByRange',
         (['in'], TextPatternRangeEndpoint, 'srcEndPoint'),
         (['in'], POINTER(IUIAutomationTextRange), 'range'),
-        (['in'], TextPatternRangeEndpoint, 'targetEndPoint')
+        (['in'], TextPatternRangeEndpoint, 'targetEndPoint'),
     ),
     COMMETHOD([], HRESULT, 'Select'),
     COMMETHOD([], HRESULT, 'AddToSelection'),
@@ -4955,7 +4955,7 @@ IUIAutomationTextRange._methods_ = [
         [],
         HRESULT,
         'ScrollIntoView',
-        (['in'], c_int, 'alignToTop')
+        (['in'], c_int, 'alignToTop'),
     ),
     COMMETHOD(
         [],
@@ -4965,7 +4965,7 @@ IUIAutomationTextRange._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'children',
-        )
+        ),
     ),
 ]
 
@@ -4986,7 +4986,7 @@ IUIAutomationTextRange._methods_ = [
 #
 #     def ExpandToEnclosingUnit(self, TextUnit):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def FindAttribute(self, attr, val, backward):
 #         '-no docstring-'
@@ -5022,23 +5022,23 @@ IUIAutomationTextRange._methods_ = [
 #
 #     def MoveEndpointByRange(self, srcEndPoint, range, targetEndPoint):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Select(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddToSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFromSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def ScrollIntoView(self, alignToTop):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetChildren(self):
 #         '-no docstring-'
@@ -5054,7 +5054,7 @@ IUIAutomationTextRange2._methods_ = [
 # class IUIAutomationTextRange2_Impl(object):
 #     def ShowContextMenu(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_AnnotationAnnotationTypeIdPropertyId = 30113  # Constant c_int
 
@@ -5082,7 +5082,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
             ['in'],
             POINTER(IUIAutomationActiveTextPositionChangedEventHandler),
             'handler',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -5091,7 +5091,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
         (['in'], c_int, 'eventId'),
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -5101,7 +5101,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
         (['in'], POINTER(c_int), 'changeTypes'),
         (['in'], c_int, 'changesCount'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationChangesEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -5109,7 +5109,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
         'AddNotificationEventHandler',
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationNotificationEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -5119,7 +5119,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
         (['in'], POINTER(IUIAutomationPropertyChangedEventHandler), 'handler'),
         (['in'], POINTER(c_int), 'propertyArray'),
-        (['in'], c_int, 'propertyCount')
+        (['in'], c_int, 'propertyCount'),
     ),
     COMMETHOD(
         [],
@@ -5127,7 +5127,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
         'AddStructureChangedEventHandler',
         (['in'], TreeScope, 'scope'),
         (['in'], POINTER(IUIAutomationCacheRequest), 'cacheRequest'),
-        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler')
+        (['in'], POINTER(IUIAutomationStructureChangedEventHandler), 'handler'),
     ),
     COMMETHOD(
         [],
@@ -5140,7 +5140,7 @@ IUIAutomationEventHandlerGroup._methods_ = [
             ['in'],
             POINTER(IUIAutomationTextEditTextChangedEventHandler),
             'handler',
-        )
+        ),
     ),
 ]
 
@@ -5149,31 +5149,31 @@ IUIAutomationEventHandlerGroup._methods_ = [
 # class IUIAutomationEventHandlerGroup_Impl(object):
 #     def AddActiveTextPositionChangedEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddAutomationEventHandler(self, eventId, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddChangesEventHandler(self, scope, changeTypes, changesCount, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddNotificationEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPropertyChangedEventHandler(self, scope, cacheRequest, handler, propertyArray, propertyCount):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddStructureChangedEventHandler(self, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddTextEditTextChangedEventHandler(self, scope, TextEditChangeType, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_CulturePropertyId = 30015  # Constant c_int
 
@@ -5194,7 +5194,7 @@ IUIAutomationTextRange3._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElement)),
             'enclosingElement',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -5205,7 +5205,7 @@ IUIAutomationTextRange3._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'children',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -5213,7 +5213,7 @@ IUIAutomationTextRange3._methods_ = [
         'GetAttributeValues',
         (['in'], POINTER(c_int), 'attributeIds'),
         (['in'], c_int, 'attributeIdCount'),
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(VARIANT)), 'attributeValues')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(VARIANT)), 'attributeValues'),
     ),
 ]
 
@@ -5245,14 +5245,14 @@ IUIAutomationTextRangeArray._methods_ = [
         ['propget'],
         HRESULT,
         'Length',
-        (['out', 'retval'], POINTER(c_int), 'Length')
+        (['out', 'retval'], POINTER(c_int), 'Length'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetElement',
         (['in'], c_int, 'index'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'element'),
     ),
 ]
 
@@ -5288,14 +5288,14 @@ IUIAutomationTextPattern._methods_ = [
         HRESULT,
         'RangeFromPoint',
         (['in'], tagPOINT, 'pt'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RangeFromChild',
         (['in'], POINTER(IUIAutomationElement), 'child'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
     COMMETHOD(
         [],
@@ -5305,7 +5305,7 @@ IUIAutomationTextPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationTextRangeArray)),
             'ranges',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -5315,13 +5315,13 @@ IUIAutomationTextPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationTextRangeArray)),
             'ranges',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'DocumentRange',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
     COMMETHOD(
         ['propget'],
@@ -5331,7 +5331,7 @@ IUIAutomationTextPattern._methods_ = [
             ['out', 'retval'],
             POINTER(SupportedTextSelection),
             'SupportedTextSelection',
-        )
+        ),
     ),
 ]
 
@@ -5377,7 +5377,7 @@ IUIAutomationObjectModelPattern._methods_ = [
         [],
         HRESULT,
         'GetUnderlyingObjectModel',
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'retVal'),
     ),
 ]
 
@@ -5401,79 +5401,79 @@ IUIAutomationRangeValuePattern._methods_ = [
         [],
         HRESULT,
         'SetValue',
-        (['in'], c_double, 'val')
+        (['in'], c_double, 'val'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentValue',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsReadOnly',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentMaximum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentMinimum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLargeChange',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentSmallChange',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedValue',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsReadOnly',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedMaximum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedMinimum',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLargeChange',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedSmallChange',
-        (['out', 'retval'], POINTER(c_double), 'retVal')
+        (['out', 'retval'], POINTER(c_double), 'retVal'),
     ),
 ]
 
@@ -5482,7 +5482,7 @@ IUIAutomationRangeValuePattern._methods_ = [
 # class IUIAutomationRangeValuePattern_Impl(object):
 #     def SetValue(self, val):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentValue(self):
@@ -5558,14 +5558,14 @@ IUIAutomationTextPattern2._methods_ = [
         HRESULT,
         'RangeFromAnnotation',
         (['in'], POINTER(IUIAutomationElement), 'annotation'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetCaretRange',
         (['out'], POINTER(c_int), 'isActive'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
 ]
 
@@ -5593,13 +5593,13 @@ IUIAutomationTextEditPattern._methods_ = [
         [],
         HRESULT,
         'GetActiveComposition',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetConversionTarget',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationTextRange)), 'range'),
     ),
 ]
 
@@ -5630,7 +5630,7 @@ IUIAutomationItemContainerPattern._methods_ = [
         (['in'], POINTER(IUIAutomationElement), 'pStartAfter'),
         (['in'], c_int, 'propertyId'),
         (['in'], VARIANT, 'value'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'pFound')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'pFound'),
     ),
 ]
 
@@ -5658,7 +5658,7 @@ IUIAutomationInvokePattern._methods_ = [
 # class IUIAutomationInvokePattern_Impl(object):
 #     def Invoke(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -5682,19 +5682,19 @@ IUIAutomationDockPattern._methods_ = [
         [],
         HRESULT,
         'SetDockPosition',
-        (['in'], DockPosition, 'dockPos')
+        (['in'], DockPosition, 'dockPos'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDockPosition',
-        (['out', 'retval'], POINTER(DockPosition), 'retVal')
+        (['out', 'retval'], POINTER(DockPosition), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDockPosition',
-        (['out', 'retval'], POINTER(DockPosition), 'retVal')
+        (['out', 'retval'], POINTER(DockPosition), 'retVal'),
     ),
 ]
 
@@ -5703,7 +5703,7 @@ IUIAutomationDockPattern._methods_ = [
 # class IUIAutomationDockPattern_Impl(object):
 #     def SetDockPosition(self, dockPos):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentDockPosition(self):
@@ -5732,7 +5732,7 @@ IUIAutomationScrollItemPattern._methods_ = [
 # class IUIAutomationScrollItemPattern_Impl(object):
 #     def ScrollIntoView(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -5751,19 +5751,19 @@ IUIAutomationSelectionPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCanSelectMultiple',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentIsSelectionRequired',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -5773,19 +5773,19 @@ IUIAutomationSelectionPattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCanSelectMultiple',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsSelectionRequired',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -5842,13 +5842,13 @@ IUIAutomationExpandCollapsePattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentExpandCollapseState',
-        (['out', 'retval'], POINTER(ExpandCollapseState), 'retVal')
+        (['out', 'retval'], POINTER(ExpandCollapseState), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedExpandCollapseState',
-        (['out', 'retval'], POINTER(ExpandCollapseState), 'retVal')
+        (['out', 'retval'], POINTER(ExpandCollapseState), 'retVal'),
     ),
 ]
 
@@ -5857,11 +5857,11 @@ IUIAutomationExpandCollapsePattern._methods_ = [
 # class IUIAutomationExpandCollapsePattern_Impl(object):
 #     def Expand(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Collapse(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentExpandCollapseState(self):
@@ -5902,31 +5902,31 @@ IUIAutomationGridPattern._methods_ = [
         'GetItem',
         (['in'], c_int, 'row'),
         (['in'], c_int, 'column'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'element'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentRowCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentColumnCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedRowCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedColumnCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -5978,49 +5978,49 @@ IUIAutomationSelectionPattern2._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentFirstSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentLastSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentCurrentSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentItemCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedFirstSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedLastSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedCurrentSelectedItem',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedItemCount',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -6087,61 +6087,61 @@ IUIAutomationGridItemPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentContainingGrid',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentRow',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentColumn',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentRowSpan',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentColumnSpan',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedContainingGrid',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedRow',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedColumn',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedRowSpan',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedColumnSpan',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -6225,21 +6225,21 @@ IUIAutomation6._methods_ = [
             ['out'],
             POINTER(POINTER(IUIAutomationEventHandlerGroup)),
             'handlerGroup',
-        )
+        ),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'AddEventHandlerGroup',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationEventHandlerGroup), 'handlerGroup')
+        (['in'], POINTER(IUIAutomationEventHandlerGroup), 'handlerGroup'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'RemoveEventHandlerGroup',
         (['in'], POINTER(IUIAutomationElement), 'element'),
-        (['in'], POINTER(IUIAutomationEventHandlerGroup), 'handlerGroup')
+        (['in'], POINTER(IUIAutomationEventHandlerGroup), 'handlerGroup'),
     ),
     COMMETHOD(
         ['propget'],
@@ -6249,7 +6249,7 @@ IUIAutomation6._methods_ = [
             ['out', 'retval'],
             POINTER(ConnectionRecoveryBehaviorOptions),
             'ConnectionRecoveryBehaviorOptions',
-        )
+        ),
     ),
     COMMETHOD(
         ['propput'],
@@ -6259,7 +6259,7 @@ IUIAutomation6._methods_ = [
             ['in'],
             ConnectionRecoveryBehaviorOptions,
             'ConnectionRecoveryBehaviorOptions',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
@@ -6269,13 +6269,13 @@ IUIAutomation6._methods_ = [
             ['out', 'retval'],
             POINTER(CoalesceEventsOptions),
             'CoalesceEventsOptions',
-        )
+        ),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'CoalesceEvents',
-        (['in'], CoalesceEventsOptions, 'CoalesceEventsOptions')
+        (['in'], CoalesceEventsOptions, 'CoalesceEventsOptions'),
     ),
     COMMETHOD(
         [],
@@ -6288,7 +6288,7 @@ IUIAutomation6._methods_ = [
             ['in'],
             POINTER(IUIAutomationActiveTextPositionChangedEventHandler),
             'handler',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -6299,7 +6299,7 @@ IUIAutomation6._methods_ = [
             ['in'],
             POINTER(IUIAutomationActiveTextPositionChangedEventHandler),
             'handler',
-        )
+        ),
     ),
 ]
 
@@ -6312,11 +6312,11 @@ IUIAutomation6._methods_ = [
 #
 #     def AddEventHandlerGroup(self, element, handlerGroup):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveEventHandlerGroup(self, element, handlerGroup):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def _get(self):
 #         '-no docstring-'
@@ -6334,11 +6334,11 @@ IUIAutomation6._methods_ = [
 #
 #     def AddActiveTextPositionChangedEventHandler(self, element, scope, cacheRequest, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveActiveTextPositionChangedEventHandler(self, element, handler):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_IsSpreadsheetPatternAvailablePropertyId = 30128  # Constant c_int
 UIA_ControllerForPropertyId = 30104  # Constant c_int
@@ -6414,7 +6414,7 @@ IUIAutomationVirtualizedItemPattern._methods_ = [
 # class IUIAutomationVirtualizedItemPattern_Impl(object):
 #     def Realize(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 AnnotationType_EditingLockedChange = 60016  # Constant c_int
 
@@ -6430,61 +6430,61 @@ IUIAutomationAnnotationPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentAnnotationTypeId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAnnotationTypeName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentAuthor',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDateTime',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentTarget',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAnnotationTypeId',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAnnotationTypeName',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedAuthor',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDateTime',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedTarget',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
 ]
 
@@ -6566,25 +6566,25 @@ IUIAutomationDropTargetPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentDropTargetEffect',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDropTargetEffect',
-        (['out', 'retval'], POINTER(BSTR), 'retVal')
+        (['out', 'retval'], POINTER(BSTR), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDropTargetEffects',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDropTargetEffects',
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(BSTR)), 'retVal'),
     ),
 ]
 
@@ -6639,13 +6639,13 @@ IUIAutomationElement8._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentHeadingLevel',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHeadingLevel',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -6688,7 +6688,7 @@ IUIAutomationEventHandler._methods_ = [
         HRESULT,
         'HandleAutomationEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
-        (['in'], c_int, 'eventId')
+        (['in'], c_int, 'eventId'),
     ),
 ]
 
@@ -6697,7 +6697,7 @@ IUIAutomationEventHandler._methods_ = [
 # class IUIAutomationEventHandler_Impl(object):
 #     def HandleAutomationEvent(self, sender, eventId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -6712,13 +6712,13 @@ IUIAutomationElement9._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentIsDialog',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsDialog',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
 ]
 
@@ -6743,7 +6743,7 @@ IUIAutomationPropertyChangedEventHandler._methods_ = [
         'HandlePropertyChangedEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
         (['in'], c_int, 'propertyId'),
-        (['in'], VARIANT, 'newValue')
+        (['in'], VARIANT, 'newValue'),
     ),
 ]
 
@@ -6752,7 +6752,7 @@ IUIAutomationPropertyChangedEventHandler._methods_ = [
 # class IUIAutomationPropertyChangedEventHandler_Impl(object):
 #     def HandlePropertyChangedEvent(self, sender, propertyId, newValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 
 
@@ -6774,13 +6774,13 @@ IUIAutomationProxyFactory._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IRawElementProviderSimple)),
             'provider',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ProxyFactoryId',
-        (['out', 'retval'], POINTER(BSTR), 'factoryId')
+        (['out', 'retval'], POINTER(BSTR), 'factoryId'),
     ),
 ]
 
@@ -6804,7 +6804,7 @@ IUIAutomationStructureChangedEventHandler._methods_ = [
         'HandleStructureChangedEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
         (['in'], StructureChangeType, 'changeType'),
-        (['in'], _midlSAFEARRAY(c_int), 'runtimeId')
+        (['in'], _midlSAFEARRAY(c_int), 'runtimeId'),
     ),
 ]
 
@@ -6813,7 +6813,7 @@ IUIAutomationStructureChangedEventHandler._methods_ = [
 # class IUIAutomationStructureChangedEventHandler_Impl(object):
 #     def HandleStructureChangedEvent(self, sender, changeType, runtimeId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_FlowsToPropertyId = 30106  # Constant c_int
 
@@ -6838,7 +6838,7 @@ IUIAutomationCustomNavigationPattern._methods_ = [
         HRESULT,
         'Navigate',
         (['in'], NavigateDirection, 'direction'),
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'pRetVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'pRetVal'),
     ),
 ]
 
@@ -6856,7 +6856,7 @@ IUIAutomationActiveTextPositionChangedEventHandler._methods_ = [
         HRESULT,
         'HandleActiveTextPositionChangedEvent',
         (['in'], POINTER(IUIAutomationElement), 'sender'),
-        (['in'], POINTER(IUIAutomationTextRange), 'range')
+        (['in'], POINTER(IUIAutomationTextRange), 'range'),
     ),
 ]
 
@@ -6865,7 +6865,7 @@ IUIAutomationActiveTextPositionChangedEventHandler._methods_ = [
 # class IUIAutomationActiveTextPositionChangedEventHandler_Impl(object):
 #     def HandleActiveTextPositionChangedEvent(self, sender, range):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 # values for enumeration 'ProviderOptions'
 ProviderOptions_ClientSideProvider = 1
@@ -6884,21 +6884,21 @@ IRawElementProviderSimple._methods_ = [
         ['propget'],
         HRESULT,
         'ProviderOptions',
-        (['out', 'retval'], POINTER(ProviderOptions), 'pRetVal')
+        (['out', 'retval'], POINTER(ProviderOptions), 'pRetVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetPatternProvider',
         (['in'], c_int, 'patternId'),
-        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'pRetVal')
+        (['out', 'retval'], POINTER(POINTER(IUnknown)), 'pRetVal'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetPropertyValue',
         (['in'], c_int, 'propertyId'),
-        (['out', 'retval'], POINTER(VARIANT), 'pRetVal')
+        (['out', 'retval'], POINTER(VARIANT), 'pRetVal'),
     ),
     COMMETHOD(
         ['propget'],
@@ -6908,7 +6908,7 @@ IRawElementProviderSimple._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IRawElementProviderSimple)),
             'pRetVal',
-        )
+        ),
     ),
 ]
 
@@ -6950,25 +6950,25 @@ IUIAutomationSelectionItemPattern._methods_ = [
         ['propget'],
         HRESULT,
         'CurrentIsSelected',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentSelectionContainer',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedIsSelected',
-        (['out', 'retval'], POINTER(c_int), 'retVal')
+        (['out', 'retval'], POINTER(c_int), 'retVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedSelectionContainer',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationElement)), 'retVal'),
     ),
 ]
 
@@ -6977,15 +6977,15 @@ IUIAutomationSelectionItemPattern._methods_ = [
 # class IUIAutomationSelectionItemPattern_Impl(object):
 #     def Select(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddToSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def RemoveFromSelection(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentIsSelected(self):
@@ -7030,62 +7030,62 @@ IUIAutomationLegacyIAccessiblePattern._methods_ = [
         [],
         HRESULT,
         'Select',
-        ([], c_int, 'flagsSelect')
+        ([], c_int, 'flagsSelect'),
     ),
     COMMETHOD([], HRESULT, 'DoDefaultAction'),
     COMMETHOD(
         [],
         HRESULT,
         'SetValue',
-        ([], WSTRING, 'szValue')
+        ([], WSTRING, 'szValue'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentChildId',
-        (['out', 'retval'], POINTER(c_int), 'pRetVal')
+        (['out', 'retval'], POINTER(c_int), 'pRetVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentName',
-        (['out', 'retval'], POINTER(BSTR), 'pszName')
+        (['out', 'retval'], POINTER(BSTR), 'pszName'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentValue',
-        (['out', 'retval'], POINTER(BSTR), 'pszValue')
+        (['out', 'retval'], POINTER(BSTR), 'pszValue'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDescription',
-        (['out', 'retval'], POINTER(BSTR), 'pszDescription')
+        (['out', 'retval'], POINTER(BSTR), 'pszDescription'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentRole',
-        (['out', 'retval'], POINTER(c_ulong), 'pdwRole')
+        (['out', 'retval'], POINTER(c_ulong), 'pdwRole'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentState',
-        (['out', 'retval'], POINTER(c_ulong), 'pdwState')
+        (['out', 'retval'], POINTER(c_ulong), 'pdwState'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentHelp',
-        (['out', 'retval'], POINTER(BSTR), 'pszHelp')
+        (['out', 'retval'], POINTER(BSTR), 'pszHelp'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentKeyboardShortcut',
-        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut')
+        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut'),
     ),
     COMMETHOD(
         [],
@@ -7095,61 +7095,61 @@ IUIAutomationLegacyIAccessiblePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'pvarSelectedChildren',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentDefaultAction',
-        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction')
+        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedChildId',
-        (['out', 'retval'], POINTER(c_int), 'pRetVal')
+        (['out', 'retval'], POINTER(c_int), 'pRetVal'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedName',
-        (['out', 'retval'], POINTER(BSTR), 'pszName')
+        (['out', 'retval'], POINTER(BSTR), 'pszName'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedValue',
-        (['out', 'retval'], POINTER(BSTR), 'pszValue')
+        (['out', 'retval'], POINTER(BSTR), 'pszValue'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDescription',
-        (['out', 'retval'], POINTER(BSTR), 'pszDescription')
+        (['out', 'retval'], POINTER(BSTR), 'pszDescription'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedRole',
-        (['out', 'retval'], POINTER(c_ulong), 'pdwRole')
+        (['out', 'retval'], POINTER(c_ulong), 'pdwRole'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedState',
-        (['out', 'retval'], POINTER(c_ulong), 'pdwState')
+        (['out', 'retval'], POINTER(c_ulong), 'pdwState'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedHelp',
-        (['out', 'retval'], POINTER(BSTR), 'pszHelp')
+        (['out', 'retval'], POINTER(BSTR), 'pszHelp'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedKeyboardShortcut',
-        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut')
+        (['out', 'retval'], POINTER(BSTR), 'pszKeyboardShortcut'),
     ),
     COMMETHOD(
         [],
@@ -7159,19 +7159,19 @@ IUIAutomationLegacyIAccessiblePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'pvarSelectedChildren',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedDefaultAction',
-        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction')
+        (['out', 'retval'], POINTER(BSTR), 'pszDefaultAction'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'GetIAccessible',
-        (['out', 'retval'], POINTER(POINTER(IAccessible)), 'ppAccessible')
+        (['out', 'retval'], POINTER(POINTER(IAccessible)), 'ppAccessible'),
     ),
 ]
 
@@ -7180,15 +7180,15 @@ IUIAutomationLegacyIAccessiblePattern._methods_ = [
 # class IUIAutomationLegacyIAccessiblePattern_Impl(object):
 #     def Select(self, flagsSelect):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def DoDefaultAction(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def SetValue(self, szValue):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     @property
 #     def CurrentChildId(self):
@@ -7327,7 +7327,7 @@ IUIAutomationSynchronizedInputPattern._methods_ = [
         [],
         HRESULT,
         'StartListening',
-        (['in'], SynchronizedInputType, 'inputType')
+        (['in'], SynchronizedInputType, 'inputType'),
     ),
     COMMETHOD([], HRESULT, 'Cancel'),
 ]
@@ -7337,11 +7337,11 @@ IUIAutomationSynchronizedInputPattern._methods_ = [
 # class IUIAutomationSynchronizedInputPattern_Impl(object):
 #     def StartListening(self, inputType):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Cancel(self):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 UIA_StylesFillPatternColorPropertyId = 30125  # Constant c_int
 UIA_StylesFillPatternStylePropertyId = 30123  # Constant c_int
@@ -7367,7 +7367,7 @@ IUIAutomationTablePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -7377,13 +7377,13 @@ IUIAutomationTablePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CurrentRowOrColumnMajor',
-        (['out', 'retval'], POINTER(RowOrColumnMajor), 'retVal')
+        (['out', 'retval'], POINTER(RowOrColumnMajor), 'retVal'),
     ),
     COMMETHOD(
         [],
@@ -7393,7 +7393,7 @@ IUIAutomationTablePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         [],
@@ -7403,13 +7403,13 @@ IUIAutomationTablePattern._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationElementArray)),
             'retVal',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CachedRowOrColumnMajor',
-        (['out', 'retval'], POINTER(RowOrColumnMajor), 'retVal')
+        (['out', 'retval'], POINTER(RowOrColumnMajor), 'retVal'),
     ),
 ]
 
@@ -7455,67 +7455,67 @@ IUIAutomationProxyFactoryEntry._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationProxyFactory)),
             'factory',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ClassName',
-        (['out', 'retval'], POINTER(BSTR), 'ClassName')
+        (['out', 'retval'], POINTER(BSTR), 'ClassName'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'ImageName',
-        (['out', 'retval'], POINTER(BSTR), 'ImageName')
+        (['out', 'retval'], POINTER(BSTR), 'ImageName'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'AllowSubstringMatch',
-        (['out', 'retval'], POINTER(c_int), 'AllowSubstringMatch')
+        (['out', 'retval'], POINTER(c_int), 'AllowSubstringMatch'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'CanCheckBaseClass',
-        (['out', 'retval'], POINTER(c_int), 'CanCheckBaseClass')
+        (['out', 'retval'], POINTER(c_int), 'CanCheckBaseClass'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'NeedsAdviseEvents',
-        (['out', 'retval'], POINTER(c_int), 'adviseEvents')
+        (['out', 'retval'], POINTER(c_int), 'adviseEvents'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'ClassName',
-        (['in'], WSTRING, 'ClassName')
+        (['in'], WSTRING, 'ClassName'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'ImageName',
-        (['in'], WSTRING, 'ImageName')
+        (['in'], WSTRING, 'ImageName'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'AllowSubstringMatch',
-        (['in'], c_int, 'AllowSubstringMatch')
+        (['in'], c_int, 'AllowSubstringMatch'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'CanCheckBaseClass',
-        (['in'], c_int, 'CanCheckBaseClass')
+        (['in'], c_int, 'CanCheckBaseClass'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'NeedsAdviseEvents',
-        (['in'], c_int, 'adviseEvents')
+        (['in'], c_int, 'adviseEvents'),
     ),
     COMMETHOD(
         [],
@@ -7523,7 +7523,7 @@ IUIAutomationProxyFactoryEntry._methods_ = [
         'SetWinEventsForAutomationEvent',
         (['in'], c_int, 'eventId'),
         (['in'], c_int, 'propertyId'),
-        (['in'], _midlSAFEARRAY(c_uint), 'winEvents')
+        (['in'], _midlSAFEARRAY(c_uint), 'winEvents'),
     ),
     COMMETHOD(
         [],
@@ -7531,7 +7531,7 @@ IUIAutomationProxyFactoryEntry._methods_ = [
         'GetWinEventsForAutomationEvent',
         (['in'], c_int, 'eventId'),
         (['in'], c_int, 'propertyId'),
-        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_uint)), 'winEvents')
+        (['out', 'retval'], POINTER(_midlSAFEARRAY(c_uint)), 'winEvents'),
     ),
 ]
 
@@ -7580,7 +7580,7 @@ IUIAutomationProxyFactoryEntry._methods_ = [
 #
 #     def SetWinEventsForAutomationEvent(self, eventId, propertyId, winEvents):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def GetWinEventsForAutomationEvent(self, eventId, propertyId):
 #         '-no docstring-'
@@ -7599,19 +7599,19 @@ IUIAutomationPropertyCondition._methods_ = [
         ['propget'],
         HRESULT,
         'propertyId',
-        (['out', 'retval'], POINTER(c_int), 'propertyId')
+        (['out', 'retval'], POINTER(c_int), 'propertyId'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'PropertyValue',
-        (['out', 'retval'], POINTER(VARIANT), 'PropertyValue')
+        (['out', 'retval'], POINTER(VARIANT), 'PropertyValue'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'PropertyConditionFlags',
-        (['out', 'retval'], POINTER(PropertyConditionFlags), 'flags')
+        (['out', 'retval'], POINTER(PropertyConditionFlags), 'flags'),
     ),
 ]
 
@@ -7646,7 +7646,7 @@ IUIAutomationBoolCondition._methods_ = [
         ['propget'],
         HRESULT,
         'BooleanValue',
-        (['out', 'retval'], POINTER(c_int), 'boolVal')
+        (['out', 'retval'], POINTER(c_int), 'boolVal'),
     ),
 ]
 
@@ -7675,13 +7675,13 @@ IUIAutomationCacheRequest._methods_ = [
         [],
         HRESULT,
         'AddProperty',
-        (['in'], c_int, 'propertyId')
+        (['in'], c_int, 'propertyId'),
     ),
     COMMETHOD(
         [],
         HRESULT,
         'AddPattern',
-        (['in'], c_int, 'patternId')
+        (['in'], c_int, 'patternId'),
     ),
     COMMETHOD(
         [],
@@ -7691,43 +7691,43 @@ IUIAutomationCacheRequest._methods_ = [
             ['out', 'retval'],
             POINTER(POINTER(IUIAutomationCacheRequest)),
             'clonedRequest',
-        )
+        ),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'TreeScope',
-        (['out', 'retval'], POINTER(TreeScope), 'scope')
+        (['out', 'retval'], POINTER(TreeScope), 'scope'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'TreeScope',
-        (['in'], TreeScope, 'scope')
+        (['in'], TreeScope, 'scope'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'TreeFilter',
-        (['out', 'retval'], POINTER(POINTER(IUIAutomationCondition)), 'filter')
+        (['out', 'retval'], POINTER(POINTER(IUIAutomationCondition)), 'filter'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'TreeFilter',
-        (['in'], POINTER(IUIAutomationCondition), 'filter')
+        (['in'], POINTER(IUIAutomationCondition), 'filter'),
     ),
     COMMETHOD(
         ['propget'],
         HRESULT,
         'AutomationElementMode',
-        (['out', 'retval'], POINTER(AutomationElementMode), 'mode')
+        (['out', 'retval'], POINTER(AutomationElementMode), 'mode'),
     ),
     COMMETHOD(
         ['propput'],
         HRESULT,
         'AutomationElementMode',
-        (['in'], AutomationElementMode, 'mode')
+        (['in'], AutomationElementMode, 'mode'),
     ),
 ]
 
@@ -7736,11 +7736,11 @@ IUIAutomationCacheRequest._methods_ = [
 # class IUIAutomationCacheRequest_Impl(object):
 #     def AddProperty(self, propertyId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def AddPattern(self, patternId):
 #         '-no docstring-'
-#         #return 
+#         #return
 #
 #     def Clone(self):
 #         '-no docstring-'
@@ -8174,8 +8174,7 @@ __all__ = [
     'IUIAutomationFocusChangedEventHandler',
     'UIA_IsActiveAttributeId', 'CoalesceEventsOptions_Enabled',
     'UIA_IndentationLeadingAttributeId', 'UIA_SelectionItemPatternId',
-    'RowOrColumnMajor_ColumnMajor'
+    'RowOrColumnMajor_ColumnMajor',
 ]
 
 _check_version('1.2.0', 1691570609.765831)
-

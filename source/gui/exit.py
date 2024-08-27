@@ -30,7 +30,6 @@ except RuntimeError:
 
 @unique
 class _ExitAction(DisplayStringEnum):
-
 	EXIT = auto()
 	RESTART = auto()
 	RESTART_WITH_ADDONS_DISABLED = auto()
@@ -80,7 +79,7 @@ class ExitDialog(wx.Dialog):
 			addonsDisabledText = _(
 				# Translators: A message in the exit Dialog shown when all add-ons are disabled.
 				"All add-ons are now disabled. "
-				"They will be re-enabled on the next restart unless you choose to disable them again."
+				"They will be re-enabled on the next restart unless you choose to disable them again.",
 			)
 			warningMessages.append(addonsDisabledText)
 		if languageHandler.isLanguageForced():
@@ -88,7 +87,7 @@ class ExitDialog(wx.Dialog):
 				# Translators: A message in the exit Dialog shown when NVDA language has been
 				# overwritten from the command line.
 				"NVDA's interface language is now forced from the command line."
-				" On the next restart, the language  saved in NVDA's configuration will be used instead."
+				" On the next restart, the language  saved in NVDA's configuration will be used instead.",
 			)
 			warningMessages.append(langForcedMsg)
 		if warningMessages:
@@ -143,13 +142,16 @@ class ExitDialog(wx.Dialog):
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame
-				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+
+				if any(
+					getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo),
+				):
 					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
 						parent=mainFrame,
 						destPath=destPath,
 						version=version,
 						apiVersion=apiVersion,
-						backCompatTo=backCompatTo
+						backCompatTo=backCompatTo,
 					)
 					displayDialogAsModal(confirmUpdateDialog)
 				else:

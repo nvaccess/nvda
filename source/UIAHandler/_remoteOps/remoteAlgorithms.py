@@ -6,24 +6,24 @@
 from __future__ import annotations
 from collections.abc import Generator
 from .remoteFuncWrapper import (
-	remoteContextManager
+	remoteContextManager,
 )
 from .remoteAPI import RemoteAPI
 from .remoteTypes import (
 	RemoteIntEnum,
-	RemoteTextRange
+	RemoteTextRange,
 )
 from .lowLevel import (
-	TextUnit
+	TextUnit,
 )
 
 
 @remoteContextManager
 def remote_forEachUnitInTextRange(
-		ra: RemoteAPI,
-		textRange: RemoteTextRange,
-		unit: RemoteIntEnum[TextUnit] | TextUnit,
-		reverse: bool = False
+	ra: RemoteAPI,
+	textRange: RemoteTextRange,
+	unit: RemoteIntEnum[TextUnit] | TextUnit,
+	reverse: bool = False,
 ) -> Generator[RemoteTextRange, None, None]:
 	logicalTextRange = textRange.getLogicalAdapter(reverse)
 	logicalTempRange = logicalTextRange.clone()
