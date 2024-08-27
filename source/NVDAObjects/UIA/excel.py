@@ -31,7 +31,7 @@ import re
 
 
 class ExcelCustomProperties:
-	""" UIA 'custom properties' specific to Excel.
+	"""UIA 'custom properties' specific to Excel.
 	Once registered, all subsequent registrations will return the same ID value.
 	"""
 
@@ -86,10 +86,10 @@ class ExcelCustomProperties:
 
 
 class ExcelCustomAnnotationTypes:
-	""" UIA 'custom annotation types' specific to Excel.
+	"""UIA 'custom annotation types' specific to Excel.
 	Once registered, all subsequent registrations will return the same ID value.
 	"""
-	
+
 	def __init__(self):
 		#  Available custom Annotations list at https://docs.microsoft.com/en-us/office/uia/excel/excelannotations
 		# Note annotation:
@@ -101,14 +101,13 @@ class ExcelCustomAnnotationTypes:
 
 
 class ExcelObject(UIA):
-	"""Common base class for all Excel UIA objects
-	"""
+	"""Common base class for all Excel UIA objects"""
+
 	_UIAExcelCustomProps = ExcelCustomProperties()
 	_UIAExcelCustomAnnotationTypes = ExcelCustomAnnotationTypes()
 
 
 class ExcelCell(ExcelObject):
-
 	_coordinateRegEx = re.compile("([A-Z]+)([0-9]+)", re.IGNORECASE)
 
 	# selecting cells causes duplicate focus events
@@ -194,7 +193,7 @@ class ExcelCell(ExcelObject):
 			"excel-UIA",
 			# Translators: the description of a script
 			"Shows a browseable message Listing information about a cell's "
-			"appearance such as outline and fill colors, rotation and size"
+			"appearance such as outline and fill colors, rotation and size",
 		),
 		gestures=["kb:NVDA+o"],
 	)
@@ -203,31 +202,33 @@ class ExcelCell(ExcelObject):
 		tmpl = pgettext(
 			"excel-UIA",
 			# Translators: The width of the cell in points
-			"Cell width: {0.x:.1f} pt"
+			"Cell width: {0.x:.1f} pt",
 		)
 		infoList.append(tmpl.format(self.cellSize))
 
 		tmpl = pgettext(
 			"excel-UIA",
 			# Translators: The height of the cell in points
-			"Cell height: {0.y:.1f} pt"
+			"Cell height: {0.y:.1f} pt",
 		)
 		infoList.append(tmpl.format(self.cellSize))
 
 		if self.rotation is not None:
-			infoList.append(npgettext(
-				"excel-UIA",
-				# Translators: The rotation in degrees of an Excel cell
-				"Rotation: {0} degree",
-				"Rotation: {0} degrees",
-				self.rotation,
-			).format(self.rotation))
+			infoList.append(
+				npgettext(
+					"excel-UIA",
+					# Translators: The rotation in degrees of an Excel cell
+					"Rotation: {0} degree",
+					"Rotation: {0} degrees",
+					self.rotation,
+				).format(self.rotation)
+			)
 
 		if self.outlineColor is not None:
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The outline (border) colors of an Excel cell.
-				"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}"
+				"Outline color: top={0.name}, bottom={1.name}, left={2.name}, right={3.name}",
 			)
 			infoList.append(tmpl.format(*self.outlineColor))
 
@@ -235,7 +236,7 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The outline (border) thickness values of an Excel cell.
-				"Outline thickness: top={0}, bottom={1}, left={2}, right={3}"
+				"Outline thickness: top={0}, bottom={1}, left={2}, right={3}",
 			)
 			infoList.append(tmpl.format(*self.outlineThickness))
 
@@ -243,7 +244,7 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The fill color of an Excel cell
-				"Fill color: {0.name}"
+				"Fill color: {0.name}",
 			)
 			infoList.append(tmpl.format(self.fillColor))
 
@@ -251,19 +252,15 @@ class ExcelCell(ExcelObject):
 			tmpl = pgettext(
 				"excel-UIA",
 				# Translators: The fill type (pattern, gradient etc) of an Excel Cell
-				"Fill type: {0}"
+				"Fill type: {0}",
 			)
 			infoList.append(tmpl.format(UIAHandler.constants.FillTypeLabels[self.fillType]))
-		numberFormat = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.cellNumberFormat.id
-		)
+		numberFormat = self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.cellNumberFormat.id)
 		if numberFormat:
 			# Translators: the number format of an Excel cell
 			tmpl = _("Number format: {0}")
 			infoList.append(tmpl.format(numberFormat))
-		hasDataValidation = self._getUIACacheablePropertyValue(
-			self._UIAExcelCustomProps.hasDataValidation.id
-		)
+		hasDataValidation = self._getUIACacheablePropertyValue(self._UIAExcelCustomProps.hasDataValidation.id)
 		if hasDataValidation:
 			# Translators: If an excel cell has data validation set
 			tmpl = _("Has data validation")
@@ -292,15 +289,12 @@ class ExcelCell(ExcelObject):
 			title=pgettext(
 				"excel-UIA",
 				# Translators: Title for a browsable message that describes the appearance of a cell in Excel
-				"Cell Appearance"
-			)
+				"Cell Appearance",
+			),
 		)
 
 	def _hasSelection(self):
-		return (
-			self.selectionContainer
-			and 1 < self.selectionContainer.getSelectedItemsCount()
-		)
+		return self.selectionContainer and 1 < self.selectionContainer.getSelectedItemsCount()
 
 	def _get_value(self):
 		if self._hasSelection():
@@ -332,9 +326,7 @@ class ExcelCell(ExcelObject):
 			author = presence.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
 			descriptionList.append(
 				# Translators: a mesage when another author is editing a cell in a shared Excel spreadsheet.
-				_("{author} is editing").format(
-					author=author
-				)
+				_("{author} is editing").format(author=author)
 			)
 		baseDescription = super().description
 		if baseDescription:
@@ -397,6 +389,7 @@ class ExcelCell(ExcelObject):
 		See https://codereview.stackexchange.com/questions/182733/base-26-letters-and-base-10-using-recursion
 		for more details about the approach used.
 		"""
+
 		def modGenerator(x: int) -> Tuple[int, int]:
 			"""Generate digits from L{x} in base alphabet, least significants
 			bits first.
@@ -407,10 +400,8 @@ class ExcelCell(ExcelObject):
 			while x:
 				x, y = divmod(x - 1, 26)
 				yield y
-		return ''.join(
-			chr(ord("A") + i)
-			for i in modGenerator(n)
-		)[::-1]
+
+		return "".join(chr(ord("A") + i) for i in modGenerator(n))[::-1]
 
 	@staticmethod
 	def _getNumberRepresentationForColumn(column: str) -> int:
@@ -420,8 +411,7 @@ class ExcelCell(ExcelObject):
 		for more details about the approach used.
 		"""
 		return sum(
-			(ord(letter) - ord("A") + 1) * (26 ** i)
-			for i, letter in enumerate(reversed(column.upper()))
+			(ord(letter) - ord("A") + 1) * (26**i) for i, letter in enumerate(reversed(column.upper()))
 		)
 
 	def _get_cellCoordsText(self):
@@ -434,42 +424,39 @@ class ExcelCell(ExcelObject):
 				UIAHandler.UIA_Selection2FirstSelectedItemPropertyId
 			).QueryInterface(UIAHandler.IUIAutomationElement)
 
-			firstAddress = firstSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_NamePropertyId
-			).replace('"', '').replace(' ', '')
-
-			firstValue = firstSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_ValueValuePropertyId
+			firstAddress = (
+				firstSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+				.replace('"', "")
+				.replace(" ", "")
 			)
+
+			firstValue = firstSelected.GetCurrentPropertyValue(UIAHandler.UIA_ValueValuePropertyId)
 
 			lastSelected = sc.GetCurrentPropertyValue(
 				UIAHandler.UIA_Selection2LastSelectedItemPropertyId
 			).QueryInterface(UIAHandler.IUIAutomationElement)
 
-			lastAddress = lastSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_NamePropertyId
-			).replace('"', '').replace(' ', '')
-
-			lastValue = lastSelected.GetCurrentPropertyValue(
-				UIAHandler.UIA_ValueValuePropertyId
+			lastAddress = (
+				lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_NamePropertyId)
+				.replace('"', "")
+				.replace(" ", "")
 			)
+
+			lastValue = lastSelected.GetCurrentPropertyValue(UIAHandler.UIA_ValueValuePropertyId)
 
 			cellCoordsTemplate = pgettext(
 				"excel-UIA",
 				# Translators: Excel, report selected range of cell coordinates
-				"{firstAddress} {firstValue} through {lastAddress} {lastValue}"
+				"{firstAddress} {firstValue} through {lastAddress} {lastValue}",
 			)
 			return cellCoordsTemplate.format(
-				firstAddress=firstAddress,
-				firstValue=firstValue,
-				lastAddress=lastAddress,
-				lastValue=lastValue
+				firstAddress=firstAddress, firstValue=firstValue, lastAddress=lastAddress, lastValue=lastValue
 			)
 		else:
 			name = super().name
 			# Later builds of Excel 2016 quote the letter coordinate.
 			# We don't want the quotes and also strip the space between column and row.
-			name = name.replace('"', '').replace(' ', '')
+			name = name.replace('"', "").replace(" ", "")
 			if self.rowSpan > 1 or self.columnSpan > 1:
 				# Excel does not offer information about merged cells
 				# but merges all merged cells into one UIA element named as the first cell in the merged range.
@@ -477,15 +464,19 @@ class ExcelCell(ExcelObject):
 				firstAddress = name
 				firstColumn, firstRow = self._coordinateRegEx.match(firstAddress).groups()
 				firstRow = int(firstRow)
-				lastColumn = firstColumn if self.columnSpan == 1 else self._getColumnRepresentationForNumber(
-					self._getNumberRepresentationForColumn(firstColumn) + (self.columnSpan - 1)
+				lastColumn = (
+					firstColumn
+					if self.columnSpan == 1
+					else self._getColumnRepresentationForNumber(
+						self._getNumberRepresentationForColumn(firstColumn) + (self.columnSpan - 1)
+					)
 				)
 				lastRow = firstRow + (self.rowSpan - 1)
 				lastAddress = f"{lastColumn}{lastRow}"
 				cellCoordsTemplate = pgettext(
 					"excel-UIA",
 					# Translators: Excel, report merged range of cell coordinates
-					"{firstAddress} through {lastAddress}"
+					"{firstAddress} through {lastAddress}",
 				)
 				return cellCoordsTemplate.format(
 					firstAddress=firstAddress,
@@ -496,7 +487,8 @@ class ExcelCell(ExcelObject):
 	@script(
 		# Translators: the description  for a script for Excel
 		description=_("Reports the note or comment thread on the current cell"),
-		gesture="kb:NVDA+alt+c")
+		gesture="kb:NVDA+alt+c",
+	)
 	def script_reportComment(self, gesture):
 		if winVersion.getWinVer() >= winVersion.WIN11:
 			noteElement = self.UIAAnnotationObjects.get(self._UIAExcelCustomAnnotationTypes.note.id)
@@ -513,13 +505,12 @@ class ExcelCell(ExcelObject):
 		if commentsElement:
 			comment = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_FullDescriptionPropertyId)
 			author = commentsElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAuthorPropertyId)
-			numReplies = commentsElement.GetCurrentPropertyValue(self._UIAExcelCustomProps.commentReplyCount.id)
+			numReplies = commentsElement.GetCurrentPropertyValue(
+				self._UIAExcelCustomProps.commentReplyCount.id
+			)
 			if numReplies == 0:
 				# Translators: a comment on a cell in Microsoft excel.
-				text = _("Comment thread: {comment}  by {author}").format(
-					comment=comment,
-					author=author
-				)
+				text = _("Comment thread: {comment}  by {author}").format(comment=comment, author=author)
 			else:
 				text = ngettext(
 					# Translators: a comment on a cell in Microsoft excel.
@@ -571,7 +562,7 @@ class BadExcelFormulaEdit(ExcelObject):
 
 
 class ExcelTable(UIA):
-	""" Represents a table within an Excel spreadsheet."""
+	"""Represents a table within an Excel spreadsheet."""
 
 	def event_focusExited(self):
 		# Generally, NVDA would not announce when focus exits an ancestor control.

@@ -3,9 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the extension points in the braille module.
-"""
-
+"""Unit tests for the extension points in the braille module."""
 
 import braille
 from ..extensionPointTestHelpers import actionTester, deciderTester, filterTester
@@ -19,18 +17,14 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 		cells = [0] * braille.handler.displaySize
 		braille.handler._rawText = " " * braille.handler.displaySize
 		expectedKwargs = dict(
-			cells=cells,
-			rawText=braille.handler._rawText,
-			currentCellCount=braille.handler.displaySize
+			cells=cells, rawText=braille.handler._rawText, currentCellCount=braille.handler.displaySize
 		)
 
 		with actionTester(self, braille.pre_writeCells, **expectedKwargs):
 			braille.handler._writeCells(cells)
 
 	def test_displaySizeChanged(self):
-		expectedKwargs = dict(
-			displaySize=braille.handler.displaySize
-		)
+		expectedKwargs = dict(displaySize=braille.handler.displaySize)
 
 		with actionTester(self, braille.displaySizeChanged, **expectedKwargs):
 			# Change the attribute that is compared with the value coming from filter_displaySize
@@ -39,10 +33,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler._get_displaySize()
 
 	def test_displayChanged(self):
-		expectedKwargs = dict(
-			isFallback=False,
-			detected=None
-		)
+		expectedKwargs = dict(isFallback=False, detected=None)
 
 		with actionTester(self, braille.displayChanged, useAssertDictContainsSubset=True, **expectedKwargs):
 			# Terminate the current noBraille instance to ensure that the action is triggered when choosing it again.
@@ -55,7 +46,7 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			self,
 			braille.filter_displaySize,
 			braille.handler._displaySize,  # The currently cached display size
-			20,   # The filter handler should change the display size to 40
+			20,  # The filter handler should change the display size to 40
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displaySize, expectedOutput)
 

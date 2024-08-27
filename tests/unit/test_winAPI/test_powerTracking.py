@@ -19,10 +19,7 @@ from winAPI._powerTracking import (
 
 class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 	def setUp(self) -> None:
-		self.testPowerStatus = cast(
-			SystemPowerStatus,
-			MagicMock(SystemPowerStatus())
-		)
+		self.testPowerStatus = cast(SystemPowerStatus, MagicMock(SystemPowerStatus()))
 
 	def test_fetch_status_fetchFailed(self):
 		actualSpeech = _getSpeechForBatteryStatus(
@@ -69,7 +66,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			['1 percent', '1 hour and 1 minute remaining', "Unplugged"],
+			["1 percent", "1 hour and 1 minute remaining", "Unplugged"],
 			actualSpeech,
 		)
 
@@ -96,7 +93,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_OFFLINE,
 		)
 		self.assertEqual(
-			["Plugged in", '1 percent', '1 hour and 1 minute remaining'],
+			["Plugged in", "1 percent", "1 hour and 1 minute remaining"],
 			actualSpeech,
 		)
 
@@ -110,7 +107,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["Unplugged", '1 percent', '1 hour and 1 minute remaining'],
+			["Unplugged", "1 percent", "1 hour and 1 minute remaining"],
 			actualSpeech,
 		)
 
@@ -124,7 +121,7 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["Unplugged", '1 percent'],
+			["Unplugged", "1 percent"],
 			actualSpeech,
 		)
 
@@ -139,6 +136,6 @@ class Test_GetSpeechForBatteryStatus(unittest.TestCase):
 			oldPowerState=PowerState.AC_ONLINE,
 		)
 		self.assertEqual(
-			["Unplugged", '7 percent'],
+			["Unplugged", "7 percent"],
 			actualSpeech,
 		)

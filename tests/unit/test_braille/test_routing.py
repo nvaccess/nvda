@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for the move system caret when routing review cursor braille setting.
-"""
+"""Unit tests for the move system caret when routing review cursor braille setting."""
 
 import config
 import braille
@@ -18,7 +17,6 @@ from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 
 
 class CursorManagerTextInfo(CursorManager.TextInfo):
-
 	def updateCaret(self):
 		super().updateCaret()
 		self.obj.caretLastUpdateTime = time.time()
@@ -104,7 +102,9 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		whereas it should activate the current position when the review cursor is already at that position.
 		The caret should always move when routing.
 		"""
-		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = (
+			ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		)
 		curTime = time.time()
 		braille.handler.routeTo(3)  # Route to the fourth cell
 		self.assertLess(self.cm.lastActivateTime, curTime)
@@ -133,7 +133,9 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		This test ensures that this behavior will work, even when it is the first routing action in a sequence.
 		The caret should also have been moved even though routing didn't touch the review cursor position.
 		"""
-		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = (
+			ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		)
 		curTime = time.time()
 		review = self.caret.copy()
 		review.move(textInfos.UNIT_CHARACTER, 3)

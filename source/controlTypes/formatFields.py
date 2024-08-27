@@ -14,10 +14,11 @@ class TextPosition(DisplayStringStrEnum):
 	"""Values to use for 'text-position' NVDA format field.
 	These describe the vertical position of the text with respect to the base line.
 	"""
-	UNDEFINED = 'undefined'
-	BASELINE = 'baseline'
-	SUBSCRIPT = 'sub'
-	SUPERSCRIPT = 'super'
+
+	UNDEFINED = "undefined"
+	BASELINE = "baseline"
+	SUBSCRIPT = "sub"
+	SUPERSCRIPT = "super"
 
 	@property
 	def _displayStringLabels(self):
@@ -74,7 +75,7 @@ class FontSize:
 		# Translators: A measurement unit of font size.
 		"larger": pgettext("font size", "larger"),
 		# Translators: A measurement unit of font size.
-		"smaller": pgettext("font size", "smaller")
+		"smaller": pgettext("font size", "smaller"),
 	}
 
 	_measurementRe = re.compile(r"([0-9\.]+)(px|em|ex|rem|pt|%)")
@@ -86,7 +87,7 @@ class FontSize:
 		Browsers provide the value of the font-size attribute directly,
 		either as a measurement or as keywords. These aren't translated.
 		https://developer.mozilla.org/en-US/docs/Web/CSS/font-size#values
-		
+
 		@return: a translated font size string.
 		"""
 		if fontSize in FontSize._keywordToTranslatableString:
@@ -105,15 +106,16 @@ class TextAlign(DisplayStringStrEnum):
 	"""Values to use for 'text-align' NVDA format field.
 	These describe the horizontal paragraph position.
 	"""
-	UNDEFINED = 'undefined'
-	LEFT = 'left'
-	CENTER = 'center'
-	RIGHT = 'right'
-	JUSTIFY = 'justify'
-	DISTRIBUTE = 'distribute'
-	CENTER_ACROSS_SELECTION = 'center-across-selection'
-	GENERAL = 'general'
-	FILL = 'fill'
+
+	UNDEFINED = "undefined"
+	LEFT = "left"
+	CENTER = "center"
+	RIGHT = "right"
+	JUSTIFY = "justify"
+	DISTRIBUTE = "distribute"
+	CENTER_ACROSS_SELECTION = "center-across-selection"
+	GENERAL = "general"
+	FILL = "fill"
 
 	@property
 	def _displayStringLabels(self):
@@ -151,12 +153,13 @@ class VerticalTextAlign(DisplayStringStrEnum):
 	"""Values to use for 'vertical-align' NVDA format field.
 	These describe the vertical text position, e.g. in a table cell.
 	"""
-	UNDEFINED = 'undefined'
-	TOP = 'top'
-	CENTER = 'center'
-	BOTTOM = 'bottom'
-	JUSTIFY = 'justify'
-	DISTRIBUTE = 'distributed'
+
+	UNDEFINED = "undefined"
+	TOP = "top"
+	CENTER = "center"
+	BOTTOM = "bottom"
+	JUSTIFY = "justify"
+	DISTRIBUTE = "distributed"
 
 	@property
 	def _displayStringLabels(self):

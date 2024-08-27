@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_string(TestCase):
-
 	def test_concat(self):
 		op = operation.Operation(localMode=True)
 
@@ -21,7 +20,7 @@ class Test_string(TestCase):
 		def code(ra: remoteAPI.RemoteAPI):
 			s = ra.newString("hello")
 			t = ra.newString(" world")
-			u = (s + t)
+			u = s + t
 			ra.Return(u)
 
 		u = op.execute()

@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2024 NV Access Limited
 
-"""Unit tests for the installer module.
-"""
+"""Unit tests for the installer module."""
 
 import pathlib
 import tempfile

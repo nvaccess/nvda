@@ -17,27 +17,21 @@ from logHandler import getFormattedStacksForAllThreads
 
 
 LPOVERLAPPED_COMPLETION_ROUTINE = ctypes.WINFUNCTYPE(
-	None,
-	ctypes.wintypes.DWORD,
-	ctypes.wintypes.DWORD,
-	LPOVERLAPPED
+	None, ctypes.wintypes.DWORD, ctypes.wintypes.DWORD, LPOVERLAPPED
 )
 ApcT = typing.Callable[[int], None]
 ApcIdT = int
 OverlappedStructAddressT = int
 CompletionRoutineT = typing.Callable[[int, int, LPOVERLAPPED], None]
 ApcStoreT = typing.Dict[
-	ApcIdT,
-	typing.Tuple[
-		typing.Union[ApcT, BoundMethodWeakref[ApcT], AnnotatableWeakref[ApcT]], ApcIdT
-	]
+	ApcIdT, typing.Tuple[typing.Union[ApcT, BoundMethodWeakref[ApcT], AnnotatableWeakref[ApcT]], ApcIdT]
 ]
 CompletionRoutineStoreTypeT = typing.Dict[
 	OverlappedStructAddressT,
 	typing.Tuple[
 		typing.Union[BoundMethodWeakref[CompletionRoutineT], AnnotatableWeakref[CompletionRoutineT]],
-		OVERLAPPED
-	]
+		OVERLAPPED,
+	],
 ]
 
 
@@ -54,8 +48,7 @@ def _generateApcParams() -> typing.Generator[ApcIdT, None, None]:
 
 
 class IoThread(threading.Thread):
-	"""A thread used for background writes and raw I/O, e.g. for braille displays.
-	"""
+	"""A thread used for background writes and raw I/O, e.g. for braille displays."""
 
 	exit: bool = False
 	_apcParamCounter = _generateApcParams()
@@ -73,10 +66,7 @@ class IoThread(threading.Thread):
 	_completionRoutineStore: CompletionRoutineStoreTypeT = {}
 
 	def __init__(self):
-		super().__init__(
-			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}",
-			daemon=True
-		)
+		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}", daemon=True)
 
 	@winKernel.PAPCFUNC
 	def _internalApc(param: ApcIdT):
@@ -102,14 +92,12 @@ class IoThread(threading.Thread):
 		try:
 			function(actualParam)
 		except Exception:
-			log.error(f"Error in APC function {function!r} with apcId {param} queued to IoThread", exc_info=True)
+			log.error(
+				f"Error in APC function {function!r} with apcId {param} queued to IoThread", exc_info=True
+			)
 
 	@LPOVERLAPPED_COMPLETION_ROUTINE
-	def _internalCompletionRoutine(
-			error: int,
-			numberOfBytes: int,
-			overlapped: LPOVERLAPPED
-	):
+	def _internalCompletionRoutine(error: int, numberOfBytes: int, overlapped: LPOVERLAPPED):
 		threadinst = threading.current_thread()
 		if not isinstance(threadinst, IoThread):
 			log.error("Internal APC called from unknown thread")
@@ -118,7 +106,9 @@ class IoThread(threading.Thread):
 		ptr = ctypes.cast(overlapped, ctypes.c_void_p).value
 		(reference, cachedOverlapped) = IoThread._completionRoutineStore.pop(ptr, (None, None))
 		if reference is None:
-			log.error(f"Internal completion routine called with pointer 0x{ptr:x}, but no such address in store")
+			log.error(
+				f"Internal completion routine called with pointer 0x{ptr:x}, but no such address in store"
+			)
 			return
 
 		function = reference()
@@ -138,9 +128,9 @@ class IoThread(threading.Thread):
 		self.handle = ctypes.windll.kernel32.OpenThread(winKernel.THREAD_SET_CONTEXT, False, self.ident)
 
 	def _registerToCallAsApc(
-			self,
-			func: ApcT,
-			param: int = 0,
+		self,
+		func: ApcT,
+		param: int = 0,
 	) -> ApcIdT:
 		"""Internal method to store a python function to be called in an Asynchronous Procedure Call (APC).
 		The function and param are saved in a store on the IoThread instance.
@@ -164,11 +154,7 @@ class IoThread(threading.Thread):
 		self._apcStore[internalParam] = (reference, param)
 		return internalParam
 
-	def queueAsApc(
-			self,
-			func: ApcT,
-			param: int = 0
-	):
+	def queueAsApc(self, func: ApcT, param: int = 0):
 		"""safely queues a Python function call as an Asynchronous Procedure Call (APC).
 		The function and param are saved in a store on the IoThread instance.
 		When our internal APC executes the function, the entry will be popped from the store.
@@ -181,13 +167,9 @@ class IoThread(threading.Thread):
 		ctypes.windll.kernel32.QueueUserAPC(self._internalApc, self.handle, internalParam)
 
 	def setWaitableTimer(
-			self,
-			handle: typing.Union[int, ctypes.wintypes.HANDLE],
-			dueTime: int,
-			func: ApcT,
-			param: int = 0
+		self, handle: typing.Union[int, ctypes.wintypes.HANDLE], dueTime: int, func: ApcT, param: int = 0
 	):
-		""""Safe wrapper around winKernel.setWaitableTimer that uses an internal APC.
+		""" "Safe wrapper around winKernel.setWaitableTimer that uses an internal APC.
 		A weak reference to the function and its param are saved in a store on the IoThread instance.
 		When our internal APC executes the function, the entry will be popped from the store.
 		Note that as the python function is weakly referenced, the caller should
@@ -198,17 +180,12 @@ class IoThread(threading.Thread):
 		@param param: The parameter passed to the APC when called.
 		"""
 		internalParam = self._registerToCallAsApc(func, param)
-		winKernel.setWaitableTimer(
-			handle,
-			dueTime,
-			completionRoutine=self._internalApc,
-			arg=internalParam
-		)
+		winKernel.setWaitableTimer(handle, dueTime, completionRoutine=self._internalApc, arg=internalParam)
 
 	def queueAsCompletionRoutine(
-			self,
-			func: CompletionRoutineT,
-			overlapped: OVERLAPPED,
+		self,
+		func: CompletionRoutineT,
+		overlapped: OVERLAPPED,
 	):
 		"""safely queues a Python function call as an overlapped completion routine.
 		A weak reference to the Python function is saved in a store on the IoThread instance
@@ -246,6 +223,7 @@ class IoThread(threading.Thread):
 
 		def fakeApc(param):
 			return None
+
 		self.queueAsApc(fakeApc)
 		self.join(timeout)
 		self.exit = False

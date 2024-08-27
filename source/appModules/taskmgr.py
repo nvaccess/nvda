@@ -21,6 +21,7 @@ def isChildOfRow(obj):
 		obj = obj.parent
 	return False
 
+
 class BrokenUIAChild(UIA):
 	# This is A child which is layout, but should be content.
 	presentationType = NVDAObject.presType_content
@@ -40,7 +41,7 @@ class AppModule(appModuleHandler.AppModule):
 		if normalizedClassName in (
 			# #15503: SysListView32 controls in task manager are known to have an incomplete UIA implementation.
 			# Revert back to the MSAA implementation instead.
-			'SysListView32',
+			"SysListView32",
 		):
 			return True
 		return False

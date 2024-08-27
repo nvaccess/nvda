@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited.
 
-"""Unit tests for the caseInsensitiveCollections submodule.
-"""
+"""Unit tests for the caseInsensitiveCollections submodule."""
 
 import unittest
 

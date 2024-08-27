@@ -21,18 +21,18 @@ def findExtraOverlayClasses(obj: NVDAObject, clsList: List[Type[NVDAObject]]) ->
 	UIAControlType = obj.UIAElement.cachedControlType
 	if UIAControlType == UIAHandler.UIA.UIA_ListControlTypeId:
 		clsList.insert(0, SysListViewList)
-	elif UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId and isinstance(obj.parent, SysListViewList):
+	elif UIAControlType == UIAHandler.UIA.UIA_ListItemControlTypeId and isinstance(
+		obj.parent, SysListViewList
+	):
 		clsList.insert(0, SysListViewItem)
 		if obj.parent._getUIACacheablePropertyValue(UIAHandler.UIA.UIA_IsTablePatternAvailablePropertyId):
 			clsList.insert(0, RowWithFakeNavigation)
 
 
-class SysListViewList(UIA):
-	...
+class SysListViewList(UIA): ...
 
 
 class SysListViewItem(ListItem):
-
 	def _get_name(self) -> str:
 		parent = self.parent
 		if not isinstance(parent, SysListViewList) or self.childCount <= 1:
@@ -52,7 +52,8 @@ class SysListViewItem(ListItem):
 			columnHeaderTextList = []
 			if (
 				name
-				and config.conf['documentFormatting']['reportTableHeaders'] in (
+				and config.conf["documentFormatting"]["reportTableHeaders"]
+				in (
 					ReportTableHeaders.ROWS_AND_COLUMNS,
 					ReportTableHeaders.COLUMNS,
 				)
@@ -60,8 +61,7 @@ class SysListViewItem(ListItem):
 			):
 				try:
 					columnHeaderItems = e.getCachedPropertyValueEx(
-						UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId,
-						False
+						UIAHandler.UIA.UIA_TableItemColumnHeaderItemsPropertyId, False
 					)
 				except COMError:
 					log.debugWarning("Couldn't fetch column header items", exc_info=True)
@@ -88,13 +88,9 @@ class SysListViewItem(ListItem):
 		childCacheRequest = UIAHandler.handler.baseCacheRequest.clone()
 		childCacheRequest.addProperty(UIAHandler.UIA.UIA_GridItemRowPropertyId)
 		element = UIAHandler.handler.baseTreeWalker.GetFirstChildElementBuildCache(
-			self.UIAElement,
-			childCacheRequest
+			self.UIAElement, childCacheRequest
 		)
-		val = element.getCachedPropertyValueEx(
-			UIAHandler.UIA.UIA_GridItemRowPropertyId,
-			True
-		)
+		val = element.getCachedPropertyValueEx(UIAHandler.UIA.UIA_GridItemRowPropertyId, True)
 		if val == UIAHandler.handler.reservedNotSupportedValue:
 			return super().indexInParent
 		return val
@@ -107,12 +103,12 @@ class SysListViewItem(ListItem):
 		except (COMError, NotImplementedError):
 			pass
 		if itemIndex > 0:
-			info['indexInGroup'] = itemIndex
+			info["indexInGroup"] = itemIndex
 			itemCount = 0
 			try:
 				itemCount = self.parent.rowCount
 			except (COMError, NotImplementedError):
 				pass
 			if itemCount > 0:
-				info['similarItemsInGroup'] = itemCount
+				info["similarItemsInGroup"] = itemCount
 		return info

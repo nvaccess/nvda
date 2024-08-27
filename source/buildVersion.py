@@ -11,9 +11,9 @@ Any localizable version information should be placed in the versionInfo module, 
 This module exists separately so that it can be imported for version checks before localization is initialized.
 """
 
+
 def _updateVersionFromVCS():
-	"""Update the version from version control system metadata if possible.
-	"""
+	"""Update the version from version control system metadata if possible."""
 	global version
 	# The root of the Git working tree will be the parent of this module's directory.
 	gitDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), ".git")
@@ -28,9 +28,7 @@ def _updateVersionFromVCS():
 		ref = head[5:]
 		with open(os.path.join(gitDir, ref), "r") as f:
 			commit = f.read().rstrip()
-		version = "source-%s-%s" % (
-			os.path.basename(ref),
-			commit[:7])
+		version = "source-%s-%s" % (os.path.basename(ref), commit[:7])
 	except:  # noqa: E722
 		pass
 
@@ -69,9 +67,9 @@ version_year = 2024
 version_major = 3
 version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
-version=_formatDevVersionString()
-publisher="unknown"
-updateVersionType=None
+version = _formatDevVersionString()
+publisher = "unknown"
+updateVersionType = None
 try:
 	from _buildVersion import version, publisher, updateVersionType, version_build  # noqa: F401
 except ImportError:

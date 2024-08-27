@@ -7,7 +7,6 @@
 This module contains the instructions that operate on the status of operations.
 """
 
-
 from __future__ import annotations
 from dataclasses import dataclass
 from .. import lowLevel

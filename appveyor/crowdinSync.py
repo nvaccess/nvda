@@ -20,19 +20,12 @@ if not PROJECT_ID:
 
 
 def request(
-		path: str,
-		method=requests.get,
-		headers: dict[str, str] | None = None,
-		**kwargs
+	path: str, method=requests.get, headers: dict[str, str] | None = None, **kwargs
 ) -> requests.Response:
 	if headers is None:
 		headers = {}
 	headers["Authorization"] = f"Bearer {AUTH_TOKEN}"
-	r = method(
-		f"https://api.crowdin.com/api/v2/{path}",
-		headers=headers,
-		**kwargs
-	)
+	r = method(f"https://api.crowdin.com/api/v2/{path}", headers=headers, **kwargs)
 	# Convert errors to exceptions, but print the response before raising.
 	try:
 		r.raise_for_status()
@@ -50,32 +43,18 @@ def uploadSourceFile(crowdinFileID: int, localFilePath: str) -> None:
 	fn = os.path.basename(localFilePath)
 	print(f"Uploading {localFilePath} to Crowdin temporary storage as {fn}")
 	with open(localFilePath, "rb") as f:
-		r = request(
-			"storages",
-			method=requests.post,
-			headers={"Crowdin-API-FileName": fn},
-			data=f
-		)
+		r = request("storages", method=requests.post, headers={"Crowdin-API-FileName": fn}, data=f)
 	storageID = r.json()["data"]["id"]
 	print(f"Updating file {crowdinFileID} on Crowdin with storage ID {storageID}")
-	r = projectRequest(
-		f"files/{crowdinFileID}",
-		method=requests.put,
-		json={"storageId": storageID}
-	)
+	r = projectRequest(f"files/{crowdinFileID}", method=requests.put, json={"storageId": storageID})
 	revisionId = r.json()["data"]["revisionId"]
 	print(f"Updated to revision {revisionId}")
 
 
 def main():
-	parser = argparse.ArgumentParser(
-		description="Syncs translations with Crowdin."
-	)
+	parser = argparse.ArgumentParser(description="Syncs translations with Crowdin.")
 	commands = parser.add_subparsers(dest="command", required=True)
-	uploadCommand = commands.add_parser(
-		"uploadSourceFile",
-		help="Upload a source file to Crowdin."
-	)
+	uploadCommand = commands.add_parser("uploadSourceFile", help="Upload a source file to Crowdin.")
 	uploadCommand.add_argument("crowdinFileID", type=int, help="The Crowdin file ID.")
 	uploadCommand.add_argument("localFilePath", help="The path to the local file.")
 	args = parser.parse_args()

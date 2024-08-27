@@ -34,7 +34,7 @@ def getAppNameFromHost(processId):
 	# Convert this into lowercase to make the file name consistent with other NVDA app modules.
 	return appModel.value.split("!")[-1].lower()
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	# WWAHost app content is treated as part of an app, not a browse mode document.
 	disableBrowseModeByDefault = True

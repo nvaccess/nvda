@@ -7,7 +7,7 @@
 Commands that can be embedded in a speech sequence for changing synth parameters, playing sounds or running
  other callbacks.
 """
- 
+
 from abc import ABCMeta, abstractmethod
 from typing import (
 	Optional,
@@ -15,6 +15,7 @@ from typing import (
 
 import config
 from synthDriverHandler import getSynth
+
 
 class SpeechCommand(object):
 	"""The base class for objects that can be inserted between strings of text to perform actions,
@@ -31,10 +32,7 @@ class _CancellableSpeechCommand(SpeechCommand):
 	Support currently experimental and may be subject to change.
 	"""
 
-	def __init__(
-			self,
-			reportDevInfo=False
-	):
+	def __init__(self, reportDevInfo=False):
 		"""
 		@param reportDevInfo: If true, developer info is reported for repr implementation.
 		"""
@@ -65,12 +63,15 @@ class _CancellableSpeechCommand(SpeechCommand):
 		self._isCancelled = True
 
 	def _getFormattedDevInfo(self):
-
-		return "" if not self._reportDevInfo else (
-			f", devInfo<"
-			f" isCanceledCache: {self._isCancelled}"
-			f", isValidCallback: {self._checkIfValid()}"
-			f", isValidCallbackDevInfo: {self._getDevInfo()} >"
+		return (
+			""
+			if not self._reportDevInfo
+			else (
+				f", devInfo<"
+				f" isCanceledCache: {self._isCancelled}"
+				f", isValidCallback: {self._checkIfValid()}"
+				f", isValidCallbackDevInfo: {self._getDevInfo()} >"
+			)
 		)
 
 	def __repr__(self):
@@ -83,8 +84,8 @@ class _CancellableSpeechCommand(SpeechCommand):
 
 
 class SynthCommand(SpeechCommand):
-	"""Commands that can be passed to synth drivers.
-	"""
+	"""Commands that can be passed to synth drivers."""
+
 
 class IndexCommand(SynthCommand):
 	"""Marks this point in the speech with an index.
@@ -96,13 +97,14 @@ class IndexCommand(SynthCommand):
 	NVDA handles the indexing and dispatches callbacks as appropriate.
 	"""
 
-	def __init__(self,index):
+	def __init__(self, index):
 		"""
 		@param index: the value of this index
 		@type index: integer
 		"""
-		if not isinstance(index,int): raise ValueError("index must be int, not %s"%type(index))  # noqa: E701
-		self.index=index
+		if not isinstance(index, int):
+			raise ValueError("index must be int, not %s" % type(index))  # noqa: E701
+		self.index = index
 
 	def __repr__(self):
 		return "IndexCommand(%r)" % self.index
@@ -116,24 +118,26 @@ class IndexCommand(SynthCommand):
 
 
 class SynthParamCommand(SynthCommand):
-	"""A synth command which changes a parameter for subsequent speech.
-	"""
+	"""A synth command which changes a parameter for subsequent speech."""
+
 	#: Whether this command returns the parameter to its default value.
 	#: Note that the default might be configured by the user;
 	#: e.g. for pitch, rate, etc.
 	#: @type: bool
 	isDefault = False
 
+
 class CharacterModeCommand(SynthParamCommand):
 	"""Turns character mode on and off for speech synths."""
 
-	def __init__(self,state):
+	def __init__(self, state):
 		"""
 		@param state: if true character mode is on, if false its turned off.
 		@type state: boolean
 		"""
-		if not isinstance(state,bool): raise ValueError("state must be boolean, not %s"%type(state))  # noqa: E701
-		self.state=state
+		if not isinstance(state, bool):
+			raise ValueError("state must be boolean, not %s" % type(state))  # noqa: E701
+		self.state = state
 		self.isDefault = not state
 
 	def __repr__(self):
@@ -158,7 +162,7 @@ class LangChangeCommand(SynthParamCommand):
 		self.isDefault = not lang
 
 	def __repr__(self):
-		return "LangChangeCommand (%r)"%self.lang
+		return "LangChangeCommand (%r)" % self.lang
 
 	def __eq__(self, __o: object) -> bool:
 		if __o is self:
@@ -171,8 +175,7 @@ class LangChangeCommand(SynthParamCommand):
 
 
 class BreakCommand(SynthCommand):
-	"""Insert a break between words.
-	"""
+	"""Insert a break between words."""
 
 	def __init__(self, time: int = 0):
 		"""
@@ -207,6 +210,7 @@ class SuppressUnicodeNormalizationCommand(SpeechCommand):
 	When state is False, original behavior of normalization will be restored.
 	This command is a no-op when normalization is disabled.
 	"""
+
 	state: bool
 
 	def __init__(self, state: bool = True):
@@ -226,6 +230,7 @@ class BaseProsodyCommand(SynthParamCommand):
 	To return to the default value, specify neither.
 	This base class should not be instantiated directly.
 	"""
+
 	#: The name of the setting in the configuration; e.g. pitch, rate, etc.
 	settingName = None
 
@@ -247,16 +252,14 @@ class BaseProsodyCommand(SynthParamCommand):
 
 	@property
 	def defaultValue(self):
-		"""The default value for the setting as configured by the user.
-		"""
+		"""The default value for the setting as configured by the user."""
 		synth = getSynth()
 		synthConf = config.conf["speech"][synth.name]
 		return synthConf[self.settingName]
 
 	@property
 	def multiplier(self):
-		"""The number by which to multiply the default value.
-		"""
+		"""The number by which to multiply the default value."""
 		if self._multiplier != 1:
 			# Constructed with multiplier. Just return it.
 			return self._multiplier
@@ -270,8 +273,7 @@ class BaseProsodyCommand(SynthParamCommand):
 
 	@property
 	def offset(self):
-		"""The amount by which to increase/decrease the default value.
-		"""
+		"""The amount by which to increase/decrease the default value."""
 		if self._offset != 0:
 			# Constructed with offset. Just return it.
 			return self._offset
@@ -285,8 +287,7 @@ class BaseProsodyCommand(SynthParamCommand):
 
 	@property
 	def newValue(self):
-		"""The new absolute value after the offset or multiplier is applied to the default value.
-		"""
+		"""The new absolute value after the offset or multiplier is applied to the default value."""
 		if self._offset != 0:
 			# Calculate using offset.
 			return self.defaultValue + self._offset
@@ -303,8 +304,7 @@ class BaseProsodyCommand(SynthParamCommand):
 			param = "multiplier=%g" % self._multiplier
 		else:
 			param = ""
-		return "{type}({param})".format(
-			type=type(self).__name__, param=param)
+		return "{type}({param})".format(type=type(self).__name__, param=param)
 
 	def __eq__(self, __o: object) -> bool:
 		if __o is self:
@@ -322,19 +322,22 @@ class BaseProsodyCommand(SynthParamCommand):
 
 
 class PitchCommand(BaseProsodyCommand):
-	"""Change the pitch of the voice.
-	"""
+	"""Change the pitch of the voice."""
+
 	settingName = "pitch"
 
+
 class VolumeCommand(BaseProsodyCommand):
-	"""Change the volume of the voice.
-	"""
+	"""Change the volume of the voice."""
+
 	settingName = "volume"
 
+
 class RateCommand(BaseProsodyCommand):
-	"""Change the rate of the voice.
-	"""
+	"""Change the rate of the voice."""
+
 	settingName = "rate"
+
 
 class PhonemeCommand(SynthCommand):
 	"""Insert a specific pronunciation.
@@ -380,16 +383,17 @@ class BaseCallbackCommand(SpeechCommand, metaclass=ABCMeta):
 	@abstractmethod
 	def run(self):
 		"""Code to run when speech reaches this command.
-		This method is executed in NVDA's main thread, 
-		therefore must return as soon as practically possible, 
+		This method is executed in NVDA's main thread,
+		therefore must return as soon as practically possible,
 		otherwise it will block production of further speech and or other functionality in NVDA.
 		"""
+
 
 class CallbackCommand(BaseCallbackCommand):
 	"""
 	Call a function when speech reaches this point.
-	Note that  the provided function is executed in NVDA's main thread, 
-		therefore must return as soon as practically possible, 
+	Note that  the provided function is executed in NVDA's main thread,
+		therefore must return as soon as practically possible,
 		otherwise it will block production of further speech and or other functionality in NVDA.
 	"""
 
@@ -397,17 +401,15 @@ class CallbackCommand(BaseCallbackCommand):
 		self._callback = callback
 		self._name = name if name else repr(callback)
 
-	def run(self,*args, **kwargs):
-		return self._callback(*args,**kwargs)
+	def run(self, *args, **kwargs):
+		return self._callback(*args, **kwargs)
 
 	def __repr__(self):
-		return "CallbackCommand(name={name})".format(
-			name=self._name
-		)
+		return "CallbackCommand(name={name})".format(name=self._name)
+
 
 class BeepCommand(BaseCallbackCommand):
-	"""Produce a beep.
-	"""
+	"""Produce a beep."""
 
 	def __init__(self, hz, length, left=50, right=50):
 		self.hz = hz
@@ -417,35 +419,32 @@ class BeepCommand(BaseCallbackCommand):
 
 	def run(self):
 		import tones
-		tones.beep(
-			self.hz,
-			self.length,
-			left=self.left,
-			right=self.right,
-			isSpeechBeepCommand=True
-		)
+
+		tones.beep(self.hz, self.length, left=self.left, right=self.right, isSpeechBeepCommand=True)
 
 	def __repr__(self):
 		return "BeepCommand({hz}, {length}, left={left}, right={right})".format(
-			hz=self.hz, length=self.length, left=self.left, right=self.right)
+			hz=self.hz, length=self.length, left=self.left, right=self.right
+		)
+
 
 class WaveFileCommand(BaseCallbackCommand):
-	"""Play a wave file.
-	"""
+	"""Play a wave file."""
 
 	def __init__(self, fileName):
 		self.fileName = fileName
 
 	def run(self):
 		import nvwave
+
 		nvwave.playWaveFile(self.fileName, asynchronous=True, isSpeechWaveFileCommand=True)
 
 	def __repr__(self):
 		return "WaveFileCommand(%r)" % self.fileName
 
+
 class ConfigProfileTriggerCommand(SpeechCommand):
-	"""Applies (or stops applying) a configuration profile trigger to subsequent speech.
-	"""
+	"""Applies (or stops applying) a configuration profile trigger to subsequent speech."""
 
 	def __init__(self, trigger, enter=True):
 		"""

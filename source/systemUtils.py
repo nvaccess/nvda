@@ -4,7 +4,8 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-""" System related functions."""
+"""System related functions."""
+
 import ctypes
 import time
 import threading
@@ -57,6 +58,7 @@ def openDefaultConfigurationDirectory():
 	Used as a fallback when trying to explore user config from the start menu,
 	and NVDA is not running."""
 	import config
+
 	path = config.getUserDefaultConfigPath()
 	if not path:
 		raise ValueError("no user default config path")
@@ -70,9 +72,7 @@ TokenUIAccess = 26
 def hasUiAccess():
 	token = ctypes.wintypes.HANDLE()
 	ctypes.windll.advapi32.OpenProcessToken(
-		ctypes.windll.kernel32.GetCurrentProcess(),
-		winKernel.MAXIMUM_ALLOWED,
-		ctypes.byref(token)
+		ctypes.windll.kernel32.GetCurrentProcess(), winKernel.MAXIMUM_ALLOWED, ctypes.byref(token)
 	)
 	try:
 		val = ctypes.wintypes.DWORD()
@@ -81,7 +81,7 @@ def hasUiAccess():
 			TokenUIAccess,
 			ctypes.byref(val),
 			ctypes.sizeof(ctypes.wintypes.DWORD),
-			ctypes.byref(ctypes.wintypes.DWORD())
+			ctypes.byref(ctypes.wintypes.DWORD()),
 		)
 		return bool(val.value)
 	finally:
@@ -102,6 +102,7 @@ class TokenOrigin(ctypes.Structure):
 	"""TOKEN_ORIGIN structure: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_origin
 	This structure is used in calls to the Win32 GetTokenInformation function.
 	"""
+
 	_fields_ = [
 		("originatingLogonSession", ctypes.c_ulonglong)  # OriginatingLogonSession in C structure
 	]
@@ -120,19 +121,13 @@ def getProcessLogonSessionId(processHandle: int) -> int:
 	"""
 	token = ctypes.wintypes.HANDLE()
 	if not ctypes.windll.advapi32.OpenProcessToken(
-		processHandle,
-		winKernel.MAXIMUM_ALLOWED,
-		ctypes.byref(token)
+		processHandle, winKernel.MAXIMUM_ALLOWED, ctypes.byref(token)
 	):
 		raise ctypes.WinError()
 	try:
 		val = TokenOrigin()
 		if not ctypes.windll.advapi32.GetTokenInformation(
-			token,
-			TOKEN_ORIGIN,
-			ctypes.byref(val),
-			ctypes.sizeof(val),
-			ctypes.byref(ctypes.wintypes.DWORD())
+			token, TOKEN_ORIGIN, ctypes.byref(val), ctypes.sizeof(val), ctypes.byref(ctypes.wintypes.DWORD())
 		):
 			raise ctypes.WinError()
 		return val.originatingLogonSession
@@ -147,6 +142,7 @@ def getCurrentProcessLogonSessionId() -> int:
 
 def execElevated(path, params=None, wait=False, handleAlreadyElevated=False):
 	import subprocess
+
 	if params is not None:
 		params = subprocess.list2cmdline(params)
 	sei = shellapi.SHELLEXECUTEINFO(lpFile=path, lpParameters=params, nShow=winUser.SW_HIDE)
@@ -174,13 +170,7 @@ def _getDesktopName() -> str:
 	UOI_NAME = 2  # The name of the object, as a string
 	desktop = windll.user32.GetThreadDesktop(windll.kernel32.GetCurrentThreadId())
 	name = create_unicode_buffer(256)
-	windll.user32.GetUserObjectInformationW(
-		desktop,
-		UOI_NAME,
-		byref(name),
-		sizeof(name),
-		None
-	)
+	windll.user32.GetUserObjectInformationW(desktop, UOI_NAME, byref(name), sizeof(name), None)
 	return name.value
 
 
@@ -230,9 +220,7 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		# (see CPython issue 107271).
 		self.funcRes: Optional[_execAndPumpResT] = None
 		fname = repr(func)
-		super().__init__(
-			name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})"
-		)
+		super().__init__(name=f"{self.__class__.__module__}.{self.__class__.__qualname__}({fname})")
 		self.threadExc: Exception | None = None
 		self.start()
 		time.sleep(0.1)

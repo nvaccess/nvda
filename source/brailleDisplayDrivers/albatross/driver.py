@@ -84,9 +84,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(DeviceType.SERIAL, {
-			"VID_0403&PID_6001",  # Caiku Albatross 46/80
-		})
+		driverRegistrar.addUsbDevices(
+			DeviceType.SERIAL,
+			{
+				"VID_0403&PID_6001",  # Caiku Albatross 46/80
+			},
+		)
 
 	@classmethod
 	def getManualPorts(cls):
@@ -167,10 +170,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
 				# Block port if its vid and pid are correct but bus reported
 				# device description is not "Albatross Braille Display".
-				if (
-					portId == VID_AND_PID
-					and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC
-				):
+				if portId == VID_AND_PID and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC:
 					log.debug(f"port {port} blocked; port information: {portInfo}")
 					continue
 				# For reconnection
@@ -181,17 +181,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					# Prepare _oldCells to store last displayed content.
 					while len(self._oldCells) < self.numCells:
 						self._oldCells.append(0)
-					self._kc = _threading.RepeatedTimer(
-						KC_INTERVAL,
-						self._keepConnected
-					)
+					self._kc = _threading.RepeatedTimer(KC_INTERVAL, self._keepConnected)
 					self._handleRead = _threading.ReadThread(
 						self._readHandling,
 						self._disableConnection,
 						self._exitEvent,
 						self._dev,
 						name="albatross_read",
-						daemon=True
+						daemon=True,
 					)
 					self._handleRead.start()
 					log.info(
@@ -240,9 +237,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if self._tryToConnect:
 				self._tryToConnect = False
 			else:
-				log.debug(
-					f"Sleeping {SLEEP_TIMEOUT} seconds before try {i + 1} / {MAX_INIT_RETRIES}"
-				)
+				log.debug(f"Sleeping {SLEEP_TIMEOUT} seconds before try {i + 1} / {MAX_INIT_RETRIES}")
 				time.sleep(SLEEP_TIMEOUT)
 			if not self._readInitByte():
 				continue
@@ -262,15 +257,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			stopbits=serial.STOPBITS_ONE,
 			parity=serial.PARITY_NONE,
 			timeout=READ_TIMEOUT,
-			writeTimeout=WRITE_TIMEOUT
+			writeTimeout=WRITE_TIMEOUT,
 		)
 		log.debug(f"Port {self._currentPort} initialized")
 		if not self._resetBuffers():
 			if i == MAX_INIT_RETRIES - 1:
 				return False
-			log(
-				f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
-			)
+			log(f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}")
 			time.sleep(SLEEP_TIMEOUT)
 			return False
 		return True
@@ -286,9 +279,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if not self._resetBuffers():
 				if i == MAX_INIT_RETRIES - 1:
 					return False
-				log(
-					f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}"
-				)
+				log(f"sleeping {SLEEP_TIMEOUT} seconds before try {i + 2} / {MAX_INIT_RETRIES}")
 				time.sleep(SLEEP_TIMEOUT)
 				return False
 			return True
@@ -299,7 +290,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			log.debug(
 				f"Port {self._currentPort} not opened, sleeping {SLEEP_TIMEOUT} seconds "
 				f"before try {i + 2} / {MAX_INIT_RETRIES}",
-				exc_info=True
+				exc_info=True,
 			)
 			time.sleep(SLEEP_TIMEOUT)
 			return False
@@ -333,11 +324,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				return False
 		except (IOError, AttributeError):
 			self._disableConnection()
-			log.debug(
-				f"INIT_START_BYTE {INIT_START_BYTE} read failed, "
-				"trying to reconnect",
-				exc_info=True
-			)
+			log.debug(f"INIT_START_BYTE {INIT_START_BYTE} read failed, " "trying to reconnect", exc_info=True)
 			return False
 
 	def _readSettingsByte(self) -> bool:
@@ -376,8 +363,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		try:
 			for j in range(RESET_COUNT):
 				PurgeComm(
-					self._dev._port_handle,
-					PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT
+					self._dev._port_handle, PURGE_RXCLEAR | PURGE_RXABORT | PURGE_TXCLEAR | PURGE_TXABORT
 				)
 				time.sleep(RESET_SLEEP)
 			log.debug("I/O buffers reset done")
@@ -386,9 +372,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# but writing to display fails during it - or vice versa - AttributeError
 		# might raise.
 		except (IOError, AttributeError):
-			log.debug(
-				f"I/O buffer reset failed on port {self._currentPort}", exc_info=True
-			)
+			log.debug(f"I/O buffer reset failed on port {self._currentPort}", exc_info=True)
 			if self._dev.is_open:
 				self._dev.close()
 			return False
@@ -444,9 +428,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			if not self._dev.in_waiting:
 				return None
 			data = self._dev.read(self._dev.in_waiting)
-			log.debug(
-				f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}"
-			)
+			log.debug(f"Read: {data}, length {len(data)}, in_waiting {self._dev.in_waiting}")
 			return data
 		# Considering situation where "albatross_read" thread is about to read
 		# but writing to display fails during it - or vice versa - AttributeError
@@ -463,7 +445,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		settingsByte = None
 		for i in data:
-			iAsByte = i.to_bytes(1, 'big')
+			iAsByte = i.to_bytes(1, "big")
 			if not self._initByteReceived:
 				if iAsByte == INIT_START_BYTE:
 					self._initByteReceived = True
@@ -528,9 +510,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _handleReadQueue(self):
 		"""Handles data read in L{_readHandling}."""
-		log.debug(
-			f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}"
-		)
+		log.debug(f"_ReadQueue is: {self._readQueue}, length {len(self._readQueue)}")
 		while len(self._readQueue):
 			try:
 				data = self._readQueue.popleft()
@@ -566,10 +546,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				log.debug(f"Read: dequeued {data}, {len(self._readQueue)} items left")
 			except IndexError:
 				self._waitingSettingsByte = True
-				log.debug(
-					"Read: _readQueue is empty, waiting for settings byte",
-					exc_info=True
-				)
+				log.debug("Read: _readQueue is empty, waiting for settings byte", exc_info=True)
 				return
 			self._writeQueue.appendleft(ESTABLISHED)
 			log.debug(f"Write: enqueued {ESTABLISHED}")
@@ -582,9 +559,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Ensure display is updated after reconnection and exit from internal menu.
 			self._clearOldCells()
 			braille.handler._displayWithCursor()
-			log.debug(
-				"Updated display content after reconnection or display menu exit"
-			)
+			log.debug("Updated display content after reconnection or display menu exit")
 		if self._waitingSettingsByte:
 			self._waitingSettingsByte = False
 
@@ -668,9 +643,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._waitingCtrlPacket = True
 					self._partialCtrlPacket = data
 					log.debug(
-						f"Read: Ctrl key packet {data} dequeued partially, "
-						"_readQueue is empty",
-						exc_info=True
+						f"Read: Ctrl key packet {data} dequeued partially, " "_readQueue is empty",
+						exc_info=True,
 					)
 					return
 				if len(data) > MAX_COMBINATION_KEYS and data[len(data) - 1] != data[0]:
@@ -680,16 +654,12 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					return
 		if self._keyLayout != KeyLayout.normal:
 			# Using custom key layout
-			data = self._changeKeyValues(
-				bytearray(data)
-			)
+			data = self._changeKeyValues(bytearray(data))
 		log.debug(f"Keys for key press: {data}")
 		pressedKeys = set(data)
 		log.debug(f"Forwarding keys {pressedKeys}")
 		try:
-			inputCore.manager.executeGesture(
-				gestures.InputGestureKeys(pressedKeys, self.name)
-			)
+			inputCore.manager.executeGesture(gestures.InputGestureKeys(pressedKeys, self.name))
 		# Attribute error which rarely occurs here is something strange.
 		except (inputCore.NoInputGestureAction, AttributeError):
 			log.debug("", exc_info=True)
@@ -707,12 +677,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if key in LEFT_RIGHT_KEY_CODES.keys():
 					data[i] = LEFT_RIGHT_KEY_CODES[key]
 				elif key in LEFT_RIGHT_KEY_CODES.values():
-					j = list(
-						LEFT_RIGHT_KEY_CODES.values()
-					).index(key)
-					data[i] = list(
-						LEFT_RIGHT_KEY_CODES.keys()
-					)[j]
+					j = list(LEFT_RIGHT_KEY_CODES.values()).index(key)
+					data[i] = list(LEFT_RIGHT_KEY_CODES.keys())[j]
 				continue
 			if self._keyLayout == KeyLayout.bothSidesAsRight:
 				if key in LEFT_RIGHT_KEY_CODES.keys():
@@ -720,12 +686,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				continue
 			if self._keyLayout == KeyLayout.bothSidesAsLeft:
 				if key in LEFT_RIGHT_KEY_CODES.values():
-					j = list(
-						LEFT_RIGHT_KEY_CODES.values()
-					).index(key)
-					data[i] = list(
-						LEFT_RIGHT_KEY_CODES.keys()
-					)[j]
+					j = list(LEFT_RIGHT_KEY_CODES.values()).index(key)
+					data[i] = list(LEFT_RIGHT_KEY_CODES.keys())[j]
 		return bytes(data)
 
 	def _keepConnected(self):
@@ -751,22 +713,17 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		# Using lock because called also indirectly manually when display is
 		# switched back on or exited from internal menu.
 		with self._displayLock:
-			writeBytes: List[bytes] = [START_BYTE, ]
+			writeBytes: List[bytes] = [
+				START_BYTE,
+			]
 			# Only changed content is sent (cell index and data).
 			for i, cell in enumerate(cells):
 				if cell != self._oldCells[i]:
 					self._oldCells[i] = cell
 					# display indexing starts from 1
-					writeBytes.append((i + 1).to_bytes(1, 'big'))
+					writeBytes.append((i + 1).to_bytes(1, "big"))
 					# Bits have to be reversed.
-					writeBytes.append(
-						int(
-							'{:08b}'.format(cell)[::-1], 2
-						)
-						.to_bytes(
-							1, 'big'
-						)
-					)
+					writeBytes.append(int("{:08b}".format(cell)[::-1], 2).to_bytes(1, "big"))
 			writeBytes.append(END_BYTE)
 			if writeBytes == [START_BYTE, END_BYTE]:  # No updated cell content
 				return

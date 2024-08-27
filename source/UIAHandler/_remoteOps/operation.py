@@ -34,7 +34,6 @@ class ExecutionResult:
 
 
 class Executor:
-
 	def importElement(self, operandId: lowLevel.OperandId, element: UIA.IUIAutomationElement):
 		raise NotImplementedError
 
@@ -143,7 +142,7 @@ class RemoteExecutor(Executor):
 			status=resultSet.status,
 			errorLocation=resultSet.errorLocation,
 			extendedError=resultSet.extendedError,
-			resultSet=resultSet
+			resultSet=resultSet,
 		)
 
 
@@ -163,16 +162,17 @@ class Operation:
 	_executionCount = 0
 
 	def __init__(
-			self,
-			enableCompiletimeLogging: bool = False,
-			enableRuntimeLogging: bool = False,
-			localMode: bool = False
+		self,
+		enableCompiletimeLogging: bool = False,
+		enableRuntimeLogging: bool = False,
+		localMode: bool = False,
 	):
 		self._compiletimeLoggingEnabled = enableCompiletimeLogging
 		self._runtimeLoggingEnabled = enableRuntimeLogging
 		self._localMode = localMode
 		if localMode:
 			from .localExecute import LocalExecutor
+
 			self._executorClass = LocalExecutor
 		self._rob = builder.RemoteOperationBuilder()
 		self._importedElements = {}
@@ -181,9 +181,7 @@ class Operation:
 		self._staticOperands = []
 
 	def importElement(
-			self,
-			element: UIA.IUIAutomationElement,
-			operandId: lowLevel.OperandId | None = None
+		self, element: UIA.IUIAutomationElement, operandId: lowLevel.OperandId | None = None
 	) -> remoteAPI.RemoteElement:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
@@ -194,9 +192,7 @@ class Operation:
 		return remoteAPI.RemoteElement(self._rob, operandId)
 
 	def importTextRange(
-			self,
-			textRange: UIA.IUIAutomationTextRange,
-			operandId: lowLevel.OperandId | None = None
+		self, textRange: UIA.IUIAutomationTextRange, operandId: lowLevel.OperandId | None = None
 	) -> remoteAPI.RemoteTextRange:
 		if operandId is None:
 			operandId = self._rob.requestNewOperandId()
@@ -215,7 +211,7 @@ class Operation:
 		self.addToResults(operand)
 
 	def _refreshStaticInstructions(self):
-		with self._rob.overrideDefaultSection('static'):
+		with self._rob.overrideDefaultSection("static"):
 			self._rob.getDefaultInstructionList().clear()
 			for operand in self._staticOperands:
 				if isinstance(operand, remoteAPI.RemoteElement):
@@ -231,7 +227,9 @@ class Operation:
 					else:
 						self.importTextRange(operand.localValue, operandId=operand.operandId)
 				else:
-					type(operand).createNew(self._rob, initialValue=operand.localValue, operandId=operand.operandId)
+					type(operand).createNew(
+						self._rob, initialValue=operand.localValue, operandId=operand.operandId
+					)
 
 	@contextlib.contextmanager
 	def buildContext(self):
@@ -247,20 +245,14 @@ class Operation:
 			self._dumpCompiletimeLog()
 		self._built = True
 
-	def buildFunction(
-			self,
-			func: Callable[[remoteAPI.RemoteAPI], None]
-	) -> Operation:
+	def buildFunction(self, func: Callable[[remoteAPI.RemoteAPI], None]) -> Operation:
 		with self.buildContext() as ra:
 			self._returnIdOperand = ra.newInt(-1)
 			self.addToResults(self._returnIdOperand)
 			func(ra)
 		return self
 
-	def buildIterableFunction(
-			self,
-			func: Callable[[remoteAPI.RemoteAPI], None]
-	) -> Operation:
+	def buildIterableFunction(self, func: Callable[[remoteAPI.RemoteAPI], None]) -> Operation:
 		with self.buildContext() as ra:
 			self._yieldListOperand = ra.newArray()
 			self.addToResults(self._yieldListOperand)
@@ -299,12 +291,7 @@ class Operation:
 				)
 
 	def _dumpCompiletimeLog(self):
-		log.info(
-			"Dumping instructions:\n"
-			"--- Begin ---\n"
-			f"{self._rob.dumpInstructions()}"
-			"--- End ---"
-		)
+		log.info("Dumping instructions:\n" "--- Begin ---\n" f"{self._rob.dumpInstructions()}" "--- End ---")
 
 	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult, None, None]:
 		self._executionCount = 0
@@ -325,14 +312,9 @@ class Operation:
 					raise UnhandledException(self, executionResult)
 				break
 		except Exception as e:
+			e.add_note(f"Error occured on execution try {self._executionCount}")
 			e.add_note(
-				f"Error occured on execution try {self._executionCount}"
-			)
-			e.add_note(
-				"Dumping instructions:\n"
-				"--- Begin ---\n"
-				f"{self._rob.dumpInstructions()}"
-				"--- End ---"
+				"Dumping instructions:\n" "--- Begin ---\n" f"{self._rob.dumpInstructions()}" "--- End ---"
 			)
 			raise
 

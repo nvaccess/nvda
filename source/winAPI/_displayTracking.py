@@ -61,11 +61,7 @@ def getPrimaryDisplayOrientation() -> OrientationState:
 		# If the function fails, the return value is 0.
 		# GetLastError does not provide extended error information.
 		log.error("Failed to get primary display height")
-	return OrientationState(
-		width,
-		height,
-		_getOrientationStyle(width=width, height=height)
-	)
+	return OrientationState(width, height, _getOrientationStyle(width=width, height=height))
 
 
 def _getOrientationStyle(height: int, width: int) -> Orientation:
@@ -73,9 +69,9 @@ def _getOrientationStyle(height: int, width: int) -> Orientation:
 
 
 def _getNewOrientationStyle(
-		previousState: OrientationState,
-		height: int,
-		width: int,
+	previousState: OrientationState,
+	height: int,
+	width: int,
 ) -> Optional[Orientation]:
 	"""
 	@returns: Orientation if there has been an orientation state change, otherwise None

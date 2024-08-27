@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2024 NV Access Limited, Cyrille Bougot
 
-"""Provides functionality to view the NVDA log.
-"""
+"""Provides functionality to view the NVDA log."""
 
 import wx
 import globalVars
@@ -18,12 +17,11 @@ logViewer = None
 
 
 class LogViewer(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Frame  # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Frame,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	"""The NVDA log viewer GUI.
-	"""
-	
+	"""The NVDA log viewer GUI."""
+
 	helpId = "LogViewer"
 
 	def __init__(self, parent):
@@ -32,10 +30,12 @@ class LogViewer(
 		self.Bind(wx.EVT_ACTIVATE, self.onActivate)
 		self.Bind(wx.EVT_CLOSE, self.onClose)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.outputCtrl = wx.TextCtrl(self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY|wx.TE_RICH)
+		self.outputCtrl = wx.TextCtrl(
+			self, wx.ID_ANY, size=(500, 500), style=wx.TE_MULTILINE | wx.TE_READONLY | wx.TE_RICH
+		)
 		font = self.outputCtrl.GetFont()
 		# Set a fixed width font so that the error is correctly pointed in Python tracebacks.
-		font.SetFaceName('Consolas')
+		font.SetFaceName("Consolas")
 		self.outputCtrl.SetFont(font)
 		self.outputCtrl.Bind(wx.EVT_KEY_DOWN, self.onOutputKeyDown)
 		mainSizer.Add(self.outputCtrl, proportion=1, flag=wx.EXPAND)
@@ -64,7 +64,7 @@ class LogViewer(
 
 	def refresh(self, evt=None):
 		# Ignore if log is not initialized
-		if(globalVars.appArgs.logFileName is None):
+		if globalVars.appArgs.logFileName is None:
 			return
 		pos = self.outputCtrl.GetInsertionPoint()
 		# Append new text to the output control which has been written to the log file since the last refresh.
@@ -88,7 +88,9 @@ class LogViewer(
 
 	def onSaveAsCommand(self, evt):
 		# Translators: Label of a menu item in NVDA Log Viewer.
-		filename = wx.FileSelector(_("Save As"), default_filename="nvda.log", flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, parent=self)
+		filename = wx.FileSelector(
+			_("Save As"), default_filename="nvda.log", flags=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT, parent=self
+		)
 		if not filename:
 			return
 		try:
@@ -97,7 +99,9 @@ class LogViewer(
 				f.write(self.outputCtrl.GetValue())
 		except (IOError, OSError) as e:
 			# Translators: Dialog text presented when NVDA cannot save a log file.
-			gui.messageBox(_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self)
+			gui.messageBox(
+				_("Error saving log: %s") % e.strerror, _("Error"), style=wx.OK | wx.ICON_ERROR, parent=self
+			)
 
 	def onOutputKeyDown(self, evt):
 		key = evt.GetKeyCode()
@@ -126,7 +130,7 @@ def activate():
 			_("Log is unavailable"),
 			# Translators: The title of an error message dialog.
 			_("Error"),
-			wx.OK | wx.ICON_ERROR
+			wx.OK | wx.ICON_ERROR,
 		)
 		return
 	logViewer.Raise()

@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-""" This module provides the ChromeLib Robot Framework Library which allows system tests to start
+"""This module provides the ChromeLib Robot Framework Library which allows system tests to start
 Google Chrome with a HTML sample and assert NVDA interacts with it in the expected way.
 """
 
@@ -33,10 +33,10 @@ import NvdaLib as _NvdaLib
 import WindowsLib as _WindowsLib
 
 builtIn: BuiltIn = BuiltIn()
-opSys: _OpSysLib = _getLib('OperatingSystem')
-process: _ProcessLib = _getLib('Process')
-assertsLib: _AssertsLib = _getLib('AssertsLib')
-windowsLib: _WindowsLib = _getLib('WindowsLib')
+opSys: _OpSysLib = _getLib("OperatingSystem")
+process: _ProcessLib = _getLib("Process")
+assertsLib: _AssertsLib = _getLib("AssertsLib")
+windowsLib: _WindowsLib = _getLib("WindowsLib")
 
 
 # In Robot libraries, class name must match the name of the module. Use caps for both.
@@ -67,10 +67,7 @@ class ChromeLib:
 		)
 
 		if not ChromeLib._chromeWindow:
-			builtIn.log(
-				"Unable to close tab, Chrome window not initialised correctly.",
-				level="WARN"
-			)
+			builtIn.log("Unable to close tab, Chrome window not initialised correctly.", level="WARN")
 			return
 
 		if not windowsLib.isWindowInForeground(ChromeLib._chromeWindow):
@@ -80,11 +77,9 @@ class ChromeLib:
 			)
 			return
 
-		spy.emulateKeyPress('control+w')
+		spy.emulateKeyPress("control+w")
 		process.wait_for_process(
-			ChromeLib._processRFHandleForStart,
-			timeout="10 seconds",
-			on_timeout="continue"
+			ChromeLib._processRFHandleForStart, timeout="10 seconds", on_timeout="continue"
 		)
 		builtIn.log(
 			# False is expected, chrome should have allowed "Start" to exit.
@@ -117,7 +112,7 @@ class ChromeLib:
 			f" {_chromeArgs.getChromeArgs()}"
 			f' "{filePath}"',
 			shell=True,
-			alias='chromeStartAlias',
+			alias="chromeStartAlias",
 		)
 		process.process_should_be_running(ChromeLib._processRFHandleForStart)
 		titlePattern = self.getUniqueTestCaseTitleRegex(testCase)
@@ -126,7 +121,7 @@ class ChromeLib:
 			giveUpAfterSeconds=10,  # Chrome has been taking ~3 seconds to open a new tab on appveyor.
 			shouldStopEvaluator=lambda _window: _window is not None,
 			intervalBetweenSeconds=0.5,
-			errorMessage="Unable to get chrome window"
+			errorMessage="Unable to get chrome window",
 		)
 
 		if not success or ChromeLib._chromeWindow is None:
@@ -155,7 +150,7 @@ class ChromeLib:
 		@return: path to the HTML file.
 		"""
 		filePath = ChromeLib._getTestCasePath("test.html")
-		fileContents = (f"""
+		fileContents = f"""
 			<head>
 				<title>{ChromeLib.getUniqueTestCaseTitle(testCase)}</title>
 			</head>
@@ -165,13 +160,13 @@ class ChromeLib:
 				{testCase}
 				<p>{ChromeLib._afterMarker}</p>
 			</body>
-		""")
-		with open(file=filePath, mode='w', encoding='UTF-8') as f:
+		"""
+		with open(file=filePath, mode="w", encoding="UTF-8") as f:
 			f.write(fileContents)
 		return filePath
 
 	def _waitForStartMarker(self) -> bool:
-		""" Wait until the page loads and NVDA reads the start marker.
+		"""Wait until the page loads and NVDA reads the start marker.
 		Depends on Chrome having focus, then tries to ensure that the document is focused and NVDA
 		virtual cursor is set to the "start marker"
 		@return: False on failure
@@ -179,16 +174,18 @@ class ChromeLib:
 		spy = _NvdaLib.getSpyLib()
 		spy.wait_for_speech_to_finish()
 		expectedAddressBarSpeech = "Address and search bar"
-		moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('nvda+tab')  # report current focus.
+		moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey("nvda+tab")  # report current focus.
 		if expectedAddressBarSpeech not in moveToAddressBarSpeech:
-			moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey('alt+d')  # focus the address bar, chrome shortcut
+			moveToAddressBarSpeech = _NvdaLib.getSpeechAfterKey(
+				"alt+d"
+			)  # focus the address bar, chrome shortcut
 			if expectedAddressBarSpeech not in moveToAddressBarSpeech:
 				builtIn.log(
 					f"Didn't read '{expectedAddressBarSpeech}' after alt+d, instead got: {moveToAddressBarSpeech}"
 				)
 				return False
 
-		afterControlF6Speech = _NvdaLib.getSpeechAfterKey('control+F6')  # focus web content, chrome shortcut.
+		afterControlF6Speech = _NvdaLib.getSpeechAfterKey("control+F6")  # focus web content, chrome shortcut.
 		if ChromeLib._testCaseTitle not in afterControlF6Speech:
 			builtIn.log(
 				f"Didn't get tab title '{ChromeLib._testCaseTitle}' after moving to document, "
@@ -196,7 +193,7 @@ class ChromeLib:
 			)
 			return False
 
-		afterUpArrowSpeech = _NvdaLib.getSpeechAfterKey('upArrow')  # focus web content, chrome shortcut.
+		afterUpArrowSpeech = _NvdaLib.getSpeechAfterKey("upArrow")  # focus web content, chrome shortcut.
 		if ChromeLib._beforeMarker not in afterUpArrowSpeech:
 			builtIn.log(
 				f"Didn't get '{ChromeLib._beforeMarker}' after moving to document, instead got: {afterUpArrowSpeech}"
@@ -204,9 +201,9 @@ class ChromeLib:
 			return False
 
 		# ensure we start at the top of the document
-		_NvdaLib.getSpeechAfterKey('control+home')
+		_NvdaLib.getSpeechAfterKey("control+home")
 
-		afterNumPad8Speech = _NvdaLib.getSpeechAfterKey('numpad8')  # report current line
+		afterNumPad8Speech = _NvdaLib.getSpeechAfterKey("numpad8")  # report current line
 		if ChromeLib._beforeMarker not in afterNumPad8Speech:
 			builtIn.log(
 				f"Didn't get {ChromeLib._beforeMarker} after reporting the current line"
@@ -216,10 +213,8 @@ class ChromeLib:
 		return True
 
 	def canChromeTitleBeReported(self, chromeTitleSpeechPattern: re.Pattern) -> bool:
-		speech = _NvdaLib.getSpeechAfterKey('NVDA+t')
-		return bool(
-			chromeTitleSpeechPattern.search(speech)
-		)
+		speech = _NvdaLib.getSpeechAfterKey("NVDA+t")
+		return bool(chromeTitleSpeechPattern.search(speech))
 
 	def prepareChrome(self, testCase: str, _alwaysDoToggleFocus: bool = False) -> None:
 		"""
@@ -227,15 +222,18 @@ class ChromeLib:
 		@param testCase - The HTML sample to test.
 		@param _alwaysDoToggleFocus - When True, Chrome will be intentionally de-focused and re-focused
 		"""
-		testCase = testCase + (
-			"\n<!-- "  # new line, start a HTML comment
-			"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
-			" this test case string: \n"
-			f"{ _datetime.datetime.now().isoformat()} "
-			f" -->"  # end HTML comment
+		testCase = (
+			testCase
+			+ (
+				"\n<!-- "  # new line, start a HTML comment
+				"Sample generation time, to ensure that the test case title is reproducibly unique purely from"
+				" this test case string: \n"
+				f"{ _datetime.datetime.now().isoformat()} "
+				f" -->"  # end HTML comment
+			)
 		)
 		spy = _NvdaLib.getSpyLib()
-		_chromeLib: "ChromeLib" = _getLib('ChromeLib')  # using the lib gives automatic 'keyword' logging.
+		_chromeLib: "ChromeLib" = _getLib("ChromeLib")  # using the lib gives automatic 'keyword' logging.
 		path = self._writeTestFile(testCase)
 
 		spy.wait_for_speech_to_finish()
@@ -245,7 +243,7 @@ class ChromeLib:
 		applicationTitle = ChromeLib.getUniqueTestCaseTitle(testCase)
 		# application title will be something like "NVDA Browser Test Case (499078752)"
 		# the parentheses could be escaped, instead we can just replace them with "match any char".
-		patternSafeTitleString = applicationTitle.replace('(', '.').replace(')', '.')
+		patternSafeTitleString = applicationTitle.replace("(", ".").replace(")", ".")
 		chromeTitleSpeechPattern = re.compile(patternSafeTitleString)
 
 		if (
@@ -261,23 +259,18 @@ class ChromeLib:
 		spy.wait_for_speech_to_finish()
 
 		if not self._waitForStartMarker():
-			builtIn.fail(
-				"Unable to locate 'before sample' marker."
-				" See NVDA log for full speech."
-			)
+			builtIn.fail("Unable to locate 'before sample' marker." " See NVDA log for full speech.")
 		# Move to the loading status line, and wait for it to become complete
 		# the page has fully loaded.
-		spy.emulateKeyPress('downArrow')
+		spy.emulateKeyPress("downArrow")
 		for x in range(10):
 			builtIn.sleep("0.1 seconds")
-			actualSpeech = ChromeLib.getSpeechAfterKey('NVDA+UpArrow')
+			actualSpeech = ChromeLib.getSpeechAfterKey("NVDA+UpArrow")
 			if actualSpeech == self._loadCompleteString:
 				break
 		else:  # Exceeded the number of tries
 			spy.dump_speech_to_log()
-			builtIn.fail(
-				"Failed to wait for Test page load complete."
-			)
+			builtIn.fail("Failed to wait for Test page load complete.")
 
 	@staticmethod
 	def getSpeechAfterKey(key) -> str:
@@ -291,4 +284,4 @@ class ChromeLib:
 		"""Ensure speech has stopped, press tab, and get speech until it stops.
 		@return: The speech after tab.
 		"""
-		return _NvdaLib.getSpeechAfterKey('tab')
+		return _NvdaLib.getSpeechAfterKey("tab")

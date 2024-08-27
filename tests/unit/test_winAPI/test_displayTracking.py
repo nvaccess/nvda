@@ -13,7 +13,6 @@ from winAPI._displayTracking import (
 
 
 class Test_UpdateOrientationState(unittest.TestCase):
-
 	def test_orientationChange_landscape(self):
 		# Simulate a 90deg rotation
 		# or a new monitor with a different orientation.
@@ -26,10 +25,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 			height=1,
 			width=2,
 		)
-		self.assertEqual(
-			newStyle,
-			Orientation.LANDSCAPE
-		)
+		self.assertEqual(newStyle, Orientation.LANDSCAPE)
 
 	def test_orientationChange_portrait(self):
 		# Simulate a 90deg rotation
@@ -43,10 +39,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 			height=2,
 			width=1,
 		)
-		self.assertEqual(
-			newStyle,
-			Orientation.PORTRAIT
-		)
+		self.assertEqual(newStyle, Orientation.PORTRAIT)
 
 	def test_noChanges_screenFlip(self):
 		# Test no changes in dimensions.
@@ -61,10 +54,7 @@ class Test_UpdateOrientationState(unittest.TestCase):
 			height=1,
 			width=2,
 		)
-		self.assertEqual(
-			newStyle,
-			Orientation.LANDSCAPE
-		)
+		self.assertEqual(newStyle, Orientation.LANDSCAPE)
 
 	def test_widthIncreaseLandscape(self):
 		# simulate a display change, where the orientation doesn't update

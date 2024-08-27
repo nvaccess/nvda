@@ -39,13 +39,13 @@ class ReadThread(Thread):
 	"""Controls most of read operations and tries to reconnect when needed."""
 
 	def __init__(
-			self,
-			readFunction: Callable[[], None],
-			disableFunction: Callable[[], None],
-			event: Event,
-			dev: serial.Serial,
-			*args,
-			**kwargs
+		self,
+		readFunction: Callable[[], None],
+		disableFunction: Callable[[], None],
+		event: Event,
+		dev: serial.Serial,
+		*args,
+		**kwargs,
 	):
 		"""Constructor.
 		@param readFunction: Handles read operations and reconnection.
@@ -67,20 +67,15 @@ class ReadThread(Thread):
 			if not self._dev.is_open:
 				# But if port is not present, just wait and continue
 				if not self._portPresent():
-					log.debug(
-						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not present"
-					)
+					log.debug(f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not present")
 					self._event.wait(KC_INTERVAL)
 					continue
 				log.debug(
-					f"Port {self._dev.name} present, calling {self._readFunction.__name__} "
-					"to open it"
+					f"Port {self._dev.name} present, calling {self._readFunction.__name__} " "to open it"
 				)
 				self._readFunction()
 				if not self._dev.is_open:
-					log.debug(
-						f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open"
-					)
+					log.debug(f"Sleepin {KC_INTERVAL} seconds, port {self._dev.name} not open")
 					self._event.wait(KC_INTERVAL)
 					continue
 			# If any of I/O function fails, it should not crash the thread.
@@ -93,9 +88,7 @@ class ReadThread(Thread):
 					log.debug("SetCommMask failed")
 					continue
 				result = ctypes.windll.kernel32.WaitCommEvent(
-					self._dev._port_handle,
-					byref(dwEvtMask),
-					byref(self._dev._overlapped_read)
+					self._dev._port_handle, byref(dwEvtMask), byref(self._dev._overlapped_read)
 				)
 				if not result and GetLastError() != ERROR_IO_PENDING:
 					if self._event.is_set():
@@ -104,10 +97,7 @@ class ReadThread(Thread):
 					log.debug("WaitCommEvent failed")
 					continue
 				result = ctypes.windll.kernel32.GetOverlappedResult(
-					self._dev._port_handle,
-					byref(self._dev._overlapped_read),
-					byref(data),
-					True
+					self._dev._port_handle, byref(self._dev._overlapped_read), byref(data), True
 				)
 				if result:
 					log.debug(f"Calling function {self._readFunction.__name__} for read")
@@ -144,11 +134,7 @@ class RepeatedTimer:
 	connected.
 	"""
 
-	def __init__(
-			self,
-			interval: float,
-			feedFunction: Callable[[], None]
-	):
+	def __init__(self, interval: float, feedFunction: Callable[[], None]):
 		"""Constructor.
 		@param interval: Checking frequency
 		@param feedFunction: feeds display with data if needed

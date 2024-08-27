@@ -46,7 +46,7 @@ class BasicTextInfo(NVDAObjectTextInfo):
 		converter = textUtils.getOffsetConverter(self.encoding)(storyText)
 		strStart, strEnd = converter.encodedToStrOffsets(start, end)
 		return storyText[strStart:strEnd]
-	
+
 	def copy(self):
 		obj = super().copy()
 		obj.encoding = self.encoding
@@ -74,10 +74,10 @@ class BasicTextProvider(PlaceholderNVDAObject):
 	selectionOffsets: Tuple[int, int]
 
 	def __init__(
-			self,
-			text: str = "",
-			selection: Tuple[int, int] = (0, 0),
-			encoding: str = textUtils.WCHAR_ENCODING,
+		self,
+		text: str = "",
+		selection: Tuple[int, int] = (0, 0),
+		encoding: str = textUtils.WCHAR_ENCODING,
 	):
 		"""
 		@param text: The text to provide via TextInfos.
@@ -102,16 +102,15 @@ class BasicTextProvider(PlaceholderNVDAObject):
 
 
 class CursorManager(cursorManager.CursorManager, BasicTextProvider):
-	"""CursorManager which navigates within a provided string of text.
-	"""
+	"""CursorManager which navigates within a provided string of text."""
 
 
 class MockBlackBoxTextInfo(textInfos.TextInfo):
 	"""
-		This class mocks a textInfo implementation with hidden internal state. Each character of its internal
-		representation maps to one or more characters of python codepoint string,
-		and we assume we don't have access to this mapping. We also assume tests don't make use of _startOffset and
-		_endOffset fields.
+	This class mocks a textInfo implementation with hidden internal state. Each character of its internal
+	representation maps to one or more characters of python codepoint string,
+	and we assume we don't have access to this mapping. We also assume tests don't make use of _startOffset and
+	_endOffset fields.
 	"""
 
 	_abstract_text = False
@@ -121,7 +120,7 @@ class MockBlackBoxTextInfo(textInfos.TextInfo):
 		self.n = len(characters)
 		self._startOffset = 0
 		self._endOffset = self.n
-	
+
 	def move(self, unit: str, direction: int, endPoint: str | None = None) -> int:
 		if unit != textInfos.UNIT_CHARACTER:
 			raise NotImplementedError("This mock TextInfo only supports move by character")
@@ -156,7 +155,7 @@ class MockBlackBoxTextInfo(textInfos.TextInfo):
 		if self._startOffset != self._endOffset:
 			raise RuntimeError("expand() can be called on collapsed textInfo only.")
 		self.move(textInfos.UNIT_CHARACTER, 1, "end")
-	
+
 	def compareEndPoints(self, other: textInfos.TextInfo, which: str):
 		if not isinstance(other, self.__class__):
 			raise NotImplementedError("UMad!")
@@ -193,7 +192,7 @@ class MockBlackBoxTextInfo(textInfos.TextInfo):
 		return other
 
 	def _get_text(self) -> str:
-		return "".join(self.characters[self._startOffset:self._endOffset])
-	
+		return "".join(self.characters[self._startOffset : self._endOffset])
+
 	def _get_bookmark(self):
 		raise NotImplementedError

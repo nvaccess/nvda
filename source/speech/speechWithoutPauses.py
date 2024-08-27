@@ -33,15 +33,9 @@ def _yieldIfNonEmpty(seq: SpeechSequence):
 
 class SpeechWithoutPauses:
 	_pendingSpeechSequence: SpeechSequence
-	re_last_pause = re.compile(
-		r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)",
-		re.DOTALL | re.UNICODE
-	)
+	re_last_pause = re.compile(r"^(.*(?<=[^\s.!?])[.!?][\"'”’)]?(?:\s+|$))(.*$)", re.DOTALL | re.UNICODE)
 
-	def __init__(
-			self,
-			speakFunc: Callable[[SpeechSequence], None]
-	):
+	def __init__(self, speakFunc: Callable[[SpeechSequence], None]):
 		"""
 		:param speakFunc: Function used by L{speakWithoutPauses} to speak. This will likely be speech.speak.
 		"""
@@ -51,11 +45,7 @@ class SpeechWithoutPauses:
 	def reset(self):
 		self._pendingSpeechSequence = []
 
-	def speakWithoutPauses(
-			self,
-			speechSequence: Optional[SpeechSequence],
-			detectBreaks: bool = True
-	) -> bool:
+	def speakWithoutPauses(self, speechSequence: Optional[SpeechSequence], detectBreaks: bool = True) -> bool:
 		"""
 		Speaks the speech sequences given over multiple calls,
 		only sending to the synth at acceptable phrase or sentence boundaries,
@@ -63,18 +53,13 @@ class SpeechWithoutPauses:
 		@return: C{True} if something was actually spoken,
 			C{False} if only buffering occurred.
 		"""
-		speech = GeneratorWithReturn(self.getSpeechWithoutPauses(
-			speechSequence,
-			detectBreaks
-		))
+		speech = GeneratorWithReturn(self.getSpeechWithoutPauses(speechSequence, detectBreaks))
 		for seq in speech:
 			self.speak(seq)
 		return speech.returnValue
 
 	def getSpeechWithoutPauses(  # noqa: C901
-			self,
-			speechSequence: Optional[SpeechSequence],
-			detectBreaks: bool = True
+		self, speechSequence: Optional[SpeechSequence], detectBreaks: bool = True
 	) -> Generator[SpeechSequence, None, bool]:
 		"""
 		Generate speech sequences over multiple calls,
@@ -104,8 +89,7 @@ class SpeechWithoutPauses:
 		return bool(speech)
 
 	def _detectBreaksAndGetSpeech(
-			self,
-			speechSequence: SpeechSequence
+		self, speechSequence: SpeechSequence
 	) -> Generator[SpeechSequence, None, bool]:
 		lastStartIndex = 0
 		sequenceLen = len(speechSequence)
@@ -114,12 +98,8 @@ class SpeechWithoutPauses:
 			if isinstance(item, EndUtteranceCommand):
 				if index > 0 and lastStartIndex < index:
 					subSequence = speechSequence[lastStartIndex:index]
-					yield from _yieldIfNonEmpty(
-						self._getSpeech(subSequence)
-					)
-				yield from _yieldIfNonEmpty(
-					self._flushPendingSpeech()
-				)
+					yield from _yieldIfNonEmpty(self._getSpeech(subSequence))
+				yield from _yieldIfNonEmpty(self._flushPendingSpeech())
 				gotValidSpeech = True
 				lastStartIndex = index + 1
 		if lastStartIndex < sequenceLen:
@@ -138,10 +118,7 @@ class SpeechWithoutPauses:
 		self._pendingSpeechSequence = []
 		return pending
 
-	def _getSpeech(
-			self,
-			speechSequence: SpeechSequence
-	) -> SpeechSequence:
+	def _getSpeech(self, speechSequence: SpeechSequence) -> SpeechSequence:
 		"""
 		@return: May be an empty sequence
 		"""

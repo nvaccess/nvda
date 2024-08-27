@@ -35,14 +35,13 @@ _ScriptsModel = Dict[
 #: Type for structure returned by inputCore
 _GesturesModel = Dict[
 	str,  # category name
-	_ScriptsModel
+	_ScriptsModel,
 ]
 
 
 def _getAllGestureScriptInfo() -> _GesturesModel:
 	gestureMappings = inputCore.manager.getAllGestureMappings(
-		obj=gui.mainFrame.prevFocus,
-		ancestors=gui.mainFrame.prevFocusAncestors
+		obj=gui.mainFrame.prevFocus, ancestors=gui.mainFrame.prevFocusAncestors
 	)
 	if inputCore.SCRCAT_KBEMU not in gestureMappings:
 		gestureMappings[inputCore.SCRCAT_KBEMU] = {}
@@ -104,6 +103,7 @@ class _ScriptVM:
 
 		for g in scriptInfo.gestures:
 			self.gestures.append(_GestureVM(g))
+
 	# todo: Gestures could be sorted?
 
 	def __repr__(self):
@@ -149,10 +149,7 @@ class _CategoryVM:
 		self.scripts = []
 		for scriptName in sorted(scripts, key=strxfrm):
 			scriptInfo = scripts[scriptName]
-			self.scripts.append(_ScriptVM(
-				displayName=scriptName,
-				scriptInfo=scriptInfo
-			))
+			self.scripts.append(_ScriptVM(displayName=scriptName, scriptInfo=scriptInfo))
 
 	def __repr__(self):
 		return f"Category: {self.displayName}"
@@ -214,9 +211,7 @@ class _EmuCategoryVM:
 		for scriptName in sorted(emuGestures, key=strxfrm):
 			emuG = emuGestures[scriptName]
 			if isinstance(emuG, inputCore.KbEmuScriptInfo):
-				self.scripts.append(_EmulatedGestureVM(
-					emuGestureInfo=emuG
-				))
+				self.scripts.append(_EmulatedGestureVM(emuGestureInfo=emuG))
 			elif isinstance(emuG, inputCore.AllGesturesScriptInfo):
 				self.scripts.append(_ScriptVM(scriptName, emuG))
 			else:
@@ -227,18 +222,12 @@ class _EmuCategoryVM:
 		self.scripts.append(self.pending)
 		return self.pending
 
-	def finalisePending(
-			self,
-			scriptInfo: inputCore.AllGesturesScriptInfo
-	) -> _EmulatedGestureVM:
+	def finalisePending(self, scriptInfo: inputCore.AllGesturesScriptInfo) -> _EmulatedGestureVM:
 		assert self.pending is not None
 		self.scripts.remove(self.pending)
 		return self._addEmulation(scriptInfo)
 
-	def _addEmulation(
-			self,
-			scriptInfo: inputCore.AllGesturesScriptInfo
-	) -> _EmulatedGestureVM:
+	def _addEmulation(self, scriptInfo: inputCore.AllGesturesScriptInfo) -> _EmulatedGestureVM:
 		emuGesture = self.removedKbEmulation.pop(scriptInfo.displayName, None)
 		if not emuGesture:
 			emuGesture = _EmulatedGestureVM(scriptInfo)
@@ -262,11 +251,7 @@ _CategoryVMTypes = Union[_CategoryVM, _EmuCategoryVM]
 _ScriptVMTypes = Union[_ScriptVM, _EmulatedGestureVM, _PendingEmulatedGestureVM]
 _GestureVMTypes = Union[_GestureVM, _PendingGesture]
 
-_VmSelection = Tuple[
-	_CategoryVMTypes,
-	Optional[_ScriptVMTypes],
-	Optional[_GestureVMTypes]
-]
+_VmSelection = Tuple[_CategoryVMTypes, Optional[_ScriptVMTypes], Optional[_GestureVMTypes]]
 
 
 class _InputGesturesViewModel:
@@ -292,19 +277,13 @@ class _InputGesturesViewModel:
 		catVM, scriptVM, gestureVM = vmSelection
 		catIndex = self.filteredGestures.index(catVM)
 		if gestureVM is not None:
-			return (
-				catIndex,
-				catVM.scripts.index(scriptVM),
-				scriptVM.gestures.index(gestureVM)
-			)
+			return (catIndex, catVM.scripts.index(scriptVM), scriptVM.gestures.index(gestureVM))
 		if scriptVM is not None:
 			return (
 				catIndex,
 				catVM.scripts.index(scriptVM),
 			)
-		return (
-			catIndex,
-		)
+		return (catIndex,)
 
 	def _fillAllGestures(self):
 		gestureMappings = _getAllGestureScriptInfo()
@@ -313,15 +292,9 @@ class _InputGesturesViewModel:
 		for catName in sorted(gestureMappings, key=strxfrm):
 			scripts = gestureMappings[catName]
 			if catName == inputCore.SCRCAT_KBEMU:
-				self.allGestures.append(_EmuCategoryVM(
-					displayName=catName,
-					emuGestures=scripts
-				))
+				self.allGestures.append(_EmuCategoryVM(displayName=catName, emuGestures=scripts))
 			else:
-				self.allGestures.append(_CategoryVM(
-					displayName=catName,
-					scripts=scripts
-				))
+				self.allGestures.append(_CategoryVM(displayName=catName, scripts=scripts))
 
 	def commitChanges(self):
 		gesturesToRemove = [
@@ -331,12 +304,15 @@ class _InputGesturesViewModel:
 			for gestureVM in scriptVM.removedGestures.values()
 		]
 
-		gesturesForRemovedKbEmu = list([
-			(gestureVM, scriptVM.scriptInfo)
-			for catVM in self.allGestures if isinstance(catVM, _EmuCategoryVM)
-			for scriptVM in catVM.removedKbEmulation.values()
-			for gestureVM in scriptVM.removedGestures.values()
-		])
+		gesturesForRemovedKbEmu = list(
+			[
+				(gestureVM, scriptVM.scriptInfo)
+				for catVM in self.allGestures
+				if isinstance(catVM, _EmuCategoryVM)
+				for scriptVM in catVM.removedKbEmulation.values()
+				for gestureVM in scriptVM.removedGestures.values()
+			]
+		)
 		didRemove = False
 		for gestureVM, scriptInfo in itertools.chain(gesturesToRemove, gesturesForRemovedKbEmu):
 			log.debug(
@@ -347,7 +323,7 @@ class _InputGesturesViewModel:
 					gestureVM.normalizedGestureIdentifier,
 					scriptInfo.moduleName,
 					scriptInfo.className,
-					scriptInfo.scriptName
+					scriptInfo.scriptName,
 				)
 			except ValueError:
 				# The user wants to unbind a gesture they didn't define.
@@ -355,7 +331,7 @@ class _InputGesturesViewModel:
 					gestureVM.normalizedGestureIdentifier,
 					scriptInfo.moduleName,
 					scriptInfo.className,
-					None  # replace script with None
+					None,  # replace script with None
 				)
 			didRemove = True
 
@@ -374,7 +350,7 @@ class _InputGesturesViewModel:
 					gestureVM.normalizedGestureIdentifier,
 					scriptInfo.moduleName,
 					scriptInfo.className,
-					None  # replace script with None
+					None,  # replace script with None
 				)
 			except ValueError:
 				pass
@@ -382,7 +358,7 @@ class _InputGesturesViewModel:
 				gestureVM.normalizedGestureIdentifier,
 				scriptInfo.moduleName,
 				scriptInfo.className,
-				scriptInfo.scriptName
+				scriptInfo.scriptName,
 			)
 			didAdd = True
 
@@ -406,15 +382,10 @@ class _InputGesturesViewModel:
 		# Because we're escaping, words must then be split on r"\ ".
 		filterText = re.escape(filterText)
 		pattern = re.compile(
-			r"(?=.*?" + r")(?=.*?".join(filterText.split(r"\ ")) + r")",
-			re.U | re.IGNORECASE
+			r"(?=.*?" + r")(?=.*?".join(filterText.split(r"\ ")) + r")", re.U | re.IGNORECASE
 		)
 		for catVM in self.allGestures:
-			filteredScripts = [
-				scriptVM
-				for scriptVM in catVM.scripts
-				if pattern.match(scriptVM.displayName)
-			]
+			filteredScripts = [scriptVM for scriptVM in catVM.scripts if pattern.match(scriptVM.displayName)]
 			if filteredScripts:
 				# clone the catVM, but start empty.
 				filteredCat: Union[_CategoryVM, _EmuCategoryVM] = type(catVM)(catVM.displayName, {})
@@ -424,13 +395,12 @@ class _InputGesturesViewModel:
 
 
 class _GesturesTree(VirtualTree, wx.TreeCtrl):
-
 	def __init__(self, parent, gesturesVM: _InputGesturesViewModel):
 		self.gesturesVM = gesturesVM
 		super().__init__(
 			parent,
 			size=wx.Size(600, 400),
-			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE
+			style=wx.TR_HAS_BUTTONS | wx.TR_HIDE_ROOT | wx.TR_LINES_AT_ROOT | wx.TR_SINGLE,
 		)
 
 	def OnGetChildrenCount(self, index: Tuple[int, ...]) -> int:
@@ -492,14 +462,11 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 			)
 			return None
 		# ensure that the length of tuple is 3, missing elements replaced with None
-		nonesForMissingElements = ((None, ) * (3 - len(selIdx)))
+		nonesForMissingElements = (None,) * (3 - len(selIdx))
 		selIdx: Tuple[int, Optional[int], Optional[int]] = selIdx + nonesForMissingElements
 		return self.getData(selIdx)
 
-	def getData(
-			self,
-			index: Tuple[int, Optional[int], Optional[int]]
-	) -> Optional[_VmSelection]:
+	def getData(self, index: Tuple[int, Optional[int], Optional[int]]) -> Optional[_VmSelection]:
 		assert 3 == len(index) and index[0] is not None
 		if len(self.gesturesVM.filteredGestures) == 0:
 			log.debug("No filtered gestures available.")
@@ -561,10 +528,17 @@ class _GesturesTree(VirtualTree, wx.TreeCtrl):
 				log.debug(f"expanding: {focus}")
 				catVM, scriptVM, gestureVM = focus
 				catIndex = self.gesturesVM.filteredGestures.index(catVM)
-				self.Expand(self.GetItemByIndex((catIndex, )))
+				self.Expand(self.GetItemByIndex((catIndex,)))
 				if scriptVM is not None:
 					scriptIndex = catVM.scripts.index(scriptVM)
-					self.Expand(self.GetItemByIndex((catIndex, scriptIndex, )))
+					self.Expand(
+						self.GetItemByIndex(
+							(
+								catIndex,
+								scriptIndex,
+							)
+						)
+					)
 		if focus:
 			# selecting the item must be done after the freeze has completed (thawed) other wise WX calculates
 			# the wrong scrolling position and puts the item outside of the virtual window.
@@ -715,11 +689,7 @@ class InputGesturesDialog(SettingsDialog):
 			for gid in gids:
 				gestureVM = _GestureVM(gid)
 				item = menu.Append(wx.ID_ANY, gestureVM.displayName)
-				self.Bind(
-					wx.EVT_MENU,
-					lambda evt, gid=gid: self._addChoice(catVM, scriptVM, gid),
-					item
-				)
+				self.Bind(wx.EVT_MENU, lambda evt, gid=gid: self._addChoice(catVM, scriptVM, gid), item)
 			self.PopupMenu(menu)
 			if self.gesturesVM.isExpectingNewGesture:
 				# No item was selected, so use the first.
@@ -745,15 +715,21 @@ class InputGesturesDialog(SettingsDialog):
 		# Use the last identifier, which is the most generic one
 		gestureToEmulate = gesture.identifiers[-1]
 		from globalCommands import GlobalCommands
+
 		scriptInfo = inputCore._AllGestureMappingsRetriever.makeKbEmuScriptInfo(
-			GlobalCommands,
-			kbGestureIdentifier=gestureToEmulate
+			GlobalCommands, kbGestureIdentifier=gestureToEmulate
 		)
 
 		catVM = self.gesturesVM.isExpectingNewEmuGesture
 		newScript = catVM.finalisePending(scriptInfo)
 		self.gesturesVM.isExpectingNewEmuGesture = None
-		self.tree.doRefresh(focus=(catVM, newScript, None,))
+		self.tree.doRefresh(
+			focus=(
+				catVM,
+				newScript,
+				None,
+			)
+		)
 		self._refreshButtonState()
 
 	def onRemove(self, evt):
@@ -777,16 +753,19 @@ class InputGesturesDialog(SettingsDialog):
 		self._refreshButtonState()
 
 	def onReset(self, evt):
-		if gui.messageBox(
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("""Are you sure you want to reset all gestures to their factory defaults?
+		if (
+			gui.messageBox(
+				# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+				_("""Are you sure you want to reset all gestures to their factory defaults?
 
 			All of your user defined gestures, whether previously set or defined during this session, will be lost.
 			This cannot be undone."""),
-			# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
-			_("Reset gestures"),
-			style=wx.YES | wx.NO | wx.NO_DEFAULT
-		) != wx.YES:
+				# Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
+				_("Reset gestures"),
+				style=wx.YES | wx.NO | wx.NO_DEFAULT,
+			)
+			!= wx.YES
+		):
 			return
 		inputCore.manager.userGestureMap.clear()
 		try:
@@ -797,7 +776,7 @@ class InputGesturesDialog(SettingsDialog):
 			gui.messageBox(
 				_("Error saving user defined gestures - probably read only file system."),
 				caption=_("Error"),
-				style=wx.OK | wx.ICON_ERROR
+				style=wx.OK | wx.ICON_ERROR,
 			)
 			self.onCancel(None)
 			return
@@ -811,7 +790,7 @@ class InputGesturesDialog(SettingsDialog):
 				_("Error saving user defined gestures - probably read only file system."),
 				# Translators: An title for an error displayed when saving user defined input gestures fails.
 				_("Error"),
-				wx.OK | wx.ICON_ERROR
+				wx.OK | wx.ICON_ERROR,
 			)
 
 		super(InputGesturesDialog, self).onOk(evt)

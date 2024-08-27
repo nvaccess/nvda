@@ -5,6 +5,7 @@
 # Copyright (C) 2019 NV Access Limited
 
 """autoSettings for add-ons"""
+
 from abc import abstractmethod
 from copy import deepcopy
 from typing import Dict, Type, Any, Iterable
@@ -19,7 +20,7 @@ SupportedSettingType: Type = Iterable[DriverSetting]
 
 
 class AutoSettings(AutoPropertyObject):
-	""" An AutoSettings instance is used to simplify the load/save of user config for NVDA extensions
+	"""An AutoSettings instance is used to simplify the load/save of user config for NVDA extensions
 	(Synth drivers, braille drivers, vision providers) and make it possible to automatically provide a
 	standard GUI for these settings.
 	Derived classes must implement:
@@ -39,14 +40,12 @@ class AutoSettings(AutoPropertyObject):
 		self._unregisterConfigSaveAction()
 
 	def _registerConfigSaveAction(self):
-		""" Overrideable pre_configSave registration
-		"""
+		"""Overrideable pre_configSave registration"""
 		log.debug(f"registering pre_configSave action: {self.__class__!r}")
 		config.pre_configSave.register(self.saveSettings)
 
 	def _unregisterConfigSaveAction(self):
-		""" Overrideable pre_configSave de-registration
-		"""
+		"""Overrideable pre_configSave de-registration"""
 		config.pre_configSave.unregister(self.saveSettings)
 
 	@classmethod
@@ -76,11 +75,7 @@ class AutoSettings(AutoPropertyObject):
 		...
 
 	@classmethod
-	def _initSpecificSettings(
-			cls,
-			clsOrInst: Any,
-			settings: SupportedSettingType
-	) -> None:
+	def _initSpecificSettings(cls, clsOrInst: Any, settings: SupportedSettingType) -> None:
 		section = cls._getConfigSection()
 		settingsId = cls.getId()
 		firstLoad = not config.conf[section].isSet(settingsId)
@@ -88,9 +83,7 @@ class AutoSettings(AutoPropertyObject):
 			# Create the new section.
 			config.conf[section][settingsId] = {}
 		# Make sure the config spec is up to date, so the config validator does its work.
-		config.conf[section][settingsId].spec.update(
-			cls._getConfigSpecForSettings(settings)
-		)
+		config.conf[section][settingsId].spec.update(cls._getConfigSpecForSettings(settings))
 		# Make sure the clsOrInst has attributes for every setting
 		for setting in settings:
 			if not hasattr(clsOrInst, setting.id):
@@ -113,23 +106,18 @@ class AutoSettings(AutoPropertyObject):
 	_abstract_supportedSettings = True
 
 	def _get_supportedSettings(self) -> SupportedSettingType:
-		"""The settings supported by the AutoSettings instance. Abstract.
-		"""
+		"""The settings supported by the AutoSettings instance. Abstract."""
 		return []
 
 	def isSupported(self, settingID) -> bool:
-		"""Checks whether given setting is supported by the AutoSettings instance.
-		"""
+		"""Checks whether given setting is supported by the AutoSettings instance."""
 		for s in self.supportedSettings:
 			if s.id == settingID:
 				return True
 		return False
 
 	@classmethod
-	def _getConfigSpecForSettings(
-			cls,
-			settings: SupportedSettingType
-	) -> Dict:
+	def _getConfigSpecForSettings(cls, settings: SupportedSettingType) -> Dict:
 		section = cls._getConfigSection()
 		spec = deepcopy(config.confspec[section]["__many__"])
 		for setting in settings:
@@ -142,11 +130,7 @@ class AutoSettings(AutoPropertyObject):
 		return self._getConfigSpecForSettings(self.supportedSettings)
 
 	@classmethod
-	def _saveSpecificSettings(
-			cls,
-			clsOrInst: Any,
-			settings: SupportedSettingType
-	) -> None:
+	def _saveSpecificSettings(cls, clsOrInst: Any, settings: SupportedSettingType) -> None:
 		"""
 		Save values for settings to config.
 		The values from the attributes of `clsOrInst` that match the `id` of each setting are saved to config.
@@ -162,10 +146,7 @@ class AutoSettings(AutoPropertyObject):
 			try:
 				conf[setting.id] = getattr(clsOrInst, setting.id)
 			except UnsupportedConfigParameterError:
-				log.debugWarning(
-					f"Unsupported setting {setting.id!r}; ignoring",
-					exc_info=True
-				)
+				log.debugWarning(f"Unsupported setting {setting.id!r}; ignoring", exc_info=True)
 				continue
 		if settings:
 			log.debug(f"Saved settings for {cls.__qualname__}")
@@ -180,10 +161,7 @@ class AutoSettings(AutoPropertyObject):
 
 	@classmethod
 	def _loadSpecificSettings(
-			cls,
-			clsOrInst: Any,
-			settings: SupportedSettingType,
-			onlyChanged: bool = False
+		cls, clsOrInst: Any, settings: SupportedSettingType, onlyChanged: bool = False
 	) -> None:
 		"""
 		Load settings from config, set them on `clsOrInst`.
@@ -206,16 +184,13 @@ class AutoSettings(AutoPropertyObject):
 			try:
 				setattr(clsOrInst, setting.id, val)
 			except UnsupportedConfigParameterError:
-				log.debugWarning(
-					f"Unsupported setting {setting.id!r}; ignoring",
-					exc_info=True
-				)
+				log.debugWarning(f"Unsupported setting {setting.id!r}; ignoring", exc_info=True)
 				continue
 		if settings:
 			log.debug(
 				f"Loaded changed settings for {cls.__qualname__}"
-				if onlyChanged else
-				f"Loaded settings for {cls.__qualname__}"
+				if onlyChanged
+				else f"Loaded settings for {cls.__qualname__}"
 			)
 
 	def loadSettings(self, onlyChanged: bool = False):

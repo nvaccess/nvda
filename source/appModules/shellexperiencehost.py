@@ -47,7 +47,6 @@ class ActionCenterToggleButton(UIA):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def event_NVDAObject_init(self, obj):
 		if isinstance(obj, UIA):
 			# #8845: Brightness button in Action Center is a button, not a toggle button.
@@ -64,7 +63,11 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(ContentGenericClient)
 			except ValueError:
 				pass
-		elif isinstance(obj, UIA) and obj.role == controlTypes.Role.TOGGLEBUTTON and obj.UIAElement.cachedClassName == "ToggleButton":
+		elif (
+			isinstance(obj, UIA)
+			and obj.role == controlTypes.Role.TOGGLEBUTTON
+			and obj.UIAElement.cachedClassName == "ToggleButton"
+		):
 			clsList.insert(0, ActionCenterToggleButton)
 		elif (
 			isinstance(obj, UIA)

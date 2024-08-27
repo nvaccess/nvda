@@ -44,8 +44,9 @@ _SentSequenceIndex = int
 @dataclass
 class ExpectedIndex:
 	"""To simplify building tests (de-duplication of test data) , ExpectedIndexes are not sent to the speech
-		manager, but represent indexes that is sent to the synth.
+	manager, but represent indexes that is sent to the synth.
 	"""
+
 	expectedIndexCommandIndex: int
 
 	def __eq__(self, other):
@@ -63,11 +64,8 @@ class ExpectedProsody:
 	but represent prosody
 	commands that are sent to the synth. This may be as a result of resuming a previous utterance.
 	"""
-	expectedProsody: Union[
-		PitchCommand,
-		RateCommand,
-		VolumeCommand
-	]
+
+	expectedProsody: Union[PitchCommand, RateCommand, VolumeCommand]
 
 	def __eq__(self, other):
 		if type(self.expectedProsody) != type(other):
@@ -78,7 +76,7 @@ class ExpectedProsody:
 
 
 class SpeechManagerInteractions:
-	""" Track expected state and interactions with the speechManager.
+	"""Track expected state and interactions with the speechManager.
 	SpeechManager has the following functions that external code interacts with. Currently only supports
 	setting / checking expectations within an expectation block. See L{SpeechManagerInteractions.expectation}
 	Inputs:
@@ -153,9 +151,7 @@ class SpeechManagerInteractions:
 
 	def _sideEffect_synth_speak(self, sequence):
 		if not self._inExpectBlock:  # an ExpectBlock will verify state on exit
-			failureMessage = (
-				"Unexpected call to synth.speak. Calls should happen in an expect block."
-			)
+			failureMessage = "Unexpected call to synth.speak. Calls should happen in an expect block."
 			# sometimes for code called by SpeechManager, exceptions caused by failed asserts are caught.
 			# record them so that at any subsequent _verifyCurrentState calls they can be reported.
 			self._unexpectedSideEffectFailureMessages.append(failureMessage)
@@ -163,9 +159,7 @@ class SpeechManagerInteractions:
 
 	def _sideEffect_synth_cancel(self):
 		if not self._inExpectBlock:  # an ExpectBlock will verify state on exit
-			failureMessage = (
-				"Unexpected call to synth.cancel. Calls should happen in an expect block."
-			)
+			failureMessage = "Unexpected call to synth.cancel. Calls should happen in an expect block."
 			# sometimes for code called by SpeechManager, exceptions caused by failed asserts are caught.
 			# record them so that at any subsequent _verifyCurrentState calls they can be reported.
 			self._unexpectedSideEffectFailureMessages.append(failureMessage)
@@ -196,8 +190,7 @@ class SpeechManagerInteractions:
 
 	@contextmanager
 	def expectation(self):
-		"""Ensures the pre/post conditions are as expected when exercising the SpeechManager.
-		"""
+		"""Ensures the pre/post conditions are as expected when exercising the SpeechManager."""
 		self._testCase.assertFalse(self._inExpectBlock, msg="This is likely a logic error in the test.")
 		self._inExpectBlock = True
 		self._verifyCurrentState()
@@ -223,11 +216,10 @@ class SpeechManagerInteractions:
 
 	def _updateKnownSequences(self, seq) -> List[_SentSequenceIndex]:
 		"""Handle EndUtteranceCommands
-			Sequence gets split after the EndUtteranceCommand and two sequence numbers are returned.
+		Sequence gets split after the EndUtteranceCommand and two sequence numbers are returned.
 		"""
 		startOfUtteranceIndexes = set(
-			i + 1 for i, item in enumerate(seq)
-			if isinstance(item, EndUtteranceCommand)
+			i + 1 for i, item in enumerate(seq) if isinstance(item, EndUtteranceCommand)
 		)
 		startOfUtteranceIndexes.add(len(seq))  # ensure the last index is included
 		start = 0
@@ -242,20 +234,19 @@ class SpeechManagerInteractions:
 		for seqNumber in seqNumbers:
 			indexNumbers = [
 				speechItem.index
-				if not hasattr(speechItem, 'expectedIndexCommandIndex')
+				if not hasattr(speechItem, "expectedIndexCommandIndex")
 				else speechItem.expectedIndexCommandIndex
 				for speechItem in self._knownSequences[seqNumber]
-				if hasattr(speechItem, 'expectedIndexCommandIndex')
-				or isinstance(speechItem, IndexCommand)
+				if hasattr(speechItem, "expectedIndexCommandIndex") or isinstance(speechItem, IndexCommand)
 			]
 			for index in indexNumbers:
 				self._speechManagerIndexes[index] = seqNumber
 		return seqNumbers
 
 	def speak(
-			self,
-			seq: List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex, EndUtteranceCommand]],
-			priority=speech.Spri.NORMAL
+		self,
+		seq: List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex, EndUtteranceCommand]],
+		priority=speech.Spri.NORMAL,
 	) -> Union[_SentSequenceIndex, List[_SentSequenceIndex]]:
 		"""Call SpeechManager.speak and track sequences used."""
 		sequenceNumbers = self._updateKnownSequences(seq)
@@ -297,7 +288,7 @@ class SpeechManagerInteractions:
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		cb = CallbackCommand(
 			lambda i=expectedToBecomeIndex: self._indexReachedCallback(i),
-			name=f"indexCommandIndex: {expectedToBecomeIndex}"
+			name=f"indexCommandIndex: {expectedToBecomeIndex}",
 		)
 		cb.expectedIndexCommandIndex = expectedToBecomeIndex
 		return cb
@@ -324,8 +315,7 @@ class SpeechManagerInteractions:
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
-			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			expectedToBecomeIndex, "Did you forget to provide the 'expectedToBecomeIndex' argument?"
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		b = BeepCommand(hz, length, left, right)
@@ -339,8 +329,7 @@ class SpeechManagerInteractions:
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
-			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			expectedToBecomeIndex, "Did you forget to provide the 'expectedToBecomeIndex' argument?"
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		t = ConfigProfileTriggerCommand(trigger, enter)
@@ -354,8 +343,7 @@ class SpeechManagerInteractions:
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
-			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			expectedToBecomeIndex, "Did you forget to provide the 'expectedToBecomeIndex' argument?"
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		w = WaveFileCommand(filename)
@@ -369,22 +357,17 @@ class SpeechManagerInteractions:
 		indexed commands to help to prevent errors in the tests.
 		"""
 		self._testCase.assertIsNotNone(
-			expectedToBecomeIndex,
-			"Did you forget to provide the 'expectedToBecomeIndex' argument?"
+			expectedToBecomeIndex, "Did you forget to provide the 'expectedToBecomeIndex' argument?"
 		)
 		self._assertStrictIndexOrder(expectedToBecomeIndex)
 		e = EndUtteranceCommand()
 		e.expectedIndexCommandIndex = expectedToBecomeIndex
 		return e
 
-	def expect_indexReachedCallback(
-			self,
-			forIndex: _IndexT,
-			sideEffect: Optional[Callable[[], None]] = None
-	):
+	def expect_indexReachedCallback(self, forIndex: _IndexT, sideEffect: Optional[Callable[[], None]] = None):
 		"""Expect that upon exiting the expectation block, forIndex will have been reached.
-			If a side effect is required (such as speaking more text) this must be called before
-			triggering the index reached code, in this case consider using pumpAllAndSendSpeechOnCallback.
+		If a side effect is required (such as speaking more text) this must be called before
+		triggering the index reached code, in this case consider using pumpAllAndSendSpeechOnCallback.
 		"""
 		if not self._inExpectBlock:
 			self._testCase.fail("Expectations should be set in a with expectation() block")
@@ -408,7 +391,9 @@ class SpeechManagerInteractions:
 			self._testCase.fail(f"Index {index} is not one of the index commands sent to speech manager.")
 		seqNumber = self._speechManagerIndexes[index]
 		if seqNumber not in self.expectedState_speak:  # ensure the index has been sent to the synth
-			self._testCase.fail(f"Index {index} not yet sent to the synth. This indicates an error in the test.")
+			self._testCase.fail(
+				f"Index {index} not yet sent to the synth. This indicates an error in the test."
+			)
 
 	def expect_synthCancel(self):
 		if not self._inExpectBlock:
@@ -416,14 +401,14 @@ class SpeechManagerInteractions:
 		self._awaitingCancelCalls = 1 + self._awaitingCancelCalls
 
 	def addMockCallMonitoring(self, monitorMocks: typing.List[mock.Mock]):
-		""" Allows the call count state for other arbitrary mock objects to be tracked.
+		"""Allows the call count state for other arbitrary mock objects to be tracked.
 		@param monitorMocks: Mock objects to track the number of calls to
 		"""
 		for m in monitorMocks:
 			self._expectedMockCallCount[m] = 0
 
 	def expect_mockCall(self, m: mock.Mock):
-		""" Expect another call to the given Mock. The total number of expected calls to this mock is incremented.
+		"""Expect another call to the given Mock. The total number of expected calls to this mock is incremented.
 		@param m: Mock object to expect another call on.
 		"""
 		if not self._inExpectBlock:
@@ -431,9 +416,9 @@ class SpeechManagerInteractions:
 		self._awaitingMockCalls[m] = 1 + self._awaitingMockCalls.get(m, 0)
 
 	def expect_synthSpeak(
-			self,
-			sequenceNumbers: Optional[Union[int, typing.Iterable[int]]] = None,
-			sequence: Optional[List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex]]] = None,
+		self,
+		sequenceNumbers: Optional[Union[int, typing.Iterable[int]]] = None,
+		sequence: Optional[List[Union[speech.types.SequenceItemT, ExpectedProsody, ExpectedIndex]]] = None,
 	):
 		isSpeechSpecified = sequence is not None
 		areNumbersSpecified = sequenceNumbers is not None
@@ -449,7 +434,7 @@ class SpeechManagerInteractions:
 			self._testCase.assertLess(
 				sequenceNumbers,
 				len(self._knownSequences),
-				msg=f"Less than {sequenceNumbers} sequences have been sent to the synth (see calls to speak)"
+				msg=f"Less than {sequenceNumbers} sequences have been sent to the synth (see calls to speak)",
 			)
 			self._awaitingSpeakCalls.append(sequenceNumbers)
 		else:
@@ -476,9 +461,7 @@ class SpeechManagerInteractions:
 		self._awaitingMockCalls.clear()
 
 	def _updateExpectedStateFromAwaiting_callbacks(self):
-		self.expectedState_indexReached.extend(
-			index for index, c in self._awaitingCallbackForIndex
-		)
+		self.expectedState_indexReached.extend(index for index, c in self._awaitingCallbackForIndex)
 		self._awaitingCallbackForIndex.clear()
 
 	def _assertIndexCallbackState(self):
@@ -490,7 +473,7 @@ class SpeechManagerInteractions:
 				f"Number of CallbackCommand callbacks not as expected."
 				f"\nExpected: {expectedCalls}"
 				f"\nGot: {self._indexReachedCallback.call_args_list}"
-			)
+			),
 		)
 		self._indexReachedCallback.assert_has_calls(expectedCalls)
 
@@ -499,15 +482,13 @@ class SpeechManagerInteractions:
 		self._testCase.assertEqual(
 			expectedCancelCallCount,
 			self.synthMock.cancel.call_count,
-			msg=f"The number of calls to synth.cancel was not as expected. Expected {expectedCancelCallCount}"
+			msg=f"The number of calls to synth.cancel was not as expected. Expected {expectedCancelCallCount}",
 		)
 
 	def _assertMockCallsState(self):
 		for m, e in self._expectedMockCallCount.items():
 			self._testCase.assertEqual(
-				e,
-				m.call_count,
-				msg=f"The number of calls to {m} was not as expected. Expected {e}"
+				e, m.call_count, msg=f"The number of calls to {m} was not as expected. Expected {e}"
 			)
 
 	def _assertCurrentSpeechCallState(self):
@@ -522,7 +503,7 @@ class SpeechManagerInteractions:
 				f"\nExpected a total of {len(expectedSeqIndexes)}"
 				f"\nThe index(es) of the expected sequences: {expectedSeqIndexes}"
 				f"\nActual calls: {mockSpeak.call_args_list}"
-			)
+			),
 		)
 		# Build (total) expected call list
 		replaceWithExpectedIndexTypes = (
@@ -536,7 +517,8 @@ class SpeechManagerInteractions:
 		for s in expectedSeqIndexes:
 			expectedSpeech = self._knownSequences[s]
 			expectedSpeech = [
-				x if not isinstance(x, replaceWithExpectedIndexTypes)
+				x
+				if not isinstance(x, replaceWithExpectedIndexTypes)
 				else ExpectedIndex(x.expectedIndexCommandIndex)
 				for x in expectedSpeech
 			]
@@ -546,18 +528,21 @@ class SpeechManagerInteractions:
 			mockSpeak.assert_has_calls(expectedCalls)
 
 	def pumpAllAndSendSpeechOnCallback(
-			self,
-			expectCallbackForIndex: int,
-			expectedSendSequenceNumber: Union[int, List[int]],
-			seq,
-			priority=speech.Spri.NORMAL
+		self,
+		expectCallbackForIndex: int,
+		expectedSendSequenceNumber: Union[int, List[int]],
+		seq,
+		priority=speech.Spri.NORMAL,
 	):
-		"""Must be called in an 'expectation' block. """
+		"""Must be called in an 'expectation' block."""
+
 		def _lineReachedSideEffect():
 			self._filterAndSendSpeech(seq, priority)
 
 		actualSequenceNumber = self._updateKnownSequences(seq)
-		actualSequenceNumber = actualSequenceNumber if len(actualSequenceNumber) > 1 else actualSequenceNumber[0]
+		actualSequenceNumber = (
+			actualSequenceNumber if len(actualSequenceNumber) > 1 else actualSequenceNumber[0]
+		)
 		self._testCase.assertEqual(expectedSendSequenceNumber, actualSequenceNumber)
 
 		self.expect_indexReachedCallback(expectCallbackForIndex, _lineReachedSideEffect)
@@ -570,12 +555,15 @@ class SpeechManagerInteractions:
 		self._testCase.assertEqual(
 			expectedToBecomeIndex,
 			indexCommandIndex,
-			msg="Did you forget to update the 'expectedToBecomeIndex' argument?"
+			msg="Did you forget to update the 'expectedToBecomeIndex' argument?",
 		)
 
 	def _filterAndSendSpeech(self, seq, priority):
 		filteredSpeech = [
-			x for x in seq
-			if not isinstance(x, (ExpectedIndex, ExpectedProsody))  # don't send types used for behaviour tracking.
+			x
+			for x in seq
+			if not isinstance(
+				x, (ExpectedIndex, ExpectedProsody)
+			)  # don't send types used for behaviour tracking.
 		]
 		self.sManager.speak(filteredSpeech, priority)

@@ -11,14 +11,10 @@ See L{gui} for the graphical user interface.
 """
 
 import os
-from ctypes import (
-	windll,
-	byref,
-	POINTER
-)
+from ctypes import windll, byref, POINTER
 import comtypes.client
 from comtypes import IUnknown
-from comtypes import automation 
+from comtypes import automation
 from comtypes import COMError
 from html import escape
 from logHandler import log
@@ -38,12 +34,12 @@ URL_MK_UNIFORM = 1
 # Dialog box properties
 DIALOG_OPTIONS = "resizable:yes;help:no"
 
-#dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
-HTMLDLG_NOUI = 0x0010 
-HTMLDLG_MODAL = 0x0020 
-HTMLDLG_MODELESS = 0x0040 
-HTMLDLG_PRINT_TEMPLATE = 0x0080 
-HTMLDLG_VERIFY = 0x0100 
+# dwDialogFlags for ShowHTMLDialogEx from mshtmhst.h
+HTMLDLG_NOUI = 0x0010
+HTMLDLG_MODAL = 0x0020
+HTMLDLG_MODELESS = 0x0040
+HTMLDLG_PRINT_TEMPLATE = 0x0080
+HTMLDLG_VERIFY = 0x0100
 
 
 def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> None:
@@ -77,6 +73,7 @@ def _warnBrowsableMessageNotAvailableOnSecureScreens(title: Optional[str]) -> No
 
 	import wx  # Late import to prevent circular dependency.
 	import gui  # Late import to prevent circular dependency.
+
 	log.debug("Presenting browsable message unavailable warning.")
 	gui.messageBox(
 		browsableMessageUnavailableMsg,
@@ -96,12 +93,13 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 	"""
 	if isRunningOnSecureDesktop():
 		import wx  # Late import to prevent circular dependency.
+
 		wx.CallAfter(_warnBrowsableMessageNotAvailableOnSecureScreens, title)
 		return
 
-	htmlFileName = os.path.join(globalVars.appDir, 'message.html')
-	if not os.path.isfile(htmlFileName ): 
-		raise LookupError(htmlFileName )
+	htmlFileName = os.path.join(globalVars.appDir, "message.html")
+	if not os.path.isfile(htmlFileName):
+		raise LookupError(htmlFileName)
 	moniker = POINTER(IUnknown)()
 	windll.urlmon.CreateURLMonikerEx(0, htmlFileName, byref(moniker), URL_MK_UNIFORM)
 	if not title:
@@ -115,29 +113,24 @@ def browseableMessage(message: str, title: Optional[str] = None, isHtml: bool = 
 		log.error("Scripting.Dictionary component unavailable", exc_info=True)
 		# Store the module level message function in a new variable since it is masked by a local variable with
 		# the same name
-		messageFunction = globals()['message']
+		messageFunction = globals()["message"]
 		# Translators: reported when unable to display a browsable message.
 		messageFunction(_("Unable to display browseable message"))
 		return
 	d.add("title", title)
 	d.add("message", message)
 	dialogArgsVar = automation.VARIANT(d)
-	gui.mainFrame.prePopup() 
-	windll.mshtml.ShowHTMLDialogEx( 
-		gui.mainFrame.Handle , 
-		moniker , 
-		HTMLDLG_MODELESS , 
-		byref(dialogArgsVar), 
-		DIALOG_OPTIONS, 
-		None
+	gui.mainFrame.prePopup()
+	windll.mshtml.ShowHTMLDialogEx(
+		gui.mainFrame.Handle, moniker, HTMLDLG_MODELESS, byref(dialogArgsVar), DIALOG_OPTIONS, None
 	)
-	gui.mainFrame.postPopup() 
+	gui.mainFrame.postPopup()
 
 
 def message(
-		text: str,
-		speechPriority: Optional[speech.Spri] = None,
-		brailleText: Optional[str] = None,
+	text: str,
+	speechPriority: Optional[speech.Spri] = None,
+	brailleText: Optional[str] = None,
 ):
 	"""Present a message to the user.
 	The message will be presented in both speech and braille.
@@ -183,5 +176,5 @@ def reportTextCopiedToClipboard(text: Optional[str] = None):
 		text=_("Copied to clipboard: {text}").format(text=spokenText),
 		# Translators: Displayed in braille when a text has been copied to clipboard.
 		# {text} is replaced by the copied text.
-		brailleText=_("Copied: {text}").format(text=text)
+		brailleText=_("Copied: {text}").format(text=text),
 	)

@@ -4,8 +4,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2018-2019 NV Access Limited, Babbage B.V.
 
-"""Module within the vision framework that contains the base vision enhancement provider class.
-"""
+"""Module within the vision framework that contains the base vision enhancement provider class."""
 
 from abc import abstractmethod
 import config
@@ -37,6 +36,7 @@ class VisionEnhancementProviderSettings(AutoSettings):
 	expose using the L{utoSettings._get_supportedSettings} property.
 	- "_exampleProvider_autoGui.py" provides an example of this.
 	"""
+
 	def __init__(self):
 		super().__init__()
 		self.initSettings()  # ensure that settings are loaded at construction time.
@@ -47,8 +47,8 @@ class VisionEnhancementProviderSettings(AutoSettings):
 
 
 class VisionProviderStateControl:
-	""" Stub showing the interface for controlling the start/termination of a single provider.
-			Implementors of this class should handle the outcome when things go wrong.
+	"""Stub showing the interface for controlling the start/termination of a single provider.
+	Implementors of this class should handle the outcome when things go wrong.
 	"""
 
 	@abstractmethod
@@ -93,6 +93,7 @@ class VisionEnhancementProvider(AutoPropertyObject):
 	Optional: To provide a custom GUI, return a SettingsPanel class type from:
 	- getSettingsPanelClass
 	"""
+
 	cachePropertiesByDefault = True
 
 	@classmethod

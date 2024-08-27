@@ -5,25 +5,14 @@
 
 
 from __future__ import annotations
-from typing import (
-	Type,
-	Any,
-	Callable,
-	Generator,
-	TypeVar,
-	cast
-)
+from typing import Type, Any, Callable, Generator, TypeVar, cast
 import contextlib
-from comtypes import (
-	GUID
-)
+from comtypes import GUID
 from UIAHandler import UIA
 from .lowLevel import RelativeOffset
 from . import instructions
 from . import builder
-from .remoteFuncWrapper import (
-	remoteContextManager
-)
+from .remoteFuncWrapper import remoteContextManager
 from . import operation
 from .remoteTypes import (
 	RemoteBaseObject,
@@ -57,17 +46,13 @@ class RemoteAPI(builder._RemoteBase):
 			remoteValue = remoteValues[0]
 		else:
 			remoteValue = self.newArray()
-			self.addCompiletimeComment(
-				f"Created {remoteValue} for returning values {remoteValues}"
-			)
+			self.addCompiletimeComment(f"Created {remoteValue} for returning values {remoteValues}")
 			for value in remoteValues:
 				remoteValue.append(value)
 		if self._op._returnIdOperand is None:
 			raise RuntimeError("ReturnIdOperand not set not created")
 		self._op.addToResults(remoteValue)
-		self.addCompiletimeComment(
-			f"Returning {remoteValue}"
-		)
+		self.addCompiletimeComment(f"Returning {remoteValue}")
 		self._op._returnIdOperand.set(remoteValue.operandId.value)
 		self.halt()
 
@@ -78,9 +63,7 @@ class RemoteAPI(builder._RemoteBase):
 			remoteValue = remoteValues[0]
 		else:
 			remoteValue = self.newArray()
-			self.addCompiletimeComment(
-				f"Created {remoteValue} for yielding values {remoteValues}"
-			)
+			self.addCompiletimeComment(f"Created {remoteValue} for yielding values {remoteValues}")
 			for value in remoteValues:
 				remoteValue.append(value)
 		if self._op._yieldListOperand is None:
@@ -89,13 +72,10 @@ class RemoteAPI(builder._RemoteBase):
 		self.addCompiletimeComment(f"Yielding {remoteValue}")
 		self._op._yieldListOperand.append(remoteValue)
 
-	_newObject_RemoteType = TypeVar('_newObject_RemoteType', bound=RemoteBaseObject)
+	_newObject_RemoteType = TypeVar("_newObject_RemoteType", bound=RemoteBaseObject)
 
 	def _newObject(
-			self,
-			RemoteType: Type[_newObject_RemoteType],
-			value: Any,
-			static: bool = False
+		self, RemoteType: Type[_newObject_RemoteType], value: Any, static: bool = False
 	) -> _newObject_RemoteType:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -135,9 +115,7 @@ class RemoteAPI(builder._RemoteBase):
 		return RemoteArray.createNew(self.rob)
 
 	def newElement(
-			self,
-			value: UIA.IUIAutomationElement | None = None,
-			static: bool = False
+		self, value: UIA.IUIAutomationElement | None = None, static: bool = False
 	) -> RemoteElement:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -150,9 +128,7 @@ class RemoteAPI(builder._RemoteBase):
 				return self._newObject(RemoteElement, value, static=static)
 
 	def newTextRange(
-			self,
-			value: UIA.IUIAutomationTextRange | None = None,
-			static: bool = False
+		self, value: UIA.IUIAutomationTextRange | None = None, static: bool = False
 	) -> RemoteTextRange:
 		section = "static" if static else "main"
 		with self.rob.overrideDefaultSection(section):
@@ -168,19 +144,13 @@ class RemoteAPI(builder._RemoteBase):
 	def getOperationStatus(self) -> RemoteInt:
 		instructionList = self.rob.getDefaultInstructionList()
 		result = RemoteInt(self.rob, self.rob.requestNewOperandId())
-		instructionList.addInstruction(
-			instructions.GetOperationStatus(
-				result=result
-			)
-		)
+		instructionList.addInstruction(instructions.GetOperationStatus(result=result))
 		return result
 
 	def setOperationStatus(self, status: RemoteInt | int):
 		instructionList = self.rob.getDefaultInstructionList()
 		instructionList.addInstruction(
-			instructions.SetOperationStatus(
-				status=RemoteInt.ensureRemote(self.rob, status)
-			)
+			instructions.SetOperationStatus(status=RemoteInt.ensureRemote(self.rob, status))
 		)
 
 	_scopeInstructionJustExited: instructions.InstructionBase | None = None
@@ -240,7 +210,7 @@ class RemoteAPI(builder._RemoteBase):
 		# Add a new loop block instruction to start the while loop
 		loopBlockInstruction = instructions.NewLoopBlock(
 			breakBranch=RelativeOffset(1),  # offset updated after yield
-			continueBranch=RelativeOffset(1)
+			continueBranch=RelativeOffset(1),
 		)
 		loopBlockInstructionIndex = instructionList.addInstruction(loopBlockInstruction)
 		# generate the loop condition.
@@ -263,14 +233,11 @@ class RemoteAPI(builder._RemoteBase):
 		loopBlockInstruction.breakBranch = RelativeOffset(nextInstructionIndex - loopBlockInstructionIndex)
 		self._scopeInstructionJustExited = loopBlockInstruction
 
-	_range_intTypeVar = TypeVar('_range_intTypeVar', bound=RemoteIntBase)
+	_range_intTypeVar = TypeVar("_range_intTypeVar", bound=RemoteIntBase)
 
 	@remoteContextManager
 	def forEachNumInRange(
-			self,
-			start: _range_intTypeVar | int,
-			stop: _range_intTypeVar | int,
-			step: _range_intTypeVar | int = 1
+		self, start: _range_intTypeVar | int, stop: _range_intTypeVar | int, step: _range_intTypeVar | int = 1
 	) -> Generator[RemoteIntBase, None, None]:
 		RemoteType: Type[RemoteIntBase] = RemoteInt
 		for arg in (start, stop, step):
@@ -286,10 +253,7 @@ class RemoteAPI(builder._RemoteBase):
 			counter += remoteStep
 
 	@remoteContextManager
-	def forEachItemInArray(
-			self,
-			array: RemoteArray
-	) -> Generator[RemoteVariant, None, None]:
+	def forEachItemInArray(self, array: RemoteArray) -> Generator[RemoteVariant, None, None]:
 		with self.forEachNumInRange(0, array.size()) as index:
 			yield array[index]
 

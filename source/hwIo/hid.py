@@ -41,7 +41,6 @@ def check_HidP_status(func, *args):
 
 
 class HidReport:
-
 	_reportType: hidpi.HIDP_REPORT_TYPE
 	_reportSize: int
 	_reportBuf: "ctypes.Array"
@@ -51,7 +50,6 @@ class HidReport:
 
 
 class HidInputReport(HidReport):
-
 	_reportType = hidpi.HIDP_REPORT_TYPE.INPUT
 
 	def __init__(self, device, data):
@@ -72,9 +70,9 @@ class HidInputReport(HidReport):
 			ctypes.byref(numUsages),
 			self._dev._pd,
 			self._reportBuf,
-			self._reportSize
+			self._reportSize,
 		)
-		return usageList[0:numUsages.value]
+		return usageList[0 : numUsages.value]
 
 	def getDataItems(self):
 		maxDataLength = hidDll.HidP_MaxDataListLength(self._reportType, self._dev._pd)
@@ -87,13 +85,12 @@ class HidInputReport(HidReport):
 			ctypes.byref(numDataLength),
 			self._dev._pd,
 			self._reportBuf,
-			self._reportSize
+			self._reportSize,
 		)
-		return dataList[0:numDataLength.value]
+		return dataList[0 : numDataLength.value]
 
 
 class HidOutputReport(HidReport):
-
 	_reportType = hidpi.HIDP_REPORT_TYPE.OUTPUT
 
 	def __init__(self, device, reportID=0):
@@ -118,22 +115,22 @@ class HidOutputReport(HidReport):
 			len(dataBuf),
 			self._dev._pd,
 			self._reportBuf,
-			self._reportSize
+			self._reportSize,
 		)
 
 
 class Hid(IoBase):
-	"""Raw I/O for HID devices.
-	"""
+	"""Raw I/O for HID devices."""
+
 	_featureSize: int
 
 	def __init__(
-			self,
-			path: str,
-			onReceive: Callable[[bytes], None],
-			exclusive: bool = True,
-			onReadError: Optional[Callable[[int], bool]] = None,
-			ioThread: Optional[IoThread] = None,
+		self,
+		path: str,
+		onReceive: Callable[[bytes], None],
+		exclusive: bool = True,
+		onReadError: Optional[Callable[[int], bool]] = None,
+		ioThread: Optional[IoThread] = None,
 	):
 		"""Constructor.
 		@param path: The device path.
@@ -155,7 +152,7 @@ class Hid(IoBase):
 			None,
 			winKernel.OPEN_EXISTING,
 			FILE_FLAG_OVERLAPPED,
-			None
+			None,
 		)
 		if handle == INVALID_HANDLE_VALUE:
 			if _isDebug():
@@ -172,9 +169,7 @@ class Hid(IoBase):
 			log.debug("usage page: 0X%X" % caps.UsagePage)
 			log.debug(
 				"Report byte lengths: input %d, output %d, feature %d"
-				% (
-					caps.InputReportByteLength, caps.OutputReportByteLength, caps.FeatureReportByteLength
-				)
+				% (caps.InputReportByteLength, caps.OutputReportByteLength, caps.FeatureReportByteLength)
 			)
 		self._featureSize = caps.FeatureReportByteLength
 		self._writeSize = caps.OutputReportByteLength
@@ -186,12 +181,12 @@ class Hid(IoBase):
 			onReceive,
 			onReceiveSize=caps.InputReportByteLength,
 			onReadError=onReadError,
-			ioThread=ioThread
+			ioThread=ioThread,
 		)
 
 	@property
 	def caps(self):
-		if hasattr(self, '_caps'):
+		if hasattr(self, "_caps"):
 			return self._caps
 		caps = hidpi.HIDP_CAPS()
 		check_HidP_status(hidDll.HidP_GetCaps, self._pd, byref(caps))
@@ -200,7 +195,7 @@ class Hid(IoBase):
 
 	@property
 	def inputButtonCaps(self):
-		if hasattr(self, '_inputButtonCaps'):
+		if hasattr(self, "_inputButtonCaps"):
 			return self._inputButtonCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputButtonCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberInputButtonCaps)
@@ -209,14 +204,14 @@ class Hid(IoBase):
 			hidpi.HIDP_REPORT_TYPE.INPUT,
 			ctypes.byref(valueCapsList),
 			ctypes.byref(numValueCaps),
-			self._pd
+			self._pd,
 		)
 		self._inputButtonCaps = valueCapsList
 		return self._inputButtonCaps
 
 	@property
 	def inputValueCaps(self):
-		if hasattr(self, '_inputValueCaps'):
+		if hasattr(self, "_inputValueCaps"):
 			return self._inputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberInputValueCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberInputValueCaps)
@@ -225,14 +220,14 @@ class Hid(IoBase):
 			hidpi.HIDP_REPORT_TYPE.INPUT,
 			ctypes.byref(valueCapsList),
 			ctypes.byref(numValueCaps),
-			self._pd
+			self._pd,
 		)
 		self._inputValueCaps = valueCapsList
 		return self._inputValueCaps
 
 	@property
 	def outputValueCaps(self):
-		if hasattr(self, '_outputValueCaps'):
+		if hasattr(self, "_outputValueCaps"):
 			return self._outputValueCaps
 		valueCapsList = (hidpi.HIDP_VALUE_CAPS * self.caps.NumberOutputValueCaps)()
 		numValueCaps = ctypes.c_long(self.caps.NumberOutputValueCaps)
@@ -241,13 +236,13 @@ class Hid(IoBase):
 			hidpi.HIDP_REPORT_TYPE.OUTPUT,
 			ctypes.byref(valueCapsList),
 			ctypes.byref(numValueCaps),
-			self._pd
+			self._pd,
 		)
 		self._outputValueCaps = valueCapsList
 		return self._outputValueCaps
 
 	def _prepareWriteBuffer(self, data: bytes) -> Tuple[int, ctypes.c_char_p]:
-		""" For HID devices, the buffer to be written must match the
+		"""For HID devices, the buffer to be written must match the
 		OutputReportByteLength fetched from HIDP_CAPS, to ensure this is the case
 		we create a buffer of that size. We also check that data is not bigger than
 		the write size, which we do not currently support. If it becomes necessary to
@@ -258,10 +253,7 @@ class Hid(IoBase):
 		if len(data) > self._writeSize:
 			log.error("Attempting to send a buffer larger than supported.")
 			raise RuntimeError("Unable to send buffer of: %d", len(data))
-		return (
-			self._writeSize,
-			ctypes.create_string_buffer(data, self._writeSize)
-		)
+		return (self._writeSize, ctypes.create_string_buffer(data, self._writeSize))
 
 	def getFeature(self, reportId: bytes) -> bytes:
 		"""Get a feature report from this device.
@@ -271,10 +263,7 @@ class Hid(IoBase):
 		buf = ctypes.create_string_buffer(reportId, size=self._featureSize)
 		if not hidDll.HidD_GetFeature(self._file, buf, self._featureSize):
 			if _isDebug():
-				log.debug(
-					"Get feature %r failed: %s"
-					% (reportId, ctypes.WinError())
-				)
+				log.debug("Get feature %r failed: %s" % (reportId, ctypes.WinError()))
 			raise ctypes.WinError()
 		if _isDebug():
 			log.debug("Get feature: %r" % buf.raw)
@@ -288,11 +277,7 @@ class Hid(IoBase):
 		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
 			log.debug("Set feature: %r" % report)
-		result = hidDll.HidD_SetFeature(
-			self._file,
-			buf,
-			bufSize
-		)
+		result = hidDll.HidD_SetFeature(self._file, buf, bufSize)
 		if not result:
 			if _isDebug():
 				log.debug("Set feature failed: %s" % ctypes.WinError())
@@ -308,11 +293,7 @@ class Hid(IoBase):
 		bufSize = ctypes.sizeof(buf)
 		if _isDebug():
 			log.debug("Set output report: %r" % report)
-		result = hidDll.HidD_SetOutputReport(
-			self._writeFile,
-			buf,
-			bufSize
-		)
+		result = hidDll.HidD_SetOutputReport(self._writeFile, buf, bufSize)
 		if not result:
 			if _isDebug():
 				log.debug("Set output report failed: %s" % ctypes.WinError())

@@ -4,6 +4,7 @@
 # See the file COPYING for more details.
 
 import typing
+
 # F401 imported but unused. RelationType should be exposed from IAccessibleHandler, in future __all__
 # should be used to export it.
 from .types import RelationType  # noqa: F401
@@ -247,9 +248,7 @@ Role = controlTypes.Role
 State = controlTypes.State
 
 
-def _getStatesSetFromIAccessibleStates(
-		IAccessibleStates: int
-) -> Set[controlTypes.State]:
+def _getStatesSetFromIAccessibleStates(IAccessibleStates: int) -> Set[controlTypes.State]:
 	return set(
 		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates.keys()
@@ -270,7 +269,7 @@ def getStatesSetFromIAccessibleAttrs(attrs: "textInfos.ControlField") -> Set[Sta
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
 	# EG IAccessible::state_40="1"
-	IAccessibleStateAttrName = 'IAccessible::state_{}'
+	IAccessibleStateAttrName = "IAccessible::state_{}"
 	return set(
 		IAccessibleStatesToNVDAStates[IAState]
 		for IAState in IAccessibleStatesToNVDAStates.keys()
@@ -283,7 +282,7 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 	# The value for the state is used in the attribute name.
 	# The attribute value is always 1.
 	# EG IAccessible2::state_40="1"
-	IAccessible2StateAttrName = 'IAccessible2::state_{}'
+	IAccessible2StateAttrName = "IAccessible2::state_{}"
 	return set(
 		IAccessible2StatesToNVDAStates[IA2State]
 		for IA2State in IAccessible2StatesToNVDAStates.keys()
@@ -292,8 +291,7 @@ def getStatesSetFromIAccessible2Attrs(attrs: "textInfos.ControlField") -> Set[St
 
 
 def calculateNvdaRole(IARole: int, IAStates: int) -> Role:
-	"""Convert IARole value into an NVDA role, and apply any required transformations.
-	"""
+	"""Convert IARole value into an NVDA role, and apply any required transformations."""
 	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
 	states = _getStatesSetFromIAccessibleStates(IAStates)
 	role, states = controlTypes.transformRoleStates(role, states)
@@ -301,8 +299,7 @@ def calculateNvdaRole(IARole: int, IAStates: int) -> Role:
 
 
 def calculateNvdaStates(IARole: int, IAStates: int) -> Set[State]:
-	"""Convert IAStates bit set into a Set of NVDA States and apply any required transformations.
-	"""
+	"""Convert IAStates bit set into a Set of NVDA States and apply any required transformations."""
 	role = IAccessibleRolesToNVDARoles.get(IARole, Role.UNKNOWN)
 	states = _getStatesSetFromIAccessibleStates(IAStates)
 	role, states = controlTypes.transformRoleStates(role, states)
@@ -321,8 +318,7 @@ def NVDARoleFromAttr(accRole: Optional[str]) -> Role:
 
 
 def normalizeIAccessible(
-		pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2],
-		childID: int = 0
+	pacc: Union[IUnknown, IA.IAccessible, IA2.IAccessible2], childID: int = 0
 ) -> Union[IA.IAccessible, IA2.IAccessible2]:
 	if not isinstance(pacc, IA.IAccessible):
 		try:
@@ -515,11 +511,7 @@ def accNavigate(pacc, childID, direction):
 # Note: when working on winEventToNVDAEvent, look for opportunities to simplify
 # and move logic out into smaller helper functions.
 def winEventToNVDAEvent(  # noqa: C901
-		eventID: int,
-		window: int,
-		objectID: int,
-		childID: int,
-		useCache: bool = True
+	eventID: int, window: int, objectID: int, childID: int, useCache: bool = True
 ) -> Optional[Tuple[str, NVDAObjects.IAccessible.IAccessible]]:
 	"""Tries to convert a win event ID to an NVDA event name, and instantiate or fetch an NVDAObject for
 	 the win event parameters.
@@ -586,8 +578,8 @@ def winEventToNVDAEvent(  # noqa: C901
 	# SDM MSAA objects sometimes don't contain enough information to be useful Sometimes there is a real
 	# window that does, so try to get the SDMChild property on the NVDAObject, and if successull use that as
 	# obj instead.
-	if 'bosa_sdm' in obj.windowClassName:
-		SDMChild = getattr(obj, 'SDMChild', None)
+	if "bosa_sdm" in obj.windowClassName:
+		SDMChild = getattr(obj, "SDMChild", None)
 		if SDMChild:
 			obj = SDMChild
 	if isMSAADebugLoggingEnabled():
@@ -614,16 +606,14 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	@rtype: boolean
 	"""
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing generic winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}"
-		)
+		log.debug(f"Processing generic winEvent: {getWinEventLogInfo(window, objectID, childID, eventID)}")
 	# Notify appModuleHandler of this new window
 	appModuleHandler.update(winUser.getWindowThreadProcessID(window)[0])
 	# Handle particular events for the special MSAA caret object just as if they were for the focus object
 	focus = eventHandler.lastQueuedFocusObject
 	if objectID == winUser.OBJID_CARET and eventID in (
 		winUser.EVENT_OBJECT_LOCATIONCHANGE,
-		winUser.EVENT_OBJECT_SHOW
+		winUser.EVENT_OBJECT_SHOW,
 	):
 		if not isinstance(focus, NVDAObjects.IAccessible.IAccessible):
 			# #12855: Ignore MSAA caret event on non-MSAA focus.
@@ -633,6 +623,7 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 			# Seem to rely on MSAA caret events,
 			# as they do not fire their own UIA caret events.
 			from NVDAObjects.UIA.wordDocument import WordDocument
+
 			if isinstance(focus, WordDocument):
 				if isMSAADebugLoggingEnabled():
 					log.debug(
@@ -658,10 +649,7 @@ def processGenericWinEvent(eventID, window, objectID, childID):
 	# if the winEvent is for the object with focus,
 	# Ensure that that the event is send to the existing focus instance,
 	# rather than a new instance of the object with focus.
-	if (
-		NVDAEvent[1] is not focus
-		and NVDAEvent[1] == focus
-	):
+	if NVDAEvent[1] is not focus and NVDAEvent[1] == focus:
 		if isMSAADebugLoggingEnabled():
 			log.debug(
 				f"Directing winEvent to existing focus object {focus}. "
@@ -688,8 +676,7 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	"""
 	if isMSAADebugLoggingEnabled():
 		log.debug(
-			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, "
-			f"force {force}"
+			f"Processing focus winEvent: {getWinEventLogInfo(window, objectID, childID)}, " f"force {force}"
 		)
 	windowClassName = winUser.getClassName(window)
 	# Generally, we must ignore focus on child windows of SDM windows as we only want the SDM MSAA events.
@@ -697,8 +684,8 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	# as this is a child control and the SDM MSAA events don't handle child controls.
 	if (
 		childID == 0
-		and not windowClassName.startswith('bosa_sdm')
-		and winUser.getClassName(winUser.getAncestor(window, winUser.GA_PARENT)).startswith('bosa_sdm')
+		and not windowClassName.startswith("bosa_sdm")
+		and winUser.getClassName(winUser.getAncestor(window, winUser.GA_PARENT)).startswith("bosa_sdm")
 	):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
@@ -726,9 +713,8 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 	if not NVDAEvent:
 		return False
 	eventName, obj = NVDAEvent
-	if (
-		(childID == 0 and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_LIST)
-		or (objectID == winUser.OBJID_CLIENT and "SysListView32" in obj.windowClassName)
+	if (childID == 0 and obj.IAccessibleRole == oleacc.ROLE_SYSTEM_LIST) or (
+		objectID == winUser.OBJID_CLIENT and "SysListView32" in obj.windowClassName
 	):
 		# Some controls incorrectly fire focus on child ID 0, even when there is a child with focus.
 		try:
@@ -741,7 +727,7 @@ def processFocusWinEvent(window, objectID, childID, force=False):
 				IAccessibleChildID=realChildID,
 				event_windowHandle=window,
 				event_objectID=objectID,
-				event_childID=realChildID
+				event_childID=realChildID,
 			)
 			if realObj:
 				obj = realObj
@@ -768,16 +754,15 @@ def processFocusNVDAEvent(obj, force=False):
 			if isMSAADebugLoggingEnabled():
 				log.debug(f"IAccessible focus event not allowed by {obj}")
 			return False
-	eventHandler.queueEvent('gainFocus', obj)
+	eventHandler.queueEvent("gainFocus", obj)
 	return True
 
 
 def processDesktopSwitchWinEvent(window, objectID, childID):
 	from winAPI.secureDesktop import _handleSecureDesktopChange
+
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}"
-		)
+		log.debug(f"Processing desktopSwitch winEvent: {getWinEventLogInfo(window, objectID, childID)}")
 	hDesk = windll.user32.OpenInputDesktop(0, False, 0)
 	if hDesk != 0:
 		windll.user32.CloseDesktop(hDesk)
@@ -796,6 +781,7 @@ def processDesktopSwitchWinEvent(window, objectID, childID):
 
 def _handleUserDesktop():
 	from winAPI.secureDesktop import post_secureDesktopStateChange
+
 	eventHandler.queueEvent("gainFocus", api.getDesktopObject().objectWithFocus())
 	post_secureDesktopStateChange.notify(isSecureDesktop=False)
 
@@ -815,9 +801,7 @@ def processForegroundWinEvent(window, objectID, childID):
 	@rtype: boolean
 	"""
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing foreground winEvent: {getWinEventLogInfo(window, objectID, childID)}"
-		)
+		log.debug(f"Processing foreground winEvent: {getWinEventLogInfo(window, objectID, childID)}")
 	# Ignore foreground events on windows that aren't the current foreground window
 	if window != winUser.getForegroundWindow():
 		if isMSAADebugLoggingEnabled():
@@ -829,9 +813,8 @@ def processForegroundWinEvent(window, objectID, childID):
 	# If there is a pending gainFocus, it will handle the foreground object.
 	oldFocus = eventHandler.lastQueuedFocusObject
 	# If this foreground win event's window is an ancestor of the existing focus's window, then ignore it
-	if (
-		isinstance(oldFocus, NVDAObjects.window.Window)
-		and winUser.isDescendantWindow(window, oldFocus.windowHandle)
+	if isinstance(oldFocus, NVDAObjects.window.Window) and winUser.isDescendantWindow(
+		window, oldFocus.windowHandle
 	):
 		if isMSAADebugLoggingEnabled():
 			log.debug(
@@ -864,7 +847,9 @@ def processForegroundWinEvent(window, objectID, childID):
 			)
 		return True
 	# Convert the win event to an NVDA event
-	NVDAEvent = winEventToNVDAEvent(winUser.EVENT_SYSTEM_FOREGROUND, window, objectID, childID, useCache=False)
+	NVDAEvent = winEventToNVDAEvent(
+		winUser.EVENT_SYSTEM_FOREGROUND, window, objectID, childID, useCache=False
+	)
 	if not NVDAEvent:
 		if isMSAADebugLoggingEnabled():
 			log.debug(
@@ -878,9 +863,7 @@ def processForegroundWinEvent(window, objectID, childID):
 
 def processShowWinEvent(window, objectID, childID):
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing show winEvent: {getWinEventLogInfo(window, objectID, childID)}"
-		)
+		log.debug(f"Processing show winEvent: {getWinEventLogInfo(window, objectID, childID)}")
 	# eventHandler.shouldAcceptEvent only accepts show events for a few specific cases.
 	# Narrow this further to only accept events for clients or custom objects.
 	if objectID == winUser.OBJID_CLIENT or objectID > 0:
@@ -895,9 +878,7 @@ def processDestroyWinEvent(window, objectID, childID):
 	such an object exists.
 	"""
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing destroy winEvent: {getWinEventLogInfo(window, objectID, childID)}"
-		)
+		log.debug(f"Processing destroy winEvent: {getWinEventLogInfo(window, objectID, childID)}")
 	try:
 		del liveNVDAObjectTable[(window, objectID, childID)]
 	except KeyError:
@@ -907,6 +888,7 @@ def processDestroyWinEvent(window, objectID, childID):
 	# so can't use generic focus correction. (#2695)
 	focus = api.getFocusObject()
 	from NVDAObjects.IAccessible.mscandui import BaseCandidateItem
+
 	if (
 		objectID == 0
 		and childID == 0
@@ -930,9 +912,9 @@ def processMenuStartWinEvent(eventID, window, objectID, childID, validFocus):
 		)
 	if validFocus:
 		lastFocus = eventHandler.lastQueuedFocusObject
-		if (
-			isinstance(lastFocus, NVDAObjects.IAccessible.IAccessible)
-			and lastFocus.IAccessibleRole in (oleacc.ROLE_SYSTEM_MENUPOPUP, oleacc.ROLE_SYSTEM_MENUITEM)
+		if isinstance(lastFocus, NVDAObjects.IAccessible.IAccessible) and lastFocus.IAccessibleRole in (
+			oleacc.ROLE_SYSTEM_MENUPOPUP,
+			oleacc.ROLE_SYSTEM_MENUITEM,
 		):
 			# Focus has already been set to a menu or menu item, so we don't need to handle the menuStart.
 			return
@@ -962,9 +944,7 @@ def processFakeFocusWinEvent(eventID, window, objectID, childID):
 	# However, it is possible that the focus event has simply been delayed, so wait a bit and only do it if
 	# the focus hasn't changed yet.
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Processing fake focus winEvent {getWinEventLogInfo(window, objectID, childID)}"
-		)
+		log.debug(f"Processing fake focus winEvent {getWinEventLogInfo(window, objectID, childID)}")
 	core.callLater(50, _fakeFocus, api.getFocusObject())
 
 
@@ -976,9 +956,7 @@ def _fakeFocus(oldFocus):
 	if not focus:
 		return
 	if isMSAADebugLoggingEnabled():
-		log.debug(
-			f"Faking focus on {focus}"
-		)
+		log.debug(f"Faking focus on {focus}")
 	processFocusNVDAEvent(focus)
 
 
@@ -1015,10 +993,9 @@ def pumpAll():  # noqa: C901
 
 	for winEvent in winEvents:
 		isEventOnCaret = winEvent[2] == winUser.OBJID_CARET
-		showHideCaretEvent = focus and isEventOnCaret and winEvent[0] in [
-			winUser.EVENT_OBJECT_SHOW,
-			winUser.EVENT_OBJECT_HIDE
-		]
+		showHideCaretEvent = (
+			focus and isEventOnCaret and winEvent[0] in [winUser.EVENT_OBJECT_SHOW, winUser.EVENT_OBJECT_HIDE]
+		)
 		# #4001: Ideally, we'd call shouldAcceptEvent in winEventCallback, but this causes focus issues when
 		# starting applications. #7332: If this is a show event, which would normally be dropped by
 		# `shouldAcceptEvent` and this event is for the caret, later it will be mapped to a caret event,
@@ -1027,15 +1004,11 @@ def pumpAll():  # noqa: C901
 			if not focus.shouldAcceptShowHideCaretEvent:
 				continue
 		elif not eventHandler.shouldAcceptEvent(
-			internalWinEventHandler.winEventIDsToNVDAEventNames[winEvent[0]],
-			windowHandle=winEvent[1]
+			internalWinEventHandler.winEventIDsToNVDAEventNames[winEvent[0]], windowHandle=winEvent[1]
 		):
 			continue
 		# We want to only pass on one focus event to NVDA, but we always want to use the most recent possible one
-		if winEvent[0] in (
-			winUser.EVENT_OBJECT_FOCUS,
-			winUser.EVENT_SYSTEM_FOREGROUND
-		):
+		if winEvent[0] in (winUser.EVENT_OBJECT_FOCUS, winUser.EVENT_SYSTEM_FOREGROUND):
 			focusWinEvents.append(winEvent)
 			continue
 		else:
@@ -1065,10 +1038,7 @@ def pumpAll():  # noqa: C901
 			break
 	if fakeFocusEvent:
 		# Try this as a last resort.
-		if fakeFocusEvent[0] in (
-			winUser.EVENT_SYSTEM_MENUSTART,
-			winUser.EVENT_SYSTEM_MENUPOPUPSTART
-		):
+		if fakeFocusEvent[0] in (winUser.EVENT_SYSTEM_MENUSTART, winUser.EVENT_SYSTEM_MENUPOPUPSTART):
 			# menuStart needs to be handled specially and might act even if there was a valid focus event.
 			processMenuStartWinEvent(*fakeFocusEvent, validFocus=validFocus)
 		elif not validFocus:
@@ -1094,14 +1064,14 @@ def getIAccIdentity(pacc, childID):
 				# comtypes transparently does this for wireHWND.
 				return dict(menuHandle=cast(hmenu, wintypes.HMENU).value, childID=childID)
 		stringPtr = cast(stringPtr, POINTER(c_char * stringSize))
-		fields = struct.unpack('IIiI', stringPtr.contents.raw)
+		fields = struct.unpack("IIiI", stringPtr.contents.raw)
 		d = {}
-		d['childID'] = fields[3]
+		d["childID"] = fields[3]
 		if fields[0] & 2:
-			d['menuHandle'] = fields[2]
+			d["menuHandle"] = fields[2]
 		else:
-			d['objectID'] = fields[2]
-			d['windowHandle'] = fields[1]
+			d["objectID"] = fields[2]
+			d["windowHandle"] = fields[1]
 		return d
 	finally:
 		windll.ole32.CoTaskMemFree(stringPtr)
@@ -1185,19 +1155,17 @@ def getRecursiveTextFromIAccessibleTextObject(obj, startOffset=0, endOffset=-1):
 			except:  # noqa: E722 Bare except
 				pass
 		textList.append(t)
-	return "".join(textList).replace('  ', ' ')
+	return "".join(textList).replace("  ", " ")
 
 
-ATTRIBS_STRING_BASE64_PATTERN = re.compile(
-	r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+"
-)
+ATTRIBS_STRING_BASE64_PATTERN = re.compile(r"(([^\\](\\\\)*);src:data\\:[^\\;]+\\;base64\\,)[A-Za-z0-9+/=]+")
 ATTRIBS_STRING_BASE64_REPL = r"\1<truncated>"
 ATTRIBS_STRING_BASE64_THRESHOLD = 4096
 
 
 # C901: splitIA2Attribs is too complex
 def splitIA2Attribs(  # noqa: C901
-		attribsString: str
+	attribsString: str,
 ) -> Dict[str, Union[str, Dict]]:
 	"""Split an IAccessible2 attributes string into a dict of attribute keys and values.
 	An invalid attributes string does not cause an error, but strange results may be returned.
@@ -1278,9 +1246,12 @@ def isMarshalledIAccessible(IAccessibleObject):
 	if not isinstance(IAccessibleObject, IA.IAccessible):
 		raise TypeError("object should be of type IAccessible, not %s" % IAccessibleObject)
 	buf = create_unicode_buffer(1024)
-	addr = POINTER(c_void_p).from_address(
-		super(comtypes._compointer_base, IAccessibleObject).value).contents.value
+	addr = (
+		POINTER(c_void_p)
+		.from_address(super(comtypes._compointer_base, IAccessibleObject).value)
+		.contents.value
+	)
 	handle = HANDLE()
 	windll.kernel32.GetModuleHandleExW(6, addr, byref(handle))
 	windll.kernel32.GetModuleFileNameW(handle, buf, 1024)
-	return not buf.value.lower().endswith('oleacc.dll')
+	return not buf.value.lower().endswith("oleacc.dll")

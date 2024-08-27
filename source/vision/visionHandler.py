@@ -9,6 +9,7 @@
 The vision handler is the core of the vision framework.
 See the documentation of L{VisionHandler} for more details about what it does.
 """
+
 from . import providerInfo
 from .constants import Context
 from .providerBase import VisionEnhancementProvider
@@ -25,25 +26,20 @@ from typing import Type, Dict, List, Optional, Set
 from . import exceptions
 
 
-def _getProviderClass(
-		moduleName: str,
-		caseSensitive: bool = True
-) -> Type[VisionEnhancementProvider]:
+def _getProviderClass(moduleName: str, caseSensitive: bool = True) -> Type[VisionEnhancementProvider]:
 	"""Returns a registered provider class with the specified moduleName."""
 	try:
 		return importlib.import_module(
-			"visionEnhancementProviders.%s" % moduleName,
-			package="visionEnhancementProviders"
+			"visionEnhancementProviders.%s" % moduleName, package="visionEnhancementProviders"
 		).VisionEnhancementProvider
 	except ImportError as initialException:
 		if caseSensitive:
 			raise initialException
 		for loader, name, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-			if name.startswith('_') or name.lower() != moduleName.lower():
+			if name.startswith("_") or name.lower() != moduleName.lower():
 				continue
 			return importlib.import_module(
-				"visionEnhancementProviders.%s" % name,
-				package="visionEnhancementProviders"
+				"visionEnhancementProviders.%s" % name, package="visionEnhancementProviders"
 			).VisionEnhancementProvider
 		else:
 			raise initialException
@@ -51,7 +47,7 @@ def _getProviderClass(
 
 def _getProvidersFromFileSystem():
 	for loader, moduleName, isPkg in pkgutil.iter_modules(visionEnhancementProviders.__path__):
-		if moduleName.startswith('_'):
+		if moduleName.startswith("_"):
 			continue
 		try:
 			#  Get each piece of info in a new statement so any exceptions raised identifies the line correctly.
@@ -60,16 +56,10 @@ def _getProvidersFromFileSystem():
 			providerId = providerSettings.getId()
 			displayName = providerSettings.getDisplayName()
 			yield providerInfo.ProviderInfo(
-				providerId=providerId,
-				moduleName=moduleName,
-				displayName=displayName,
-				providerClass=provider
+				providerId=providerId, moduleName=moduleName, displayName=displayName, providerClass=provider
 			)
 		except Exception:  # Purposely catch everything as we don't know what a provider might raise.
-			log.error(
-				f"Error while importing vision enhancement provider module {moduleName}",
-				exc_info=True
-			)
+			log.error(f"Error while importing vision enhancement provider module {moduleName}", exc_info=True)
 			continue
 
 
@@ -102,32 +92,27 @@ class VisionHandler(AutoPropertyObject):
 	def _getBuiltInProviderIds(self):
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
-		return [
-			NVDAHighlighterSettings.getId(),
-			ScreenCurtainSettings.getId()
-		]
+
+		return [NVDAHighlighterSettings.getId(), ScreenCurtainSettings.getId()]
 
 	def _updateAllProvidersList(self):
 		# Sort the providers alphabetically by id.
 		# id is used because it will not vary by locale
-		allProviders = sorted(
-			_getProvidersFromFileSystem(),
-			key=lambda info: info.providerId.lower()
-		)
+		allProviders = sorted(_getProvidersFromFileSystem(), key=lambda info: info.providerId.lower())
 		# Built in providers should come first
 		# Python list.sort is stable sort again by 'built-in'
 		builtInProviderIds = self._getBuiltInProviderIds()
 		allProviders = sorted(
 			allProviders,
 			key=lambda info: info.providerId in builtInProviderIds,
-			reverse=True  # Because False comes before True, we want built-ins first.
+			reverse=True,  # Because False comes before True, we want built-ins first.
 		)
 		self._allProviders = list(allProviders)
 
 	def getProviderList(
-			self,
-			onlyStartable: bool = True,
-			reloadFromSystem: bool = False,
+		self,
+		onlyStartable: bool = True,
+		reloadFromSystem: bool = False,
 	) -> List[providerInfo.ProviderInfo]:
 		"""Gets a list of available vision enhancement provider information
 		@param onlyStartable: excludes all providers for which the check method returns C{False}.
@@ -162,29 +147,19 @@ class VisionHandler(AutoPropertyObject):
 		return list(self._providers.values())
 
 	def getActiveProviderInfos(self) -> List[providerInfo.ProviderInfo]:
-		activeProviderInfos = [
-			self.getProviderInfo(p) for p in self._providers
-		]
+		activeProviderInfos = [self.getProviderInfo(p) for p in self._providers]
 		return list(activeProviderInfos)
 
 	def getConfiguredProviderInfos(self) -> List[providerInfo.ProviderInfo]:
 		configuredProviderInfos: List[providerInfo.ProviderInfo] = [
-			p for p in self._allProviders
-			if p.providerClass.isEnabledInConfig()
+			p for p in self._allProviders if p.providerClass.isEnabledInConfig()
 		]
 		return configuredProviderInfos
 
-	def getProviderInstance(
-			self,
-			provider: providerInfo.ProviderInfo
-	) -> Optional[VisionEnhancementProvider]:
+	def getProviderInstance(self, provider: providerInfo.ProviderInfo) -> Optional[VisionEnhancementProvider]:
 		return self._providers.get(provider.providerId)
 
-	def terminateProvider(
-			self,
-			provider: providerInfo.ProviderInfo,
-			saveSettings: bool = True
-	) -> None:
+	def terminateProvider(self, provider: providerInfo.ProviderInfo, saveSettings: bool = True) -> None:
 		"""Terminates a currently active provider.
 		When termination fails, an exception is raised.
 		Yet, the provider will be removed from the providers dictionary,
@@ -220,15 +195,13 @@ class VisionHandler(AutoPropertyObject):
 			try:
 				providerInst.registerEventExtensionPoints(self.extensionPoints)
 			except Exception:
-				log.error(f"Error while registering to extension points for provider {providerId}", exc_info=True)
+				log.error(
+					f"Error while registering to extension points for provider {providerId}", exc_info=True
+				)
 		if exception:
 			raise exception
 
-	def initializeProvider(
-			self,
-			provider: providerInfo.ProviderInfo,
-			temporary: bool = False
-	) -> None:
+	def initializeProvider(self, provider: providerInfo.ProviderInfo, temporary: bool = False) -> None:
 		"""
 		Enables and activates the supplied provider.
 		@param provider: The provider to initialize.
@@ -270,7 +243,9 @@ class VisionHandler(AutoPropertyObject):
 					providerInst.terminate()
 				except Exception:
 					log.error(
-						f"Error terminating provider {providerId} after registering to extension points", exc_info=True)
+						f"Error terminating provider {providerId} after registering to extension points",
+						exc_info=True,
+					)
 				raise registerEventExtensionPointsException
 		if not temporary:
 			providerInst.enableInConfig(True)
@@ -337,19 +312,13 @@ class VisionHandler(AutoPropertyObject):
 				info = self.getProviderInfo(providerId)
 				self.terminateProvider(info)
 			except Exception:
-				log.error(
-					f"Could not terminate the {providerId} vision enhancement provider",
-					exc_info=True
-				)
+				log.error(f"Could not terminate the {providerId} vision enhancement provider", exc_info=True)
 		for providerId in providersToInitialize:
 			try:
 				info = self.getProviderInfo(providerId)
 				self.initializeProvider(info)
 			except Exception:
-				log.error(
-					f"Could not initialize the {providerId} vision enhancement provider",
-					exc_info=True
-				)
+				log.error(f"Could not initialize the {providerId} vision enhancement provider", exc_info=True)
 
 	def initialFocus(self) -> None:
 		"""Handles the current focus when the provider is initialized.
@@ -359,7 +328,7 @@ class VisionHandler(AutoPropertyObject):
 			# focus/review hasn't yet been initialized.
 			return
 		self.handleGainFocus(api.getFocusObject())
-	
+
 	def initialNavigatorObject(self) -> None:
 		"""Handles the current navigator object when the provider is initialized.
 		This function notifies an extension point; thus it can raise any type of exception.

@@ -33,7 +33,7 @@ def splitAtCharacterBoundaries(text: str) -> Generator[str, None, None]:
 	):
 		raise RuntimeError("NVDAHelper calculateCharacterBoundaries failed")
 	# Get the end offsets of the characters we need.
-	calculatedOffsets = offsets[1: (offsetsCount.value - 1)]
+	calculatedOffsets = offsets[1 : (offsetsCount.value - 1)]
 	start = 0
 	for end in calculatedOffsets:
 		yield buffer[start:end]

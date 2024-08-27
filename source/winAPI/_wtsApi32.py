@@ -53,8 +53,8 @@ WTSFreeMemory.restype = None
 
 
 class WTS_INFO_CLASS(IntEnum):
-	"""WtsApi32.h#L322
-	"""
+	"""WtsApi32.h#L322"""
+
 	WTSInitialProgram = 0
 	WTSApplicationName = 1
 	WTSWorkingDirectory = 2
@@ -104,9 +104,10 @@ USERNAME_LENGTH = 20
 
 
 class WTSINFOEX_LEVEL1_W(ctypes.Structure):
-	""" WtsApi32.h#L443
+	"""WtsApi32.h#L443
 	https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level1_w
 	"""
+
 	_fields_ = (
 		("SessionId", ULONG),
 		("SessionState", WTS_CONNECTSTATE_CLASS),
@@ -131,12 +132,11 @@ class WTSINFOEX_LEVEL1_W(ctypes.Structure):
 
 
 class WTSINFOEX_LEVEL_W(ctypes.Union):
-	""" WtsApi32.h#L483
+	"""WtsApi32.h#L483
 	https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoex_level_w
 	"""
-	_fields_ = (
-		("WTSInfoExLevel1", WTSINFOEX_LEVEL1_W),
-	)
+
+	_fields_ = (("WTSInfoExLevel1", WTSINFOEX_LEVEL1_W),)
 
 	WTSInfoExLevel1: WTSINFOEX_LEVEL1_W
 
@@ -145,9 +145,10 @@ class WTSINFOEXW(ctypes.Structure):
 	"""WtsApi32.h#L491
 	https://learn.microsoft.com/en-us/windows/win32/api/wtsapi32/ns-wtsapi32-wtsinfoexw
 	"""
+
 	_fields_ = (
-		('Level', DWORD),
-		('Data', WTSINFOEX_LEVEL_W),
+		("Level", DWORD),
+		("Data", WTSINFOEX_LEVEL_W),
 	)
 
 	Level: DWORD
@@ -165,7 +166,7 @@ WTSQuerySessionInformationT = Callable[
 		POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer. Holds WTSINFOEXW, use ctypes.cast
 		POINTER(DWORD),  # [out] DWORD * pBytesReturned
 	],
-	bool
+	bool,
 ]
 WTSQuerySessionInformation: WTSQuerySessionInformationT = windll.wtsapi32.WTSQuerySessionInformationW
 WTSQuerySessionInformation.argtypes = (
@@ -173,7 +174,7 @@ WTSQuerySessionInformation.argtypes = (
 	DWORD,  # [ in] DWORD SessionId
 	c_int,  # [ in]  WTS_INFO_CLASS WTSInfoClass,
 	POINTER(LPWSTR),  # [out] LPWSTR * ppBuffer,
-	POINTER(DWORD)  # [out] DWORD * pBytesReturned
+	POINTER(DWORD),  # [out] DWORD * pBytesReturned
 )
 WTSQuerySessionInformation.restype = BOOL  # On Failure, the return value is zero.
 
@@ -182,6 +183,7 @@ class _WTS_LockState(IntEnum):
 	"""
 	WtsApi32.h#L437
 	"""
+
 	WTS_SESSIONSTATE_UNKNOWN = 0xFFFFFFFF  # dec(4294967295)
 	"""The session state is not known."""
 
@@ -193,12 +195,13 @@ class _WTS_LockState(IntEnum):
 
 
 class _WTS_LockState_Win7(IntEnum):
-	""" Provide consistent interface to work around defect in Windows Server 2008 R2 and Windows 7.
+	"""Provide consistent interface to work around defect in Windows Server 2008 R2 and Windows 7.
 	Due to a code defect in Windows 7/Server 2008 the values are reversed.
 	That is:
 	- _WTS_LockState.WTS_SESSIONSTATE_LOCK (0x0) indicates that the session is unlocked
 	- _WTS_LockState.WTS_SESSIONSTATE_UNLOCK (0x1) indicates the session is locked.
 	"""
+
 	WTS_SESSIONSTATE_UNKNOWN = _WTS_LockState.WTS_SESSIONSTATE_UNKNOWN.value
 	"""The session state is not known."""
 
@@ -210,8 +213,7 @@ class _WTS_LockState_Win7(IntEnum):
 
 
 def _setWTS_LockState() -> _WTS_LockState:
-	""" Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform.
-	"""
+	"""Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform."""
 	return _WTS_LockState
 
 

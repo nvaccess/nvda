@@ -14,10 +14,10 @@ import oleacc
 from logHandler import log
 import textInfos
 
-class WebKit_TextInfo(VirtualBufferTextInfo):
 
+class WebKit_TextInfo(VirtualBufferTextInfo):
 	def _normalizeControlField(self, attrs: textInfos.ControlField):
-		accRole=attrs['IAccessible::role']
+		accRole = attrs["IAccessible::role"]
 		role = level = None
 		if accRole.isdigit():
 			accRole = int(accRole)
@@ -39,13 +39,14 @@ class WebKit_TextInfo(VirtualBufferTextInfo):
 			attrs["level"] = level
 		return super(WebKit_TextInfo, self)._normalizeControlField(attrs)
 
+
 class WebKit(VirtualBuffer):
 	TextInfo = WebKit_TextInfo
 
-	def __init__(self,rootNVDAObject):
-		super(WebKit,self).__init__(rootNVDAObject,backendName="webKit")
+	def __init__(self, rootNVDAObject):
+		super(WebKit, self).__init__(rootNVDAObject, backendName="webKit")
 
-	def __contains__(self,obj):
+	def __contains__(self, obj):
 		if not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle):
 			return False
 		# #15653: The list items within combo boxes should not be classed as part of the browse mode document.
@@ -61,7 +62,7 @@ class WebKit(VirtualBuffer):
 	def _get_isAlive(self):
 		if self.isLoading:
 			return True
-		root=self.rootNVDAObject
+		root = self.rootNVDAObject
 		if not root:
 			return False
 		if not winUser.isWindow(root.windowHandle) or root.role == controlTypes.Role.UNKNOWN:
@@ -80,35 +81,51 @@ class WebKit(VirtualBuffer):
 		ID = obj.IA2UniqueID
 		return docHandle, ID
 
-	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType=="formField":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON,oleacc.ROLE_SYSTEM_RADIOBUTTON,oleacc.ROLE_SYSTEM_CHECKBUTTON,oleacc.ROLE_SYSTEM_COMBOBOX,oleacc.ROLE_SYSTEM_LIST,oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
-		elif nodeType=="list":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
-		elif nodeType=="listItem":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
-		elif nodeType=="button":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_PUSHBUTTON]}
-		elif nodeType=="edit":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TEXT],"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
-		elif nodeType=="radioButton":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON]}
-		elif nodeType=="comboBox":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
-		elif nodeType=="checkBox":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_CHECKBUTTON]}
-		elif nodeType=="graphic":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
-		elif nodeType=="focusable":
-			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
+	def _searchableAttribsForNodeType(self, nodeType):
+		if nodeType == "formField":
+			attrs = {
+				"IAccessible::role": [
+					oleacc.ROLE_SYSTEM_PUSHBUTTON,
+					oleacc.ROLE_SYSTEM_RADIOBUTTON,
+					oleacc.ROLE_SYSTEM_CHECKBUTTON,
+					oleacc.ROLE_SYSTEM_COMBOBOX,
+					oleacc.ROLE_SYSTEM_LIST,
+					oleacc.ROLE_SYSTEM_TEXT,
+				],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+			}
+		elif nodeType == "list":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_LIST]}
+		elif nodeType == "listItem":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_LISTITEM]}
+		elif nodeType == "button":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_PUSHBUTTON]}
+		elif nodeType == "edit":
+			attrs = {
+				"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
+				"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1],
+			}
+		elif nodeType == "radioButton":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_RADIOBUTTON]}
+		elif nodeType == "comboBox":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX]}
+		elif nodeType == "checkBox":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON]}
+		elif nodeType == "graphic":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType == "focusable":
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
 		elif nodeType.startswith("heading") and nodeType[7:].isdigit():
-			attrs={"IAccessible::role":["H"+nodeType[7:]]}
-		elif nodeType=="heading":
-			attrs={"IAccessible::role":["H1","H2","H3","H4","H5","H6"]}
-		elif nodeType=="link":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1]}
-		elif nodeType=="table":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
+			attrs = {"IAccessible::role": ["H" + nodeType[7:]]}
+		elif nodeType == "heading":
+			attrs = {"IAccessible::role": ["H1", "H2", "H3", "H4", "H5", "H6"]}
+		elif nodeType == "link":
+			attrs = {
+				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+			}
+		elif nodeType == "table":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_TABLE]}
 		else:
 			return None
 		return attrs
@@ -121,14 +138,14 @@ class WebKit(VirtualBuffer):
 			pass
 
 		log.debugWarning("could not programmatically activate field, trying mouse")
-		l=obj.location  # noqa: E741
+		l = obj.location  # noqa: E741
 		if not l:
 			log.debugWarning("no location for field")
 			return
-		oldX,oldY=winUser.getCursorPos()
+		oldX, oldY = winUser.getCursorPos()
 		winUser.setCursorPos(*l.center)
 		mouseHandler.doPrimaryClick()
-		winUser.setCursorPos(oldX,oldY)
+		winUser.setCursorPos(oldX, oldY)
 
-	def _shouldSetFocusToObj(self,obj):
-		return obj.role!=controlTypes.Role.GROUPING and super(WebKit,self)._shouldSetFocusToObj(obj)
+	def _shouldSetFocusToObj(self, obj):
+		return obj.role != controlTypes.Role.GROUPING and super(WebKit, self)._shouldSetFocusToObj(obj)

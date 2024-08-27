@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2012-2023 Mesar Hameed, NV Access Limited, Leonard de Ruijter, Rui Fontes, Cyrille Bougot
 
-"""App module for Poedit 3.4+.
-"""
+"""App module for Poedit 3.4+."""
 
 from enum import IntEnum
 
@@ -58,9 +57,9 @@ class _WindowControlIdOffsetFromSidebar(IntEnum):
 
 
 def _findDescendantObject(
-		parentWindowHandle: int,
-		controlId: int | None = None,
-		className: str | None = None,
+	parentWindowHandle: int,
+	controlId: int | None = None,
+	className: str | None = None,
 ) -> Window | None:
 	"""
 	Finds a window with the given controlId or class name,
@@ -117,15 +116,13 @@ class AppModule(appModuleHandler.AppModule):
 		return obj is None
 
 	def _getNVDAObjectForWindowControlIdOffsetFromDataView(
-			self,
-			windowControlIdOffset: _WindowControlIdOffsetFromDataView
+		self, windowControlIdOffset: _WindowControlIdOffsetFromDataView
 	) -> Window | None:
 		fg = api.getForegroundObject()
 		return _findDescendantObject(fg.windowHandle, self._dataViewControlId + windowControlIdOffset)
 
 	def _getNVDAObjectForWindowControlIdOffsetFromSidebar(
-			self,
-			windowControlIdOffset: _WindowControlIdOffsetFromSidebar
+		self, windowControlIdOffset: _WindowControlIdOffsetFromSidebar
 	) -> Window | None:
 		fg = api.getForegroundObject()
 		sidebarControlId = self._sidebarControlId

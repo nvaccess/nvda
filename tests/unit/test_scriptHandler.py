@@ -10,6 +10,7 @@ from scriptHandler import script
 from inputCore import SCRCAT_MISC
 from speech.sayAll import CURSOR
 
+
 class TestScriptDecorator(unittest.TestCase):
 	"""A test that verifies the functionality of the L{scriptHandler.script} decorator."""
 
@@ -22,7 +23,7 @@ class TestScriptDecorator(unittest.TestCase):
 			canPropagate=True,
 			bypassInputHelp=True,
 			allowInSleepMode=True,
-			resumeSayAllMode=CURSOR.CARET
+			resumeSayAllMode=CURSOR.CARET,
 		)
 		def script_test(self, gesture):
 			return

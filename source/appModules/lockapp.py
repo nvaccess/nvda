@@ -32,10 +32,11 @@ Refer to usages of `winAPI.sessionTracking.isLockScreenModeActive`.
 
 
 def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility.
-	"""
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if attrName == "LockAppObject" and NVDAState._allowDeprecatedAPI():
-		log.warning("lockapp.LockAppObject is deprecated, use NVDAObjects.lockscreen.LockScreenObject instead.")
+		log.warning(
+			"lockapp.LockAppObject is deprecated, use NVDAObjects.lockscreen.LockScreenObject instead."
+		)
 		return LockScreenObject
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 
@@ -43,7 +44,7 @@ def __getattr__(attrName: str) -> Any:
 # Windows 10 and 11 lock screen container
 class LockAppContainer(UIA):
 	# Make sure the user can get to this so they can dismiss the lock screen from a touch screen.
-	presentationType=UIA.presType_content
+	presentationType = UIA.presType_content
 
 
 class AppModule(appModuleHandler.AppModule):
@@ -53,12 +54,16 @@ class AppModule(appModuleHandler.AppModule):
 	"""
 
 	def chooseNVDAObjectOverlayClasses(
-			self,
-			obj: NVDAObject,
-			clsList: List[NVDAObject],
+		self,
+		obj: NVDAObject,
+		clsList: List[NVDAObject],
 	) -> None:
-		if isinstance(obj,UIA) and obj.role==controlTypes.Role.PANE and obj.UIAElement.cachedClassName=="LockAppContainer":
-			clsList.insert(0,LockAppContainer)
+		if (
+			isinstance(obj, UIA)
+			and obj.role == controlTypes.Role.PANE
+			and obj.UIAElement.cachedClassName == "LockAppContainer"
+		):
+			clsList.insert(0, LockAppContainer)
 
 		if not isLockScreenModeActive():
 			log.debugWarning(

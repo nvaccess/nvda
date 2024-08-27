@@ -101,7 +101,9 @@ def winEventCallback(handle, eventID, window, objectID, childID, threadID, times
 		# Ignore events with invalid window handles
 		isWindow = winUser.isWindow(window) if window else 0
 		if window == 0 or (
-			not isWindow and eventID in (
+			not isWindow
+			and eventID
+			in (
 				winUser.EVENT_SYSTEM_SWITCHSTART,
 				winUser.EVENT_SYSTEM_SWITCHEND,
 				winUser.EVENT_SYSTEM_MENUEND,
@@ -189,11 +191,14 @@ winEventHookIDs = []
 
 
 def initialize(
-		processDestroyWinEventFunc: Callable[[
+	processDestroyWinEventFunc: Callable[
+		[
 			c_int,  # window
 			c_int,  # objectID
 			c_int,  # childID
-		], None]
+		],
+		None,
+	],
 ):
 	global _processDestroyWinEvent
 	_processDestroyWinEvent = processDestroyWinEventFunc
@@ -222,10 +227,7 @@ def _shouldGetEvents():
 		curForegroundWindow = winUser.getForegroundWindow()
 		curForegroundClassName = winUser.getClassName(curForegroundWindow)
 		futureForegroundClassName = winUser.getClassName(_deferUntilForegroundWindow)
-		if (
-			_foregroundDefers < MAX_FOREGROUND_DEFERS
-			and curForegroundWindow != _deferUntilForegroundWindow
-		):
+		if _foregroundDefers < MAX_FOREGROUND_DEFERS and curForegroundWindow != _deferUntilForegroundWindow:
 			# Wait a core cycle before handling events to give the foreground window time to update.
 			core.requestPump()
 			_foregroundDefers += 1

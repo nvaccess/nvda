@@ -32,7 +32,6 @@ class SoundSplitState(DisplayStringIntEnum):
 	NVDA_RIGHT_APPS_BOTH = 5
 	NVDA_BOTH_APPS_LEFT = 6
 	NVDA_BOTH_APPS_RIGHT = 7
-	
 
 	@property
 	def _displayStringLabels(self) -> dict[IntEnum, str]:
@@ -133,15 +132,15 @@ class _AudioSessionNotificationWrapper(AudioSessionNotification):
 
 
 def _applyToAllAudioSessions(
-		callback: AudioSessionNotification,
-		applyToFuture: bool = True,
+	callback: AudioSessionNotification,
+	applyToFuture: bool = True,
 ) -> None:
 	"""
-		Executes provided callback function on all active audio sessions.
-		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
-		which will execute the same callback for all future sessions as they are created.
-		That notification will be active until next invokation of this function,
-		or until _unregisterCallback() is called.
+	Executes provided callback function on all active audio sessions.
+	Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
+	which will execute the same callback for all future sessions as they are created.
+	That notification will be active until next invokation of this function,
+	or until _unregisterCallback() is called.
 	"""
 	_unregisterCallback()
 	callback = _AudioSessionNotificationWrapper(callback)
@@ -176,7 +175,9 @@ class _VolumeSetter(AudioSessionNotification):
 		channelVolume = new_session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
-			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
+			log.warning(
+				f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!"
+			)
 			self.foundSessionWithNot2Channels = True
 			return
 		if pid != globalVars.appPid:

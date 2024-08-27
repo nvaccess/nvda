@@ -54,7 +54,7 @@ from NVDAState import WritePaths
 
 
 #: True if NVDA is running as a Windows Store Desktop Bridge application
-isAppX=False
+isAppX = False
 
 #: The active configuration, C{None} if it has not yet been loaded.
 #: @type: ConfigManager
@@ -91,6 +91,7 @@ def __getattr__(attrName: str) -> Any:
 			"use addonHandler.packaging.addDirsToPythonPackagePath instead."
 		)
 		from addonHandler.packaging import addDirsToPythonPackagePath
+
 		return addDirsToPythonPackagePath
 	if attrName == "CONFIG_IN_LOCAL_APPDATA_SUBKEY" and NVDAState._allowDeprecatedAPI():
 		# Note: this should only log in situations where it will not be excessively noisy.
@@ -106,6 +107,7 @@ def __getattr__(attrName: str) -> Any:
 def initialize():
 	global conf
 	conf = ConfigManager()
+
 
 def saveOnExit():
 	"""Save the configuration if configured to save on exit.
@@ -145,10 +147,7 @@ class RegistryKey(str, Enum):
 def isInstalledCopy() -> bool:
 	"""Checks to see if this running copy of NVDA is installed on the system"""
 	try:
-		k = winreg.OpenKey(
-			winreg.HKEY_LOCAL_MACHINE,
-			RegistryKey.INSTALLED_COPY.value
-		)
+		k = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, RegistryKey.INSTALLED_COPY.value)
 	except FileNotFoundError:
 		log.debug(
 			f"Unable to find isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}"
@@ -156,10 +155,7 @@ def isInstalledCopy() -> bool:
 		)
 		return False
 	except WindowsError:
-		log.error(
-			f"Unable to open isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}",
-			exc_info=True
-		)
+		log.error(f"Unable to open isInstalledCopy registry key {RegistryKey.INSTALLED_COPY}", exc_info=True)
 		return False
 
 	try:
@@ -181,7 +177,7 @@ def isInstalledCopy() -> bool:
 		log.error(
 			"Failed to access the installed NVDA directory,"
 			"or, a portable copy failed to access the current NVDA app directory",
-			exc_info=True
+			exc_info=True,
 		)
 		return False
 
@@ -216,37 +212,39 @@ def getUserDefaultConfigPath(useInstalledPathIfExists=False):
 	which includes temporary copies.
 	Most callers will want the C{NVDAState.WritePaths.configDir variable} instead.
 	"""
-	installedUserConfigPath=getInstalledUserConfigPath()
-	if installedUserConfigPath and (isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))):
+	installedUserConfigPath = getInstalledUserConfigPath()
+	if installedUserConfigPath and (
+		isInstalledCopy() or isAppX or (useInstalledPathIfExists and os.path.isdir(installedUserConfigPath))
+	):
 		if isAppX:
 			# NVDA is running as a Windows Store application.
 			# Although Windows will redirect %APPDATA% to a user directory specific to the Windows Store application,
-			# It also makes existing %APPDATA% files available here. 
+			# It also makes existing %APPDATA% files available here.
 			# We cannot share NVDA user config directories  with other copies of NVDA as their config may be using add-ons
 			# Therefore add a suffix to the directory to make it specific to Windows Store application versions.
-			installedUserConfigPath+='_appx'
+			installedUserConfigPath += "_appx"
 		return installedUserConfigPath
-	return os.path.join(globalVars.appDir, 'userConfig')
+	return os.path.join(globalVars.appDir, "userConfig")
 
 
 SCRATCH_PAD_ONLY_DIRS = (
-	'appModules',
-	'brailleDisplayDrivers',
-	'brailleTables',
-	'globalPlugins',
-	'synthDrivers',
-	'visionEnhancementProviders',
+	"appModules",
+	"brailleDisplayDrivers",
+	"brailleTables",
+	"globalPlugins",
+	"synthDrivers",
+	"visionEnhancementProviders",
 )
 
 
 def getScratchpadDir(ensureExists: bool = False) -> str:
-	""" Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
+	"""Returns the path where custom appModules, globalPlugins and drivers can be placed while being developed."""
 	path = WritePaths.scratchpadDir
 	if ensureExists:
 		if not os.path.isdir(path):
 			os.makedirs(path)
 		for subdir in SCRATCH_PAD_ONLY_DIRS:
-			subpath=os.path.join(path,subdir)
+			subpath = os.path.join(path, subdir)
 			if not os.path.isdir(subpath):
 				os.makedirs(subpath)
 	return path
@@ -274,11 +272,11 @@ def initConfigPath(configPath: Optional[str] = None) -> None:
 				except OSError as ex:
 					if ex.errno == errno.ENOTEMPTY:
 						log.info("Failed to remove old plugins dir: %s. Directory not empty.", dir)
-	subdirs=["speechDicts","profiles"]
+	subdirs = ["speechDicts", "profiles"]
 	if not isAppX:
 		subdirs.append("addons")
 	for subdir in subdirs:
-		subdir=os.path.join(configPath,subdir)
+		subdir = os.path.join(configPath, subdir)
 		if not os.path.isdir(subdir):
 			os.makedirs(subdir)
 
@@ -297,16 +295,10 @@ def getStartAfterLogon() -> bool:
 	try:
 		k = winreg.OpenKey(winreg.HKEY_CURRENT_USER, RegistryKey.RUN.value)
 	except FileNotFoundError:
-		log.debugWarning(
-			f"Unable to find run registry key {RegistryKey.RUN}",
-			exc_info=True
-		)
+		log.debugWarning(f"Unable to find run registry key {RegistryKey.RUN}", exc_info=True)
 		return False
 	except WindowsError:
-		log.error(
-			f"Unable to open run registry key {RegistryKey.RUN}",
-			exc_info=True
-		)
+		log.error(f"Unable to open run registry key {RegistryKey.RUN}", exc_info=True)
 		return False
 
 	try:
@@ -321,22 +313,16 @@ def getStartAfterLogon() -> bool:
 	try:
 		startAfterLogonPath = os.stat(val)
 	except WindowsError:
-		log.error(
-			"Failed to access the start after logon directory.",
-			exc_info=True
-		)
+		log.error("Failed to access the start after logon directory.", exc_info=True)
 		return False
-	
+
 	try:
 		currentSourcePath = os.stat(sys.argv[0])
 	except FileNotFoundError:
 		log.debug("Failed to access the current running NVDA directory.")
 		return False
 	except WindowsError:
-		log.error(
-			"Failed to access the current running NVDA directory.",
-			exc_info=True
-		)
+		log.error("Failed to access the current running NVDA directory.", exc_info=True)
 		return False
 
 	return currentSourcePath == startAfterLogonPath
@@ -344,7 +330,7 @@ def getStartAfterLogon() -> bool:
 
 def setStartAfterLogon(enable: bool) -> None:
 	"""Not to be confused with setStartOnLogonScreen.
-	
+
 	Toggle if NVDA automatically starts after a logon.
 	Sets easeOfAccess related registry keys.
 
@@ -370,10 +356,7 @@ def setStartAfterLogon(enable: bool) -> None:
 	try:
 		winreg.DeleteValue(k, "nvda")
 	except WindowsError:
-		log.error(
-			"Couldn't unset registry key for nvda to start after logon.",
-			exc_info=True
-		)
+		log.error("Couldn't unset registry key for nvda to start after logon.", exc_info=True)
 
 
 SLAVE_FILENAME = os.path.join(globalVars.appDir, "nvda_slave.exe")
@@ -418,16 +401,20 @@ def setSystemConfigToCurrentConfig():
 		_setSystemConfig(fromPath)
 	else:
 		import systemUtils
+
 		res = systemUtils.execElevated(SLAVE_FILENAME, ("setNvdaSystemConfig", fromPath), wait=True)
-		if res==2:
+		if res == 2:
 			import installer
+
 			raise installer.RetriableFailure
-		elif res!=0:
+		elif res != 0:
 			raise RuntimeError("Slave failure")
+
 
 def _setSystemConfig(fromPath):
 	import installer
-	toPath=os.path.join(sys.prefix,'systemConfig')
+
+	toPath = os.path.join(sys.prefix, "systemConfig")
 	log.debug("Copying config to systemconfig dir: %s", toPath)
 	if os.path.isdir(toPath):
 		installer.tryRemoveFile(toPath)
@@ -448,11 +435,13 @@ def _setSystemConfig(fromPath):
 			# Do not copy executables to the system configuration, as this may cause security risks.
 			# This will also exclude pending updates.
 			if f.endswith(".exe"):
-				log.debug("Ignored file %s while copying current user configuration to system configuration"%f)
+				log.debug(
+					"Ignored file %s while copying current user configuration to system configuration" % f
+				)
 				continue
-			sourceFilePath=os.path.join(curSourceDir,f)
-			destFilePath=os.path.join(curDestDir,f)
-			installer.tryCopyFile(sourceFilePath,destFilePath)
+			sourceFilePath = os.path.join(curSourceDir, f)
+			destFilePath = os.path.join(curDestDir, f)
+			installer.tryCopyFile(sourceFilePath, destFilePath)
 
 
 def setStartOnLogonScreen(enable: bool) -> None:
@@ -473,11 +462,13 @@ def setStartOnLogonScreen(enable: bool) -> None:
 		log.debugWarning("Failed to set start on logon screen's config.")
 		# We probably don't have admin privs, so we need to elevate to do this using the slave.
 		import systemUtils
-		if systemUtils.execElevated(
-			SLAVE_FILENAME,
-			("config_setStartOnLogonScreen", "%d" % enable),
-			wait=True
-		) != 0:
+
+		if (
+			systemUtils.execElevated(
+				SLAVE_FILENAME, ("config_setStartOnLogonScreen", "%d" % enable), wait=True
+			)
+			!= 0
+		):
 			raise RuntimeError("Slave failed to set startOnLogonScreen")
 
 
@@ -488,9 +479,12 @@ def _transformSpec(spec: ConfigObj):
 	"""
 	spec.configspec = spec
 	spec.validate(
-		Validator({
-			"featureFlag": _transformSpec_AddFeatureFlagDefault,
-		}), preserve_errors=True,
+		Validator(
+			{
+				"featureFlag": _transformSpec_AddFeatureFlagDefault,
+			}
+		),
+		preserve_errors=True,
 	)
 
 
@@ -526,9 +520,7 @@ class ConfigManager(object):
 		self.profiles: List[ConfigObj] = []
 		#: Whether profile triggers are enabled (read-only).
 		self.profileTriggersEnabled: bool = True
-		self.validator: Validator = Validator({
-			"_featureFlag": _validateConfig_featureFlag
-		})
+		self.validator: Validator = Validator({"_featureFlag": _validateConfig_featureFlag})
 		self.rootSection: Optional[AggregatedSection] = None
 		self._shouldHandleProfileSwitch: bool = True
 		self._pendingHandleProfileSwitch: bool = False
@@ -561,10 +553,10 @@ class ConfigManager(object):
 			profile.filename = fn
 		else:
 			try:
-				profile = self._loadConfig(fn) # a blank config returned if fn does not exist
+				profile = self._loadConfig(fn)  # a blank config returned if fn does not exist
 				self.baseConfigError = False
 			except:  # noqa: E722
-				backupFileName = fn + '.corrupted.bak'
+				backupFileName = fn + ".corrupted.bak"
 				log.error(
 					"Error loading base configuration; the base configuration file will be reinitialized."
 					f" A copy of your previous configuration file will be saved at {backupFileName}",
@@ -575,7 +567,10 @@ class ConfigManager(object):
 						os.unlink(backupFileName)
 					os.rename(fn, backupFileName)
 				except Exception:
-					log.error(f"Unable to save a copy of the corrupted configuration to {backupFileName}", exc_info=True)
+					log.error(
+						f"Unable to save a copy of the corrupted configuration to {backupFileName}",
+						exc_info=True,
+					)
 				self.baseConfigError = True
 				return self._initBaseConf(factoryDefaults=True)
 
@@ -595,7 +590,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 
 	def _loadConfig(self, fn, fileError=False):
-		log.info(u"Loading config: {0}".format(fn))
+		log.info("Loading config: {0}".format(fn))
 		profile = ConfigObj(fn, indent_type="\t", encoding="UTF-8", file_error=fileError)
 		# Python converts \r\n to \n when reading files in Windows, so ConfigObj can't determine the true line ending.
 		profile.newlines = "\r\n"
@@ -608,7 +603,7 @@ class ConfigManager(object):
 			profileUpgrader.upgrade(profile, self.validator, writeProfileFunc)
 		except Exception as e:
 			# Log at level info to ensure that the profile is logged.
-			log.info(u"Config before schema update:\n%s" % profileCopy, exc_info=False)
+			log.info("Config before schema update:\n%s" % profileCopy, exc_info=False)
 			raise e
 		# since profile settings are not yet imported we have to "peek" to see
 		# if debug level logging is enabled.
@@ -618,7 +613,11 @@ class ConfigManager(object):
 			logLevelName = None
 		if log.isEnabledFor(log.DEBUG) or (logLevelName and DEBUG >= logging.getLevelName(logLevelName)):
 			# Log at level info to ensure that the profile is logged.
-			log.info(u"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(profile))
+			log.info(
+				"Config loaded (after upgrade, and in the state it will be used by NVDA):\n{0}".format(
+					profile
+				)
+			)
 		return profile
 
 	def __getitem__(self, key):
@@ -662,7 +661,7 @@ class ConfigManager(object):
 
 		# Load the profile.
 		fn = self._getProfileFn(name)
-		profile = self._loadConfig(fn, fileError = True) # file must exist.
+		profile = self._loadConfig(fn, fileError=True)  # file must exist.
 		profile.name = name
 		profile.manual = False
 		profile.triggered = False
@@ -709,8 +708,7 @@ class ConfigManager(object):
 			profile.write(f)
 
 	def save(self):
-		"""Save all modified profiles and the base configuration to disk.
-		"""
+		"""Save all modified profiles and the base configuration to disk."""
 		# #7598: give others a chance to either save settings early or terminate tasks.
 		pre_configSave.notify()
 		if not NVDAState.shouldWriteToDisk():
@@ -760,6 +758,7 @@ class ConfigManager(object):
 		# Register a script for the new profile.
 		# Import late to avoid circular import.
 		from globalCommands import ConfigProfileActivationCommands
+
 		ConfigProfileActivationCommands.addScriptForProfile(name)
 
 	def deleteProfile(self, name):
@@ -777,6 +776,7 @@ class ConfigManager(object):
 		# Remove the script for the deleted profile from the script collector.
 		# Import late to avoid circular import.
 		from globalCommands import ConfigProfileActivationCommands
+
 		ConfigProfileActivationCommands.removeScriptForProfile(name)
 		try:
 			del self._profileCache[name]
@@ -785,8 +785,7 @@ class ConfigManager(object):
 		# Remove any triggers associated with this profile.
 		allTriggers = self.triggersToProfiles
 		# You can't delete from a dict while iterating through it.
-		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.items()
-			if trigProfile == name]
+		delTrigs = [trigSpec for trigSpec, trigProfile in allTriggers.items() if trigProfile == name]
 		if delTrigs:
 			for trigSpec in delTrigs:
 				del allTriggers[trigSpec]
@@ -852,6 +851,7 @@ class ConfigManager(object):
 		# Rename the script for the profile.
 		# Import late to avoid circular import.
 		from globalCommands import ConfigProfileActivationCommands
+
 		ConfigProfileActivationCommands.updateScriptForRenamedProfile(oldName, newName)
 		try:
 			profile = self._profileCache.pop(oldName)
@@ -868,8 +868,7 @@ class ConfigManager(object):
 		self._dirtyProfiles.add(newName)
 
 	def _triggerProfileEnter(self, trigger):
-		"""Called by L{ProfileTrigger.enter}}}.
-		"""
+		"""Called by L{ProfileTrigger.enter}}}."""
 		if not self.profileTriggersEnabled:
 			return
 		if self._suspendedTriggers is not None:
@@ -892,8 +891,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch(trigger._shouldNotifyProfileSwitch)
 
 	def _triggerProfileExit(self, trigger):
-		"""Called by L{ProfileTrigger.exit}}}.
-		"""
+		"""Called by L{ProfileTrigger.exit}}}."""
 		if not self.profileTriggersEnabled:
 			return
 		if self._suspendedTriggers is not None:
@@ -978,8 +976,7 @@ class ConfigManager(object):
 		self._handleProfileSwitch()
 
 	def enableProfileTriggers(self):
-		"""Re-enable profile triggers after they were previously disabled.
-		"""
+		"""Re-enable profile triggers after they were previously disabled."""
 		self.profileTriggersEnabled = True
 
 	def _loadProfileTriggers(self):
@@ -1042,6 +1039,7 @@ class ConfigManager(object):
 		data.default = conf.validator.get_default_value(spec)
 		return data
 
+
 class ConfigValidationData(object):
 	validationFuncName = None  # type: str
 
@@ -1060,17 +1058,11 @@ class ConfigValidationData(object):
 
 
 class AggregatedSection:
-	"""A view of a section of configuration which aggregates settings from all active profiles.
-	"""
+	"""A view of a section of configuration which aggregates settings from all active profiles."""
+
 	# TODO: move to config.aggregatedSection
 
-	def __init__(
-			self,
-			manager: ConfigManager,
-			path: Tuple[str],
-			spec: ConfigObj,
-			profiles: List[ConfigObj]
-	):
+	def __init__(self, manager: ConfigManager, path: Tuple[str], spec: ConfigObj, profiles: List[ConfigObj]):
 		self.manager = manager
 		self.path = path
 		self._spec = spec
@@ -1083,11 +1075,7 @@ class AggregatedSection:
 		"""Checks if a given value or spec is a section of a config profile."""
 		return isinstance(val, dict)
 
-	def __getitem__(
-			self,
-			key: aggregatedSection._cacheKeyT,
-			checkValidity: bool = True
-	):
+	def __getitem__(self, key: aggregatedSection._cacheKeyT, checkValidity: bool = True):
 		# Try the cache first.
 		try:
 			val = self._cache[key]
@@ -1225,11 +1213,7 @@ class AggregatedSection:
 			newdict[key] = value
 		return newdict
 
-	def __setitem__(
-			self,
-			key: aggregatedSection._cacheKeyT,
-			val: aggregatedSection._cacheValueT
-	):
+	def __setitem__(self, key: aggregatedSection._cacheKeyT, val: aggregatedSection._cacheValueT):
 		spec = self._spec.get(key) if self.spec else None
 		if self._isSection(spec) and not self._isSection(val):
 			raise ValueError("Value must be a section")
@@ -1270,11 +1254,7 @@ class AggregatedSection:
 				# Check str comparison as this is what is written to the config.
 				# If the value is unchanged, do not update
 				# or mark the profile as dirty.
-				(
-					isinstance(val, FeatureFlag)
-					or isinstance(curVal, FeatureFlag)
-				)
-				and str(val) == str(curVal)
+				(isinstance(val, FeatureFlag) or isinstance(curVal, FeatureFlag)) and str(val) == str(curVal)
 			):
 				return
 
@@ -1314,6 +1294,7 @@ class AggregatedSection:
 		self._spec.clear()
 		self._spec.update(val)
 
+
 class ProfileTrigger(object):
 	"""A trigger for automatic activation/deactivation of a configuration profile.
 	The user can associate a profile with a trigger.
@@ -1325,6 +1306,7 @@ class ProfileTrigger(object):
 	Alternatively, you can use this object as a context manager via the with statement;
 	i.e. this trigger will apply only inside the with block.
 	"""
+
 	#: Whether to notify handlers when activating a triggered profile.
 	#: This should usually be C{True}, but might be set to C{False} when
 	#: only specific settings should be applied.
@@ -1359,8 +1341,8 @@ class ProfileTrigger(object):
 		try:
 			conf._triggerProfileEnter(self)
 		except:  # noqa: E722
-			log.error("Error entering trigger %s, profile %s"
-				% (self.spec, self.profileName), exc_info=True)
+			log.error("Error entering trigger %s, profile %s" % (self.spec, self.profileName), exc_info=True)
+
 	__enter__ = enter
 
 	def exit(self):
@@ -1372,8 +1354,7 @@ class ProfileTrigger(object):
 		try:
 			conf._triggerProfileExit(self)
 		except:  # noqa: E722
-			log.error("Error exiting trigger %s, profile %s"
-				% (self.spec, self.profileName), exc_info=True)
+			log.error("Error exiting trigger %s, profile %s" % (self.spec, self.profileName), exc_info=True)
 
 	def __exit__(self, excType, excVal, traceback):
 		self.exit()
@@ -1386,8 +1367,8 @@ class AllowUiaInChromium(Enum):
 	NO = 3
 
 	@staticmethod
-	def getConfig() -> 'AllowUiaInChromium':
-		allow = AllowUiaInChromium(conf['UIA']['allowInChromium'])
+	def getConfig() -> "AllowUiaInChromium":
+		allow = AllowUiaInChromium(conf["UIA"]["allowInChromium"])
 		if allow == AllowUiaInChromium._DEFAULT:
 			return AllowUiaInChromium.WHEN_NECESSARY
 		return allow
@@ -1400,8 +1381,8 @@ class AllowUiaInMSWord(Enum):
 	ALWAYS = 3
 
 	@staticmethod
-	def getConfig() -> 'AllowUiaInMSWord':
-		allow = AllowUiaInMSWord(conf['UIA']['allowInMSWord'])
+	def getConfig() -> "AllowUiaInMSWord":
+		allow = AllowUiaInMSWord(conf["UIA"]["allowInMSWord"])
 		if allow == AllowUiaInMSWord._DEFAULT:
 			return AllowUiaInMSWord.WHERE_SUITABLE
 		return allow
