@@ -24,41 +24,51 @@ class TestMarkdownTranslate(unittest.TestCase):
 	def tearDown(self):
 		self.outDir.cleanup()
 
-	def runMarkdownTranslateCommand(self, command: str, *args):
-		print(f"Running markdownTranslate command: {command} {' '.join(args)}")
-		subprocess.run([sys.executable, self.markdownTranslateScriptPath, command, *args], check=True)
+	def runMarkdownTranslateCommand(self, description, args: list[str]):
+		failed = False
+		try:
+			subprocess.run([sys.executable, self.markdownTranslateScriptPath, *args], check=True)
+		except subprocess.CalledProcessError:
+			failed = True
+		if failed:
+			message = f"Failed when trying to {description} with command: {' '.join(args)}"
+			self.fail(message)
 
 	def test_markdownTranslate(self):
 		outDir = self.outDir.name
 		testDir = self.testDir
-		with self.subTest("Generate an xliff file from the English 2024.2 user guide markdown file"):
-			self.runMarkdownTranslateCommand(
+		self.runMarkdownTranslateCommand(
+			description="Generate an xliff file from the English 2024.2 user guide markdown file",
+			args=[
 				"generateXliff",
 				"-m",
 				os.path.join(testDir, "en_2024.2_userGuide.md"),
 				"-o",
 				os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-			)
-		with self.subTest(
-			"Regenerate the markdown file from the xliff file and ensure it matches the original markdown file"
-		):
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Regenerate the 2024.2 markdown file from the generated 2024.2 xliff file",
+			args=[
 				"generateMarkdown",
 				"-x",
 				os.path.join(outDir, "en_2024.2_userGuide.xliff"),
 				"-o",
 				os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
 				"-u",
-			)
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Ensure the regenerated 2024.2 markdown file matches the original 2024.2 markdown file",
+			args=[
 				"ensureMarkdownFilesMatch",
 				os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
 				os.path.join(testDir, "en_2024.2_userGuide.md"),
-			)
-		with self.subTest(
-			"Update the xliff file with the changes between the English 2024.2 and 2024.3beta6 user guide markdown files"
-		):
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Update the 2024.2 xliff file with the changes between the English 2024.2 and 2024.3beta6 user guide markdown files",
+			args=[
 				"updateXliff",
 				"-x",
 				os.path.join(outDir, "en_2024.2_userGuide.xliff"),
@@ -66,27 +76,30 @@ class TestMarkdownTranslate(unittest.TestCase):
 				os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
 				"-o",
 				os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-			)
-		with self.subTest(
-			"Regenerate the markdown file from the updated xliff file and ensure it matches the English 2024.3beta6 user guide markdown file"
-		):
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Regenerate the 2024.3beta6 markdown file from the updated xliff file",
+			args=[
 				"generateMarkdown",
 				"-x",
 				os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
 				"-o",
 				os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
 				"-u",
-			)
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Ensure the regenerated 2024.3beta6 markdown file matches the original 2024.3beta6 markdown",
+			args=[
 				"ensureMarkdownFilesMatch",
 				os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
 				os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
-			)
-		with self.subTest(
-			"Translate the xliff file to French using the pretranslated French 2024.3beta6 user guide markdown file"
-		):
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Translate the 2024.3beta6 xliff file to French using the existing pretranslated French 2024.3beta6 user guide markdown file",
+			args=[
 				"translateXliff",
 				"-x",
 				os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
@@ -96,20 +109,23 @@ class TestMarkdownTranslate(unittest.TestCase):
 				os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
 				"-o",
 				os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
-			)
-		with self.subTest(
-			"Regenerate the French 2024.3beta6 user guide markdown file from the translated xliff file"
-			" and ensure it matches the pretranslated French 2024.3beta6 user guide markdown file"
-		):
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Regenerate the French 2024.3beta6 user guide markdown file from the French translated 2024.3beta6 xliff file",
+			args=[
 				"generateMarkdown",
 				"-x",
 				os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
 				"-o",
 				os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
-			)
-			self.runMarkdownTranslateCommand(
+			],
+		)
+		self.runMarkdownTranslateCommand(
+			description="Ensure the regenerated French 2024.3beta6 user guide markdown file matches the original French 2024.3beta6 user guide markdown file",
+			args=[
 				"ensureMarkdownFilesMatch",
 				os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
 				os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
-			)
+			],
+		)
