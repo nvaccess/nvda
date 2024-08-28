@@ -1046,6 +1046,12 @@ class ChartShape(Shape):
 
 
 class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
+	"""
+	TextInfo for a PowerPoint text frame,
+	fetching its information from a TextRange in the PowerPoint object model.
+	For more information about text ranges, see https://learn.microsoft.com/en-us/office/vba/api/powerpoint.textrange
+	"""
+
 	def _getCaretOffset(self) -> int:
 		return self.obj.documentWindow.ppSelection.textRange.start - 1
 
@@ -1068,7 +1074,6 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		:param clamp: If True, the start and end indices will be clamped to valid values within the text range. Defaults to False.
 		:returns: The text range object as a comtypes.client.lazybind.Dispatch object.
 		:raises ValueError: If the start index is greater than the end index.
-		:note: For more information about text ranges, see https://learn.microsoft.com/en-us/office/vba/api/powerpoint.textrange
 		"""
 		if not (start <= end):
 			raise ValueError(
