@@ -3132,9 +3132,20 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
+		# Translators: This is the label for a text box in the add-on store settings dialog.
+		addonUpdateMirrorLabel = _("Update &mirror")
+		self.addonUpdateMirrorTextbox = sHelper.addLabeledControl(
+			addonUpdateMirrorLabel,
+			wx.TextCtrl,
+		)
+		self.addonUpdateMirrorTextbox.SetValue(config.conf["addonStore"]["baseURL"])
+		# self.addonUpdateMirrorTextbox.SetValidator(URLValidator)
+
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+
+		config.conf["addonStore"]["baseURL"] = self.addonUpdateMirrorTextbox.Value.strip()
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -5362,3 +5373,18 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+# class URLValidator(wx.Validator):
+# 	def Clone(self):
+# 		return URLValidator()
+
+# 	def Validate(self, parent):
+# 		from urllib.parse import urlparse
+# 		textControl = self.GetWindow()
+# 		text = textControl.getValue()
+# 		parsed = urlparse(text)
+# 		isValid = all([parsed.scheme, parsed.netloc])
+# 		if not isValid:
+# 			wx.MessageBox("The mirror URL is invalid")
+# 		return isValid
