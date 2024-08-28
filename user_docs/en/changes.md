@@ -59,6 +59,9 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * The comment command in Microsoft Word and notes command in Microsoft Excel can now be pressed twice to show the comment or note in a browsable message. (#16800, #16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
+* When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
+  * This option is disabled by default. You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
+* Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
 
 ### Changes
 
