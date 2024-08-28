@@ -14,7 +14,11 @@ import os
 
 class TestMarkdownTranslate(unittest.TestCase):
 	markdownTranslateScriptPath = os.path.join(
-		os.path.dirname(__file__), "..", "..", "user_docs", "markdownTranslate.py"
+		os.path.dirname(__file__),
+		"..",
+		"..",
+		"user_docs",
+		"markdownTranslate.py",
 	)
 	testDir = os.path.join(os.path.dirname(__file__), "..", "markdownTranslate")
 
