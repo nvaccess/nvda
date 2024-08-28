@@ -1762,7 +1762,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self.brailleCells = []
 		#: A list representing the rows in the braille window,
 		#: each item being a tuple of start and end braille buffer offsets.
-		#: Splitting the window into independent rows allows for optional avoidance of  splitting words across rows.
+		#: Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
 		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
 
 	def clear(self):
