@@ -1866,7 +1866,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 
 	def windowPosToBufferPos(self, windowPos: int) -> int:
 		"""
-		Converts a position relative to the  braille window to a position relative to the braille buffer.
+		Converts a position relative to the braille window to a position relative to the braille buffer.
 		"""
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
@@ -2063,7 +2063,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _get_windowRawText(self):
 		return self.bufferPositionsToRawText(self.windowStartPos, self.windowEndPos)
 
-	def _get_windowBrailleCells(self):
+	def _get_windowBrailleCells(self) -> list[int]:
 		windowCells = []
 		for start, end in self._windowRowBufferOffsets:
 			rowCells = self.brailleCells[start:end]
@@ -2288,7 +2288,7 @@ class DisplayDimensions(NamedTuple):
 	numCols: int
 
 	@property
-	def displaySize(self):
+	def displaySize(self) -> int:
 		return self.numCols * self.numRows
 
 
@@ -2529,7 +2529,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
 		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
 		calculatedDisplaySize = filteredDisplayDimensions.displaySize
-		if len(list(filter_displaySize.handlers)):
+		if next(filter_displaySize.handlers, None):
 			# There is technically a race condition here if a handler is unregistered before the apply call.
 			# But worse case is that a multiline display will be singleline for a short time.
 			filteredDisplaySize = filter_displaySize.apply(calculatedDisplaySize)
