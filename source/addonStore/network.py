@@ -27,6 +27,7 @@ from logHandler import log
 import NVDAState
 from NVDAState import WritePaths
 from utils.security import sha256_checksum
+from config import conf
 
 from .models.addon import (
 	_AddonGUIModel,
@@ -49,6 +50,8 @@ i.e include older incompatible versions.
 
 
 def _getBaseUrl() -> str:
+	if url := conf["addonStore"]["baseURL"]:
+		return url
 	return BASE_URL
 
 
