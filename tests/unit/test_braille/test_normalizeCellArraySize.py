@@ -19,7 +19,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		expectedNewCells = [1, 2, 3, 4]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=8, oldNumRows=1, newCellCount=4, newNumRows=1
+			oldCells,
+			oldCellCount=8,
+			oldNumRows=1,
+			newCellCount=4,
+			newNumRows=1,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -28,7 +32,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		expectedNewCells = [1, 2, 3, 4, 0, 0, 0, 0]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=4, oldNumRows=1, newCellCount=8, newNumRows=1
+			oldCells,
+			oldCellCount=4,
+			oldNumRows=1,
+			newCellCount=8,
+			newNumRows=1,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -44,7 +52,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=15, oldNumRows=3, newCellCount=10, newNumRows=2
+			oldCells,
+			oldCellCount=15,
+			oldNumRows=3,
+			newCellCount=10,
+			newNumRows=2,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -60,7 +72,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=10, oldNumRows=2, newCellCount=15, newNumRows=3
+			oldCells,
+			oldCellCount=10,
+			oldNumRows=2,
+			newCellCount=15,
+			newNumRows=3,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -77,7 +93,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=12, oldNumRows=3, newCellCount=6, newNumRows=3
+			oldCells,
+			oldCellCount=12,
+			oldNumRows=3,
+			newCellCount=6,
+			newNumRows=3,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -94,7 +114,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=6, oldNumRows=3, newCellCount=12, newNumRows=3
+			oldCells,
+			oldCellCount=6,
+			oldNumRows=3,
+			newCellCount=12,
+			newNumRows=3,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -110,7 +134,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=15, oldNumRows=3, newCellCount=4, newNumRows=2
+			oldCells,
+			oldCellCount=15,
+			oldNumRows=3,
+			newCellCount=4,
+			newNumRows=2,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -126,7 +154,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=4, oldNumRows=2, newCellCount=12, newNumRows=3
+			oldCells,
+			oldCellCount=4,
+			oldNumRows=2,
+			newCellCount=12,
+			newNumRows=3,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -142,7 +174,11 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=6, oldNumRows=3, newCellCount=8, newNumRows=2
+			oldCells,
+			oldCellCount=6,
+			oldNumRows=3,
+			newCellCount=8,
+			newNumRows=2,
 		)
 		self.assertEqual(newcells, expectedNewCells)
 
@@ -158,6 +194,10 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		]  # fmt: skip
 		assert braille.handler is not None
 		newcells = braille.handler._normalizeCellArraySize(
-			oldCells, oldCellCount=8, oldNumRows=2, newCellCount=6, newNumRows=3
+			oldCells,
+			oldCellCount=8,
+			oldNumRows=2,
+			newCellCount=6,
+			newNumRows=3,
 		)
 		self.assertEqual(newcells, expectedNewCells)
