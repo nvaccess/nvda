@@ -40,6 +40,7 @@ Major highlights include:
 ### System Requirements {#SystemRequirements}
 
 #### Minimum System Requirements {#MinimumSystemRequirements}
+
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
   * Note 32-bit operating systems are no longer under active support.
@@ -47,7 +48,8 @@ Major highlights include:
 * at least 150 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
   * both AMD64 and ARM64 variants of Windows are supported.
 * at least 150 MB of storage space.
 * at least 4 GB of RAM.
@@ -2169,7 +2171,7 @@ If "Read by paragraph" is checked, the selected start marker will be displayed t
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, Pilcrow (¶), for more obvious paragraph breaks.
+The options include using two spaces as a subtle paragraph break, and the paragraph symbol, pilcrow (¶), as a more obvious one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2952,9 +2954,8 @@ The font attributes combo box has four options:
 
 * Off: NVDA will not report these font attributes.
 * Speech: NVDA will announce when these font attributes change.
-* Braille: NVDA will display bold, italic, and underlines in braille.
-Note that your chosen braille table must support displaying these attributes.
-Exactly how these attributes are displayed varies between tables.
+* Braille: NVDA will display these attributes in braille.
+Exactly how they are displayed can be configured in [NVDA's braille settings](#BrailleFormattingDisplay).
 * Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
@@ -5056,6 +5057,31 @@ Following are the current key assignments for these displays.
 |NVDA Menu |space+dot1+dot3+dot4+dot5 (space+n)|
 |windows+d key (minimize all applications) |space+dot1+dot4+dot5 (space+d)|
 |Say all |space+dot1+dot2+dot3+dot4+dot5+dot6|
+
+<!-- KC:endInclude -->
+
+### Dot Pad {#dotPad}
+
+The Dot Pad from Dot Inc is a device that can display refreshable tactile graphics and braille.
+NVDA can display either a single line of braille on the devices dedicated braille display line, or multiple lines of braille on its tactile graphics area.
+The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 lines of 20 cells each.
+
+You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
+
+Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+
+When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
+This driver does not support auto detection.
+
+Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
+Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.
+
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back | `pan_left` |
+|Scroll braille display forward | `pan_right` |
 
 <!-- KC:endInclude -->
 

@@ -180,6 +180,9 @@ def normalizeIA2TextFormatField(formatField):
 	fontSize = formatField.get("font-size")
 	if fontSize is not None:
 		formatField["font-size"] = FontSize.translateFromAttribute(fontSize)
+	mark = formatField.pop("mark", None)
+	if mark == "true":
+		formatField["marked"] = True
 
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
