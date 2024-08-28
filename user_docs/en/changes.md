@@ -6,13 +6,13 @@
 
 ### New Features
 
-* Improvements when editing in Microsoft PowerPoint text boxes:
-  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
-  * You can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
+* When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 
 ### Bug Fixes
 
-* In Microsoft PowerPoint, caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+* Improvements when editing in Microsoft PowerPoint:
+  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
 
 ### Changes for Developers
 
