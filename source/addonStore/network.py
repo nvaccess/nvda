@@ -48,17 +48,21 @@ i.e include older incompatible versions.
 """
 
 
+def _getBaseUrl() -> str:
+	return BASE_URL
+
+
 def _getCurrentApiVersionForURL() -> str:
 	year, major, minor = addonAPIVersion.CURRENT
 	return f"{year}.{major}.{minor}"
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	return f"{BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{_getBaseUrl()}/{lang}/{channel.value}/{nvdaApiVersion}.json"
 
 
 def _getCacheHashURL() -> str:
-	return f"{BASE_URL}/cacheHash.json"
+	return f"{_getBaseUrl()}/cacheHash.json"
 
 
 class AddonFileDownloader:
