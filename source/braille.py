@@ -1881,7 +1881,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _set_windowStartPos(self, pos):
 		self._calculateWindowRowBufferOffsets(pos)
 
-	def _calculateWindowRowBufferOffsets(self, pos):
+	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
 		"""
 		Calculates the start and end positions of each row in the braille window.
 		Ensures that words are not split across rows when word wrap is enabled.
