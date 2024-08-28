@@ -439,7 +439,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True):
 		return res
 
 
-def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool = False):
+def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = False):
 	print(f"Ensuring files {prettyPathString(path1)} and {prettyPathString(path2)} match...")
 	with contextlib.ExitStack() as stack:
 		file1 = stack.enter_context(open(path1, "r", encoding="utf8"))
@@ -478,73 +478,6 @@ def ensureFilesMatch(path1: str, path2: str, allowBadAnchors: bool = False):
 def markdownTranslateCommand(command: str, *args):
 	print(f"Running markdownTranslate command: {command} {' '.join(args)}")
 	subprocess.run(["python", __file__, command, *args], check=True)
-
-
-def runTests(testDir: str):
-	outDir = os.path.join(testDir, "output")
-	os.makedirs(outDir, exist_ok=True)
-	markdownTranslateCommand(
-		"generateXliff",
-		"-m",
-		os.path.join(testDir, "en_2024.2_userGuide.md"),
-		"-o",
-		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-	)
-	markdownTranslateCommand(
-		"generateMarkdown",
-		"-x",
-		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-		"-o",
-		os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
-		"-u",
-	)
-	ensureFilesMatch(
-		os.path.join(outDir, "rebuilt_en_2024.2_userGuide.md"),
-		os.path.join(testDir, "en_2024.2_userGuide.md"),
-	)
-	markdownTranslateCommand(
-		"updateXliff",
-		"-x",
-		os.path.join(outDir, "en_2024.2_userGuide.xliff"),
-		"-m",
-		os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
-		"-o",
-		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-	)
-	markdownTranslateCommand(
-		"generateMarkdown",
-		"-x",
-		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-		"-o",
-		os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
-		"-u",
-	)
-	ensureFilesMatch(
-		os.path.join(outDir, "rebuilt_en_2024.3beta6_userGuide.md"),
-		os.path.join(testDir, "en_2024.3beta6_userGuide.md"),
-	)
-	markdownTranslateCommand(
-		"translateXliff",
-		"-x",
-		os.path.join(outDir, "en_2024.3beta6_userGuide.xliff"),
-		"-l",
-		"fr",
-		"-p",
-		os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
-		"-o",
-		os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
-	)
-	markdownTranslateCommand(
-		"generateMarkdown",
-		"-x",
-		os.path.join(outDir, "fr_2024.3beta6_userGuide.xliff"),
-		"-o",
-		os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
-	)
-	ensureFilesMatch(
-		os.path.join(outDir, "fr_2024.3beta6_userGuide.md"),
-		os.path.join(testDir, "fr_pretranslated_2024.3beta6_userGuide.md"),
-	)
 
 
 def pretranslateAllPossibleLanguages(langsDir: str, mdBaseName: str):
@@ -682,14 +615,16 @@ if __name__ == "__main__":
 		action="store_false",
 		help="Generate the markdown file with the untranslated strings",
 	)
-	testParser = commandParser.add_parser("runTests")
-	testParser.add_argument(
-		"-d",
-		"--test-dir",
-		dest="testDir",
+	ensureMarkdownFilesMatchParser = commandParser.add_parser("ensureMarkdownFilesMatch")
+	ensureMarkdownFilesMatchParser.add_argument(
+		dest="path1",
 		type=str,
-		required=True,
-		help="The directory containing the test files",
+		help="The first markdown file",
+	)
+	ensureMarkdownFilesMatchParser.add_argument(
+		dest="path2",
+		type=str,
+		help="The second markdown file",
 	)
 	pretranslateLangsParser = commandParser.add_parser("pretranslateLangs")
 	pretranslateLangsParser.add_argument(
@@ -709,26 +644,27 @@ if __name__ == "__main__":
 		help="The base name of the markdown files to pretranslate",
 	)
 	args = mainParser.parse_args()
-	if args.command == "generateXliff":
-		generateXliff(mdPath=args.md, outputPath=args.output)
-	elif args.command == "updateXliff":
-		updateXliff(
-			xliffPath=args.xliff,
-			mdPath=args.md,
-			outputPath=args.output,
-		)
-	elif args.command == "generateMarkdown":
-		generateMarkdown(xliffPath=args.xliff, outputPath=args.output, translated=args.translated)
-	elif args.command == "translateXliff":
-		translateXliff(
-			xliffPath=args.xliff,
-			lang=args.lang,
-			pretranslatedMdPath=args.pretranslatedMd,
-			outputPath=args.output,
-		)
-	elif args.command == "pretranslateLangs":
-		pretranslateAllPossibleLanguages(langsDir=args.langsDir, mdBaseName=args.mdBaseName)
-	elif args.command == "runTests":
-		runTests(args.testDir)
-	else:
-		raise ValueError(f"Unknown command: {args.command}")
+	match args.command:
+		case "generateXliff":
+			generateXliff(mdPath=args.md, outputPath=args.output)
+		case "updateXliff":
+			updateXliff(
+				xliffPath=args.xliff,
+				mdPath=args.md,
+				outputPath=args.output,
+			)
+		case "generateMarkdown":
+			generateMarkdown(xliffPath=args.xliff, outputPath=args.output, translated=args.translated)
+		case "translateXliff":
+			translateXliff(
+				xliffPath=args.xliff,
+				lang=args.lang,
+				pretranslatedMdPath=args.pretranslatedMd,
+				outputPath=args.output,
+			)
+		case "pretranslateLangs":
+			pretranslateAllPossibleLanguages(langsDir=args.langsDir, mdBaseName=args.mdBaseName)
+		case "ensureMarkdownFilesMatch":
+			ensureMarkdownFilesMatch(path1=args.path1, path2=args.path2)
+		case _:
+			raise ValueError(f"Unknown command: {args.command}")
