@@ -18,14 +18,18 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 		oldCells = [1, 2, 3, 4, 5, 6, 7, 8]  # fmt: skip
 		expectedNewCells = [1, 2, 3, 4]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 8, 1, 4, 1)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=8, oldNumRows=1, newCellCount=4, newNumRows=1
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_growSingleLine(self):
 		oldCells = [1, 2, 3, 4]  # fmt: skip
 		expectedNewCells = [1, 2, 3, 4, 0, 0, 0, 0]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 4, 1, 8, 1)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=4, oldNumRows=1, newCellCount=8, newNumRows=1
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_decreaseNumRows(self):
@@ -39,7 +43,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12, 13, 14, 15,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 15, 3, 10, 2)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=15, oldNumRows=3, newCellCount=10, newNumRows=2
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_increaseNumRows(self):
@@ -53,7 +59,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			0, 0, 0, 0, 0,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 10, 2, 15, 3)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=10, oldNumRows=2, newCellCount=15, newNumRows=3
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_decreaseNumColumns(self):
@@ -68,7 +76,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			21, 22,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 12, 3, 6, 3)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=12, oldNumRows=3, newCellCount=6, newNumRows=3
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_increaseNumColumns(self):
@@ -83,7 +93,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			21, 22, 0, 0,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 6, 3, 12, 3)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=6, oldNumRows=3, newCellCount=12, newNumRows=3
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_decreaseNumRowsAndColumns(self):
@@ -97,7 +109,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 15, 3, 4, 2)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=15, oldNumRows=3, newCellCount=4, newNumRows=2
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_increaseNumRowsAndColumns(self):
@@ -111,7 +125,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			0, 0, 0, 0,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 4, 2, 12, 3)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=4, oldNumRows=2, newCellCount=12, newNumRows=3
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_decreaseNumRowsAndIncreaseNumColumns(self):
@@ -125,7 +141,9 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			11, 12, 0, 0,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 6, 3, 8, 2)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=6, oldNumRows=3, newCellCount=8, newNumRows=2
+		)
 		self.assertEqual(newcells, expectedNewCells)
 
 	def test_increaseNumRowsAndDecreaseNumColumns(self):
@@ -139,5 +157,7 @@ class Test_normalizeCellArraySize(unittest.TestCase):
 			0, 0,
 		]  # fmt: skip
 		assert braille.handler is not None
-		newcells = braille.handler._normalizeCellArraySize(oldCells, 8, 2, 6, 3)
+		newcells = braille.handler._normalizeCellArraySize(
+			oldCells, oldCellCount=8, oldNumRows=2, newCellCount=6, newNumRows=3
+		)
 		self.assertEqual(newcells, expectedNewCells)
