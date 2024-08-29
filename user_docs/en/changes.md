@@ -6,6 +6,7 @@
 
 ### New Features
 
+* When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 
 ### Changes
@@ -16,6 +17,9 @@
 ### Bug Fixes
 
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
+* Improvements when editing in Microsoft PowerPoint:
+  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
 
 ### Changes for Developers
 
