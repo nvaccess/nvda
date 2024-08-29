@@ -520,7 +520,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getUnitOffsets(self, unit: str, offset: int) -> tuple[int, int]:
 		"""Gets the start and end offsets of the unit containing the given offset.
 
-		:param unit: Any of UNIT_CHARACTER, UNIT_WORD, UNIT_LINE, UNIT_SENTENCE, UNIT_PARAGRAPH, 
+		:param unit: Any of UNIT_CHARACTER, UNIT_WORD, UNIT_LINE, UNIT_SENTENCE, UNIT_PARAGRAPH,
 			UNIT_READINGCHUNK, UNIT_STORY, or UNIT_OFFSET as defined in textInfos.
 		:param offset: The offset of the character within the text unit.
 		:return: A tuple of the start and end offsets of the unit.
