@@ -118,6 +118,14 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * These keys are currently synchronized until 2025.1.
 * `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
 
+## 2024.3.1
+
+This is a patch release to fix a bug with the automatic add-on update notification.
+
+### Bug Fixes
+
+* When automatically checking for add-on updates, NVDA no longer freezes on poor connections. (#17036)
+
 ## 2024.3
 
 The Add-on Store will now notify you if any add-on updates are available on NVDA startup.

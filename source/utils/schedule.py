@@ -193,7 +193,7 @@ class ScheduleThread(threading.Thread):
 						name=f"{task.__name__}",
 					)
 					log.debug(f"Starting thread for job: {task.__name__} on thread {t.ident}")
-					t.run()
+					t.start()
 			case ThreadTarget.CUSTOM:
 
 				def callJobOnThread(*args, **kwargs):
