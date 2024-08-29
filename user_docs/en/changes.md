@@ -8,6 +8,10 @@
 
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 
+### Changes
+
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+
 ### Bug Fixes
 
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)

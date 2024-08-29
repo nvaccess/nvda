@@ -1755,7 +1755,13 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ##### Show exit options when exiting NVDA {#GeneralSettingsShowExitOptions}
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
+When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+* exit
+* restart
+* restart with add-ons disabled and debug logging enabled
+* restart with debug logging enabled
+* install pending updates (if any).
+
 When unchecked, NVDA will exit immediately.
 
 ##### Play sounds when starting or exiting NVDA {#GeneralSettingsPlaySounds}
