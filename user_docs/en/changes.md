@@ -10,7 +10,8 @@
 
 ### Changes
 
-* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
 
 ### Bug Fixes
 
@@ -22,6 +23,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 
 #### API Breaking Changes
 
