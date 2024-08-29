@@ -43,15 +43,15 @@ Major highlights include:
 
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
-  * Note 32-bit operating systems are no longer under active support.
+  * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
 
 * Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
   * both AMD64 and ARM64 variants of Windows are supported.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
@@ -1755,7 +1755,13 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ##### Show exit options when exiting NVDA {#GeneralSettingsShowExitOptions}
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
+When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+* exit
+* restart
+* restart with add-ons disabled and debug logging enabled
+* restart with debug logging enabled
+* install pending updates (if any).
+
 When unchecked, NVDA will exit immediately.
 
 ##### Play sounds when starting or exiting NVDA {#GeneralSettingsPlaySounds}

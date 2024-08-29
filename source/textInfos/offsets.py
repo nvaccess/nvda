@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 from abc import abstractmethod
 import re
@@ -443,6 +443,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		end = findEndOfLine(text, offset)
 		return [start, end]
 
+	def _getSentenceOffsets(self, offset: int) -> tuple[int, int]:
+		"""
+		Gets the start and end offsets of the sentence containing the given offset.
+		:param offset: The offset of the character within the sentence.
+		:return: A tuple of the start and end offsets of the sentence.
+		:raise NotImplementedError: If the method is not implemented.
+		"""
+		raise NotImplementedError
+
 	def _getParagraphOffsets(self, offset):
 		return self._getLineOffsets(offset)
 
@@ -508,23 +517,35 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
-	def _getUnitOffsets(self, unit, offset):
-		if unit == textInfos.UNIT_CHARACTER:
-			offsetsFunc = self._getCharacterOffsets
-		elif unit == textInfos.UNIT_WORD:
-			offsetsFunc = self._getWordOffsets
-		elif unit == textInfos.UNIT_LINE:
-			offsetsFunc = self._getLineOffsets
-		elif unit == textInfos.UNIT_PARAGRAPH:
-			offsetsFunc = self._getParagraphOffsets
-		elif unit == textInfos.UNIT_READINGCHUNK:
-			offsetsFunc = self._getReadingChunkOffsets
-		elif unit == textInfos.UNIT_STORY:
-			return 0, self._getStoryLength()
-		elif unit == textInfos.UNIT_OFFSET:
-			return offset, offset + 1
-		else:
-			raise ValueError("unknown unit: %s" % unit)
+	def _getUnitOffsets(self, unit: str, offset: int) -> tuple[int, int]:
+		"""Gets the start and end offsets of the unit containing the given offset.
+
+		:param unit: Any of UNIT_CHARACTER, UNIT_WORD, UNIT_LINE, UNIT_SENTENCE, UNIT_PARAGRAPH,
+			UNIT_READINGCHUNK, UNIT_STORY, or UNIT_OFFSET as defined in textInfos.
+		:param offset: The offset of the character within the text unit.
+		:return: A tuple of the start and end offsets of the unit.
+		:raises ValueError: If the unit is not recognised.
+		:raises NotImplementedError: If the offset getter for the given unit is not implemented.
+		"""
+		match unit:
+			case textInfos.UNIT_CHARACTER:
+				offsetsFunc = self._getCharacterOffsets
+			case textInfos.UNIT_WORD:
+				offsetsFunc = self._getWordOffsets
+			case textInfos.UNIT_LINE:
+				offsetsFunc = self._getLineOffsets
+			case textInfos.UNIT_SENTENCE:
+				offsetsFunc = self._getSentenceOffsets
+			case textInfos.UNIT_PARAGRAPH:
+				offsetsFunc = self._getParagraphOffsets
+			case textInfos.UNIT_READINGCHUNK:
+				offsetsFunc = self._getReadingChunkOffsets
+			case textInfos.UNIT_STORY:
+				return 0, self._getStoryLength()
+			case textInfos.UNIT_OFFSET:
+				return offset, offset + 1
+			case _:
+				raise ValueError(f"unknown unit: {unit!r}")
 		return offsetsFunc(offset)
 
 	def _get_pointAtStart(self):
