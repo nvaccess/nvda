@@ -15,7 +15,6 @@ Providing feedback via synthetic speech and Braille, it enables blind or vision 
 NVDA is developed by [NV Access](https://www.nvaccess.org/), with contributions from the community.
 
 ### General Features {#GeneralFeatures}
-Crowdin test 4
 
 NVDA allows blind and vision impaired people to access and interact with the Windows operating system and many third party applications.
 
