@@ -98,7 +98,7 @@ COM_INTERFACES = {
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
 	# As long as Appveyor is on a Windows version that has an acceptable version of UIAutomationClient,
 	# we generate it at build time.
-	"UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
+	"UIAutomationClient.py": ("{944DE083-8FB8-45CF-BCB7-C477ACB2F897}", 1, 0),
 }
 
 for k, v in COM_INTERFACES.items():
