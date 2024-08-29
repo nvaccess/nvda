@@ -20,6 +20,8 @@ NVDA is no longer unstable after restarting NVDA during an automatic Braille Blu
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
+LibLouis has been updated, adding new Braille tables for Thai and Greek international braille with single-cell accented letters.
+
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
 
 ### New Features
@@ -41,7 +43,7 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
 * Component updates:
-  * Updated LibLouis braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#????, @LeonarddeR)
+  * Updated LibLouis braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR)
     * New braille tables:
       * Thai grade 1
       * Greek international braille (single-cell accented letters)
