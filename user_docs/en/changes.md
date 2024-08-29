@@ -37,6 +37,9 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 #### Deprecations
 
+* The `braille.filter_displaySize` extension point is deprecated.
+Please use `braille.filter_displayDimensions` instead. (#17011)
+
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
