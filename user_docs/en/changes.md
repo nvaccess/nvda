@@ -1,7 +1,6 @@
 # What's New in NVDA
 
 ## 2024.4
-Test string 1
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
 
