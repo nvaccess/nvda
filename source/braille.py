@@ -1760,10 +1760,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		#: A list representing the rows in the braille window,
-		#: each item being a tuple of start and end braille buffer offsets.
-		#: Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
 		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
+		"""
+		A list representing the rows in the braille window,
+		each item being a tuple of start and end braille buffer offsets.
+		Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
+		"""
 
 	def clear(self):
 		"""Clear the entire buffer.
@@ -2302,7 +2304,7 @@ filter_displayDimensions = extensionPoints.Filter[DisplayDimensions]()
 """
 Filter that allows components or add-ons to change the number of rows and columns used for braille output.
 For example, when a system has a display with 10 rows and 20 columns, but is being controlled by a remote system with a display of 5 rows and 40 coluns, the display number of rows should be lowered to 5.
-@param value: a DisplayDimensions namedtuple with the number of rows and columns of the current display.
+:param value: a DisplayDimensions namedtuple with the number of rows and columns of the current display.
 Note: this should be used in place of filter_displaySize.
 """
 
@@ -2311,12 +2313,12 @@ displaySizeChanged = extensionPoints.Action()
 Action that allows components or add-ons to be notified of display size changes.
 For example, when a system is controlled by a remote system and the remote system swaps displays,
 The local system should be notified about display size changes at the remote system.
-@param displaySize: The current display size used by the braille handler.
-@type displaySize: int
-@param displayDimensions.numRows: The current number of rows used by the braille handler.
-@type displayDimensions.numRows: int
-@param displayDimensions.numCols: The current number of columns used by the braille handler.
-@type displayDimensions.numCols: int
+:param displaySize: The current display size used by the braille handler.
+:type displaySize: int
+:param displayDimensions.numRows: The current number of rows used by the braille handler.
+:type displayDimensions.numRows: int
+:param displayDimensions.numCols: The current number of columns used by the braille handler.
+:type displayDimensions.numCols: int
 """
 
 displayChanged = extensionPoints.Action()
