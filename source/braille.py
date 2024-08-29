@@ -1881,7 +1881,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _get_windowStartPos(self) -> int:
 		return self.windowPosToBufferPos(0)
 
-	def _set_windowStartPos(self, pos : int) -> None:
+	def _set_windowStartPos(self, pos: int) -> None:
 		self._calculateWindowRowBufferOffsets(pos)
 
 	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
