@@ -517,7 +517,16 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
-	def _getUnitOffsets(self, unit, offset):
+	def _getUnitOffsets(self, unit: str, offset: int) -> tuple[int, int]:
+		"""Gets the start and end offsets of the unit containing the given offset.
+
+		:param unit: Any of UNIT_CHARACTER, UNIT_WORD, UNIT_LINE, UNIT_SENTENCE, UNIT_PARAGRAPH, 
+			UNIT_READINGCHUNK, UNIT_STORY, or UNIT_OFFSET as defined in textInfos.
+		:param offset: The offset of the character within the text unit.
+		:return: A tuple of the start and end offsets of the unit.
+		:raises ValueError: If the unit is not recognised.
+		:raises NotImplementedError: If the offset getter for the given unit is not implemented.
+		"""
 		match unit:
 			case textInfos.UNIT_CHARACTER:
 				offsetsFunc = self._getCharacterOffsets
