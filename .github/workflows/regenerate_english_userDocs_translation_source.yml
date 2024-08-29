@@ -52,22 +52,25 @@ jobs:
         }
       if: success()
 
-    - name: Commit changes
-      run: |
-        $ErrorActionPreference = 'Stop'
-        git config --local user.name "GitHub Actions"
-        git config --local user.email "actions@github.com"
-        git add user_docs/en/*.xliff
-        git commit -m "Update user documentation files"
-      if: success()
-
-    - name: Push changes
+    - name: Commit and Push changes
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         $ErrorActionPreference = 'Stop'
+        git config --local user.name "GitHub Actions"
+        git config --local user.email "actions@github.com"
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-        git push origin HEAD
+        $filesChanged = git diff --name-only -- *.xliff
+        if($filesChanged) {
+          Write-Host "xliff files were changed. Committing and pushing changes."
+          foreach ($file in $filesChanged) {
+            git add $file
+            git commit -m "Update $file"
+          }
+          git push origin HEAD
+        } else {
+          Write-Host "No xliff files were changed. Skipping commit and push."
+        }
       if: success()
 
     - name: Crowdin upload
@@ -81,7 +84,7 @@ jobs:
         # Check if we changed userGuide.xliff in this action.
         # If we did, upload it to Crowdin.
         $ErrorActionPreference = 'Stop'
-        $changed = git diff --name-only HEAD~1.. -- user_docs/en/userGuide.xliff
+        $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/userGuide.xliff
         if($changed) {
             Write-Host "Uploading userGuide.xliff to Crowdin"
             # 18 is the file ID for userGuide.xliff in Crowdin.
