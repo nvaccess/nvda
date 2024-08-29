@@ -45,6 +45,7 @@ jobs:
             if(Test-Path $xliff) {
                 Write-Host "Updating $xliff with changes from $markdown"
                 python user_docs/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
+                Write-Host "Renaming $tempXliff to $xliff"
                 move-item -Path $tempXliff -Destination $xliff -Force
             } else {
                 Write-Host "Ignoring $markdown as it does not have a corresponding xliff file"
