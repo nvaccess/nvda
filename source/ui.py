@@ -198,7 +198,7 @@ def browseableMessage(
 		# describing the key to press to activate the button. Currently, this key may only be Ctrl+Shift+C.
 		# Translation makes sense here if the Control or Shift keys are called something else in a
 		# given language; or to set this to the empty string if that key combination is unavailable on some keyboard.
-		d.add("copyButtonAcceleratorAccessibilityLabel", _("Ctrl+Shift+C"))
+		d.add("copyButtonAcceleratorAccessibilityLabel", _("control+shift+c"))
 
 	dialogArgsVar = automation.VARIANT(d)
 	gui.mainFrame.prePopup()
