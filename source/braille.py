@@ -1875,10 +1875,13 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			return min(start + col, end - 1)
 		raise ValueError("Position outside window")
 
-	def _get_windowStartPos(self):
+	windowStartPos: int
+	"""The start position of the braille window in the braille buffer."""
+
+	def _get_windowStartPos(self) -> int:
 		return self.windowPosToBufferPos(0)
 
-	def _set_windowStartPos(self, pos):
+	def _set_windowStartPos(self, pos : int) -> None:
 		self._calculateWindowRowBufferOffsets(pos)
 
 	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
@@ -1912,11 +1915,14 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 				break
 			start = end
 
+	windowEndPos: int
+	"""The end position of the braille window in the braille buffer."""
+
 	def _get_windowEndPos(self) -> int:
 		start, end = self._windowRowBufferOffsets[-1]
 		return end
 
-	def _set_windowEndPos(self, endPos):
+	def _set_windowEndPos(self, endPos: int) -> None:
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
 		1. Braille display size.
 		2. Whether one of the regions should be shown hard left on the braille display;
