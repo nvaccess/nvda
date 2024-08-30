@@ -40,7 +40,7 @@ class _WindowControlId(IntEnum):
 	PREVIOUS_SOURCE_TEXT = 10103
 	"""
 	Text of previous source text
-	(msgid) for current item(shown in sidebar, may be hidden, is static control with the text)
+	(msgid) for current item (shown in sidebar, may be hidden, is static control with the text)
 	"""
 	NOTES_FOR_TRANSLATOR = 10104
 	"""
