@@ -18,6 +18,8 @@ Cursor routing reliability has been improved, and support for routing keys in Po
 All lines of cells will now be used when using a multi-line braille display via HID braille.
 NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan.
 
+Due to stability updates in the poedit translation software and changes in NVDA to support these, the minimum required version of Poedit that works with NVDA is now version 3.5.
+
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
