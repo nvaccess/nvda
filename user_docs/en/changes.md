@@ -23,6 +23,8 @@ The available options are:
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
+* The default state of Unicode Normalization for speech output has been changed to enabled. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the speech settings categorie in the NVDA Settings dialog.
 
 ### Bug Fixes
 
