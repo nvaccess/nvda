@@ -234,19 +234,37 @@ class _DataManager:
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=addonAPIVersion.CURRENT,
 				)
-			elif onDisplayableError is not None:
-				from gui.message import DisplayableError
-
-				displayableError = DisplayableError(
+			else:
+				self._do_displayError(
+					onDisplayableError,
 					# Translators: A message shown when fetching add-on data from the store fails
 					pgettext("addonStore", "Unable to fetch latest add-on data for compatible add-ons."),
-					self._updateFailureMessage,
 				)
-				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 		if self._compatibleAddonCache is None:
 			return _createAddonGUICollection()
 		return deepcopy(self._compatibleAddonCache.cachedAddonData)
+
+	def _do_displayError(
+		self,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
+		displayMessage: str,
+		titleMessage: str | None = _updateFailureMessage,
+	):
+		"""Display a DisplayableMessage if an OnDisplayableError action is given.
+
+		See gui.message.DisplayableError for further information.
+
+		:param onDisplayableError: The displayable error action.
+		:param displayMessage: Body of the displayable error.
+		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage
+		"""
+		if onDisplayableError is None:
+			return
+		from gui.message import DisplayableError
+
+		displayableError = DisplayableError(displayMessage, titleMessage)
+		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 	def getLatestAddons(
 		self,
