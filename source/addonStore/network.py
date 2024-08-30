@@ -9,6 +9,7 @@ from concurrent.futures import (
 )
 import os
 import pathlib
+import posixpath
 import shutil
 from typing import (
 	TYPE_CHECKING,
@@ -61,11 +62,13 @@ def _getCurrentApiVersionForURL() -> str:
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	return f"{_getBaseUrl()}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+	# We don't know whether a user-supplied base url will have a trailing slash, so use posixpath.join, which inserts separators as needed.
+	return posixpath.join(_getBaseUrl(), lang, channel.value, f"{nvdaApiVersion}.json")
 
 
 def _getCacheHashURL() -> str:
-	return f"{_getBaseUrl()}/cacheHash.json"
+	# We don't know whether a user-supplied base url will have a trailing slash, so use posixpath.join, which inserts separators as needed.
+	return posixpath.join(_getBaseUrl(), "cacheHash.json")
 
 
 class AddonFileDownloader:
