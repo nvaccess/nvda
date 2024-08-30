@@ -639,19 +639,21 @@ class AddonStoreVM:
 
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
-			# If the download was cancelled, the file may have been partially downloaded.
-			os.remove(listItemVM.model.tempDownloadPath)
 			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 		except KeyError:
 			log.debug("Download already completed")
 			return self._cancelPendingInstallForAddon(listItemVM)
-		except FileNotFoundError:
-			pass
 		else:
 			futuresCopy = self._downloader._pending.copy()
 			for future, addon in futuresCopy.items():
 				if listItemVM == addon[0] and not future.cancel():
 					self._downloader.progress.pop(addon[0], None)
+
+		try:
+			# If the download was cancelled, the file may have been partially downloaded.
+			os.remove(listItemVM.model.tempDownloadPath)
+		except FileNotFoundError:
+			pass
 
 	def _cancelPendingInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
