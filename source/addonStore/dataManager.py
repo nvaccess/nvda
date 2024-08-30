@@ -291,15 +291,12 @@ class _DataManager:
 					cachedLanguage=self._lang,
 					nvdaAPIVersion=_LATEST_API_VER,
 				)
-			elif onDisplayableError is not None:
-				from gui.message import DisplayableError
-
-				displayableError = DisplayableError(
+			else:
+				self._do_displayError(
+					onDisplayableError,
 					# Translators: A message shown when fetching add-on data from the store fails
 					pgettext("addonStore", "Unable to fetch latest add-on data for incompatible add-ons."),
-					self._updateFailureMessage,
 				)
-				callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
