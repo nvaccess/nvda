@@ -61,6 +61,7 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * It is now possible to interact with Data validation dropdown lists in Microsoft Excel 365. (#15138)
 * NVDA is no longer as sluggish when arrowing up and down through large files in VS Code. (#17039)
 * NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word and Microsoft Outlook. (#16812)
+* NVDA no longer reads the last line when the cursor is on the second-last line of a multiline edit control in Java applications. (#17027)
 
 ### Changes for Developers
 
