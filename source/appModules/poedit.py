@@ -32,21 +32,25 @@ class _WindowControlId(IntEnum):
 
 	NEEDS_WORK_SWITCH = 10101
 	"""The "Needs work" toggle in editing area at the bottom"""
+
 	TRANSLATION_ISSUE_TEXT = 10102
 	"""
 	The error or warning line above translation field
 	(hidden when there's no issue; ID is of the static text child window with issue's text)
 	"""
+
 	PREVIOUS_SOURCE_TEXT = 10103
 	"""
 	Text of previous source text
 	(msgid) for current item (shown in sidebar, may be hidden, is static control with the text)
 	"""
+
 	NOTES_FOR_TRANSLATOR = 10104
 	"""
 	Text of notes for translators (extracted from source code) for current item
 	(shown in sidebar, may be hidden, is static control with the text)
 	"""
+
 	TRANSLATOR_COMMENT = 10105
 	"""
 	Text of translator's comment for current item
