@@ -40,16 +40,18 @@ Major highlights include:
 ### System Requirements {#SystemRequirements}
 
 #### Minimum System Requirements {#MinimumSystemRequirements}
+
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
-  * Note 32-bit operating systems are no longer under active support.
+  * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
   * both AMD64 and ARM64 variants of Windows are supported.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
@@ -2169,7 +2171,7 @@ If "Read by paragraph" is checked, the selected start marker will be displayed t
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, Pilcrow (¶), for more obvious paragraph breaks.
+The options include using two spaces as a subtle paragraph break, and the paragraph symbol, pilcrow (¶), as a more obvious one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2952,9 +2954,8 @@ The font attributes combo box has four options:
 
 * Off: NVDA will not report these font attributes.
 * Speech: NVDA will announce when these font attributes change.
-* Braille: NVDA will display bold, italic, and underlines in braille.
-Note that your chosen braille table must support displaying these attributes.
-Exactly how these attributes are displayed varies between tables.
+* Braille: NVDA will display these attributes in braille.
+Exactly how they are displayed can be configured in [NVDA's braille settings](#BrailleFormattingDisplay).
 * Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
