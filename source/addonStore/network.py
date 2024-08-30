@@ -33,7 +33,6 @@ from .models.addon import (
 	_AddonStoreModel,
 )
 from .models.channel import Channel
-from .models.status import AvailableAddonStatus
 
 
 if TYPE_CHECKING:
@@ -111,13 +110,7 @@ class AddonFileDownloader:
 		f.add_done_callback(self._done)
 
 	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
-		isCancelled = (
-			downloadAddonFuture.cancelled()
-			or downloadAddonFuture not in self._pending
-			# When the add-on status is set to a value other than "DOWNLOADING" before the completeness check,
-			# the download is considered to be canceled externally.
-			or self._pending[downloadAddonFuture][0].status != AvailableAddonStatus.DOWNLOADING
-		)
+		isCancelled = downloadAddonFuture.cancelled() or downloadAddonFuture not in self._pending
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
 

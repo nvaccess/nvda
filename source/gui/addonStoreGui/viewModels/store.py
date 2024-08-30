@@ -643,7 +643,6 @@ class AddonStoreVM:
 			log.debug("Download already completed")
 			return self._cancelPendingInstallForAddon(listItemVM)
 		else:
-			listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 			futuresCopy = self._downloader._pending.copy()
 			for future, addon in futuresCopy.items():
 				if listItemVM == addon[0] and not future.cancel():
