@@ -42,7 +42,7 @@ jobs:
             $xliff = "user_docs/en/$baseName.xliff"
             $tempXliff = "user_docs/en/$baseName.xliff.temp"
             $markdown = $file
-            if(Test-Path $xliff) {
+            if (Test-Path $xliff) {
                 Write-Host "Updating $xliff with changes from $markdown"
                 python user_docs/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
                 Write-Host "Renaming $tempXliff to $xliff"
@@ -62,7 +62,7 @@ jobs:
         git config --local user.email "actions@github.com"
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
         $filesChanged = git diff --name-only -- *.xliff
-        if($filesChanged) {
+        if ($filesChanged) {
           Write-Host "xliff files were changed. Committing and pushing changes."
           foreach ($file in $filesChanged) {
             git add $file
@@ -86,7 +86,7 @@ jobs:
         # If we did, upload it to Crowdin.
         $ErrorActionPreference = 'Stop'
         $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/userGuide.xliff
-        if($changed) {
+        if ($changed) {
             Write-Host "Uploading userGuide.xliff to Crowdin"
             # 18 is the file ID for userGuide.xliff in Crowdin.
             python appVeyor/crowdinSync.py uploadSourceFile 18 user_docs/en/userguide.xliff

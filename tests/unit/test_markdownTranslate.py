@@ -28,7 +28,7 @@ class TestMarkdownTranslate(unittest.TestCase):
 	def tearDown(self):
 		self.outDir.cleanup()
 
-	def runMarkdownTranslateCommand(self, description, args: list[str]):
+	def runMarkdownTranslateCommand(self, description: str, args: list[str]):
 		failed = False
 		try:
 			subprocess.run([sys.executable, self.markdownTranslateScriptPath, *args], check=True)

@@ -47,7 +47,7 @@ def createAndDeleteTempFilePath_contextManager(
 		os.remove(tempFilePath)
 
 
-def getLastCommitID(filePath) -> str:
+def getLastCommitID(filePath: str) -> str:
 	# Run the git log command to get the last commit ID for the given file
 	result = subprocess.run(
 		["git", "log", "-n", "1", "--pretty=format:%H", "--", filePath],
@@ -72,7 +72,7 @@ def getGitDir() -> str:
 	return gitDir
 
 
-def getRawGithubURLForPath(filePath: str):
+def getRawGithubURLForPath(filePath: str) -> str:
 	gitDirPath = getGitDir()
 	commitID = getLastCommitID(filePath)
 	relativePath = os.path.relpath(os.path.abspath(filePath), gitDirPath)
@@ -201,7 +201,10 @@ def updateSkeleton(
 			else:
 				raise ValueError(f"Unexpected diff line: {mdDiffLine}")
 		print(
-			f"Updated skeleton file with {res.numAddedLines} added lines ({res.numAddedTranslationPlaceholders} translation placeholders), {res.numRemovedLines} removed lines ({res.numRemovedTranslationPlaceholders} translation placeholders), and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)"
+			f"Updated skeleton file with {res.numAddedLines} added lines "
+			f"({res.numAddedTranslationPlaceholders} translation placeholders), "
+			f"{res.numRemovedLines} removed lines ({res.numRemovedTranslationPlaceholders} translation placeholders), "
+			f"and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)"
 		)
 		return res
 
@@ -391,7 +394,7 @@ class Result_generateMarkdown:
 	numTranslatedStrings = 0
 
 
-def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True):
+def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -> Result_generateMarkdown:
 	print(f"Generating markdown file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)}...")
 	res = Result_generateMarkdown()
 	with contextlib.ExitStack() as stack:
