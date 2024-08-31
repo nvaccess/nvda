@@ -129,6 +129,8 @@ class AddonFileDownloader:
 				os.remove(self._pending[downloadAddonFuture][0].model.tempDownloadPath)
 			except FileNotFoundError:
 				pass
+			except Exception as e:
+				log.error(f"Error while deleting partially downloaded file: {e}")
 			return
 
 		addonData, onComplete, onDisplayableError = self._pending[downloadAddonFuture]
