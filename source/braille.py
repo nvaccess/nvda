@@ -1762,9 +1762,12 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		#: The position in L{brailleCells} where the display window starts (inclusive).
-		#: @type: int
-		self.windowStartPos = 0
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
+		"""
+		A list representing the rows in the braille window,
+		each item being a tuple of start and end braille buffer offsets.
+		Splitting the window into independent rows allows for optional avoidance of splitting words across rows.
+		"""
 
 	def clear(self):
 		"""Clear the entire buffer.
@@ -1859,30 +1862,71 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			)
 			return ""
 
-	def bufferPosToWindowPos(self, bufferPos):
-		if not (self.windowStartPos <= bufferPos < self.windowEndPos):
-			raise LookupError("Buffer position not in window")
-		return bufferPos - self.windowStartPos
+	def bufferPosToWindowPos(self, bufferPos: int) -> int:
+		for row, (start, end) in enumerate(self._windowRowBufferOffsets):
+			if start <= bufferPos < end:
+				return row * self.handler.displayDimensions.numCols + (bufferPos - start)
+		raise LookupError("buffer pos not in window")
 
-	def _get_windowEndPos(self):
-		endPos = self.windowStartPos + self.handler.displaySize
-		cellsLen = len(self.brailleCells)
-		if endPos >= cellsLen:
-			return cellsLen
-		if not config.conf["braille"]["wordWrap"]:
-			return endPos
-		try:
-			# Try not to split words across windows.
-			# To do this, break after the furthest possible space.
-			return min(
-				rindex(self.brailleCells, 0, self.windowStartPos, endPos) + 1,
-				endPos,
-			)
-		except ValueError:
-			pass
-		return endPos
+	def windowPosToBufferPos(self, windowPos: int) -> int:
+		"""
+		Converts a position relative to the braille window to a position relative to the braille buffer.
+		"""
+		windowPos = max(min(windowPos, self.handler.displaySize), 0)
+		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
+		if row < len(self._windowRowBufferOffsets):
+			start, end = self._windowRowBufferOffsets[row]
+			return min(start + col, end - 1)
+		raise ValueError("Position outside window")
 
-	def _set_windowEndPos(self, endPos):
+	windowStartPos: int
+	"""The start position of the braille window in the braille buffer."""
+
+	def _get_windowStartPos(self) -> int:
+		return self.windowPosToBufferPos(0)
+
+	def _set_windowStartPos(self, pos: int) -> None:
+		self._calculateWindowRowBufferOffsets(pos)
+
+	def _calculateWindowRowBufferOffsets(self, pos: int) -> None:
+		"""
+		Calculates the start and end positions of each row in the braille window.
+		Ensures that words are not split across rows when word wrap is enabled.
+		Ensures that the window does not extend past the end of the braille buffer.
+		:param pos: The start position of the braille window.
+		"""
+		self._windowRowBufferOffsets.clear()
+		if len(self.brailleCells) == 0:
+			# Initialising with no actual braille content.
+			self._windowRowBufferOffsets = [(0, 1)]
+			return
+		doWordWrap = config.conf["braille"]["wordWrap"]
+		bufferEnd = len(self.brailleCells)
+		start = pos
+		clippedEnd = False
+		for row in range(self.handler.displayDimensions.numRows):
+			end = start + self.handler.displayDimensions.numCols
+			if end > bufferEnd:
+				end = bufferEnd
+				clippedEnd = True
+			elif doWordWrap:
+				try:
+					end = rindex(self.brailleCells, 0, start, end) + 1
+				except (ValueError, IndexError):
+					pass  # No space on line
+			self._windowRowBufferOffsets.append((start, end))
+			if clippedEnd:
+				break
+			start = end
+
+	windowEndPos: int
+	"""The end position of the braille window in the braille buffer."""
+
+	def _get_windowEndPos(self) -> int:
+		start, end = self._windowRowBufferOffsets[-1]
+		return end
+
+	def _set_windowEndPos(self, endPos: int) -> None:
 		"""Sets the end position for the braille window and recalculates the window start position based on several variables.
 		1. Braille display size.
 		2. Whether one of the regions should be shown hard left on the braille display;
@@ -2012,6 +2056,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 			start += len(cells)
 		if log.isEnabledFor(log.IO):
 			log.io("Braille regions text: %r" % logRegions)
+		self._calculateWindowRowBufferOffsets(self.windowStartPos)
 
 	def updateDisplay(self):
 		if self is self.handler.buffer:
@@ -2028,18 +2073,25 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 	def _get_windowRawText(self):
 		return self.bufferPositionsToRawText(self.windowStartPos, self.windowEndPos)
 
-	def _get_windowBrailleCells(self):
-		return self.brailleCells[self.windowStartPos : self.windowEndPos]
+	def _get_windowBrailleCells(self) -> list[int]:
+		windowCells = []
+		for start, end in self._windowRowBufferOffsets:
+			rowCells = self.brailleCells[start:end]
+			remaining = self.handler.displayDimensions.numCols - len(rowCells)
+			if remaining > 0:
+				rowCells.extend([0] * remaining)
+			windowCells.extend(rowCells)
+		return windowCells
 
 	def routeTo(self, windowPos):
-		pos = self.windowStartPos + windowPos
+		pos = self.windowPosToBufferPos(windowPos)
 		if pos >= self.windowEndPos:
 			return
 		region, pos = self.bufferPosToRegionPos(pos)
 		region.routeTo(pos)
 
 	def getTextInfoForWindowPos(self, windowPos):
-		pos = self.windowStartPos + windowPos
+		pos = self.windowPosToBufferPos(windowPos)
 		if pos >= self.windowEndPos:
 			return None
 		region, pos = self.bufferPosToRegionPos(pos)
@@ -2230,13 +2282,32 @@ the remote system should know what cells to show on its display.
 @type currentCellCount: bool
 """
 
-filter_displaySize = extensionPoints.Filter()
+filter_displaySize = extensionPoints.Filter[int]()
 """
 Filter that allows components or add-ons to change the display size used for braille output.
 For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
 display, the display size should be lowered to 40 .
 @param value: the number of cells of the current display.
-@type value: int
+Note: filter_displayDimensions should now be used in place of this filter.
+If this filter is used, NVDA will assume that the display has 1 row of `displaySize` cells.
+"""
+
+
+class DisplayDimensions(NamedTuple):
+	numRows: int
+	numCols: int
+
+	@property
+	def displaySize(self) -> int:
+		return self.numCols * self.numRows
+
+
+filter_displayDimensions = extensionPoints.Filter[DisplayDimensions]()
+"""
+Filter that allows components or add-ons to change the number of rows and columns used for braille output.
+For example, when a system has a display with 10 rows and 20 columns, but is being controlled by a remote system with a display of 5 rows and 40 coluns, the display number of rows should be lowered to 5.
+:param value: a DisplayDimensions namedtuple with the number of rows and columns of the current display.
+Note: this should be used in place of filter_displaySize.
 """
 
 displaySizeChanged = extensionPoints.Action()
@@ -2244,8 +2315,12 @@ displaySizeChanged = extensionPoints.Action()
 Action that allows components or add-ons to be notified of display size changes.
 For example, when a system is controlled by a remote system and the remote system swaps displays,
 The local system should be notified about display size changes at the remote system.
-@param displaySize: The current display size used by the braille handler.
-@type displaySize: int
+:param displaySize: The current display size used by the braille handler.
+:type displaySize: int
+:param displayDimensions.numRows: The current number of rows used by the braille handler.
+:type displayDimensions.numRows: int
+:param displayDimensions.numCols: The current number of columns used by the braille handler.
+:type displayDimensions.numCols: int
 """
 
 displayChanged = extensionPoints.Action()
@@ -2292,10 +2367,10 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		louisHelper.initialize()
 		self._table: brailleTables.BrailleTable = brailleTables.getTable(FALLBACK_TABLE)
 		self.display: Optional[BrailleDisplayDriver] = None
-		self._displaySize: int = 0
+		self._displayDimensions: DisplayDimensions = DisplayDimensions(1, 0)
 		"""
-		Internal cache for the displaySize property.
-		This attribute is used to compare the displaySize output by l{filter_displaySize}
+		Internal cache for the displayDimensions property.
+		This attribute is used to compare the displaySize output by l{filter_displayDimensions} or l{filter_displaySize}
 		with its previous output.
 		If the value differs, L{displaySizeChanged} is notified.
 		"""
@@ -2432,26 +2507,64 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	displaySize: int
 	_cache_displaySize = True
 
-	def _get_displaySize(self):
+	def _get_displaySize(self) -> int:
 		"""Returns the display size to use for braille output.
-		Handlers can register themselves to L{filter_displaySize} to change this value on the fly.
+		This is calculated from l{displayDimensions}.
+		Handlers can register themselves to L{filter_displayDimensions} to change this value on the fly.
 		Therefore, this is a read only property and can't be set.
 		"""
-		numCells = self.display.numCells if self.display else 0
-		currentDisplaySize = filter_displaySize.apply(numCells)
-		if self._displaySize != currentDisplaySize:
-			displaySizeChanged.notify(displaySize=currentDisplaySize)
-			self._displaySize = currentDisplaySize
-		return currentDisplaySize
+		displaySize = self.displayDimensions.displaySize
+		# For backwards compatibility, we still set the internal cache.
+		self._displaySize = displaySize
+		return displaySize
 
 	def _set_displaySize(self, value):
 		"""While the display size can be changed while a display is connected
 		(for instance see L{brailleDisplayDrivers.alva.BrailleDisplayDriver} split point feature),
 		it is not possible to override the display size using this property.
-		Consider registering a handler to L{filter_displaySize} instead.
+		Consider registering a handler to L{filter_displayDimensions} instead.
 		"""
 		raise AttributeError(
-			f"Can't set displaySize to {value}, consider registering a handler to filter_displaySize",
+			f"Can't set displaySize to {value}, consider registering a handler to filter_displayDimensions",
+		)
+
+	displayDimensions: DisplayDimensions
+	_cache_displayDimensions = True
+
+	def _get_displayDimensions(self) -> DisplayDimensions:
+		rawDisplayDimensions = DisplayDimensions(
+			numRows=self.display.numRows if self.display else 0,
+			numCols=self.display.numCols if self.display else 0,
+		)
+		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
+		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
+		calculatedDisplaySize = filteredDisplayDimensions.displaySize
+		if next(filter_displaySize.handlers, None):
+			# There is technically a race condition here if a handler is unregistered before the apply call.
+			# But worse case is that a multiline display will be singleline for a short time.
+			filteredDisplaySize = filter_displaySize.apply(calculatedDisplaySize)
+			if filteredDisplaySize != calculatedDisplaySize:
+				calculatedDisplaySize = filteredDisplaySize
+				filteredDisplayDimensions = DisplayDimensions(
+					numRows=1,
+					numCols=filteredDisplaySize,
+				)
+		if self._displayDimensions != filteredDisplayDimensions:
+			displaySizeChanged.notify(
+				displaySize=calculatedDisplaySize,
+				numRows=filteredDisplayDimensions.numRows,
+				numCols=filteredDisplayDimensions.numCols,
+			)
+		self._displayDimensions = filteredDisplayDimensions
+		return filteredDisplayDimensions
+
+	def _set_displayDimensions(self, value: DisplayDimensions):
+		"""
+		It is not possible to override the display dimensions using this property.
+		Consider registering a handler to L{filter_displayDimensions} instead.
+		"""
+		raise AttributeError(
+			f"Can't set displayDimensions to {value}, consider registering a handler to filter_displayDimensions",
 		)
 
 	enabled: bool
@@ -2613,6 +2726,41 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			# Make sure we start the blink timer from the main thread to avoid wx assertions
 			wx.CallAfter(self._cursorBlinkTimer.Start, blinkRate)
 
+	def _normalizeCellArraySize(
+		self,
+		oldCells: list[int],
+		oldCellCount: int,
+		oldNumRows: int,
+		newCellCount: int,
+		newNumRows: int,
+	) -> list[int]:
+		"""
+		Given a list of braille cells of length oldCell Count layed out in sequencial rows of oldNumRows,
+		return a list of braille cells of length newCellCount layed out in sequencial rows of newNumRows,
+		padding or truncating the rows and columns as necessary.
+		"""
+		oldNumCols = oldCellCount // oldNumRows
+		newNumCols = newCellCount // newNumRows
+		if len(oldCells) < oldCellCount:
+			log.warning("Braille cells are shorter than the display size. Padding with blank cells.")
+			oldCells.extend([0] * (oldCellCount - len(oldCells)))
+		newCells = []
+		if newCellCount != oldCellCount or newNumRows != oldNumRows:
+			for rowIndex in range(newNumRows):
+				if rowIndex < oldNumRows:
+					start = rowIndex * oldNumCols
+					rowLen = min(oldNumCols, newNumCols)
+					end = start + rowLen
+					row = oldCells[start:end]
+					if rowLen < newNumCols:
+						row.extend([0] * (newNumCols - rowLen))
+				else:
+					row = [0] * newNumCols
+				newCells.extend(row)
+		else:
+			newCells = oldCells
+		return newCells
+
 	def _writeCells(self, cells: List[int]):
 		handlerCellCount = self.displaySize
 		pre_writeCells.notify(cells=cells, rawText=self._rawText, currentCellCount=handlerCellCount)
@@ -2622,18 +2770,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			return
 		# Braille displays expect cells to be padded up to displayCellCount.
 		# However, the braille handler uses handlerCellCount to calculate the number of cells.
-		cellCountDif = displayCellCount - len(cells)
-		if cellCountDif < 0:
-			# There are more cells than the connected display could take.
-			log.warning(
-				f"Connected display {self.display.name!r} has {displayCellCount} cells, "
-				f"while braille handler is using {handlerCellCount} cells",
-			)
-			cells = cells[:displayCellCount]
-		elif cellCountDif > 0:
-			# The connected display could take more cells than the braille handler produces.
-			# Displays expect cells to be padded up to the number of cells.
-			cells += [END_OF_BRAILLE_OUTPUT_SHAPE] + [0] * (cellCountDif - 1)
+		# number of rows / columns may also differ.
+		cells = self._normalizeCellArraySize(
+			cells,
+			handlerCellCount,
+			self.displayDimensions.numRows,
+			displayCellCount,
+			self.display.numRows,
+		)
 		if not self.display.isThreadSafe:
 			try:
 				self.display.display(cells)
