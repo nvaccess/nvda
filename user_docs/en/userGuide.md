@@ -2477,7 +2477,7 @@ The following keyboard command can also be used from anywhere:
 
 | Name | Key | Description |
 |---|---|---|
-| Mute or unmute other applications | `NVDA+alt+delete` | Cycles through statuses for "Applications volume adjuster" |
+| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
 
 Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
