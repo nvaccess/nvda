@@ -648,12 +648,6 @@ class AddonStoreVM:
 				if listItemVM == addon[0] and not future.cancel():
 					self._downloader.progress.pop(addon[0], None)
 
-		try:
-			# If the download was cancelled, the file may have been partially downloaded.
-			os.remove(listItemVM.model.tempDownloadPath)
-		except FileNotFoundError:
-			log.debug(f"File already removed {listItemVM.model.tempDownloadPath}")
-
 	def _cancelPendingInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
 		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
 		for addonData, fileDownloaded in pendingInstallCopy:

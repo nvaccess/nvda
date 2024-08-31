@@ -161,13 +161,21 @@ class _AddonStoreModel(_AddonGUIModel):
 			# have not been installed yet
 			addonDataManager._downloadsPendingInstall,
 		)
+		nameInDownloadsPendingCompletion = filter(
+			lambda m: m.model.name == self.name,
+			# add-ons which are currently being downloaded
+			# and have not been cancelled
+			addonDataManager._downloadsPendingCompletion,
+		)
 		return (
 			super().isPendingInstall
 			# True if this add-on has been downloaded but
 			# has not been installed yet
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
+			# and the download has not been cancelled
 			or os.path.exists(self.tempDownloadPath)
+			and bool(next(nameInDownloadsPendingCompletion, False))
 		)
 
 

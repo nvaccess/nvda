@@ -110,7 +110,11 @@ class AddonFileDownloader:
 		f.add_done_callback(self._done)
 
 	def _done(self, downloadAddonFuture: Future[Optional[os.PathLike]]):
-		isCancelled = downloadAddonFuture.cancelled() or downloadAddonFuture not in self._pending
+		isCancelled = (
+			downloadAddonFuture.cancelled()
+			or downloadAddonFuture not in self._pending
+			or self._pending[downloadAddonFuture][0] not in self.progress
+		)
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
 
