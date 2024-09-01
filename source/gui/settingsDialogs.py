@@ -28,6 +28,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
+	AddonListOrder,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -3132,9 +3133,22 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
+		# Translators: This is a label for the add-on list order combo box in the Add-on Store Settings dialog.
+		addonListOrderLabelText = _("Addon list &order:")
+		self.addonListOrderComboBox = sHelper.addLabeledControl(
+			addonListOrderLabelText,
+			wx.Choice,
+			choices=[mode.displayString for mode in AddonListOrder],
+		)
+		self.bindHelpEvent("AddonListOrder", self.addonListOrderComboBox)
+		index = [x.value for x in AddonListOrder].index(config.conf["addonStore"]["addonListOrder"])
+		self.addonListOrderComboBox.SetSelection(index)
+
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+		index = self.addonListOrderComboBox.GetSelection()
+		config.conf["addonStore"]["addonListOrder"] = [x.value for x in AddonListOrder][index]
 
 
 class TouchInteractionPanel(SettingsPanel):

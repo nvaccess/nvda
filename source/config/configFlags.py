@@ -227,6 +227,26 @@ class AddonsAutomaticUpdate(DisplayStringStrEnum):
 		}
 
 
+class AddonListOrder(DisplayStringStrEnum):
+	RECENT = "recent"
+	OLDER = "older"
+	ALPHABETICAL = "alphabetical"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: This is a label for the add-on list order in the store.
+			# Recent published add-ons will be presented first.
+			self.RECENT: _("Recent add-ons first"),
+			# Translators: This is a label for the add-on list order in the store.
+			# Older published add-ons will be presented first.
+			self.OLDER: _("Older add-ons first"),
+			# Translators: This is a label for the add-on list order in the store.
+			# Add-ons will be sorted alphabetically.
+			self.ALPHABETICAL: _("Alphabetical"),
+		}
+
+
 @unique
 class OutputMode(DisplayStringIntFlag):
 	"""Enumeration for ways to output information, such as formatting.
