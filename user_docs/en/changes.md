@@ -61,6 +61,7 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * It is now possible to interact with Data validation dropdown lists in Microsoft Excel 365. (#15138)
 * NVDA is no longer as sluggish when arrowing up and down through large files in VS Code. (#17039)
 * NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word and Microsoft Outlook. (#16812)
+* NVDA no longer reads the last line when the cursor is on the second-last line of a multiline edit control in Java applications. (#17027)
 
 ### Changes for Developers
 
@@ -87,6 +88,14 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
   * These keys are currently synchronized until 2025.1.
 * `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
+
+## 2024.3.1
+
+This is a patch release to fix a bug with the automatic add-on update notification.
+
+### Bug Fixes
+
+* When automatically checking for add-on updates, NVDA no longer freezes on poor connections. (#17036)
 
 ## 2024.3
 
