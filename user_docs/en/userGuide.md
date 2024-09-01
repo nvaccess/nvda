@@ -3031,6 +3031,22 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
+##### Add-on list order {#AddonListOrder}
+
+This option determines the order of add-ons in the add-on list of the store.
+Add-ons can be sorted by date (recent or older add-ons first), or alphabetically.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Recent add-ons first (Default), Older add-ons first, alphabetical |
+|Default |Recent add-ons first |
+
+|Option |Behaviour |
+|---|---|
+|Recent add-ons first |Add-ons published more recently will be presented first |
+|Older add-ons first |Add-ons published before will be presented first |
+|Alphabetical |Add-ons will be presented in alphabetical order |
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
