@@ -90,7 +90,11 @@ class AddonListField(_AddonListFieldData, Enum):
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
 	)
-
+	publicationDate = (
+		# Translators: The name of the column that contains the publication date of the add-on.
+		pgettext("addonStore", "publicationDate"),
+		50,
+	)
 
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
@@ -344,8 +348,10 @@ class AddonListVM:
 			core.callLater(delay=0, callable=self.updated.notify)
 
 	def _getFilteredSortedIds(self) -> List[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
+		def _getSortFieldData(listItemVM: AddonListItemVM, shouldUseSubmissionTime: bool = True) -> "SupportsLessThan":
+			if not shouldUseSubmissionTime or listItemVM.model.submissionTime is None:
+				return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
+			return str(listItemVM.model.submissionTime)
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
@@ -365,7 +371,8 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+		reverse = True
+		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=reverse)])
 		return filteredSorted
 
 	def _tryPersistSelection(

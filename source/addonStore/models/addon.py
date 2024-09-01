@@ -6,6 +6,7 @@
 import dataclasses
 import json
 import os
+from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -170,6 +171,12 @@ class _AddonStoreModel(_AddonGUIModel):
 			# True if this add-on is currently being downloaded
 			or os.path.exists(self.tempDownloadPath)
 		)
+
+	@property
+	def publicationDate(self) -> str | None:
+		if self.submissionTime is None:
+			return None
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime), "%x")
 
 
 class _AddonManifestModel(_AddonGUIModel):
