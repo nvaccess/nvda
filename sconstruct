@@ -334,14 +334,16 @@ styles = os.path.join(userDocsDir.path, "styles.css")
 numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
 # Create Non-english md files in user_docs from localized xliff and English skel files
-for xliffFile in env.Glob(os.path.join(userDocsDir.path, '*', '*.xliff')):
-	lang = os.path.basename(xliffFile.path).split('.')[0]
-	if lang == 'en':
+for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
+	lang = os.path.basename(xliffFile.path).split(".")[0]
+	if lang == "en":
 		continue
-	mdFile = os.path.splitext(xliffFile.path)[0] + '.md'
-	env.Command(mdFile, xliffFile, [
-		f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'
-	])
+	mdFile = os.path.splitext(xliffFile.path)[0] + ".md"
+	env.Command(
+		mdFile,
+		xliffFile,
+		[f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.md2html(mdFile)
