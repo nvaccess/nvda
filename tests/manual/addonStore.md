@@ -38,6 +38,14 @@ Add-ons can be filtered by display name, publisher and description.
 1. Ensure a warning is displayed: "Unable to fetch latest compatible add-ons"
 1. Ensure installed add-ons are still available in the add-on store.
 
+### Sorting the add-ons list
+1. Go to NVDA's menu, Preferences submenu, Settings, and select the add-on store category.
+1. In the Add-on list order combo box, select one of the available options.
+1. Open the store and check that add-ons are sorted according with your chosen option. If an add-on has a publication date, it will be shown in the add-on list and in the details panel. This can be used to check  that add-ons have been sorted from recent to older, or from older to recent.
+1. To add a publication date to an add-on manually, edit the Add-on Store JSON metadata, assigning an integer value to a "submissionTime" key.
+        - Example: `source\userConfig\addons\clock.json
+        - `"submissionTime": 1000000000`
+
 
 ## Installing add-ons
 
