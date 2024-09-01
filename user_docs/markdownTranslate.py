@@ -528,7 +528,7 @@ def pretranslateAllPossibleLanguages(langsDir: str, mdBaseName: str):
 			os.remove(langXliffPath)
 			continue
 		try:
-			ensureFilesMatch(rebuiltLangMdPath, langPretranslatedMdPath, allowBadAnchors=True)
+			ensureMarkdownFilesMatch(rebuiltLangMdPath, langPretranslatedMdPath, allowBadAnchors=True)
 		except Exception as e:
 			print(f"Rebuilt {langDir} markdown does not match pretranslated markdown: {e}")
 			os.remove(langXliffPath)
