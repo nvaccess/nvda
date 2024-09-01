@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import config
 from dataclasses import dataclass
 from enum import Enum
 
@@ -348,7 +349,8 @@ class AddonListVM:
 			core.callLater(delay=0, callable=self.updated.notify)
 
 	def _getFilteredSortedIds(self) -> List[str]:
-		def _getSortFieldData(listItemVM: AddonListItemVM, shouldUseSubmissionTime: bool = True) -> "SupportsLessThan":
+		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			shouldUseSubmissionTime = config.conf["addonStore"]["addonListOrder"] != "alphabetical"
 			if not shouldUseSubmissionTime or listItemVM.model.submissionTime is None:
 				return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 			return str(listItemVM.model.submissionTime)
@@ -371,7 +373,8 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		reverse = True
+
+		reverse = config.conf["addonStore"]["addonListOrder"] == "recent"
 		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=reverse)])
 		return filteredSorted
 
