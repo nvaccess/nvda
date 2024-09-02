@@ -54,8 +54,6 @@ jobs:
       if: success()
 
     - name: Commit and Push changes
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         $ErrorActionPreference = 'Stop'
         git config --local user.name "GitHub Actions"
@@ -70,11 +68,12 @@ jobs:
           }
           Write-Host "Setting up ssh for push"
           # Ensure .ssh directory exists
-          mkdir -p ~/.ssh
+          New-Item -ItemType Directory -Force -Path ~/.ssh
           # Add github.com to the list of known hosts for ssh
           ssh-keyscan github.com >> ~/.ssh/known_hosts
           # set the private key of the Github deploy key as the ssh key 
-          echo ${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY}} >~.ssh/id_rsa
+          $privateKey = "${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY }}"
+          $privateKey | Out-File -FilePath ~/.ssh/id_rsa -Encoding ascii
           # Tell git to use ssh for pushing
           git remote set-url origin git@github.com:${{ github.repository }}
           Write-Host "Pushing changes"
