@@ -179,7 +179,7 @@ class _AddonStoreModel(_AddonGUIModel):
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
 			# and the download has not been cancelled
-			and bool(next(nameInDownloadsPendingCompletion, False))
+			or bool(next(nameInDownloadsPendingCompletion, False))
 		)
 
 
