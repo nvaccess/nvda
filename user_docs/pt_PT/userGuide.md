@@ -1,5 +1,5 @@
 # Manual do Utilizador do NVDA NVDA_VERSION
-Traduzido pela equipa portuguesa do NVDA.
+
 [TOC]
 
 <!-- KC:title: NVDA NVDA_VERSION Commands Quick Reference -->

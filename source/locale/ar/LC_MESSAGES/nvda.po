@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-27 03:39+0000\n"
-"PO-Revision-Date: 2024-08-27 06:23\n"
+"POT-Creation-Date: 2024-08-30 06:22+0000\n"
+"PO-Revision-Date: 2024-09-02 01:14\n"
 "Last-Translator: \n"
 "Language-Team: Arabic\n"
 "Language: ar_SA\n"
@@ -659,7 +659,7 @@ msgstr "بلوتوث"
 #: braille.py:410
 msgctxt "braille formatting symbol"
 msgid "⠃"
-msgstr ""
+msgstr "⠃"
 
 #. Translators: Brailled at the end of bold text.
 #. This is the English letter "b" plus dot 7 in braille.
@@ -687,21 +687,21 @@ msgstr ""
 #: braille.py:426
 msgctxt "braille formatting symbol"
 msgid "⠥"
-msgstr ""
+msgstr "⠎"
 
 #. Translators: Brailled at the end of underlined text.
 #. This is the English letter "u" plus dot 7 in braille.
 #: braille.py:429
 msgctxt "braille formatting symbol"
 msgid "⡥"
-msgstr ""
+msgstr "⡥"
 
 #. Translators: Brailled at the start of strikethrough text.
 #. This is the English letter "s" in braille.
 #: braille.py:434
 msgctxt "braille formatting symbol"
 msgid "⠎"
-msgstr ""
+msgstr "⠎"
 
 #. Translators: Brailled at the end of strikethrough text.
 #. This is the English letter "s" plus dot 7 in braille.
@@ -3496,7 +3496,7 @@ msgstr "لا يوجد تحديد"
 
 #. Translators: Abbreviation for points, a measurement of font size.
 #: displayModel.py:576 appModules\powerpnt.py:1113 appModules\soffice.py:77
-#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:205
+#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:202
 #: NVDAObjects\UIA\__init__.py:194 NVDAObjects\window\edit.py:345
 #: NVDAObjects\window\edit.py:714 NVDAObjects\window\excel.py:1300
 #: NVDAObjects\window\scintilla.py:154 NVDAObjects\window\winword.py:1059
@@ -3932,27 +3932,27 @@ msgstr "تفعيل الإعلان عن حجم الخط"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:579
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr ""
+msgstr "يبدّل بين أنماط الإعلان عن خصائص الخط: النُطق، برايل، النُطق وبرايل معا، وتعطيل."
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:589
 msgid "Do not report font attributes"
-msgstr ""
+msgstr "عدم الإعلان عن خصائص الخط"
 
 #. Translators: A state in which font attributes are only spoken.
 #: globalCommands.py:592
 msgid "Speak font attributes"
-msgstr ""
+msgstr "نُطق خصائص الخط"
 
 #. Translators: A state in which font attributes are only brailled.
 #: globalCommands.py:595
 msgid "Braille font attributes"
-msgstr ""
+msgstr "عرض خصائص الخط بطريقة برايل"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:598
 msgid "Speak and braille font attributes"
-msgstr ""
+msgstr "نُطق خصائص الخط وعرضها بطريقة برايل"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:604
@@ -5370,17 +5370,17 @@ msgstr "تفعيل مؤشر برايل"
 #. Translators: Input help mode message for speak on routing command.
 #: globalCommands.py:3598
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
-msgstr ""
+msgstr "التبديل بين تفعيل وتعطيل الإعلان عن الحرف الذي ينتقل إليه مؤشّر برايل"
 
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3606
 msgid "Enabled speak character when routing cursor in text"
-msgstr ""
+msgstr "تفعيل نُطق الحرف عند نقل مؤشّر برايل إليه"
 
 #. Translators: The message announced when toggling off speaking character when routing.
 #: globalCommands.py:3609
 msgid "Disabled speak character when routing cursor in text"
-msgstr ""
+msgstr "تعطيل نُطق الحرف عند نقل مؤشّر برايل إليه"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3614
@@ -9808,7 +9808,7 @@ msgstr "إشعار"
 #. Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 #: config\configFlags.py:252
 msgid "Speech and braille"
-msgstr ""
+msgstr "نُطقًا وبطريقة برايل"
 
 #. Translators: This is a label for a paragraph start marker.
 #: config\configFlags.py:265
@@ -12573,7 +12573,7 @@ msgstr "استخدام خاصية &تصحيح الهجاء إن كانت مدع�
 #. Translators: Label of the list where user can enable or disable symbol dictionaires.
 #: gui\settingsDialogs.py:1746
 msgid "E&xtra dictionaries for character and symbol processing:"
-msgstr ""
+msgstr "قواميس إضافية لمعالجة الأحرف والرموز:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1760
@@ -12676,7 +12676,7 @@ msgstr "التعامل مع المفا&تيح المخصصة للتطبيقات 
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:1991
 msgid "&Multiple key press timeout (ms):"
-msgstr ""
+msgstr "مهلة الضغط على المفاتيح المتعددة (مللي ثانية):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2007
@@ -13796,12 +13796,12 @@ msgstr "إظهار مؤشّر ال&تحديد"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4442
 msgid "Formatting &display"
-msgstr ""
+msgstr "&عرض التنسيق"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4451
 msgid "Spea&k character when routing cursor in text"
-msgstr ""
+msgstr "نُطق الحرف عند نقل مؤشّر برايل إليه"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
