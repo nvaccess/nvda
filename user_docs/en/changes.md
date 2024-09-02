@@ -13,6 +13,10 @@
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+* Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
+  * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
+  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie)
+  * The initial window can now be exited with `escape` or `alt+f4`. (#10799, @XLTechie)
 
 ### Bug Fixes
 
@@ -20,6 +24,7 @@
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 
 ### Changes for Developers
 
