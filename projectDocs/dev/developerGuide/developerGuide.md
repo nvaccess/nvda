@@ -1313,7 +1313,8 @@ For examples of how to define and use new extension points, please see the code 
 
 | Type |Extension Point |Description|
 |---|---|---|
-|`Filter` |`filter_displaySize` |Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displaySize` | [Deprecated] Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displayDimensions` | Allows components or add-ons to change the number of rows and columns of the display used for braille output.|
 |`Action` |`displaySizeChanged` |Notifies of display size changes.|
 |`Action` |`pre_writeCells` |Notifies when cells are about to be written to a braille display|
 |`Action` |`displayChanged` |Notifies of braille display changes.|

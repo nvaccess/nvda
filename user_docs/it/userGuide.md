@@ -523,7 +523,7 @@ La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazion
 Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
 
 NVDA può essere configurato in modo tale che sia il tasto `Insert del tastierino numerico`, sia `Insert della tastiera estesa` e il tasto `Blocca Maiuscole` agiscano contemporaneamente come tasto funzione `NVDA`.
-Da impostazioni predefinite entrambi i tasti `Insert`, della tastiera estesa e del tastierino, sono configurati come tasti funzione di NVDA.
+Da impostazioni predefinite, sia il tasto `Insert` della tastiera estesa che `insert` del tastierino numerico, sono configurati come tasti funzione di NVDA.
 
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
 

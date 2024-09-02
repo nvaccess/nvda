@@ -236,6 +236,7 @@ freeze(
 			"brailleDisplayDrivers",
 			"brailleDisplayDrivers.albatross",
 			"brailleDisplayDrivers.eurobraille",
+			"brailleDisplayDrivers.dotPad",
 			"synthDrivers",
 			"visionEnhancementProviders",
 		],
