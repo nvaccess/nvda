@@ -3139,6 +3139,7 @@ class AddonStorePanel(SettingsPanel):
 			wx.TextCtrl,
 		)
 		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseURL"])
+		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
 		# self.addonUpdateMirrorTextbox.SetValidator(URLValidator)
 
 	def onSave(self):
