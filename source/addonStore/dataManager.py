@@ -207,6 +207,16 @@ class _DataManager:
 
 	# Translators: A title of the dialog shown when fetching add-on data from the store fails
 	_updateFailureMessage = pgettext("addonStore", "Add-on data update failure")
+	_updateFailureMirrorSuggestion = pgettext(
+		"addonStore",
+		# Translators: A suggestion of what to do when fetching add-on data from the store fails and a metadata mirror is being used.
+		"Make sure you are connected to the internet, and the add-on store metadata mirror URL is valid.",
+	)
+	_updateFailureDefaultSuggestion = pgettext(
+		"addonStore",
+		# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
+		"Make sure you are connected to the internet and try again.",
+	)
 
 	def getLatestCompatibleAddons(
 		self,
@@ -286,6 +296,7 @@ class _DataManager:
 		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
 		displayMessage: str,
 		titleMessage: str | None = _updateFailureMessage,
+		showTip: bool = True,
 	):
 		"""Display a DisplayableMessage if an OnDisplayableError action is given.
 
@@ -293,12 +304,15 @@ class _DataManager:
 
 		:param onDisplayableError: The displayable error action.
 		:param displayMessage: Body of the displayable error.
-		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage
+		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage.
+		:param showTip: Whether or not to show a suggestion of what to try, defaults to True.
 		"""
 		if onDisplayableError is None:
 			return
 		from gui.message import DisplayableError
 
+		if showTip:
+			displayMessage += f'\n{self._updateFailureMirrorSuggestion if config.conf["addonStore"]["baseURL"] else self._updateFailureDefaultSuggestion}'
 		displayableError = DisplayableError(displayMessage, titleMessage)
 		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
