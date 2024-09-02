@@ -153,7 +153,10 @@ class _AddonStoreModel(_AddonGUIModel):
 
 	@property
 	def isPendingInstall(self) -> bool:
-		"""True if this addon has not yet been fully installed."""
+		"""True if this addon has not yet been fully installed.
+
+		Note: That the download might not be completed yet.
+		"""
 		from ..dataManager import addonDataManager
 
 		assert addonDataManager

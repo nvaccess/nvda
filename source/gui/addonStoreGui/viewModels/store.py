@@ -644,7 +644,7 @@ class AddonStoreVM:
 			return self._cancelPendingInstallForAddon(listItemVM)
 		else:
 			futuresCopy = self._downloader._pending.copy()
-			for _, addon in futuresCopy.items():
+			for addon in futuresCopy.values():
 				if listItemVM == addon[0]:
 					self._downloader.progress.pop(addon[0], None)
 
