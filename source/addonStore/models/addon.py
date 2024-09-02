@@ -126,7 +126,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	reviewURL: Optional[str]
-	submissionTime: Optional[int]
+	submissionTime: int | None
 
 	@property
 	def tempDownloadPath(self) -> str:
@@ -253,7 +253,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
-	submissionTime: Optional[int]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -290,7 +290,7 @@ class AddonStoreModel(_AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
-	submissionTime: Optional[int]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
