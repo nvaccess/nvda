@@ -19,7 +19,7 @@ Some files are covered by the GNU LGPL, for example the controller client and it
 This allows someone to use them (or parts of them) as-is.
 In this case use the following header:
 
-```
+```py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) <CREATED YEAR>-<LAST UPDATED YEAR> NV Access Limited, <YOUR NAME>
 # This file may be used under the terms of the GNU Lesser General Public License, version 2.1 or later.
