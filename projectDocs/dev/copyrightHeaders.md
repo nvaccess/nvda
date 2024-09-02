@@ -10,7 +10,9 @@ In NVDA files, which are licensed under the GNU GPL, use the following copyright
 Replacing:
 - `<YOUR NAME>` with your name.
 - `<CREATED YEAR>` the year the file was created
-- `<LAST UPDATED YEAR>`when the file was last updated. For new files this can be missing. E.g. a file created in 2025 might have `#Copyright (C) 2025`
+- `<LAST UPDATED YEAR>` when the file was last updated.
+For new files this can be missing.
+e.g. a file created in 2025 might have `# Copyright (C) 2025`
 ```
 
 Some files are covered by the GNU LGPL, for example the the controller client and its examples. This allows someone to use them (or parts of them) as-is. In this case use the following header:
