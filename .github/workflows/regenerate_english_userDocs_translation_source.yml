@@ -59,14 +59,24 @@ jobs:
         $ErrorActionPreference = 'Stop'
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git
-        $filesChanged = git diff --name-only -- *.xliff
+                $filesChanged = git diff --name-only -- *.xliff
         if ($filesChanged) {
           Write-Host "xliff files were changed. Committing and pushing changes."
           foreach ($file in $filesChanged) {
             git add $file
+            Write-Host "Committing $file"
             git commit -m "Update $file"
           }
+          Write-Host "Setting up ssh for push"
+          # Ensure .ssh directory exists
+          mkdir -p ~/.ssh
+          # Add github.com to the list of known hosts for ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          # set the private key of the Github deploy key as the ssh key 
+          echo ${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY}} >~.ssh/id_rsa
+          # Tell git to use ssh for pushing
+          git remote set-url origin git@github.com:${{ github.repository }}
+          Write-Host "Pushing changes"
           git push origin HEAD
         } else {
           Write-Host "No xliff files were changed. Skipping commit and push."
