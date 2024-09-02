@@ -15,7 +15,9 @@ For new files this can be missing.
 e.g. a file created in 2025 might have `# Copyright (C) 2025`
 ```
 
-Some files are covered by the GNU LGPL, for example the the controller client and its examples. This allows someone to use them (or parts of them) as-is. In this case use the following header:
+Some files are covered by the GNU LGPL, for example the controller client and its examples.
+This allows someone to use them (or parts of them) as-is.
+In this case use the following header:
 
 ```
 # A part of NonVisual Desktop Access (NVDA)
