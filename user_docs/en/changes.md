@@ -8,6 +8,7 @@
 
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
+* It is now possible to specify a mirror URL to use for the add-on store. (#14974)
 
 ### Changes
 
