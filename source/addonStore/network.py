@@ -133,7 +133,7 @@ class AddonFileDownloader:
 		addonId = "CANCELLED" if isCancelled else self._pending[downloadAddonFuture][0].model.addonId
 		log.debug(f"Done called for {addonId}")
 
-		if not downloadAddonFuture.done() or downloadAddonFuture.cancelled():
+		if not downloadAddonFuture.done():
 			log.error("Logic error with download in BG thread.")
 			isCancelled = True
 
