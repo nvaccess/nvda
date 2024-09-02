@@ -50,7 +50,7 @@ i.e include older incompatible versions.
 """
 
 
-def _getBaseUrl() -> str:
+def _getBaseURL() -> str:
 	if url := conf["addonStore"]["baseURL"]:
 		return url
 	return BASE_URL
@@ -63,12 +63,12 @@ def _getCurrentApiVersionForURL() -> str:
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
 	# We don't know whether a user-supplied base url will have a trailing slash, so use posixpath.join, which inserts separators as needed.
-	return posixpath.join(_getBaseUrl(), lang, channel.value, f"{nvdaApiVersion}.json")
+	return posixpath.join(_getBaseURL(), lang, channel.value, f"{nvdaApiVersion}.json")
 
 
 def _getCacheHashURL() -> str:
 	# We don't know whether a user-supplied base url will have a trailing slash, so use posixpath.join, which inserts separators as needed.
-	return posixpath.join(_getBaseUrl(), "cacheHash.json")
+	return posixpath.join(_getBaseURL(), "cacheHash.json")
 
 
 class AddonFileDownloader:
