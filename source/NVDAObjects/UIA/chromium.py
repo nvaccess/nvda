@@ -3,6 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020-2021 NV Access limited, Leonard de Ruijter
 
+import typing
+
 import UIAHandler
 from . import web
 import controlTypes
@@ -66,7 +68,7 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 class ChromiumUIA(web.UIAWeb):
 	_TextInfo = ChromiumUIATextInfo
 
-	def _get_states(self):
+	def _get_states(self) -> typing.Set[controlTypes.State]:
 		states = super().states
 		if self.role == controlTypes.Role.LINK and self.linkType:
 			states.add(self.linkType)
@@ -77,7 +79,7 @@ class ChromiumUIATreeInterceptor(web.UIAWebTreeInterceptor):
 	def _get_documentConstantIdentifier(self):
 		return self.rootNVDAObject.parent._getUIACacheablePropertyValue(UIAHandler.UIA_AutomationIdPropertyId)
 
-	def _get_documentUrl(self):
+	def _get_documentUrl(self) -> str | None:
 		return self.rootNVDAObject.value
 
 
