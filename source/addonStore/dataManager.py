@@ -245,27 +245,6 @@ class _DataManager:
 			return _createAddonGUICollection()
 		return deepcopy(self._compatibleAddonCache.cachedAddonData)
 
-	def _do_displayError(
-		self,
-		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
-		displayMessage: str,
-		titleMessage: str | None = _updateFailureMessage,
-	):
-		"""Display a DisplayableMessage if an OnDisplayableError action is given.
-
-		See gui.message.DisplayableError for further information.
-
-		:param onDisplayableError: The displayable error action.
-		:param displayMessage: Body of the displayable error.
-		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage
-		"""
-		if onDisplayableError is None:
-			return
-		from gui.message import DisplayableError
-
-		displayableError = DisplayableError(displayMessage, titleMessage)
-		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
-
 	def getLatestAddons(
 		self,
 		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
@@ -301,6 +280,27 @@ class _DataManager:
 		if self._latestAddonCache is None:
 			return _createAddonGUICollection()
 		return deepcopy(self._latestAddonCache.cachedAddonData)
+
+	def _do_displayError(
+		self,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
+		displayMessage: str,
+		titleMessage: str | None = _updateFailureMessage,
+	):
+		"""Display a DisplayableMessage if an OnDisplayableError action is given.
+
+		See gui.message.DisplayableError for further information.
+
+		:param onDisplayableError: The displayable error action.
+		:param displayMessage: Body of the displayable error.
+		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage
+		"""
+		if onDisplayableError is None:
+			return
+		from gui.message import DisplayableError
+
+		displayableError = DisplayableError(displayMessage, titleMessage)
+		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
 		addonCachePath = os.path.join(self._installedAddonDataCacheDir, f"{addonId}.json")
