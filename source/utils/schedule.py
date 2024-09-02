@@ -184,7 +184,7 @@ class ScheduleThread(threading.Thread):
 					wx.CallAfter(task, *args, **kwargs)
 			case ThreadTarget.DAEMON:
 
-				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
+				def callJobOnThread(*args, **kwargs):
 					t = threading.Thread(
 						target=task,
 						args=args,
@@ -196,7 +196,7 @@ class ScheduleThread(threading.Thread):
 					t.start()
 			case ThreadTarget.CUSTOM:
 
-				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
+				def callJobOnThread(*args, **kwargs):
 					log.debug(f"Starting thread for job: {task.__name__} on custom thread")
 					task(*args, **kwargs)
 			case _:

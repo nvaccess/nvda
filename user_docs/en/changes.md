@@ -1,5 +1,45 @@
 # What's New in NVDA
 
+## 2025.1
+
+### Important notes
+
+### New Features
+
+* When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
+* In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
+
+### Changes
+
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+
+### Bug Fixes
+
+* Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
+* Improvements when editing in Microsoft PowerPoint:
+  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+* Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+#### Deprecations
+
+* The `braille.filter_displaySize` extension point is deprecated.
+Please use `braille.filter_displayDimensions` instead. (#17011)
+
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
