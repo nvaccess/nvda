@@ -322,11 +322,7 @@ e) modify or distribute the source code of any Distributable Code so that any pa
 ## Third-Party Dependencies
 
 NVDA includes various third-party dependencies, each with its own license terms. 
-For an automatically generated list of these dependencies, along with their respective license information, please visit the following URL:
-
-TODO: permalink
-
-[https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md](https://ci.appveyor.com/api/buildjobs/vp794l0bsqsltff8/artifacts/licenseCheckResults.md)
+Acceptable licences are automatically limited by our build system to include only BSD, MIT, Python, LGPLV3+ and Apache.
 
 In addition to these dependencies, the following are also included in NVDA:
 
@@ -338,6 +334,6 @@ In addition to these dependencies, the following are also included in NVDA:
 - Python: PSF
 - NSIS: zlib/libpng
 
-Furthermore, NVDA also utilises additional static/binary dependencies, details of which can be found at the following URL:
+Furthermore, NVDA also utilises some static/binary dependencies, details of which can be found at the following URL:
 
 https://github.com/nvaccess/nvda-misc-deps/tree/master
