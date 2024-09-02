@@ -36,6 +36,9 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* The `addonStore.network.BASE_URL` constant has been removed.
+As the add-on store base URL is now configurable directly within NVDA, no replacement is planned.
+
 #### Deprecations
 
 * The `braille.filter_displaySize` extension point is deprecated.
