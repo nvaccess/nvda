@@ -1610,7 +1610,7 @@ Note: The above shortcuts work only with the default formatting string for fooba
 
 ### Poedit {#Poedit}
 
-NVDA offers enhanced support for Poedit 3.4 or newer.
+NVDA offers enhanced support for Poedit 3.5 or newer.
 
 <!-- KC:beginInclude -->
 
