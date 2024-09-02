@@ -1006,9 +1006,9 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				// For links, store the IAccessible value to handle same page link detection.
 				parentNode->addAttribute(L"IAccessible::value", value);
 			}
-			if (SysStringLen(value)==0) {
+			if (SysStringLen(value) == 0) {
 				SysFreeString(value);
-				value=NULL;
+				value = NULL;
 			}
 		}
 	}

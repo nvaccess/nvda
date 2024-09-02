@@ -239,7 +239,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0: Off, 1: style, 2: color and style
 	reportCellBorders = integer(0, 2, default=0)
 	reportLinks = boolean(default=true)
-	reportLinkType = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	reportLinkType = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportBookmarks = boolean(default=true)

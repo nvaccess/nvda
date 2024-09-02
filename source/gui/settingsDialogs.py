@@ -2881,7 +2881,7 @@ class DocumentFormattingPanel(SettingsPanel):
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
-	def onLinksChange(self, evt: wx.CommandEvent):
+	def _onLinksChange(self, evt: wx.CommandEvent):
 		self.reportLinkTypeCombo.Enable(evt.IsChecked())
 
 	def onSave(self):
