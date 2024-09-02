@@ -57,7 +57,7 @@ jobs:
         $ErrorActionPreference = 'Stop'
         git config --local user.name "GitHub Actions"
         git config --local user.email "actions@github.com"
-                $filesChanged = git diff --name-only -- *.xliff
+        $filesChanged = git diff --name-only -- *.xliff
         if ($filesChanged) {
           Write-Host "xliff files were changed. Committing and pushing changes."
           foreach ($file in $filesChanged) {
