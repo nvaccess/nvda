@@ -3133,19 +3133,19 @@ class AddonStorePanel(SettingsPanel):
 		self.automaticUpdatesComboBox.SetSelection(index)
 
 		# Translators: This is the label for a text box in the add-on store settings dialog.
-		addonUpdateMirrorLabel = _("Update &mirror")
-		self.addonUpdateMirrorTextbox = sHelper.addLabeledControl(
-			addonUpdateMirrorLabel,
+		addonMetadataMirrorLabel = _("Metadata &mirror")
+		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
+			addonMetadataMirrorLabel,
 			wx.TextCtrl,
 		)
-		self.addonUpdateMirrorTextbox.SetValue(config.conf["addonStore"]["baseURL"])
+		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseURL"])
 		# self.addonUpdateMirrorTextbox.SetValidator(URLValidator)
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
-		config.conf["addonStore"]["baseURL"] = self.addonUpdateMirrorTextbox.Value.strip()
+		config.conf["addonStore"]["baseURL"] = self.addonMetadataMirrorTextbox.Value.strip()
 
 
 class TouchInteractionPanel(SettingsPanel):
