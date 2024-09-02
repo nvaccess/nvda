@@ -131,6 +131,8 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		Path where this add-on should be downloaded to.
 		After download completion, the add-on is moved to cachedDownloadPath.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
