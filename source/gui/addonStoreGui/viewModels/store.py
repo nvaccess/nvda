@@ -665,7 +665,8 @@ class AddonStoreVM:
 		log.debug(f"Cancelling install of {listItemVM.Id}")
 
 		if AvailableAddonStatus.DOWNLOADING == getStatus(listItemVM.model, self._filteredStatusKey):
-			self._cancelDownloadForAddon(listItemVM)
+			with self._downloader.DOWNLOAD_LOCK:
+				self._cancelDownloadForAddon(listItemVM)
 		elif AvailableAddonStatus.DOWNLOAD_SUCCESS == getStatus(listItemVM.model, self._filteredStatusKey):
 			self._cancelPendingInstallForAddon(listItemVM)
 

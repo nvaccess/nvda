@@ -26,6 +26,7 @@ from core import callLater
 from logHandler import log
 import NVDAState
 from NVDAState import WritePaths
+import threading
 from utils.security import sha256_checksum
 
 from .models.addon import (
@@ -67,8 +68,22 @@ class AddonFileDownloader:
 		None,
 	]
 
+	DOWNLOAD_LOCK = threading.RLock()
+	"""Used to protect cross-thread download management.
+
+	Notably:
+	- tracking download progress: AddonFileDownloader.progress
+	- writes/reads to an add-on file: _AddonStoreModel.tempDownloadPath
+	"""
+
 	def __init__(self):
-		self.progress: Dict["AddonListItemVM[_AddonStoreModel]", int] = {}  # Number of chunks received
+		self.progress: Dict["AddonListItemVM[_AddonStoreModel]", int] = {}
+		"""
+		Counts chunks received in a download of an add-on.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
+		"""
+
 		self._pending: Dict[
 			Future[Optional[os.PathLike]],
 			Tuple[
@@ -125,8 +140,9 @@ class AddonFileDownloader:
 		if isCancelled:
 			log.debug("Download was cancelled, not calling onComplete")
 			try:
-				# If the download was cancelled, the file may have been partially downloaded.
-				os.remove(self._pending[downloadAddonFuture][0].model.tempDownloadPath)
+				with self.DOWNLOAD_LOCK:
+					# If the download was cancelled, the file may have been partially downloaded.
+					os.remove(self._pending[downloadAddonFuture][0].model.tempDownloadPath)
 			except FileNotFoundError:
 				pass
 			except Exception as e:
@@ -196,12 +212,13 @@ class AddonFileDownloader:
 				# chunk, starting with small chunks and increasing up until a maximum wait time is reached.
 				chunkSize = 128000
 				for chunk in r.iter_content(chunk_size=chunkSize):
-					fd.write(chunk)
-					if addonData in self.progress:  # Removed when the download should be cancelled.
-						self.progress[addonData] += 1
-					else:
-						log.debug(f"Cancelled download: {addonData.model.addonId}")
-						return False  # The download was cancelled
+					with self.DOWNLOAD_LOCK:
+						fd.write(chunk)
+						if addonData in self.progress:  # Removed when the download should be cancelled.
+							self.progress[addonData] += 1
+						else:
+							log.debug(f"Cancelled download: {addonData.model.addonId}")
+							return False  # The download was cancelled
 		return True
 
 	def _download(self, listItem: "AddonListItemVM[_AddonStoreModel]") -> Optional[os.PathLike]:
@@ -218,9 +235,10 @@ class AddonFileDownloader:
 			os.remove(cacheFilePath)
 
 		inProgressFilePath = addonData.tempDownloadPath
-		if listItem not in self.progress:
-			log.debug("the download was cancelled before it started.")
-			return None  # The download was cancelled
+		with self.DOWNLOAD_LOCK:
+			if listItem not in self.progress:
+				log.debug("the download was cancelled before it started.")
+				return None  # The download was cancelled
 		try:
 			if not self._downloadAddonToPath(listItem, inProgressFilePath):
 				return None  # The download was cancelled
@@ -245,7 +263,8 @@ class AddonFileDownloader:
 				_addonDownloadFailureMessageTitle,
 			)
 		if not self._checkChecksum(inProgressFilePath, addonData):
-			os.remove(inProgressFilePath)
+			with self.DOWNLOAD_LOCK:
+				os.remove(inProgressFilePath)
 			log.debugWarning(f"Cache file deleted, checksum mismatch: {inProgressFilePath}")
 			raise DisplayableError(
 				pgettext(
@@ -256,7 +275,8 @@ class AddonFileDownloader:
 				_addonDownloadFailureMessageTitle,
 			)
 		log.debug(f"Download complete: {inProgressFilePath}")
-		os.replace(src=inProgressFilePath, dst=cacheFilePath)
+		with self.DOWNLOAD_LOCK:
+			os.replace(src=inProgressFilePath, dst=cacheFilePath)
 		log.debug(f"Cache file available: {cacheFilePath}")
 		return cast(os.PathLike, cacheFilePath)
 
