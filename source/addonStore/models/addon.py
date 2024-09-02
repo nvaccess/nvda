@@ -179,7 +179,6 @@ class _AddonStoreModel(_AddonGUIModel):
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
 			# and the download has not been cancelled
-			or os.path.exists(self.tempDownloadPath)
 			and bool(next(nameInDownloadsPendingCompletion, False))
 		)
 
