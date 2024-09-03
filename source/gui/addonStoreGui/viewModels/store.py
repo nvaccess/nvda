@@ -142,7 +142,7 @@ class AddonStoreVM:
 			),
 			AddonActionVM(
 				# Translators: Label for an action that retries the selected addon
-				displayName=pgettext("addonStore", "Re&try"),
+				displayName=pgettext("addonStore", "Re&try install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.canUseRetryAction(),
 				actionTarget=selectedListItem,
