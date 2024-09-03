@@ -30,6 +30,12 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 Add-ons will need to be re-tested and have their manifest updated.
 * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+* Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
+  * A new `utils/urlUtils` module with different functions to determine link types
+  * A new `INTERNAL_LINK` state has been added to `controlTypes.states.State`
+  * A new `linkType` property has been added on `NVDAObject`. It queries the `treeInterceptor` by default, if any
+  * `BrowseModeTreeInterceptor` object has a new `documentUrl` property
+  * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
 
 #### API Breaking Changes
 
@@ -123,12 +129,6 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
 * Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
-* A new utils/urlUtils with different functions to determine link types has been added to check links (#141, @LeonarddeR, @nvdaes)
-* A new INTERNAL_LINK state has been added to controlTypes.states.State (#141, @nvdaes)
-* A new linkType property has been added on `NVDAObject`. It queries the treeInterceptor by default, if any. (#141, @LeonarddeR, @nvdaes)
-* BrowseModeTreeInterceptor object has a new documentUrl property (#141, @LeonarddeR)
-* BrowseModeTreeInterceptor object has a new getLinkTypeInDocument method which accepts an URL to check the link type of the object (#141, @LeonarddeR, @nvdaes)
-
 
 #### Deprecations
 
