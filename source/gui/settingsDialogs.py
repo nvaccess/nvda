@@ -3143,16 +3143,20 @@ class AddonStorePanel(SettingsPanel):
 		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
 
 	def isValid(self) -> bool:
-		metadataURL = self.addonMetadataMirrorTextbox.GetValue()
+		metadataURL = self.addonMetadataMirrorTextbox.GetValue().strip()
 		if metadataURL:
-			parsed = urllib.parse.urlparse(metadataURL)
-			isValid = all([parsed.scheme, parsed.netloc])
-			if not isValid:
+			try:
+				metadataURL = _normalizeHypertextURL(metadataURL)
+			except ValueError as e:
+				log.debug(f"Error normalizing URL {metadataURL}: {e}")
 				self._validationErrorMessageBox(
 					"The Add-on Store mirror URL is invalid.",
-					self.addonMetadataMirrorLabelText,
+					# Get rid of the first ampersand, as it's an accelerator.
+					gui._stripAcceleratorFromLabel(self.addonMetadataMirrorLabelText),
 				)
 				return False
+			else:
+				self.addonMetadataMirrorTextbox.SetValue(metadataURL)
 		return True
 
 	def onSave(self):
@@ -5387,3 +5391,17 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+def _normalizeHypertextURL(url):
+	url = url.strip()
+	parsed = urllib.parse.urlparse(url)
+	if not parsed.scheme:
+		raise ValueError("URL scheme is required.")
+	if parsed.scheme not in ("http", "https"):
+		raise ValueError("Only HTTP and HTTPS are supported.")
+	if not parsed.netloc or parsed.netloc.isspace():
+		raise ValueError("Authority is required.")
+	path = urllib.parse.quote(parsed.path).rstrip("/") + "/"
+	parsed = parsed._replace(path=path)
+	return urllib.parse.urlunparse(parsed)

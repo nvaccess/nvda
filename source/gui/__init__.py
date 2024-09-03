@@ -949,3 +949,7 @@ class NonReEntrantTimer(wx.Timer):
 
 def _isDebug():
 	return config.conf["debugLog"]["gui"]
+
+
+def _stripAcceleratorFromLabel(label: str) -> str:
+	return label.replace("&", "", 1)
