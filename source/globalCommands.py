@@ -932,7 +932,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
 		msg = toggleBooleanValue(
-		configSection="documentFormatting",
+			configSection="documentFormatting",
 			configKey="reportLinkType",
 			enabledMsg="Report link type on",
 			disabledMsg="Report link type off",
