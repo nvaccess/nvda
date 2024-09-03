@@ -1,24 +1,26 @@
 # Novidades do  NVDA
-## Traduzido pela Equipa portuguesa do NVDA
-
 
 ## 2024.3
+
 A Loja de Extras agora notificará se houver atualizações de extras disponíveis no arranque do NVDA.
 
-Existem agora opções para aplicar normalização Unicode à saída de voz e braille. Isto pode ser útil ao ler caracteres desconhecidos para um determinado sintetizador de voz ou tabela de braille que tenham uma alternativa compatível, como os caracteres em negrito e itálico usados frequentemente nas redes sociais. Também permite a leitura de equações no editor de equações do Microsoft Word.
+Existem agora opções para aplicar normalização Unicode à saída de voz e Braille.
+Isto pode ser útil ao ler caracteres desconhecidos para um determinado sintetizador de voz ou tabela de braille que tenham uma alternativa compatível, como os caracteres em negrito e itálico usados frequentemente nas redes sociais.
+Também permite a leitura de equações no editor de equações do Microsoft Word.
 
 Os dispositivos braille Help Tech Activator Pro são agora suportados.
 
 Foram adicionados comandos sem atribuição para rolar a roda do rato vertical e horizontalmente.
 
 Existem várias correções de bugs, particularmente para o Painel de Emojis e o histórico da Área de Transferência no Windows 11.
-Para navegadores web, há correções para a apresentação de mensagens de erro, figuras, legendas, etiquetas de tabelas e itens de menu de caixas de seleção/botões de opção.
+Para navegadores web, há correções para a apresentação de mensagens de erro, figuras, legendas, etiquetas de tabelas e itens de menu de caixas de verificação/botões de opção.
 
 LibLouis foi atualizado, adicionando novas tabelas de braille para Sérvio Cirílico, Iídiche, várias línguas antigas, Turco e o Alfabeto Fonético Internacional.
 O eSpeak foi atualizado, adicionando suporte para a língua Caracalpaque.
 O Unicode CLDR também foi atualizado.
 
 ### Novas Funcionalidades
+
 * Novos comandos:
   * Adicionados comandos sem atribuição para rolar vertical e horizontalmente a roda do rato, para melhorar a navegação em páginas web e aplicações com conteúdo dinâmico, como o Dism++. (#16462, @Cary-Rowen)
 * Adicionado suporte para Normalização Unicode na saída de voz e braille. (#11570, #16466 @LeonarddeR).
@@ -32,6 +34,7 @@ O Unicode CLDR também foi atualizado.
 * Adicionado suporte para os dispositivos Braille Help Tech Activator Pro. (#16668)
 
 ### Alterações
+
 * Atualizações de Componentes:
   * O eSpeak NG foi atualizado para 1.52-dev commit `54ee11a79`. (#16495)
     * Adicionado suporte para a língua Caracalpaque.
@@ -52,9 +55,10 @@ O Unicode CLDR também foi atualizado.
 * Ao ler linha por linha no modo de navegação, "legenda" já não é reportado em cada linha de uma figura ou legenda de tabela longa. (#14874)
 * Na consola Python, o último comando não executado já não será perdido ao navegar no histórico de entradas. (#16653, @CyrilleB79)
 * Um ID anónimo único é agora enviado como parte da recolha opcional de estatísticas de uso do NVDA. (#16266)
-* Por padrão, uma nova pasta será criada ao fazer uma cópia portátil.Uma mensagem de aviso informará se tentar escrever numa pasta não vazia. (#16686)
+* Por padrão, uma nova pasta será criada ao fazer uma cópia portátil.
+Uma mensagem de aviso informará se tentar escrever numa pasta não vazia. (#16686)
 
-## Correcções de Bugs
+### Correcções de Bugs
 
 * Correcções para Windows 11:
   * O NVDA não parecerá mais ficar preso ao fechar o histórico da área de transferência e o painel de emojis. (#16346, #16347, @josephsl)
@@ -100,7 +104,6 @@ It is especially useful to read the error location markers in tracebacks. (#1632
   Jobs are scheduled with a delay to avoid conflicts.
   * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
 * It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
-
 
 ## 2024.2
 
@@ -5154,5 +5157,4 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 * Quando um sintetizador não pode ser carregado ao ser escolhido a partir do Diálogo de Sintetizadores, uma caixa de diálogo agora avisa ao usuário desse fato.
 * Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, em lugar de forçá-lo a usar os padrões que este supõe estar adequados. Isso resolve um problema com os sintetizadores  Eloquence e Viavoice sapi4 que iniciavam a falar de forma excessivamente rápida para uma primeira vez.
 35230
-
 
