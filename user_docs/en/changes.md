@@ -39,6 +39,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated Ruff to 0.6.3. (#17102)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+* There is a new `gui.utilityDialogs.ContinueCancelDialog`, for producing simple dialogs with Continue and Cancel buttons. (#12355, @XLTechie)
 
 #### API Breaking Changes
 
