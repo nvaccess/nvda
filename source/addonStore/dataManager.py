@@ -312,7 +312,12 @@ class _DataManager:
 		from gui.message import DisplayableError
 
 		if showTip:
-			displayMessage += f'\n{self._updateFailureMirrorSuggestion if config.conf["addonStore"]["baseServerURL"] else self._updateFailureDefaultSuggestion}'
+			tip = (
+				self._updateFailureMirrorSuggestion
+				if config.conf["addonStore"]["baseServerURL"]
+				else self._updateFailureDefaultSuggestion
+			)
+			displayMessage = f"{displayMessage}\n{tip}"
 		displayableError = DisplayableError(displayMessage, titleMessage)
 		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
