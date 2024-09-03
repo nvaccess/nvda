@@ -43,10 +43,11 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
 * Component updates:
-  * Updated LibLouis braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR)
-    * New braille tables:
+  * Updated LibLouis Braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR, @codeofdusk)
+    * Fixed back-translation of numbers in Spanish Braille.
+    * New Braille tables:
       * Thai grade 1
-      * Greek international braille (single-cell accented letters)
+      * Greek international Braille (single-cell accented letters)
     * Renamed tables:
       * "Thai 6 dot" was renamed to "Thai grade 0" for consistency reasons.
       * The existing "Greek international braille" table was renamed to "Greek international braille (2-cell accented letters)" to clarify the distinction between the two Greek systems.
