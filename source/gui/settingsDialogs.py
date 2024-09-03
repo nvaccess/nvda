@@ -3146,7 +3146,7 @@ class AddonStorePanel(SettingsPanel):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
-		config.conf["addonStore"]["baseURL"] = self.addonMetadataMirrorTextbox.Value.strip()
+		config.conf["addonStore"]["baseURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
 
 
 class TouchInteractionPanel(SettingsPanel):

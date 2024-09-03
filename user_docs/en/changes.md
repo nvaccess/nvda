@@ -8,7 +8,7 @@
 
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
-* It is now possible to specify a mirror URL to use for the add-on store. (#14974)
+* It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 
 ### Changes
 
@@ -37,7 +37,7 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * The `addonStore.network.BASE_URL` constant has been removed.
-As the add-on store base URL is now configurable directly within NVDA, no replacement is planned.
+As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
 
 #### Deprecations
 

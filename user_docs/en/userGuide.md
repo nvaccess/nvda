@@ -3033,8 +3033,8 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 
 ##### Metadata Mirror {#AddonStoreMetadataMirror}
 
-This option allows you to specify an alternative URL to download add-on metadata from.
-This may be of use in locations where access to the NV Access Add-on Store server is slow.
+This option allows you to specify an alternative URL to download Add-on Store data from.
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
 
 Leave this blank to use the default NV Access Add-on Store server.
 
