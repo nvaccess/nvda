@@ -125,6 +125,7 @@ NO_SETTINGS_MSG = _("No settings")
 
 
 def toggleBooleanValue(
+	configSection: str,
 	configKey: str,
 	# Translators: The message announced when toggling the configKey setting.
 	enabledMsg: str,
@@ -134,14 +135,15 @@ def toggleBooleanValue(
 	"""
 	Toggles a boolean value in the configuration and returns the appropriate message.
 
+	:param configSection: The configuration section containing the boolean key.
 	:param configKey: The configuration key associated with the boolean value.
 	:param enabledMsg: The message for the enabled state.
 	:param disabledMsg: The message for the disabled state.
 	:return: The translatable message to be displayed to the user.
 	"""
-	currentValue = config.conf[configKey]
+	currentValue = config.conf[configSection][configKey]
 	newValue = not currentValue
-	config.conf[configKey] = newValue
+	config.conf[configSection][configKey] = newValue
 
 	return _(enabledMsg) if newValue else _(disabledMsg)
 
@@ -930,7 +932,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
 		msg = toggleBooleanValue(
-			configKey="documentFormatting.reportLinkType",
+		configSection="documentFormatting",
+			configKey="reportLinkType",
 			enabledMsg="Report link type on",
 			disabledMsg="Report link type off",
 		)
