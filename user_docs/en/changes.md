@@ -36,6 +36,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * A new `linkType` property has been added on `NVDAObject`. It queries the `treeInterceptor` by default, if any
   * `BrowseModeTreeInterceptor` object has a new `documentUrl` property
   * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
+  * A `toggleBooleanValue` helper function has been added to `globalCommands`. It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 
 #### API Breaking Changes
 
