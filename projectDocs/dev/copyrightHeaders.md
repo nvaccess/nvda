@@ -1,6 +1,6 @@
 In NVDA files, which are licensed under the GNU GPL, use the following copyright header:
 
-```
+```py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) <CREATED YEAR>-<LAST UPDATED YEAR> NV Access Limited, <YOUR NAME>
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
