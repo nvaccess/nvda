@@ -557,7 +557,7 @@ class MainFrame(wx.Frame):
 			"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, or with Windows itself.\n"
 			"It examines the system registry for corrupted or missing accessibility entries and will correct them.\n"
 			"Those entries can sometimes be damaged by installing or uninstalling programs, or other system events. This"
-			" can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously"
+			' can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously'
  			"accessible elements suddenly no longer reading correctly.\n\n"
 			"You have most likely been asked to run this tool by NVDA support or a power user trying to assist you.\n"
 			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will be"
