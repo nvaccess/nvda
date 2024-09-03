@@ -62,6 +62,7 @@ from typing import (
 	Set,
 	cast,
 )
+from url_normalize import url_normalize
 import core
 import keyboardHandler
 import characterProcessing
@@ -79,7 +80,6 @@ import touchHandler
 import winVersion
 import weakref
 import time
-import urllib.parse
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
 #: The size that settings panel text descriptions should be wrapped at.
@@ -3143,20 +3143,9 @@ class AddonStorePanel(SettingsPanel):
 		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
 
 	def isValid(self) -> bool:
-		metadataURL = self.addonMetadataMirrorTextbox.GetValue().strip()
-		if metadataURL:
-			try:
-				metadataURL = _normalizeHypertextURL(metadataURL)
-			except ValueError as e:
-				log.debug(f"Error normalizing URL {metadataURL}: {e}")
-				self._validationErrorMessageBox(
-					"The Add-on Store mirror URL is invalid.",
-					# Get rid of the first ampersand, as it's an accelerator.
-					gui._stripAcceleratorFromLabel(self.addonMetadataMirrorLabelText),
-				)
-				return False
-			else:
-				self.addonMetadataMirrorTextbox.SetValue(metadataURL)
+		self.addonMetadataMirrorTextbox.SetValue(
+			url_normalize(self.addonMetadataMirrorTextbox.GetValue().strip()).rstrip("/"),
+		)
 		return True
 
 	def onSave(self):
@@ -5391,17 +5380,3 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
-
-
-def _normalizeHypertextURL(url):
-	url = url.strip()
-	parsed = urllib.parse.urlparse(url)
-	if not parsed.scheme:
-		raise ValueError("URL scheme is required.")
-	if parsed.scheme not in ("http", "https"):
-		raise ValueError("Only HTTP and HTTPS are supported.")
-	if not parsed.netloc or parsed.netloc.isspace():
-		raise ValueError("Authority is required.")
-	path = urllib.parse.quote(parsed.path).rstrip("/") + "/"
-	parsed = parsed._replace(path=path)
-	return urllib.parse.urlunparse(parsed)
