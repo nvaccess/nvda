@@ -219,11 +219,7 @@ class AddonListValidator:
 		return hasUpdatable and not hasInstallable
 
 	def canUseRetryAction(self) -> bool:
-		for aVM in self.addonsList:
-			if aVM.canUseRetryAction():
-				return True
-		return False
-
+		return any(aVM.canUseRetryAction() for aVM in self.addonsList)
 	def canUseRemoveAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseRemoveAction():
