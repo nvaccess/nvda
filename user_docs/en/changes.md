@@ -15,7 +15,7 @@
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
 * Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
-  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie)
+  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie, @britechguy)
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799, @XLTechie)
 
 ### Bug Fixes

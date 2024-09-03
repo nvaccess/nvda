@@ -489,27 +489,13 @@ class MainFrame(wx.Frame):
 		If the user chooses to continue: runs the tool, and displays a completion dialog.
 		Cancels the run attempt if the user fails or declines the UAC prompt.
 		"""
-		introMessage: str = _(
-			# Translators: Explain the COM Registration Fixing tool to users before running
-			"""Welcome to the COM Registration Fixing tool.
-This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, or with Windows itself.\n
-It examines the system registry for corrupted or missing accessibility entries and will correct them.\n
-Those entries can sometimes be damaged by installing or uninstalling programs, or other system events. This
- can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously
- accessible elements suddenly no longer reading correctly.\n\n
-You have most likely been asked to run this tool by NVDA support or a power user trying to assist you.\n
-Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will be
- prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the yes
- button.\n\n
-Press OK to try to repair the registry now.\n""",
-		)
 		# Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 		genericTitle: str = _("Fix COM Registrations")
 		response: int = messageBox(
-			introMessage,
+			self._CRFTIntroMessage(),
 			caption=genericTitle,
-			style=wx.OK | wx.CANCEL | wx.STAY_ON_TOP,
-			parent=mainFrame,
+			style=wx.OK | wx.CANCEL | wx.STAY_ON_TOP | wx.ICON_INFORMATION,
+			parent=self,
 		)
 		if response == wx.CANCEL:
 			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
@@ -561,6 +547,22 @@ Press OK to try to repair the registry now.\n""",
 			),
 			genericTitle,
 			wx.OK,
+		)
+
+	def _CRFTIntroMessage(self) -> str:
+		"""Helper that returns the COM Registration Fixing Tool's introductory statement."""
+		return _(
+			# Translators: Explain the COM Registration Fixing tool to users before running
+			"Welcome to the COM Registration Fixing tool.\n"
+			"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, or with Windows itself.\n"
+			"It examines the system registry for corrupted or missing accessibility entries and will correct them.\n"
+			"Those entries can sometimes be damaged by installing or uninstalling programs, or other system events. This"
+			" can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously"
+ 			"accessible elements suddenly no longer reading correctly.\n\n"
+			"You have most likely been asked to run this tool by NVDA support or a power user trying to assist you.\n"
+			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will be"
+			" prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the yes button.\n\n"
+			"Press OK to try to repair the registry now.\n",
 		)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
