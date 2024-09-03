@@ -141,6 +141,13 @@ class AddonStoreVM:
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
+				# Translators: Label for an action that retries the selected addon
+				displayName=pgettext("addonStore", "Re&try"),
+				actionHandler=self.getAddon,
+				validCheck=lambda aVM: aVM.canUseRetryAction(),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
 				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),

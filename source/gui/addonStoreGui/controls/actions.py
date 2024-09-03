@@ -155,6 +155,13 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
+				# Translators: Label for an action that retries the selected add-ons
+				displayName=pgettext("addonStore", "Re&try selected add-ons"),
+				actionHandler=self._storeVM.getAddons,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseRetryAction(),
+				actionTarget=self._selectedAddons,
+			),
+			BatchAddonActionVM(
 				# Translators: Label for an action that removes the selected add-ons
 				displayName=pgettext("addonStore", "&Remove selected add-ons"),
 				actionHandler=self._storeVM.removeAddons,
@@ -210,6 +217,12 @@ class AddonListValidator:
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				hasInstallable = True
 		return hasUpdatable and not hasInstallable
+
+	def canUseRetryAction(self) -> bool:
+		for aVM in self.addonsList:
+			if aVM.canUseRetryAction():
+				return True
+		return False
 
 	def canUseRemoveAction(self) -> bool:
 		for aVM in self.addonsList:
