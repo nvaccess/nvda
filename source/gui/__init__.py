@@ -554,14 +554,16 @@ class MainFrame(wx.Frame):
 		return _(
 			# Translators: Explain the COM Registration Fixing tool to users before running
 			"Welcome to the COM Registration Fixing tool.\n"
-			"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, or with Windows itself.\n"
+			"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, "
+			"or with Windows itself.\n"
 			"It examines the system registry for corrupted or missing accessibility entries and will correct them.\n"
-			"Those entries can sometimes be damaged by installing or uninstalling programs, or other system events. This"
-			' can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously'
+			"Those entries are sometimes damaged by installing or uninstalling programs, or other system events. This "
+			'can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously '
 			"accessible elements suddenly no longer reading correctly.\n\n"
 			"You have most likely been asked to run this tool by NVDA support or a power user trying to assist you.\n"
-			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will be"
-			" prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the yes button.\n\n"
+			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will "
+			"be prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the "
+			"yes button.\n\n"
 			"Press OK to try to repair the registry now.\n",
 		)
 
