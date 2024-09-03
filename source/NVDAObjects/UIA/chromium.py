@@ -3,7 +3,6 @@
 # See the file COPYING for more details.
 # Copyright (C) 2020-2021 NV Access limited, Leonard de Ruijter
 
-import typing
 
 import UIAHandler
 from . import web
