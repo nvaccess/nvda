@@ -11,40 +11,40 @@ from logHandler import log
 def getLinkType(targetUrl: str, rootUrl: str) -> controlTypes.State | None:
 	"""Returns the link type corresponding to a given URL.
 
-	:param url: The URL of the link destination
+	:param targetUrl: The URL of the link destination
 	:param rootUrl: The root URL of the page
 	:return: A controlTypes.State corresponding to the link type, or C{None} if the state cannot be determined
 	"""
-	if not url or not rootUrl:
-		log.debug(f"getLinkType: Either url {url} or rootUrl {rootUrl} is empty.")
+	if not targetUrl or not rootUrl:
+		log.debug(f"getLinkType: Either targetUrl {targetUrl} or rootUrl {rootUrl} is empty.")
 		return None
-	if isSamePageUrl(url, rootUrl):
-		log.debug(f"getLinkType: {url} is an internal link.")
+	if isSamePageUrl(targetUrl, rootUrl):
+		log.debug(f"getLinkType: {targetUrl} is an internal link.")
 		return controlTypes.State.INTERNAL_LINK
-	log.debug(f"getLinkType: {url} type is unknown.")
+	log.debug(f"getLinkType: {targetUrl} type is unknown.")
 	return None
 
 
 def isSamePageUrl(targetUrlOnPage: str, rootUrl: str) -> bool:
 	"""Returns whether a given URL belongs to the same page as another URL.
 
-	:param urlOnPage: The URL that should be on the same page as `rootUrl`
+	:param targetUrlOnPage: The URL that should be on the same page as `rootUrl`
 	:param rootUrl: The root URL of the page
-	:return: Whether `urlOnPage` belongs to the same page as `rootUrl`
+	:return: Whether `targetUrlOnPage` belongs to the same page as `rootUrl`
 	"""
-	if not urlOnPage or not rootUrl:
+	if not targetUrlOnPage or not rootUrl:
 		return False
 
 	# Parse the URLs
-	urlOnPageParsed: ParseResult = urlparse(urlOnPage)
+	targetUrlOnPageParsed: ParseResult = urlparse(targetUrlOnPage)
 	rootUrlParsed: ParseResult = urlparse(rootUrl)
 
 	# Reconstruct URLs without fragments for comparison
-	urlOnPageWithoutFragment = urlunparse(urlOnPageParsed._replace(fragment=""))
+	targetUrlOnPageWithoutFragment = urlunparse(targetUrlOnPageParsed._replace(fragment=""))
 	rootUrlWithoutFragment = urlunparse(rootUrlParsed._replace(fragment=""))
 	fragmentInvalidChars: str = "%/"  # Characters not considered valid in fragments
 	return (
-		urlOnPageWithoutFragment == rootUrlWithoutFragment
-		and urlOnPageParsed.fragment
-		and not any(char in urlOnPageParsed.fragment for char in fragmentInvalidChars)
+		targetUrlOnPageWithoutFragment == rootUrlWithoutFragment
+		and targetUrlOnPageParsed.fragment
+		and not any(char in targetUrlOnPageParsed.fragment for char in fragmentInvalidChars)
 	)
