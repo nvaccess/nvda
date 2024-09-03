@@ -298,7 +298,6 @@ class _DataManager:
 		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
 		displayMessage: str,
 		titleMessage: str | None = None,
-		showTip: bool = True,
 	):
 		"""Display a DisplayableMessage if an OnDisplayableError action is given.
 
@@ -307,19 +306,17 @@ class _DataManager:
 		:param onDisplayableError: The displayable error action.
 		:param displayMessage: Body of the displayable error.
 		:param titleMessage: Title of the displayable error. If None, _updateFailureMessage will be used. Defaults to None.
-		:param showTip: Whether or not to show a suggestion of what to try, defaults to True.
 		"""
 		if onDisplayableError is None:
 			return
 		from gui.message import DisplayableError
 
-		if showTip:
-			tip = (
-				self._updateFailureMirrorSuggestion.format(url=url)
-				if (url := config.conf["addonStore"]["baseServerURL"])
-				else self._updateFailureDefaultSuggestion
-			)
-			displayMessage = f"{displayMessage}\n{tip}"
+		tip = (
+			self._updateFailureMirrorSuggestion.format(url=url)
+			if (url := config.conf["addonStore"]["baseServerURL"])
+			else self._updateFailureDefaultSuggestion
+		)
+		displayMessage = f"{displayMessage}\n{tip}"
 		displayableError = DisplayableError(displayMessage, titleMessage or self._updateFailureMessage)
 		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
