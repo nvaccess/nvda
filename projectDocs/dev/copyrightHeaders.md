@@ -26,5 +26,6 @@ In this case use the following header:
 # For more details see: https://www.gnu.org/licenses/lgpl-2.1.html
 ```
 
-In some files an older style of referring to the contributors is used. The contributors is not a list of names and may just say something like:
+In some files an older style of referring to the contributors is used.
+The contributors is not a list of names and may just say something like:
 `Copyright (C) 2006-2024 NVDA Contributors`. We suggesting referring to the git logs to identify specific authors.
