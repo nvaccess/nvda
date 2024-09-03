@@ -9,6 +9,11 @@ from .nvdaControls import MessageDialog
 
 
 class ContinueCancelDialog(MessageDialog):
+	"""
+	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
+	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
+	"""
+
 	def __init__(
 		self,
 		parent,
@@ -17,6 +22,14 @@ class ContinueCancelDialog(MessageDialog):
 		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
 		continueByDefault: bool = True,
 	) -> None:
+	"""Creates a ContinueCancelDialog MessageDialog.
+
+	:param parent: The parent window for the dialog, usually `gui.mainFrame`.
+	:param title: The title or caption of the dialog.
+	:param message: The message to be shown in the dialog.
+	:param dialogType: One of the dialog type constants from MessageDialog, defaults to standard.
+	:param continueByDefault: Whether the Continue button should be the one wx sets as default, defaults to True.
+	"""
 		self.continueByDefault: bool = continueByDefault
 		super().__init__(parent, title, message, dialogType)
 
