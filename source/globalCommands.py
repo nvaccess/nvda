@@ -124,6 +124,28 @@ SCRCAT_AUDIO = _("Audio")
 NO_SETTINGS_MSG = _("No settings")
 
 
+def toggleBooleanValue(
+	configKey: str,
+	# Translators: The message announced when toggling the configKey setting.
+	enabledMsg: str,
+	# Translators: The message announced when toggling the configKey setting.
+	disabledMsg: str
+) -> str:
+	"""
+	Toggles a boolean value in the configuration and returns the appropriate message.
+
+	:param configKey: The configuration key associated with the boolean value.
+	:param enabledMsg: The message for the enabled state.
+	:param disabledMsg: The message for the disabled state.
+	:return: The translatable message to be displayed to the user.
+	"""
+	currentValue = config.conf[configKey]
+	newValue = not currentValue
+	config.conf[configKey] = newValue
+
+	return _(enabledMsg) if newValue else _(disabledMsg)
+
+
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
 
@@ -907,15 +929,12 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
-		if config.conf["documentFormatting"]["reportLinkType"]:
-			# Translators: The message announced when toggling the report link type document formatting setting.
-			state = _("report link type off")
-			config.conf["documentFormatting"]["reportLinkType"] = False
-		else:
-			# Translators: The message announced when toggling the report link type document formatting setting.
-			state = _("report link type on")
-			config.conf["documentFormatting"]["reportLinkType"] = True
-		ui.message(state)
+		msg = toggleBooleanValue(
+			configKey="documentFormatting.reportLinkType",
+			enabledMsg="Report link type on",
+			disabledMsg="Report link type off"
+		)
+		ui.message(msg)
 
 	@script(
 		# Translators: Input help mode message for toggle report graphics command.
