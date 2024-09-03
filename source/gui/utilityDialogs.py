@@ -15,21 +15,21 @@ class ContinueCancelDialog(MessageDialog):
 	"""
 
 	def __init__(
-		self,
-		parent,
-		title: str,
-		message: str,
-		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
-		continueByDefault: bool = True,
+			self,
+			parent,
+			title: str,
+			message: str,
+			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+			continueByDefault: bool = True,
 	) -> None:
-	"""Creates a ContinueCancelDialog MessageDialog.
+		"""Creates a ContinueCancelDialog MessageDialog.
 
-	:param parent: The parent window for the dialog, usually `gui.mainFrame`.
-	:param title: The title or caption of the dialog.
-	:param message: The message to be shown in the dialog.
-	:param dialogType: One of the dialog type constants from MessageDialog, defaults to standard.
-	:param continueByDefault: Whether the Continue button should be the one wx sets as default, defaults to True.
-	"""
+		:param parent: The parent window for the dialog, usually `gui.mainFrame`.
+		:param title: The title or caption of the dialog.
+		:param message: The message to be shown in the dialog.
+		:param dialogType: One of the dialog type constants from MessageDialog, defaults to standard.
+		:param continueByDefault: Whether the Continue button should be the one wx sets as default, defaults to True.
+		"""
 		self.continueByDefault: bool = continueByDefault
 		super().__init__(parent, title, message, dialogType)
 
