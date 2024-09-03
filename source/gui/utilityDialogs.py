@@ -19,7 +19,7 @@ class ContinueCancelDialog(MessageDialog):
 		continueByDefault: bool = True,
 	) -> None:
 		self.continueByDefault: bool = continueByDefault
-		super().__init__(parent, message, title, dialogType)
+		super().__init__(parent, title, message, dialogType)
 
 	def _addButtons(self, buttonHelper) -> None:
 		"""Override to add Continue and Cancel buttons."""
