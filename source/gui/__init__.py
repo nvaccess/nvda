@@ -30,9 +30,7 @@ from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
-	displayDialogAsModal,
 )
-from .nvdaControls import MessageDialog
 from . import blockAction
 from .speechDict import (
 	DefaultDictionaryDialog,
@@ -70,7 +68,6 @@ from . import logViewer
 import speechViewer
 import winUser
 import api
-import gui.contextHelp as contextHelp
 import NVDAState
 
 
