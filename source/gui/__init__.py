@@ -37,7 +37,7 @@ from .speechDict import (
 	VoiceDictionaryDialog,
 	TemporaryDictionaryDialog,
 )
-
+from .utilityDialogs import ContinueCancelDialog
 # ExitDialog is accessed through `import gui.ExitDialog` as opposed to `gui.exit.ExitDialog`.
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
@@ -491,12 +491,8 @@ class MainFrame(wx.Frame):
 		"""
 		# Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 		genericTitle: str = _("Fix COM Registrations")
-		response: int = messageBox(
-			self._CRFTIntroMessage(),
-			caption=genericTitle,
-			style=wx.OK | wx.CANCEL | wx.STAY_ON_TOP | wx.ICON_INFORMATION,
-			parent=self,
-		)
+		introDialog = ContinueCancelDialog(self, self._CRFTIntroMessage(), genericTitle)
+		response: int = introDialog.ShowModal()
 		if response == wx.CANCEL:
 			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")
 			return
