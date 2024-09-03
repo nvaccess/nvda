@@ -565,7 +565,7 @@ class MainFrame(wx.Frame):
 			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will "
 			"be prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the "
 			"yes button.\n\n"
-			"Press OK to try to repair the registry now.\n",
+			"Press Continue to try to repair the registry now.\n",
 		)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
