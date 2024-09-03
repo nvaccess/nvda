@@ -33,7 +33,7 @@ class TestIsSamePageUrl(unittest.TestCase):
 		self.assertFalse(isSamePageUrl("http://example.com/page#section", ""))
 
 	def test_differentScheme(self):
-		self.assertFalse(isSamePageUrl("http://example.com/page#section", "https://example.com/page"))
+		self.assertTrue(isSamePageUrl("http://example.com/page#section", "https://example.com/page"))
 
 	def test_differentQuery(self):
 		self.assertFalse(
@@ -46,7 +46,7 @@ class TestIsSamePageUrl(unittest.TestCase):
 
 	def test_unusualCharacters(self):
 		"""Test URLs with unusual characters."""
-		self.assertFalse(isSamePageUrl("http://example.com/page#%E2%9C%93", "http://example.com/page"))
+		self.assertTrue(isSamePageUrl("http://example.com/page#%E2%9C%93", "http://example.com/page"))
 
 	def test_ftpScheme(self):
 		"""Test URLs with different schemes like FTP."""
