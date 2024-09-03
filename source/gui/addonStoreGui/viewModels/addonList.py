@@ -141,7 +141,7 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 
 	def canUseRetryAction(self) -> bool:
-		return self.status in (AvailableAddonStatus.DOWNLOAD_FAILED, AvailableAddonStatus.INSTALL_FAILED)
+		return self.status in {AvailableAddonStatus.DOWNLOAD_FAILED, AvailableAddonStatus.INSTALL_FAILED}
 
 	def canUseRemoveAction(self) -> bool:
 		return (

@@ -8,7 +8,7 @@
 
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
-* In the add-on shop if the download/installation of an add-on fails, you can now retry the installation. (#17090, @hwf1324)
+* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 
 ### Changes
 
