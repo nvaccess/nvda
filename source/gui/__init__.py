@@ -491,7 +491,12 @@ class MainFrame(wx.Frame):
 		"""
 		# Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 		genericTitle: str = _("Fix COM Registrations")
-		introDialog = ContinueCancelDialog(self, self._CRFTIntroMessage(), genericTitle)
+		introDialog = ContinueCancelDialog(
+			self,
+			genericTitle,
+			self._CRFTIntroMessage(),
+			ContinueCancelDialog.DIALOG_TYPE_WARNING,
+		)
 		response: int = introDialog.ShowModal()
 		if response == wx.CANCEL:
 			log.debug("Run of COM Registration Fixing Tool canceled before UAC.")

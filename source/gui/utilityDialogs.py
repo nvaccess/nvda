@@ -6,7 +6,7 @@
 
 import wx
 
-from gui.nvdaControls import MessageDialog
+from .nvdaControls import MessageDialog
 
 
 class ContinueCancelDialog(MessageDialog):
@@ -14,25 +14,22 @@ class ContinueCancelDialog(MessageDialog):
 	def __init__(
 			self,
 			parent,
-			message: str,
 			title: str,
+			message: str,
+			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
 			continueByDefault: bool = True,
-			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD
 	) -> None:
-		super().__init__(parent, message, title)
-		self.dialogType: int = dialogType
 		self.continueByDefault: bool = continueByDefault
+		super().__init__(parent, message, title, dialogType)
 
-	def _addButtons(self) -> None:
+	def _addButtons(self, buttonHelper) -> None:
 		"""Override to add Continue and Cancel buttons."""
 		# Translators: The label for the Continue button in an NVDA dialog.
-		continueButton = wx.Button(self, wx.ID_OK, _("&Continue"))
-		# Translators: The label for a Cancel button in an NVDA dialog.
-		cancelButton = wx.Button(self, wx.ID_CANCEL, _("Cancel"))
-		self.Sizer.Add(continueButton, flag=wx.ALIGN_CENTER | wx.ALL, border=10)
-		self.Sizer.Add(cancelButton, flag=wx.ALIGN_CENTER | wx.ALL, border=10)
-		self.SetAffirmativeId(wx.ID_OK)
-		self.SetEscapeId(wx.ID_CANCEL)
+		continueButton = buttonHelper.addButton(self, id=wx.ID_OK, label=_("&Continue"))
+		continueButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+		# Translators: The label for the Cancel button in an NVDA dialog.
+		cancelButton = buttonHelper.addButton(self, id=wx.ID_CANCEL, label=_("Cancel"))
+		cancelButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 		if self.continueByDefault:
 			continueButton.SetDefault()
 		else:
