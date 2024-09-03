@@ -495,7 +495,6 @@ class MainFrame(wx.Frame):
 			self,
 			genericTitle,
 			self._CRFTIntroMessage(),
-			ContinueCancelDialog.DIALOG_TYPE_WARNING,
 		)
 		response: int = introDialog.ShowModal()
 		if response == wx.CANCEL:
