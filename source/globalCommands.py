@@ -906,7 +906,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the reporting of link type"),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
-	def script_toggleReportLinkType(self, gesture):
+	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
 		if config.conf["documentFormatting"]["reportLinkType"]:
 			# Translators: The message announced when toggling the report link type document formatting setting.
 			state = _("report link type off")
