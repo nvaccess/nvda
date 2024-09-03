@@ -79,6 +79,7 @@ import touchHandler
 import winVersion
 import weakref
 import time
+import urllib.parse
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 
 #: The size that settings panel text descriptions should be wrapped at.
@@ -3133,14 +3134,26 @@ class AddonStorePanel(SettingsPanel):
 		self.automaticUpdatesComboBox.SetSelection(index)
 
 		# Translators: This is the label for a text box in the add-on store settings dialog.
-		addonMetadataMirrorLabel = _("&Mirror URL")
+		self.addonMetadataMirrorLabelText = _("&Mirror URL")
 		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
-			addonMetadataMirrorLabel,
+			self.addonMetadataMirrorLabelText,
 			wx.TextCtrl,
 		)
 		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
 		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
-		# self.addonUpdateMirrorTextbox.SetValidator(URLValidator)
+
+	def isValid(self) -> bool:
+		metadataURL = self.addonMetadataMirrorTextbox.GetValue()
+		if metadataURL:
+			parsed = urllib.parse.urlparse(metadataURL)
+			isValid = all([parsed.scheme, parsed.netloc])
+			if not isValid:
+				self._validationErrorMessageBox(
+					"The Add-on Store mirror URL is invalid.",
+					self.addonMetadataMirrorLabelText,
+				)
+				return False
+		return True
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
@@ -5374,18 +5387,3 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
-
-
-# class URLValidator(wx.Validator):
-# 	def Clone(self):
-# 		return URLValidator()
-
-# 	def Validate(self, parent):
-# 		from urllib.parse import urlparse
-# 		textControl = self.GetWindow()
-# 		text = textControl.getValue()
-# 		parsed = urlparse(text)
-# 		isValid = all([parsed.scheme, parsed.netloc])
-# 		if not isValid:
-# 			wx.MessageBox("The mirror URL is invalid")
-# 		return isValid
