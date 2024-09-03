@@ -15,12 +15,12 @@ class ContinueCancelDialog(MessageDialog):
 	"""
 
 	def __init__(
-			self,
-			parent,
-			title: str,
-			message: str,
-			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
-			continueByDefault: bool = True,
+		self,
+		parent,
+		title: str,
+		message: str,
+		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+		continueByDefault: bool = True,
 	) -> None:
 		"""Creates a ContinueCancelDialog MessageDialog.
 
