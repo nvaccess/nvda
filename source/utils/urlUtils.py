@@ -8,7 +8,7 @@ from urllib.parse import ParseResult, urlparse, urlunparse
 from logHandler import log
 
 
-def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
+def getLinkType(targetUrl: str, rootUrl: str) -> controlTypes.State | None:
 	"""Returns the link type corresponding to a given URL.
 
 	:param url: The URL of the link destination
@@ -16,7 +16,7 @@ def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
 	:return: A controlTypes.State corresponding to the link type, or C{None} if the state cannot be determined
 	"""
 	if not url or not rootUrl:
-		log.debug("getLinkType: Either url or rootUrl is empty.")
+		log.debug(f"getLinkType: Either url {url} or rootUrl {rootUrl} is empty.")
 		return None
 	if isSamePageUrl(url, rootUrl):
 		log.debug(f"getLinkType: {url} is an internal link.")
@@ -25,7 +25,7 @@ def getLinkType(url: str, rootUrl: str) -> controlTypes.State | None:
 	return None
 
 
-def isSamePageUrl(urlOnPage: str, rootUrl: str) -> bool:
+def isSamePageUrl(targetUrlOnPage: str, rootUrl: str) -> bool:
 	"""Returns whether a given URL belongs to the same page as another URL.
 
 	:param urlOnPage: The URL that should be on the same page as `rootUrl`

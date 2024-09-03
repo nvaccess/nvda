@@ -8,7 +8,7 @@
 
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
-* NVDA can report when a link destination points to the current page (#141, @LeonarddeR, @nvdaes)
+* NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 
 ### Changes
 

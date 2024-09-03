@@ -172,9 +172,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			if controlTypes.State.LINKED not in states:
 				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
 				role = controlTypes.Role.TEXTFRAME
-			elif (value := attrs.get("IAccessible::value")) is not None and (
-				linkType := self.obj.getLinkTypeInDocument(value)
-			) is not None:
+			elif (
+				(value := attrs.get("IAccessible::value")) is not None
+				and (linkType := self.obj.getLinkTypeInDocument(value)) is not None
+			):
 				states.add(linkType)
 		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")

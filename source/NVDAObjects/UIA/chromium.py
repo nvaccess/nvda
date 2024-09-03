@@ -68,7 +68,7 @@ class ChromiumUIATextInfo(web.UIAWebTextInfo):
 class ChromiumUIA(web.UIAWeb):
 	_TextInfo = ChromiumUIATextInfo
 
-	def _get_states(self) -> typing.Set[controlTypes.State]:
+	def _get_states(self) -> set[controlTypes.State]:
 		states = super().states
 		if self.role == controlTypes.Role.LINK and self.linkType:
 			states.add(self.linkType)
