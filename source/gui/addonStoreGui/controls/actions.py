@@ -156,7 +156,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 			),
 			BatchAddonActionVM(
 				# Translators: Label for an action that retries the selected add-ons
-				displayName=pgettext("addonStore", "Re&try selected add-ons"),
+				displayName=pgettext("addonStore", "Re&try installing selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseRetryAction(),
 				actionTarget=self._selectedAddons,
