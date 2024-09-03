@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ "master", "beta", "rc" ]
   schedule:
+    # Scheduled jobs only run on the default branch.
     - cron: '35 22 * * 3'
 
 jobs:
