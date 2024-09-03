@@ -220,6 +220,7 @@ class AddonListValidator:
 
 	def canUseRetryAction(self) -> bool:
 		return any(aVM.canUseRetryAction() for aVM in self.addonsList)
+
 	def canUseRemoveAction(self) -> bool:
 		for aVM in self.addonsList:
 			if aVM.canUseRemoveAction():
