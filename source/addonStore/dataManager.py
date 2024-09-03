@@ -297,7 +297,7 @@ class _DataManager:
 		self,
 		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None",
 		displayMessage: str,
-		titleMessage: str | None = _updateFailureMessage,
+		titleMessage: str | None = None,
 		showTip: bool = True,
 	):
 		"""Display a DisplayableMessage if an OnDisplayableError action is given.
@@ -306,7 +306,7 @@ class _DataManager:
 
 		:param onDisplayableError: The displayable error action.
 		:param displayMessage: Body of the displayable error.
-		:param titleMessage: Title of the displayable error, defaults to _updateFailureMessage.
+		:param titleMessage: Title of the displayable error. If None, _updateFailureMessage will be used. Defaults to None.
 		:param showTip: Whether or not to show a suggestion of what to try, defaults to True.
 		"""
 		if onDisplayableError is None:
@@ -320,7 +320,7 @@ class _DataManager:
 				else self._updateFailureDefaultSuggestion
 			)
 			displayMessage = f"{displayMessage}\n{tip}"
-		displayableError = DisplayableError(displayMessage, titleMessage)
+		displayableError = DisplayableError(displayMessage, titleMessage or self._updateFailureMessage)
 		callLater(delay=0, callable=onDisplayableError.notify, displayableError=displayableError)
 
 	def _deleteCacheInstalledAddon(self, addonId: str):
