@@ -38,6 +38,7 @@ from .speechDict import (
 	TemporaryDictionaryDialog,
 )
 from .utilityDialogs import ContinueCancelDialog
+
 # ExitDialog is accessed through `import gui.ExitDialog` as opposed to `gui.exit.ExitDialog`.
 # Be careful when removing, and only do in a compatibility breaking release.
 from .exit import ExitDialog
