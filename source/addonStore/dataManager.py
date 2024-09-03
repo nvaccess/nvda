@@ -210,7 +210,9 @@ class _DataManager:
 	_updateFailureMirrorSuggestion = pgettext(
 		"addonStore",
 		# Translators: A suggestion of what to do when fetching add-on data from the store fails and a metadata mirror is being used.
-		"Make sure you are connected to the internet, and the add-on store metadata mirror URL is valid.",
+		# {url} will be replaced with the mirror URL.
+		"Make sure you are connected to the internet, and the add-on store mirror URL is valid.\n"
+		"Mirror URL: {url}",
 	)
 	_updateFailureDefaultSuggestion = pgettext(
 		"addonStore",
@@ -313,8 +315,8 @@ class _DataManager:
 
 		if showTip:
 			tip = (
-				self._updateFailureMirrorSuggestion
-				if config.conf["addonStore"]["baseServerURL"]
+				self._updateFailureMirrorSuggestion.format(url=url)
+				if (url := config.conf["addonStore"]["baseServerURL"])
 				else self._updateFailureDefaultSuggestion
 			)
 			displayMessage = f"{displayMessage}\n{tip}"
