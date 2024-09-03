@@ -129,7 +129,7 @@ def toggleBooleanValue(
 	# Translators: The message announced when toggling the configKey setting.
 	enabledMsg: str,
 	# Translators: The message announced when toggling the configKey setting.
-	disabledMsg: str
+	disabledMsg: str,
 ) -> str:
 	"""
 	Toggles a boolean value in the configuration and returns the appropriate message.
@@ -932,7 +932,7 @@ class GlobalCommands(ScriptableObject):
 		msg = toggleBooleanValue(
 			configKey="documentFormatting.reportLinkType",
 			enabledMsg="Report link type on",
-			disabledMsg="Report link type off"
+			disabledMsg="Report link type off",
 		)
 		ui.message(msg)
 
