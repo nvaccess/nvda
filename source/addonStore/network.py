@@ -51,7 +51,7 @@ i.e include older incompatible versions.
 
 
 def _getBaseURL() -> str:
-	if url := conf["addonStore"]["baseURL"]:
+	if url := conf["addonStore"]["baseServerURL"]:
 		return url
 	return _DEFAULT_BASE_URL
 

@@ -3138,7 +3138,7 @@ class AddonStorePanel(SettingsPanel):
 			addonMetadataMirrorLabel,
 			wx.TextCtrl,
 		)
-		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseURL"])
+		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
 		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
 		# self.addonUpdateMirrorTextbox.SetValidator(URLValidator)
 
@@ -3146,7 +3146,7 @@ class AddonStorePanel(SettingsPanel):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
 
-		config.conf["addonStore"]["baseURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
+		config.conf["addonStore"]["baseServerURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
 
 
 class TouchInteractionPanel(SettingsPanel):
