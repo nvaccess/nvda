@@ -6,7 +6,6 @@
 """Unit tests for the urlUtils submodule."""
 
 import unittest
-from utils.urlUtils import isSamePageUrl
 
 
 class TestIsSamePageURL(unittest.TestCase):
