@@ -21,7 +21,7 @@ class TestIsSamePageUrl(unittest.TestCase):
 
 	def test_noFragment(self):
 		"""URLs without fragments are not considered the same page."""
-		self.assertFalse(isSamePageUrl("http://example.com/page", "http://example.com/page"))
+		self.assertTrue(isSamePageUrl("http://example.com/page", "http://example.com/page"))
 
 	def test_differentDomain(self):
 		self.assertFalse(isSamePageUrl("http://other.com/page#section", "http://example.com/page"))

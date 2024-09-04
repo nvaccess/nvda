@@ -51,6 +51,5 @@ def isSamePageUrl(targetUrlOnPage: str, rootUrl: str) -> bool:
 	fragmentInvalidChars: str = "/"  # Characters not considered valid in fragments
 	return (
 		targetUrlOnPageWithoutFragments == rootUrlWithoutFragments
-		and targetUrlOnPageParsed.fragment
 		and not any(char in targetUrlOnPageParsed.fragment for char in fragmentInvalidChars)
 	)
