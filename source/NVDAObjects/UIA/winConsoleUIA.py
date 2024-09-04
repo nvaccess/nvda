@@ -9,7 +9,6 @@ import config
 import controlTypes
 import ctypes
 import NVDAHelper
-import NVDAState
 import speech
 import textInfos
 import textUtils
@@ -19,10 +18,9 @@ from comtypes import COMError
 from diffHandler import prefer_difflib
 from logHandler import log
 from typing import (
-	Any,
 	Optional,
 )
-from UIAHandler.utils import _getConhostAPILevel, _shouldUseWindowsTerminalNotifications
+from UIAHandler.utils import _getConhostAPILevel
 from UIAHandler.constants import WinConsoleAPILevel
 from . import UIA, UIATextInfo
 from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedCharSupport
