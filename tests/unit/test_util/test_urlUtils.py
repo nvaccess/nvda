@@ -13,7 +13,7 @@ class TestIsSamePageURL(unittest.TestCase):
 	def test_samePage_basic(self):
 		self.assertTrue(isSamePageURL("http://example.com/page#section", "http://example.com/page"))
 
-	def test_samePage_bothHaveFragments(self):
+	def test_samePageBothHaveFragments(self):
 		self.assertTrue(isSamePageURL("http://example.com/page#section", "http://example.com/page#main"))
 
 	def test_differentPage(self):
