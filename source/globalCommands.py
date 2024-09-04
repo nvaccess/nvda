@@ -931,14 +931,19 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
 	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
-		toggleBooleanValue(
-			configSection="documentFormatting",
-			configKey="reportLinkType",
-			# Translators: The message announced when toggling the report link type document formatting setting.
-			enabledMsg=_("Report link type on"),
-			# Translators: The message announced when toggling the report link type document formatting setting.
-			disabledMsg=_("Report link type off"),
-		)
+		if config.conf["documentFormatting"]["reportLinks"]:
+			toggleBooleanValue(
+				configSection="documentFormatting",
+				configKey="reportLinkType",
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				enabledMsg=_("Report link type on"),
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				disabledMsg=_("Report link type off"),
+			)
+		else:
+			# Translators: The message announced when reporting links is disabled,
+			# and the user tries to toggle the report link type document formatting setting.
+			ui.message(_("The report links setting must be enabled to toggle report link type"))
 
 	@script(
 		# Translators: Input help mode message for toggle report graphics command.
