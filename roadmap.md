@@ -1,7 +1,7 @@
 ## NVDA Roadmap
 
-This document outlines NV Access's planned development roadmap for NVDA and its supporting infrastructure. 
-Priorities are grouped into short, medium and long-term timeframes. 
+This document outlines NV Access's planned development roadmap for NVDA and its supporting infrastructure.
+Priorities are grouped into short, medium and long-term timeframes.
 This roadmap will be updated to reflect completed projects, development progress and significant changes to the world of screen readers and the wider technology space.
 
 ### Short-Term Priorities
