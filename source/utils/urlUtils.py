@@ -45,7 +45,7 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 		return False
 
 	# Reconstruct URLs without schemes and without fragments for comparison
-	targetURLOnPageWithoutFragments = urlunparse(parsedTargetUrlOnPage._replace(scheme="", fragment=""))
+	targetURLOnPageWithoutFragments = urlunparse(parsedTargetURLOnPage._replace(scheme="", fragment=""))
 	rootURLWithoutFragments = urlunparse(parsedRootURL._replace(scheme="", fragment=""))
 
 	fragmentInvalidChars: str = "/"  # Characters not considered valid in fragments
