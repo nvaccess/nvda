@@ -13,6 +13,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 */
 #define _USE_MATH_DEFINES
 #include <cmath>
+#include <algorithm>
 #include "beeps.h"
 
 

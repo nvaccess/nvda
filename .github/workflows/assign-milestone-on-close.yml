@@ -30,8 +30,21 @@ jobs:
               core.setOutput('milestoneNotSet', 'false');
             }
 
+      - name: Check completed or merged
+        id: check-done
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            if ((context.payload.issue && context.payload.issue.state_reason === "completed")
+                || (context.payload.pull_request && context.payload.pull_request.merged === true)) {
+              core.setOutput('isDone', 'true');
+            } else {
+              core.setOutput('isDone', 'false');
+            }
+
       - name: Assign default milestone
-        if: steps.check-milestone.outputs.milestoneNotSet == 'true'
+        if: steps.check-milestone.outputs.milestoneNotSet == 'true' && steps.check-done.outputs.isDone == 'true'
         uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}

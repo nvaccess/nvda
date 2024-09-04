@@ -317,7 +317,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("terminating tones")
 	tones.terminate()
 	log.debug("terminating sound split")
-	audio.soundSplit.terminate()
+	audio.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
@@ -349,8 +349,8 @@ def resetConfiguration(factoryDefaults=False):
 	# Tones
 	tones.initialize()
 	# Sound split
-	log.debug("initializing sound split")
-	audio.soundSplit.initialize()
+	log.debug("initializing audio")
+	audio.initialize()
 	# Character processing
 	log.debug("initializing character processing")
 	characterProcessing.initialize()
@@ -745,7 +745,7 @@ def main():
 	log.debug("Initializing sound split")
 	import audio
 
-	audio.soundSplit.initialize()
+	audio.initialize()
 	import speechDictHandler
 
 	log.debug("Speech Dictionary processing")

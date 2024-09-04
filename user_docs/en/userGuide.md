@@ -40,16 +40,18 @@ Major highlights include:
 ### System Requirements {#SystemRequirements}
 
 #### Minimum System Requirements {#MinimumSystemRequirements}
+
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
-  * Note 32-bit operating systems are no longer under active support.
+  * Note that 32-bit operating systems are no longer under active support.
   * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 
 #### Recommended System Requirements {#RecommendedSystemRequirements}
-* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Window Server 2022
+
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
   * both AMD64 and ARM64 variants of Windows are supported.
-* at least 150 MB of storage space.
+* at least 500 MB of storage space.
 * at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
@@ -1608,7 +1610,7 @@ Note: The above shortcuts work only with the default formatting string for fooba
 
 ### Poedit {#Poedit}
 
-NVDA offers enhanced support for Poedit 3.4 or newer.
+NVDA offers enhanced support for Poedit 3.5 or newer.
 
 <!-- KC:beginInclude -->
 
@@ -1753,7 +1755,13 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ##### Show exit options when exiting NVDA {#GeneralSettingsShowExitOptions}
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
+When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+* exit
+* restart
+* restart with add-ons disabled and debug logging enabled
+* restart with debug logging enabled
+* install pending updates (if any).
+
 When unchecked, NVDA will exit immediately.
 
 ##### Play sounds when starting or exiting NVDA {#GeneralSettingsPlaySounds}
@@ -2169,7 +2177,7 @@ If "Read by paragraph" is checked, the selected start marker will be displayed t
 This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
 In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-The options include using double space for softer paragraph breaks, or alternatively the paragraph symbol, Pilcrow (¶), for more obvious paragraph breaks.
+The options include using two spaces as a subtle paragraph break, and the paragraph symbol, pilcrow (¶), as a more obvious one.
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2423,6 +2431,8 @@ This mode may differ from "Sound split disabled" mode in case other audio proces
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
@@ -2439,6 +2449,46 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
+
+This combo box allows you to select the status of the applications volume adjuster.
+The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+
+Possible values are:
+
+* Disabled: NVDA doesn't interfere with volume levels of other applications.
+* Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Volume of other applications {#OtherAppVolume}
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Muting other applications {#OtherAppMute}
+
+This check box allows you to mute or unmute all applications except NVDA at once.
+This mute setting will apply to all other applications sound output, even if they start after this setting is changed.
+
+The following keyboard command can also be used from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
+
+Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
@@ -2952,9 +3002,8 @@ The font attributes combo box has four options:
 
 * Off: NVDA will not report these font attributes.
 * Speech: NVDA will announce when these font attributes change.
-* Braille: NVDA will display bold, italic, and underlines in braille.
-Note that your chosen braille table must support displaying these attributes.
-Exactly how these attributes are displayed varies between tables.
+* Braille: NVDA will display these attributes in braille.
+Exactly how they are displayed can be configured in [NVDA's braille settings](#BrailleFormattingDisplay).
 * Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
@@ -5056,6 +5105,31 @@ Following are the current key assignments for these displays.
 |NVDA Menu |space+dot1+dot3+dot4+dot5 (space+n)|
 |windows+d key (minimize all applications) |space+dot1+dot4+dot5 (space+d)|
 |Say all |space+dot1+dot2+dot3+dot4+dot5+dot6|
+
+<!-- KC:endInclude -->
+
+### Dot Pad {#dotPad}
+
+The Dot Pad from Dot Inc is a device that can display refreshable tactile graphics and braille.
+NVDA can display either a single line of braille on the devices dedicated braille display line, or multiple lines of braille on its tactile graphics area.
+The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 lines of 20 cells each.
+
+You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
+
+Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+
+When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
+This driver does not support auto detection.
+
+Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
+Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.
+
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back | `pan_left` |
+|Scroll braille display forward | `pan_right` |
 
 <!-- KC:endInclude -->
 

@@ -68,6 +68,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+from audio import appsVolume
 
 
 #: Script category for text review commands.
@@ -340,9 +341,8 @@ class GlobalCommands(ScriptableObject):
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
-
 			elif scriptCount == 3:
-				ui.browseableMessage(info.text)
+				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
 
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
@@ -2441,6 +2441,8 @@ class GlobalCommands(ScriptableObject):
 				message,
 				# Translators: title for formatting information dialog.
 				_("Formatting"),
+				copyButton=True,
+				closeButton=True,
 			)
 
 	@staticmethod
@@ -4140,7 +4142,7 @@ class GlobalCommands(ScriptableObject):
 	) -> None:
 		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
 		positioned on a link, or an element with an included link such as a graphic.
-		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
+		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
@@ -4174,6 +4176,8 @@ class GlobalCommands(ScriptableObject):
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
 					title=_("Destination of: {name}").format(name=obj.name),
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(linkDestination)  # Speak the link
@@ -4702,6 +4706,50 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageUp",
+	)
+	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageDown",
+	)
+	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(-5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles other applications volume adjuster status",
+		),
+		category=SCRCAT_AUDIO,
+		gesture=None,
+	)
+	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Mutes or unmutes other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+delete",
+	)
+	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeMute()
 
 
 #: The single global commands instance.

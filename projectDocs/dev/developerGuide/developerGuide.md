@@ -74,9 +74,9 @@ It is assumed that characters will have the same description regardless of their
 
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 
-Translations for `characterDescriptions.dic` happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `characterDescriptions.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 
-For a full example and reference, please look at the English [characterDescriptions.dic file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
+For a full example and reference, please look at [the English `characterDescriptions.dic` file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
 
 ### Symbol Pronunciation {#symbolPronunciation}
 
@@ -93,7 +93,7 @@ The file contains two sections, [complex symbols](#complexSymbols) and [symbols]
 
 #### Translating this file {#TranslatingSymbolsFile}
 
-Translations for `symbols.dic` happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `symbols.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 #### Defining Complex Symbols {#complexSymbols}
@@ -211,12 +211,12 @@ thousands separator	comma	all	norep
 
 The gestures defined originally in NVDA are configured to expect English software and keyboard layout.
 In most cases, these gestures can also be executed on other keyboard layouts without any problem.
-However, sometimes a gesture originally defined by NVDA is not adapted for a specific locale (keyboard layout or software).
+However, sometimes a gesture originally defined by NVDA is not suitable for a specific locale (keyboard layout or software).
 The need to modify an original gesture may be due to the following reasons:
 
 * The original gesture is defined with a character that is not a key name on the locale keyboard layout.
 Generally, the key names are the characters that can be input without the help of a modifier key (`shift`, `control`, etc.)
-* The original gesture takes advantage of the keys physical location on the English keyboard layout, but this advantage does not exist with the locale keyboard layout.
+* The original gesture takes advantage of the key's physical location on the English keyboard layout, but this advantage does not exist with the locale keyboard layout.
 * The original gesture is defined to match a native shortcut in Windows or in an application, but the shortcut in the local version of Windows or of this application is not the same as the English one.
 
 In all of these cases, NVDA allows remapping of this gesture for this specific locale.
@@ -229,8 +229,8 @@ Below are three detailed examples of `gestures.ini` files corresponding to the t
 
 In the original English version, the scripts for left and right mouse click (laptop layout) are executed with `NVDA+[` and `NVDA+]`, respectively.
 
-* On an English keyboard layout, the `[` and `]` keys are the two keys at the right of the `p` key.
-* On an Italian keyboard layout, `[` and `]` characters can only be input with the help of `AltGr` modifier: `AltGr+è` and `AltGr+Plus`, respectively.
+* On an English keyboard layout, the `[` and `]` keys are the two keys to the right of the `p` key.
+* On an Italian keyboard layout, `[` and `]` characters can only be input with the help of the `altGr` modifier: `altGr+è` and `altGr+plus`, respectively.
 
 Thus, the Italian translators decided to remap these scripts using the two keys at the right of the `p` key on the Italian keyboard layout, i.e. `è` and `+`.
 To do this, they have added the following lines in the `gestures.ini` file:
@@ -263,8 +263,8 @@ For the French (France) layout, this was not mandatory since there is no possibi
 ##### Example 3: The original gesture is defined to match a native shortcut {#TranslatingGesturesEx3}
 
 NVDA provides a script for the Word document object named `toggleBold`.
-This script is mapped to the same gesture as the Word native shortcut to set text bold, i.e. `control+b` in English version of Word.
-However on French version of Word, the shortcut to turn text bold is `control+g`.
+This script is mapped to the same gesture as the Word native shortcut to set text bold, i.e. `control+b` in the English version of Word.
+However in the French version of Word, the shortcut to turn text bold is `control+g`.
 The G stands for "gras" meaning "bold" in French.
 The following lines have been added in the French `gestures.ini` file to remap this script:
 
@@ -292,7 +292,7 @@ If the gesture to be remapped is a global command, you may execute the following
 * press the gesture you want to remap, e.g. `NVDA+]` (laptop layout)
 * de-activate input help (`NVDA+1`)
 * open the log (`NVDA+F1`)
-* find out the line corresponding to the moment you executed the gesture, e.g.:
+* find the line corresponding to the moment you executed the gesture, e.g.:
 
   ```
   Input help: gesture kb(laptop):NVDA+], bound to script rightMouseClick on globalCommands.GlobalCommands
@@ -311,17 +311,17 @@ You just need to ensure before proceeding that you are in the targeted applicati
 
 ##### Case of an object specific script {#TranslatingGesturesStepCaseObject}
 
-For object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument`, you may follow the same steps as those for application specific scripts, paying attention to the two following points:
+For object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument`, you may follow the same steps as those for application specific scripts, paying attention to the following two points:
 
 * You need to ensure before proceeding that the object to which the script is bound is focused.
 * Some of these scripts have no help message, so you may not hear anything when executing them in input help mode; but the script's name and the class of the object will still appear in the log.
 
-Note, that the class of the object appearing in the log may be a subclass of the one where the original gesture is actually bound.
+Note that the class of the object appearing in the log may be a subclass of the one where the original gesture is actually bound.
 In this case, you will have to explore NVDA's source code to find this parent class.
 
 #### Translating this file {#TranslatingGesturesFile}
 
-Translations for `gestures.ini` happen on SVN following [this process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translations for `gestures.ini` happen on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
 
 1. In your local copy of the screenReaderTranslations repository, check if the `gestures.ini` file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
    * If this file does not exist, create it by copying it from the last version of NVDA.
@@ -334,7 +334,7 @@ If the class your looking for does not exist, create this section.
    toggleBold = kb:control+g, kb:control+shift+b
    ```
 
-   If a line already exists for the script name, but you want to modify the shortcut: add the new shortcut on the same line, separating each shortcut from others with a comma ("`,`")
+   If a line already exists for the script name, but you want to modify the shortcut, add the new shortcut on the same line, separating each shortcut with a comma ("`,`").
 
 4. If you want to unmap the original shortcut, just map it to `None`, e.g.:
 
@@ -477,16 +477,16 @@ As with other examples in this guide, remember to delete the created app module 
 ### App modules for hosted apps {#appModulesForHostedApps}
 
 Some executables host various apps inside or are employed by an app to display their interfaces.
-These include javaw.exe for running various Java programs, wwahost.exe for some apps in Windows 8 and later, and msedgewebview2.exe for displaying web-like interface on apps employing Edge WebView2 runtime.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
 If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
-For example, an app module for a Java app named "test" hosted inside javaw.exe must be named test.py.
-For apps hosted inside wwahost, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
+For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
+For apps hosted inside `wwahost`, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in `wwahost`.
 By default, apps employing Edge WebView2 such as modern Outlook (olk.exe) are displayed as a webpage.
 
-### Example 2: an app module for an app hosted by wwahost.exe {#example2}
+### Example 2: an app module for an app hosted by `wwahost.exe` {#example2}
 
-The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
+The following example is the same as the Notepad app module above, except this is for an app hosted by `wwahost.exe`.
 
 ```py
 # wwahost/test App Module for NVDA
@@ -502,13 +502,13 @@ class AppModule(AppModule):
 		nextHandler()
 ```
 
-The biggest difference from Notepad app module is where wwahost app module comes from.
-As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
+The biggest difference from the Notepad app module is where the `wwahost` app module comes from.
+As a built-in app module, `wwahost` can be imported from `nvdaBuiltin.appModules`.
 
 Another difference is how the app module class is defined.
 As wwahost app module provides necessary infrastructure for apps hosted inside, you just need to subclass the wwahost AppModule class.
 
-### Example 3: an app module for an app employing Edge WebView2 (msedgewebview2.exe) {#example3}
+### Example 3: an app module for an app employing Edge WebView2 (`msedgewebview2.exe`) {#example3}
 
 The following example is an app module employing Edge WebView2 runtime with browse mode disabled by default, using modern Outlook (olk.exe) as an example.
 
@@ -546,7 +546,7 @@ Be very careful to keep all tabs and spaces intact.
 
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
-From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
+From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken and brailled.
 
 ```py
 # Version announcement plugin for NVDA
@@ -683,13 +683,13 @@ In short, a decorator is a function that modifies the behavior of a particular f
 The script decorator modifies the script in such a way that it will be properly bound to the desired gestures.
 Furthermore, it ensures that the script is listed with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
 
-In order for you to use the script decorator, you will have to import it from the scriptHandler module.
+In order for you to use the `script` decorator, you will have to import it from the `scriptHandler` module.
 
 ```py
 from scriptHandler import script
 ```
 
-After that, just above your script definition, add the script decorator, providing it the desired arguments.
+After that, just above your script definition, add the `script` decorator, providing the desired arguments.
 For example:
 
 ```py
@@ -860,7 +860,7 @@ There are two steps to providing a custom NVDA Object class:
 When defining a custom NVDAObject class, you have many NVDAObject base classes to choose from.
 These base classes contain the base support for the particular accessibility or OS API underlying the control, such as win32, MSAA or Java access Bridge.
 You should usually inherit your custom NVDAObject class from the highest base class you need in order to choose your class in the first place.
-For example, if you choose to use your custom NVDAObject class when the window class name is "Edit" and the window control ID is 15, you should probably inherit from `NVDAObjects.window.Window`, as clearly you are aware that this is a Window object.
+For example, if you choose to use your custom NVDAObject class when the window class name is "Edit" and the window control ID is 15, you should probably inherit from `NVDAObjects.window.Window`, as you are clearly aware that this is a Window object.
 Similarly, if you match on MSAA's `accRole` property, you would probably need to inherit from `NVDAObjects.IAccessible.IAccessible`.
 You should also consider what properties you are going to override on the custom NVDA Object.
 For instance, if you are going to override an IAccessible specific property, such as `shouldAllowIAccessibleFocusEvent`, then you need to inherit from `NVDAObjects.IAccessible.IAccessible`.
@@ -938,7 +938,7 @@ class AppModule(appModuleHandler.AppModule):
 ### Parsing additional command line arguments in your plugin {#PluginCLIArgs}
 
 By default NVDA accepts a limited set of command line arguments and shows an error for unknown ones.
-However if you want to use any additional arguments, this is possible by adding a handler to the [extension point](#ExtensionPoints) `addonHandler.isCLIParamKnown`.
+However, if you want to use any additional arguments, this is possible by adding a handler to the [extension point](#ExtensionPoints) `addonHandler.isCLIParamKnown`.
 Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in a global plugin, since app modules or other drivers may not be loaded at this stage.
 A sample handler can be written as follows:
 
@@ -1140,8 +1140,8 @@ displayName = Hébreu Biblique
 
 ### Add-on Documentation {#AddonDoc}
 
-Documentation for an add-on should be placed in a doc directory in the archive.
-Similar to the locale directory, this directory should contain directories for each language in which documentation is available.
+Documentation for an add-on should be placed in the `doc` directory in the archive.
+Similar to the `locale` directory, this directory should contain directories for each language in which documentation is available.
 
 Users can access documentation for a particular add-on by opening the Add-on Store, selecting the add-on and pressing the Add-on help button.
 This will open the file named in the docFileName parameter of the manifest.
@@ -1173,7 +1173,7 @@ output = True
 input = True
 ```
 
-In the above example, `fr-bfu-tabmod-comp8.utb` is a new table,  while `no-no-8dot.utb` replaces a table that is already included in NVDA.
+In the above example, `fr-bfu-tabmod-comp8.utb` is a new table, while `no-no-8dot.utb` replaces a table that is already included in NVDA.
 Both tables need to be shipped in the brailleTables directory of the add-on.
 It is also possible to include a table in the manifest that is shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
 In that case, the table does not need to be shipped in the add-on's brailleTables directory.
@@ -1285,9 +1285,9 @@ There are some special functions:
 
 ## Extension Points {#ExtensionPoints}
 
-NVDA's `extensionPoints` module, allows code in different parts of NVDA, or in add-ons, to perform tasks such as:
+NVDA's `extensionPoints` module allows code in different parts of NVDA, or in add-ons, to perform tasks such as:
 
-* Being notified when an action occurs or a state is changed.
+* Be notified when an action occurs or a state is changed.
 * Receive, as part of being notified, variables related to the action or changed state.
 * Cancel or alter an action NVDA was going to take, based upon certain conditions.
 * Modify data that NVDA is using (such as changing speech sequences or braille, before they are spoken or brailled).
@@ -1313,7 +1313,8 @@ For examples of how to define and use new extension points, please see the code 
 
 | Type |Extension Point |Description|
 |---|---|---|
-|`Filter` |`filter_displaySize` |Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displaySize` | [Deprecated] Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displayDimensions` | Allows components or add-ons to change the number of rows and columns of the display used for braille output.|
 |`Action` |`displaySizeChanged` |Notifies of display size changes.|
 |`Action` |`pre_writeCells` |Notifies when cells are about to be written to a braille display|
 |`Action` |`displayChanged` |Notifies of braille display changes.|
