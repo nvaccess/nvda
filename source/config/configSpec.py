@@ -335,7 +335,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [addonStore]
 	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
-	addonListOrder = option("recent", "older", "alphabetical", default="recent")
 """
 
 #: The configuration specification

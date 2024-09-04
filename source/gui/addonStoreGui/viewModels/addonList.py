@@ -351,10 +351,7 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			shouldUseSubmissionTime = config.conf["addonStore"]["addonListOrder"] != "alphabetical"
-			if not shouldUseSubmissionTime or listItemVM.model.submissionTime is None:
-				return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
-			return str(listItemVM.model.submissionTime)
+			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
@@ -375,8 +372,7 @@ class AddonListVM:
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
 
-		reverse = config.conf["addonStore"]["addonListOrder"] == "recent"
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=reverse)])
+		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
 		return filteredSorted
 
 	def _tryPersistSelection(
