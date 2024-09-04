@@ -607,10 +607,15 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		if not eventHandler.isPendingEvents("caret", self):
 			eventHandler.queueEvent("caret", self)
 
+	suppressedActivityIds = [
+		"AccSN1",  # #10950: font attributes
+		"AccSN2",  # #10851: delete activity ID
+	]
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
-		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
-		# such as "delete back word" when Control+Backspace is pressed.
-		if activityId == "AccSN2":  # Delete activity ID
+		# In recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
+		# such as "delete back word" when Control+Backspace is pressed or font attributes are toggled.
+		if activityId in self.suppressedActivityIds:
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 

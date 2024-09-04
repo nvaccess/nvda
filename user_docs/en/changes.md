@@ -5,6 +5,9 @@
 ### Important notes
 
 ### New Features
+* The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
+* Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
+In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
 
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
@@ -28,7 +31,9 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
-* Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
+* Component updates:
+  * Updated Ruff to 0.6.3. (#17102)
+  * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 
 #### API Breaking Changes
@@ -59,6 +64,8 @@ Cursor routing reliability has been improved, and support for routing keys in Po
 All lines of cells will now be used when using a multi-line braille display via HID braille.
 NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan.
 
+The minimum required version of Poedit that works with NVDA is now version 3.5.
+
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
@@ -84,6 +91,7 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
+* The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
 
 ### Bug Fixes
 
