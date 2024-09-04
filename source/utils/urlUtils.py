@@ -18,7 +18,7 @@ def getLinkType(targetURL: str, rootURL: str) -> controlTypes.State | None:
 	if not targetURL or not rootURL:
 		log.debug(f"getLinkType: Either targetUrl {targetURL} or rootUrl {rootURL} is empty.")
 		return None
-	if isSamePageURL(targetUrl, rootURL):
+	if isSamePageURL(targetURL, rootURL):
 		log.debug(f"getLinkType: {targetURL} is an internal link.")
 		return controlTypes.State.INTERNAL_LINK
 	log.debug(f"getLinkType: {targetURL} type is unknown.")
