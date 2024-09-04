@@ -37,18 +37,18 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 
 	validSchemes = ("http", "https")
 	# Parse the URLs
-	targetURLOnPageParsed: ParseResult = urlparse(targetURLOnPage)
-	if targetURLOnPageParsed.scheme not in validSchemes:
+	parsedTargetURLOnPage: ParseResult = urlparse(targetURLOnPage)
+	if parsedTargetURLOnPage.scheme not in validSchemes:
 		return False
-	rootURLParsed: ParseResult = urlparse(rootURL)
-	if rootURLParsed.scheme not in validSchemes:
+	parsedRootURL: ParseResult = urlparse(rootURL)
+	if parsedRootURL.scheme not in validSchemes:
 		return False
 
 	# Reconstruct URLs without schemes and without fragments for comparison
-	targetURLOnPageWithoutFragments = urlunparse(targetUrlOnPageParsed._replace(scheme="", fragment=""))
-	rootURLWithoutFragments = urlunparse(rootURLParsed._replace(scheme="", fragment=""))
+	targetURLOnPageWithoutFragments = urlunparse(parsedTargetUrlOnPage._replace(scheme="", fragment=""))
+	rootURLWithoutFragments = urlunparse(parsedRootURL._replace(scheme="", fragment=""))
 
 	fragmentInvalidChars: str = "/"  # Characters not considered valid in fragments
 	return targetURLOnPageWithoutFragments == rootURLWithoutFragments and not any(
-		char in targetURLOnPageParsed.fragment for char in fragmentInvalidChars
+		char in parsedTargetURLOnPage.fragment for char in fragmentInvalidChars
 	)
