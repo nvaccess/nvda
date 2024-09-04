@@ -351,6 +351,8 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			if listItemVM.model.submissionTime:
+				return strxfrm(str(listItemVM.model.submissionTime))
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
