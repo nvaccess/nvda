@@ -458,3 +458,7 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 	pass
+
+
+def _stripAcceleratorFromLabel(label: str) -> str:
+	return label.replace("&", "", 1)
