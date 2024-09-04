@@ -8,47 +8,47 @@ from urllib.parse import ParseResult, urlparse, urlunparse
 from logHandler import log
 
 
-def getLinkType(targetUrl: str, rootUrl: str) -> controlTypes.State | None:
+def getLinkType(targetURL: str, rootURL: str) -> controlTypes.State | None:
 	"""Returns the link type corresponding to a given URL.
 
-	:param targetUrl: The URL of the link destination
-	:param rootUrl: The root URL of the page
+	:param targetURL: The URL of the link destination
+	:param rootURL: The root URL of the page
 	:return: A controlTypes.State corresponding to the link type, or C{None} if the state cannot be determined
 	"""
-	if not targetUrl or not rootUrl:
-		log.debug(f"getLinkType: Either targetUrl {targetUrl} or rootUrl {rootUrl} is empty.")
+	if not targetURL or not rootURL:
+		log.debug(f"getLinkType: Either targetUrl {targetURL} or rootUrl {rootURL} is empty.")
 		return None
-	if isSamePageUrl(targetUrl, rootUrl):
-		log.debug(f"getLinkType: {targetUrl} is an internal link.")
+	if isSamePageURL(targetUrl, rootURL):
+		log.debug(f"getLinkType: {targetURL} is an internal link.")
 		return controlTypes.State.INTERNAL_LINK
-	log.debug(f"getLinkType: {targetUrl} type is unknown.")
+	log.debug(f"getLinkType: {targetURL} type is unknown.")
 	return None
 
 
-def isSamePageUrl(targetUrlOnPage: str, rootUrl: str) -> bool:
+def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 	"""Returns whether a given URL belongs to the same page as another URL.
 
-	:param targetUrlOnPage: The URL that should be on the same page as `rootUrl`
-	:param rootUrl: The root URL of the page
-	:return: Whether `targetUrlOnPage` belongs to the same page as `rootUrl`
+	:param targetURLOnPage: The URL that should be on the same page as `rootURL`
+	:param rootURL: The root URL of the page
+	:return: Whether `targetURLOnPage` belongs to the same page as `rootURL`
 	"""
-	if not targetUrlOnPage or not rootUrl:
+	if not targetURLOnPage or not rootURL:
 		return False
 
 	validSchemes = ("http", "https")
 	# Parse the URLs
-	targetUrlOnPageParsed: ParseResult = urlparse(targetUrlOnPage)
-	if targetUrlOnPageParsed.scheme not in validSchemes:
+	targetURLOnPageParsed: ParseResult = urlparse(targetURLOnPage)
+	if targetURLOnPageParsed.scheme not in validSchemes:
 		return False
-	rootUrlParsed: ParseResult = urlparse(rootUrl)
-	if rootUrlParsed.scheme not in validSchemes:
+	rootURLParsed: ParseResult = urlparse(rootURL)
+	if rootURLParsed.scheme not in validSchemes:
 		return False
 
 	# Reconstruct URLs without schemes and without fragments for comparison
-	targetUrlOnPageWithoutFragments = urlunparse(targetUrlOnPageParsed._replace(scheme="", fragment=""))
-	rootUrlWithoutFragments = urlunparse(rootUrlParsed._replace(scheme="", fragment=""))
+	targetURLOnPageWithoutFragments = urlunparse(targetUrlOnPageParsed._replace(scheme="", fragment=""))
+	rootURLWithoutFragments = urlunparse(rootURLParsed._replace(scheme="", fragment=""))
 
 	fragmentInvalidChars: str = "/"  # Characters not considered valid in fragments
-	return targetUrlOnPageWithoutFragments == rootUrlWithoutFragments and not any(
-		char in targetUrlOnPageParsed.fragment for char in fragmentInvalidChars
+	return targetURLOnPageWithoutFragments == rootURLWithoutFragments and not any(
+		char in targetURLOnPageParsed.fragment for char in fragmentInvalidChars
 	)

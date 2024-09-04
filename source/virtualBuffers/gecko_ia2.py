@@ -328,7 +328,7 @@ class Gecko_ia2(VirtualBuffer):
 			isDefunct = True
 		return not isDefunct
 
-	def _get_documentUrl(self) -> str:
+	def _get_documentURL(self) -> str:
 		return self.documentConstantIdentifier
 
 	def getNVDAObjectFromIdentifier(
