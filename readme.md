@@ -25,6 +25,7 @@ Their contribution helps us maintain the security and integrity of our releases.
 ## Contributing to NVDA
 If you would like to contribute to NVDA, you can read more information in our [contributing guide](./.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
+NV Access also maintains a [development roadmap](roadmap.md) of NVDA features and supporting infrastructure work.
 
 ## Status checks
 
