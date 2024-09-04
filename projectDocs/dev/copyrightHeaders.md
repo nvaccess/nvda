@@ -1,10 +1,10 @@
-In NVDA files, which are licensed under the GNU GPL, use the following copyright header:
+In NVDA files, which are licensed under the terms of a modified GNU General Public License, use the following copyright header:
 
 ```py
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) <CREATED YEAR>-<LAST UPDATED YEAR> NV Access Limited, <YOUR NAME>
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
-# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 ```
 
 Replacing:
