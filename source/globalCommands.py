@@ -934,7 +934,9 @@ class GlobalCommands(ScriptableObject):
 		toggleBooleanValue(
 			configSection="documentFormatting",
 			configKey="reportLinkType",
+			# Translators: The message announced when toggling the report link type document formatting setting.
 			enabledMsg=_("Report link type on"),
+			# Translators: The message announced when toggling the report link type document formatting setting.
 			disabledMsg=_("Report link type off"),
 		)
 
