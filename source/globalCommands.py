@@ -145,7 +145,8 @@ def toggleBooleanValue(
 	newValue = not currentValue
 	config.conf[configSection][configKey] = newValue
 
-	return _(enabledMsg) if newValue else _(disabledMsg)
+	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
 
 
 class GlobalCommands(ScriptableObject):
@@ -934,8 +935,8 @@ class GlobalCommands(ScriptableObject):
 		msg = toggleBooleanValue(
 			configSection="documentFormatting",
 			configKey="reportLinkType",
-			enabledMsg="Report link type on",
-			disabledMsg="Report link type off",
+			enabledMsg=_("Report link type on"),
+			disabledMsg=_("Report link type off"),
 		)
 		ui.message(msg)
 
