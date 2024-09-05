@@ -83,7 +83,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 	try:
 		parsedTime = datetime.strptime(
 			timeStr,
-			_timeOutputToParsingFormats[outputFormat]
+			_timeOutputToParsingFormats[outputFormat],
 		)
 	except ValueError:
 		# Note if D > 31, strptime does not recognise that value for d.
@@ -97,7 +97,7 @@ def _parseTimeStrToTimeDelta(timeStr: str) -> Optional[timedelta]:
 		days=parsedDay,
 		hours=parsedTime.hour,
 		minutes=parsedTime.minute,
-		seconds=parsedTime.second
+		seconds=parsedTime.second,
 	)
 
 
@@ -112,6 +112,7 @@ class _StatusBarTimes(NamedTuple):
 	"""
 	A named tuple for holding the elapsed and total playing times from Foobar2000's status bar
 	"""
+
 	elapsed: Optional[str]
 	total: Optional[str]
 
@@ -165,8 +166,10 @@ class AppModule(appModuleHandler.AppModule):
 		if parsedElapsedTime is not None and parsedTotalTime is not None:
 			remainingTime = parsedTotalTime - parsedElapsedTime
 			remainingTimeFormatted = TimeOutputFormat.parseTimeDeltaToFormatted(remainingTime)
-			# Translators: Reported remaining time in Foobar2000
-			ui.message(_("{remainingTimeFormatted} remaining").format(remainingTimeFormatted=remainingTimeFormatted))
+			ui.message(
+				# Translators: Reported remaining time in Foobar2000
+				_("{remainingTimeFormatted} remaining").format(remainingTimeFormatted=remainingTimeFormatted),
+			)
 		else:
 			# Translators: Reported if the remaining time can not be calculated in Foobar2000
 			ui.message(_("Remaining time not available"))

@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools<70", "wheel"]
+requires = ["setuptools~=72.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.ruff]
@@ -16,11 +16,11 @@ builtins = [
 	"npgettext",
 ]
 
-logger-objects = ["logHandler.log"]
-
 include = [
 	"*.py",
 	"*.pyw",
+	"sconstruct",
+	"*sconscript",
 ]
 
 exclude = [
@@ -50,4 +50,39 @@ max-complexity = 15
 ignore = [
 	# indentation contains tabs
 	"W191",
+]
+logger-objects = ["logHandler.log"]
+
+[tool.ruff.lint.per-file-ignores]
+# sconscripts contains many inbuilt functions not recognised by the lint,
+# so ignore F821.
+"sconstruct" = ["F821"]
+"*sconscript" = ["F821"]
+
+[tool.licensecheck]
+using = "requirements:requirements.txt"
+only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]
+ignore_packages = [
+	# Incompatible Apache licenses.
+	# These are current license violations and are bundled with NVDA.
+	"fast-diff-match-patch",  # See also #16633
+	"requests",
+
+	# Incompatible Apache licenses.
+	# Bundled with a dependency, but not bundled with NVDA.
+	"importlib-metadata",
+	"opencv-python",
+
+	# Incompatible Apache licenses.
+	# System testing frameworks, not bundled with NVDA.
+	"robotframework",
+	"robotframework-screencaplibrary",
+	"robotremoteserver",
+
+	# Compatible licenses:
+	"certifi",  # Mozilla Public License 2.0
+	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
+	"pycaw",  # MIT license, but not in PyPI
+	"wxPython",  # wxWindows Library License
+	"pillow",  # PIL Software License
 ]

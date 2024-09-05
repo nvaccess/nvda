@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited.
 
-"""Unit tests for the eSpeak synth driver submodule.
-"""
+"""Unit tests for the eSpeak synth driver submodule."""
 
 import logging
 import unittest
@@ -25,42 +24,43 @@ class FakeESpeakSynthDriver:
 
 class TestSynthDriver_Logic(unittest.TestCase):
 	"""Testing of internal logic for the eSpeak driver."""
+
 	def test_normalizeLangCommand(self):
 		"""Test cases for determining a supported eSpeak language from a LangChangeCommand."""
 		self.assertEqual(
 			LangChangeCommand("en-gb"),
 			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand(None)),
-			msg="Default language used if language code not provided"
+			msg="Default language used if language code not provided",
 		)
 		self.assertEqual(
 			LangChangeCommand("fr-fr"),
 			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FR")),
-			msg="Language with locale used when available"
+			msg="Language with locale used when available",
 		)
 		self.assertEqual(
 			LangChangeCommand("en-gb"),
 			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("default")),
-			msg="Default eSpeak language mappings used"
+			msg="Default eSpeak language mappings used",
 		)
 		self.assertEqual(
 			LangChangeCommand("fr"),
 			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fr_FAKE")),
-			msg="Language without locale used when available"
+			msg="Language without locale used when available",
 		)
 		self.assertEqual(
 			LangChangeCommand("ta-ta"),
 			SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("ta-gb")),
-			msg="Language with any locale used when available"
+			msg="Language with any locale used when available",
 		)
 		with self.assertLogs(logHandler.log, level=logging.DEBUG) as logContext:
 			self.assertEqual(
 				LangChangeCommand(None),
 				SynthDriver._normalizeLangCommand(FakeESpeakSynthDriver, LangChangeCommand("fake")),
-				msg="No matching available language returns None"
+				msg="No matching available language returns None",
 			)
 		self.assertIn(
 			"Unable to find an eSpeak language for 'fake'",
-			logContext.output[0]
+			logContext.output[0],
 		)
 
 
@@ -73,7 +73,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		self._nvwaveOpenOld = nvwave.WavePlayer.open
 		nvwave.WavePlayer.open = lambda self: None
 		self._driver = SynthDriver()
-	
+
 	def tearDown(self) -> None:
 		self._driver.terminate()
 		nvwave.WavePlayer.open = self._nvwaveOpenOld
@@ -89,22 +89,28 @@ class TestSynthDriver_Integration(unittest.TestCase):
 			msg=(
 				"Languages mapped by default are no longer supported by eSpeak: "
 				f"{unexpectedUnsupportedDefaultLanguages}"
-			)
+			),
 		)
 
 		expectedUnsupportedMappedLanguages = set(self._driver._defaultLangToLocale.keys())
-		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(eSpeakAvailableLangs)
+		unexpectedSupportedMappedLanguages = expectedUnsupportedMappedLanguages.intersection(
+			eSpeakAvailableLangs,
+		)
 		self.assertEqual(
 			set(),
 			unexpectedSupportedMappedLanguages,
 			msg=(
 				"Languages mapped to eSpeak defaults are now supported by eSpeak: "
 				f"{unexpectedSupportedMappedLanguages}"
-			)
+			),
 		)
 
-		supportedLanguagesWithLocaleStripped = set(stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs)
-		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(eSpeakAvailableLangs)
+		supportedLanguagesWithLocaleStripped = set(
+			stripLocaleFromLangCode(lang) for lang in eSpeakAvailableLangs
+		)
+		unsupportedLanguagesWithoutLocale = supportedLanguagesWithLocaleStripped.difference(
+			eSpeakAvailableLangs,
+		)
 		self.assertEqual(
 			expectedUnsupportedMappedLanguages,
 			unsupportedLanguagesWithoutLocale,
@@ -112,7 +118,7 @@ class TestSynthDriver_Integration(unittest.TestCase):
 				"eSpeak has a language with locale supported "
 				"but the language without locale is unsupported."
 				"Update _defaultLangToLocale to include a new mapping."
-			)
+			),
 		)
 
 	def test_availableLanguagesWithoutLocale(self):
@@ -120,13 +126,17 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		Confirms that eSpeak can manually be switched to all of its supported languages with the locale removed.
 		This doesn't test automatic language switching.
 		"""
-		availableLangsWithoutLocale = set(stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages)
+		availableLangsWithoutLocale = set(
+			stripLocaleFromLangCode(lang) for lang in self._driver.availableLanguages
+		)
 		for langWithoutLocale in availableLangsWithoutLocale:
 			_setVoiceByLanguage(langWithoutLocale)
 			self.assertEqual(
 				langWithoutLocale,
-				self._driver.voice.split("\\")[-1],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
-				msg="Language without locale not supported by eSpeak"
+				self._driver.voice.split("\\")[
+					-1
+				],  # Language code is the last item, e.g. (gmw\en, roa\fr-CH)
+				msg="Language without locale not supported by eSpeak",
 			)
 
 	def test_fallbackToBritishEnglish(self):
@@ -137,5 +147,5 @@ class TestSynthDriver_Integration(unittest.TestCase):
 		self.assertEqual(
 			"gmw\\en",
 			self._driver.voice,
-			msg="Language without locale not supported by eSpeak"
+			msg="Language without locale not supported by eSpeak",
 		)

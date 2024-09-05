@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -30,9 +30,9 @@ except RuntimeError:
 
 @unique
 class _ExitAction(DisplayStringEnum):
-
 	EXIT = auto()
 	RESTART = auto()
+	RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED = auto()
 	RESTART_WITH_ADDONS_DISABLED = auto()
 	RESTART_WITH_DEBUG_LOGGING_ENABLED = auto()
 	INSTALL_PENDING_UPDATE = auto()
@@ -44,8 +44,14 @@ class _ExitAction(DisplayStringEnum):
 			self.EXIT: _("Exit"),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART: _("Restart"),
-			# Translators: An option in the combo box to choose exit action.
-			self.RESTART_WITH_ADDONS_DISABLED: _("Restart with add-ons disabled"),
+			self.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED: _(
+				# Translators: An option in the combo box to choose exit action.
+				"Restart with add-ons disabled and debug logging enabled",
+			),
+			self.RESTART_WITH_ADDONS_DISABLED: _(
+				# Translators: An option in the combo box to choose exit action.
+				"Restart with add-ons disabled",
+			),
 			# Translators: An option in the combo box to choose exit action.
 			self.RESTART_WITH_DEBUG_LOGGING_ENABLED: _("Restart with debug logging enabled"),
 			# Translators: An option in the combo box to choose exit action.
@@ -80,7 +86,7 @@ class ExitDialog(wx.Dialog):
 			addonsDisabledText = _(
 				# Translators: A message in the exit Dialog shown when all add-ons are disabled.
 				"All add-ons are now disabled. "
-				"They will be re-enabled on the next restart unless you choose to disable them again."
+				"They will be re-enabled on the next restart unless you choose to disable them again.",
 			)
 			warningMessages.append(addonsDisabledText)
 		if languageHandler.isLanguageForced():
@@ -88,7 +94,7 @@ class ExitDialog(wx.Dialog):
 				# Translators: A message in the exit Dialog shown when NVDA language has been
 				# overwritten from the command line.
 				"NVDA's interface language is now forced from the command line."
-				" On the next restart, the language  saved in NVDA's configuration will be used instead."
+				" On the next restart, the language  saved in NVDA's configuration will be used instead.",
 			)
 			warningMessages.append(langForcedMsg)
 		if warningMessages:
@@ -99,11 +105,17 @@ class ExitDialog(wx.Dialog):
 		allowedActions = list(_ExitAction)
 		# Windows Store version of NVDA does not support add-ons yet.
 		if config.isAppX:
-			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED)
+			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
 		# Changing debug level on secure screen is not allowed.
 		# Logging on secure screens could allow keylogging of passwords and retrieval from the SYSTEM user.
 		if globalVars.appArgs.secure:
 			allowedActions.remove(_ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED)
+			try:
+				allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED)
+			except ValueError:  # If already removed before
+				pass
+		else:
+			allowedActions.remove(_ExitAction.RESTART_WITH_ADDONS_DISABLED)
 		# Installing updates should not happen in secure mode.
 		if globalVars.appArgs.secure or not (updateCheck and updateCheck.isPendingUpdate()):
 			allowedActions.remove(_ExitAction.INSTALL_PENDING_UPDATE)
@@ -135,7 +147,18 @@ class ExitDialog(wx.Dialog):
 		elif action == _ExitAction.RESTART:
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart)
 		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED:
-			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, disableAddons=True)
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				core.restart,
+				disableAddons=True,
+			)
+		elif action == _ExitAction.RESTART_WITH_ADDONS_DISABLED_AND_DEBUG_LOGGING_ENABLED:
+			queueHandler.queueFunction(
+				queueHandler.eventQueue,
+				core.restart,
+				disableAddons=True,
+				debugLogging=True,
+			)
 		elif action == _ExitAction.RESTART_WITH_DEBUG_LOGGING_ENABLED:
 			queueHandler.queueFunction(queueHandler.eventQueue, core.restart, debugLogging=True)
 		elif action == _ExitAction.INSTALL_PENDING_UPDATE:
@@ -143,13 +166,16 @@ class ExitDialog(wx.Dialog):
 				destPath, version, apiVersion, backCompatTo = updateCheck.getPendingUpdate()
 				from addonHandler import getIncompatibleAddons
 				from gui import mainFrame
-				if any(getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo)):
+
+				if any(
+					getIncompatibleAddons(currentAPIVersion=apiVersion, backCompatToAPIVersion=backCompatTo),
+				):
 					confirmUpdateDialog = updateCheck.UpdateAskInstallDialog(
 						parent=mainFrame,
 						destPath=destPath,
 						version=version,
 						apiVersion=apiVersion,
-						backCompatTo=backCompatTo
+						backCompatTo=backCompatTo,
 					)
 					displayDialogAsModal(confirmUpdateDialog)
 				else:

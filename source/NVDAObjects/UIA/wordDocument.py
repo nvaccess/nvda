@@ -11,7 +11,9 @@ from typing import (
 
 import enum
 from comtypes import COMError
+import inputCore
 import mathPres
+import scriptHandler
 from scriptHandler import isScriptWaiting
 import textInfos
 import UIAHandler
@@ -27,12 +29,12 @@ from UIAHandler.browseMode import (
 	UIABrowseModeDocument,
 	UIADocumentWithTableNavigation,
 	UIATextAttributeQuicknavIterator,
-	TextAttribUIATextInfoQuickNavItem
+	TextAttribUIATextInfoQuickNavItem,
 )
 from . import UIA, UIATextInfo
 from NVDAObjects.window.winword import (
 	WordDocument as WordDocumentBase,
-	WordDocumentTextInfo as LegacyWordDocumentTextInfo
+	WordDocumentTextInfo as LegacyWordDocumentTextInfo,
 )
 from NVDAObjects import NVDAObject
 from scriptHandler import script
@@ -41,6 +43,7 @@ from globalCommands import SCRCAT_SYSTEMCARET
 import documentBase
 
 """Support for Microsoft Word via UI Automation."""
+
 
 class UIACustomAttributeID(enum.IntEnum):
 	LINE_NUMBER = 0
@@ -51,12 +54,13 @@ class UIACustomAttributeID(enum.IntEnum):
 
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
-END_OF_ROW_MARK = '\x07'
+END_OF_ROW_MARK = "\x07"
 
 
 class ElementsListDialog(browseMode.ElementsListDialog):
-
-	ELEMENT_TYPES=(browseMode.ElementsListDialog.ELEMENT_TYPES[0],browseMode.ElementsListDialog.ELEMENT_TYPES[1],
+	ELEMENT_TYPES = (
+		browseMode.ElementsListDialog.ELEMENT_TYPES[0],
+		browseMode.ElementsListDialog.ELEMENT_TYPES[1],
 		# Translators: The label of a radio button to select the type of element
 		# in the browse mode Elements List dialog.
 		("annotation", _("&Annotations")),
@@ -65,22 +69,28 @@ class ElementsListDialog(browseMode.ElementsListDialog):
 		("error", _("&Errors")),
 	)
 
+
 class RevisionUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
-	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues={UIAHandler.AnnotationType_InsertionChange,UIAHandler.AnnotationType_DeletionChange,UIAHandler.AnnotationType_TrackChanges}
+	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues = {
+		UIAHandler.AnnotationType_InsertionChange,
+		UIAHandler.AnnotationType_DeletionChange,
+		UIAHandler.AnnotationType_TrackChanges,
+	}
 
 	@property
 	def label(self):
-		text=self.textInfo.text
+		text = self.textInfo.text
 		if UIAHandler.AnnotationType_InsertionChange in self.attribValues:
-			# Translators: The label shown for an insertion change 
-			return _(u"insertion: {text}").format(text=text)
+			# Translators: The label shown for an insertion change
+			return _("insertion: {text}").format(text=text)
 		elif UIAHandler.AnnotationType_DeletionChange in self.attribValues:
-			# Translators: The label shown for a deletion change 
-			return _(u"deletion: {text}").format(text=text)
+			# Translators: The label shown for a deletion change
+			return _("deletion: {text}").format(text=text)
 		else:
-			# Translators: The general label shown for track changes 
-			return _(u"track change: {text}").format(text=text)
+			# Translators: The general label shown for track changes
+			return _("track change: {text}").format(text=text)
+
 
 def getCommentInfoFromPosition(position):
 	"""
@@ -90,16 +100,16 @@ def getCommentInfoFromPosition(position):
 	@return: A dictionary containing keys of comment, author and date
 	@rtype: dict
 	"""
-	val=position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
+	val = position._rangeObj.getAttributeValue(UIAHandler.UIA_AnnotationObjectsAttributeId)
 	if not val:
 		return
 	try:
-		UIAElementArray=val.QueryInterface(UIAHandler.IUIAutomationElementArray)
+		UIAElementArray = val.QueryInterface(UIAHandler.IUIAutomationElementArray)
 	except COMError:
 		return
 	for index in range(UIAElementArray.length):
-		UIAElement=UIAElementArray.getElement(index)
-		UIAElement=UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
+		UIAElement = UIAElementArray.getElement(index)
+		UIAElement = UIAElement.buildUpdatedCache(UIAHandler.handler.baseCacheRequest)
 		typeID = UIAElement.GetCurrentPropertyValue(UIAHandler.UIA_AnnotationAnnotationTypeIdPropertyId)
 		# Use Annotation Type Comment if available
 		if typeID == UIAHandler.AnnotationType_Comment:
@@ -113,7 +123,7 @@ def getCommentInfoFromPosition(position):
 				not obj.parent
 				# Because the name of this object is language sensetive check if it has UIA Annotation Pattern
 				or not obj.parent.UIAElement.getCurrentPropertyValue(
-					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId
+					UIAHandler.UIA_IsAnnotationPatternAvailablePropertyId,
 				)
 			):
 				continue
@@ -135,19 +145,20 @@ def getPresentableCommentInfoFromPosition(commentInfo):
 	# Translators: The message reported for a comment in Microsoft Word
 	return _("Comment: {comment} by {author} on {date}").format(**commentInfo)
 
+
 class CommentUIATextInfoQuickNavItem(TextAttribUIATextInfoQuickNavItem):
-	attribID=UIAHandler.UIA_AnnotationTypesAttributeId
-	wantedAttribValues={UIAHandler.AnnotationType_Comment,}
+	attribID = UIAHandler.UIA_AnnotationTypesAttributeId
+	wantedAttribValues = {UIAHandler.AnnotationType_Comment}
 
 	@property
 	def label(self):
-		commentInfo=getCommentInfoFromPosition(self.textInfo)
+		commentInfo = getCommentInfoFromPosition(self.textInfo)
 		return getPresentableCommentInfoFromPosition(commentInfo)
 
-class WordDocumentTextInfo(UIATextInfo):
 
+class WordDocumentTextInfo(UIATextInfo):
 	def getMathMl(self, field):
-		mathml = field.get('mathml')
+		mathml = field.get("mathml")
 		if not mathml:
 			raise LookupError("No MathML")
 		return mathml
@@ -179,121 +190,132 @@ class WordDocumentTextInfo(UIATextInfo):
 		# UIA has no good way yet to convert coordinates into user-configured distances such as inches or centimetres.
 		# Nor can it give us specific distances from the edge of a page.
 		# Therefore for now, get the screen coordinates, and if the word object model is available, use our legacy code to get the location text.
-		om=self.obj.WinwordWindowObject
+		om = self.obj.WinwordWindowObject
 		if not om:
-			return super(WordDocumentTextInfo,self).locationText
+			return super(WordDocumentTextInfo, self).locationText
 		try:
-			r=om.rangeFromPoint(point.x,point.y)
-		except (COMError,NameError):
+			r = om.rangeFromPoint(point.x, point.y)
+		except (COMError, NameError):
 			log.debugWarning("MS Word object model does not support rangeFromPoint")
-			return super(WordDocumentTextInfo,self).locationText
-		from  NVDAObjects.window.winword import WordDocumentTextInfo as WordObjectModelTextInfo
-		i=WordObjectModelTextInfo(self.obj,None,_rangeObj=r)
+			return super(WordDocumentTextInfo, self).locationText
+		from NVDAObjects.window.winword import WordDocumentTextInfo as WordObjectModelTextInfo
+
+		i = WordObjectModelTextInfo(self.obj, None, _rangeObj=r)
 		return i.locationText
 
-	def _getTextWithFields_text(self,textRange,formatConfig,UIAFormatUnits=None):
+	def _getTextWithFields_text(self, textRange, formatConfig, UIAFormatUnits=None):
 		if UIAFormatUnits is None and self.UIAFormatUnits:
-			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types 
-			UIAFormatUnits=self.UIAFormatUnits
-		return super(WordDocumentTextInfo,self)._getTextWithFields_text(textRange,formatConfig,UIAFormatUnits=UIAFormatUnits)
+			# Word documents must always split by a unit the first time, as an entire text chunk can give valid annotation types
+			UIAFormatUnits = self.UIAFormatUnits
+		return super(WordDocumentTextInfo, self)._getTextWithFields_text(
+			textRange,
+			formatConfig,
+			UIAFormatUnits=UIAFormatUnits,
+		)
 
 	def _get_controlFieldNVDAObjectClass(self):
 		return WordDocumentNode
 
 	def _getControlFieldForUIAObject(self, obj, isEmbedded=False, startOfNode=False, endOfNode=False):
-		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
+		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc)
 		automationId = obj.UIAAutomationId
 		field = super(WordDocumentTextInfo, self)._getControlFieldForUIAObject(
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
-			endOfNode=endOfNode
+			endOfNode=endOfNode,
 		)
-		if automationId.startswith('UIA_AutomationId_Word_Page_'):
-			field['page-number'] = automationId.rsplit('_', 1)[-1]
-		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_GroupControlTypeId and obj.name:
-			field['role']=controlTypes.Role.EMBEDDEDOBJECT
-			field['alwaysReportName']=True
+		if automationId.startswith("UIA_AutomationId_Word_Page_"):
+			field["page-number"] = automationId.rsplit("_", 1)[-1]
+		elif obj.UIAElement.cachedControlType == UIAHandler.UIA_GroupControlTypeId and obj.name:
+			field["role"] = controlTypes.Role.EMBEDDEDOBJECT
+			field["alwaysReportName"] = True
 		elif obj.role == controlTypes.Role.MATH:
-			field['mathml'] = obj.mathMl
-		elif obj.UIAElement.cachedControlType==UIAHandler.UIA_CustomControlTypeId and obj.name:
+			field["mathml"] = obj.mathMl
+		elif obj.UIAElement.cachedControlType == UIAHandler.UIA_CustomControlTypeId and obj.name:
 			# Include foot note and endnote identifiers
-			field['content']=obj.name
-			field['role']=controlTypes.Role.LINK
-		if obj.role==controlTypes.Role.LIST or obj.role==controlTypes.Role.EDITABLETEXT:
-			field['states'].add(controlTypes.State.READONLY)
-			if obj.role==controlTypes.Role.LIST:
+			field["content"] = obj.name
+			field["role"] = controlTypes.Role.LINK
+		if obj.role == controlTypes.Role.LIST or obj.role == controlTypes.Role.EDITABLETEXT:
+			field["states"].add(controlTypes.State.READONLY)
+			if obj.role == controlTypes.Role.LIST:
 				# To stay compatible with the older MS Word implementation, don't expose lists in word documents as actual lists. This suppresses announcement of entering and exiting them.
 				# Note that bullets and numbering are still announced of course.
 				# Eventually we'll want to stop suppressing this, but for now this is more confusing than good (as in many cases announcing of new bullets when pressing enter causes exit and then enter to be spoken).
-				field['role']=controlTypes.Role.EDITABLETEXT
-		if obj.role==controlTypes.Role.GRAPHIC:
+				field["role"] = controlTypes.Role.EDITABLETEXT
+		if obj.role == controlTypes.Role.GRAPHIC:
 			# Label graphics with a description before name as name seems to be auto-generated (E.g. "rectangle")
-			field['content'] = (
-				field.pop('description', None)
-				or obj.description
-				or field.pop('name', None)
-				or obj.name
+			field["content"] = (
+				field.pop("description", None) or obj.description or field.pop("name", None) or obj.name
 			)
 		# #11430: Read-only tables, such as in the Outlook message viewer
 		# should be treated as layout tables,
 		# if they have either 1 column or 1 row.
 		if (
-			obj.appModule.appName == 'outlook'
+			obj.appModule.appName == "outlook"
 			and obj.role == controlTypes.Role.TABLE
 			and controlTypes.State.READONLY in obj.states
-			and (
-				obj.rowCount <= 1
-				or obj.columnCount <= 1
-			)
+			and (obj.rowCount <= 1 or obj.columnCount <= 1)
 		):
-			field['table-layout'] = True
+			field["table-layout"] = True
 		return field
 
 	def _getTextFromUIARange(self, textRange):
-		t=super(WordDocumentTextInfo,self)._getTextFromUIARange(textRange)
+		t = super(WordDocumentTextInfo, self)._getTextFromUIARange(textRange)
 		if t:
 			# HTML emails expose a lot of vertical tab chars in their text
 			# Really better as carage returns
-			t=t.replace('\v','\r')
+			t = t.replace("\v", "\r")
 			# Remove end-of-row markers from the text - they are not useful
-			t = t.replace(END_OF_ROW_MARK, '')
+			t = t.replace(END_OF_ROW_MARK, "")
 		return t
 
-	def _isEndOfRow(self):
-		""" Is this textInfo positioned on an end-of-row mark? """
-		info=self.copy()
-		info.expand(textInfos.UNIT_CHARACTER)
-		return info._rangeObj.getText(-1)==u'\u0007'
+	def _getTextForCodepointMovement(self) -> str:
+		"""
+		#8576, #10960: In Word, list bullets are exposed in text but are ignored when moving by character.
+		Therefore in `getTextWithFields`, the bullets are stripped from the text and exposed in the `line-prefix` field.
+		To stay compatible with this, we can't simply use the `text` property,
+		as it can potentially contain bullets that should be stripped.
+		"""
+		t = super()._getTextForCodepointMovement()
+		if not t:
+			return t
+		return "".join(f for f in self.getTextWithFields(formatConfig=dict()) if isinstance(f, str))
 
-	def move(self,unit,direction,endPoint=None):
+	def _isEndOfRow(self):
+		"""Is this textInfo positioned on an end-of-row mark?"""
+		info = self.copy()
+		info.expand(textInfos.UNIT_CHARACTER)
+		return info._rangeObj.getText(-1) == "\u0007"
+
+	def move(self, unit, direction, endPoint=None):
 		if endPoint is None:
-			res=super(WordDocumentTextInfo,self).move(unit,direction)
-			if res==0:
+			res = super(WordDocumentTextInfo, self).move(unit, direction)
+			if res == 0:
 				return 0
 			# Skip over end of Row marks
 			while self._isEndOfRow():
-				if self.move(unit,1 if direction>0 else -1)==0:
+				if self.move(unit, 1 if direction > 0 else -1) == 0:
 					break
 			return res
-		return super(WordDocumentTextInfo,self).move(unit,direction,endPoint)
+		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
 
-	def expand(self,unit):
-		super(WordDocumentTextInfo,self).expand(unit)
+	def expand(self, unit):
+		super(WordDocumentTextInfo, self).expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
 		# Therefore work around this by detecting if the expand to line failed, and moving the end of the range to the end of the document manually.
-		if  self.isCollapsed:
-			if self.move(unit,1,endPoint="end")==0:
-				docInfo=self.obj.makeTextInfo(textInfos.POSITION_ALL)
-				self.setEndPoint(docInfo,"endToEnd")
+		if self.isCollapsed:
+			if self.move(unit, 1, endPoint="end") == 0:
+				docInfo = self.obj.makeTextInfo(textInfos.POSITION_ALL)
+				self.setEndPoint(docInfo, "endToEnd")
 
 	# C901 'getTextWithFields' is too complex
 	# Note: when working on getTextWithFields, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None
+		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		fields = None
 		# #11043: when a non-collapsed text range is positioned within a blank table cell
@@ -314,14 +336,14 @@ class WordDocumentTextInfo(UIATextInfo):
 				fields = super(WordDocumentTextInfo, r).getTextWithFields(formatConfig=formatConfig)
 		if fields is None:
 			fields = super().getTextWithFields(formatConfig=formatConfig)
-		if len(fields)==0: 
+		if len(fields) == 0:
 			# Nothing to do... was probably a collapsed range.
 			return fields
 
 		# MS Word tries to produce speakable math content within equations.
 		# However, using mathPlayer with the exposed mathml property on the equation is much nicer.
 		# But, we therefore need to remove the inner math content if reading by line
-		if not formatConfig or not formatConfig.get('extraDetail'):
+		if not formatConfig or not formatConfig.get("extraDetail"):
 			# We really only want to remove content if we can guarantee that mathPlayer is available.
 			if mathPres.speechProvider or mathPres.brailleProvider:
 				curLevel = 0
@@ -332,7 +354,7 @@ class WordDocumentTextInfo(UIATextInfo):
 					field = fields[index]
 					if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 						curLevel += 1
-						if mathLevel is None and field.field.get('mathml'):
+						if mathLevel is None and field.field.get("mathml"):
 							mathLevel = curLevel
 							mathStartIndex = index
 					elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
@@ -340,70 +362,73 @@ class WordDocumentTextInfo(UIATextInfo):
 							mathEndIndex = index
 						curLevel -= 1
 				if mathEndIndex is not None:
-					del fields[mathStartIndex + 1:mathEndIndex]
+					del fields[mathStartIndex + 1 : mathEndIndex]
 
 		# Sometimes embedded objects and graphics In MS Word can cause a controlStart then a controlEnd with no actual formatChange / text in the middle.
 		# SpeakTextInfo always expects that the first lot of controlStarts will always contain some text.
 		# Therefore ensure that the first lot of controlStarts does contain some text by inserting a blank formatChange and empty string in this case.
 		for index in range(len(fields)):
-			field=fields[index]
-			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
+			field = fields[index]
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
 				continue
-			elif isinstance(field,textInfos.FieldCommand) and field.command=="controlEnd":
-				formatChange=textInfos.FieldCommand("formatChange",textInfos.FormatField())
-				fields.insert(index,formatChange)
-				fields.insert(index+1,"")
+			elif isinstance(field, textInfos.FieldCommand) and field.command == "controlEnd":
+				formatChange = textInfos.FieldCommand("formatChange", textInfos.FormatField())
+				fields.insert(index, formatChange)
+				fields.insert(index + 1, "")
 			break
 		##7971: Microsoft Word exposes list bullets as part of the actual text.
 		# This then confuses NVDA's braille cursor routing as it expects that there is a one-to-one mapping between characters in the text string and   unit character moves.
 		# Therefore, detect when at the start of a list, and strip the bullet from the text string, placing it in the text's formatField as line-prefix.
-		listItemStarted=False
-		lastFormatField=None
+		listItemStarted = False
+		lastFormatField = None
 		for index in range(len(fields)):
-			field=fields[index]
-			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				if field.field.get('role')==controlTypes.Role.LISTITEM and field.field.get('_startOfNode'):
+			field = fields[index]
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+				if field.field.get("role") == controlTypes.Role.LISTITEM and field.field.get("_startOfNode"):
 					# We are in the start of a list item.
-					listItemStarted=True
-			elif isinstance(field,textInfos.FieldCommand) and field.command=="formatChange":
+					listItemStarted = True
+			elif isinstance(field, textInfos.FieldCommand) and field.command == "formatChange":
 				# This is the most recent formatField we have seen.
-				lastFormatField=field.field
-			elif listItemStarted and isinstance(field,str):
+				lastFormatField = field.field
+			elif listItemStarted and isinstance(field, str):
 				# This is the first text string within the list.
 				# Remove the text up to the first space, and store it as line-prefix which NVDA will appropriately speak/braille as a bullet.
 				try:
-					spaceIndex=field.index(' ')
+					spaceIndex = field.index(" ")
 				except ValueError:
 					log.debugWarning("No space found in this text string")
 					break
-				prefix=field[0:spaceIndex]
-				fields[index]=field[spaceIndex+1:]
-				lastFormatField['line-prefix']=prefix
+				prefix = field[0:spaceIndex]
+				fields[index] = field[spaceIndex + 1 :]
+				lastFormatField["line-prefix"] = prefix
 				# Let speech know that line-prefix is safe to be spoken always, as it will only be exposed on the very first formatField on the list item.
-				lastFormatField['line-prefix_speakAlways']=True
+				lastFormatField["line-prefix_speakAlways"] = True
 				break
 			else:
 				# Not a controlStart, formatChange or text string. Nothing to do.
 				break
 		# Fill in page number attributes where NVDA expects
 		try:
-			page=fields[0].field['page-number']
+			page = fields[0].field["page-number"]
 		except KeyError:
-			page=None
+			page = None
 		if page is not None:
 			for field in fields:
-				if isinstance(field,textInfos.FieldCommand) and isinstance(field.field,textInfos.FormatField):
-					field.field['page-number']=page
+				if isinstance(field, textInfos.FieldCommand) and isinstance(
+					field.field,
+					textInfos.FormatField,
+				):
+					field.field["page-number"] = page
 		# MS Word can sometimes return a higher ancestor in its textRange's children.
 		# E.g. a table inside a table header.
 		# This does not cause a loop, but does cause information to be doubled
 		# Detect these duplicates and remove them from the generated fields.
-		seenStarts=set()
-		pendingRemoves=[]
-		index=0
-		for index,field in enumerate(fields):
-			if isinstance(field,textInfos.FieldCommand) and field.command=="controlStart":
-				runtimeID=field.field['runtimeID']
+		seenStarts = set()
+		pendingRemoves = []
+		index = 0
+		for index, field in enumerate(fields):
+			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
+				runtimeID = field.field["runtimeID"]
 				if not runtimeID:
 					continue
 				if runtimeID in seenStarts:
@@ -412,70 +437,78 @@ class WordDocumentTextInfo(UIATextInfo):
 					seenStarts.add(runtimeID)
 			elif seenStarts:
 				seenStarts.clear()
-		index=0
-		while index<len(fields):
-			field=fields[index]
-			if isinstance(field,textInfos.FieldCommand) and any(x is field.field for x in pendingRemoves):
+		index = 0
+		while index < len(fields):
+			field = fields[index]
+			if isinstance(field, textInfos.FieldCommand) and any(x is field.field for x in pendingRemoves):
 				del fields[index]
 			else:
-				index+=1
+				index += 1
 		return fields
 
 	def _getFormatFieldAtRange(self, textRange, formatConfig, ignoreMixedValues=False):
-		formatField = super()._getFormatFieldAtRange(textRange, formatConfig, ignoreMixedValues=ignoreMixedValues)
+		formatField = super()._getFormatFieldAtRange(
+			textRange,
+			formatConfig,
+			ignoreMixedValues=ignoreMixedValues,
+		)
 		if not formatField:
 			return formatField
 		if UIARemote.isSupported():
 			docElement = self.obj.UIAElement
-			if formatConfig['reportLineNumber']:
+			if formatConfig["reportLineNumber"]:
 				lineNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.LINE_NUMBER
+					docElement,
+					textRange,
+					UIACustomAttributeID.LINE_NUMBER,
 				)
 				if isinstance(lineNumber, int):
-					formatField.field['line-number'] = lineNumber
-			if formatConfig['reportPage']:
+					formatField.field["line-number"] = lineNumber
+			if formatConfig["reportPage"]:
 				sectionNumber = UIARemote.msWord_getCustomAttributeValue(
-					docElement, textRange, UIACustomAttributeID.SECTION_NUMBER
+					docElement,
+					textRange,
+					UIACustomAttributeID.SECTION_NUMBER,
 				)
 				if isinstance(sectionNumber, int):
-					formatField.field['section-number'] = sectionNumber
+					formatField.field["section-number"] = sectionNumber
 				if False:
 					# #13511: Fetching of text-column-number is disabled
 					# as it causes Microsoft Word 16.0.1493 and newer to crash!!
 					# This should only be reenabled for versions identified not to crash.
 					textColumnNumber = UIARemote.msWord_getCustomAttributeValue(
-						docElement, textRange, UIACustomAttributeID.COLUMN_NUMBER
+						docElement,
+						textRange,
+						UIACustomAttributeID.COLUMN_NUMBER,
 					)
 					if isinstance(textColumnNumber, int):
-						formatField.field['text-column-number'] = textColumnNumber
+						formatField.field["text-column-number"] = textColumnNumber
 		return formatField
-	
+
 	def _getIndentValueDisplayString(self, val: float) -> str:
 		"""A function returning the string to display in formatting info in Word documents.
 		@param val: an indent value measured in points, fetched via
 			an UIAHandler.UIA_Indentation*AttributeId attribute.
 		@return: The string used in formatting information to report the length of an indentation.
 		"""
-		
+
 		if self.obj.WinwordApplicationObject:
 			# When Word object model is available we honour Word's options to report distances so that what is
 			# reported by NVDA matches Word's UI (rulers, paragraph formatting dialog, etc.)
 			# Default seem to be inch or centimeters for Western countries localization of Word and characters for
 			# east Asian localisations.
 			return self.obj.getLocalizedMeasurementTextForPointSize(val)
-		
+
 		# If Word object model is not available, we just fallback to general UIA case, i.e. use Windows regional
 		# settings.
 		return super()._getIndentValueDisplayString(val)
 
 
 class WordBrowseModeDocument(UIABrowseModeDocument):
-
 	def _shouldSetFocusToObj(self, obj: NVDAObject) -> bool:
-		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if (
-			obj.role == controlTypes.Role.EDITABLETEXT
-			and obj.UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc)
+		if obj.role == controlTypes.Role.EDITABLETEXT and obj.UIAAutomationId.startswith(
+			"UIA_AutomationId_Word_Content",
 		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
@@ -483,51 +516,63 @@ class WordBrowseModeDocument(UIABrowseModeDocument):
 			return False
 		return super()._shouldSetFocusToObj(obj)
 
-	def shouldPassThrough(self,obj,reason=None):
-		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc) 
-		if (
-			obj.role == controlTypes.Role.EDITABLETEXT
-			and obj.UIAAutomationId.startswith('UIA_AutomationId_Word_Content')
+	def shouldPassThrough(self, obj, reason=None):
+		# Ignore strange editable text fields surrounding most inner fields (links, table cells etc)
+		if obj.role == controlTypes.Role.EDITABLETEXT and obj.UIAAutomationId.startswith(
+			"UIA_AutomationId_Word_Content",
 		):
 			return False
 		elif obj.role == controlTypes.Role.MATH:
 			# Don't  activate focus mode for math equations otherwise they cannot be interacted  with mathPlayer.
 			return False
-		return super(WordBrowseModeDocument,self).shouldPassThrough(obj,reason=reason)
+		return super(WordBrowseModeDocument, self).shouldPassThrough(obj, reason=reason)
 
-	def script_tab(self,gesture):
-		oldBookmark=self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
+	def script_tab(self, gesture):
+		oldBookmark = self.rootNVDAObject.makeTextInfo(textInfos.POSITION_SELECTION).bookmark
 		gesture.send()
-		noTimeout,newInfo=self.rootNVDAObject._hasCaretMoved(oldBookmark,timeout=1)
+		noTimeout, newInfo = self.rootNVDAObject._hasCaretMoved(oldBookmark, timeout=1)
 		if not newInfo:
 			return
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if not info.isCollapsed:
 			speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-	script_shiftTab=script_tab
 
-	def _iterNodesByType(self,nodeType,direction="next",pos=None):
-		if nodeType=="annotation":
-			comments=UIATextAttributeQuicknavIterator(CommentUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
-			revisions=UIATextAttributeQuicknavIterator(RevisionUIATextInfoQuickNavItem,nodeType,self,pos,direction=direction)
-			return browseMode.mergeQuickNavItemIterators([comments,revisions],direction)
-		return super(WordBrowseModeDocument,self)._iterNodesByType(nodeType,direction=direction,pos=pos)
+	script_shiftTab = script_tab
 
-	ElementsListDialog=ElementsListDialog
+	def _iterNodesByType(self, nodeType, direction="next", pos=None):
+		if nodeType == "annotation":
+			comments = UIATextAttributeQuicknavIterator(
+				CommentUIATextInfoQuickNavItem,
+				nodeType,
+				self,
+				pos,
+				direction=direction,
+			)
+			revisions = UIATextAttributeQuicknavIterator(
+				RevisionUIATextInfoQuickNavItem,
+				nodeType,
+				self,
+				pos,
+				direction=direction,
+			)
+			return browseMode.mergeQuickNavItemIterators([comments, revisions], direction)
+		return super(WordBrowseModeDocument, self)._iterNodesByType(nodeType, direction=direction, pos=pos)
+
+	ElementsListDialog = ElementsListDialog
 
 	def _iterTextStyle(
-			self,
-			kind: str,
-			direction: documentBase._Movement = documentBase._Movement.NEXT,
-			pos: textInfos.TextInfo | None = None
+		self,
+		kind: str,
+		direction: documentBase._Movement = documentBase._Movement.NEXT,
+		pos: textInfos.TextInfo | None = None,
 	) -> Generator[browseMode.TextInfoQuickNavItem, None, None]:
 		raise NotImplementedError(
-			"word textInfos are not supported due to multiple issues with them - #16569"
+			"word textInfos are not supported due to multiple issues with them - #16569",
 		)
 
 
 class WordDocumentNode(UIA):
-	TextInfo=WordDocumentTextInfo
+	TextInfo = WordDocumentTextInfo
 
 	def _get_mathMl(self):
 		try:
@@ -539,19 +584,20 @@ class WordDocumentNode(UIA):
 	def _get_role(self):
 		if self.mathMl:
 			return controlTypes.Role.MATH
-		role=super(WordDocumentNode,self).role
+		role = super(WordDocumentNode, self).role
 		# Footnote / endnote elements currently have a role of unknown. Force them to editableText so that theyr text is presented correctly
-		if role==controlTypes.Role.UNKNOWN:
-			role=controlTypes.Role.EDITABLETEXT
+		if role == controlTypes.Role.UNKNOWN:
+			role = controlTypes.Role.EDITABLETEXT
 		return role
 
-class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentBase):
-	treeInterceptorClass=WordBrowseModeDocument
-	shouldCreateTreeInterceptor=False
-	announceEntireNewLine=True
+
+class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumentBase):
+	treeInterceptorClass = WordBrowseModeDocument
+	shouldCreateTreeInterceptor = False
+	announceEntireNewLine = True
 
 	# Microsoft Word duplicates the full title of the document on this control, which is redundant as it appears in the title of the app itself.
-	name=u""
+	name = ""
 
 	def event_textChange(self):
 		# Ensure Braille is updated when text changes,
@@ -561,10 +607,15 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 		if not eventHandler.isPendingEvents("caret", self):
 			eventHandler.queueEvent("caret", self)
 
+	suppressedActivityIds = [
+		"AccSN1",  # #10950: font attributes
+		"AccSN2",  # #10851: delete activity ID
+	]
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
-		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
-		# such as "delete back word" when Control+Backspace is pressed.
-		if activityId == "AccSN2":  # Delete activity ID
+		# In recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
+		# such as "delete back word" when Control+Backspace is pressed or font attributes are toggled.
+		if activityId in self.suppressedActivityIds:
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 
@@ -611,15 +662,28 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 	@script(
 		gesture="kb:NVDA+alt+c",
 		# Translators: a description for a script that reports the comment at the caret.
-		description=_("Reports the text of the comment where the system caret is located."),
+		description=_(
+			# Translators: a description for a script that reports the comment at the caret.
+			"Reports the text of the comment where the system caret is located."
+			" If pressed twice, presents the information in a browsable message",
+		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCurrentComment(self,gesture):
-		caretInfo=self.makeTextInfo(textInfos.POSITION_CARET)
+	def script_reportCurrentComment(self, gesture: "inputCore.InputGesture") -> None:
+		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		commentInfo = getCommentInfoFromPosition(caretInfo)
 		if commentInfo is not None:
-			ui.message(getPresentableCommentInfoFromPosition(commentInfo))
+			text = getPresentableCommentInfoFromPosition(commentInfo)
+			repeats = scriptHandler.getLastScriptRepeatCount()
+			if repeats == 0:
+				ui.message(text)
+			elif repeats == 1:
+				ui.browseableMessage(
+					text,
+					# Translators: title for Word comment dialog.
+					_("Comment"),
+				)
 		else:
 			# Translators: a message when there is no comment to report in Microsoft Word
 			ui.message(_("No comments"))
@@ -627,18 +691,22 @@ class WordDocument(UIADocumentWithTableNavigation,WordDocumentNode,WordDocumentB
 
 	@script(gesture="kb:NVDA+shift+c")
 	def script_setColumnHeader(self, gesture):
-		ui.message(_(
-			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
-			# headers.
-			"Command not supported in this type of document. "
-			"The tables have their first row cells automatically set as column headers."
-		))
+		ui.message(
+			_(
+				# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+				# headers.
+				"Command not supported in this type of document. "
+				"The tables have their first row cells automatically set as column headers.",
+			),
+		)
 
 	@script(gesture="kb:NVDA+shift+r")
 	def script_setRowHeader(self, gesture):
-		ui.message(_(
-			# Translators: The message reported in Microsoft Word for document types not supporting setting custom
-			# headers.
-			"Command not supported in this type of document. "
-			"The tables have their first column cells automatically set as row headers."
-		))
+		ui.message(
+			_(
+				# Translators: The message reported in Microsoft Word for document types not supporting setting custom
+				# headers.
+				"Command not supported in this type of document. "
+				"The tables have their first column cells automatically set as row headers.",
+			),
+		)

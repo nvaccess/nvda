@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_numericComparison(TestCase):
-
 	def test_compare_lowToHigh(self):
 		op = operation.Operation(localMode=True)
 

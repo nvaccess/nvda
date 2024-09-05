@@ -67,6 +67,7 @@ class WinConsoleAPILevel(enum.IntEnum):
 	Defines actively used Windows Console versions and the levels of custom code required
 	for each.
 	"""
+
 	# Represents a console before microsoft/terminal#4018 was merged.
 	# These consoles do not support UIA word navigation and require a number
 	# of text range workarounds.

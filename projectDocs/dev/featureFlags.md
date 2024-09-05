@@ -13,7 +13,7 @@ A boolean feature, must have 3 states selectable by the user:
 - `Default` (NVDA developer recommendation)
 
 This allows a choice between the following use-cases to be made at any point in time:
-- **Explicitly opt-in** to the feature, regardless of the default behavior. 
+- **Explicitly opt-in** to the feature, regardless of the default behavior.
 An early adopter may choose to do this to test the feature and provide feedback.
 - **Explicitly opt-out** of the feature, regardless of the default behavior.
 A user may find the pre-existing behavior acceptable, and wants the maximum delay to adopt the new feature.

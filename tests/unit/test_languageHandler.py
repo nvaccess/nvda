@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2017-2022 NV Access Limited, Łukasz Golonka
 
-"""Unit tests for the languageHandler module.
-"""
+"""Unit tests for the languageHandler module."""
 
 import unittest
 import languageHandler
@@ -52,7 +51,6 @@ class TestLocaleNameToWindowsLCID(unittest.TestCase):
 
 
 class Test_Normalization_For_Win32(unittest.TestCase):
-
 	def test_isNormalizedWin32LocaleNormalizedLocale(self):
 		self.assertTrue(languageHandler.isNormalizedWin32Locale("en"))
 		self.assertTrue(languageHandler.isNormalizedWin32Locale("ro"))
@@ -140,11 +138,11 @@ class Test_GetLocaleInfoEx_Wrappers(unittest.TestCase):
 		Unicode only locale names"""
 		self.assertIn(
 			languageHandler.ansiCodePageFromNVDALocale("hi"),
-			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES
+			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES,
 		)
 		self.assertIn(
 			languageHandler.ansiCodePageFromNVDALocale("Ne"),
-			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES
+			self.POSSIBLE_CODE_PAGES_FOR_UNICODE_ONLY_LOCALES,
 		)
 
 
@@ -152,9 +150,9 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 	"""Tests for the function languageHandler.setLocale"""
 
 	SUPPORTED_LOCALES = [
-		("en", 'English_United States.1252'),
+		("en", "English_United States.1252"),
 		("fa-IR", "Persian_Iran.1256"),
-		("pl_PL", "Polish_Poland.1250")
+		("pl_PL", "Polish_Poland.1250"),
 	]
 
 	def setUp(self):
@@ -194,7 +192,7 @@ class Test_languageHandler_setLocale(unittest.TestCase):
 
 	def test_NVDASupportedAndPythonSupportedLocale_LanguageCodeMatches(self):
 		"""
-	 	Tests all the translatable languages that NVDA shows in the user preferences
+		Tests all the translatable languages that NVDA shows in the user preferences
 		excludes the locales that python doesn't support, as the expected behaviour is different.
 		"""
 		for localeName in TRANSLATABLE_LANGS - UNSUPPORTED_WIN_LANGUAGES:
@@ -250,7 +248,7 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 		ctypes.windll.kernel32.SetThreadLocale(0)
 		defaultThreadLocale = ctypes.windll.kernel32.GetThreadLocale()
 		self._defaultThreadLocaleName = languageHandler.windowsLCIDToLocaleName(
-			defaultThreadLocale
+			defaultThreadLocale,
 		)
 
 		locale.setlocale(locale.LC_ALL, "")
@@ -306,12 +304,14 @@ class Test_LanguageHandler_SetLanguage(unittest.TestCase):
 						# Python normalizes Unicode Windows code page to 'utf8'
 						possibleVariants.add(lang_country.replace("65001", "utf8"))
 					if "_" in lang_country:
-						possibleVariants.add(languageHandler.localeStringFromLocaleCode(localeName.split("_")[0]))
+						possibleVariants.add(
+							languageHandler.localeStringFromLocaleCode(localeName.split("_")[0]),
+						)
 					possibleVariants.add(languageHandler.englishLanguageNameFromNVDALocale(localeName))
 					self.assertIn(
 						locale.setlocale(locale.LC_ALL),
 						possibleVariants,
-						f"full values: {localeName} {python_locale}"
+						f"full values: {localeName} {python_locale}",
 					)
 
 	def test_WindowsLanguages_NoErrorsThrown(self):

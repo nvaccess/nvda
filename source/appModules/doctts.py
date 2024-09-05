@@ -1,5 +1,5 @@
 import appModuleHandler
 
-class AppModule(appModuleHandler.AppModule):
 
-	sleepMode=True
+class AppModule(appModuleHandler.AppModule):
+	sleepMode = True

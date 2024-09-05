@@ -10,6 +10,7 @@ All feature flags enums should
 - inherit from DisplayStringEnum and implement _displayStringLabels (for the 'displayString' property)
 - have a 'DEFAULT' member.
 """
+
 import enum
 import typing
 from typing import Protocol
@@ -21,17 +22,18 @@ from utils.displayString import (
 
 
 class FeatureFlagEnumProtocol(Protocol):
-	""" All feature flags are expected to have a "DEFAULT" value.
+	"""All feature flags are expected to have a "DEFAULT" value.
 	This definition is provided only for type annotations
 	"""
+
 	DEFAULT: enum.Enum  # Required enum member
 	name: str  # comes from enum.Enum
 	value: str  # comes from enum.Enum
 
 
 class FlagValueEnum(enum.EnumMeta, _DisplayStringEnumMixin, FeatureFlagEnumProtocol):
-	"""Provided only for type annotations.
-	"""
+	"""Provided only for type annotations."""
+
 	pass
 
 
@@ -59,9 +61,24 @@ class BoolFlag(DisplayStringEnum):
 		if self == BoolFlag.DEFAULT:
 			raise ValueError(
 				"Only ENABLED or DISABLED are valid bool values"
-				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy"
+				", DEFAULT must be combined with a 'behavior for default' to be Truthy or Falsy",
 			)
 		return self == BoolFlag.ENABLED
+
+
+class AppsVolumeAdjusterFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.DISABLED: _("Disabled Applications volume adjuster"),
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.ENABLED: _("Enabled Applications volume adjuster"),
+		}
+
+	DEFAULT = enum.auto()
+	DISABLED = enum.auto()
+	ENABLED = enum.auto()
 
 
 class ParagraphNavigationFlag(DisplayStringEnum):
@@ -73,7 +90,7 @@ class ParagraphNavigationFlag(DisplayStringEnum):
 			# Translators: Label for a paragraph style in NVDA settings.
 			self.SINGLE_LINE_BREAK: _("Single line break"),
 			# Translators: Label for a paragraph style in NVDA settings.
-			self.MULTI_LINE_BREAK: _("Multi line break")
+			self.MULTI_LINE_BREAK: _("Multi line break"),
 		}
 
 	DEFAULT = enum.auto()
@@ -91,7 +108,7 @@ class ReviewRoutingMovesSystemCaretFlag(DisplayStringEnum):
 			# Translators: Label for setting to move the system caret when routing review cursor with braille.
 			self.ONLY_WHEN_AUTO_TETHERED: _("Only when tethered automatically"),
 			# Translators: Label for setting to move the system caret when routing review cursor with braille.
-			self.ALWAYS: _("Always")
+			self.ALWAYS: _("Always"),
 		}
 
 	DEFAULT = enum.auto()
@@ -118,6 +135,23 @@ class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	DEFAULT = enum.auto()
 	DIFFING = enum.auto()
 	NOTIFICATIONS = enum.auto()
+
+
+class FontFormattingBrailleModeFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to display formatting changes in braille."""
+
+	DEFAULT = enum.auto()
+	LIBLOUIS = enum.auto()
+	TAGS = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["FontFormattingBrailleModeFlag", str]:
+		return {
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
+		}
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

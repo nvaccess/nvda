@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2022 NV Access Limited.
 
-"""Unit tests for the blockUntilConditionMet submodule.
-"""
+"""Unit tests for the blockUntilConditionMet submodule."""
 
 from typing import (
 	Any,
@@ -17,12 +16,13 @@ from unittest.mock import patch
 from utils.blockUntilConditionMet import blockUntilConditionMet
 
 
-class _FakeTimer():
+class _FakeTimer:
 	"""
 	Used to simulate the passage of time.
 	Patches sleeping and getting the current time,
 	so that the module under test is not dependent on real world time.
 	"""
+
 	POLL_INTERVAL = 0.1
 
 	def __init__(self) -> None:
@@ -42,8 +42,10 @@ class _FakeTimer():
 
 	def createShouldStopEvaluator(self, succeedAfterSeconds: float) -> Callable[[Any], bool]:
 		"""Used to test the shouldStopEvaluator parameter of utils.blockUntilConditionMet.blockUntilConditionMet"""
+
 		def _shouldStopEvaluator(_value: Any) -> bool:
 			return self._fakeTime >= succeedAfterSeconds
+
 		return _shouldStopEvaluator
 
 
@@ -52,6 +54,7 @@ class _Timer_SlowSleep(_FakeTimer):
 	Adds an extra amount of sleep when sleep is called to simulate
 	the device taking longer than expected.
 	"""
+
 	def sleep(self, secs: float) -> None:
 		return super().sleep(secs + 2 * self.POLL_INTERVAL)
 
@@ -61,6 +64,7 @@ class _Timer_SlowGetValue(_FakeTimer):
 	Adds an extra amount of sleep when getValue is called to simulate
 	the function taking a significant amount of time.
 	"""
+
 	def getValue(self) -> float:
 		self._fakeTime += 2 * self.POLL_INTERVAL
 		return super().getValue()
@@ -71,11 +75,14 @@ class _Timer_SlowShouldStop(_FakeTimer):
 	Adds an extra amount of sleep when shouldStopEvaluator is called to simulate
 	the function taking a significant amount of time.
 	"""
+
 	def createShouldStopEvaluator(self, succeedAfterSeconds: float) -> Callable[[Any], bool]:
 		"""Used to test the shouldStopEvaluator parameter of utils.blockUntilConditionMet.blockUntilConditionMet"""
+
 		def _shouldStopEvaluator(_value: Any):
 			self._fakeTime += 2 * self.POLL_INTERVAL
 			return self._fakeTime >= succeedAfterSeconds
+
 		return _shouldStopEvaluator
 
 
@@ -105,7 +112,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds - _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds - _FakeTimer.POLL_INTERVAL,
 			),
 			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
 		)
@@ -113,7 +120,7 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 		timeElapsed = self._timer.time()
 		self.assertTrue(
 			success,
-			msg=f"Test condition failed unexpectedly due to timeout. Elapsed time: {timeElapsed:.2f}s"
+			msg=f"Test condition failed unexpectedly due to timeout. Elapsed time: {timeElapsed:.2f}s",
 		)
 		self.assertGreater(giveUpAfterSeconds, timeElapsed)
 
@@ -123,14 +130,14 @@ class Test_blockUntilConditionMet_Timer(unittest.TestCase):
 			getValue=self._timer.getValue,
 			giveUpAfterSeconds=giveUpAfterSeconds,
 			shouldStopEvaluator=self._timer.createShouldStopEvaluator(
-				succeedAfterSeconds=giveUpAfterSeconds + _FakeTimer.POLL_INTERVAL
+				succeedAfterSeconds=giveUpAfterSeconds + _FakeTimer.POLL_INTERVAL,
 			),
 			intervalBetweenSeconds=_FakeTimer.POLL_INTERVAL,
 		)
 		timeElapsed = self._timer.time()
 		self.assertFalse(
 			success,
-			msg=f"Test condition succeeded unexpectedly before timeout. Elapsed time: {timeElapsed:.2f}s"
+			msg=f"Test condition succeeded unexpectedly before timeout. Elapsed time: {timeElapsed:.2f}s",
 		)
 		self.assertGreaterEqual(timeElapsed, giveUpAfterSeconds)
 

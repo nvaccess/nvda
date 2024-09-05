@@ -39,8 +39,17 @@ Glavne značajke uključuju:
 
 ### Preduvjeti za pokretanje NVDA čitača {#SystemRequirements}
 
+#### Preporučeni preduvjeti sustava {#MinimumSystemRequirements}
+* Operacijski sustavi: 64-bitna izdanja Windowsa 10, Windowsa 11 i Windows Server 2022
+  * Podržane su AMD64 kao i ARM64 verzije sustava Windows.
+* Najmanje 150 MB prostora za pohranu.
+* najmanje 4 GB RAM-a.
+
+#### Minimalni preduvjeti sustava {#MinimumSystemRequirements}
 * Operacijski sustavi: sva 32-bitna i 64-bitna izdanja sustava Windows 8.1, Windows 10, Windows 11 i svih serverskih operacijskih sustava, počevši od Windows Server 2008 R2.
   * Obje inačice,  AMD64 kao i ARM64 operacijskog sustava Windows su podržane.
+  * Imajte na umu da 32-bitni operacijski sustavi nisu aktivno podržani.
+  * Imajte na umu da Windows 8.1 i Windows Server verzije starije od 2022 više nisu aktivno podržane.
 * Najmanje 150 MB prostora na tvrdom disku.
 
 ### Internacionalizacija {#Internationalization}
@@ -352,6 +361,9 @@ Status dodatka će biti prikazan kao "nadogradnja je dostupna".
 na popisu će se prikazati trenutno instalirana verzija i dostupna verzija.
 Pritisnite `enter` na dodatku, kako biste otvorili popis radnji a potom izaberite "nadogradi".
 
+Poslije pokretanja NVDA, biti ćete obaviješteni o dostupnim ažuriranjima dodataka.
+Kako biste saznali više o ovoj značajci i konfigurirali ju, pogledajte ["poglavlje o nadogradnjama dodataka"](#AutomaticAddonUpdates).
+
 ### Zajednica {#Community}
 
 NVDA ima živu zajednicu korisnika. 
@@ -428,12 +440,18 @@ Ova je opcija dostupna samo kad se NVDA instalira iz prijenosne kopije, ali ne i
 ### Izrada prijenosne kopije {#CreatingAPortableCopy}
 
 Ako izrađujete prijenosnu kopiju iz preuzetog instalacijskog paketa za NVDA, jednostavno pritisnite gumb Stvori prijenosnu kopiju.
-Ako ste već zatvorili dijaloški okvir ili ako ste pokrenuli instaliranu kopiju NVDA čitača, odaberite stavku Stvori prijenosnu kopiju, u NVDA izborniku.
+Ako ste već zatvorili dijaloški okvir ili ako ste pokrenuli instaliranu kopiju NVDA čitača, odaberite stavku Stvori prijenosnu kopiju u NVDA izborniku.
 
-Dijaloški okvir koji se prikazuje omogućuje biranje mjesta, gdje će se izraditi prijenosna kopija.
+Dijaloški okvir koji se prikazuje omogućuje biranje mjesta izrade prijenosne kopije.
 To može biti mapa na vašem tvrdom disku ili lokacija na vašem USB sticku ili na drugom prijenosnom uređaju.
-Također, postoji opcija koja omogućuje kopiranje konfiguracije trenutačno prijavljenog korisnika za korištenje u prijenosnoj kopiji.
+Podrazumjevano će se stvoriti mapa za prijenosnu kopiju.
+Također postoji mogućnost korištenja postojeće mape. To će nadpisati postojeće datoteke u mapi.
+Ako postojeća mapa sadrži postojeću prijenosnu kopiju, ona će biti ažurirana.
+
+Također postoji opcija za kopiranje postojeće korisničke konfiguracije za korištenje u stvorenoj prijenosnoj kopiji.
+U to su također uključeni dodaci.
 Ova je opcija dostupna samo kad se prijenosna kopija izrađuje iz instalirane kopije, ali ne i kad se izrađuje iz instalacijske datoteke preuzete s interneta.
+
 Kad pritisnete Nastavi, započet ćete proces izrade prijenosne kopije.
 Kad proces izrade završi, prikazat će se poruka da je izrada prijenosne kopije uspjela.
 Pritisnite U redu da biste zatvorili ovaj dijaloški okvir.
@@ -493,8 +511,7 @@ Treći potvrdni okvir određuje, hoće li se ovaj dijaloški okvir prikazivati t
 
 #### Dijaloški okvir o prikupljanju podataka {#UsageStatsDialog}
 
-Počevši s verzijom NVDA 2018.3, korisnika se pita želi li pristati davati statističke podatke NV Accessu koji pomažu razvijati NVDA. 
-Prilikom prvog pokretanja NVDA, otvorit će se dijaloški okvir u kojem ćete biti pitani, želite li slati korisničke podatke NV Accessu kakda koristite NVDA.
+Prilikom prvog pokretanja NVDA, otvorit će se dijaloški okvir u kojem ćete biti pitani, želite li slati korisničke podatke NV Accessu kada koristite NVDA, u svrhu unapređivanja NVDA u budućnosti.
 O tome koji se podaci prikupljaju, možete pročitati u poglavlju o općenitim postavkama, [Dozvoli NV accessu prikupljanje statističkih podataka](#GeneralSettingsGatherUsageStats).
 Upozorenje: pritiskom gumba "Da" ili "Ne" ova će se postavka spremiti, a dijaloški okvir se više nikada neće pojavljivati osim u slučaju kad ponovo instalirate NVDA.
 Međutim, možete uključiti ili isključiti proces prikupljanja podataka ručno u ploči općih postavki. Kako biste tu postavku promijenili ručno, možete označiti ili odznačiti potvrdni okvir [Dozvoli NVDA projektu prikupljanje statistike o korištenju](#GeneralSettingsGatherUsageStats).
@@ -505,8 +522,8 @@ Međutim, možete uključiti ili isključiti proces prikupljanja podataka ručno
 Većina tipkovničkih prečaca koji su specifični za NVDA, koriste se pritiskanjem određene tipke koja se zove NVDA modifikacijska tipka, u kombinaciji s jednom ili više drugih tipki.
 S tim u vezi postoje iznimke, kao što su prečaci za pregled teksta u rasporedu tipkovnice za stolna računala koje koriste numerički dio tipkovnice, kao i neke druge.
 
-NVDA se može konfigurirati tako da se kao NVDA modifikacijska tipka koriste tipke numerički Insert, Prošireni Insert i-ili capslock.
-Tipke numerički insert i prošireni insert su standardno postavljene kao NVDA modifikacijske tipke.
+NVDA se može konfigurirati tako da se kao `NVDA` modifikacijska tipka koriste tipke `numerički Insert`, `Insert` i/ili `capsLock`.
+Tipke `numerički insert` i `insert` su standardno postavljene kao NVDA modifikacijske tipke.
 
 Ako želite da se NVDA modifikacijske tipke ponašaju na način kao da NVDA nije pokrenut (npr. želite uključiti velika slova kad ste velika slova postavili kao modifikacijsku tipku), pritisnite tipku dva puta brzo.
 
@@ -900,6 +917,7 @@ Ove značajke nisu standardno uključene u postavkama NVDA.
 Ako želite koristiti te značajke, možete ih konfigurirati u [postavkama Miša](#MouseSettings), kategorija [NVDA Postavke](#NVDASettings) u NVDA izborniku Postavke.
 
 Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA ima neke prečace povezane uz miš:
+
 <!-- KC:beginInclude -->
 
 | Naziv |Prečac za stolna računala |Prečac za prenosna računala |Dodir |Opis|
@@ -908,6 +926,10 @@ Iako bi se za kretanje pomoću miša trebao koristiti miš ili trackpad, NVDA im
 |Zaključavanje lijeve tipke miša |shift+Podijeljeno na numeričkoj tipkovnici |NVDA+control+[ |Nema |Zaključava lijevu tipku miša. Pritisnite opet za otpuštanje. Za premještanje miša, pritisnite ovu tipku kako biste zaključali miš i pomićite miš fizički ili ili koristite prečace za usmjeravanje miša|
 |Desna tipka miša |množenje na numeričkoj tipkovnici |NVDA+] |Dodirnite i držite |Jednokratan pritisak desne tipke miša U većini slučajeva koristi se za otvaranje kontekstnog izbornika na poziciji miša.|
 |Zaključavanje desne tipke miša |shift+numeričko množenje |NVDA+control+] |Nema |Zaključava desnu tipku miša. Pritisnite opet za otpuštanje. Kako biste premjestili miš, pritisnite ovu tipku i pomićite miš fizički ili koristite jedan od prečaca za premještavanje miša|
+|Pomiće miš prema gore |nema |nema |nema |Pomiše kotačić miša prema gore na trenutnoj poziciji miša|
+|Pomiće miš prema dolje|nema |nema |nema |Pomiče kotačić miša prema dolje na poziciji miša|
+|Pomiće miš u lijevo |nema |nema |nema |Pomiće kotačić miša u lijevo na trenutnoj poziciji miša|
+|Pomiće miš u desno |nema |nema |nema |Pomiće kotačić miša u desno na trenutnu poziciju miša|
 |Premjesti miš na sljedeći objekt navigatora |NVDA+numeričko dijeljenje |NVDA+shift+m |nema |Premještava miš na sljedeći objekt navigatora i preglednog kursora|
 |Premjesti tipkovnicu na objekt pod mišem |NVDA+numeričko množenje |NVDA+shift+n |nema |postavlja objekt navigatora na poziciju miša|
 
@@ -1785,6 +1807,7 @@ Ako je ova opcija aktivirana, NV Access će koristiti informacije dobivene od se
 Imajte na umu da iako vaša IP adresa će biti korištena za izračunavanje vaše države porijekla, ista nije zadržavana na serveru.
 Osim obaveznih informacija koje se šalju pri provjeri nadogradnje, trenutačno se šalju i sljedeće informacije:
 
+* jedinstveni identifikator korisnika NVDA, koji se mijenja svaki mjesec
 * Jezik NVDA sučelja
 * Vrsta kopije NVDA čitača, instalirana ili prijenosna
 * Ime trenutačno korištene govorne jedinice (uključujući ime dodatka od kojeg potiče driver)
@@ -1878,6 +1901,39 @@ Ova se opcija primjenjuje na sve govorne jedinice, ne samo na trenutačno aktivn
 Standardno je uključena. Ova opcija govori programu NVDA da se jeziku trenutačno odabranog glasa može vjerovati, kad se procesiraju simboli i znakovi.
 Ako shvatite da NVDA čita interpunkciju koristeći krivi jezik za određenu govornu jedinicu ili glas, možda biste ovu opciju željeli isključiti kako biste prisilili NVDA da umjesto toga koristi glavnu jezičnu postavku.
 
+##### Normalizacija Unicode znakova {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcije |podrazumjevano (onemogućeno), omogućeno, onemogućeno|
+|Podrazumjevano |onemogućeno|
+
+Kada je ova opcija omogućena, Normalizacija Unicode znakova biti će izvedena na tekstu koji će NVDA izgovoriti.
+Ovo je ključno za znakove koji se mogu prikazivati u više oblika.
+NVDA koristi  NFKC (engl. Normalization Form Compatibility Composition) algoritam, koji donosi sljedeća poboljšanja, među kojima su uključena:
+
+1. Kose i podebljane verzije znakova koji su dio unicode standarda, te se često koriste na društvenim mrežama su normalizirane u njihove najčešće kompatibilne ekvivalente.
+Na primjer, latinično slovo "h" može također biti prikazano kao "𝐡" (podebljano), "ℎ" (koso), itd., ali će biti izgovoreno kao "h" pri uključenoj normalizaciji.
+Ovaj aspekt normalizacije također je od pomoći pri čitanju jednadžbi u Microsoft Word uređivaču jednadžbi.
+
+1. Normalizacija u sastavljene znakove.
+Na primjer, znak "ü" (u sa prijeglasom/dierezom), zajednički znak za jezike poput njemačkog i turskog može se prikazati u dva oblika.
+  1. Jedan samostalan unicode znak (ü)
+  1. rastavljanje na dva znaka (ü), točnije obično latinično u sa modifikatorom prijeglasa
+  Unicode normalizacija osigurava to, da će se koristiti jedan oblik prilikom izgovaranja teksta, što je jedna varijanta znaka.
+
+1. Rastavljanje nekih ligatura, uključujući "ĳ" (ligatura ij) u njihove dvoslovne oblike ("ij").
+
+1. Stabilan poredak sastavljenih znakova, na primjer u starohebrejskom.
+
+Kako biste mogli podesiti Unicode normalizaciju sa bilo kojeg mjesta, molimo dodijelite prilagođenu gestu koristeći [Dijaloški okvir ulazne geste](#InputGestures).
+
+##### Izgovaraj "normalizirano" pri kretanju po znakovima {#SpeechReportNormalizedForCharacterNavigation}
+
+Ova postavka je potvrdni okvir koji služi za podešavanje izgovora stanja normaliziranosti Unicode znaka pri čitanju slovo po slovo.
+Na primjer, kada je ova opcija uključena, slovkanje znaka "ĳ" rezultirat će izgovorom "i j normalizirano".
+
+Imajte na umu da je ova postavka dostupna samo kad je "[Unicode normalizacija](#SpeechUnicodeNormalization)" uključena.
+
 ##### Koristi Unicode bazu podataka za čitanje opisa znakova i simbola (uključujući emoji znakove) {#SpeechSettingsCLDR}
 
 Kad se ovaj potvrdni okvir označi, NVDA će uključiti dodatne znakove i simbole tijekom čitanja.
@@ -1916,6 +1972,7 @@ Većina govornih jedinica to podržava.
 
 Ova opcija bi općenito trebala biti aktivirana.
 Međutim, u nekim Microsoft Speech API govornim jedinicama ova se opcija ne primijenjuje pravilno i one se ponašaju čudno kad je ova opcija aktivirana.
+Govorne jedinice tvrtke Code Factory, dodatak i sapi aplikacija, također nepravilno implementiraju tu funkciju i nepravilno slovkaju znakove (npr. u NVDA izborniku ili dijaloškim okvirima).
 Ako imate problem s izgovorom pojedinačnih znakova, pokušajte s deaktiviranom opcijom.
 
 ##### Opis znakova koji kasni prilikom pomicanja kursora {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Ako je ova opcija deaktivirana, bit će prikazan onaj dio riječi koji stane na 
 Kad kližete po brajičnom retku, moći ćete pročitati ostatak riječi.
 
 Aktiviranjem ove opcije ćete tekst moći tečnije čitati, ali ćete morati i više klizati po brajičnom retku.
+
+##### Unicode normalizacija {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opcije |podrazumjevano (onemogućeno), omogućeno, onemogućeno|
+|podrazumjevano |onemogućeno|
+
+Kada je ova opcija uključena, tekst koji će se prikazivati na brajičnom redku biti će normaliziran.
+Ovo je ključno za one znakoje koji ne postoje u brajičnim tablicama, te za koje postoje kompatibilne alternative, poput podebljanih i kosih znakova koji se često koriste na društvenim mrežama.
+Ostale dobrobiti Unicode normalizacije objašnjene su u detaljno u [poglavlju o ekvivalentnoj postavci za govor](#SpeechUnicodeNormalization).
+
+Kako biste mogli uključiti ili isključiti Unicode normalizaciju sa bilo kojeg mjesta, dodijelite prilagođenu gestu koristeći [dijaloški okvir ulazne geste](#InputGestures).
 
 ##### Predstavljanje konteksta fokusa {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2926,27 @@ Imajte na umuu da se ovaj stil odlomka ne može koristiti u Microsoft Wordu ili 
 
 Možete se prebacivati između dostupnih stilova odlomaka tako da pridijelite tipkovnički prečac u [dijaloškom okviru ulazne geste](#InputGestures).
 
+#### Add-on Store postavke {#AddonStoreSettings}
+
+Ova kategorija služi za konfiguriranje Add-on storea.
+
+##### Obavjesti o ažuriranjima {#AutomaticAddonUpdates}
+
+Kada je ova opcija postavljena na "obavještavaj", Add-on store će vas obavještavati o dostupnosti ažuriranja dodataka poslije pokretanja NVDA.
+Ova se provjera obavlja svakih dvadeset i četiri sata.
+Obavijesti će se prikazivati  samo za ažuriranja dodataka dostupnih u istom kanalu.
+Na primjer, za instalirane beta dodatke, biti ćete obaviješteni samo o Beta kanalu.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|opcije |obavijesti (podrazumijevano), onemogućeno |
+|Podrazumjevano |obavijesti |
+
+|Opcija |ponašanje |
+|---|---|
+|Obavijesti |obavještava o dostupnosti ažuriranja unutar istog kanala |
+|Onemogućeno |ne provjerava automatski za ažuriranja dodataka |
+
 #### Windows OCR postavke {#Win10OcrSettings}
 
 Postavke u ovoj kategoriji omogućuju podešavanje [Windows OCR](#Win10Ocr).
@@ -3442,6 +3532,9 @@ Ako je NVDA instaliran i pokrenut na vašem sistemu, možete takođe otvoriti da
 Kada se dodatak instalira iz eksternih izvora, NVDA će zahtevati da potvrdite instalaciju.
 Nakon što se dodatak instalira, NVDA mora ponovo da se pokrene kako bi dodatak bio pokrenut, ali možete da odložite ponovno pokretanje programa NVDA ako imate druge dodatke koje želite da instalirate ili ažurirate.
 
+Poslije pokretanja NVDA, podrazumjevano ćete biti obavješteni o ažuriranjima dodataka.
+Kako biste saznali više i podesili ovu opciju, pogledajte ["obavijesti o ažuriranjima"](#AutomaticAddonUpdates).
+
 #### Uklanjanje dodataka {#AddonStoreRemoving}
 
 Da biste uklonili dodatak, izaberite dodatak iz liste i koristite radnju ukloni.
@@ -3563,15 +3656,9 @@ Za više informacija, pročitajte opširno poglavlje: [Dodaci i Add-on store](#A
 
 ### Stvori prijenosnu kopiju {#CreatePortableCopy}
 
-Ovo otvara dijaloški okvir koji služi za stvaranje prijenosne verzije iz instalacijske.
-Na ovaj način, kada pokrećemo prijenosnu inačicu NVDA, u podizborniku Alati stavka izbornika će se zvati "Instaliraj NVDA na ovaj PC" umjesto "Stvori prijenosnu kopiju).
+Ova će opcija otvoriti dijaloški okvir koji služi za stvaranje prijenosne inačice iz trenutno pokrenute kopije NVDA.
 
-Dijaloški okvir za stvaranje prijenosne verzije  NVDA odnosno instalacije NVDA na ovaj Pc će vas pitati gdje želite stvoriti prijenosnu kopiju odnosno instalirati NVDA.
-
-U ovom dijaloškom okviru možete uključiti ili isključiti slijedeće:
-
-* Kopiraj trenutnu korisničku konfiguraciju (ovo uključuje datoteke u %appdata%\roaming\NVDA ili u korisničkoj konfiguraciji prijenosne verzije te uključuje tekođer dodatke i druge komponente)
-* Pokreni novu prijenosnu kopiju poslije stvaranja odnosno pokreni instalacijsku verziju poslije instalacije (Pokreće NVDA poslije stvaranja prijenosne kopije ili poslije instalacijske)
+Za više informacija, slijedite upute u [poglavlju stvaranje prijenosne kopije.](#CreatingAPortableCopy)
 
 ### Pokreni alat za popravak Com registracija... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Podržani su također slijedeći dodatni uređaji, i za njih nisu potrebni dodat
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Imajte na umu da Zoomax trenutno nije podržan bez vanjskih upravljačkih programa
 
 Slijede prečaci za Brailliant BI/B i BrailleNote brajične retke s NVDA čitačem.
 Smještaj ovih tipki potražite u dokumentaciji brajičnog retka.
@@ -4995,8 +5083,8 @@ Slijede opcije naredbenog retka za NVDA:
 |nema |`--install-silent` |Tiho instalira NVDA (ne pokreće novu instaliranu kopiju)|
 |nema |`--enable-start-on-logon=True|False` |Tijekom instaliranja, aktivirajte [opciju pokretanja NVDA čitača na ekranu za prijavu](#StartAtWindowsLogon)|
 |Nema |`copy-portable-config` |Prilikom instalacije, kopira se prijenosna kopija sa zadane lokacije (`config-path`, `-c`) u trenutnu korisničku mapu|
-|nema |`--create-portable` |Stvara prijenosnu kopiju NVDA čitača (pri tome ponovo pokrečući novostvorenu kopiju). Zahtijeva određenu funkciju `--portable-path`|
-|nema |`--create-portable-silent` |Stvara prijenosnu kopiju NVDA čitača (ne pokreće novostvorenu kopiju). zahtjeva određen parametar `--portable-path`|
+|Nema |`--create-portable` |Stvara prijenosnu kopiju NVDA i pokreće ju. Zahtijeva definiran `--portable-path` |
+|Nema |`--create-portable-silent` |Stvara prijenosnu kopiju NVDA  (bez njenog pokretanja. Zahijeva definiran `--portable-path`. Ova opcija utišava upozorenja prilikom pisanja datoteka u pune mape te može nadpisati datoteke bez upozorenja.|
 |nema |`--portable-path=PORTABLEPATH` |Putanja za stvorenu prijenosnu kopiju|
 
 ### Cijelosustavski parametri {#SystemWideParameters}

@@ -35,6 +35,7 @@ if TYPE_CHECKING:
 		AddonBase as AddonHandlerBaseModel,
 		AddonManifest,
 	)
+
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
@@ -50,6 +51,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	"""Needed to display information in add-on store.
 	May come from manifest or add-on store data.
 	"""
+
 	addonId: str
 	displayName: str
 	description: str
@@ -78,6 +80,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	def _addonHandlerModel(self) -> Optional["AddonHandlerModel"]:
 		"""Returns the Addon model tracked in addonHandler, if it exists."""
 		from ..dataManager import addonDataManager
+
 		if addonDataManager is None:
 			return None
 		return addonDataManager._installedAddonsCache.installedAddons.get(self.addonId)
@@ -131,7 +134,7 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}.download"
+			f"{self.name}.download",
 		)
 
 	@property
@@ -143,19 +146,20 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}-{self.addonVersionName}.nvda-addon"
+			f"{self.name}-{self.addonVersionName}.nvda-addon",
 		)
 
 	@property
 	def isPendingInstall(self) -> bool:
 		"""True if this addon has not yet been fully installed."""
 		from ..dataManager import addonDataManager
+
 		assert addonDataManager
 		nameInDownloadsPendingInstall = filter(
 			lambda m: m[0].model.name == self.name,
 			# add-ons which have been downloaded but
 			# have not been installed yet
-			addonDataManager._downloadsPendingInstall
+			addonDataManager._downloadsPendingInstall,
 		)
 		return (
 			super().isPendingInstall
@@ -171,6 +175,7 @@ class _AddonManifestModel(_AddonGUIModel):
 	"""Get data from an add-on's manifest.
 	Can be from an add-on bundle or installed add-on.
 	"""
+
 	addonId: str
 	addonVersionName: str
 	channel: Channel
@@ -205,6 +210,7 @@ class AddonManifestModel(_AddonManifestModel):
 	"""Get data from an add-on's manifest.
 	Can be from an add-on bundle or installed add-on.
 	"""
+
 	addonId: str
 	addonVersionName: str
 	channel: Channel
@@ -224,6 +230,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	"""
 	Data from an add-on installed from the add-on store.
 	"""
+
 	addonId: str
 	publisher: str
 	addonVersionName: str
@@ -247,6 +254,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	@property
 	def manifest(self) -> "AddonManifest":
 		from ..dataManager import addonDataManager
+
 		assert addonDataManager
 		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
 
@@ -256,6 +264,7 @@ class AddonStoreModel(_AddonStoreModel):
 	"""
 	Data from an add-on from the add-on store.
 	"""
+
 	addonId: str
 	displayName: str
 	description: str
@@ -352,11 +361,7 @@ def _createAddonGUICollection() -> "AddonGUICollectionT":
 	as add-on IDs are installed to a case insensitive path.
 	Therefore addon IDs should be treated as case insensitive.
 	"""
-	return {
-		channel: CaseInsensitiveDict()
-		for channel in Channel
-		if channel != Channel.ALL
-	}
+	return {channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL}
 
 
 def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT":

@@ -1,6 +1,112 @@
 # ﻿Novità in NVDA 
 
 
+## 2024.3
+
+Nel caso in cui vi siano aggiornamenti per gli add-on installati, si verrà avvisati all'avvio di NVDA.
+
+Sono ora disponibili opzioni per applicare la normalizzazione Unicode sia per sintesi vocale che braille.
+Ciò può risultare utile quando si incontrano caratteri non presenti in una tabella braille o sconosciuti alla sintesi vocale e che hanno un'alternativa compatibile, come i caratteri in grassetto e corsivo comunemente utilizzati sui social media.
+Consente inoltre la lettura delle equazioni nell'editor di equazioni di Microsoft Word.
+
+Sono ora supportati I display braille Help Tech Activator Pro.
+
+Aggiunti comandi non assegnati per scorrere la rotellina del mouse in verticale e in orizzontale.
+
+Sono disponibili diverse correzioni di bug, in particolare per il pannello Emoji di Windows 11 e la cronologia degli Appunti.
+Per i browser Web, sono state apportate correzioni per la segnalazione di messaggi di errore, figure, didascalie, etichette di tabelle e voci di menu con caselle di controllo/pulsanti di opzione.
+
+LibLouis è stata aggiornata, aggiungendo nuove tabelle Braille per il cirillico serbo, lo yiddish, diverse lingue antiche, il turco e l'alfabeto fonetico internazionale.
+Anche eSpeak porta con sé aggiornamenti, aggiungendo il supporto per la lingua Karakalpak.
+Infine, aggiornato anche unicode CLDR.
+
+### Novità
+
+* Nuovi comandi da tastiera:
+  * Aggiunti comandi non assegnati per lo scorrimento verticale e orizzontale della rotella del mouse, per migliorare la navigazione su pagine web e app con contenuti dinamici, come Dism++.(#16462, @Cary-Rowen)
+* Aggiunto il supporto per la normalizzazione Unicode sia per sintesi vocale che display braille. (#11570, #16466 @LeonarddeR).
+  * Ciò può risultare utile quando si incontrano caratteri non presenti in una tabella braille o sconosciuti alla sintesi vocale e che hanno un'alternativa compatibile, come i caratteri in grassetto e corsivo comunemente utilizzati sui social media.
+  * Consente inoltre la lettura delle equazioni nell'editor di equazioni di Microsoft Word. (#4631)
+  * è possibile abilitare questa funzionalità sia per la sintesi che per il braille nelle rispettive categorie di impostazioni nella finestra di dialogo Impostazioni NVDA.
+* Da impostazioni predefinite, all'avvio di NVDA si riceverà una notifica nel caso in cui siano presenti aggiornamenti per gli add-on installati. (#15035)
+  * Ciò può essere disabilitato nella categoria delle impostazioni "Add-on store".
+  * NVDA verifica quotidianamente la presenza di aggiornamenti.
+  * Verranno controllati solo gli aggiornamenti all'interno dello stesso canale (ad esempio, se sono stati installati add-on in versione beta, questi riceveranno aggiornamenti appartenenti esclusivamente al canale beta.
+* Aggiunto il supporto per i display Help Tech Activator Pro. (#16668)
+
+### Cambiamenti
+
+* Aggiornamento ai componenti:
+  * eSpeak NG è stato aggiornato a 1.52-dev commit `54ee11a79`. (#16495)
+    * Aggiunta la nuova lingua Karakalpak.
+  * Aggiornato Unicode CLDR alla versione 45.0. (#16507, @OzancanKaratas)
+  * Aggiornato fast_diff_match_patch (utilizzato per rilevare modifiche nei terminali e altri contenuti dinamici) alla versione 2.1.0. (#16508, @codeofdusk)
+  * Aggiornata LibLouis braille translator a [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Nuove tabelle braille:
+      * Serbo cirillico.
+      * yiddish.
+      * Diverse lingue antiche: ebraico biblico, accadico, siriaco, ugaritico e testo cuneiforme traslitterato.
+      * Turco grado 2. (#16735)
+      * Alfabeto fonetico internazionale. (#16773)
+  * NSIS aggiornato a 3.10 (#16674, @dpy013)
+  * Aggiornato markdown a 3.6 (#16725, @dpy013)
+  * Aggiornato nh3 a 0.2.17 (#16725, @dpy013)
+* La tabella di input Braille di riserva è ora uguale alla tabella di output di riserva, che è il codice Braille inglese unificato di grado 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA ora annuncerà le figure senza oggetti figli accessibili, ma con un'etichetta o una descrizione. (#14514)
+* Durante la lettura riga per riga in modalità navigazione, non verrà più annunciata la parola "didascalia" quando si esplorano figure con molto testo al loro interno. (#14874)
+* Nella console Python, non andrà più perso l'ultimo comando non eseguito quando ci si sposta nella cronologia degli input. (#16653, @CyrilleB79)
+* Viene ora inviato un ID anonimo ed univoco come parte della raccolta facoltativa delle statistiche sull'utilizzo di NVDA. (#16266)
+* Per impostazione predefinita, verrà creata una nuova cartella quando si crea una copia portable.
+Si riceverà un messaggio d'avviso nel caso in cui si provi a scrivere in una directory non vuota. (#16686)
+
+### Bug Corretti
+
+* Correzioni a Windows 11:
+  * NVDA non si bloccherà più quando si chiude la cronologia degli appunti e il pannello emoji. (#16346, #16347, @josephsl)
+  * NVDA annuncerà nuovamente i caratteri candidati visibili all'apertura dell'interfaccia IME. (#14023, @josephsl)
+  * NVDA non leggerà più due volte la "cronologia degli appunti" durante la navigazione tra le voci del menu del pannello emoji. (#16532, @josephsl)
+  * NVDA non interromperà più la sintesi vocale e la lettura Braille quando si esaminano kaomojis e simboli nel pannello delle emoji. (#16533, @josephsl)
+* Correzioni nei browser Web:
+  * I messaggi di errore a cui si fa riferimento con `aria-errormessage` ora vengono segnalati in Google Chrome e Mozilla Firefox. (#8318)
+  * Se presente, NVDA ora utilizzerà `aria-labelledby` per fornire nomi accessibili per le tabelle in Mozilla Firefox. (#5183)
+  * NVDA annuncerà correttamente gli elementi relativi alle caselle di controllo o pulsanti radio nei menu quando si accede per la prima volta ai sottomenu in Google Chrome e Mozilla Firefox. (#14550)
+  * La funzionalità di ricerca in modalità navigazione di NVDA è ora più precisa quando la pagina contiene emoji. (#16317, @LeonarddeR)
+  * In Mozilla Firefox, NVDA ora riporta correttamente il carattere, la parola e la riga correnti quando il cursore si trova nel punto di inserimento alla fine di una riga. (#3156, @jcsteh)
+  * Lo screen reader non causa più l'arresto anomalo di Google Chrome quando si chiude un documento o si esce da Chrome. (#16893)
+* NVDA annuncerà correttamente i suggerimenti di completamento automatico in Eclipse e in altri ambienti basati su Eclipse su Windows 11. (#16416, @thgcode)
+* Maggiore affidabilità della lettura automatica del testo, in particolare nelle applicazioni terminali. (#15850, #16027, @Danstiv)
+* È nuovamente possibile ripristinare in modo affidabile la configurazione alle impostazioni di fabbrica. (#16755, @Emil-18)
+* NVDA annuncerà correttamente le modifiche alla selezione durante la modifica del testo di una cella in Microsoft Excel. (#15843)
+* Nelle applicazioni che utilizzano Java Access Bridge, NVDA ora leggerà correttamente l'ultima riga vuota di un testo invece di ripetere la riga precedente. (#9376, @dmitrii-drobotov)
+* In LibreOffice Writer (versione 24.8 e successive), quando si attiva/disattiva la formattazione del testo (grassetto, corsivo, sottolineato, pedice/apice, allineamento) utilizzando la scorciatoia da tastiera corrispondente, NVDA annuncia il nuovo attributo di formattazione (ad esempio "Grassetto attivato", "Grassetto disattivato" ). (#4248, @michaelweghorn)
+* Quando si naviga con i tasti freccia nelle caselle di testo in applicazioni che fanno uso di UI Automation, NVDA non annuncerà più per errore il carattere, la parola o la riga errata. (#16711, @jcsteh)
+* Quando si incolla qualcosa nella calcolatrice di Windows 10/11, NVDA ora leggerà correttamente il numero completo appena incollato. (#16573, @TristanBurchett)
+* Corretto un errore che zittiva la sintesi vocale dopo la disconnessione e la riconnessione a una sessione di Desktop remoto. (#16722, @jcsteh)
+* Aggiunto supporto per i comandi di revisione del testo per il nome di un oggetto in Visual Studio Code. (#16248, @Cary-Rowen)
+* è ora possibile ascoltare i suoni generati da NVDA anche sui dispositivi mono. (#16770, @jcsteh)
+* NVDA segnalerà gli indirizzi quando si scorrono i campi A/CC/BCC in outlook.com/Modern Outlook. (#16856)
+* NVDA ora gestisce gli errori di installazione dei componenti aggiuntivi in modo più efficace. (#16704)
+
+### Cambiamenti per sviluppatori, in inglese
+
+* NVDA now uses Ruff instead of flake8 for linting. (#14817)
+* Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
+* A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
+It is especially useful to read the error location markers in tracebacks. (#16321, @CyrilleB79)
+* Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * Tables can be provided in the `brailleTables` folder in an add-on package.
+  * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
+  * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
+* When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
+* NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
+* `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+* It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
+
+
 ## 2024.2
 
 Introdotta una nuova funzionalità chiamata hbilanciamento audio.

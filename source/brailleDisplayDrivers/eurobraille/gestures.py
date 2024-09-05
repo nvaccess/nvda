@@ -28,9 +28,12 @@ GestureMapEntries = {
 			"br(eurobraille):l8",
 		),
 		"braille_toFocus": (
-			"br(eurobraille):switch1Left+switch1Right", "br(eurobraille):switch2Left+switch2Right",
-			"br(eurobraille):switch3Left+switch3Right", "br(eurobraille):switch4Left+switch4Right",
-			"br(eurobraille):switch5Left+switch5Right", "br(eurobraille):switch6Left+switch6Right",
+			"br(eurobraille):switch1Left+switch1Right",
+			"br(eurobraille):switch2Left+switch2Right",
+			"br(eurobraille):switch3Left+switch3Right",
+			"br(eurobraille):switch4Left+switch4Right",
+			"br(eurobraille):switch5Left+switch5Right",
+			"br(eurobraille):switch6Left+switch6Right",
 			"br(eurobraille):l1+l8",
 		),
 		"review_previousLine": ("br(eurobraille):joystick1Up",),
@@ -113,8 +116,8 @@ GestureMapEntries = {
 		"kb:f11": ("br(eurobraille):dot1+dot3+backspace",),
 		"kb:f12": ("br(eurobraille):dot1+dot2+dot3+backspace",),
 		"kb:windows": ("br(eurobraille):dot1+dot2+dot4+dot5+dot6+space",),
-		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace",),
-		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace",),
+		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace"),
+		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace"),
 		"braille_toggleShift": (
 			"br(eurobraille):dot1+dot7+space",
 			"br(eurobraille):dot4+dot7+space",
@@ -130,17 +133,19 @@ GestureMapEntries = {
 		"braille_toggleAlt": (
 			"br(eurobraille):dot1+dot8+space",
 			"br(eurobraille):dot4+dot8+space",
-			"br(eurobraille):l6"
+			"br(eurobraille):l6",
 		),
 		"kb:alt": ("br(eurobraille):dot8+space"),
 		"braille_toggleNVDAKey": ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
 		"kb:control+home": (
 			"br(eurobraille):joystick2left+joystick2up",
-			"br(eurobraille):l1+l2+l3", "br(eurobraille):l2+l3+l4",
+			"br(eurobraille):l1+l2+l3",
+			"br(eurobraille):l2+l3+l4",
 		),
 		"kb:control+end": (
 			"br(eurobraille):joystick2right+joystick2up",
-			"br(eurobraille):l6+l7+l8", "br(eurobraille):l5+l6+l7",
+			"br(eurobraille):l6+l7+l8",
+			"br(eurobraille):l5+l6+l7",
 		),
 		"braille_toggleWindows": (
 			"br(eurobraille):backspace+dot1+dot2+dot3+dot4",
@@ -153,7 +158,6 @@ _gestureMap = inputCore.GlobalGestureMap(GestureMapEntries)
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-
 	source = constants.name
 
 	def __init__(self, display: "BrailleDisplayDriver"):
@@ -167,15 +171,15 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 				if sum(keysDown.values()) == groupKeysDown and not groupKeysDown & 0x100:
 					# This is braille input.
 					# 0x1000 is backspace, 0x2000 is space
-					self.dots = groupKeysDown & 0xff
+					self.dots = groupKeysDown & 0xFF
 					self.space = groupKeysDown & 0x200
-				names.extend(f"dot{i + 1}" for i in range(8) if (groupKeysDown & 0xff) & (1 << i))
+				names.extend(f"dot{i + 1}" for i in range(8) if (groupKeysDown & 0xFF) & (1 << i))
 				if groupKeysDown & 0x200:
 					names.append("space")
 				if groupKeysDown & 0x100:
 					names.append("backSpace")
 			if group == constants.EB_KEY_INTERACTIVE:  # Routing
-				self.routingIndex = (groupKeysDown & 0xff) - 1
+				self.routingIndex = (groupKeysDown & 0xFF) - 1
 				if groupKeysDown >> 8 == ord(constants.EB_KEY_INTERACTIVE_DOUBLE_CLICK):
 					names.append("doubleRouting")
 				else:

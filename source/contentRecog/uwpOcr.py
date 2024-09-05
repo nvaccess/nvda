@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Recognition of text using the UWP OCR engine included in Windows 10 and later.
-"""
+"""Recognition of text using the UWP OCR engine included in Windows 10 and later."""
 
 import ctypes
 import json
@@ -14,6 +13,7 @@ import config
 import languageHandler
 
 uwpOcr_Callback = ctypes.CFUNCTYPE(None, ctypes.c_wchar_p)
+
 
 def getLanguages():
 	"""Return the available recognition languages.
@@ -27,6 +27,7 @@ def getLanguages():
 	langs = dll.uwpOcr_getLanguages()
 	return langs.split(";")[:-1]
 
+
 def getInitialLanguage():
 	"""Get the language to use the first time UWP OCR is used.
 	The NVDA interface language is used if a matching OCR language is available.
@@ -35,6 +36,7 @@ def getInitialLanguage():
 	nvdaLang = languageHandler.getLanguage()
 	ocrLangs = getLanguages()
 	return _getInitialLanguage(nvdaLang, ocrLangs)
+
 
 def _getInitialLanguage(nvdaLang, ocrLangs):
 	# Try the full language code.
@@ -54,6 +56,7 @@ def _getInitialLanguage(nvdaLang, ocrLangs):
 		return ocrLangs[0]
 	raise LookupError("No UWP OCR languages installed")
 
+
 def getConfigLanguage():
 	"""Get the user's configured OCR language.
 	If no language has been configured, choose an initial language
@@ -68,14 +71,13 @@ def getConfigLanguage():
 
 
 class UwpOcr(ContentRecognizer):
-
 	@classmethod
 	def _get_allowAutoRefresh(cls) -> bool:
-		return config.conf['uwpOcr']['autoRefresh']
+		return config.conf["uwpOcr"]["autoRefresh"]
 
 	@classmethod
 	def _get_autoRefreshInterval(cls) -> int:
-		return config.conf['uwpOcr']['autoRefreshInterval']
+		return config.conf["uwpOcr"]["autoRefreshInterval"]
 
 	def getResizeFactor(self, width, height):
 		# UWP OCR performs poorly with small images, so increase their size.
@@ -96,6 +98,7 @@ class UwpOcr(ContentRecognizer):
 
 	def recognize(self, pixels, imgInfo, onResult):
 		self._onResult = onResult
+
 		@uwpOcr_Callback
 		def callback(result):
 			# If self._onResult is None, recognition was cancelled.
@@ -108,6 +111,7 @@ class UwpOcr(ContentRecognizer):
 			self._dll.uwpOcr_terminate(self._handle)
 			self._callback = None
 			self._handle = None
+
 		self._callback = callback
 		self._handle = self._dll.uwpOcr_initialize(self.language, callback)
 		if not self._handle:

@@ -1,4 +1,4 @@
-`appveyor.yml` specifies build settings which generally [override online UI driven settings](https://www.appveyor.com/docs/build-configuration/#appveyoryml-and-ui-coexistence). 
+`appveyor.yml` specifies build settings which generally [override online UI driven settings](https://www.appveyor.com/docs/build-configuration/#appveyoryml-and-ui-coexistence).
 
 # Branch and tag filtering
 
@@ -12,7 +12,7 @@ Builds will fail if any command has a non-zero exit code. PowerShell scripts con
 
 ## Setup process
 
-Before we begin the install process, AppVeyor clones our repository and checks out the commit of the build. 
+Before we begin the install process, AppVeyor clones our repository and checks out the commit of the build.
 
 ### `install`
 
@@ -31,7 +31,7 @@ Performs a build of NVDA and related artifacts for testing and deployment.
 
 ## Testing
 
-Unlike the rest of the build, tests do not exit early if they fail or raise an error. If any test fails, `testFailExitCode` is set to 1. The `after_test` build phase will exit the build if any tests fail so that all test failures can be recorded where possible. 
+Unlike the rest of the build, tests do not exit early if they fail or raise an error. If any test fails, `testFailExitCode` is set to 1. The `after_test` build phase will exit the build if any tests fail so that all test failures can be recorded where possible.
 
 Before testing we:
 
@@ -48,9 +48,9 @@ The tests we perform are:
 
 ## Artifacts
 
-Artifacts are added to the build throughout the process. 
+Artifacts are added to the build throughout the process.
 
-Artifacts in `output\*` and `output\*\*` are automatically packaged after successful tests. If something fails before then, we manually push these artifacts in `on_failure`. Artifacts outside of `output` are pushed manually as they are created. 
+Artifacts in `output\*` and `output\*\*` are automatically packaged after successful tests. If something fails before then, we manually push these artifacts in `on_failure`. Artifacts outside of `output` are pushed manually as they are created.
 
 At the end of the build, regardless of failure, we upload the list of successfully installed python packages in `pushPackagingInfo.ps1`. This is performed here in case scons (partially) fails.
 

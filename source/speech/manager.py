@@ -44,7 +44,7 @@ def _shouldDoSpeechManagerLogging():
 
 def _speechManagerDebug(msg, *args, **kwargs) -> None:
 	"""Log 'msg % args' with severity 'DEBUG' if speech manager logging is enabled.
-		'SpeechManager-' is prefixed to all messages to make searching the log easier.
+	'SpeechManager-' is prefixed to all messages to make searching the log easier.
 	"""
 	if not log.isEnabledFor(log.DEBUG) or not _shouldDoSpeechManagerLogging():
 		return
@@ -58,8 +58,8 @@ IS_UNIT_TEST_LOG_ENABLED = False
 
 def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
 	"""Log 'msg % args' with severity 'DEBUG' if .
-		'SpeechManUnitTest-' is prefixed to all messages to make searching the log easier.
-		When
+	'SpeechManUnitTest-' is prefixed to all messages to make searching the log easier.
+	When
 	"""
 	if not IS_UNIT_TEST_LOG_ENABLED:
 		# Don't reuse _speechManagerDebug, it leads to incorrect function names in the log (all
@@ -70,6 +70,7 @@ def _speechManagerUnitTest(msg, *args, **kwargs) -> None:
 			log._log(log.DEBUG, "SpeechManager- " + msg, args, **kwargs)
 		return
 	log._log(log.INFO, "SpeechManUnitTest- " + msg, args, **kwargs)
+
 
 # Install the custom log handlers.
 #: For extra debug level logging, this is a category that must be enabled in the advanced settings panel.
@@ -111,6 +112,7 @@ class ParamChangeTracker(object):
 		@type: list of L{SynthParamCommand}
 		"""
 		return list(self._commands.values())
+
 
 class _ManagerPriorityQueue(object):
 	"""A speech queue for a specific priority.
@@ -251,7 +253,7 @@ class SpeechManager(object):
 			f" | _indexesSpeaking: {self._indexesSpeaking!r}"
 			f" | _curPriQueue valid: {not self._hasNoMoreSpeech()}"
 			f" | _shouldPushWhenDoneSpeaking: {self._shouldPushWhenDoneSpeaking}"
-			f" | _cancelledLastSpeechWithSynth {self._cancelledLastSpeechWithSynth}"
+			f" | _cancelledLastSpeechWithSynth {self._cancelledLastSpeechWithSynth}",
 		)
 		if interrupt:
 			log._speechManagerDebug("Interrupting speech")
@@ -274,14 +276,14 @@ class SpeechManager(object):
 		queue = self._priQueues.get(priority)
 		log._speechManagerDebug(
 			f"Current priority: {priority},"
-			f" queLen: {0 if queue is None else len(queue.pendingSequences)}"
+			f" queLen: {0 if queue is None else len(queue.pendingSequences)}",
 		)
 		if not queue:
 			queue = self._priQueues[priority] = _ManagerPriorityQueue(priority)
 		else:
 			log._speechManagerDebug(
 				"current queue: %r",  # expensive string to build - defer
-				queue.pendingSequences
+				queue.pendingSequences,
 			)
 		first = len(queue.pendingSequences) == 0
 		queue.pendingSequences.extend(outSeq)
@@ -345,10 +347,14 @@ class SpeechManager(object):
 					# Ignore triggers that have no associated profile.
 					continue
 				if command.enter and command.trigger in enteredTriggers:
-					log.debugWarning("Request to enter trigger which has already been entered: %r" % command.trigger.spec)
+					log.debugWarning(
+						"Request to enter trigger which has already been entered: %r" % command.trigger.spec,
+					)
 					continue
 				if not command.enter and command.trigger not in enteredTriggers:
-					log.debugWarning("Request to exit trigger which wasn't entered: %r" % command.trigger.spec)
+					log.debugWarning(
+						"Request to exit trigger which wasn't entered: %r" % command.trigger.spec,
+					)
 					continue
 				self._ensureEndUtterance(outSeq, outSeqs, paramsToReplay, paramTracker)
 				outSeqs.append([command])
@@ -404,7 +410,10 @@ class SpeechManager(object):
 					return
 				self._restoreProfileTriggers(queue.enteredProfileTriggers)
 			self._curPriQueue = queue
-		while queue.pendingSequences and isinstance(queue.pendingSequences[0][0], ConfigProfileTriggerCommand):
+		while queue.pendingSequences and isinstance(
+			queue.pendingSequences[0][0],
+			ConfigProfileTriggerCommand,
+		):
 			if not doneSpeaking:
 				# Wait for the synth to finish speaking.
 				# _handleDoneSpeaking will call us again.
@@ -426,8 +435,7 @@ class SpeechManager(object):
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):
-		"""Get the highest priority queue containing pending speech.
-		"""
+		"""Get the highest priority queue containing pending speech."""
 		for priority in SPEECH_PRIORITIES:
 			queue = self._priQueues.get(priority)
 			if not queue:
@@ -458,10 +466,10 @@ class SpeechManager(object):
 		except IndexError:
 			log.error(
 				f"Checking for cancellations failed, cancelling sequence: {utterance}",
-				exc_info=True
+				exc_info=True,
 			)
 			# Avoid infinite recursion by removing the problematic sequences:
-			del self._curPriQueue.pendingSequences[:lastSequenceIndexAddedToUtterance + 1]
+			del self._curPriQueue.pendingSequences[: lastSequenceIndexAddedToUtterance + 1]
 			utteranceValid = False
 
 		if utteranceValid:
@@ -482,7 +490,7 @@ class SpeechManager(object):
 		utteranceIndex = self._getUtteranceIndex(utterance)
 		if utteranceIndex is None:
 			raise IndexError(
-				f"no utterance index({utteranceIndex}, cant save cancellable commands"
+				f"no utterance index({utteranceIndex}, cant save cancellable commands",
 			)
 		cancellableItems = list(
 			item for item in reversed(utterance) if isinstance(item, _CancellableSpeechCommand)
@@ -496,7 +504,7 @@ class SpeechManager(object):
 			else:
 				item._utteranceIndex = utteranceIndex
 				log._speechManagerDebug(
-					f"Speaking utterance with cancellable item, index: {utteranceIndex}"
+					f"Speaking utterance with cancellable item, index: {utteranceIndex}",
 				)
 				self._cancelCommandsForUtteranceBeingSpokenBySynth[item] = utteranceIndex
 		return True
@@ -513,14 +521,13 @@ class SpeechManager(object):
 		@return True if indexA was created before indexB, else False
 		"""
 		w = cls._WRAPPED_INDEX_MAGNITUDE
-		return (
-			indexA != indexB and (
-				(indexA < indexB and w >= indexB - indexA) or (
-					# Test for wrapped values
-					indexB < indexA
-					# Avoid dealing with wrapping logic, check distance in the other direction.
-					and w < indexA - indexB
-				)
+		return indexA != indexB and (
+			(indexA < indexB and w >= indexB - indexA)
+			or (
+				# Test for wrapped values
+				indexB < indexA
+				# Avoid dealing with wrapping logic, check distance in the other direction.
+				and w < indexA - indexB
 			)
 		)
 
@@ -535,17 +542,17 @@ class SpeechManager(object):
 			f"Length of _cancelCommandsForUtteranceBeingSpokenBySynth: "
 			f"{len(self._cancelCommandsForUtteranceBeingSpokenBySynth)} "
 			f"Length of _indexesSpeaking: "
-			f"{len(self._indexesSpeaking)} "
+			f"{len(self._indexesSpeaking)} ",
 		)
 		cancelledIndexes = (
-			index for command, index
-			in self._cancelCommandsForUtteranceBeingSpokenBySynth.items()
+			index
+			for command, index in self._cancelCommandsForUtteranceBeingSpokenBySynth.items()
 			if command.isCancelled
 		)
 		for index in cancelledIndexes:
-			if (
-				latestCancelledUtteranceIndex is None
-				or self._isIndexABeforeIndexB(latestCancelledUtteranceIndex, index)
+			if latestCancelledUtteranceIndex is None or self._isIndexABeforeIndexB(
+				latestCancelledUtteranceIndex,
+				index,
 			):
 				latestCancelledUtteranceIndex = index
 		return latestCancelledUtteranceIndex
@@ -604,16 +611,21 @@ class SpeechManager(object):
 			lastCommand = seq[-1] if isinstance(seq, list) else None
 			if isinstance(lastCommand, IndexCommand):
 				if self._isIndexAAfterIndexB(index, lastCommand.index):
-					log.debugWarning(f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled")
+					log.debugWarning(
+						f"Reached speech index {index :d}, but index {lastCommand.index :d} never handled",
+					)
 				elif index == lastCommand.index:
-					endOfUtterance = isinstance(self._curPriQueue.pendingSequences[seqIndex + 1][0], EndUtteranceCommand)
+					endOfUtterance = isinstance(
+						self._curPriQueue.pendingSequences[seqIndex + 1][0],
+						EndUtteranceCommand,
+					)
 					if endOfUtterance:
 						# Remove the EndUtteranceCommand as well.
 						seqIndex += 1
-					break # Found it!
+					break  # Found it!
 		else:
 			log._speechManagerDebug(
-				"Unknown index. Probably from a previous utterance which was cancelled."
+				"Unknown index. Probably from a previous utterance which was cancelled.",
 			)
 			return False, False
 		if endOfUtterance:
@@ -630,7 +642,7 @@ class SpeechManager(object):
 					if isinstance(command, SynthParamCommand):
 						self._curPriQueue.paramTracker.update(command)
 		# This sequence is done, so we don't need to track it any more.
-		toRemove = self._curPriQueue.pendingSequences[:seqIndex + 1]
+		toRemove = self._curPriQueue.pendingSequences[: seqIndex + 1]
 		log._speechManagerDebug("Removing: %r", seq)
 		if _shouldCancelExpiredFocusEvents():
 			cancellables = (
@@ -638,7 +650,8 @@ class SpeechManager(object):
 				for seq in toRemove
 				for item in seq
 				if isinstance(
-					item, _CancellableSpeechCommand
+					item,
+					_CancellableSpeechCommand,
 				)
 			)
 			for item in cancellables:
@@ -646,10 +659,10 @@ class SpeechManager(object):
 					# Debug logging for cancelling expired focus events.
 					log._speechManagerDebug(
 						f"Item is in _cancelCommandsForUtteranceBeingSpokenBySynth: "
-						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}"
+						f"{item in self._cancelCommandsForUtteranceBeingSpokenBySynth.keys()}",
 					)
 				self._cancelCommandsForUtteranceBeingSpokenBySynth.pop(item, None)
-		del self._curPriQueue.pendingSequences[:seqIndex + 1]
+		del self._curPriQueue.pendingSequences[: seqIndex + 1]
 
 		return True, endOfUtterance
 
@@ -689,14 +702,13 @@ class SpeechManager(object):
 						log.exception("Error running speech callback")
 		self._doRemoveCancelledSpeechCommands()
 		shouldPush = (
-			endOfUtterance
-			and not self._synthStillSpeaking()  # stops double speaking errors
+			endOfUtterance and not self._synthStillSpeaking()  # stops double speaking errors
 		)
 		if shouldPush:
 			if self._indexesSpeaking:
 				log._speechManagerDebug(
 					f"Indexes speaking: {self._indexesSpeaking!r},"
-					f" queue: {self._curPriQueue.pendingSequences}"
+					f" queue: {self._curPriQueue.pendingSequences}",
 				)
 			# Even if we have many indexes, we should only push next speech once.
 			self._pushNextSpeech(False)
@@ -710,7 +722,7 @@ class SpeechManager(object):
 
 	def _handleDoneSpeaking(self):
 		log._speechManagerDebug(
-			f"Synth done speaking, should push: {self._shouldPushWhenDoneSpeaking}"
+			f"Synth done speaking, should push: {self._shouldPushWhenDoneSpeaking}",
 		)
 		if self._shouldPushWhenDoneSpeaking:
 			self._shouldPushWhenDoneSpeaking = False
@@ -718,7 +730,10 @@ class SpeechManager(object):
 
 	def _switchProfile(self):
 		command = self._curPriQueue.pendingSequences.pop(0)[0]
-		assert isinstance(command, ConfigProfileTriggerCommand), "First pending command should be a ConfigProfileTriggerCommand"
+		assert isinstance(
+			command,
+			ConfigProfileTriggerCommand,
+		), "First pending command should be a ConfigProfileTriggerCommand"
 		if command.enter:
 			try:
 				command.trigger.enter()

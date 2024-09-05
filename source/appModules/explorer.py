@@ -36,7 +36,6 @@ class MultitaskingViewFrameWindow(UIA):
 
 # Suppress focus ancestry for task switching list items if alt is held down (alt+tab)
 class MultitaskingViewFrameListItem(UIA):
-
 	def _get_container(self):
 		if winUser.getAsyncKeyState(winUser.VK_MENU) & 32768:
 			return api.getDesktopObject()
@@ -46,7 +45,6 @@ class MultitaskingViewFrameListItem(UIA):
 
 # Support for Win8 start screen search suggestions.
 class SuggestionListItem(UIA):
-
 	def event_UIA_elementSelected(self):
 		speech.cancelSpeech()
 		if api.setNavigatorObject(self, isFocus=True):
@@ -63,7 +61,6 @@ class SearchBoxClient(IAccessible):
 # Class for menu items  for Windows Places and Frequently used Programs (in start menu)
 # Also used for desktop items
 class SysListView32EmittingDuplicateFocusEvents(IAccessible):
-
 	# #474: When focus moves to these items, an extra focus is fired on the parent
 	# However NVDA redirects it to the real focus.
 	# But this means double focus events on the item, so filter the second one out
@@ -73,18 +70,18 @@ class SysListView32EmittingDuplicateFocusEvents(IAccessible):
 		if not res:
 			return False
 		focus = eventHandler.lastQueuedFocusObject
-		if (
-			type(focus) != type(self)
-			or (self.event_windowHandle, self.event_objectID, self.event_childID)
-			!= (focus.event_windowHandle, focus.event_objectID, focus.event_childID)
-		):
+		if type(focus) is not type(self) or (
+			self.event_windowHandle,
+			self.event_objectID,
+			self.event_childID,
+		) != (focus.event_windowHandle, focus.event_objectID, focus.event_childID):
 			return True
 		return False
 
 
 class NotificationArea(IAccessible):
-	"""The Windows notification area, a.k.a. system tray.
-	"""
+	"""The Windows notification area, a.k.a. system tray."""
+
 	lastKnownLocation = None
 
 	def event_gainFocus(self):
@@ -124,7 +121,6 @@ class NotificationArea(IAccessible):
 
 
 class ExplorerToolTip(ToolTip):
-
 	def shouldReport(self):
 		# Avoid reporting systray tool-tips if their text equals the focused systray icon name (#6656)
 
@@ -167,7 +163,6 @@ class ExplorerToolTip(ToolTip):
 
 
 class GridTileElement(UIA):
-
 	role = controlTypes.Role.TABLECELL
 
 	def _get_description(self):
@@ -183,14 +178,13 @@ class GridTileElement(UIA):
 
 
 class GridListTileElement(UIA):
-
 	role = controlTypes.Role.TABLECELL
 	description = None
 
 
 class GridGroup(UIA):
-	"""A group in the Windows 8 Start Menu.
-	"""
+	"""A group in the Windows 8 Start Menu."""
+
 	presentationType = UIA.presType_content
 
 	# Normally the name is the first tile which is rather redundant
@@ -223,8 +217,8 @@ class StartButton(IAccessible):
 		return states
 
 
-CHAR_LTR_MARK = u'\u200E'
-CHAR_RTL_MARK = u'\u200F'
+CHAR_LTR_MARK = "\u200e"
+CHAR_RTL_MARK = "\u200f"
 
 
 class UIProperty(UIA):
@@ -236,7 +230,7 @@ class UIProperty(UIA):
 		value = super(UIProperty, self).value
 		if value is None:
 			return value
-		return value.replace(CHAR_LTR_MARK, '').replace(CHAR_RTL_MARK, '')
+		return value.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
 
 
 class ReadOnlyEditBox(Edit):
@@ -247,12 +241,11 @@ class ReadOnlyEditBox(Edit):
 	def _get_windowText(self):
 		windowText = super(ReadOnlyEditBox, self).windowText
 		if windowText is not None:
-			return windowText.replace(CHAR_LTR_MARK, '').replace(CHAR_RTL_MARK, '')
+			return windowText.replace(CHAR_LTR_MARK, "").replace(CHAR_RTL_MARK, "")
 		return windowText
 
 
 class MetadataEditField(RichEdit50):
-
 	@classmethod
 	def _get_TextInfo(cls):
 		cls.TextInfo = super().TextInfo
@@ -260,7 +253,6 @@ class MetadataEditField(RichEdit50):
 
 
 class WorkerW(IAccessible):
-
 	def event_gainFocus(self):
 		# #6671: do not allow WorkerW thread to send gain focus event,
 		# as it causes 'pane" to be announced when minimizing windows or moving to desktop.
@@ -268,7 +260,6 @@ class WorkerW(IAccessible):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	# C901 'chooseNVDAObjectOverlayClasses' is too complex
 	# Note: when working on chooseNVDAObjectOverlayClasses, look for opportunities to simplify
 	# and move logic out into smaller helper functions.
@@ -307,14 +298,11 @@ class AppModule(appModuleHandler.AppModule):
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
 		if windowClass == "SysListView32" and isinstance(obj, IAccessible):
-			if(
-				role == controlTypes.Role.MENUITEM
-				or (
-					role == controlTypes.Role.LISTITEM
-					and obj.simpleParent
-					and obj.simpleParent.simpleParent
-					and obj.simpleParent.simpleParent == api.getDesktopObject()
-				)
+			if role == controlTypes.Role.MENUITEM or (
+				role == controlTypes.Role.LISTITEM
+				and obj.simpleParent
+				and obj.simpleParent.simpleParent
+				and obj.simpleParent.simpleParent == api.getDesktopObject()
 			):
 				clsList.insert(0, SysListView32EmittingDuplicateFocusEvents)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
@@ -326,7 +314,7 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, StartButton)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
-		if windowClass == 'RICHEDIT50W' and RichEdit50 in clsList and obj.windowControlID == 256:
+		if windowClass == "RICHEDIT50W" and RichEdit50 in clsList and obj.windowControlID == 256:
 			clsList.insert(0, MetadataEditField)
 			return  # Optimization: return early to avoid comparing class names and roles that will never match.
 
@@ -344,14 +332,17 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, GridGroup)
 			elif uiaClassName == "ImmersiveLauncher" and role == controlTypes.Role.PANE:
 				clsList.insert(0, ImmersiveLauncher)
-			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith('Suggestion_'):
+			elif uiaClassName == "ListViewItem" and obj.UIAAutomationId.startswith("Suggestion_"):
 				clsList.insert(0, SuggestionListItem)
 			# Multitasking view frame window
 			elif (
 				# Windows 10 and earlier
 				(uiaClassName == "MultitaskingViewFrame" and role == controlTypes.Role.WINDOW)
 				# Windows 11 where a pane window receives focus when switching tasks
-				or (uiaClassName == "Windows.UI.Input.InputSite.WindowClass" and role == controlTypes.Role.PANE)
+				or (
+					uiaClassName == "Windows.UI.Input.InputSite.WindowClass"
+					and role == controlTypes.Role.PANE
+				)
 			):
 				clsList.insert(0, MultitaskingViewFrameWindow)
 			# Windows 10 task switch list
@@ -359,7 +350,8 @@ class AppModule(appModuleHandler.AppModule):
 				# RS4 and below we can match on a window class
 				windowClass == "MultitaskingViewFrame"
 				# RS5 and above we must look for a particular UIA automationID on the list
-				or isinstance(obj.parent, UIA) and obj.parent.UIAAutomationId == "SwitchItemListControl"
+				or isinstance(obj.parent, UIA)
+				and obj.parent.UIAAutomationId == "SwitchItemListControl"
 			):
 				clsList.insert(0, MultitaskingViewFrameListItem)
 			elif uiaClassName == "UIProperty" and role == controlTypes.Role.EDITABLETEXT:
@@ -371,10 +363,11 @@ class AppModule(appModuleHandler.AppModule):
 			# This is not the file explorer window. Resort to standard behavior.
 			raise NotImplementedError
 		import UIAHandler
+
 		clientObject = UIAHandler.handler.clientObject
 		condition = clientObject.createPropertyCondition(
 			UIAHandler.UIA_ControlTypePropertyId,
-			UIAHandler.UIA_StatusBarControlTypeId
+			UIAHandler.UIA_StatusBarControlTypeId,
 		)
 		walker = clientObject.createTreeWalker(condition)
 		try:
@@ -405,28 +398,34 @@ class AppModule(appModuleHandler.AppModule):
 				child.role == controlTypes.Role.GROUPING
 				and child.childCount > 1
 				and not any(
-					grandChild for grandChild in child.children
+					grandChild
+					for grandChild in child.children
 					if grandChild.role != controlTypes.Role.RADIOBUTTON
 				)
 			):
 				selected = next(
 					iter(
-						grandChild for grandChild in child.children
+						grandChild
+						for grandChild in child.children
 						if controlTypes.State.CHECKED in grandChild.states
-					), None
+					),
+					None,
 				)
 				if selected is not None:
-					parts.append(" ".join(
-						[child.name]
-						+ ([selected.name] if selected is not None else [])
-					))
+					parts.append(
+						" ".join(
+							[child.name] + ([selected.name] if selected is not None else []),
+						),
+					)
 			else:
 				# Unexpected child, try to retrieve something useful.
-				parts.append(" ".join(
-					chunk
-					for chunk in (child.name, child.value)
-					if chunk and isinstance(chunk, str) and not chunk.isspace()
-				))
+				parts.append(
+					" ".join(
+						chunk
+						for chunk in (child.name, child.value)
+						if chunk and isinstance(chunk, str) and not chunk.isspace()
+					),
+				)
 		if not parts:
 			# We couldn't retrieve anything. Resort to standard behavior.
 			raise NotImplementedError
@@ -464,8 +463,9 @@ class AppModule(appModuleHandler.AppModule):
 		if (
 			windowClass == "msctls_progress32"
 			and winUser.getClassName(
-				winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT)
-			) == "Address Band Root"
+				winUser.getAncestor(obj.windowHandle, winUser.GA_PARENT),
+			)
+			== "Address Band Root"
 		):
 			obj.presentationType = obj.presType_layout
 			return
@@ -498,10 +498,7 @@ class AppModule(appModuleHandler.AppModule):
 	def isGoodUIAWindow(self, hwnd: HWNDValT) -> bool:
 		currentWinVer = winVersion.getWinVer()
 		# #9204: shell raises window open event for emoji panel in build 18305 and later.
-		if (
-			currentWinVer >= winVersion.WIN10_1903
-			and winUser.getClassName(hwnd) == "ApplicationFrameWindow"
-		):
+		if currentWinVer >= winVersion.WIN10_1903 and winUser.getClassName(hwnd) == "ApplicationFrameWindow":
 			return True
 		# #13506: Windows 11 UI elements such as Taskbar should be reclassified as UIA windows,
 		# letting NVDA announce shell elements when navigating with mouse and/or touch,
@@ -513,7 +510,8 @@ class AppModule(appModuleHandler.AppModule):
 			# This is more so for the shell root (first class name), and for others, class name check would work
 			# since they are top-level windows for windows shown on screen such as Task View.
 			# However, look for the ancestor for consistency.
-			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT)) in (
+			and winUser.getClassName(winUser.getAncestor(hwnd, winUser.GA_ROOT))
+			in (
 				# Windows 11 shell UI root, housing various shell elements shown on screen if enabled.
 				"Shell_TrayWnd",  # Start, Search, Widgets, other shell elements
 				# Top-level window class names from Windows 11 shell features
@@ -536,7 +534,7 @@ class AppModule(appModuleHandler.AppModule):
 				# 19H2 and earlier
 				"windowsinternal_composableshell_experiences_textinput_inputapp",
 				# 20H1 and later
-				"textinputhost"
+				"textinputhost",
 			)
 			if inputPanelWindow and inputPanelWindow.appModule.appName in inputPanelAppName:
 				eventHandler.executeEvent("UIA_window_windowOpen", inputPanelWindow)
@@ -558,7 +556,7 @@ class AppModule(appModuleHandler.AppModule):
 					name=obj.name,
 					role=obj.role,
 					states=obj.states,
-					positionInfo=obj.positionInfo
-				)
+					positionInfo=obj.positionInfo,
+				),
 			)
 		nextHandler()

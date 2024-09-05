@@ -14,7 +14,6 @@ import utils.caseInsensitiveCollections
 
 
 class TestDefaultStateContent(unittest.TestCase):
-
 	def test_expectedDefaultValsInState(self):
 		state = addonHandler.AddonsState()
 		state.setDefaultStateValues()
@@ -30,7 +29,6 @@ class TestDefaultStateContent(unittest.TestCase):
 
 
 class TestStatePopulationFromPickledData(unittest.TestCase):
-
 	def setUp(self) -> None:
 		self.state = addonHandler.AddonsState()
 		self.state.setDefaultStateValues()
@@ -63,7 +61,6 @@ class TestStatePopulationFromPickledData(unittest.TestCase):
 
 
 class TestStateConversionForPickling(unittest.TestCase):
-
 	def test_stateConvertedToBuiltInTypes(self):
 		state = addonHandler.AddonsState()
 		state.setDefaultStateValues()

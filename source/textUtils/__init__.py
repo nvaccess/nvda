@@ -47,10 +47,10 @@ class OffsetConverter(metaclass=ABCMeta):
 
 	@abstractmethod
 	def strToEncodedOffsets(
-			self,
-			strStart: int,
-			strEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		strStart: int,
+		strEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
@@ -65,8 +65,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		"""
 		if strEnd is not None and strEnd < strStart:
 			raise ValueError(
-				"strEnd=%d must be greater than or equal to strStart=%d"
-				% (strEnd, strStart)
+				"strEnd=%d must be greater than or equal to strStart=%d" % (strEnd, strStart),
 			)
 		if strStart < 0 or strStart > self.strLength:
 			if raiseOnError:
@@ -77,10 +76,10 @@ class OffsetConverter(metaclass=ABCMeta):
 
 	@abstractmethod
 	def encodedToStrOffsets(
-			self,
-			encodedStart: int,
-			encodedEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		encodedStart: int,
+		encodedEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		r"""
 		This method takes two offsets from subclass-specific encoded string representation
@@ -95,7 +94,7 @@ class OffsetConverter(metaclass=ABCMeta):
 		"""
 		if encodedEnd is not None and encodedEnd < encodedStart:
 			raise ValueError(
-				f"{encodedEnd=} must be greater than or equal to {encodedStart=}"
+				f"{encodedEnd=} must be greater than or equal to {encodedStart=}",
 			)
 		if encodedStart < 0 or encodedStart > self.encodedStringLength:
 			if raiseOnError:
@@ -137,10 +136,10 @@ class WideStringOffsetConverter(OffsetConverter):
 		return len(self.encoded) // self._bytesPerIndex
 
 	def strToEncodedOffsets(
-			self,
-			strStart: int,
-			strEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		strStart: int,
+		strEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		"""
 		This method takes two offsets from the str representation
@@ -163,7 +162,7 @@ class WideStringOffsetConverter(OffsetConverter):
 			wideStringStart: int = 0
 		else:
 			precedingBytes: bytes = self.decoded[:strStart].encode(self._encoding, errors="surrogatepass")
-			wideStringStart= len(precedingBytes) // self._bytesPerIndex
+			wideStringStart = len(precedingBytes) // self._bytesPerIndex
 		if strEnd is None:
 			return wideStringStart
 		strEnd = max(0, min(strEnd, self.strLength))
@@ -174,10 +173,10 @@ class WideStringOffsetConverter(OffsetConverter):
 		return (wideStringStart, wideStringEnd)
 
 	def encodedToStrOffsets(
-			self,
-			encodedStart: int,
-			encodedEnd: int,
-			raiseOnError: bool = False,
+		self,
+		encodedStart: int,
+		encodedEnd: int,
+		raiseOnError: bool = False,
 	) -> Tuple[int, int]:
 		r"""
 		This method takes two offsets from the wide character representation
@@ -209,15 +208,18 @@ class WideStringOffsetConverter(OffsetConverter):
 		encodedEnd = max(0, min(encodedEnd, self.encodedStringLength))
 		bytesStart: int = encodedStart * self._bytesPerIndex
 		bytesEnd: int = encodedEnd * self._bytesPerIndex
-		precedingStr= self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
-		strStart= len(precedingStr)
+		precedingStr = self.encoded[:bytesStart].decode(self._encoding, errors="surrogatepass")
+		strStart = len(precedingStr)
 		if bytesStart == bytesEnd and bytesEnd <= (len(self.encoded) - self._bytesPerIndex):
 			# Though we are trying to fetch str offsets for a single offset,
 			# we need to make sure to avoid off by one errors caused by surrogates
 			correctedBytesEnd = bytesEnd + self._bytesPerIndex
 		else:
 			correctedBytesEnd = bytesEnd
-		decodedRange: str = self.encoded[bytesStart:correctedBytesEnd].decode(self._encoding, errors="surrogatepass")
+		decodedRange: str = self.encoded[bytesStart:correctedBytesEnd].decode(
+			self._encoding,
+			errors="surrogatepass",
+		)
 		strEnd: int = strStart + len(decodedRange)
 		# In the case where precedingStr ends with a high surrogate,
 		# and decodedRange ends with a low surrogate character
@@ -234,7 +236,7 @@ class WideStringOffsetConverter(OffsetConverter):
 			# Compensate for the case where we stretched our offsets earlier
 			strEnd -= (correctedBytesEnd - bytesEnd) // self._bytesPerIndex
 		return (strStart, strEnd)
-	
+
 	wideStringLength = encodedStringLength
 	strToWideOffsets = strToEncodedOffsets
 	wideToStrOffsets = encodedToStrOffsets
@@ -244,7 +246,7 @@ def getTextFromRawBytes(
 	buf: bytes,
 	numChars: int,
 	encoding: Optional[str] = None,
-	errorsFallback: str = "replace"
+	errorsFallback: str = "replace",
 ):
 	"""
 	Gets a string from a raw bytes object, decoded using the specified L{encoding}.
@@ -272,7 +274,7 @@ def getTextFromRawBytes(
 		numBytes = numChars * 2
 	elif encoding.startswith("utf_32"):
 		numBytes = numChars * 4
-	else: # All other encodings are single byte.
+	else:  # All other encodings are single byte.
 		numBytes = numChars
 	rawText: bytes = buf[:numBytes]
 	if not any(rawText):
@@ -282,19 +284,25 @@ def getTextFromRawBytes(
 	try:
 		text = rawText.decode(encoding, errors="surrogatepass")
 	except UnicodeDecodeError:
-		log.debugWarning("Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf)
+		log.debugWarning(
+			"Error decoding text in %r, probably wrong encoding assumed or incomplete data" % buf,
+		)
 		text = rawText.decode(encoding, errors=errorsFallback)
 	return text
 
-HIGH_SURROGATE_FIRST = u"\uD800"
-HIGH_SURROGATE_LAST = u"\uDBFF"
+
+HIGH_SURROGATE_FIRST = "\ud800"
+HIGH_SURROGATE_LAST = "\udbff"
+
 
 def isHighSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a high surrogate UTF-16 character."""
 	return HIGH_SURROGATE_FIRST <= ch <= HIGH_SURROGATE_LAST
 
-LOW_SURROGATE_FIRST = u"\uDC00"
-LOW_SURROGATE_LAST = u"\uDFFF"
+
+LOW_SURROGATE_FIRST = "\udc00"
+LOW_SURROGATE_LAST = "\udfff"
+
 
 def isLowSurrogate(ch: str) -> bool:
 	"""Returns if the given character is a low surrogate UTF-16 character."""
@@ -304,12 +312,12 @@ def isLowSurrogate(ch: str) -> bool:
 #: ￼ OBJECT REPLACEMENT CHARACTER,
 # placeholder in the text for another unspecified object, for example in a compound document.
 # https://en.wikipedia.org/wiki/Specials_(Unicode_block)
-OBJ_REPLACEMENT_CHAR = u"\uFFFC"
+OBJ_REPLACEMENT_CHAR = "\ufffc"
 
 #: � REPLACEMENT CHARACTER,
 # used to replace an unknown, unrecognized, or unrepresentable character.
 # https://en.wikipedia.org/wiki/Specials_(Unicode_block)
-REPLACEMENT_CHAR = u"\uFFFD"
+REPLACEMENT_CHAR = "\ufffd"
 
 
 class UTF8OffsetConverter(OffsetConverter):
@@ -335,10 +343,10 @@ class UTF8OffsetConverter(OffsetConverter):
 		return len(self.encoded)
 
 	def strToEncodedOffsets(
-			self,
-			strStart: int,
-			strEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		strStart: int,
+		strEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
@@ -354,16 +362,16 @@ class UTF8OffsetConverter(OffsetConverter):
 			return (resultStart, resultEnd)
 
 	def encodedToStrOffsets(
-			self,
-			encodedStart: int,
-			encodedEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		encodedStart: int,
+		encodedEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		r"""
-			This method takes two offsets from UTF-8 representation
-			of the string the object is initialized with, and converts them to str offsets.
-			This implementation ignores raiseOnError argument and
-			it will allways raise UnicodeDecodeError if indices are invalid.
+		This method takes two offsets from UTF-8 representation
+		of the string the object is initialized with, and converts them to str offsets.
+		This implementation ignores raiseOnError argument and
+		it will allways raise UnicodeDecodeError if indices are invalid.
 		"""
 		# Optimisation, don't do anything special if offsets are collapsed at the start.
 		if 0 == encodedEnd == encodedStart:
@@ -384,7 +392,7 @@ class UTF8OffsetConverter(OffsetConverter):
 
 class IdentityOffsetConverter(OffsetConverter):
 	R"""
-		This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
+	This is a dummy converter that assumes 1:1 correspondence between encoded and decoded characters.
 	"""
 
 	def __init__(self, text: str):
@@ -395,10 +403,10 @@ class IdentityOffsetConverter(OffsetConverter):
 		return self.strLength
 
 	def strToEncodedOffsets(
-			self,
-			strStart: int,
-			strEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		strStart: int,
+		strEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strEnd is None:
@@ -406,10 +414,10 @@ class IdentityOffsetConverter(OffsetConverter):
 		return (strStart, strEnd)
 
 	def encodedToStrOffsets(
-			self,
-			encodedStart: int,
-			encodedEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		encodedStart: int,
+		encodedEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int, int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedEnd is None:
@@ -428,6 +436,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 	For example, when using the NFKC algorithm, the "ĳ" ligature normalizes to "ij",
 	which takes two characters instead of one.
 	"""
+
 	normalizationForm: str
 	computedStrToEncodedOffsets: list[int]
 	computedEncodedToStrOffsets: list[int]
@@ -447,8 +456,12 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 				computedStrToEncodedOffsets.extend(normOffset + i for i in range(len(origPart)))
 				computedEncodedToStrOffsets.extend(origOffset + i for i in range(len(normPart)))
 			elif isReorder:
-				computedStrToEncodedOffsets.extend(normOffset + i for i in self._processReordered(origPart, normPart))
-				computedEncodedToStrOffsets.extend(origOffset + i for i in self._processReordered(normPart, origPart))
+				computedStrToEncodedOffsets.extend(
+					normOffset + i for i in self._processReordered(origPart, normPart)
+				)
+				computedEncodedToStrOffsets.extend(
+					origOffset + i for i in self._processReordered(normPart, origPart)
+				)
 			else:
 				computedStrToEncodedOffsets.extend(normOffset for origChar in origPart)
 				computedEncodedToStrOffsets.extend(origOffset for normChar in normPart)
@@ -457,7 +470,7 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		self.encoded = normalized
 
 	def _processReordered(self, a: str, b: str) -> Generator[int, None, None]:
-		""""Yields the offset in b of every character in a"""
+		""" "Yields the offset in b of every character in a"""
 		for char in a:
 			index = b.find(char)
 			yield index
@@ -469,10 +482,10 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 		return len(self.encoded)
 
 	def strToEncodedOffsets(
-			self,
-			strStart: int,
-			strEnd: int | None = None,
-			raiseOnError: bool = False,
+		self,
+		strStart: int,
+		strEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int]:
 		super().strToEncodedOffsets(strStart, strEnd, raiseOnError)
 		if strStart == 0:
@@ -488,10 +501,10 @@ class UnicodeNormalizationOffsetConverter(OffsetConverter):
 			return (resultStart, resultEnd)
 
 	def encodedToStrOffsets(
-			self,
-			encodedStart: int,
-			encodedEnd: int | None = None,
-			raiseOnError: bool = False
+		self,
+		encodedStart: int,
+		encodedEnd: int | None = None,
+		raiseOnError: bool = False,
 	) -> int | Tuple[int]:
 		super().encodedToStrOffsets(encodedStart, encodedEnd, raiseOnError)
 		if encodedStart == 0:

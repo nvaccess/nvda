@@ -49,6 +49,7 @@ class ThreadTarget(Enum):
 
 class JobClashError(Exception):
 	"""Raised when a job time clashes with an existing job."""
+
 	pass
 
 
@@ -86,7 +87,9 @@ class ScheduleThread(threading.Thread):
 		startTime = datetime.fromtimestamp(NVDAState.getStartTime())
 		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
-		startTimeMinuteOffset = startTime.minute + (self.scheduledDailyJobCount + 1) * self.DAILY_JOB_MINUTE_OFFSET
+		startTimeMinuteOffset = (
+			startTime.minute + (self.scheduledDailyJobCount + 1) * self.DAILY_JOB_MINUTE_OFFSET
+		)
 		# Handle the case where the minute offset is greater than 60.
 		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)
 		startTimeMinuteOffset = startTimeMinuteOffset % 60
@@ -95,11 +98,11 @@ class ScheduleThread(threading.Thread):
 		return f"{startTimeHourOffset:02d}:{startTimeMinuteOffset:02d}"
 
 	def scheduleDailyJobAtStartUp(
-			self,
-			task: Callable,
-			queueToThread: ThreadTarget,
-			*args,
-			**kwargs
+		self,
+		task: Callable,
+		queueToThread: ThreadTarget,
+		*args,
+		**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a daily job to run at startup.
@@ -111,7 +114,13 @@ class ScheduleThread(threading.Thread):
 		:return: The scheduled job.
 		"""
 		try:
-			job = self.scheduleDailyJob(task, self._calculateDailyTimeOffset(), queueToThread, *args, **kwargs)
+			job = self.scheduleDailyJob(
+				task,
+				self._calculateDailyTimeOffset(),
+				queueToThread,
+				*args,
+				**kwargs,
+			)
 		except JobClashError as e:
 			log.warning(f"Failed to schedule daily job due to clash: {e}")
 			self.scheduledDailyJobCount += 1
@@ -122,12 +131,12 @@ class ScheduleThread(threading.Thread):
 			return job
 
 	def scheduleDailyJob(
-			self,
-			task: Callable,
-			cronTime: str,
-			queueToThread: ThreadTarget,
-			*args,
-			**kwargs
+		self,
+		task: Callable,
+		cronTime: str,
+		queueToThread: ThreadTarget,
+		*args,
+		**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a daily job to run at specific times.
@@ -145,12 +154,12 @@ class ScheduleThread(threading.Thread):
 		return self.scheduleJob(task, scheduledJob, queueToThread, *args, **kwargs)
 
 	def scheduleJob(
-			self,
-			task: Callable,
-			jobSchedule: schedule.Job,
-			queueToThread: ThreadTarget,
-			*args,
-			**kwargs
+		self,
+		task: Callable,
+		jobSchedule: schedule.Job,
+		queueToThread: ThreadTarget,
+		*args,
+		**kwargs,
 	) -> schedule.Job:
 		"""
 		Schedule a job to run at specific times.
@@ -167,17 +176,27 @@ class ScheduleThread(threading.Thread):
 		"""
 		match queueToThread:
 			case ThreadTarget.GUI:
+
 				def callJobOnThread(*args, **kwargs):
 					import wx
+
 					log.debug(f"Starting thread for job: {task.__name__} on GUI thread")
 					wx.CallAfter(task, *args, **kwargs)
 			case ThreadTarget.DAEMON:
-				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
-					t = threading.Thread(target=task, args=args, kwargs=kwargs, daemon=True, name=f"{task.__name__}")
+
+				def callJobOnThread(*args, **kwargs):
+					t = threading.Thread(
+						target=task,
+						args=args,
+						kwargs=kwargs,
+						daemon=True,
+						name=f"{task.__name__}",
+					)
 					log.debug(f"Starting thread for job: {task.__name__} on thread {t.ident}")
-					t.run()
+					t.start()
 			case ThreadTarget.CUSTOM:
-				def callJobOnThread(*args, **kwargs):  # noqa F811: lint bug with flake8 4.0.1 not recognizing case statement
+
+				def callJobOnThread(*args, **kwargs):
 					log.debug(f"Starting thread for job: {task.__name__} on custom thread")
 					task(*args, **kwargs)
 			case _:
@@ -185,20 +204,13 @@ class ScheduleThread(threading.Thread):
 
 		# Check if scheduled job time clashes with existing jobs.
 		for existingJob in schedule.jobs:
-			if (
-				(
-					jobSchedule.at_time is not None
-					and existingJob.at_time == jobSchedule.at_time
-				)
-				or (
-					jobSchedule.next_run is not None
-					and existingJob.next_run == jobSchedule.next_run
-				)
+			if (jobSchedule.at_time is not None and existingJob.at_time == jobSchedule.at_time) or (
+				jobSchedule.next_run is not None and existingJob.next_run == jobSchedule.next_run
 			):
 				# raise warning that job time clashes with existing job
 				raise JobClashError(
 					f"Job time {jobSchedule.at_time} clashes with existing job: "
-					f"{existingJob.job_func} and {task.__name__}"
+					f"{existingJob.job_func} and {task.__name__}",
 				)
 		return jobSchedule.do(callJobOnThread, *args, **kwargs)
 

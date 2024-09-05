@@ -19,16 +19,16 @@ def _isDebug():
 
 
 class AutoEvent(wintypes.HANDLE):
-
 	def __init__(self):
-		e=windll.kernel32.CreateEventW(None,True,False,None)
-		super(AutoEvent,self).__init__(e)
+		e = windll.kernel32.CreateEventW(None, True, False, None)
+		super(AutoEvent, self).__init__(e)
 
 	def __del__(self):
 		if self:
 			windll.kernel32.CloseHandle(self)
 
-WAIT_TIMEOUT=0x102
+
+WAIT_TIMEOUT = 0x102
 
 
 class AudioDuckingMode(DisplayStringIntEnum):
@@ -57,13 +57,13 @@ class ANRUSDucking(IntEnum):
 	AUDIO_ACTIVE_NODUCK = 8
 
 
-INITIAL_DUCKING_DELAY=0.15
+INITIAL_DUCKING_DELAY = 0.15
 
-_audioDuckingMode=0
-_duckingRefCount=0
+_audioDuckingMode = 0
+_duckingRefCount = 0
 _duckingRefCountLock = threading.RLock()
-_modeChangeEvent=None
-_lastDuckedTime=0
+_modeChangeEvent = None
+_lastDuckedTime = 0
 
 
 def _setDuckingState(switch):
@@ -71,19 +71,20 @@ def _setDuckingState(switch):
 	with _duckingRefCountLock:
 		try:
 			import gui
-			ATWindow=gui.mainFrame.GetHandle()
+
+			ATWindow = gui.mainFrame.GetHandle()
 			if switch:
 				oledll.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
-					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK
+					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
-				_lastDuckedTime=time.time()
+				_lastDuckedTime = time.time()
 			else:
 				oledll.oleacc.AccSetRunningUtilityState(
 					ATWindow,
 					ANRUSDucking.AUDIO_ACTIVE | ANRUSDucking.AUDIO_ACTIVE_NODUCK,
-					ANRUSDucking.AUDIO_ACTIVE_NODUCK
+					ANRUSDucking.AUDIO_ACTIVE_NODUCK,
 				)
 		except WindowsError as e:
 			# When the NVDA build is not signed, audio ducking fails with access denied.
@@ -99,7 +100,7 @@ def _setDuckingState(switch):
 				# we want developers to hear the "error sound", and to halt, so still raise the exception.
 				log.error(
 					"Unknown error when setting ducking state:  Error number: {:#010X}".format(errorCode),
-					exc_info=True
+					exc_info=True,
 				)
 				raise e
 
@@ -107,21 +108,22 @@ def _setDuckingState(switch):
 def _ensureDucked():
 	global _duckingRefCount
 	with _duckingRefCountLock:
-		_duckingRefCount+=1
+		_duckingRefCount += 1
 		if _isDebug():
-			log.debug("Increased ref count, _duckingRefCount=%d"%_duckingRefCount)
+			log.debug("Increased ref count, _duckingRefCount=%d" % _duckingRefCount)
 		if _duckingRefCount == 1 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(True)
-			delta=0
+			delta = 0
 		else:
-			delta=time.time()-_lastDuckedTime
-		return delta,_modeChangeEvent
+			delta = time.time() - _lastDuckedTime
+		return delta, _modeChangeEvent
 
 
 def _unensureDucked(delay=True):
 	global _duckingRefCount
 	if delay:
 		import core
+
 		if _isDebug():
 			log.debug("Queuing _unensureDucked")
 		try:
@@ -132,9 +134,9 @@ def _unensureDucked(delay=True):
 			# will fail as they rely on wx.CallLater/wx.CallAfter
 			log.debugWarning("wx App not initialized, unducking immediately")
 	with _duckingRefCountLock:
-		_duckingRefCount-=1
+		_duckingRefCount -= 1
 		if _isDebug():
-			log.debug("Decreased  ref count, _duckingRefCount=%d"%_duckingRefCount)
+			log.debug("Decreased  ref count, _duckingRefCount=%d" % _duckingRefCount)
 		if _duckingRefCount == 0 and _audioDuckingMode != AudioDuckingMode.NONE:
 			_setDuckingState(False)
 
@@ -146,12 +148,13 @@ def setAudioDuckingMode(mode):
 	if mode < 0 or mode >= len(AudioDuckingMode):
 		raise ValueError("%s is not an audio ducking mode")
 	with _duckingRefCountLock:
-		oldMode=_audioDuckingMode
-		_audioDuckingMode=mode
-		if _modeChangeEvent: windll.kernel32.SetEvent(_modeChangeEvent)  # noqa: E701
-		_modeChangeEvent=AutoEvent()
+		oldMode = _audioDuckingMode
+		_audioDuckingMode = mode
+		if _modeChangeEvent:
+			windll.kernel32.SetEvent(_modeChangeEvent)
+		_modeChangeEvent = AutoEvent()
 		if _isDebug():
-			log.debug("Switched modes from %s, to %s"%(oldMode,mode))
+			log.debug("Switched modes from %s, to %s" % (oldMode, mode))
 		if oldMode == AudioDuckingMode.NONE and mode != AudioDuckingMode.NONE and _duckingRefCount > 0:
 			_setDuckingState(True)
 		elif oldMode != AudioDuckingMode.NONE and mode == AudioDuckingMode.NONE and _duckingRefCount > 0:
@@ -166,39 +169,39 @@ def initialize():
 	if not isAudioDuckingSupported():
 		return
 	_setDuckingState(False)
-	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+	setAudioDuckingMode(config.conf["audio"]["audioDuckingMode"])
 	config.post_configProfileSwitch.register(handlePostConfigProfileSwitch)
 
 
-_isAudioDuckingSupported=None
+_isAudioDuckingSupported = None
 
 
 def isAudioDuckingSupported():
 	global _isAudioDuckingSupported
 	if _isAudioDuckingSupported is None:
-		_isAudioDuckingSupported = (
-			config.isInstalledCopy()
-			or config.isAppX
-		) and hasattr(oledll.oleacc, 'AccSetRunningUtilityState')
+		_isAudioDuckingSupported = (config.isInstalledCopy() or config.isAppX) and hasattr(
+			oledll.oleacc,
+			"AccSetRunningUtilityState",
+		)
 		_isAudioDuckingSupported &= systemUtils.hasUiAccess()
 	return _isAudioDuckingSupported
 
 
 def handlePostConfigProfileSwitch():
-	setAudioDuckingMode(config.conf['audio']['audioDuckingMode'])
+	setAudioDuckingMode(config.conf["audio"]["audioDuckingMode"])
 
 
 class AudioDucker(object):
-	""" Create one of these objects to manage ducking of background audio. 
-	Use the enable and disable methods on this object to denote when you require audio to be ducked.  
+	"""Create one of these objects to manage ducking of background audio.
+	Use the enable and disable methods on this object to denote when you require audio to be ducked.
 	If this object is deleted while ducking is still enabled, the object will automatically disable ducking first.
 	"""
 
 	def __init__(self):
 		if not isAudioDuckingSupported():
 			raise RuntimeError("audio ducking not supported")
-		self._enabled=False
-		self._lock=threading.Lock()
+		self._enabled = False
+		self._lock = threading.Lock()
 
 	def __del__(self):
 		if self._enabled:
@@ -217,24 +220,33 @@ class AudioDucker(object):
 				if debug:
 					log.debug("ignoring duplicate enable")
 				return True
-			self._enabled=True
+			self._enabled = True
 			if debug:
 				log.debug("enabling")
-			whenWasDucked,modeChangeEvent=_ensureDucked()
-			deltaMS=int((INITIAL_DUCKING_DELAY-whenWasDucked)*1000)
-			disableEvent=self._disabledEvent=AutoEvent()
+			whenWasDucked, modeChangeEvent = _ensureDucked()
+			deltaMS = int((INITIAL_DUCKING_DELAY - whenWasDucked) * 1000)
+			disableEvent = self._disabledEvent = AutoEvent()
 			if debug:
-				log.debug("whenWasDucked %s, deltaMS %s"%(whenWasDucked,deltaMS))
+				log.debug("whenWasDucked %s, deltaMS %s" % (whenWasDucked, deltaMS))
 			if deltaMS <= 0 or _audioDuckingMode == AudioDuckingMode.NONE:
 				return True
 		import NVDAHelper
+
 		if not NVDAHelper.localLib.audioDucking_shouldDelay():
 			if debug:
 				log.debug("No background audio, not delaying")
 			return True
 		if debug:
-			log.debug("waiting %s ms or mode change"%deltaMS)
-		wasCanceled=windll.kernel32.WaitForMultipleObjects(2,(wintypes.HANDLE*2)(disableEvent,modeChangeEvent),False,deltaMS)!=WAIT_TIMEOUT
+			log.debug("waiting %s ms or mode change" % deltaMS)
+		wasCanceled = (
+			windll.kernel32.WaitForMultipleObjects(
+				2,
+				(wintypes.HANDLE * 2)(disableEvent, modeChangeEvent),
+				False,
+				deltaMS,
+			)
+			!= WAIT_TIMEOUT
+		)
 		if debug:
 			log.debug("Wait canceled" if wasCanceled else "timeout exceeded")
 		return not wasCanceled
@@ -249,7 +261,7 @@ class AudioDucker(object):
 				if _isDebug():
 					log.debug("Ignoring duplicate disable")
 				return True
-			self._enabled=False
+			self._enabled = False
 			if _isDebug():
 				log.debug("disabling")
 			_unensureDucked()

@@ -41,13 +41,12 @@ def _getNormalizedCurrentAttrs(attrs: textInfos.ControlField) -> typing.Dict[str
 		isCurrent = controlTypes.IsCurrent.NO
 	if isCurrent != controlTypes.IsCurrent.NO:
 		return {
-			'current': isCurrent
+			"current": isCurrent,
 		}
 	return {}
 
 
 class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
-
 	def _setSelectionOffsets(self, start: int, end: int):
 		super()._setSelectionOffsets(start, end)
 		if self.obj._nativeAppSelectionMode:
@@ -56,10 +55,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			else:
 				self.obj.clearAppSelection()
 
-	def _getBoundingRectFromOffset(self,offset):
+	def _getBoundingRectFromOffset(self, offset):
 		formatFieldStart, formatFieldEnd = self._getUnitOffsets(textInfos.UNIT_FORMATFIELD, offset)
 		# The format field starts at the first character.
-		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart+1)):
+		for field in reversed(self._getFieldsInRange(formatFieldStart, formatFieldStart + 1)):
 			if not (isinstance(field, textInfos.FieldCommand) and field.command == "formatChange"):
 				# This is no format field.
 				continue
@@ -113,10 +112,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			"table-rownumber-presentational",
 			"table-columnnumber-presentational",
 			"table-rowcount-presentational",
-			"table-columncount-presentational"
+			"table-columncount-presentational",
 		):
 			attrVal = attrs.get(attr)
-			if attrVal is not None and attrVal.lstrip('-').isdigit():
+			if attrVal is not None and attrVal.lstrip("-").isdigit():
 				attrs[attr] = int(attrVal)
 			else:
 				attrs[attr] = None
@@ -126,17 +125,21 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 		placeholder = self._getPlaceholderAttribute(attrs, "IAccessible2::attribute_placeholder")
 		if placeholder is not None:
-			attrs['placeholder']= placeholder
+			attrs["placeholder"] = placeholder
 
-		role = IAccessibleHandler.NVDARoleFromAttr(attrs['IAccessible::role'])
-		if attrs.get('IAccessible2::attribute_tag',"").lower()=="blockquote":
-			role=controlTypes.Role.BLOCKQUOTE
+		role = IAccessibleHandler.NVDARoleFromAttr(attrs["IAccessible::role"])
+		if attrs.get("IAccessible2::attribute_tag", "").lower() == "blockquote":
+			role = controlTypes.Role.BLOCKQUOTE
 
 		states = IAccessibleHandler.getStatesSetFromIAccessibleAttrs(attrs)
 		states |= IAccessibleHandler.getStatesSetFromIAccessible2Attrs(attrs)
 		role, states = controlTypes.transformRoleStates(role, states)
 
-		if role == controlTypes.Role.EDITABLETEXT and not (controlTypes.State.FOCUSABLE in states or controlTypes.State.UNAVAILABLE in states or controlTypes.State.EDITABLE in states):
+		if role == controlTypes.Role.EDITABLETEXT and not (
+			controlTypes.State.FOCUSABLE in states
+			or controlTypes.State.UNAVAILABLE in states
+			or controlTypes.State.EDITABLE in states
+		):
 			# This is a text leaf.
 			# See NVDAObjects.Iaccessible.mozilla.findOverlayClasses for an explanation of these checks.
 			role = controlTypes.Role.STATICTEXT
@@ -150,24 +153,24 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		elif grabbed == "true":
 			states.add(controlTypes.State.DRAGGING)
 		sorted = attrs.get("IAccessible2::attribute_sort")
-		if sorted=="ascending":
+		if sorted == "ascending":
 			states.add(controlTypes.State.SORTED_ASCENDING)
-		elif sorted=="descending":
+		elif sorted == "descending":
 			states.add(controlTypes.State.SORTED_DESCENDING)
-		elif sorted=="other":
+		elif sorted == "other":
 			states.add(controlTypes.State.SORTED)
-		roleText=attrs.get("IAccessible2::attribute_roledescription")
+		roleText = attrs.get("IAccessible2::attribute_roledescription")
 		if roleText:
-			attrs['roleText']=roleText
+			attrs["roleText"] = roleText
 		roleTextBraille = attrs.get("IAccessible2::attribute_brailleroledescription")
 		if roleTextBraille:
-			attrs['roleTextBraille'] = roleTextBraille
+			attrs["roleTextBraille"] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
-		if role==controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
+		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
 			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
-			role=controlTypes.Role.TEXTFRAME
-		level=attrs.get('IAccessible2::attribute_level',"")
+			role = controlTypes.Role.TEXTFRAME
+		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
 		if landmark and role != controlTypes.Role.LANDMARK and landmark != xmlRoles[0]:
@@ -190,21 +193,21 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 				states.discard(controlTypes.State.CHECKED)
 				states.add(controlTypes.State.ON)
 		popupState = aria.ariaHaspopupValuesToNVDAStates.get(
-			attrs.get("IAccessible2::attribute_haspopup")
+			attrs.get("IAccessible2::attribute_haspopup"),
 		)
 		if popupState:
 			states.discard(controlTypes.State.HASPOPUP)
 			states.add(popupState)
-		attrs['role']=role
-		attrs['states']=states
+		attrs["role"] = role
+		attrs["states"] = states
 		if level != "" and level is not None:
-			attrs['level']=level
+			attrs["level"] = level
 		if landmark:
-			attrs["landmark"]=landmark
+			attrs["landmark"] = landmark
 
-		detailsRoles = attrs.get('detailsRoles')
+		detailsRoles = attrs.get("detailsRoles")
 		if detailsRoles is not None:
-			attrs['detailsRoles'] = set(self._normalizeDetailsRole(detailsRoles))
+			attrs["detailsRoles"] = set(self._normalizeDetailsRole(detailsRoles))
 			if config.conf["debugLog"]["annotations"]:
 				log.debug(f"detailsRoles: {attrs['detailsRoles']}")
 		return super()._normalizeControlField(attrs)
@@ -220,9 +223,10 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 		"""
 		# Can't import at module level as chromium imports from this module
 		from NVDAObjects.IAccessible.chromium import supportedAriaDetailsRoles
+
 		if config.conf["debugLog"]["annotations"]:
 			log.debug(f"detailsRoles: {repr(detailsRoles)}")
-		detailsRolesValues = detailsRoles.split(',')
+		detailsRolesValues = detailsRoles.split(",")
 		for detailsRole in detailsRolesValues:
 			if detailsRole.isdigit():
 				detailsRoleInt = int(detailsRole)
@@ -252,7 +256,7 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			val = attrs.get(name, None)
 			if val is not None:
 				attrs[name] = int(val)
-		return super(Gecko_ia2_TextInfo,self)._normalizeFormatField(attrs)
+		return super(Gecko_ia2_TextInfo, self)._normalizeFormatField(attrs)
 
 	def _get_location(self) -> locationHelper.RectLTWH:
 		document = self.obj.rootNVDAObject.IAccessibleObject
@@ -262,21 +266,20 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 
 
 class Gecko_ia2(VirtualBuffer):
-
-	TextInfo=Gecko_ia2_TextInfo
+	TextInfo = Gecko_ia2_TextInfo
 	_nativeAppSelectionModeSupported = True
 
-	def __init__(self,rootNVDAObject):
-		super(Gecko_ia2,self).__init__(rootNVDAObject,backendName="gecko_ia2")
+	def __init__(self, rootNVDAObject):
+		super(Gecko_ia2, self).__init__(rootNVDAObject, backendName="gecko_ia2")
 		self._initialScrollObj = None
 
-	def __contains__(self,obj):
+	def __contains__(self, obj):
 		if (
 			not (
 				isinstance(obj, NVDAObjects.IAccessible.IAccessible)
 				and isinstance(obj.IAccessibleObject, IA2.IAccessible2)
 			)
-			or not obj.windowClassName.startswith('Mozilla')
+			or not obj.windowClassName.startswith("Mozilla")
 			or not winUser.isDescendantWindow(self.rootNVDAObject.windowHandle, obj.windowHandle)
 		):
 			return False
@@ -300,7 +303,7 @@ class Gecko_ia2(VirtualBuffer):
 	def _get_isAlive(self):
 		if self.isLoading:
 			return True
-		root=self.rootNVDAObject
+		root = self.rootNVDAObject
 		if not root:
 			return False
 		if not winUser.isWindow(root.windowHandle):
@@ -316,13 +319,13 @@ class Gecko_ia2(VirtualBuffer):
 			isDefunct = bool(root.IAccessibleObject.states & IA2.IA2_STATE_DEFUNCT)
 		except COMError:
 			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
-			isDefunct=True
+			isDefunct = True
 		return not isDefunct
 
 	def getNVDAObjectFromIdentifier(
-			self,
-			docHandle: int,
-			ID: int
+		self,
+		docHandle: int,
+		ID: int,
 	) -> NVDAObjects.IAccessible.IAccessible:
 		try:
 			pacc = self.rootNVDAObject.IAccessibleObject.accChild(ID)
@@ -331,13 +334,13 @@ class Gecko_ia2(VirtualBuffer):
 		return NVDAObjects.IAccessible.IAccessible(
 			windowHandle=docHandle,
 			IAccessibleObject=IAccessibleHandler.normalizeIAccessible(pacc),
-			IAccessibleChildID=0
+			IAccessibleChildID=0,
 		)
 
-	def getIdentifierFromNVDAObject(self,obj):
-		docHandle=obj.windowHandle
-		ID=obj.IA2UniqueID
-		return docHandle,ID
+	def getIdentifierFromNVDAObject(self, obj):
+		docHandle = obj.windowHandle
+		ID = obj.IA2UniqueID
+		return docHandle, ID
 
 	def _shouldIgnoreFocus(self, obj):
 		if obj.role == controlTypes.Role.DOCUMENT and controlTypes.State.EDITABLE not in obj.states:
@@ -353,39 +356,52 @@ class Gecko_ia2(VirtualBuffer):
 	def _shouldSetFocusToObj(self, obj):
 		if obj.role == controlTypes.Role.GRAPHIC and controlTypes.State.LINKED in obj.states:
 			return True
-		return super(Gecko_ia2,self)._shouldSetFocusToObj(obj)
+		return super(Gecko_ia2, self)._shouldSetFocusToObj(obj)
 
-	def _activateLongDesc(self,controlField):
-		index=int(controlField['IAccessibleAction_showlongdesc'])
-		docHandle=int(controlField['controlIdentifier_docHandle'])
-		ID=int(controlField['controlIdentifier_ID'])
-		obj=self.getNVDAObjectFromIdentifier(docHandle,ID)
+	def _activateLongDesc(self, controlField):
+		index = int(controlField["IAccessibleAction_showlongdesc"])
+		docHandle = int(controlField["controlIdentifier_docHandle"])
+		ID = int(controlField["controlIdentifier_ID"])
+		obj = self.getNVDAObjectFromIdentifier(docHandle, ID)
 		obj.doAction(index)
 
 	def _searchableTagValues(self, values):
 		return values
 
-	def _searchableAttribsForNodeType(self,nodeType):
-		if nodeType.startswith('heading') and nodeType[7:].isdigit():
-			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING], "IAccessible2::attribute_level": [nodeType[7:]]}
+	def _searchableAttribsForNodeType(self, nodeType):
+		if nodeType.startswith("heading") and nodeType[7:].isdigit():
+			attrs = {
+				"IAccessible::role": [IA2.IA2_ROLE_HEADING],
+				"IAccessible2::attribute_level": [nodeType[7:]],
+			}
 		elif nodeType == "annotation":
 			attrs = {
-				"IAccessible::role": [IA2.IA2_ROLE_CONTENT_DELETION, IA2.IA2_ROLE_CONTENT_INSERTION]
+				"IAccessible::role": [IA2.IA2_ROLE_CONTENT_DELETION, IA2.IA2_ROLE_CONTENT_INSERTION],
 			}
-		elif nodeType=="heading":
+		elif nodeType == "heading":
 			attrs = {"IAccessible::role": [IA2.IA2_ROLE_HEADING]}
-		elif nodeType=="table":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_TABLE]}
+		elif nodeType == "table":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_TABLE]}
 			if not config.conf["documentFormatting"]["includeLayoutTables"]:
-				attrs["table-layout"]=[None]
-		elif nodeType=="link":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1]}
-		elif nodeType=="visitedLink":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[1]}
-		elif nodeType=="unvisitedLink":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LINK],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_LINKED:[1],"IAccessible::state_%d"%oleacc.STATE_SYSTEM_TRAVERSED:[None]}
-		elif nodeType=="formField":
-			attrs=[
+				attrs["table-layout"] = [None]
+		elif nodeType == "link":
+			attrs = {
+				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+			}
+		elif nodeType == "visitedLink":
+			attrs = {
+				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [1],
+			}
+		elif nodeType == "unvisitedLink":
+			attrs = {
+				"IAccessible::role": [oleacc.ROLE_SYSTEM_LINK],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_LINKED: [1],
+				"IAccessible::state_%d" % oleacc.STATE_SYSTEM_TRAVERSED: [None],
+			}
+		elif nodeType == "formField":
+			attrs = [
 				{
 					"IAccessible::role": [
 						oleacc.ROLE_SYSTEM_BUTTONMENU,
@@ -403,7 +419,7 @@ class Gecko_ia2(VirtualBuffer):
 				{
 					"IAccessible::role": [
 						oleacc.ROLE_SYSTEM_COMBOBOX,
-						oleacc.ROLE_SYSTEM_TEXT
+						oleacc.ROLE_SYSTEM_TEXT,
 					],
 					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
 				},
@@ -412,63 +428,69 @@ class Gecko_ia2(VirtualBuffer):
 					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [None],
 				},
 			]
-		elif nodeType=="list":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LIST]}
-		elif nodeType=="listItem":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_LISTITEM]}
-		elif nodeType=="button":
+		elif nodeType == "list":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_LIST]}
+		elif nodeType == "listItem":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_LISTITEM]}
+		elif nodeType == "button":
 			attrs = {
 				"IAccessible::role": [
 					oleacc.ROLE_SYSTEM_PUSHBUTTON,
 					oleacc.ROLE_SYSTEM_BUTTONMENU,
-					IA2.IA2_ROLE_TOGGLE_BUTTON
-				]
+					IA2.IA2_ROLE_TOGGLE_BUTTON,
+				],
 			}
-		elif nodeType=="edit":
-			attrs=[
+		elif nodeType == "edit":
+			attrs = [
 				{
 					"IAccessible::role": [oleacc.ROLE_SYSTEM_TEXT],
-					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[1]
+					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
 				},
 				{
 					f"IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [1],
-					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}":[None]
+					f"parent::IAccessible2::state_{IA2.IA2_STATE_EDITABLE}": [None],
 				},
 			]
-		elif nodeType=="frame":
+		elif nodeType == "frame":
 			attrs = {"IAccessible::role": [IA2.IA2_ROLE_INTERNAL_FRAME]}
-		elif nodeType=="separator":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_SEPARATOR]}
-		elif nodeType=="radioButton":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_RADIOBUTTON]}
-		elif nodeType=="comboBox":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_COMBOBOX]}
-		elif nodeType=="checkBox":
+		elif nodeType == "separator":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_SEPARATOR]}
+		elif nodeType == "radioButton":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_RADIOBUTTON]}
+		elif nodeType == "comboBox":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_COMBOBOX]}
+		elif nodeType == "checkBox":
 			attrs = [
 				{"IAccessible::role": [oleacc.ROLE_SYSTEM_CHECKBUTTON]},
 				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("switch")]},
 			]
-		elif nodeType=="graphic":
-			attrs={"IAccessible::role":[oleacc.ROLE_SYSTEM_GRAPHIC]}
-		elif nodeType=="blockQuote":
-			attrs=[
+		elif nodeType == "graphic":
+			attrs = {"IAccessible::role": [oleacc.ROLE_SYSTEM_GRAPHIC]}
+		elif nodeType == "blockQuote":
+			attrs = [
 				# Search for a tag of blockquote for older implementations before the blockquote IAccessible2 role existed.
-				{"IAccessible2::attribute_tag":self._searchableTagValues(["blockquote"])},
+				{"IAccessible2::attribute_tag": self._searchableTagValues(["blockquote"])},
 				# Also support the new blockquote IAccessible2 role
 				{"IAccessible::role": [IA2.IA2_ROLE_BLOCK_QUOTE]},
 			]
-		elif nodeType=="focusable":
-			attrs={"IAccessible::state_%s"%oleacc.STATE_SYSTEM_FOCUSABLE:[1]}
-		elif nodeType=="landmark":
+		elif nodeType == "focusable":
+			attrs = {"IAccessible::state_%s" % oleacc.STATE_SYSTEM_FOCUSABLE: [1]}
+		elif nodeType == "landmark":
 			attrs = [
 				{"IAccessible::role": [IA2.IA2_ROLE_LANDMARK]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles]},
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
-					"name": [VBufStorage_findMatch_notEmpty]}
-				]
+				{
+					"IAccessible2::attribute_xml-roles": [
+						VBufStorage_findMatch_word(lr) for lr in aria.landmarkRoles
+					],
+				},
+				{
+					"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("region")],
+					"name": [VBufStorage_findMatch_notEmpty],
+				},
+			]
 		elif nodeType == "article":
 			attrs = [
-				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]}
+				{"IAccessible2::attribute_xml-roles": [VBufStorage_findMatch_word("article")]},
 			]
 		elif nodeType == "grouping":
 			attrs = [
@@ -476,24 +498,25 @@ class Gecko_ia2(VirtualBuffer):
 					"IAccessible2::attribute_xml-roles": [
 						VBufStorage_findMatch_word(r) for r in ("group", "radiogroup")
 					],
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 				{
 					"IAccessible2::attribute_tag": self._searchableTagValues(["fieldset"]),
-					"name": [VBufStorage_findMatch_notEmpty]
+					"name": [VBufStorage_findMatch_notEmpty],
 				},
 			]
-		elif nodeType=="embeddedObject":
-			attrs=[
+		elif nodeType == "embeddedObject":
+			attrs = [
 				{
-					"IAccessible2::attribute_tag":
-					self._searchableTagValues(["embed", "object", "applet", "audio", "video", "figure"])
+					"IAccessible2::attribute_tag": self._searchableTagValues(
+						["embed", "object", "applet", "audio", "video", "figure"],
+					),
 				},
-				{"IAccessible::role":[oleacc.ROLE_SYSTEM_APPLICATION,oleacc.ROLE_SYSTEM_DIALOG]},
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_APPLICATION, oleacc.ROLE_SYSTEM_DIALOG]},
 			]
 		elif nodeType == "tab":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PAGETAB]},
 			]
 		elif nodeType == "figure":
 			attrs = [
@@ -504,28 +527,30 @@ class Gecko_ia2(VirtualBuffer):
 			]
 		elif nodeType == "menuItem":
 			attrs = [
-				{"IAccessible::role": [
-					oleacc.ROLE_SYSTEM_BUTTONMENU,
-					oleacc.ROLE_SYSTEM_MENUITEM,
-				]}
+				{
+					"IAccessible::role": [
+						oleacc.ROLE_SYSTEM_BUTTONMENU,
+						oleacc.ROLE_SYSTEM_MENUITEM,
+					],
+				},
 			]
 		elif nodeType == "toggleButton":
 			attrs = [
-				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]}
+				{"IAccessible::role": [IA2.IA2_ROLE_TOGGLE_BUTTON]},
 			]
 		elif nodeType == "progressBar":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_PROGRESSBAR]},
 			]
 		elif nodeType == "math":
 			attrs = [
-				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]}
+				{"IAccessible::role": [oleacc.ROLE_SYSTEM_EQUATION]},
 			]
 		else:
 			return None
 		return attrs
 
-	def event_stateChange(self,obj,nextHandler):
+	def event_stateChange(self, obj, nextHandler):
 		if not self.isAlive:
 			return treeInterceptorHandler.killTreeInterceptor(self)
 		return nextHandler()
@@ -536,29 +561,34 @@ class Gecko_ia2(VirtualBuffer):
 			return nextHandler()
 		if not self._handleScrollTo(obj):
 			return nextHandler()
+
 	event_scrollingStart.ignoreIsReady = True
 
-	def _getTableCellAt(self,tableID,startPos,destRow,destCol):
+	def _getTableCellAt(self, tableID, startPos, destRow, destCol):
 		docHandle = self.rootDocHandle
 		table = self.getNVDAObjectFromIdentifier(docHandle, tableID)
 		try:
 			try:
-				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+				cell = table.IAccessibleTable2Object.cellAt(destRow - 1, destCol - 1).QueryInterface(
+					IAccessible2,
+				)
 			except AttributeError:
-				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(IAccessible2)
+				cell = table.IAccessibleTableObject.accessibleAt(destRow - 1, destCol - 1).QueryInterface(
+					IAccessible2,
+				)
 			cell = NVDAObjects.IAccessible.IAccessible(IAccessibleObject=cell, IAccessibleChildID=0)
-			if cell.IA2Attributes.get('hidden'):
-				raise LookupError("Found hidden cell") 
+			if cell.IA2Attributes.get("hidden"):
+				raise LookupError("Found hidden cell")
 			return self.makeTextInfo(cell)
 		except (COMError, RuntimeError):
 			raise LookupError
 
 	def _getNearestTableCell(
-			self,
-			startPos: textInfos.TextInfo,
-			cell: documentBase._TableCell,
-			movement: documentBase._Movement,
-			axis: documentBase._Axis,
+		self,
+		startPos: textInfos.TextInfo,
+		cell: documentBase._TableCell,
+		movement: documentBase._Movement,
+		axis: documentBase._Axis,
 	) -> textInfos.TextInfo:
 		# Skip the VirtualBuffer implementation as the base BrowseMode implementation is good enough for us here.
 		return super(VirtualBuffer, self)._getNearestTableCell(startPos, cell, movement, axis)
@@ -570,11 +600,11 @@ class Gecko_ia2(VirtualBuffer):
 			return None
 
 	def _getInitialCaretPos(self):
-		initialPos = super(Gecko_ia2,self)._getInitialCaretPos()
+		initialPos = super(Gecko_ia2, self)._getInitialCaretPos()
 		if initialPos:
 			return initialPos
 		return self._initialScrollObj
-	
+
 	def _getStartSelection(self, ia2Sel: "_Ia2Selection", selFields: TextInfo.TextWithFieldsT):
 		"""Get the start of the selection.
 
@@ -592,14 +622,14 @@ class Gecko_ia2(VirtualBuffer):
 		for field in selFields:
 			if isinstance(field, textInfos.FieldCommand):
 				if field.command in ("controlStart", "formatChange"):
-					hwnd = field.field.get('ia2TextWindowHandle')
+					hwnd = field.field.get("ia2TextWindowHandle")
 					if hwnd is not None:
 						ia2Sel.startWindow = hwnd
-						ia2Sel.startID = field.field['ia2TextUniqueID']
-						ia2Sel.startOffset = field.field['ia2TextStartOffset']
+						ia2Sel.startID = field.field["ia2TextUniqueID"]
+						ia2Sel.startOffset = field.field["ia2TextStartOffset"]
 						if field.command == "formatChange":
-							ia2Sel.startOffset += field.field.get('strippedCharsFromStart', 0)
-							ia2Sel.startOffset += field.field['_offsetFromStartOfNode']
+							ia2Sel.startOffset += field.field.get("strippedCharsFromStart", 0)
+							ia2Sel.startOffset += field.field["_offsetFromStartOfNode"]
 					if field.command == "controlStart":
 						continue
 			break
@@ -609,9 +639,11 @@ class Gecko_ia2(VirtualBuffer):
 		log.debug(f"ia2 start ID: {ia2Sel.startID}")
 		log.debug(f"ia2 start offset: {ia2Sel.startOffset}")
 		ia2Sel.startObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-			ia2Sel.startWindow, winUser.OBJID_CLIENT, ia2Sel.startID
+			ia2Sel.startWindow,
+			winUser.OBJID_CLIENT,
+			ia2Sel.startID,
 		)
-		assert (childID == 0), "childID should be 0"
+		assert childID == 0, "childID should be 0"
 		ia2Sel.startObj = ia2Sel.startObj.QueryInterface(IAccessibleText)
 		log.debug(f"ia2 start obj: {ia2Sel.startObj}")
 
@@ -632,16 +664,16 @@ class Gecko_ia2(VirtualBuffer):
 				continue
 			elif isinstance(field, textInfos.FieldCommand):
 				if field.command in ("controlEnd", "formatChange"):
-					hwnd = field.field.get('ia2TextWindowHandle')
+					hwnd = field.field.get("ia2TextWindowHandle")
 					if hwnd is not None:
 						ia2Sel.endWindow = hwnd
-						ia2Sel.endID = field.field['ia2TextUniqueID']
-						ia2Sel.endOffset = field.field['ia2TextStartOffset']
+						ia2Sel.endID = field.field["ia2TextUniqueID"]
+						ia2Sel.endOffset = field.field["ia2TextStartOffset"]
 						if field.command == "controlEnd":
 							ia2Sel.endOffset += 1
 						elif field.command == "formatChange":
-							ia2Sel.endOffset += field.field.get('strippedCharsFromStart', 0)
-							ia2Sel.endOffset += field.field['_offsetFromStartOfNode']
+							ia2Sel.endOffset += field.field.get("strippedCharsFromStart", 0)
+							ia2Sel.endOffset += field.field["_offsetFromStartOfNode"]
 							ia2Sel.endOffset += textLen
 				if field.command == "controlEnd":
 					continue
@@ -656,9 +688,11 @@ class Gecko_ia2(VirtualBuffer):
 			log.debug("Reusing ia2Sel.startObj for ia2Sel.endObj")
 		else:
 			ia2Sel.endObj, childID = IAccessibleHandler.accessibleObjectFromEvent(
-				ia2Sel.endWindow, winUser.OBJID_CLIENT, ia2Sel.endID
+				ia2Sel.endWindow,
+				winUser.OBJID_CLIENT,
+				ia2Sel.endID,
 			)
-			assert (childID == 0), "childID should be 0"
+			assert childID == 0, "childID should be 0"
 			ia2Sel.endObj = ia2Sel.endObj.QueryInterface(IAccessibleText)
 			log.debug(f"ia2 end obj {ia2Sel.endObj}")
 
@@ -666,7 +700,7 @@ class Gecko_ia2(VirtualBuffer):
 		"""Update the native selection in the application to match the browse mode selection in NVDA."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
-				IAccessibleTextSelectionContainer
+				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e
@@ -685,7 +719,7 @@ class Gecko_ia2(VirtualBuffer):
 				ia2Sel.startOffset,
 				ia2Sel.endObj,
 				ia2Sel.endOffset,
-				False
+				False,
 			)
 			paccTextSelectionContainer.SetSelections(1, byref(r))
 		else:  # No selection
@@ -696,7 +730,7 @@ class Gecko_ia2(VirtualBuffer):
 		"""Clear the native selection in the application."""
 		try:
 			paccTextSelectionContainer = self.rootNVDAObject.IAccessibleObject.QueryInterface(
-				IAccessibleTextSelectionContainer
+				IAccessibleTextSelectionContainer,
 			)
 		except COMError as e:
 			raise NotImplementedError from e

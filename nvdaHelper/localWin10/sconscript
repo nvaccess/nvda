@@ -18,9 +18,9 @@ import glob
 from SCons.Tool.MSCommon.vc import find_vc_pdir
 
 Import(
-	'env',
-	'sourceDir',
-	'localLib',
+	"env",
+	"sourceDir",
+	"localLib",
 )
 
 
@@ -30,14 +30,15 @@ env = env.Clone()  # noqa: F821
 localWin10Lib = env.SharedLibrary(
 	target="nvdaHelperLocalWin10",
 	source=[
-		env['projectResFile'],
-		'oneCoreSpeech.cpp',
-		'uwpOcr.cpp',
+		env["projectResFile"],
+		"oneCoreSpeech.cpp",
+		"uwpOcr.cpp",
 	],
 	LIBS=[
 		"WindowsApp",
 		# Ignoring Flake8 F821: 'undefined name' due to nonstandard SCons import
-		localLib[2]],  # noqa: F821
+		localLib[2],
+	],  # noqa: F821
 )
 
 # UWP dlls can only be dynamically linked with the CRT,
@@ -45,13 +46,16 @@ localWin10Lib = env.SharedLibrary(
 # Therefore, we must include it.
 # VS keeps changing the path to reflect the latest major.minor.build version which we canot easily find out.
 # Therefore  Search these versioned directories from newest to oldest  to collect all the files we need.
-msvc = env.get('MSVC_VERSION')
-vcRedistDirs = glob.glob(os.path.join(
-    find_vc_pdir(env, msvc),
-    rf"Redist\MSVC\{msvc[:2]}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
-))
-if len(vcRedistDirs)==0:
-	raise RuntimeError("Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed") 
+msvc = env.get("MSVC_VERSION")
+vcRedistDirs = glob.glob(
+	os.path.join(
+		find_vc_pdir(env, msvc), rf"Redist\MSVC\{msvc[:2]}*\x86\Microsoft.VC{msvc.replace('.', '')}.CRT"
+	)
+)
+if len(vcRedistDirs) == 0:
+	raise RuntimeError(
+		"Could not locate vc redistributables. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+	)
 vcRedistDirs.sort(reverse=True)
 for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
 	for vcRedistDir in vcRedistDirs:
@@ -60,6 +64,9 @@ for fn in ("msvcp140.dll", "vccorlib140.dll", "vcruntime140.dll"):
 			env.Install(sourceDir, path)
 			break
 		else:
-			raise RuntimeError("Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"%fn) 
+			raise RuntimeError(
+				"Could not locate %s. Perhaps the Universal Windows Platform component in visual Studio is not installed"
+				% fn
+			)
 
-Return(['localWin10Lib'])
+Return(["localWin10Lib"])

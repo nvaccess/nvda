@@ -5,6 +5,92 @@
 
 Informacije za programere nisu prevedene, molimo ’pogledajte [englesku inačicu ovog dokumenta](../en/changes.html).
 
+## 2024.3
+
+Add-on store će vas obavijestiti o dostupnosti ažuriranja dodataka prilikom pokretanja NVDA.
+
+Dodane su opcije za primjenu unicode normalizacije na govor i brajicu.
+To može biti korisno pri čitanju znakova koji su nepoznati određenoj govornoj jedinici ili ne postoje u određenoj brajičnoj tablici. Takvi znakovi mogu imati kompatibilnu alternativu, poput podebljanih ili kosih slova koja se uobičajeno koriste na društvenim mrežama.
+Ta opcija također omogućuje čitanje jednadžbi u Microsoft Word uređivaču jednadžbi.
+
+Help Tech Activator Pro brajični redci su sada podržani.
+
+Dodane su nedodijeljene geste za pomicanje kotačića miša vertikalno ili horizontalno.
+
+Ispravljeno je nekoliko pogrešaka, prije svega u Windows 11 emoji panelu i povijesti međuspremnika.
+Dodane su ispravke u web preglednicima za čitanje poruka o pogreškama, figure, crteže, oznake tablica te potvrdne okvire i izborne gumbe.
+
+Liblouis je nadograđen sa dodanom podrškom za srpsku ćirilicu, Jidiš, nekoliko drevnih jezika, turski i međunarodnu fonetsku abecedu.
+eSpeak je nadograđen sa dodanom podrškom za karakalpački.
+Unicode CLDR je također nadograđen.
+
+### nove značajke
+
+* Novi tipkovnički prečaci:
+  * Dodani su prečaci za vertikalno i horizontalno pomicanje kotačića miša, kako bi se unaprijedilo kretanje u nekim aplikacijama i na nekim web stranicama čiji se sadržaj osvježava, kao što je to na primjer Dism++. (#16462, @Cary-Rowen)
+* Dodana podrška za Unicode normalizaciju za govor i brajicu. (#11570, #16466 @LeonarddeR).
+  * To može biti korisno kada je određeni znak nepoznat za govornu jedinicu ili ne postoji u brajičnoj tablici, ali ima kompatibilnu alternativu kao što su to na primjer podebljani ili kosi znakovi koji se uobičajeno koriste na društvenim mrežama.
+  * To također omogućuje čitanje jednadžbi u Microsoft Word uređivaču jednadžbi. (#4631)
+  * Ovu značajku možete uključiti za govor i brajicu u dijaloškom okviru postavki u pripadajućim kategorijama.
+* Od sada ćete biti podrazumijevano obavješteni o novim ažuriranjima dodataka prilikom pokretanja NVDA. (#15035)
+  * To se može isključiti u "Add-on Store" kategoriji u postavkama.
+  * NVDA provjerava svakodnevno za ažuriranje NVDA dodataka.
+  * Provjeravat će se ažuriranja samo za jedan kanal (na primjer instalirani beta dodaci će biti provjeravani iz beta kanala).
+* Dodana podrška za Help Tech Activator Pro brajične redke. (#16668)
+
+### Izmjene
+
+* nadogradnje komponenata:
+  * eSpeak NG je nadograđen na inačicu 1.52-dev commit `54ee11a79`. (#16495)
+    * Dodan novi jezik: karakalpački.
+  * Nadograđen Unicode CLDR na inačicu 45.0. (#16507, @OzancanKaratas)
+  * Nadograđen fast_diff_match_patch (koristi se za otkrivanje izmjena u naredbenom redku i drugom dinamičkom sadržaju) na inačicu 2.1.0. (#16508, @codeofdusk)
+  * Nadograđen LibLouis brajični prevoditelj na inačicu [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * nove brajične tablice:
+      * Srpski ćirilica.
+      * Jidiš.
+      * Nekoliko drevnih jezika: biblijski hebrejski, akadski, sirijski, ugaricki te transliterirani klinopis.
+      * Turski kratkopis. (#16735)
+      * Međunarodna fonetska abeceda. (#16773)
+  * Nadograđen NSIS na inačicu 3.10 (#16674, @dpy013)
+  * Nadograđen markdown na inačicu 3.6 (#16725, @dpy013)
+  * Nadograđen nh3 na inačicu 0.2.17 (#16725, @dpy013)
+* Sigurnosna ulazna brajična tablica je jednaka izlaznoj sigurnosnoj brajičnoj tablici, koja je "Unificirani Engleski brajični kod puno pismo". (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA će sada čitati figure bez pristupačnih podređenih objekata, ali sa oznakom i opisom. (#14514)
+* Prilikom čitanja po redku  u modusu čitanja, "potpis" se više ne čita pri svakom redku potpisa ili tablice. (#14874)
+* U Python konzoli, zadnja neizvršena komanda više neće biti izgubljena prilikom kretanja po povijesti ulaza. (#16653, @CyrilleB79)
+* Unikatan anonimni identifikator sada se šalje kao dio neobaveznih statistika korištenja NVDA. (#16266)
+* Pri stvaranju prijenosne kopije, podrazumijevano će se automatski stvarati nova mapa.
+Od sada će se prikazivati upozorenje ako pokušate pisati unutar mape koja nije prazna. (#16686)
+
+### Ispravke grešaka
+
+* Windows 11 ispravke:
+  * NVDA se više neće zaglavljivati prilikom zatvaranja povijesti međuspremnika i emoji panela. (#16346, #16347, @josephsl)
+  * NVDA će ponovno izgovarati vidljive kandidate prilikom otvaranja Ime sučelja. (#14023, @josephsl)
+  * NVDA više neće dvaput izgovoriti "povijest međuspremnika" pri kretanju stavkama izbornika emoji panela. (#16532, @josephsl)
+  * NVDA više neće prekidati govor i brajicu pri pregledu kaomojia i znakova u emoji panelu. (#16533, @josephsl)
+* Ispravke u preglednicima:
+  * Poruke o pogrešci zabilježene kao `aria-errormessage` sada se izgovaraju u Google Chromeu i Mozilla Firefoxu. (#8318)
+  * Ako postoji, NVDA će sada koristiti `aria-labelledby` atribut za  dohvaćanje pristupačnih naziva tablica u Mozilla Firefoxu. (#5183)
+  * NVDA će ispravno izgovarati stavke izbornika u obliku izbornih gumbi i potvrdnih okvira prilikom prvog otvaranja podizbornika u Google Chromeu i Mozilla Firefoxu. (#14550)
+  * Značajka pretrage u modusu čitanja NVDA čitača zaslona sada je točnija kada stranica sadrži emoji znakove. (#16317, @LeonarddeR)
+  * U Mozilla Firefoxu, NVDA sada ispravno čita trenutni znak, trenutnu riječ i trenutni redak kada se kursor nalazi na točki umetanja na kraju redka. (#3156, @jcsteh)
+  * NVDA više ne prouzrokuje rušenje poslije zatvaranja dokumenta ili zatvaranja Google Chromea. (#16893)
+* NVDA će sada ispravno čitati prijedloge automatskog popunjavanja u Eclipse i drugim okruženjima baziranima na Eclipseu u Windowsima 11. (#16416, @thgcode)
+* Unapređena pouzdanost automatskog čitanja teksta, osobito u aplikacijama naredbenog redka. (#15850, #16027, @Danstiv)
+* Sada je ponovno moguće pouzdano vratiti konfiguraciju na prethodne vrijednosti. (#16755, @Emil-18)
+* NVDA će ispravno izgovarati promjene u označavanju pri uređivanju teksta ćelije u Microsoft Excelu. (#15843)
+* U aplikacijama koje koriste Jawa access bridge, NVDA će sada ispravno pročitati zadnji prazan redak teksta umjesto ponavljanja prethodnog redka teksta. (#9376, @dmitrii-drobotov)
+* U LibreOffice Writeru (inačica 24.8 i novijim), prilikom uključivanja ili isključivanja oblikovanja teksta (podebljanja, ukošenja, podcrtavanja, indeksa/eksponenta, poravnanja) kada se koriste odgovarajući tipkovnički prečaci, NVDA će izgovoriti novo obilježje oblikovanja (na primjer, "podebljano uključeno", "podebljano isključeno"). (#4248, @michaelweghorn)
+* pri kretanju po poljima za uređivanje u aplikacijama koje koriste UI automation, NVDA više ne izgovara krivi znak, krivu riječ, Itd. (#16711, @jcsteh)
+* Pri ljepljenju u  Windows 10/11 kalkulator, NVDA sada ispravno čita cijeli broj koji je zalijepljen. (#16573, @TristanBurchett)
+* Govor se više ne gubi prilikom ponovnog povezivanja u sesiju udaljene radne površine. (#16722, @jcsteh)
+* Dodana je podrška za prečace za pregledavanje teksta za ime objekta u Visual Studio Codeu. (#16248, @Cary-Rowen)
+* Zvukovi NVDA sada se reproduciraju i na Mono audiouređajima. (#16770, @jcsteh)
+* NVDA će od sada čitati adrese prilikom kretanja po poljima do/kopija/skrivena kopija u prgramu outlook.com i suvremenom Outlooku. (#16856)
+* NVDA sada bolje rukuje pogreškama pri instalaciji dodataka. (#16704)
+
 ## 2024.2
 
 Dodana nova značajka način podjeljenog zvuka.

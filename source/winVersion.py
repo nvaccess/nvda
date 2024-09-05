@@ -53,7 +53,8 @@ def _getRunningVersionNameFromWinReg() -> str:
 	"""
 	# Cache the version in use on the system.
 	with winreg.OpenKey(
-		winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\Windows NT\CurrentVersion"
+		winreg.HKEY_LOCAL_MACHINE,
+		r"Software\Microsoft\Windows NT\CurrentVersion",
 	) as currentVersion:
 		# Version 20H2 and later where a separate display version string is used.
 		try:
@@ -64,7 +65,7 @@ def _getRunningVersionNameFromWinReg() -> str:
 				releaseId = winreg.QueryValueEx(currentVersion, "ReleaseID")[0]
 			except OSError:
 				raise RuntimeError(
-					"Release name is not recorded in Windows Registry on this version of Windows"
+					"Release name is not recorded in Windows Registry on this version of Windows",
 				) from None
 	return releaseId
 
@@ -78,14 +79,14 @@ class WinVersion(object):
 	"""
 
 	def __init__(
-			self,
-			major: int = 0,
-			minor: int = 0,
-			build: int = 0,
-			releaseName: str | None = None,
-			servicePack: str = "",
-			productType: str = "",
-			processorArchitecture: str = ""
+		self,
+		major: int = 0,
+		minor: int = 0,
+		build: int = 0,
+		releaseName: str | None = None,
+		servicePack: str = "",
+		productType: str = "",
+		processorArchitecture: str = "",
 	):
 		self.major = major
 		self.minor = minor
@@ -135,16 +136,10 @@ class WinVersion(object):
 		return " ".join(winVersionText)
 
 	def __eq__(self, other):
-		return (
-			(self.major, self.minor, self.build)
-			== (other.major, other.minor, other.build)
-		)
+		return (self.major, self.minor, self.build) == (other.major, other.minor, other.build)
 
 	def __ge__(self, other):
-		return (
-			(self.major, self.minor, self.build)
-			>= (other.major, other.minor, other.build)
-		)
+		return (self.major, self.minor, self.build) >= (other.major, other.minor, other.build)
 
 
 # Windows releases to WinVersion instances for easing comparisons.
@@ -172,18 +167,20 @@ WIN11_24H2 = WinVersion(major=10, minor=0, build=26100)
 
 @functools.lru_cache(maxsize=1)
 def getWinVer():
-	"""Returns a record of current Windows version NVDA is running on.
-	"""
+	"""Returns a record of current Windows version NVDA is running on."""
 	winVer = sys.getwindowsversion()
 	# #12509: on Windows 10, fetch whatever Windows Registry says for the current build.
 	# #12626: note that not all Windows 10 releases are labeled "Windows 10"
 	# (build 22000 is Windows 11 despite major.minor being 10.0).
 	try:
-		if WinVersion(
-			major=winVer.major,
-			minor=winVer.minor,
-			build=winVer.build
-		) >= WIN11:
+		if (
+			WinVersion(
+				major=winVer.major,
+				minor=winVer.minor,
+				build=winVer.build,
+			)
+			>= WIN11
+		):
 			releaseName = f"Windows 11 {_getRunningVersionNameFromWinReg()}"
 		else:
 			releaseName = f"Windows 10 {_getRunningVersionNameFromWinReg()}"
@@ -196,7 +193,7 @@ def getWinVer():
 		releaseName=releaseName,
 		servicePack=winVer.service_pack,
 		productType=("workstation", "domain controller", "server")[winVer.product_type - 1],
-		processorArchitecture=platform.machine()
+		processorArchitecture=platform.machine(),
 	)
 
 
@@ -213,6 +210,7 @@ def isUwpOcrAvailable():
 
 
 if NVDAState._allowDeprecatedAPI():
+
 	def isFullScreenMagnificationAvailable() -> bool:
 		"""
 		Technically this is always False. The Magnification API has been marked by MS as unsupported for
@@ -222,7 +220,7 @@ if NVDAState._allowDeprecatedAPI():
 		log.debugWarning(
 			"Deprecated function called: winVersion.isFullScreenMagnificationAvailable, "
 			"use visionEnhancementProviders.screenCurtain.ScreenCurtainProvider.canStart instead.",
-			stack_info=True
+			stack_info=True,
 		)
 		return True
 

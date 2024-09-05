@@ -1,24 +1,26 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2006-2010 NVDA contributers.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU Lesser General Public License version 2.1, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2006-2010 NVDA contributers.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License version 2.1, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
 ###
 
-Import([
-	'env',
-])
+Import(
+	[
+		"env",
+	]
+)
 
-winIPCUtilsObj=env.Object("./winIPCUtils","../common/winIPCUtils.cpp")
+winIPCUtilsObj = env.Object("./winIPCUtils", "../common/winIPCUtils.cpp")
 
-controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
+controllerRPCHeader, controllerRPCClientSource = env.MSRPCStubs(
 	target="./nvdaController",
 	source=[
 		"../interfaces/nvdaController/nvdaController.idl",
@@ -30,14 +32,14 @@ controllerRPCHeader,controllerRPCClientSource=env.MSRPCStubs(
 
 clientLibName = "nvdaControllerClient"
 
-clientLib=env.SharedLibrary(
+clientLib = env.SharedLibrary(
 	target=clientLibName,
 	source=[
-		env['projectResFile'],
+		env["projectResFile"],
 		"client.cpp",
 		winIPCUtilsObj,
 		controllerRPCClientSource,
-		'nvdaControllerClient.def',
+		"nvdaControllerClient.def",
 	],
 	LIBS=[
 		"user32",
@@ -45,4 +47,4 @@ clientLib=env.SharedLibrary(
 	],
 )
 
-Return(['clientLib','controllerRPCHeader'])
+Return(["clientLib", "controllerRPCHeader"])

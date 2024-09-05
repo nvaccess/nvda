@@ -1,8 +1,8 @@
-#textInfos/offsets.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2006-2019 NV Access Limited, Babbage B.V.
+# textInfos/offsets.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 from abc import abstractmethod
 import re
@@ -24,15 +24,18 @@ from typing import (
 )
 from logHandler import log
 
+
 @dataclass
 class Offsets:
 	"""Represents two offsets."""
+
 	#: the first offset.
 	startOffset: int
 	#: the second offset.
 	endOffset: int
 
-def findStartOfLine(text,offset,lineLength=None):
+
+def findStartOfLine(text, offset, lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves back to sit on a multiple of the line length.
 	@param text: the text to search
 	@type text: str
@@ -41,24 +44,25 @@ def findStartOfLine(text,offset,lineLength=None):
 	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
 	@type lineLength: int or None
 	@return: the found offset
-	@rtype: int 
+	@rtype: int
 	"""
 	if not text:
 		return 0
-	if offset>=len(text):
-		offset=len(text)-1
-	if isinstance(lineLength,int):
-		return offset-(offset%lineLength)
-	if text[offset]=='\n' and offset>=0 and text[offset-1]=='\r':
-		offset-=1
-	start=text.rfind('\n',0,offset)
-	if start<0:
-		start=text.rfind('\r',0,offset)
-	if start<0:
-		start=-1
-	return start+1
+	if offset >= len(text):
+		offset = len(text) - 1
+	if isinstance(lineLength, int):
+		return offset - (offset % lineLength)
+	if text[offset] == "\n" and offset >= 0 and text[offset - 1] == "\r":
+		offset -= 1
+	start = text.rfind("\n", 0, offset)
+	if start < 0:
+		start = text.rfind("\r", 0, offset)
+	if start < 0:
+		start = -1
+	return start + 1
 
-def findEndOfLine(text,offset,lineLength=None):
+
+def findEndOfLine(text, offset, lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next line. With out a set line length, it searches for new line / cariage return characters, with a set line length it simply moves forward to sit on a multiple of the line length.
 	@param text: the text to search
 	@type text: str
@@ -67,25 +71,26 @@ def findEndOfLine(text,offset,lineLength=None):
 	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
 	@type lineLength: int or None
 	@return: the found offset
-	@rtype: int 
+	@rtype: int
 	"""
 	if not text:
 		return 0
-	if offset>=len(text):
-		offset=len(text)-1
-	if isinstance(lineLength,int):
-		return (offset-(offset%lineLength)+lineLength)
-	end=offset
-	if text[end]!='\n':
-		end=text.find('\n',offset)
-	if end<0:
-		if text[offset]!='\r':
-			end=text.find('\r',offset)
-	if end<0:
-		end=len(text)-1
-	return end+1
+	if offset >= len(text):
+		offset = len(text) - 1
+	if isinstance(lineLength, int):
+		return offset - (offset % lineLength) + lineLength
+	end = offset
+	if text[end] != "\n":
+		end = text.find("\n", offset)
+	if end < 0:
+		if text[offset] != "\r":
+			end = text.find("\r", offset)
+	if end < 0:
+		end = len(text) - 1
+	return end + 1
 
-def findStartOfWord(text,offset,lineLength=None):
+
+def findStartOfWord(text, offset, lineLength=None):
 	"""Searches backwards through the given text from the given offset, until it finds the offset that is the start of the word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
 	@param text: the text to search
 	@type text: str
@@ -94,20 +99,21 @@ def findStartOfWord(text,offset,lineLength=None):
 	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
 	@type lineLength: int or None
 	@return: the found offset
-	@rtype: int 
+	@rtype: int
 	"""
-	if offset>=len(text):
+	if offset >= len(text):
 		return offset
-	while offset>0 and text[offset].isspace():
-		offset-=1
+	while offset > 0 and text[offset].isspace():
+		offset -= 1
 	if unicodedata.category(text[offset])[0] not in "LMN":
 		return offset
 	else:
-		while offset>0 and unicodedata.category(text[offset-1])[0] in "LMN":
-			offset-=1
+		while offset > 0 and unicodedata.category(text[offset - 1])[0] in "LMN":
+			offset -= 1
 	return offset
 
-def findEndOfWord(text,offset,lineLength=None):
+
+def findEndOfWord(text, offset, lineLength=None):
 	"""Searches forwards through the given text from the given offset, until it finds the offset that is the start of the next word. It checks to see if a character is alphanumeric, or is another symbol , or is white space.
 	@param text: the text to search
 	@type text: str
@@ -116,23 +122,24 @@ def findEndOfWord(text,offset,lineLength=None):
 	@param lineLength: The number of characters that makes up a line, None if new line characters should be looked at instead
 	@type lineLength: int or None
 	@return: the found offset
-	@rtype: int 
+	@rtype: int
 	"""
-	if offset>=len(text):
-		return offset+1
+	if offset >= len(text):
+		return offset + 1
 	if unicodedata.category(text[offset])[0] in "LMN":
-		while offset<len(text) and unicodedata.category(text[offset])[0] in "LMN":
-			offset+=1
+		while offset < len(text) and unicodedata.category(text[offset])[0] in "LMN":
+			offset += 1
 	elif unicodedata.category(text[offset])[0] not in "LMNZ":
-		offset+=1
-	while offset<len(text) and text[offset].isspace():
-		offset+=1
+		offset += 1
+	while offset < len(text) and text[offset].isspace():
+		offset += 1
 	return offset
+
 
 class OffsetsTextInfo(textInfos.TextInfo):
 	"""An abstract TextInfo for text implementations which represent ranges using numeric offsets relative to the start of the text.
 	In such implementations, the start of the text is represented by 0 and the end is the length of the entire text.
-	
+
 	All subclasses must implement L{_getStoryLength}.
 	Aside from this, there are two possible implementations:
 		* If the underlying text implementation does not support retrieval of line offsets, L{_getStoryText} should be implemented.
@@ -140,7 +147,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		This is very inefficient and should be avoided if possible.
 		* Otherwise, subclasses must implement at least L{_getTextRange} and L{_getLineOffsets}.
 		Retrieval of other offsets (e.g. L{_getWordOffsets}) should also be implemented if possible for greatest accuracy and efficiency.
-	
+
 	If a caret and/or selection should be supported, L{_getCaretOffset} and/or L{_getSelectionOffsets} should be implemented, respectively.
 	To support conversion from screen points (e.g. for mouse tracking), L{_getOffsetFromPoint} should be implemented.
 	To support conversion to screen rectangles and points (e.g. for magnification or mouse tracking), either L{_getBoundingRectFromOffset} or L{_getPointFromOffset} should be implemented.
@@ -154,8 +161,12 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	#: The encoding internal to the underlying text info implementation.
 	encoding: Optional[str] = textUtils.WCHAR_ENCODING
 
-	def __eq__(self,other):
-		if self is other or (isinstance(other,OffsetsTextInfo) and self._startOffset==other._startOffset and self._endOffset==other._endOffset):
+	def __eq__(self, other):
+		if self is other or (
+			isinstance(other, OffsetsTextInfo)
+			and self._startOffset == other._startOffset
+			and self._endOffset == other._endOffset
+		):
 			return True
 		else:
 			return False
@@ -166,18 +177,18 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		return super().__hash__()
 
 	def _get_locationText(self):
-		textList=[]
-		storyLength=self._getStoryLength() or 1
-		curPercent=(self._startOffset/float(storyLength))*100
+		textList = []
+		storyLength = self._getStoryLength() or 1
+		curPercent = (self._startOffset / float(storyLength)) * 100
 		# Translators: current position in a document as a percentage of the document length
 		textList.append(_("{curPercent:.0f}%").format(curPercent=curPercent))
 		try:
-			curPoint=self.pointAtStart
-		except (NotImplementedError,LookupError):
-			curPoint=None
+			curPoint = self.pointAtStart
+		except (NotImplementedError, LookupError):
+			curPoint = None
 		if curPoint is not None:
 			# Translators: the current position's screen coordinates in pixels
-			textList.append(_("at {x}, {y}").format(x=curPoint.x,y=curPoint.y))
+			textList.append(_("at {x}, {y}").format(x=curPoint.x, y=curPoint.y))
 		return ", ".join(textList)
 
 	# C901 '_get_boundingRects' is too complex
@@ -189,7 +200,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		startOffset = self._startOffset
 		try:
 			firstVisibleOffset = self._getFirstVisibleOffset()
-			if firstVisibleOffset >=0:
+			if firstVisibleOffset >= 0:
 				startOffset = max(startOffset, firstVisibleOffset)
 		except (LookupError, NotImplementedError):
 			pass
@@ -219,7 +230,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			obj = obj.parent
 		if not objLocation:
 			raise LookupError
-		rects = [] 
+		rects = []
 		if inclusiveEndOffset > startOffset:
 			offset = startOffset
 			while offset <= inclusiveEndOffset:
@@ -234,15 +245,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 				rects.append(
 					locationHelper.RectLTWH.fromCollection(
 						startLocation if lineStart == startOffset else getLocationFromOffset(lineStart),
-						getLocationFromOffset(inclusiveLineEnd)
-					)
+						getLocationFromOffset(inclusiveLineEnd),
+					),
 				)
 				offset = inclusiveLineEnd + 1
 		else:
 			rects.append(
 				locationHelper.RectLTWH.fromCollection(
-					startLocation
-				)
+					startLocation,
+				),
 			)
 		intersectedRects = []
 		for rect in rects:
@@ -255,13 +266,13 @@ class OffsetsTextInfo(textInfos.TextInfo):
 	def _getCaretOffset(self):
 		raise NotImplementedError
 
-	def _setCaretOffset(self,offset):
+	def _setCaretOffset(self, offset):
 		raise NotImplementedError
 
 	def _getSelectionOffsets(self):
 		raise NotImplementedError
 
-	def _setSelectionOffsets(self,start,end):
+	def _setSelectionOffsets(self, start, end):
 		raise NotImplementedError
 
 	@abstractmethod
@@ -275,7 +286,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		"""
 		raise NotImplementedError
 
-	def _getTextRange(self,start,end):
+	def _getTextRange(self, start, end):
 		"""Retrieve the text in a given offset range.
 		@param start: The start offset.
 		@type start: int
@@ -284,7 +295,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		@return: The text contained in the requested range.
 		@rtype: str
 		"""
-		text=self._getStoryText()
+		text = self._getStoryText()
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			start, end = offsetConverter.encodedToStrOffsets(start, end)
@@ -296,22 +307,27 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			raise NotImplementedError
 		return text[start:end]
 
-	def _getFormatFieldAndOffsets(self,offset,formatConfig,calculateOffsets=True):
+	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
 		"""Retrieve the formatting information for a given offset and the offsets spanned by that field.
 		Subclasses must override this if support for text formatting is desired.
 		The base implementation associates text with line numbers if possible.
 		"""
-		formatField=textInfos.FormatField()
-		startOffset,endOffset=self._startOffset,self._endOffset
+		formatField = textInfos.FormatField()
+		startOffset, endOffset = self._startOffset, self._endOffset
 		if formatConfig["reportLineNumber"]:
 			if calculateOffsets:
-				startOffset,endOffset=self._getLineOffsets(offset)
-			lineNum=self._getLineNumFromOffset(offset)
+				startOffset, endOffset = self._getLineOffsets(offset)
+			lineNum = self._getLineNumFromOffset(offset)
 			if lineNum is not None:
-				formatField["line-number"]=lineNum+1
-		return formatField,(startOffset,endOffset)
+				formatField["line-number"] = lineNum + 1
+		return formatField, (startOffset, endOffset)
 
-	def _calculateUniscribeOffsets(self, lineText: str, unit: str, relOffset: int) -> Optional[Tuple[int, int]]:
+	def _calculateUniscribeOffsets(
+		self,
+		lineText: str,
+		unit: str,
+		relOffset: int,
+	) -> Optional[Tuple[int, int]]:
 		"""
 		Calculates the bounds of a unit at an offset within a given string of text
 		using the Windows uniscribe  library, also used in Notepad, for example.
@@ -344,7 +360,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			uniscribeLineLength,
 			relOffset,
 			ctypes.byref(relStart),
-			ctypes.byref(relEnd)
+			ctypes.byref(relEnd),
 		):
 			relStart = relStart.value
 			relEnd = min(lineLength, relEnd.value)
@@ -377,7 +393,7 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
 		return (offset, offset + 1)
 
-	def _getWordOffsets(self,offset):
+	def _getWordOffsets(self, offset):
 		if not (
 			self.encoding == textUtils.WCHAR_ENCODING
 			or self.encoding is None
@@ -386,15 +402,15 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		):
 			raise NotImplementedError
 		lineStart, lineEnd = self._getLineOffsets(offset)
-		lineText = self._getTextRange(lineStart,lineEnd)
+		lineText = self._getTextRange(lineStart, lineEnd)
 		# Convert NULL and non-breaking space to space to make sure that words will break on them
-		lineText = lineText.translate({0:u' ',0xa0:u' '})
+		lineText = lineText.translate({0: " ", 0xA0: " "})
 		relOffset = offset - lineStart
 		if self.useUniscribe:
 			offsets = self._calculateUniscribeOffsets(lineText, textInfos.UNIT_WORD, relOffset)
 			if offsets is not None:
 				return (offsets[0] + lineStart, offsets[1] + lineStart)
-		#Fall back to the older word offsets detection that only breaks on non alphanumeric
+		# Fall back to the older word offsets detection that only breaks on non alphanumeric
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(lineText)
 			relStrOffset = offsetConverter.encodedToStrOffsets(relOffset, relOffset)[0]
@@ -402,20 +418,20 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			relStrEnd = findEndOfWord(lineText, relStrOffset)
 			relWideStringStart, relWideStringEnd = offsetConverter.strToEncodedOffsets(relStrStart, relStrEnd)
 			return (relWideStringStart + lineStart, relWideStringEnd + lineStart)
-		start=findStartOfWord(lineText,offset-lineStart)+lineStart
-		end=findEndOfWord(lineText,offset-lineStart)+lineStart
-		return [start,end]
+		start = findStartOfWord(lineText, offset - lineStart) + lineStart
+		end = findEndOfWord(lineText, offset - lineStart) + lineStart
+		return [start, end]
 
-	def _getLineNumFromOffset(self,offset):
+	def _getLineNumFromOffset(self, offset):
 		return None
 
-	def _getLineOffsets(self,offset):
-		text=self._getStoryText()
+	def _getLineOffsets(self, offset):
+		text = self._getStoryText()
 		if self.encoding == textUtils.WCHAR_ENCODING:
 			offsetConverter = textUtils.WideStringOffsetConverter(text)
 			strOffset = offsetConverter.encodedToStrOffsets(offset, offset)[0]
-			strStart=findStartOfLine(text, strOffset)
-			strEnd=findEndOfLine(text, strOffset)
+			strStart = findStartOfLine(text, strOffset)
+			strEnd = findEndOfLine(text, strOffset)
 			return offsetConverter.strToEncodedOffsets(strStart, strEnd)
 		elif not (
 			self.encoding is None
@@ -423,89 +439,113 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			or self.encoding == textUtils.USER_ANSI_CODE_PAGE
 		):
 			raise NotImplementedError
-		start=findStartOfLine(text,offset)
-		end=findEndOfLine(text,offset)
-		return [start,end]
+		start = findStartOfLine(text, offset)
+		end = findEndOfLine(text, offset)
+		return [start, end]
 
-	def _getParagraphOffsets(self,offset):
-		return self._getLineOffsets(offset)
-
-	def _getReadingChunkOffsets(self,offset):
-		return self._getLineOffsets(offset)
-
-	def _getBoundingRectFromOffset(self,offset):
+	def _getSentenceOffsets(self, offset: int) -> tuple[int, int]:
+		"""
+		Gets the start and end offsets of the sentence containing the given offset.
+		:param offset: The offset of the character within the sentence.
+		:return: A tuple of the start and end offsets of the sentence.
+		:raise NotImplementedError: If the method is not implemented.
+		"""
 		raise NotImplementedError
 
-	def _getPointFromOffset(self,offset):
+	def _getParagraphOffsets(self, offset):
+		return self._getLineOffsets(offset)
+
+	def _getReadingChunkOffsets(self, offset):
+		return self._getLineOffsets(offset)
+
+	def _getBoundingRectFromOffset(self, offset):
+		raise NotImplementedError
+
+	def _getPointFromOffset(self, offset):
 		# Purposely do not catch LookupError or NotImplementedError raised by _getBoundingRectFromOffset.
 		return self._getBoundingRectFromOffset(offset).center
 
-	def _getOffsetFromPoint(self,x,y):
+	def _getOffsetFromPoint(self, x, y):
 		raise NotImplementedError
 
-	def _getNVDAObjectFromOffset(self,offset):
+	def _getNVDAObjectFromOffset(self, offset):
 		return self.obj
 
-	def _getOffsetsFromNVDAObject(self,obj):
-		if obj==self.obj:
-			return 0,self._getStoryLength()
+	def _getOffsetsFromNVDAObject(self, obj):
+		if obj == self.obj:
+			return 0, self._getStoryLength()
 		raise LookupError
 
-	def __init__(self,obj,position):
+	def __init__(self, obj, position):
 		"""Constructor.
 		Subclasses may extend this to perform implementation specific initialisation, calling their superclass method afterwards.
 		"""
-		super(OffsetsTextInfo,self).__init__(obj,position)
+		super(OffsetsTextInfo, self).__init__(obj, position)
 		from NVDAObjects import NVDAObject
-		if isinstance(position,locationHelper.Point):
-			offset=self._getOffsetFromPoint(position.x,position.y)
-			position=Offsets(offset,offset)
-		elif isinstance(position,NVDAObject):
-			start,end=self._getOffsetsFromNVDAObject(position)
-			position=textInfos.offsets.Offsets(start,end)
+
+		if isinstance(position, locationHelper.Point):
+			offset = self._getOffsetFromPoint(position.x, position.y)
+			position = Offsets(offset, offset)
+		elif isinstance(position, NVDAObject):
+			start, end = self._getOffsetsFromNVDAObject(position)
+			position = textInfos.offsets.Offsets(start, end)
 
 		if type(position) is type(self):
 			# This is a direct TextInfo to TextInfo copy.
-			# Copy over the contents of the property cache, and any private instance variables (includes the TextInfo's offsets) 
+			# Copy over the contents of the property cache, and any private instance variables (includes the TextInfo's offsets)
 			self._propertyCache.update(position._propertyCache)
-			self.__dict__.update({x:y for x,y in position.__dict__.items() if x.startswith('_') and x!='_propertyCache'})
-		elif position==textInfos.POSITION_FIRST:
-			self._startOffset=self._endOffset=0
-		elif position==textInfos.POSITION_LAST:
-			self._startOffset=self._endOffset=max(self._getStoryLength()-1,0)
-		elif position==textInfos.POSITION_CARET:
-			self._startOffset=self._endOffset=self._getCaretOffset()
-		elif position==textInfos.POSITION_SELECTION:
-			(self._startOffset,self._endOffset)=self._getSelectionOffsets()
-		elif position==textInfos.POSITION_ALL:
-			self._startOffset=0
-			self._endOffset=self._getStoryLength()
-		elif isinstance(position,Offsets):
-			self._startOffset=max(min(position.startOffset,self._getStoryLength()),0)
-			self._endOffset=max(min(position.endOffset,self._getStoryLength()),0)
+			self.__dict__.update(
+				{x: y for x, y in position.__dict__.items() if x.startswith("_") and x != "_propertyCache"},
+			)
+		elif position == textInfos.POSITION_FIRST:
+			self._startOffset = self._endOffset = 0
+		elif position == textInfos.POSITION_LAST:
+			self._startOffset = self._endOffset = max(self._getStoryLength() - 1, 0)
+		elif position == textInfos.POSITION_CARET:
+			self._startOffset = self._endOffset = self._getCaretOffset()
+		elif position == textInfos.POSITION_SELECTION:
+			(self._startOffset, self._endOffset) = self._getSelectionOffsets()
+		elif position == textInfos.POSITION_ALL:
+			self._startOffset = 0
+			self._endOffset = self._getStoryLength()
+		elif isinstance(position, Offsets):
+			self._startOffset = max(min(position.startOffset, self._getStoryLength()), 0)
+			self._endOffset = max(min(position.endOffset, self._getStoryLength()), 0)
 		else:
-			raise NotImplementedError("position: %s not supported"%position)
+			raise NotImplementedError("position: %s not supported" % position)
 
 	def _get_NVDAObjectAtStart(self):
 		return self._getNVDAObjectFromOffset(self._startOffset)
 
-	def _getUnitOffsets(self,unit,offset):
-		if unit==textInfos.UNIT_CHARACTER:
-			offsetsFunc=self._getCharacterOffsets
-		elif unit==textInfos.UNIT_WORD:
-			offsetsFunc=self._getWordOffsets
-		elif unit==textInfos.UNIT_LINE:
-			offsetsFunc=self._getLineOffsets
-		elif unit==textInfos.UNIT_PARAGRAPH:
-			offsetsFunc=self._getParagraphOffsets
-		elif unit==textInfos.UNIT_READINGCHUNK:
-			offsetsFunc=self._getReadingChunkOffsets
-		elif unit==textInfos.UNIT_STORY:
-			return 0,self._getStoryLength()
-		elif unit==textInfos.UNIT_OFFSET:
-			return offset,offset+1
-		else:
-			raise ValueError("unknown unit: %s"%unit)
+	def _getUnitOffsets(self, unit: str, offset: int) -> tuple[int, int]:
+		"""Gets the start and end offsets of the unit containing the given offset.
+
+		:param unit: Any of UNIT_CHARACTER, UNIT_WORD, UNIT_LINE, UNIT_SENTENCE, UNIT_PARAGRAPH,
+			UNIT_READINGCHUNK, UNIT_STORY, or UNIT_OFFSET as defined in textInfos.
+		:param offset: The offset of the character within the text unit.
+		:return: A tuple of the start and end offsets of the unit.
+		:raises ValueError: If the unit is not recognised.
+		:raises NotImplementedError: If the offset getter for the given unit is not implemented.
+		"""
+		match unit:
+			case textInfos.UNIT_CHARACTER:
+				offsetsFunc = self._getCharacterOffsets
+			case textInfos.UNIT_WORD:
+				offsetsFunc = self._getWordOffsets
+			case textInfos.UNIT_LINE:
+				offsetsFunc = self._getLineOffsets
+			case textInfos.UNIT_SENTENCE:
+				offsetsFunc = self._getSentenceOffsets
+			case textInfos.UNIT_PARAGRAPH:
+				offsetsFunc = self._getParagraphOffsets
+			case textInfos.UNIT_READINGCHUNK:
+				offsetsFunc = self._getReadingChunkOffsets
+			case textInfos.UNIT_STORY:
+				return 0, self._getStoryLength()
+			case textInfos.UNIT_OFFSET:
+				return offset, offset + 1
+			case _:
+				raise ValueError(f"unknown unit: {unit!r}")
 		return offsetsFunc(offset)
 
 	def _get_pointAtStart(self):
@@ -515,153 +555,181 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			return self._getPointFromOffset(self._startOffset)
 
 	def _get_isCollapsed(self):
-		if self._startOffset==self._endOffset:
+		if self._startOffset == self._endOffset:
 			return True
 		else:
 			return False
 
-	def collapse(self,end=False):
+	def collapse(self, end=False):
 		if not end:
-			self._endOffset=self._startOffset
+			self._endOffset = self._startOffset
 		else:
-			self._startOffset=self._endOffset
+			self._startOffset = self._endOffset
 
-	def expand(self,unit):
-		self._startOffset,self._endOffset=self._getUnitOffsets(unit,self._startOffset)
+	def expand(self, unit):
+		self._startOffset, self._endOffset = self._getUnitOffsets(unit, self._startOffset)
 
 	def copy(self):
-		return self.__class__(self.obj,self)
+		return self.__class__(self.obj, self)
 
-	def compareEndPoints(self,other,which):
-		if which=="startToStart":
-			diff=self._startOffset-other._startOffset
-		elif which=="startToEnd":
-			diff=self._startOffset-other._endOffset
-		elif which=="endToStart":
-			diff=self._endOffset-other._startOffset
-		elif which=="endToEnd":
-			diff=self._endOffset-other._endOffset
+	def compareEndPoints(self, other, which):
+		if which == "startToStart":
+			diff = self._startOffset - other._startOffset
+		elif which == "startToEnd":
+			diff = self._startOffset - other._endOffset
+		elif which == "endToStart":
+			diff = self._endOffset - other._startOffset
+		elif which == "endToEnd":
+			diff = self._endOffset - other._endOffset
 		else:
-			raise ValueError("bad argument - which: %s"%which)
-		if diff<0:
-			diff=-1
-		elif diff>0:
-			diff=1
+			raise ValueError("bad argument - which: %s" % which)
+		if diff < 0:
+			diff = -1
+		elif diff > 0:
+			diff = 1
 		return diff
 
-	def setEndPoint(self,other,which):
-		if which=="startToStart":
-			self._startOffset=other._startOffset
-		elif which=="startToEnd":
-			self._startOffset=other._endOffset
-		elif which=="endToStart":
-			self._endOffset=other._startOffset
-		elif which=="endToEnd":
-			self._endOffset=other._endOffset
+	def setEndPoint(self, other, which):
+		if which == "startToStart":
+			self._startOffset = other._startOffset
+		elif which == "startToEnd":
+			self._startOffset = other._endOffset
+		elif which == "endToStart":
+			self._endOffset = other._startOffset
+		elif which == "endToEnd":
+			self._endOffset = other._endOffset
 		else:
-			raise ValueError("bad argument - which: %s"%which)
-		if self._startOffset>self._endOffset:
+			raise ValueError("bad argument - which: %s" % which)
+		if self._startOffset > self._endOffset:
 			# start should never be after end.
-			if which in ("startToStart","startToEnd"):
-				self._endOffset=self._startOffset
+			if which in ("startToStart", "startToEnd"):
+				self._endOffset = self._startOffset
 			else:
-				self._startOffset=self._endOffset
+				self._startOffset = self._endOffset
 
 	def getTextWithFields(self, formatConfig: Optional[Dict] = None) -> textInfos.TextInfo.TextWithFieldsT:
 		if not formatConfig:
-			formatConfig=config.conf["documentFormatting"]
-		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig['detectFormatAfterCursor']:
-			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(self._startOffset,formatConfig,calculateOffsets=False)
-			text=self.text
-			return [textInfos.FieldCommand('formatChange',field),text]
-		commandList=[]
-		offset=self._startOffset
-		while offset<self._endOffset:
-			field,(boundStart,boundEnd)=self._getFormatFieldAndOffsets(offset,formatConfig)
-			if boundEnd<=boundStart:
-				boundEnd=boundStart+1
-			if boundEnd<=offset:
-				boundEnd=offset+1
-			command=textInfos.FieldCommand("formatChange",field)
+			formatConfig = config.conf["documentFormatting"]
+		if self.detectFormattingAfterCursorMaybeSlow and not formatConfig["detectFormatAfterCursor"]:
+			field, (boundStart, boundEnd) = self._getFormatFieldAndOffsets(
+				self._startOffset,
+				formatConfig,
+				calculateOffsets=False,
+			)
+			text = self.text
+			return [textInfos.FieldCommand("formatChange", field), text]
+		commandList = []
+		offset = self._startOffset
+		while offset < self._endOffset:
+			field, (boundStart, boundEnd) = self._getFormatFieldAndOffsets(offset, formatConfig)
+			if boundEnd <= boundStart:
+				boundEnd = boundStart + 1
+			if boundEnd <= offset:
+				boundEnd = offset + 1
+			command = textInfos.FieldCommand("formatChange", field)
 			commandList.append(command)
-			text=self._getTextRange(offset,min(boundEnd,self._endOffset))
+			text = self._getTextRange(offset, min(boundEnd, self._endOffset))
 			commandList.append(text)
-			offset=boundEnd
+			offset = boundEnd
 		return commandList
 
 	def _get_text(self):
-		return self._getTextRange(self._startOffset,self._endOffset)
+		return self._getTextRange(self._startOffset, self._endOffset)
 
-	def unitIndex(self,unit):
-		if unit==textInfos.UNIT_LINE:  
+	def unitIndex(self, unit):
+		if unit == textInfos.UNIT_LINE:
 			return self._lineNumFromOffset(self._startOffset)
 		else:
 			raise NotImplementedError
 
-	def unitCount(self,unit):
-		if unit==textInfos.UNIT_LINE:
+	def unitCount(self, unit):
+		if unit == textInfos.UNIT_LINE:
 			return self._getLineCount()
 		else:
 			raise NotImplementedError
 
-	allowMoveToOffsetPastEnd=True #: move with unit_character can move 1 past story length to allow braille routing to end insertion point. (#2096)
+	allowMoveToOffsetPastEnd = True  #: move with unit_character can move 1 past story length to allow braille routing to end insertion point. (#2096)
 
-	def move(self,unit,direction,endPoint=None):
-		if direction==0:
+	def move(self, unit, direction, endPoint=None):
+		if direction == 0:
 			return 0
-		if endPoint=="end":
-			offset=self._endOffset
-		elif endPoint=="start":
-			offset=self._startOffset
+		if endPoint == "end":
+			offset = self._endOffset
+		elif endPoint == "start":
+			offset = self._startOffset
 		else:
 			self.collapse()
-			offset=self._startOffset
-		lastOffset=None
-		count=0
-		lowLimit=0
-		highLimit=self._getStoryLength()
-		if self.allowMoveToOffsetPastEnd and unit==textInfos.UNIT_CHARACTER:
+			offset = self._startOffset
+		lastOffset = None
+		count = 0
+		lowLimit = 0
+		highLimit = self._getStoryLength()
+		if self.allowMoveToOffsetPastEnd and unit == textInfos.UNIT_CHARACTER:
 			# #2096: There is often an uncounted character at the end of the text
 			# where the caret is placed to append text.
-			highLimit+=1
-		while count!=direction and (lastOffset is None or (direction>0 and offset>lastOffset) or (direction<0 and offset<lastOffset)) and (offset<highLimit or direction<0) and (offset>lowLimit or direction>0):
-			lastOffset=offset
-			if direction<0 and offset>lowLimit:
-				offset-=1
-			newStart,newEnd=self._getUnitOffsets(unit,offset)
-			if direction<0:
-				offset=newStart
-			elif direction>0:
-				offset=newEnd
-			count=count+1 if direction>0 else count-1
-		if endPoint=="start":
-			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
+			highLimit += 1
+		while (
+			count != direction
+			and (
+				lastOffset is None
+				or (direction > 0 and offset > lastOffset)
+				or (direction < 0 and offset < lastOffset)
+			)
+			and (offset < highLimit or direction < 0)
+			and (offset > lowLimit or direction > 0)
+		):
+			lastOffset = offset
+			if direction < 0 and offset > lowLimit:
+				offset -= 1
+			newStart, newEnd = self._getUnitOffsets(unit, offset)
+			if direction < 0:
+				offset = newStart
+			elif direction > 0:
+				offset = newEnd
+			count = count + 1 if direction > 0 else count - 1
+		if endPoint == "start":
+			if (
+				(direction > 0 and offset <= self._startOffset)
+				or (direction < 0 and offset >= self._startOffset)
+				or offset < lowLimit
+				or offset >= highLimit
+			):
 				return 0
-			self._startOffset=offset
-		elif endPoint=="end":
-			if (direction>0 and offset<=self._endOffset) or (direction<0 and offset>=self._endOffset) or offset<lowLimit or offset>highLimit:
+			self._startOffset = offset
+		elif endPoint == "end":
+			if (
+				(direction > 0 and offset <= self._endOffset)
+				or (direction < 0 and offset >= self._endOffset)
+				or offset < lowLimit
+				or offset > highLimit
+			):
 				return 0
-			self._endOffset=offset
+			self._endOffset = offset
 		else:
-			if (direction>0 and offset<=self._startOffset) or (direction<0 and offset>=self._startOffset) or offset<lowLimit or offset>=highLimit:
+			if (
+				(direction > 0 and offset <= self._startOffset)
+				or (direction < 0 and offset >= self._startOffset)
+				or offset < lowLimit
+				or offset >= highLimit
+			):
 				return 0
-			self._startOffset=self._endOffset=offset
-		if self._startOffset>self._endOffset:
-			tempOffset=self._startOffset
-			self._startOffset=self._endOffset
-			self._endOffset=tempOffset
+			self._startOffset = self._endOffset = offset
+		if self._startOffset > self._endOffset:
+			tempOffset = self._startOffset
+			self._startOffset = self._endOffset
+			self._endOffset = tempOffset
 		return count
 
-	def find(self,text,caseSensitive=False,reverse=False):
+	def find(self, text, caseSensitive=False, reverse=False):
 		if reverse:
 			# When searching in reverse, we reverse both strings and do a forwards search.
 			text = text[::-1]
 			# Start searching one before the start to avoid finding the current match.
-			inText=self._getTextRange(0,self._startOffset)[::-1]
+			inText = self._getTextRange(0, self._startOffset)[::-1]
 		else:
 			# Start searching one past the start to avoid finding the current match.
-			inText=self._getTextRange(self._startOffset+1,self._getStoryLength())
-		m=re.search(re.escape(text),inText,(0 if caseSensitive else re.IGNORECASE)|re.UNICODE)
+			inText = self._getTextRange(self._startOffset + 1, self._getStoryLength())
+		m = re.search(re.escape(text), inText, (0 if caseSensitive else re.IGNORECASE) | re.UNICODE)
 		if not m:
 			return False
 		converter = textUtils.getOffsetConverter(self.encoding)(inText)
@@ -669,17 +737,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 			offset = self._startOffset - converter.strToEncodedOffsets(m.end())
 		else:
 			offset = self._startOffset + 1 + converter.strToEncodedOffsets(m.start())
-		self._startOffset=self._endOffset=offset
+		self._startOffset = self._endOffset = offset
 		return True
 
 	def updateCaret(self):
 		return self._setCaretOffset(self._startOffset)
 
 	def updateSelection(self):
-		return self._setSelectionOffsets(self._startOffset,self._endOffset)
+		return self._setSelectionOffsets(self._startOffset, self._endOffset)
 
 	def _get_bookmark(self):
-		return Offsets(self._startOffset,self._endOffset)
+		return Offsets(self._startOffset, self._endOffset)
 
 	def _getFirstVisibleOffset(self):
 		obj = self.obj
@@ -696,17 +764,17 @@ class OffsetsTextInfo(textInfos.TextInfo):
 		if obj.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
 		exclusiveX, exclusiveY = obj.location.bottomRight
-		offset = self._getOffsetFromPoint(exclusiveX -1, exclusiveY -1)
-		if 0==offset<self._getStoryLength():
+		offset = self._getOffsetFromPoint(exclusiveX - 1, exclusiveY - 1)
+		if 0 == offset < self._getStoryLength():
 			raise LookupError("Couldn't get reliable last visible offset")
 		return offset
-	
+
 	def _getOffsetEncoder(self):
 		return textUtils.getOffsetConverter(self.encoding)(self.text)
 
 	def moveToCodepointOffset(
-			self,
-			codepointOffset: int,
+		self,
+		codepointOffset: int,
 	) -> Self:
 		result = self.copy()
 		encodedOffset = self._startOffset + self._getOffsetEncoder().strToEncodedOffsets(codepointOffset)

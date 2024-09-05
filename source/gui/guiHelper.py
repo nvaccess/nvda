@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 
-""" Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
+"""Utilities to simplify the creation of wx GUIs, including automatic management of spacing.
 Example usage:
 
 class myDialog(wx.Dialog):
@@ -42,6 +42,7 @@ class myDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 	...
 """
+
 from contextlib import contextmanager
 import weakref
 from typing import (
@@ -58,7 +59,7 @@ from wx.lib import scrolledpanel, newevent
 from abc import ABCMeta
 
 #: border space to be used around all controls in dialogs
-BORDER_FOR_DIALOGS=10
+BORDER_FOR_DIALOGS = 10
 
 #: when dialog items are laid out vertically use this much space between them
 SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS = 10
@@ -82,11 +83,13 @@ def autoThaw(control: wx.Window):
 	yield
 	control.Thaw()
 
+
 class ButtonHelper(object):
-	""" Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
+	"""Class used to ensure that the appropriate space is added between each button, whether in horizontal or vertical
 	arrangement. This class should be used for groups of buttons. While it won't cause problems to use this class with a
 	single button there is little benefit. Individual buttons can be added directly to a sizer / sizer helper.
 	"""
+
 	def __init__(self, orientation):
 		"""
 		@param orientation: the orientation for the buttons, either wx.HORIZONTAL or wx.VERTICAL
@@ -94,21 +97,24 @@ class ButtonHelper(object):
 		object.__init__(self)
 		self._firstButton = True
 		self._sizer = wx.BoxSizer(orientation)
-		self._space = SPACE_BETWEEN_BUTTONS_HORIZONTAL if orientation is wx.HORIZONTAL else SPACE_BETWEEN_BUTTONS_VERTICAL
+		self._space = (
+			SPACE_BETWEEN_BUTTONS_HORIZONTAL
+			if orientation is wx.HORIZONTAL
+			else SPACE_BETWEEN_BUTTONS_VERTICAL
+		)
 
 	@property
 	def sizer(self):
-		""" Useful if you wish to add this group of buttons to another sizer and provide other arguments 
-		"""
+		"""Useful if you wish to add this group of buttons to another sizer and provide other arguments"""
 		return self._sizer
 
 	def addButton(self, *args, **kwargs):
-		""" add another button to the group. Space between the buttons is added automatically.
-			usage hint: 
-				parent = self # a wx window class. EG wx.Dialog
-				myButtonHelper.addButton(dialog, label=_("my new button"))
-			@param args: The formal arguments to pass directly to wx.Button. The only required parameter is 'parent'.
-			@param kwargs: The keyword args passed directly to wx.Button
+		"""add another button to the group. Space between the buttons is added automatically.
+		usage hint:
+			parent = self # a wx window class. EG wx.Dialog
+			myButtonHelper.addButton(dialog, label=_("my new button"))
+		@param args: The formal arguments to pass directly to wx.Button. The only required parameter is 'parent'.
+		@param kwargs: The keyword args passed directly to wx.Button
 		"""
 		wxButton = wx.Button(*args, **kwargs)
 		if not self._firstButton:
@@ -119,13 +125,13 @@ class ButtonHelper(object):
 
 
 def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx.BoxSizer:
-	""" Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
-		pairings used in the NVDA GUI.
-		Currently handles:
-			wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
-			wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
-			wx.Button and wx.CheckBox - Horizontal layout
-			wx.TextCtrl and wx.Button - Horizontal layout
+	"""Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
+	pairings used in the NVDA GUI.
+	Currently handles:
+		wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
+		wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
+		wx.Button and wx.CheckBox - Horizontal layout
+		wx.TextCtrl and wx.Button - Horizontal layout
 	"""
 	if isinstance(firstElement, ButtonHelper) or isinstance(secondElement, ButtonHelper):
 		raise NotImplementedError("AssociateElements has no implementation for ButtonHelper elements")
@@ -134,13 +140,16 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 
 	# staticText and input control
 	# likely a labelled control from LabeledControlHelper
-	if isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (
-		wx.Button,
-		wx.Choice,
-		wx.Slider,
-		wx.SpinCtrl,
-		wx.TextCtrl,
-	)):
+	if isinstance(firstElement, wx.StaticText) and isinstance(
+		secondElement,
+		(
+			wx.Button,
+			wx.Choice,
+			wx.Slider,
+			wx.SpinCtrl,
+			wx.TextCtrl,
+		),
+	):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
@@ -152,7 +161,10 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
 		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
 	# staticText and (ListCtrl, ListBox or TreeCtrl)
-	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, (wx.ListCtrl,wx.ListBox,wx.TreeCtrl)):
+	elif isinstance(firstElement, wx.StaticText) and isinstance(
+		secondElement,
+		(wx.ListCtrl, wx.ListBox, wx.TreeCtrl),
+	):
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizer.Add(firstElement)
 		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
@@ -170,7 +182,9 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 		sizer.AddSpacer(SPACE_BETWEEN_BUTTONS_HORIZONTAL)
 		sizer.Add(secondElement, flag=wx.ALIGN_CENTER_VERTICAL)
 	else:
-		raise NotImplementedError("The firstElement and secondElement argument combination has no implementation")
+		raise NotImplementedError(
+			"The firstElement and secondElement argument combination has no implementation",
+		)
 
 	return sizer
 
@@ -179,11 +193,11 @@ _LabeledControlT = TypeVar("_LabeledControlT", bound=wx.Control)
 
 
 class LabeledControlHelper(Generic[_LabeledControlT]):
-	""" Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
+	"""Represents a Labeled Control. Provides a class to create and hold on to the objects and automatically associate
 	the two controls together.
 	Relies on guiHelper.associateElements(), any limitations in guiHelper.associateElements() also apply here.
 	"""
-	
+
 	# When the control is enabled / disabled this event is raised.
 	# A handler is automatically added to the control to ensure the label is also enabled/disabled.
 	EnableChanged, EVT_ENABLE_CHANGED = newevent.NewEvent()
@@ -193,10 +207,10 @@ class LabeledControlHelper(Generic[_LabeledControlT]):
 	ShowChanged, EVT_SHOW_CHANGED = newevent.NewEvent()
 
 	def __init__(self, parent: wx.Window, labelText: str, wxCtrlClass: Type[_LabeledControlT], **kwargs):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param labelText: The text to associate with a wx control.
-			@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
-			@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
+		"""@param parent: An instance of the parent wx window. EG wx.Dialog
+		@param labelText: The text to associate with a wx control.
+		@param wxCtrlClass: The class to associate with the label, eg: wx.TextCtrl
+		@param kwargs: The keyword arguments used to instantiate the wxCtrlClass
 		"""
 
 		class LabelEnableChangedListener(wx.StaticText):
@@ -266,12 +280,13 @@ class PathSelectionHelper(object):
 	button in horizontal layout. The Button launches a directory explorer. To get the path selected by the user, use the
 	`pathControl` property which exposes a wx.TextCtrl.
 	"""
+
 	def __init__(self, parent, buttonText, browseForDirectoryTitle):
-		""" @param parent: An instance of the parent wx window. EG wx.Dialog
-			@param buttonText: The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
-			@type buttonText: string
-			@param browseForDirectoryTitle: The text for the title of the directory dialog (wx.DirDialog)
-			@type browseForDirectoryTitle: string
+		"""@param parent: An instance of the parent wx window. EG wx.Dialog
+		@param buttonText: The text for the button to launch a directory dialog (wx.DirDialog). This is typically 'Browse'
+		@type buttonText: string
+		@param browseForDirectoryTitle: The text for the title of the directory dialog (wx.DirDialog)
+		@type browseForDirectoryTitle: string
 		"""
 		object.__init__(self)
 		self._textCtrl = wx.TextCtrl(parent)
@@ -300,19 +315,19 @@ class PathSelectionHelper(object):
 
 
 class BoxSizerHelper:
-	""" Used to abstract away spacing logic for a wx.BoxSizer
-	"""
+	"""Used to abstract away spacing logic for a wx.BoxSizer"""
+
 	def __init__(
-			self,
-			parent: wx.Dialog,
-			orientation: Optional[int] = None,
-			sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None
+		self,
+		parent: wx.Dialog,
+		orientation: Optional[int] = None,
+		sizer: Optional[Union[wx.BoxSizer, wx.StaticBoxSizer]] = None,
 	):
-		""" Init. Pass in either orientation OR sizer.
-			@param parent: An instance of the parent wx window. EG wx.Dialog
-			@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
-			@type orientation: wx.HORIZONTAL or wx.VERTICAL
-			@param sizer: the sizer to use rather than constructing one.
+		"""Init. Pass in either orientation OR sizer.
+		@param parent: An instance of the parent wx window. EG wx.Dialog
+		@param orientation: the orientation to use when constructing the sizer, either wx.HORIZONTAL or wx.VERTICAL
+		@type orientation: wx.HORIZONTAL or wx.VERTICAL
+		@param sizer: the sizer to use rather than constructing one.
 		"""
 		self._parentRef = weakref.ref(parent)
 		self.hasFirstItemBeenAdded = False
@@ -329,13 +344,15 @@ class BoxSizerHelper:
 	_ItemT = TypeVar("_ItemT")
 
 	def addItem(self, item: "_ItemT", **keywordArgs) -> "_ItemT":
-		""" Adds an item with space between it and the previous item.
-			Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
-			@param item: the item to add to the sizer
-			@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is 
-				normally not necessary.
+		"""Adds an item with space between it and the previous item.
+		Does not handle adding LabledControlHelper; use L{addLabeledControl} instead.
+		@param item: the item to add to the sizer
+		@param **keywordArgs: the extra args to pass when adding the item to the wx.Sizer. This parameter is
+			normally not necessary.
 		"""
-		assert not self.dialogDismissButtonsAdded, "Buttons to dismiss the dialog already added, they should be the last item added."
+		assert (
+			not self.dialogDismissButtonsAdded
+		), "Buttons to dismiss the dialog already added, they should be the last item added."
 
 		toAdd = item
 		shouldAddSpacer = self.hasFirstItemBeenAdded
@@ -345,7 +362,7 @@ class BoxSizerHelper:
 			buttonBorderAmount = 5
 			keywordArgs["border"] = buttonBorderAmount
 			keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.ALL
-			shouldAddSpacer = False # no need to add a spacer, since the button border has been added.
+			shouldAddSpacer = False  # no need to add a spacer, since the button border has been added.
 		elif isinstance(item, BoxSizerHelper):
 			toAdd = item.sizer
 		elif isinstance(item, PathSelectionHelper):
@@ -353,7 +370,9 @@ class BoxSizerHelper:
 			if self.sizer.GetOrientation() == wx.VERTICAL:
 				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
 			else:
-				raise NotImplementedError("Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented")
+				raise NotImplementedError(
+					"Adding PathSelectionHelper to a horizontal BoxSizerHelper is not implemented",
+				)
 		elif isinstance(item, wx.CheckBox):
 			if self.sizer.GetOrientation() == wx.HORIZONTAL:
 				keywordArgs["flag"] = keywordArgs.get("flag", 0) | wx.EXPAND
@@ -371,18 +390,18 @@ class BoxSizerHelper:
 		return item
 
 	def addLabeledControl(
-			self,
-			labelText: str,
-			wxCtrlClass: Type[_LabeledControlT],
-			**kwargs
+		self,
+		labelText: str,
+		wxCtrlClass: Type[_LabeledControlT],
+		**kwargs,
 	) -> _LabeledControlT:
-		""" Convenience method to create a labeled control
-			@param labelText: Text to use when constructing the wx.StaticText to label the control.
-			@param wxCtrlClass: Control class to construct and associate with the label
-			@param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
+		"""Convenience method to create a labeled control
+		@param labelText: Text to use when constructing the wx.StaticText to label the control.
+		@param wxCtrlClass: Control class to construct and associate with the label
+		@param kwargs: keyword arguments used to construct the wxCtrlClass. As taken by guiHelper.LabeledControlHelper
 
-			Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
-			limitations from there.
+		Relies on guiHelper.LabeledControlHelper and thus guiHelper.associateElements, and therefore inherits any
+		limitations from there.
 		"""
 		parent = self._parentRef()
 		if isinstance(self.sizer, wx.StaticBoxSizer):
@@ -397,11 +416,11 @@ class BoxSizerHelper:
 	_ButtonsT = TypeVar("_ButtonsT", wx.Sizer, ButtonHelper, wx.Button, int)
 
 	def addDialogDismissButtons(
-			self,
-			buttons: "_ButtonsT",
-			separated: bool = False
+		self,
+		buttons: "_ButtonsT",
+		separated: bool = False,
 	) -> "_ButtonsT":
-		""" Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
+		"""Adds and aligns the buttons for dismissing the dialog; e.g. "ok | cancel". These buttons are expected
 		to be the last items added to the dialog. Buttons that launch an action, do not dismiss the dialog, or are not
 		the last item should be added via L{addItem}
 		@param buttons: The buttons to add
@@ -415,7 +434,7 @@ class BoxSizerHelper:
 		"""
 		if self.sizer.GetOrientation() != wx.VERTICAL:
 			raise NotImplementedError(
-				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented."
+				"Adding dialog dismiss buttons to a horizontal BoxSizerHelper is not implemented.",
 			)
 		if isinstance(buttons, ButtonHelper):
 			toAdd = buttons.sizer
@@ -437,4 +456,5 @@ class BoxSizerHelper:
 
 class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
+
 	pass

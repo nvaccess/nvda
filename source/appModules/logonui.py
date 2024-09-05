@@ -1,8 +1,8 @@
-#appModules/logonui.py
-#A part of NonVisual Desktop Access (NVDA)
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
-#Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
+# appModules/logonui.py
+# A part of NonVisual Desktop Access (NVDA)
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+# Copyright (C) 2009-2016 NV Access Limited, Joseph Lee
 
 import speech
 import api
@@ -18,14 +18,18 @@ from NVDAObjects.UIA import UIA
 """App module for the Windows Logon screen
 """
 
-class LogonDialog(Dialog):
 
+class LogonDialog(Dialog):
 	role = controlTypes.Role.DIALOG
 	isPresentableFocusAncestor = True
 
 	def event_gainFocus(self):
 		child = self.firstChild
-		if child and controlTypes.State.FOCUSED in child.states and not eventHandler.isPendingEvents("gainFocus"):
+		if (
+			child
+			and controlTypes.State.FOCUSED in child.states
+			and not eventHandler.isPendingEvents("gainFocus")
+		):
 			# UIA reports that focus is on the top level pane, even when it's actually on the frame below.
 			# This causes us to incorrectly use UIA for the top level pane, which causes this pane to be spoken again when the focus moves.
 			# Therefore, bounce the focus to the correct object.
@@ -36,7 +40,6 @@ class LogonDialog(Dialog):
 
 
 class Win8PasswordField(UIA):
-
 	# This UIA object has no invoke pattern, at least set focus.
 	# #6024: Affects both Windows 8.x and 10.
 	def doAction(self, index=None):
@@ -47,7 +50,6 @@ class Win8PasswordField(UIA):
 
 
 class XPPasswordField(IAccessible):
-
 	def initOverlayClass(self):
 		for gesture in ("kb:upArrow", "kb:downArrow"):
 			self.bindGesture(gesture, "changeUser")
@@ -71,8 +73,8 @@ class XPPasswordField(IAccessible):
 			return
 		self.event_gainFocus()
 
-class AppModule(appModuleHandler.AppModule):
 
+class AppModule(appModuleHandler.AppModule):
 	def event_NVDAObject_init(self, obj):
 		if obj.windowClassName == "NativeHWNDHost" and obj.parent and not obj.parent.parent:
 			# This is the top level pane of the XP logon screen.
@@ -83,11 +85,19 @@ class AppModule(appModuleHandler.AppModule):
 		windowClass = obj.windowClassName
 
 		if UIAHandler.handler:
-			if isinstance(obj,UIA) and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox") and obj.role==controlTypes.Role.EDITABLETEXT:
-				clsList.insert(0,Win8PasswordField)
+			if (
+				isinstance(obj, UIA)
+				and obj.UIAElement.cachedClassName in ("TouchEditInner", "PasswordBox")
+				and obj.role == controlTypes.Role.EDITABLETEXT
+			):
+				clsList.insert(0, Win8PasswordField)
 		# #6010: Allow Windows 10 version to be recognized as well.
-		if ((windowClass == "AUTHUI.DLL: LogonUI Logon Window" and obj.parent and obj.parent.parent and not obj.parent.parent.parent)
-		or (windowClass == "LogonUI Logon Window" and obj.UIAIsWindowElement)):
+		if (
+			windowClass == "AUTHUI.DLL: LogonUI Logon Window"
+			and obj.parent
+			and obj.parent.parent
+			and not obj.parent.parent.parent
+		) or (windowClass == "LogonUI Logon Window" and obj.UIAIsWindowElement):
 			clsList.insert(0, LogonDialog)
 			return
 
@@ -97,13 +107,22 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.insert(0, XPPasswordField)
 				return
 
-	def event_gainFocus(self,obj,nextHandler):
+	def event_gainFocus(self, obj, nextHandler):
 		# #6010: Windows 10 version uses a different window class name.
-		if obj.windowClassName in ("DirectUIHWND", "LogonUI Logon Window") and obj.role==controlTypes.Role.BUTTON and not obj.next:
-			prev=obj.previous
+		if (
+			obj.windowClassName in ("DirectUIHWND", "LogonUI Logon Window")
+			and obj.role == controlTypes.Role.BUTTON
+			and not obj.next
+		):
+			prev = obj.previous
 			if prev and prev.role in (controlTypes.Role.STATICTEXT, controlTypes.Role.PANE):
 				# This is for a popup message in the logon dialog.
 				# Present the dialog again so the message will be reported.
-				speech.speakObjectProperties(api.getForegroundObject(),name=True,role=True,description=True)
+				speech.speakObjectProperties(
+					api.getForegroundObject(),
+					name=True,
+					role=True,
+					description=True,
+				)
 				braille.invalidateCachedFocusAncestors(1)
 		nextHandler()

@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-""" App module for Microsoft Teams.
-"""
+"""App module for Microsoft Teams."""
 
 import appModuleHandler
 from NVDAObjects.IAccessible.ia2Web import Ia2Web
@@ -15,7 +14,6 @@ class PopOverMenu(Ia2Web):
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		# #11821, #14355
 		# Teams will sometimes create an element with an ARIA role of menu
@@ -31,8 +29,5 @@ class AppModule(appModuleHandler.AppModule):
 		# As Teams keeps changing the layout,
 		# and all menus in Teams do set focus to their first item when truly focused,
 		# It is safer just to ignore all menu popupStart events within Teams content for now.
-		if (
-			Ia2Web in clsList
-			and obj.IA2Attributes.get("xml-roles") == "menu"
-		):
+		if Ia2Web in clsList and obj.IA2Attributes.get("xml-roles") == "menu":
 			clsList.insert(0, PopOverMenu)

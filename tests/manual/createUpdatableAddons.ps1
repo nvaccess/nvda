@@ -5,7 +5,7 @@
 
 param(
 	[string]$addonName = "clock",
-	[string]$configFolder = "$env:APPDATA\nvda\userConfig",
+	[string]$configFolder = "$env:APPDATA\nvda",
 	[string]$newVersionMajor = "0",
 	[string]$newVersionMinor = "0"
 )

@@ -10,29 +10,29 @@ from NVDAObjects.behaviors import Dialog
 import winUser
 from winAPI.types import HWNDValT
 
-#win8hack: the nondefault items in the list of applications are not labeled
-class NonDefaultAppTile(UIA):
 
+# win8hack: the nondefault items in the list of applications are not labeled
+class NonDefaultAppTile(UIA):
 	def _get_name(self):
-		firstChild=self.firstChild
+		firstChild = self.firstChild
 		if firstChild:
-			next=firstChild.next
+			next = firstChild.next
 			if next:
 				return next.name
-		return super(NonDefaultAppTile,self).name
+		return super(NonDefaultAppTile, self).name
 
-class ImmersiveOpenWithFlyout(Dialog,UIA):
 
-	role=controlTypes.Role.DIALOG
+class ImmersiveOpenWithFlyout(Dialog, UIA):
+	role = controlTypes.Role.DIALOG
 
-	#win8hack: This window never actually gets the physical focus thus tabbing etc goes to the original window
-	#So Force it to get focus
+	# win8hack: This window never actually gets the physical focus thus tabbing etc goes to the original window
+	# So Force it to get focus
 	def event_focusEntered(self):
 		self.setFocus()
-		super(ImmersiveOpenWithFlyout,self).event_focusEntered()
+		super(ImmersiveOpenWithFlyout, self).event_focusEntered()
+
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if isinstance(obj, UIA):
 			automationId = obj.UIAAutomationId

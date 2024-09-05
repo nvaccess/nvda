@@ -18,7 +18,7 @@ from gui import guiHelper
 import gui.contextHelp
 from speech import sayAll
 import review
-from scriptHandler import willSayAllResume, script
+from scriptHandler import willSayAllResume, script, isScriptWaiting
 import textInfos
 import speech
 import config
@@ -35,12 +35,11 @@ from logHandler import log
 
 
 class FindDialog(
-		gui.contextHelp.ContextHelpMixin,
-		wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
+	gui.contextHelp.ContextHelpMixin,
+	wx.Dialog,  # wxPython does not seem to call base class initializer, put last in MRO
 ):
-	"""A dialog used to specify text to find in a cursor manager.
-	"""
-	
+	"""A dialog used to specify text to find in a cursor manager."""
+
 	helpId = "SearchingForText"
 
 	def __init__(self, parent, cursorManager, text, caseSensitivity, reverse=False):
@@ -56,13 +55,13 @@ class FindDialog(
 		findLabelText = _("Type the text you wish to find")
 		self.findTextField = sHelper.addLabeledControl(findLabelText, wx.TextCtrl, value=text)
 		# Translators: An option in find dialog to perform case-sensitive search.
-		self.caseSensitiveCheckBox=wx.CheckBox(self,wx.ID_ANY,label=_("Case &sensitive"))
+		self.caseSensitiveCheckBox = wx.CheckBox(self, wx.ID_ANY, label=_("Case &sensitive"))
 		self.caseSensitiveCheckBox.SetValue(caseSensitivity)
 		sHelper.addItem(self.caseSensitiveCheckBox)
 		sHelper.addDialogDismissButtons(self.CreateButtonSizer(wx.OK | wx.CANCEL))
 		mainSizer.Add(sHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
-		self.Bind(wx.EVT_BUTTON,self.onOk,id=wx.ID_OK)
-		self.Bind(wx.EVT_BUTTON,self.onCancel,id=wx.ID_CANCEL)
+		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
+		self.Bind(wx.EVT_BUTTON, self.onCancel, id=wx.ID_CANCEL)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		self.CentreOnScreen()
@@ -78,14 +77,15 @@ class FindDialog(
 			self.activeCursorManager.doFindText,
 			text,
 			caseSensitive=caseSensitive,
-			reverse=self.reverse
+			reverse=self.reverse,
 		)
 		self.Destroy()
 
 	def onCancel(self, evt):
 		self.Destroy()
 
-class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject):
+
+class CursorManager(documentBase.TextContainerObject, baseObject.ScriptableObject):
 	"""
 	A mix-in providing caret navigation and selection commands for the object's virtual text range.
 	This is required where a text range is not linked to a physical control and thus does not provide commands to move the cursor, select and copy text, etc.
@@ -105,10 +105,10 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	_focusEventMustUpdateCaretPosition = False
 
 	# Translators: the script category for browse mode
-	scriptCategory=SCRCAT_BROWSEMODE
+	scriptCategory = SCRCAT_BROWSEMODE
 
-	_lastFindText=""
-	_lastCaseSensitivity=False
+	_lastFindText = ""
+	_lastCaseSensitivity = False
 
 	def __init__(self, *args, **kwargs):
 		super(CursorManager, self).__init__(*args, **kwargs)
@@ -123,7 +123,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		This must be called before the cursor manager functionality can be used.
 		It is normally called by L{__init__} or L{initOverlayClass}.
 		"""
-		self.isTextSelectionAnchoredAtStart=True
+		self.isTextSelectionAnchoredAtStart = True
 
 	def _get_selection(self):
 		return self.makeTextInfo(textInfos.POSITION_SELECTION)
@@ -134,12 +134,26 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		braille.handler.handleCaretMove(self)
 		vision.handler.handleCaretMove(self)
 
-	def _caretMovementScriptHelper(self,gesture,unit,direction=None,posConstant=textInfos.POSITION_SELECTION,posUnit=None,posUnitEnd=False,extraDetail=False,handleSymbols=False):
-		oldInfo=self.makeTextInfo(posConstant)
-		info=oldInfo.copy()
+	def _caretMovementScriptHelper(
+		self,
+		gesture,
+		unit,
+		direction=None,
+		posConstant=textInfos.POSITION_SELECTION,
+		posUnit=None,
+		posUnitEnd=False,
+		extraDetail=False,
+		handleSymbols=False,
+	):
+		if isScriptWaiting():
+			# Moving / reporting is quite costly, so we don't want to do it if there are more scripts waiting.
+			# Otherwise, NVDA could become unusable while it processes many backed up scripts.
+			return
+		oldInfo = self.makeTextInfo(posConstant)
+		info = oldInfo.copy()
 		info.collapse(end=self.isTextSelectionAnchoredAtStart)
 		if self.isTextSelectionAnchoredAtStart and not oldInfo.isCollapsed:
-			info.move(textInfos.UNIT_CHARACTER,-1)
+			info.move(textInfos.UNIT_CHARACTER, -1)
 		if posUnit is not None:
 			# expand and collapse to ensure that we are aligned with the end of the intended unit
 			info.expand(posUnit)
@@ -151,17 +165,19 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# See #7009
 				pass
 			if posUnitEnd:
-				info.move(textInfos.UNIT_CHARACTER,-1)
+				info.move(textInfos.UNIT_CHARACTER, -1)
 		if direction is not None:
 			info.expand(unit)
 			info.collapse(end=posUnitEnd)
-			if info.move(unit,direction)==0 and isinstance(self,DocumentWithPageTurns):
+			if info.move(unit, direction) == 0 and isinstance(self, DocumentWithPageTurns):
 				try:
-					self.turnPage(previous=direction<0)
+					self.turnPage(previous=direction < 0)
 				except RuntimeError:
 					pass
 				else:
-					info=self.makeTextInfo(textInfos.POSITION_FIRST if direction>0 else textInfos.POSITION_LAST)
+					info = self.makeTextInfo(
+						textInfos.POSITION_FIRST if direction > 0 else textInfos.POSITION_LAST,
+					)
 		# #10343: Speak before setting selection because setting selection might
 		# move the focus, which might mutate the document, potentially invalidating
 		# info if it is offset-based.
@@ -176,12 +192,12 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	def doFindText(self, text, reverse=False, caseSensitive=False, willSayAllResume=False):
 		if not text:
 			return
-		info=self.makeTextInfo(textInfos.POSITION_CARET)
-		res=info.find(text,reverse=reverse,caseSensitive=caseSensitive)
+		info = self.makeTextInfo(textInfos.POSITION_CARET)
+		res = info.find(text, reverse=reverse, caseSensitive=caseSensitive)
 		if res:
-			self.selection=info
+			self.selection = info
 			speech.cancelSpeech()
-			info.move(textInfos.UNIT_LINE,1,endPoint="end")
+			info.move(textInfos.UNIT_LINE, 1, endPoint="end")
 			if not willSayAllResume:
 				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET)
 		else:
@@ -193,10 +209,10 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# Translators: message dialog title displayed to the user when
 				# searching text and no text is found.
 				_("0 matches"),
-				wx.OK | wx.ICON_INFORMATION
+				wx.OK | wx.ICON_INFORMATION,
 			)
-		CursorManager._lastFindText=text
-		CursorManager._lastCaseSensitivity=caseSensitive
+		CursorManager._lastFindText = text
+		CursorManager._lastCaseSensitivity = caseSensitive
 
 	def script_find(self, gesture, reverse=False):
 		# #8566: We need this to be a modal dialog, but it mustn't block this script.
@@ -205,19 +221,21 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			d = FindDialog(gui.mainFrame, self, self._lastFindText, self._lastCaseSensitivity, reverse)
 			d.ShowModal()
 			gui.mainFrame.postPopup()
+
 		wx.CallAfter(run)
+
 	# Translators: Input help message for NVDA's find command.
 	script_find.__doc__ = _("find a text string from the current cursor position")
 
 	@script(
 		description=_(
 			# Translators: Input help message for find next command.
-			"find the next occurrence of the previously entered text string from the current cursor's position"
+			"find the next occurrence of the previously entered text string from the current cursor's position",
 		),
 		gesture="kb:NVDA+f3",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
-	def script_findNext(self,gesture):
+	def script_findNext(self, gesture):
 		if not self._lastFindText:
 			self.script_find(gesture)
 			return
@@ -230,12 +248,12 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	@script(
 		description=_(
 			# Translators: Input help message for find previous command.
-			"find the previous occurrence of the previously entered text string from the current cursor's position"
+			"find the previous occurrence of the previously entered text string from the current cursor's position",
 		),
 		gesture="kb:NVDA+shift+f3",
 		resumeSayAllMode=sayAll.CURSOR.CARET,
 	)
-	def script_findPrevious(self,gesture):
+	def script_findPrevious(self, gesture):
 		if not self._lastFindText:
 			self.script_find(gesture, reverse=True)
 			return
@@ -246,44 +264,79 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			willSayAllResume=willSayAllResume(gesture),
 		)
 
-	def script_moveByPage_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,-config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+	def script_moveByPage_back(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_LINE,
+			-config.conf["virtualBuffers"]["linesPerPage"],
+			extraDetail=False,
+		)
+
 	script_moveByPage_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByPage_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,config.conf["virtualBuffers"]["linesPerPage"],extraDetail=False)
+	def script_moveByPage_forward(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_LINE,
+			config.conf["virtualBuffers"]["linesPerPage"],
+			extraDetail=False,
+		)
+
 	script_moveByPage_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByCharacter_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_CHARACTER,-1,extraDetail=True,handleSymbols=True)
+	def script_moveByCharacter_back(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_CHARACTER,
+			-1,
+			extraDetail=True,
+			handleSymbols=True,
+		)
 
-	def script_moveByCharacter_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_CHARACTER,1,extraDetail=True,handleSymbols=True)
+	def script_moveByCharacter_forward(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_CHARACTER,
+			1,
+			extraDetail=True,
+			handleSymbols=True,
+		)
 
-	def script_moveByWord_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_WORD,-1,extraDetail=True,handleSymbols=True)
+	def script_moveByWord_back(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_WORD,
+			-1,
+			extraDetail=True,
+			handleSymbols=True,
+		)
 
-	def script_moveByWord_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_WORD,1,extraDetail=True,handleSymbols=True)
+	def script_moveByWord_forward(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_WORD, 1, extraDetail=True, handleSymbols=True)
 
-	def script_moveByLine_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,-1)
+	def script_moveByLine_back(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE, -1)
+
 	script_moveByLine_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveByLine_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,1)
+	def script_moveByLine_forward(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE, 1)
+
 	script_moveByLine_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveBySentence_back(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,-1)
+	def script_moveBySentence_back(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, -1)
+
 	script_moveBySentence_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_moveBySentence_forward(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_SENTENCE,1)
+	def script_moveBySentence_forward(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_SENTENCE, 1)
+
 	script_moveBySentence_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def _handleParagraphNavigation(self, gesture: InputGesture, nextParagraph: bool) -> None:
 		from config.featureFlagEnums import ParagraphNavigationFlag
+
 		flag: config.featureFlag.FeatureFlag = config.conf["documentNavigation"]["paragraphStyle"]
 		if (
 			flag.calculated() == ParagraphNavigationFlag.APPLICATION
@@ -292,11 +345,13 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 			self._caretMovementScriptHelper(gesture, textInfos.UNIT_PARAGRAPH, 1 if nextParagraph else -1)
 		elif flag.calculated() == ParagraphNavigationFlag.MULTI_LINE_BREAK:
 			from documentNavigation.paragraphHelper import moveToMultiLineBreakParagraph
+
 			ti = self.makeTextInfo(textInfos.POSITION_SELECTION)
 			passKey, moved = moveToMultiLineBreakParagraph(
 				nextParagraph=nextParagraph,
 				speakNew=not willSayAllResume(gesture),
-				ti=ti)
+				ti=ti,
+			)
 			if moved:
 				self.selection = ti
 			elif passKey:
@@ -307,30 +362,45 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 
 	def script_moveByParagraph_back(self, gesture: InputGesture):
 		self._handleParagraphNavigation(gesture, False)
+
 	script_moveByParagraph_back.resumeSayAllMode = sayAll.CURSOR.CARET
 
 	def script_moveByParagraph_forward(self, gesture: InputGesture):
 		self._handleParagraphNavigation(gesture, True)
+
 	script_moveByParagraph_forward.resumeSayAllMode = sayAll.CURSOR.CARET
 
-	def script_startOfLine(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_CHARACTER,posUnit=textInfos.UNIT_LINE,extraDetail=True,handleSymbols=True)
+	def script_startOfLine(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_CHARACTER,
+			posUnit=textInfos.UNIT_LINE,
+			extraDetail=True,
+			handleSymbols=True,
+		)
 
-	def script_endOfLine(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_CHARACTER,posUnit=textInfos.UNIT_LINE,posUnitEnd=True,extraDetail=True,handleSymbols=True)
+	def script_endOfLine(self, gesture):
+		self._caretMovementScriptHelper(
+			gesture,
+			textInfos.UNIT_CHARACTER,
+			posUnit=textInfos.UNIT_LINE,
+			posUnitEnd=True,
+			extraDetail=True,
+			handleSymbols=True,
+		)
 
-	def script_topOfDocument(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,posConstant=textInfos.POSITION_FIRST)
+	def script_topOfDocument(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE, posConstant=textInfos.POSITION_FIRST)
 
-	def script_bottomOfDocument(self,gesture):
-		self._caretMovementScriptHelper(gesture,textInfos.UNIT_LINE,posConstant=textInfos.POSITION_LAST)
+	def script_bottomOfDocument(self, gesture):
+		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE, posConstant=textInfos.POSITION_LAST)
 
-	def _selectionMovementScriptHelper(self,unit=None,direction=None,toPosition=None):
-		oldInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
+	def _selectionMovementScriptHelper(self, unit=None, direction=None, toPosition=None):
+		oldInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		# toPosition and unit might both be provided.
 		# In this case, we move to the position before moving by the unit.
 		if toPosition:
-			newInfo=self.makeTextInfo(toPosition)
+			newInfo = self.makeTextInfo(toPosition)
 			if oldInfo.isCollapsed:
 				self.isTextSelectionAnchoredAtStart = newInfo.compareEndPoints(oldInfo, "startToStart") >= 0
 		elif unit:
@@ -386,31 +456,37 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 				# 2. Shift+rightArrow: selection (1, 2)
 				newInfo.setEndPoint(oldInfo, "startToStart")
 		self.selection = newInfo
-		speech.speakSelectionChange(oldInfo,newInfo)
+		speech.speakSelectionChange(oldInfo, newInfo)
 
-	def script_selectCharacter_forward(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER,direction=1)
+	def script_selectCharacter_forward(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER, direction=1)
 
-	def script_selectCharacter_back(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER,direction=-1)
+	def script_selectCharacter_back(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_CHARACTER, direction=-1)
 
-	def script_selectWord_forward(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD,direction=1)
+	def script_selectWord_forward(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD, direction=1)
 
-	def script_selectWord_back(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD,direction=-1)
+	def script_selectWord_back(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_WORD, direction=-1)
 
-	def script_selectLine_forward(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
+	def script_selectLine_forward(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE, direction=1)
 
-	def script_selectLine_back(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
+	def script_selectLine_back(self, gesture):
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE, direction=-1)
 
-	def script_selectPage_forward(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=config.conf["virtualBuffers"]["linesPerPage"])
+	def script_selectPage_forward(self, gesture):
+		self._selectionMovementScriptHelper(
+			unit=textInfos.UNIT_LINE,
+			direction=config.conf["virtualBuffers"]["linesPerPage"],
+		)
 
-	def script_selectPage_back(self,gesture):
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-config.conf["virtualBuffers"]["linesPerPage"])
+	def script_selectPage_back(self, gesture):
+		self._selectionMovementScriptHelper(
+			unit=textInfos.UNIT_LINE,
+			direction=-config.conf["virtualBuffers"]["linesPerPage"],
+		)
 
 	def script_selectParagraph_forward(self, gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=1)
@@ -418,29 +494,33 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 	def script_selectParagraph_back(self, gesture):
 		self._selectionMovementScriptHelper(unit=textInfos.UNIT_PARAGRAPH, direction=-1)
 
-	def script_selectToBeginningOfLine(self,gesture):
+	def script_selectToBeginningOfLine(self, gesture):
 		# Make sure the active endpoint of the selection is after the start of the line.
-		sel=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		line=sel.copy()
+		sel = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		line = sel.copy()
 		line.collapse()
 		line.expand(textInfos.UNIT_LINE)
-		compOp="startToStart" if not self.isTextSelectionAnchoredAtStart else "endToStart"
-		if sel.compareEndPoints(line,compOp)>0:
-			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=-1)
+		compOp = "startToStart" if not self.isTextSelectionAnchoredAtStart else "endToStart"
+		if sel.compareEndPoints(line, compOp) > 0:
+			self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE, direction=-1)
 
-	def script_selectToEndOfLine(self,gesture):
+	def script_selectToEndOfLine(self, gesture):
 		# #7157: There isn't necessarily a line ending character or insertion point at the end of a line.
 		# Therefore, always allow select to end of line,
 		# even if the caret is already on the last character of the line.
-		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE,direction=1)
+		self._selectionMovementScriptHelper(unit=textInfos.UNIT_LINE, direction=1)
 
-	def script_selectToTopOfDocument(self,gesture):
+	def script_selectToTopOfDocument(self, gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_FIRST)
 
-	def script_selectToBottomOfDocument(self,gesture):
-		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_LAST,unit=textInfos.UNIT_CHARACTER,direction=1)
+	def script_selectToBottomOfDocument(self, gesture):
+		self._selectionMovementScriptHelper(
+			toPosition=textInfos.POSITION_LAST,
+			unit=textInfos.UNIT_CHARACTER,
+			direction=1,
+		)
 
-	def script_selectAll(self,gesture):
+	def script_selectAll(self, gesture):
 		self._selectionMovementScriptHelper(toPosition=textInfos.POSITION_ALL)
 
 	_nativeAppSelectionModeSupported: bool = False
@@ -453,7 +533,7 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		if self._nativeAppSelectionMode:
 			gesture.send()
 			return
-		info=self.makeTextInfo(textInfos.POSITION_SELECTION)
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
 		if info.isCollapsed:
 			# Translators: Reported when there is no text selected (for copying).
 			ui.message(_("No selection"))
@@ -461,8 +541,8 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		info.copyToClipboard(notify=True)
 
 	def reportSelectionChange(self, oldTextInfo):
-		newInfo=self.makeTextInfo(textInfos.POSITION_SELECTION)
-		speech.speakSelectionChange(oldTextInfo,newInfo)
+		newInfo = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		speech.speakSelectionChange(oldTextInfo, newInfo)
 		braille.handler.handleCaretMove(self)
 
 	__gestures = {
@@ -497,9 +577,10 @@ class CursorManager(documentBase.TextContainerObject,baseObject.ScriptableObject
 		"kb:control+a": "selectAll",
 		"kb:control+c": "copyToClipboard",
 		"kb:NVDA+Control+f": "find",
-		"kb:alt+upArrow":"moveBySentence_back",
-		"kb:alt+downArrow":"moveBySentence_forward",
+		"kb:alt+upArrow": "moveBySentence_back",
+		"kb:alt+downArrow": "moveBySentence_forward",
 	}
+
 
 class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""For use with L{ReviewCursorManager}.
@@ -507,12 +588,13 @@ class _ReviewCursorManagerTextInfo(textInfos.TextInfo):
 	"""
 
 	def updateCaret(self):
-		info=self.copy()
+		info = self.copy()
 		info.collapse()
 		self.obj._selection = info
 
 	def updateSelection(self):
 		self.obj._selection = self.copy()
+
 
 class ReviewCursorManager(CursorManager):
 	"""
@@ -528,7 +610,11 @@ class ReviewCursorManager(CursorManager):
 	def initCursorManager(self):
 		super(ReviewCursorManager, self).initCursorManager()
 		realTI = self.TextInfo
-		self.TextInfo = type("ReviewCursorManager_%s" % realTI.__name__, (_ReviewCursorManagerTextInfo, realTI), {})
+		self.TextInfo = type(
+			"ReviewCursorManager_%s" % realTI.__name__,
+			(_ReviewCursorManagerTextInfo, realTI),
+			{},
+		)
 		self._selection = self.makeTextInfo(textInfos.POSITION_FIRST)
 
 	def makeTextInfo(self, position):

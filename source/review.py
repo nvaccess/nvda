@@ -19,88 +19,95 @@ from displayModel import DisplayModelTextInfo
 import textInfos
 import config
 
+
 def getObjectPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object.
 	@param obj: the NVDAObject to review
 	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
 	try:
-		pos=obj.makeTextInfo(textInfos.POSITION_CARET)
+		pos = obj.makeTextInfo(textInfos.POSITION_CARET)
 	except (NotImplementedError, RuntimeError):
 		# No caret supported, try first position instead
 		try:
-			pos=obj.makeTextInfo(textInfos.POSITION_FIRST)
+			pos = obj.makeTextInfo(textInfos.POSITION_FIRST)
 		except (NotImplementedError, RuntimeError):
-			log.debugWarning("%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo"%obj.TextInfo)
-			# First position not supported either, return first position from a generic NVDAObjectTextInfo 
-			return NVDAObjectTextInfo(obj,textInfos.POSITION_FIRST),obj
-	return pos,pos.obj
+			log.debugWarning(
+				"%s does not support POSITION_FIRST, falling back to NVDAObjectTextInfo" % obj.TextInfo,
+			)
+			# First position not supported either, return first position from a generic NVDAObjectTextInfo
+			return NVDAObjectTextInfo(obj, textInfos.POSITION_FIRST), obj
+	return pos, pos.obj
+
 
 def getDocumentPosition(obj):
 	"""
 	Fetches a TextInfo instance suitable for reviewing the text in  the given object's L{TreeInterceptor}, positioned at the object.
 	@param obj: the NVDAObject to review
 	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
-	if not isinstance(obj.treeInterceptor,DocumentTreeInterceptor):
+	if not isinstance(obj.treeInterceptor, DocumentTreeInterceptor):
 		return None
 	try:
-		pos=obj.treeInterceptor.makeTextInfo(obj)
+		pos = obj.treeInterceptor.makeTextInfo(obj)
 	except LookupError:
 		return None
-	return pos,pos.obj
+	return pos, pos.obj
+
 
 def getScreenPosition(obj):
 	"""
-	Fetches a TextInfo instance suitable for reviewing the screen, positioned at the given object's coordinates. 
+	Fetches a TextInfo instance suitable for reviewing the screen, positioned at the given object's coordinates.
 	@param obj: the NVDAObject to review
 	@type obj: L{NVDAObject}
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	@rtype: (L{TextInfo},L{ScriptableObject})
 	"""
-	focus=api.getFocusObject()
-	while focus and not isinstance(focus,Window):
-		focus=focus.parent
-	if not focus: return None  # noqa: E701
-	w=winUser.getAncestor(focus.windowHandle,winUser.GA_ROOT) or focus.windowHandle
-	s=Window(windowHandle=w)
+	focus = api.getFocusObject()
+	while focus and not isinstance(focus, Window):
+		focus = focus.parent
+	if not focus:
+		return None
+	w = winUser.getAncestor(focus.windowHandle, winUser.GA_ROOT) or focus.windowHandle
+	s = Window(windowHandle=w)
 	if s:
 		s.redraw()
 		try:
-			pos=DisplayModelTextInfo(s,obj)
+			pos = DisplayModelTextInfo(s, obj)
 		except LookupError:
-			pos=DisplayModelTextInfo(s,textInfos.POSITION_FIRST)
-		return pos,pos.obj
+			pos = DisplayModelTextInfo(s, textInfos.POSITION_FIRST)
+		return pos, pos.obj
 
-modes=[
+
+modes = [
 	# Translators: One of the review modes.
-	('object',_("Object review"),getObjectPosition),
+	("object", _("Object review"), getObjectPosition),
 	# Translators: One of the review modes.
-	('document',_("Document review"),getDocumentPosition),
+	("document", _("Document review"), getDocumentPosition),
 	# Translators: One of the review modes.
-	('screen',_("Screen review"),getScreenPosition),
+	("screen", _("Screen review"), getScreenPosition),
 ]
 
-_currentMode=0
+_currentMode = 0
 
 
 def getPositionForCurrentMode(obj: NVDAObject) -> Union[textInfos.TextInfo, ScriptableObject]:
 	"""
-	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode. 
+	Fetches a TextInfo instance suitable for reviewing the text in or around the given object, according to the current review mode.
 	@param obj: the NVDAObject to review
-	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error. 
+	@return: the TextInfo instance and the Scriptable object the TextInfo instance is referencing, or None on error.
 	"""
-	mode=_currentMode
-	while mode>=0:
-		pos=modes[mode][2](obj)
+	mode = _currentMode
+	while mode >= 0:
+		pos = modes[mode][2](obj)
 		if pos:
 			return pos
-		mode-=1
+		mode -= 1
 
 
 def getCurrentMode():
@@ -109,8 +116,8 @@ def getCurrentMode():
 
 
 def setCurrentMode(
-		mode: Union[int, str],
-		updateReviewPosition: bool = True
+	mode: Union[int, str],
+	updateReviewPosition: bool = True,
 ) -> Optional[str]:
 	"""
 	Sets the current review mode to the given mode ID or index and updates the review position.
@@ -118,39 +125,40 @@ def setCurrentMode(
 	@return: a presentable label for the new current mode (suitable for speaking or braille)
 	"""
 	global _currentMode
-	if isinstance(mode,int):
-		ID,label,func=modes[mode]
+	if isinstance(mode, int):
+		ID, label, func = modes[mode]
 	else:
-		for index,(ID,label,func) in enumerate(modes):
-			if mode==ID:
-				mode=index
+		for index, (ID, label, func) in enumerate(modes):
+			if mode == ID:
+				mode = index
 				break
 		else:
-			raise LookupError("mode %s not found"%mode)
-	obj=api.getNavigatorObject()
-	pos=func(obj)
+			raise LookupError("mode %s not found" % mode)
+	obj = api.getNavigatorObject()
+	pos = func(obj)
 	if pos:
-		_currentMode=mode
+		_currentMode = mode
 		if updateReviewPosition:
 			api.setReviewPosition(pos[0], clearNavigatorObject=False)
 		return label
 
 
-def nextMode(prev=False,startMode=None):
+def nextMode(prev=False, startMode=None):
 	"""
-	Sets the current review mode to the next available  mode and updates the review position. 
+	Sets the current review mode to the next available  mode and updates the review position.
 	@param prev: if true then switch to the previous mode. If false, switch to the next mode.
 	@type prev: bool
 	@return: a presentable label for the new current mode (suitable for speaking or brailleing)
 	@rtype: string
 	"""
 	if startMode is None:
-		startMode=_currentMode
-	newMode=startMode+(1 if not prev else -1)
-	if newMode<0 or newMode>=len(modes):
+		startMode = _currentMode
+	newMode = startMode + (1 if not prev else -1)
+	if newMode < 0 or newMode >= len(modes):
 		return None
-	label=setCurrentMode(newMode)
-	return label or nextMode(prev=prev,startMode=newMode)
+	label = setCurrentMode(newMode)
+	return label or nextMode(prev=prev, startMode=newMode)
+
 
 def handleCaretMove(pos):
 	"""
@@ -160,27 +168,27 @@ def handleCaretMove(pos):
 	"""
 	if not config.conf["reviewCursor"]["followCaret"]:
 		return
-	if isinstance(pos,textInfos.TextInfo):
-		info=pos
-		obj=pos.obj
+	if isinstance(pos, textInfos.TextInfo):
+		info = pos
+		obj = pos.obj
 	else:
-		info=None
-		obj=pos
-	mode=getCurrentMode()
-	if isinstance(obj,NVDAObject):
-		if not mode=='object' or obj!=api.getNavigatorObject():
+		info = None
+		obj = pos
+	mode = getCurrentMode()
+	if isinstance(obj, NVDAObject):
+		if not mode == "object" or obj != api.getNavigatorObject():
 			return
-	elif isinstance(obj,DocumentTreeInterceptor):
-		if mode not in ('object','document'):
+	elif isinstance(obj, DocumentTreeInterceptor):
+		if mode not in ("object", "document"):
 			return
-		if mode!='document':
+		if mode != "document":
 			if obj.passThrough:
-				#if trying to set with a position in a treeInterceptor but passThrough is turned on, ignore it completely
+				# if trying to set with a position in a treeInterceptor but passThrough is turned on, ignore it completely
 				return
-			setCurrentMode('document',updateReviewPosition=False)
+			setCurrentMode("document", updateReviewPosition=False)
 	if not info:
 		try:
-			info=obj.makeTextInfo(textInfos.POSITION_CARET)
-		except (NotImplementedError,RuntimeError):
+			info = obj.makeTextInfo(textInfos.POSITION_CARET)
+		except (NotImplementedError, RuntimeError):
 			return
 	api.setReviewPosition(info, isCaret=True)

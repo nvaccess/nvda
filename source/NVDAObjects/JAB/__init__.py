@@ -7,6 +7,7 @@ import ctypes
 import re
 from typing import (
 	Dict,
+	Any,
 )
 import eventHandler
 import keyLabels
@@ -14,13 +15,12 @@ import JABHandler
 import controlTypes
 import textUtils
 from controlTypes import TextPosition
+from .. import NVDAObject, InvalidNVDAObject
 from ..window import Window
 from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
-from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
-
 
 JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"alert": controlTypes.Role.DIALOG,
@@ -85,20 +85,20 @@ JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"edit bar": controlTypes.Role.EDITBAR,
 }
 
-JABStatesToNVDAStates={
-	"busy":controlTypes.State.BUSY,
-	"checked":controlTypes.State.CHECKED,
-	"focused":controlTypes.State.FOCUSED,
-	"selected":controlTypes.State.SELECTED,
-	"pressed":controlTypes.State.PRESSED,
-	"expanded":controlTypes.State.EXPANDED,
-	"collapsed":controlTypes.State.COLLAPSED,
-	"iconified":controlTypes.State.ICONIFIED,
-	"modal":controlTypes.State.MODAL,
-	"multi_line":controlTypes.State.MULTILINE,
+JABStatesToNVDAStates = {
+	"busy": controlTypes.State.BUSY,
+	"checked": controlTypes.State.CHECKED,
+	"focused": controlTypes.State.FOCUSED,
+	"selected": controlTypes.State.SELECTED,
+	"pressed": controlTypes.State.PRESSED,
+	"expanded": controlTypes.State.EXPANDED,
+	"collapsed": controlTypes.State.COLLAPSED,
+	"iconified": controlTypes.State.ICONIFIED,
+	"modal": controlTypes.State.MODAL,
+	"multi_line": controlTypes.State.MULTILINE,
 	"multiple line": controlTypes.State.MULTILINE,
-	"focusable":controlTypes.State.FOCUSABLE,
-	"editable":controlTypes.State.EDITABLE,
+	"focusable": controlTypes.State.FOCUSABLE,
+	"editable": controlTypes.State.EDITABLE,
 	"selectable": controlTypes.State.SELECTABLE,
 }
 
@@ -107,85 +107,93 @@ re_simpleXmlTag = re.compile(r"(\<[^>]+\>)+")
 
 
 def _subHtmlTag(match: re.match) -> str:
-	""" Determines whether to replace the tag with a space or to just remove it. """
+	"""Determines whether to replace the tag with a space or to just remove it."""
 	startIndex, endIndex = match.span()
-	return "" if (
-		startIndex == 0 or match.string[startIndex - 1].isspace()
-		or endIndex == len(match.string) or match.string[endIndex].isspace()
-	) else " "
+	return (
+		""
+		if (
+			startIndex == 0
+			or match.string[startIndex - 1].isspace()
+			or endIndex == len(match.string)
+			or match.string[endIndex].isspace()
+		)
+		else " "
+	)
 
 
 def _processHtml(text: str) -> str:
-	""" Strips HTML tags from text if it is HTML """
+	"""Strips HTML tags from text if it is HTML"""
 	return re_simpleXmlTag.sub(_subHtmlTag, text) if text.startswith("<html>") else text
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
-
-	def _getOffsetFromPoint(self,x,y):
-		info=self.obj.jabContext.getAccessibleTextInfo(x,y)
-		offset=max(min(info.indexAtPoint,info.charCount-1),0)
+	def _getOffsetFromPoint(self, x: int, y: int) -> int:
+		info = self.obj.jabContext.getAccessibleTextInfo(x, y)
+		offset = max(min(info.indexAtPoint, info.charCount - 1), 0)
 		return offset
 
-	def _getBoundingRectFromOffset(self, offset):
+	def _getBoundingRectFromOffset(self, offset: int) -> RectLTWH:
 		rect = self.obj.jabContext.getAccessibleTextRect(offset)
 		try:
 			return RectLTWH(rect.x, rect.y, rect.width, rect.height).toLTRB()
 		except ValueError:
 			raise LookupError
 
-	def _getCaretOffset(self):
-		textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
-		offset=textInfo.caretIndex
+	def _getCaretOffset(self) -> int:
+		textInfo = self.obj.jabContext.getAccessibleTextInfo(
+			self.obj._JABAccContextInfo.x,
+			self.obj._JABAccContextInfo.y,
+		)
+		offset = textInfo.caretIndex
 		# OpenOffice sometimes returns nonsense, so treat charCount < offset as no caret.
-		if offset==-1 or textInfo.charCount<offset:
+		if offset == -1 or textInfo.charCount < offset:
 			raise RuntimeError("no available caret in this object")
 		return offset
 
-	def _setCaretOffset(self,offset):
+	def _setCaretOffset(self, offset: int) -> None:
 		self.obj.jabContext.setCaretPosition(offset)
 
-	def _getSelectionOffsets(self):
-		info=self.obj.jabContext.getAccessibleTextSelectionInfo()
-		start=max(info.selectionStartIndex,0)
-		end=max(info.selectionEndIndex,0)
-		return (start,end)
+	def _getSelectionOffsets(self) -> tuple[int, int]:
+		info = self.obj.jabContext.getAccessibleTextSelectionInfo()
+		start = max(info.selectionStartIndex, 0)
+		end = max(info.selectionEndIndex, 0)
+		return (start, end)
 
-	def _setSelectionOffsets(self,start,end):
-		self.obj.jabContext.selectTextRange(start,end)
+	def _setSelectionOffsets(self, start: int, end: int) -> None:
+		self.obj.jabContext.selectTextRange(start, end)
 
-	def _getStoryLength(self):
-		if not hasattr(self,'_storyLength'):
-			textInfo=self.obj.jabContext.getAccessibleTextInfo(self.obj._JABAccContextInfo.x,self.obj._JABAccContextInfo.y)
-			self._storyLength=textInfo.charCount
+	def _getStoryLength(self) -> int:
+		if not hasattr(self, "_storyLength"):
+			textInfo = self.obj.jabContext.getAccessibleTextInfo(
+				self.obj._JABAccContextInfo.x,
+				self.obj._JABAccContextInfo.y,
+			)
+			self._storyLength = textInfo.charCount
 		return self._storyLength
 
-	def _getTextRange(self,start,end):
-		#Java needs end of range as last character, not one past the last character
-		text=self.obj.jabContext.getAccessibleTextRange(start,end-1)
+	def _getTextRange(self, start: int, end: int) -> str:
+		# Java needs end of range as last character, not one past the last character
+		text = self.obj.jabContext.getAccessibleTextRange(start, end - 1)
 		return text
 
-	def _getLineNumFromOffset(self,offset):
+	def _getLineNumFromOffset(self, offset: int) -> None:
 		return None
 
-	def _getLineOffsets(self,offset):
-		(start,end)=self.obj.jabContext.getAccessibleTextLineBounds(offset)
-		if end==-1 and offset>0:
+	def _getLineOffsets(self, offset: int) -> tuple[int, int]:
+		(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset)
+		if end == -1 and offset > 0:
 			# #1892: JAB returns -1 for the end insertion position
 			# instead of returning the offsets for the last line.
-			# Try one character back, unless we're on a new line.
-			if self.obj.jabContext.getAccessibleTextRange(offset - 1, offset - 1) != "\n":
-				(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset - 1)
-			else:
-				(start, end) = (offset, offset)
-		#Java gives end as the last character, not one past the last character
-		end=end+1
-		return (start,end)
+			# Try one character back.
+			(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset - 1)
+		# Java gives end as the last character, not one past the last character
+		end = end + 1
+		return (start, end)
 
-	def _getParagraphOffsets(self,offset):
+	def _getParagraphOffsets(self, offset: int) -> tuple[int, int]:
 		return self._getLineOffsets(offset)
 
-	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+	def _getFormatFieldAndOffsets(self, offset: int, formatConfig, calculateOffsets=True):
 		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
@@ -205,32 +213,38 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# TODO: Not sure how to interpret Java's alignment numbers.
 		return field, (offset, offset + length)
 
-	def getEmbeddedObject(self, offset=0):
+	def getEmbeddedObject(self, offset: int = 0) -> "JAB":
 		offset += self._startOffset
 
 		# We need to count the embedded objects to determine which child to use.
 		# This could possibly be optimised by caching.
 		text = self._getTextRange(0, offset + 1)
 		childIndex = text.count(textUtils.OBJ_REPLACEMENT_CHAR) - 1
-		jabContext=self.obj.jabContext.getAccessibleChildFromContext(childIndex)
+		jabContext = self.obj.jabContext.getAccessibleChildFromContext(childIndex)
 		if jabContext:
 			return JAB(jabContext=jabContext)
 
 		raise LookupError
 
-class JAB(Window):
 
-	def findOverlayClasses(self,clsList):
+class JAB(Window):
+	def findOverlayClasses(self, clsList: list[NVDAObject]) -> None:
 		role = self.JABRole
-		if self._JABAccContextInfo.accessibleText and role in ("text","password text","edit bar","view port","paragraph"):
+		if self._JABAccContextInfo.accessibleText and role in (
+			"text",
+			"password text",
+			"edit bar",
+			"view port",
+			"paragraph",
+		):
 			clsList.append(EditableTextWithoutAutoSelectDetection)
 		elif role in ("dialog", "alert"):
 			clsList.append(Dialog)
-		elif role=="combo box":
+		elif role == "combo box":
 			clsList.append(ComboBox)
-		elif role=="table":
+		elif role == "table":
 			clsList.append(Table)
-		elif self.parent and isinstance(self.parent,Table) and self.parent._jabTableInfo:
+		elif self.parent and isinstance(self.parent, Table) and self.parent._jabTableInfo:
 			clsList.append(TableCell)
 		elif role == "progress bar":
 			clsList.append(ProgressBar)
@@ -238,31 +252,39 @@ class JAB(Window):
 		clsList.append(JAB)
 
 	@classmethod
-	def kwargsFromSuper(cls,kwargs,relation=None):
-		jabContext=None
-		windowHandle=kwargs['windowHandle']
-		if relation=="focus":
-			vmID=ctypes.c_int()
-			accContext=JABHandler.JOBJECT64()
-			JABHandler.bridgeDll.getAccessibleContextWithFocus(windowHandle,ctypes.byref(vmID),ctypes.byref(accContext))
-			jabContext=JABHandler.JABContext(hwnd=windowHandle,vmID=vmID.value,accContext=accContext.value)
-		elif isinstance(relation,tuple):
-			jabContext=JABHandler.JABContext(hwnd=windowHandle)
+	def kwargsFromSuper(cls, kwargs, relation: str | None = None) -> bool:
+		jabContext = None
+		windowHandle = kwargs["windowHandle"]
+		if relation == "focus":
+			vmID = ctypes.c_int()
+			accContext = JABHandler.JOBJECT64()
+			JABHandler.bridgeDll.getAccessibleContextWithFocus(
+				windowHandle,
+				ctypes.byref(vmID),
+				ctypes.byref(accContext),
+			)
+			jabContext = JABHandler.JABContext(
+				hwnd=windowHandle,
+				vmID=vmID.value,
+				accContext=accContext.value,
+			)
+		elif isinstance(relation, tuple):
+			jabContext = JABHandler.JABContext(hwnd=windowHandle)
 			if jabContext:
-				jabContext=jabContext.getAccessibleContextAt(*relation)
+				jabContext = jabContext.getAccessibleContextAt(*relation)
 		else:
-			jabContext=JABHandler.JABContext(hwnd=windowHandle)
+			jabContext = JABHandler.JABContext(hwnd=windowHandle)
 		if not jabContext:
 			return False
-		kwargs['jabContext']=jabContext
+		kwargs["jabContext"] = jabContext
 		return True
 
-	def __init__(self,relation=None,windowHandle=None,jabContext=None):
+	def __init__(self, relation=None, windowHandle=None, jabContext=None):
 		if not windowHandle:
-			windowHandle=jabContext.hwnd
-		self.windowHandle=windowHandle
-		self.jabContext=jabContext
-		super(JAB,self).__init__(windowHandle=windowHandle)
+			windowHandle = jabContext.hwnd
+		self.windowHandle = windowHandle
+		self.jabContext = jabContext
+		super(JAB, self).__init__(windowHandle=windowHandle)
 		try:
 			self._JABAccContextInfo
 		except RuntimeError:
@@ -272,23 +294,28 @@ class JAB(Window):
 		return self.jabContext.getAccessibleContextInfo()
 
 	def _get_TextInfo(self):
-		if self._JABAccContextInfo.accessibleText and self.role not in [controlTypes.Role.BUTTON,controlTypes.Role.MENUITEM,controlTypes.Role.MENU,controlTypes.Role.LISTITEM]:
+		if self._JABAccContextInfo.accessibleText and self.role not in [
+			controlTypes.Role.BUTTON,
+			controlTypes.Role.MENUITEM,
+			controlTypes.Role.MENU,
+			controlTypes.Role.LISTITEM,
+		]:
 			return JABTextInfo
-		return super(JAB,self).TextInfo
+		return super(JAB, self).TextInfo
 
-	def _isEqual(self,other):
+	def _isEqual(self, other: Any) -> bool:
 		try:
-			return self.jabContext==other.jabContext
+			return self.jabContext == other.jabContext
 		except:  # noqa: E722
 			return False
 
-	def _get_keyboardShortcut(self):
-		bindings=self.jabContext.getAccessibleKeyBindings()
-		if not bindings or bindings.keyBindingsCount<1: 
+	def _get_keyboardShortcut(self) -> str | None:
+		bindings = self.jabContext.getAccessibleKeyBindings()
+		if not bindings or bindings.keyBindingsCount < 1:
 			return None
-		shortcutsList=[]
+		shortcutsList = []
 		for index in range(bindings.keyBindingsCount):
-			binding=bindings.keyBindingInfo[index]
+			binding = bindings.keyBindingInfo[index]
 			# We don't support these modifiers
 			if binding.modifiers & (
 				JABHandler.AccessibleKeystroke.META
@@ -317,8 +344,11 @@ class JAB(Window):
 		return self._JABAccContextInfo.role_en_US
 
 	def _get_role(self):
-		role = JABRolesToNVDARoles.get(self.JABRole,controlTypes.Role.UNKNOWN)
-		if role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN) and self.parent:
+		role = JABRolesToNVDARoles.get(self.JABRole, controlTypes.Role.UNKNOWN)
+		if (
+			role in (controlTypes.Role.LABEL, controlTypes.Role.PANEL, controlTypes.Role.UNKNOWN)
+			and self.parent
+		):
 			parentRole = self.parent.role
 			if parentRole == controlTypes.Role.LIST:
 				return controlTypes.Role.LISTITEM
@@ -326,7 +356,7 @@ class JAB(Window):
 				return controlTypes.Role.TREEVIEWITEM
 			elif parentRole == controlTypes.Role.TABLE:
 				return controlTypes.Role.TABLECELL
-		if role==controlTypes.Role.LABEL:
+		if role == controlTypes.Role.LABEL:
 			return controlTypes.Role.STATICTEXT
 		return role
 
@@ -334,10 +364,10 @@ class JAB(Window):
 		return self._JABAccContextInfo.states_en_US
 
 	def _get_states(self):
-		log.debug("states: %s"%self.JABStates)
-		stateSet=set()
-		stateString=self.JABStates
-		stateStrings=stateString.split(',')
+		log.debug("states: %s" % self.JABStates)
+		stateSet = set()
+		stateString = self.JABStates
+		stateStrings = stateString.split(",")
 		for state in stateStrings:
 			if state in JABStatesToNVDAStates:
 				stateSet.add(JABStatesToNVDAStates[state])
@@ -358,10 +388,14 @@ class JAB(Window):
 
 	def _get_value(self):
 		if (
-			self.role not in [
-				controlTypes.Role.TOGGLEBUTTON, controlTypes.Role.CHECKBOX,
-				controlTypes.Role.MENU, controlTypes.Role.MENUITEM,
-				controlTypes.Role.RADIOBUTTON, controlTypes.Role.BUTTON
+			self.role
+			not in [
+				controlTypes.Role.TOGGLEBUTTON,
+				controlTypes.Role.CHECKBOX,
+				controlTypes.Role.MENU,
+				controlTypes.Role.MENUITEM,
+				controlTypes.Role.RADIOBUTTON,
+				controlTypes.Role.BUTTON,
 			]
 			and self._JABAccContextInfo.accessibleValue
 			and not self._JABAccContextInfo.accessibleText
@@ -373,192 +407,198 @@ class JAB(Window):
 		return _processHtml(description)
 
 	def _get_location(self):
-		return RectLTWH(self._JABAccContextInfo.x,self._JABAccContextInfo.y,self._JABAccContextInfo.width,self._JABAccContextInfo.height)
+		return RectLTWH(
+			self._JABAccContextInfo.x,
+			self._JABAccContextInfo.y,
+			self._JABAccContextInfo.width,
+			self._JABAccContextInfo.height,
+		)
 
-	def _get_hasFocus(self):
+	def _get_hasFocus(self) -> bool:
 		if controlTypes.State.FOCUSED in self.states:
 			return True
 		else:
 			return False
 
 	def _get_positionInfo(self):
-		info=super(JAB,self).positionInfo or {}
+		info = super(JAB, self).positionInfo or {}
 
 		# If tree view item, try to retrieve the level via JAB
-		if self.role==controlTypes.Role.TREEVIEWITEM:
+		if self.role == controlTypes.Role.TREEVIEWITEM:
 			try:
-				tree=self.jabContext.getAccessibleParentWithRole("tree")
+				tree = self.jabContext.getAccessibleParentWithRole("tree")
 				if tree:
-					treeDepth=tree.getObjectDepth()
-					selfDepth=self.jabContext.getObjectDepth()
+					treeDepth = tree.getObjectDepth()
+					selfDepth = self.jabContext.getObjectDepth()
 					if selfDepth > treeDepth:
-						info['level']=selfDepth-treeDepth
+						info["level"] = selfDepth - treeDepth
 			except:  # noqa: E722
 				pass
 
-		targets=self._getJABRelationTargets('memberOf')
-		for index,target in enumerate(targets):
-			if target==self.jabContext:
-				info['indexInGroup']=index+1
-				info['similarItemsInGroup']=len(targets)
+		targets = self._getJABRelationTargets("memberOf")
+		for index, target in enumerate(targets):
+			if target == self.jabContext:
+				info["indexInGroup"] = index + 1
+				info["similarItemsInGroup"] = len(targets)
 				return info
 
-		parent=self.parent
-		if (
-			isinstance(parent, JAB)
-			and self.role in (
-				controlTypes.Role.TREEVIEWITEM,
-				controlTypes.Role.LISTITEM,
-				controlTypes.Role.TAB
-			)
+		parent = self.parent
+		if isinstance(parent, JAB) and self.role in (
+			controlTypes.Role.TREEVIEWITEM,
+			controlTypes.Role.LISTITEM,
+			controlTypes.Role.TAB,
 		):
-			index=self._JABAccContextInfo.indexInParent+1
-			childCount=parent._JABAccContextInfo.childrenCount
-			info['indexInGroup']=index
-			info['similarItemsInGroup']=childCount
+			index = self._JABAccContextInfo.indexInParent + 1
+			childCount = parent._JABAccContextInfo.childrenCount
+			info["indexInGroup"] = index
+			info["similarItemsInGroup"] = childCount
 		return info
 
 	def _get_activeChild(self):
-		jabContext=self.jabContext.getActiveDescendent()
+		jabContext = self.jabContext.getActiveDescendent()
 		if jabContext:
 			return JAB(jabContext=jabContext)
 		else:
 			return None
 
 	def _get_parent(self):
-		if not hasattr(self,'_parent'):
-			jabContext=self.jabContext.getAccessibleParentFromContext()
+		if not hasattr(self, "_parent"):
+			jabContext = self.jabContext.getAccessibleParentFromContext()
 			if jabContext and self.indexInParent is not None:
-				self._parent=JAB(jabContext=jabContext)
+				self._parent = JAB(jabContext=jabContext)
 			else:
-				self._parent=super(JAB,self).parent
+				self._parent = super(JAB, self).parent
 		return self._parent
- 
+
 	def _get_next(self):
-		parent=self.parent
-		if not isinstance(parent,JAB):
-			return super(JAB,self).next
+		parent = self.parent
+		if not isinstance(parent, JAB):
+			return super(JAB, self).next
 		if self.indexInParent is None:
 			return None
-		newIndex=self.indexInParent+1
-		if newIndex>=parent._JABAccContextInfo.childrenCount:
+		newIndex = self.indexInParent + 1
+		if newIndex >= parent._JABAccContextInfo.childrenCount:
 			return None
-		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
+		jabContext = parent.jabContext.getAccessibleChildFromContext(newIndex)
 		if not jabContext:
 			return None
-		obj=JAB(jabContext=jabContext)
-		if not isinstance(obj.parent,JAB):
-			obj.parent=parent
+		obj = JAB(jabContext=jabContext)
+		if not isinstance(obj.parent, JAB):
+			obj.parent = parent
 		if obj.indexInParent is None:
-			obj.indexInParent=newIndex
-		elif obj.indexInParent<=self.indexInParent: 
+			obj.indexInParent = newIndex
+		elif obj.indexInParent <= self.indexInParent:
 			return None
 		return obj
 
 	def _get_previous(self):
-		parent=self.parent
-		if not isinstance(parent,JAB):
-			return super(JAB,self).previous
+		parent = self.parent
+		if not isinstance(parent, JAB):
+			return super(JAB, self).previous
 		if self.indexInParent is None:
 			return None
-		newIndex=self.indexInParent-1
-		if newIndex<0:
+		newIndex = self.indexInParent - 1
+		if newIndex < 0:
 			return None
-		jabContext=parent.jabContext.getAccessibleChildFromContext(newIndex)
+		jabContext = parent.jabContext.getAccessibleChildFromContext(newIndex)
 		if not jabContext:
 			return None
-		obj=JAB(jabContext=jabContext)
-		if not isinstance(obj.parent,JAB):
-			obj.parent=parent
+		obj = JAB(jabContext=jabContext)
+		if not isinstance(obj.parent, JAB):
+			obj.parent = parent
 		if obj.indexInParent is None:
-			obj.indexInParent=newIndex
-		elif obj.indexInParent>=self.indexInParent: 
+			obj.indexInParent = newIndex
+		elif obj.indexInParent >= self.indexInParent:
 			return None
 		return obj
 
 	def _get_firstChild(self):
-		if self._JABAccContextInfo.childrenCount<=0:
+		if self._JABAccContextInfo.childrenCount <= 0:
 			return None
-		jabContext=self.jabContext.getAccessibleChildFromContext(0)
+		jabContext = self.jabContext.getAccessibleChildFromContext(0)
 		if jabContext:
-			obj=JAB(jabContext=jabContext)
-			if not isinstance(obj.parent,JAB):
-				obj.parent=self
+			obj = JAB(jabContext=jabContext)
+			if not isinstance(obj.parent, JAB):
+				obj.parent = self
 			if obj.indexInParent is None:
-				obj.indexInParent=0
+				obj.indexInParent = 0
 			return obj
 		else:
 			return None
 
 	def _get_lastChild(self):
-		if self._JABAccContextInfo.childrenCount<=0:
+		if self._JABAccContextInfo.childrenCount <= 0:
 			return None
-		jabContext=self.jabContext.getAccessibleChildFromContext(self.childCount-1)
+		jabContext = self.jabContext.getAccessibleChildFromContext(self.childCount - 1)
 		if jabContext:
-			obj=JAB(jabContext=jabContext)
-			if not isinstance(obj.parent,JAB):
-				obj.parent=self
+			obj = JAB(jabContext=jabContext)
+			if not isinstance(obj.parent, JAB):
+				obj.parent = self
 			if obj.indexInParent is None:
-				obj.indexInParent=self.childCount-1
+				obj.indexInParent = self.childCount - 1
 			return obj
 		else:
 			return None
 
-	def _get_childCount(self):
+	def _get_childCount(self) -> int:
 		return self._JABAccContextInfo.childrenCount
 
-	def _get_children(self):
-		children=[]
+	def _get_children(self) -> list["JAB"]:
+		children = []
 		for index in range(self._JABAccContextInfo.childrenCount):
-			jabContext=self.jabContext.getAccessibleChildFromContext(index)
+			jabContext = self.jabContext.getAccessibleChildFromContext(index)
 			if jabContext:
-				obj=JAB(jabContext=jabContext)
-				if not isinstance(obj.parent,JAB):
-					obj.parent=self
+				obj = JAB(jabContext=jabContext)
+				if not isinstance(obj.parent, JAB):
+					obj.parent = self
 				if obj.indexInParent is None:
-					obj.indexInParent=index
+					obj.indexInParent = index
 				children.append(obj)
 		return children
 
-	def _get_indexInParent(self):
+	def _get_indexInParent(self) -> int | None:
 		index = self._JABAccContextInfo.indexInParent
 		if index == -1:
 			return None
 		return index
 
-	def _getJABRelationTargets(self, key):
+	def _getJABRelationTargets(self, key: str) -> list["JABHandler.JABContext"]:
 		rs = self.jabContext.getAccessibleRelationSet()
-		targets=[]
-		for relation in rs.relations[:rs.relationCount]:
-			for target in relation.targets[:relation.targetCount]:
+		targets = []
+		for relation in rs.relations[: rs.relationCount]:
+			for target in relation.targets[: relation.targetCount]:
 				if relation.key == key:
 					targets.append(JABHandler.JABContext(self.jabContext.hwnd, self.jabContext.vmID, target))
 				else:
-					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID,target)
+					JABHandler.bridgeDll.releaseJavaObject(self.jabContext.vmID, target)
 		return targets
 
 	def _get_flowsTo(self):
-		targets=self._getJABRelationTargets("flowsTo")
+		targets = self._getJABRelationTargets("flowsTo")
 		if targets:
 			return targets[0]
 
 	def _get_flowsFrom(self):
-		targets=self._getJABRelationTargets("flowsFrom")
+		targets = self._getJABRelationTargets("flowsFrom")
 		if targets:
 			return targets[0]
 
 	def reportFocus(self):
-		parent=self.parent
-		if self.role in [controlTypes.Role.LIST] and isinstance(parent,JAB) and parent.role==controlTypes.Role.COMBOBOX:
+		parent = self.parent
+		if (
+			self.role in [controlTypes.Role.LIST]
+			and isinstance(parent, JAB)
+			and parent.role == controlTypes.Role.COMBOBOX
+		):
 			return
-		super(JAB,self).reportFocus()
+		super(JAB, self).reportFocus()
 
 	def _get__actions(self):
 		actions = JABHandler.AccessibleActions()
 		JABHandler.bridgeDll.getAccessibleActions(self.jabContext.vmID, self.jabContext.accContext, actions)
-		return actions.actionInfo[:actions.actionsCount]
+		return actions.actionInfo[: actions.actionsCount]
 
-	def _get_actionCount(self):
+	def _get_actionCount(self) -> int:
 		return len(self._actions)
 
 	def getActionName(self, index=None):
@@ -573,50 +613,56 @@ class JAB(Window):
 		if index is None:
 			index = self.defaultActionIndex
 		try:
-			JABHandler.bridgeDll.doAccessibleActions(self.jabContext.vmID, self.jabContext.accContext,
+			JABHandler.bridgeDll.doAccessibleActions(
+				self.jabContext.vmID,
+				self.jabContext.accContext,
 				JABHandler.AccessibleActionsToDo(actionsCount=1, actions=(self._actions[index],)),
-				JABHandler.jint())
+				JABHandler.jint(),
+			)
 		except (IndexError, RuntimeError):
 			raise NotImplementedError
 
 	def _get_activeDescendant(self):
-		descendantFound=False
-		jabContext=self.jabContext
+		descendantFound = False
+		jabContext = self.jabContext
 		while jabContext:
 			try:
-				tempContext=jabContext.getActiveDescendent()
+				tempContext = jabContext.getActiveDescendent()
 			except:  # noqa: E722
 				break
 			if not tempContext:
 				break
 			try:
-				depth=tempContext.getObjectDepth()
+				depth = tempContext.getObjectDepth()
 			except:  # noqa: E722
-				depth=-1
-			if depth<=0 or tempContext==jabContext: 
+				depth = -1
+			if depth <= 0 or tempContext == jabContext:
 				break
-			jabContext=tempContext
-			descendantFound=True
+			jabContext = tempContext
+			descendantFound = True
 		if descendantFound:
 			return JAB(jabContext=jabContext)
 
 	def event_gainFocus(self):
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		super(JAB,self).event_gainFocus()
+		super(JAB, self).event_gainFocus()
 		if eventHandler.isPendingEvents("gainFocus"):
 			return
-		activeDescendant=self.activeDescendant
+		activeDescendant = self.activeDescendant
 		if activeDescendant:
-			eventHandler.queueEvent("gainFocus",activeDescendant)
+			eventHandler.queueEvent("gainFocus", activeDescendant)
 
 
 class ComboBox(JAB):
-
 	def _get_states(self):
-		states=super(ComboBox,self).states
+		states = super(ComboBox, self).states
 		if controlTypes.State.COLLAPSED not in states and controlTypes.State.EXPANDED not in states:
-			if self.childCount==1 and self.firstChild and self.firstChild.role==controlTypes.Role.POPUPMENU:
+			if (
+				self.childCount == 1
+				and self.firstChild
+				and self.firstChild.role == controlTypes.Role.POPUPMENU
+			):
 				if controlTypes.State.INVISIBLE in self.firstChild.states:
 					states.add(controlTypes.State.COLLAPSED)
 				else:
@@ -626,83 +672,91 @@ class ComboBox(JAB):
 	def _get_activeDescendant(self):
 		if controlTypes.State.COLLAPSED in self.states:
 			return None
-		return super(ComboBox,self).activeDescendant
+		return super(ComboBox, self).activeDescendant
 
 	def _get_value(self):
-		value=super(ComboBox,self).value
-		if not value and not self.activeDescendant: 
-			descendant=super(ComboBox,self).activeDescendant
+		value = super(ComboBox, self).value
+		if not value and not self.activeDescendant:
+			descendant = super(ComboBox, self).activeDescendant
 			if descendant:
-				value=descendant.name
+				value = descendant.name
 		return value
 
-class Table(JAB):
 
+class Table(JAB):
 	def _get__jabTableInfo(self):
-		info=self.jabContext.getAccessibleTableInfo()
+		info = self.jabContext.getAccessibleTableInfo()
 		if info:
-			self._jabTableInfo=info
+			self._jabTableInfo = info
 			return info
 
-	def _get_rowCount(self):
+	def _get_rowCount(self) -> int | None:
 		if self._jabTableInfo:
 			return self._jabTableInfo.rowCount
 
-	def _get_columnCount(self):
+	def _get_columnCount(self) -> int | None:
 		if self._jabTableInfo:
 			return self._jabTableInfo.columnCount
 
 	def _get_tableID(self):
 		return self._jabTableInfo.jabTable.accContext.value
 
-class TableCell(JAB):
 
+class TableCell(JAB):
 	def _get_table(self):
-		if self.parent and isinstance(self.parent,Table):
-			self.table=self.parent
+		if self.parent and isinstance(self.parent, Table):
+			self.table = self.parent
 			return self.table
 
 	def _get_tableID(self):
 		return self.table.tableID
 
-	def _get_rowNumber(self):
-		return self.table._jabTableInfo.jabTable.getAccessibleTableRow(self.indexInParent)+1
+	def _get_rowNumber(self) -> int:
+		return self.table._jabTableInfo.jabTable.getAccessibleTableRow(self.indexInParent) + 1
 
-	def _get_columnNumber(self):
-		return self.table._jabTableInfo.jabTable.getAccessibleTableColumn(self.indexInParent)+1
+	def _get_columnNumber(self) -> int:
+		return self.table._jabTableInfo.jabTable.getAccessibleTableColumn(self.indexInParent) + 1
 
-	def _get_rowHeaderText(self):
-		headerTableInfo=self.table.jabContext.getAccessibleTableRowHeader()
+	def _get_rowHeaderText(self) -> str | None:
+		headerTableInfo = self.table.jabContext.getAccessibleTableRowHeader()
 		if headerTableInfo and headerTableInfo.jabTable:
-			textList=[]
-			row=self.rowNumber-1
+			textList = []
+			row = self.rowNumber - 1
 			for col in range(headerTableInfo.columnCount):
-				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
+				cellInfo = headerTableInfo.jabTable.getAccessibleTableCellInfo(row, col)
 				if cellInfo and cellInfo.jabContext:
-					obj=JAB(jabContext=cellInfo.jabContext)
-					if obj.name: textList.append(obj.name)  # noqa: E701
-					if obj.description: textList.append(obj.description)  # noqa: E701
-			jabContext=self.table._jabTableInfo.jabTable.getAccessibleTableRowDescription(row)
+					obj = JAB(jabContext=cellInfo.jabContext)
+					if obj.name:
+						textList.append(obj.name)
+					if obj.description:
+						textList.append(obj.description)
+			jabContext = self.table._jabTableInfo.jabTable.getAccessibleTableRowDescription(row)
 			if jabContext:
-				obj=JAB(jabContext=jabContext)
-				if obj.name: textList.append(obj.name)  # noqa: E701
-				if obj.description: textList.append(obj.description)  # noqa: E701
+				obj = JAB(jabContext=jabContext)
+				if obj.name:
+					textList.append(obj.name)
+				if obj.description:
+					textList.append(obj.description)
 			return " ".join(textList)
 
-	def _get_columnHeaderText(self):
-		headerTableInfo=self.table.jabContext.getAccessibleTableColumnHeader()
+	def _get_columnHeaderText(self) -> str | None:
+		headerTableInfo = self.table.jabContext.getAccessibleTableColumnHeader()
 		if headerTableInfo and headerTableInfo.jabTable:
-			textList=[]
-			col=self.columnNumber-1
+			textList = []
+			col = self.columnNumber - 1
 			for row in range(headerTableInfo.rowCount):
-				cellInfo=headerTableInfo.jabTable.getAccessibleTableCellInfo(row,col)
+				cellInfo = headerTableInfo.jabTable.getAccessibleTableCellInfo(row, col)
 				if cellInfo and cellInfo.jabContext:
-					obj=JAB(jabContext=cellInfo.jabContext)
-					if obj.name: textList.append(obj.name)  # noqa: E701
-					if obj.description: textList.append(obj.description)  # noqa: E701
-			jabContext=self.table._jabTableInfo.jabTable.getAccessibleTableColumnDescription(col)
+					obj = JAB(jabContext=cellInfo.jabContext)
+					if obj.name:
+						textList.append(obj.name)
+					if obj.description:
+						textList.append(obj.description)
+			jabContext = self.table._jabTableInfo.jabTable.getAccessibleTableColumnDescription(col)
 			if jabContext:
-				obj=JAB(jabContext=jabContext)
-				if obj.name: textList.append(obj.name)  # noqa: E701
-				if obj.description: textList.append(obj.description)  # noqa: E701
+				obj = JAB(jabContext=jabContext)
+				if obj.name:
+					textList.append(obj.name)
+				if obj.description:
+					textList.append(obj.description)
 			return " ".join(textList)

@@ -1,19 +1,108 @@
 # Các tính năng Mới của NVDA
 
+## 2024.3
+
+Cửa Hàng Add-on giờ đây sẽ thông báo cho bạn nếu có cập nhật cho bất kì add-on nào trong khi khởi động NVDA.
+
+Giờ đây đã có tùy chọn để áp dụng việc  chuẩn hóa Unicode cho đầu ra của tiếng nói và chữ nổi.
+Điều này có thể hữu ích khi đọc các ký tự không xác định trong các bộ đọc hoặc bảng chữ nổi cụ thể và có ký tự thay thế tương thích, chẳng hạn như các ký tự in đậm và in nghiêng thường được sử dụng trên mạng xã hội.
+Điều này cũng cho phép đọc công thức trong trình biên soạn công thức của Microsoft Word.
+
+Đã hỗ trợ cho các màn hình chữ nổi Help Tech Activator Pro.
+
+Đã thêm các lệnh chưa gán thao tác để cuộn con lăn chuột theo chiều dọc và chiều ngang.
+
+Sửa một số lỗi, đặc biệt là lỗi của bảng biểu tượng cảm xúc  (Emoji Panel) và lịch sử bộ nhớ tạm của Windows 11.
+Với các trình duyệt web, sửa lỗi đọc các thông điệp báo lỗi, nhóm hình ảnh, phụ đề, nhãn của bảng biểu và hộp kiểm/mục trình đơn nút radio.
+
+Đã cập nhật LibLouis, thêm các bảng chữ nổi mới cho Tiếng Serbia chữ Cyrillic, Yiddish, vài ngôn ngữ cổ, Thổ Nhĩ Kỳ, và bảng chữ cái phiên âm quốc tế.
+Đã cập nhật eSpeak, thêm hỗ trợ cho ngôn ngữ Karakalpak.
+Unicode CLDR cũng đã được cập nhật.
+
+### Tính năng mới
+
+* Các phím lệnh mới:
+  * Thêm các lệnh chưa gán thao tác để cuộn con lăn chuột theo chiều dọc và chiều ngang, nhằm cải thiện việc điều hướng trên các trang web và ứng dụng với nội dung động, như là Dism++. (#16462, @Cary-Rowen)
+* Thêm hỗ trợ  Chuẩn Hóa Unicode cho đầu ra tiếng nói và chữ nổi. (#11570, #16466 @LeonarddeR).
+  * Điều này có thể hữu ích khi đọc các ký tự không xác định bằng một bộ đọc hoặc một bảng chữ nổi cụ thể và có ký tự thay thế tương thích, chẳng hạn như các ký tự in đậm và in nghiêng thường được sử dụng trên mạng xã hội.
+  * Nó cũng cho phép đọc các công thức trong trình biên soạn công thức của Microsoft Word. (#4631)
+  * Bạn có thể bật tính năng này cho cả bộ đọc và chữ nổi trong các phân loại cài đặt tương ứng của chúng trong hộp thoại cài đặt NVDA.
+* Mặc Định, sau khi khởi động NVDA, bạn sẽ được thông báo nếu có bản cập nhật cho bất cứ add-on nào. (#15035)
+  * Điều này có thể được vô hiệu hóa trong phân loại "Cửa Hàng Add-on" trong cài đặt.
+  * NVDA kiểm tra cập nhật add-on hàng ngày.
+  * Chỉ có cập nhật cùng kênh mới được kiểm tra (ví dụ: đã cài đặt bản beta của các add-on thì chỉ nhận thông báo cho cập nhật của kênh beta).
+* Đã thêm hỗ trợ cho các màn hình chữ nổi Help Tech Activator Pro. (#16668)
+
+### Các thay đổi
+
+* Cập nhật thành phần::
+  * eSpeak NG đã được cập nhật lên 1.52-dev commit `54ee11a79`. (#16495)
+    * Đã thêm ngôn ngữ mới Karakalpak.
+  * Đã cập nhật Unicode CLDR lên phiên bản 45.0. (#16507, @OzancanKaratas)
+  * Đã cập nhật fast_diff_match_patch (dùng để nhận dạng các thay đổi trong terminals và các nội dung động khác) lên phiên bản 2.1.0. (#16508, @codeofdusk)
+  * Đã cập nhật thư viện phiên dịch chữ nổi LibLouis lên [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Các bảng chữ nổi mới:
+      * Tiếng Serbia chữ Cyrillic.
+      * Yiddish.
+      * Vài ngôn ngữ cổ: Văn bản tiếng Do Thái trong Kinh thánh, tiếng Akkadian, tiếng Syriac, tiếng Ugaritic và phiên âm chữ hình nêm.
+      * Thổ Nhĩ Kỳ cấp 2. (#16735)
+      * Bảng chữ cái phiên âm quốc tế. (#16773)
+  * Cập nhật NSIS lên 3.10 (#16674, @dpy013)
+  * Cập nhật markdown lên 3.6 (#16725, @dpy013)
+  * Cập nhật nh3 lên 0.2.17 (#16725, @dpy013)
+* Đầu vào của bảng chữ nổi fallback giờ đây đã giống với đầu ra  fallback, là mã chữ nổi tiếng Anh thống nhất cấp 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA giờ đây sẽ thông báo nhóm hình ảnh với không có mục con tiếp cận được, nhưng với một nhãn hoặc mô tả. (#14514)
+* Khi đọc theo dòng trong chế độ duyệt, từ "phụ đề" không còn bị đọc lên ở mỗi dòng ở một nhóm hình ảnh dài hay phụ đề bảng biểu. (#14874)
+* Trong Python console, lệnh cuối cùng chưa được thực hiện sẽ không còn bị mất khi di chuyển trong lịch sử nhập. (#16653, @CyrilleB79)
+* Một ID riêng biệt ẩn danh giờ đây được gửi đi như một phần của tùy chọn Thu thập số liệu thống kê sử dụng NVDA. (#16266)
+* Mặc định, một thư mục mới sẽ được tạo khi tạo bản chạy trực tiếp.
+Sẽ có thông báo cảnh báo cho bạn nếu nỗ lực ghi vào một thư mục không rỗng. (#16686)
+
+### Sửa lỗi
+
+* Sửa lỗi cho Windows 11:
+  * NVDA sẽ không còn bị kẹt khi đóng bảng lịch sử bộ nhớ tạm và biểu tượng cảm súc nữa. (#16346, #16347, @josephsl)
+  * NVDA sẽ lại thông báo các thành phần hiển thị khi mở giao diện của IME. (#14023, @josephsl)
+  * NVDA không còn đọc "lịch sử bộ nhớ tạm" hai lần khi điều hướng qua các thành phần trên trình đơn của bảng biểu tượng cảm xúc. (#16532, @josephsl)
+  * NVDA sẽ không còn cắt đi nội dung bằng chữ nổi hay tiếng nói khi xem kaomojis và kí hiệu trong bảng biểu tượng cảm xúc. (#16533, @josephsl)
+* Sửa lỗi cho trình duyệt web:
+  * Thông điệp báo lỗi được tham chiếu với `aria-errormessage` giờ đây đã được đọc trong Google Chrome và Mozilla Firefox. (#8318)
+  * nếu xuất hiện, NVDA giờ đây sẽ dùng `aria-labelledby` để cung cấp tên tiếp cận được cho các bảng trong Mozilla Firefox. (#5183)
+  * NVDA sẽ thông báo chính xác radio và hộp kiểm cho mục trên trình đơn khi  lần đầu vào trình đơn con trong Google Chrome và Mozilla Firefox. (#14550)
+  * Tính năng tìm kiếm ở chế độ duyệt của NVDA giờ đây hoạt động chính xác hơn với một trang có biểu tượng cảm xúc. (#16317, @LeonarddeR)
+  * Trong Mozilla Firefox, NVDA giờ đây thông báo chính xác kí tự, từ và dòng hiện tại khi con trỏ ở tại điểm chèn ở cuối dòng. (#3156, @jcsteh)
+  * Không còn tình trạng làm cho Google Chrome bị lỗi khi đóng một tài liệu hay thoát Chrome. (#16893)
+* NVDA sẽ thông báo chính xác các gợi ý tự hoàn thành trong Eclipse và các ứng dụng dựa trên môi trường Eclipse trên Windows 11. (#16416, @thgcode)
+* Cải thiện độ tin cậy của việc đọc văn bản tự động, đặc biệt là trong các ứng dụng terminal. (#15850, #16027, @Danstiv)
+* Lại có thể khôi phục cấu hình về mặc định của nhà sản xuất một cách đáng tin cậy. (#16755, @Emil-18)
+* NVDA sẽ thông báo chính xác các thay đổi lựa chọn khi chỉnh sửa văn bản của một ô trong Microsoft Excel. (#15843)
+* Trong các ứng dụng dùng Java Access Bridge, NVDA giờ đây sẽ đọc chính xác dòng trắng cuối cùng của một văn bản thay vì lặp lại dòng trước. (#9376, @dmitrii-drobotov)
+* Trong LibreOffice Writer (phiên bản 24.8 và mới hơn), khi chuyển đổi định dạng văn bản (in đậm, in nghiêng, gạch chân, chỉ số trên/chỉ số dưới, căn lề) bằng phím tắt tương ứng, NVDA sẽ thông báo thuộc tính định dạng mới (ví dụ "Bật in đậm", "Tắt in đậm"). (#4248, @michaelweghorn)
+* Khi điều hướng với các phím con trỏ trong các hộp nhập văn bản trong các ứng dụng có dùng UI Automation, NVDA không còn tình trạng thỉnh thoảng thông báo sai kí tự, từ, v...v.... (#16711, @jcsteh)
+* Khi dán vào Calculator của Windows 10/11, NVDA giờ đây sẽ đọc chính xác toàn bộ số đã được dán vào. (#16573, @TristanBurchett)
+* Bộ đọc sẽ không còn bị im lặng sau khi ngắt kết nối và kết nối lại một Remote Desktop. (#16722, @jcsteh)
+* Đã thêm hỗ trợ cho các lệnh duyệt văn bản cho một đối tượng trong Visual Studio Code. (#16248, @Cary-Rowen)
+* Việc phát các âm thanh NVDA không còn bị lỗi trên thiết bị âm thanh mono. (#16770, @jcsteh)
+* NVDA sẽ thông báo các địa chỉ khi di chuyển mũi tên qua các trường To/CC/BCC trong outlook.com / Modern Outlook. (#16856)
+* NVDA giờ đây quản lý việc cài đặt add-on thất bại tốt hơn. (#16704)
+
+### Các thay đổi cho nhà phát triển
+
+Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.md để biết thêm thông tin.
 
 ## 2024.2
 
-Một tính năng mới, tên gọi chia âm thanh.
+Một tính năng mới, tên gọi tách âm thanh.
 Tính năng này cho phép đặt âm thanh NVDA vào một kênh (ví dụ như bên trái) trong khi âm thanh từ tất cả ứng dụng khác sẽ được đặt ở một kênh khác (ví dụ như bên phải).
 
-Có thêm lệnh mới để tùy chỉnh vòng thiết lập cho giọng đọc, cho phép người dùng đi đến cài đặt đầu tiên hay cuối cùng, và để tăng hoặc giảm giá trị của cài đặt hiện tại bằng các bước dài hơn.
-Cũng có thêm những phím lệnh di chuyển nhanh, cho phép người dùng gán thao tác để di chuyển nhanh giữa: đoạn, đoạn đã căn lề, kiểu văn ban giống nhau, kiểu văn bản khác nhau, mục trình đơn, các nút ật / tắt, thanh tiến độ, hình ảnh, và công thức toán.
+Có thêm lệnh mới để tùy chỉnh vòng thiết lập cho giọng đọc, cho phép người dùng đi đến cài đặt đầu tiên hay cuối cùng, và để tăng hoặc giảm giá trị của cài đặt hiện tại bằng các bước nhảy dài hơn.
+Cũng có thêm những phím lệnh di chuyển nhanh, cho phép người dùng gán thao tác để di chuyển nhanh giữa: đoạn, đoạn đã căn lề, kiểu văn bản giống nhau, kiểu văn bản khác nhau, mục trình đơn, các nút bật / tắt, thanh tiến độ, hình ảnh, và công thức toán.
 
 Nhiều tính năng mới và sửa lỗi cho chữ nổi.
 Đã thêm một chế độ chữ nổi mới gọi là "hiện đầu ra giọng đọc".
-Khi kích hoạt, màn hình chữ nổi sẽ hiền thị chính xác những gì NVDA đọc.
+Khi kích hoạt, màn hình chữ nổi sẽ hiển thị chính xác những gì NVDA đọc.
 Cũng đã thêm hỗ trợ cho các màn hình BrailleEdgeS2 và BrailleEdgeS3.
-Đã cập nhật LibLouis, thêm chi tiết mới (xác định chữ hoa) cho các bản chữ nổi tiếng Belarusian và Ukrainian, bảng chữ nổi tiếng Lào và Tây Ban Nha để đọc văn bản tiếng Greek.
+Đã cập nhật LibLouis, thêm chi tiết mới (xác định chữ hoa) cho các bản chữ nổi tiếng Belarus và Ukraina, bảng chữ nổi tiếng Lào và Tây Ban Nha để đọc văn bản tiếng Hy Lạp.
 
 Đã cập nhật eSpeak, thêm ngôn ngữ mới Tigrinya.
 
@@ -23,7 +112,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 
 * Các phím lệnh mới:
   * Lệnh di chuyển nhanh mới `p` để di chuyển đến đoạn văn bản kế/đoạn văn bản trước trong chế độ duyệt. (#15998, @mltony)
-  * Lệnh di chuyển nhanh mới, chưa gán phím tắt, có thể dùng để di chuyển đến các thành phần kế tiếp hoặc trước đó:
+  * Lệnh di chuyển nhanh mới, chưa gán thao tác, có thể dùng để di chuyển đến các thành phần kế tiếp hoặc trước đó:
     * nhóm hình ảnh (#10826)
     * căn lề dọc đoạn văn bản (#15999, @mltony)
     * mục trên trình đơn (#16001, @mltony)
@@ -37,14 +126,14 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
     * giảm và tăng giá trị hiện tại của vòng thiết lập bộ đọc bằng bước nhảy lớn hơn (#13768):
       * Máy bàn: `NVDA+control+pageUp` và `NVDA+control+pageDown`.
       * Máy xách tay: `NVDA+control+shift+pageUp` và `NVDA+control+shift+pageDown`.
-  * Thêm thao tác chưa gán lệnh để bật / tắt thông áo nhóm hình ảnh và phụ đề. (#10826, #14349)
-* Chữ nỏi:
+  * Thêm thao tác chưa gán lệnh để bật / tắt thông báo nhóm hình ảnh và phụ đề. (#10826, #14349)
+* Chữ nổi:
   * Thêm hỗ trợ cho các màn hình BrailleEdgeS2 và BrailleEdgeS3. (#16033, #16279, @EdKweon)
-  * Thêm chế độ chữ nổi mới gọi là "hiện thị đầu ra giọng đọc". (#15898, @Emil-18)
+  * Thêm chế độ chữ nổi mới gọi là "hiển thị đầu ra giọng đọc". (#15898, @Emil-18)
     * Khi kích hoạt, các màn hình chữ nổi sẽ hiển thị chính xác những gì NVDA đọc.
     * Có thể bật / tắt bằng cách bấm `NVDA+alt+t`, hoặc bật / tắt trong hộp thoại cài đặt chữ nổi.
-* Chia âm thanh: (#12985, @mltony)
-  * Cho phép chia âm thanh NVDA vào một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
+* Tách âm thanh: (#12985, @mltony)
+  * Cho phép tách âm thanh NVDA ra một kênh (kênh trái chẳng hạn) trong khi âm thanh của các ứng dụng khác sẽ được đưa vào kênh còn lại (kênh phải).
   * Bật / tắt bằng lệnh `NVDA+alt+s`.
 * Đã hỗ trợ thông báo tiêu đề cột và dòng  trong các phần tử HTML có thể chỉnh sửa nội dung. (#14113)
 * Đã thêm tùy chọn để vô hiệu hóa thông báo nhóm hình ảnh và phụ đề trong cài đặt định dạng tài liệu. (#10826, #14349)
@@ -74,7 +163,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 ### Sửa lỗi
 
 * Sửa lỗi cho Windows 11:
-  * NVDA lại một lần nữa thông báo phần cứng cho gọi ý đầu vào bàn phím. (#16283, @josephsl)
+  * NVDA lại một lần nữa thông báo phần cứng cho gợi ý đầu vào bàn phím. (#16283, @josephsl)
   * Trong phiên bản 24H2 (2024 Update và Windows Server 2025), có thể dùng tương tác chuột và tương tác cảm ứng trong các thiết lập nhanh (quick settings). (#16348, @josephsl)
 * Cửa Hàng Add-on :
   * Khi bấm `ctrl+tab`, focus di chuyển đến đúng tiêu đề của thẻ mới. (#14986, @ABuffEr)
@@ -93,6 +182,7 @@ Nhiều bản sửa lỗi nhỏ cho các ứng dụng như Thunderbird, Adobe Re
 * Hỗ trợ của NVDA cho phần mềm phiên dịch Poedit phiên bản 3.4 trở lên hoạt động chuẩn xác khi dịch các ngôn ngữ 1 hoặc nhiều hơn 2 dạng số nhiều (e.g. Chinese, Polish). (#16318)
 
 ### Các thay đổi cho nhà phát triển
+
 Phần này không được dịch. Vui lòng xem bản tiếng Anh changes.md để biết thêm thông tin.
 
 ## 2024.1

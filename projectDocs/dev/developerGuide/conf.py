@@ -9,6 +9,7 @@
 
 import os
 import sys
+
 _appDir = os.path.abspath(os.path.join("..", "..", "..", "source"))
 
 sys.path.insert(0, _appDir)
@@ -23,11 +24,13 @@ import sourceEnv  # noqa: F401, E402
 # by comTypes.
 # This patch causes the error to be ignored, which matches the behavior at runtime.
 import monkeyPatches.comtypesMonkeyPatches  # noqa: E402
+
 monkeyPatches.comtypesMonkeyPatches.replace_check_version()
 monkeyPatches.comtypesMonkeyPatches.appendComInterfacesToGenSearchPath()
 
 # Initialize languageHandler so that sphinx is able to deal with translatable strings.
 import languageHandler  # noqa: E402
+
 languageHandler.setLanguage("en")
 
 # Initialize globalVars.appArgs to something sensible.
@@ -47,6 +50,7 @@ globalVars.appDir = _appDir
 
 # Import NVDA's versionInfo module.
 import versionInfo  # noqa: E402
+
 # Set a suitable updateVersionType for the updateCheck module to be imported
 versionInfo.updateVersionType = "stable"
 
@@ -60,7 +64,7 @@ author = versionInfo.publisher
 version = versionInfo.formatVersionForGUI(
 	versionInfo.version_year,
 	versionInfo.version_major,
-	versionInfo.version_minor
+	versionInfo.version_minor,
 )
 
 # The full version, including alpha/beta/rc tags
@@ -68,23 +72,23 @@ release = versionInfo.version
 
 # -- General configuration ---------------------------------------------------
 
-default_role = 'py:obj'
+default_role = "py:obj"
 
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
 extensions = [
-	'sphinx.ext.autodoc',
+	"sphinx.ext.autodoc",
 ]
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ["_templates"]
 
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
 exclude_patterns = [
-	"_build"
+	"_build",
 ]
 
 
@@ -100,7 +104,7 @@ html_theme = "sphinx_rtd_theme"
 
 # Both the class’ and the __init__ method’s docstring are concatenated and inserted.
 autoclass_content = "both"
-autodoc_member_order = 'bysource'
+autodoc_member_order = "bysource"
 autodoc_mock_imports = [
 	"louis",  # Not our project
 ]
@@ -110,5 +114,6 @@ autodoc_mock_imports = [
 from sphinx.ext.autodoc.mock import _make_subclass  # noqa: E402
 
 import config  # noqa: E402
+
 # Mock an instance of the configuration manager.
 config.conf = _make_subclass("conf", "config")()

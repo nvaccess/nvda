@@ -7,7 +7,6 @@
 This module contains the instructions that operate on UI Automation text ranges.
 """
 
-
 from __future__ import annotations
 from typing import cast
 from dataclasses import dataclass

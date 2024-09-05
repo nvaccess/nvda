@@ -3,7 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2019-2020 NV Access Limited, Cyrille Bougot
 
-""" App module for Microsoft Word.
+"""App module for Microsoft Word.
 Word and Outlook share a lot of code and components. This app module gathers the code that is relevant for
 Microsoft Word only.
 """
@@ -17,14 +17,12 @@ from NVDAObjects.window.winword import WordDocument
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
 			clsList.insert(0, WinwordWordDocument)
 
 
 class WinwordWordDocument(WordDocument):
-
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
 		if not self.WinwordDocumentObject:
@@ -34,7 +32,7 @@ class WinwordWordDocument(WordDocument):
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
-			lambda: self.WinwordDocumentObject.TrackRevisions
+			lambda: self.WinwordDocumentObject.TrackRevisions,
 		)
 		if val:
 			# Translators: a message when toggling change tracking in Microsoft word

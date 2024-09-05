@@ -13,6 +13,7 @@ class IsCurrent(DisplayStringStrEnum):
 	These describe if an item is the current item within a particular kind of selection.
 	EG aria-current
 	"""
+
 	NO = "false"
 	YES = "true"
 	PAGE = "page"

@@ -3,8 +3,8 @@
 # See the file COPYING for more details.
 # Copyright (C) 2021-2023 NV Access Limited, Leonard de RUijter
 
-"""Unit tests for the synthDriverHandler
-"""
+"""Unit tests for the synthDriverHandler"""
+
 import config
 import globalVars
 import languageHandler
@@ -21,7 +21,9 @@ FAKE_DEFAULT_SYNTH_NAME = "defaultSynth"
 class MockSynth:
 	def __init__(self, name: str):
 		self.name = name
-		self.availableVoices = {"fooId": synthDriverHandler.VoiceInfo("fooId", "foo language", FAKE_DEFAULT_LANG)}
+		self.availableVoices = {
+			"fooId": synthDriverHandler.VoiceInfo("fooId", "foo language", FAKE_DEFAULT_LANG),
+		}
 
 	def cancel(self):
 		pass
@@ -38,7 +40,6 @@ class MockSynth:
 
 
 class test_synthDriverHandler(unittest.TestCase):
-
 	def setUp(self) -> None:
 		self._oldLang = languageHandler.getLanguage()
 		self._oldSynthConfig = config.conf["speech"]["synth"]
@@ -122,13 +123,13 @@ class test_synthDriverHandler(unittest.TestCase):
 	def test_synthChangedExtensionPoint(self):
 		expectedKwargs = dict(
 			isFallback=False,
-			audioOutputDevice="default"
+			audioOutputDevice="default",
 		)
 
 		with actionTester(
 			self,
 			synthDriverHandler.synthChanged,
 			useAssertDictContainsSubset=True,
-			**expectedKwargs
+			**expectedKwargs,
 		):
 			synthDriverHandler.setSynth("auto")

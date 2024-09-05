@@ -15,7 +15,6 @@ import time
 
 
 class IntelliSenseItem(UIA):
-
 	def _get_name(self):
 		return self.UIAAutomationId
 
@@ -28,13 +27,17 @@ class IntelliSenseItem(UIA):
 		if api.setNavigatorObject(self, isFocus=True):
 			self.reportFocus()
 			# Display results as flash messages.
-			braille.handler.message(braille.getPropertiesBraille(
-				name=self.name, role=self.role, positionInfo=self.positionInfo, description=self.description
-			))
+			braille.handler.message(
+				braille.getPropertiesBraille(
+					name=self.name,
+					role=self.role,
+					positionInfo=self.positionInfo,
+					description=self.description,
+				),
+			)
 
 
-class IntelliSenseList(UIA):
-	...
+class IntelliSenseList(UIA): ...
 
 
 class IntelliSenseLiveRegion(UIA):
@@ -50,13 +53,12 @@ class IntelliSenseLiveRegion(UIA):
 
 _INTELLISENSE_LIST_AUTOMATION_IDS = {
 	"listBoxCompletions",
-	"CompletionList"
+	"CompletionList",
 }
 
 
 class CompletionToolTip(ToolTip):
-	""" A tool tip for which duplicate open events can be fired.
-	"""
+	"""A tool tip for which duplicate open events can be fired."""
 
 	#: Keeps track of the last ToolTipOpened event (text, time)
 	_lastToolTipOpenedInfo = (None, None)
@@ -69,8 +71,7 @@ class CompletionToolTip(ToolTip):
 		newTime = time.time()
 		self.__class__._lastToolTipOpenedInfo = (newText, newTime)
 		withinPossibleDupToolTipTimeWindow = (
-			oldTime is not None
-			and (newTime - oldTime) < self._preventDuplicateToolTipSeconds
+			oldTime is not None and (newTime - oldTime) < self._preventDuplicateToolTipSeconds
 		)
 		if newText == oldText and withinPossibleDupToolTipTimeWindow:
 			# Tool-tip event suspected to be a duplicate, drop the event.
@@ -85,7 +86,10 @@ class CompletionToolTip(ToolTip):
 def findExtraOverlayClasses(obj, clsList):
 	if obj.UIAAutomationId in _INTELLISENSE_LIST_AUTOMATION_IDS:
 		clsList.insert(0, IntelliSenseList)
-	elif obj.UIAElement.cachedClassName == "IntellisenseMenuItem" and isinstance(obj.parent, IntelliSenseList):
+	elif obj.UIAElement.cachedClassName == "IntellisenseMenuItem" and isinstance(
+		obj.parent,
+		IntelliSenseList,
+	):
 		clsList.insert(0, IntelliSenseItem)
 	elif (
 		obj.UIAElement.cachedClassName == "LiveTextBlock"

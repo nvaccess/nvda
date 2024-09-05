@@ -58,8 +58,7 @@ class AnnotationOrigin:
 		self._originObj: "NVDAObject" = originObj
 
 	def __bool__(self):
-		"""Performant implementation required to test for annotations
-		"""
+		"""Performant implementation required to test for annotations"""
 		raise NotImplementedError
 
 	@property
@@ -74,6 +73,7 @@ class AnnotationOrigin:
 @dataclass
 class _AnnotationNavigationNode:
 	"""Node used in _AnnotationNavigation, for navigating between annotations."""
+
 	_TargetIndex = int  # Type for target index
 	origin: "NVDAObject"  # this is the last known location
 	indexOfLastReportedSummary: Optional[_TargetIndex] = None  # this would be the next destination
@@ -84,5 +84,6 @@ class _AnnotationNavigation:
 	Used to manage navigation of annotations.
 	For example, reporting a summary of each comment for an object with multiple comment annotation targets.
 	"""
+
 	lastReported: Optional[_AnnotationNavigationNode] = None
 	priorOrigins: List["NVDAObject"] = []

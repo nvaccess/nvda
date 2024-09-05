@@ -1,6 +1,194 @@
 # NVDA 新版資訊
 
 
+## 2024.3 更新中文摘譯
+
+如果 NVDA 啟動時有可用的附加元件更新，附加元件商店將會通知您。
+
+現在可以選擇將 Unicode 正規化應用於語音和點字輸出。
+當讀取特定語音合成器或點字表未知的字元並且具有相容的替代字元 (例如社交媒體上常用的粗體和斜體字元) 時，這可能很有幫助。
+它還允許在 Microsoft Word 方程式編輯器中讀取方程式。
+
+現在支援 Help Tech Activator Pro 點字顯示器。
+
+新增了未指派的指令來垂直和水平滾動滑鼠滾輪。
+
+修正了多個錯誤，特別是針對 Windows 11 表情符號面板和剪貼簿歷史記錄。
+對於網頁瀏覽器，修正了讀出錯誤訊息、圖形、標題、表格標籤和核取方塊/選擇鈕選單項目的問題。
+
+LibLouis 已更新，添加了新的點字表，包括塞爾維亞西里爾文、意第緒文、幾種古代語言、土耳其文和國際音標。
+Unicode CLDR 也已更新。
+
+### 新功能
+
+* 新的指令
+  * 新增了用於垂直和水平滾動滑鼠滾輪的未指派指命，以增強網頁和具有動態內容的應用程式 (例如 Dism++) 上的導覽。  (#16462, @Cary-Rowen)
+
+* 新增了對語音和點字輸出的 Unicode 正規化的支援。 (#11570, #16466 @LeonarddeR).
+  * 當讀取特定語音合成器或點字表未知的字元並且具有相容的替代字元 (例如社交媒體上常用的粗體和斜體字元) 時，這可能很有幫助。
+  * 它還允許在 Microsoft Word 方程式編輯器中讀取方程式。 (#4631)
+  * 您可以在 NVDA 設定對話框中各自的設定類別中為語音和點字啟用此功能。
+* 預設情況下，如果 NVDA 啟動時有可用的附加元件更新，附加元件商店將會通知您。 (#15035)
+  * 可以在「附加元件商店」設定類別中停用此功能。
+  * NVDA 每天檢查附加元件更新。
+  * 僅檢查相同通道內的更新 (例如，安裝的 Beta 版附加元件將僅通知 Beta 版通道中的更新）。
+* 增加對 Help Tech Activator Pro 點字顯示器的支援 (#16668)
+
+### 變更
+
+* 組件更新：
+  * eSpeak NG 更新至 1.52-dev commit `54ee11a79`. (#16495)
+  * Unicode CLDR 更新至版本 45.0. (#16507, @OzancanKaratas)
+  * fast_diff_match_patch (用於偵測終端機和其他動態內容的變化) 更新至版本2.1.0。 (#16508, @codeofdusk)
+  * LibLouis 點字轉譯表更新至 [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0)。 (#16652, @codeofdusk)
+    * 新增點字表：
+      * 塞爾維亞西里爾文
+      * 意第緒文
+      * 幾種古代語言：聖經希伯來文、阿卡德文、敘利亞文、烏加里特文和音譯楔形文字
+      * 土耳其文二級 (#16735)
+      * 國際音標 (#16773)
+  * NSIS 更新至 3.10 (#16674, @dpy013)
+  * Markdown 至 3.6 (#16725, @dpy013)
+  * nh3 至 0.2.17 (#16725, @dpy013)
+* 備用點字輸入表現在與輸出表相同，即統一英文點字一級。 (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA 現在能夠讀出沒有可訪問子項目但具有標籤或說明的圖表。 (#14514)
+* 在瀏覽模式下逐行閱讀時，長圖形或表格標題的每一行不再讀出「標題」。 (#14874)
+* 在Python主控台，當在輸入歷史記錄中移動時，最後一個未執行的命令將不再漏掉。 (#16653, @CyrilleB79)
+* 選用 NVDA 使用情況統計時，會加上一個唯一的匿名 ID。 (#16266)
+* 預設情況下，製作可攜式版本時將建立一個新資料夾。
+如果您嘗試寫入非空目錄，則會出現警告訊息。 (#16686)
+
+### 錯誤修復：
+
+* Windows 11 修復：
+  * 關閉剪貼簿歷史記錄和表情符號面板時，NVDA 將不再出現卡住的情況。 (#16346, #16347, @josephsl)
+  * NVDA 將在開啟 IME 介面時再次讀出可見的候選字。 (#14023, @josephsl)
+  * 在表情符號面板選單項目中導覽時，NVDA 將不再重覆讀出「剪貼簿歷史記錄」。 (#16532, @josephsl)
+  * 在檢閱表情符號面板中的顏文字和符號時，NVDA 將不再切斷語音和點字。 (#16533, @josephsl)
+* 網頁瀏覽器修復：
+  * Google Chrome 和 Mozilla Firefox 現在會回報「aria-errormessage」所引用的錯誤訊息。 (#8318)
+  * 如果存在，NVDA 現在將使用「aria-labelledby」為 Mozilla Firefox 中的表格提供可存取的名稱。 (#5183)
+  * 首次在 Google Chrome 和 Mozilla Firefox 中進入子功能表時，NVDA 將正確宣佈選擇鈕和核取方塊選單項目。 (#14550)
+  * 當頁麵包含表情符號時，NVDA 的瀏覽模式搜尋功能現在更加準確。 (#16317, @LeonarddeR)
+  * 在 Mozilla Firefox 中，當遊標位於行尾的插入點時，NVDA 現在可以正確讀出目前字元、單字和行。 (#3156, @jcsteh)
+  * 關閉文件或退出 Chrome 時不再導致 Google Chrome 崩潰。 (#16893)
+* NVDA 將在 Windows 11 上的 Eclipse 和其他基於 Eclipse 的環境中正確讀出自動完成建議。 (#16416, @thgcode)
+* 提高了自動文字讀出的可靠性，特別是在終端程式內。 (#15850, #16027, @Danstiv)
+* 可以再次可靠地將設定重設為出廠預設值。 (#16755, @Emil-18)
+* 在 Microsoft Excel 中編輯儲存格文字時，NVDA 將正確讀出選取變更。 (#15843)
+* 在使用 Java Access Bridge 的應用程式中，NVDA 現在將正確讀取文字的最後一個空白行，而不是重複前一行。 (#9376, @dmitrii-drobotov)
+* 在LibreOffice Writer (版本24.8 及更高版本) 中，當使用對應的鍵盤快速鍵切換文字格式 (粗體、斜體、底線、下標/上標、對齊) 時，NVDA 會宣布新的格式屬性 (例如「粗體開」、「粗體關」 )。 (#4248, @michaelweghorn)
+* 在使用 UI Automation 的應用程式中使用方向鍵在文字方塊中導覽時，NVDA 不再讀出錯誤的字元、單字等。 (#16711, @jcsteh)
+* 當貼到 Windows 10/11 小算盤時，NVDA 現在可以正確報告貼上的完整數字。 (#16573, @TristanBurchett)
+* 與遠端桌面斷開並重新連接後，語音不再沒有聲音。 (#16722, @jcsteh)
+* 新增了對 Visual Studio Code 中物件名稱的文字檢視命令的支援。 (#16248, @Cary-Rowen)
+* 在單聲道音訊裝置上播放 NVDA 聲音不再失敗。 (#16770, @jcsteh)
+* 當在 Outlook.com / Modern Outlook 中的「收件者」/「副本」/「密件副本」欄位中使用方向鍵時，NVDA 會讀出地址。 (#16856)
+* NVDA 現在可以更流暢地處理附加元件安裝失敗。 (#16704)
+
+## 2024.3
+
+The Add-on Store will now notify you if any add-on updates are available on NVDA startup.
+
+There are now options to apply Unicode normalization to speech and braille output.
+This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+It also allows reading of equations in the Microsoft Word equation editor.
+
+Help Tech Activator Pro braille displays are now supported.
+
+Unassigned commands have been added to scroll the mouse wheel vertically and horizontally.
+
+There are several bug fixes, particularly for the Windows 11 Emoji Panel and Clipboard history.
+For web browsers, there are fixes for reporting error messages, figures, captions, table labels and checkbox/radio button menu items.
+
+LibLouis has been updated, adding new Braille tables for Cyrillic Serbian, Yiddish, several ancient languages, Turkish, and the International Phonetic Alphabet.
+eSpeak has been updated, adding support for the Karakalpak language.
+Unicode CLDR has also been updated.
+
+### New Features
+
+* New key commands:
+  * Added unassigned commands for vertical and horizontal scrolling of the mouse wheel, to enhance navigation on web pages and apps with dynamic content, such as Dism++. (#16462, @Cary-Rowen)
+* Added support for Unicode Normalization to speech and braille output. (#11570, #16466 @LeonarddeR).
+  * This can be useful when reading characters that are unknown to a particular speech synthesizer or braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+  * It also allows reading of equations in the Microsoft Word equation editor. (#4631)
+  * You can enable this functionality for both speech and braille in their respective settings categories in the NVDA Settings dialog.
+* By default, after NVDA startup, you will be notified if any add-on updates are available. (#15035)
+  * This can be disabled in the "Add-on Store" category of settings.
+  * NVDA checks daily for add-on updates.
+  * Only updates within the same channel will be checked (e.g. installed beta add-ons will only notify for updates in the beta channel).
+* Added support for the Help Tech Activator Pro displays. (#16668)
+
+### Changes
+
+* Component updates:
+  * eSpeak NG has been updated to 1.52-dev commit `54ee11a79`. (#16495)
+    * Added new language Karakalpak.
+  * Updated Unicode CLDR to version 45.0. (#16507, @OzancanKaratas)
+  * Updated fast_diff_match_patch (used to detect changes in terminals and other dynamic content) to version 2.1.0. (#16508, @codeofdusk)
+  * Updated LibLouis braille translator to [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * New braille tables:
+      * Cyrillic Serbian.
+      * Yiddish.
+      * Several ancient languages: Biblical Hebrew, Akkadian, Syriac, Ugaritic and transliterated Cuneiform text.
+      * Turkish grade 2. (#16735)
+      * International Phonetic Alphabet. (#16773)
+  * Updated NSIS to 3.10 (#16674, @dpy013)
+  * Updated markdown to 3.6 (#16725, @dpy013)
+  * Updated nh3 to 0.2.17 (#16725, @dpy013)
+* The fallback braille input table is now equal to the fallback output table, which is Unified English Braille Code grade 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* NVDA will now report figures with no accessible children, but with a label or description. (#14514)
+* When reading by line in browse mode, "caption" is no longer reported on each line of a long figure or table caption. (#14874)
+* In the Python console, the last unexecuted command will no longer be lost when moving in the input history. (#16653, @CyrilleB79)
+* A unique anonymous ID is now sent as part of optional NVDA usage statistics gathering. (#16266)
+* By default, a new folder will be created when making a portable copy.
+A warning message will inform you if you try writing to a non-empty directory. (#16686)
+
+### Bug Fixes
+
+* Windows 11 fixes:
+  * NVDA will no longer appear to get stuck when closing the clipboard history and emoji panel. (#16346, #16347, @josephsl)
+  * NVDA will announce visible candidates again when opening the IME interface. (#14023, @josephsl)
+  * NVDA will no longer announce "clipboard history" twice when navigating through the emoji panel menu items. (#16532, @josephsl)
+  * NVDA will no longer cut off speech and braille when reviewing kaomojis and symbols in the emoji panel. (#16533, @josephsl)
+* Web browser fixes:
+  * Error messages referenced with `aria-errormessage` are now reported in Google Chrome and Mozilla Firefox. (#8318)
+  * If present, NVDA will now use `aria-labelledby` to provide accessible names for tables in Mozilla Firefox. (#5183)
+  * NVDA will correctly announce radio and checkbox menu items when first entering sub-menus in Google Chrome and Mozilla Firefox. (#14550)
+  * NVDA's browse mode find functionality is now more accurate when the page contains emojis. (#16317, @LeonarddeR)
+  * In Mozilla Firefox, NVDA now correctly reports the current character, word and line when the cursor is at the insertion point at the end of a line. (#3156, @jcsteh)
+* NVDA will announce correctly the autocomplete suggestions in Eclipse and other Eclipse-based environments on Windows 11. (#16416, @thgcode)
+* Improved reliability of automatic text readout, particularly in terminal applications. (#15850, #16027, @Danstiv)
+* NVDA will correctly announce selection changes when editing a cell's text in Microsoft Excel. (#15843)
+* In applications using Java Access Bridge, NVDA will now correctly read the last blank line of a text instead of repeating the previous line. (#9376, @dmitrii-drobotov)
+* In LibreOffice Writer (version 24.8 and newer), when toggling text formatting (bold, italic, underline, subscript/superscript, alignment) using the corresponding keyboard shortcut, NVDA announces the new formatting attribute (e.g. "Bold on", "Bold off"). (#4248, @michaelweghorn)
+* When navigating with the cursor keys in text boxes in applications which use UI Automation, NVDA no longer sometimes reports the wrong character, word, etc. (#16711, @jcsteh)
+* When pasting into the Windows 10/11 Calculator, NVDA now correctly reports the full number pasted. (#16573, @TristanBurchett)
+* Speech is no longer silent after disconnecting from and reconnecting to a Remote Desktop session. (#16722, @jcsteh)
+* Support added for text review commands for an object's name in Visual Studio Code. (#16248, @Cary-Rowen)
+* Playing NVDA sounds no longer fails on a mono audio device. (#16770, @jcsteh)
+* NVDA will report addresses when arrowing through To/CC/BCC fields in outlook.com / Modern Outlook. (#16856)
+* NVDA now handles add-on installation failures more gracefully. (#16704)
+
+### Changes for Developers
+
+* NVDA now uses Ruff instead of flake8 for linting. (#14817)
+* Fixed NVDA's build system to work properly when using Visual Studio 2022 version 17.10 and above. (#16480, @LeonarddeR)
+* A fixed width font is now used in Log Viewer and in the NVDA Python Console so that the cursor remains in the same column during vertical navigation.
+It is especially useful to read the error location markers in tracebacks. (#16321, @CyrilleB79)
+* Support for custom braille tables has been added. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * Tables can be provided in the `brailleTables` folder in an add-on package.
+  * Table metadata can be added to an optional `brailleTables` section in the add-on manifest or to a `.ini` file with the same format found in the brailleTables subdirectory of the scratchpad directory.
+  * Please consult the [braille translation tables section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) for more details.
+* When a `gainFocus` event is queued with an object that has a valid `focusRedirect` property, the object pointed to by the `focusRedirect` property is now held by `eventHandler.lastQueuedFocusObject`, rather than the originally queued object. (#15843)
+* NVDA will log its executable architecture (x86) at startup. (#16432, @josephsl)
+* `wx.CallAfter`, which is wrapped in `monkeyPatches/wxMonkeyPatches.py`, now includes proper `functools.wraps` indication. (#16520, @XLTechie)
+* There is a new module for scheduling tasks `utils.schedule`, using the pip module `schedule`. (#16636)
+  * You can use `scheduleThread.scheduleDailyJobAtStartUp` to automatically schedule a job that happens after NVDA starts, and every 24 hours after that.
+  Jobs are scheduled with a delay to avoid conflicts.
+  * `scheduleThread.scheduleDailyJob` and `scheduleJob` can be used to schedule jobs at custom times, where a `JobClashError` will be raised on a known job scheduling clash.
+* It is now possible to create app modules for apps hosting Edge WebView2 (msedgewebview2.exe) controls. (#16705, @josephsl)
+
 ## 2024.2 更新中文摘譯
 
 新增了一個「聲音分割」功能，

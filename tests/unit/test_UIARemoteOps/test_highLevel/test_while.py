@@ -13,7 +13,6 @@ from UIAHandler._remoteOps import remoteAPI
 
 
 class Test_while(TestCase):
-
 	def test_while(self):
 		op = operation.Operation(localMode=True)
 

@@ -81,7 +81,6 @@ def splitUIAElementAttribs(attribsString):
 
 
 class UIAWebTextInfo(UIATextInfo):
-
 	def _get_UIAElementAtStartWithReplacedContent(self):
 		"""Fetches the deepest UIAElement at the start of the text range
 		whose name has been overridden by the author (such as aria-label).
@@ -89,26 +88,26 @@ class UIAWebTextInfo(UIATextInfo):
 		element = self.UIAElementAtStart
 		condition = createUIAMultiPropertyCondition(
 			{
-				UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent
+				UIAHandler.UIA_ControlTypePropertyId: self.UIAControlTypesWhereNameIsContent,
 			},
 			{
 				UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_ListControlTypeId,
 				UIAHandler.UIA_IsKeyboardFocusablePropertyId: True,
-			}
+			},
 		)
 		# A part from the condition given, we must always match on the root of the document
 		# so we know when to stop walking
 		runtimeID = VARIANT()
 		self.obj.UIAElement._IUIAutomationElement__com_GetCurrentPropertyValue(
 			UIAHandler.UIA_RuntimeIdPropertyId,
-			byref(runtimeID)
+			byref(runtimeID),
 		)
 		condition = UIAHandler.handler.clientObject.createOrCondition(
 			UIAHandler.handler.clientObject.createPropertyCondition(
 				UIAHandler.UIA_RuntimeIdPropertyId,
-				runtimeID
+				runtimeID,
 			),
-			condition
+			condition,
 		)
 		walker = UIAHandler.handler.clientObject.createTreeWalker(condition)
 		cacheRequest = UIAHandler.handler.clientObject.createCacheRequest()
@@ -128,7 +127,7 @@ class UIAWebTextInfo(UIATextInfo):
 			name = element.getCachedPropertyValue(UIAHandler.UIA_NamePropertyId)
 			if name:
 				ariaProperties = element.getCachedPropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
-				if ('label=' in ariaProperties) or ('labelledby=' in ariaProperties):
+				if ("label=" in ariaProperties) or ("labelledby=" in ariaProperties):
 					return element
 				try:
 					textRange = self.obj.UIATextPattern.rangeFromChild(element)
@@ -156,14 +155,14 @@ class UIAWebTextInfo(UIATextInfo):
 			textRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_Start,
 				textRange,
-				UIAHandler.TextPatternRangeEndpoint_End
+				UIAHandler.TextPatternRangeEndpoint_End,
 			)
 			textRange.move(UIAHandler.TextUnit_Character, -1)
 		else:
 			textRange.MoveEndpointByRange(
 				UIAHandler.TextPatternRangeEndpoint_End,
 				textRange,
-				UIAHandler.TextPatternRangeEndpoint_Start
+				UIAHandler.TextPatternRangeEndpoint_Start,
 			)
 		self._rangeObj = textRange
 
@@ -200,10 +199,10 @@ class UIAWebTextInfo(UIATextInfo):
 			obj,
 			isEmbedded=isEmbedded,
 			startOfNode=startOfNode,
-			endOfNode=endOfNode
+			endOfNode=endOfNode,
 		)
-		field['embedded'] = isEmbedded
-		role = field.get('role')
+		field["embedded"] = isEmbedded
+		role = field.get("role")
 		# Fields should be treated as block for certain roles.
 		# This can affect whether the field is presented as a container (e.g.  announcing entering and exiting)
 		if role in (
@@ -214,29 +213,29 @@ class UIAWebTextInfo(UIATextInfo):
 			controlTypes.Role.LANDMARK,
 			controlTypes.Role.REGION,
 		):
-			field['isBlock'] = True
+			field["isBlock"] = True
 		ariaProperties = splitUIAElementAttribs(
-			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId)
+			obj._getUIACacheablePropertyValue(UIAHandler.UIA_AriaPropertiesPropertyId),
 		)
 		# ARIA roledescription and landmarks
-		field['roleText'] = ariaProperties.get('roledescription')
+		field["roleText"] = ariaProperties.get("roledescription")
 		# provide landmarks
-		field['landmark'] = obj.landmark
+		field["landmark"] = obj.landmark
 		# Combo boxes with a text pattern are editable
 		if obj.role == controlTypes.Role.COMBOBOX and obj.UIATextPattern:
-			field['states'].add(controlTypes.State.EDITABLE)
+			field["states"].add(controlTypes.State.EDITABLE)
 		# report if the field is 'current'
-		field['current'] = obj.isCurrent
+		field["current"] = obj.isCurrent
 		if obj.placeholder and obj._isTextEmpty:
-			field['placeholder'] = obj.placeholder
+			field["placeholder"] = obj.placeholder
 		# For certain controls, if ARIA overrides the label, then force the field's content (value) to the label
 		# Later processing in getTextWithFields will remove descendant content from fields
 		# with a content attribute.
-		hasAriaLabel = 'label' in ariaProperties
-		hasAriaLabelledby = 'labelledby' in ariaProperties
-		if field.get('nameIsContent'):
+		hasAriaLabel = "label" in ariaProperties
+		hasAriaLabelledby = "labelledby" in ariaProperties
+		if field.get("nameIsContent"):
 			content = ""
-			field.pop('name', None)
+			field.pop("name", None)
 			if hasAriaLabel or hasAriaLabelledby:
 				content = obj.name
 			if not content:
@@ -244,24 +243,26 @@ class UIAWebTextInfo(UIATextInfo):
 				# embedded object characters (which can appear in Edgium)
 				# should also be treated as whitespace
 				# allowing to be replaced by an overridden label
-				text = text.replace(textUtils.OBJ_REPLACEMENT_CHAR, '')
+				text = text.replace(textUtils.OBJ_REPLACEMENT_CHAR, "")
 				if not text or text.isspace():
-					content = obj.name or field.pop('description', None)
+					content = obj.name or field.pop("description", None)
 			if content:
-				field['content'] = content
+				field["content"] = content
 		elif isEmbedded:
-			field['content'] = obj.value
-			if field['role'] == controlTypes.Role.GROUPING:
-				field['role'] = controlTypes.Role.EMBEDDEDOBJECT
+			field["content"] = obj.value
+			if field["role"] == controlTypes.Role.GROUPING:
+				field["role"] = controlTypes.Role.EMBEDDEDOBJECT
 				if not obj.value:
-					field['content'] = obj.name
+					field["content"] = obj.name
 		elif hasAriaLabel or hasAriaLabelledby:
-			field['alwaysReportName'] = True
+			field["alwaysReportName"] = True
 		# Give lists an item count
 		if obj.role == controlTypes.Role.LIST:
 			child = UIAHandler.handler.clientObject.ControlViewWalker.GetFirstChildElement(obj.UIAElement)
 			if child:
-				field['_childcontrolcount'] = child.getCurrentPropertyValue(UIAHandler.UIA_SizeOfSetPropertyId)
+				field["_childcontrolcount"] = child.getCurrentPropertyValue(
+					UIAHandler.UIA_SizeOfSetPropertyId,
+				)
 		return field
 
 	# C901 'getTextWithFields' is too complex
@@ -269,7 +270,7 @@ class UIAWebTextInfo(UIATextInfo):
 	# and move logic out into smaller helper functions.
 	def getTextWithFields(  # noqa: C901
 		self,
-		formatConfig: Optional[Dict] = None
+		formatConfig: Optional[Dict] = None,
 	) -> textInfos.TextInfo.TextWithFieldsT:
 		# We don't want fields for collapsed ranges.
 		# This would normally be a general rule, but MS Word currently needs fields for collapsed ranges,
@@ -281,7 +282,7 @@ class UIAWebTextInfo(UIATextInfo):
 		clickableField = None
 		for field in fields:
 			if isinstance(field, textInfos.FieldCommand) and field.command == "controlStart":
-				states = field.field['states']
+				states = field.field["states"]
 				if clickableField:
 					states.discard(controlTypes.State.CLICKABLE)
 				elif controlTypes.State.CLICKABLE in states:
@@ -301,7 +302,7 @@ class UIAWebTextInfo(UIATextInfo):
 			if index > 1 and isinstance(field, str) and field.isspace():
 				prevField = fields[index - 2]
 				if isinstance(prevField, textInfos.FieldCommand) and prevField.command == "controlEnd":
-					del fields[index - 1:index + 1]
+					del fields[index - 1 : index + 1]
 			index += 1
 		# chop fields off the end incorrectly placed there by Edge
 		# This can happen if expanding to line covers element start chars at its end
@@ -315,12 +316,12 @@ class UIAWebTextInfo(UIATextInfo):
 			elif (
 				isinstance(field, textInfos.FieldCommand)
 				and field.command == "controlStart"
-				and not field.field.get('embedded')
+				and not field.field.get("embedded")
 			):
 				startCount += 1
 				lastStartIndex = index
 		if lastStartIndex:
-			del fields[lastStartIndex: lastStartIndex + (startCount * 2)]
+			del fields[lastStartIndex : lastStartIndex + (startCount * 2)]
 		# Remove any content from fields with a content attribute
 		numFields = len(fields)
 		curField = None
@@ -330,7 +331,7 @@ class UIAWebTextInfo(UIATextInfo):
 				not curField
 				and isinstance(field, textInfos.FieldCommand)
 				and field.command == "controlEnd"
-				and field.field.get('content')
+				and field.field.get("content")
 			):
 				curField = field.field
 				endIndex = index
@@ -340,21 +341,17 @@ class UIAWebTextInfo(UIATextInfo):
 				and field.command == "controlStart"
 				and field.field is curField
 			):
-				fields[index + 1: endIndex] = " "
+				fields[index + 1 : endIndex] = " "
 				curField = None
 		return fields
 
 
 class UIAWeb(UIA):
-
 	_TextInfo = UIAWebTextInfo
 
 	def _isIframe(self):
 		role = super().role
-		return (
-			role == controlTypes.Role.PANE
-			and self.UIATextPattern
-		)
+		return role == controlTypes.Role.PANE and self.UIATextPattern
 
 	def _get_role(self):
 		if self._isIframe():
@@ -370,12 +367,16 @@ class UIAWeb(UIA):
 
 	def _get_states(self):
 		states = super().states
-		if self.role in (
-			controlTypes.Role.STATICTEXT,
-			controlTypes.Role.GROUPING,
-			controlTypes.Role.SECTION,
-			controlTypes.Role.GRAPHIC,
-		) and self.UIAInvokePattern:
+		if (
+			self.role
+			in (
+				controlTypes.Role.STATICTEXT,
+				controlTypes.Role.GROUPING,
+				controlTypes.Role.SECTION,
+				controlTypes.Role.GRAPHIC,
+			)
+			and self.UIAInvokePattern
+		):
 			states.add(controlTypes.State.CLICKABLE)
 		return states
 
@@ -398,18 +399,18 @@ class UIAWeb(UIA):
 				return controlTypes.IsCurrent(valueOfAriaCurrent)
 			except ValueError:
 				log.debugWarning(
-					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}"
+					f"Unknown aria-current value: {valueOfAriaCurrent}, ariaProperties: {ariaProperties}",
 				)
 		return controlTypes.IsCurrent.NO
 
 	def _get_roleText(self):
-		roleText = self.ariaProperties.get('roledescription', None)
+		roleText = self.ariaProperties.get("roledescription", None)
 		if roleText:
 			return roleText
 		return super().roleText
 
 	def _get_placeholder(self):
-		ariaPlaceholder = self.ariaProperties.get('placeholder', None)
+		ariaPlaceholder = self.ariaProperties.get("placeholder", None)
 		return ariaPlaceholder
 
 	def _get_landmark(self):
@@ -423,13 +424,12 @@ class UIAWeb(UIA):
 		# #7333: It is valid to provide multiple, space separated aria roles in HTML
 		# If multiple roles or even multiple landmark roles are provided, the first one is used
 		ariaRole = ariaRoles.split(" ")[0]
-		if ariaRole in aria.landmarkRoles and (ariaRole != 'region' or self.name):
+		if ariaRole in aria.landmarkRoles and (ariaRole != "region" or self.name):
 			return ariaRole
 		return None
 
 
 class List(UIAWeb):
-
 	# non-focusable lists are readonly lists (ensures correct NVDA presentation category)
 	def _get_states(self):
 		states = super().states
@@ -439,11 +439,13 @@ class List(UIAWeb):
 
 
 class HeadingControlQuickNavItem(UIATextRangeQuickNavItem):
-
 	@property
 	def level(self):
-		if not hasattr(self, '_level'):
-			styleVal = getUIATextAttributeValueFromRange(self.textInfo._rangeObj, UIAHandler.UIA_StyleIdAttributeId)
+		if not hasattr(self, "_level"):
+			styleVal = getUIATextAttributeValueFromRange(
+				self.textInfo._rangeObj,
+				UIAHandler.UIA_StyleIdAttributeId,
+			)
 			if UIAHandler.StyleId_Heading1 <= styleVal <= UIAHandler.StyleId_Heading6:
 				self._level = styleVal - (UIAHandler.StyleId_Heading1 - 1)
 			else:
@@ -462,7 +464,7 @@ def HeadingControlQuicknavIterator(itemType, document, position, direction="next
 	See L{browseMode._iterNodesByType} for details on these specific arguments.
 	"""
 	# Some UI Automation web implementations expose all headings as UIA elements
-# 	with a controlType of text, and a level.
+	# 	with a controlType of text, and a level.
 	# Thus we can quickly search for these.
 	# However, sometimes when ARIA is used,
 	# the level on the element may not match the level in the text attributes.
@@ -471,13 +473,20 @@ def HeadingControlQuicknavIterator(itemType, document, position, direction="next
 	# Though this is still much faster than searching text attributes alone
 	# #9078: this must be wrapped inside a list, as Python 3 will treat this as iteration.
 	levels = list(range(1, 7))
-	condition = createUIAMultiPropertyCondition({
-		UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_TextControlTypeId,
-		UIAHandler.UIA_LevelPropertyId: levels
-	})
+	condition = createUIAMultiPropertyCondition(
+		{
+			UIAHandler.UIA_ControlTypePropertyId: UIAHandler.UIA_TextControlTypeId,
+			UIAHandler.UIA_LevelPropertyId: levels,
+		},
+	)
 	levelString = itemType[7:]
 	itemIter = UIAControlQuicknavIterator(
-		itemType, document, position, condition, direction=direction, itemClass=HeadingControlQuickNavItem
+		itemType,
+		document,
+		position,
+		condition,
+		direction=direction,
+		itemClass=HeadingControlQuickNavItem,
 	)
 	for item in itemIter:
 		# Verify this is the correct heading level via text attributes

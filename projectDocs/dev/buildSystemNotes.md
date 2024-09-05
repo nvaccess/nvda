@@ -30,6 +30,7 @@ These are the only files expected to be executed directly by a user/developer:
 - `rununittests.bat`
 - `runsystemtests.bat`
 - `runlint.bat`
+- `runlicensecheck.bat`
 
 **Note:** The `runnvda.bat` script intentionally uses `pyw.exe` to run NVDA as
 this is the more common and expected way to run NVDA.
@@ -45,11 +46,11 @@ The following files contain the main implementation of the virtual environment s
 
 #### `venvUtils/ensureAndActivate.bat`
    - Activates the virtual environment.
-   - If necessary, creates and configures it first. 
-   - The virtual environment is left active. 
+   - If necessary, creates and configures it first.
+   - The virtual environment is left active.
 #### `venvUtils/venvCmd.bat`
   - Uses `ensureAndActivate.bat` to run a command within the context
-   of the virtual environment. 
+   of the virtual environment.
   - The virtual environment is deactivated after the command
    completes.
   - All entry point scripts depend on this.

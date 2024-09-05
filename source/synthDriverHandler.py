@@ -41,8 +41,7 @@ class LanguageInfo(StringParameterInfo):
 
 
 class VoiceInfo(StringParameterInfo):
-	"""Provides information about a single synthesizer voice.
-	"""
+	"""Provides information about a single synthesizer voice."""
 
 	def __init__(self, id, displayName, language: Optional[str] = None):
 		"""
@@ -125,7 +124,7 @@ class SynthDriver(driverHandler.Driver):
 			_("&Language"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Language'),
+			displayName=pgettext("synth setting", "Language"),
 		)
 
 	@classmethod
@@ -137,7 +136,7 @@ class SynthDriver(driverHandler.Driver):
 			_("&Voice"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Voice'),
+			displayName=pgettext("synth setting", "Voice"),
 		)
 
 	@classmethod
@@ -149,7 +148,7 @@ class SynthDriver(driverHandler.Driver):
 			_("V&ariant"),
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Variant'),
+			displayName=pgettext("synth setting", "Variant"),
 		)
 
 	@classmethod
@@ -162,7 +161,7 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Rate'),
+			displayName=pgettext("synth setting", "Rate"),
 		)
 
 	@classmethod
@@ -174,8 +173,8 @@ class SynthDriver(driverHandler.Driver):
 			# which further increases the speaking rate when enabled.
 			_("Rate boos&t"),
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Rate boost'),
-			availableInSettingsRing=True
+			displayName=pgettext("synth setting", "Rate boost"),
+			availableInSettingsRing=True,
 		)
 
 	@classmethod
@@ -189,7 +188,7 @@ class SynthDriver(driverHandler.Driver):
 			normalStep=5,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Volume'),
+			displayName=pgettext("synth setting", "Volume"),
 		)
 
 	@classmethod
@@ -202,7 +201,7 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Pitch'),
+			displayName=pgettext("synth setting", "Pitch"),
 		)
 
 	@classmethod
@@ -215,7 +214,7 @@ class SynthDriver(driverHandler.Driver):
 			minStep=minStep,
 			availableInSettingsRing=True,
 			# Translators: Label for a setting in synth settings ring.
-			displayName=pgettext('synth setting', 'Inflection'),
+			displayName=pgettext("synth setting", "Inflection"),
 		)
 
 	@abstractmethod
@@ -228,8 +227,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def cancel(self):
-		"""Silence speech immediately.
-		"""
+		"""Silence speech immediately."""
 
 	def _get_language(self) -> Optional[str]:
 		return self.availableVoices[self.voice].language
@@ -253,7 +251,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def _get_availableVoices(self) -> OrderedDict[str, VoiceInfo]:
-		if not hasattr(self, '_availableVoices'):
+		if not hasattr(self, "_availableVoices"):
 			self._availableVoices = self._getAvailableVoices()
 		return self._availableVoices
 
@@ -301,7 +299,7 @@ class SynthDriver(driverHandler.Driver):
 		raise NotImplementedError
 
 	def _get_availableVariants(self):
-		if not hasattr(self, '_availableVariants'):
+		if not hasattr(self, "_availableVariants"):
 			self._availableVariants = self._getAvailableVariants()
 		return self._availableVariants
 
@@ -366,9 +364,10 @@ class SynthDriver(driverHandler.Driver):
 		log.debug(
 			(
 				"Loaded changed settings for SynthDriver {}"
-				if onlyChanged else
-				"Loaded settings for SynthDriver {}"
-			).format(self.name))
+				if onlyChanged
+				else "Loaded settings for SynthDriver {}"
+			).format(self.name),
+		)
 
 	def _get_initialSettingsRingSetting(self):
 		supportedSettings = list(self.supportedSettings)
@@ -416,7 +415,7 @@ def getSynthList() -> List[Tuple[str, str]]:
 	# The synth that should be placed at the end of the list.
 	lastSynth = None
 	for loader, name, isPkg in pkgutil.iter_modules(synthDrivers.__path__):
-		if name.startswith('_'):
+		if name.startswith("_"):
 			continue
 		try:
 			synth = _getSynthDriver(name)
@@ -445,7 +444,7 @@ def getSynth() -> Optional[SynthDriver]:
 
 def getSynthInstance(name, asDefault=False):
 	newSynth: SynthDriver = _getSynthDriver(name)()
-	if asDefault and newSynth.name == 'oneCore':
+	if asDefault and newSynth.name == "oneCore":
 		# Will raise an exception if oneCore does not support the system language
 		newSynth._getDefaultVoice(pickAny=False)
 	newSynth.initSettings()
@@ -454,10 +453,10 @@ def getSynthInstance(name, asDefault=False):
 
 # The synthDrivers that should be used by default.
 # The first that successfully initializes will be used when config is set to auto (I.e. new installs of NVDA).
-defaultSynthPriorityList = ['espeak', 'silence']
+defaultSynthPriorityList = ["espeak", "silence"]
 if winVersion.getWinVer() >= winVersion.WIN10:
 	# Default to OneCore on Windows 10 and above
-	defaultSynthPriorityList.insert(0, 'oneCore')
+	defaultSynthPriorityList.insert(0, "oneCore")
 
 
 def setSynth(name: Optional[str], isFallback: bool = False):
@@ -470,7 +469,7 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		_curSynth.terminate()
 		_curSynth = None
 		return True
-	if name == 'auto':
+	if name == "auto":
 		asDefault = True
 		name = defaultSynthPriorityList[0]
 	if _curSynth:
@@ -535,6 +534,7 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 		if resetSpeechIfNeeded:
 			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
 			import speech
+
 			speech.cancelSpeech()
 		setSynth(conf["synth"])
 		return

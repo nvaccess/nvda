@@ -91,7 +91,12 @@ class SapiSink(object):
 
 
 class SynthDriver(SynthDriver):
-	supportedSettings=(SynthDriver.VoiceSetting(),SynthDriver.RateSetting(),SynthDriver.PitchSetting(),SynthDriver.VolumeSetting())
+	supportedSettings = (
+		SynthDriver.VoiceSetting(),
+		SynthDriver.RateSetting(),
+		SynthDriver.PitchSetting(),
+		SynthDriver.VolumeSetting(),
+	)
 	supportedCommands = {
 		IndexCommand,
 		CharacterModeCommand,
@@ -106,29 +111,31 @@ class SynthDriver(SynthDriver):
 
 	COM_CLASS = "SAPI.SPVoice"
 
-	name="sapi5"
-	description="Microsoft Speech API version 5"
+	name = "sapi5"
+	description = "Microsoft Speech API version 5"
 
 	@classmethod
 	def check(cls):
 		try:
-			r=winreg.OpenKey(winreg.HKEY_CLASSES_ROOT,cls.COM_CLASS)
+			r = winreg.OpenKey(winreg.HKEY_CLASSES_ROOT, cls.COM_CLASS)
 			r.Close()
 			return True
 		except:  # noqa: E722
 			return False
 
-	ttsAudioStream=None #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
+	ttsAudioStream = (
+		None  #: Holds the ISPAudio interface for the current voice, to aid in stopping and pausing audio
+	)
 	_audioDucker: Optional[audioDucking.AudioDucker] = None
 
-	def __init__(self,_defaultVoiceToken=None):
+	def __init__(self, _defaultVoiceToken=None):
 		"""
 		@param _defaultVoiceToken: an optional sapi voice token which should be used as the default voice (only useful for subclasses)
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
 		if audioDucking.isAudioDuckingSupported():
 			self._audioDucker = audioDucking.AudioDucker()
-		self._pitch=50
+		self._pitch = 50
 		self._initTts(_defaultVoiceToken)
 
 	def terminate(self):
@@ -136,21 +143,21 @@ class SynthDriver(SynthDriver):
 		self.tts = None
 
 	def _getAvailableVoices(self):
-		voices=OrderedDict()
-		v=self._getVoiceTokens()
+		voices = OrderedDict()
+		v = self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
 		for i in range(len(v)):
 			try:
-				ID=v[i].Id
-				name=v[i].GetDescription()
+				ID = v[i].Id
+				name = v[i].GetDescription()
 				try:
-					language=locale.windows_locale[int(v[i].getattribute('language').split(';')[0],16)]
+					language = locale.windows_locale[int(v[i].getattribute("language").split(";")[0], 16)]
 				except KeyError:
-					language=None
+					language = None
 			except COMError:
 				log.warning("Could not get the voice info. Skipping...")
-			voices[ID]=VoiceInfo(ID,name,language)
+			voices[ID] = VoiceInfo(ID, name, language)
 		return voices
 
 	def _getVoiceTokens(self):
@@ -158,7 +165,7 @@ class SynthDriver(SynthDriver):
 		return self.tts.getVoices()
 
 	def _get_rate(self):
-		return (self.tts.rate*5)+50
+		return (self.tts.rate * 5) + 50
 
 	def _get_pitch(self):
 		return self._pitch
@@ -168,10 +175,10 @@ class SynthDriver(SynthDriver):
 
 	def _get_voice(self):
 		return self.tts.voice.Id
- 
+
 	def _get_lastIndex(self):
-		bookmark=self.tts.status.LastBookmark
-		if bookmark!="" and bookmark is not None:
+		bookmark = self.tts.status.LastBookmark
+		if bookmark != "" and bookmark is not None:
 			return int(bookmark)
 		else:
 			return None
@@ -179,45 +186,46 @@ class SynthDriver(SynthDriver):
 	def _percentToRate(self, percent):
 		return (percent - 50) // 5
 
-	def _set_rate(self,rate):
+	def _set_rate(self, rate):
 		self.tts.Rate = self._percentToRate(rate)
 
-	def _set_pitch(self,value):
-		#pitch is really controled with xml around speak commands
-		self._pitch=value
+	def _set_pitch(self, value):
+		# pitch is really controled with xml around speak commands
+		self._pitch = value
 
-	def _set_volume(self,value):
+	def _set_volume(self, value):
 		self.tts.Volume = value
 
 	def _initTts(self, voice=None):
-		self.tts=comtypes.client.CreateObject(self.COM_CLASS)
+		self.tts = comtypes.client.CreateObject(self.COM_CLASS)
 		if voice:
 			# #749: It seems that SAPI 5 doesn't reset the audio parameters when the voice is changed,
 			# but only when the audio output is changed.
 			# Therefore, set the voice before setting the audio output.
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
-		outputDeviceID=nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
-		if outputDeviceID>=0:
-			self.tts.audioOutput=self.tts.getAudioOutputs()[outputDeviceID]
+		outputDeviceID = nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
+		if outputDeviceID >= 0:
+			self.tts.audioOutput = self.tts.getAudioOutputs()[outputDeviceID]
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
 		self.tts.EventInterests = (
 			SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
 		)
 		from comInterfaces.SpeechLib import ISpAudio
-		try:
-			self.ttsAudioStream=self.tts.audioOutputStream.QueryInterface(ISpAudio)
-		except COMError:
-			log.debugWarning("SAPI5 voice does not support ISPAudio") 
-			self.ttsAudioStream=None
 
-	def _set_voice(self,value):
+		try:
+			self.ttsAudioStream = self.tts.audioOutputStream.QueryInterface(ISpAudio)
+		except COMError:
+			log.debugWarning("SAPI5 voice does not support ISPAudio")
+			self.ttsAudioStream = None
+
+	def _set_voice(self, value):
 		tokens = self._getVoiceTokens()
 		# #2629: Iterating uses IEnumVARIANT and GetBestInterface doesn't work on tokens returned by some token enumerators.
 		# Therefore, fetch the items by index, as that method explicitly returns the correct interface.
 		for i in range(len(tokens)):
-			voice=tokens[i]
-			if value==voice.Id:
+			voice = tokens[i]
+			if value == voice.Id:
 				break
 		else:
 			# Voice not found.
@@ -228,9 +236,10 @@ class SynthDriver(SynthDriver):
 		return percent // 2 - 25
 
 	IPA_TO_SAPI = {
-		u"θ": u"th",
-		u"s": u"s",
+		"θ": "th",
+		"s": "s",
 	}
+
 	def _convertPhoneme(self, ipa):
 		# We only know about US English phonemes.
 		# Rather than just ignoring unknown phonemes, SAPI throws an exception.
@@ -240,8 +249,8 @@ class SynthDriver(SynthDriver):
 		out = []
 		outAfter = None
 		for ipaChar in ipa:
-			if ipaChar == u"ˈ":
-				outAfter = u"1"
+			if ipaChar == "ˈ":
+				outAfter = "1"
 				continue
 			out.append(self.IPA_TO_SAPI[ipaChar])
 			if outAfter:
@@ -249,7 +258,7 @@ class SynthDriver(SynthDriver):
 				outAfter = None
 		if outAfter:
 			out.append(outAfter)
-		return u" ".join(out)
+		return " ".join(out)
 
 	def speak(self, speechSequence):
 		textList = []
@@ -261,6 +270,7 @@ class SynthDriver(SynthDriver):
 		# We have to use something mutable here because it needs to be changed by the inner function.
 		tagsChanged = [True]
 		openedTags = []
+
 		def outputTags():
 			if not tagsChanged[0]:
 				return
@@ -321,8 +331,9 @@ class SynthDriver(SynthDriver):
 				tagsChanged[0] = True
 			elif isinstance(item, PhonemeCommand):
 				try:
-					textList.append(u'<pron sym="%s">%s</pron>'
-						% (self._convertPhoneme(item.ipa), item.text or u""))
+					textList.append(
+						'<pron sym="%s">%s</pron>' % (self._convertPhoneme(item.ipa), item.text or ""),
+					)
 				except LookupError:
 					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
 					if item.text:
@@ -349,7 +360,7 @@ class SynthDriver(SynthDriver):
 		# - When there is no audio produced by the synth, a user may notice volume lowering (ducking) temporarily.
 		# - If the call to startStream handler is delayed significantly, users may notice a variation in volume
 		# (as ducking is disabled at the end of speak, and re-enabled when the startStream handler is called)
-		
+
 		# A note on the synchronicity of components of this approach:
 		# SAPISink.StartStream event handler (callback):
 		# the synth speech is not blocked by this event callback.
