@@ -41,6 +41,7 @@ These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
 * `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
+* `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
 
 #### Deprecations
 
