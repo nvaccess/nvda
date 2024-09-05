@@ -3074,6 +3074,13 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
+##### Server mirror URL {#AddonStoreMetadataMirror}
+
+This option allows you to specify an alternative URL to download Add-on Store data from.
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
+
+Leave this blank to use the default NV Access Add-on Store server.
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).

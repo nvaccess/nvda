@@ -339,6 +339,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [addonStore]
 	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
+	baseServerURL = string(default="")
 """
 
 #: The configuration specification
