@@ -4379,6 +4379,8 @@ Please see the display's documentation for descriptions of where these keys can 
 |control+home key |backspace+LJ up|
 |control+end key |backspace+LJ down|
 
+<!-- KC:endInclude -->
+
 ### Papenmeier BRAILLEX Newer Models {#Papenmeier}
 
 The following Braille displays are supported:
