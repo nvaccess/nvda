@@ -3,7 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import config
 from dataclasses import dataclass
 from enum import Enum
 
@@ -96,6 +95,7 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Publication date"),
 		50,
 	)
+
 
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 

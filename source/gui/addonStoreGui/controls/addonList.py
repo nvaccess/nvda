@@ -72,7 +72,7 @@ class AddonVirtualList(
 				self.SetItemData(i, addon.model.submissionTime)
 			else:
 				self.SetItemData(i, 0)
-		#self.SortItems(self.getSortFunction)
+		# self.SortItems(self.getSortFunction)
 
 	def getSortFunction(self, addon1, addon2):
 		data1 = self.GetItemData(addon1)
