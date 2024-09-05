@@ -3134,7 +3134,7 @@ class AddonStorePanel(SettingsPanel):
 		self.automaticUpdatesComboBox.SetSelection(index)
 
 		# Translators: This is the label for a text box in the add-on store settings dialog.
-		self.addonMetadataMirrorLabelText = _("&Mirror URL")
+		self.addonMetadataMirrorLabelText = _("Server &mirror URL")
 		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
 			self.addonMetadataMirrorLabelText,
 			wx.TextCtrl,
