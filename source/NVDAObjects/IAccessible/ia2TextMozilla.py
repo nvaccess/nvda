@@ -11,6 +11,7 @@ import typing
 from typing import (
 	Optional,
 	Dict,
+	Type,
 )
 
 from comtypes import COMError
@@ -27,7 +28,7 @@ import locationHelper
 from logHandler import log
 
 
-def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
+def _getRawTextInfo(obj) -> Type[offsets.OffsetsTextInfo]:
 	if obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
