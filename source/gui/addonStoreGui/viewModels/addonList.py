@@ -93,10 +93,9 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "publicationDate"),
+		pgettext("addonStore", "Publication date"),
 		50,
 	)
-
 
 _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
@@ -218,7 +217,7 @@ class AddonListVM:
 		self.selectionChanged = extensionPoints.Action()
 		self.selectedAddonId: Optional[str] = None
 		self.lastSelectedAddonId = self.selectedAddonId
-		self._sortByModelField: AddonListField = AddonListField.displayName
+		self._sortByModelField: AddonListField = AddonListField.publicationDate
 		self._filterString: Optional[str] = None
 
 		self._setSelectionPending = False
@@ -351,7 +350,7 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			if listItemVM.model.submissionTime:
+			if listItemVM.model.submissionTime and self._sortByModelField == AddonListField.publicationDate:
 				return strxfrm(str(listItemVM.model.submissionTime))
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
