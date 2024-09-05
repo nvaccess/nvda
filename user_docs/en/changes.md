@@ -5,10 +5,10 @@
 ### Important notes
 
 ### New Features
+
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
-
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 
@@ -16,6 +16,8 @@ In order to use this feature, the application volume adjuster needs to be enable
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 
 ### Bug Fixes
 
@@ -89,8 +91,6 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
 * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
   * Added new languages Faroese and Xextan.
-* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
-  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
 
 ### Bug Fixes
