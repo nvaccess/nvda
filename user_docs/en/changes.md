@@ -11,6 +11,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
+    * This feature can be enabled in the document formatting settings panel.
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 
