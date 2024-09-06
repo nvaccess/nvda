@@ -27,6 +27,7 @@ from logHandler import log
 import NVDAState
 from NVDAState import WritePaths
 from utils.security import sha256_checksum
+from config import conf
 
 from .models.addon import (
 	_AddonGUIModel,
@@ -40,12 +41,18 @@ if TYPE_CHECKING:
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 
 
-BASE_URL = "https://nvaccess.org/addonStore"
+_DEFAULT_BASE_URL = "https://nvaccess.org/addonStore"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
 i.e include older incompatible versions.
 """
+
+
+def _getBaseURL() -> str:
+	if url := conf["addonStore"]["baseServerURL"]:
+		return url
+	return _DEFAULT_BASE_URL
 
 
 def _getCurrentApiVersionForURL() -> str:
@@ -54,11 +61,11 @@ def _getCurrentApiVersionForURL() -> str:
 
 
 def _getAddonStoreURL(channel: Channel, lang: str, nvdaApiVersion: str) -> str:
-	return f"{BASE_URL}/{lang}/{channel.value}/{nvdaApiVersion}.json"
+	return f"{_getBaseURL()}/{lang}/{channel.value}/{nvdaApiVersion}.json"
 
 
 def _getCacheHashURL() -> str:
-	return f"{BASE_URL}/cacheHash.json"
+	return f"{_getBaseURL()}/cacheHash.json"
 
 
 class AddonFileDownloader:
