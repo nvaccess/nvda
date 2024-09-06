@@ -1000,10 +1000,16 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	BSTR value=NULL;
-	if(pacc->get_accValue(varChild,&value)==S_OK) {
-		if(value&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
+	if (pacc->get_accValue(varChild, &value) == S_OK) {
+		if (value) {
+			if (role == ROLE_SYSTEM_LINK) {
+				// For links, store the IAccessible value to handle same page link detection.
+				parentNode->addAttribute(L"IAccessible::value", value);
+			}
+			if (SysStringLen(value) == 0) {
+				SysFreeString(value);
+				value = NULL;
+			}
 		}
 	}
 

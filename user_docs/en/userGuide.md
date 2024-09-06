@@ -2983,6 +2983,7 @@ You can configure reporting of:
 * Elements
   * Headings
   * Links
+  * Link type (destination to same page)
   * Graphics
   * Lists
   * Block quotes
