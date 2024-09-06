@@ -678,6 +678,9 @@ class AddonStoreVM:
 			self._cancelPendingInstallForAddon(listItemVM)
 
 		log.debug(f"Completed cancelling install of {listItemVM.Id}")
+		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
+			listItemVM.model.name
+		)
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
 	def cancelInstallForAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
