@@ -2983,6 +2983,7 @@ You can configure reporting of:
 * Elements
   * Headings
   * Links
+  * Link type (destination to same page)
   * Graphics
   * Lists
   * Block quotes
@@ -3073,21 +3074,12 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Add-on list order {#AddonListOrder}
+##### Server mirror URL {#AddonStoreMetadataMirror}
 
-This option determines the order of add-ons in the add-on list of the store.
-Add-ons can be sorted by date (recent or older add-ons first), or alphabetically.
+This option allows you to specify an alternative URL to download Add-on Store data from.
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Recent add-ons first (Default), Older add-ons first, alphabetical |
-|Default |Recent add-ons first |
-
-|Option |Behaviour |
-|---|---|
-|Recent add-ons first |Add-ons published more recently will be presented first |
-|Older add-ons first |Add-ons published before will be presented first |
-|Alphabetical |Add-ons will be presented in alphabetical order |
+Leave this blank to use the default NV Access Add-on Store server.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3661,6 +3653,7 @@ This could include accessing your personal data or even the entire system.
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
+It is also possible to cancel the install before exiting the Add-on Store.
 
 You can also install multiple add-ons at once.
 This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.

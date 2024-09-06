@@ -145,6 +145,9 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseReplaceAction(self) -> bool:
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 
+	def canUseCancelInstallAction(self) -> bool:
+		return self.status in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
+
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
