@@ -679,7 +679,7 @@ class AddonStoreVM:
 
 		log.debug(f"Completed cancelling install of {listItemVM.Id}")
 		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
-			listItemVM.model.name
+			listItemVM.model.name,
 		)
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 
