@@ -2983,6 +2983,7 @@ You can configure reporting of:
 * Elements
   * Headings
   * Links
+  * Link type (destination to same page)
   * Graphics
   * Lists
   * Block quotes
@@ -3653,6 +3654,7 @@ You can install and update add-ons by [browsing Available add-ons](#AddonStoreBr
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
 You can also retry the installation if the download/installation fails.
+It is also possible to cancel the install before exiting the Add-on Store.
 
 You can also install multiple add-ons at once.
 This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.

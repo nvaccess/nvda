@@ -2800,7 +2800,14 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.linksCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Lin&ks")))
+		self.linksCheckBox.Bind(wx.EVT_CHECKBOX, self._onLinksChange)
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
+		self.linkTypeCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Link type")))
+		self.linkTypeCheckBox.SetValue(config.conf["documentFormatting"]["reportLinkType"])
+		self.linkTypeCheckBox.Enable(self.linksCheckBox.IsChecked())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2868,6 +2875,9 @@ class DocumentFormattingPanel(SettingsPanel):
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
+	def _onLinksChange(self, evt: wx.CommandEvent):
+		self.linkTypeCheckBox.Enable(evt.IsChecked())
+
 	def onSave(self):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"] = (
 			self.detectFormatAfterCursorCheckBox.IsChecked()
@@ -2902,6 +2912,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportTableCellCoords"] = self.tableCellCoordsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportCellBorders"] = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportLinks"] = self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLinkType"] = self.linkTypeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"] = self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"] = self.listsCheckBox.IsChecked()

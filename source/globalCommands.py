@@ -125,6 +125,29 @@ SCRCAT_AUDIO = _("Audio")
 NO_SETTINGS_MSG = _("No settings")
 
 
+def toggleBooleanValue(
+	configSection: str,
+	configKey: str,
+	enabledMsg: str,
+	disabledMsg: str,
+) -> None:
+	"""
+	Toggles a boolean value in the configuration and returns the appropriate message.
+
+	:param configSection: The configuration section containing the boolean key.
+	:param configKey: The configuration key associated with the boolean value.
+	:param enabledMsg: The message for the enabled state.
+	:param disabledMsg: The message for the disabled state.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	newValue = not currentValue
+	config.conf[configSection][configKey] = newValue
+
+	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
+
+
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
 
@@ -901,6 +924,26 @@ class GlobalCommands(ScriptableObject):
 			state = _("report links on")
 			config.conf["documentFormatting"]["reportLinks"] = True
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle report link type command.
+		description=_("Toggles on and off the reporting of link type"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
+		if config.conf["documentFormatting"]["reportLinks"]:
+			toggleBooleanValue(
+				configSection="documentFormatting",
+				configKey="reportLinkType",
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				enabledMsg=_("Report link type on"),
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				disabledMsg=_("Report link type off"),
+			)
+		else:
+			# Translators: The message announced when reporting links is disabled,
+			# and the user tries to toggle the report link type document formatting setting.
+			ui.message(_("The report links setting must be enabled to toggle report link type"))
 
 	@script(
 		# Translators: Input help mode message for toggle report graphics command.

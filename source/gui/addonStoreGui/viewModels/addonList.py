@@ -143,6 +143,9 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseRetryAction(self) -> bool:
 		return self.status in {AvailableAddonStatus.DOWNLOAD_FAILED, AvailableAddonStatus.INSTALL_FAILED}
 
+	def canUseCancelInstallAction(self) -> bool:
+		return self.status in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
+
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
