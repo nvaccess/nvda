@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-27 03:39+0000\n"
-"PO-Revision-Date: 2024-08-27 06:23\n"
+"POT-Creation-Date: 2024-08-30 06:22+0000\n"
+"PO-Revision-Date: 2024-09-02 01:14\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Simplified\n"
 "Language: zh_CN\n"
@@ -3480,7 +3480,7 @@ msgstr "未选择文本"
 
 #. Translators: Abbreviation for points, a measurement of font size.
 #: displayModel.py:576 appModules\powerpnt.py:1113 appModules\soffice.py:77
-#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:205
+#: controlTypes\formatFields.py:53 NVDAObjects\JAB\__init__.py:202
 #: NVDAObjects\UIA\__init__.py:194 NVDAObjects\window\edit.py:345
 #: NVDAObjects\window\edit.py:714 NVDAObjects\window\excel.py:1300
 #: NVDAObjects\window\scintilla.py:154 NVDAObjects\window\winword.py:1059
@@ -11496,7 +11496,7 @@ msgstr "版本"
 #. Translators: The label for a column in add-ons list used to provide some explanation about incompatibility
 #: gui\addonGui.py:369
 msgid "Incompatible reason"
-msgstr "不兼容的原因"
+msgstr "不兼容原因"
 
 #. Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 #: gui\blockAction.py:29
@@ -14619,7 +14619,7 @@ msgstr "更新(&U)"
 #: gui\addonStoreGui\viewModels\store.py:138
 msgctxt "addonStore"
 msgid "&Update (override incompatibility)"
-msgstr "更新（覆盖不兼容）(&U)"
+msgstr "更新（忽略不兼容）(&U)"
 
 #. Translators: Label for an action that replaces the selected addon with
 #. an add-on store version.
@@ -14827,13 +14827,13 @@ msgstr "{rowNumber}行{columnNumber}列已设为列标题的开始单元"
 #: NVDAObjects\IAccessible\winword.py:279
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from column headers"
-msgstr "{rowNumber}行{columnNumber}列已从列标题中移除"
+msgstr "{rowNumber} 行 {columnNumber} 列已从列标题中移除"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:287
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in column headers"
-msgstr "无法在列标题中找到{rowNumber}行{columnNumber}列"
+msgstr "无法在列标题中找到 {rowNumber} 行 {columnNumber} 列"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:297
@@ -14856,13 +14856,13 @@ msgstr "{rowNumber}行{columnNumber}列已设为行标题的开始单元"
 #: NVDAObjects\IAccessible\winword.py:331
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr "{rowNumber}行{columnNumber}列已从行标题中移除"
+msgstr "{rowNumber} 行 {columnNumber} 列已从行标题中移除"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:339
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in row headers"
-msgstr "无法在行标题中找到{rowNumber}行{columnNumber}列"
+msgstr "无法在行标题中找到 {rowNumber} 行 {columnNumber} 列"
 
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387

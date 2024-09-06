@@ -1610,7 +1610,7 @@ Note: The above shortcuts work only with the default formatting string for fooba
 
 ### Poedit {#Poedit}
 
-NVDA offers enhanced support for Poedit 3.4 or newer.
+NVDA offers enhanced support for Poedit 3.5 or newer.
 
 <!-- KC:beginInclude -->
 
@@ -2431,6 +2431,8 @@ This mode may differ from "Sound split disabled" mode in case other audio proces
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
@@ -2447,6 +2449,46 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
+
+This combo box allows you to select the status of the applications volume adjuster.
+The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+
+Possible values are:
+
+* Disabled: NVDA doesn't interfere with volume levels of other applications.
+* Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Volume of other applications {#OtherAppVolume}
+
+This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
+This volume can also be controlled via the following keyboard commands from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
+| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Muting other applications {#OtherAppMute}
+
+This check box allows you to mute or unmute all applications except NVDA at once.
+This mute setting will apply to all other applications sound output, even if they start after this setting is changed.
+
+The following keyboard command can also be used from anywhere:
+
+| Name | Key | Description |
+|---|---|---|
+| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
+
+Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
+
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
@@ -3030,6 +3072,13 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |---|---|
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
+
+##### Server mirror URL {#AddonStoreMetadataMirror}
+
+This option allows you to specify an alternative URL to download Add-on Store data from.
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
+
+Leave this blank to use the default NV Access Add-on Store server.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
