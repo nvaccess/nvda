@@ -8,9 +8,11 @@
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
-
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
+* NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
+* Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+* It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 
 ### Changes
 
@@ -39,6 +41,15 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated Ruff to 0.6.3. (#17102)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+* Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
+  * A new `utils.urlUtils` module with different functions to determine link types
+  * A new `INTERNAL_LINK` state has been added to `controlTypes.states.State`
+  * A new `linkType` property has been added on `NVDAObject`.
+  It queries the `treeInterceptor` by default, if any.
+  * `BrowseModeTreeInterceptor` object has a new `documentUrl` property
+  * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
+  * A `toggleBooleanValue` helper function has been added to `globalCommands`.
+  It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * There is a new `gui.utilityDialogs.ContinueCancelDialog`, for producing simple dialogs with Continue and Cancel buttons. (#12355, @XLTechie)
 
 #### API Breaking Changes
@@ -46,6 +57,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
 
+* The `addonStore.network.BASE_URL` constant has been removed.
+As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
 * `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
 * `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
 

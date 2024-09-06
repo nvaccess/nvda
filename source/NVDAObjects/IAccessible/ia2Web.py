@@ -213,6 +213,8 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
+		if self.role == controlTypes.Role.LINK and controlTypes.State.LINKED in states and self.linkType:
+			states.add(self.linkType)
 		return states
 
 	def _get_landmark(self):
