@@ -15,12 +15,12 @@ class ContinueCancelDialog(MessageDialog):
 	"""
 
 	def __init__(
-		self,
-		parent: wx.Frame,
-		title: str,
-		message: str,
-		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
-		continueButtonFirst: bool = True,
+			self,
+			parent: wx.Frame,
+			title: str,
+			message: str,
+			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+			continueButtonFirst: bool = True,
 	) -> None:
 		"""Creates a ContinueCancelDialog MessageDialog.
 
