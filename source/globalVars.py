@@ -58,6 +58,7 @@ class DefaultAppArgs(argparse.Namespace):
 	 - SecureMode and SecureScreens
 	"""
 	disableAddons: bool = False
+	disableDictionaries: bool = False
 	debugLogging: bool = False
 	noLogging: bool = False
 	changeScreenReaderFlag: bool = True

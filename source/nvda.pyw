@@ -221,6 +221,13 @@ parser.add_argument(
 	"--disable-addons", action="store_true", dest="disableAddons", default=False, help="Disable all add-ons"
 )
 parser.add_argument(
+	"--disable-dictionaries",
+	action="store_true",
+	dest="disableDictionaries",
+	default=False,
+	help="Disable dictionary processing for all dictionaries",
+)
+parser.add_argument(
 	"--debug-logging",
 	action="store_true",
 	dest="debugLogging",
@@ -332,6 +339,10 @@ for name in pathAppArgs:
 	if isinstance(origVal, str):
 		newVal = os.path.abspath(origVal)
 		setattr(globalVars.appArgs, name, newVal)
+
+if globalVars.appArgs.disableDictionaries is True:
+	log.debug("Dictionaries processing is disabled.")
+	globalVars.speechDictionaryProcessing = False
 
 
 def terminateRunningNVDA(window):

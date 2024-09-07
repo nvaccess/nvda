@@ -240,12 +240,19 @@ class DictionaryDialog(
 	def postInit(self):
 		self.dictList.SetFocus()
 
+	def ReEnableDictionaryProcessing(self):
+		if globalVars.appArgs.disableDictionaries is False:
+			globalVars.speechDictionaryProcessing = True
+		else:
+			log.warning("dictionaries processing is disabled")
+
 	def onCancel(self, evt):
-		globalVars.speechDictionaryProcessing = True
+		self.ReEnableDictionaryProcessing()
 		super(DictionaryDialog, self).onCancel(evt)
 
 	def onOk(self, evt):
-		globalVars.speechDictionaryProcessing = True
+		self.ReEnableDictionaryProcessing()
+
 		if self.tempSpeechDict != self.speechDict:
 			del self.speechDict[:]
 			self.speechDict.extend(self.tempSpeechDict)
