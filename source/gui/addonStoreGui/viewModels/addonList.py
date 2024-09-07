@@ -356,7 +356,7 @@ class AddonListVM:
 			if self._sortByModelField == AddonListField.publicationDate:
 				if listItemVM.model.submissionTime is not None:
 					return strxfrm(str(listItemVM.model.submissionTime))
-				fallbackField =AddonListField.displayName
+				fallbackField = AddonListField.displayName
 				return strxfrm(self._getAddonFieldText(listItemVM, fallbackField))
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
