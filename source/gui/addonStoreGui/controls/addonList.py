@@ -66,18 +66,6 @@ class AddonVirtualList(
 			self.Focus(selIndex)
 		self._addonsListVM.itemUpdated.register(self._itemDataUpdated)
 		self._addonsListVM.updated.register(self._doRefresh)
-		for i in range(self.GetItemCount()):
-			addon = self._addonsListVM.getAddonAtIndex(i)
-			if addon.model.submissionTime is not None:
-				self.SetItemData(i, addon.model.submissionTime)
-			else:
-				self.SetItemData(i, 0)
-		# self.SortItems(self.getSortFunction)
-
-	def getSortFunction(self, addon1, addon2):
-		data1 = self.GetItemData(addon1)
-		data2 = self.GetItemData(addon2)
-		return (data1 > data2) - (data1 < data2)
 
 	def _refreshColumns(self):
 		self.ClearAll()
