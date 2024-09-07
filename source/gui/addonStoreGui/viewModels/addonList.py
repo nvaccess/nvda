@@ -53,13 +53,13 @@ class AddonListField(_AddonListFieldData, Enum):
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
-		150,
+		100,
 	)
 	status = (
 		# Translators: The name of the column that contains the status of the addon.
 		# e.g. available, downloading installing
 		pgettext("addonStore", "Status"),
-		150,
+		100,
 	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
@@ -92,7 +92,7 @@ class AddonListField(_AddonListFieldData, Enum):
 	)
 	publicationDate = (
 		# Translators: The name of the column that contains the publication date of the add-on.
-		pgettext("addonStore", "Publication date"),
+		pgettext("addonStore", "Date"),
 		50,
 	)
 
