@@ -353,7 +353,10 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			if self._sortByModelField == AddonListField.publicationDate and listItemVM.model.submissionTime is not None:
+			if (
+				self._sortByModelField == AddonListField.publicationDate
+				and listItemVM.model.submissionTime is not None
+			):
 				return strxfrm(str(listItemVM.model.submissionTime))
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
