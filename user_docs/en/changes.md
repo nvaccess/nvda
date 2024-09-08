@@ -13,6 +13,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* The add-ons list in the store can be sorted by columns. (#15277, @nvdaes)
 
 ### Changes
 
