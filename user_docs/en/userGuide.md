@@ -3637,6 +3637,12 @@ You can reach it by pressing `shift+tab` from the list of add-ons.
 Type a keyword or two for the kind of add-on you're looking for, then `tab` to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
+#### Sorting the add-ons list {#AddonStoreFilterColumn}
+
+By default, the add-ons list is sorted by add-on display name. The Sort by column combo box can be used to sort the list by the available columns for each tab.
+
+For example, you may wish to sort add-ons by editor, available version, etc.
+
 ### Add-on actions {#AddonStoreActions}
 
 Add-ons have associated actions, such as install, help, disable, and remove.
