@@ -159,9 +159,9 @@ class AddonStoreDialog(SettingsDialog):
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
 				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Sort by &column:"),
+				labelText=pgettext("addonStore", "Sort by colu&mn:"),
 				wxCtrlClass=wx.Choice,
-				choices=[c.displayString for c in self._storeVM.listVM.presentedFields]
+				choices=[c.displayString for c in self._storeVM.listVM.presentedFields],
 			),
 		)
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
