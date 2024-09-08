@@ -10,10 +10,10 @@ Het maakt ook het lezen van vergelijkingen in de Microsoft Word-vergelijkingsedi
 
 Help Tech Activator Pro-brailleleesregels worden nu ondersteund.
 
-Ongeassigneerde opdrachten zijn toegevoegd om het muiswiel verticaal en horizontaal te scrollen.
+Niet toegewezen opdrachten zijn toegevoegd om het muiswiel verticaal en horizontaal te scrollen.
 
-Er zijn verschillende bugfixes, met name voor het Windows 11 Emoji-paneel en de geschiedenis van het klembord.
-Voor webbrowsers zijn er oplossingen voor het rapporteren van foutmeldingen, afbeeldingen, bijschriften, tabellabels en menu-items van selectievakjes/radioknoppen.
+Er zijn verschillende bugfixes, met name voor het Windows 11 Emoji-paneel en de klembordgeschiedenis.
+Voor webbrowsers zijn er oplossingen voor het melden van fouten, afbeeldingen, bijschriften, tabellabels en menu-items van selectievakjes/radioknoppen.
 
 LibLouis is bijgewerkt en voegt nieuwe brailletabellen toe voor Cyrillisch Servisch, Jiddisch, verschillende oude talen, Turks en het Internationaal Fonetisch Alfabet.
 eSpeak is bijgewerkt met ondersteuning voor de Karakalpaks taal.
@@ -22,7 +22,7 @@ Unicode CLDR is ook bijgewerkt.
 ### Nieuwe functies
 
 * Nieuwe toetsopdrachten:
-  * Ongeassigneerde opdrachten toegevoegd voor verticale en horizontale scroll van het muiswiel, om de navigatie op webpagina's en apps met dynamische inhoud, zoals Dism++, te verbeteren. (#16462, @Cary-Rowen)
+  * Niet toegewezen opdrachten toegevoegd voor verticale en horizontale scroll van het muiswiel, om de navigatie op webpagina's en apps met dynamische inhoud, zoals Dism++, te verbeteren. (#16462, @Cary-Rowen)
 * Ondersteuning toegevoegd voor Unicode-normalisatie in spraak- en braille-uitvoer. (#11570, #16466 @LeonarddeR).
   * Dit kan handig zijn bij het lezen van tekens die onbekend zijn voor een bepaalde spraaksynthesizer of brailletabel en die een compatibel alternatief hebben, zoals de vetgedrukte en cursieve tekens die vaak op sociale media worden gebruikt.
   * Het maakt ook het lezen van vergelijkingen in de Microsoft Word-vergelijkingseditor mogelijk. (#4631)
@@ -2367,8 +2367,8 @@ Raadpleeg de lijst met wijzigingen verderop voor meer informatie hierover.
 * Het is mogelijk om de logfuncties van NVDA uit te schakelen door het niveau van loggen in te stellen op "uitgeschakeld" in de categorie met Algemene instellingen. (#8516)
 * De aanwezigheid van formules in -spreadsheets in LibreOffice en Apache OpenOffice wordt nu gemeld. (#860)
 * In Mozilla Firefox en Google Chrome meldt de bladermodus nu het geselecteerde item in keuzelijsten en boomstructuren.
- - Dit werkt in Firefox 66 en later.
- - Dit werkt niet voor bepaalde keuzelijsten (HTML select elementen) in Chrome.
+ * Dit werkt in Firefox 66 en later.
+ * Dit werkt niet voor bepaalde keuzelijsten (HTML select elementen) in Chrome.
 * Vroege ondersteuning voor apps zoals Mozilla Firefox op computers met ARM64-processors (bijvoorbeeld Qualcomm Snapdragon). (#9216)
 * Er is een nieuwe geavanceerd categorie toegevoegd aan het dialoogvenster Instellingen van NVDA, inclusief een optie om NVDA's nieuwe ondersteuning voor Microsoft Word uit te proberen via de Microsoft UI Automation API. (#9200)
 * Ondersteuning toegevoegd voor de grafische weergave in Windows Schijfbeheer. (#1486)
@@ -2382,12 +2382,11 @@ Raadpleeg de lijst met wijzigingen verderop voor meer informatie hierover.
 * Deze versie van NVDA staat het installeren en laden van add-ons toe die nog geen gegevens over de Minimale en Laatst Getestte NVDA-versie bevatten. Het upgraden naar toekomstige versies van NVDA (bijv. 2019.2) zou er echter automatisch voor kunnen gaan zorgen dat deze oudere add-ons worden uitgeschakeld.
 * De opdracht om de muis naar het huidige navigatorobject te verplaatsen, is nu beschikbaar in Microsoft Word evenals voor UIA-besturingselementen, waaronder Microsoft Edge. (#7916, #8371)
 * Het melden van tekst onder de muis is verbeterd binnen Microsoft Edge en andere UIA-applicaties. (#8370)
-* Wanneer NVDA wordt gestart met de opdrachtregelparameter `--portable path', wordt het opgegeven pad automatisch ingevuld wanneer wordt geprobeerd een draagbare kopie van NVDA te maken met behulp van het NVDA-menu. (#8623)
+* Wanneer NVDA wordt gestart met de opdrachtregelparameter `--portable-path`, wordt het opgegeven pad automatisch ingevuld wanneer wordt geprobeerd een draagbare kopie van NVDA te maken met behulp van het NVDA-menu. (#8623)
 * Het pad naar de Noorse brailletabel is bijgewerkt voor gebruik van de standaard uit het jaar 2015. (#9170)
 * Bij navigeren op basis van een alinea (control + pijl omhoog of omlaag) of bij tabelnavigatie(control + alt + pijltjestoetsen), wordt de aanwezigheid ​​van spelfouten niet langer gemeld, zelfs als NVDA is geconfigureerd om deze automatisch te melden. Dit komt doordat alinea's en tabelcellen vrij omvangrijk kunnen zijn en het detecteren van spelfouten in sommige toepassingen erg veel tijd kan kosten. (#9217)
 * NVDA laadt niet langer automatisch aangepaste appModules, globalPlugins en brailleleesregel- en synthesizer drivers uit de NVDA-gebruikersconfiguratiemap. Deze code moet in plaats daarvan worden gedistribueerd als een add-on met de juiste versiegegevens, zodat incompatibele code niet wordt uitgevoerd door huidige versies van NVDA. (#9238)
  * Ontwikkelaars die code dienen te testen terwijl deze wordt ontwikkeld, kunnen NVDA's ontwikkelaarskladblokmap inschakelen via de categorie geavanceerd in de NVDA-instellingen. Na het inschakelen kan code geplaatst worden in de map 'scratchpad' in de NVDA-gebruikersconfiguratiemap.
-* Bij het gebruik van de Nederlandse taal wordt de punt nu alleen geïnterpreteerd als scheidingsteken voor duizendtallen wanneer de punt wordt gevolgd door 3 cijfers. Voorheen werd een punt tussen cijfers altijd geïnterpreteerd als een cijfergroeperingsteken.
 
 ### Opgeloste Problemen
 
@@ -2624,6 +2623,7 @@ Hoogtepunten in deze versie zijn ondersteuning voor tabellen in Kindle voor PC, 
 * NVDA meldt niet langer links-naar-rechts- en rechts-naar-links-markeringen in braille of bij het navigeren per karakter in spraak wanneer de klok wordt bekeken in recente versies van Windows. (#5729)
 * Detectie van de scrolltoetsen op Hims Smart Beetle leesregels is opnieuw niet meer onbetrouwbaar. (#6086)
 * In sommige besturingselementen voor tekstinvoer, voornamelijk in Delphi-applicaties, is de informatie over bewerken en navigeren een stuk betrouwbaarder dan voorheen. (#636, #8102)
+* In Windows 10 RS5, NVDA no longer reports extra redundant information when switching tasks with alt+tab. (#8258)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
@@ -2798,6 +2798,7 @@ Hoogtepunten in deze versie zijn invoer van braille kortschrift, ondersteuning v
 * Er is een niet toegewezen invoerhandeling toegevoegd om NVDA op verzoek te herstarten. U kunt deze optie vinden in de categorie Diversen van het dialoogvenster Invoerhandelingen. (#6396)
 * De toetsenbordindeling kan nu worden ingesteld in het welkomscherm van NVDA. (#6863)
 * Veel meer soorten besturingselementen en bijbehorende status-indicatoren zijn afgekort voor braille. Ook oriëntatiepunten zijn afgekort. Zie "Braille-afkortingen voor besturingselementen, status-indicatoren en oriëntatiepunten" onder Braille in de Gebruikershandleiding voor een volledige lijst. (#7188, #3975)
+* Updated eSpeak NG to 1.49.1. (#7280)
 * In het dialoogvenster Braille-instellingen zijn de lijsten van uitvoer- en invoertabellen nu alfabetisch gerangschikt. (#6113)
 * liblouis braille translator bijgewerkt naar 3.2.0. (#6935)
 * De standaard brailletabel is nu Uniforme Engelse Braillecode graad 1. (#6952)
@@ -2848,7 +2849,7 @@ Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukkin
 
 ### Nieuwe Functies
 
-* Informatie over celranden kan nu worden gemeld in Microsoft Excel via `NVDA+f`. (#3044)
+* Informatie over celranden kan nu worden gemeld in Microsoft Excel via NVDA+f. (#3044)
 * Ondersteuning toegevoegd voor aria-current attributen. (#6358)
 * Automatische taalverandering wordt nu ondersteund in Microsoft Edge. (#6852)
 * Ondersteuning toegevoegd voor Windows Rekenmachine op Windows 10 Enterprise LTSB (Long-Term Servicing Branch) en Server. (#6914)
@@ -2885,12 +2886,22 @@ Hoogtepunten in deze versie zijn volledige ondersteuning voor audio-onderdrukkin
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
-* Timestamps in the log now include milliseconds. (#7163)
-* NVDA must now be built with Visual Studio Community 2015. Visual Studio Express is no longer supported. (#7110)
- * The Windows 10 Tools and SDK are now also required, which can be enabled when installing Visual Studio.
- * See the Installed Dependencies section of the readme for additional details.
-* Support for content recognizers such as OCR and image description tools can be easily implemented using the new contentRecog package. (#7361)
-* The Python json package is now included in NVDA binary builds. (#3050)
+* Commandline arguments are now processed with Python's argparse module, rather than optparse. This allows certain options such as -r and -q to be handled exclusively. (#6865)
+* core.callLater now queues the callback to NVDA's main queue after the given delay, rather than waking the core and executing it directly. This stops possible freezes due to the  core accidentally going to sleep after processing a callback, in the midle of  a modal call such as the desplaying of a message box. (#6797)
+* The InputGesture.identifiers property has been changed so that it is no longer normalized. (#6945)
+ * Subclasses no longer need to normalize identifiers before returning them from this property.
+ * If you want normalized identifiers, there is now an InputGesture.normalizedIdentifiers property which normalizes the identifiers returned by the identifiers property .
+* The InputGesture.logIdentifier property is now deprecated. Callers should use InputGesture.identifiers[0] instead. (#6945)
+* Removed some deprecated code:
+ * `speech.REASON_*` constants: `controlTypes.REASON_*` should be used instead. (#6846)
+ * `i18nName` for synth settings: `displayName` and `displayNameWithAccelerator` should be used instead. (#6846, #5185)
+ * `config.validateConfig`. (#6846, #667)
+ * `config.save`: `config.conf.save` should be used instead. (#6846, #667)
+* The list of completions in the autocomplete context menu of the Python Console no longer shows  any object path leading up to the final symbol being completed. (#7023)
+* There is now a unit testing framework for NVDA. (#7026)
+ * Unit tests and infrastructure are located in the tests/unit directory. See the docstring in the tests\unit\init.py file for details.
+ * You can run tests using "scons tests". See the "Running Tests" section of readme.md for details.
+ * If you are submitting a pull request for NVDA, you should first run the tests and ensure they pass.
 
 ## 2017.1
 
@@ -2951,6 +2962,7 @@ Hoogtepunten in deze versie zijn verbeterde ondersteuning voor Microsoft Edge; b
 * Ondersteuning voor de Baum SuperVario2, Baum Vario 340 en HumanWare Brailliant2 brailleleesregels. (#6116)
 * Initiële ondersteuning voor de Verjaardagsupdate van Microsoft Edge. (#6271)
 * Bladermodus wordt nu gebruikt bij het lezen van emails in de Windows 10 mail app. (#6271)
+* New language: Lithuanian.
 
 ### Veranderingen
 
@@ -2984,6 +2996,11 @@ Hoogtepunten in deze versie zijn verbeterde ondersteuning voor Microsoft Edge; b
 * Het is niet langer mogelijk om het Patroonveld leeg te laten voor een nieuwe regel in het spraakwoordenboek. (#6412)
 * Een zeldzaam probleem opgelost bij het zoeken naar seriële poorten in sommige systemen wat sommige drivers voor brailleleesregels onbruikbaar maakte. (#6462)
 * Genummerde opsommingstekens in tabelcellen worden nu gelezen in Microsoft Word als u per cel navigeert. (#6446)
+* It is now possible to assign gestures to commands for the Handy Tech braille display driver in the NVDA Input Gestures dialog. (#6461)
+* In Microsoft Excel, pressing enter or numpadEnter when navigating a spreadsheet now correctly reports navigation to the next row. (#6500)
+* iTunes no longer intermittently freezes forever when using browse mode for the iTunes Store, Apple Music, etc. (#6502)
+* Fixed crashes in 64 bit Mozilla and Chrome-based applications. (#6497)
+* In Firefox with multi-process enabled, browse mode and editable text fields now function correctly. (#6380)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
@@ -3040,6 +3057,8 @@ Hoogtepunten in deze versie zijn de mogelijkheid om individuele add-ons uit te s
 * Het kon gebeuren dat NVDA geen toetsaanslagen meer herkende op Baum compatibele en HumanWare Brailliant B brailleleesregels. Dit is niet langer het geval. (#6035)
 * Als het melden van regelnummers is ingeschakeld in NVDA's voorkeuren voor Documentopmaak, dan worden regelnummers nu getoond op een brailleleesregel. (#5941)
 * Als spraakmodus uit is, verschijnen gemelde objecten (zoals het drukken van NVDA+tab om de focus te melden) nu in het spraakweergavevenster zoals verwacht. (#6049)
+* In the Outlook 2016 message list,  associated draft information is no longer reported. (#6219)
+* In Google Chrome and Chrome-based browsers in a language other than English, browse mode no longer fails to work in many documents. (#6249)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
@@ -3350,6 +3369,7 @@ Hoogtepunten in deze versie zijn bladermodus voor Microsoft Word en Outlook docu
 * Wanneer de focus verplaatst naar een nieuw item in boomstructuren in de Eclipse IDEen het eerder geselecteerde item een selectivakje is, wordt het niet langer onterecht gemeld. (#4586)
 * In het venster voor spellingscontrole van Microsoft Word zal de volgende fout automatisch gemeld moeten worden wanneer de laatste fout veranderd of genegeerd is met gebruik van de daarvoor bedoelde sneltoetsen. (#1938)
 * Tekst kan weer correct worden gelezen in plaatsen zoals het terminalvenster van Tera Term Pro en documenten in Balabolka. (#4229)
+* Focus now correctly returns to the document being edited When finishing input composition of text in Korean and other east Asian languages while editing within a frame in Internet Explorer and other MSHTML documents. (#4045)
 * Wanneer u in het dialoogvenster Invoerhandelingen koppelen tijdens het selecteren van een toetsenbordindeling voor een toetsenbordsneltoets op escape drukt, zal het menu gesloten worden in plaats van het hele venster. (#3617)
 * Bij het verwijderen van een add-on wordt de map van de add-on nu correct verwijderd na het herstarten van NVDA. Voorheen moest NVDA twee keer herstart worden. (#3461)
 * Er zijn belangrijke problemen opgelost bij het gebruik van Skype voor Desktop 7. (#4218)
@@ -3358,8 +3378,14 @@ Hoogtepunten in deze versie zijn bladermodus voor Microsoft Word en Outlook docu
 * Er is een probleem opgelost waarbij het NVDA-commando voor het melden van de datum/tijd de regionale instellingen van de gebruiker in sommige gevallen niet respecteerde. (#2987)
 * In de bladermodus wordt onzinnige tekst (die soms zelfs meerdere regels omvat) niet langer gepresenteerd voor bepaalde afbeeldingen zoals te vinden op Google Groups. Dit gebeurde specifiek met base64 gecodeerde afbeeldingen.) (#4793)
 * NVDA zou niet langer na enkele seconden moeten bevriezen wanneer de focus verplaatst wordt uit een app uit de Windows Store. (#4572)
-* Verschillende verbeteringen voor Mozilla Firefox, Internet Explorer en andere MSHTML elementen, onder andere voor ondersteuning van aria. Zie voor details [het Engelstalige document](../en/changes.html). (#4045, #4794, #4798, #4800, #4575, #4839, #3776, #4491, #4667)
+* The aria-atomic attribute on live regions in Mozilla Firefox is now honored even when the atomic element itself changes. Previously, it only affected descendant elements. (#4794)
+* Browse mode will reflect updates, and live regions will be announced, for   browse mode documents within ARIA applications embedded in a document in Internet Explorer or other MSHTML controls. (#4798)
+* When text is changed or added in live regions in Internet Explorer and other MSHTML controls where the author has specified that text is relevant, only the changed or added text is announced, rather than all of the text in the containing element. (#4800)
+* Content indicated by the aria-labelledby attribute on elements in Internet Explorer and other MSHTML controls correctly replaces the original content  where it is appropriate to do so. (#4575)
 * Bij de spellingscontrole in Microsoft Outlook 2013 wordt het verkeerd gespelde woord nu gemeld. (#4848)
+* In Internet Explorer and other MSHTML controls, content inside elements hidden with visibility:hidden is no longer inappropriately presented in browse mode. (#4839, #3776)
+* In Internet Explorer and other MSHTML controls, the title attribute on form controls no longer inappropriately takes preference over other label associations. (#4491)
+* In Internet Explorer and other MSHTML controls, NVDA no longer ignores focusing  of elements  due to the aria-activedescendant attribute. (#4667)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
@@ -3386,17 +3412,22 @@ Hoogtepunten in deze versie zijn bladermodus voor Microsoft Word en Outlook docu
 
 ### Opgeloste Problemen
 
-* Verschillende probleemoplossingen voor bladermodusdocumenten en de werking van NVDA op het internet. Zie voor details [het Engelstalige document](../en/changes.html). (#4369, #4169, #4418, #4405, #3494, #4173)
+* When moving focus back to a browse mode document (e.g. alt+tabbing to an already opened web page), the review cursor is properly positioned at the virtual caret, rather than the focused control (e.g. a nearby link). (#4369)
 * In Powerpoint-presentaties volgt de leescursor nu de virtuele cursor op een correcte manier. (#4370)
+* In Mozilla Firefox and other Gecko-based browsers, new content within a live region will be announced even if the new content has a usable ARIA live type different to the parent live region; e.g. when content marked as assertive is added to a live region marked as polite. (#4169)
+* In Internet Explorer and other MSHTML controls, some cases where a document is contained within another document no longer prevent the user from accessing some of the content (specifically, framesets inside framesets). (#4418)
 * NVDA loopt in sommige gevallen niet langer vast bij het gebruik van een Handy Tech brailleleesregel. (#3709)
 * Het in een aantal gevallen weergeven van een foutmelding in Windows Vista, bijv. bij het starten van NVDA via de bureaubladsnelkoppeling of via de sneltoets, is opgelost.(#4235)
 * Er zijn ernstige problemen met tekstinvoer opgelost in dialoogvensters in recente versies van Eclipse. (#3872)
 * In Outlook 2010 werkt het verplaatsen van de cursor in het locatieveld van afspraken en vergaderverzoeken nu naar behoren. (#4126)
+* Inside a live region, content which is marked as not being live (e.g. aria-live="off") is now correctly ignored. (#4405)
 * Bij het melden van de tekst van een statusbalk met een naam wordt de naam nu correct gescheiden van het eerste woord van de statusbalktekst. (#4430)
 * Bij het invoeren van wachtwoorden met het uitspreken van woorden ingeschakeld worden er niet langer nodeloos meerdere sterretjes uitgesproken bij het beginnen aan een nieuw woord. (#4402)
 * In de berichtenlijst van Microsoft Outlook worden items niet langer nodeloos benoemd als data-items. (#4439)
 * Bij het selecteren van tekst in het codevenster van de Eclipse IDE wordt de hele selectie niet langer iedere keer uitgesproken bij een selectieverandering. (#2314)
 * Verschillende versies van Eclipse worden nu als zodanig herkend en behandeld. (#4360, #4454)
+* Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls (including many Windows 8 applications) is now much more accurate  on high DPI displays or when document zoom is changed. (#3494) 
+* Mouse tracking and touch exploration in Internet Explorer and other MSHTML controls will now announce the label of more buttons. (#4173)
 * Bij het gebruik van een Papenmeier BRAILLEX brailleleesregel met BrxCom werken de toetsen op de leesregel nu als verwacht. (#4614)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
@@ -3429,7 +3460,7 @@ Hoogtepunten in deze versie zijn bladermodus voor Microsoft Word en Outlook docu
  * Deze commando's kunnen nu ook meerdere keren per blad worden gebruikt om verschillende koppen in te stellen voor verschillende gebieden.
 * Ondersteuning voor het automatisch lezen van kolom- en rijkoppen in Microsoft Word (#3110) inclusief:
  * Ondersteuning van MS Word bookmarks om kopcellen te identificeren (compatibel met de Jaws screenreader) 
- * De commando's kolomkoppen instellen (NVDA+shift+c) en rijkoppen instellen (NVDA+shift+r) laten u in de eerste kopcel van een tabel toe om NVDA te laten weten dat deze koppen automatisch gemeld moeten worden. De instellingen worden in het document bewaard zodat ze beschikbaar zijn de volgende keer dat het document wordt geopend, en ze zullen beschikbaar zijn voor andere schermlezers die het bookmark schema ondersteunen.
+ -  De commando's kolomkoppen instellen (NVDA+shift+c) en rijkoppen instellen (NVDA+shift+r) laten u in de eerste kopcel van een tabel toe om NVDA te laten weten dat deze koppen automatisch gemeld moeten worden. De instellingen worden in het document bewaard zodat ze beschikbaar zijn de volgende keer dat het document wordt geopend, en ze zullen beschikbaar zijn voor andere schermlezers die het bookmark schema ondersteunen.
 * Microsoft Word: meld de afstand van de linkerrand van de pagina als men op de tabtoets drukt. (#1353)
 * Microsoft Word: geeft feedback in spraak en braille voor de meest beschikbare opmaaksneltoetsen (vet, cursief, onderlijnen, uitlijning en kopniveau's). (#1353)
 * Microsoft Excel: als de geselecteerde cel opmerkingen bevat, kunnen deze nu gemeld worden via NVDA+alt+c (#2920)
@@ -3630,6 +3661,9 @@ Hoogtepunten in deze versie zijn bladermodus voor Microsoft Word en Outlook docu
 * In Microsoft Excel kondigt NVDA samengevoegde cellen nu anders aan dan meerdere geselecteerde cellen. (#3567)
 * De bladermoduscursor wordt niet langer foutief gepositioneerd bij het verlaten van een dialoogvenster of toepassing binnen het document. (#3145)
 * Een probleem opgelost waarbij op sommige systemen de driver voor de HumanWare Brailliant BI/B serie brailleleesregel niet als optie verscheen in het Braille-instellingen dialoogvenster, zelfs als de leesregel was verbonden via USB.
+* NVDA no longer fails  to switch to screen review when the navigator object has no actual screen location. In this case the review cursor is now placed at the top of the screen. (#3454)
+* Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)
+* Fixed an issue where keys on Freedom Scientific braille displays weren't detected in some circumstances. (#3401, #3662)
 
 ### Veranderingen voor Ontwikkelaars (niet vertaald)
 
