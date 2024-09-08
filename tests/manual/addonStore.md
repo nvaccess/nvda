@@ -30,6 +30,12 @@ Add-ons can be filtered by display name, publisher and description.
 1. Enable the "Include incompatible add-ons" filter
 1. Ensure add-ons with status "incompatible" are included in the list with the available add-ons.
 
+### Sorting the add-ons list by column
+1. Open the Add-on Store
+1. Jump to the sort by column field (`alt+m`)
+1. Select different columns, and ensure that the add-ons list is sortered accordingly
+1. Change to different tabs, and repeat the previous step.
+
 ### Failure to fetch add-ons available for download
 1. Disable your internet connection
 1. Go to your [NVDA user configuration folder](#editing-user-configuration)
