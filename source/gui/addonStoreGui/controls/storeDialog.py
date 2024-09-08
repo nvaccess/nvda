@@ -373,8 +373,9 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
-
 		self.columnFilterCtrl.SetSelection(0)
+		self._storeVM.listVM._sortByModelField = self._storeVM.listVM.presentedFields[0]
+
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
 		self._storeVM.listVM.setSelection(None)
