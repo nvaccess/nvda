@@ -357,7 +357,7 @@ class AddonListVM:
 
 		def _getSortFieldDate(listItemVM: AddonListItemVM) -> "SupportsLessThan":
 			if getattr(listItemVM.model, "submissionTime", None):
-				return - listItemVM.model.submissionTime
+				return -listItemVM.model.submissionTime
 			return 0
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
