@@ -220,7 +220,7 @@ class AddonListVM:
 		self.selectionChanged = extensionPoints.Action()
 		self.selectedAddonId: Optional[str] = None
 		self.lastSelectedAddonId = self.selectedAddonId
-		self._sortByModelField: AddonListField = AddonListField.publicationDate
+		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
 
 		self._setSelectionPending = False
@@ -294,7 +294,7 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		return getattr(listItemVM.model, field.name)
+		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
@@ -353,11 +353,12 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
-			if self._sortByModelField == AddonListField.publicationDate:
-				if listItemVM.model.submissionTime is not None:
-					return strxfrm(str(listItemVM.model.submissionTime))
-				return self._getAddonFieldText(listItemVM, AddonListField.displayName)
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
+
+		def _getSortFieldDate(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			if getattr(listItemVM.model, "submissionTime", None):
+				return - listItemVM.model.submissionTime
+			return 0
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
 			term = term.casefold()
@@ -378,7 +379,11 @@ class AddonListVM:
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
 
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+		if self._sortByModelField == AddonListField.publicationDate:
+			filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldDate)])
+		else:
+			filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+
 		return filteredSorted
 
 	def _tryPersistSelection(
