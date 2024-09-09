@@ -34,8 +34,9 @@ Add-ons can be filtered by display name, publisher and description.
 1. Open the Add-on Store
 1. Jump to the sort by column field (`alt+m`)
 1. Select different columns, and ensure that the add-ons list is sorted accordingly
+1. Alternatively, perform a left mouse click on different columns
 1. Check and uncheck the descending order checkbox (`alt+d`), and ensure that add-ons are sorted in descending order only when the checkbox is checked.
-1. Change to different tabs, and repeat the previous step.
+1. Change to different tabs, and repeat the previous steps.
 
 ### Failure to fetch add-ons available for download
 1. Disable your internet connection
