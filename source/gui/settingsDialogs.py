@@ -4450,7 +4450,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 		speakOnRoutingText = _("Spea&k character when routing cursor in text")
 		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
-			wx.CheckBox(self, label=speakOnRoutingText),
+			wx.CheckBox(self.followCursorGroupBox, label=speakOnRoutingText),
 		)
 		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
