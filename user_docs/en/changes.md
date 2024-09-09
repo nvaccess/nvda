@@ -88,6 +88,8 @@ The minimum required version of Poedit that works with NVDA is now version 3.5.
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
+LibLouis has been updated, adding new Braille tables for Thai and Greek international braille with single-cell accented letters.
+
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
 
 ### New Features
@@ -108,8 +110,17 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 ### Changes
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
-* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
-  * Added new languages Faroese and Xextan.
+* Component updates:
+  * Updated LibLouis Braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR, @codeofdusk)
+    * Fixed translation of numbers in Spanish Braille.
+    * New Braille tables:
+      * Thai grade 1
+      * Greek international Braille (single-cell accented letters)
+    * Renamed tables:
+      * "Thai 6 dot" was renamed to "Thai grade 0" for consistency reasons.
+      * The existing "Greek international braille" table was renamed to "Greek international braille (2-cell accented letters)" to clarify the distinction between the two Greek systems.
+  * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+    * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
 * The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
 
