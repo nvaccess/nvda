@@ -13,12 +13,13 @@ In order to use this feature, the application volume adjuster needs to be enable
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 
 ### Changes
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
-* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
   * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 
