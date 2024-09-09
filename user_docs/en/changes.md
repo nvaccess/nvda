@@ -5,6 +5,7 @@
 ### Important notes
 
 ### New Features
+
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
@@ -19,6 +20,8 @@ In order to use this feature, the application volume adjuster needs to be enable
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 
 ### Bug Fixes
 
@@ -46,6 +49,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
 
 #### API Breaking Changes
 
