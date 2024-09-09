@@ -167,6 +167,21 @@ class AddonStoreDialog(SettingsDialog):
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterColumn", self.columnFilterCtrl)
 
+		# Translators: The label of a checkbox to sort the list of add-ons in the add-on store dialog.
+		descendingOrderLabel = pgettext("addonStore", "&Descending order")
+		self.descendingOrderCtrl = cast(
+			wx.CheckBox,
+			filterCtrlsLine0.addItem(
+				wx.CheckBox(self, label=descendingOrderLabel),
+			),
+		)
+		self.descendingOrderCtrl.SetValue(0)
+		self.descendingOrderCtrl.Bind(
+			wx.EVT_CHECKBOX,
+			self.onDescendingOrderChange,
+			self.descendingOrderCtrl,
+		)
+
 		self.channelFilterCtrl = cast(
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
@@ -391,6 +406,10 @@ class AddonStoreDialog(SettingsDialog):
 		colIndex = evt.GetSelection()
 		log.debug(f"Sortered by col: {colIndex}")
 		self._storeVM.listVM._sortByModelField = self._storeVM.listVM.presentedFields[colIndex]
+		self._storeVM.refresh()
+
+	def onDescendingOrderChange(self, evt: wx.EVT_CHECKBOX):
+		self._storeVM.listVM._reversed  = self.descendingOrderCtrl.GetValue()
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
