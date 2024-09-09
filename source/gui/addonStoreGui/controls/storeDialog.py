@@ -165,7 +165,7 @@ class AddonStoreDialog(SettingsDialog):
 			),
 		)
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
-		self.bindHelpEvent("AddonStoreFilterColumn", self.columnFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
 
 		# Translators: The label of a checkbox to sort the list of add-ons in the add-on store dialog.
 		descendingOrderLabel = pgettext("addonStore", "&Descending order")
@@ -181,6 +181,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.onDescendingOrderFilterChange,
 			self.descendingOrderFilterCtrl,
 		)
+		self.bindHelpEvent("AddonStoreSortDescending", self.descendingOrderFilterCtrl)
 
 		self.channelFilterCtrl = cast(
 			wx.Choice,
