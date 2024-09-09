@@ -181,7 +181,7 @@ class AddonStoreDialog(SettingsDialog):
 			self.onDescendingOrderFilterChange,
 			self.descendingOrderFilterCtrl,
 		)
-		self.bindHelpEvent("AddonStoreSortDescending", self.descendingOrderFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortDescending", self.columnFilterCtrl)
 
 		self.channelFilterCtrl = cast(
 			wx.Choice,
