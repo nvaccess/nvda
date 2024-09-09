@@ -5,6 +5,7 @@
 ### Important notes
 
 ### New Features
+
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
@@ -12,12 +13,15 @@ In order to use this feature, the application volume adjuster needs to be enable
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 
 ### Changes
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
-* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 * Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
   * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie, @britechguy)
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799, @XLTechie)
@@ -51,6 +55,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * There is a new `gui.nvdaControls.ContinueCancelDialog`, for producing simple dialogs with Continue and Cancel buttons. (#12355, @XLTechie)
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
 
 #### API Breaking Changes
 
@@ -89,6 +94,8 @@ The minimum required version of Poedit that works with NVDA is now version 3.5.
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
+LibLouis has been updated, adding new Braille tables for Thai and Greek international braille with single-cell accented letters.
+
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
 
 ### New Features
@@ -109,8 +116,17 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 ### Changes
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
-* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
-  * Added new languages Faroese and Xextan.
+* Component updates:
+  * Updated LibLouis Braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR, @codeofdusk)
+    * Fixed translation of numbers in Spanish Braille.
+    * New Braille tables:
+      * Thai grade 1
+      * Greek international Braille (single-cell accented letters)
+    * Renamed tables:
+      * "Thai 6 dot" was renamed to "Thai grade 0" for consistency reasons.
+      * The existing "Greek international braille" table was renamed to "Greek international braille (2-cell accented letters)" to clarify the distinction between the two Greek systems.
+  * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+    * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
 * The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
 
