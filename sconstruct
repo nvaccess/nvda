@@ -149,7 +149,6 @@ env = Environment(
 	tools=[
 		"textfile",
 		"gettextTool",
-		"md2html",
 		"doxygen",
 		"recursiveInstall",
 		"m4",
@@ -346,7 +345,21 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
-	htmlFile = env.md2html(mdFile)
+	# first substitute some variables such as NvDA version and URL into the markdown file
+	mdFileSub = env.Substfile(
+		target=mdFile.abspath.replace(".md", ".md.sub"),
+		source=mdFile,
+		SUBST_DICT={
+			"NVDA_VERSION": env["version"],
+			"NVDA_URL": versionInfo.url,
+			"NVDA_COPYRIGHT_YEARS": versionInfo.copyrightYears,
+		},
+	)
+	htmlFile = env.Command(
+		target=mdFile.abspath.replace(".md", ".html"),
+		source=mdFileSub,
+		action=[f'@{sys.executable} user_docs/md2html.py convert "$SOURCE" "$TARGET"'],
+	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
 	installedHeadingsStyle = env.Install(styleInstallPath, numberedHeadingsStyle)
@@ -362,11 +375,13 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	env.Depends(htmlFile, mdFile)
 
 # Create key commands files
-for userGuideFile in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.md")):
-	keyCommandsHtmlFile = env.md2html(
-		userGuideFile.abspath.replace("userGuide.md", "keyCommands.html"), userGuideFile
+for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.md.sub")):
+	keyCommandsHtmlFile = env.Command(
+		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
+		source=userGuideFileSub,
+		action=[f'@{sys.executable} user_docs/md2html.py convert "$SOURCE" "$TARGET"'],
 	)
-	env.Depends(keyCommandsHtmlFile, userGuideFile)
+	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 
 # Build unicode CLDR dictionaries
 env.SConscript("cldrDict_sconscript", exports=["env", "sourceDir"])
