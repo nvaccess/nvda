@@ -406,7 +406,7 @@ class AddonStoreDialog(SettingsDialog):
 	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
 		colIndex = evt.GetSelection()
 		log.debug(f"Sortered by col: {colIndex}")
-		self._storeVM.listVM._sortByModelField = self._storeVM.listVM.presentedFields[colIndex]
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex])
 		self._storeVM.refresh()
 
 	def onDescendingOrderFilterChange(self, evt: wx.EVT_CHECKBOX):
