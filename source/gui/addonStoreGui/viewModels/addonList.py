@@ -373,7 +373,7 @@ class AddonListVM:
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
 		filteredSorted = list(
-			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)]
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)],
 		)
 		return filteredSorted
 
