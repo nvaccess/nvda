@@ -372,7 +372,9 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)])
+		filteredSorted = list(
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)]
+		)
 		return filteredSorted
 
 	def _tryPersistSelection(
