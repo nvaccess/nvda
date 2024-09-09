@@ -3639,7 +3639,8 @@ Add-ons will be listed if the search text can be found in the add-on ID, display
 
 #### Sorting the add-ons list {#AddonStoreFilterColumn}
 
-By default, the add-ons list is sorted by add-on display name. The Sort by column combo box can be used to sort the list by the available columns for each tab.
+By default, the add-ons list is sorted by the add-ons' display name.
+The "Sort by column" combo box can be used to sort the list by the available columns for each tab.
 
 For example, you may wish to sort add-ons by editor, available version, etc.
 
