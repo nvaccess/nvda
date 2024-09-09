@@ -484,7 +484,7 @@ class MainFrame(wx.Frame):
 		blockAction.Context.SECURE_MODE,
 		blockAction.Context.MODAL_DIALOG_OPEN,
 	)
-	def onRunCOMRegistrationFixesCommand(self, evt) -> None:
+	def onRunCOMRegistrationFixesCommand(self, evt: wx.CommandEvent) -> None:
 		"""Manages the interactive running of the COM Registration Fixing Tool.
 		Shows a dialog to the user, giving an overview of what is going to happen.
 		If the user chooses to continue: runs the tool, and displays a completion dialog.
@@ -535,8 +535,8 @@ class MainFrame(wx.Frame):
 						"The COM Registration Fixing Tool was unsuccessful. This Windows "
 						"error may provide more information.    {}",
 					).format(error),
-					# Translators: Added to the title of the dialog showing the COM Registration Fix failure
-					genericTitle + " " + _("Failed"),
+					# Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
+					_("COM Registration Fixing Tool Failed"),
 					wx.OK,
 				)
 		# Display success dialog if there were no errors
@@ -563,8 +563,8 @@ class MainFrame(wx.Frame):
 			"accessible elements suddenly no longer reading correctly.\n\n"
 			"You have most likely been asked to run this tool by an experienced user or support worker to investigate and potentially fix an issue with NVDA's behaviour.\n"
 			"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will "
-			"be prompted by UAC before this tool can do its job. This is normal and you should answer by pressing the "
-			"yes button.\n\n"
+			"be prompted by UAC before this tool can do its job. This is normal and you should follow the UAC "
+			"instructions to approve the running of the tool.\n\n"
 			"Press Continue to try to repair the registry now.\n",
 		)
 

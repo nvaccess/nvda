@@ -19,9 +19,9 @@ In order to use this feature, the application volume adjuster needs to be enable
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
 * Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
-  * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
   * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie, @britechguy)
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799, @XLTechie)
+  * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 
 ### Bug Fixes
 
@@ -50,7 +50,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
-* There is a new `gui.utilityDialogs.ContinueCancelDialog`, for producing simple dialogs with Continue and Cancel buttons. (#12355, @XLTechie)
+* There is a new `gui.nvdaControls.ContinueCancelDialog`, for producing simple dialogs with Continue and Cancel buttons. (#12355, @XLTechie)
 
 #### API Breaking Changes
 
