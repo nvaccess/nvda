@@ -217,6 +217,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self.reverse: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
@@ -368,7 +369,7 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self.reverse)])
 		return filteredSorted
 
 	def _tryPersistSelection(
