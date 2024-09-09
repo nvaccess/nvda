@@ -482,11 +482,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 						_(
 							# Translators: A message when number of status cells must be changed
 							# for a braille display driver
-							"To use Albatross with NVDA: "
-							"change number of status cells in Albatross internal menu at most "
-							f"to {MAX_STATUS_CELLS_ALLOWED}, and if needed, restart Albatross "
-							"and NVDA.",
-						),
+							"To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu "
+							"to at most {maxCells}, and restart the Albatross and NVDA if needed.",
+						).format(maxCells=MAX_STATUS_CELLS_ALLOWED),
 					)
 					self._disableConnection()
 					return False

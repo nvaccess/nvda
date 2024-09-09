@@ -101,3 +101,11 @@ jobs:
         } else {
             Write-Host "Not uploading userGuide.xliff to Crowdin as it has not changed"
         }
+        $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/changes.xliff
+        if ($changed) {
+            Write-Host "Uploading changes.xliff to Crowdin"
+            # 20 is the file ID for changes.xliff in Crowdin.
+            python appVeyor/crowdinSync.py uploadSourceFile 20 user_docs/en/changes.xliff
+        } else {
+            Write-Host "Not uploading changes.xliff to Crowdin as it has not changed"
+        }
