@@ -33,7 +33,7 @@ Add-ons can be filtered by display name, publisher and description.
 ### Sorting the add-ons list by column
 1. Open the Add-on Store
 1. Jump to the sort by column field (`alt+m`)
-1. Select different columns, and ensure that the add-ons list is sortered accordingly
+1. Select different columns, and ensure that the add-ons list is sorted accordingly
 1. Change to different tabs, and repeat the previous step.
 
 ### Failure to fetch add-ons available for download
