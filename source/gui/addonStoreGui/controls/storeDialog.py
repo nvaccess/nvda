@@ -410,7 +410,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM.refresh()
 
 	def onDescendingOrderFilterChange(self, evt: wx.EVT_CHECKBOX):
-		self._storeVM.listVM.reverse = self.descendingOrderFilterCtrl.GetValue()
+		self._storeVM.listVM.setReverse(self.descendingOrderFilterCtrl.GetValue())
 		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
