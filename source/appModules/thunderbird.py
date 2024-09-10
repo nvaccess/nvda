@@ -16,7 +16,7 @@ from typing import Callable
 
 
 class AppModule(appModuleHandler.AppModule):
-	def _isPopupMenuItem(self, obj):
+	def _isPopupMenuItem(self, obj: NVDAObject):
 		attributes = getattr(obj, "IA2Attributes", None)
 
 		if attributes and "class" in attributes:
@@ -26,7 +26,7 @@ class AppModule(appModuleHandler.AppModule):
 
 		return False
 
-	def event_NVDAObject_init(self, obj):
+	def event_NVDAObject_init(self, obj: NVDAObject):
 		if obj.role == controlTypes.Role.SECTION and not obj.name and self._isPopupMenuItem(obj):
 			obj.role = controlTypes.Role.MENUITEM
 			obj.name = obj.IAccessibleObject.accChild(1).accName(0)
