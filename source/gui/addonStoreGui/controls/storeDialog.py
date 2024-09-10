@@ -155,6 +155,34 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
+		self.columnFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Sort by colu&mn:"),
+				wxCtrlClass=wx.Choice,
+				choices=[c.displayString for c in self._storeVM.listVM.presentedFields],
+			),
+		)
+		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
+
+		# Translators: The label of a checkbox to sort the list of add-ons in the add-on store dialog.
+		descendingOrderLabel = pgettext("addonStore", "&Descending order")
+		self.descendingOrderFilterCtrl = cast(
+			wx.CheckBox,
+			filterCtrlsLine0.addItem(
+				wx.CheckBox(self, label=descendingOrderLabel),
+			),
+		)
+		self.descendingOrderFilterCtrl.SetValue(0)
+		self.descendingOrderFilterCtrl.Bind(
+			wx.EVT_CHECKBOX,
+			self.onDescendingOrderFilterChange,
+			self.descendingOrderFilterCtrl,
+		)
+		self.bindHelpEvent("AddonStoreSortDescending", self.columnFilterCtrl)
+
 		self.channelFilterCtrl = cast(
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
@@ -323,6 +351,9 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.columnFilterCtrl.Clear()
+		for c in self._storeVM.listVM.presentedFields:
+			self.columnFilterCtrl.Append(c.displayString)
 		self.channelFilterCtrl.Clear()
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:
@@ -358,6 +389,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
+		self.columnFilterCtrl.SetSelection(0)
+		self._storeVM.listVM._sortByModelField = self._storeVM.listVM.presentedFields[0]
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -369,6 +402,16 @@ class AddonStoreDialog(SettingsDialog):
 		# avoid erratic focus on the contained panel
 		if not self.addonListTabs.HasFocus():
 			self.addonListTabs.SetFocus()
+
+	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
+		colIndex = evt.GetSelection()
+		log.debug(f"Sortered by col: {colIndex}")
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex])
+		self._storeVM.refresh()
+
+	def onDescendingOrderFilterChange(self, evt: wx.EVT_CHECKBOX):
+		self._storeVM.listVM.setReverse(self.descendingOrderFilterCtrl.GetValue())
+		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey

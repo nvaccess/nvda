@@ -15,6 +15,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* The add-ons lists in the Add-on Store can be sorted by columns. (#15277, @nvdaes)
 
 ### Changes
 

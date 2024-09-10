@@ -220,6 +220,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self._reverse: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
@@ -349,6 +350,9 @@ class AddonListVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
 
+	def setReverse(self, reverse: bool) -> None:
+		self._reverse = reverse
+
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
@@ -371,7 +375,9 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+		filteredSorted = list(
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)],
+		)
 		return filteredSorted
 
 	def _tryPersistSelection(
