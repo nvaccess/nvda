@@ -168,7 +168,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			"outputBrailleTable": config.conf["braille"]["translationTable"] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (_getCheckURL(), urllib.parse.urlencode(params))
+	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
 	try:
 		log.debug(f"Fetching update data from {url}")
 		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
@@ -968,7 +968,7 @@ def _updateWindowsRootCertificates():
 	with requests.get(
 		# We must specify versionType so the server doesn't return a 404 error and
 		# thus cause an exception.
-		_getCheckURL() + "?versionType=stable",
+		f"{_getCheckURL()}?versionType=stable",
 		timeout=UPDATE_FETCH_TIMEOUT_S,
 		# Use an unverified connection to avoid a certificate error.
 		verify=False,
