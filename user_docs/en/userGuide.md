@@ -1831,6 +1831,13 @@ This information greatly aides NV Access to prioritize future development of NVD
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
+##### Update server mirror URL {#UpdateMirrorURL}
+
+This option allows you to specify an alternative URL to use to check for updates to NVDA.
+This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+
+Leave this blank to use the default NV Access NVDA update server.
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->

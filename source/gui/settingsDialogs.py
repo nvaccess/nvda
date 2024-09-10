@@ -958,6 +958,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				_("Update server &mirror URL:"),
 				wx.TextCtrl,
 			)
+			self.bindHelpEvent("UpdateMirrorURL", self.updateMirrorTextBox)
 			item.Value = config.conf["update"]["serverURL"]
 			if globalVars.appArgs.secure:
 				item.Disable()
