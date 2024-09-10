@@ -67,7 +67,7 @@ import winKernel
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.
-CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
+_DEFAULT_CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
 #: The time to wait between checks.
 CHECK_INTERVAL = 86400  # 1 day
 #: The time to wait before retrying a failed check.
@@ -89,6 +89,12 @@ state: Optional[Dict[str, Any]] = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
 autoChecker: Optional["AutoUpdateChecker"] = None
+
+
+def _getCheckURL() -> str:
+	if url := config.conf["update"]["baseServerURL"]:
+		return url
+	return _DEFAULT_CHECK_URL
 
 
 def getQualifiedDriverClassNameForStats(cls):
@@ -162,7 +168,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			"outputBrailleTable": config.conf["braille"]["translationTable"] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
-	url = "%s?%s" % (CHECK_URL, urllib.parse.urlencode(params))
+	url = "%s?%s" % (_getCheckURL(), urllib.parse.urlencode(params))
 	try:
 		log.debug(f"Fetching update data from {url}")
 		res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
@@ -943,7 +949,7 @@ def _updateWindowsRootCertificates():
 	with requests.get(
 		# We must specify versionType so the server doesn't return a 404 error and
 		# thus cause an exception.
-		CHECK_URL + "?versionType=stable",
+		_getCheckURL() + "?versionType=stable",
 		timeout=UPDATE_FETCH_TIMEOUT_S,
 		# Use an unverified connection to avoid a certificate error.
 		verify=False,
