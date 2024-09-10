@@ -33,6 +33,20 @@ import ui
 import vision
 
 
+class SymphonyUtils:
+	"""Helper class providing utility methods."""
+
+	@staticmethod
+	def is_toolbar_item(obj: NVDAObject) -> bool:
+		"""Whether the given object is part of a toolbar."""
+		parent = obj.parent
+		while parent:
+			if parent.role == controlTypes.Role.TOOLBAR:
+				return True
+			parent = parent.parent
+		return False
+
+
 class SymphonyTextInfo(IA2TextTextInfo):
 	# C901 '_getFormatFieldFromLegacyAttributesString' is too complex
 	# Note: when working on _getFormatFieldFromLegacyAttributesString, look for opportunities to simplify
@@ -235,6 +249,17 @@ class SymphonyText(IAccessible, EditableText):
 			return {"level": int(level)}
 		return super(SymphonyText, self).positionInfo
 
+	def event_valueChange(self) -> None:
+		# announce new value to indicate formatting change if registered gesture
+		# triggered the change in toolbar item's value/text
+		if SymphonyDocument.isFormattingChangeAnnouncementEnabled() and SymphonyUtils.is_toolbar_item(self):
+			message = self.IAccessibleTextObject.text(0, -1)
+			ui.message(message)
+			# disable announcement until next registered keypress enables it again
+			SymphonyDocument.announceFormattingGestureChange = False
+
+		return super().event_valueChange()
+
 
 class SymphonyTableCell(IAccessible):
 	"""Silences particular states, and redundant column/row numbers"""
@@ -355,16 +380,7 @@ class SymphonyButton(IAccessible):
 	def event_stateChange(self) -> None:
 		# announce new state of toggled toolbar button to indicate formatting change
 		# if registered gesture resulted in button state change
-		if (
-			SymphonyDocument.announceToolbarButtonToggle
-			and self.parent
-			and self.parent.role == controlTypes.Role.TOOLBAR
-			and time.time()
-			< (
-				SymphonyDocument.lastFormattingGestureEventTime
-				+ SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
-			)
-		):
+		if SymphonyDocument.isFormattingChangeAnnouncementEnabled() and SymphonyUtils.is_toolbar_item(self):
 			states = self.states
 			enabled = controlTypes.State.PRESSED in states or controlTypes.State.CHECKED in states
 			# button's accessible name is the font attribute, e.g. "Bold", "Italic"
@@ -376,7 +392,7 @@ class SymphonyButton(IAccessible):
 				message = _("{textAttribute} off").format(textAttribute=self.name)
 			ui.message(message)
 			# disable announcement until next registered keypress enables it again
-			SymphonyDocument.announceToolbarButtonToggle = False
+			SymphonyDocument.announceFormattingGestureChange = False
 
 		return super().event_stateChange()
 
@@ -431,9 +447,15 @@ class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
 	# variables used for handling announcements resulting from gestures
-	GESTURE_ANNOUNCEMENT_TIMEOUT = 0.15
-	announceToolbarButtonToggle = False
+	GESTURE_ANNOUNCEMENT_TIMEOUT = 2.0
+	announceFormattingGestureChange = False
 	lastFormattingGestureEventTime = 0
+
+	@staticmethod
+	def isFormattingChangeAnnouncementEnabled() -> bool:
+		return SymphonyDocument.announceFormattingGestureChange and time.time() < (
+			SymphonyDocument.lastFormattingGestureEventTime + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
+		)
 
 	# override base class implementation because that one assumes
 	# that the text retrieved from the text info for the text unit
@@ -489,13 +511,19 @@ class SymphonyDocument(CompoundDocument):
 			"kb:control+r",
 			# justified
 			"kb:control+j",
+			# decrease font size
+			"kb:control+[",
+			# increase font size
+			"kb:control+]",
 		],
 	)
-	def script_toggleTextAttribute(self, gesture: inputCore.InputGesture):
-		"""Reset time and enable announcement of toggled toolbar buttons.
-		See :func:`SymphonyButton.event_stateChange`
+	def script_changeTextFormatting(self, gesture: inputCore.InputGesture):
+		"""Reset time and enable announcement of newly changed state/text of toolbar
+		items related to text formatting.
+		See also :func:`SymphonyButton.event_stateChange` and
+		:func:`SymphonyText.event_valueChange`.
 		"""
-		SymphonyDocument.announceToolbarButtonToggle = True
+		SymphonyDocument.announceFormattingGestureChange = True
 		SymphonyDocument.lastFormattingGestureEventTime = time.time()
 		# send gesture
 		gesture.send()
