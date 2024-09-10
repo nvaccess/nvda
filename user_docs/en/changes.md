@@ -14,7 +14,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
-* It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151)
 
 ### Changes
 
@@ -58,6 +58,8 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 
 * The `addonStore.network.BASE_URL` constant has been removed.
 As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
+* The `updateCheck.CHECK_URL` constant has been removed.
+As the NVDA update check URL is now configurable directly within NVDA, no replacement is planned. (#17151)
 * `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
 * `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
 
