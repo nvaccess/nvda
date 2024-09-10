@@ -155,33 +155,25 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
+		# Translators: Presented when a list will be sorted in ascending order.
+		ascendingOrderLabel = pgettext("addonStore", "Ascending")
+		# Translators: Presented when a list will be sorted in descending order.
+		descendingOrderLabel = pgettext("addonStore", "Descending")
+		columnChoices = []
+		for c in self._storeVM.listVM.presentedFields:
+			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
+			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
 		self.columnFilterCtrl = cast(
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
 				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
 				labelText=pgettext("addonStore", "Sort by colu&mn:"),
 				wxCtrlClass=wx.Choice,
-				choices=[c.displayString for c in self._storeVM.listVM.presentedFields],
+				choices=columnChoices,
 			),
 		)
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
 		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
-
-		# Translators: The label of a checkbox to sort the list of add-ons in the add-on store dialog.
-		descendingOrderLabel = pgettext("addonStore", "&Descending order")
-		self.descendingOrderFilterCtrl = cast(
-			wx.CheckBox,
-			filterCtrlsLine0.addItem(
-				wx.CheckBox(self, label=descendingOrderLabel),
-			),
-		)
-		self.descendingOrderFilterCtrl.SetValue(0)
-		self.descendingOrderFilterCtrl.Bind(
-			wx.EVT_CHECKBOX,
-			self.onDescendingOrderFilterChange,
-			self.descendingOrderFilterCtrl,
-		)
-		self.bindHelpEvent("AddonStoreSortDescending", self.columnFilterCtrl)
 
 		self.channelFilterCtrl = cast(
 			wx.Choice,
@@ -404,9 +396,9 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetFocus()
 
 	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
-		colIndex = evt.GetSelection()
-		log.debug(f"Sortered by col: {colIndex}")
+		colIndex = evt.GetSelection() // 2
 		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex])
+		self._storeVM.listVM.setReverse(evt.GetSelection() % 2)
 		self._storeVM.refresh()
 
 	def onDescendingOrderFilterChange(self, evt: wx.EVT_CHECKBOX):
