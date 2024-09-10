@@ -37,7 +37,7 @@ from .speechDict import (
 	VoiceDictionaryDialog,
 	TemporaryDictionaryDialog,
 )
-from .nvdaControls import ContinueCancelDialog
+from .nvdaControls import _ContinueCancelDialog
 
 # ExitDialog is accessed through `import gui.ExitDialog` as opposed to `gui.exit.ExitDialog`.
 # Be careful when removing, and only do in a compatibility breaking release.
@@ -480,7 +480,7 @@ class MainFrame(wx.Frame):
 
 		installerGui.showInstallGui()
 
-	CRFT_INTRO_MESSAGE: str = _(
+	_CRFT_INTRO_MESSAGE: str = _(
 		# Translators: Explain the COM Registration Fixing tool to users before running
 		"Welcome to the COM Registration Fixing tool.\n"
 		"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, "
@@ -512,10 +512,10 @@ class MainFrame(wx.Frame):
 		"""
 		# Translators: The title of various dialogs displayed when using the COM Registration Fixing tool
 		genericTitle: str = _("Fix COM Registrations")
-		introDialog = ContinueCancelDialog(
+		introDialog = _ContinueCancelDialog(
 			self,
 			genericTitle,
-			self.CRFT_INTRO_MSG,
+			self._CRFT_INTRO_MSG,
 		)
 		response: int = introDialog.ShowModal()
 		if response == wx.CANCEL:
