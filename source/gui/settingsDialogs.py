@@ -918,6 +918,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
+
 		if updateCheck:
 			item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
 				self,
@@ -952,6 +953,14 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+			item = self.updateMirrorTextBox = settingsSizerHelper.addLabeledControl(
+				# Translators: The label of a textbox in general settings to set the NVDA update server mirror
+				_("Update server &mirror URL:"),
+				wx.TextCtrl,
+			)
+			item.Value = config.conf["update"]["baseServerURL"]
+			if globalVars.appArgs.secure:
+				item.Disable()
 
 	def onCopySettings(self, evt):
 		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
@@ -1013,6 +1022,12 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
+	def isValid(self) -> bool:
+		self.updateMirrorTextBox.SetValue(
+			url_normalize(self.updateMirrorTextBox.GetValue().strip()).rstrip("/"),
+		)
+		return True
+
 	def onSave(self):
 		if (
 			not languageHandler.isLanguageForced()
@@ -1043,6 +1058,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
+			config.conf["update"]["baseServerURL"] = self.updateMirrorTextBox.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
 
