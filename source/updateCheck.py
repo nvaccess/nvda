@@ -337,12 +337,31 @@ class UpdateChecker(garbageHandler.TrackedObject):
 		)
 
 	def _error(self):
+		if url := config.conf["update"]["serverURL"]:
+			tip = pgettext(
+				"updateCheck",
+				# Translators: A suggestion of what to do when checking for NVDA updates fails and an update mirror is being used.
+				# {url} will be replaced with the mirror URL.
+				"Make sure you are connected to the internet, and the NVDA update mirror URL is valid.\n"
+				"Mirror URL: {url}",
+			).format(url=url)
+		else:
+			tip = pgettext(
+				"updateCheck",
+				# Translators: A suggestion of what to do when fetching add-on data from the store fails and the default metadata URL is being used.
+				"Make sure you are connected to the internet and try again.",
+			)
+		message = pgettext(
+			"updateCheck",
+			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
+			# tip will be replaced with a context sensitive suggestion of next steps.
+			"Error checking for update.\n{tip}",
+		).format(tip=tip)
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(
 			gui.messageBox,
-			# Translators: A message indicating that an error occurred while checking for an update to NVDA.
-			_("Error checking for update."),
+			message,
 			# Translators: The title of an error message dialog.
 			_("Error"),
 			wx.OK | wx.ICON_ERROR,
