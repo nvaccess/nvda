@@ -392,7 +392,9 @@ class AddonStoreDialog(SettingsDialog):
 	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
 		colIndex = evt.GetSelection() // 2
 		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex])
-		self._storeVM.listVM.setReverse(evt.GetSelection() % 2)
+		reverse = evt.GetSelection() % 2
+		self._storeVM.listVM.setReverse(reverse)
+		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
 		self._storeVM.refresh()
 
 	def onDescendingOrderFilterChange(self, evt: wx.EVT_CHECKBOX):
