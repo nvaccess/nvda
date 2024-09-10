@@ -92,7 +92,7 @@ autoChecker: Optional["AutoUpdateChecker"] = None
 
 
 def _getCheckURL() -> str:
-	if url := config.conf["update"]["baseServerURL"]:
+	if url := config.conf["update"]["serverURL"]:
 		return url
 	return _DEFAULT_CHECK_URL
 

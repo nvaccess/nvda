@@ -958,7 +958,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				_("Update server &mirror URL:"),
 				wx.TextCtrl,
 			)
-			item.Value = config.conf["update"]["baseServerURL"]
+			item.Value = config.conf["update"]["serverURL"]
 			if globalVars.appArgs.secure:
 				item.Disable()
 
@@ -1058,7 +1058,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
-			config.conf["update"]["baseServerURL"] = self.updateMirrorTextBox.GetValue()
+			config.conf["update"]["serverURL"] = self.updateMirrorTextBox.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
 
