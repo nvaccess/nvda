@@ -391,8 +391,10 @@ class AddonStoreDialog(SettingsDialog):
 			self.addonListTabs.SetFocus()
 
 	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
+		# Each col index will correspond to 2 choices in the combo box (ascending and descending)
 		colIndex = evt.GetSelection() // 2
 		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex])
+		# Descending sort should be applied for odd choices of the combo box
 		reverse = evt.GetSelection() % 2
 		self._storeVM.listVM.setReverse(reverse)
 		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
