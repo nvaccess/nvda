@@ -452,7 +452,7 @@ class SymphonyDocument(CompoundDocument):
 	lastFormattingGestureEventTime = 0
 
 	@staticmethod
-	def isFormattingChangeAnnouncementEnabled():
+	def isFormattingChangeAnnouncementEnabled() -> bool:
 		return SymphonyDocument.announceFormattingGestureChange and time.time() < (
 			SymphonyDocument.lastFormattingGestureEventTime + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
 		)
