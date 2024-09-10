@@ -3799,18 +3799,24 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
 Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
-As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+As accessibility Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear if the correct registrations are missing.
 
-This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+This can happen, for example, after installing and uninstalling Adobe Reader, Math Player and other programs.
+It can also happen after Windows updates, or during other events that access the registry.
 
-The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+The missing registrations can cause issues in browsers, desktop apps, Windows Explorer, the task bar and other interfaces.
 
-Specifically, following issues can be solved by running this tool:
+Specifically, the following issues can be solved by running this tool:
 
-* NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
-* NVDA fails to switch between focus mode and browse mode
-* NVDA is very slow when navigating in browsers while using browse mode
+* NVDA reports "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, etc.
+* NVDA fails to switch between focus mode and browse mode when you expect it to.
+* NVDA is very slow when navigating in browsers while using browse mode.
 * And possibly other issues.
+
+Because this tool corrects entries in the Windows registry, it requires administrative access to work.
+If you have UAC (User Access Control) enabled, as most users do, you will need to follow whatever prompts are presented by UAC, to run the tool successfully.
+This may include entering your administrative account's password.
+It will not be NVDA asking for this, but Windows itself, just as it would while installing a program.
 
 ### Reload plugins {#ReloadPlugins}
 
