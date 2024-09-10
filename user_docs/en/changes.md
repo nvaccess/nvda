@@ -16,6 +16,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 * The add-ons lists in the Add-on Store can be sorted by columns. (#15277, @nvdaes)
+* When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
 
 ### Changes
 
@@ -61,6 +62,9 @@ Please open a GitHub issue if your add-on has an issue with updating to the new 
 As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
 * `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
 * `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
+* The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
+  * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
+  * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 
 #### Deprecations
 
