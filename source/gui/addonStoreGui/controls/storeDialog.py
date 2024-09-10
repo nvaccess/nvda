@@ -155,21 +155,14 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
-		# Translators: Presented when a list will be sorted in ascending order.
-		ascendingOrderLabel = pgettext("addonStore", "Ascending")
-		# Translators: Presented when a list will be sorted in descending order.
-		descendingOrderLabel = pgettext("addonStore", "Descending")
-		columnChoices = []
-		for c in self._storeVM.listVM.presentedFields:
-			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
-			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
+		self._storeVM.listVM.setColumnChoices()
 		self.columnFilterCtrl = cast(
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
 				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
 				labelText=pgettext("addonStore", "Sort by colu&mn:"),
 				wxCtrlClass=wx.Choice,
-				choices=columnChoices,
+				choices=self._storeVM.listVM._columnChoices,
 			),
 		)
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
@@ -344,8 +337,9 @@ class AddonStoreDialog(SettingsDialog):
 
 	def _toggleFilterControls(self):
 		self.columnFilterCtrl.Clear()
-		for c in self._storeVM.listVM.presentedFields:
-			self.columnFilterCtrl.Append(c.displayString)
+		self._storeVM.listVM.setColumnChoices()
+		for c in self._storeVM.listVM._columnChoices:
+			self.columnFilterCtrl.Append(c)
 		self.channelFilterCtrl.Clear()
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:

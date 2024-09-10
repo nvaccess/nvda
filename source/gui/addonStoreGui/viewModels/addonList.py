@@ -220,6 +220,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self._columnChoices: list[str] = []
 		self._reverse: bool = False
 
 		self._setSelectionPending = False
@@ -349,6 +350,17 @@ class AddonListVM:
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
+
+	def setColumnChoices(self) -> None:
+		# Translators: Presented when a list will be sorted in ascending order.
+		ascendingOrderLabel = pgettext("addonStore", "Ascending")
+		# Translators: Presented when a list will be sorted in descending order.
+		descendingOrderLabel = pgettext("addonStore", "Descending")
+		columnChoices = []
+		for c in self.presentedFields:
+			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
+			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
+		self._columnChoices = columnChoices
 
 	def setReverse(self, reverse: bool) -> None:
 		self._reverse = reverse
