@@ -480,7 +480,7 @@ class MainFrame(wx.Frame):
 
 		installerGui.showInstallGui()
 
-	CRFT_INTRO_MSG: str = _(
+	CRFT_INTRO_MESSAGE: str = _(
 		# Translators: Explain the COM Registration Fixing tool to users before running
 		"Welcome to the COM Registration Fixing tool.\n"
 		"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, "
@@ -492,9 +492,8 @@ class MainFrame(wx.Frame):
 		"You have most likely been asked to run this tool by an experienced user or support worker to investigate "
 		"and potentially fix an issue with NVDA's behaviour.\n"
 		"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will "
-		"be prompted by UAC before this tool can do its job. This is normal and you should follow the UAC's "
-		"instructions to approve the running of the tool.\n\n"
-		"Press Continue to try to repair the registry now.\n",
+		"be prompted by UAC before this tool can do its job. This is normal, and you should follow the prompts to allow the tool to run.\n\n"
+		"Press Continue to try to repair the registry now.",
 	)
 	"""
 	Contains the intro dialog contents for the COM Registration Fixing Tool.
@@ -554,8 +553,8 @@ class MainFrame(wx.Frame):
 					_(
 						# Translators: message shown to the user on COM Registration Fix fail
 						"The COM Registration Fixing Tool was unsuccessful. This Windows "
-						"error may provide more information.    {}",
-					).format(error),
+						"error may provide more information.\n{error}",
+					).format(error=error),
 					# Translators: The title of a COM Registration Fixing Tool dialog, when the tool has failed
 					_("COM Registration Fixing Tool Failed"),
 					wx.OK,
