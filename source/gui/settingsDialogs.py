@@ -2161,6 +2161,11 @@ class ReviewCursorPanel(SettingsPanel):
 class InputCompositionPanel(SettingsPanel):
 	# Translators: This is the label for the Input Composition settings panel.
 	title = _("Input Composition")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Input Composition settings panel.
+		"Configure how NVDA reports the input of Asian characters, "
+		"such as when using IME or Text Service input methods."
+	)
 	helpId = "InputCompositionSettings"
 
 	def makeSettings(self, settingsSizer):
