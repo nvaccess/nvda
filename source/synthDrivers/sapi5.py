@@ -340,17 +340,15 @@ class SynthDriver(SynthDriver):
 					if item.text:
 						textList.append(item.text)
 			elif isinstance(item, LangChangeCommand):
-				lcid = languageHandler.LCID_NONE
-				if item.lang:
-					lcid = languageHandler.localeNameToWindowsLCID(item.lang)
-				if lcid == languageHandler.LCID_NONE:
+				lcid = languageHandler.localeNameToWindowsLCID(item.lang) if item.lang else languageHandler.LCID_NONE
+				if lcid is languageHandler.LCID_NONE:
 					try:
 						del tags["lang"]
 					except KeyError:
 						pass
 				else:
 					tags["lang"] = {"langid": "%x" % lcid}
-					tagsChanged[0] = True
+				tagsChanged[0] = True
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
 			else:
