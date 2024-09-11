@@ -2942,6 +2942,10 @@ class DocumentFormattingPanel(SettingsPanel):
 class DocumentNavigationPanel(SettingsPanel):
 	# Translators: This is the label for the document navigation settings panel.
 	title = _("Document Navigation")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Document Navigation settings panel.
+		"Configure certain specifics of how you can move through documents."
+	)
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
