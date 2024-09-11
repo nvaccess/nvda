@@ -340,7 +340,11 @@ class SynthDriver(SynthDriver):
 					if item.text:
 						textList.append(item.text)
 			elif isinstance(item, LangChangeCommand):
-				lcid = languageHandler.localeNameToWindowsLCID(item.lang) if item.lang else languageHandler.LCID_NONE
+				lcid = (
+					languageHandler.localeNameToWindowsLCID(item.lang)
+					if item.lang
+					else languageHandler.LCID_NONE
+				)
 				if lcid is languageHandler.LCID_NONE:
 					try:
 						del tags["lang"]
