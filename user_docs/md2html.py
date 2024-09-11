@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 import sys
+import argparse
 from copy import deepcopy
 import io
 import pathlib
@@ -132,15 +133,14 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	return htmlOutput
 
 
-def main(cmd: str, source: str, dest: str):
-	if cmd not in ("check", "convert"):
-		raise ValueError(f"Unknown command {cmd}")
-	print(f"{cmd} {source} {dest}")
-	isKeyCommands = dest.endswith("keyCommands.html")
-	isUserGuide = dest.endswith("userGuide.html")
-	isDevGuide = dest.endswith("developerGuide.html")
-	isChanges = dest.endswith("changes.html")
-
+def main(source: str, dest: str, lang="en", docType=None):
+	print(f"Converting {docType or 'document'} at {source} to {dest}, {lang=}")
+	isUserGuide = docType == "userGuide"
+	isDevGuide = docType == "developerGuide"
+	isChanges = docType == "changes"
+	isKeyCommands = docType == "keyCommands"
+	if docType and not any([isUserGuide, isDevGuide, isChanges, isKeyCommands]):
+		raise ValueError(f"Unknown docType {docType}")
 	with open(source, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
 
@@ -176,17 +176,19 @@ def main(cmd: str, source: str, dest: str):
 	htmlBuffer.seek(0, io.SEEK_END)
 	htmlBuffer.write("\n</body>\n</html>\n")
 
-	if cmd == "convert":
-		with open(dest, "w", encoding="utf-8") as targetFile:
-			# Make next read at start of buffer
-			htmlBuffer.seek(0)
-			shutil.copyfileobj(htmlBuffer, targetFile)
+	with open(dest, "w", encoding="utf-8") as targetFile:
+		# Make next read at start of buffer
+		htmlBuffer.seek(0)
+		shutil.copyfileobj(htmlBuffer, targetFile)
 
 	htmlBuffer.close()
 
 
 if __name__ == "__main__":
-	cmd = sys.argv[1]
-	source = sys.argv[2]
-	dest = sys.argv[3]
-	main(cmd, source, dest)
+	args = argparse.ArgumentParser()
+	args.add_argument("-l", "--lang", help="Language code", action="store", default="en")
+	args.add_argument("-t", "--docType", help="Type of document", action="store", choices=["userGuide", "developerGuide", "changes", "keyCommands"])
+	args.add_argument("source", help="Path to the markdown file")
+	args.add_argument("dest", help="Path to the resulting html file")
+	args = args.parse_args()
+	main(source=args.source, dest=args.dest, lang=args.lang, docType=args.docType)

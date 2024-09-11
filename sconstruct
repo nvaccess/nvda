@@ -355,10 +355,12 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 			"NVDA_COPYRIGHT_YEARS": versionInfo.copyrightYears,
 		},
 	)
+	lang = os.path.split(os.path.dirname(mdFile.path))[-1]
+	docType = os.path.basename(mdFile.path).split(".")[0]
 	htmlFile = env.Command(
 		target=mdFile.abspath.replace(".md", ".html"),
 		source=mdFileSub,
-		action=[f'@{sys.executable} user_docs/md2html.py convert "$SOURCE" "$TARGET"'],
+		action=[f'@{sys.executable} user_docs/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
 	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
@@ -376,10 +378,11 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 
 # Create key commands files
 for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.md.sub")):
+	lang = os.path.split(os.path.dirname(userGuideFileSub.path))[-1]
 	keyCommandsHtmlFile = env.Command(
 		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
 		source=userGuideFileSub,
-		action=[f'@{sys.executable} user_docs/md2html.py convert "$SOURCE" "$TARGET"'],
+		action=[f'@{sys.executable} user_docs/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
 	)
 	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 
@@ -728,3 +731,10 @@ source = env.Dir(os.path.join(os.getcwd(), "dist"))
 # Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))
+
+nvdaL10nUtil = env.Command(
+	target=outputDir.File("nvdaL10nUtil.exe"),
+	source="user_docs/nvdaL10nUtil.py",
+	ENV=os.environ,
+	action=f"nuitka --standalone --onefile --output-dir=./output --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links user_docs/nvdaL10nUtil.py",
+)
