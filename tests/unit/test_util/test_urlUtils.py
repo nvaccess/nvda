@@ -54,3 +54,9 @@ class TestIsSamePageURL(unittest.TestCase):
 	def test_mailtoScheme(self):
 		"""Test URLs with different schemes like mailto."""
 		self.assertFalse(isSamePageURL("mailto://example.com/page#section", "http://example.com/page"))
+
+	def test_samePageInLocalFile(self):
+		self.assertTrue(isSamePageURL("file:///example.html#section", "file:///example.html"))
+
+	def test_externalLinkInLocalFile(self):
+		self.assertFalse(isSamePageURL("http://example.com", "file:///example.html"))
