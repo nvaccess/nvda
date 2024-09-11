@@ -369,19 +369,27 @@ def translateXliff(
 						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}'
 					)
 				translation = pretranslatedLine[len(prefix) : len(pretranslatedLine) - len(suffix)]
-				unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
-				if unit is not None:
-					segment = unit.find("./xliff:segment", namespaces=namespace)
-					if segment is not None:
-						target = lxml.etree.Element("target")
-						target.text = xmlEscape(translation)
-						target.tail = "\n"
-						segment.append(target)
-						res.numTranslatedStrings += 1
+				try:
+					unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
+					if unit is not None:
+						segment = unit.find("./xliff:segment", namespaces=namespace)
+						if segment is not None:
+							target = lxml.etree.Element("target")
+							target.text = xmlEscape(translation)
+							target.tail = "\n"
+							segment.append(target)
+							res.numTranslatedStrings += 1
+						else:
+							raise ValueError(f"No segment found for unit {ID}")
 					else:
-						raise ValueError(f"No segment found for unit {ID}")
-				else:
-					raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+						raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+				except Exception as e:
+					e.add_note(
+						f"Line {lineNo}: {pretranslatedLine=}, {skelLine=}"
+					)
+					raise
+			elif skelLine != pretranslatedLine:
+				raise ValueError(f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}")
 		xliff.write(outputPath, encoding="utf8", xml_declaration=True)
 		print(f"Translated xliff file with {res.numTranslatedStrings} translated strings")
 		return res
