@@ -30,6 +30,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 
 ### Changes for Developers
 
