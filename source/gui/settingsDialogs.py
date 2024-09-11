@@ -2123,6 +2123,10 @@ class MouseSettingsPanel(SettingsPanel):
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
 	title = _("Review Cursor")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Review Cursor settings panel.
+		"Configure NVDA's review cursor behavior."
+	)
 	helpId = "ReviewCursorSettings"
 
 	def makeSettings(self, settingsSizer):
