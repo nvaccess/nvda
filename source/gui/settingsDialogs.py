@@ -2125,7 +2125,7 @@ class ReviewCursorPanel(SettingsPanel):
 	title = _("Review Cursor")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Review Cursor settings panel.
-		"Configure NVDA's review cursor behavior."
+		"Configure NVDA's review cursor behavior.",
 	)
 	helpId = "ReviewCursorSettings"
 
@@ -2168,7 +2168,7 @@ class InputCompositionPanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Input Composition settings panel.
 		"Configure how NVDA reports the input of Asian characters, "
-		"such as when using IME or Text Service input methods."
+		"such as when using IME or Text Service input methods.",
 	)
 	helpId = "InputCompositionSettings"
 
@@ -2422,7 +2422,7 @@ class BrowseModePanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Browse Mode settings panel.
 		"Configure behaviors when reading complex documents, including web pages, messages in Outlook or Thunderbird, or "
-		"files in the MS Office browse mode."
+		"files in the MS Office browse mode.",
 	)
 	helpId = "BrowseModeSettings"
 
@@ -2944,7 +2944,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	title = _("Document Navigation")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Document Navigation settings panel.
-		"Configure certain specifics of how you can move through documents."
+		"Configure certain specifics of how you can move through documents.",
 	)
 	helpId = "DocumentNavigation"
 
@@ -3200,7 +3200,7 @@ class AddonStorePanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Add-on Store settings panel.
 		"Adjust certain aspects of the Add-on Store, including whether you want to be notified "
-		"when your add-ons have updates available."
+		"when your add-ons have updates available.",
 	)
 	helpId = "AddonStoreSettings"
 
@@ -3271,7 +3271,7 @@ class UwpOcrPanel(SettingsPanel):
 	title = _("Windows OCR")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Windows OCR settings panel.
-		"Configure some elements of the Windows optical character recognition feature which NVDA makes available."
+		"Configure some elements of the Windows optical character recognition feature which NVDA makes available.",
 	)
 	helpId = "Win10OcrSettings"
 
