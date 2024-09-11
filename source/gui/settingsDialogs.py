@@ -3269,6 +3269,10 @@ class TouchInteractionPanel(SettingsPanel):
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows OCR panel.
 	title = _("Windows OCR")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Windows OCR settings panel.
+		"Configure some elements of the Windows optical character recognition feature which NVDA makes available."
+	)
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
