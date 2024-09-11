@@ -2419,6 +2419,11 @@ class ObjectPresentationPanel(SettingsPanel):
 class BrowseModePanel(SettingsPanel):
 	# Translators: This is the label for the browse mode settings panel.
 	title = _("Browse Mode")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Browse Mode settings panel.
+		"Configure behaviors when reading complex documents, including web pages, messages in Outlook or Thunderbird, or "
+		"files in the MS Office browse mode."
+	)
 	helpId = "BrowseModeSettings"
 
 	def makeSettings(self, settingsSizer):
