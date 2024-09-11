@@ -5460,3 +5460,41 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+class SetURLDialog(SettingsDialog):
+	# Translators: This is the label for the synthesizer selection dialog
+	title = _("NVDA Update Mirror")
+	helpId = "SynthesizerSelection"
+
+	def makeSettings(self, settingsSizer):
+		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
+		self.urlTextBox = settingsSizerHelper.addLabeledControl("&URL:", wx.TextCtrl, size=(250, -1))
+		self.testButton = wx.Button(self, label="&Test")
+		self.urlTextBox.GetContainingSizer().Add(self.testButton)
+		self.testButton.Bind(wx.EVT_BUTTON, self.onTest)
+
+	def postInit(self):
+		# Ensure that focus is on the URL text box.
+		self.urlTextBox.SetFocus()
+
+	def onTest(self, evt):
+		self.isValid()
+
+	def isValid(self) -> bool:
+		from urllib3.util.url import parse_url
+
+		parsed = parse_url(self.urlTextBox.GetValue())
+		if parsed.scheme is None:
+			parsed = parsed._replace(scheme="https")
+		elif parsed.scheme not in ("http", "https"):
+			gui.messageBox("Only HTTP and HTTPS URLs are supported.")
+			return False
+		if parsed.host is None:
+			gui.message("The URL doesn't seem to point anywhere")
+			return False
+		if parsed.query is not None:
+			gui.messageBox("Query strings are not allowed")
+		self.urlTextBox.SetValue(parsed.url)
+		return False
+		return True
