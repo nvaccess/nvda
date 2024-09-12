@@ -131,6 +131,8 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		Path where this add-on should be downloaded to.
 		After download completion, the add-on is moved to cachedDownloadPath.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
@@ -151,7 +153,10 @@ class _AddonStoreModel(_AddonGUIModel):
 
 	@property
 	def isPendingInstall(self) -> bool:
-		"""True if this addon has not yet been fully installed."""
+		"""True if this addon has not yet been fully installed.
+
+		Note: That the download might not be completed yet.
+		"""
 		from ..dataManager import addonDataManager
 
 		assert addonDataManager
@@ -161,13 +166,20 @@ class _AddonStoreModel(_AddonGUIModel):
 			# have not been installed yet
 			addonDataManager._downloadsPendingInstall,
 		)
+		nameInDownloadsPendingCompletion = filter(
+			lambda m: m.model.name == self.name,
+			# add-ons which are currently being downloaded
+			# and have not been cancelled
+			addonDataManager._downloadsPendingCompletion,
+		)
 		return (
 			super().isPendingInstall
 			# True if this add-on has been downloaded but
 			# has not been installed yet
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
-			or os.path.exists(self.tempDownloadPath)
+			# and the download has not been cancelled
+			or bool(next(nameInDownloadsPendingCompletion, False))
 		)
 
 

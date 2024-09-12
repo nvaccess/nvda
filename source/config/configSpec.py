@@ -35,7 +35,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
-	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
 	# Deprecated in 2025.1
 	includeCLDR = boolean(default=True)
@@ -63,6 +63,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 	soundSplitState = integer(default=0)
 	includedSoundSplitModes = int_list(default=list(0, 2, 3))
+	applicationsSoundVolume = integer(default=100, min=0, max=100)
+	applicationsSoundMuted = boolean(default=False)
+	applicationsVolumeMode = featureFlag(optionsEnum="AppsVolumeAdjusterFlag", behaviorOfDefault="DISABLED")
 
 # Braille settings
 [braille]
@@ -239,6 +242,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0: Off, 1: style, 2: color and style
 	reportCellBorders = integer(0, 2, default=0)
 	reportLinks = boolean(default=true)
+	reportLinkType = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportBookmarks = boolean(default=true)
@@ -335,6 +339,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [addonStore]
 	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
+	baseServerURL = string(default="")
 """
 
 #: The configuration specification

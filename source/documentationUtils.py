@@ -10,6 +10,11 @@ import os
 import globalVars
 import languageHandler
 import NVDAState
+from logHandler import log
+import ui
+import queueHandler
+from gui.message import messageBox
+import wx
 
 
 def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
@@ -51,3 +56,20 @@ def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
 
 
 getDocFilePath.rootPath = None
+
+
+def reportNoDocumentation(fileName: str, useMsgBox: bool = False) -> None:
+	# Translators: Message reported upon action (e.g. context sensitive help, open documentation from NVDA menu)
+	noDocMessage = _("No documentation found.")
+	log.debugWarning(
+		f"Documentation not found ({fileName}): possible cause - running from source without building user docs.",
+	)
+	if useMsgBox:
+		messageBox(
+			noDocMessage,
+			# Translators: the title of an error message dialog
+			_("Error"),
+			wx.OK | wx.ICON_ERROR,
+		)
+	else:
+		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noDocMessage)

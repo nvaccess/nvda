@@ -44,16 +44,12 @@ repos:
       exclude: "\\.(dic|sfd)$"
     # Checks python syntax
     - id: check-ast
-      # File uses encoding not supported in Linux
-      exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     # Checks for filenames that will conflict on case insensitive filesystems (the majority of Windows filesystems, most of the time)
     - id: check-case-conflict
     # Checks for artifacts from resolving merge conflicts.
     - id: check-merge-conflict
     # Checks Python files for debug statements, such as python's breakpoint function, or those inserted by some IDEs.
     - id: debug-statements
-      # File uses encoding not supported in Linux
-      exclude: source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
     # Removes trailing whitespace.
     - id: trailing-whitespace
       types_or: [python, c, c++, batch, markdown]
@@ -101,7 +97,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.5.6
+  rev: v0.6.3
   hooks:
     - id: ruff
       name: lint with ruff

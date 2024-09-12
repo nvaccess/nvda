@@ -1,0 +1,111 @@
+name: Rebuild English User Documentation for Translation 
+
+on:
+  push:
+    branches:
+      - beta
+    paths:
+      - 'user_docs/en/*.md'
+
+jobs:
+  rebuild-translation-source:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install lxml requests
+
+    - name: update xliff files
+      shell: pwsh
+      run: |
+        # for any English markdown files changed within the commits of this push,
+        # update the corresponding xliff file (if one exists) to reflect the current markdown file,
+        # keeping existing translation IDs in tact. 
+        $ErrorActionPreference = 'Stop'
+        $changedFiles = git diff --name-only ${{github.event.before}}.. -- user_docs/en/*.md
+        foreach ($file in $changedFiles) {
+            Write-Host "$file has changed"
+            $baseName = [System.IO.Path]::GetFileNameWithoutExtension($file)
+            $xliff = "user_docs/en/$baseName.xliff"
+            $tempXliff = "user_docs/en/$baseName.xliff.temp"
+            $markdown = $file
+            if (Test-Path $xliff) {
+                Write-Host "Updating $xliff with changes from $markdown"
+                python user_docs/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
+                Write-Host "Renaming $tempXliff to $xliff"
+                move-item -Path $tempXliff -Destination $xliff -Force
+            } else {
+                Write-Host "Ignoring $markdown as it does not have a corresponding xliff file"
+            }
+        }
+      if: success()
+
+    - name: Commit and Push changes
+      run: |
+        $ErrorActionPreference = 'Stop'
+        git config --local user.name "GitHub Actions"
+        git config --local user.email "actions@github.com"
+        $filesChanged = git diff --name-only -- *.xliff
+        if ($filesChanged) {
+          Write-Host "xliff files were changed. Committing and pushing changes."
+          foreach ($file in $filesChanged) {
+            git add $file
+            Write-Host "Committing $file"
+            git commit -m "Update $file"
+          }
+          Write-Host "Setting up ssh for push"
+          # Ensure .ssh directory exists
+          New-Item -ItemType Directory -Force -Path ~/.ssh
+          # Add github.com to the list of known hosts for ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          # set the private key of the Github deploy key as the ssh key 
+          $privateKey = "${{ secrets.XLIFF_DEPLOY_PRIVATE_KEY }}"
+          $privateKey | Out-File -FilePath ~/.ssh/id_rsa -Encoding ascii
+          # Tell git to use ssh for pushing
+          git remote set-url origin git@github.com:${{ github.repository }}
+          Write-Host "Pushing changes"
+          git push origin HEAD
+        } else {
+          Write-Host "No xliff files were changed. Skipping commit and push."
+        }
+      if: success()
+
+    - name: Crowdin upload
+      # This step must only be run after successfully pushing changes to the repository.
+      # Otherwise if the push fails, subsequent runs may cause new translation IDs to be created,
+      # which will cause needless retranslation of existing strings.
+      env:
+        crowdinProjectID: ${{ vars.CROWDIN_PROJECT_ID }}
+        crowdinAuthToken: ${{ secrets.CROWDIN_AUTH_TOKEN }}
+      run: |
+        # Check if we changed userGuide.xliff in this action.
+        # If we did, upload it to Crowdin.
+        $ErrorActionPreference = 'Stop'
+        $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/userGuide.xliff
+        if ($changed) {
+            Write-Host "Uploading userGuide.xliff to Crowdin"
+            # 18 is the file ID for userGuide.xliff in Crowdin.
+            python appVeyor/crowdinSync.py uploadSourceFile 18 user_docs/en/userguide.xliff
+        } else {
+            Write-Host "Not uploading userGuide.xliff to Crowdin as it has not changed"
+        }
+        $changed = git diff --name-only ${{GITHUB.SHA}}.. -- user_docs/en/changes.xliff
+        if ($changed) {
+            Write-Host "Uploading changes.xliff to Crowdin"
+            # 20 is the file ID for changes.xliff in Crowdin.
+            python appVeyor/crowdinSync.py uploadSourceFile 20 user_docs/en/changes.xliff
+        } else {
+            Write-Host "Not uploading changes.xliff to Crowdin as it has not changed"
+        }
