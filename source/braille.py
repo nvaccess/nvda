@@ -3130,7 +3130,9 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		):
 			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
 
-		self._tether = config.conf["braille"]["tetherTo"]
+		configuredTether = config.conf["braille"]["tetherTo"]
+		if configuredTether != TetherTo.AUTO.value:
+			self._tether = configuredTether
 		tableName = config.conf["braille"]["translationTable"]
 		# #6140: Migrate to new table names as smoothly as possible.
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
