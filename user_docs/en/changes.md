@@ -30,6 +30,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* Correct IDs of single space and space with dots gestures for Seika Notetaker on the input gestures dialog. (#17047, @school510587)
 
 ### Changes for Developers
 
@@ -64,6 +65,7 @@ As the Add-on Store base URL is now configurable directly within NVDA, no replac
 * The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
   * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
+* The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 
 #### Deprecations
 
