@@ -16,7 +16,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
-* Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) voices. (#17146, @gexgd0419)
+* Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 
 ### Changes
 
