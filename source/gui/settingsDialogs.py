@@ -2421,8 +2421,7 @@ class BrowseModePanel(SettingsPanel):
 	title = _("Browse Mode")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Browse Mode settings panel.
-		"Configure behaviors when reading complex documents, including web pages, messages in Outlook or Thunderbird, or "
-		"files in the MS Office browse mode.",
+		"Configure how NVDA behaves when reading complex documents, such as web pages and emails.",
 	)
 	helpId = "BrowseModeSettings"
 
