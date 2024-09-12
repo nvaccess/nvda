@@ -3265,7 +3265,7 @@ class UwpOcrPanel(SettingsPanel):
 	title = _("Windows OCR")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Windows OCR settings panel.
-		"Configure some elements of the Windows optical character recognition feature which NVDA makes available.",
+		"Configure NVDA's Windows optical character recognition support.",
 	)
 	helpId = "Win10OcrSettings"
 
