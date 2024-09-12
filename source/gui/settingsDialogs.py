@@ -14,6 +14,7 @@ import os
 from enum import IntEnum
 from locale import strxfrm
 import re
+import threading
 import typing
 import wx
 from NVDAState import WritePaths
@@ -57,6 +58,7 @@ import vision.providerBase
 from typing import (
 	Any,
 	Callable,
+	Iterable,
 	List,
 	Optional,
 	Set,
@@ -953,15 +955,62 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			item = self.updateMirrorTextBox = settingsSizerHelper.addLabeledControl(
-				# Translators: The label of a textbox in general settings to set the NVDA update server mirror
-				_("Update server &mirror URL:"),
-				wx.TextCtrl,
+			# item = self.updateMirrorTextBox = settingsSizerHelper.addLabeledControl(
+			# Translators: The label of a textbox in general settings to set the NVDA update server mirror
+			# _("Update server &mirror URL:"),
+			# wx.TextCtrl,
+			# )
+			# self.bindHelpEvent("UpdateMirrorURL", self.updateMirrorTextBox)
+			# item.Value = config.conf["update"]["serverURL"]
+			# if globalVars.appArgs.secure:
+			# item.Disable()
+			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label="Update mirror:")
+			mirrorBox = mirrorBoxSizer.GetStaticBox()
+			mirrorGroup = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+			settingsSizerHelper.addItem(mirrorGroup)
+
+			# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
+			# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+			# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+			# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+			# display here.
+			self.mirrorURLTextBox = ExpandoTextCtrl(
+				mirrorBox,
+				size=(self.scaleSize(250), -1),
+				value=url if (url := config.conf["update"]["serverURL"]) else "(None)",
+				style=wx.TE_READONLY,
 			)
-			self.bindHelpEvent("UpdateMirrorURL", self.updateMirrorTextBox)
-			item.Value = config.conf["update"]["serverURL"]
-			if globalVars.appArgs.secure:
-				item.Disable()
+			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+
+			# Translators: This is the label for the button used to change synthesizer,
+			# it appears in the context of a synthesizer group on the speech settings panel.
+			changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+			# self.bindHelpEvent("SpeechSettingsChange", self.synthNameCtrl)
+			# self.bindHelpEvent("SpeechSettingsChange", changeSynthBtn)
+			mirrorGroup.addItem(
+				guiHelper.associateElements(
+					self.mirrorURLTextBox,
+					changeMirrorBtn,
+				),
+			)
+			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+
+	def onChangeMirrorURL(self, evt):
+		changeMirror = SetURLDialog(self, "Update Mirror", ("update", "serverURL"))
+		ret = changeMirror.ShowModal()
+		if ret == wx.ID_OK:
+			self.Freeze()
+			# trigger a refresh of the settings
+			self.mirrorURLTextBox.SetValue(config.conf["update"]["serverURL"])
+			self.onPanelActivated()
+			self._sendLayoutUpdatedEvent()
+			self.Thaw()
+
+	def _enterTriggersOnChangeMirrorURL(self, evt):
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeMirrorURL(evt)
+		else:
+			evt.Skip()
 
 	def onCopySettings(self, evt):
 		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
@@ -1023,11 +1072,11 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
-	def isValid(self) -> bool:
-		self.updateMirrorTextBox.SetValue(
-			url_normalize(self.updateMirrorTextBox.GetValue().strip()).rstrip("/"),
-		)
-		return True
+	# def isValid(self) -> bool:
+	# self.updateMirrorTextBox.SetValue(
+	# url_normalize(self.updateMirrorTextBox.GetValue().strip()).rstrip("/"),
+	# )
+	# return True
 
 	def onSave(self):
 		if (
@@ -1059,7 +1108,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
-			config.conf["update"]["serverURL"] = self.updateMirrorTextBox.GetValue()
+			# config.conf["update"]["serverURL"] = self.updateMirrorTextBox.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
 
@@ -5463,38 +5512,127 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 
 class SetURLDialog(SettingsDialog):
-	# Translators: This is the label for the synthesizer selection dialog
-	title = _("NVDA Update Mirror")
-	helpId = "SynthesizerSelection"
+	_progressDialog = None
+
+	def __init__(
+		self,
+		parent,
+		title: str,
+		configPath: Iterable[str],
+		helpId: str | None = None,
+		*args,
+		**kwargs,
+	):
+		if not configPath or len(configPath) < 1:
+			raise ValueError("Config path not provided.")
+		self.title = title
+		self.helpId = helpId
+		self._configPath = configPath
+		super().__init__(parent, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		self.urlTextBox = settingsSizerHelper.addLabeledControl("&URL:", wx.TextCtrl, size=(250, -1))
-		self.testButton = wx.Button(self, label="&Test")
-		self.urlTextBox.GetContainingSizer().Add(self.testButton)
-		self.testButton.Bind(wx.EVT_BUTTON, self.onTest)
+		self._urlControl = urlControl = settingsSizerHelper.addLabeledControl(
+			"&URL:",
+			wx.TextCtrl,
+			size=(250, -1),
+		)
+		urlControl.SetValue(self._getFromConfig())
+		self.testButton = testButton = wx.Button(self, label="&Test")
+		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
+		urlControlsSizerHelper.addItem(self.testButton)
+		testButton.Bind(wx.EVT_BUTTON, self.onTest)
+		urlControl.Bind(wx.EVT_TEXT, self._typingEnablesTestButton)
+		self._typingEnablesTestButton(None)
+
+	def _typingEnablesTestButton(self, evt):
+		value = self._url
+		self.testButton.Enable(not (len(value) == 0 or value.isspace()))
 
 	def postInit(self):
 		# Ensure that focus is on the URL text box.
-		self.urlTextBox.SetFocus()
+		self._urlControl.SetFocus()
 
 	def onTest(self, evt):
 		self.isValid()
+		t = threading.Thread(
+			name=f"{self.__class__.__module__}.{self.onTest.__qualname__}",
+			target=self._bg,
+			daemon=True,
+		)
+		self._progressDialog = gui.IndeterminateProgressDialog(
+			self,
+			title=self.title,
+			message="Validating URL...",
+		)
+		t.start()
+
+	def _bg(self):
+		from urllib.request import urlopen
+		from urllib.error import URLError
+
+		try:
+			with urlopen(self._url):
+				self._done(True)
+		except URLError as e:
+			self._done(e)
+
+	def _done(self, result):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
+		flags = wx.OK
+		if result is True:
+			message = "Successfully connected to the given URL."
+			title = "Success"
+		else:
+			message = "Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid."
+			title = "Error"
+			flags |= wx.ICON_ERROR
+		wx.CallAfter(
+			gui.messageBox,
+			message,
+			title,
+			flags,
+		)
 
 	def isValid(self) -> bool:
 		from urllib3.util.url import parse_url
 
-		parsed = parse_url(self.urlTextBox.GetValue())
+		parsed = parse_url(self._urlControl.GetValue())
+		if not parsed.host:
+			self._urlControl.SetValue("")
 		if parsed.scheme is None:
 			parsed = parsed._replace(scheme="https")
-		elif parsed.scheme not in ("http", "https"):
-			gui.messageBox("Only HTTP and HTTPS URLs are supported.")
-			return False
-		if parsed.host is None:
-			gui.message("The URL doesn't seem to point anywhere")
-			return False
 		if parsed.query is not None:
-			gui.messageBox("Query strings are not allowed")
-		self.urlTextBox.SetValue(parsed.url)
-		return False
+			parsed._replace(query=None)
+			return False
+		self._urlControl.SetValue(parsed.url)
 		return True
+
+	def _getFromConfig(self):
+		currentConfigSection = config.conf
+		keyIndex = len(self._configPath) - 1
+		for index, component in enumerate(self._configPath):
+			if index == keyIndex:
+				return currentConfigSection[component]
+			currentConfigSection = currentConfigSection[component]
+
+	def _saveToConfig(self):
+		currentConfigSection = config.conf
+		keyIndex = len(self._configPath) - 1
+		for index, component in enumerate(self._configPath):
+			if index == keyIndex:
+				currentConfigSection[component] = self._url
+			currentConfigSection = currentConfigSection[component]
+
+	def onOk(self, evt: wx.CommandEvent):
+		self._saveToConfig()
+		super().onOk(evt)
+
+	@property
+	def _url(self) -> str:
+		return self._urlControl.GetValue()
+
+	@_url.setter
+	def url(self, val):
+		self._urlControl.SetValue(val)
