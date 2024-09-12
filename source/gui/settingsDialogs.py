@@ -3196,11 +3196,6 @@ class AudioPanel(SettingsPanel):
 class AddonStorePanel(SettingsPanel):
 	# Translators: This is the label for the addon navigation settings panel.
 	title = _("Add-on Store")
-	panelDescription = _(
-		# Translators: This is descriptive text shown at the top of the Add-on Store settings panel.
-		"Adjust certain aspects of the Add-on Store, including whether you want to be notified "
-		"when your add-ons have updates available.",
-	)
 	helpId = "AddonStoreSettings"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
