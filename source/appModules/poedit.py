@@ -236,6 +236,8 @@ class AppModule(appModuleHandler.AppModule):
 			and obj.windowClassName == "RICHEDIT50W"
 		):
 			clsList.insert(0, PoeditRichEdit)
+		elif obj.role == controlTypes.Role.PANE and obj.windowClassName == "wxWindowNR":
+			clsList.insert(0, PoeditPane)
 
 
 class PoeditRichEdit(NVDAObject):
@@ -289,3 +291,13 @@ class PoeditListItem(NVDAObject):
 				tones.beep(550, 50)
 			case _WindowControlId.NEEDS_WORK_SWITCH:
 				tones.beep(660, 50)
+
+class PoeditPane(NVDAObject):
+	def _get_focusRedirect(self):
+		try:
+			obj = self.firstChild.firstChild
+			if obj:
+				return obj
+		except AttributeError:
+			pass
+		return None
