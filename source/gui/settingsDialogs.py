@@ -977,7 +977,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.mirrorURLTextBox = ExpandoTextCtrl(
 				mirrorBox,
 				size=(self.scaleSize(250), -1),
-				value=url if (url := config.conf["update"]["serverURL"]) else "(None)",
+				# value=url if (url := config.conf["update"]["serverURL"]) else "(None)",
 				style=wx.TE_READONLY,
 			)
 			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
@@ -1001,7 +1001,6 @@ class GeneralSettingsPanel(SettingsPanel):
 		if ret == wx.ID_OK:
 			self.Freeze()
 			# trigger a refresh of the settings
-			self.mirrorURLTextBox.SetValue(config.conf["update"]["serverURL"])
 			self.onPanelActivated()
 			self._sendLayoutUpdatedEvent()
 			self.Thaw()
@@ -1111,6 +1110,17 @@ class GeneralSettingsPanel(SettingsPanel):
 			# config.conf["update"]["serverURL"] = self.updateMirrorTextBox.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
+
+	def onPanelActivated(self):
+		self.mirrorURLTextBox.SetValue(
+			(
+				url
+				if (url := config.conf["update"]["serverURL"])
+				# Translators: A value that appears in General Settings to indicate that no update mirror is in use.
+				else _("(None)")
+			),
+		)
+		super().onPanelActivated()
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
@@ -5520,6 +5530,7 @@ class SetURLDialog(SettingsDialog):
 		title: str,
 		configPath: Iterable[str],
 		helpId: str | None = None,
+		urlFactory: Callable[[str], str] = lambda url: url,
 		*args,
 		**kwargs,
 	):
@@ -5538,23 +5549,23 @@ class SetURLDialog(SettingsDialog):
 			size=(250, -1),
 		)
 		urlControl.SetValue(self._getFromConfig())
-		self.testButton = testButton = wx.Button(self, label="&Test")
+		self._testButton = testButton = wx.Button(self, label="&Test")
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
-		urlControlsSizerHelper.addItem(self.testButton)
+		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self.onTest)
 		urlControl.Bind(wx.EVT_TEXT, self._typingEnablesTestButton)
 		self._typingEnablesTestButton(None)
 
 	def _typingEnablesTestButton(self, evt):
 		value = self._url
-		self.testButton.Enable(not (len(value) == 0 or value.isspace()))
+		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
 
 	def postInit(self):
 		# Ensure that focus is on the URL text box.
 		self._urlControl.SetFocus()
 
 	def onTest(self, evt):
-		self.isValid()
+		self._normalize()
 		t = threading.Thread(
 			name=f"{self.__class__.__module__}.{self.onTest.__qualname__}",
 			target=self._bg,
@@ -5568,13 +5579,17 @@ class SetURLDialog(SettingsDialog):
 		t.start()
 
 	def _bg(self):
-		from urllib.request import urlopen
-		from urllib.error import URLError
+		# from urllib.request import urlopen
+		# from urllib.error import URLError
+		from requests.exceptions import RequestException
+		from requests import get
 
 		try:
-			with urlopen(self._url):
-				self._done(True)
-		except URLError as e:
+			# with urlopen(self._url):
+			r = get(self._url)
+			r.raise_for_status()
+			self._done(True)
+		except RequestException as e:
 			self._done(e)
 
 	def _done(self, result):
@@ -5585,7 +5600,7 @@ class SetURLDialog(SettingsDialog):
 			message = "Successfully connected to the given URL."
 			title = "Success"
 		else:
-			message = "Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid."
+			message = f"Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid. {result}"
 			title = "Error"
 			flags |= wx.ICON_ERROR
 		wx.CallAfter(
@@ -5595,19 +5610,16 @@ class SetURLDialog(SettingsDialog):
 			flags,
 		)
 
-	def isValid(self) -> bool:
+	def _normalize(self):
 		from urllib3.util.url import parse_url
 
-		parsed = parse_url(self._urlControl.GetValue())
+		parsed = parse_url(self._url)
 		if not parsed.host:
-			self._urlControl.SetValue("")
-		if parsed.scheme is None:
+			return ""
+		parsed = parsed._replace(query=None, fragment=None)
+		if not parsed.scheme:
 			parsed = parsed._replace(scheme="https")
-		if parsed.query is not None:
-			parsed._replace(query=None)
-			return False
-		self._urlControl.SetValue(parsed.url)
-		return True
+		self._url = parsed.url
 
 	def _getFromConfig(self):
 		currentConfigSection = config.conf
@@ -5626,6 +5638,7 @@ class SetURLDialog(SettingsDialog):
 			currentConfigSection = currentConfigSection[component]
 
 	def onOk(self, evt: wx.CommandEvent):
+		self._normalize()
 		self._saveToConfig()
 		super().onOk(evt)
 
@@ -5634,5 +5647,5 @@ class SetURLDialog(SettingsDialog):
 		return self._urlControl.GetValue()
 
 	@_url.setter
-	def url(self, val):
+	def _url(self, val):
 		self._urlControl.SetValue(val)
