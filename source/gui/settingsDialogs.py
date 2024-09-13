@@ -2123,6 +2123,10 @@ class MouseSettingsPanel(SettingsPanel):
 class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
 	title = _("Review Cursor")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Review Cursor settings panel.
+		"Configure the review cursor, which allows reading the contents of the screen, current document or current object without moving the caret",
+	)
 	helpId = "ReviewCursorSettings"
 
 	def makeSettings(self, settingsSizer):
@@ -2161,6 +2165,11 @@ class ReviewCursorPanel(SettingsPanel):
 class InputCompositionPanel(SettingsPanel):
 	# Translators: This is the label for the Input Composition settings panel.
 	title = _("Input Composition")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Input Composition settings panel.
+		"Configure how NVDA reports the input of Asian characters, "
+		"such as when using IME or Text Service input methods.",
+	)
 	helpId = "InputCompositionSettings"
 
 	def makeSettings(self, settingsSizer):
@@ -2410,6 +2419,10 @@ class ObjectPresentationPanel(SettingsPanel):
 class BrowseModePanel(SettingsPanel):
 	# Translators: This is the label for the browse mode settings panel.
 	title = _("Browse Mode")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Browse Mode settings panel.
+		"Configure how NVDA behaves when reading complex documents, such as web pages and emails.",
+	)
 	helpId = "BrowseModeSettings"
 
 	def makeSettings(self, settingsSizer):
@@ -2928,6 +2941,10 @@ class DocumentFormattingPanel(SettingsPanel):
 class DocumentNavigationPanel(SettingsPanel):
 	# Translators: This is the label for the document navigation settings panel.
 	title = _("Document Navigation")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Document Navigation settings panel.
+		"Configure the behaviour of navigation commands in documents.",
+	)
 	helpId = "DocumentNavigation"
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
@@ -3246,6 +3263,10 @@ class TouchInteractionPanel(SettingsPanel):
 class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows OCR panel.
 	title = _("Windows OCR")
+	panelDescription = _(
+		# Translators: This is descriptive text shown at the top of the Windows OCR settings panel.
+		"Configure NVDA's Windows optical character recognition support.",
+	)
 	helpId = "Win10OcrSettings"
 
 	def makeSettings(self, settingsSizer):
