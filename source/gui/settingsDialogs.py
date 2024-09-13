@@ -2943,7 +2943,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	title = _("Document Navigation")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Document Navigation settings panel.
-		"Configure certain specifics of how you can move through documents.",
+		"Configure the behaviour of navigation commands in documents.",
 	)
 	helpId = "DocumentNavigation"
 
