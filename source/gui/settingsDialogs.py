@@ -2125,7 +2125,7 @@ class ReviewCursorPanel(SettingsPanel):
 	title = _("Review Cursor")
 	panelDescription = _(
 		# Translators: This is descriptive text shown at the top of the Review Cursor settings panel.
-		"Configure NVDA's review cursor behavior.",
+		"Configure the review cursor, which allows reading the contents of the screen, current document or current object without moving the caret",
 	)
 	helpId = "ReviewCursorSettings"
 
