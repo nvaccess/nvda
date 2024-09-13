@@ -292,6 +292,7 @@ class PoeditListItem(NVDAObject):
 			case _WindowControlId.NEEDS_WORK_SWITCH:
 				tones.beep(660, 50)
 
+
 class PoeditPane(NVDAObject):
 	def _get_focusRedirect(self):
 		try:
