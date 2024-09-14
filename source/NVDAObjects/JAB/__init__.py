@@ -7,6 +7,7 @@ import ctypes
 import re
 from typing import (
 	Dict,
+	Any,
 )
 import eventHandler
 import keyLabels
@@ -14,13 +15,12 @@ import JABHandler
 import controlTypes
 import textUtils
 from controlTypes import TextPosition
+from .. import NVDAObject, InvalidNVDAObject
 from ..window import Window
 from ..behaviors import ProgressBar, EditableTextWithoutAutoSelectDetection, Dialog
 import textInfos.offsets
 from logHandler import log
-from .. import InvalidNVDAObject
 from locationHelper import RectLTWH
-
 
 JABRolesToNVDARoles: Dict[str, controlTypes.Role] = {
 	"alert": controlTypes.Role.DIALOG,
@@ -127,19 +127,19 @@ def _processHtml(text: str) -> str:
 
 
 class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
-	def _getOffsetFromPoint(self, x, y):
+	def _getOffsetFromPoint(self, x: int, y: int) -> int:
 		info = self.obj.jabContext.getAccessibleTextInfo(x, y)
 		offset = max(min(info.indexAtPoint, info.charCount - 1), 0)
 		return offset
 
-	def _getBoundingRectFromOffset(self, offset):
+	def _getBoundingRectFromOffset(self, offset: int) -> RectLTWH:
 		rect = self.obj.jabContext.getAccessibleTextRect(offset)
 		try:
 			return RectLTWH(rect.x, rect.y, rect.width, rect.height).toLTRB()
 		except ValueError:
 			raise LookupError
 
-	def _getCaretOffset(self):
+	def _getCaretOffset(self) -> int:
 		textInfo = self.obj.jabContext.getAccessibleTextInfo(
 			self.obj._JABAccContextInfo.x,
 			self.obj._JABAccContextInfo.y,
@@ -150,19 +150,19 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 			raise RuntimeError("no available caret in this object")
 		return offset
 
-	def _setCaretOffset(self, offset):
+	def _setCaretOffset(self, offset: int) -> None:
 		self.obj.jabContext.setCaretPosition(offset)
 
-	def _getSelectionOffsets(self):
+	def _getSelectionOffsets(self) -> tuple[int, int]:
 		info = self.obj.jabContext.getAccessibleTextSelectionInfo()
 		start = max(info.selectionStartIndex, 0)
 		end = max(info.selectionEndIndex, 0)
 		return (start, end)
 
-	def _setSelectionOffsets(self, start, end):
+	def _setSelectionOffsets(self, start: int, end: int) -> None:
 		self.obj.jabContext.selectTextRange(start, end)
 
-	def _getStoryLength(self):
+	def _getStoryLength(self) -> int:
 		if not hasattr(self, "_storyLength"):
 			textInfo = self.obj.jabContext.getAccessibleTextInfo(
 				self.obj._JABAccContextInfo.x,
@@ -171,32 +171,29 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 			self._storyLength = textInfo.charCount
 		return self._storyLength
 
-	def _getTextRange(self, start, end):
+	def _getTextRange(self, start: int, end: int) -> str:
 		# Java needs end of range as last character, not one past the last character
 		text = self.obj.jabContext.getAccessibleTextRange(start, end - 1)
 		return text
 
-	def _getLineNumFromOffset(self, offset):
+	def _getLineNumFromOffset(self, offset: int) -> None:
 		return None
 
-	def _getLineOffsets(self, offset):
+	def _getLineOffsets(self, offset: int) -> tuple[int, int]:
 		(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset)
 		if end == -1 and offset > 0:
 			# #1892: JAB returns -1 for the end insertion position
 			# instead of returning the offsets for the last line.
-			# Try one character back, unless we're on a new line.
-			if self.obj.jabContext.getAccessibleTextRange(offset - 1, offset - 1) != "\n":
-				(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset - 1)
-			else:
-				(start, end) = (offset, offset)
+			# Try one character back.
+			(start, end) = self.obj.jabContext.getAccessibleTextLineBounds(offset - 1)
 		# Java gives end as the last character, not one past the last character
 		end = end + 1
 		return (start, end)
 
-	def _getParagraphOffsets(self, offset):
+	def _getParagraphOffsets(self, offset: int) -> tuple[int, int]:
 		return self._getLineOffsets(offset)
 
-	def _getFormatFieldAndOffsets(self, offset, formatConfig, calculateOffsets=True):
+	def _getFormatFieldAndOffsets(self, offset: int, formatConfig, calculateOffsets=True):
 		attribs: JABHandler.AccessibleTextAttributesInfo
 		attribs, length = self.obj.jabContext.getTextAttributesInRange(offset, self._endOffset - 1)
 		field = textInfos.FormatField()
@@ -216,7 +213,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 		# TODO: Not sure how to interpret Java's alignment numbers.
 		return field, (offset, offset + length)
 
-	def getEmbeddedObject(self, offset=0):
+	def getEmbeddedObject(self, offset: int = 0) -> "JAB":
 		offset += self._startOffset
 
 		# We need to count the embedded objects to determine which child to use.
@@ -231,7 +228,7 @@ class JABTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 
 class JAB(Window):
-	def findOverlayClasses(self, clsList):
+	def findOverlayClasses(self, clsList: list[NVDAObject]) -> None:
 		role = self.JABRole
 		if self._JABAccContextInfo.accessibleText and role in (
 			"text",
@@ -255,7 +252,7 @@ class JAB(Window):
 		clsList.append(JAB)
 
 	@classmethod
-	def kwargsFromSuper(cls, kwargs, relation=None):
+	def kwargsFromSuper(cls, kwargs, relation: str | None = None) -> bool:
 		jabContext = None
 		windowHandle = kwargs["windowHandle"]
 		if relation == "focus":
@@ -306,13 +303,13 @@ class JAB(Window):
 			return JABTextInfo
 		return super(JAB, self).TextInfo
 
-	def _isEqual(self, other):
+	def _isEqual(self, other: Any) -> bool:
 		try:
 			return self.jabContext == other.jabContext
 		except:  # noqa: E722
 			return False
 
-	def _get_keyboardShortcut(self):
+	def _get_keyboardShortcut(self) -> str | None:
 		bindings = self.jabContext.getAccessibleKeyBindings()
 		if not bindings or bindings.keyBindingsCount < 1:
 			return None
@@ -417,7 +414,7 @@ class JAB(Window):
 			self._JABAccContextInfo.height,
 		)
 
-	def _get_hasFocus(self):
+	def _get_hasFocus(self) -> bool:
 		if controlTypes.State.FOCUSED in self.states:
 			return True
 		else:
@@ -543,10 +540,10 @@ class JAB(Window):
 		else:
 			return None
 
-	def _get_childCount(self):
+	def _get_childCount(self) -> int:
 		return self._JABAccContextInfo.childrenCount
 
-	def _get_children(self):
+	def _get_children(self) -> list["JAB"]:
 		children = []
 		for index in range(self._JABAccContextInfo.childrenCount):
 			jabContext = self.jabContext.getAccessibleChildFromContext(index)
@@ -559,13 +556,13 @@ class JAB(Window):
 				children.append(obj)
 		return children
 
-	def _get_indexInParent(self):
+	def _get_indexInParent(self) -> int | None:
 		index = self._JABAccContextInfo.indexInParent
 		if index == -1:
 			return None
 		return index
 
-	def _getJABRelationTargets(self, key):
+	def _getJABRelationTargets(self, key: str) -> list["JABHandler.JABContext"]:
 		rs = self.jabContext.getAccessibleRelationSet()
 		targets = []
 		for relation in rs.relations[: rs.relationCount]:
@@ -601,7 +598,7 @@ class JAB(Window):
 		JABHandler.bridgeDll.getAccessibleActions(self.jabContext.vmID, self.jabContext.accContext, actions)
 		return actions.actionInfo[: actions.actionsCount]
 
-	def _get_actionCount(self):
+	def _get_actionCount(self) -> int:
 		return len(self._actions)
 
 	def getActionName(self, index=None):
@@ -693,11 +690,11 @@ class Table(JAB):
 			self._jabTableInfo = info
 			return info
 
-	def _get_rowCount(self):
+	def _get_rowCount(self) -> int | None:
 		if self._jabTableInfo:
 			return self._jabTableInfo.rowCount
 
-	def _get_columnCount(self):
+	def _get_columnCount(self) -> int | None:
 		if self._jabTableInfo:
 			return self._jabTableInfo.columnCount
 
@@ -714,13 +711,13 @@ class TableCell(JAB):
 	def _get_tableID(self):
 		return self.table.tableID
 
-	def _get_rowNumber(self):
+	def _get_rowNumber(self) -> int:
 		return self.table._jabTableInfo.jabTable.getAccessibleTableRow(self.indexInParent) + 1
 
-	def _get_columnNumber(self):
+	def _get_columnNumber(self) -> int:
 		return self.table._jabTableInfo.jabTable.getAccessibleTableColumn(self.indexInParent) + 1
 
-	def _get_rowHeaderText(self):
+	def _get_rowHeaderText(self) -> str | None:
 		headerTableInfo = self.table.jabContext.getAccessibleTableRowHeader()
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList = []
@@ -742,7 +739,7 @@ class TableCell(JAB):
 					textList.append(obj.description)
 			return " ".join(textList)
 
-	def _get_columnHeaderText(self):
+	def _get_columnHeaderText(self) -> str | None:
 		headerTableInfo = self.table.jabContext.getAccessibleTableColumnHeader()
 		if headerTableInfo and headerTableInfo.jabTable:
 			textList = []

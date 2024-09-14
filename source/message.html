@@ -4,24 +4,93 @@
 <TITLE></TITLE>
 <SCRIPT LANGUAGE=javascript>
 <!--
-function escapeKeyPress(e) {
+// Though these should be constants, MSHTML does not support const as of 2024
+var args = window.dialogArguments;
+var copyStatusTimeout = 5000;  // milliseconds before copy status message goes away
+var copyEnabled = false;
+
+function handleKeyPress(e) {
+	/*
+	This code should be effective for modern browsers (EdgeWebView2),
+	while also serving in old IE (MSHTML) contexts.
+	*/
 	e = e || window.event;
-	if(e.keyCode == 27){ // code for escape
-		window.close();
+	var key = e.key || e.keyCode;
+	if (key === 'Escape' || key === 27) { // code for escape
+		onCloseButtonPress();
+	} else if (e.shiftKey && e.ctrlKey && (key === 'C' || key === 67)) { // code for Ctrl+Shift+C
+		onCopyButtonPress();
 	}
-};
+}
+
+function onCopyButtonPress() {
+	if (!copyEnabled) return;
+	// Copy code came from http://www.codestore.net/store.nsf/unid/DOMM-4QHQE8/
+	var rng = document.body.createTextRange();
+	rng.moveToElementText(messageDiv);
+	rng.scrollIntoView();
+	rng.select();
+	var success = rng.execCommand("Copy");
+	rng.collapse(false);
+	rng.select();
+	copyStatusDiv.innerHTML = '<p id="copyStatusText" style="font-weight:bold; text-align:center;"></p>';
+	if (success) {  // Notify the user about the copy result
+		copyStatusText.innerText = args.item('copySuccessfulAlertText');
+	} else {
+		copyStatusText.innerText = args.item('copyFailedAlertText');
+	}
+	// Time out the user alert message
+	setTimeout(function() {
+		copyStatusDiv.innerHTML = '';
+	}, copyStatusTimeout);
+}
+
+function onCloseButtonPress() {
+	window.close();
+}
 
 function windowOnLoad() {
-	var args = window.dialogArguments;
 	if (args) {
 		document.title = args.item('title');
-		messageID.innerHTML = args.item('message');
+		// We can't use innerText, even for text-only nodes,
+		// because of #12004.
+		messageDiv.innerHTML = args.item('message');
+		// If caller wants a close button
+		if (args.item('closeButtonText') != null) {
+			closeButton.innerText = args.item('closeButtonText');  // Assign the (translated) label
+			closeButton.style.display = 'inline';  // Display the button
+			buttonDiv.style.display = 'block';  // Display the button section
+		}
+		// If caller wants a copy to clip button
+		if (args.item('copyButtonText') != null) {
+			copyEnabled = true;
+			copyButton.innerText = args.item('copyButtonText');  // Assign the (translated) label
+			copyButtonSpan.style.display = 'inline';  // Display the button
+			copyStatusDiv.style.display = 'block';  // Display the copy status
+			buttonDiv.style.display = 'block';  // Display the section
+			if (args.item('copyButtonAcceleratorAccessibilityLabel') != null) {  // If translated text for the accelerator is provided
+				copyButtonAcceleratorAccessibilityLabel.innerText = args.item('copyButtonAcceleratorAccessibilityLabel');
+			}
+		}
+	} else {  // If args wasn't provided, we can do nothing. Just exit
+		window.close();
 	}
 } 
 //-->
 </SCRIPT>
 </HEAD>
-<BODY tabindex='0' id='main_body' style="margin:1em" LANGUAGE=javascript onload="return windowOnLoad()" onkeypress="return escapeKeyPress()" >
-<div id=messageID></div>
+<body tabindex='0' id='main_body' style="margin:1em" onload="return windowOnLoad()" onkeydown="return handleKeyPress()" >
+<div id="messageDiv"></div>
+
+<!-- "tabindex" is needed to circumvent an old IE/MSHTML bug in the handling of aria-labelledby.
+See: https://www.tpgi.com/aria-labelledby-aria-describedby-support-popular-windows-browsers/ -->
+<span id="copyButtonAcceleratorAccessibilityLabel" style="visibility: hidden;" tabindex="-1"></span>
+
+<div id="buttonDiv" style="display: none;"><hr>
+<div id="copyStatusDiv" role="status" aria-live="polite"></div>
+<span id="copyButtonSpan" style="display: none;">
+<button id="copyButton" onclick="onCopyButtonPress();" aria-labelledby="copyButton copyButtonAcceleratorAccessibilityLabel"></button>&nbsp;</span>
+<span><button id="closeButton" style="display: none;" onclick="onCloseButtonPress();"></button></span>
+</div>
 </body>
 </html>

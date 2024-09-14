@@ -64,6 +64,7 @@ from typing import (
 	Set,
 	cast,
 )
+from url_normalize import url_normalize
 import core
 import keyboardHandler
 import characterProcessing
@@ -2801,7 +2802,14 @@ class DocumentFormattingPanel(SettingsPanel):
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
 		self.linksCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Lin&ks")))
+		self.linksCheckBox.Bind(wx.EVT_CHECKBOX, self._onLinksChange)
 		self.linksCheckBox.SetValue(config.conf["documentFormatting"]["reportLinks"])
+
+		# Translators: This is the label for a checkbox in the
+		# document formatting settings panel.
+		self.linkTypeCheckBox = elementsGroup.addItem(wx.CheckBox(elementsGroupBox, label=_("Link type")))
+		self.linkTypeCheckBox.SetValue(config.conf["documentFormatting"]["reportLinkType"])
+		self.linkTypeCheckBox.Enable(self.linksCheckBox.IsChecked())
 
 		# Translators: This is the label for a checkbox in the
 		# document formatting settings panel.
@@ -2869,6 +2877,9 @@ class DocumentFormattingPanel(SettingsPanel):
 	def _onLineIndentationChange(self, evt: wx.CommandEvent) -> None:
 		self.ignoreBlankLinesRLICheckbox.Enable(evt.GetSelection() != 0)
 
+	def _onLinksChange(self, evt: wx.CommandEvent):
+		self.linkTypeCheckBox.Enable(evt.IsChecked())
+
 	def onSave(self):
 		config.conf["documentFormatting"]["detectFormatAfterCursor"] = (
 			self.detectFormatAfterCursorCheckBox.IsChecked()
@@ -2903,6 +2914,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportTableCellCoords"] = self.tableCellCoordsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportCellBorders"] = self.borderComboBox.GetSelection()
 		config.conf["documentFormatting"]["reportLinks"] = self.linksCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportLinkType"] = self.linkTypeCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportGraphics"] = self.graphicsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportHeadings"] = self.headingsCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLists"] = self.listsCheckBox.IsChecked()
@@ -3018,6 +3030,40 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
+		# Translators: This is a label for the applications volume adjuster combo box in settings.
+		label = _("&Application volume adjuster status")
+		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["audio", "applicationsVolumeMode"],
+			conf=config.conf,
+		)
+		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
+		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
+
+		# Translators: This is the label for a slider control in the
+		# Audio settings panel.
+		label = _("Volume of other applications")
+		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
+			label,
+			nvdaControls.EnhancedInputSlider,
+			minValue=0,
+			maxValue=100,
+		)
+		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
+		volume = config.conf["audio"]["applicationsSoundVolume"]
+		if 0 <= volume <= 100:
+			self.appSoundVolSlider.SetValue(volume)
+		else:
+			log.error("Invalid volume level: {}", volume)
+			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
+			self.appSoundVolSlider.SetValue(defaultVolume)
+
+		# Translators: Mute other apps checkbox in settings
+		self.muteOtherAppsCheckBox = wx.CheckBox(self, label=_("Mute other apps"))
+		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
+		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
+
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3078,6 +3124,15 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
+		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
+		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
+		self.appVolAdjusterCombo.saveCurrentValueToConf()
+		audio.appsVolume._updateAppsVolumeImpl(
+			volume=self.appSoundVolSlider.GetValue() / 100.0,
+			muted=self.muteOtherAppsCheckBox.GetValue(),
+			state=self.appVolAdjusterCombo._getControlCurrentValue(),
+		)
+
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -3098,6 +3153,15 @@ class AudioPanel(SettingsPanel):
 		)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
+
+		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
+		self.appSoundVolSlider.Enable(
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
+		)
+		self.muteOtherAppsCheckBox.Enable(
+			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
+		)
+		self.appVolAdjusterCombo.Enable(wasapi)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
@@ -3134,9 +3198,26 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
+		# Translators: This is the label for a text box in the add-on store settings dialog.
+		self.addonMetadataMirrorLabelText = _("Server &mirror URL")
+		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
+			self.addonMetadataMirrorLabelText,
+			wx.TextCtrl,
+		)
+		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
+		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
+
+	def isValid(self) -> bool:
+		self.addonMetadataMirrorTextbox.SetValue(
+			url_normalize(self.addonMetadataMirrorTextbox.GetValue().strip()).rstrip("/"),
+		)
+		return True
+
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+
+		config.conf["addonStore"]["baseServerURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -4449,6 +4530,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.bindHelpEvent("BrailleFormattingDisplay", self.formattingDisplayCombo)
 
+		# Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
+		speakOnRoutingText = _("Spea&k character when routing cursor in text")
+		self.speakOnRoutingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=speakOnRoutingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
+		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4516,6 +4605,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["braille"]["paragraphStartMarker"] = [marker.value for marker in ParagraphStartMarker][
 			self.paragraphStartMarkersComboBox.GetSelection()
 		]
+		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[

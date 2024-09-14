@@ -1,5 +1,5 @@
 # Manual do Utilizador do NVDA NVDA_VERSION
-Traduzido pela equipa portuguesa do NVDA.
+
 [TOC]
 
 <!-- KC:title: NVDA NVDA_VERSION Commands Quick Reference -->
@@ -39,8 +39,17 @@ As características principais são:
 
 ### Requisitos do sistema {#SystemRequirements}
 
-* Sistemas operativos: Todas as versões, 32-bit ou 64-bit, do Windows 8.1, Windows 10, Windows 11 e todas as versões do Windows Server a partir da 2012 R2.
+#### Requisitos recomendados do sistema {#MinimumSystemRequirements}
+* Sistemas operativos: Versões de 64-bit do Windows 10, Windows 11 e Window Server 2022
   * As variantes AMD64 e ARM64 do Windows são suportadas.
+* Pelo menos 150 MB de espaço de armazenamento.;
+* Pelo menos 4 GB de RAM.
+
+#### Requisitos mínimos do sistema {#MinimumSystemRequirements}
+* Sistemas operativos: Todas as versões, 32-bit ou 64-bit, do Windows 8.1, Windows 10, Windows 11 e todas as versões do Windows Server a partir da 2012 R2.
+  * As variantes AMD64 e ARM64 do Windows são suportadas;
+  * Note que as versões de 32-bit dos sistemas operativos já não têm suporte activo;
+  * Note que o Windows 8.1 e Windows Server versões anteriores a 2022 já não têm suporte activo.
 * Pelo menos 150 MB de espaço de armazenamento.
 
 ### Internacionalização {#Internationalization}
@@ -82,7 +91,7 @@ Para detalhes sobre as exceções, aceda o documento da licença no menu Ajuda d
 ## Guia de início rápido do NVDA {#NVDAQuickStartGuide}
 
 Este guia de início rápido contém três secções principais: download, configuração inicial e execução do NVDA.
-Estas são seguidas por informações sobre como ajustar preferências, participar na comunidade e obter ajuda.
+Estas são seguidas por informações sobre como ajustar as preferências, utilização de extras, participar na comunidade e obter ajuda.
 A informação neste guia é condensada a partir de outras partes do Guia do Utilizador NVDA.
 Por favor consulte o Guia do Utilizador completo para informações mais detalhadas sobre cada tópico.
 
@@ -313,8 +322,8 @@ Para navegar na lista e obter informações sobre um extra específico:
 #### Pesquisar extras {#SearchingForAddons}
 Além de navegar por todos os extras disponíveis, é possível filtrar os extras mostrados.
 Para pesquisar, pressione `alt+p` para se mover para o campo "pesquisar" e digite o texto a pesquisar.
-O campo de pesquisa pesquisa ocorrências em ID do extra, nome exibido, editor, autor ou descrição.
-A lista actualiza enquanto escreve os termos de pesquisa.
+São pesquisadas ocorrências no ID do extra, nome, editor, autor ou descrição.
+A lista actualiza enquanto escreve os termos a pesquisar.
 Quando terminar, pressione `tab` para ir para a lista filtrada de extras e navegue pelos resultados.
 
 #### Instalar extras {#InstallingAddons}
@@ -337,13 +346,13 @@ Durante o processo de instalação Os extras podem criar diálogos aos quais pre
 #### Gerir extras instalados {#ManagingInstalledAddons}
 Pressione `control+tab` para se mover entre os separadores da Loja de Extras.
 Os separadores incluem: "Extras instalados", "Extras com actualizações", "Extras disponíveis" e "Extras incompatíveis instalados".
-Cada um dos separadores apresentam-se de forma semelhante, com uma lista de extras, um painel para mais detalhes sobre o extra seleccionado e um botão para executar várias ações para o extra.
+Cada um dos separadores apresenta-se de forma semelhante, com uma lista de extras, um painel para mais detalhes sobre o extra seleccionado e um botão para executar várias ações para o extra.
 O menu de acções de extras instalados inclui "Desactivar" e "Remover" em vez de "Instalar".
 Desactivar um extra impede o NVDA de o carregar, mas mantém-no instalado.
 Para reactivar um extra desactivado, escolha "Activar" no menu de acções.
 Após activar, desactivar ou remover extras, será solicitado que reinicie o NVDA ao fechar a Loja de Extras.
 Estas alterações só terão efeito depois de reiniciar o NVDA.
-Note que na loja de extras `esc` funciona da mesma forma que o botão Fechar.
+Note que na loja de extras `escape` funciona da mesma forma que o botão Fechar.
 
 #### Actualizar extras {#UpdatingAddons}
 Quando houver uma actualização para um extra que instalou, ele será listado no separador "Extras com actualizações".
@@ -351,6 +360,9 @@ Pressione `control+tab` para chegar a este separador de qualquer lugar na Loja d
 O estado do extra será listado como "Actualização disponível".
 A entrada contém a versão actualmente instalada e a versão disponível.
 Pressione `enter` no extra para abrir a lista de acções e escolha "Actualizar".
+
+Por padrão, após o arranque do NVDA, será notificado da existência de qualquer actualização de extras.
+Para saber mais sobre, e configurar, este comportamento, vá a ["Notificação de actualizações"](#AutomaticAddonUpdates).
 
 ### Comunidade {#Community}
 
@@ -432,8 +444,14 @@ Se já fechou este diálogo ou está a executar uma cópia instalada do NVDA, es
 
 O diálogo que surge permite-lhe definir onde a cópia portátil deve ser criada.
 Poderá ser uma pasta no seu disco rígido, ou uma localização numa Pen USB ou outro dispositivo portátil.
+Por padrão, será criada uma nova pasta para a cópia portátil.
+Pode escolher usar uma pasta já existente, o que fará com que os ficheiros existentes sejam apagados.
+Se a pasta selecionada contiver uma cópia portátil do NVDA, ela será actualizada.
+
 Existe igualmente uma opção para escolher se o NVDA deverá ou não copiar a configuração do utilizador actual para ser usada na cópia portátil a ser criada.
+Os extras serão também copiados.
 Esta opção está apenas disponível, quando está a criar uma cópia portátil a partir duma cópia instalada; mas não quando o faz a partir do pacote que descarregou.
+
 Se pressionar "Continuar", criará a cópia portátil.
 Uma vez terminada a criação, aparecerá uma mensagem a informá-lo que a mesma foi bem sucedida.
 Pressione "OK", para sair deste diálogo.
@@ -493,8 +511,7 @@ E a  terceira permite-lhe definir se este diálogo de boas vindas aparecerá sem
 
 #### Estatísticas de utilização do NVDA {#UsageStatsDialog}
 
-A partir do NVDA 2018.3, o utilizador é questionado se permite que a NV Access recolha estatísticas de utilização do NVDA, para ajudar a melhorar o NVDA no futuro. 
-Ao iniciar o NVDA pela primeira vez, aparecerá uma janela a perguntar se permite o envio de dados para a NV Access enquanto usa o NVDA.
+Ao iniciar o NVDA pela primeira vez, aparecerá uma janela a perguntar se permite o envio de dados para a NV Access, enquanto usa o NVDA, para ajudar a melhorar o NVDA no futuro. 
 Pode ler mais sobre os dados recolhidos pela NV Access em ["Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA"](#GeneralSettingsGatherUsageStats).
 Nota: Ao escolher "Sim" ou "não", a opção será guardada e a janela nunca mais aparecerá, a menos que reinstale o NVDA.
 Contudo, pode, manualmente, activar ou desactivar o processo de recolha de dados na janela de configurações do NVDA, secção Geral. Para isso, marque ou desmarque a caixa de verificação ["Permitir que o projeto do NVDA recolha estatísticas de utilização do NVDA"](#GeneralSettingsGatherUsageStats).
@@ -505,8 +522,8 @@ Contudo, pode, manualmente, activar ou desactivar o processo de recolha de dados
 A maioria dos comandos de teclado do NVDA consiste, normalmente, no pressionar da tecla modificadora do NVDA em conjunto com uma ou mais teclas.
 As principais excepções são, usando o esquema de teclado Desktop, os comandos de revisão do texto, que utilizam somente o bloco numérico.
 
-O NVDA pode ser configurado para que, tanto o Insert do bloco numérico, o Insert do bloco intermédio, e a tecla Caps Lock, possam ser utilizados como teclas modificadoras do NVDA.
-Por padrão, tanto o Insert do bloco numérico como o Insert do bloco intermédio, são definidos como teclas modificadoras do NVDA.
+O NVDA pode ser configurado para que tanto o `Insert do bloco numérico`, o `Insert do bloco intermédio` e o `CapsLock`, possam ser utilizados como teclas modificadoras do `NVDA`.
+Por padrão, tanto o `Insert do bloco numérico` como o `Insert do bloco intermédio`, são definidos como teclas modificadoras do NVDA.
 
 Se pretender que uma das teclas modificadoras do NVDA actue com a sua função original (por exemplo, quando tiver definido o Caps Lock como uma tecla modificadora do NVDA e desejar activá-la com a sua função original), deverá pressionar a tecla duas vezes, em rápida sucessão.
 
@@ -540,7 +557,7 @@ Pode também manter o dedo no ecrã e movê-lo, para ler outros controlos e text
 Quando os comandos do NVDA forem descritos, mais tarde neste manual, poderá ser listado um gesto de toque que pode ser usado para activar esse mesmo comando, através do ecrã táctil.
 Seguem-se algumas instruções de como efectuar os vários gestos de toque, necessários para realizar os comandos do NVDA com um ecrã táctil.
 
-##### Toques {#toc45}
+##### Toques {#Taps}
 
 Toque rapidamente no ecrã com um ou mais dedos.
 
@@ -552,7 +569,7 @@ Tocar duas vezes resultará num toque duplo.
 Tocar três vezes resultará num toque triplo, e assim, sucessivamente.
 É claro que estes gestos, de toque múltiplo, também reconhecem quantos dedos foram usados, o que permite ser possível ter gestos como um toque triplo de dois dedos, ou um toque quádruplo, etc. 
 
-##### Varrimentos {#toc46}
+##### Varrimentos {#Flicks}
 
 Arraste rapidamente o seu dedo pelo ecrã.
 
@@ -900,6 +917,7 @@ Estas funcionalidades adicionais do NVDA não se encontram activas por padrão.
 Se pretender utilizar as mesmas, pode configurá-las na secção configurações do [Rato](#MouseSettings), que encontra no diálogo [Configurações](#NVDASettings) aberto através do Menu NVDA, "Preferências", "Configurações".
 
 Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar com o rato, o NVDA fornece alguns comandos relacionados com o rato:
+
 <!-- KC:beginInclude -->
 
 | Nome |Comandos de Teclado de Desktop |Comandos de Teclado de Laptop |Toque |Descrição|
@@ -908,6 +926,10 @@ Apesar de um rato físico, ou um touchpad, terem de ser utilizados para navegar 
 |Bloquear o botão esquerdo do rato |Shift+Barra do bloco numérico |NVDA+control+Sinal de Mais |nenhum |Bloqueia o botão esquerdo do rato, na posição de  pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão esquerdo do rato, na posição de  pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato|
 |Clicar com o botão direito do rato |Asterisco do bloco numérico |NVDA+Acento agudo |Tocar e manter |Clica uma vez com o botão direito do rato|
 |Bloquear o botão direito do rato |Shift+Asterisco do bloco numérico |NVDA+control+Acento agudo |nenhum |Bloqueia o botão direito do rato, na posição de pressionado. Pressione novamente para desbloqueá-lo. Para arrastar o rato, pressione esta tecla de atalho para bloquear o botão direito do rato, na posição de pressionado e mova o rato quer seja fisicamente ou utilizando qualquer comando de movimento do rato|
+|Deslocar para cima na posição do rato |nenhum |nenhum |nenhum |Desloca a roda do rato para cima na posição atual do |
+|Deslocar para baixo na posição do rato |nenhum |nenhum |nenhum |Desloca a roda do rato para baixo na posição atual do |
+|Deslocar para a esquerda na posição do rato |nenhum |nenhum |nenhum |Desloca a roda do rato para a esquerda na posição atual do |
+|Deslocar para a direita na posição do rato |nenhum |nenhum |nenhum |Desloca a roda do rato para a direita na posição atual do |
 |Mover o rato para o objecto de navegação actual |NVDA+Barra do bloco numérico |NVDA+shift+m |nenhum |Move o rato para a localização do objecto de navegação actual e do cursor de revisão|
 |Navegar para o objecto sob o rato |NVDA+Asterisco do bloco numérico |NVDA+shift+n |nenhum |Define o objecto de navegação para o objecto localizado na posição do rato|
 
@@ -1706,7 +1728,7 @@ As secções presentes no diálogo de configurações do NVDA são detalhadas se
 
 <!-- KC:setting -->
 
-##### Abrir as configurações gerais {#toc110}
+##### Abrir as configurações gerais {#OpenGeneralSettings}
 
 Comando: `NVDA+control+g`
 
@@ -1785,6 +1807,7 @@ Se esta opção estiver activada, a NV Access usará a informação obtida pela 
 Note que apesar do seu endereço IP ser usado para determinar o seu país, ele nunca é guardado.
 Para além das informações obrigatórias para a selecção da actualização, as seguintes informações adicionais também serão enviadas:
 
+* Um ID único para o utilizador actual do NVDA, que será alterado uma vez por mês;
 * Idioma da interface do NVDA;
 * Se o NVDA é uma cópia portátil ou instalada;
 * Nome do sintetizador em utilização (incluindo o nome do extra do driver);
@@ -1802,7 +1825,7 @@ Também poderá proceder à instalação, manualmente, através do menu de "saí
 
 <!-- KC:setting -->
 
-##### Abrir configurações de voz {#toc123}
+##### Abrir configurações de voz {#OpenSpeechSettings}
 
 Comando: `NVDA+control+v`
 
@@ -1878,6 +1901,39 @@ Esta opção aplica-se a todos os sintetizadores, e não apenas ao sintetizador 
 Activada por padrão, esta opção indica ao NVDA se deve usar o idioma da voz actual para processar a leitura de símbolos e caracteres, incluindo sinais de pontuação.
 Se quiser que o NVDA não leia a pontuação no idioma da voz, para um determinado sintetizador ou voz, pode desactivar esta funcionalidade para forçar o NVDA a usar o idioma da interface.
 
+##### Normalização Unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opções |Padrão (Desactivado), Activado, Desactivado|
+|Padrão |Desactivado|
+
+Quando esta opção está activada, a normalização unicode é realizada no texto falado pelo NVDA.
+Isto é benéfico ao falar caracteres que podem ser representados em várias formas.
+O NVDA utiliza o algoritmo NFKC (Compatibilidade de Composição de Formas Normalizadas), que proporciona, entre outros, os seguintes benefícios:
+
+1. As versões em negrito e itálico dos caracteres que fazem parte do padrão unicode e são comumente usados nas redes sociais são normalizadas para o seu equivalente compatível mais comum.
+Por exemplo, a letra latina "h" também pode ser apresentada como "𝐡" (negrito), "ℎ" (itálico), etc., mas será sempre falada como "h" quando a normalização estiver activada.
+Este aspecto da normalização também auxilia na leitura de equações no editor de equações do Microsoft Word.
+
+1. Normalização para caracteres compostos.
+Por exemplo, o caractere "ü" (u com trema/diacrítico), um caractere comum em idiomas como alemão e turco, pode ser representado de duas formas:
+  1. Um caractere unicode independente (ü)
+  1. Uma decomposição em dois caracteres (ü), ou seja, a letra latina normal u e um modificador diacrítico.
+  A normalização unicode assegura que apenas uma forma será usada em toda a saída de voz, que é a variante de um caractere.
+
+1. Decomposição de algumas ligaduras, incluindo "ĳ" (ligadura ij) para a sua forma de duas letras ("ij").
+
+1. Ordem estável de modificadores em caracteres compostos, por exemplo, em hebraico antigo.
+
+Para alternar a normalização Unicode de qualquer lugar, por favor, atribua um gesto personalizado usando o Diálogo de [Gestos de Entrada](#InputGestures).
+
+##### Anunciar "Normalizado" ao navegar por caracteres {#SpeechReportNormalizedForCharacterNavigation}
+
+Esta configuração é uma caixa de verificação  que, quando marcada, instrui o NVDA a anunciar explicitamente que um caractere está normalizado quando falado como um caractere individual, como ao soletrar.
+Por exemplo, quando esta opção está activada, soletrar o caractere "ĳ" o pronunciará como "i j normalizado".
+
+Note que esta configuração só está disponível quando a "[Normalização Unicode](#SpeechUnicodeNormalization)" está activada.
+
 ##### Incluir dados do Unicode Consortium (incluindo emoji) ao processar caracteres e símbolos {#SpeechSettingsCLDR}
 
 Quando esta caixa de verificação está marcada, o NVDA incluirá símbolos adicionais pronunciation dictionaries when pronouncing characters and symbols.
@@ -1916,6 +1972,7 @@ A maioria dos sintetizadores tem esse suporte.
 
 Esta opção deverá, em geral, estar activa.
 Todavia, alguns sintetizadores suportados via Microsoft Speech API não implementam correctamente esta funcionalidade e comportam-se de maneira estranha.
+Os sintetizadores da Code Factory, tanto o extra como a aplicação SAPI, também não o implementam corretamente e provocam uma soletração indesejada do texto falado (por exemplo, no menu ou nas caixas de diálogo do NVDA).
 Se estiver a ter problemas com a pronúncia de alguns caracteres individuais, desactive esta opção.
 
 ##### Descrição desfasada dos caracteres ao movimentar o cursor {#delayedCharacterDescriptions}
@@ -1945,7 +2002,7 @@ Note que é necessário marcar, pelo menos, dois modos.
 
 <!-- KC:setting -->
 
-##### Abrir o diálogo de selecção de sintetizador {#toc144}
+##### Abrir o diálogo de selecção de sintetizador {#OpenSelectSynthesizer}
 
 Comando: `NVDA+control+s`
 
@@ -2117,6 +2174,18 @@ Quando se deslocar para a próxima linha, poderá ler o resto da palavra.
 
 Se activar esta opção, poderá ter uma leitura mais fluída, mas geralmente obriga a mais movimentações da linha.
 
+##### Normalização Unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opções |Padrão (Desactivado), Activado, Desactivado|
+|Padrão |Desactivado|
+
+Quando esta opção está activada, a normalização unicode é executada no texto que é apresentado em Braille no dispositivo Braille.
+Isto é benéfico quando se depara com caracteres em Braille que são desconhecidos numa determinada tabela Braille e que têm uma alternativa compatível, como os caracteres a negrito e itálico normalmente utilizados nas redes sociais.
+Outros benefícios da normalização unicode são explicados em maior detalhe na [secção para a definição de voz equivalente](#SpeechUnicodeNormalization).
+
+Para alternar a normalização Unicode a partir de qualquer lugar, atribua um gesto personalizado utilizando a [caixa de diálogo Gestos de entrada](#InputGestures).
+
 ##### Apresentação do contexto do foco {#BrailleSettingsFocusContextPresentation}
 
 Esta opção permite escolher que informação de contexto o NVDA mostrará, na linha Braille, quando um objecto recebe o foco.
@@ -2177,7 +2246,7 @@ Para alternar entre mostrar ou não o indicador de selecção, a partir de qualq
 
 <!-- KC:setting -->
 
-##### Abrir o diálogo de selecção de dispositivo Braille {#toc168}
+##### Abrir o diálogo de selecção de dispositivo Braille {#OpenSelectBrailleDisplay}
 
 Comando: `NVDA+control+a`
 
@@ -2229,7 +2298,7 @@ Portanto, é recomendável ligar apenas um dispositivo Braille de um determinado
 
 <!-- KC:setting -->
 
-##### Abrir configurações de áudio {#toc173}
+##### Abrir configurações de áudio {#OpenAudioSettings}
 
 Comando: `NVDA+control+u`
 
@@ -2372,7 +2441,7 @@ Para mais informações sobre as opções suportadas por cada um desses sistemas
 
 <!-- KC:setting -->
 
-##### Abrir configurações de teclado {#toc188}
+##### Abrir configurações de teclado {#OpenKeyboardSettings}
 
 Comando: `NVDA+control+k`
 
@@ -2449,7 +2518,7 @@ Esta opção está activada por padrão, embora alguns utilizadores possam prefe
 
 <!-- KC:setting -->
 
-##### Abrir configurações do rato {#toc201}
+##### Abrir configurações do rato {#OpenMouseSettings}
 
 Comando: `NVDA+control+m`
 
@@ -2552,7 +2621,7 @@ Para activar ou desactivar o Modo de revisão simples, em qualquer local, por fa
 
 <!-- KC:setting -->
 
-##### Abrir configurações da apresentação de objectos {#toc218}
+##### Abrir configurações da apresentação de objectos {#OpenObjectPresentationSettings}
 
 Comando: `NVDA+control+o`
 
@@ -2667,7 +2736,7 @@ Esta opção está activada, por padrão.
 
 <!-- KC:setting -->
 
-##### Abrir configurações do modo de navegação {#toc236}
+##### Abrir configurações do modo de navegação {#OpenBrowseModeSettings}
 
 Comando: `NVDA+control+b`
 
@@ -2759,7 +2828,7 @@ Activar esta opção pode melhorar o suporte em algumas páginas, com o contra d
 
 <!-- KC:setting -->
 
-##### Abrir configurações da formatação de documentos {#toc250}
+##### Abrir configurações da formatação de documentos {#OpenDocumentFormattingSettings}
 
 Comando: `NVDA+control+d`
 
@@ -2856,6 +2925,27 @@ Este estilo funciona melhor quando lemos documentos com os parágrafos em blocos
 Note que este estilo não pode ser usado no Microsoft Word ou Microsoft Outlook, a menos que esteja a usar a UIA para aceder aos controlos do Microsoft Word.
 
 Pode alternar entre os estilos de parágrafo disponíveis associando um comando através do [diálogo "Definir comandos"](#InputGestures).
+
+#### Configurações da Loja de extras {#AddonStoreSettings}
+
+Esta categoria permite configurar o comportamento da Loja de extras
+
+##### Notificação de actualizações {#AutomaticAddonUpdates}
+
+Quando esta opção está definida para "Notificar", a Loja de Complementos notificá-lo-á após o arranque do NVDA se estiverem disponíveis quaisquer actualizações de complementos.
+Essa verificação é feita a cada 24 horas.
+As notificações só ocorrerão para extras com actualizações disponíveis no mesmo canal.
+Por exemplo, para extras beta instalados, só será notificado de actualizações dentro do canal beta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opções |Anunciar (Padrão), Desactivado |
+|Padrão |Anunciar |
+
+|Opção |Comportamento |
+|---|---|
+|Anunciar |Anunciar actualizações de extras dentro do mesmo canal |
+|Desactivado |Não verificar automaticamente por actualizações de extras |
 
 #### configurações do OCR do Windows {#Win10OcrSettings}
 
@@ -3442,6 +3532,9 @@ Se o NVDA estiver instalado e a funcionar no seu sistema, também pode abrir um 
 Quando um extra está a ser instalado a partir de uma fonte externa, o NVDA irá solicitar a confirmação da instalação.
 Depois de instalado o extra, será necessário reiniciar o NVDA para que o extra comece a funcionar, embora possa adiar a reinicialização do NVDA se tiver outros extras para instalar ou actualizar.
 
+Por padrão, após o NVDA ser iniciado, será avisado da existência de actualizações de extras.
+Para saber mais sobre, e configurar, este comportamento, vá a ["Notificação de actualizações"](#AutomaticAddonUpdates).
+
 #### Remover Extras {#AddonStoreRemoving}
 
 Para remover um extra, selecione o extra na lista e utilize a ação de Remover.
@@ -3556,22 +3649,16 @@ Para alternar o Visualizador Braille a partir de qualquer lugar, por favor assoc
 A Consola de Python do NVDA, encontrada em Ferramentas no menu do NVDA, é uma ferramenta de desenvolvimento útil para depuração, inspecção geral de componentes internos do NVDA ou inspecção da hierarquia de acessibilidade de uma aplicação.
 Para mais informações, leia o [Guia de desenvolvimento do NVDA](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Loja de extras {#toc314}
+### Loja de extras {#AddonStoreMenuItem}
 
 Esta opção abre a [Loja de extras do NVDA](#AddonsManager).
 Para mais informações, leia o capítulo: [Extras e a Loja de extras](#AddonsManager).
 
 ### Criar uma cópia portátil {#CreatePortableCopy}
 
-Esta opção abre uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão instalada.
-Quando estiver a executar uma cópia portátil do NVDA, terá uma opção adicional do menu Ferramentas, chamada "instalar o NVDA".
+Esta opção abre uma caixa de diálogo que permite criar uma cópia portátil do NVDA a partir da versão em execução.
 
-A caixa de diálogo para criar uma cópia portátil, ou instalar o NVDA, solicitará que escolha o directório onde criar a cópia portátil ou instalar o NVDA.
-
-Nesta caixa de diálogo, pode activar ou desactivar o seguinte:
-
-* "Copiar configuração actual do utilizador" ou "Copiar configuração portátil para a conta de utilizador actual" (isso inclui os ficheiros em% appdata% \ roaming \ NVDA, ou na sub-pasta userConfig dentro da pasta do NVDA portátil, e inclui também os extras e outros módulos);
-* "Iniciar a nova cópia portátil após ser criada" (inicia o NVDA automaticamente após a criação da cópia portátil).
+Para mais informações, vá a [Criar uma Cópia Portátil](#CreatingAPortableCopy).
 
 ### Executar a Ferramenta de correcção de registo de DLLs... {#RunCOMRegistrationFixingTool}
 
@@ -4001,11 +4088,12 @@ Os seguintes dispositivos são também suportados, não necessitando de drivers 
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Note que o Zoomax atuamente não é suportado sem drivers externos.
 
 Seguem-se as associações de teclas para estes dispositivos braille com o NVDA.
 Por favor, consulte a documentação do seu dispositivo braille para obter a descrição de onde estas teclas podem ser encontradas.
 
-#### Comandos para todos os modelos {#toc334}
+#### Comandos para todos os modelos {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4034,7 +4122,7 @@ Por favor, consulte a documentação do seu dispositivo braille para obter a des
 
 <!-- KC:endInclude -->
 
-#### Comandos para Brailliant BI 32, BI 40 e B 80 {#toc335}
+#### Comandos para Brailliant BI 32, BI 40 e B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4046,7 +4134,7 @@ Por favor, consulte a documentação do seu dispositivo braille para obter a des
 
 <!-- KC:endInclude -->
 
-#### Comandos para Brailliant BI 14 {#toc336}
+#### Comandos para Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -4995,8 +5083,8 @@ Seguidamente, apresentam-se as opções para a linha de comando para o NVDA
 |None |`--install-silent` |Instala o NVDA silenciosamente e não inicia a cópia instalada|
 |None |`--enable-start-on-logon=True|False` |Ao instalar, activa o [Usar o NVDA no início de sessão do Windows](#StartAtWindowsLogon)|
 |None |`--copy-portable-config` |Ao instalar copiar a configuração portátil da pasta especificada (`--config-path`, `-c`) para a conta do utilizador|
-|None |`--create-portable` |Cria uma cópia portátil do NVDA iniciando a cópia criada. Requer que `--portable-path` seja especificado|
-|None |`--create-portable-silent` |Cria uma cópia portátil do NVDA sem iniciar a cópia criada. Requer que `--portable-path` seja especificado|
+|None |`--create-portable` |Cria uma cópia portátil do NVDA (e inicia a cópia criada). Requer que `--portable-path` seja especificado|
+|None |`--create-portable-silent` |Cria uma cópia portátil do NVDA (sem iniciar a cópia criada). Requer que `--portable-path` seja especificado. Esta opção suprime os avisos ao escrever em directórios não vazios e pode apagar/sobreescrever ficheiros sem nenhum aviso.|
 |None |`--portable-path=PORTABLEPATH` |O caminho da pasta onde a cópia portátil vai ser criada|
 
 ### Parâmetros do Sistema {#SystemWideParameters}

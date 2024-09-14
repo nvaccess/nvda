@@ -39,8 +39,17 @@ Najvýznamnejšie prednosti programu:
 
 ### Systémové požiadavky {#SystemRequirements}
 
+#### Odporúčané systémové požiadavky {#MinimumSystemRequirements}
+* Operačné systémy: 64-bitové edície systémov Windows 10, Windows 11 a Window Server 2022
+  * Podporované sú AMD64 a ARM64 varianty operačného systému Windows.
+* Mali by ste mať aspoň 150 MB voľného miesta úložného priestoru.
+* Mali by ste mať aspoň 4 GB operačnej pamäte RAM.
+
+#### Minimálne systémové požiadavky {#MinimumSystemRequirements}
 * NVDA spustíte v 32 aj 64 bitových verziách systémov Windows 8.1, 10, Windows 11 a tiež v serverových edíciách Windows od verzie 2012 R2.
   * Podporované sú AMD64 a ARM64 varianty operačného systému Windows.
+  * Pozor: 32-bitové varianty operačného systému Windows nie sú viac aktívne podporované.
+  * Pozor: Windows 8.1 a operačné systémy Windows Server staršie než verzia 2022 nie sú viac aktívne podporované.
 * Mali by ste mať aspoň 150 MB voľného miesta úložného priestoru
 
 ### Medzinárodná podpora {#Internationalization}
@@ -352,6 +361,9 @@ Stav pri doplnku bude "dostupné aktualizácie".
 V zozname sa zobrazí aktuálna a tiež dostupná verzia.
 Na zvolenom doplnku stlačte `enter` čím otvoríte zoznam dostupných možností. Následne zvoľte "aktualizovať".
 
+V predvolenej konfigurácii budete na dostupnosť aktualizácií doplnkov upozornení aj hneď po spustení programu NVDA.
+Viac sa o tejto funkcionalite s možnosťou ďalších nastavení dozviete v časti ["Upozorňovať na aktualizácie doplnkov"](#AutomaticAddonUpdates).
+
 ### Komunita {#Community}
 
 Okolo programu NVDA existuje rozsiahla komunita používateľov.
@@ -432,8 +444,14 @@ Ak ste zatvorili úvodnú obrazovku, alebo máte spustenú inštalačnú verziu 
 
 V nasledujúcom dialógu môžete vybrať priečinok, v ktorom sa uloží prenosná verzia NVDA.
 Môže to byť priečinok na vašom pevnom disku, USB kľúči, pamäťovej karte alebo inom prenosnom médiu.
+Bežné použitie tejto funkcie vytvorí nový priečinok pre prenosnú verziu.
+Ak zvolíte už existujúci priečinok, vytvorením prenosnej verzie prepíšete súbory v tomto umiestnení.
+Ak sa v tomto existujúcom priečinku nachádza prenosná verzia NVDA, táto bude automaticky aktualizovaná.
+
 K dispozícii je tiež voľba, ktorá umožňuje zahrnúť do prenosnej verzie nastavenia práve prihláseného používateľa.
+Toto zahŕňa aj nainštalované doplnky.
 Táto možnosť je dostupná len ak vytvárate prenosnú verziu z nainštalovanej verzie NVDA a nezobrazí sa, ak vytvárate prenosnú verziu priamo zo stiahnutého súboru zo stránky NVDA.
+
 Vytvorenie prenosnej verzie potvrdíte stlačením tlačidla Pokračovať.
 Po úspešnom skopírovaní súborov sa zobrazí správa, ktorá vás informuje o úspešnosti operácie.
 Dialóg zatvorte aktivovaním tlačidla OK.
@@ -493,8 +511,7 @@ Tretie začiarkavacie políčko umožňuje nastaviť, či sa uvítacie okno má 
 
 #### Získavanie údajov od používateľov NVDA {#UsageStatsDialog}
 
-Od verzie NVDA 2018.3 sa pýtame používateľov, či nám chcú posielať dáta, ktoré môžeme využiť na zlepšenie funkcií NVDA.
-Pri prvom spustení NVDA sa zobrazí otázka, či chcete povoliť zasielanie anonymných údajov do NV Access.
+Hneď pri prvom spustení po úspešnej inštalácii programu NVDA sa zobrazí dialógové okno s otázkou, či súhlasíte s odosielaním štatistických údajov o používaní programu združeniu NV Access s cieľom do budúcna zlepšovať NVDA.
 Podrobnosti sú vysvetlené v kapitole [Povoliť zasielanie štatistických údajov do NV Access](#GeneralSettingsGatherUsageStats).
 Upozorňujeme, že odpoveď áno alebo nie automaticky zatvorí tento dialóg a táto otázka sa nezobrazí až dokým nepreinštalujete NVDA.
 Kedykoľvek môžete zasielanie štatistík zapnúť alebo vypnúť. Hľadajte začiarkávacie pole označené [Povoliť zasielanie údajov](#GeneralSettingsGatherUsageStats) v časti všeobecné nastavenia.
@@ -505,8 +522,8 @@ Kedykoľvek môžete zasielanie štatistík zapnúť alebo vypnúť. Hľadajte z
 Väčšina klávesových príkazov NVDA je kombináciou zvláštneho klávesu nazývaného kláves NVDA s inými klávesmi.
 Výnimkou sú príkazy na navigáciu  v desktop rozložení pomocou prezeracieho kurzora, keďže tu sa používajú číslice na vypnutom  numerickom bloku bez klávesu NVDA. Existujú však aj ďalšie výnimky.
 
-Ako kláves NVDA je možné nastaviť klávesy insert, numerický insert a capslock pričom všetky je možné použiť súčasne.
-Predvolené nastavenia majú ako kláves NVDA nastavený insert aj numerický insert.
+Ako kláves `NVDA` je možné nastaviť klávesy `insert`, `numerický insert` a `capslock` pričom všetky je možné použiť súčasne.
+Predvolené nastavenia majú ako kláves NVDA nastavený `insert` aj `numerický insert`.
 
 Ak si želáte vykonať pôvodnú funkcionalitu klávesu, ktorý Ste nastavili ako kláves NVDA (napr. prepnúť stav veľkých písmen pomocou klávesu capslock) stlačte kláves NVDA 2 krát rýchlo za sebou.
 
@@ -900,6 +917,7 @@ Tieto funkcie v NVDA nie sú štandardne zapnuté.
 Aktivovať je ich možné v kategórii  [nastavenia myši](#MouseSettings) v [Nastaveniach](#NVDASettings) z ponuky možnosti.
 
 Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo trackpad, NVDA má zabudovaných niekoľko klávesových skratiek, ktoré simulujú niektoré funkcie ukazovacieho zariadenia:
+
 <!-- KC:beginInclude -->
 
 | Názov |Klávesová skratka pre desktop |Klávesová skratka pre laptop |Dotykové gesto |Popis|
@@ -908,6 +926,10 @@ Aj napriek tomu, že sa na tento druh navigácie bežne používa myš alebo tra
 |Zamknúť ľavé tlačidlo myši |shift+numerické  lomeno |NVDA+ctrl+ú |nie je |Stlačí a uzamkne ľavé tlačidlo myši. Stlačte znovu na uvoľnenie. Operáciu drag & drop môžete začať uzamknutím tlačidla použitím tohto príkazu a následne posunúť myš fyzicky alebo pomocou iných klávesových príkazov.|
 |Pravý klik |numerická hviezdička |NVDA+ä |klepnúť a podržať |Vykoná klik pravým tlačidlom myši.|
 |Zamknúť pravé tlačidlo myši |shift+numerická  hviezdička |NVDA+ctrl+ä |nie je |Stlačí a uzamkne pravé tlačidlo myši. Stlačte znovu na uvoľnenie. Operáciu drag & drop môžete začať uzamknutím tlačidla použitím tohto príkazu a následne posunúť myš fyzicky alebo pomocou iných klávesových príkazov.|
+|Posúvať hore na pozícii myši |nie je |nie je |nie je |Posúva koliesko myši hore na aktuálnej pozícii|
+|Posúvať dolu na pozícii myši |nie je |nie je |nie je |Posúva koliesko myši dolu na aktuálnej pozícii|
+|Posúvať vľavo na pozícii myši |nie je |nie je |nie je |Posúva koliesko myši vľavo na aktuálnej pozícii|
+|Posúvať vpravo na pozícii myši |nie je |nie je |nie je |Posúva koliesko myši vpravo na aktuálnej pozícii|
 |Myš na navigačný objekt |NVDA+numerické  lomeno |NVDA+shift+m |nie je |Premiestni kurzor myši na miesto aktuálneho prvku zameraného objektovou navigáciou na mieste, kde ukazuje prezerací kurzor|
 |Objektová navigácia na myš |NVDA+numerická hviezdička |NVDA+shift+n |nie je |Nastaví objektovú navigáciu na prvok, na ktorého umiestnenie ukazuje kurzor myši|
 
@@ -1782,9 +1804,10 @@ Aby bolo možné poskytnúť aktualizáciu, zisťujeme:
 ##### Povoliť zasielanie štatistických údajov do NV Access {#GeneralSettingsGatherUsageStats}
 
 Ak začiarknete túto možnosť, NV Access využije tieto informácie na zisťovanie, koľko ľudí používa NVDA, z akých krajín pochádzajú. Informácie sú zasielané vždy pri kontrole dostupnosti novej verzie.
-Na zisťovanie krajiny, v ktorej sa nachádzate, využívame IP adresu. Vašu IP adresu si však ďalej neukladáme.
-Okrem nevyhnutných údajov na získanie aktualizácie tiež po začiarknutí tohto políčka budeme odosielať tieto informácie:
+Na zisťovanie krajiny, v ktorej sa nachádzate, využívame IP adresu. Vašu IP adresu však ďalej neuchovávame.
+Okrem nevyhnutných údajov potrebných na zisťovanie dostupnosti aktualizácií tiež po začiarknutí tohto políčka budeme odosielať tieto informácie:
 
+* Unikátny identifikátor aktuálneho používateľa NVDA, mení sa raz za mesiac
 * Aktuálny jazyk NVDA
 * Či používate portable alebo nainštalovanú verziu NVDA
 * Aký hlasový výstup používate (vrátane názvu doplnku z ktorého je nainštalovaný ovládač)
@@ -1878,6 +1901,39 @@ Nastavenie interpunkcie ovplyvňuje prejav NVDA pre všetky hlasové výstupy.
 táto možnosť je predvolene začiarknutá a hovorí NVDA, že pri spracovaní textu sa má riadiť jazykom konkrétneho hlasu.
 Ak vám NVDA pri použití konkrétneho hlasu alebo hlasového výstupu nesprávne číta interpunkciu, odčiarknite túto možnosť, aby boli uprednostnené globálne nastavenia NVDA.
 
+##### Normalizovať znaky unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Možnosti |Predvolené (Vypnuté), Zapnuté, Vypnuté|
+|Predvolené |Vypnuté|
+
+Keď je táto možnosť povolená, na texte, ktorý NVDA vyslovuje , sa vykoná normalizácia znakov v kóde unicode.
+To je výhodné, pri vyslovovaní znakov, ktoré môžu byť zastúpené vo viacerých formách.
+NVDA používa algoritmus NFKC (Normalization Form Compatibility Composition), ktorý okrem iného poskytuje tieto výhody:
+
+1. Tučné verzie znakov a verzie znakov s kurzívou, ktoré sú súčasťou štandardu Unicode a bežne sa používajú v príspevkoch uverejňovaných na sociálnych sieťach, sú normalizované na ich najbežnejší kompatibilný ekvivalent.
+Napríklad v latinke existuje písmeno "h", namiesto ktorého je možné zapísať "𝐡" (tučné), "ℎ" (kurzíva) atď. Keď je toto nastavenie Normalizovať znaky unicode zapnuté, NVDA bude normalizovať unicode na základnú formu znaku a vysloví "h".
+Tento aspekt normalizácie pomáha aj pri čítaní rovníc v editore rovníc programu Microsoft Word.
+
+1. Normalizácia na zložené znaky.
+Napríklad znak "ü" (u s prehláskou), často sa vyskytujúci znak v jazykoch ako sú nemčina a turečtina je možné zapísať v dvoch formách.
+  1. Jediný samostatný znak v kóde unicode (ü)
+  1. Rozklad na 2 znaky v kóde unicode (ü), bežné písmeno latinky u a modifikátor prehláska
+  Normalizácia Unicode zabezpečuje, že NVDA bude celý čas pri syntéze reči používať len jednu formu, a to jeden variant znaku.
+
+1. Rozklad niektorých ligatúr, vrátane "ĳ" (ligatúra ij) na dvojznakové formy ("ij").
+
+1. Rovnaké poradie oznamovania modifikátorov pre zložené znaky, napríklad v starovekej hebrejčine.
+
+Ak chcete normalizáciu unicode prepínať odkiaľkoľvek, prosím priraďte si vlastnú skratku cez [dialóg klávesové skratky](#InputGestures).
+
+##### Oznámiť "Normalizované" pri navigácii po znakoch {#SpeechReportNormalizedForCharacterNavigation}
+
+Toto nastavenie je začiarkavacie políčko, ktoré po začiarknutí nastaví NVDA na explicitné oznamovanie, že znak je normalizovaný, keď je vyslovený samostatne, napríklad pri hláskovaní.
+Napríklad, ak je toto nastavenie zapnuté, pri hláskovaní znaku "ĳ" NVDA vysloví "i j normalizované".
+
+Všimnite si, že toto nastavenie je k dispozícii len ak je zapnuté aj nastavenie "[Normalizovať znaky unicode](#SpeechUnicodeNormalization)".
+
 ##### Na spracovanie špeciálnych znakov a emoji použiť databázu Unicode Konzorcia {#SpeechSettingsCLDR}
 
 Ak začiarknete túto možnosť, NVDA bude na spracovanie symbolov využívať dodatočné slovníky.
@@ -1916,14 +1972,15 @@ Väčšina hlasových výstupov to podporuje.
 
 Odporúča sa nechať túto možnosť zapnutú.
 Žiaľ niektoré hlasové výstupy Microsoft Speech API toto nastavenie nepodporujú a môžu sa správať zvláštne, ak je to začiarknuté.
+Hlasové výstupy Code Factory, doplnok aj SAPI verzia, ho tiež neimplementujú správne a spôsobujú nežiaduce hláskovanie hovoreného textu (napr. v ponuke alebo dialógových oknách NVDA).
 Ak pozorujete problémy s vyslovovaním jednotlivých znakov, skúste túto voľbu odčiarknuť.
 
 ##### Foneticky hláskovať pri čítaní po znakoch {#delayedCharacterDescriptions}
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Možnosti |Vypnuté, zapnuté|
-|predvolene |vypnuté|
+|Možnosti |Vypnuté, Zapnuté|
+|Predvolené |Vypnuté|
 
 Ak je táto možnosť zapnutá, bude NVDA vyslovovať aj fonetické popisky pre znaky, ktoré prečítate pod kurzorom.
 
@@ -2079,7 +2136,7 @@ V tomto prípade nebude brailový riadok sledovať systémový a textový kurzor
 | . {.hideHeaderRow} |.|
 |---|---|
 |Predvolené |Nikdy|
-|Možnosti |Predvolené (nikdy), nikdy, Len ak je zviazaný automaticky, vždy|
+|Možnosti |Predvolené (Nikdy), Nikdy, Len ak je zviazaný automaticky, Vždy|
 
 Toto nastavenie určuje, či sa systémový kurzor posúva pri použití smerových tlačidiel na brailovom riadku.
 Predvolene je toto nastavenie nastavené na nikdy, takže pri stláčaní smerových tlačidiel sa systémový kurzor neposúva.
@@ -2117,6 +2174,18 @@ Zvyšok slova bude až na ďalšom riadku.
 
 Začiarknutím tejto možnosti docielite plynulejšie čítanie, na druhej strane budete musieť riadok posúvať častejšie.
 
+##### Normalizovať znaky unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Možnosti |Predvolené (Vypnuté), Zapnuté, Vypnuté|
+|Predvolené |Vypnuté|
+
+Keď je táto možnosť zapnutá, vykoná sa normalizácia unicode na texte, ktorý je zobrazovaný na braillovskom displeji.
+To je výhodné, keď narazíte na znaky v Braillovom písme, ktoré nie sú známe v konkrétnej brailovej tabuľke a ktoré majú kompatibilnú alternatívu, ako napríklad tučné znaky alebo znaky s kurzívou bežne používané v príspevkoch na sociálnych sieťach.
+Ďalšie výhody normalizácie znakov v kóde unicode sú podrobnejšie vysvetlené [v časti o rovnakom nastavení reči](#SpeechUnicodeNormalization).
+
+Ak chcete normalizáciu unicode prepínať odkiaľkoľvek, prosím priraďte si vlastnú skratku cez [dialóg klávesové skratky](#InputGestures).
+
 ##### prezentácia kontextu {#BrailleSettingsFocusContextPresentation}
 
 toto nastavenie určuje, aké kontextové informácie sa zobrazia na riadku pri objekte, ktorý má fokus.
@@ -2148,8 +2217,8 @@ Ak chcete toto nastavenie meniť kedykoľvek z klávesnice, môžete si k nemu p
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Predvolene |zapnuté|
-|Možnosti |Predvolené (zapnuté), zapnuté, vypnuté|
+|Predvolené |Zapnuté|
+|Možnosti |Predvolené (Zapnuté), Zapnuté, Vypnuté|
 
 Toto nastavenie určuje, či má byť reč prerušená, ak posuniete brailový riadok vpred alebo späť.
 Príkazy, ktoré prechádzajú na predchádzajúci alebo nasledujúci riadok, vždy prerušia tok reči.
@@ -2164,7 +2233,7 @@ Ak túto možnosť vypnete, je možné počúvať hlas a čítať text zároveň
 | . {.hideHeaderRow} |.|
 |---|---|
 |Predvolené |Povolené|
-|Možnosti |Predvolené (povolené), povolené, zakázané|
+|Možnosti |Predvolené (Povolené), Povolené, Zakázané|
 
 Určuje, či bude výber vyznačený na brailovom riadku bodmi 7 a 8.
 Predvolene je toto zapnuté a výber sa ukazuje.
@@ -2258,8 +2327,8 @@ Nemôžete ju využiť, ak NVDA beží v portable režime alebo z dočasnej kóp
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|predvolené |vypnuté|
-|Možnosti |vypnuté, zapnuté|
+|Predvolené |Vypnuté|
+|Možnosti |Vypnuté, Zapnuté|
 
 Ak je táto možnosť zapnutá, hlasitosť zvukov sa prispôsobí hlasitosti reči.
 Ak znížite hlasitosť reči, zníži sa hlasitosť zvukov.
@@ -2842,7 +2911,7 @@ Táto kategória nastavení umožňuje upraviť rôzne možnosti navigácie v do
 | . {.hideHeaderRow} |.|
 |---|---|
 |Predvolené |Podľa aplikácie|
-|Možnosti |Predvolené (podľa aplikácie), Podľa aplikácie, jeden zlom riadka, viacero zlomov riadka|
+|Možnosti |Predvolené (Podľa aplikácie), Podľa aplikácie, Jeden zlom riadka, Viacero zlomov riadka|
 
 Toto nastavenie určuje, čo bude považované za odseky, pri pohybe pomocou skratiek `ctrl+šípka hore` a `ctrl+šípka dole`.
 Dostupné sú tieto možnosti:
@@ -2856,6 +2925,27 @@ Toto nastavenie najlepšie funguje v prípadoch, ak sa používajú blokové ods
 Upozorňujeme, že toto nastavenie nefunguje v aplikáciách Microsoft Word alebo Microsoft Outlook, ak nepoužívate rozhranie UIA na prácu s prvkami MS Word.
 
 Toto nastavenie je možné kdekoľvek meniť aj pomocou klávesových skratiek. Tieto je potrebné definovať v dialógu [Klávesové skratky](#InputGestures).
+
+#### Nastavenia obchodu s doplnkami {#AddonStoreSettings}
+
+V tejto kategórii nastavení je možné prispôsobiť správanie obchodu s doplnkami.
+
+##### Upozorňovať na aktualizácie doplnkov {#AutomaticAddonUpdates}
+
+Keď je táto voľba nastavená na "Upozorňovať", obchod s doplnkami vás hneď po spustení NVDA upozorní na dostupnosť aktualizácií doplnkov.
+Táto kontrola dostupností aktualizácií doplnkov v obchode s doplnkami je automaticky vykonávaná každých 24 hodín.
+Upozornenia sa zobrazia len pre aktualizácie doplnkov v rovnakom aktualizačnom kanály, ako je aj nainštalovaná verzia doplnku.
+Napríklad, ak máte nainštalovanú beta verziu doplnku, budete dostávať upozornenia len na aktualizované beta verzie tohoto doplnku.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Možnosti |Upozorňovať (Predvolené), Vypnuté |
+|Predvolené |Upozorňovať |
+
+|Možnosť |Správanie |
+|---|---|
+|Upozorňovať |Upozorní na aktualizácie doplnkov v rovnakom aktualizačnom kanály |
+|Vypnuté |Vôbec nebude zisťovať dostupnosť aktualizácií doplnkov |
 
 #### Rozpoznávanie textu windows {#Win10OcrSettings}
 
@@ -2943,7 +3033,7 @@ Implementácia rozhrania UI automation v programe Microsoft Excel sa stále zlep
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Možnosti |Predvolené (zapnuté), vypnuté, zapnuté|
+|Možnosti |Predvolené (Zapnuté), Vypnuté, Zapnuté|
 |Predvolené|  Zapnuté |
 
 Ak je toto zapnuté, NVDA má rýchlu odozvu aj v prípade, že dostáva množstvo udalostí cez rozhranie UIA, napríklad v oknách konzolových aplikácií a terminálov.
@@ -2953,7 +3043,7 @@ Aby sa prejavili zmeny, je potrebné NVDA po zmene tohto nastavenia reštartova�
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Možnosti |Automaticky, UIA ak je dostupné, staršie|
+|Možnosti |Automaticky, UIA ak je dostupné, Staršie|
 |Predvolené |Automaticky|
 
 Určuje, ako NVDA spolupracuje s Windows konzolami v príkazovom riadku, PowerShell a Windows Subsystémom pre Linux.
@@ -3006,7 +3096,7 @@ Dostupné sú tieto možnosti:
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Možnosti |predvolené (zapnuté), Vypnuté, zapnuté|
+|Možnosti |Predvolené (Zapnuté), Vypnuté, Zapnuté|
 |Predvolené |Zapnuté|
 
 Toto nastavenie určuje, či bude NVDA oznamovať niektoré typy dynamicky meneného obsahu na brailovom riadku.
@@ -3081,7 +3171,7 @@ Tiež je možné stretnúť sa s tým, že text je zobrazený s priehľadnou far
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Možnosti |Predvolené (zapnuté), Vypnuté, zapnuté|
+|Možnosti |Predvolené (Zapnuté), Vypnuté, Zapnuté|
 |Predvolené |Zapnuté|
 
 Táto možnosť umožňuje na posielanie zvukového výstupu z NVDA využiť rozhranie Windows Audio Session API (WASAPI).
@@ -3442,6 +3532,9 @@ Ak je NVDA nainštalované a spustené, môžete inštaláciu doplnku spustiť a
 Ak inštalujete doplnok z externého zdroja, NVDA sa opýta, či skutočne chcete pokračovať.
 Aby doplnok začal po inštalácii fungovať, je potrebné reštartovať NVDA. Reštartovať môžete aj neskôr, ak máte v pláne inštalovať alebo aktualizovať aj ďalšie doplnky.
 
+V predvolenej konfigurácii budete na dostupnosť aktualizácií doplnkov upozornení aj hneď po spustení programu NVDA.
+Viac sa o tejto funkcionalite s možnosťou ďalších nastavení dozviete v časti ["Upozorňovať na aktualizácie doplnkov"](#AutomaticAddonUpdates).
+
 #### Odstránenie doplnkov {#AddonStoreRemoving}
 
 Ak chcete odstrániť doplnok, zvoľte ho v zozname doplnkov a z menu akcie aktivujte položku odstrániť.
@@ -3564,14 +3657,8 @@ Podrobnosti sú popísané v kapitole [Doplnky a katalóg s doplnkami](#AddonsMa
 ### Vytvoriť prenosnú verziu {#CreatePortableCopy}
 
 Umožní z aktuálne spustenej kópie NVDA vytvoriť prenosnú verziu.
-Ak je už spustená prenosná verzia, položka funguje opačne a umožní z prenosnej verzie nainštalovať NVDA do systému.
 
-V prvom kroku je potrebné vybrať priečinok, do ktorého sa uloží prenosná verzia, alebo do ktorého sa NVDA nainštaluje.
-
-V tomto dialógu tiež môžete zapnúť a vypnúť tieto možnosti:
-
-* Skopírovať aktuálne používateľské nastavenia (toto zahŕňa súbory z priečinka %appdata%\roaming\nvda alebo súbory z priečinka s nastaveniami prenosnej verzie, vrátane doplnkov a modulov)
-* Po dokončení spustiť (po vytvorení prenosnej verzie rovno spustí prenosnú verziu alebo po nainštalovaní automaticky  spustíNVDA zo systému)
+Usmernenia a viac informácií získate v časti [Vytvorenie prenosnej verzie](#CreatingAPortableCopy).
 
 ### Spustiť opravný nástroj COM... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Takisto môžete používať bez nutnosťi inštalovať ovládače aj nasledujú
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Všimnite si, že Zoomax momentálne nie je podporovaný bez potreby inštalovať externé ovládače
 
 Nasleduje zoznam klávesových príkazov pre tieto typy riadkov.
 Prosím, prečítajte si dokumentáciu dodanú spolu so zariadením na zistenie rozmiestnenia klávesov.
@@ -4996,7 +5084,7 @@ NVDA v súčasnosti podporuje tieto parametre:
 |Nie je |`--enable-start-on-logon=True` |False |Počas inštalácie povolí [Spustenie na prihlasovacej obrazovke](#StartAtWindowsLogon)|
 |nie je |`--copy-portable-config` |Počas inštalácie skopíruje nastavenia z prenosnej verzie NVDA podľa zadanej cesty (`--config-path`, `-c`) do používateľského profilu|
 |Nie je |`--create-portable` |Vytvorí prenosnú verziu NVDA a spustí ju. Je potrebné určiť cestu cez argument `--portable-path`|
-|Nie je |`--create-portable-silent` |Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument `--portable-path`|
+|Nie je |`--create-portable-silent` |Vytvorí prenosnú verziu NVDA, ale nespustí ju. Je potrebné určiť cestu cez argument `--portable-path` Táto voľba potláča varovania pri zápise do neprázdnych adresárov a môže prepísať súbory bez varovania.|
 |Nie je |`--portable-path=cesta` |určuje, kam sa uloží prenosná verzia NVDA|
 
 ### Systémové parametre {#SystemWideParameters}

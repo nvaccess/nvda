@@ -40,13 +40,7 @@ def showHelp(helpId: str):
 		return
 	helpFile = documentationUtils.getDocFilePath("userGuide.html")
 	if helpFile is None:
-		# Translators: Message shown when trying to display context sensitive help,
-		# indicating that	the user guide could not be found.
-		noHelpMessage = _("No user guide found.")
-		log.debugWarning(
-			"No user guide found: possible cause - running from source without building user docs",
-		)
-		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noHelpMessage)
+		documentationUtils.reportNoDocumentation("userGuide.html")
 		return
 	log.debug(f"Opening help: helpId = {helpId}, userGuidePath: {helpFile}")
 

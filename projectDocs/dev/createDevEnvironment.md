@@ -77,10 +77,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `54ee11a79c66c8ecb9a48a7084163beff3bd6075`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `961454ffaa894d981526f4d424daef1d3bc4175f`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.30.0
+* [liblouis](http://www.liblouis.io/), version 3.31.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 45.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)

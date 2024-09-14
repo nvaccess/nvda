@@ -51,12 +51,12 @@ Unicode CLDR er også blevet opdateret.
   * Opdateret markdown til 3.6 (#16725, @dpy013)
   * Opdateret nh3 til 0.2.17 (#16725, @dpy013)
 * Den alternative punktskrift input-tabel er nu den samme som den alternative output-tabel, som er Unified English Braille Code grad 1. (#9863, @JulienCochuyt, @LeonarddeR)
-* NVDA vil nu rapportere figurer uden tilgængelige børn, men med et navn eller beskrivelse. (#14514)
+* NVDA vil nu rapportere figurer uden tilgængelige underelementer, men med et navn eller en beskrivelse. (#14514)
 * Når der læses linjevis i gennemsynstilstand, rapporteres "Billedtekst" ikke længere på hver linje af en lang figur- eller tabelbilledtekst. (#14874)
 * I Python-konsollen vil den sidste ikke-udførte kommando ikke længere gå tabt, når man bevæger sig i inputhistorikken. (#16653, @CyrilleB79)
 * Et unikt anonymt ID sendes nu som en del af den valgfrie NVDA-brugsstatistik. (#16266)
 * Som standard vil en ny mappe blive oprettet, når der laves en flytbar kopi.
-En advarselsbesked vil informere dig, hvis du forsøger at skrive til en ikke-tom mappe. (#16686)
+En advarselsbesked vil informere dig, hvis du forsøger at skrive til en mappe, der ikke er tom. (#16686)
 
 ### Fejlrettelser
 
@@ -68,11 +68,13 @@ En advarselsbesked vil informere dig, hvis du forsøger at skrive til en ikke-to
 * Web-browserrettelser:
   * Fejlmeddelelser refereret med `aria-errormessage` rapporteres nu i Google Chrome og Mozilla Firefox. (#8318)
   * Hvis til stede, vil NVDA nu bruge `aria-labelledby` til at give tilgængelige navne til tabeller i Mozilla Firefox. (#5183)
-  * NVDA annoncerer korrekt radio- og afkrydsningsfeltmenuemner, når man første gang går ind i undermenuer i Google Chrome og Mozilla Firefox. (#14550)
+  * NVDA annoncerer korrekt radio- og check box menuemner, når man første gang går ind i undermenuer i Google Chrome og Mozilla Firefox. (#14550)
   * NVDAs søgefunktionalitet i gennemsynstilstand er nu mere præcis, når siden indeholder emojis. (#16317, @LeonarddeR)
   * I Mozilla Firefox rapporterer NVDA nu korrekt det aktuelle tegn, ord og linje, når markøren er ved indsætningspunktet ved slutningen af en linje. (#3156, @jcsteh)
+  * Google Chrome går ikke længere ned, hvis der lukkes et vindue eller browseren afsluttes. (#16893)
 * NVDA vil korrekt annoncere autoudfyldningsforslag i Eclipse og andre Eclipse-baserede miljøer på Windows 11. (#16416, @thgcode)
 * Forbedret pålidelighed af automatisk tekstoplæsning, især i terminalapplikationer. (#15850, #16027, @Danstiv)
+* Nulstilling til fabriksindstillingerne vil nu konsekvent virke. (#16755, @Emil-18)
 * NVDA vil korrekt annoncere ændringer i markeringen, når der redigeres en celles tekst i Microsoft Excel. (#15843)
 * I applikationer, der bruger Java Access Bridge, vil NVDA nu korrekt læse den sidste tomme linje af en tekst i stedet for at gentage den foregående linje. (#9376, @dmitrii-drobotov)
 * I LibreOffice Writer (version 24.8 og nyere), når du skifter tekstformatering (fed, kursiv, understreget, nedsænket/hævet skrift, justering) ved hjælp af den tilsvarende tastaturgenvej, annoncerer NVDA den nye formateringsattribut (f.eks. "Fed til", "Fed fra"). (#4248, @michaelweghorn)

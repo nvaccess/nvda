@@ -1,37 +1,151 @@
 # What's New in NVDA
 
-## 2024.4
+## 2025.1
 
 ### Important notes
 
 ### New Features
 
-* Enhanced Microsoft Word comment command: press twice to present comment content in browsable message. (#16800, @Cary-Rowen)
-* Enhanced Microsoft Excel notes command: press twice to present notes content in browsable message. (#16878, @Cary-Rowen)
+* The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
+* Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
+In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
+* When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
+* In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
+* NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
+* Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
+* It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
+
+### Changes
+
+* The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
+
+### Bug Fixes
+
+* Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
+* Improvements when editing in Microsoft PowerPoint:
+  * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
+  * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+* Note: this is an Add-on API compatibility breaking release.
+Add-ons will need to be re-tested and have their manifest updated.
+* Component updates:
+  * Updated Ruff to 0.6.3. (#17102)
+  * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
+* `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+* Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
+  * A new `utils.urlUtils` module with different functions to determine link types
+  * A new `INTERNAL_LINK` state has been added to `controlTypes.states.State`
+  * A new `linkType` property has been added on `NVDAObject`.
+  It queries the `treeInterceptor` by default, if any.
+  * `BrowseModeTreeInterceptor` object has a new `documentUrl` property
+  * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
+  * A `toggleBooleanValue` helper function has been added to `globalCommands`.
+  It can be used in scripts to report the result when a boolean is toggled in `config.conf`
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
+
+#### API Breaking Changes
+
+These are breaking API changes.
+Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+* The `addonStore.network.BASE_URL` constant has been removed.
+As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
+* `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
+* `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
+* The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
+  * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
+  * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
+
+#### Deprecations
+
+* The `braille.filter_displaySize` extension point is deprecated.
+Please use `braille.filter_displayDimensions` instead. (#17011)
+
+## 2024.4
+
+This release includes a number of improvements in Microsoft Office, braille, and document formatting.
+
+In Word or Excel, it is now possible to double-press the comment gesture to read the comment or note in a browsable dialog.
+You can now use the review cursor selection command to select text in PowerPoint.
+NVDA also no longer brailles garbage characters when showing row or column header text in tables in Word when using the object model.
+
+NVDA can now be configured to report font attributes in speech and braille separately.
+
+A new setting has been added to configure the timeout to perform a multiple press gesture, such as the report time/date command.
+
+You can now configure how NVDA shows text formatting in braille, and set NVDA to show the start of paragraphs in braille.
+NVDA can now speak the character at the cursor when performing a braille cursor routing action.
+Cursor routing reliability has been improved, and support for routing keys in PowerPoint has been added.
+All lines of cells will now be used when using a multi-line braille display via HID braille.
+NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan.
+
+The minimum required version of Poedit that works with NVDA is now version 3.5.
+
+eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
+
+LibLouis has been updated, adding new Braille tables for Thai and Greek international braille with single-cell accented letters.
+
+There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
+
+### New Features
+
+* New braille features:
+  * It is now possible to change the way NVDA displays certain text formatting attributes in braille.
+    The available options are:
+    * Liblouis (default): Uses formatting markers defined in the selected braille table.
+    * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
+  * When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895, @nvdaes)
+  * When performing a braille cursor routing action, NVDA can now automatically speak the character at the cursor. (#8072, @LeonarddeR)
+    * This option is disabled by default.
+      You can enable "Speak character when routing cursor in text" in NVDA's braille settings.
+* The comment command in Microsoft Word and notes command in Microsoft Excel can now be pressed twice to show the comment or note in a browsable message. (#16800, #16878, @Cary-Rowen)
 * NVDA can now be configured to report font attributes in speech and braille separately. (#16755)
-* It is now possible to change the way NVDA displays certain text formatting attributes in braille.
-The available options are:
-  * Liblouis (default): Uses formatting markers defined in the selected braille table.
-  * Tags: Uses start and end tags to denote where certain font attributes begin and end. (#16864)
-* When the "Read by paragraph" option is enabled, NVDA can now be configured to indicate the start of paragraphs in braille. (#16895,  @nvdaes)
 * The timeout to perform a multiple keypress is now configurable; this may be especially useful for people with dexterity impairment. (#11929, @CyrilleB79)
 
 ### Changes
 
+* The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR, @codeofdusk)
+    * Fixed translation of numbers in Spanish Braille.
+    * New Braille tables:
+      * Thai grade 1
+      * Greek international Braille (single-cell accented letters)
+    * Renamed tables:
+      * "Thai 6 dot" was renamed to "Thai grade 0" for consistency reasons.
+      * The existing "Greek international braille" table was renamed to "Greek international braille (2-cell accented letters)" to clarify the distinction between the two Greek systems.
+  * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+    * Added new languages Faroese and Xextan.
+* When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
+* The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
+
 ### Bug Fixes
 
-* NVDA once again relies on events for caret movement in several cases, rather than only on manual querying of the caret position.
-  * UIA for XAML and WPF text controls. (#16817, @LeonarddeR)
-  * IAccessible2 for browsers such as Firefox and Chromium based browsers. (#11545, #16815, @LeonarddeR)
-  * UIA in Windows Terminal. (#16873, @codeofdusk)
-* When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in braille in table headers defined with the set row and column header commands. (#7212)
-* The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
-* Braille cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
-* In on-demand speech mode, NVDA does not talk anymore when a message is opened in Outlook, when a new page is loaded in a browser or during the slideshow in PowerPoint. (#16825, @CyrilleB79)
+* Braille fixes:
+  * It is now possible to use braille display routing keys to move the text cursor in Microsoft PowerPoint. (#9101)
+  * When accessing Microsoft Word without UI Automation, NVDA no longer outputs garbage characters in table headers defined with the set row and column header commands. (#7212)
+  * The Seika Notetaker driver now correctly generates braille input for space, backspace and dots with space/backspace gestures. (#16642, @school510587)
+  * Cursor routing is now much more reliable when a line contains one or more Unicode variation selectors or decomposed characters. (#10960, @mltony, @LeonarddeR)
+  * NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#12885)
+  * NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
+* It is now possible to use the review cursor selection commands to select text in Microsoft PowerPoint. (#17004)
+* In on-demand speech mode, NVDA does not talk any more when a message is opened in Outlook, when a new page is loaded in a browser, or when displaying a new slide in a PowerPoint slideshow. (#16825, @CyrilleB79)
 * In Mozilla Firefox, moving the mouse over text before or after a link now reliably reports the text. (#15990, @jcsteh)
-* NVDA no longer throws an error when panning the braille display forward in some empty edit controls. (#16927)
 * NVDA no longer occasionally fails to open browsable messages (such as pressing `NVDA+f` twice). (#16806, @LeonarddeR)
-* NVDA is no longer unstable after restarting NVDA during an automatic Braille Bluetooth scan. (#16933)
+* Updating NVDA while add-on updates are pending no longer results in the add-on being removed. (#16837)
+* It is now possible to interact with Data validation dropdown lists in Microsoft Excel 365. (#15138)
+* NVDA is no longer as sluggish when arrowing up and down through large files in VS Code. (#17039)
+* NVDA no longer becomes unresponsive after holding down an arrow key for a long time while in browse mode, particularly in Microsoft Word and Microsoft Outlook. (#16812)
+* NVDA no longer reads the last line when the cursor is on the second-last line of a multiline edit control in Java applications. (#17027)
 
 ### Changes for Developers
 
@@ -40,7 +154,8 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Component updates:
   * Updated py2exe to 0.13.0.2 (#16907, @dpy013)
   * Updated setuptools to 72.0 (#16907, @dpy013)
-  * Updated Ruff to 0.5.5. (#16868, @LeonarddeR)
+  * Updated Ruff to 0.5.6. (#16868, @LeonarddeR)
+  * Updated nh3 to 0.2.18 (#17020, @dpy013)
 * Added a `.editorconfig` file to NVDA's repository in order for several IDEs to pick up basic NVDA code style rules by default. (#16795, @LeonarddeR)
 * Added support for custom speech symbol dictionaries. (#16739, #16823, @LeonarddeR)
   * Dictionaries can be provided in locale specific folders in an add-on package, e.g. `locale\en`.
@@ -48,6 +163,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * Please consult the [Custom speech symbol dictionaries section in the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#AddonSymbolDictionaries) for more details.
 * It is now possible to redirect objects retrieved from on-screen coordinates, by using the `NVDAObject.objectFromPointRedirect` method. (#16788, @Emil-18)
 * Running SCons with the parameter `--all-cores` will automatically pick the maximum number of available CPU cores. (#16943, #16868, @LeonarddeR)
+* Developer info now includes information on app architecture (such as AMD64) for the navigator object. (#16488, @josephsl)
 
 #### Deprecations
 
@@ -56,6 +172,14 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
   * API consumers can use the `bool` value as previously, or check the `OutputMode` if handling speech or braille specifically.
   * These keys are currently synchronized until 2025.1.
 * `NVDAObjects.UIA.InaccurateTextChangeEventEmittingEditableText` is deprecated with no replacement. (#16817, @LeonarddeR)
+
+## 2024.3.1
+
+This is a patch release to fix a bug with the automatic add-on update notification.
+
+### Bug Fixes
+
+* When automatically checking for add-on updates, NVDA no longer freezes on poor connections. (#17036)
 
 ## 2024.3
 
