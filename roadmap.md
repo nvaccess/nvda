@@ -46,4 +46,4 @@ These priorities represent ambitious goals and initiatives that will shape the f
 
 ## Contributing and Feedback
 
-**Contributing:** We encourage contributions from the community! Please explore our GitHub repository or user groups on groups.io to learn more about how you can get involved.
+We encourage contributions from the community! Please explore our GitHub repository or user groups on groups.io to learn more about how you can get involved.
