@@ -5522,15 +5522,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 
 class SetURLDialog(SettingsDialog):
-	_progressDialog = None
+	_progressDialog: "gui.IndeterminateProgressDialog | None" = None
 
 	def __init__(
 		self,
-		parent,
+		parent: wx.Window,
 		title: str,
 		configPath: Iterable[str],
 		helpId: str | None = None,
-		urlFactory: Callable[[str], str] = lambda url: url,
+		urlTransformer: Callable[[str], str] = lambda url: url,
 		*args,
 		**kwargs,
 	):
@@ -5539,6 +5539,7 @@ class SetURLDialog(SettingsDialog):
 		self.title = title
 		self.helpId = helpId
 		self._configPath = configPath
+		self._urlTransformer = urlTransformer
 		super().__init__(parent, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer):
@@ -5548,21 +5549,25 @@ class SetURLDialog(SettingsDialog):
 			wx.TextCtrl,
 			size=(250, -1),
 		)
-		urlControl.SetValue(self._getFromConfig())
 		self._testButton = testButton = wx.Button(self, label="&Test")
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self.onTest)
 		urlControl.Bind(wx.EVT_TEXT, self._typingEnablesTestButton)
-		self._typingEnablesTestButton(None)
-
-	def _typingEnablesTestButton(self, evt):
-		value = self._url
-		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
+		self._url = self._getFromConfig()
 
 	def postInit(self):
 		# Ensure that focus is on the URL text box.
 		self._urlControl.SetFocus()
+
+	def onOk(self, evt: wx.CommandEvent):
+		self._normalize()
+		self._saveToConfig()
+		super().onOk(evt)
+
+	def _typingEnablesTestButton(self, evt: wx.Event):
+		value = self._url
+		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
 
 	def onTest(self, evt):
 		self._normalize()
@@ -5579,14 +5584,11 @@ class SetURLDialog(SettingsDialog):
 		t.start()
 
 	def _bg(self):
-		# from urllib.request import urlopen
-		# from urllib.error import URLError
 		from requests.exceptions import RequestException
 		from requests import get
 
 		try:
-			# with urlopen(self._url):
-			r = get(self._url)
+			r = get(self._urlTransformer(self._url))
 			r.raise_for_status()
 			self._done(True)
 		except RequestException as e:
@@ -5636,11 +5638,6 @@ class SetURLDialog(SettingsDialog):
 			if index == keyIndex:
 				currentConfigSection[component] = self._url
 			currentConfigSection = currentConfigSection[component]
-
-	def onOk(self, evt: wx.CommandEvent):
-		self._normalize()
-		self._saveToConfig()
-		super().onOk(evt)
 
 	@property
 	def _url(self) -> str:
