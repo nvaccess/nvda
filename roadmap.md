@@ -1,10 +1,10 @@
-## NVDA Roadmap
+# NVDA Roadmap
 
 This document outlines NV Access's planned development roadmap for NVDA and its supporting infrastructure.
 Priorities are grouped into short, medium and long-term timeframes.
 This roadmap will be updated to reflect completed projects, development progress and significant changes to the world of screen readers and the wider technology space.
 
-### Short-Term Priorities
+## Short-Term Priorities
 
 These priorities focus on enhancements and improvements that we aim to deliver in the near future.
 
@@ -17,7 +17,7 @@ These priorities focus on enhancements and improvements that we aim to deliver i
 * **Containerising server infrastructure:** Migrating our server infrastructure to containers, enhancing scalability, maintainability, and deployment flexibility.
 * **Add-on store automatic updates:** Enabling automatic updates for add-ons downloaded from the NVDA Add-on Store, ensuring users have the latest features and bug fixes.
 
-### Medium-Term Priorities
+## Medium-Term Priorities
 
 These priorities represent significant features and improvements that require more extensive development effort.
 
@@ -31,7 +31,7 @@ These priorities represent significant features and improvements that require mo
 * **Anonymous identifier:** Implementation of a system for generating unique, rotating, anonymous identifiers for NVDA installations, allowing for better data collection and analysis without compromising user privacy.
 * **End of support for windows 8.1, 2012/R2:**  Officially ending support for older versions of Windows, allowing us to focus on developing for modern operating systems and their latest accessibility features.
 
-### Long-Term Priorities
+## Long-Term Priorities
 
 These priorities represent ambitious goals and initiatives that will shape the future of NVDA.
 
