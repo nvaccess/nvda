@@ -22,7 +22,10 @@ from config.featureFlag import (
 	FlagValueEnum as FeatureFlagEnumT,
 )
 from .dpiScalingHelper import DpiScalingHelperMixin
-from . import guiHelper
+from . import (
+	guiHelper,
+	contextHelp
+)
 import winUser
 import winsound
 
@@ -378,7 +381,7 @@ class MessageDialog(DPIScaledDialog):
 
 
 class _ContinueCancelDialog(
-	gui.contextHelp.ContextHelpMixin,
+	contextHelp.ContextHelpMixin,
 	MessageDialog,
 ):
 	"""
