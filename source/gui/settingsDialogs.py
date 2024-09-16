@@ -3047,7 +3047,7 @@ class AudioPanel(SettingsPanel):
 
 		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
 			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Mute other apps"))
+			wx.CheckBox(self, label=_("Mute other apps")),
 		)
 		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
 		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
