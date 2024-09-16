@@ -886,7 +886,7 @@ class Config_AggregatedSection_setitem(unittest.TestCase):
 		self.assertIs(self.testSection["foo"], valueOfDefaultFlag)
 
 
-class Config_AggregatedSection_polution(unittest.TestCase):
+class Config_AggregatedSection_pollution(unittest.TestCase):
 	"""Ënsure that config profiles don't get polluted with overridden values equal to the base config"""
 
 	def setUp(self):
