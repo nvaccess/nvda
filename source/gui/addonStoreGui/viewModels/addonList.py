@@ -353,10 +353,6 @@ class AddonListVM:
 
 	@property
 	def _columnSortChoices(self) -> list[str]:
-		# Translators: Presented when a list will be sorted in ascending order.
-		ascendingOrderLabel = pgettext("addonStore", "Ascending")
-		# Translators: Presented when a list will be sorted in descending order.
-		descendingOrderLabel = pgettext("addonStore", "Descending")
 		columnChoices = []
 		for c in self.presentedFields:
 			# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
