@@ -355,21 +355,21 @@ class AddonListVM:
 	def _columnSortChoices(self) -> list[str]:
 		columnChoices = []
 		for c in self.presentedFields:
-			# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
-			# {column} will be replaced with the column display string.
 			columnChoices.append(
 				pgettext(
 					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
+					# {column} will be replaced with the column display string.
 					"{column} (ascending)",
 				).format(
 					column=c.displayString,
 				),
 			)
-			# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
-			# {column} will be replaced with the column display string.
 			columnChoices.append(
 				pgettext(
 					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
+					# {column} will be replaced with the column display string.
 					"{column} (descending)",
 				).format(
 					column=c.displayString,
