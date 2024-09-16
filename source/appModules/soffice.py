@@ -48,7 +48,7 @@ class SymphonyUtils:
 		return False
 
 	@staticmethod
-	def get_id(obj: NVDAObject) -> Optional[str]:
+	def get_id(obj: NVDAObject) -> str | None:
 		"""Get value of the "id" object attribute, if set."""
 		if not hasattr(obj, "IA2Attributes"):
 			return None
