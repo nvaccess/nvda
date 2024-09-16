@@ -5,10 +5,19 @@
 
 complexSymbols:
 # identifier	regexp
+# Sentence endings.
+. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
+! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
+? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
+# Phrase endings.
+; phrase ending	(?<=[^\s;]);(?=\s|$)
+: phrase ending	(?<=[^\s:]):(?=\s|$)
+# Series of dots used for visual presentation, e.g. in table of contents
+multiple .	\.{4,}
 # Others
-decimal point	(?<![^\d -])\,(?=\d)
-thousands separator	(?<=\d)\.(?=\d{3})
-begin-word '	((?<=\s)|(?<=^))'(?=\w(\s|$|[-.,?!]))
+decimal point	(?<![^\d -])\.(?=\d)
+in-word '	(?<=[^\W_])['’]
+negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -19,13 +28,12 @@ symbols:
 ? sentence ending	vraagteken	all	always
 ; phrase ending	puntcomma	most	always
 : phrase ending	dubbele punt	most	always
+multiple .	een reeks punten	all	always
 decimal point		none	always
-thousands separator	punt	all	norep
-in-word '	apostrofe	all	norep
-begin-word '	apostrofe	all	norep
+in-word '	apostrof	all	norep
 negative number	minus	none	norep
 
-# Whitespace
+# Whi	tespace
 \0	leeg	char	# null
 \t	tab
 \n	nieuwe regel	char
@@ -36,6 +44,7 @@ negative number	minus	none	norep
 
 # Standard punctuation/symbols
 !	uitroepteken	all
+！	grootformaat uitroepteken	all
 "	aanhalingsteken	most
 \#	hekje	some
 $	dollar	all	norep
@@ -44,23 +53,30 @@ $	dollar	all	norep
 ¢	cent	all	norep
 ¥	yen	all	norep
 ₹	roepie	some	norep
+ƒ	gulden	all	norep
+¤	currency sign	all	norep
 %	procent	some
+‰	promille	some
 &	en	some
-'	apostrofe	all
+'	apostrof	all
 (	haakje openen	most	always
 )	haakje sluiten	most	always
 *	ster	some
-+	plus	some
-,	comma	all	always
+,	komma	all	always
+、	ideografische komma	all	always
+،	arabische komma	all	always
 -	min	most
 .	punt	some
+．	(dikke) punt	some
 /	slash	some
 :	dubbele punt	most	norep
+：	fullwidth dubbele punt	most	norep
 ;	puntcomma	most
-<	kleiner dan	some
->	groter dan	some
-=	gelijk aan	some
+؛	arabische puntkolon	most
+；	fullwidth puntkomma	most
 ?	vraagteken	all
+؟	arabisch vraagteken	all
+？	fullwidth vraagteken	all
 @	at	some
 [	rechte haak openen	most
 ]	rechte haak sluiten	most
@@ -71,58 +87,203 @@ _	onderstreping	most
 {	accolade openen	most
 }	accolade sluiten	most
 |	pijp	most
+¦	onderbroken pijp	most
 ~	tilde	most
+¡	omgekeerd uitroepteken	some
+¿	omgekeerd vraagteken	some
+·	hoge punt	most
+‚	laag rechter enkel aanhalingsteken	most
+„	laag rechter dubbel aanhalingsteken	most
+′	prime sans serif 	some
+″	dubbel prime	some
+‴	drievoudige prime	some
 
 # Other characters
 •	opsommingsteken	some
 …	punt punt punt	all	always
 ...	punt punt punt	all	always
-	opsommingsteken	some
 “	aanhalingsteken openen	most
 ”	aanhalingsteken sluiten	most
 ‘	enkel aanhalingsteken openen	most
 ’	enkel aanhalingsteken sluiten	most
 –	en streepje	most	always
 —	em streepje	most
+­	afbreekstreepje	most
+⁃	opsommingsstreepje	none
 ●	cirkel	most
+○	holle cirkel	most
 ¨	diaeresis	most
+¯	macron	most
+´	accent aigu	most
+¸	cedille	most
 ‎	links naar rechts markering	char
 ‏	rechts naar links markering	char
+¶	alineamarkering	most
 ■	zwart vierkant	some
 ▪	zwart vierkant	some
 ◾	zwart vierkant	some
+□	white square	some
 ◦	wit opsommingsteken	some
+⇨	doorzichtige pijl naar rechts	some
 ➔	pijl naar rechts	some
+➢	naar rechtswijzende pijlpunt	some
+❖	zwarte ruitvorm minus wit X	some
+♣	zwart klaveren	some
+♦	zwart ruiten	some
+◆	zwart ruiten	some
 §	sectie	all
 °	graden	some
 «	linker dubbele pijl
 »	rechter dubbele pijl
 µ	micro	some
+⁰	superscript 0	some
 ¹	superscript 1	some
 ²	superscript 2	some
 ³	superscript 3	some
+⁴	superscript 4	some
+⁵	superscript 5	some
+⁶	superscript 6	some
+⁷	superscript 7	some
+⁸	superscript 8	some
+⁹	superscript 9	some
+⁺	superscript plus	some
+⁼	superscript is gelijk aan	some
+⁽	superscript haakje openen	some
+⁾	superscript haakje sluiten	some
+ⁿ	superscript n	some
+₀	subscript 0	some
+₁	subscript 1	some
+₂	subscript 2	some
+₃	subscript 3	some
+₄	subscript 4	some
+₅	subscript 5	some
+₆	subscript 6	some
+₇	subscript 7	some
+₈	subscript 8	some
+₉	subscript 9	some
+₊	subscript plus	some
+₋	subscript minus	some
+₌	subscript is gelijk aan	some
+₍	subscript haakje openen	some
+₎	subscript haakje sluiten	some
 ®	geregistreerd	some
 ™	handelsmerk	some
 ©	Copyright	some
-±	Plusminus	some
-×	maal	some
-÷	delen door	some
+℠	ServiceMarkering	some
 ←	pijl naar links	some
 ↑	pijl omhoog	some
 →	pijl naar rechts	some
 ↓	pijl omlaag	some
 ✓	vinkje	some
 ✔	vinkje	some
+🡺	pijl naar rechts	some
+†	zuil	some
+‡	dubbele zuil	some
+‣	driehoekig opsommingsteken	none
+✗	x-vormig opsommingsteken	none
+⊕	omcirkeld plusteken	none
+⊖	omcirkeld minteken	none
+⇄	pijl naar rechts boven naar links	none
+⇒	dubbele pijl naar rechts	none
 
-#Mathematical Operatsors U+2200 to U+220F
-∀	voor alle	none
-∁	complement	none
-∂	gedeelteijke differentiaal	none
-∃	er bestaat	none
-∄	er bestaat niet	none
+#Arithmetic operators
++	plus	some
+−	minus	some
+×	vermenigvuldigteken	some
+⋅	maal	some
+⨯	maal	none
+∕	gedeeld door	some
+⁄	deel van	some
+÷	delen door	some
+∓	min of meer	some
+±	plus of Minus	some
+
+#Set operations
+∖	set minus	none
+⊍	set union	none
+𝒫	power set of the set	none
+𝔓	power set of the set	none
+℘	power set of the set	none
+∁	complement of the set	none
+
+#Set relations and set constructions
 ∅	lege verzameling	none
-∆	toename	none
-∇	vectordifferenciaal	none
+⊂	deelverzameling van	none
+⊄	niet een deelverzameling van	none
+⊃	superset of	none
+⊅	not a superset of	none
+⊆	deelverzameling van of gelijk aan	none
+⊈	noch een deelverzameling van noch gelijk aan	none
+⊇	superset of or equal to	none
+⊉	neither a superset of nor equal to	none
+⊌	multiset	none
+
+#Equality signs
+=	is gelijk aan	some
+≃	asymptotisch gelijk aan	none
+≄	niet asymptotisch gelijk aan	none
+≅	ongeveer gelijk aan	none
+≆	ongeveer maar niet werkelijk gelijk aan	none
+≈	bijna Gelijk aan	none
+≌	alles gelijk aan	none
+≍	equivalent aan	none
+≭	niet equivalent aan	none
+≎	geometrisch equivalent aan	none
+≑	geometrisch gelijk aan	none
+≚	met gelijke hoeken	none
+≬	tussen	none
+≠	niet gelijk aan	none
+≡	identiek aan	none
+≣	strikt identiek aan	none
+≢	niet identiek aan	none
+∼	soortgelijk aan	none
+≙	naar schatting	none
+≟	questioned equal to	none
+
+#comparison signs
+<	minder	some
+>	groter	some
+≤	minder- dan of gelijk aan	none
+≦	minder- dan of gelijk aan	none
+≪	veel kleiner dan	none
+≥	groter-dan of gelijk aan	none
+≧	groter-dan of gelijk aan	none
+≫	veel groter dan	none
+≶	minder dan of groter dan	none
+≷	groter dan of minder dan	none
+≮	niet minder dan	none
+≯	niet groter dan	none
+
+#Functions
+⁻	inverse	some
+∘	ring Operator	none
+∂	partiële afgeleide 	none
+∇	gradiënt van	none
+
+#Geometry and linear Algebra
+⃗	vector tussen	none
+△	driehoek	none
+▭	rechthoek	none
+∟	rechte hoek	none
+∠	hoek	none
+∥	evenwijdig aan	none
+∦	niet evenwijdig aan	none
+⊥	loodrecht op	none
+⟂	ortogonaal op	none
+‖	norm of vector	none
+̂	normalizes	none
+∿	sinegolf	none
+∡	measured Angle	none
+∢	sferische Hoek	none
+
+#Logical operators
+∀	voor alle	none
+∃	er bestaat	none
+∄	er bestaat geen	none
+⇏	dit houdt niet in dat	none
+⇐	dit houdt in dat	none
+
+#Other mathematical Operators
 ∈	element van	none
 ∉	geen element van	none
 ∊	klein element van	none
@@ -131,35 +292,50 @@ _	onderstreping	most
 ∍	klein bevat als lid	none
 ∎	einde bewijs	none
 ∏	n-ary product	none
-
-# Miscellaneous Mathematical Operators
+∐	n-ary coproduct	none
 ∑	n-ary som	none
 √	vierkantswortel	none
 ∛	derdemachtswortel	none
 ∜	vierdemachtswortel	none
 ∝	evenredig aan	none
 ∞	oneindig	none
-∟	rechte hoek	none
-∠	hoek	none
-∥	parallel aan	none
-∦	niet parallel aan	none
-∧	logisch en	none
-∨	logisch of	none
+∧	en	none
+∨	of	none
+¬	niet	none
 ∩	snijpunt	none
 ∪	vereniging	none
 ∫	integraal	none
-∴	daarom	none
+∬	dubbele Integraal	none
+∭	triple Integraal	none
+∮	kring Integraal	none
+∯	oppervlk Integraal	none
+∰	volume Integraal	none
+∱	clockwise Integral	none
+∲	clockwise contour Integral	none
+∳	anticlockwise Contour Integral	none
+∴	derhalve	none
 ∵	omdat	none
-∶	verhouding	none
+∶	ratio	none
 ∷	evenredigheid	none
-≤	kleiner dan of gelijk aan	none
-≥	groter dan of gelijk aan	none
-⊂	deelverzameling van	none
-⊃	omvat	none
-⊆	deelverzameling van of gelijk aan	none
-⊇	bevat of gelijk aan	none
+∹	excess	none
+∺	geometrische verhouding	none
+≀	kransproduct	none
+≏	verschil tussen	none
+≐	benadert de limiet	none
+∙	bullet Operator	none
+∣	deelt	none
+∤	deelt niet	none
+≔	dubbele punt gelijk aan	none
+≕	is gelijk aan dubbele punt	none
+≺	gaat vooraf aan	none
+≻	volgt op	none
+⊀	gaat niet vooraf aan	none
+⊁	volgt niet op	none
 
-# Vulgur Fractions U+2150 to U+215E
+# Vulgar Fractions U+2150 to U+215E
+¼	een vierde	none
+½	een half	none
+¾	drie vierde	none
 ⅐	een zevende	none
 ⅑	een negende	none
 ⅒	een tiende	none
@@ -167,11 +343,290 @@ _	onderstreping	most
 ⅔	twee derde	none
 ⅕	een vijfde	none
 ⅖	twee vijfde	none
-⅗	drie vijfde	none
-⅘	vier vijfde	none
+⅗	drie vjfde	none
+⅘	viervfjide	none
 ⅙	een zesde	none
 ⅚	vijf zesde	none
 ⅛	een achtste	none
 ⅜	drie achtste	none
 ⅝	vijf achtste	none
 ⅞	zeven achtste	none
+
+#Number sets
+𝔸	algebraische getallen	none
+ℂ	complexe getallen	none
+ℑ	imaginair deel van complex getal	none
+ℍ	quaternionen	none
+ℕ	natuurlijke getallen	none
+𝕁	nonnegatieve (hele) getallen	none
+ℚ	rationele getallen	none
+ℝ	reële getallen	none
+ℜ	reëel deel van complex getal	none
+ℤ	integers (gehele getallen)	none
+ℵ	aleph number	none
+ℶ	beth-getal	none
+
+# Miscellaneous Technical
+⌘	mac Commandotoets	none
+⌥	mac Optietoets	none
+
+## 6-punts cell
+### note: the character on the next line is U+2800 (braille space), not U+0020 (ASCII space)
+⠀	spatie
+⠁	braille 1
+⠂	braille 2
+⠃	braille 1 2
+⠄	braille 3
+⠅	braille 1 3
+⠆	braille 2 3
+⠇	braille 1 2 3
+⠈	braille 4
+⠉	braille 1 4
+⠊	braille 2 4
+⠋	braille 1 2 4
+⠌	braille 3 4
+⠍	braille 1 3 4
+⠎	braille 2 3 4
+⠏	braille 1 2 3 4
+⠐	braille 5
+⠑	braille 1 5
+⠒	braille 2 5
+⠓	braille 1 2 5
+⠔	braille 3 5
+⠕	braille 1 3 5
+⠖	braille 2 3 5
+⠗	braille 1 2 3 5
+⠘	braille 4 5
+⠙	braille 1 4 5
+⠚	braille 2 4 5
+⠛	braille 1 2 4 5
+⠜	braille 3 4 5
+⠝	braille 1 3 4 5
+⠞	braille 2 3 4 5
+⠟	braille 1 2 3 4 5
+⠠	braille 6
+⠡	braille 1 6
+⠢	braille 2 6
+⠣	braille 1 2 6
+⠤	braille 3 6
+⠥	braille 1 3 6
+⠦	braille 2 3 6
+⠧	braille 1 2 3 6
+⠨	braille 4 6
+⠩	braille 1 4 6
+⠪	braille 2 4 6
+⠫	braille 1 2 4 6
+⠬	braille 3 4 6
+⠭	braille 1 3 4 6
+⠮	braille 2 3 4 6
+⠯	braille 1 2 3 4 6
+⠰	braille 5 6
+⠱	braille 1 5 6
+⠲	braille 2 5 6
+⠳	braille 1 2 5 6
+⠴	braille 3 5 6
+⠵	braille 1 3 5 6
+⠶	braille 2 3 5 6
+⠷	braille 1 2 3 5 6
+⠸	braille 4 5 6
+⠹	braille 1 4 5 6
+⠺	braille 2 4 5 6
+⠻	braille 1 2 4 5 6
+⠼	braille 3 4 5 6
+⠽	braille 1 3 4 5 6
+⠾	braille 2 3 4 5 6
+⠿	braille 1
+## 8-punts braille cell
+⡀	braille 7
+⡁	braille 1 7
+⡂	braille 2 7
+⡃	braille 1 2 7
+⡄	braille 3 7
+⡅	braille 1 3 7
+⡆	braille 2 3 7
+⡇	braille 1 2 3 7
+⡈	braille 4 7
+⡉	braille 1 4 7
+⡊	braille 2 4 7
+⡋	braille 1 2 4 7
+⡌	braille 3 4 7
+⡍	braille 1 3 4 7
+⡎	braille 2 3 4 7
+⡏	braille 1 2 3 4 7
+⡐	braille 5 7
+⡑	braille 1 5 7
+⡒	braille 2 5 7
+⡓	braille 1 2 5 7
+⡔	braille 3 5 7
+⡕	braille 1 3 5 7
+⡖	braille 2 3 5 7
+⡗	braille 1 2 3 5 7
+⡘	braille 4 5 7
+⡙	braille 1 4 5 7
+⡚	braille 2 4 5 7
+⡛	braille 1 2 4 5 7
+⡜	braille 3 4 5 7
+⡝	braille 1 3 4 5 7
+⡞	braille 2 3 4 5 7
+⡟	braille 1 2 3 4 5 7
+⡠	braille 6 7
+⡡	braille 1 6 7
+⡢	braille 2 6 7
+⡣	braille 1 2 6 7
+⡤	braille 3 6 7
+⡥	braille 1 3 6 7
+⡦	braille 2 3 6 7
+⡧	braille 1 2 3 6 7
+⡨	braille 4 6 7
+⡩	braille 1 4 6 7
+⡪	braille 2 4 6 7
+⡫	braille 1 2 4 6 7
+⡬	braille 3 4 6 7
+⡭	braille 1 3 4 6 7
+⡮	braille 2 3 4 6 7
+⡯	braille 1 2 3 4 6 7
+⡰	braille 5 6 7
+⡱	braille 1 5 6 7
+⡲	braille 2 5 6 7
+⡳	braille 1 2 5 6 7
+⡴	braille 3 5 6 7
+⡵	braille 1 3 5 6 7
+⡶	braille 2 3 5 6 7
+⡷	braille 1 2 3 5 6 7
+⡸	braille 1 2 3 7
+⡹	braille 1 4 5 6 7
+⡺	braille 2 4 5 6 7
+⡻	braille 1 2 4 5 6 7
+⡼	braille 3 4 5 6 7
+⡽	braille 1 3 4 5 6 7
+⡾	braille 2 3 4 5 6 7
+⡿	braille 1 2 3 4 5 6 7
+⢀	braille 8
+⢁	braille 1 8
+⢂	braille 2 8
+⢃	braille 1 2 8
+⢄	braille 3 8
+⢅	braille 1 3 8
+⢆	braille 2 3 8
+⢇	braille 1 2 3 8
+⢈	braille 4 8
+⢉	braille 1 4 8
+⢊	braille 2 4 8
+⢋	braille 1 2 4 8
+⢌	braille 3 4 8
+⢍	braille 1 3 4 8
+⢎	braille 2 3 4 8
+⢏	braille 1 2 3 4 8
+⢐	braille 5 8
+⢑	braille 1 5 8
+⢒	braille 2 5 8
+⢓	braille 1 2 5 8
+⢔	braille 3 5 8
+⢕	braille 1 3 5 8
+⢖	braille 2 3 5 8
+⢗	braille 1 2 3 5 8
+⢘	braille 4 5 8
+⢙	braille 1 4 5 8
+⢚	braille 2 4 5 8
+⢛	braille 1 2 4 5 8
+⢜	braille 3 4 5 8
+⢝	braille 1 3 4 5 8
+⢞	braille 2 3 4 5 8
+⢟	braille 1 2 3 4 5 8
+⢠	braille 6 8
+⢡	braille 1 6 8
+⢢	braille 2 6 8
+⢣	braille 1 2 6 8
+⢤	braille 3 6 8
+⢥	braille 1 3 6 8
+⢦	braille 2 3 6 8
+⢧	braille 1 2 3 6 8
+⢨	braille 4 6 8
+⢩	braille 1 4 6 8
+⢪	braille 2 4 6 8
+⢫	braille 1 2 4 6 8
+⢬	braille 3 4 6 8
+⢭	braille 1 3 4 6 8
+⢮	braille 2 3 4 6 8
+⢯	braille 1 2 3 4 6 8
+⢰	braille 5 6 8
+⢱	braille 1 5 6 8
+⢲	braille 2 5 6 8
+⢳	braille 1 2 5 6 8
+⢴	braille 3 5 6 8
+⢵	braille 1 3 5 6 8
+⢶	braille 2 3 5 6 8
+⢷	braille 1 2 3 5 6 8
+⢸	braille 1 2 3 8
+⢹	braille 1 4 5 6 8
+⢺	braille 2 4 5 6 8
+⢻	braille 1 2 4 5 6 8
+⢼	braille 3 4 5 6 8
+⢽	braille 1 3 4 5 6 8
+⢾	braille 2 3 4 5 6 8
+⢿	braille 1 2 3 4 5 6 8
+⣀	braille 7 8
+⣁	braille 1 7 8
+⣂	braille 2 7 8
+⣃	braille 1 2 7 8
+⣄	braille 3 7 8
+⣅	braille 1 3 7 8
+⣆	braille 2 3 7 8
+⣇	braille 1 2 3 7 8
+⣈	braille 4 7 8
+⣉	braille 1 4 7 8
+⣊	braille 2 4 7 8
+⣋	braille 1 2 4 7 8
+⣌	braille 3 4 7 8
+⣍	braille 1 3 4 7 8
+⣎	braille 2 3 4 7 8
+⣏	braille 1 2 3 4 7 8
+⣐	braille 5 7 8
+⣑	braille 1 5 7 8
+⣒	braille 2 5 7 8
+⣓	braille 1 2 5 7 8
+⣔	braille 3 5 7 8
+⣕	braille 1 3 5 7 8
+⣖	braille 2 3 5 7 8
+⣗	braille 1 2 3 5 7 8
+⣘	braille 4 5 7 8
+⣙	braille 1 4 5 7 8
+⣚	braille 2 4 5 7 8
+⣛	braille 1 2 4 5 7 8
+⣜	braille 3 4 5 7 8
+⣝	braille 1 3 4 5 7 8
+⣞	braille 2 3 4 5 7 8
+⣟	braille 1 2 3 4 5 7 8
+⣠	braille 6 7 8
+⣡	braille 1 6 7 8
+⣢	braille 2 6 7 8
+⣣	braille 1 2 6 7 8
+⣤	braille 3 6 7 8
+⣥	braille 1 3 6 7 8
+⣦	braille 2 3 6 7 8
+⣧	braille 1 2 3 6 7 8
+⣨	braille 4 6 7 8
+⣩	braille 1 4 6 7 8
+⣪	braille 2 4 6 7 8
+⣫	braille 1 2 4 6 7 8
+⣬	braille 3 4 6 7 8
+⣭	braille 1 3 4 6 7 8
+⣮	braille 2 3 4 6 7 8
+⣯	braille 1 2 3 4 6 7 8
+⣰	braille 5 6 7 8
+⣱	braille 1 5 6 7 8
+⣲	braille 2 5 6 7 8
+⣳	braille 1 2 5 6 7 8
+⣴	braille 3 5 6 7 8
+⣵	braille 1 3 5 6 7 8
+⣶	braille 2 3 5 6 7 8
+⣷	braille 1 2 3 5 6 7 8
+⣸	braille 1 2 3 7 8
+⣹	braille 1 4 5 6 7 8
+⣺	braille 2 4 5 6 7 8
+⣻	braille 1 2 4 5 6 7 8
+⣼	braille 3 4 5 6 7 8
+⣽	braille 1 3 4 5 6 7 8
+⣾	braille 2 3 4 5 6 7 8
+⣿	braille 1 2 3 4 5 6 7 8
+
