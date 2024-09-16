@@ -455,10 +455,10 @@ class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
 	# variables used for handling announcements resulting from gestures
-	GESTURE_ANNOUNCEMENT_TIMEOUT = 2.0  # Seconds
-	announceFormattingGestureChange = False
-	formattingGestureObjectIds = []
-	lastFormattingGestureEventTime = 0
+	GESTURE_ANNOUNCEMENT_TIMEOUT: float = 2.0  # Seconds
+	announceFormattingGestureChange: bool = False
+	formattingGestureObjectIds: list[str] = []
+	lastFormattingGestureEventTime: float = 0
 
 	@staticmethod
 	def isFormattingChangeAnnouncementEnabled(obj: NVDAObject) -> bool:
