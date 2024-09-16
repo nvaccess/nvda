@@ -362,7 +362,6 @@ class AddonListVM:
 			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
 		return columnChoices
 
-
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
