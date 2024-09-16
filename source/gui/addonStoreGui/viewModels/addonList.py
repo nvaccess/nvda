@@ -220,8 +220,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
-		self._columnChoices: list[str] = []
-		self._reverse: bool = False
+		self._reverseSort: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
@@ -351,7 +350,8 @@ class AddonListVM:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
 
-	def setColumnChoices(self) -> None:
+	@property
+	def _columnSortChoices(self) -> list[str]:
 		# Translators: Presented when a list will be sorted in ascending order.
 		ascendingOrderLabel = pgettext("addonStore", "Ascending")
 		# Translators: Presented when a list will be sorted in descending order.
@@ -360,10 +360,8 @@ class AddonListVM:
 		for c in self.presentedFields:
 			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
 			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
-		self._columnChoices = columnChoices
+		return columnChoices
 
-	def setReverse(self, reverse: bool) -> None:
-		self._reverse = reverse
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
@@ -388,7 +386,7 @@ class AddonListVM:
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
 		filteredSorted = list(
-			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverse)],
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
 		)
 		return filteredSorted
 
