@@ -3799,7 +3799,7 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
 Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
-As accessibility Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear if the correct registrations are missing.
+As accessibility interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear if the correct registrations are missing.
 
 This can happen, for example, after installing and uninstalling Adobe Reader, Math Player and other programs.
 It can also happen after Windows updates, or during other events that access the registry.
@@ -3813,10 +3813,8 @@ Specifically, the following issues can be solved by running this tool:
 * NVDA is very slow when navigating in browsers while using browse mode.
 * And possibly other issues.
 
-Because this tool corrects entries in the Windows registry, it requires administrative access to work.
+Because this tool corrects entries in the Windows registry, it requires administrative access to work, just like when installing a program.
 If you have UAC (User Access Control) enabled, as most users do, you will need to follow whatever prompts are presented by UAC, to run the tool successfully.
-This may include entering your administrative account's password.
-It will not be NVDA asking for this, but Windows itself, just as it would while installing a program.
 
 ### Reload plugins {#ReloadPlugins}
 
