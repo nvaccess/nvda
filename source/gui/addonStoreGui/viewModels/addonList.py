@@ -341,10 +341,11 @@ class AddonListVM:
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelField: AddonListField):
+	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
 		self._validate(sortField=modelField)
 		self._sortByModelField = modelField
+		self._reverseSort = reverse
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
@@ -352,16 +353,29 @@ class AddonListVM:
 
 	@property
 	def _columnSortChoices(self) -> list[str]:
-		# Translators: Presented when a list will be sorted in ascending order.
-		ascendingOrderLabel = pgettext("addonStore", "Ascending")
-		# Translators: Presented when a list will be sorted in descending order.
-		descendingOrderLabel = pgettext("addonStore", "Descending")
 		columnChoices = []
 		for c in self.presentedFields:
-			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
-			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
+			# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
+			# {column} will be replaced with the column display string.
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					"{column} (ascending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+			# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
+			# {column} will be replaced with the column display string.
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					"{column} (descending)",
+				).format(
+					column=c.displayString,
+				),
+			)
 		return columnChoices
-
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
