@@ -65,6 +65,8 @@ from typing import (
 	cast,
 )
 from url_normalize import url_normalize
+from requests.exceptions import RequestException
+import requests
 import core
 import keyboardHandler
 import characterProcessing
@@ -5534,6 +5536,15 @@ class SetURLDialog(SettingsDialog):
 		*args,
 		**kwargs,
 	):
+		"""Customisable dialog for requesting a URL from the user.
+
+		:param parent: Parent window of this dialog.
+		:param title: Title of this dialog.
+		:param configPath: Where in the config the URL is to be stored.
+		:param helpId: Anchor of the user guide section for this dialog, defaults to None
+		:param urlTransformer: Function to transform the given URL into something usable, eg by adding required query parameters. Defaults to the identity function.
+		:raises ValueError: If no config path is given.
+		"""
 		if not configPath or len(configPath) < 1:
 			raise ValueError("Config path not provided.")
 		self.title = title
@@ -5545,14 +5556,21 @@ class SetURLDialog(SettingsDialog):
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self._urlControl = urlControl = settingsSizerHelper.addLabeledControl(
-			"&URL:",
+			# Translators: The label of a text box asking the user for a URL.
+			# The purpose of this text box will be explained elsewhere in the user interface.
+			_("&URL:"),
 			wx.TextCtrl,
 			size=(250, -1),
 		)
-		self._testButton = testButton = wx.Button(self, label="&Test")
+		self._testButton = testButton = wx.Button(
+			self,
+			# Translators: A button in a dialog which allows the user to test a URL that they have entered.
+			label=_("&Test..."),
+		)
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
-		testButton.Bind(wx.EVT_BUTTON, self.onTest)
+		# Order of operations is important here.
+		testButton.Bind(wx.EVT_BUTTON, self._onTest)
 		urlControl.Bind(wx.EVT_TEXT, self._typingEnablesTestButton)
 		self._url = self._getFromConfig()
 
@@ -5565,69 +5583,74 @@ class SetURLDialog(SettingsDialog):
 		self._saveToConfig()
 		super().onOk(evt)
 
-	def _typingEnablesTestButton(self, evt: wx.Event):
+	def _typingEnablesTestButton(self, evt: wx.CommandEvent):
+		"""Enable the "Test..." button only when there is text in the URL control."""
 		value = self._url
 		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
 
-	def onTest(self, evt):
+	def _onTest(self, evt: wx.CommandEvent):
+		"""Normalize the URL, start a background thread to test it, and show an indeterminate progress dialog to the user."""
 		self._normalize()
 		t = threading.Thread(
-			name=f"{self.__class__.__module__}.{self.onTest.__qualname__}",
+			name=f"{self.__class__.__module__}.{self._onTest.__qualname__}",
 			target=self._bg,
 			daemon=True,
 		)
 		self._progressDialog = gui.IndeterminateProgressDialog(
 			self,
 			title=self.title,
-			message="Validating URL...",
+			# Translators: A message shown to users when connecting to a URL to ensure it is valid.
+			message=_("Validating URL..."),
 		)
 		t.start()
 
 	def _bg(self):
-		from requests.exceptions import RequestException
-		from requests import get
-
+		"""Background URL connection thread."""
 		try:
-			r = get(self._urlTransformer(self._url))
-			r.raise_for_status()
+			with requests.get(self._urlTransformer(self._url)) as r:
+				r.raise_for_status()
 			self._success()
 		except RequestException as e:
+			log.debug(f"Failed to check URL: {e}")
 			self._failure(e)
 
 	def _success(self):
+		"""Notify the user that we successfully connected to their URL."""
 		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
-			"Successfully connected to the given URL.",
-			"Success",
+			# Translators: Message shown to users when testing a given URL has succeeded.
+			_("Successfully connected to the given URL."),
+			# Translators: The title of a dialog presented when a test succeeds
+			_("Success"),
 			wx.OK,
 		)
 
 	def _failure(self, error: Exception):
+		"""Notify the user that testing their URL failed."""
 		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
-			f"Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid. {error}",
+			_(
+				# Translators: Message displayed to users when testing a URL has failed.
+				"Unable to connect to the given URL. Check that you are connected to the internet and the URL is correct.",
+			),
+			# Translators: The title of a dialog presented when an error occurs.
 			"Error",
 			wx.OK | wx.ICON_ERROR,
 		)
 
 	def _cleanUp(self):
+		"""Clean up after testing a URL."""
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 
 	def _normalize(self):
-		from urllib3.util.url import parse_url
-
-		parsed = parse_url(self._url)
-		if not parsed.host:
-			return ""
-		parsed = parsed._replace(query=None, fragment=None)
-		if not parsed.scheme:
-			parsed = parsed._replace(scheme="https")
-		self._url = parsed.url
+		"""Normalize the URL in the URL text box."""
+		self._url = url_normalize(self._url)
 
 	def _getFromConfig(self):
+		"""Get the value pointed to by `configPath` from the config."""
 		currentConfigSection = config.conf
 		keyIndex = len(self._configPath) - 1
 		for index, component in enumerate(self._configPath):
@@ -5636,6 +5659,7 @@ class SetURLDialog(SettingsDialog):
 			currentConfigSection = currentConfigSection[component]
 
 	def _saveToConfig(self):
+		"""Save the value of `_url` to the config."""
 		currentConfigSection = config.conf
 		keyIndex = len(self._configPath) - 1
 		for index, component in enumerate(self._configPath):
