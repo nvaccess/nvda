@@ -341,10 +341,11 @@ class AddonListVM:
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelField: AddonListField):
+	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
 		self._validate(sortField=modelField)
 		self._sortByModelField = modelField
+		self._reverseSort = reverse
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
