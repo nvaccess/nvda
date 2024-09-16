@@ -483,17 +483,14 @@ class MainFrame(wx.Frame):
 	_CRFT_INTRO_MESSAGE: str = _(
 		# Translators: Explain the COM Registration Fixing tool to users before running
 		"Welcome to the COM Registration Fixing tool.\n"
-		"This tool is used by NVDA to fix problems it may have as it tries to interact with various applications, "
-		"or with Windows itself.\n"
-		"It examines the system registry for corrupted or missing accessibility entries and will correct them.\n"
-		"Those entries are sometimes damaged by installing or uninstalling programs, or other system events. This "
-		'can result in "unknown" or "pane" being spoken instead of the content you were expecting, or previously '
+		"This tool fixes common problems that sometimes occur, preventing NVDA from accessing content in various "
+		"applications and Windows components.\n"
+		"Accessibility entries in the system registry can be damaged by installing or uninstalling "
+		"programs, or other system events. This may result in "
+		'"unknown" or "pane" being spoken instead of the content you were expecting, or previously '
 		"accessible elements suddenly no longer reading correctly.\n\n"
-		"You have most likely been asked to run this tool by an experienced user or support worker to investigate "
-		"and potentially fix an issue with NVDA's behaviour.\n"
-		"Because it needs to modify the Windows registry, if you have User Account Control (UAC) active, you will "
-		"be prompted by UAC before this tool can do its job. This is normal, and you should follow the prompts to allow the tool to run.\n\n"
-		"Press Continue to try to repair the registry now.",
+		"The tool accesses the system registry, which requires administrative privileges.\n"
+		"Press Continue to run the tool now.",
 	)
 	"""
 	Contains the intro dialog contents for the COM Registration Fixing Tool.
