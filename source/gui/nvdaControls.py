@@ -377,7 +377,10 @@ class MessageDialog(DPIScaledDialog):
 		evt.Skip()
 
 
-class _ContinueCancelDialog(MessageDialog):
+class _ContinueCancelDialog(
+	gui.contextHelp.ContextHelpMixin,
+	MessageDialog,
+):
 	"""
 	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
 	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
@@ -390,6 +393,7 @@ class _ContinueCancelDialog(MessageDialog):
 		message: str,
 		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
 		continueButtonFirst: bool = True,
+helpId: str | None = None,
 	) -> None:
 		"""Creates a ContinueCancelDialog MessageDialog.
 
@@ -401,6 +405,8 @@ class _ContinueCancelDialog(MessageDialog):
 			opens; if False, the Cancel button will. Defaults to True.
 		"""
 		self.continueButtonFirst: bool = continueButtonFirst
+		if helpId is not None:
+			self.helpId = helpId
 		super().__init__(parent, title, message, dialogType)
 
 	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:

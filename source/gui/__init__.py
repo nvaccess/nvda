@@ -513,6 +513,7 @@ class MainFrame(wx.Frame):
 			self,
 			genericTitle,
 			self._CRFT_INTRO_MESSAGE,
+			helpId="RunCOMRegistrationFixingTool",
 		)
 		response: int = introDialog.ShowModal()
 		if response == wx.CANCEL:
