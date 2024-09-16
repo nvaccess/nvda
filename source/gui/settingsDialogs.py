@@ -966,39 +966,43 @@ class GeneralSettingsPanel(SettingsPanel):
 			# item.Value = config.conf["update"]["serverURL"]
 			# if globalVars.appArgs.secure:
 			# item.Disable()
-			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label="Update mirror:")
+			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror:"))
 			mirrorBox = mirrorBoxSizer.GetStaticBox()
-			mirrorGroup = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
-			settingsSizerHelper.addItem(mirrorGroup)
+			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+			settingsSizerHelper.addItem(mirrorBoxSizerHelper)
 
-			# Use a ExpandoTextCtrl because even when readonly it accepts focus from keyboard, which
-			# standard readonly TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+			# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+			# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
 			# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
 			# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
 			# display here.
+			# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
 			self.mirrorURLTextBox = ExpandoTextCtrl(
 				mirrorBox,
 				size=(self.scaleSize(250), -1),
-				# value=url if (url := config.conf["update"]["serverURL"]) else "(None)",
 				style=wx.TE_READONLY,
 			)
-			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
-
-			# Translators: This is the label for the button used to change synthesizer,
-			# it appears in the context of a synthesizer group on the speech settings panel.
+			# Translators: This is the label for the button used to change the NVDA update mirror URL,
+			# it appears in the context of the update mirror group on the General page of NVDA's settings.
 			changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
-			# self.bindHelpEvent("SpeechSettingsChange", self.synthNameCtrl)
-			# self.bindHelpEvent("SpeechSettingsChange", changeSynthBtn)
-			mirrorGroup.addItem(
+			mirrorBoxSizerHelper.addItem(
 				guiHelper.associateElements(
 					self.mirrorURLTextBox,
 					changeMirrorBtn,
 				),
 			)
+			self.bindHelpEvent("UpdateMirrorURL", mirrorBox)
+			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
 			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
 
 	def onChangeMirrorURL(self, evt):
-		changeMirror = SetURLDialog(self, "Update Mirror", ("update", "serverURL"))
+		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
+		changeMirror = SetURLDialog(
+			self,
+			"Update Mirror",
+			("update", "serverURL"),
+			urlTransformer=lambda url: f"{url}?versionType=stable",
+		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
 			self.Freeze()
@@ -1008,6 +1012,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.Thaw()
 
 	def _enterTriggersOnChangeMirrorURL(self, evt):
+		"""Open the change update mirror URL dialog in response to the enter key in the mirror URL read-only text box."""
 		if evt.KeyCode == wx.WXK_RETURN:
 			self.onChangeMirrorURL(evt)
 		else:
