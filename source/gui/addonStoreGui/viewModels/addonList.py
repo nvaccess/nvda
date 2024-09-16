@@ -359,9 +359,23 @@ class AddonListVM:
 		columnChoices = []
 		for c in self.presentedFields:
 			# Translators: An option of a combo box to sort columns in the add-on store.
-			columnChoices.append(pgettext("addonStore", "{columnDisplayString} ({ascendingOrderLabel})".format(columnDisplayString=c.displayString, ascendingOrderLabel=ascendingOrderLabel)))
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					"{columnDisplayString} ({ascendingOrderLabel})".format(
+						columnDisplayString=c.displayString, ascendingOrderLabel=ascendingOrderLabel
+					),
+				)
+			)
 			# Translators: An option of a combo box to sort columns in the add-on store.
-			columnChoices.append(pgettext("addonStore", "{columnDisplayString} ({descendingOrderLabel})".format(columnDisplayString=c.displayString, descendingOrderLabel=descendingOrderLabel)))
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					"{columnDisplayString} ({descendingOrderLabel})".format(
+						columnDisplayString=c.displayString, descendingOrderLabel=descendingOrderLabel
+					),
+				)
+			)
 		return columnChoices
 
 	def _getFilteredSortedIds(self) -> List[str]:
