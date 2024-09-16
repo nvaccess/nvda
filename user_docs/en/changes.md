@@ -31,6 +31,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 
 ### Changes for Developers
