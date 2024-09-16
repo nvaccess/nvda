@@ -393,7 +393,7 @@ class _ContinueCancelDialog(
 		message: str,
 		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
 		continueButtonFirst: bool = True,
-helpId: str | None = None,
+		helpId: str | None = None,
 	) -> None:
 		"""Creates a ContinueCancelDialog MessageDialog.
 
