@@ -358,8 +358,10 @@ class AddonListVM:
 		descendingOrderLabel = pgettext("addonStore", "Descending")
 		columnChoices = []
 		for c in self.presentedFields:
-			columnChoices.append(f"{c.displayString} ({ascendingOrderLabel})")
-			columnChoices.append(f"{c.displayString} ({descendingOrderLabel})")
+			# Translators: An option of a combo box to sort columns in the add-on store.
+			columnChoices.append(pgettext("addonStore", "{columnDisplayString} ({ascendingOrderLabel})".format(columnDisplayString=c.displayString, ascendingOrderLabel=ascendingOrderLabel)))
+			# Translators: An option of a combo box to sort columns in the add-on store.
+			columnChoices.append(pgettext("addonStore", "{columnDisplayString} ({descendingOrderLabel})".format(columnDisplayString=c.displayString, descendingOrderLabel=descendingOrderLabel)))
 		return columnChoices
 
 	def _getFilteredSortedIds(self) -> List[str]:
