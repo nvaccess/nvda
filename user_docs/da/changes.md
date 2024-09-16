@@ -103,6 +103,108 @@ En advarselsbesked vil informere dig, hvis du forsøger at skrive til en mappe, 
   * `scheduleThread.scheduleDailyJob` og `scheduleJob` kan bruges til at planlægge opgaver på brugerdefinerede tidspunkter, hvor en `JobClashError` vil blive udløst ved en kendt konflikt i opgaveplanlægningen.
 * Det er nu muligt at oprette app-moduler til apps, der er vært for Edge WebView2 (msedgewebview2.exe)-kontroller. (#16705, @josephsl)
 
+## 2024.2
+
+Der er en ny funktion kaldet lydopdeling. Funktionen gør det muligt at have NVDA-lyde i én kanal (f.eks. venstre), mens lyde fra alle andre programmer udsendes i den anden kanal (f.eks. højre).
+
+Der er nye kommandoer til ændring af ringen af talesynteseindstillinger, hvilket giver brugerne mulighed for at springe til den første eller sidste indstilling, og for at øge eller mindske den aktuelle indstilling med større trin. Der er også nye hurtignavigationskommandoer, der gør det muligt for brugere at tilknytte tastetryk til hurtigt at hoppe mellem: afsnit, lodret justeret afsnit, tekst med samme typografi, tekst med en anderledes typografi, menuemne, skifteknap, behandlingslinje, figur og matematisk formel.
+
+Der er mange nye punktskriftsfunktioner og fejlrettelser. En ny punktskrifttilstand kaldet "vis taleoutput" er blevet tilføjet. Når den er aktiv, viser punktdisplayet, hvad NVDA siger. Der er også tilføjet understøttelse for punktdisplays BrailleEdgeS2, BrailleEdgeS3. LibLouis blev opdateret, og tilføjede nye detaljerede (med store bogstaver angivet) hviderussiske og ukrainske punktskriftstabeller, en punkttabel for Lao, og en spansk tabel til læsning af græske tekster.
+
+eSpeak blev opdateret med tilføjelsen af det nye sprog Tigrinya.
+
+Der er mange mindre fejlrettelser for programmer, såsom Thunderbird, Adobe Reader, webbrowsere, Nudi og Geekbench.
+
+### Nye funktioner
+
+* Nye tastaturkommandoer:
+  * Ny hurtignavigationskommando `p` til at hoppe til næste/forrige tekstafsnit i gennemsynstilstand. 
+  * Nye ikke-tildelte hurtignavigationskommandoer, som kan bruges til at hoppe til næste/forrige:
+    * figur
+    * lodret justeret afsnit
+    * menupunkt
+    * skifteknap
+    * behandlingslinje
+    * matematisk formel
+    * tekst med samme typografi
+    * tekst med en anden typografi
+  * Tilføjede kommandoer til at springe til første, sidste, frem og tilbage gennem indstillingsværdier i ringen for talesynteseindstillinger.
+    * Skift til første og sidste værdi for den aktuelle indstilling i ringen af talesynteseindstillinger. Denne har ingen tildelt kommando.
+    * Formindske og forøge den aktuelle indstilling i ringen af talesynteseindstillinger med større trin:
+      * Desktop: `NVDA+Ctrl+sideOp` eller `NVDA+Ctrl+sideNed`
+      * Laptop: `NVDA+Ctrl+Shift+sideOp` eller `NVDA+Ctrl+Shift+sideNed`
+  * Tilføjet en ny ikke-tildelt kommando til at skifte rapportering af figurer og billedtekster.
+  
+* Punktskrift:
+  * Tilføjet support for BrailleEdgeS2, BrailleEdgeS3.
+  * En ny punktskrifttilstand kaldet "vis taleoutput" er blevet tilføjet.
+    * Når aktiv, viser dit punktdisplay, hvad NVDA siger.
+    * Kan aktiveres ved at trykke `NVDA+alt+t`, eller fra punktskriftsindstillingsdialogen.
+    
+* Lydopdeling:
+  * Gør det muligt at dele NVDA-lyde i én kanal (f.eks. venstre) mens lyde fra alle andre programmer udsendes i den anden kanal (f.eks. højre).
+  * Aktiveres med `NVDA+alt+s`.
+  
+* Rapportering af række- og kolonneoverskrifter understøttes nu i redigerbare HTML-elementer med indhold.
+* Tilføjet muligheden for at deaktivere rapportering af figurer og billedtekster i indstillinger for dokumentformatering.
+* I Windows 11 vil NVDA annoncere meddelelser fra stemmeindtastning og foreslåede handlinger, herunder det øverste forslag, når data som telefonnumre kopieres til udklipsholderen (Windows 11 2022-opdatering og senere).
+* NVDA kan holde lydenheden i gang efter at tale er stoppet, for at forhindre at starten af næste tale bliver afbrudt med nogle lydenheder som Bluetooth-hovedtelefoner.
+* HP Secure Browser er nu understøttet.
+
+### Ændringer
+
+* Tilføjelsescenter:
+  * Den mindste og den sidst testede NVDA-version for en tilføjelse vises nu i området "andre detaljer".
+  * Handlingen for fællesskabets anmeldelser vil være tilgængelig i alle faner i centeret.
+  
+* Komponentopdateringer:
+  * Opdateret LibLouis punktskriftsoversætter til 3.29.0.
+    * Tilføjet nye detaljerede (med store bogstaver angivet) hviderussiske og ukrainske punktskriftstabeller.
+    * Ny spansk tabel til læsning af græske tekster.
+    * Ny tabel for Lao Niveau 1.
+  * eSpeak NG er blevet opdateret til 1.52-dev commit `cb62d93fd7`.
+    * Tilføjet nyt sprog Tigrinya.
+    
+* Ændret flere kommandoer for BrailleSense-enheder for at undgå konflikter med tegn fra den franske punktskriftstabel.
+  * `alt+venstre pil` er nu tildelt `punkt2+punkt7+mellemrum`.
+  * `alt+højre pil` er nu tildelt `punkt5+punkt7+mellemrum`.
+  * `alt+pil op` er nu tildelt `punkt2+punkt3+punkt7+mellemrum`.
+  * `alt+pil ned` er nu tildelt `punkt5+punkt6+punkt7+mellemrum`.
+  
+* Prikker, der almindeligvis bruges i indholdsfortegnelser, rapporteres ikke længere på lave tegnsætningsniveauer.
+
+### Fejlrettelser
+
+* Windows 11-rettelser:
+  * NVDA vil igen oplyse forslag til hardwaretastaturindtastning.
+  * I version 24H2 (2024-opdatering og Windows Server 2025) kan mus og berøringsinteraktion bruges i hurtige indstillinger.
+  
+* Tilføjelsescenter:
+  * Når der trykkes på `ctrl+tab`, flyttes fokus korrekt til den nye aktuelle faneoverskrift.
+  * Hvis filer i NVDAs cache ikke er korrekte, vil NVDA ikke længere konstant genstarte.
+  
+* Rettelser for Chromium-baserede browsere, når de bruges med UIA:
+  * Rettet fejl, der forårsagede, at NVDA sad fast.
+  * Backspace-tasten virker nu korrekt i Gmail-log-ind-felter.
+  
+* Backspace virker nu korrekt, når Nudi 6.1 bruges med NVDA's indstilling "Håndtér tastetryk fra andre programmer" aktiveret.
+* Rettet en fejl, hvor lydkoordinater ville blive afspillet, mens applikationen er i dvaletilstand, når "Afspil lydkoordinater, når musen bevæger sig" er aktiveret.
+* I Adobe Reader ignorerer NVDA ikke længere alternativ tekst, der benyttes i formularer i PDF'er.
+* Rettet en fejl, der forårsagede, at NVDA ikke kunne læse båndet og indstillingerne i Geekbench.
+* Rettet et sjældent tilfælde, hvor gemning af konfigurationen kunne fejle, når NVDA gemmer alle profiler.
+* I Firefox og Chromium-baserede browsere vil NVDA korrekt gå ind i fokus-tilstand, når der trykkes enter, når man er placeret i en punktopstilling (med tal og punkttegn) i redigerbart indhold.
+* Kolonnetilstandsændring rapporteres automatisk, når kolonner vælges til visning i Thunderbirds meddelelsesliste.
+* Kommandolinjeparametre `-h`/`--help` virker nu igen.
+* NVDAs understøttelse for PoEdit version 3.4 eller nyere fungerer nu igen korrekt, hvis du oversætter til et sprog med én eller flere flertalsformer (f.eks. kinesisk eller polsk).
+
+### Ændringer for udviklere
+
+* Instansiering af `winVersion.WinVersion`-objekter med ukendte Windows-versioner over 10.0.22000, såsom 10.0.25398, returnerer nu "Windows 11 unknown" i stedet for "Windows 10 unknown" som versionsnavn.
+* Gør AppVeyor-byggeprocessen nemmere for NVDA-forks ved at tilføje konfigurerbare variabler i `appveyor.yml` til at deaktivere eller ændre NV Access-specifikke dele af build-scripts.
+* Tilføjet et "how-to"-dokument, der forklarer processen med at bygge NVDA-forks på AppVeyor.
+
+
+
 ## 2017.4
 
 Højdepunkter i denne version inkluderer mange fejlrettelser og forbedringer til websupport, herunder gennemsynstilstand for webdialoger som standard, bedre rapportering af feltgruppelabels i gennemsynstilstand, understøttelse af nye Windows 10-teknologier som Windows Defender Application Guard og Windows 10 på ARM64, samt automatisk rapportering af skærmretning og batteristatus.
@@ -346,7 +448,7 @@ Højdepunkterne i denne version inkluderer rapportering af sektioner og tekstkol
 * Tryk på escape i Microsoft Excel skifter ikke længere forkert til gennemsynstilstand, medmindre brugeren tidligere har skiftet til gennemsynstilstand eksplicit med NVDA+space og derefter gået ind i fokustilstand ved at trykke på enter på et formularfelt. (#6569) 
 * NVDA fryser ikke længere i Microsoft Excel-regneark, hvor en hel række eller kolonne er flettet. (#6216)
 * Rapportering af afskåret/overløbet tekst i Microsoft Excel-celler bør nu være mere præcis. (#6472)
-* NVDA rapporterer nu, når en afkrydsningsboks er skrivebeskyttet. (#6563)
+* NVDA rapporterer nu, når en check box er skrivebeskyttet. (#6563)
 * NVDA-launcheren viser ikke længere en advarselsdialog, når den ikke kan afspille logolyden på grund af manglende lydudstyr. (#6289)
 * Kontroller i Microsoft Excel-båndet, der ikke er tilgængelige, rapporteres nu som sådan. (#6430)
 * NVDA annoncerer ikke længere "rude", når vinduer minimeres. (#6671)
@@ -366,7 +468,7 @@ Højdepunkterne i denne udgivelse inkluderer forbedret understøttelse af Micros
 
 * NVDA kan nu angive linjeindrykning ved hjælp af toner. Dette kan konfigureres ved hjælp af komboboksen "Linjeindrykningsrapportering" i NVDA's dialogboks for dokumentformatering. (#5906)
 * Understøttelse af Orbit Reader 20 punktdisplay. (#6007)
-* En mulighed for at åbne vinduet til talevisning ved opstart er tilføjet. Dette kan aktiveres via en afkrydsningsboks i vinduet for talevisning. (#5050)
+* En mulighed for at åbne vinduet til talevisning ved opstart er tilføjet. Dette kan aktiveres via en check box i vinduet for talevisning. (#5050)
 * Når talevisningsvinduet genåbnes, vil dets placering og dimensioner nu blive gendannet. (#5050)
 * Krydsreferencer i Microsoft Word behandles nu som hyperlinks. De rapporteres som links og kan aktiveres. (#6102)
 * Understøttelse af Baum SuperVario2, Baum Vario 340 og HumanWare Brailliant2 punktdisplays. (#6116)
@@ -398,7 +500,7 @@ Højdepunkterne i denne udgivelse inkluderer forbedret understøttelse af Micros
 * Når du bruger Microsoft Word, kan sidetalsfelter i sidehoveder nu læses. (#6004)
 * Musen kan nu bruges til at flytte fokus mellem symbollisten og redigeringsfelterne i dialogboksen for symboludtale. (#6312)
 * I gennemsynstilstand i Microsoft Word er et problem, der forhindrer, at elementlisten vises, når et dokument indeholder et ugyldigt hyperlink, rettet. (#5886)
-* Når talevisningsvinduet lukkes via proceslinjen eller genvejstasten alt+F4, vil afkrydsningsboksen i NVDA-menuen nu afspejle vinduets faktiske synlighed. (#6340)
+* Når talevisningsvinduet lukkes via proceslinjen eller genvejstasten alt+F4, vil check boxen i NVDA-menuen nu afspejle vinduets faktiske synlighed. (#6340)
 * Genindlæsning af plugins-kommandoen skaber ikke længere problemer for udløste konfigurationsprofiler, nye dokumenter i webbrowsere og skærmgennemgang. (#2892, #5380)
 * I listen over sprog i NVDA's generelle indstillinger vises sprog som Aragonese nu korrekt på Windows 10. (#6259)
 * Emulerede systemtastaturtaster (f.eks. en knap på et punktdisplay, der emulerer tab-tasten) præsenteres nu i det konfigurerede NVDA-sprog i inputhjælp og kommandoer for inputkommandoer. Tidligere blev de altid præsenteret på engelsk. (#6212)
@@ -429,7 +531,7 @@ Højdepunkterne i denne udgivelse inkluderer muligheden for at deaktivere indivi
 * I Microsoft Word rapporterer NVDA nu positionsoplysninger, når afsnit flyttes (alt+shift+pilNed og alt+shift+pilOp). (#5945)
 * I Microsoft Word rapporteres linjeafstand nu via NVDA's kommando til rapportering af formatering, når den ændres med forskellige Microsoft Word-genvejstaster, og når der navigeres til tekst med forskellig linjeafstand, hvis rapportering af linjeafstand er aktiveret i NVDA's dokumentformateringsindstillinger. (#2961)
 * I Internet Explorer genkendes HTML5-strukturelementer nu. (#5591)
-* Rapportering af kommentarer (såsom i Microsoft Word) kan nu deaktiveres via en afkrydsningsboks til rapportering af kommentarer i NVDA's dialogboks for dokumentformatering. (#5108)
+* Rapportering af kommentarer (såsom i Microsoft Word) kan nu deaktiveres via en check box til rapportering af kommentarer i NVDA's dialogboks for dokumentformatering. (#5108)
 * Det er nu muligt at deaktivere individuelle tilføjelser i tilføjelsesstyringen. (#3090)
 * Yderligere tasteopgaver er tilføjet til ALVA BC640/680-seriens punktdisplays. (#5206)
 * Der er nu en kommando til at flytte punktdisplayet til det aktuelle fokus. I øjeblikket har kun ALVA BC640/680-serien en tildelt tast til denne kommando, men den kan tildeles manuelt for andre displays i dialogboksen for inputkommandoer, hvis det ønskes. (#5250)
@@ -634,10 +736,10 @@ Højdepunkter i denne udgivelse inkluderer ydelsesforbedringer i Windows 10; ink
 * I Windows 8 og senere starter NVDA nu meget tidligere, når det er konfigureret til at starte efter login på Windows. (#308)
  * Hvis du aktiverede dette med en tidligere version af NVDA, skal du deaktivere det og aktivere det igen for at ændringen træder i kraft. Følg denne procedure:
   1. Åbn Generelle indstillinger dialogen.
-  1. Fjern markeringen i afkrydsningsfeltet Start NVDA automatisk efter login på Windows.
+  1. Fjern markeringen i check boxen  Start NVDA automatisk efter login på Windows.
   1. Tryk på OK knappen.
   1. Åbn Generelle indstillinger dialogen igen.
-  1. Marker afkrydsningsfeltet Start NVDA automatisk efter login på Windows.
+  1. Marker check boxen Start NVDA automatisk efter login på Windows.
   1. Tryk på OK knappen.
 * Ydelsesforbedringer for UI Automation, inklusive File Explorer og Opgavefremviser. (#5293)
 * NVDA skifter nu korrekt til fokustilstand, når der tabbes til skrivebeskyttede ARIA gitterkontroller i Gennemsynstilstand for Mozilla Firefox og andre Gecko-baserede kontroller. (#5118)
@@ -686,7 +788,7 @@ Højdepunkter i denne udgivelse inkluderer den første understøttelse af Window
 * I punkt vises der ikke længere unødvendige mellemrum mellem eller efter indikatorer for kontroller og formatering. (#5043)
 * Når en applikation reagerer langsomt, og du skifter væk fra den applikation, er NVDA nu meget mere responsiv i andre applikationer i de fleste tilfælde. (#3831)
 * Windows 10 Toast-meddelelser rapporteres nu som forventet. (#5136)
-* Værdien rapporteres nu korrekt, når den ændres i visse (UI Automation) kombinationsfelter, hvor dette tidligere ikke fungerede.
+* Værdien rapporteres nu korrekt, når den ændres i visse (UI Automation) combo boxe, hvor dette tidligere ikke fungerede.
 * I gennemsynstilstand for webbrowsere fungerer tabulatortasten nu som forventet efter at have tabbet til et rammedokument. (#5227)
 * Låseskærmen i Windows 10 kan nu lukkes ved hjælp af en berøringsskærm. (#5220)
 * I Windows 7 og senere forvrænges teksten ikke længere ved indtastning i visse applikationer som Wordpad og Skype med et punktdisplay. (#4291)
@@ -717,7 +819,7 @@ Højdepunkter i denne udgivelse inkluderer evnen til at læse diagrammer i Micro
 
 * Tegnbeskrivelser håndteres nu korrekt for sammenføjede tegn i visse indiske sprog. (#4582)
 * Hvis "Stol på stemmens sprog ved behandling af tegn og symboler" indstillingen er aktiveret, bruger dialogboksen for tegnsætning/symboludtale nu korrekt stemmens sprog. Desuden vises sproget, for hvilket udtalen redigeres, i dialogboksens titel. (#4930)
-* I Internet Explorer og andre MSHTML-kontroller annonceres indtastede tegn ikke længere uhensigtsmæssigt i redigerbare kombinationsfelter såsom Google søgefeltet på Google hjemmesiden. (#4976)
+* I Internet Explorer og andre MSHTML-kontroller annonceres indtastede tegn ikke længere uhensigtsmæssigt i redigerbare combo boxe såsom Google søgefeltet på Google hjemmesiden. (#4976)
 * Ved valg af farver i Microsoft Office-applikationer rapporteres farvenavne nu. (#3045)
 * Dansk punktudgang fungerer nu igen. (#4986)
 * PageUp/PageDown kan igen bruges til at skifte dias i en PowerPoint-diasshow. (#4850)
@@ -986,7 +1088,7 @@ Højdepunkter i denne udgivelse inkluderer gennemsynstilstand for dokumenter i M
 * NVDA håndterer korrekt åbningen af en dropdown-liste for en celle i Microsoft Excel via genvejsmenuen. (#3586)
 * Nyt sideindhold i iTunes 11-butikssider vises nu korrekt i gennemsynstilstand, når et link følges i butikken, eller når butikken åbnes. (#3625)
 * Knapper til forhåndsvisning af sange i iTunes 11-butikken viser nu deres etiket i gennemsynstilstand. (#3638)
-* I gennemsynstilstand i Google Chrome gengives etiketterne for afkrydsningsfelter og radioknapper korrekt. (#1562)
+* I gennemsynstilstand i Google Chrome gengives etiketterne for check boxer og radioknapper korrekt. (#1562)
 * I Instantbird rapporterer NVDA ikke længere ubrugelig information, hver gang du flytter til en kontakt i kontaktlisten. (#2667)
 * I gennemsynstilstand i Adobe Reader gengives den korrekte tekst nu for knapper osv., hvor etiketten er blevet ændret ved hjælp af et værktøjstip eller andre midler. (#3640)
 * I gennemsynstilstand i Adobe Reader gengives overflødige grafik, der indeholder teksten "mc-ref", ikke længere. (#3645)
@@ -1046,7 +1148,7 @@ Højdepunkter i denne udgivelse inkluderer gennemsynstilstand for dokumenter i M
 ### Fejlrettelser
 
 * Zend Studio fungerer nu på samme måde som Eclipse. (#3420)
-* Den ændrede tilstand for visse afkrydsningsfelter i Microsoft Outlook 2010-meddelelsesregler-dialogen rapporteres nu automatisk. (#3063)
+* Den ændrede tilstand for visse check boxer i Microsoft Outlook 2010-meddelelsesregler-dialogen rapporteres nu automatisk. (#3063)
 * NVDA vil nu rapportere den fastgjorte tilstand for fastgjorte kontroller såsom faner i Mozilla Firefox. (#3372)
 * Det er nu muligt at binde scripts til tastaturkommandoer, der indeholder Alt- og/eller Windows-taster som modifikatorer. Tidligere, hvis dette blev gjort, ville udførelsen af scriptet medføre, at startmenuen eller menulinjen blev aktiveret. (#3472)
 * Valg af tekst i dokumenter i gennemsynstilstand (f.eks. ved brug af control+shift+end) får ikke længere tastaturlayoutet til at skifte på systemer med flere installerede tastaturlayouts. (#3472)
@@ -1096,7 +1198,7 @@ Højdepunkter i denne udgivelse inkluderer gennemsynstilstand for dokumenter i M
 ### Ændringer
 
 * På en touchskærm bevæger en enkelt fingerstrygning til venstre eller højre i objektmodus nu forrige eller næste gennem alle objekter, ikke kun dem i den nuværende container. Brug to-fingerstrygning til venstre eller højre for at udføre den oprindelige handling med at flytte til forrige eller næste objekt i den nuværende container.
-* "Rapportér layouttabeller"-afkrydsningsfeltet i gennemsynstilstandsindstillingsdialogen er nu blevet omdøbt til "Inkluder layouttabeller" for at afspejle, at hurtignavigation heller ikke vil finde dem, hvis afkrydsningsfeltet er slået fra. (#3140)
+* "Rapportér layouttabeller"-check boxen i gennemsynstilstandsindstillingsdialogen er nu blevet omdøbt til "Inkluder layouttabeller" for at afspejle, at hurtignavigation heller ikke vil finde dem, hvis check boxen er slået fra. (#3140)
 * Flad gennemgang er blevet erstattet med objekt-, dokument- og skærmgennemgangstilstande. (#2996)
   * Objektgennemgang gennemgår kun tekst inden for navigatorobjektet, dokumentgennemgang gennemgår al tekst i et gennemsynstilstandsdokument (hvis nogen), og skærmgennemgang gennemgår tekst på skærmen for den aktuelle applikation.
   * Kommandoerne, der tidligere bevægede sig til/fra flad gennemgang, skifter nu mellem disse nye gennemgangstilstande.
@@ -1166,7 +1268,7 @@ Højdepunkter for denne udgivelse inkluderer et mere intuitivt og konsistent tas
 #### Nyt tastaturlayout til bærbare computere
 
 Tastaturlayoutet til bærbare computere er blevet fuldstændig redesignet for at gøre det mere intuitivt og konsistent.
-Det nye layout bruger piletasterne i kombination med NVDA-tasten og andre modifikatorer til gennemgangskommandoer.
+Det nye layout bruger piletasterne i kombination med NVDA-tasten og andre modifikatorer til læsekommandoer.
 
 Bemærk følgende ændringer til ofte anvendte kommandoer:
 
@@ -1249,7 +1351,7 @@ Se venligst dokumentet [Kommandoernes hurtigreference](keyCommands.html) for de 
   * Dette gøres ved hjælp af getPossiblePorts-klassens metode på BrailleDisplayDriver-klassen.
 * Punktinput fra punkt-tastaturer understøttes nu. (#808)
   * Punktinput er dækket af brailleInput.BrailleInputGesture-klassen eller en underklasse deraf.
-  * Underklasser af braille.BrailleDisplayGesture (som implementeret i punktdisplay-drivere) kan også arve fra brailleInput.BrailleInputGesture. Dette tillader displaykommandoer og punktinput at blive behandlet af den samme gestusklasse.
+  * Underklasser af braille.BrailleDisplayGesture (som implementeret i punktdisplay-drivere) kan også arve fra brailleInput.BrailleInputGesture. Dette tillader displaykommandoer og punktinput at blive behandlet af den samme gestureklasse.
 * Du kan nu bruge comHelper.getActiveObject til at få et aktivt COM-objekt fra en normal proces, når NVDA kører med UIAccess-privilegiet. (#2483)
 
 ## 2012.3
@@ -1344,7 +1446,7 @@ Højdepunkter i denne udgivelse inkluderer understøttelse af asiatisk tegninput
 * Hvor et dokument indeholder en applikation, er applikationens indhold ikke længere inkluderet i gennemsynstilstand. Dette forhindrer uventet bevægelse ind i applikationen under navigation. Du kan interagere med applikationen på samme måde som med indlejrede objekter. (#990)
 * I Mozilla-applikationer rapporteres værdien af drejeknapper nu korrekt, når den ændres. (#2653)
 * Opdateret understøttelse af Adobe Digital Editions, så det fungerer i version 2.0. (#2688)
-* Ved at trykke på NVDA+pil op, mens du er på en kombinationsboks i Internet Explorer og andre MSHTML-dokumenter, vil NVDA ikke længere fejlagtigt læse alle elementer. Kun det aktive element læses. (#2337)
+* Ved at trykke på NVDA+pil op, mens du er på en combo box i Internet Explorer og andre MSHTML-dokumenter, vil NVDA ikke længere fejlagtigt læse alle elementer. Kun det aktive element læses. (#2337)
 * Taleordbøger gemmes nu korrekt, når der bruges et nummer (#) i mønster- eller erstatningsfelterne. (#961)
 * Gennemsynstilstand for MSHTML-dokumenter (f.eks. Internet Explorer) viser nu korrekt synligt indhold indeholdt i skjult indhold (specifikt elementer med en style af visibility:visible inde i et element med style visibility:hidden). (#2097)
 * Links i Windows XP's sikkerhedscenter rapporterer ikke længere tilfældige tegn efter deres navne. (#1331)
@@ -1538,7 +1640,7 @@ Højdepunkter i denne udgivelse inkluderer automatisk skift af talesprog ved læ
 * NVDA viser ikke længere punkttegn eller nummerering for lister i Internet Explorer og andre MSHTML-kontroller, når forfatteren har angivet, at disse ikke skal vises (f.eks. hvis listeformatet er "none"). (#1671)
 * Genstart af NVDA, når det er frosset (f.eks. ved at trykke på control+alt+n), lukker ikke længere den tidligere kopi uden at starte en ny.
 * Tryk på backspace eller piletaster i en Windows-kommandokonsol giver ikke længere mærkelige resultater i nogle tilfælde. (#1612)
-* Det valgte element i WPF-kombokasser (og muligvis nogle andre kombokasser eksponeret ved brug af UI Automation), der ikke tillader tekstredigering, rapporteres nu korrekt.
+* Det valgte element i WPF-combo boxe (og muligvis nogle andre combo boxe eksponeret ved brug af UI Automation), der ikke tillader tekstredigering, rapporteres nu korrekt.
 * I gennemsynstilstand i Adobe Reader er det nu altid muligt at flytte til næste række fra header-rækken og omvendt ved brug af kommandoerne til at flytte til næste og forrige række. Header-rækken rapporteres heller ikke længere som række 0. (#1731)
 * I gennemsynstilstand i Adobe Reader er det nu muligt at flytte til (og dermed forbi) tomme celler i en tabel.
 * Ubrugelig positionsinformation (f.eks. 0 af 0 niveau 0) rapporteres ikke længere på punktdisplay.
@@ -1546,7 +1648,7 @@ Højdepunkter i denne udgivelse inkluderer automatisk skift af talesprog ved læ
 * En tekstkontrols tekst præsenteres ikke længere dobbelt på et punktdisplay i nogle tilfælde, f.eks. når der rulles tilbage fra starten af Wordpad-dokumenter.
 * I gennemsynstilstand i Internet Explorer, fremkalder tryk på enter på en filupload-knap nu korrekt dialogboksen til at vælge en fil, der skal uploades, i stedet for at skifte til fokustilstand. (#1720)
 * Dynamiske indholdsændringer, såsom i DOS-konsoller, annonceres ikke længere, hvis dvaletilstand for den applikation er aktiveret. (#1662)
-* I gennemsynstilstand er adfærden for alt+opPil og alt+nedPil til at folde og udvide kombokasser forbedret. (#1630)
+* I gennemsynstilstand er adfærden for alt+opPil og alt+nedPil til at folde og udvide combo boxe forbedret. (#1630)
 * NVDA genopretter sig nu fra mange flere situationer, såsom applikationer, der ikke reagerer, hvilket tidligere fik det til at fryse helt. (#1408)
 * For Mozilla Gecko (Firefox osv.) gennemsynstilstandsdokumenter vil NVDA ikke længere fejle i at gengive tekst i en meget specifik situation, hvor et element er stylet som display:table. (#1373)
 * NVDA vil ikke længere annoncere label-kontroller, når fokus flyttes inden i dem. Stopper dobbeltannoncering af labels for nogle formularfelter i Firefox (Gecko) og Internet Explorer (MSHTML). (#1650)
@@ -1567,3 +1669,797 @@ Højdepunkter i denne udgivelse inkluderer automatisk skift af talesprog ved læ
 * NVDA kan nu instruere talesynteser til at skifte sprog for bestemte dele af tale.
  * For at understøtte dette skal drivere håndtere speech.LangChangeCommand i sekvenser sendt til SynthDriver.speak().
  * SynthDriver-objekter bør også levere sprogargumentet til VoiceInfo-objekter (eller tilsidesætte sprog-attributten for at hente det aktuelle sprog). Ellers vil NVDA's brugergrænsefladesprog blive brugt.
+
+## 2011.2
+
+Højdepunkter i denne version inkluderer store forbedringer med hensyn til tegnsætning og symboler, inklusive konfigurerbare niveauer, brugerdefineret mærkning og tegnbeskrivelser; ingen pauser ved slutningen af linjer under "sig alt"; forbedret støtte til ARIA i Internet Explorer; bedre støtte til XFA/LiveCycle PDF-dokumenter i Adobe Reader; adgang til tekst, der skrives til skærmen i flere applikationer; og adgang til formaterings- og farveoplysninger for tekst, der skrives til skærmen.
+
+### Nye funktioner
+
+* Det er nu muligt at høre beskrivelsen af et givet tegn ved at trykke på kommandoen for gennemgang af det aktuelle tegn to gange hurtigt efter hinanden. For engelske tegn er dette det standard engelske fonetiske alfabet. For piktografiske sprog såsom traditionel kinesisk gives der et eller flere eksempler med sætninger, der bruger det pågældende symbol. At trykke tre gange på kommandoen for gennemgang af det aktuelle ord eller linje vil stave ordet/linjen ved brug af den første af disse beskrivelser. (#55)
+* Mere tekst kan ses i flad gennemgang for applikationer som Mozilla Thunderbird, der skriver deres tekst direkte til skærmen som glyphs.
+* Det er nu muligt at vælge mellem flere niveauer af tegnsætning og symboludtalelse. (#332)
+* Når tegnsætning eller andre symboler gentages mere end fire gange, bliver antallet af gentagelser nu annonceret i stedet for at gentage symbolerne. (#43)
+* Nye punkttabeller: Norsk 8-punkt computer braille, Etiopisk grad 1, Slovensk grad 1, Serbisk grad 1. (#1456)
+* Tale holder ikke længere unaturlige pauser ved slutningen af hver linje, når man bruger "sig alt"-kommandoen. (#149)
+* NVDA vil nu annoncere, om noget er sorteret (ifølge aria-sort egenskaben) i webbrowsere. (#1500)
+* Unicode Braille-mønstre vises nu korrekt på punktdisplays. (#1505)
+* I Internet Explorer og andre MSHTML-kontroller, når fokus flytter sig inden for en gruppe af kontroller (omgivet af et fieldset), vil NVDA nu annoncere navnet på gruppen (legenden). (#535)
+* I Internet Explorer og andre MSHTML-kontroller respekteres nu aria-labelledBy og aria-describedBy egenskaberne.
+* I Internet Explorer og andre MSHTML-kontroller er støtte til ARIA-liste, gridcelle, slider og progressbar kontroller blevet forbedret.
+* Brugere kan nu ændre udtalen af tegnsætning og andre symboler samt niveauet for, hvornår de bliver talt. (#271, #1516)
+* I Microsoft Excel annonceres navnet på det aktive ark nu, når der skiftes ark med control+pageUp eller control+pageDown. (#760)
+* Når man navigerer i en tabel i Microsoft Word med tabulatortasten, vil NVDA nu annoncere den aktuelle celle, når du flytter dig. (#159)
+* Du kan nu konfigurere, om tabelcellekoordinater skal annonceres fra dialogboksen for dokumentformatering. (#719)
+* NVDA kan nu opdage formatering og farver for tekst, der skrives til skærmen.
+* I meddelelseslisten i Outlook Express/Windows Mail/Windows Live Mail annoncerer NVDA nu, om en meddelelse er ulæst, samt om den er udvidet eller kollapset i samtaletråde. (#868)
+* eSpeak har nu en "rate boost"-indstilling, der tredobler taletempoet.
+* Støtte til kalenderkontrollen, der findes i dialogboksen for Dato og tid fra Windows 7-uret. (#1637)
+* Yderligere tastaturbindinger er blevet tilføjet til MDV Lilli punktdisplayet. (#241)
+* Nye sprog: Bulgarsk, Albansk.
+
+### Ændringer
+
+* For at flytte markøren til gennemgangsmarkøren, tryk nu på kommandoen for at flytte fokus til navigatorobjektet (desktop NVDA+shift+numpadMinus, laptop NVDA+shift+backspace) to gange hurtigt efter hinanden. Dette frigør flere taster på tastaturet. (#837)
+* For at høre den decimale og hexadecimale repræsentation af tegnet under gennemgangsmarkøren, tryk nu tre gange på kommandoen for gennemgang af det aktuelle tegn i stedet for to gange, da to gange nu taler tegnbeskrivelsen.
+* Opdateret eSpeak talesyntese til version 1.45.03. (#1465)
+* Layouttabeller annonceres ikke længere i Mozilla Gecko-applikationer, når man flytter fokus i fokus-tilstand eller uden for et dokument.
+* I Internet Explorer og andre MSHTML-kontroller fungerer gennemsynstilstand nu for dokumenter inde i ARIA-applikationer. (#1452)
+* Opdateret liblouis brailleoversætter til version 2.3.0.
+* Når man er i gennemsynstilstand og hopper til en kontrol med quicknav eller fokus, bliver beskrivelsen af kontrollen nu annonceret, hvis den har en.
+* Fremdriftslinjer annonceres nu i gennemsynstilstand.
+* Noder markeret med en ARIA-rolle som præsentation i Internet Explorer og andre MSHTML-kontroller bliver nu filtreret fra i simpel gennemgang og fokus-stamtræet.
+* NVDA's brugergrænseflade og dokumentation henviser nu til virtuelle buffere som gennemsynstilstand, da termen "virtuelle buffere" er ret meningsløs for de fleste brugere. (#1509)
+* Når brugeren ønsker at kopiere sine brugerindstillinger til systemprofilen til brug ved loginskærmen mv., og deres indstillinger indeholder brugerdefinerede plugins, advares de nu om, at dette kan udgøre en sikkerhedsrisiko. (#1426)
+* NVDA-tjenesten starter og stopper ikke længere NVDA på brugerinput-skriveborde.
+* På Windows XP og Windows Vista benytter NVDA ikke længere UI Automation, selvom det er tilgængeligt via platformopdateringen. Selvom brugen af UI Automation kan forbedre tilgængeligheden af nogle moderne applikationer, var der for mange nedbrud, frysninger og overordnet ydelsestab ved brug af det på XP og Vista. (#1437)
+* I applikationer, der bruger Mozilla Gecko 2 og senere (såsom Firefox 4 og senere), kan et dokument nu læses i gennemsynstilstand, før det er fuldstændigt indlæst.
+* NVDA annoncerer nu tilstanden af en container, når fokus flyttes til en kontrol inde i den (f.eks. hvis fokus flyttes inde i et dokument, der stadig indlæses, vil det blive rapporteret som travlt).
+* NVDA's brugergrænseflade og dokumentation bruger ikke længere termerne "første barn" og "forælder" med hensyn til objekt-navigation, da disse termer er forvirrende for mange brugere.
+* "Kollapset" annonceres ikke længere for nogle menupunkter, der har undermenuer.
+* Kommandoen "Rapporter aktuel formatering" (NVDA+f) rapporterer nu formateringen ved gennemgangsmarkøren i stedet for systemmarkøren/fokus. Da gennemgangsmarkøren som standard følger markøren, vil de fleste ikke bemærke nogen forskel. Dette giver dog nu brugeren mulighed for at finde ud af formateringen, når man flytter gennemgangsmarkøren, f.eks. i flad gennemgang.
+
+### Fejlrettelser
+
+* Kollapsende kombobokse i gennemsynstilstandsdokumenter, når fokus-tilstand er blevet tvunget med NVDA+mellemrum, skifter ikke længere automatisk tilbage til gennemsynstilstand. (#1386)
+* I Gecko (f.eks. Firefox) og MSHTML (f.eks. Internet Explorer) dokumenter gengiver NVDA nu korrekt visse tekster på samme linje, der tidligere blev gengivet på separate linjer. (#1378)
+* Når punktskrift er forbundet med gennemgang, og navigatorobjektet flyttes til et gennemsynstilstandsdokument, enten manuelt eller på grund af en fokusændring, vil punktskrift passende vise gennemsynstilstandsindholdet. (#1406, #1407)
+* Når tale af tegnsætning er deaktiveret, bliver visse tegnsætninger ikke længere fejlagtigt talt, når man bruger nogle talesynteser. (#332)
+* Der opstår ikke længere problemer ved indlæsning af konfiguration for talesynteser, der ikke understøtter stemmeindstillingen, såsom Audiologic Tts3. (#1347)
+* Skype Ekstras-menuen bliver nu læst korrekt. (#648)
+* Markering af check boxen for Lysstyrke kontrollerer lydstyrke i dialogboksen Musens indstillinger bør ikke længere forårsage store forsinkelser for beep-lyde, når musen flyttes rundt på skærmen på Windows Vista/Windows 7 med Aero aktiveret. (#1183)
+* Når NVDA er konfigureret til at bruge laptop-tastaturlayout, fungerer NVDA+slet nu som dokumenteret til at rapportere dimensionerne af det aktuelle navigatorobjekt. (#1498)
+* NVDA respekterer nu korrekt aria-selected attributten i Internet Explorer dokumenter.
+* Når NVDA automatisk skifter til fokus-tilstand i gennemsynstilstandsdokumenter, annoncerer den nu oplysninger om konteksten for fokus. For eksempel, hvis et listeboks-element modtager fokus, vil listeboksen blive annonceret først. (#1491)
+* I Internet Explorer og andre MSHTML-kontroller behandles ARIA listeboks-kontroller nu som lister i stedet for listeelementer.
+* Når en skrivebeskyttet redigerbar tekstkontrol modtager fokus, rapporterer NVDA nu, at den er skrivebeskyttet. (#1436)
+* I gennemsynstilstand opfører NVDA sig nu korrekt med hensyn til skrivebeskyttede redigerbare tekstfelter.
+* I gennemsynstilstandsdokumenter skifter NVDA ikke længere fejlagtigt ud af fokus-tilstand, når aria-activedescendant er indstillet; f.eks. når fuldførelseslisten dukkede op i nogle autoudfyldningskontroller.
+* I Adobe Reader rapporteres navnet på kontroller, når fokus flyttes eller når der bruges hurtig navigation i gennemsynstilstand.
+* I XFA PDF-dokumenter i Adobe Reader gengives knapper, links og grafik nu korrekt.
+* I XFA PDF-dokumenter i Adobe Reader er alle elementer nu gengivet på separate linjer. Denne ændring blev foretaget, fordi store sektioner (nogle gange hele dokumentet) blev gengivet uden mellemrum på grund af den generelle mangel på struktur i disse dokumenter.
+* Rettede problemer, når der flyttes fokus til eller væk fra redigerbare tekstfelter i XFA PDF-dokumenter i Adobe Reader.
+* I XFA PDF-dokumenter i Adobe Reader rapporteres ændringer i værdien af en fokuseret komboboks nu.
+* Ejermalede kombobokse såsom dem, der bruges til at vælge farver i Outlook Express, er nu tilgængelige med NVDA. (#1340)
+* I sprog, der bruger et mellemrum som en tusindskilletegn, såsom fransk og tysk, udtales tal fra separate tekststykker ikke længere som et enkelt tal. Dette var især problematisk for tabelceller, der indeholdt tal. (#555)
+* Noder med en ARIA-rolle som beskrivelse i Internet Explorer og andre MSHTML-kontroller bliver nu klassificeret som statisk tekst og ikke som redigeringsfelter.
+* Rettede forskellige problemer, når man trykkede på tabulatortasten, mens fokus var på et dokument i gennemsynstilstand (f.eks. flyttede tab-tasten fejlagtigt til adresselinjen i Internet Explorer). (#720, #1367)
+* Når man går ind i lister, mens man læser tekst, siger NVDA nu f.eks. "liste med 5 elementer" i stedet for "listemed 5 elementer". (#1515)
+* I input-hjælpetilstand logges kommandoer, selvom deres scripts omgår input-hjælpen, såsom kommandoerne for at rulle punktdisplayet frem og tilbage.
+* I input-hjælpetilstand, når en tastaturmodifikator holdes nede, rapporterer NVDA ikke længere modifikatoren, som om den modificerer sig selv; f.eks. NVDA+NVDA.
+* I Adobe Reader-dokumenter fungerer tryk på c eller shift+c for at navigere til en komboboks nu korrekt.
+* Den valgte tilstand af valgbare tabelrækker rapporteres nu på samme måde som liste- og trævisningselementer.
+* Kontroller i Firefox og andre Gecko-applikationer kan nu aktiveres i gennemsynstilstand, selvom deres indhold er blevet flyttet ud af skærmen. (#801)
+* Det er ikke længere muligt at vise en NVDA-indstillingsdialog, mens en meddelelsesdialog vises, da indstillingsdialogen var frosset i dette tilfælde. (#1451)
+* I Microsoft Excel er der ikke længere forsinkelser, når man holder nede eller hurtigt trykker på taster for at flytte mellem eller vælge celler.
+* Rettede intermitterende nedbrud af NVDA-tjenesten, hvilket betød, at NVDA stoppede med at køre på sikre Windows-skærme.
+* Rettede problemer, der undertiden opstod med punktdisplays, når en ændring fik teksten, der blev vist, til at forsvinde. (#1377)
+* Downloadvinduet i Internet Explorer 9 kan nu navigeres og læses med NVDA. (#1280)
+* Det er ikke længere muligt ved et uheld at starte flere kopier af NVDA på samme tid. (#507)
+* På langsomme systemer forhindrer NVDA nu uhensigtsmæssigt, at hovedvinduet vises hele tiden, mens det kører. (#726)
+* NVDA går ikke længere ned på Windows XP, når en WPF-applikation startes. (#1437)
+* "Sig alt" og "sig alt med gennemgang" fungerer nu i UI Automation-tekstkontroller, der understøtter al nødvendig funktionalitet. For eksempel kan du nu bruge "sig alt med gennemgang" på XPS Viewer-dokumenter.
+* NVDA klassificerer ikke længere visse listeelementer i Outlook Express/Windows Live Mail-meddelelsesregler Anvend nu-dialogen som værende check boxer. (#576)
+* Kombobokse rapporteres ikke længere som havende en undermenu.
+* NVDA er nu i stand til at læse modtagerne i felterne Til, CC og BCC i Microsoft Outlook. (#421)
+* Rettede problemet i NVDA's taleindstillinger, hvor værdien af skydeknapperne undertiden ikke blev rapporteret, når den blev ændret. (#1411)
+* NVDA annoncerer ikke længere den nye celle, når man bevæger sig i et Excel-regneark efter at have klippet og indsat. (#1567)
+* NVDA bliver ikke længere dårligere til at gætte farvenavne, jo flere farver det annoncerer.
+* I Internet Explorer og andre MSHTML-kontroller rettede vi problemet med at læse sjældne sider med iframes markeret med en ARIA-rolle som præsentation. (#1569)
+* I Internet Explorer og andre MSHTML-kontroller rettede vi et sjældent problem, hvor fokus blev ved med at hoppe uendeligt mellem dokumentet og et flerlinjet redigeringsfelt i fokus-tilstand. (#1566)
+* I Microsoft Word 2010 læser NVDA nu automatisk bekræftelsesdialoger. (#1538)
+* I flerlinjede redigerbare tekstfelter i Internet Explorer og andre MSHTML-kontroller rapporteres markeringen på linjer efter den første korrekt. (#1590)
+* Forbedrede bevægelsen efter ord i mange tilfælde, inklusive gennemsynstilstand og Windows redigeringskontroller. (#1580)
+* NVDA-installationsprogrammet viser ikke længere fejlbehæftede tekster for Hongkong-versioner af Windows Vista og Windows 7. (#1596)
+* NVDA fejler ikke længere ved indlæsning af Microsoft Speech API version 5 talesyntese, hvis konfigurationen indeholder indstillinger for den talesyntese, men mangler stemmeindstillingen. (#1599)
+* I redigerbare tekstfelter i Internet Explorer og andre MSHTML-kontroller fryser eller hænger NVDA ikke længere, når punkt er aktiveret.
+* I Firefox gennemsynstilstand nægter NVDA ikke længere at inkludere indhold, der er inden i en fokuserbar node med en ARIA-rolle som præsentation.
+* I Microsoft Word med punkt aktiveret rapporteres linjer på sider efter den første side nu korrekt. (#1603)
+* I Microsoft Word 2003 kan linjer med højre-til-venstre-tekst igen læses, når punkt er aktiveret. (#627)
+* I Microsoft Word fungerer "sig alt" nu korrekt, når dokumentet ikke slutter med en sætning.
+* Når man åbner en almindelig tekstmeddelelse i Windows Live Mail 2011, vil NVDA korrekt fokusere på meddelelsesdokumentet, så det kan læses.
+* NVDA fryser ikke længere midlertidigt eller nægter at tale i dialogerne Flyt til/Kopier til i Windows Live Mail. (#574)
+* I Outlook 2010 vil NVDA nu korrekt følge fokus i meddelelseslisten. (#1285)
+* Nogle USB-forbindelsesproblemer er blevet løst med MDV Lilli punktdisplayet. (#241)
+* I Internet Explorer og andre MSHTML-kontroller ignoreres mellemrum ikke længere i gennemsynstilstand i visse tilfælde (f.eks. efter et link).
+* I Internet Explorer og andre MSHTML-kontroller er nogle overflødige linjeskift blevet elimineret i gennemsynstilstand. Specifikt tvinger HTML-elementer med en display-stil af None ikke længere et linjeskift. (#1685)
+* Hvis NVDA ikke kan starte, vil undladelse af at afspille Windows-kritisk stop-lyd ikke længere forhindre den kritiske fejlmeddelelse i logfilen.
+
+### Ændringer for udviklere
+
+* Udviklerdokumentation kan nu genereres ved brug af SCons. Se readme.txt i roden af kildefordelingen for detaljer, herunder tilknyttede afhængigheder.
+* Lokaliser kan nu levere beskrivelser for tegn. Se sektionen Tegnbeskrivelser i Udviklerguiden for detaljer. (#55)
+* Lokaliser kan nu levere oplysninger om udtale af specifik tegnsætning og andre symboler. Se sektionen Symboludtale i Udviklerguiden for detaljer. (#332)
+* Du kan nu bygge NVDAHelper med flere fejlretningsmuligheder ved at bruge nvdaHelperDebugFlags SCons-variablen. Se readme.txt i roden af kildefordelingen for detaljer. (#1390)
+* Synth-drivere får nu overført en sekvens af tekst og tale-kommandoer til at tale, i stedet for kun tekst og en indeks.
+ * Dette muliggør indlejrede indekser, parameterændringer mv.
+ * Drivere bør implementere SynthDriver.speak() i stedet for SynthDriver.speakText() og SynthDriver.speakCharacter().
+ * De gamle metoder vil blive brugt, hvis SynthDriver.speak() ikke er implementeret, men de er forældede og vil blive fjernet i en fremtidig version.
+* gui.execute() er blevet fjernet. wx.CallAfter() bør bruges i stedet.
+* gui.scriptUI er blevet fjernet.
+ * For meddelelsesdialoger, brug wx.CallAfter(gui.messageBox, ...).
+ * For alle andre dialoger bør rigtige wx-dialoger bruges i stedet.
+ * En ny gui.runScriptModalDialog() funktion forenkler brugen af modale dialoger fra scripts.
+* Synth-drivere kan nu understøtte boolske indstillinger. Se SynthDriverHandler.BooleanSynthSetting.
+* SCons accepterer nu en certTimestampServer-variabel, der specificerer URL'en på en tidsstemplingsserver, som skal bruges til at tidsstemple autenticode-signaturer. (#1644)
+
+## 2011.1.1
+
+Denne udgivelse løser flere sikkerheds- og andre vigtige problemer, der er fundet i NVDA 2011.1.
+
+### Fejlrettelser
+
+* Punktet Doner i NVDA-menuen er nu deaktiveret, når man kører på logon-, låse-, UAC- og andre sikre Windows-skærme, da dette udgør en sikkerhedsrisiko. (#1419)
+* Det er nu umuligt at kopiere eller indsætte inden for NVDA's brugergrænseflade, mens man er på sikre skriveborde (låseskærm, UAC-skærm og Windows-logon), da dette udgør en sikkerhedsrisiko. (#1421)
+* I Firefox 4 fungerer kommandoen flyt til den indeholdende virtuelle buffer (NVDA+control+space) nu som den burde for at undslippe indlejrede objekter såsom Flash-indhold. (#1429)
+* Når tale af kommando-taster er aktiveret, bliver skiftede tegn ikke længere fejlagtigt talt som kommando-taster. (#1422)
+* Når tale af kommando-taster er aktiveret, bliver tryk på mellemrum med andre modifikatorer end skift (såsom control og alt) nu rapporteret som en kommando-tast. (#1424)
+* Logføring er nu helt deaktiveret, når man kører på logon-, låse-, UAC- og andre sikre Windows-skærme, da dette udgør en sikkerhedsrisiko. (#1435)
+* I input-hjælpetilstand logges kommandoer, selvom de ikke er bundet til et script (i overensstemmelse med brugerguiden). (#1425)
+
+## 2011.1
+
+Højdepunkter i denne version inkluderer automatisk rapportering af ny tekstudgang i mIRC, PuTTY, Tera Term og SecureCRT; støtte til globale plugins; annoncering af punkttegn og nummerering i Microsoft Word; yderligere tastaturbindinger til punktdisplays, inklusive taster til at flytte til næste og forrige linje; støtte til flere Baum, HumanWare og APH punktdisplays; og rapportering af farver for nogle kontroller, inklusive IBM Lotus Symphony tekstkontroller.
+
+### Nye funktioner
+
+* Farver kan nu rapporteres for nogle kontroller. Automatisk annoncering kan konfigureres i dialogboksen for dokumentformatering. Det kan også rapporteres efter behov ved hjælp af kommandoen "rapporter tekstformatering" (NVDA+f).
+ * Indledningsvist understøttes dette i standard IAccessible2-redigerbare tekstkontroller (såsom i Mozilla-applikationer), RichEdit-kontroller (såsom i Wordpad) og IBM Lotus Symphony tekstkontroller.
+* I virtuelle buffere kan du nu vælge pr. side (ved hjælp af shift+pageDown og shift+pageUp) og paragraf (ved hjælp af shift+control+downArrow og shift+control+upArrow). (#639)
+* NVDA rapporterer nu automatisk ny tekstudgang i mIRC, PuTTY, Tera Term og SecureCRT. (#936)
+* Brugere kan nu tilføje nye tastaturbindinger eller overskrive eksisterende for ethvert script i NVDA ved at tildele én kommando til det pågældende script. (#194)
+* Støtte til globale plugins. Globale plugins kan tilføje ny funktionalitet til NVDA, der fungerer på tværs af alle applikationer. (#281)
+* Et lille bip høres nu, når der skrives tegn med shift-tasten, mens capslock er aktiveret. Dette kan slås fra ved at fjerne markeringen af den relaterede nye indstilling i dialogboksen for tastaturindstillinger. (#663)
+* Hårde sideskift annonceres nu, når man bevæger sig linje for linje i Microsoft Word. (#758)
+* Punkttegn og nummerering tales nu i Microsoft Word, når man bevæger sig linje for linje. (#208)
+* En kommando til at skifte dvaletilstand for den aktuelle applikation (NVDA+shift+s) er nu tilgængelig. Dvaletilstand (tidligere kendt som selvtalende tilstand) deaktiverer al skærmlæsningsfunktionalitet i NVDA for en bestemt applikation. Meget nyttigt for applikationer, der leverer deres egen tale- og/eller skærmlæsningsfunktionalitet. Tryk på denne kommando igen for at deaktivere dvaletilstand.
+* Nogle yderligere punktdisplay-tastaturbindinger er blevet tilføjet. Se sektionen Støttede punktdisplays i brugerguiden for detaljer. (#209)
+* Til bekvemmelighed for tredjepartsudviklere kan app-moduler samt globale plugins nu genindlæses uden at genstarte NVDA. Brug værktøjer -> Genindlæs plugins i NVDA-menuen eller NVDA+control+f3. (#544)
+* NVDA husker nu den position, du var på, når du vender tilbage til en tidligere besøgt webside. Dette gælder, indtil enten browseren eller NVDA afsluttes. (#132)
+* Handy Tech punktdisplays kan nu bruges uden at installere Handy Tech universal driver. (#854)
+* Støtte til flere Baum, HumanWare og APH punktdisplays. (#937)
+* Statuslinjen i Media Player Classic Home Cinema genkendes nu.
+* Freedom Scientific Focus 40 Blue punktdisplayet kan nu bruges, når det er forbundet via bluetooth. (#1345)
+
+### Ændringer
+
+* Positionsinformation rapporteres ikke længere som standard i nogle tilfælde, hvor det normalt var ukorrekt; f.eks. de fleste menuer, køreprogramlinjen, meddelelsesområdet osv. Dette kan dog genaktiveres ved en tilføjet mulighed i dialogboksen for objektpræsentation.
+* Tastaturhjælp er blevet omdøbt til input-hjælp for at afspejle, at det håndterer input fra andre kilder end tastaturet.
+* Input-hjælp rapporterer ikke længere en scripts kodelokation via tale og punkt, da det er kryptisk og irrelevant for brugeren. Dog logges det nu for udviklere og avancerede brugere.
+* Når NVDA opdager, at det er frosset, fortsætter det med at opsnappe NVDA-modifikatortaster, selvom det giver alle andre taster videre til systemet. Dette forhindrer brugeren i utilsigtet at skifte caps lock mv., hvis de trykker på en NVDA-modifikatortast uden at indse, at NVDA er frosset. (#939)
+* Hvis taster holdes nede efter brug af kommandoen "giv næste tast videre", gives alle taster (inklusive tastagentagelser) nu videre, indtil den sidste tast er frigivet.
+* Hvis en NVDA-modifikatortast trykkes to gange hurtigt efter hinanden for at give den videre, og det andet tryk holdes nede, vil alle tastagentagelser nu også blive givet videre.
+* Volumen op, ned og lydløs-tasterne rapporteres nu i input-hjælp. Dette kan være nyttigt, hvis brugeren er usikker på, hvad disse taster er.
+* Genvejstasten for "Gennemgangsmarkør" i NVDA's præferencemenu er blevet ændret fra r til c for at eliminere konflikten med punktindstillinger.
+
+### Fejlrettelser
+
+* Når der tilføjes en ny taleordbogspost, er titlen på dialogboksen nu "Tilføj ordbogspost" i stedet for "Rediger ordbogspost". (#924)
+* I taleordbogens dialogbokse præsenteres indholdet af kolonnerne Regelmæssigt udtryk og Store/små bogstaver følsomme nu i det konfigurerede NVDA-sprog i stedet for altid på engelsk.
+* I AIM annonceres positionsinformation nu i trævisninger.
+* På skydeknapperne i dialogboksen Taleindstillinger øger op-pil/side op/home nu indstillingen, og ned-pil/side ned/end mindsker den. Tidligere skete det modsatte, hvilket ikke er logisk og ikke stemmer overens med talesyntese-indstillingsringen. (#221)
+* I virtuelle buffere med skærmlayout deaktiveret vises nogle overflødige tomme linjer ikke længere.
+* Hvis en NVDA-modifikatortast trykkes to gange hurtigt, men der er en mellemliggende tastetryk, gives NVDA-modifikatortasten ikke længere videre ved det andet tryk.
+* Tegnsætningstaster tales nu i input-hjælp, selv når tale af tegnsætning er deaktiveret. (#977)
+* I dialogboksen for tastaturindstillinger præsenteres tastaturlayoutnavnene nu i det konfigurerede NVDA-sprog i stedet for altid på engelsk. (#558)
+* Rettede et problem, hvor nogle elementer blev gengivet som tomme i Adobe Reader-dokumenter; f.eks. linksene i indholdsfortegnelsen i Apple iPhone IOS 4.1 brugervejledningen.
+* Knappen "Brug aktuelt gemte indstillinger på logon og andre sikre skærme" i NVDA's Generelle indstillinger fungerer nu, hvis den bruges umiddelbart efter, at NVDA er nyinstalleret, men før en sikker skærm har vist sig. Tidligere rapporterede NVDA, at kopiering var succesfuld, men det havde faktisk ingen effekt. (#1194)
+* Det er ikke længere muligt at have to NVDA-indstillingsdialogbokse åbne samtidig. Dette løser problemer, hvor én åben dialog afhænger af en anden åben dialog; f.eks. ændring af talesyntese, mens dialogboksen for taleindstillinger er åben. (#603)
+* På systemer med UAC aktiveret, fejler knappen "Brug aktuelt gemte indstillinger på logon og andre sikre skærme" i NVDA's Generelle indstillinger ikke længere efter UAC-prompten, hvis brugerens kontonavn indeholder et mellemrum. (#918)
+* I Internet Explorer og andre MSHTML-kontroller bruger NVDA nu URL'en som sidste udvej til at bestemme navnet på et link i stedet for at præsentere tomme links. (#633)
+* NVDA ignorerer ikke længere fokus i AOL Instant Messenger 7-menuer. (#655)
+* Annoncerer nu den korrekte etiket for fejl i Microsoft Word stavekontrol-dialogboksen (f.eks. Ikke i ordbog, Grammatikfejl, tegnsætning). Tidligere blev de alle annonceret som grammatikfejl. (#883)
+* Indtastning i Microsoft Word ved brug af punktdisplay bør ikke længere forårsage, at der indtastes forvansket tekst, og en sjælden frysefejl ved tryk på en punktmarkørtast i Word-dokumenter er blevet rettet. (#1212) En begrænsning er dog, at arabisk tekst ikke længere kan læses i Word 2003 og derunder, når der bruges et punktdisplay. (#627)
+* Når der trykkes på slet-tasten i et redigeringsfelt, bør teksten/markøren på et punktdisplay nu altid blive opdateret passende for at afspejle ændringen. (#947)
+* Ændringer på dynamiske sider i Gecko2-dokumenter (f.eks. Firefox 4), mens flere faner er åbne, afspejles nu korrekt af NVDA. Tidligere blev kun ændringer i den første fane afspejlet. (Mozilla fejl 610985)
+* NVDA kan nu korrekt annoncere forslag til grammatik- og tegnsætningsfejl i Microsoft Words stavekontrol-dialogboks. (#704)
+* I Internet Explorer og andre MSHTML-kontroller præsenterer NVDA ikke længere destinationsankre som tomme links i sin virtuelle buffer. I stedet skjules disse ankre, som de bør være. (#1326)
+* Objekt-navigation omkring og inden for standard gruppedialogvinduer er ikke længere ødelagt og asymmetrisk.
+* I Firefox og andre Gecko-baserede kontroller sidder NVDA ikke længere fast i en underframe, hvis den er færdig med at indlæse, før det ydre dokument er færdigt.
+* NVDA annoncerer nu passende det næste tegn, når man sletter et tegn med numpadDelete. (#286)
+* På Windows XP logonskærmen annonceres brugernavnet igen, når den valgte bruger ændres.
+* Rettede problemer, når man læser tekst i Windows kommandokonsoller med rapportering af linjenumre aktiveret.
+* Dialogboksen for elementlisten i virtuelle buffere er nu anvendelig af seende brugere. Alle kontroller er synlige på skærmen. (#1321)
+* Listen over poster i taleordbogens dialogboks er nu mere læsbar for seende brugere. Listen er nu stor nok til at vise alle dens kolonner på skærmen. (#90)
+* På ALVA BC640/BC680 punktdisplays ignorerer NVDA ikke længere display-taster, der stadig er holdt nede, efter en anden tast er frigivet.
+* Adobe Reader X går ikke længere ned, efter man forlader de uopmærkede dokumentindstillinger, før behandlingsdialogen vises. (#1218)
+* NVDA skifter nu til den passende punktdisplay-driver, når du vender tilbage til gemt konfiguration. (#1346)
+* Visual Studio 2008 Project Wizard læses igen korrekt. (#974)
+* NVDA holder ikke længere helt op med at fungere i applikationer, der indeholder ikke-ASCII-tegn i deres eksekverbare navn. (#1352)
+* Når man læser linje for linje i AkelPad med linjeombrydning aktiveret, læser NVDA ikke længere det første tegn på den følgende linje ved slutningen af den aktuelle linje.
+* I Visual Studio 2005/2008 kodeeditoren læser NVDA ikke længere hele teksten efter hver indtastede tast. (#975)
+* Rettede problemet, hvor nogle punktdisplays ikke blev ryddet korrekt, når NVDA blev afsluttet, eller displayet blev ændret.
+* Den indledende fokus tales ikke længere nogle gange to gange, når NVDA starter. (#1359)
+
+### Ændringer for udviklere
+
+* SCons bruges nu til at forberede kildekoden og skabe binære builds, bærbare arkiver, installationsprogrammer mv. Se readme.txt i roden af kildefordelingen for detaljer.
+* Tasternavne brugt af NVDA (inklusive tastkort) er blevet gjort mere brugervenlige/logiske; f.eks. opPil i stedet for extendedUp og numpadPageUp i stedet for prior. Se vkCodes-modulet for en liste.
+* Alt input fra brugeren repræsenteres nu af en inputCore.InputGesture-forekomst. (#601)
+ * Hver input-kilde underklasser basen InputGesture-klassen.
+ * Tastetryk på systemtastaturet er dækket af keyboardHandler.KeyboardInputGesture-klassen.
+ * Tryk på knapper, hjul og andre kontroller på et punktdisplay er dækket af underklasserne af braille.BrailleDisplayGesture-klassen. Disse underklasser leveres af hver punktdisplay-driver.
+* Input-kommandoer bindes til ScriptableObjects ved hjælp af ScriptableObject.bindGesture() metoden på en forekomst eller en __gestures dict på klassen, som kortlægger gesture-identifikatorer til script-navne. Se baseObject.ScriptableObject for detaljer.
+* App-moduler har ikke længere tastkort-filer. Alle input-kommando-bindinger skal udføres i selve app-modulet.
+* Alle scripts tager nu en InputGesture-forekomst i stedet for et tastetryk.
+ * KeyboardInputGestures kan sendes videre til OS'et ved hjælp af send()-metoden på kommandoen.
+* For at sende et vilkårligt tastetryk skal du nu oprette en KeyboardInputGesture ved hjælp af KeyboardInputGesture.fromName() og derefter bruge dens send()-metode.
+* Lokaliser kan nu levere input gesture for at tilføje nye bindinger eller overskrive eksisterende bindinger for scripts hvor som helst i NVDA. (#810)
+ * Locale-gesture-map bør placeres i locale\LANG\gestures.ini, hvor LANG er sprognavnet.
+ * Se inputCore.GlobalGestureMap for detaljer om filformatet.
+* De nye LiveText- og Terminal NVDAObject-adfærdsmønstre faciliterer automatisk rapportering af ny tekst. Se disse klasser i NVDAObjects.behaviors for detaljer. (#936)
+ * NVDAObjects.window.DisplayModelLiveText overlay-klassen kan bruges til objekter, der skal hente tekst skrevet til skærmen.
+ * Se mirc- og putty-app-modulerne for brugseksempler.
+* Der findes ikke længere et _default-app-modul. App-moduler bør i stedet underklasser appModuleHandler.AppModule (basen AppModule-klassen).
+* Støtte til globale plugins, der kan globalt binde scripts, håndtere NVDAObject-begivenheder og vælge NVDAObject-overlay-klasser. (#281) Se globalPluginHandler.GlobalPlugin for detaljer.
+* På SynthDriver-objekter er attributterne available* for strengindstillinger (f.eks. availableVoices og availableVariants) nu OrderedDicts nøglede efter ID i stedet for lister.
+* synthDriverHandler.VoiceInfo tager nu et valgfrit language-argument, der specificerer sproget for stemmen.
+* SynthDriver-objekter har nu en language-attribut, der specificerer sproget for den aktuelle stemme.
+ * Basisimplementeringen bruger sproget specificeret på VoiceInfo-objekterne i availableVoices. Dette er velegnet til de fleste talesynteser, der understøtter ét sprog pr. stemme.
+* Punktdisplay-drivere er blevet forbedret for at tillade, at knapper, hjul og andre kontroller kan bindes til NVDA-scripts:
+ * Drivere kan levere en global input gesture  for at tilføje bindinger for scripts hvor som helst i NVDA.
+ * De kan også levere deres egne scripts til at udføre specifikke displayfunktioner.
+ * Se braille.BrailleDisplayDriver for detaljer og eksisterende punktdisplay-drivere for eksempler.
+* Ejendommen 'selfVoicing' på AppModule-klasser er nu blevet omdøbt til 'sleepMode'.
+* App-modulbegivenhederne event_appLoseFocus og event_appGainFocus er nu blevet omdøbt til event_appModule_loseFocus og event_appModule_gainFocus, henholdsvis, for at gøre navngivningskonventionen konsistent med app-moduler og træinterceptorer.
+* Alle punktdisplay-drivere bør nu bruge braille.BrailleDisplayDriver i stedet for braille.BrailleDisplayDriverWithCursor.
+ * Markøren administreres nu uden for driveren.
+ * Eksisterende drivere behøver kun at ændre deres klassesætning i overensstemmelse hermed og omdøbe deres _display-metode til display.
+
+## 2010.2
+
+Bemærkelsesværdige funktioner i denne udgivelse inkluderer kraftigt forenklet objektnavigation; virtuelle buffere til Adobe Flash-indhold; adgang til mange tidligere utilgængelige kontroller ved at hente tekst, der er skrevet til skærmen; flad gennemgang af skærmtekst; support for IBM Lotus Symphony-dokumenter; rapportering af tabelrække- og kolonneoverskrifter i Mozilla Firefox; og betydeligt forbedret brugerdokumentation.
+
+### Nye Funktioner
+
+* Navigation gennem objekter med gennemgangsmarkøren er blevet kraftigt forenklet. Gennemgangsmarkøren udelukker nu objekter, som ikke er nyttige for brugeren; dvs. objekter, der kun bruges til layoutformål, og utilgængelige objekter.
+* I applikationer, der bruger Java Access Bridge (inklusive OpenOffice.org), kan formatering nu rapporteres i tekstkontroller. (#358, #463)
+* Når musen flyttes over celler i Microsoft Excel, vil NVDA korrekt annoncere dem.
+* I applikationer, der bruger Java Access Bridge, rapporteres teksten i en dialogboks nu, når dialogboksen vises. (#554)
+* En virtuelBuffer kan nu bruges til at navigere i Adobe Flash-indhold. Objektnavigation og interaktion med kontrollerne direkte (ved at aktivere fokustilstand) understøttes stadig. (#453)
+* Redigerbare tekstkontroller i Eclipse IDE, inklusive kodeditoren, er nu tilgængelige. Du skal bruge Eclipse 3.6 eller nyere. (#256, #641)
+* NVDA kan nu hente det meste tekst, der skrives til skærmen. (#40, #643)
+ * Dette gør det muligt at læse kontroller, der ikke udsender information på mere direkte/pålidelige måder.
+ * Kontroller, der bliver tilgængelige via denne funktion inkluderer: nogle menupunkter, der viser ikoner (f.eks. menuen Åbn med på filer i Windows XP) (#151), redigerbare tekstfelter i Windows Live-applikationer (#200), fejloversigten i Outlook Express (#582), det redigerbare tekstfelt i TextPad (#605), lister i Eudora, mange kontroller i Australian E-tax og formellinjen i Microsoft Excel.
+* Understøttelse af kodeditoren i Microsoft Visual Studio 2005 og 2008. Minimumsversionen skal være Visual Studio Standard; dette virker ikke i Express-udgaverne. (#457)
+* Understøttelse af IBM Lotus Symphony-dokumenter.
+* Tidlig eksperimentel understøttelse af Google Chrome. Bemærk venligst, at Chromes skærmlæserstøtte langt fra er fuldstændig, og at der kan være behov for yderligere arbejde i NVDA. Du skal bruge en nyere udviklingsudgave af Chrome for at afprøve dette.
+* Tilstanden for taster med skiftfunktion (caps lock, num lock og scroll lock) vises nu på punkt, når de trykkes. (#620)
+* Hjælpeballoner vises nu på punkt, når de dukker op. (#652)
+* Tilføjet en driver til MDV Lilli punktdisplay. (#241)
+* Når en hel række eller kolonne vælges i Microsoft Excel med genvejstasterne shift+space og control+space, rapporteres det nye valg nu. (#759)
+* Tabelrække- og kolonneoverskrifter kan nu rapporteres. Dette kan konfigureres fra dialogboksen Dokumentformatering.
+ * I øjeblikket understøttes dette i dokumenter i Mozilla-applikationer som Firefox (version 3.6.11 og senere) og Thunderbird (version 3.1.5 og senere). (#361)
+* Kommandoer til flad gennemgang blev introduceret: (#58)
+ * NVDA+numpad7 skifter til flad gennemgang og placerer gennemgangsmarkøren ved det nuværende objekts position, hvilket giver dig mulighed for at gennemgå skærmen (eller et dokument, hvis du er i et) med tekstgennemgangskommandoer.
+ * NVDA+numpad1 flytter gennemgangsmarkøren ind i det objekt, der er repræsenteret af teksten ved gennemgangsmarkørens position, hvilket giver dig mulighed for at navigere efter objekt fra dette punkt.
+* Aktuelle NVDA-brugerindstillinger kan kopieres til brug på sikre Windows-skærme som logon- og UAC-skærme ved at trykke på en knap i dialogboksen Generelle Indstillinger. (#730)
+* Understøttelse af Mozilla Firefox 4.
+* Understøttelse af Microsoft Internet Explorer 9.
+
+### Ændringer
+
+* Sig alt ved Navigator-objekt (NVDA+numpadAdd), næste navigator-objekt i flow (NVDA+shift+numpad6) og forrige navigator-objekt i flow (NVDA+shift+numpad4) er blevet fjernet midlertidigt på grund af fejl og for at frigøre taster til andre mulige funktioner.
+* I NVDA talesyntesedialogen vises nu kun syntesens visningsnavn. Tidligere blev det forudgået af driverens navn, hvilket kun er relevant internt.
+* Når du er i indlejrede applikationer eller virtuelle buffere inde i en anden virtuelBuffer (f.eks. Flash), kan du nu trykke på nvda+control+space for at bevæge dig ud af den indlejrede applikation eller virtuelle buffer til det overordnede dokument. Tidligere blev nvda+space brugt til dette. Nu bruges nvda+space specifikt kun til at skifte mellem gennemsyns-/fokustilstande i virtuelleBuffere.
+* Hvis taleviseren (aktiveret i menuen Værktøjer) får fokus (f.eks. ved klik), vil ny tekst ikke vises i kontrolfeltet, før fokus er fjernet. Dette giver mulighed for lettere valg af tekst (f.eks. til kopiering).
+* Logviseren og Python-konsollen maksimeres, når de aktiveres.
+* Når der fokuseres på et regneark i Microsoft Excel, og der er mere end én celle valgt, annonceres valgintervallet i stedet for kun den aktive celle. (#763)
+* Gemning af konfiguration og ændring af bestemte følsomme indstillinger er nu deaktiveret, når du kører på logon-, UAC- og andre sikre Windows-skærme.
+* Opdateret eSpeak talesyntese til 1.44.03.
+* Hvis NVDA allerede kører, vil aktivering af NVDA-genvejen på skrivebordet (som inkluderer at trykke på control+alt+n) genstarte NVDA.
+* Fjernet check boxen Rapportér tekst under musen fra dialogboksen Mus-indstillinger og erstattet det med et check box for Aktiver musesporing, som bedre matcher scriptet til at skifte musesporing (NVDA+m).
+* Opdateringer til tastaturlayoutet til bærbare computere, så det inkluderer alle kommandoer tilgængelige i skrivebordslayoutet og fungerer korrekt på ikke-engelske tastaturer. (#798, #800)
+* Betydelige forbedringer og opdateringer til brugerdokumentationen, herunder dokumentation af tastaturkommandoer til bærbare computere og synkronisering af hurtigreference til tastaturkommandoer med brugervejledningen. (#455)
+* Opdateret liblouis punktskriftsoversætter til 2.1.1. Dette retter især nogle problemer relateret til kinesisk punktskrift samt tegn, der er udefinerede i oversættelsestabellen. (#484, #499)
+
+### Fejlrettelser
+
+* I µTorrent rapporteres det fokuserede element i torrentlisten ikke længere gentagne gange eller stjæler fokus, når en menu er åben.
+* I µTorrent rapporteres filnavnene i listen over torrentindhold nu.
+* I Mozilla-applikationer registreres fokus nu korrekt, når det lander på en tom tabel eller et træ.
+* I Mozilla-applikationer rapporteres "ikke markeret" nu korrekt for kontroller, der kan markeres, såsom markerbare tabelceller. (#571)
+* I Mozilla-applikationer ignoreres teksten i korrekt implementerede ARIA-dialoger ikke længere og rapporteres nu, når dialogboksen vises. (#630)
+* I Internet Explorer og andre MSHTML-kontroller overholdes ARIA-niveauattributten nu korrekt.
+* I Internet Explorer og andre MSHTML-kontroller vælges ARIA-rollen nu over andre typeoplysninger for at give en meget mere korrekt og forudsigelig ARIA-oplevelse.
+* En sjælden nedbrud i Internet Explorer ved navigation gennem rammer eller iFrames er stoppet.
+* I Microsoft Word-dokumenter kan højre-til-venstre-linjer (som arabisk tekst) læses igen. (#627)
+* Kraftigt reduceret forsinkelse, når store mængder tekst vises i en Windows-kommandokonsol på 64-bit-systemer. (#622)
+* Hvis Skype allerede er startet, når NVDA starter, er det ikke længere nødvendigt at genstarte Skype for at aktivere tilgængelighed. Dette kan også være tilfældet for andre applikationer, der kontrollerer systemets skærmlæserflag.
+* I Microsoft Office-applikationer nedbryder NVDA ikke længere, når tal den forgrund (NVDA+b) trykkes, eller når der navigeres gennem nogle objekter på værktøjslinjer. (#616)
+* Rettet fejlagtig udtale af tal, der indeholder et 0 efter et separator; f.eks. 1.023. (#593)
+* Adobe Acrobat Pro og Reader 9 går ikke længere ned, når en fil lukkes eller visse andre opgaver udføres. (#613)
+* Valget annonceres nu, når control+a trykkes for at vælge al tekst i nogle redigerbare tekstkontroller som i Microsoft Word. (#761)
+* I Scintilla-kontroller (f.eks. Notepad++) vælges tekst ikke længere fejlagtigt, når NVDA flytter markøren, som f.eks. under sig alt. (#746)
+* Det er igen muligt at gennemgå indholdet af celler i Microsoft Excel med gennemgangsmarkøren.
+* NVDA kan igen læse linjevis i visse problematiske tekstområder i Internet Explorer 8. (#467)
+* Windows Live Messenger 2009 afsluttes ikke længere med det samme efter start, mens NVDA kører. (#677)
+* I webbrowsere er det ikke længere nødvendigt at trykke på tabulator for at interagere med et indlejret objekt (som Flash-indhold) efter at have trykket på enter på det indlejrede objekt eller vendt tilbage fra en anden applikation. (#775)
+* I Scintilla-kontroller (f.eks. Notepad++) afkortes begyndelsen af lange linjer ikke længere, når den ruller af skærmen. Disse lange linjer vises også korrekt på punkt, når de er markeret.
+* I Loudtalks er det nu muligt at få adgang til kontaktlisten.
+* Dokumentets URL og "MSAAHTML Registered Handler" rapporteres ikke længere sporadisk i Internet Explorer og andre MSHTML-kontroller. (#811)
+* I trævisninger i Eclipse IDE annonceres det tidligere fokuserede element ikke længere fejlagtigt, når fokus flyttes til et nyt element.
+* NVDA fungerer nu korrekt på et system, hvor den aktuelle arbejdsmappe er fjernet fra DLL-søgestien (ved at indstille registreringsnøglen CWDIllegalInDllSearch til 0xFFFFFFFF). Bemærk, at dette ikke er relevant for de fleste brugere. (#907)
+* Når tabelnavigationskommandoer bruges uden for en tabel i Microsoft Word, siges "kant af tabel" ikke længere efter "ikke i tabel". (#921)
+* Når tabelnavigationskommandoer ikke kan flyttes på grund af at være ved kanten af en tabel i Microsoft Word, siges "kant af tabel" nu på det konfigurerede NVDA-sprog i stedet for altid på engelsk. (#921)
+* I Outlook Express, Windows Mail og Windows Live Mail rapporteres tilstanden af check boxerne i meddelelsesregelisten nu. (#576)
+* Beskrivelsen af meddelelsesregler kan nu læses i Windows Live Mail 2010.
+
+## 2010.1
+
+Denne udgivelse fokuserer primært på fejlrettelser og forbedringer af brugeroplevelsen, herunder nogle betydelige stabilitetsforbedringer.
+
+### Nye Funktioner
+
+* NVDA starter ikke længere op på et system uden lydudgangsenheder. Naturligvis skal et punktdisplay eller Silence talesyntese sammen med taleviseren bruges til output i dette tilfælde. (#425)
+* Et check box til rapportering af landemærker er blevet tilføjet til dialogboksen Dokumentformatering, hvilket giver dig mulighed for at konfigurere, om NVDA skal annoncere landemærker i webdokumenter. For kompatibilitet med den tidligere udgivelse er muligheden aktiveret som standard.
+* Hvis "Sig kommandoer" er aktiveret, vil NVDA nu annoncere navne på multimedietaster (f.eks. play, stop, hjemmesiden osv.) på mange tastaturer, når de trykkes. (#472)
+* NVDA annoncerer nu det ord, der slettes, når du trykker på control+backspace i kontroller, der understøtter det. (#491)
+* Piletaster kan nu bruges i webformatorvinduet til at navigere og læse teksten. (#452)
+* Postliste i Microsoft Office Outlook-adressebogen understøttes nu.
+* NVDA understøtter bedre indlejrede redigerbare (design mode) dokumenter i Internet Explorer. (#402)
+* Et nyt script (nvda+shift+numpadMinus) giver dig mulighed for at flytte systemets fokus til det nuværende navigator-objekt.
+* Nye scripts til at låse og låse op for venstre og højre museknap. Nyttigt til at udføre træk og slip operationer. shift+numpadDivide for at låse/låse venstre, shift+numpadMultiply for at låse/låse højre.
+* Nye punktskriftoversættelsestabeller: Tysk 8-punkts computer braille, tysk grad 2, finsk 8-punkts computer braille, kinesisk (Hong Kong, kantonesisk), kinesisk (Taiwan, mandarin). (#344, #369, #415, #450)
+* Det er nu muligt at deaktivere oprettelsen af genvejen på skrivebordet (og dermed genvejstasten), når du installerer NVDA. (#518)
+* NVDA kan nu bruge IAccessible2, når det er til stede i 64-bit applikationer. (#479)
+* Forbedret support for liveområder i Mozilla-applikationer. (#246)
+* NVDA Controller Client API leveres nu for at give applikationer mulighed for at kontrollere NVDA; f.eks. for at tale tekst, slå tale fra, vise en besked på punkt, osv.
+* Informationer og fejlmeddelelser læses nu på logonskærmen i Windows Vista og Windows 7. (#506)
+* I Adobe Reader understøttes PDF-interaktive formularer udviklet med Adobe LiveCycle nu. (#475)
+* I Miranda IM læser NVDA nu automatisk indkommende beskeder i chatvinduer, hvis rapportering af dynamiske indholdsændringer er aktiveret. Der er også tilføjet kommandoer for at rapportere de tre seneste beskeder (NVDA+control+nummer). (#546)
+* Input-tekstfelter understøttes nu i Adobe Flash-indhold. (#461)
+
+### Ændringer
+
+* Den meget omfattende tastaturhjælpsbesked i Windows 7 Start-menuen rapporteres ikke længere.
+* Display syntesen er nu erstattet med en ny taleviser. For at aktivere den, vælg Taleviser fra Værktøjer-menuen. Taleviseren kan bruges uafhængigt af den talesyntese, du bruger. (#44)
+* Meddelelser på punktdisplayet fjernes automatisk, hvis brugeren trykker på en tast, der resulterer i en ændring, såsom fokusflytning. Tidligere blev meddelelsen altid vist i sin konfigurerede tid.
+* Indstilling om punkt skal være bundet til fokus eller gennemgangsmarkør (NVDA+control+t) kan nu også indstilles fra dialogboksen Punktskriftindstillinger og gemmes nu også i brugerens konfiguration.
+* Opdateret eSpeak talesyntese til 1.43.
+* Opdateret liblouis punktskriftoversætter til 1.8.0.
+* I virtuelle buffere er rapportering af elementer ved flytning med tegn eller ord blevet betydeligt forbedret. Tidligere blev en masse irrelevant information rapporteret, og rapporteringen var meget anderledes end ved flytning med linje. (#490)
+* Control-tasten stopper nu tale, som andre taster gør, i stedet for at sætte tale på pause. For at pause/genoptage tale skal du bruge shift-tasten.
+* Tabelrække- og kolonneantal annonceres ikke længere ved rapportering af fokusændringer, da denne rapportering er ret omfattende og normalt ikke nyttig.
+
+### Fejlrettelser
+
+* NVDA fejler ikke længere ved opstart, hvis UI Automation-support ser ud til at være tilgængelig, men mislykkes i at initialisere af en eller anden grund. (#483)
+* Hele indholdet af en tabelrække rapporteres ikke længere nogle gange, når fokus flyttes inde i en celle i Mozilla-applikationer. (#482)
+* NVDA oplever ikke længere betydelig forsinkelse, når trævisningselementer, der indeholder et meget stort antal underordnede elementer, udvides.
+* Når SAPI 5-stemmer listes, forsøger NVDA nu at opdage defekte stemmer og udelukker dem fra Stemmens Indstillinger-dialogboksen og synteseindstillingsringen. Tidligere, når der var blot én problematisk stemme, kunne NVDA's SAPI 5-driver nogle gange ikke starte.
+* Virtuelle buffere respekterer nu indstillingen for genvejstaster til objektpræsentation fundet i dialogboksen Objektpræsentation. (#486)
+* I virtuelle buffere læses række-/kolonnekoordinater ikke længere forkert for række- og kolonneoverskrifter, når rapportering af tabeller er deaktiveret.
+* I virtuelle buffere læses række-/kolonnekoordinater nu korrekt, når du forlader en tabel og derefter genindtaster samme celle uden først at besøge en anden celle; f.eks. tryk på pil op og derefter pil ned på den første celle i en tabel. (#378)
+* Tomme linjer i Microsoft Word-dokumenter og Microsoft HTML-redigeringskontroller vises nu korrekt på punktdisplays. Tidligere viste NVDA den aktuelle sætning på displayet, ikke den aktuelle linje i disse situationer. (#420)
+* Flere sikkerhedsrettelser ved kørsel af NVDA på Windows logon og andre sikre skriveborde. (#515)
+* Markørpositionen (caret) opdateres nu korrekt ved udførelse af Sig Alt, der går uden for skærmen, i standard Windows-redigeringsfelter og Microsoft Word-dokumenter. (#418)
+* I virtuelle buffere inkluderes tekst ikke længere fejlagtigt for billeder inde i links og klikbare elementer, der er markeret som værende irrelevante for skærmlæsere. (#423)
+* Rettelser til tastaturlayoutet til bærbare computere. (#517)
+* Når punkt er bundet til gennemgangsmarkøren, og du fokuserer på et Dos-konsolvindue, kan gennemgangsmarkøren nu navigere korrekt i teksten i konsollen.
+* Mens du arbejder med TeamTalk3 eller TeamTalk4 Classic, annonceres VU-meterets fremgangsbar i hovedvinduet ikke længere, mens den opdateres. Derudover kan specialtegn læses korrekt i det indgående chatvindue.
+* Elementer i Windows 7 Startmenuen tales ikke længere to gange. (#474)
+* Aktivering af samme-sidelinks i Firefox 3.6 flytter korrekt markøren i den virtuelleBuffer til det rigtige sted på siden.
+* Rettet problemet, hvor noget tekst ikke blev gengivet i Adobe Reader i visse PDF-dokumenter.
+* NVDA taler ikke længere forkert visse tal adskilt af en bindestreg; f.eks. 500-1000. (#547)
+* I Windows XP forårsager NVDA ikke længere, at Internet Explorer fryser ved aktivering af check box i Windows Update. (#477)
+* Når den indbyggede eSpeak talesyntese bruges, forårsager samtidig tale og bip ikke længere lejlighedsvise systemfrysninger på nogle systemer. Dette var mest mærkbart, f.eks. ved kopiering af store datamængder i Windows Stifinder.
+* NVDA annoncerer ikke længere, at et Firefox-dokument er blevet travlt (f.eks. på grund af en opdatering eller opfriskning), når det dokument er i baggrunden. Dette fik også statuslinjen i forgrundsapplikationen til at blive fejlagtigt annonceret.
+* Ved skift af Windows-tastaturlayouts (med control+shift eller alt+shift) rapporteres det fulde navn af layoutet både i tale og på punkt. Tidligere blev det kun rapporteret i tale, og alternative layouts (f.eks. Dvorak) blev slet ikke rapporteret.
+* Hvis rapportering af tabeller er deaktiveret, annonceres tabelinformationer ikke længere, når fokus ændres.
+* Visse standardtrævisningskontroller i 64-bit applikationer (f.eks. Indholdsoversigten i Microsoft HTML-hjælp) er nu tilgængelige. (#473)
+* Rettet nogle problemer med logning af beskeder, der indeholdt ikke-ASCII-tegn. Dette kunne i nogle tilfælde forårsage fejlagtige fejl på ikke-engelske systemer. (#581)
+* Informationerne i dialogboksen Om NVDA vises nu på brugerens konfigurerede sprog i stedet for altid på engelsk. (#586)
+* Der opstår ikke længere problemer ved brug af synteseindstillingsringen efter at stemmen er ændret til én, der har færre indstillinger end den forrige stemme.
+* I Skype 4.2 tales kontaktnavne ikke længere to gange i kontaktlisten.
+* Rettet nogle potentielt store hukommelseslækager i GUI'en og i virtuelle buffere. (#590, #591)
+* Omgået en irriterende fejl i nogle SAPI 4 talesynteser, som forårsagede hyppige fejl og nedbrud i NVDA. (#597)
+
+## 2009.1
+
+Væsentlige højdepunkter i denne udgivelse inkluderer understøttelse af 64-bit versioner af Windows; kraftigt forbedret understøttelse af Microsoft Internet Explorer og Adobe Reader-dokumenter; understøttelse af Windows 7; læsning af Windows logon-, control+alt+delete- og Brugeradgangskontrol (UAC)-skærme; og muligheden for at interagere med Adobe Flash- og Sun Java-indhold på websider. Der er også foretaget flere væsentlige stabilitetsforbedringer og forbedringer af den generelle brugeroplevelse.
+
+### Nye Funktioner
+
+* Officiel understøttelse af 64-bit versioner af Windows! (#309)
+* Tilføjet en driver til Newfon talesyntese. Bemærk, at dette kræver en speciel version af Newfon. (#206)
+* I virtuelle buffere kan fokus- og gennemsynstilstand nu rapporteres med lyde i stedet for tale. Dette er som standard aktiveret og kan konfigureres fra dialogboksen Virtuelle buffere. (#244)
+* NVDA afbryder ikke længere tale, når lydstyrketaster trykkes på tastaturet, hvilket gør det muligt for brugeren at ændre lydstyrken og lytte til de faktiske resultater med det samme. (#287)
+* Fuldstændigt omskrevet understøttelse af Microsoft Internet Explorer og Adobe Reader-dokumenter. Denne understøttelse er blevet forenet med den kerneunderstøttelse, der bruges til Mozilla Gecko, så funktioner som hurtig sideindlæsning, omfattende hurtignavigation, linksliste, tekstvalg, automatisk fokustilstand og punktskriftstøtte nu er tilgængelige med disse dokumenter.
+* Forbedret understøttelse af datovalgskontrollen fundet i Windows Vista-dato-/tidsdialogboksen.
+* Forbedret understøttelse af Modern XP/Vista startmenu (specifikt "alle programmer" og steder-menuer). Passende niveauinformationer annonceres nu.
+* Mængden af tekst, der annonceres, når musen bevæges, kan nu konfigureres fra dialogboksen Mus-indstillinger. Der kan vælges afsnit, linje, ord eller tegn.
+* Rapporter stavefejl under markøren i Microsoft Word.
+* Understøttelse af stavekontrollen i Microsoft Word 2007. Delvis understøttelse kan være tilgængelig for tidligere versioner af Microsoft Word.
+* Bedre understøttelse af Windows Live Mail. Tekstbeskeder kan nu læses, og både tekst- og HTML-beskedkomposering er anvendelige.
+* I Windows Vista annoncerer NVDA, når brugeren skifter til det sikre skrivebord (enten fordi en UAC-kontrolboks er dukket op, eller fordi control+alt+delete er blevet trykket).
+* NVDA kan annoncere tekst under musen i DOS-konsolvinduer.
+* Understøttelse af UI Automation via UI Automation-klient API tilgængelig i Windows 7 samt rettelser for at forbedre NVDA-oplevelsen i Windows 7.
+* NVDA kan konfigureres til at starte automatisk efter logon til Windows. Muligheden findes i dialogboksen Generelle Indstillinger.
+* NVDA kan læse sikre Windows-skærme som Windows logon, control+alt+delete og Brugeradgangskontrol (UAC)-skærme i Windows XP og nyere. Læsning af Windows logonskærmen kan konfigureres fra dialogboksen Generelle Indstillinger. (#97)
+* Tilføjet en driver til Optelec ALVA BC6-serien punktdisplays.
+* Ved gennemsyn af webdokumenter kan du nu trykke på n og shift+n for at springe fremad og tilbage forbi blokke af links.
+* Ved gennemsyn af webdokumenter rapporteres ARIA-landemærker nu, og du kan flytte fremad og tilbage gennem dem ved hjælp af tasterne d og shift+d. (#192)
+* Links-listen tilgængelig ved gennemsyn af webdokumenter er nu blevet til en elementliste, der kan vise links, overskrifter og landemærker. Overskrifter og landemærker præsenteres hierarkisk. (#363)
+* Den nye elementliste indeholder et "Filtrér efter"-felt, der giver dig mulighed for at filtrere listen til kun at indeholde de elementer, der inkluderer den indtastede tekst. (#173)
+* Bærbare versioner af NVDA ser nu i mappen 'userConfig' inde i NVDA-mappen efter brugerens konfiguration. Ligesom installer-versionen holder dette brugerens konfiguration adskilt fra NVDA selv.
+* Brugerdefinerede app-moduler, punktdisplaydrivere og syntesedrivere kan nu gemmes i brugerens konfigurationsmappe. (#337)
+* Virtuelle buffere gengives nu i baggrunden, hvilket giver brugeren mulighed for at interagere med systemet i en vis grad under gengivelsesprocessen. Brugeren vil blive informeret om, at dokumentet bliver gengivet, hvis det tager længere end et sekund.
+* Hvis NVDA opdager, at det er frosset af en eller anden grund, vil det automatisk lade alle tastetryk passere igennem, så brugeren har større chance for at genoprette systemet.
+* Understøttelse af ARIA træk-og-slip i Mozilla Gecko. (#239)
+* Dokumentets titel og den aktuelle linje eller markering annonceres nu, når fokus flyttes inden for en virtuel buffer. Dette gør adfærden ved flytning af fokus til virtuelle buffere konsistent med den for normale dokumentobjekter. (#210)
+* I virtuelle buffere kan du nu interagere med indlejrede objekter (såsom Adobe Flash og Sun Java-indhold) ved at trykke på enter på objektet. Hvis det er tilgængeligt, kan du derefter navigere rundt med tab-tasten ligesom i enhver anden applikation. For at vende tilbage til dokumentet, tryk NVDA+space. (#431)
+* I virtuelle buffere flytter o og shift+o til næste og forrige indlejrede objekt, henholdsvis.
+* NVDA kan nu fuldt ud tilgå applikationer, der kører som administrator i Windows Vista og nyere. Du skal installere en officiel udgivelse af NVDA for at få dette til at virke. Dette virker ikke for bærbare versioner og snapshots. (#397)
+
+### Ændringer
+
+* NVDA annoncerer ikke længere "NVDA startet", når det starter.
+* Start- og afslutningslyde afspilles nu via NVDA's konfigurerede lydudgangsenhed i stedet for Windows' standardlydudgangsenhed. (#164)
+* Rapportering af fremgangsbjælker er blevet forbedret. Mest bemærkelsesværdigt kan du nu konfigurere NVDA til at annoncere både via tale og bip samtidig.
+* Nogle generiske roller, såsom rude, applikation og ramme, rapporteres ikke længere ved fokus, medmindre kontrolfeltet er navnløst.
+* Kommandoen gennemgangskopi (NVDA+f10) kopierer teksten fra startmarkøren og frem til og med den aktuelle gennemgangsposition, i stedet for at ekskludere den aktuelle position. Dette gør det muligt at kopiere det sidste tegn i en linje, hvilket ikke tidligere var muligt. (#430)
+* navigatorObject_where-skriptet (ctrl+NVDA+numpad5) er blevet fjernet. Denne tastekombination fungerede ikke på nogle tastaturer, og scriptet blev ikke fundet særligt nyttigt.
+* navigatorObject_currentDimentions-skriptet er blevet omplaceret til NVDA+numpadDelete. Den gamle tastekombination fungerede ikke på nogle tastaturer. Dette script rapporterer nu bredden og højden af objektet i stedet for de højre/bundkoordinater.
+* Forbedret ydeevne (især på netbooks), når mange bip lyder hurtigt efter hinanden; f.eks. hurtig musebevægelse med aktiverede lydkoordinater. (#396)
+* NVDA-fejlllyden afspilles ikke længere i releasekandidater og endelige udgivelser. Bemærk, at fejl stadig logges.
+
+### Fejlrettelser
+
+* Når NVDA køres fra en 8.3 DOS-sti, men det er installeret i den tilknyttede lange sti (f.eks. progra~1 kontra programfiler), identificerer NVDA korrekt, at det er en installeret kopi og indlæser korrekt brugerens indstillinger.
+* At tale titlen på det aktuelle forgrundsvindue med nvda+t fungerer nu korrekt, når du er i menuer.
+* Punkt viser ikke længere ubrugelig information i sin fokuskontekst, såsom ikke-navngivne ruder.
+* Stop med at annoncere en del ubrugelig information, når fokus ændres, såsom rod-ruder, lagdelte ruder og rulningsruder i Java- eller Lotus-applikationer.
+* Gør søgefeltet i Windows Hjælp (CHM) seer meget mere anvendeligt. På grund af fejl i denne kontrol kunne det aktuelle søgeord ikke læses, da det konstant ændrede sig.
+* Rapportér de korrekte sidetal i Microsoft Word, hvis sidetallene specifikt er blevet justeret i dokumentet.
+* Bedre understøttelse af redigeringsfelter i Microsoft Word-dialoger (f.eks. dialogboksen Skrifttype). Det er nu muligt at navigere disse kontroller med piletasterne.
+* Bedre understøttelse af DOS-konsoller. Specifikt: NVDA kan nu læse indholdet af bestemte konsoller, som det tidligere troede var tomme. Ved at trykke på control+break afsluttes NVDA ikke længere.
+* På Windows Vista og nyere starter NVDA-installationsprogrammet NVDA med normale brugerrettigheder, når der anmodes om at køre NVDA på slutskærmen.
+* Backspace håndteres nu korrekt, når der tales indtastede ord. (#306)
+* Rapporter ikke længere "Startmenu" for visse genvejsmenuer i Windows Stifinder/Windows shell. (#257)
+* NVDA håndterer nu korrekt ARIA-etiketter i Mozilla Gecko, når der ikke er andet nyttigt indhold. (#156)
+* NVDA aktiverer ikke længere automatisk fokustilstand for redigerbare tekstfelter, der opdaterer deres værdi, når fokus ændres; f.eks. http://tigerdirect.com/. (#220)
+* NVDA vil nu forsøge at genoprette sig fra nogle situationer, der tidligere ville forårsage, at det fryser fuldstændigt. Det kan tage op til 10 sekunder for NVDA at opdage og genoprette sig fra et sådant frysepunkt.
+* Når NVDA-sproget er indstillet til "Brugerstandard", bruges brugerens Windows-sprogsætning i stedet for Windows' landestandard. (#353)
+* NVDA genkender nu eksistensen af kontroller i AIM 7.
+* Kommandoen for at passere næste tast igennem bliver ikke længere hængende, hvis en tast holdes nede. Tidligere stoppede NVDA med at acceptere kommandoer, hvis dette skete, og skulle genstartes. (#413)
+* Proceslinjen ignoreres ikke længere, når den modtager fokus, hvilket ofte sker, når en applikation afsluttes. Tidligere opførte NVDA sig, som om fokus slet ikke var ændret.
+* Ved læsning af tekstfelter i applikationer, der bruger Java Access Bridge (inklusive OpenOffice.org), fungerer NVDA nu korrekt, når rapportering af linjenumre er aktiveret.
+* Gennemgangskopi-kommandoen (NVDA+f10) håndterer nu korrekt den situation, hvor den bruges på en position før startmarkøren. Tidligere kunne dette forårsage problemer som nedbrud i Notepad++.
+* En bestemt kontroltegn (0x1) forårsager ikke længere underlig opførsel i eSpeak (såsom ændringer i lydstyrke og tonehøjde), når det mødes i tekst. (#437)
+* Kommandoen for rapportering af tekstmarkering (NVDA+shift+pil op) rapporterer nu korrekt, at der ikke er nogen markering i objekter, der ikke understøtter tekstmarkering.
+* Rettet problemet, hvor det at trykke på enter på bestemte Miranda-IM knapper eller links fik NVDA til at fryse. (#440)
+* Den aktuelle linje eller markering respekteres nu korrekt, når det aktuelle navigatorobjekt staves eller kopieres.
+* Omgået en Windows-fejl, som forårsagede, at skrald blev talt efter navnet på linkkontroller i Windows Stifinder- og Internet Explorer-dialogbokse. (#451)
+* Rettet et problem med kommandoen for at rapportere dato og tid (NVDA+f12). Tidligere blev datarapporteringen afskåret på nogle systemer. (#471)
+* Rettet problemet, hvor systemets skærmlæserflag nogle gange blev fejlagtigt ryddet efter interaktion med sikre Windows-skærme. Dette kunne forårsage problemer i applikationer, der kontrollerer skærmlæserflaget, herunder Skype, Adobe Reader og Jart. (#462)
+* I en Internet Explorer 6-combo box rapporteres det aktive element nu, når det ændres. (#342)
+
+## 0.6p3
+
+### Nye Funktioner
+
+* Da Microsoft Excels formellinje er utilgængelig for NVDA, leveres en NVDA-specifik dialogboks til redigering, når brugeren trykker på f2 på en celle.
+* Understøttelse af formatering i IAccessible2-tekstkontroller, herunder Mozilla-applikationer.
+* Stavefejl kan nu rapporteres, hvor det er muligt. Dette kan konfigureres fra dialogboksen Dokumentformatering.
+* NVDA kan konfigureres til at bippe ved enten alle eller kun synlige fremgangsbjælker. Alternativt kan det konfigureres til at tale fremgangsbjælkernes værdier for hver 10%.
+* Links kan nu identificeres i richedit-kontroller.
+* Musen kan nu flyttes til tegnet under gennemgangsmarkøren i de fleste redigerbare tekstkontroller. Tidligere kunne musen kun flyttes til midten af kontrollen.
+* I virtuelle buffere gennemgår gennemgangsmarkøren nu teksten i bufferen, snarere end bare navigatorobjektets interne tekst (som ofte ikke er nyttig for brugeren). Dette betyder, at du kan navigere den virtuelle buffer hierarkisk ved hjælp af objektnavigation, og gennemgangsmarkøren flyttes til det punkt i bufferen.
+* Håndter nogle yderligere tilstande på Java-kontroller.
+* Hvis titlen kommandoen (NVDA+t) trykkes to gange, staver den titlen. Hvis den trykkes tre gange, kopieres titlen til udklipsholderen.
+* Tastaturhjælpen læser nu navne på modifikatortaster, når de trykkes alene.
+* Tastenavne, som annonceres af tastaturhjælp, kan nu oversættes.
+* Tilføjet understøttelse for det genkendte tekstfelt i SiRecognizer. (#198)
+* Understøttelse af punktdisplays!
+* Tilføjet en kommando (NVDA+c) til at rapportere teksten på Windows-udklipsholderen. (#193)
+* I virtuelle buffere, hvis NVDA automatisk skifter til fokustilstand, kan du bruge escape-tasten til at skifte tilbage til gennemsynstilstand. NVDA+space kan stadig også bruges.
+* I virtuelle buffere, når fokus ændres eller markøren flyttes, kan NVDA automatisk skifte til fokustilstand eller gennemsynstilstand, alt efter hvad der er passende for kontrollen under markøren. Dette konfigureres fra dialogboksen Virtuelle Buffere. (#157)
+* Omskrevet SAPI4-syntesedriver, der erstatter sapi4serotek- og sapi4activeVoice-driverne og bør rette de problemer, der blev oplevet med disse drivere.
+* NVDA-applikationen inkluderer nu en manifestfil, hvilket betyder, at den ikke længere kører i kompatibilitetstilstand i Windows Vista.
+* Konfigurationsfilen og taleordbøger gemmes nu i brugerens applikationsdatamappe, hvis NVDA blev installeret ved hjælp af installationsprogrammet. Dette er nødvendigt for Windows Vista og giver også mulighed for, at flere brugere kan have individuelle NVDA-konfigurationer.
+* Tilføjet understøttelse af positionsinformationer for IAccessible2-kontroller.
+* Tilføjet muligheden for at kopiere tekst til udklipsholderen ved hjælp af gennemgangsmarkøren. NVDA+f9 indstiller startmarkøren til den aktuelle position af gennemgangsmarkøren. NVDA+f10 henter teksten mellem startmarkøren og den aktuelle position af gennemgangsmarkøren og kopierer den til udklipsholderen. (#240)
+* Tilføjet understøttelse af nogle redigeringskontroller i Pinnacle TV-software.
+* Når udvalgt tekst rapporteres for lange valg (512 tegn eller mere), rapporterer NVDA nu antallet af valgte tegn i stedet for at læse hele valget. (#249)
+
+### Ændringer
+
+* Hvis lydoutputenheden er indstillet til at bruge Windows standardenhed (Microsoft Sound Mapper), skifter NVDA nu til den nye standardenhed for eSpeak og lydeffekter, når standardenheden ændres. For eksempel skifter NVDA til en USB-lydenhed, hvis den automatisk bliver standardenheden, når den tilsluttes.
+* Forbedret ydeevne for eSpeak med nogle Windows Vista-lyddrivere.
+* Rapportering af links, overskrifter, tabeller, lister og blokcitater kan nu konfigureres fra dialogboksen Dokumentformatering. Tidligere skulle disse indstillinger for virtuelle buffere konfigureres fra dialogboksen Virtuelle Buffere. Nu deler alle dokumenter denne konfiguration.
+* Talehastighed er nu standardindstillingen i synteseindstillingsringen.
+* Forbedret ind- og udlæsning af appmoduler.
+* Kommandoen Titel (NVDA+t) rapporterer nu kun titlen i stedet for hele objektet. Hvis forgrundsobjektet ikke har noget navn, bruges applikationens procesnavn.
+* I stedet for pass-through-tilstand for virtuel buffer til og fra, rapporterer NVDA nu fokustilstand (pass-through til) og gennemsynstilstand (pass-through fra).
+* Stemmer gemmes nu i konfigurationsfilen efter ID i stedet for efter indeks. Dette gør stemmeindstillingerne mere pålidelige på tværs af systemer og konfigurationsændringer. Stemmeindstillingen bevares ikke i gamle konfigurationer, og der kan logges en fejl første gang, en syntese bruges. (#19)
+* Niveauet for et trævisningselement rapporteres nu først, hvis det har ændret sig fra det tidligere fokuserede element i alle trævisninger. Tidligere skete dette kun for native Windows (SysTreeView32) trævisninger.
+
+### Fejlrettelser
+
+* Den sidste lyddel afbrydes ikke længere, når NVDA bruges med eSpeak på en fjernskrivebordsserver.
+* Rettet problemer med lagring af taleordbøger for visse stemmer.
+* Eliminér forsinkelsen, når der navigeres med enheder, der ikke er tegn (ord, linje osv.) mod bunden af store tekstdokumenter i Mozilla Gecko virtuelle buffere. (#155)
+* Hvis "Sig indtastede ord" er aktiveret, annonceres ordet, når der trykkes på enter.
+* Rettet nogle tegnsætningsproblemer i richedit-dokumenter.
+* NVDA-logviseren bruger nu richedit i stedet for blot edit til at vise loggen. Dette forbedrer læsning med NVDA.
+* Rettet nogle problemer relateret til indlejrede objekter i richedit-kontroller.
+* NVDA læser nu sidetal i Microsoft Word. (#120)
+* Rettet problemet, hvor faneblad til et markeret check box i en Mozilla Gecko virtuel buffer og tryk på mellemrumstasten ikke annoncerede, at check box blev fjernet markeringen fra.
+* Rapporter korrekt delvist markerede check box i Mozilla-applikationer.
+* Hvis tekstvalget udvides eller krympes i begge retninger, læses valget nu som ét stykke i stedet for to.
+* Når der læses med musen, læses tekst i Mozilla Gecko-redigeringsfelter nu korrekt.
+* Sig Alt bør ikke længere få visse SAPI5 talesynteser til at gå ned.
+* Rettet et problem, hvor tekstvalgsændringer ikke blev læst i Windows standard redigeringsfelter før første fokusændring efter NVDA blev startet.
+* Rettet muse-sporing i Java-objekter. (#185)
+* NVDA rapporterer ikke længere Java trævisningselementer uden underordnede som værende sammenklappet.
+* Annoncér objektet med fokus, når et Java-vindue kommer til forgrunden. Tidligere blev kun Java's øverste niveau-objekt annonceret.
+* eSpeak-syntesedriveren stopper ikke længere helt med at tale efter en enkelt fejl.
+* Rettet problemet, hvor opdaterede stemmeparametre (hastighed, tonehøjde osv.) ikke blev gemt, når stemmen blev ændret fra synteseindstillingsringen.
+* Forbedret tale af indtastede tegn og ord.
+* Ny tekst, der tidligere ikke blev talt i tekstkonsolapplikationer (såsom nogle tekst-eventyrspil), læses nu.
+* NVDA ignorerer nu fokusændringer i baggrundsvinduer. Tidligere kunne en baggrunds-fokusændring behandles, som om det virkelige fokus havde ændret sig.
+* Forbedret detektering af fokus, når kontekstmenuer forlades. Tidligere reagerede NVDA ofte slet ikke, når kontekstmenuen blev forladt.
+* NVDA annoncerer nu, når kontekstmenuen aktiveres i Startmenuen.
+* Den klassiske startmenu annonceres nu som startmenu i stedet for applikationsmenu.
+* Forbedret læsning af advarsler som dem, der stødes på i Mozilla Firefox. Teksten læses ikke længere flere gange, og anden overflødig information læses ikke længere. (#248)
+* Teksten i fokuserbare, skrivebeskyttede redigeringsfelter medtages ikke længere, når dialogbokse henter tekst. Dette løser f.eks. automatisk læsning af hele licensaftalen i installationsprogrammer.
+* NVDA annoncerer ikke længere fjernelse af tekstmarkering, når nogle redigeringsfelter forlades (f.eks. Internet Explorer adressefeltet, Thunderbird 3 e-mail adressefelter).
+* Når almindelige tekst-e-mails åbnes i Outlook Express og Windows Mail, placeres fokus korrekt i beskeden klar til, at brugeren kan læse den. Tidligere skulle brugeren trykke på tab-tasten eller klikke på beskeden for at bruge piletasterne til at læse den.
+* Rettet flere større problemer med "Sig kommandoer" funktionalitet.
+* NVDA kan nu læse tekst, der overstiger 65535 tegn i standardredigeringsfelter (f.eks. en stor fil i Notesblok).
+* Forbedret linjelæsning i MSHTML redigeringsfelter (Outlook Express redigerbare beskeder og Internet Explorer tekstinputfelter).
+* NVDA fryser ikke længere helt, når tekst redigeres i OpenOffice. (#148, #180)
+
+## 0.6p2
+
+* Forbedret standardstemmen til eSpeak i NVDA
+* Tilføjet et tastaturlayout til bærbare computere. Tastaturlayouts kan konfigureres fra NVDA's Tastaturindstillinger dialog. (#60)
+* Understøttelse af grupperede elementer i SysListView32-kontroller, primært fundet i Windows Vista. (#27)
+* Rapporter check box-tilstand for trævisningselementer i SysTreeview32-kontroller.
+* Tilføjet genvejstaster for mange af NVDA's konfigurationsdialogbokse.
+* Understøttelse af IAccessible2 aktiverede applikationer som Mozilla Firefox, når NVDA kører fra bærbare medier, uden at skulle registrere specielle Dll-filer.
+* Rettet et nedbrud med linkslisten i virtuelle buffere i Gecko-applikationer. (#48)
+* NVDA bør ikke længere nedbryde Mozilla Gecko-applikationer som Firefox og Thunderbird, hvis NVDA kører med højere privilegier end Mozilla Gecko-applikationen. F.eks. hvis NVDA kører som administrator.
+* Taleordbøger (tidligere Brugerdictionaries) kan nu enten være store/små-bogstavsfølsomme eller følsomme, og mønstrene kan valgfrit være regulære udtryk. (#39)
+* Hvorvidt NVDA bruger en 'skærmlayout'-tilstand for virtuelle bufferdokumenter kan nu konfigureres fra en indstillingsdialog.
+* Rapporter ikke længere anker-tags uden href i Gecko-dokumenter som links. (#47)
+* NVDA's søgekommando husker nu, hvad du sidst søgte efter, på tværs af alle applikationer. (#53)
+* Rettet problemer, hvor check box-tilstanden ikke ville blive annonceret for nogle check box og radioknapper i virtuelle buffere.
+* Pass-through-tilstand for virtuelle buffere er nu specifik for hvert dokument i stedet for NVDA globalt. (#33)
+* Rettet en langsommelighed med fokusændringer og forkert taleafbrydelse, der nogle gange opstod, når NVDA blev brugt på et system, der havde været i standby eller var ret langsomt.
+* Forbedret understøttelse af kombinationsbokse i Mozilla Firefox. Specifikt gentages tekst ikke, når der navigeres med piletasterne, og når der springes ud af dem, annonceres ikke unødvendigt overordnede kontroller. Virtuelle buffer-kommandoer fungerer også, når de er fokuseret på en, når du er i en virtuel buffer.
+* Forbedret præcision af statuslinjefinding i mange applikationer. (#8)
+* Tilføjet NVDA interaktivt Python-konsolværktøj, der gør det muligt for udviklere at se på og manipulere NVDA's interne systemer, mens det kører.
+* Kommandoerne Sig alt, rapporter valg og rapporter aktuel linje fungerer nu korrekt, når du er i pass-through-tilstand for virtuelle buffere. (#52)
+* Øg og formindsk talekommandoerne er blevet fjernet. Brugere bør bruge synteseindstillingsringens kommandoer (control+nvda+piletaster) eller dialogboksen Stemmens indstillinger.
+* Forbedret skala og rækkevidde for bip i fremgangsbjælker.
+* Tilføjet flere hurtige taster til nye virtuelle buffere: l for liste, i for listeelement, e for redigeringsfelt, b for knap, x for check box, r for radioknap, g for grafik, q for blokcitat, c for kombinationsboks, 1 gennem 6 for respektive overskriftsniveauer, s for separator, m for ramme. (#67, #102, #108)
+* Annullering af indlæsning af et nyt dokument i Mozilla Firefox giver nu brugeren mulighed for at fortsætte med at bruge den gamle dokuments virtuelle buffer, hvis det gamle dokument endnu ikke var blevet slettet. (#63)
+* Navigation efter ord i virtuelle buffere er nu mere præcis, da ord ikke ved en fejl indeholder tekst fra mere end ét felt. (#70)
+* Forbedret præcision af fokussporing og fokusopdatering ved navigation i Mozilla Gecko virtuelle buffere.
+* Tilføjet findForrige-kommando (shift+NVDA+f3) til brug i nye virtuelle buffere.
+* Forbedret langsomhed i Mozilla Gecko-dialoger (i Firefox og Thunderbird). (#66)
+* Tilføjet muligheden for at se den aktuelle logfil for NVDA. Den findes i NVDA-menuen -> Værktøjer.
+* Kommandoer som sig tid og dato tager nu det aktuelle sprog i betragtning; tegnsætning og ordstilling afspejler nu sproget.
+* Sprogkombinationsboksen i NVDA's Generelle Indstillinger dialog viser nu fulde sprognavne for nem brug.
+* Ved gennemgang af tekst i det aktuelle navigatorobjekt er teksten altid opdateret, hvis den ændres dynamisk. F.eks. gennemgang af teksten i et listeelement i Jobliste. (#15)
+* Når der flyttes med musen, annonceres nu det aktuelle tekstafsnit under musen, i stedet for enten al teksten i det pågældende objekt eller blot det aktuelle ord. Også lydkoordinater og annoncering af objektroller er valgfri, og de er som standard deaktiveret.
+* Understøttelse af læsning af tekst med musen i Microsoft Word.
+* Rettet en fejl, hvor efterladelse af menulinjen i applikationer som Wordpad ville medføre, at tekstvalget ikke længere blev annonceret.
+* I Winamp annonceres sporets titel ikke længere igen og igen, når du skifter spor eller pauser/genoptager/stopper afspilning.
+* I Winamp tilføjet evnen til at annoncere status for shuffle- og repeat-kontroller, mens de skiftes. Fungerer i hovedvinduet og i afspilningslisteeditoren.
+* Forbedret evnen til at aktivere bestemte felter i Mozilla Gecko virtuelle buffere. Dette kan inkludere klikbare grafik, links, der indeholder afsnit, og andre mærkelige strukturer.
+* Rettet indledende forsinkelse ved åbning af NVDA-dialoger på nogle systemer. (#65)
+* Tilføjet specifik understøttelse af Total Commander-applikationen.
+* Rettet fejl i sapi4serotek-driveren, hvor tonehøjden kunne låses ved en bestemt værdi, f.eks. forbliver høj efter læsning af et stort bogstav. (#89)
+* Annoncer klikbar tekst og andre felter som klikbare i Mozilla Gecko Virtuelle Buffere. F.eks. et felt, der har en onclick HTML-attribut. (#91)
+* Når der navigeres rundt i Mozilla Gecko virtuelle buffere, rulles det aktuelle felt nu i syne – nyttigt, så seende kolleger har en idé om, hvor brugeren er kommet til i dokumentet. (#57)
+* Tilføjet grundlæggende understøttelse af ARIA liveområder i IAccessible2-aktiverede applikationer. Nyttigt i Chatzilla IRC-applikationen, hvor nye beskeder nu vil blive læst automatisk.
+* Nogle små forbedringer for at hjælpe med at bruge ARIA-aktiverede webapplikationer, f.eks. Google Docs.
+* Stop med at tilføje ekstra tomme linjer til tekst, når den kopieres fra en virtuel buffer.
+* Stop mellemrumstasten fra at aktivere et link i Links-listen. Nu kan det bruges ligesom andre bogstaver til at begynde at skrive navnet på et bestemt link, du vil gå til.
+* Kommandoen moveMouseToNavigator (NVDA+numpadSlash) flytter nu musen til midten af navigatorobjektet i stedet for øverst til venstre.
+* Tilføjet scripts til at klikke på venstre og højre museknap (numpadSlash og numpadStar henholdsvis).
+* Forbedret adgang til Windows' Systembakke. Fokus bør forhåbentlig ikke længere synes at springe tilbage til et bestemt element. Husk: For at få adgang til Systembakken brug Windows-tasten WindowsKey+b. (#10)
+* Forbedret ydeevne og stop annoncering af ekstra tekst, når en piletast holdes nede i et redigeringsfelt, og det når slutningen.
+* Stop NVDA fra at få brugeren til at vente, mens bestemte beskeder læses. Retter nogle nedbrud/frysninger med bestemte talesynteser. (#117)
+* Tilføjet understøttelse af Audiologic Tts3 talesyntese, bidraget af Gianluca Casalino. (#105)
+* Forbedret ydeevne ved navigation af dokumenter i Microsoft Word.
+* Forbedret præcision ved læsning af advarsler i Mozilla Gecko-applikationer.
+* Stop med at forårsage nedbrud, når du prøver at gemme konfigurationen på ikke-engelske versioner af Windows. (#114)
+* Tilføjet en NVDA velkomstdialog. Denne dialog er designet til at give væsentlige oplysninger til nye brugere og tillader, at CapsLock kan konfigureres som en NVDA-modifikatortast. Denne dialog vil blive vist, når NVDA starter som standard, indtil den deaktiveres.
+* Rettet grundlæggende understøttelse af Adobe Reader, så det er muligt at læse dokumenter i versionerne 8 og 9.
+* Rettet nogle fejl, der kan være opstået, når taster blev holdt nede, før NVDA var fuldt initialiseret.
+* Hvis brugeren har konfigureret NVDA til at gemme konfigurationen ved afslutning, sørg for, at konfigurationen er korrekt gemt, når Windows lukkes ned eller logger ud.
+* Tilføjet en NVDA logo-lyd i starten af installationsprogrammet, bidraget af Victer Tsaran.
+* NVDA, både når det kører i installationsprogrammet og ellers, rydder korrekt sin systembakkeikon, når det afsluttes.
+* Etiketternes standardkontroller i NVDA's dialogbokse (såsom Ok- og Annuller-knapper) vises nu på det sprog, NVDA er indstillet til, i stedet for bare at blive på engelsk.
+* NVDA's ikon bruges nu til NVDA-genvejene i startmenuen og på skrivebordet i stedet for et standardprogramikon.
+* Læs celler i MS Excel, når der navigeres med tab og shift+tab. (#146)
+* Rettet nogle dobbeltudtalelser i bestemte lister i Skype.
+* Forbedret markørsporing i IAccessible2- og Java-applikationer; f.eks. i OpenOffice og Lotus Symphony, venter NVDA korrekt på, at markøren flyttes i dokumenter i stedet for ved et uheld at læse det forkerte ord eller linje ved slutningen af nogle afsnit. (#119)
+* Understøttelse af AkelEdit-kontroller fundet i Akelpad 4.0.
+* NVDA fryser ikke længere i Lotus Symphony, når der flyttes fra dokumentet til menulinjen.
+* NVDA fryser ikke længere i Windows XP-tilføj/fjern-program applet, når en afinstallationsprogram startes. (#30)
+* NVDA fryser ikke længere, når Spybot Search and Destroy åbnes.
+
+## 0.6p1
+
+### Adgang til webindhold med nye in-process virtuelle buffere (indtil videre for Mozilla Gecko-applikationer, herunder Firefox3 og Thunderbird3)
+
+* Indlæsningstider er blevet forbedret næsten tredive gange (du behøver slet ikke længere vente på, at de fleste websider indlæses i bufferen).
+* Tilføjet en links-liste (NVDA+f7).
+* Forbedret søgedialogen (control+nvda+f), så den udfører en ikke-følsom søgning, plus rettet et par fokusproblemer med den dialogboks.
+* Det er nu muligt at vælge og kopiere tekst i de nye virtuelle buffere.
+* Som standard repræsenterer de nye virtuelle buffere dokumentet i et skærmlayout (links og kontroller er ikke på separate linjer, medmindre de virkelig er visuelt). Du kan skifte denne funktion med NVDA+v.
+* Det er muligt at navigere med afsnit ved hjælp af control+pil op og control+pil ned.
+* Forbedret understøttelse af dynamisk indhold.
+* Forbedret overordnet nøjagtighed ved læsning af linjer og felter, når der navigeres op og ned med piletasterne.
+
+### Internationalisering
+
+* Det er nu muligt at skrive accentuerede tegn, der er afhængige af et "dødt tegn", mens NVDA kører.
+* NVDA annoncerer nu, når tastaturlayoutet ændres (når der trykkes på alt+shift).
+* Funktionen annoncer dato og tid tager nu systemets aktuelle regionale og sproglige indstillinger i betragtning.
+* Tilføjet tjekkisk oversættelse (af Tomas Valusek med hjælp fra Jaromir Vit).
+* Tilføjet vietnamesisk oversættelse af Dang Hoai Phuc.
+* Tilføjet afrikaans (af_ZA) oversættelse, af Willem van der Walt.
+* Tilføjet russisk oversættelse af Dmitry Kaslin.
+* Tilføjet polsk oversættelse af DOROTA CZAJKA og venner.
+* Tilføjet japansk oversættelse af Katsutoshi Tsuji.
+* Tilføjet thai oversættelse af Amorn Kiattikhunrat.
+* Tilføjet kroatisk oversættelse af Mario Percinic og Hrvoje Katic.
+* Tilføjet galicisk oversættelse af Juan C. Buno.
+* Tilføjet ukrainsk oversættelse af Aleksey Sadovoy.
+
+### Tale
+
+* NVDA leveres nu med eSpeak 1.33, som indeholder mange forbedringer, herunder forbedrede sprog, navngivne varianter og evnen til at tale hurtigere.
+* Stemmens indstillinger dialogboksen giver dig nu mulighed for at ændre varianten af en talesyntese, hvis den understøtter en. Variant er normalt en let variation af den nuværende stemme. (eSpeak understøtter varianter).
+* Tilføjet muligheden for at ændre tonefaldet af en stemme i Stemmens indstillinger dialogboksen, hvis den aktuelle talesyntese understøtter dette. (eSpeak understøtter tonefald).
+* Tilføjet muligheden for at slå tale af objektpositionsinformation fra (f.eks. 1 af 4). Denne indstilling findes i dialogboksen Objektpræsentation.
+* NVDA kan nu bippe, når et stort bogstav siges. Dette kan slås til og fra med et check box i Stemmens indstillinger dialogboksen. Der er også tilføjet et check box til at konfigurere, om NVDA skal hæve tonehøjden for store bogstaver. Så nu kan du vælge mellem hævet tonehøjde, sige "stort", eller bippe ved store bogstaver.
+* Tilføjet muligheden for at pause tale i NVDA (som fundet i Voice Over til Mac). Når NVDA taler noget, kan du trykke på control- eller shift-tasten for at stoppe tale, ligesom normalt, men hvis du derefter trykker på shift-tasten igen (så længe du ikke har trykket på nogen andre taster), vil tale fortsætte fra det præcise sted, hvor det stoppede.
+* Tilføjet en virtuel syntesedriver, der outputter tekst til et vindue i stedet for at tale via en talesyntese. Dette bør være mere behageligt for seende udviklere, der ikke er vant til talesyntese, men vil vide, hvad der siges af NVDA. Der er sandsynligvis stadig nogle fejl, så feedback er bestemt velkommen.
+* NVDA taler som standard ikke længere tegnsætning, du kan aktivere tale af tegnsætning med NVDA+p.
+* eSpeak taler nu som standard meget langsommere, hvilket bør gøre det nemmere for folk, der bruger eSpeak for første gang, når de installerer eller begynder at bruge NVDA.
+* Tilføjet brugerordbøger til NVDA. Disse giver dig mulighed for at få NVDA til at sige visse tekststykker anderledes. Der er tre ordbøger: standard, stemme og midlertidig. Indgange du tilføjer til standardordbogen vil gælde hele tiden i NVDA. Stemmeordbøger er specifikke for den aktuelle talesyntese og stemme, du har indstillet. Og midlertidig ordbog er til de tidspunkter, hvor du hurtigt vil oprette en regel, mens du udfører en bestemt opgave, men ikke ønsker, at den skal være permanent (den forsvinder, når du lukker NVDA). For nu er reglerne regulære udtryk, ikke bare normal tekst.
+* Talesynteser kan nu bruge enhver lydudgangsenhed på dit system ved at indstille udgangsenheden i syntesedialogboksen, før du vælger den talesyntese, du vil bruge.
+
+### Ydeevne
+
+* NVDA bruger ikke længere en enorm mængde systemhukommelse, når beskeder redigeres i MSHTML-redigeringsfelter.
+* Forbedret ydeevne ved gennemgang af tekst i mange kontroller, der ikke har en reel markør. F.eks. MSN Messenger historie-vinduet, trævisningselementer, listevisningselementer osv.
+* Forbedret ydeevne i richedit-dokumenter.
+* NVDA bør ikke længere langsomt bruge mere systemhukommelse uden nogen åbenbar grund.
+* Rettet fejl ved forsøg på at fokusere på et DOS-konsolvindue mere end tre gange. NVDA havde en tendens til at gå fuldstændig ned.
+
+### Tastaturkommandoer
+
+* NVDA+shift+numpad6 og NVDA+shift+numpad4 giver dig mulighed for at navigere til det næste eller forrige objekt i flowet. Dette betyder, at du kan navigere i en applikation ved kun at bruge disse to taster uden at skulle bekymre dig om at gå op til overordnet objekt eller ned til første barn, mens du bevæger dig rundt i objektets hierarki. For eksempel i en webbrowser som Firefox kan du navigere dokumentet ved objekt ved blot at bruge disse to taster. Hvis næste i flow eller forrige i flow tager dig op og ud af et objekt eller ned i et objekt, høres ordnede bip, der indikerer retningen.
+* Du kan nu konfigurere stemmeindstillinger uden at åbne stemmens indstillinger dialogboksen ved at bruge synteseindstillingsringen. Synteseindstillingsringen er en gruppe af stemmeindstillinger, du kan skifte mellem ved at trykke på control+NVDA+pil højre og control+NVDA+pil venstre. For at ændre en indstilling skal du bruge control+NVDA+pil op og control+NVDA+pil ned.
+* Tilføjet en kommando til at rapportere den aktuelle markering i redigeringsfelter (NVDA+shift+pil op).
+* En række NVDA-kommandoer, der læser tekst (såsom rapporter aktuel linje osv.), kan nu stave teksten, hvis de trykkes to gange hurtigt.
+* CapsLock, numpad insert og extended insert kan alle bruges som NVDA-modifikatortasten. Også, hvis en af disse taster bruges, vil dobbelttryk på tasten uden at trykke på andre taster sende tasten igennem til operativsystemet, ligesom du ville gøre, hvis NVDA ikke kørte. For at gøre en af disse taster til NVDA-modifikatortasten skal du markere dens check box i dialogboksen Tastaturets indstillinger (tidligere kaldet tastaturets ekko dialogboksen).
+
+### Applikationsunderstøttelse
+
+* Forbedret understøttelse af Firefox3 og Thunderbird3 dokumenter. Indlæsningstider er forbedret næsten tredive gange, et skærmlayout bruges som standard (tryk på NVDA+v for at skifte mellem dette og uden skærmlayout), en links-liste (NVDA+f7) er blevet tilføjet, søgedialogen (control+NVDA+f) er nu ikke-følsom for store/små bogstaver, betydeligt forbedret understøttelse af dynamisk indhold, valg og kopiering af tekst er nu muligt.
+* I MSN Messenger og Windows Live Messenger historie-vinduerne er det nu muligt at vælge og kopiere tekst.
+* Forbedret understøttelse af Audacity-applikationen.
+* Tilføjet understøttelse af nogle redigerings- og tekstkontroller i Skype.
+* Forbedret understøttelse af Miranda Instant Messenger-applikationen.
+* Rettet fokusproblemer, når HTML- og almindelige tekstbeskeder åbnes i Outlook Express.
+* Outlook Express nyhedsgruppe-beskedfelter er nu korrekt mærket.
+* NVDA kan nu læse adresserne i Outlook Express' beskedfelter (til/fra/cc osv.).
+* NVDA bør nu være mere præcis ved annoncering af næste besked i Outlook Express, når der slettes en besked fra beskedlisten.
+
+### API'er og værktøjssæt
+
+* Forbedret objektnavigation for MSAA-objekter. Hvis et vindue har en systemmenu, titellinje eller rullepaneler, kan du nu navigere til dem.
+* Tilføjet understøttelse af IAccessible2 tilgængeligheds-API'en. Ud over muligheden for at annoncere flere kontroltyper gør dette også NVDA i stand til at få adgang til markøren i applikationer som Firefox 3 og Thunderbird 3, hvilket giver dig mulighed for at navigere, vælge eller redigere tekst.
+* Tilføjet understøttelse af Scintilla redigeringskontroller (sådanne kontroller findes i Notepad++ eller TortoiseSVN).
+* Tilføjet understøttelse af Java-applikationer (via Java Access Bridge). Dette kan give grundlæggende understøttelse af OpenOffice (hvis Java er aktiveret) og andre selvstændige Java-applikationer. Bemærk, at Java-applikationer i en webbrowser muligvis ikke fungerer endnu.
+
+### Mus
+
+* Forbedret understøttelse af læsning af, hvad der er under musemarkøren, mens den flyttes. Det er nu meget hurtigere, og det har også nu evnen i nogle kontroller som standard redigeringsfelter, Java- og IAccessible2-kontroller, til at læse det aktuelle ord, ikke kun det aktuelle objekt. Dette kan være nyttigt for synshæmmede personer, der bare vil læse et specifikt tekststykke med musen.
+* Tilføjet en ny konfigurationsmulighed, som findes i dialogboksen Mus-indstillinger. Afspil lyd, når musen bevæges; når aktiveret, afspilles et 40 ms bip hver gang musen bevæges, med tonehøjden (mellem 220 og 1760 hz), der repræsenterer y-aksen og venstre/højre lydstyrke, der repræsenterer x-aksen. Dette giver en blind person mulighed for at få en grov idé om, hvor musen er på skærmen, mens den bevæges. Denne funktion afhænger også af, at reportObjectUnderMouse er aktiveret. Det betyder, at hvis du hurtigt skal deaktivere både bip og annoncering af objekter, så tryk blot på NVDA+m. Bipene er også højere eller blødere afhængigt af, hvor lys skærmen er på det punkt.
+
+### Objektpræsentation og interaktion
+
+* Forbedret understøttelse af de mest almindelige trævisningskontroller. NVDA fortæller nu, hvor mange elementer der er i grenen, når du udvider den. Det annoncerer også niveauet, når du flytter ind og ud af grene. Og det annoncerer det aktuelle elementnummer og antal elementer, ifølge den aktuelle gren, ikke hele trævisningen.
+* Forbedret, hvad der annonceres, når fokus ændres, mens du bevæger dig rundt i applikationer eller operativsystemet. Nu hører du, i stedet for bare kontrollen, du lander på, også information om eventuelle kontroller, denne kontrol er placeret inde i. For eksempel hvis du tab'er og lander på en knap inde i en gruppeboks, vil gruppeboksen også blive annonceret.
+* NVDA forsøger nu at tale beskeden inde i mange dialogbokse, når de vises. Dette er præcist det meste af tiden, men der er stadig mange dialogbokse, der ikke er så gode, som de kunne være.
+* Tilføjet en "Rapporter objektbeskrivelser" check box i dialogboksen Objektpræsentation. Erfarne brugere vil måske nogle gange fjerne markeringen af dette for at stoppe NVDA i at annoncere mange ekstra beskrivelser på bestemte kontroller, som i Java-applikationer.
+* NVDA annoncerer automatisk markeret tekst i redigeringsfelter, når fokus flyttes til dem. Hvis der ikke er markeret tekst, annonceres den aktuelle linje som sædvanlig.
+* NVDA er nu meget mere omhyggelig, når det afspiller bip for at indikere ændringer i fremgangsbjælker i applikationer. Det går ikke længere amok i Eclipse-applikationer som Lotus Notes/Symphony og Accessibility Probe.
+
+### Brugergrænseflade
+
+* Fjernet NVDA-grænsefladevinduet og erstattet det med en simpel NVDA-popupmenu.
+* NVDA's brugergrænsefladeindstillinger dialogboksen kaldes nu Generelle Indstillinger. Den indeholder også en ekstra indstilling: en kombinationsboks til at indstille logningsniveauet for, hvilke meddelelser der skal sendes til NVDA's logfil. Bemærk, at NVDA's logfil nu hedder nvda.log i stedet for debug.log.
+* Fjernet rapportering af objektgruppenavne fra objektpræsentationsindstillingerne. Rapportering af gruppenavne håndteres nu anderledes.
+
+## 0.5
+
+* NVDA har nu en indbygget talesyntese kaldet eSpeak, udviklet af Jonathan Duddington. Den er meget responsiv og letvægts, og har understøttelse af mange forskellige sprog. SAPI-talesynteser kan stadig bruges, men eSpeak vil være standardtalesyntesen.
+ * eSpeak er ikke afhængig af nogen speciel softwareinstallation, så den kan bruges med NVDA på enhver computer, fra et USB-drev, eller hvor som helst.
+ * For mere information om eSpeak, eller for at finde andre versioner, gå til [http://espeak.sourceforge.net/](http://espeak.sourceforge.net/).
+* Rettet fejl, hvor det forkerte tegn blev annonceret, når der blev trykket på delete i Internet Explorer/Outlook Express redigerbare felter.
+* Tilføjet understøttelse af flere redigeringsfelter i Skype.
+* Virtuelle buffere indlæses kun, når fokus er på vinduet, der skal indlæses. Dette løser nogle problemer, når forhåndsvisningsruden er aktiveret i Outlook Express.
+* Tilføjet kommandolinjeargumenter til NVDA:
+ * -m, --minimal: spiller ikke opstarts-/afslutningslyde og viser ikke grænsefladen ved opstart, hvis denne indstilling er valgt.
+ * -q, --quit: afslut enhver anden allerede kørende instans af NVDA og afslut derefter.
+ * -s, --stderr-file filNavn: specificerer, hvor NVDA skal placere ukontrollerede fejl og undtagelser.
+ * -d, --debug-file filNavn: specificerer, hvor NVDA skal placere fejlfindingbeskeder.
+ * -c, --config-file: specificerer en alternativ konfigurationsfil.
+ * -h, --help: viser en hjælpemeddelelse, der lister kommandolinjeargumenter.
+* Rettet fejl, hvor tegnsætningstegn ikke blev oversat til det korrekte sprog, når der blev brugt et andet sprog end engelsk, og når "tal indtastede tegn" var aktiveret.
+* Tilføjet slovakiske sprogfiler takket være Peter Vagner.
+* Tilføjet en virtuel buffer-indstillinger dialog og en dokumentformateringsindstillinger dialog, fra Peter Vagner.
+* Tilføjet fransk oversættelse takket være Michel Such.
+* Tilføjet et script til at skifte bip for fremgangsbjælker til og fra (insert+u). Bidraget af Peter Vagner.
+* Flere beskeder i NVDA kan nu oversættes til andre sprog. Dette inkluderer scriptbeskrivelser, når man er i tastaturhjælp.
+* Tilføjet en søgedialog til virtuelle buffere (Internet Explorer og Firefox). Ved at trykke på control+f på en side åbnes en dialog, hvor du kan indtaste noget tekst til at finde. Ved at trykke på enter vil denne tekst blive søgt, og den virtuelle buffers markør vil placeres på denne linje. Ved at trykke på f3 vil du også søge efter den næste forekomst af teksten.
+* Når "tal indtastede tegn" er aktiveret, bør flere tegn nu blive talt. Teknisk set kan tegn fra ASCII 32 til 255 nu tales.
+* Omdøbt nogle kontroltyper for bedre læsbarhed. Redigerbar tekst er nu redigeringsfelt, outline er nu trævisning, og trykknap er nu knap.
+* Når man navigerer rundt i listeelementer i en liste eller trævisningselementer i en trævisning, tales kontroltypen (listeelement, trævisningselement) ikke længere, for at gøre navigationen hurtigere.
+* "Har popup" (for at indikere, at en menu har en undermenu) tales nu som "undermenu".
+* Hvor nogle sprog bruger kontrol og alt (eller altGR) til at indtaste et specialtegn, vil NVDA nu tale disse tegn, når "tal indtastede tegn" er aktiveret.
+* Rettet nogle problemer med gennemgang af statiske tekstkontroller.
+* Tilføjet traditionel kinesisk oversættelse takket være Coscell Kao.
+* Omstruktureret en vigtig del af NVDA's kode, som nu burde rette mange problemer med NVDA's brugergrænseflade (herunder indstillingsdialogbokse).
+* Tilføjet SAPI4-understøttelse til NVDA. Der er i øjeblikket to SAPI4-drivere, en baseret på kode bidraget af Serotek Corporation og en, der bruger ActiveVoice.ActiveVoice COM-interface. Begge disse drivere har problemer, se hvilken der fungerer bedst for dig.
+* Nu, når man prøver at køre en ny kopi af NVDA, mens en ældre kopi allerede kører, vil den nye kopi blot afslutte. Dette løser et stort problem, hvor kørsel af flere kopier af NVDA gør dit system meget ubrugeligt.
+* Omdøbt titlen på NVDA's brugergrænseflade fra NVDA Interface til NVDA.
+* Rettet en fejl i Outlook Express, hvor tryk på backspace i starten af en redigerbar besked forårsagede en fejl.
+* Tilføjet patch fra Rui Batista, der tilføjer et script til at rapportere den aktuelle batteristatus på bærbare computere (insert+shift+b).
+* Tilføjet en talesyntesedriver kaldet Silence. Dette er en talesyntesedriver, der ikke taler noget, hvilket tillader NVDA at forblive helt stille til enhver tid. Dette kan senere bruges sammen med punktskrifttilstand, når vi har det.
+* Tilføjet "capitalPitchChange"-indstilling for talesynteser, takket være J.J. Meddaugh.
+* Tilføjet patch fra J.J. Meddaugh, der gør "tænd/sluk rapporter objekter under musen"-scriptet mere som de andre tænd/sluk-scripts (der siger til/fra i stedet for at ændre hele udsagnet).
+* Tilføjet spansk oversættelse (es) bidraget af Juan C. Buno.
+* Tilføjet ungarsk sprogfil fra Tamas Gczy.
+* Tilføjet portugisisk sprogfil fra Rui Batista.
+* Når man ændrer stemmen i Stemmens indstillinger dialogboksen, indstilles hastigheds-, tonehøjde- og volumen-sliders til de nye værdier i henhold til talesyntesen, i stedet for at tvinge talesyntesen til at blive indstillet til de gamle værdier. Dette løser problemer, hvor en talesyntese som Eloquence eller Viavoice taler meget hurtigere end alle andre talesynteser.
+* Rettet en fejl, hvor enten tale stoppede, eller NVDA gik helt ned, når det var i et DOS-konsolvindue.
+* Hvis understøttelse for et bestemt sprog findes, kan NVDA nu automatisk vise sin brugergrænseflade og tale sine beskeder på det sprog, Windows er indstillet til. Et bestemt sprog kan stadig vælges manuelt fra dialogboksen for brugergrænsefladeindstillinger.
+* Tilføjet scriptet 'toggleReportDynamicContentChanges' (insert+5). Dette skifter, om nye tekster eller andre dynamiske ændringer skal annonceres automatisk. Indtil videre fungerer dette kun i DOS-konsolvinduer.
+* Tilføjet scriptet 'toggleCaretMovesReviewCursor' (insert+6). Dette skifter, om gennemgangsmarkøren automatisk skal genplaceres, når systemets markør flytter sig. Dette er nyttigt i DOS-konsolvinduer, når du forsøger at læse information, mens skærmen opdateres.
+* Tilføjet scriptet 'toggleFocusMovesNavigatorObject' (insert+7). Dette skifter, om navigatorobjektet automatisk skal genplaceres på objektet med fokus, når dette ændres.
+* Tilføjet dokumentation oversat til forskellige sprog. Indtil videre er der fransk, spansk og finsk.
+* Fjernet noget udviklerdokumentation fra NVDA's binære distribution, det er nu kun i kildeversionen.
+* Rettet mulig fejl i Windows Live Messenger og MSN Messenger, hvor navigation med pil op/ned i kontaktlisten forårsagede fejl.
+* Nye beskeder læses nu automatisk, når der føres en samtale i Windows Live Messenger. (fungerer kun for engelske versioner indtil videre).
+* Historievinduet i en Windows Live Messenger-samtale kan nu læses med piletasterne. (fungerer kun for engelske versioner indtil videre).
+* Tilføjet scriptet 'passNextKeyThrough' (insert+f2). Tryk på denne tast, og næste tastetryk sendes direkte til Windows. Dette er nyttigt, hvis du skal trykke på en bestemt tast i en applikation, men NVDA bruger denne tast til noget andet.
+* NVDA fryser ikke længere i mere end et minut ved åbning af meget store dokumenter i MS Word.
+* Rettet fejl, hvor det at bevæge sig ud af en tabel i MS Word og derefter ind igen, forårsagede, at de aktuelle række-/kolonnenumre ikke blev talt, hvis du flyttede ind i præcis den samme celle.
+* Når NVDA startes med en talesyntese, der ikke eksisterer eller ikke virker, vil SAPI5-talesyntesen forsøge at blive indlæst i stedet, eller hvis SAPI5 ikke virker, indstilles tale til Silence.
+* Skripterne til at øge og formindske hastighed kan ikke længere tage hastigheden over 100 eller under 0.
+* Hvis der er en fejl med et sprog, når det vælges i dialogboksen for brugergrænsefladeindstillinger, vises en fejlmeddelelse, der advarer brugeren om fejlen.
+* NVDA beder nu om at gemme konfiguration og genstarte, hvis brugeren lige har ændret sproget i dialogboksen for brugergrænsefladeindstillinger. NVDA skal genstartes, for at sprogændringen træder i kraft.
+* Hvis en talesyntese ikke kan indlæses, når den vælges fra talesyntesedialogboksen, vises en fejlmeddelelse, der advarer brugeren om fejlen.
+* Når en talesyntese indlæses for første gang, tillader NVDA talesyntesen at vælge de mest egnede stemme-, hastigheds- og tonehøjdsparametre i stedet for at tvinge talesyntesen til at bruge forudindstillede værdier. Dette retter et problem, hvor Eloquence- og Viavoice SAPI4-talesynteser starter med at tale alt for hurtigt første gang.
