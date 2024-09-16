@@ -1294,6 +1294,9 @@ class AggregatedSection:
 				# If value is a section, continue to update
 				pass
 			elif str(val) == str(curVal):
+				# Check str comparison as this is what is written to the config.
+				# If the value is unchanged, do not update
+				# or mark the profile as dirty.
 				return
 
 		# Set this value in the most recently activated profile.
