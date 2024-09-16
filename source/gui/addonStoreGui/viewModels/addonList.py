@@ -379,7 +379,6 @@ class AddonListVM:
 					column=c.displayString,
 				),
 			)
-			# {column} will be replaced with the column display string.
 		return columnChoices
 
 	def _getFilteredSortedIds(self) -> List[str]:
