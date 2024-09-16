@@ -5590,27 +5590,31 @@ class SetURLDialog(SettingsDialog):
 		try:
 			r = get(self._urlTransformer(self._url))
 			r.raise_for_status()
-			self._done(True)
+			self._success()
 		except RequestException as e:
-			self._done(e)
+			self._failure(e)
 
-	def _done(self, result):
-		wx.CallAfter(self._progressDialog.done)
-		self._progressDialog = None
-		flags = wx.OK
-		if result is True:
-			message = "Successfully connected to the given URL."
-			title = "Success"
-		else:
-			message = f"Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid. {result}"
-			title = "Error"
-			flags |= wx.ICON_ERROR
+	def _success(self):
+		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
-			message,
-			title,
-			flags,
+			"Successfully connected to the given URL.",
+			"Success",
+			wx.OK,
 		)
+
+	def _failure(self, error: Exception):
+		self._cleanUp()
+		wx.CallAfter(
+			gui.messageBox,
+			f"Failed to connect to the given URL. Check that you are connected to the internet and the URL is valid. {error}",
+			"Error",
+			wx.OK | wx.ICON_ERROR,
+		)
+
+	def _cleanUp(self):
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 
 	def _normalize(self):
 		from urllib3.util.url import parse_url
