@@ -24,7 +24,7 @@ from config.featureFlag import (
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
-	contextHelp
+	contextHelp,
 )
 import winUser
 import winsound
