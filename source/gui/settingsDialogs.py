@@ -5652,7 +5652,7 @@ class SetURLDialog(SettingsDialog):
 
 	def _normalize(self):
 		"""Normalize the URL in the URL text box."""
-		self._url = url_normalize(self._url)
+		self._url = url_normalize(self._url.strip()).rstrip("/")
 
 	def _getFromConfig(self):
 		"""Get the value pointed to by `configPath` from the config."""
