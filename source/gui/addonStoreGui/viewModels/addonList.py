@@ -364,16 +364,20 @@ class AddonListVM:
 			columnChoices.append(
 				pgettext(
 					"addonStore",
-					"{column} (ascending)").format(
-						column=c.displayString),
+					"{column} (ascending)",
+				).format(
+					column=c.displayString,
+				),
 			)
 			# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
 			# {column} will be replaced with the column display string.
 			columnChoices.append(
 				pgettext(
 					"addonStore",
-					"{column} (descending)").format(
-						column=c.displayString),
+					"{column} (descending)",
+				).format(
+					column=c.displayString,
+				),
 			)
 			# {column} will be replaced with the column display string.
 		return columnChoices
