@@ -48,8 +48,6 @@ class AddonVirtualList(
 		self._addonsListVM = addonsListVM
 		self._actionsContextMenu = actionsContextMenu
 		self._batchActionsContextMenu = _BatchActionsContextMenu(self._addonsListVM._storeVM)
-		self.ShowSortIndicator(self._addonsListVM.presentedFields.index(self._addonsListVM._sortByModelField))
-		log.debug(f"Sort indicator: {self.GetSortIndicator()}")
 
 		self.SetMinSize(self.scaleSize((500, 500)))
 
@@ -153,8 +151,6 @@ class AddonVirtualList(
 		colIndex = evt.GetColumn()
 		log.debug(f"col clicked: {colIndex}")
 		self._addonsListVM.setSortField(self._addonsListVM.presentedFields[colIndex])
-		self.ShowSortIndicator(colIndex)
-		log.debug(f"Sort indicator: {self.GetSortIndicator()}")
 
 	def _doRefresh(self):
 		with guiHelper.autoThaw(self):
