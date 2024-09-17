@@ -48,6 +48,7 @@ Add-ons can be filtered by display name, publisher and description.
 1. Ensure a warning is displayed: "Unable to fetch latest compatible add-ons"
 1. Ensure installed add-ons are still available in the add-on store.
 
+
 ## Installing add-ons
 
 ### Install add-on
