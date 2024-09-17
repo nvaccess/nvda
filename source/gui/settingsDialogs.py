@@ -984,7 +984,7 @@ class GeneralSettingsPanel(SettingsPanel):
 					changeMirrorBtn,
 				),
 			)
-			self.bindHelpEvent("UpdateMirrorURL", mirrorBox)
+			self.bindHelpEvent("UpdateMirror", mirrorBox)
 			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
 			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
 			if globalVars.appArgs.secure:
@@ -994,8 +994,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		changeMirror = SetURLDialog(
 			self,
-			"Set NVDA Update Mirror",
-			("update", "serverURL"),
+			title="Set NVDA Update Mirror",
+			configPath=("update", "serverURL"),
+			helpId="SetUpdateMirror",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
 		)
 		ret = changeMirror.ShowModal()
@@ -5568,11 +5569,13 @@ class SetURLDialog(SettingsDialog):
 			wx.TextCtrl,
 			size=(250, -1),
 		)
+		self.bindHelpEvent("UpdateMirrorURL", urlControl)
 		self._testButton = testButton = wx.Button(
 			self,
 			# Translators: A button in a dialog which allows the user to test a URL that they have entered.
 			label=_("&Test..."),
 		)
+		self.bindHelpEvent("UpdateMirrorTest", testButton)
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self._onTest)
@@ -5685,6 +5688,7 @@ class SetURLDialog(SettingsDialog):
 		current_url = self._url
 		normalized_url = url_normalize(self._url.strip()).rstrip("/")
 		if current_url != normalized_url:
+			# Only change the value of the textbox if the value has actually changed, as EVT_TEXT will be fired even if the replacement text is identical.
 			self._url = normalized_url
 
 	def _getFromConfig(self) -> str:
