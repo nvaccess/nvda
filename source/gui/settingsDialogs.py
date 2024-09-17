@@ -5585,6 +5585,7 @@ class SetURLDialog(SettingsDialog):
 		self._urlControl.SetFocus()
 
 	def onOk(self, evt: wx.CommandEvent):
+		self._normalize()
 		if self._url == self._getFromConfig():
 			shouldSave = False
 		elif self._testStatus != SetURLDialog._URLTestStatus.PASSED:
@@ -5611,8 +5612,6 @@ class SetURLDialog(SettingsDialog):
 			shouldSave = True
 
 		if shouldSave:
-			gui.messageBox("Saving.")
-			self._normalize()
 			self._saveToConfig()
 		super().onOk(evt)
 
@@ -5683,7 +5682,10 @@ class SetURLDialog(SettingsDialog):
 
 	def _normalize(self):
 		"""Normalize the URL in the URL text box."""
-		self._url = url_normalize(self._url.strip()).rstrip("/")
+		current_url = self._url
+		normalized_url = url_normalize(self._url.strip()).rstrip("/")
+		if current_url != normalized_url:
+			self._url = normalized_url
 
 	def _getFromConfig(self) -> str:
 		"""Get the value pointed to by `configPath` from the config."""
