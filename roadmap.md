@@ -15,7 +15,7 @@ These priorities focus on enhancements and improvements that we aim to deliver i
 * **Updated project linting:** Updating our linting tools and rules to improve code quality and consistency across the project.
 * **Optimising certification system queries:** Optimising database queries used by the NVDA certification system to improve performance and reduce latency.
 * **Containerising server infrastructure:** Migrating our server infrastructure to containers, enhancing scalability, maintainability, and deployment flexibility.
-* **Add-on store automatic updates:** Enabling automatic updates for add-ons downloaded from the NVDA Add-on Store, ensuring users have the latest features and bug fixes.
+* **Add-on Store automatic updates:** Enabling automatic updates for add-ons downloaded from the NVDA Add-on Store, ensuring users have the latest features and bug fixes.
 
 ## Medium-Term Priorities
 
@@ -25,11 +25,11 @@ These priorities represent significant features and improvements that require mo
 * **Braille multi-line prototype:** Development of a prototype for multi-line braille display support, exploring new ways to present information in braille.
 * **Enhanced Excel UIA support:** Improvements to NVDA's UIA (User Interface Automation) support for Microsoft Excel, providing a more robust and intuitive experience for navigating and interacting with spreadsheets.
 * **Support for Microsoft Natural Voices:** Adding support for Microsoft's Natural Voices text-to-speech engine, expanding user choice and providing access to high-quality synthetic voices.
-* **Web front end for add-on store:** Creating a web-based front end for the NVDA Add-on Store, making it more accessible and easier to browse and search for add-ons.
+* **Web front end for Add-on Store:** Creating a web-based front end for the NVDA Add-on Store, making it more accessible and easier to browse and search for add-ons.
 * **Add-on installation telemetry:**  Gathering anonymous data on add-on installations to understand usage patterns to help prioritise development efforts to improve the add-on ecosystem.
 * **ARM installation telemetry:** Gathering anonymous data on ARM installations, providing insights into changing usage patterns.
 * **Anonymous identifier:** Implementation of a system for generating unique, rotating, anonymous identifiers for NVDA installations, allowing for better data collection and analysis without compromising user privacy.
-* **End of support for windows 8.1, 2012/R2:**  Officially ending support for older versions of Windows, allowing us to focus on developing for modern operating systems and their latest accessibility features.
+* **End of support for Windows 8.1, 2012/R2:**  Officially ending support for older versions of Windows, allowing us to focus on developing for modern operating systems and their latest accessibility features.
 
 ## Long-Term Priorities
 
