@@ -957,8 +957,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# if globalVars.appArgs.secure:
-			# item.Disable()
+
 			# Translators: The label for the update mirror on the General Settings panel.
 			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror:"))
 			mirrorBox = mirrorBoxSizer.GetStaticBox()
@@ -988,6 +987,8 @@ class GeneralSettingsPanel(SettingsPanel):
 			self.bindHelpEvent("UpdateMirrorURL", mirrorBox)
 			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
 			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+			if globalVars.appArgs.secure:
+				mirrorBox.Disable()
 
 	def onChangeMirrorURL(self, evt):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
