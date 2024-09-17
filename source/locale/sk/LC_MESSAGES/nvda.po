@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 23:33+0000\n"
-"PO-Revision-Date: 2024-09-09 00:08\n"
+"POT-Creation-Date: 2024-09-12 07:19+0000\n"
+"PO-Revision-Date: 2024-09-16 00:03\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -2984,7 +2984,7 @@ msgstr "Spodok"
 #. Translators: Description for the Move past end of container command in browse mode.
 #: browseMode.py:2337
 msgid "Moves past the end of the container element, such as a list or table"
-msgstr ""
+msgstr "Prejde za prvok, ktorý zoskupuje viaceré prvky rovnakého typu napr. za tabuľku alebo zoznam."
 
 #. Translators: the description for the toggleScreenLayout script.
 #. Translators: the description for the toggleScreenLayout script on virtualBuffers.
@@ -3081,7 +3081,7 @@ msgstr "pod úroveň"
 #. Translators: The name of a symbols dictionary with data from the unicode CLDR.
 #: characterProcessing.py:897
 msgid "Unicode Consortium data (including emoji)"
-msgstr ""
+msgstr "Údaje Unicode Konzorcia (zahŕňa tiež symboly emoji)"
 
 #. Translators: a transparent color, {colorDescription} replaced with the full description of the color e.g.
 #. "transparent bright orange-yellow"
@@ -3936,27 +3936,27 @@ msgstr "oznamovať veľkosť písma"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:579
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr ""
+msgstr "Cyklicky prepína oznamovanie vlastností písma medzi možnosťami reč, brail, reč aj brail, alebo vypnuté."
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:589
 msgid "Do not report font attributes"
-msgstr ""
+msgstr "Neoznamovať vlastnosti písma"
 
 #. Translators: A state in which font attributes are only spoken.
 #: globalCommands.py:592
 msgid "Speak font attributes"
-msgstr ""
+msgstr "Hovoriť vlastnosti písma"
 
 #. Translators: A state in which font attributes are only brailled.
 #: globalCommands.py:595
 msgid "Braille font attributes"
-msgstr ""
+msgstr "Zobrazovať vlastnosti písma na brailovom riadku"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:598
 msgid "Speak and braille font attributes"
-msgstr ""
+msgstr "Hovoriť aj zobrazovať vlastnosti písma na brailovom riadku"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:604
@@ -5374,17 +5374,17 @@ msgstr "brailový kurzor zapnutý"
 #. Translators: Input help mode message for speak on routing command.
 #: globalCommands.py:3598
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
-msgstr ""
+msgstr "Prepína vyslovovanie znakov pod kurzorom pri používaní smerových tlačidiel brailového riadku"
 
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3606
 msgid "Enabled speak character when routing cursor in text"
-msgstr ""
+msgstr "Vyslovovať znaky pri posúvaní kurzora smerovými tlačidlami brailového riadku"
 
 #. Translators: The message announced when toggling off speaking character when routing.
 #: globalCommands.py:3609
 msgid "Disabled speak character when routing cursor in text"
-msgstr ""
+msgstr "Nevyslovovať znaky pri posúvaní kurzora smerovými tlačidlami brailového riadku"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3614
@@ -9767,19 +9767,19 @@ msgstr "Upozorňovať"
 #. Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 #: config\configFlags.py:252
 msgid "Speech and braille"
-msgstr ""
+msgstr "Hovoriť aj zobrazovať v braily"
 
 #. Translators: This is a label for a paragraph start marker.
 #: config\configFlags.py:265
 msgctxt "paragraphMarker"
 msgid "No paragraph start marker (default)"
-msgstr ""
+msgstr "Neoznačovať začiatok odseku (predvolené)"
 
 #. Translators: This is a label for a paragraph start marker.
 #: config\configFlags.py:267
 msgctxt "paragraphMarker"
 msgid "Double space (  )"
-msgstr ""
+msgstr "Dvojitá medzera (  )"
 
 #. Translators: This is a label for a paragraph start marker.
 #. Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
@@ -9787,7 +9787,7 @@ msgstr ""
 #: config\configFlags.py:271
 msgctxt "paragraphMarker"
 msgid "Pilcrow (¶)"
-msgstr ""
+msgstr "Označenie odseku (¶)"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:53
@@ -9837,12 +9837,12 @@ msgstr "Upozornenia rozhrania UIA"
 #. Translators: Label for a way of outputting formatting in braille.
 #: config\featureFlagEnums.py:136
 msgid "Liblouis"
-msgstr ""
+msgstr "Liblouis"
 
 #. Translators: Label for a way of outputting formatting in braille.
 #: config\featureFlagEnums.py:138
 msgid "Tags"
-msgstr ""
+msgstr "Značky"
 
 #. Translators: The title of the document used to present the result of content recognition.
 #: contentRecog\recogUi.py:39
@@ -12529,7 +12529,7 @@ msgstr "Hláskovanie &riadi hlasový výstup (ak je podporované)"
 #. Translators: Label of the list where user can enable or disable symbol dictionaires.
 #: gui\settingsDialogs.py:1746
 msgid "E&xtra dictionaries for character and symbol processing:"
-msgstr ""
+msgstr "Dodatočné slovníky na spracovanie znakov a symbolov:"
 
 #. Translators: Label of the list where user can select speech modes that will be available.
 #: gui\settingsDialogs.py:1760
@@ -12632,7 +12632,7 @@ msgstr "Spracovať vstup z externých &programov"
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:1991
 msgid "&Multiple key press timeout (ms):"
-msgstr ""
+msgstr "Časový li&mit pre stlačenie viacerých klávesov (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2007
@@ -13738,7 +13738,7 @@ msgstr "Čítať po odsekoch"
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
 #: gui\settingsDialogs.py:4394
 msgid "Paragraph start marker:"
-msgstr ""
+msgstr "Značka začiatku odseku:"
 
 #. Translators: The label for a setting in braille settings to select how the context for the focus object should be presented on a braille display.
 #: gui\settingsDialogs.py:4409
@@ -13753,12 +13753,12 @@ msgstr "Ukázať v&ýber"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4442
 msgid "Formatting &display"
-msgstr ""
+msgstr "Zobrazovanie formátovania"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4451
 msgid "Spea&k character when routing cursor in text"
-msgstr ""
+msgstr "Vyslovovať zna&ky pri posúvaní kurzora smerovými tlačidlami"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14803,7 +14803,7 @@ msgstr "práca s matematickým obsahom nie je podporovaná."
 #: NVDAObjects\__init__.py:662
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
-msgstr ""
+msgstr "Rohy objektu umiestnené {left:.1f} percent od ľavého okraja obrazovky, {top:.1f} percent od horného okraja obrazovky, šírka je {width:.1f} percent šírky obrazovky, výška je {height:.1f} percent výšky obrazovky"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -14916,13 +14916,13 @@ msgstr "riadok {rowNumber} stĺpec {columnNumber} je už nastavený ako začiato
 #: NVDAObjects\IAccessible\winword.py:279
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from column headers"
-msgstr ""
+msgstr "Riadok {rowNumber} stĺpec {columnNumber} odstránený z hlavičky pre stĺpce"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:287
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in column headers"
-msgstr ""
+msgstr "V hlavičke pre stĺpce nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:297
@@ -14945,18 +14945,18 @@ msgstr "Riadok {rowNumber} stĺpec {columnNumber} už nastavený ako začiatok h
 #: NVDAObjects\IAccessible\winword.py:331
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr ""
+msgstr "Riadok {rowNumber} stĺpec {columnNumber} odstránený z hlavičky pre riadky"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:339
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in row headers"
-msgstr ""
+msgstr "V hlavičke pre riadky nie je možné nájsť riadok {rowNumber} stĺpec {columnNumber}"
 
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr ""
+msgstr "Oznámi komentár pod systémovým kurzorom. Stlačené dva krát rýchlo za sebou zobrazí obsah komentára v režime prehliadania."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:420 NVDAObjects\UIA\wordDocument.py:684
@@ -14993,7 +14993,7 @@ msgid_plural "{} suggestions"
 msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
-msgstr[3] ""
+msgstr[3] "{} návrhov"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:195
@@ -15205,7 +15205,7 @@ msgstr "Navigácia po vetách nie je podporovaná v tomto dokumente"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:662
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr ""
+msgstr "Oznámi komentár pod systémovým kurzorom. Stlačené dva krát rýchlo za sebou zobrazí obsah komentára v režime prehliadania."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -16284,13 +16284,13 @@ msgstr "{address} je už nastavené ako začiatok hlavičky pre stĺpce"
 #: NVDAObjects\window\excel.py:1632
 #, python-brace-format
 msgid "Removed {address} from column headers"
-msgstr ""
+msgstr "{address} odstránené ako hlavička pre stĺpce"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1636
 #, python-brace-format
 msgid "Cannot find {address} in column headers"
-msgstr ""
+msgstr "V hlavičke pre stĺpce nie je možné nájsť {address}"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1642
@@ -16340,7 +16340,7 @@ msgstr "Vstupný text je {message}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1850
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Oznámi poznámku pre aktuálnu bunku. Stlačené dva krát rýchlo za sebou zobrazí poznámku v režime prehliadania."
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
