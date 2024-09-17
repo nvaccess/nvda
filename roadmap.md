@@ -46,4 +46,5 @@ These priorities represent ambitious goals and initiatives that will shape the f
 
 ## Contributing and Feedback
 
-We encourage contributions from the community! Please explore our [GitHub repository](https://github.com/nvaccess/nvda) or [user group](https://nvda.groups.io/g/nvda) on groups.io to learn more about how you can get involved.
+We encourage contributions from the community! 
+Please explore our [GitHub repository](https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md) or [user group](https://nvda.groups.io/g/nvda) on groups.io to learn more about how you can get involved.
