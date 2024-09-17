@@ -994,7 +994,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		changeMirror = SetURLDialog(
 			self,
-			"Update Mirror",
+			"Set NVDA Update Mirror",
 			("update", "serverURL"),
 			urlTransformer=lambda url: f"{url}?versionType=stable",
 		)
