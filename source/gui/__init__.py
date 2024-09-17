@@ -485,16 +485,15 @@ class MainFrame(wx.Frame):
 		"Welcome to the COM Registration Fixing tool.\n"
 		"This tool fixes common problems that sometimes occur, preventing NVDA from accessing content in various "
 		"applications and Windows components.\n"
-		"Accessibility entries in the system registry can be damaged by installing or uninstalling "
-		"programs, or other system events. This may result in "
-		'"unknown" or "pane" being spoken instead of the content you were expecting, or previously '
-		"accessible elements suddenly no longer reading correctly.\n\n"
+		"Installing and uninstalling programs, and other events, can damage accessibility entries in the "
+		"Windows registry. This can cause previously accessible elements to be presented incorrectly, "
+		'or can cause "unknown" or "pane" to be spoken or brailled, instead of the content you were expecting.\n\n'
 		"The tool accesses the system registry, which requires administrative privileges.\n"
 		"Press Continue to run the tool now.",
 	)
 	"""
 	Contains the intro dialog contents for the COM Registration Fixing Tool.
-	Used by gui.MainFrame.onRunCOMRegistrationFixesCommand.
+	Used by `gui.MainFrame.onRunCOMRegistrationFixesCommand`.
 	"""
 
 	@blockAction.when(
