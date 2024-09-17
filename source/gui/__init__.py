@@ -486,7 +486,7 @@ class MainFrame(wx.Frame):
 		"Installing and uninstalling programs, and other events, can damage accessibility entries in the "
 		"Windows registry. This can cause previously accessible elements to be presented incorrectly, "
 		'or can cause "unknown" or "pane" to be spoken or brailled in some applications or Windows components, '
-		"instead of the content you were expecting.\n\n'
+		"instead of the content you were expecting.\n\n"
 		"This tool attempts to fix these common problems.\n"
 		"The tool accesses the system registry, which requires administrative privileges.\n"
 		"Press Continue to run the tool now.",

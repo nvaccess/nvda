@@ -388,26 +388,26 @@ class _ContinueCancelDialog(
 	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
 	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
 	It also supports NVDA's context sensitive help.
-		"""
+	"""
 
-		def __init__(
-			self,
-			parent: wx.Frame,
-			title: str,
-			message: str,
-			dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
-			continueButtonFirst: bool = True,
-			helpId: str | None = None,
-		) -> None:
-			"""Creates a ContinueCancelDialog MessageDialog.
+	def __init__(
+		self,
+		parent: wx.Frame,
+		title: str,
+		message: str,
+		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+		continueButtonFirst: bool = True,
+		helpId: str | None = None,
+	) -> None:
+		"""Creates a ContinueCancelDialog MessageDialog.
 
-			:param parent: The parent window for the dialog, usually `gui.mainFrame`.
-			:param title: The title or caption of the dialog.
-			:param message: The message to be shown in the dialog.
-			:param dialogType: One of the dialog type constants from `MessageDialog`, defaults to standard.
-			:param continueButtonFirst: If True, the Continue button will appear first, and be selected when the dialog
-				opens; if False, the Cancel button will. Defaults to True.
-			:param helpId: a helpId, as used with the `gui.contextHelp` module, enabling the help key (`F1`)
+		:param parent: The parent window for the dialog, usually `gui.mainFrame`.
+		:param title: The title or caption of the dialog.
+		:param message: The message to be shown in the dialog.
+		:param dialogType: One of the dialog type constants from `MessageDialog`, defaults to standard.
+		:param continueButtonFirst: If True, the Continue button will appear first, and be selected when the dialog
+			opens; if False, the Cancel button will. Defaults to True.
+		:param helpId: a helpId, as used with the `gui.contextHelp` module, enabling the help key (`F1`)
 			to open a browser to a specific heading in the NVDA user guide.
 		"""
 		self.continueButtonFirst: bool = continueButtonFirst
