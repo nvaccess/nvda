@@ -15,7 +15,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
-* The add-ons lists in the Add-on Store can be sorted by columns. (#15277, @nvdaes)
+* The add-ons lists in the Add-on Store can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
 * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
 * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)

@@ -6,6 +6,7 @@
 import dataclasses
 import json
 import os
+from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -125,6 +126,7 @@ class _AddonStoreModel(_AddonGUIModel):
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 
 	@property
 	def tempDownloadPath(self) -> str:
@@ -181,6 +183,12 @@ class _AddonStoreModel(_AddonGUIModel):
 			# and the download has not been cancelled
 			or bool(next(nameInDownloadsPendingCompletion, False))
 		)
+
+	@property
+	def publicationDate(self) -> str | None:
+		if self.submissionTime is None:
+			return None
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime), "%x")
 
 
 class _AddonManifestModel(_AddonGUIModel):
@@ -257,6 +265,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -293,6 +302,7 @@ class AddonStoreModel(_AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -325,6 +335,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewURL"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -347,6 +358,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewUrl"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 
