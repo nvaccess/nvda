@@ -11,7 +11,7 @@ import logging
 from abc import ABCMeta, abstractmethod
 import copy
 import os
-from enum import IntEnum
+from enum import Enum, IntEnum, auto
 from locale import strxfrm
 import re
 import threading
@@ -957,15 +957,9 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
-			# item = self.updateMirrorTextBox = settingsSizerHelper.addLabeledControl(
-			# Translators: The label of a textbox in general settings to set the NVDA update server mirror
-			# _("Update server &mirror URL:"),
-			# wx.TextCtrl,
-			# )
-			# self.bindHelpEvent("UpdateMirrorURL", self.updateMirrorTextBox)
-			# item.Value = config.conf["update"]["serverURL"]
 			# if globalVars.appArgs.secure:
 			# item.Disable()
+			# Translators: The label for the update mirror on the General Settings panel.
 			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror:"))
 			mirrorBox = mirrorBoxSizer.GetStaticBox()
 			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
@@ -5529,7 +5523,13 @@ class SpeechSymbolsDialog(SettingsDialog):
 
 
 class SetURLDialog(SettingsDialog):
+	class _URLTestStatus(Enum):
+		UNTESTED = auto()
+		PASSED = auto()
+		FAILED = auto()
+
 	_progressDialog: "gui.IndeterminateProgressDialog | None" = None
+	_testStatus: _URLTestStatus = _URLTestStatus.UNTESTED
 
 	def __init__(
 		self,
@@ -5574,9 +5574,9 @@ class SetURLDialog(SettingsDialog):
 		)
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
-		# Order of operations is important here.
 		testButton.Bind(wx.EVT_BUTTON, self._onTest)
-		urlControl.Bind(wx.EVT_TEXT, self._typingEnablesTestButton)
+		# Order of operations is important here.
+		urlControl.Bind(wx.EVT_TEXT, self._onTextChange)
 		self._url = self._getFromConfig()
 
 	def postInit(self):
@@ -5584,14 +5584,42 @@ class SetURLDialog(SettingsDialog):
 		self._urlControl.SetFocus()
 
 	def onOk(self, evt: wx.CommandEvent):
-		self._normalize()
-		self._saveToConfig()
+		if self._url == self._getFromConfig():
+			shouldSave = False
+		elif self._testStatus != SetURLDialog._URLTestStatus.PASSED:
+			ret = gui.messageBox(
+				_(
+					# Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
+					"The URL you have entered failed the connection test. Are you sure you want to save it anyway?",
+				)
+				if self._testStatus == SetURLDialog._URLTestStatus.FAILED
+				else _(
+					# Translators: Message shown to users when saving an untested URL to NVDA's settings.
+					"The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?",
+				),
+				# Translators: The title of a dialog.
+				_("Warning"),
+				wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_WARNING,
+				self,
+			)
+			if ret == wx.OK:
+				shouldSave = True
+			else:
+				return
+		else:
+			shouldSave = True
+
+		if shouldSave:
+			gui.messageBox("Saving.")
+			self._normalize()
+			self._saveToConfig()
 		super().onOk(evt)
 
-	def _typingEnablesTestButton(self, evt: wx.CommandEvent):
-		"""Enable the "Test..." button only when there is text in the URL control."""
+	def _onTextChange(self, evt: wx.CommandEvent):
+		"""Enable the "Test..." button only when there is text in the URL control, and change the URL's test status when the URL changes."""
 		value = self._url
 		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
+		self._testStatus = SetURLDialog._URLTestStatus.UNTESTED
 
 	def _onTest(self, evt: wx.CommandEvent):
 		"""Normalize the URL, start a background thread to test it, and show an indeterminate progress dialog to the user."""
@@ -5621,6 +5649,7 @@ class SetURLDialog(SettingsDialog):
 
 	def _success(self):
 		"""Notify the user that we successfully connected to their URL."""
+		self._testStatus = SetURLDialog._URLTestStatus.PASSED
 		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
@@ -5633,6 +5662,7 @@ class SetURLDialog(SettingsDialog):
 
 	def _failure(self, error: Exception):
 		"""Notify the user that testing their URL failed."""
+		self._testStatus = SetURLDialog._URLTestStatus.FAILED
 		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
@@ -5654,7 +5684,7 @@ class SetURLDialog(SettingsDialog):
 		"""Normalize the URL in the URL text box."""
 		self._url = url_normalize(self._url.strip()).rstrip("/")
 
-	def _getFromConfig(self):
+	def _getFromConfig(self) -> str:
 		"""Get the value pointed to by `configPath` from the config."""
 		currentConfigSection = config.conf
 		keyIndex = len(self._configPath) - 1
