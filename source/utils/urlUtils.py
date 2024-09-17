@@ -35,18 +35,13 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 	if not targetURLOnPage or not rootURL:
 		return False
 
+	validSchemes = ("http", "https")
 	# Parse the URLs
 	parsedTargetURLOnPage: ParseResult = urlparse(targetURLOnPage)
+	if parsedTargetURLOnPage.scheme not in validSchemes:
+		return False
 	parsedRootURL: ParseResult = urlparse(rootURL)
-	if (
-		parsedTargetURLOnPage.scheme == "file"
-		and parsedRootURL.scheme == "file"
-		and parsedTargetURLOnPage.path == parsedRootURL.path
-	):
-		return True
-
-	validSchemes = ("http", "https")
-	if parsedTargetURLOnPage.scheme not in validSchemes or parsedRootURL.scheme not in validSchemes:
+	if parsedRootURL.scheme not in validSchemes:
 		return False
 
 	# Reconstruct URLs without schemes and without fragments for comparison
