@@ -384,12 +384,12 @@ def translateXliff(
 					else:
 						raise ValueError(f"Cannot locate Unit {ID} in xliff file")
 				except Exception as e:
-					e.add_note(
-						f"Line {lineNo}: {pretranslatedLine=}, {skelLine=}"
-					)
+					e.add_note(f"Line {lineNo}: {pretranslatedLine=}, {skelLine=}")
 					raise
 			elif skelLine != pretranslatedLine:
-				raise ValueError(f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}")
+				raise ValueError(
+					f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}"
+				)
 		xliff.write(outputPath, encoding="utf8", xml_declaration=True)
 		print(f"Translated xliff file with {res.numTranslatedStrings} translated strings")
 		return res
@@ -400,6 +400,7 @@ class Result_generateMarkdown:
 	numTotalLines = 0
 	numTranslatableStrings = 0
 	numTranslatedStrings = 0
+	numBadTranslationStrings = 0
 
 
 def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -> Result_generateMarkdown:
@@ -422,30 +423,44 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 				prefix, ID, suffix = m.groups()
 				res.numTranslatableStrings += 1
 				unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
-				if unit is not None:
-					segment = unit.find("./xliff:segment", namespaces=namespace)
-					if segment is not None:
-						source = segment.find("./xliff:source", namespaces=namespace)
-						if translated:
-							target = segment.find("./xliff:target", namespaces=namespace)
-						else:
-							target = None
-						if target is not None and target.text:
-							res.numTranslatedStrings += 1
-							translation = xmlUnescape(target.text)
-						elif source is not None and source.text:
-							translation = xmlUnescape(source.text)
-						else:
-							raise ValueError(f"No source or target found for unit {ID}")
-					else:
-						raise ValueError(f"No segment found for unit {ID}")
-				else:
+				if unit is None:
 					raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+				segment = unit.find("./xliff:segment", namespaces=namespace)
+				if segment is None:
+					raise ValueError(f"No segment found for unit {ID}")
+				source = segment.find("./xliff:source", namespaces=namespace)
+				if source is None:
+					raise ValueError(f"No source found for unit {ID}")
+				translation = ""
+				if translated:
+					target = segment.find("./xliff:target", namespaces=namespace)
+					if target is not None:
+						targetText = target.text
+						if targetText:
+							translation = xmlUnescape(targetText)
+					# Crowdin treats empty targets (<target/>) as a literal translation.
+					# Filter out such strings and count them as bad translations.
+					if translation in (
+						"<target/>",
+						"&lt;target/&gt;",
+						"<target></target>",
+						"&lt;target&gt;&lt;/target&gt;",
+					):
+						res.numBadTranslationStrings += 1
+						translation = ""
+					else:
+						res.numTranslatedStrings += 1
+				# If we have no translation, use the source text
+				if not translation:
+					sourceText = source.text
+					if sourceText is None:
+						raise ValueError(f"No source text found for unit {ID}")
+					translation = xmlUnescape(sourceText)
 				outputFile.write(f"{prefix}{translation}{suffix}\n")
 			else:
 				outputFile.write(line)
 		print(
-			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings"
+			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings. Ignoring {res.numBadTranslationStrings} bad translated strings"
 		)
 		return res
 
