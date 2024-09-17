@@ -1914,8 +1914,8 @@ If you find that NVDA is reading punctuation in the wrong language for a particu
 ##### Unicode normalization {#SpeechUnicodeNormalization}
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Default (Disabled), Enabled, Disabled|
-|Default |Disabled|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
@@ -3637,6 +3637,13 @@ You can reach it by pressing `shift+tab` from the list of add-ons.
 Type a keyword or two for the kind of add-on you're looking for, then `tab` to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
+#### Sorting the add-ons list by column {#AddonStoreSortByColumn}
+
+By default, the add-ons list is sorted by the add-ons' display name.
+The "Sort by column" combo box can be used to sort the list by the available columns for each tab.
+For example, you may wish to sort add-ons by publisher, available version, etc.
+Add-ons can be sortered in ascending or descending order.
+
 ### Add-on actions {#AddonStoreActions}
 
 Add-ons have associated actions, such as install, help, disable, and remove.
@@ -3653,6 +3660,7 @@ This could include accessing your personal data or even the entire system.
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
+If the download or installation fails you can retry the installation.
 It is also possible to cancel the install before exiting the Add-on Store.
 
 You can also install multiple add-ons at once.
@@ -4435,6 +4443,8 @@ Please see the display's documentation for descriptions of where these keys can 
 |end key |space+LJ down|
 |control+home key |backspace+LJ up|
 |control+end key |backspace+LJ down|
+
+<!-- KC:endInclude -->
 
 ### Papenmeier BRAILLEX Newer Models {#Papenmeier}
 

@@ -145,6 +145,9 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseReplaceAction(self) -> bool:
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 
+	def canUseRetryAction(self) -> bool:
+		return self.status in {AvailableAddonStatus.DOWNLOAD_FAILED, AvailableAddonStatus.INSTALL_FAILED}
+
 	def canUseCancelInstallAction(self) -> bool:
 		return self.status in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
 
@@ -222,6 +225,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self._reverseSort: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
@@ -342,14 +346,41 @@ class AddonListVM:
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelField: AddonListField):
+	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
 		self._validate(sortField=modelField)
 		self._sortByModelField = modelField
+		self._reverseSort = reverse
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
+
+	@property
+	def _columnSortChoices(self) -> list[str]:
+		columnChoices = []
+		for c in self.presentedFields:
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
+					# {column} will be replaced with the column display string.
+					"{column} (ascending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
+					# {column} will be replaced with the column display string.
+					"{column} (descending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+		return columnChoices
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
@@ -378,12 +409,9 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-
-		if self._sortByModelField == AddonListField.publicationDate:
-			filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldDate)])
-		else:
-			filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
-
+	filteredSorted = list(
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
+		)
 		return filteredSorted
 
 	def _tryPersistSelection(
