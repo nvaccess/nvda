@@ -5592,7 +5592,7 @@ class SetURLDialog(SettingsDialog):
 		self._normalize()
 		if self._url == self._getFromConfig():
 			shouldSave = False
-		elif self._testStatus != SetURLDialog._URLTestStatus.PASSED:
+		elif self._url and self._testStatus != SetURLDialog._URLTestStatus.PASSED:
 			ret = gui.messageBox(
 				_(
 					# Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
@@ -5605,11 +5605,13 @@ class SetURLDialog(SettingsDialog):
 				),
 				# Translators: The title of a dialog.
 				_("Warning"),
-				wx.OK | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_WARNING,
+				wx.YES_NO | wx.CANCEL | wx.CANCEL_DEFAULT | wx.ICON_WARNING,
 				self,
 			)
-			if ret == wx.OK:
+			if ret == wx.YES:
 				shouldSave = True
+			elif ret == wx.NO:
+				shouldSave = False
 			else:
 				return
 		else:
