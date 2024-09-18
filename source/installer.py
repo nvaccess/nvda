@@ -806,10 +806,10 @@ def install(shouldCreateDesktopShortcut: bool = True, shouldRunAtLogon: bool = T
 	# which executables exist after copying program files.
 	# Some exes are no longer used, but we remove them anyway from legacy copies.
 	# nvda_service.exe was removed in 2017.4 (#7625).
-	# TODO: nvda_eoaProxy.exe should be added to this list in 2024.1 (#15544).
+	# nvda_eoaProxy.exe existed to support Windows 7 Ease of Access, and was removed in 2024.1 (#15577).
 	_deleteFileGroupOrFail(
 		installDir,
-		_nvdaExes.union({"nvda_service.exe"}),
+		_nvdaExes.union({"nvda_service.exe", "nvda_eoaProxy.exe"}),
 		numTries=6,
 		retryWaitInterval=0.5,
 	)

@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 12
+latestSchemaVersion = 13
 
 #: The configuration specification string
 #: @type: String
@@ -35,9 +35,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# symbolLevel: One of the characterProcessing.SymbolLevel values.
 	symbolLevel = integer(default=100)
 	trustVoiceLanguage = boolean(default=true)
-	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
+	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportNormalizedForCharacterNavigation = boolean(default=true)
+	# Deprecated in 2025.1
 	includeCLDR = boolean(default=True)
+	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
 	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
@@ -61,6 +63,9 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 	soundSplitState = integer(default=0)
 	includedSoundSplitModes = int_list(default=list(0, 2, 3))
+	applicationsSoundVolume = integer(default=100, min=0, max=100)
+	applicationsSoundMuted = boolean(default=False)
+	applicationsVolumeMode = featureFlag(optionsEnum="AppsVolumeAdjusterFlag", behaviorOfDefault="DISABLED")
 
 # Braille settings
 [braille]
@@ -83,12 +88,15 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reviewRoutingMovesSystemCaret = featureFlag(\
 		optionsEnum="ReviewRoutingMovesSystemCaretFlag", behaviorOfDefault="NEVER")
 	readByParagraph = boolean(default=false)
+	paragraphStartMarker = option("", " ", "¶", default="")
 	wordWrap = boolean(default=true)
 	unicodeNormalization = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="disabled")
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	speakOnRouting = boolean(default=false)
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
 	[[auto]]
     	excludedDisplays = string_list(default=list())
 
@@ -179,6 +187,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
+	multiPressTimeout = integer(default=500, min=100, max=20000)
 
 [virtualBuffers]
 	maxLineLength = integer(default=100)
@@ -206,7 +215,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	reportFontName = boolean(default=false)
 	reportFontSize = boolean(default=false)
 	# Deprecated in 2025.1
-	reportFontAttributes = boolean(default=false)                                                                   
+	reportFontAttributes = boolean(default=false)
 	# 0: Off, 1: Speech, 2: Braille, 3: Speech and Braille
 	fontAttributeReporting = integer(0, 3, default=0)
 	reportRevisions = boolean(default=true)
@@ -233,6 +242,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# 0: Off, 1: style, 2: color and style
 	reportCellBorders = integer(0, 2, default=0)
 	reportLinks = boolean(default=true)
+	reportLinkType = boolean(default=true)
 	reportGraphics = boolean(default=True)
 	reportComments = boolean(default=true)
 	reportBookmarks = boolean(default=true)
@@ -329,6 +339,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [addonStore]
 	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
+	baseServerURL = string(default="")
 """
 
 #: The configuration specification

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2019 NV Access Limited, Babbage B.V.
+# Copyright (C) 2009-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -150,7 +150,7 @@ def replace_cpb_del() -> None:
 	# Work around an issue with comtypes where __del__ seems to be called twice on COM pointers.
 	# This causes Release() to be called more than it should,
 	# which is very nasty and will eventually cause us to access pointers which have been freed.
-	from comtypes import _compointer_base
+	from comtypes._post_coinit.unknwn import _compointer_base
 
 	_compointer_base._oldCpbDel = _compointer_base.__del__
 	_compointer_base.__del__ = newCpbDel

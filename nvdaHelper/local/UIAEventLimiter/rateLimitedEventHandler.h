@@ -20,7 +20,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include "eventRecord.h"
 
 
-// @brief a class that listens for various UI Automation events, 
+// @brief a class that listens for various UI Automation events,
 // stores them in in an internal queue (removing any duplicates),
 // and sends them onto an existing UI Automation event handler in a separate thread.
 // This ensures that UI Automation core is never blocked while sending events to this class.
@@ -49,15 +49,15 @@ private:
 	/// @param stopToken used to check if the thread should stop.
 	void flusherThreadFunc(std::stop_token stopToken);
 
-	/// @brief a template function that queues a UI Automation event. 
-	/// @tparam EventRecordClass the type of event record representing a UI Automation event. 
+	/// @brief a template function that queues a UI Automation event.
+	/// @tparam EventRecordClass the type of event record representing a UI Automation event.
 	/// @tparam ...EventRecordArgTypes the argument types required to construct the event record
 	/// @param ...args the arguments to construct the event record.
 	/// @return S_OK on success or a failure code otherwise.
 	template<EventRecordConstraints EventRecordClass, typename... EventRecordArgTypes> HRESULT queueEvent(EventRecordArgTypes&&... args);
 
 	/// @brief Emits a UI Automation event to its existing handler.
-	/// @param record the event record representing the UI automation event. 
+	/// @param record the event record representing the UI automation event.
 	/// @return  S_OK on success or a failure code otherwise.
 	HRESULT emitEvent(const AutomationEventRecord_t& record) const;
 	HRESULT emitEvent(const FocusChangedEventRecord_t& record) const;
@@ -72,7 +72,7 @@ private:
 
 	public:
 
-	/// @brief class constructor. 
+	/// @brief class constructor.
 	/// @param pExistingHandler  a pointer to an existing UI Automation event handler where events should be sent after they are flushed from the queue.
 	RateLimitedEventHandler(IUnknown* pExistingHandler);
 

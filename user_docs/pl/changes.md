@@ -19,7 +19,7 @@ Dodano nieprzydzielone skróty klawiszowe do pionowej i poziomej nawigacji kół
 Naprawione niektóre błędy ogólnie w panelu Emoji w systemie Windows 11 i historii schowka.
 Naprawiono błędy także w przeglądarkach internetowych.  Poprawki dotyczą komunikatów o zgłaszaniu błędów, odczytu figur i podpisów, oznaczeń tabel a także elementów meni pól wyboru/przycisków opcji.
 
-Liblouis został zaktualizowany z dodanymi nowymi tablicami brajlowskimi dla serbskiej cyrylicy, Jidysz, kilka starożytnych języków i tureckiego.
+Liblouis został zaktualizowany z dodanymi nowymi tablicami brajlowskimi dla serbskiej cyrylicy, Jidysz, kilka starożytnych języków, tureckiego i międzynarodowego alfabetu fonetycznego.
 eSpeak został zaktualizowany z dodanym wsparciem dla języka karakałpackiego.
 Unicode CLDR także został zaktualizowany.
 
@@ -34,7 +34,7 @@ Unicode CLDR także został zaktualizowany.
 * Od teraz, domyślnie po uruchomieniu NVDA, wyświetli się powiadomienie o dostępnych aktualizacjach dodatków. (#15035)
   * To można wyłączyć w kategorii "Add-on Store" ustawień.
   * NVDA sprawdza aktualizacje dodatków dziennie.
-  * Aktualizacje dodatków będą sprawdzane z jednego kanału beta. Na przykład, zainstalowane dodatki z kanału beta będą sprawdzane z kanału.
+  * Aktualizacje dodatków będą sprawdzane z jednego kanału. Na przykład, zainstalowane dodatki z kanału beta będą sprawdzane z kanału beta.
 * Dodano wsparcie dla monitorów brajlowskich Help Tech Activator Pro. (#16668)
 
 ### Zmiany
@@ -50,16 +50,17 @@ Unicode CLDR także został zaktualizowany.
       * Jidysz.
       * niektóre języki starożytne: hebrajski biblijny, akadyjski, syryjski, ugarycki i transliterowany tekst pisma klinowego.
       * tureckie skróty. (#16735)
+      * międzynarodowy alfabet fonetyczny. (#16773)
   * Zaktualizowano NSIS do wersji 3.10 (#16674, @dpy013)
   * Zaktualizowano markdown do wersji 3.6 (#16725, @dpy013)
   * Zaktualizowano nh3 to 0.2.17 (#16725, @dpy013)
 * Alternatywna tablica brajlowska do wpisywania znaków na monitorze brajlowskim od teraz jest taka sama jak alternatywna tablica brajlowska wyświetlania. Jest to Ujednolicony brajl angielski (UEB) pismo pełne. (#9863, @JulienCochuyt, @LeonarddeR)
 * Figury bez dostępnych obiektów podrzędnych, ale z dostępną oznaką lub opisem będą odczytywane przez NVDA. (#14514)
-* Podczas czytanai po wierszach w trybie czytania, słowo "podpis" nie jest już wymawiane w każdej linii długiej figury lub podpisu tabeli. (#14874)
+* Podczas czytania po wierszach w trybie czytania, słowo "podpis" nie jest już wymawiane w każdej linii długiej figury lub podpisu tabeli. (#14874)
 * W konsoli  Pythona ostatnie niewypełnione polecenie nie będzie stracone podczas przemieszczania się po historii wejścia. (#16653, @CyrilleB79)
 * Od teraz podczas zbierania statystyk do NV access wysyłany jest unikatowy identyfikator użytkownika. (#16266)
 * Podczas tworzenia przenośnej kopii, będzie tworzony nowy katalog.
-Od teraz, jeżeli zostanei podjęta próba pisania do pełnego katalogu, będzei pokazane ostrzeżenie. (#16684)
+Od teraz, jeżeli zostanie podjęta próba pisania do pełnego katalogu, będzie pokazane ostrzeżenie. (#16686)
 
 ### Poprawki błędów
 
@@ -67,24 +68,27 @@ Od teraz, jeżeli zostanei podjęta próba pisania do pełnego katalogu, będzei
   * NVDA już nie będzie się zawieszała podczas zamykania panelu emoji i historii schowka. (#16346, #16347, @josephsl)
   * NVDA znowu będzie czytała widoczne kandydaty podczas otwarzania interfejsu Ime. (#14023, @josephsl)
   * NVDA nie będzie czytała dwukrotnie "historia schowka" podczas poruszania się po elementach meni panelu emoji. (#16532, @josephsl)
-  * NVDA już nie będzie wycinała mowę i brajl podczas przeglądu symboki i kaomoji w panelu emoji. (#16533, @josephsl)
+  * NVDA już nie będzie wycinała mowę i brajl podczas przeglądu symboli i kaomoji w panelu emoji. (#16533, @josephsl)
 * Poprawki dla przeglądarek internetowych:
-  * Komunikaty o błędach z referencją do atrybutu  `aria-errormessage` od teraz są czytane w przeglądarkach Google Chrome i Mozilla firefox. (#8318)
+  * Komunikaty o błędach z odwołaniem do atrybutu  `aria-errormessage` od teraz są czytane w przeglądarkach Google Chrome i Mozilla firefox. (#8318)
   * Jeżeli są dostępne, NVDA będzie używała atrybutu `aria-labelledby` aby dostarczyć dostępne nazwy dla tabel w przeglądarce Mozilla Firefox. (#5183)
   * NVDA od teraz poprawnie będzie czytać elementy meni w postaci przycisków opcji i pól wyboru podczas pierwszego wejścia do meni rozwijanego w przeglądarkach Google Chrome i Mozilla Firefox. (#14550)
   * Funkcja wyszukiwania NVDA od teraz jest bardziej dokładniejsza gdy strona internetowa zawiera znaki emoji. (#16317, @LeonarddeR)
   * W przeglądarce  Mozilla Firefox, NVDA od teraz poprawnie odczytuje bieżący znak, słowo oraz wiersz gdy kursor znajduje się w punkcie wstawiania na końcu wiersza. (#3156, @jcsteh)
+  * Google chrome już nie wysypuje się w procesie zamykania. (#16893)
 * NVDA od teraz prawidłowo czyta podpowiedzi autouzupełniania w Eclipse i innych środowiskach opartych na Eclipse w systemie Windows 11. (#16416, @thgcode)
 * Ulepszona niezawodność automatycznego odczytu, ogólnie w aplikacjach konsolowych. (#15850, #16027, @Danstiv)
-* NVDA poprawnię odczyta zmiany zaznaczenia podczas edycji tekstu komórki w programie Microsoft Excel. (#15843)
+* Przywracanie konfiguracji stało się bardziej niezawodne. (#16755, @Emil-18)
+* NVDA poprawnie odczyta zmiany zaznaczenia podczas edycji tekstu komórki w programie Microsoft Excel. (#15843)
 * W programach wykorzystujących technologię Java Access Bridge, NVDA poprawnie przeczyta ostatni pusty wiersz tekstu zamiast powtarzania przedostatniego. (#9376, @dmitrii-drobotov)
 * W programie LibreOffice Writer (wersji 24.8 i nowszych), podczas włączania lub wyłączania formatowania tekstu (pogrubienie, kursywa, podkreślenie, indeks dolny/indeks górny, wyrównanie) używając odpowiednich skrótów klawiszowych, NVDA przeczyta włączony atrybut formatowania (np. "pogrubienie tak", "pogrubienie nie"). (#4248, @michaelweghorn)
-* Podczas poruszania się klawiszami strzałęk w polach edycyjnych w programach używających interfejsu UI Automation, NVDA już nie odczytuje błędnego znaku, słowa, itd. (#16711, @jcsteh)
+* Podczas poruszania się klawiszami strzałek w polach edycyjnych w programach używających interfejsu UI Automation, NVDA już nie odczytuje błędnego znaku, słowa, itd. (#16711, @jcsteh)
 * Podczas wklejania do Kalkulatora w systemach Windows 10/11 NVDA od teraz przeczyta pełną liczbę. (#16573, @TristanBurchett)
 * Mowa już nigdy więcej nie zniknie podczas ponownego podłączenia do sesji pulpitu zdalnego. (#16722, @jcsteh)
 * Dodano wsparcie poleceń przeglądu tekstu dla nazwy obiektu w Visual Studio Code. (#16248, @Cary-Rowen)
-* W przeglądarce  Mozilla Firefox, NVDA od teraz poprawnie odczytuje bieżący znak, słowo oraz wiersz gdy kursor znajduje się w punkcie wstawiania na końcu wiersza. (#3156, @jcsteh)
-* Od teraz dźwięk będzie poprawnie odtwarzany na mono urządzeniach audio. (#16770, @jcsteh)
+* Od teraz dźwięk będzie poprawnie odtwarzany na audiourządzeniach mono. (#16770, @jcsteh)
+* NVDA od teraz przeczyta adresy podczas nawigacji po polach do/dw/UDW w programach outlook.com i współczesnym Outlooku. (#16856)
+* NVDA od teraz lepiej radzi z niepoprawnie zainstalowanymi dodatkami. (#16704)
 
 ## 2024.2
 

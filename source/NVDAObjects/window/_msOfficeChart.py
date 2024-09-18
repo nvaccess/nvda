@@ -519,12 +519,12 @@ class OfficeChartElementList(Window):
 			ui.message(self.name)
 		else:
 			if self.activeElement == None:  # noqa: E711
-				self.activeElement = self.elementList[0]  # noqa: E701, E711
+				self.activeElement = self.elementList[0]
 			else:
 				if direction == "previous":
-					self.activeElement = self.activeElement.previous  # noqa: E701
+					self.activeElement = self.activeElement.previous
 				elif direction == "next":
-					self.activeElement = self.activeElement.next  # noqa: E701
+					self.activeElement = self.activeElement.next
 			self.activeElement.select()
 			eventHandler.queueEvent("gainFocus", self.activeElement)
 

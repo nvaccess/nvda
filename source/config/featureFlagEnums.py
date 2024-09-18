@@ -66,6 +66,21 @@ class BoolFlag(DisplayStringEnum):
 		return self == BoolFlag.ENABLED
 
 
+class AppsVolumeAdjusterFlag(DisplayStringEnum):
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.DISABLED: _("Disabled Applications volume adjuster"),
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.ENABLED: _("Enabled Applications volume adjuster"),
+		}
+
+	DEFAULT = enum.auto()
+	DISABLED = enum.auto()
+	ENABLED = enum.auto()
+
+
 class ParagraphNavigationFlag(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self):
@@ -120,6 +135,23 @@ class WindowsTerminalStrategyFlag(DisplayStringEnum):
 	DEFAULT = enum.auto()
 	DIFFING = enum.auto()
 	NOTIFICATIONS = enum.auto()
+
+
+class FontFormattingBrailleModeFlag(DisplayStringEnum):
+	"""Enumeration containing the possible ways to display formatting changes in braille."""
+
+	DEFAULT = enum.auto()
+	LIBLOUIS = enum.auto()
+	TAGS = enum.auto()
+
+	@property
+	def _displayStringLabels(self) -> dict["FontFormattingBrailleModeFlag", str]:
+		return {
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.LIBLOUIS: _("Liblouis"),
+			# Translators: Label for a way of outputting formatting in braille.
+			FontFormattingBrailleModeFlag.TAGS: _("Tags"),
+		}
 
 
 def getAvailableEnums() -> typing.Generator[typing.Tuple[str, FlagValueEnum], None, None]:

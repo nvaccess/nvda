@@ -47,7 +47,7 @@ class SpeechDictEntry:
 		self.pattern = pattern
 		flags = re.U
 		if not caseSensitive:
-			flags |= re.IGNORECASE  # noqa: E701
+			flags |= re.IGNORECASE
 		if type == ENTRY_TYPE_REGEXP:
 			tempPattern = pattern
 		elif type == ENTRY_TYPE_WORD:

@@ -11,9 +11,9 @@ reviews:
   collapse_walkthrough: false
   poem: false
   auto_review:
-    enabled: true
+    enabled: false
     auto_incremental_review: false
-    drafts: false
+    drafts: true
     base_branches:
       - master
       - beta
@@ -26,6 +26,10 @@ reviews:
       This project uses tabs instead of spaces, do not suggest usage of spaces over tabs.
       Are there any 'red flags' in this code that might warrant closer investigation from a security standpoint?
       Explain what makes them suspicious.
+      When providing code suggestions, particularly when requested, ensure GitHub's suggestion format is used, i.e.:
+      ```suggestion
+      <code changes>
+      ```
       "
     - path: "**/*.py"
       instructions: "

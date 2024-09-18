@@ -46,7 +46,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 
 #### Microsoft Visual Studio
 * Microsoft Visual Studio 2022
-	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022). 
+	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022).
 	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
 	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor
 	* The Professional and Enterprise versions are also supported
@@ -77,10 +77,10 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 
 For reference, the following run time dependencies are included in Git submodules:
 
-* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `54ee11a79c66c8ecb9a48a7084163beff3bd6075`
+* [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `961454ffaa894d981526f4d424daef1d3bc4175f`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
-* [liblouis](http://www.liblouis.io/), version 3.30.0
+* [liblouis](http://www.liblouis.io/), version 3.31.0
 * [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 45.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
@@ -93,7 +93,7 @@ For reference, the following run time dependencies are included in Git submodule
 * [wil](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 
-Additionally, the following build time dependencies are included in the miscDeps git submodule: 
+Additionally, the following build time dependencies are included in the miscDeps git submodule:
 
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
 

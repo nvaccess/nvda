@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions, Julien Cochuyt
+# Copyright (C) 2008-2024 NV Access Limited, Babbage B.V., Mozilla Corporation, Accessolutions,
+# Julien Cochuyt, Noelia Ruiz Martínez, Leonard de Ruijter
 
 from dataclasses import dataclass
 from typing import (
@@ -167,9 +168,14 @@ class Gecko_ia2_TextInfo(VirtualBufferTextInfo):
 			attrs["roleTextBraille"] = roleTextBraille
 		if attrs.get("IAccessible2::attribute_dropeffect", "none") != "none":
 			states.add(controlTypes.State.DROPTARGET)
-		if role == controlTypes.Role.LINK and controlTypes.State.LINKED not in states:
-			# This is a named link destination, not a link which can be activated. The user doesn't care about these.
-			role = controlTypes.Role.TEXTFRAME
+		if role == controlTypes.Role.LINK:
+			if controlTypes.State.LINKED not in states:
+				# This is a named link destination, not a link which can be activated. The user doesn't care about these.
+				role = controlTypes.Role.TEXTFRAME
+			elif (value := attrs.get("IAccessible::value")) is not None and (
+				linkType := self.obj.getLinkTypeInDocument(value)
+			) is not None:
+				states.add(linkType)
 		level = attrs.get("IAccessible2::attribute_level", "")
 		xmlRoles = attrs.get("IAccessible2::attribute_xml-roles", "").split(" ")
 		landmark = next((xr for xr in xmlRoles if xr in aria.landmarkRoles), None)
@@ -321,6 +327,9 @@ class Gecko_ia2(VirtualBuffer):
 			# If IAccessible2 states can not be fetched at all, defunct should be assumed as the object has clearly been disconnected or is dead
 			isDefunct = True
 		return not isDefunct
+
+	def _get_documentURL(self) -> str:
+		return self.documentConstantIdentifier
 
 	def getNVDAObjectFromIdentifier(
 		self,

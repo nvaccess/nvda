@@ -655,7 +655,7 @@ class CandidateItem(NVDAObject):
 	def getFormattedCandidateDescription(self, candidate):
 		numSymbols = len(candidate) if candidate else 0
 		if numSymbols != 1:
-			return ""  # noqa: E701
+			return ""
 		symbol = candidate[0]
 		try:
 			symbolDescriptions = (
@@ -666,12 +666,12 @@ class CandidateItem(NVDAObject):
 		if config.conf["inputComposition"]["alwaysIncludeShortCharacterDescriptionInCandidateName"]:
 			symbolDescriptions = symbolDescriptions[1:]
 		if len(symbolDescriptions) < 1:
-			return ""  # noqa: E701
+			return ""
 		return ", ".join(symbolDescriptions)
 
 	def reportFocus(self):
 		if not config.conf["inputComposition"]["announceSelectedCandidate"]:
-			return  # noqa: E701
+			return
 		text = self.name
 		desc = self.description
 		if desc:
@@ -698,7 +698,7 @@ class CandidateItem(NVDAObject):
 			textList.append(obj.name)
 			obj = obj.next
 		if len(textList) <= 1:
-			return None  # noqa: E701
+			return None
 		self.visibleCandidateItemsText = (", ".join(textList)) + ", "
 		return self.visibleCandidateItemsText
 

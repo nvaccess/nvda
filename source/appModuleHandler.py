@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Patrick Zajda, Joseph Lee,
 # Babbage B.V., Mozilla Corporation, Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -832,6 +832,11 @@ class AppModule(baseObject.ScriptableObject):
 		except Exception as e:
 			ret = f"exception: {e}"
 		info.append(f"appModule.helperLocalBindingHandle: {ret}")
+		try:
+			ret = repr(self.appArchitecture)
+		except Exception as e:
+			ret = f"exception: {e}"
+		info.append(f"appModule.appArchitecture: {ret}")
 		return info
 
 

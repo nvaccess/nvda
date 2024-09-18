@@ -53,10 +53,10 @@ Unicode CLDR wurde ebenfalls aktualisiert.
 * Die Fallback-Eingabe-Tabelle ist nun gleich der Fallback-Ausgabe-Tabelle, die der Englischen Vollschrift entspricht. (#9863, @JulienCochuyt, @LeonarddeR)
 * NVDA teilt nun Abbildungen mit, die nicht zugänglich sind, aber mit einer Beschriftung oder Beschreibung versehen sind. (#14514)
 * Beim zeilenweisen Lesen im Lesemodus wird "Groß" nicht mehr in jeder Zeile einer langen Abbildung oder Tabellenüberschrift angezeigt. (#14874)
-* In der Python-Konsole geht der zuletzt nicht ausgeführte Befehl nicht mehr verloren, wenn dieser in den Verlauf verschoben wurde. (#16653, @CyrilleB79)
+* In der Python-Konsole geht der zuletzt ausgeführte Befehl nicht mehr verloren, wenn dieser in den Verlauf verschoben wurde. (#16653, @CyrilleB79)
 * Eine eindeutige anonyme ID wird nun als Teil der optionalen NVDA-Nutzungsstatistiken gesendet. (#16266)
 * Standardmäßig wird beim Erstellen einer portablen Version ein neuer Ordner angelegt.
-Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichnis zu schreiben. (#16684)
+Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichnis zu schreiben. (#16686)
 
 ### Fehlerbehebungen
 
@@ -70,8 +70,10 @@ Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichn
   * Falls vorhanden, verwendet NVDA nun `aria-labelledby`, um zugängliche Namen für Tabellen in Mozilla Firefox bereitzustellen. (#5183)
   * NVDA zeigt Menüelemente mit Auswahlschalter und Kontrollkästchen beim ersten Aufruf von Untermenüs in Google Chrome und Mozilla Firefox korrekt an. (#14550)
   * Die Suchfunktion in NVDA im Lesemodus ist jetzt präziser, wenn die Seite Emojis enthält. (#16317, @LeonarddeR)
-  * In Mozilla Firefox meldet NVDA jetzt korrekt das aktuelle Zeichen, Wort und die Zeile, wenn sich der Cursor an der Einfügemarke am Ende einer Zeile befindet. (#3156, @jcsteh)
+  * In Mozilla Firefox teilt NVDA nun korrekt das aktuelle Zeichen, Wort und die Zeile mit, wenn sich der Cursor an der Einfügemarke am Ende einer Zeile befindet. (#3156, @jcsteh)
+  * Google Chrome stürzt nicht mehr ab, wenn ein Dokument geschlossen oder Chrome beendet wird. (#16893)
 * NVDA zeigt nun die Autovervollständigungsvorschläge in Eclipse und anderen Eclipse-basierten Umgebungen unter Windows 11 korrekt an. (#16416, @thgcode)
+* Es ist wieder möglich, die Konfiguration zuverlässig auf die Standard-Einstellungen zurückzusetzen. (#16755, @Emil-18)
 * Verbesserte Zuverlässigkeit beim automatischen Text vorlesen, insbesondere bei Terminal-Anwendungen. (#15850, #16027, @Danstiv)
 * NVDA teilt Änderungen bei der Auswahl korrekt mit, wenn der Text einer Zelle in Microsoft Excel bearbeitet wird. (#15843)
 * In Anwendungen, die Java Access Bridge verwenden, liest NVDA jetzt die letzte Leerzeile eines Textes korrekt vor, anstatt die vorherige Zeile zu wiederholen. (#9376, @dmitrii-drobotov)
@@ -80,8 +82,9 @@ Sie erhalten eine Warnmeldung, wenn Sie versuchen, in ein nicht leeres Verzeichn
 * Beim Einfügen im Rechner von Windows 10/11 meldet NVDA jetzt korrekt die gesamte eingefügte Zahl. (#16573, @TristanBurchett)
 * Die Sprachausgabe bleibt nicht mehr stumm, nachdem die Verbindung zu einer Remote-Desktop-Sitzung getrennt und wiederhergestellt wurde. (#16722, @jcsteh)
 * Unterstützung für Befehle zum Textbetrachten für den Namen eines Objekts in Visual Studio Code hinzugefügt. (#16248, @Cary-Rowen)
-* In Mozilla Firefox teilt NVDA jetzt korrekt das aktuelle Zeichen, Wort und die Zeile mit, wenn sich der Cursor an der Einfügemarke am Ende einer Zeile befindet. (#3156, @jcsteh)
-* Die Wiedergabe von NVDA-Sounds schlägt auf einem Audiogerät in Mono nicht mehr fehl. (#16770, @jcsteh)
+* Die Wiedergabe von NVDA-Sounds schläg auf einem Audiogerät in Mono nicht mehr fehl. (#16770, @jcsteh)
+* NVDA teilt Adressen mit, wenn man mit dem Pfeiltasten durch die Felder An/CC/BCC auf outlook.com bzw. im modernen Outlook navigiert. (#16856)
+* Besserer Umgang in NVDA mit Fehlern bei der Installation von NVDA-Erweiterungen. (#16704)
 
 ### Änderungen für Entwickler
 

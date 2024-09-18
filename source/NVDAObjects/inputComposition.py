@@ -85,14 +85,14 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 
 	def compositionUpdate(self, compositionString, selectionStart, selectionEnd, isReading, announce=True):
 		if isReading and not config.conf["inputComposition"]["reportReadingStringChanges"]:
-			return  # noqa: E701
+			return
 		if not isReading and not config.conf["inputComposition"]["reportCompositionStringChanges"]:
-			return  # noqa: E701
+			return
 		if announce:
 			self.reportNewText(
 				(self.readingString if isReading else self.compositionString),
 				compositionString,
-			)  # noqa: E701
+			)
 		hasChanged = False
 		if isReading:
 			self.readingString = compositionString

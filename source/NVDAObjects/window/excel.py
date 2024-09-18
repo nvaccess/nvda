@@ -15,6 +15,7 @@ from typing import (
 
 from comtypes import COMError, BSTR
 import comtypes.automation
+import inputCore
 import wx
 import time
 import winsound
@@ -1844,17 +1845,28 @@ class ExcelCell(ExcelBase):
 	# In Office 2016, 365 and newer, comments are now called notes.
 	# Thus, messages dialog title and so on should refer to notes.
 	@script(
-		# Translators: the description  for a script for Excel
-		description=_("Reports the note on the current cell"),
+		description=_(
+			# Translators: the description for a script for Excel
+			"Reports the note on the current cell. "
+			"If pressed twice, presents the information in browse mode",
+		),
 		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportComment(self, gesture):
+	def script_reportComment(self, gesture: "inputCore.InputGesture") -> None:
 		commentObj = self.excelCellObject.comment
 		text = commentObj.text() if commentObj else None
 		if text:
-			ui.message(text)
+			repeats = scriptHandler.getLastScriptRepeatCount()
+			if repeats == 0:
+				ui.message(text)
+			elif repeats == 1:
+				ui.browseableMessage(
+					text,
+					# Translators: title for note on the current Excel cell dialog.
+					_("Note"),
+				)
 		else:
 			# Translators: A message in Excel when there is no note
 			ui.message(_("Not on a note"))
@@ -2043,7 +2055,7 @@ class ExcelDropdown(Window):
 		gesture.send()
 		newFocus = self.selection or self
 		if eventHandler.lastQueuedFocusObject is newFocus:
-			return  # noqa: E701
+			return
 		eventHandler.queueEvent("gainFocus", newFocus)
 
 	@script(gestures=("kb:escape", "kb:enter", "kb:space"), canPropagate=True)
@@ -2231,7 +2243,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	@property
 	def label(self):
 		if self._label:
-			return self._label  # noqa: E701
+			return self._label
 		alternativeText = self.excelItemObject.AlternativeText
 		if alternativeText:
 			self._label = (
@@ -2258,7 +2270,7 @@ class ExcelFormControlQuickNavItem(ExcelQuickNavItem):
 	@property
 	def nvdaObj(self):
 		if self._nvdaObj:
-			return self._nvdaObj  # noqa: E701
+			return self._nvdaObj
 		formControlType = self.excelItemObject.formControlType
 		if formControlType == xlListBox:
 			self._nvdaObj = ExcelFormControlListBox(

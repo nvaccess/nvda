@@ -68,6 +68,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+from audio import appsVolume
 
 
 #: Script category for text review commands.
@@ -122,6 +123,29 @@ SCRCAT_AUDIO = _("Audio")
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
 NO_SETTINGS_MSG = _("No settings")
+
+
+def toggleBooleanValue(
+	configSection: str,
+	configKey: str,
+	enabledMsg: str,
+	disabledMsg: str,
+) -> None:
+	"""
+	Toggles a boolean value in the configuration and returns the appropriate message.
+
+	:param configSection: The configuration section containing the boolean key.
+	:param configKey: The configuration key associated with the boolean value.
+	:param enabledMsg: The message for the enabled state.
+	:param disabledMsg: The message for the disabled state.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	newValue = not currentValue
+	config.conf[configSection][configKey] = newValue
+
+	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
 
 
 class GlobalCommands(ScriptableObject):
@@ -340,9 +364,8 @@ class GlobalCommands(ScriptableObject):
 			if scriptCount == 0:
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
-
 			elif scriptCount == 3:
-				ui.browseableMessage(info.text)
+				ui.browseableMessage(info.text, copyButton=True, closeButton=True)
 				return
 
 			elif len(info.text) < speech.speech.MAX_LENGTH_FOR_SELECTION_REPORTING:
@@ -576,7 +599,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for toggle report font attributes command.
-			"Cycles font attribute reporting between speech, braille, speech and braille, and off."
+			"Cycles font attribute reporting between speech, braille, speech and braille, and off.",
 		),
 		category=SCRCAT_DOCUMENTFORMATTING,
 	)
@@ -901,6 +924,26 @@ class GlobalCommands(ScriptableObject):
 			state = _("report links on")
 			config.conf["documentFormatting"]["reportLinks"] = True
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle report link type command.
+		description=_("Toggles on and off the reporting of link type"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
+		if config.conf["documentFormatting"]["reportLinks"]:
+			toggleBooleanValue(
+				configSection="documentFormatting",
+				configKey="reportLinkType",
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				enabledMsg=_("Report link type on"),
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				disabledMsg=_("Report link type off"),
+			)
+		else:
+			# Translators: The message announced when reporting links is disabled,
+			# and the user tries to toggle the report link type document formatting setting.
+			ui.message(_("The report links setting must be enabled to toggle report link type"))
 
 	@script(
 		# Translators: Input help mode message for toggle report graphics command.
@@ -2441,6 +2484,8 @@ class GlobalCommands(ScriptableObject):
 				message,
 				# Translators: title for formatting information dialog.
 				_("Formatting"),
+				copyButton=True,
+				closeButton=True,
 			)
 
 	@staticmethod
@@ -3156,7 +3201,7 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		message = ""
 		mod = focus.appModule
-		if isinstance(mod, appModuleHandler.AppModule) and type(mod) != appModuleHandler.AppModule:
+		if isinstance(mod, appModuleHandler.AppModule) and type(mod) is not appModuleHandler.AppModule:
 			# Translators: Indicates the name of the appModule for the current program (example output: explorer module is loaded).
 			# This message will not be presented if there is no module for the current program.
 			message = _(" %s module is loaded. ") % mod.appModuleName.split(".")[0]
@@ -3591,6 +3636,22 @@ class GlobalCommands(ScriptableObject):
 			config.conf["braille"]["showCursor"] = True
 		# To hide or show cursor immediately on braille line
 		braille.handler._updateDisplay()
+		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for speak on routing command.
+		description=_("Toggles speaking the character under the cursor when routing cursor in text"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_braille_toggleSpeakOnRouting(self, gesture):
+		state = config.conf["braille"]["speakOnRouting"] = not config.conf["braille"]["speakOnRouting"]
+		if state:
+			# Translators: The message announced when toggling on speaking character when routing.
+			state = _("Enabled speak character when routing cursor in text")
+		else:
+			# Translators: The message announced when toggling off speaking character when routing.
+			state = _("Disabled speak character when routing cursor in text")
 		ui.message(state)
 
 	@script(
@@ -4124,7 +4185,7 @@ class GlobalCommands(ScriptableObject):
 	) -> None:
 		"""Generates a ui.message or ui.browseableMessage of a link's destination, if focus or caret is
 		positioned on a link, or an element with an included link such as a graphic.
-		@param forceBrowseable: skips the press once check, and displays the browseableMessage version.
+		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
@@ -4158,6 +4219,8 @@ class GlobalCommands(ScriptableObject):
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
 					title=_("Destination of: {name}").format(name=obj.name),
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(linkDestination)  # Speak the link
@@ -4686,6 +4749,50 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageUp",
+	)
+	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageDown",
+	)
+	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(-5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles other applications volume adjuster status",
+		),
+		category=SCRCAT_AUDIO,
+		gesture=None,
+	)
+	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Mutes or unmutes other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+delete",
+	)
+	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeMute()
 
 
 #: The single global commands instance.

@@ -17,6 +17,7 @@ import config
 import nvwave
 from logHandler import log
 import weakref
+import languageHandler
 
 from speech.commands import (
 	IndexCommand,
@@ -338,6 +339,20 @@ class SynthDriver(SynthDriver):
 					log.debugWarning("Couldn't convert character in IPA string: %s" % item.ipa)
 					if item.text:
 						textList.append(item.text)
+			elif isinstance(item, LangChangeCommand):
+				lcid = (
+					languageHandler.localeNameToWindowsLCID(item.lang)
+					if item.lang
+					else languageHandler.LCID_NONE
+				)
+				if lcid is languageHandler.LCID_NONE:
+					try:
+						del tags["lang"]
+					except KeyError:
+						pass
+				else:
+					tags["lang"] = {"langid": "%x" % lcid}
+				tagsChanged[0] = True
 			elif isinstance(item, SpeechCommand):
 				log.debugWarning("Unsupported speech command: %s" % item)
 			else:

@@ -206,7 +206,7 @@ class MultiTouchTracker:
 
 	def iterAllRawSingleTouchTrackers(self):
 		if self.rawSingleTouchTracker:
-			yield self.rawSingleTouchTracker  # noqa: E701
+			yield self.rawSingleTouchTracker
 		for child in self.childTrackers:
 			for i in child.iterAllRawSingleTouchTrackers():
 				yield i
@@ -252,9 +252,9 @@ class TrackerManager(object):
 		]
 		numFingers = len(childTrackers)
 		if numFingers == 0:
-			return  # noqa: E701
+			return
 		if numFingers == 1:
-			return childTrackers[0]  # noqa: E701
+			return childTrackers[0]
 		avgX: int = sum(t.x for t in childTrackers) // numFingers
 		avgY: int = sum(t.y for t in childTrackers) // numFingers
 		tracker = MultiTouchTracker(

@@ -39,8 +39,17 @@ Le caratteristiche principali possono essere riassunte nei seguenti punti:
 
 ### Requisiti di sistema {#SystemRequirements}
 
+#### Requisiti di sistema consigliati {#MinimumSystemRequirements}
+* Sistemi operativi: Edizioni a 64 bit di Windows 10, Windows 11 e Window Server 2022
+  * sono supportate entrambe le varianti AMD64 e ARM64 di Windows.
+* almeno 150 MB di spazio di archiviazione.
+* almeno 4 GB di RAM.
+
+#### requisiti minimi di sistema {#MinimumSystemRequirements}
 * Sistemi operativi: tutte le versioni a 32 e 64 bit dei Sistemi Windows8.1, Windows10, Windows11 e tutte le edizioni Server a partire da Windows Server 2012 r2.
   * sono supportate entrambe le varianti AMD64 e ARM64 di Windows.
+  * Si noti che i sistemi operativi a 32 bit non vengono più supportati in maniera attiva.
+  * Inoltre anche le versioni di Windows 8.1 e Windows Server precedenti al 2022 non godono di un supporto attivo.
 * Circa 150 Megabytes di spazio disco.
 
 ### Internazionalizzazione {#Internationalization}
@@ -352,6 +361,9 @@ Lo stato del componente aggiuntivo verrà visualizzato come "Aggiornamento dispo
 L'elenco mostrerà la versione attualmente installata e la versione disponibile.
 Premere `invio` sull'add-on per aprire il menu azioni; scegliere "Aggiorna".
 
+Da impostazioni predefinite, dopo che NVDA si è avviato, si riceverà una notifica nel caso siano presenti aggiornamenti negli add-on..
+Per saperne di più e configurare questa opzione, fare riferimento a ["Notifiche di aggiornamento"](#AutomaticAddonUpdates).
+
 ### Comunità {#Community}
 
 NVDA dispone di una vivace comunità di utenti.
@@ -432,8 +444,14 @@ Se invece si vuole creare una copia portable da una versione già installata di 
 
 La finestra di dialogo che apparirà richiede la selezione della cartella nella quale inserire la versione portable.
 Può trattarsi di una cartella presente nel disco fisso, oppure dell'unità di una penna USB o di un altro dispositivo rimovibile.
+Da impostazione predefinita, per la copia portable viene creata una nuova cartella .
+è anche possibile scegliere di utilizzare una cartella esistente, questo sovrascriverà i file presenti al suo interno.
+Se la cartella esistente è una copia portable di NVDA, tale copia verrà aggiornata.
+
 Esiste un'altra opzione, che permette di stabilire se NVDA debba copiare o meno la configurazione dell'utente attualmente loggato nella nuova versione portable che si desidera creare.
+Ciò comprende anche la copia dei componenti aggiuntivi.
 Questa opzione è disponibile solo quando si vuole creare una copia portable a partire da una versione installata, non quando la si crea dal pacchetto scaricato.
+
 La pressione del pulsante "Continua" darà inizio al processo di creazione della versione portable.
 Una volta terminata l'operazione, apparirà un messaggio di conferma.
 Premere a questo punto il pulsante OK per chiudere questa finestra.
@@ -493,7 +511,6 @@ La terza invece permette di decidere se questa finestra debba presentarsi ad ogn
 
 #### Finestra di dialogo statistiche sull'utilizzo dei dati {#UsageStatsDialog}
 
-A partire da NVDA 2018.3, viene chiesto all'utente il consenso alll'invio dei dati di utilizzo a NV Access al fine di contribuire a migliorare NVDA in futuro.
 Quando si avvia NVDA per la prima volta, viene visualizzata una finestra di dialogo dove si richiede di accettare l'invio di dati a NV Access durante l'utilizzo dello screen reader.
 È possibile leggere ulteriori informazioni riguardo i dati raccolti da NV Access nella sezione impostazioni generali, [Consenti a NVAccess di raccogliere statistiche sull'utilizzo dello screen reader](#GeneralSettingsGatherUsageStats).
 Nota: premendo "sì" o "no" l'impostazione verrà salvata e la finestra di dialogo non verrà più visualizzata se non si reinstalla NVDA.
@@ -505,8 +522,8 @@ Tuttavia, è possibile abilitare o disabilitare manualmente il processo di racco
 La maggior parte dei comandi da tastiera di NVDA è costituita dalla combinazione del tasto funzione NVDA più qualsiasi altro tasto o serie di tasti. 
 Fanno eccezione i tasti di revisione del testo che utilizzano i soli tasti del tastierino numerico.
 
-NVDA può essere configurato in modo tale che sia il tasto Insert del tastierino numerico, sia l'Insert della tastiera estesa e il tasto Blocca Maiuscole agiscano contemporaneamente come tasto funzione NVDA.
-Da impostazioni predefinite entrambi i tasti Insert, della tastiera estesa e del tastierino, sono configurati come tasti funzione di NVDA.
+NVDA può essere configurato in modo tale che sia il tasto `Insert del tastierino numerico`, sia `Insert della tastiera estesa` e il tasto `Blocca Maiuscole` agiscano contemporaneamente come tasto funzione `NVDA`.
+Da impostazioni predefinite, sia il tasto `Insert` della tastiera estesa che `insert` del tastierino numerico, sono configurati come tasti funzione di NVDA.
 
 Se si desidera che uno dei tasti funzione NVDA agisca usando la sua funzione originale (ad esempio si potrebbe volere attivare il BloccaMaiuscole che però è stato impostato come tasto funzione NVDA) sarà sufficiente premere quel tasto due volte in rapida successione.
 
@@ -900,6 +917,7 @@ Queste caratteristiche aggiuntive riguardanti il mouse non sono attivate di Defa
 Se le si vuole provare sarà sufficiente configurarle dalla categoria [impostazioni mouse](#MouseSettings), raggiungibile dalla finestra di dialogo delle [Impostazioni di NVDA](#NVDASettings).
 
 Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo schermo in tale modalità, NVDA mette a disposizione qualche comando relativo al mouse:
+
 <!-- KC:beginInclude -->
 
 | Nome |tasto Desktop |tasto Laptop |tocco |Descrizione|
@@ -909,6 +927,10 @@ Sebbene un mouse o un trackpad risultino la maniera migliore per esplorare lo sc
 |Click tasto destro del mouse |Asterisco del tastierino numerico |NVDA++ |Tap lungo |Effettua un click con il bottone destro del mouse, utilizzato per lo più per aprire i menu di contesto alla posizione del mouse|
 |Blocca tasto destro del mouse |Shift+Asterisco del tastierino numerico |NVDA+control++ |nessuno |Blocca il tasto destro del mouse. Premere di nuovo tale combinazione per rilasciarlo. Per trascinare il mouse, premere la sequenza di tasti per bloccare il tasto destro e quindi spostare il mouse o fisicamente oppure con gli appositi comandi relativi al mouse|
 |Spostare il mouse alla posizione del navigatore ad oggetti |NVDA+Barra del tastierino numerico |NVDA+Shift+m |nessuno |Sposta il mouse alla posizione del navigatore ad oggetti e quindi del cursore di controllo|
+|Scorri verso l'alto alla posizione del mouse |none |none |none |Fa scorrere la rotellina del mouse verso l'alto alla posizione corrente del mouse|
+|Scorri verso il basso alla posizione del mouse |none |none |none |Fa scorrere la rotellina del mouse verso il basso alla posizione corrente del mouse|
+|Scorri verso sinistra alla posizione del mouse |none |none |none |Fa scorrere la rotellina del mouse verso sinistra alla posizione corrente del mouse|
+|Scorri verso destra alla posizione del mouse |none |none |none |Fa scorrere la rotellina del mouse verso destra alla posizione corrente del mouse|
 |Spostare il navigatore ad oggetti sul mouse |NVDA+Asterisco del tastierino numerico |NVDA+Shift+n |nessuno |Sposta il navigatore ad oggetti sull'oggetto situato nella posizione del mouse|
 
 <!-- KC:endInclude -->
@@ -1785,6 +1807,7 @@ Se questa funzione è attivata, la Nv Access utilizzerà le informazioni proveni
 Si noti comunque che sebbene venga utilizzato l'indirizzo IP per calcolare lo stato di provenienza dell'utente, tale indirizzo IP non verrà mai salvato sui server.
 Oltre alle informazioni obbligatorie usate per controllare gli aggiornamenti, saranno inviati anche i seguenti dati:
 
+* Un ID univoco per l'utente corrente NVDA, che cambia una volta al mese
 * Lingua dell'interfaccia di NVDA
 * Se la copia attualmente in uso è installer o portable
 * Nome della sintesi vocale in uso (compreso il nome del driver del componente aggiuntivo e la sua provenienza)
@@ -1878,6 +1901,39 @@ Questa impostazione viene applicata a tutti i sintetizzatori, non soltanto a que
 Da impostazioni predefinite, questa funzione risulta attiva e consente di stabilire se NVDA debba ritenere affidabile la lingua della voce corrente nel processare simboli e caratteri.
 Se per qualche motivo ci si accorge che NVDA sta leggendo la punteggiatura con un sintetizzatore o voce particolare in una lingua sbagliata, si consiglia di disattivare questa opzione, per forzare NVDA ad utilizzare le impostazioni globali per quella lingua.
 
+##### Normalizzazione Unicode {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opzioni |Default (Disattivata), Attivata, Disattivata|
+|Default |Disattivata|
+
+Quando questa opzione è abilitata, viene eseguita la normalizzazione Unicode sul testo pronunciato da NVDA.
+Ciò è utile quando la sintesi vocale incontra caratteri che possono essere rappresentati in diverse forme.
+NVDA utilizza l'algoritmo NFKC (Normalization Form Compatibility Composition), che offre, tra gli altri, i seguenti vantaggi:
+
+1. Le versioni in grassetto e corsivo dei caratteri che fanno parte dello standard Unicode e sono comunemente utilizzate sui social media vengono normalizzate al loro equivalente compatibile più comune.
+Ad esempio, la lettera latina "h" può anche essere presentata come"𝐡" (grassetto), "ℎ" (corsivo), etc. ma sarà sempre pronunciata come "h" quando la normalizzazione è abilitata.
+Questo aspetto della normalizzazione aiuta anche a leggere le equazioni nell'editor di equazioni di Microsoft Word.
+
+1. Normalizzazione per i caratteri composti.
+Ad esempio, il carattere "ü" (u con umlaut/dieresi), un carattere comune in lingue come il tedesco e il turco può essere rappresentato in due forme.
+  1. Un carattere Unicode autonomo (ü)
+  1. Una scomposizione in due caratteri (ü), ossia la lettera latina U e una parte aggiuntva, dieresi
+  La normalizzazione Unicode garantisce che venga utilizzata una sola forma per la pronuncia di questi caratteri.
+
+1. Scomposizione di alcune legature, inclusa "ĳ" (legatura ij) nella loro forma di due lettere ("ij").
+
+1. Ordine stabile dei modificatori nei caratteri compositi, ad esempio nell'ebraico antico.
+
+Per attivare/disattivare la normalizzazione Unicode da qualsiasi posto, assegnare un gesto personalizzato utilizzando la [finestra gesti e tasti di immissione](#InputGestures).
+
+##### Annuncia "Normalizzato durante la navigazione per caratteri {#SpeechReportNormalizedForCharacterNavigation}
+
+Questa impostazione è una casella di controllo che, se selezionata, indica a NVDA di segnalare esplicitamente che un carattere viene normalizzato quando pronunciato come carattere individuale, ad esempio durante un controllo ortografico.
+Ad esempio, quando questa opzione è abilitata, l'ortografia del carattere "ĳ" sarà resa come "i j normalizzato".
+
+Si tenga presente che questa impostazione è disponibile solo quando l'opzione "[Normalizzazione unicode](#SpeechUnicodeNormalization)" risulta attiva.
+
 ##### Includi dati del consorzio Unicode (comprese le emoji) nel processare caratteri e simboli {#SpeechSettingsCLDR}
 
 Quando questa casella di controllo è attiva, NVDA si servirà di ulteriori dizionari per pronunciare caratteri e simboli.
@@ -1916,6 +1972,7 @@ La maggior parte dei sintetizzatori supportano questa funzione.
 
 Generalmente, si consiglia di abilitare questa impostazione.
 Talvolta, può succedere che alcune sintesi Microsoft Speech Api si comportino in modo strano nell'eseguire lo spelling.
+Anche i sintetizzatori di Code Factory, sia il componente aggiuntivo che l'applicazione SAPI, non lo implementano correttamente provocando lo spelling indesiderato del testo (ad esempio nel menu o nelle finestre di dialogo di NVDA).
 In caso ciò avvenga, consigliamo di disattivare questa caratteristica.
 
 ##### Descrizione ritardata dei caratteri al movimento del cursore {#delayedCharacterDescriptions}
@@ -2116,6 +2173,18 @@ Se invece la funzione è disabilitata, verrà mostrato il più possibile della p
 Scorrendo il display, sarà possibile leggere il resto della parola.
 
 L'attivazione di questa funzione permetterà una lettura molto più fluida, ma richiederà di scorrere il display braille molto più spesso.
+
+##### Normalizzazione unicode {#BrailleUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opzioni |Default (Disattivata), Attivata, Disattivata|
+|Default |Disattivata|
+
+Quando questa opzione è abilitata, viene effettuata la normalizzazione Unicode del testo sul display Braille.
+Ciò è utile quando si incontrano caratteri in braille che sono sconosciuti in una particolare tabella e che hanno un’alternativa compatibile, come i caratteri in grassetto e corsivo comunemente usati sui social media.
+Altri vantaggi della normalizzazione Unicode sono spiegati con maggiori dettagli nella [sezione equivalente relativa alla sintesi vocale](#SpeechUnicodeNormalization).
+
+Per attivare/disattivare la normalizzazione Unicode da qualsiasi posto, assegnare un gesto personalizzato utilizzando la [finestra gesti e tasti di immissione](#InputGestures).
 
 ##### Presentazione delle informazioni contestuali per il focus {#BrailleSettingsFocusContextPresentation}
 
@@ -2857,6 +2926,27 @@ Si noti che questo stile di paragrafo non può essere utilizzato in Microsoft Wo
 
 è possibile passare tra gli stili di paragrafo disponibili da qualsiasi luogo assegnando una combinazione di tasti nella finestra [Tasti e gesti di immissione](#InputGestures).
 
+#### Impostazioni Add-on Store {#AddonStoreSettings}
+
+Questa categoria consente di regolare il comportamento dello Store dei componenti aggiuntivi.
+
+##### Notifiche di aggiornamento {#AutomaticAddonUpdates}
+
+Quando questa opzione è impostata su "Notifica", si verrà avvisati dopo l'avvio di NVDA se sono disponibili aggiornamenti dei componenti aggiuntivi.
+Questo controllo viene eseguito ogni 24 ore.
+Le notifiche verranno inviate solo per i componenti aggiuntivi con aggiornamenti disponibili nello stesso canale.
+Ad esempio, se sono stati installati add-on in versione beta, si riceverà una notifica solo degli aggiornamenti relativi al canale beta.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Opzioni |Notifica (Default), disattivata |
+|predefinito |notifica |
+
+|Opzione |comportamento |
+|---|---|
+|Notifica |Avvisa quando sono disponibili aggiornamenti per i componenti aggiuntivi all'interno dello stesso canale |
+|Disattivata |Non verificare automaticamente la presenza di aggiornamenti per i componenti aggiuntivi |
+
 #### OCR Windows {#Win10OcrSettings}
 
 Questa categoria di impostazioni permette di configurare [l'OCR di Windows](#Win10Ocr).
@@ -3442,6 +3532,9 @@ Se NVDA è installato e in esecuzione sul sistema, si può anche aprire un add-o
 Quando un componente aggiuntivo viene installato da una fonte esterna, NVDA chiederà di confermare l'installazione.
 Una volta installato il componente, NVDA deve essere riavviato affinché l'add-on possa funzionare, anche se è possibile posticipare il riavvio nel caso in cui vi siano altri add-on da installare o aggiornare.
 
+Per impostazione predefinita, dopo l'avvio di NVDA, si riceverà una notifica nel caso della presenza di aggiornamenti sugli add-on installati.
+Per saperne di più e configurare questo comportamento, consultare ["Notifiche sugli aggiornamenti"](#AutomaticAddonUpdates).
+
 #### Rimozione di componenti aggiuntivi {#AddonStoreRemoving}
 
 Per rimuovere un componente aggiuntivo, selezionare l'add-on dall'elenco e utilizzare l'azione Rimuovi.
@@ -3563,15 +3656,9 @@ Per maggiori informazioni, leggere la sezione di approfondimento: [Componenti ag
 
 ### Crea copia portable {#CreatePortableCopy}
 
-Verrà visualizzata una finestra di dialogo che consente di creare una copia portable di NVDA a partire dalla versione installata.
-Di contro, quando si esegue una copia portable di NVDA, nel sottomenu strumenti la voce di menu sarà chiamata "installa NVDA su questo PC" invece di "crea copia portable).
+Verrà visualizzata una finestra di dialogo che consente di creare una copia portable di NVDA a partire dalla versione in esecuzione.
 
-In questa finestra, verrà chiesto di selezionare la cartella in cui lo screen reader dovrà essere copiato o installato.
-
-Inoltre è possibile attivare o disattivare le seguenti opzioni:
-
-* Copia la configurazione utente corrente (ciò comprende i file presenti in %appdata%\roaming\NVDA, o quelli della configurazione utente della copia portable, oltre a componenti aggiuntivi e altri moduli)
-* Avvia la nuova copia portable dopo la creazione o avvia NVDA dopo l'installazione, le due funzioni si spiegano da sé.)
+Seguire le istruzioni in [Creazione di una copia portable](#CreatingAPortableCopy) per ulteriori informazioni.
 
 ### Esegui Utility risoluzione registrazioni Com di sistema... {#RunCOMRegistrationFixingTool}
 
@@ -4001,6 +4088,7 @@ Sono supportati anche i dispositivi seguenti e non necessitano dell'installazion
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Si noti che Zoomax non è supportato senza driver esterni
 
 Di seguito, ecco l'elenco dell'assegnazione dei tasti per queste righe braille con NVDA.
 Si legga la documentazione della propria barra Braille per ottenere informazioni su dove sono situati i vari tasti.
@@ -4996,7 +5084,7 @@ Ecco l'elenco dei parametri a riga di comando di NVDA:
 |None |`--enable-start-on-logon=True|False` |Durante l'installazione, abilita [l'avvio di NVDA alla schermata di logon](#StartAtWindowsLogon)|
 |None |`--copy-portable-config` |Durante l'installazione, copia la configurazione portable dal percorso specificato (`--config-path`, `-c`) all'account utente corrente|
 |None |`--create-portable` |Crea una copia portable di NVDA (avviando la copia appena creata). Richiede `--portable-path` da specificare|
-|None |`--create-portable-silent` |Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede `--portable-path` da specificare|
+|None |`--create-portable-silent` |Crea una copia portable di NVDA (non avvia la nuova copia appena creata). Richiede `--portable-path` da specificare. Questa opzione elimina gli avvisi durante la scrittura in directory non vuote e potrebbe sovrascrivere i file senza avviso.|
 |None |`--portable-path=PORTABLEPATH` |Il percorso in cui verrà creata la copia portable di NVDA|
 
 ### Parametri di sistema {#SystemWideParameters}

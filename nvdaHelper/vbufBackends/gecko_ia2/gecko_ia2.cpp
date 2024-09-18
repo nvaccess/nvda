@@ -140,7 +140,7 @@ static IAccessible2* IAccessible2FromIdentifier(int docHandle, int ID) {
 	if(pacc->QueryInterface(IID_IServiceProvider,(void**)&pserv)!=S_OK) {
 		pacc->Release();
 		return NULL;
-	}  
+	}
 	pacc->Release();
 	pserv->QueryService(IID_IAccessible,IID_IAccessible2,(void**)&pacc2);
 	pserv->Release();
@@ -642,7 +642,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		LOG_DEBUG(L"pacc->get_states failed");
 		IA2States=0;
 	}
-	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec. 
+	// Remove state_editable from tables as Gecko exposes it for ARIA grids which is not in the ARIA spec.
 	if(IA2States&IA2_STATE_EDITABLE&&role==ROLE_SYSTEM_TABLE) {
 			IA2States-=IA2_STATE_EDITABLE;
 	}
@@ -767,14 +767,14 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		return id;
 	};
 	const bool nameIsContent = isEmbeddedApp
-		|| role == ROLE_SYSTEM_LINK 
-		|| role == ROLE_SYSTEM_PUSHBUTTON 
-		|| role == IA2_ROLE_TOGGLE_BUTTON 
-		|| role == ROLE_SYSTEM_MENUITEM 
-		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap) 
-		|| (role == ROLE_SYSTEM_TEXT && !isEditable) 
-		|| role == IA2_ROLE_HEADING 
-		|| role == ROLE_SYSTEM_PAGETAB 
+		|| role == ROLE_SYSTEM_LINK
+		|| role == ROLE_SYSTEM_PUSHBUTTON
+		|| role == IA2_ROLE_TOGGLE_BUTTON
+		|| role == ROLE_SYSTEM_MENUITEM
+		|| (role == ROLE_SYSTEM_GRAPHIC && !isImgMap)
+		|| (role == ROLE_SYSTEM_TEXT && !isEditable)
+		|| role == IA2_ROLE_HEADING
+		|| role == ROLE_SYSTEM_PAGETAB
 		|| role == ROLE_SYSTEM_BUTTONMENU
 		|| ((role == ROLE_SYSTEM_CHECKBUTTON || role == ROLE_SYSTEM_RADIOBUTTON) && !isLabelVisibleCached());
 	// Whether this node has a visible label somewhere else in the tree
@@ -882,10 +882,10 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		if(!paccTableCell) { // just rows and row groups
 			// setting requiresParentUpdate ensures that if this node is specifically invalidated,
 			// its parent will also be invalidated.
-			// For example, if this is a table row group, its rerendering may change the number of rows inside. 
+			// For example, if this is a table row group, its rerendering may change the number of rows inside.
 			// this in turn would affect the coordinates of all table cells in table rows after this row group.
 			// Thus, ensuring we rerender this node's parent, gives a chance to rerender other table rows.
-			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected. 
+			// Note that we however do not want to set this on table rows as if this row alone is invalidated, none of the other row coordinates would be affected.
 			if(role!=ROLE_SYSTEM_ROW) {
 				LOG_DEBUG(L"Setting node's requiresParentUpdate to true");
 				parentNode->requiresParentUpdate=true;
@@ -951,7 +951,7 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 				paccTable2 = curNodePaccTable2;
 			}
 
-			
+
 			{ // Add the table summary if one is present and the table is visible.
 				VBufStorage_fieldNode_t* summaryTempNode = nullptr;
 				if (isVisible && description.has_value() && !description.value().empty()) {
@@ -1000,15 +1000,21 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 	}
 
 	BSTR value=NULL;
-	if(pacc->get_accValue(varChild,&value)==S_OK) {
-		if(value&&SysStringLen(value)==0) {
-			SysFreeString(value);
-			value=NULL;
+	if (pacc->get_accValue(varChild, &value) == S_OK) {
+		if (value) {
+			if (role == ROLE_SYSTEM_LINK) {
+				// For links, store the IAccessible value to handle same page link detection.
+				parentNode->addAttribute(L"IAccessible::value", value);
+			}
+			if (SysStringLen(value) == 0) {
+				SysFreeString(value);
+				value = NULL;
+			}
 		}
 	}
 
 	if(nameIsContent) {
-		// We may render an accessible name for this node if it has been explicitly set or it has no useful content. 
+		// We may render an accessible name for this node if it has been explicitly set or it has no useful content.
 		parentNode->alwaysRerenderDescendants=true;
 	}
 
@@ -1476,6 +1482,12 @@ void GeckoVBufBackend_t::renderThread_initialize() {
 void GeckoVBufBackend_t::renderThread_terminate() {
 	unregisterWinEventHook(renderThread_winEventProcHook);
 	VBufBackend_t::renderThread_terminate();
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released here, in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Release();
+	}
 }
 
 void GeckoVBufBackend_t::render(VBufStorage_buffer_t* buffer, int docHandle, int ID, VBufStorage_controlFieldNode_t* oldNode) {
@@ -1502,6 +1514,18 @@ GeckoVBufBackend_t::GeckoVBufBackend_t(int docHandle, int ID): VBufBackend_t(doc
 }
 
 GeckoVBufBackend_t::~GeckoVBufBackend_t() {
+	// The backend holds a reference to the root accessible of the document.
+	// This must be specifically released in the UI thread where it was created.
+	// See https://issues.chromium.org/issues/41487612
+	// In most cases this will be released in renderThread_terminate.
+	// However in the unlikely case terminate can't run,
+	// we must detach and leak the COM pointer here.
+	// Otherwise it would be automatically deleted along with the backend which would cause a crash,
+	// as the COM object would be released from within an RPC worker thread.
+	nhAssert(!rootDocAcc);
+	if (this->rootDocAcc) {
+		this->rootDocAcc.Detach();
+	}
 }
 
 VBufBackend_t* GeckoVBufBackend_t_createInstance(int docHandle, int ID) {

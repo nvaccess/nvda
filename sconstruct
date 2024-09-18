@@ -159,15 +159,28 @@ env = Environment(
 # speed up subsequent runs by checking timestamps of targets and dependencies, and only using md5 if timestamps differ.
 env.Decider("MD5-timestamp")
 
+AddOption(
+	"--all-cores",
+	action="store_true",
+	dest="all_cores",
+	default=False,
+	help="Use the maximum number of available processor cores",
+)
 # Warn to run the build on multiple threads so it runs faster
-numJobs = env.GetOption("num_jobs")
 numCores = multiprocessing.cpu_count()
-if numJobs < numCores:
-	print(
-		f"Warning: Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
+if allCores := GetOption("all_cores"):
+	SetOption("num_jobs", numCores)
+if (numJobs := GetOption("num_jobs")) < numCores:
+	msg = "Warning: "
+	if allCores:
+		msg += "Providing both the '--all-cores' and '-j'/'--num-jobs' parameters is not supported. "
+	msg += (
+		f"Building with {numJobs} concurrent job{'s' if numJobs != 1 else ''} "
 		f"while {numCores} CPU threads are available. "
-		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build."
+		f"Running SCONS with the parameter '-j{numCores}' may lead to a faster build. "
+		"Running SCONS with parameter '--all-cores' will automatically pick all available cores. "
 	)
+	print(msg)
 else:
 	print(f"Building with {numJobs} concurrent jobs")
 
@@ -320,6 +333,17 @@ for po in env.Glob(sourceDir.path + "/locale/*/lc_messages/*.po"):
 styles = os.path.join(userDocsDir.path, "styles.css")
 numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
+# Create Non-english md files in user_docs from localized xliff and English skel files
+for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
+	lang = os.path.split(os.path.dirname(xliffFile.path))[-1]
+	if lang == "en":
+		continue
+	mdFile = os.path.splitext(xliffFile.path)[0] + ".md"
+	env.Command(
+		mdFile,
+		xliffFile,
+		[f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.md2html(mdFile)

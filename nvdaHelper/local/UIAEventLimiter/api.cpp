@@ -22,7 +22,7 @@ std::set<RateLimitedEventHandler*> activeRateLimitedEventHandlers;
 HRESULT rateLimitedUIAEventHandler_create(IUnknown* pExistingHandler, RateLimitedEventHandler** ppRateLimitedEventHandler) {
 	LOG_DEBUG(L"rateLimitedUIAEventHandler_create called");
 	if(!pExistingHandler || !ppRateLimitedEventHandler) {
-		LOG_ERROR(L"rateLimitedUIAEventHandler_create: one or more NULL arguments"); 
+		LOG_ERROR(L"rateLimitedUIAEventHandler_create: one or more NULL arguments");
 		return E_INVALIDARG;
 	}
 
@@ -39,7 +39,7 @@ HRESULT rateLimitedUIAEventHandler_create(IUnknown* pExistingHandler, RateLimite
 
 // @brief Terminates a RateLimitedEventHandler instance's flusher thread and removes it from the activeRateLimitedEventHandlers set.
 // @param pRateLimitedEventHandler the RateLimitedEventHandler instance to terminate.
-// @note This function will block until the RateLimitedEventHandler's flusher thread has terminated. 
+// @note This function will block until the RateLimitedEventHandler's flusher thread has terminated.
 // @return S_OK on success or a failure code otherwise
 HRESULT rateLimitedUIAEventHandler_terminate(RateLimitedEventHandler* pRateLimitedEventHandler) {
 	if (activeRateLimitedEventHandlers.find(pRateLimitedEventHandler) == activeRateLimitedEventHandlers.end()) {

@@ -63,21 +63,21 @@ def _swapDotBits(d: int) -> List[int]:
 	# swap dot bits
 	d2 = 0
 	if d & 1:
-		d2 |= 128  # noqa: E701
+		d2 |= 128
 	if d & 2:
-		d2 |= 64  # noqa: E701
+		d2 |= 64
 	if d & 4:
-		d2 |= 32  # noqa: E701
+		d2 |= 32
 	if d & 8:
-		d2 |= 16  # noqa: E701
+		d2 |= 16
 	if d & 16:
-		d2 |= 8  # noqa: E701
+		d2 |= 8
 	if d & 32:
-		d2 |= 4  # noqa: E701
+		d2 |= 4
 	if d & 64:
-		d2 |= 2  # noqa: E701
+		d2 |= 2
 	if d & 128:
-		d2 |= 1  # noqa: E701
+		d2 |= 1
 	a = 0x30 | (d2 & 0x0F)
 	b = 0x30 | (d2 >> 4)
 	return [b, a]
@@ -309,7 +309,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			except:  # noqa: E722
 				log.debugWarning("BROKEN PIPE - THIS SHOULD NEVER HAPPEN")
 		if self.numCells == 0:
-			raise Exception("no device found")  # noqa: E701
+			raise Exception("no device found")
 
 		# start keycheck timer
 		self.startTimer()
@@ -397,7 +397,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			super(BrailleDisplayDriver, self).terminate()
 			self.stopTimer()
 			if self._dev is not None:
-				self._dev.close()  # noqa: E701
+				self._dev.close()
 			self._dev = None
 		except:  # noqa: E722
 			self._dev = None
@@ -405,7 +405,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def display(self, cells: List[int]):
 		"""write to braille display"""
 		if self._dev is None:
-			return  # noqa: E701
+			return
 		try:
 			self._dev.write(brl_out(cells, self._nlk, self._nrk, self._voffset))
 		except:  # noqa: E722
@@ -415,7 +415,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	def executeGesture(self, gesture):
 		"""executes a gesture"""
 		if gesture.id or (gesture.dots or gesture.space):
-			inputCore.manager.executeGesture(gesture)  # noqa: E701
+			inputCore.manager.executeGesture(gesture)
 
 	def _handleKeyPresses(self):
 		"""handles key presses and performs a gesture"""
@@ -438,7 +438,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 					self.executeGesture(ig)
 		except:  # noqa: E722
 			if self._dev != None:  # noqa: E711
-				self._dev.close()  # noqa: E701, E711
+				self._dev.close()
 			self._dev = None
 
 	# global gestures
@@ -530,13 +530,13 @@ def brl_decode_trio(keys: bytes) -> List[int]:
 			a = k & 0x0F
 			# convert bitstream to list of indexes
 			if a & 1:
-				j.append(i + 3)  # noqa: E701
+				j.append(i + 3)
 			if a & 2:
-				j.append(i + 2)  # noqa: E701
+				j.append(i + 2)
 			if a & 4:
-				j.append(i + 1)  # noqa: E701
+				j.append(i + 1)
 			if a & 8:
-				j.append(i)  # noqa: E701
+				j.append(i)
 			i += 4
 		return j
 	return []
@@ -553,23 +553,23 @@ def brl_decode_keys_A(data: bytes, start: int, voffset: int) -> List[int]:
 			b = data[i + 1] & 0x0F  # n+2,n+1
 			# convert bitstream to list of indexes
 			if n > 26:
-				shift = voffset  # noqa: E701
+				shift = voffset
 			if b & 1:
-				j.append(n + 0 - shift)  # noqa: E701
+				j.append(n + 0 - shift)
 			if b & 2:
-				j.append(n + 1 - shift)  # noqa: E701
+				j.append(n + 1 - shift)
 			if b & 4:
-				j.append(n + 2 - shift)  # noqa: E701
+				j.append(n + 2 - shift)
 			if b & 8:
-				j.append(n + 3 - shift)  # noqa: E701
+				j.append(n + 3 - shift)
 			if a & 1:
-				j.append(n + 4 - shift)  # noqa: E701
+				j.append(n + 4 - shift)
 			if a & 2:
-				j.append(n + 5 - shift)  # noqa: E701
+				j.append(n + 5 - shift)
 			if a & 4:
-				j.append(n + 6 - shift)  # noqa: E701
+				j.append(n + 6 - shift)
 			if a & 8:
-				j.append(n + 7 - shift)  # noqa: E701
+				j.append(n + 7 - shift)
 			n += 8
 	return j
 
@@ -605,15 +605,15 @@ def brl_decode_key_names(driver: BrailleDisplayDriver) -> List[str]:
 def brl_join_keys(dec: List[str]) -> str:
 	"""join key names with comma, this is used for key combinations"""
 	if len(dec) == 1:
-		return dec[0]  # noqa: E701
+		return dec[0]
 	elif len(dec) == 3 and dec[0] == dec[1]:
-		return dec[0] + "," + dec[2]  # noqa: E701
+		return dec[0] + "," + dec[2]
 	elif len(dec) == 3 and dec[0] == dec[2]:
-		return dec[0] + "," + dec[1]  # noqa: E701
+		return dec[0] + "," + dec[1]
 	elif len(dec) == 2:
-		return dec[1] + "," + dec[0]  # noqa: E701
+		return dec[1] + "," + dec[0]
 	else:
-		return ""  # noqa: E701
+		return ""
 
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
@@ -657,9 +657,9 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 			elif dots == 128:
 				self.id = "d8"
 			elif thumbs == 2:
-				self.space = True  # noqa: E701
+				self.space = True
 			else:
-				self.dots = dots  # noqa: E701
+				self.dots = dots
 			return
 
 		if driver._proto == "A":  # non trio

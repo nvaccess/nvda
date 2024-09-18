@@ -359,7 +359,10 @@ addTable("ga-g2.ctb", _("Irish grade 2"), contracted=True)
 addTable("gu-in-g1.utb", _("Gujarati grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("grc-international-en.utb", _("Greek international braille"))
+addTable("grc-international-en.utb", _("Greek international braille (2-cell accented letters)"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("grc-international-en-composed.utb", _("Greek international braille (single-cell accented letters)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("grc-international-es.utb", _("Spanish for Greek text"))
@@ -626,7 +629,10 @@ addTable("te-in-g1.utb", _("Telugu grade 1"))
 addTable("th-comp8-backward.utb", _("Thai 8 dot computer braille"), output=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("th-g0.utb", _("Thai 6 dot"), input=False)
+addTable("th-g0.utb", _("Thai grade 0"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("th-g1.utb", _("Thai grade 1"), input=False, contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("tr.ctb", _("Turkish grade 1"))

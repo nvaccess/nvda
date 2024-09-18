@@ -162,12 +162,12 @@ class Window(NVDAObject):
 		if relation in ("focus", "foreground"):
 			windowHandle = winUser.getForegroundWindow()
 			if not windowHandle:
-				windowHandle = winUser.getDesktopWindow()  # noqa: E701
+				windowHandle = winUser.getDesktopWindow()
 			if windowHandle and relation == "focus":
 				threadID = winUser.getWindowThreadProcessID(windowHandle)[1]
 				threadInfo = winUser.getGUIThreadInfo(threadID)
 				if threadInfo.hwndFocus:
-					windowHandle = threadInfo.hwndFocus  # noqa: E701
+					windowHandle = threadInfo.hwndFocus
 		elif isinstance(relation, tuple):
 			windowHandle = _windowFromPoint(ctypes.wintypes.POINT(relation[0], relation[1]))
 		if not windowHandle:

@@ -84,7 +84,7 @@ class DynamicNVDAObjectType(baseObject.ScriptableObject.__class__):
 		if chooseBestAPI:
 			APIClass = self.findBestAPIClass(kwargs)
 			if not APIClass:
-				return None  # noqa: E701
+				return None
 		else:
 			APIClass = self
 
@@ -1023,7 +1023,7 @@ class NVDAObject(
 			return None
 		presType = child.presentationType
 		if presType != self.presType_content:
-			return child._findSimpleNext(useChild=(presType != self.presType_unavailable), useParent=False)  # noqa: E701
+			return child._findSimpleNext(useChild=(presType != self.presType_unavailable), useParent=False)
 		return child
 
 	def _get_simpleLastChild(self):
@@ -1036,7 +1036,7 @@ class NVDAObject(
 				useChild=(presType != self.presType_unavailable),
 				useParent=False,
 				goPrevious=True,
-			)  # noqa: E701
+			)
 		return child
 
 	def _get_childCount(self):
@@ -1627,3 +1627,18 @@ class NVDAObject(
 		if not isLockScreenModeActive():
 			return False
 		return _isObjectBelowLockScreen(self)
+
+	linkType: controlTypes.State | None
+	"""Typing information for auto property _get_linkType
+	Determines the link type based on the link and document URLs.
+	"""
+
+	def _get_linkType(self) -> controlTypes.State | None:
+		if self.role != controlTypes.Role.LINK:
+			return None
+		from browseMode import BrowseModeDocumentTreeInterceptor
+
+		ti = getattr(self, "treeInterceptor", None)
+		if not isinstance(ti, BrowseModeDocumentTreeInterceptor):
+			return None
+		return ti.getLinkTypeInDocument(self.value)

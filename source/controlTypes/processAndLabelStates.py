@@ -6,7 +6,7 @@
 from typing import Dict, List, Optional, Set
 
 from .role import Role, clickableRoles
-from .state import State, STATES_SORTED
+from .state import State, STATES_SORTED, STATES_LINK_TYPE
 from .outputReason import OutputReason
 
 
@@ -31,6 +31,7 @@ def _processPositiveStates(
 		positiveStates.discard(State.EDITABLE)
 	if role != Role.LINK:
 		positiveStates.discard(State.VISITED)
+		positiveStates.discard(State.INTERNAL_LINK)
 	positiveStates.discard(State.SELECTABLE)
 	positiveStates.discard(State.FOCUSABLE)
 	positiveStates.discard(State.CHECKABLE)
@@ -47,6 +48,9 @@ def _processPositiveStates(
 		# or reporting clickable just isn't useful,
 		# or the user has explicitly requested no reporting clickable
 		positiveStates.discard(State.CLICKABLE)
+	if not config.conf["documentFormatting"]["reportLinkType"]:
+		for state in STATES_LINK_TYPE:
+			positiveStates.discard(state)
 	if reason == OutputReason.QUERY:
 		return positiveStates
 	positiveStates.discard(State.DEFUNCT)

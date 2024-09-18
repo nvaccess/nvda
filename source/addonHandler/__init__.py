@@ -337,7 +337,7 @@ def _getAvailableAddonsFromPath(
 	log.debug("Listing add-ons from %s", path)
 	for p in os.listdir(path):
 		if p.endswith(DELETEDIR_SUFFIX):
-			if isFirstLoad:
+			if isFirstLoad and NVDAState.shouldWriteToDisk():
 				removeFailedDeletion(os.path.join(path, p))
 			continue
 		addon_path = os.path.join(path, p)
@@ -351,6 +351,7 @@ def _getAvailableAddonsFromPath(
 					name = a.manifest["name"]
 					if (
 						isFirstLoad
+						and NVDAState.shouldWriteToDisk()
 						and name in state[AddonStateCategory.PENDING_REMOVE]
 						and not a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
 					):
@@ -360,9 +361,13 @@ def _getAvailableAddonsFromPath(
 						except RuntimeError:
 							log.exception(f"Failed to remove {name} add-on")
 							_failedPendingRemovals.add(name)
-					if isFirstLoad and (
-						name in state[AddonStateCategory.PENDING_INSTALL]
-						or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+					if (
+						isFirstLoad
+						and NVDAState.shouldWriteToDisk()
+						and (
+							name in state[AddonStateCategory.PENDING_INSTALL]
+							or a.path.endswith(ADDON_PENDINGINSTALL_SUFFIX)
+						)
 					):
 						newPath = a.completeInstall()
 						if newPath:
@@ -1031,6 +1036,13 @@ docFileName = string(default=None)
 		input = boolean(default=true)
 		output = boolean(default=true)
 
+# Symbol Pronunciation
+[symbolDictionaries]
+	# The key is the symbol dictionary file name (not the full path)
+	[[__many__]]
+		displayName = string()
+		mandatory = boolean(default=false)
+
 # NOTE: apiVersion:
 # EG: 2019.1.0 or 0.0.0
 # Must have 3 integers separated by dots.
@@ -1071,6 +1083,10 @@ docFileName = string(default=None)
 				value = tableConfig.get("displayName")
 				if value:
 					self["brailleTables"][fileName]["displayName"] = value
+			for fileName, dictConfig in self._translatedConfig.get("symbolDictionaries", {}).items():
+				value = dictConfig.get("displayName")
+				if value:
+					self["symbolDictionaries"][fileName]["displayName"] = value
 
 	@property
 	def errors(self):

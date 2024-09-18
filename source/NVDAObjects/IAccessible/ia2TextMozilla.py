@@ -11,6 +11,7 @@ import typing
 from typing import (
 	Optional,
 	Dict,
+	Type,
 )
 
 from comtypes import COMError
@@ -27,32 +28,8 @@ import locationHelper
 from logHandler import log
 
 
-class FakeEmbeddingTextInfo(offsets.OffsetsTextInfo):
-	encoding = None
-
-	def _getStoryLength(self):
-		return self.obj.childCount
-
-	def _iterTextWithEmbeddedObjects(
-		self,
-		withFields,
-		formatConfig=None,
-	) -> typing.Generator[int, None, None]:
-		yield from range(self._startOffset, self._endOffset)
-
-	def _getUnitOffsets(self, unit, offset):
-		if unit in (textInfos.UNIT_WORD, textInfos.UNIT_LINE):
-			unit = textInfos.UNIT_CHARACTER
-		return super(FakeEmbeddingTextInfo, self)._getUnitOffsets(unit, offset)
-
-
-def _getRawTextInfo(obj) -> type(offsets.OffsetsTextInfo):
-	if not hasattr(obj, "IAccessibleTextObject") and obj.role in (
-		controlTypes.Role.TABLE,
-		controlTypes.Role.TABLEROW,
-	):
-		return FakeEmbeddingTextInfo
-	elif obj.TextInfo is NVDAObjectTextInfo:
+def _getRawTextInfo(obj) -> Type[offsets.OffsetsTextInfo]:
+	if obj.TextInfo is NVDAObjectTextInfo:
 		return NVDAObjectTextInfo
 	return IA2TextTextInfo
 
@@ -84,6 +61,17 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 		uniqueID = obj.IA2UniqueID
 		if uniqueID is not None:
 			controlField["uniqueID"] = uniqueID
+		# #16631: Outlook.com /modern Outlook represent addresses in To/CC/BCC fields as labelled buttons.
+		# These buttons are non-contenteditable within a parent contenteditable.
+		# Ensure their label (name) is reported as the content
+		# as the caret cannot move through them.
+		if (
+			obj.role == controlTypes.role.Role.BUTTON
+			and controlTypes.state.State.EDITABLE not in obj.states
+			and obj.parent
+			and controlTypes.state.State.EDITABLE in obj.parent.states
+		):
+			controlField["content"] = obj.name
 		return controlField
 
 	def _isCaretAtEndOfLine(self, caretObj: IAccessible) -> bool:
@@ -100,10 +88,12 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			# means this is not the insertion point at the end of a line.
 			if start != end:
 				return False
-			# If there is a line feed before us, this is an empty line. We don't want
-			# to do any special adjustment in this case. Otherwise, we will report the
-			# previous line instead of the empty one.
-			if start > 0 and caretObj.IAccessibleTextObject.text(start - 1, start) == "\n":
+			# If this is the end of the object, it might be the end of a line, but it
+			# might just be the end of the object on a line containing multiple objects.
+			# It's also possible that this is an empty last line, in which case any
+			# adjustment would cause us to report the previous line instead of the empty
+			# one. Either way, we don't need the special end of line adjustment.
+			if start > 0 and start == caretObj.IAccessibleTextObject.nCharacters:
 				return False
 			return True
 		except COMError:
@@ -252,10 +242,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 			return None
 		# optimisation: Passing an Offsets position checks nCharacters, which is an extra call we don't need.
 		info = self._makeRawTextInfo(parent, textInfos.POSITION_FIRST)
-		if isinstance(info, FakeEmbeddingTextInfo):
-			info._startOffset = obj.indexInParent
-			info._endOffset = info._startOffset + 1
-			return info
 		try:
 			hl = obj.IAccessibleObject.QueryInterface(IA2.IAccessibleHyperlink)
 			hlOffset = hl.startIndex
@@ -543,9 +529,6 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				embedTi = None
 			else:
 				embedTi = self._getEmbedding(obj)
-				if isinstance(embedTi, FakeEmbeddingTextInfo):
-					# hack: Selection in Mozilla table/table rows is broken (MozillaBug:1169238), so just ignore it.
-					embedTi = None
 			if not embedTi:
 				# There is no embedding object.
 				# The unit starts and/or ends at the start and/or end of this last object.
@@ -671,8 +654,15 @@ class MozillaCompoundTextInfo(CompoundTextInfo):
 				pass
 		return ti, obj
 
-	def move(self, unit, direction, endPoint=None):
+	def move(
+		self,
+		unit: str,
+		direction: int,
+		endPoint: str | None = None,
+	) -> int:
 		if direction == 0:
+			return 0
+		if self.obj.IAccessibleTextObject.nCharacters == 0:
 			return 0
 
 		if not endPoint or endPoint == "start":

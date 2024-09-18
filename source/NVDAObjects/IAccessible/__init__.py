@@ -180,6 +180,9 @@ def normalizeIA2TextFormatField(formatField):
 	fontSize = formatField.get("font-size")
 	if fontSize is not None:
 		formatField["font-size"] = FontSize.translateFromAttribute(fontSize)
+	mark = formatField.pop("mark", None)
+	if mark == "true":
+		formatField["marked"] = True
 
 
 class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
@@ -248,18 +251,19 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			# over "before" would just read "before", mousing over "link" would read
 			# "link" and mousing over "after" would just read "after".
 			text = self._getTextRange(self._startOffset, self._endOffset)
+			textStart = self._startOffset
 			if not text:
 				return
 			# Make our origin relative to the start of the text we just retrieved.
 			relativeOrigin = origin - self._startOffset
 			try:
 				# Shrink the start to the nearest embedded object before our origin.
-				self._startOffset = text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, relativeOrigin)
+				self._startOffset = textStart + text.rindex(textUtils.OBJ_REPLACEMENT_CHAR, 0, relativeOrigin)
 			except ValueError:
 				pass
 			try:
 				# Shrink the end to the nearest embedded object after our origin.
-				self._endOffset = text.index(textUtils.OBJ_REPLACEMENT_CHAR, relativeOrigin)
+				self._endOffset = textStart + text.index(textUtils.OBJ_REPLACEMENT_CHAR, relativeOrigin)
 			except ValueError:
 				pass
 
@@ -273,7 +277,14 @@ class IA2TextTextInfo(textInfos.offsets.OffsetsTextInfo):
 			raise RuntimeError("no active caret in this object")
 		return offset
 
-	def _setCaretOffset(self, offset):
+	def _setCaretOffset(self, offset: int) -> None:
+		iaTextObject = self.obj.IAccessibleTextObject
+		if offset > (nCharacters := iaTextObject.nCharacters):
+			log.debugWarning(
+				f"{offset=} is greater than IAccessibleText::{nCharacters=}. Clamping to {nCharacters}.",
+				stack_info=True,
+			)
+			offset = nCharacters
 		self.obj.IAccessibleTextObject.SetCaretOffset(offset)
 
 	def _getSelectionOffsets(self):
@@ -2392,7 +2403,7 @@ class SysLink(IAccessible):
 			# Remove any data after the null character
 			i = name.find("\0")
 			if i >= 0:
-				name = name[:i]  # noqa: E701
+				name = name[:i]
 		return name
 
 
