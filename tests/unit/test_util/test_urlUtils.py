@@ -47,6 +47,10 @@ class TestIsSamePageURL(unittest.TestCase):
 		"""Test URLs with unusual characters."""
 		self.assertTrue(isSamePageURL("http://example.com/page#%E2%9C%93", "http://example.com/page"))
 
+	def test_externalLinkInLocalFile(self):
+		"""Test external link in local file."""
+		self.assertFalse(isSamePageURL("http://example.com/page#section", "file:///file"))
+
 	def test_ftpScheme(self):
 		"""Test URLs with different schemes like FTP."""
 		self.assertFalse(isSamePageURL("ftp://example.com/page#section", "http://example.com/page"))
