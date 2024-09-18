@@ -375,7 +375,7 @@ def translateXliff(
 						segment = unit.find("./xliff:segment", namespaces=namespace)
 						if segment is not None:
 							target = lxml.etree.Element("target")
-							target.text = xmlEscape(translation)
+							target.text = translation
 							target.tail = "\n"
 							segment.append(target)
 							res.numTranslatedStrings += 1
