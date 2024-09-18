@@ -28,6 +28,7 @@ import speech
 import api
 import braille
 import inputCore
+import keyboardHandler
 import languageHandler
 import ui
 import vision
@@ -45,6 +46,13 @@ class SymphonyUtils:
 				return True
 			parent = parent.parent
 		return False
+
+	@staticmethod
+	def get_id(obj: NVDAObject) -> str | None:
+		"""Get value of the "id" object attribute, if set."""
+		if not hasattr(obj, "IA2Attributes"):
+			return None
+		return obj.IA2Attributes.get("id")
 
 
 class SymphonyTextInfo(IA2TextTextInfo):
@@ -252,7 +260,7 @@ class SymphonyText(IAccessible, EditableText):
 	def event_valueChange(self) -> None:
 		# announce new value to indicate formatting change if registered gesture
 		# triggered the change in toolbar item's value/text
-		if SymphonyDocument.isFormattingChangeAnnouncementEnabled() and SymphonyUtils.is_toolbar_item(self):
+		if SymphonyDocument.isFormattingChangeAnnouncementEnabled(self):
 			message = self.IAccessibleTextObject.text(0, -1)
 			ui.message(message)
 			# disable announcement until next registered keypress enables it again
@@ -380,7 +388,7 @@ class SymphonyButton(IAccessible):
 	def event_stateChange(self) -> None:
 		# announce new state of toggled toolbar button to indicate formatting change
 		# if registered gesture resulted in button state change
-		if SymphonyDocument.isFormattingChangeAnnouncementEnabled() and SymphonyUtils.is_toolbar_item(self):
+		if SymphonyDocument.isFormattingChangeAnnouncementEnabled(self):
 			states = self.states
 			enabled = controlTypes.State.PRESSED in states or controlTypes.State.CHECKED in states
 			# button's accessible name is the font attribute, e.g. "Bold", "Italic"
@@ -447,15 +455,38 @@ class SymphonyDocument(CompoundDocument):
 	TextInfo = SymphonyDocumentTextInfo
 
 	# variables used for handling announcements resulting from gestures
-	GESTURE_ANNOUNCEMENT_TIMEOUT = 2.0
-	announceFormattingGestureChange = False
-	lastFormattingGestureEventTime = 0
+	GESTURE_ANNOUNCEMENT_TIMEOUT: float = 2.0  # Seconds
+	announceFormattingGestureChange: bool = False
+	formattingGestureObjectIds: list[str] = []
+	lastFormattingGestureEventTime: float = 0
 
 	@staticmethod
-	def isFormattingChangeAnnouncementEnabled() -> bool:
-		return SymphonyDocument.announceFormattingGestureChange and time.time() < (
+	def isFormattingChangeAnnouncementEnabled(obj: NVDAObject) -> bool:
+		if not SymphonyDocument.announceFormattingGestureChange:
+			return False
+
+		# don't announce if too much time has passed since last gesture
+		if time.time() > (
 			SymphonyDocument.lastFormattingGestureEventTime + SymphonyDocument.GESTURE_ANNOUNCEMENT_TIMEOUT
-		)
+		):
+			return False
+
+		# only toolbar items are of interest
+		if not SymphonyUtils.is_toolbar_item(obj):
+			return False
+
+		# If announcement is restricted to objects with specific IDs, check whether
+		# object or its parent has an ID that matches.
+		# (For editable comboboxes, the value change event is triggered for the edit
+		# that's a child of the combobox which has the corresponding ID.)
+		if (
+			SymphonyDocument.formattingGestureObjectIds
+			and (SymphonyUtils.get_id(obj) not in SymphonyDocument.formattingGestureObjectIds)
+			and (SymphonyUtils.get_id(obj.parent) not in SymphonyDocument.formattingGestureObjectIds)
+		):
+			return False
+
+		return True
 
 	# override base class implementation because that one assumes
 	# that the text retrieved from the text info for the text unit
@@ -493,8 +524,22 @@ class SymphonyDocument(CompoundDocument):
 
 	@script(
 		gestures=[
+			# paragraph style: Body Text
+			"kb:control+0",
+			# paragraph style: Heading 1
+			"kb:control+1",
+			# paragraph style: Heading 2
+			"kb:control+2",
+			# paragraph style: Heading 3
+			"kb:control+3",
+			# paragraph style: Heading 4
+			"kb:control+4",
+			# paragraph style: Heading 5
+			"kb:control+5",
 			# bold
 			"kb:control+b",
+			# double underline
+			"kb:control+d",
 			# italic
 			"kb:control+i",
 			# underline
@@ -524,6 +569,21 @@ class SymphonyDocument(CompoundDocument):
 		:func:`SymphonyText.event_valueChange`.
 		"""
 		SymphonyDocument.announceFormattingGestureChange = True
+
+		# changing paragraph style can imply more related formatting changes (e.g. font size, bold,...);
+		# restrict announcement to the paragraph style combobox via its ID
+		if isinstance(gesture, keyboardHandler.KeyboardInputGesture) and gesture.displayName in [
+			"ctrl+0",
+			"ctrl+1",
+			"ctrl+2",
+			"ctrl+3",
+			"ctrl+4",
+			"ctrl+5",
+		]:
+			SymphonyDocument.formattingGestureObjectIds = ["applystyle"]
+		else:
+			SymphonyDocument.formattingGestureObjectIds = []
+
 		SymphonyDocument.lastFormattingGestureEventTime = time.time()
 		# send gesture
 		gesture.send()
