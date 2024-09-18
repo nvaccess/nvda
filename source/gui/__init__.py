@@ -482,13 +482,13 @@ class MainFrame(wx.Frame):
 
 	_CRFT_INTRO_MESSAGE: str = _(
 		# Translators: Explain the COM Registration Fixing tool to users before running
-		"Welcome to the COM Registration Fixing tool.\n"
+		"Welcome to the COM Registration Fixing tool.\n\n"
 		"Installing and uninstalling programs, and other events, can damage accessibility entries in the "
 		"Windows registry. This can cause previously accessible elements to be presented incorrectly, "
 		'or can cause "unknown" or "pane" to be spoken or brailled in some applications or Windows components, '
 		"instead of the content you were expecting.\n\n"
 		"This tool attempts to fix these common problems.\n"
-		"The tool accesses the system registry, which requires administrative privileges.\n"
+		"The tool accesses the system registry, which requires administrative privileges.\n\n"
 		"Press Continue to run the tool now.",
 	)
 	"""
