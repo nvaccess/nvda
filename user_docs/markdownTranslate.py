@@ -416,8 +416,8 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
-		skeletonContent = xmlUnescape(skeletonNode.text).strip()
-		for line in skeletonContent.splitlines(keepends=True):
+		skeletonContent = skeletonNode.text).strip()
+		for lineNum, line in enumerate(skeletonContent.splitlines(keepends=True), 1):
 			res.numTotalLines += 1
 			if m := re_translationID.match(line):
 				prefix, ID, suffix = m.groups()
@@ -437,7 +437,11 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 					if target is not None:
 						targetText = target.text
 						if targetText:
-							translation = xmlUnescape(targetText)
+							translation = targetText
+							unescapedTargetText = xmlUnescape(targetText)
+							if unescapedTargetText != targetText:
+								print(f"Warning: line {lineNum} contained escaped characters. Unescaped: {unescapedTargetText}")
+								translation = unescapedTargetText
 					# Crowdin treats empty targets (<target/>) as a literal translation.
 					# Filter out such strings and count them as bad translations.
 					if translation in (
@@ -447,6 +451,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 						"&lt;target&gt;&lt;/target&gt;",
 					):
 						res.numBadTranslationStrings += 1
+						print(f"Warning: line {lineNum} contained a corrupt empty translation. Using source")
 						translation = ""
 					else:
 						res.numTranslatedStrings += 1
