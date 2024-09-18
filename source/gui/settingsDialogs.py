@@ -5655,8 +5655,9 @@ class SetURLDialog(SettingsDialog):
 
 	def _success(self):
 		"""Notify the user that we successfully connected to their URL."""
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		self._testStatus = SetURLDialog._URLTestStatus.PASSED
-		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
 			# Translators: Message shown to users when testing a given URL has succeeded.
@@ -5668,6 +5669,8 @@ class SetURLDialog(SettingsDialog):
 
 	def _failure(self, error: Exception):
 		"""Notify the user that testing their URL failed."""
+		wx.CallAfter(self._progressDialog.done)
+		self._progressDialog = None
 		self._testStatus = SetURLDialog._URLTestStatus.FAILED
 		self._cleanUp()
 		wx.CallAfter(
@@ -5680,11 +5683,6 @@ class SetURLDialog(SettingsDialog):
 			"Error",
 			wx.OK | wx.ICON_ERROR,
 		)
-
-	def _cleanUp(self):
-		"""Clean up after testing a URL."""
-		wx.CallAfter(self._progressDialog.done)
-		self._progressDialog = None
 
 	def _normalize(self):
 		"""Normalize the URL in the URL text box."""
