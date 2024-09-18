@@ -538,6 +538,8 @@ class SymphonyDocument(CompoundDocument):
 			"kb:control+5",
 			# bold
 			"kb:control+b",
+			# double underline
+			"kb:control+d",
 			# italic
 			"kb:control+i",
 			# underline

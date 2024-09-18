@@ -53,13 +53,13 @@ class AddonListField(_AddonListFieldData, Enum):
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
-		150,
+		100,
 	)
 	status = (
 		# Translators: The name of the column that contains the status of the addon.
 		# e.g. available, downloading installing
 		pgettext("addonStore", "Status"),
-		150,
+		100,
 	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
@@ -89,6 +89,11 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Author"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
+	)
+	publicationDate = (
+		# Translators: The name of the column that contains the publication date of the add-on.
+		pgettext("addonStore", "Date"),
+		50,
 	)
 
 
@@ -293,7 +298,7 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		return getattr(listItemVM.model, field.name)
+		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
@@ -379,6 +384,10 @@ class AddonListVM:
 
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			if self._sortByModelField == AddonListField.publicationDate:
+				if getattr(listItemVM.model, "submissionTime", None):
+					return listItemVM.model.submissionTime
+				return 0
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
