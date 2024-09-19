@@ -8,6 +8,7 @@ Please note: the NVDA project has a [Citizen and Contributor Code of Conduct](CO
 
 The NVDA project is guided by a [product vision statement and set of principles](./projectDocs/product_vision.md).
 The vision and principles should be always considered when planning features and prioritizing work.
+NV Access also maintains a [development roadmap](roadmap.md) of NVDA features and supporting infrastructure work.
 
 NVDA is available under a modified GNU General Public License version 2.
 Please refer to [our license](./copying.txt) for more information.
@@ -25,7 +26,6 @@ Their contribution helps us maintain the security and integrity of our releases.
 ## Contributing to NVDA
 If you would like to contribute to NVDA, you can read more information in our [contributing guide](./.github/CONTRIBUTING.md).
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
-NV Access also maintains a [development roadmap](roadmap.md) of NVDA features and supporting infrastructure work.
 
 ## Status checks
 
