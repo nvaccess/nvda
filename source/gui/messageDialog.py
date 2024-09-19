@@ -128,9 +128,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
 
-		# Double ampersand in the dialog's label to avoid it being interpreted as an accelerator.
-		label = message.replace("&", "&&")
-		text = wx.StaticText(self, label=label)
+		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
+		text = wx.StaticText(self)
+		text.SetLabelText(message)
 		text.Wrap(self.scaleSize(self.GetSize().Width))
 		contentsSizer.addItem(text)
 		self._addContents(contentsSizer)
