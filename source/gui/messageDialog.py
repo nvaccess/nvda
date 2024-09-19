@@ -156,7 +156,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		)
 		mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		self.CentreOnParent()
+		# Import late to avoid circular import
+		from gui import mainFrame
+		if parent == mainFrame:
+			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
+			self.CentreOnScreen()
+		else:
+			self.CentreOnParent()
 
 	def _onDialogActivated(self, evt):
 		evt.Skip()
