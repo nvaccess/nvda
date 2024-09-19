@@ -1507,6 +1507,7 @@ class WordDocument(Window):
 			curTime = time.time()
 		return curVal
 
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1524,6 +1525,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
+	@script(gesture="kb:control+i")
 	def script_toggleItalic(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1541,6 +1543,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
+	@script(gesture="kb:control+u")
 	def script_toggleUnderline(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1558,6 +1561,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
 
+	@script(gestures=["kb:control+l", "kb:control+e", "kb:control+r", "kb:control+j"])
 	def script_toggleAlignment(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1598,6 +1602,7 @@ class WordDocument(Window):
 		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
 		ui.message(msg)
 
+	@script(gestures=["kb:control+=", "kb:control+shift+="])
 	def script_toggleSuperscriptSubscript(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1621,6 +1626,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	@script(gesture="kb:alt+shift+downArrow")
 	def script_moveParagraphDown(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1636,6 +1642,7 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved below a blank paragraph
 				ui.message(_("Moved below blank paragraph"))
 
+	@script(gesture="kb:alt+shift+upArrow")
 	def script_moveParagraphUp(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1652,6 +1659,7 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved above a blank paragraph
 				ui.message(_("Moved above blank paragraph"))
 
+	@script(gestures=["kb:alt+shift+rightArrow", "kb:alt+shift+leftArrow", "kb:control+shift+n", "kb:control+alt+1", "kb:control+alt+2", "kb:control+alt+3"])
 	def script_increaseDecreaseOutlineLevel(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1668,6 +1676,7 @@ class WordDocument(Window):
 			_("{styleName} style, outline level {outlineLevel}").format(styleName=style, outlineLevel=val),
 		)
 
+	@script(gestures=["kb:control+[", "kb:control+]", "kb:control+shift+,", "kb:control+shift+."])
 	def script_increaseDecreaseFontSize(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1779,6 +1788,7 @@ class WordDocument(Window):
 					offset,
 				).format(offset=offset)
 
+	@script(gestures=["kb:control+1", "kb:control+2", "kb:control+5"])
 	def script_changeLineSpacing(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1822,30 +1832,6 @@ class WordDocument(Window):
 			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection")
 
 	__gestures = {
-		"kb:control+[": "increaseDecreaseFontSize",
-		"kb:control+]": "increaseDecreaseFontSize",
-		"kb:control+shift+,": "increaseDecreaseFontSize",
-		"kb:control+shift+.": "increaseDecreaseFontSize",
-		"kb:control+b": "toggleBold",
-		"kb:control+i": "toggleItalic",
-		"kb:control+u": "toggleUnderline",
-		"kb:control+=": "toggleSuperscriptSubscript",
-		"kb:control+shift+=": "toggleSuperscriptSubscript",
-		"kb:control+l": "toggleAlignment",
-		"kb:control+e": "toggleAlignment",
-		"kb:control+r": "toggleAlignment",
-		"kb:control+j": "toggleAlignment",
-		"kb:alt+shift+downArrow": "moveParagraphDown",
-		"kb:alt+shift+upArrow": "moveParagraphUp",
-		"kb:alt+shift+rightArrow": "increaseDecreaseOutlineLevel",
-		"kb:alt+shift+leftArrow": "increaseDecreaseOutlineLevel",
-		"kb:control+shift+n": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+1": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+2": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+3": "increaseDecreaseOutlineLevel",
-		"kb:control+1": "changeLineSpacing",
-		"kb:control+2": "changeLineSpacing",
-		"kb:control+5": "changeLineSpacing",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
