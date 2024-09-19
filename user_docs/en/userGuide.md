@@ -3807,7 +3807,7 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
 Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
-This can be caused by, for example, installing or uninstalling certain programs, such as Adobe Reader or Math Player, as well as Windows updates and other events.
+This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
 THE COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
 The types of problem this tool can fix include:
