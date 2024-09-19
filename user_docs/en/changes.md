@@ -72,7 +72,7 @@ As the Add-on Store base URL is now configurable directly within NVDA, no replac
 * The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
   * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
-* The `[upgrade]` configuration section including `[upgrade][reportFontAttributes]` has been removed. (#17191)
+* The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 
 #### Deprecations
 
