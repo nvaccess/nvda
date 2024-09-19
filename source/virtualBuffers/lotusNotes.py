@@ -51,6 +51,9 @@ class LotusNotesRichText(VirtualBuffer):
 	def getIdentifierFromNVDAObject(self, obj):
 		return obj.windowHandle, obj.event_childID
 
+	# Older implementation of this function, overriden later in this file by a second definition of the same
+	# function. This first definition is kept in case one wants to migrate some functionalities from it to the
+	# second definition.
 	def _searchableAttribsForNodeType(self, nodeType):
 		if nodeType == "formField":
 			attrs = {
