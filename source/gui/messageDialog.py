@@ -173,4 +173,5 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		if evt.IsShown():
 			self._playSound()
+			self.GetDefaultItem().SetFocus()
 		evt.Skip()
