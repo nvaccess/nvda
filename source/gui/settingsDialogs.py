@@ -5675,7 +5675,6 @@ class SetURLDialog(SettingsDialog):
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		self._testStatus = SetURLDialog._URLTestStatus.FAILED
-		self._cleanUp()
 		wx.CallAfter(
 			gui.messageBox,
 			_(
