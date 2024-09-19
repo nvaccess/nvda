@@ -30,7 +30,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
-* Correct IDs of single space and space with dots gestures for Seika Notetaker on the input gestures dialog. (#17047, @school510587)
+* When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
 
 ### Changes for Developers
 
