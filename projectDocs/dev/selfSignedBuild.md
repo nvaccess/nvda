@@ -75,7 +75,7 @@ Thumbprint                                Subject
 On any supported version of Windows, you can manage certifications through the "Certificate Manager".
 
 Importing A Windows 11 certificate via PowerShell may fail on older versions of Windows.
-For Windows 10, simply open the certificate file and go through the installation dialog.
+On Windows 10, open the certificate file and go through the installation dialog.
 Install it to "Local Machine", in the store: "Trusted Root Certification Authorities".
 
 ### Using the certificate
