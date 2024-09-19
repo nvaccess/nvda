@@ -10,6 +10,7 @@ from typing import (
 	Optional,
 	Dict,
 	Generator,
+	Self,
 	TYPE_CHECKING,
 )
 
@@ -43,6 +44,7 @@ from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
 import documentBase
+from utils.displayString import DisplayStringIntEnum
 
 if TYPE_CHECKING:
 	import inputCore
@@ -78,6 +80,69 @@ wdStartOfRangeRowNumber = 13
 wdMaximumNumberOfRows = 15
 wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
+
+
+class WdUnderline(DisplayStringIntEnum):
+	# Word underline styles
+	# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
+	NONE = 0
+	SINGLE = 1
+	WORDS = 2
+	DOUBLE = 3
+	DOTTED = 4
+	THICK = 6
+	DASH = 7
+	DOT_DASH = 9
+	DOT_DOT_DASH = 10
+	WAVY = 11
+	DOTTED_HEAVY = 20
+	DASH_HEAVY = 23
+	DOT_DASH_HEAVY = 25
+	DOT_DOT_DASH_HEAVY = 26
+	WAVY_HEAVY = 27
+	DASH_LONG = 39
+	WAVY_DOUBLE = 43
+	DASH_LONG_HEAVY = 55
+	
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.SINGLE: _("Single"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WORDS: _("Words only"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOUBLE: _("Double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED: _("Dotted"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.THICK: _("Thick"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH: _("Dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH: _("Dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH: _("Dot dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY: _("Wave"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED_HEAVY: _("Dotted heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_HEAVY: _("Dashed heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH_HEAVY: _("Dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH_HEAVY: _("Dot dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_HEAVY: _("Wave heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG: _("Dashed long"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_DOUBLE: _("Wave double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG_HEAVY: _("Dashed long heavy"),
+		}
+
 # Horizontal alignment
 wdAlignParagraphLeft = 0
 wdAlignParagraphCenter = 1
@@ -1543,20 +1608,29 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
-	@script(gesture="kb:control+u")
+	@script(gestures=["kb:control+u", "kb:control+shift+d"])
 	def script_toggleUnderline(self, gesture):
 		if not self.WinwordSelectionObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the format change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
-			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
 			lambda: self.WinwordSelectionObject.font.underline,
 		)
-		if val:
-			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("Underline on"))
+		if val != WdUnderline.NONE:
+			try:
+				msg = WdUnderline(val).displayString
+				# Translators: a message when toggling formatting in Microsoft word
+				ui.message(_("Underline {style}").format(style=msg))
+			except ValueError:
+				# In case an unlisted value is returned by Word Object model.
+				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
+				# apply the underline style (e.g. too short timeout, gesture mismatch due to localization mismatch
+				# between Word and NVDA, etc.)
+				log.debugWarning(f'No underline value for {val}')
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
