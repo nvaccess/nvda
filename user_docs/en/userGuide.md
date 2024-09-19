@@ -3806,20 +3806,16 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
-Installing and uninstalling programs on a computer can sometimes cause COM DLL files to get unregistered.
-Because accessibility interfaces such as IAccessible depend on correct COM DLL registrations, abnormal behavior can appear if the correct registrations are missing.
+Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
+This can be caused by, for example, installing or uninstalling certain programs, such as Adobe Reader or Math Player, as well as Windows updates and other events.
+THE COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
-This can happen, for example, after installing and uninstalling Adobe Reader, Math Player and other programs.
-It can also happen after Windows updates, or during other events that access the registry.
+The types of problem this tool can fix include:
 
-The missing registrations can cause issues in browsers, desktop apps, Windows Explorer, the task bar and other interfaces.
-
-Specifically, the following issues can be solved by running this tool:
-
-* NVDA reports "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, etc.
-* NVDA fails to switch between focus mode and browse mode when you expect it to.
-* NVDA is very slow when navigating in browsers while using browse mode.
-* And possibly other issues.
+* NVDA reporting "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, Windows Explorer, the task bar, and other programs.
+* NVDA failing to switch between focus mode and browse mode when you expect it to.
+* Buttons which previously had their names spoken, suddenly being reported only as "button".
+* NVDA being very slow when navigating in browsers while using browse mode.
 
 Because this tool corrects entries in the Windows registry, it requires administrative access to work, just like when installing a program.
 If you have UAC (User Access Control) enabled, as most users do, you will need to follow whatever prompts are presented by UAC, to run the tool successfully.
