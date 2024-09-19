@@ -308,13 +308,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		gestures = []
 		if brailleDots:
 			if key in (1, 2, 3):  # bk:space+dots
+				gestures.append(InputGesture(dots=brailleDots, space=key))
 				key = 0
-				gestures.append(InputGesture(dots=brailleDots, space=True))
 			else:  # bk:dots
-				gestures.append(InputGesture(dots=brailleDots, space=False))
+				gestures.append(InputGesture(dots=brailleDots, space=0))
 		if key:
 			if key in (1, 2):  # bk:space
-				gestures.append(InputGesture(dots=0, space=True))
+				gestures.append(InputGesture(dots=0, space=key))
 			else:  # br(seikantk):XXX
 				gestures.append(InputGesture(keys=key))
 		for gesture in gestures:
@@ -391,7 +391,7 @@ def _getRoutingIndexes(routingKeyBytes: bytes) -> Set[int]:
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
 	source = BrailleDisplayDriver.name
 
-	def __init__(self, keys=None, dots=None, space=False, routing=None):
+	def __init__(self, keys=None, dots=None, space=0, routing=None):
 		super(braille.BrailleDisplayGesture, self).__init__()
 		# see what thumb keys are pressed:
 		names = set()
@@ -400,8 +400,8 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		elif dots is not None:
 			self.dots = dots
 			if space:
-				self.space = space
-				names.add(_keyNames[1])
+				self.space = bool(space)
+				names.update(_getKeyNames(space, _keyNames))
 			names.update(_getKeyNames(dots, _dotNames))
 		elif routing is not None:
 			self.routingIndex = routing
