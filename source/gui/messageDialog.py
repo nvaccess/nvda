@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from enum import IntEnum, auto
+from enum import Enum, IntEnum, auto
 import winsound
 
 import wx
@@ -21,7 +21,7 @@ class MessageDialogReturnCode(IntEnum):
 	CANCEL = wx.CANCEL
 
 
-class MessageDialogType(IntEnum):
+class MessageDialogType(Enum):
 	STANDARD = auto()
 	WARNING = auto()
 	ERROR = auto()
@@ -48,24 +48,13 @@ class MessageDialogType(IntEnum):
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
-	'''
-	def __init__(
-		self,
-		parent: wx.Window,
-		message: str,
-		caption: str = wx.MessageBoxCaptionStr,
-		style: int = wx.OK | wx.CENTER,
-		**kwargs,
-	) -> None:
-		super().__init__(parent, message, caption, style, **kwargs)
+	# def Show(self) -> None:
+	# """Show a non-blocking dialog.
+	# Attach buttons with button handlers"""
+	# pass
 
-	def Show(self) -> None:
-		"""Show a non-blocking dialog.
-		Attach buttons with button handlers"""
-		pass
-
-	def defaultAction(self) -> None:
-		return None
+	# def defaultAction(self) -> None:
+	# return None
 
 	@staticmethod
 	def CloseInstances() -> None:
@@ -83,7 +72,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Raise and focus open dialogs without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
 		pass
-	'''
 
 	def _addButtons(self, buttonHelper):
 		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
@@ -93,7 +81,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			# Translators: An ok button on a message dialog.
 			label=_("OK"),
 		)
-		ok.SetDefault()
+		# ok.SetDefault()
 		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
 		cancel = buttonHelper.addButton(
@@ -103,6 +91,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			label=_("Cancel"),
 		)
 		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+		cancel.SetDefault()
+		# self.SetDefaultItem(cancel)
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
 		"""Adds additional contents  to the dialog, before the buttons.
@@ -123,7 +113,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def __init__(
 		self,
-		parent: wx.Window,
+		parent: wx.Window | None,
 		message: str,
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: MessageDialogType = MessageDialogType.STANDARD,
@@ -158,6 +148,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.SetSizer(mainSizer)
 		# Import late to avoid circular import
 		from gui import mainFrame
+
 		if parent == mainFrame:
 			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
 			self.CentreOnScreen()
@@ -167,7 +158,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def _onDialogActivated(self, evt):
 		evt.Skip()
 
-	def _onShowEvt(self, evt):
+	def _onShowEvt(self, evt: wx.ShowEvent):
 		"""
 		:type evt: wx.ShowEvent
 		"""
