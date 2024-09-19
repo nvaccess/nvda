@@ -3806,7 +3806,7 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
-Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
+Installing and uninstalling programs on a computer can sometimes cause COM DLL files to get unregistered.
 Because accessibility interfaces such as IAccessible depend on correct COM DLL registrations, abnormal behavior can appear if the correct registrations are missing.
 
 This can happen, for example, after installing and uninstalling Adobe Reader, Math Player and other programs.
