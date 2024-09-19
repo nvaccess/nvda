@@ -525,7 +525,6 @@ class ConfigManager(object):
 	BASE_ONLY_SECTIONS = {
 		"general",
 		"update",
-		"upgrade",
 		"development",
 		"addonStore",
 	}
