@@ -53,13 +53,13 @@ class AddonListField(_AddonListFieldData, Enum):
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
-		150,
+		100,
 	)
 	status = (
 		# Translators: The name of the column that contains the status of the addon.
 		# e.g. available, downloading installing
 		pgettext("addonStore", "Status"),
-		150,
+		100,
 	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
@@ -89,6 +89,11 @@ class AddonListField(_AddonListFieldData, Enum):
 		pgettext("addonStore", "Author"),
 		100,
 		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
+	)
+	publicationDate = (
+		# Translators: The name of the column that contains the publication date of the add-on.
+		pgettext("addonStore", "Date"),
+		50,
 	)
 
 
@@ -220,6 +225,7 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self._reverseSort: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
@@ -292,7 +298,7 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		return getattr(listItemVM.model, field.name)
+		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
@@ -340,17 +346,48 @@ class AddonListVM:
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelField: AddonListField):
+	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
 		self._validate(sortField=modelField)
 		self._sortByModelField = modelField
+		self._reverseSort = reverse
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
 
+	@property
+	def _columnSortChoices(self) -> list[str]:
+		columnChoices = []
+		for c in self.presentedFields:
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
+					# {column} will be replaced with the column display string.
+					"{column} (ascending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
+					# {column} will be replaced with the column display string.
+					"{column} (descending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+		return columnChoices
+
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			if self._sortByModelField == AddonListField.publicationDate:
+				if getattr(listItemVM.model, "submissionTime", None):
+					return listItemVM.model.submissionTime
+				return 0
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
@@ -371,7 +408,9 @@ class AddonListVM:
 			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([vm.Id for vm in sorted(filtered, key=_getSortFieldData)])
+		filteredSorted = list(
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
+		)
 		return filteredSorted
 
 	def _tryPersistSelection(

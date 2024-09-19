@@ -15,7 +15,11 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
 * Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
 * It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* The add-ons lists in the Add-on Store can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
+* When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
+* When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
+* Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 
 ### Changes
 
@@ -31,6 +35,10 @@ In order to use this feature, the application volume adjuster needs to be enable
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
 * When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
+* Configuration profiles:
+  * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
+  * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
+* NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 
 ### Changes for Developers
 

@@ -155,6 +155,18 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
+		self.columnFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Sort by colu&mn:"),
+				wxCtrlClass=wx.Choice,
+				choices=self._storeVM.listVM._columnSortChoices,
+			),
+		)
+		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
+
 		self.channelFilterCtrl = cast(
 			wx.Choice,
 			filterCtrlsLine0.addLabeledControl(
@@ -323,6 +335,9 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.columnFilterCtrl.Clear()
+		for c in self._storeVM.listVM._columnSortChoices:
+			self.columnFilterCtrl.Append(c)
 		self.channelFilterCtrl.Clear()
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:
@@ -358,6 +373,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
+		self.columnFilterCtrl.SetSelection(0)
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[0])
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -369,6 +386,15 @@ class AddonStoreDialog(SettingsDialog):
 		# avoid erratic focus on the contained panel
 		if not self.addonListTabs.HasFocus():
 			self.addonListTabs.SetFocus()
+
+	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
+		# Each col index will correspond to 2 choices in the combo box (ascending and descending)
+		colIndex = evt.GetSelection() // 2
+		# Descending sort should be applied for odd choices of the combo box
+		reverse = evt.GetSelection() % 2
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex], reverse)
+		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
+		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey

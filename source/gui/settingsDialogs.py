@@ -3057,8 +3057,10 @@ class AudioPanel(SettingsPanel):
 			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
 			self.appSoundVolSlider.SetValue(defaultVolume)
 
-		# Translators: Mute other apps checkbox in settings
-		self.muteOtherAppsCheckBox = wx.CheckBox(self, label=_("Mute other apps"))
+		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
+			# Translators: Mute other apps checkbox in settings
+			wx.CheckBox(self, label=_("Mute other apps")),
+		)
 		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
 		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
 
@@ -3701,7 +3703,6 @@ class AdvancedPanelControls(
 		# Advanced settings panel
 		label = _("Audio")
 		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		audioBox = audio.GetStaticBox()  # noqa: F841
 		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
 		sHelper.addItem(audioGroup)
 

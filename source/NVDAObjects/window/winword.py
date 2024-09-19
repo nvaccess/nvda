@@ -966,8 +966,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return newField
 
 	def _normalizeFormatField(self, field, extraDetail=False):
-		_startOffset = int(field.pop("_startOffset"))
-		_endOffset = int(field.pop("_endOffset"))
 		lineSpacingRule = field.pop("wdLineSpacingRule", None)
 		lineSpacingVal = field.pop("wdLineSpacing", None)
 		if lineSpacingRule is not None:
