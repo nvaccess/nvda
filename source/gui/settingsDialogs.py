@@ -1117,15 +1117,18 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def onPanelActivated(self):
 		if updateCheck:
-			self.mirrorURLTextBox.SetValue(
-				(
-					url
-					if (url := config.conf["update"]["serverURL"])
-					# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-					else _("(None)")
-				),
-			)
+			self._updateCurrentMirrorURL()
 		super().onPanelActivated()
+
+	def _updateCurrentMirrorURL(self):
+		self.mirrorURLTextBox.SetValue(
+			(
+				url
+				if (url := config.conf["update"]["serverURL"])
+				# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
+				else _("(None)")
+			),
+		)
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
@@ -5622,6 +5625,9 @@ class SetURLDialog(SettingsDialog):
 
 		if shouldSave:
 			self._saveToConfig()
+			# Hack: Update the mirror URL in the parent window before closing.
+			# Otherwise, if focus is immediately returned to the mirror URL text control, NVDA will report the old value even though the new one is reflected visually.
+			self.Parent._updateCurrentMirrorURL()
 		super().onOk(evt)
 
 	def _onTextChange(self, evt: wx.CommandEvent):
