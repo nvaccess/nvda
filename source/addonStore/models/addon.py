@@ -188,7 +188,8 @@ class _AddonStoreModel(_AddonGUIModel):
 	def publicationDate(self) -> str | None:
 		if self.submissionTime is None:
 			return None
-		return datetime.strftime(datetime.fromtimestamp(self.submissionTime), "%x")
+		# Convert `self.submissionTime` to seconds.
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
 
 
 class _AddonManifestModel(_AddonGUIModel):
