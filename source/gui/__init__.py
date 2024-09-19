@@ -487,7 +487,7 @@ class MainFrame(wx.Frame):
 		"Windows registry. This can cause previously accessible elements to be presented incorrectly, "
 		'or can cause "unknown" or "pane" to be spoken or brailled in some applications or Windows components, '
 		"instead of the content you were expecting.\n\n"
-		"This tool attempts to fix these common problems. "
+		"This tool attempts to fix such common problems. "
 		"Note that the tool must access the system registry, which requires administrative privileges.\n\n"
 		"Press Continue to run the tool now.",
 	)
