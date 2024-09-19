@@ -539,7 +539,7 @@ class MainFrame(wx.Frame):
 				return  # Safe because of finally block
 		except Exception:
 			log.error("Could not execute fixCOMRegistrations command", exc_info=True)
-			return
+			return  # Safe because of finally block
 		finally:  # Clean up the progress dialog, and display any important error to the user before returning
 			progressDialog.done()
 			del progressDialog
