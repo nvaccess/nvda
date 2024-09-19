@@ -28,8 +28,8 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
   * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 * Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
-  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351, @XLTechie, @britechguy)
-  * The initial window can now be exited with `escape` or `alt+f4`. (#10799, @XLTechie)
+  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
+  * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 
 ### Bug Fixes
