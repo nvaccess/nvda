@@ -351,7 +351,7 @@ class InstallingOverNewerVersionDialog(
 		contentSizer.addItem(text)
 
 		buttonHelper = guiHelper.ButtonHelper(orientation=wx.HORIZONTAL)
-		okButton = buttonHelper.addButton(  # noqa: F841
+		buttonHelper.addButton(
 			parent=self,
 			id=wx.ID_OK,
 			# Translators: The label of a button to proceed with installation,
