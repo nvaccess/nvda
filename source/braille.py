@@ -277,6 +277,8 @@ positiveStateLabels = {
 	controlTypes.State.HASCOMMENT: _("cmnt"),
 	# Translators: Displayed in braille when a control is switched on
 	controlTypes.State.ON: "⣏⣿⣹",
+	# Translators: Displayed in braille when a link destination points to the same page
+	controlTypes.State.INTERNAL_LINK: _("smp"),
 }
 negativeStateLabels = {
 	# Translators: Displayed in braille when an object is not selected.
@@ -3128,7 +3130,8 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		):
 			self._detector._limitToDevices = bdDetect.getBrailleDisplayDriversEnabledForDetection()
 
-		self._tether = config.conf["braille"]["tetherTo"]
+		if (configuredTether := config.conf["braille"]["tetherTo"]) != TetherTo.AUTO.value:
+			self._tether = configuredTether
 		tableName = config.conf["braille"]["translationTable"]
 		# #6140: Migrate to new table names as smoothly as possible.
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)

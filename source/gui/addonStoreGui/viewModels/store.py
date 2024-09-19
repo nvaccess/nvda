@@ -141,11 +141,25 @@ class AddonStoreVM:
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
+				# Translators: Label for an action that retries the selected addon
+				displayName=pgettext("addonStore", "Re&try install"),
+				actionHandler=self.getAddon,
+				validCheck=lambda aVM: aVM.canUseRetryAction(),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
 				# an add-on store version.
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.canUseReplaceAction(),
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that cancels the installation of the selected addon
+				displayName=pgettext("addonStore", "Ca&ncel install"),
+				actionHandler=self.cancelInstallForAddon,
+				validCheck=lambda aVM: aVM.canUseCancelInstallAction(),
 				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
@@ -626,6 +640,53 @@ class AddonStoreVM:
 		# ensure calling on the main thread.
 		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
+
+	def _cancelDownloadForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling download for {listItemVM.Id}")
+
+		try:
+			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		except KeyError:
+			log.debug("Download already completed")
+			return self._cancelPendingInstallForAddon(listItemVM)
+		else:
+			futuresCopy = self._downloader._pending.copy()
+			for addon in futuresCopy.values():
+				if listItemVM == addon[0]:
+					self._downloader.progress.pop(addon[0], None)
+
+	def _cancelPendingInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
+		for addonData, fileDownloaded in pendingInstallCopy:
+			if addonData == listItemVM:
+				addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
+				# Clean up download file
+				try:
+					os.remove(fileDownloaded)
+				except FileNotFoundError:
+					log.debugWarning(f"File already removed {fileDownloaded}")
+				except Exception as e:
+					log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
+
+	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling install of {listItemVM.Id}")
+
+		if AvailableAddonStatus.DOWNLOADING == getStatus(listItemVM.model, self._filteredStatusKey):
+			with self._downloader.DOWNLOAD_LOCK:
+				self._cancelDownloadForAddon(listItemVM)
+		elif AvailableAddonStatus.DOWNLOAD_SUCCESS == getStatus(listItemVM.model, self._filteredStatusKey):
+			self._cancelPendingInstallForAddon(listItemVM)
+
+		log.debug(f"Completed cancelling install of {listItemVM.Id}")
+		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
+			listItemVM.model.name,
+		)
+		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+
+	def cancelInstallForAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
+		for aVM in listItemVMs:
+			if aVM.canUseCancelInstallAction():
+				self.cancelInstallForAddon(aVM)
 
 	@classmethod
 	def cancelDownloads(cls):

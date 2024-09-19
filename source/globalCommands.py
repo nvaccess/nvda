@@ -68,6 +68,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+from audio import appsVolume
 
 
 #: Script category for text review commands.
@@ -122,6 +123,29 @@ SCRCAT_AUDIO = _("Audio")
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
 NO_SETTINGS_MSG = _("No settings")
+
+
+def toggleBooleanValue(
+	configSection: str,
+	configKey: str,
+	enabledMsg: str,
+	disabledMsg: str,
+) -> None:
+	"""
+	Toggles a boolean value in the configuration and returns the appropriate message.
+
+	:param configSection: The configuration section containing the boolean key.
+	:param configKey: The configuration key associated with the boolean value.
+	:param enabledMsg: The message for the enabled state.
+	:param disabledMsg: The message for the disabled state.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	newValue = not currentValue
+	config.conf[configSection][configKey] = newValue
+
+	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
 
 
 class GlobalCommands(ScriptableObject):
@@ -900,6 +924,26 @@ class GlobalCommands(ScriptableObject):
 			state = _("report links on")
 			config.conf["documentFormatting"]["reportLinks"] = True
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle report link type command.
+		description=_("Toggles on and off the reporting of link type"),
+		category=SCRCAT_DOCUMENTFORMATTING,
+	)
+	def script_toggleReportLinkType(self, gesture: inputCore.InputGesture):
+		if config.conf["documentFormatting"]["reportLinks"]:
+			toggleBooleanValue(
+				configSection="documentFormatting",
+				configKey="reportLinkType",
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				enabledMsg=_("Report link type on"),
+				# Translators: The message announced when toggling the report link type document formatting setting.
+				disabledMsg=_("Report link type off"),
+			)
+		else:
+			# Translators: The message announced when reporting links is disabled,
+			# and the user tries to toggle the report link type document formatting setting.
+			ui.message(_("The report links setting must be enabled to toggle report link type"))
 
 	@script(
 		# Translators: Input help mode message for toggle report graphics command.
@@ -4705,6 +4749,50 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Increases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageUp",
+	)
+	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Decreases the volume of the other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+pageDown",
+	)
+	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._adjustAppsVolume(-5)
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Toggles other applications volume adjuster status",
+		),
+		category=SCRCAT_AUDIO,
+		gesture=None,
+	)
+	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeState()
+
+	@script(
+		description=_(
+			# Translators: Describes a command.
+			"Mutes or unmutes other applications",
+		),
+		category=SCRCAT_AUDIO,
+		gesture="kb:NVDA+alt+delete",
+	)
+	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
+		appsVolume._toggleAppsVolumeMute()
 
 
 #: The single global commands instance.
