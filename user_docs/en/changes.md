@@ -5,17 +5,28 @@
 ### Important notes
 
 ### New Features
+
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
-
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
+* NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
+* Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
+* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
+* It is now possible to specify a mirror URL to use for the Add-on Store. (#14974)
+* The add-ons lists in the Add-on Store can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
+* When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
+* When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
+* When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
+* Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 
 ### Changes
 
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
-* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)r
+* The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
+* Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
+  * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
 
 ### Bug Fixes
 
@@ -23,6 +34,11 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
+* Configuration profiles:
+  * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
+  * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
+* NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 
 ### Changes for Developers
 
@@ -33,12 +49,33 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
   * Updated Ruff to 0.6.3. (#17102)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
+  * Updated wxPython to 4.2.2. (#17181, @dpy013)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
+* Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
+  * A new `utils.urlUtils` module with different functions to determine link types
+  * A new `INTERNAL_LINK` state has been added to `controlTypes.states.State`
+  * A new `linkType` property has been added on `NVDAObject`.
+  It queries the `treeInterceptor` by default, if any.
+  * `BrowseModeTreeInterceptor` object has a new `documentUrl` property
+  * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
+  * A `toggleBooleanValue` helper function has been added to `globalCommands`.
+  It can be used in scripts to report the result when a boolean is toggled in `config.conf`
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
 
 #### API Breaking Changes
 
 These are breaking API changes.
 Please open a GitHub issue if your add-on has an issue with updating to the new API.
+
+* The `addonStore.network.BASE_URL` constant has been removed.
+As the Add-on Store base URL is now configurable directly within NVDA, no replacement is planned. (#17099)
+* `NVDAObjects.UIA.winConsoleUIA.WinTerminalUIA` has been removed with no public replacement. (#14047, #16820, @codeofdusk)
+* `NVDAObjects.IAccessible.ia2TextMozilla.FakeEmbeddingTextInfo` has been removed. (#16768, @jcsteh)
+* The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
+  * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
+  * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
+* The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
+* The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 
 #### Deprecations
 
@@ -67,6 +104,8 @@ The minimum required version of Poedit that works with NVDA is now version 3.5.
 
 eSpeak NG has been updated, adding support for the Faroese and Xextan languages.
 
+LibLouis has been updated, adding new Braille tables for Thai and Greek international braille with single-cell accented letters.
+
 There have also been a number of fixes, including to mouse tracking in Firefox, and the on-demand speech mode.
 
 ### New Features
@@ -87,8 +126,17 @@ There have also been a number of fixes, including to mouse tracking in Firefox, 
 ### Changes
 
 * The `-c`/`--config-path` and `--disable-addons` command line options are now respected when launching an update from within NVDA. (#16937)
-* eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
-  * Added new languages Faroese and Xextan.
+* Component updates:
+  * Updated LibLouis Braille translator to [3.31.0](https://github.com/liblouis/liblouis/releases/tag/v3.31.0). (#17080, @LeonarddeR, @codeofdusk)
+    * Fixed translation of numbers in Spanish Braille.
+    * New Braille tables:
+      * Thai grade 1
+      * Greek international Braille (single-cell accented letters)
+    * Renamed tables:
+      * "Thai 6 dot" was renamed to "Thai grade 0" for consistency reasons.
+      * The existing "Greek international braille" table was renamed to "Greek international braille (2-cell accented letters)" to clarify the distinction between the two Greek systems.
+  * eSpeak NG has been updated to 1.52-dev commit `961454ff`. (#16775)
+    * Added new languages Faroese and Xextan.
 * When using a multi-line braille display via the standard HID braille driver, all lines of cells will be used. (#16993, @alexmoon)
 * The stability of NVDA's Poedit support has been improved with the side effect that the minimum required version of Poedit is now version 3.5. (#16889, @LeonarddeR)
 

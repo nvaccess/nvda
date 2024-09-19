@@ -121,8 +121,8 @@ for k, v in COM_INTERFACES.items():
 
 
 # When cleaning comInterfaces get rid of everything
-# except for things starting with __ (e.g. __init__.py), and files tracked by Git
+# except for the readme.md and __init__.py files tracked by Git
 env.Clean(
 	Dir("comInterfaces"),
-	Glob("comInterfaces/[!_]*", exclude="comInterfaces/readme.md"),
+	Glob("comInterfaces/*", exclude=["comInterfaces/readme.md", "comInterfaces/__init__.py"]),
 )

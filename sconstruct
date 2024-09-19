@@ -335,7 +335,7 @@ numberedHeadingsStyle = os.path.join(userDocsDir.path, "numberedHeadings.css")
 
 # Create Non-english md files in user_docs from localized xliff and English skel files
 for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
-	lang = os.path.basename(xliffFile.path).split(".")[0]
+	lang = os.path.split(os.path.dirname(xliffFile.path))[-1]
 	if lang == "en":
 		continue
 	mdFile = os.path.splitext(xliffFile.path)[0] + ".md"

@@ -54,6 +54,7 @@ from NVDAObjects import NVDAObject
 import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
+from utils import urlUtils
 from typing import Optional
 
 
@@ -304,6 +305,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG)
+	documentURL: str | None = None
+	"""The URL of the current browse mode document.
+	C{None} when there is no URL or it is unknown.
+	Used to determine the type of a link in the document.
+	"""
+
+	def getLinkTypeInDocument(self, url: str) -> controlTypes.State | None:
+		"""Returns the type of a link in the document, or C{None} if the link type cannot be determined."""
+		return urlUtils.getLinkType(url, self.documentURL)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
@@ -1498,7 +1508,6 @@ class ElementsListDialog(
 		elif key == wx.WXK_F2:
 			item = self.tree.GetSelection()
 			if item:
-				selectedItemType = self.tree.GetItemData(item).item  # noqa: F841
 				self.tree.EditLabel(item)
 				evt.Skip()
 

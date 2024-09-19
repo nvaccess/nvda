@@ -240,7 +240,6 @@ class AppModule(appModuleHandler.AppModule):
 				clsList.remove(Dialog)
 		if WordDocument in clsList:
 			clsList.insert(0, OutlookWordDocument)
-		states = obj.states  # noqa: F841
 		controlID = obj.windowControlID
 		# Support the date picker in Outlook Meeting / Appointment creation forms
 		if controlID == 4352 and role == controlTypes.Role.BUTTON:

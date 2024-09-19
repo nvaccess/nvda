@@ -6,6 +6,7 @@
 import dataclasses
 import json
 import os
+from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -125,12 +126,15 @@ class _AddonStoreModel(_AddonGUIModel):
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 
 	@property
 	def tempDownloadPath(self) -> str:
 		"""
 		Path where this add-on should be downloaded to.
 		After download completion, the add-on is moved to cachedDownloadPath.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
@@ -151,7 +155,10 @@ class _AddonStoreModel(_AddonGUIModel):
 
 	@property
 	def isPendingInstall(self) -> bool:
-		"""True if this addon has not yet been fully installed."""
+		"""True if this addon has not yet been fully installed.
+
+		Note: That the download might not be completed yet.
+		"""
 		from ..dataManager import addonDataManager
 
 		assert addonDataManager
@@ -161,14 +168,28 @@ class _AddonStoreModel(_AddonGUIModel):
 			# have not been installed yet
 			addonDataManager._downloadsPendingInstall,
 		)
+		nameInDownloadsPendingCompletion = filter(
+			lambda m: m.model.name == self.name,
+			# add-ons which are currently being downloaded
+			# and have not been cancelled
+			addonDataManager._downloadsPendingCompletion,
+		)
 		return (
 			super().isPendingInstall
 			# True if this add-on has been downloaded but
 			# has not been installed yet
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
-			or os.path.exists(self.tempDownloadPath)
+			# and the download has not been cancelled
+			or bool(next(nameInDownloadsPendingCompletion, False))
 		)
+
+	@property
+	def publicationDate(self) -> str | None:
+		if self.submissionTime is None:
+			return None
+		# Convert `self.submissionTime` to seconds.
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
 
 
 class _AddonManifestModel(_AddonGUIModel):
@@ -245,6 +266,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -281,6 +303,7 @@ class AddonStoreModel(_AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -313,6 +336,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewURL"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -335,6 +359,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewUrl"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 

@@ -344,6 +344,12 @@ class AddonDetails(
 							details.reviewURL,
 						)
 
+					if details.publicationDate is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "Publication date:"),
+							details.publicationDate,
+						)
 				self.contentsPanel.Show()
 
 		self.Layout()

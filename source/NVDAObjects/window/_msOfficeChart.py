@@ -773,10 +773,10 @@ class OfficeChartElementSeries(OfficeChartElementList):
 			)
 
 	def _get_name(self):
-		currentSeries = self.officeChartObject.SeriesCollection(self.seriesIndex)  # noqa: F841
+		currentSeries = self.officeChartObject.SeriesCollection(self.seriesIndex)
 		# Translators: Details about a series in a chart. For example, this might report "foo series 1 of 2"
 		seriesText = _("{seriesName} series {seriesIndex} of {seriesCount}").format(
-			seriesName=self.officeChartObject.SeriesCollection(self.seriesIndex).Name,
+			seriesName=currentSeries.Name,
 			seriesIndex=self.seriesIndex,
 			seriesCount=self.seriesCount,
 		)

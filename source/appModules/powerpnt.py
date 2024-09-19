@@ -594,8 +594,6 @@ class Shape(PpObject):
 				self.role = controlTypes.Role.MATH
 
 	def _get__overlapInfo(self):
-		slideWidth = self.appModule._ppApplication.activePresentation.pageSetup.slideWidth  # noqa: F841
-		slideHeight = self.appModule._ppApplication.activePresentation.pageSetup.slideHeight  # noqa: F841
 		left = self.ppObject.left
 		top = self.ppObject.top
 		right = left + self.ppObject.width
