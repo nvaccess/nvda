@@ -103,7 +103,7 @@ class WdUnderline(DisplayStringIntEnum):
 	DASH_LONG = 39
 	WAVY_DOUBLE = 43
 	DASH_LONG_HEAVY = 55
-	
+
 	@property
 	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
@@ -142,6 +142,7 @@ class WdUnderline(DisplayStringIntEnum):
 			# Translators: an underline style in Microsoft Word as announced in the font window.
 			WdUnderline.DASH_LONG_HEAVY: _("Dashed long heavy"),
 		}
+
 
 # Horizontal alignment
 wdAlignParagraphLeft = 0
@@ -265,6 +266,7 @@ wdThemeColorMainLight2 = 3
 wdThemeColorText1 = 13
 wdThemeColorText2 = 15
 
+
 class WdCharacterCase(DisplayStringIntEnum):
 	# Word enumeration that specifies the case of the text in the specified range.
 	# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
@@ -280,12 +282,12 @@ class WdCharacterCase(DisplayStringIntEnum):
 	# Mixed case: Unorganized mix of lower and upper case.
 	# Note: MS also uses it as a command for toggle case (Switches uppercase characters to lowercase, and
 	# lowercase characters to uppercase)
-	MIXED_CASE = 5  
+	MIXED_CASE = 5
 	HALF_WIDTH = 6  # Used for Japanese characters.
-	FULL_WIDTH = 7# Used for Japanese characters.
+	FULL_WIDTH = 7  # Used for Japanese characters.
 	KATAKANA = 8  # Used with Japanese text.
 	HIRAGANA = 9  # Used with Japanese text.
-	
+
 	@property
 	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
@@ -310,6 +312,7 @@ class WdCharacterCase(DisplayStringIntEnum):
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.HIRAGANA: _("Hiragana"),
 		}
+
 
 # Word Field types
 FIELD_TYPE_REF = 3  # cross reference field
@@ -1676,7 +1679,7 @@ class WordDocument(Window):
 				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
 				# apply the underline style (e.g. too short timeout, gesture mismatch due to localization mismatch
 				# between Word and NVDA, etc.)
-				log.debugWarning(f'No underline value for {val}')
+				log.debugWarning(f"No underline value for {val}")
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
@@ -1822,7 +1825,16 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved above a blank paragraph
 				ui.message(_("Moved above blank paragraph"))
 
-	@script(gestures=["kb:alt+shift+rightArrow", "kb:alt+shift+leftArrow", "kb:control+shift+n", "kb:control+alt+1", "kb:control+alt+2", "kb:control+alt+3"])
+	@script(
+		gestures=[
+			"kb:alt+shift+rightArrow",
+			"kb:alt+shift+leftArrow",
+			"kb:control+shift+n",
+			"kb:control+alt+1",
+			"kb:control+alt+2",
+			"kb:control+alt+3",
+		]
+	)
 	def script_increaseDecreaseOutlineLevel(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
