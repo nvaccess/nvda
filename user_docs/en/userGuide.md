@@ -1853,7 +1853,7 @@ Contact the operator of the update mirror for details of their data handling pol
 
 Enter the URL (web address) of the update server mirror you wish to use here.
 Only HTTP and HTTPS URLs are supported.
-For your privacy, NV Access recommends using HTTPS URLs where possible.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
 
 Leave this blank to use the NV Access NVDA update check server.
 
