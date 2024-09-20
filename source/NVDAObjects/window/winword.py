@@ -265,6 +265,52 @@ wdThemeColorMainLight2 = 3
 wdThemeColorText1 = 13
 wdThemeColorText2 = 15
 
+class WdCharacterCase(DisplayStringIntEnum):
+	# Word enumeration that specifies the case of the text in the specified range.
+	# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
+
+	# No case: Returned when the selection range contains only case-insensitive characters.
+	# Note: MS also uses it as a command for "next case" (Toggles between uppercase, lowercase, and sentence
+	# case).
+	NO_CASE = -1
+	LOWER_CASE = 0
+	UPPER_CASE = 1
+	TITLE_WORD = 2
+	TITLE_SENTENCE = 4
+	# Mixed case: Unorganized mix of lower and upper case.
+	# Note: MS also uses it as a command for toggle case (Switches uppercase characters to lowercase, and
+	# lowercase characters to uppercase)
+	MIXED_CASE = 5  
+	HALF_WIDTH = 6  # Used for Japanese characters.
+	FULL_WIDTH = 7# Used for Japanese characters.
+	KATAKANA = 8  # Used with Japanese text.
+	HIRAGANA = 9  # Used with Japanese text.
+	
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.NO_CASE: _("No case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.LOWER_CASE: _("Lowercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.UPPER_CASE: _("Uppercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_WORD: _("Each word capitalized"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_SENTENCE: _("Sentence case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.MIXED_CASE: _("Mixed case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HALF_WIDTH: _("Half width:"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.FULL_WIDTH: _("Full width"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.KATAKANA: _("Katakana"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HIRAGANA: _("Hiragana"),
+		}
+
 # Word Field types
 FIELD_TYPE_REF = 3  # cross reference field
 FIELD_TYPE_HYPERLINK = 88  # hyperlink field
@@ -1634,6 +1680,49 @@ class WordDocument(Window):
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
+
+	@script(gesture="kb:control+shift+k")
+	def script_toggleCaps(self, gesture):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: (self.WinwordSelectionObject.font.allcaps, self.WinwordSelectionObject.font.smallcaps),
+		)
+		if val[0]:
+			# Translators: a message when toggling formatting to 'all capital' in Microsoft word
+			ui.message(_("All caps on"))
+		elif val[1]:
+			# Translators: a message when toggling formatting to 'small capital' in Microsoft word
+			ui.message(_("Small caps on"))
+		else:
+			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
+			ui.message(_("Caps off"))
+
+	def script_changeCase(self, gesture):
+		# Both Word and Outlook implement commands to change case, shift+f3 in both Word and Outlook and
+		# control+shift+A in Outlook only. But when using this command, only Word's return value from the
+		# object model is reliable; in Outlook, when switching from sentence case to upper case, the object
+		# model briefly transitions through lowercase, what makes it unreliable.
+		# Thus this script is only associated to shift+f3 in Word, not in Outlook's shortcuts.
+
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: self.WinwordSelectionObject.Range.Case,
+		)
+		# Translators: a message when changing case in Microsoft Word
+		ui.message(WdCharacterCase(val).displayString)
 
 	@script(gestures=["kb:control+l", "kb:control+e", "kb:control+r", "kb:control+j"])
 	def script_toggleAlignment(self, gesture):
