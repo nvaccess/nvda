@@ -990,7 +990,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				mirrorBox.Disable()
 
-	def onChangeMirrorURL(self, evt):
+	def onChangeMirrorURL(self, evt: wx.Event):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		changeMirror = SetURLDialog(
 			self,
@@ -1008,7 +1008,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			self._sendLayoutUpdatedEvent()
 			self.Thaw()
 
-	def _enterTriggersOnChangeMirrorURL(self, evt):
+	def _enterTriggersOnChangeMirrorURL(self, evt: wx.KeyEvent):
 		"""Open the change update mirror URL dialog in response to the enter key in the mirror URL read-only text box."""
 		if evt.KeyCode == wx.WXK_RETURN:
 			self.onChangeMirrorURL(evt)
@@ -5560,7 +5560,7 @@ class SetURLDialog(SettingsDialog):
 		self._urlTransformer = urlTransformer
 		super().__init__(parent, *args, **kwargs)
 
-	def makeSettings(self, settingsSizer):
+	def makeSettings(self, settingsSizer: wx.Sizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self._urlControl = urlControl = settingsSizerHelper.addLabeledControl(
 			# Translators: The label of a text box asking the user for a URL.
@@ -5716,5 +5716,5 @@ class SetURLDialog(SettingsDialog):
 		return self._urlControl.GetValue()
 
 	@_url.setter
-	def _url(self, val):
+	def _url(self, val: str):
 		self._urlControl.SetValue(val)
