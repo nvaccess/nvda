@@ -890,7 +890,8 @@ Se venligst [udviklervejledningen](https://www.nvaccess.org/files/nvda/documenta
 * Det er ikke længere nødvendigt at bruge `SearchField` og `SuggestionListItem` `UIA` `NVDAObjects` i nye UI Automation-scenarier, hvor automatisk rapportering af søgeforslag, og hvor indtastning er blevet eksponeret via UI Automation med `controllerFor` mønsteret.
 Denne funktionalitet er nu tilgængelig generelt via `behaviours.EditableText` og basen `NVDAObject`. (#14222)
 * Kategorilogning for UIA-fejlfinding, når den er aktiveret, producerer nu væsentligt mere logning for UIA-hændelseshåndterere og værktøjer. (#14256)
-* NVDAHelper bygger nu på C++20-standarden, tidligere C++17. (#13072)
+* NVDAHelper build-standarder opdateret. (#13072)
+  * Anvender nu C++20-standarden, tidligere C++17.
   * Anvender nu compilerflaget `/permissive-`, som deaktiverer permissive adfærd og sætter compilerindstillingerne `/Zc` for streng overholdelse.
 * Nogle plugin-objekter (f.eks. drivere og tilføjelser) har nu en mere informativ beskrivelse i NVDAs Python-konsol. (#14463)
 * NVDA kan nu fuldt ud kompileres med Visual Studio 2022, hvilket betyder, at Visual Studio 2019 build tools ikke længere kræves. (#14326)
@@ -1060,7 +1061,8 @@ Denne udgivelse adresserer også et sikkerhedsproblem.
 
 ### Sikkerhedsrettelser
 
-* Forhindrer mulig systemadgang (f.eks. NVDA Python-konsol) for ikke-godkendte brugere. (GHSA-fpwc-2gxx-j9v7)
+* Forhindrer mulig systemadgang (f.eks. NVDA Python-konsol) for ikke-godkendte brugere.
+(GHSA-fpwc-2gxx-j9v7)
 
 ### Fejlrettelser
 
@@ -1087,7 +1089,8 @@ Dette er en mindre udgivelse for at rette regressioner med 2022.3.1 og adressere
 
 ### Sikkerhedsrettelser
 
-* Forhindrer mulig systemadgang for ikke-godkendte brugere. (GHSA-3jj9-295f-h69w)
+* Forhindrer mulig systemadgang for ikke-godkendte brugere.
+(GHSA-3jj9-295f-h69w)
 
 ### Fejlrettelser
 
@@ -1101,9 +1104,12 @@ Rapporter venligst sikkerhedsproblemer ansvarligt til <info@nvaccess.org>.
 
 ### Sikkerhedsrettelser
 
-* Rettede en sårbarhed, hvor det var muligt at eskalere fra bruger til systemrettigheder. (GHSA-q7c2-pgqm-vvw5)
-* Rettede et sikkerhedsproblem, der tillod adgang til Python-konsollen på låseskærmen via en race condition ved opstart af NVDA. (GHSA-72mj-mqhj-qh4w)
-* Rettede et problem, hvor tekst fra taleviseren blev cachet, når Windows blev låst. (GHSA-grvr-j2h8-3qm4)
+* Rettede en sårbarhed, hvor det var muligt at eskalere fra bruger til systemrettigheder.
+(GHSA-q7c2-pgqm-vvw5)
+* Rettede et sikkerhedsproblem, der tillod adgang til Python-konsollen på låseskærmen via en race condition ved opstart af NVDA.
+(GHSA-72mj-mqhj-qh4w)
+* Rettede et problem, hvor tekst fra taleviseren blev cachet, når Windows blev låst.
+(GHSA-grvr-j2h8-3qm4)
 
 ### Fejlrettelser
 
@@ -1173,7 +1179,8 @@ Dette er en patch-udgivelse for at rette et sikkerhedsproblem.
 
 ### Fejlrettelser
 
-* Rettede en sårbarhed, hvor det var muligt at åbne NVDA's Python-konsol via logviseren på låseskærmen. (GHSA-585m-rpvv-93qg)
+* Rettede en sårbarhed, hvor det var muligt at åbne NVDA's Python-konsol via logviseren på låseskærmen.
+(GHSA-585m-rpvv-93qg)
 
 ## 2022.2.3
 
@@ -1285,7 +1292,7 @@ såsom proceslinjen og opgavevisning ved brug af musen og berøringsinteraktion.
 * Kompilering af NVDA-afhængigheder med Visual Studio 2022 (17.0) understøttes nu.
 Til udviklings- og udgivelsesbuilds bruges Visual Studio 2019 stadig. (#13033)
 * Når du henter antallet af valgte børn via accSelection,
-bliver sagen, hvor et negativt børne-ID eller en IDispatch returneres af `IAccessible::get_accSelection`, nu håndteret korrekt. (#13277)
+bliver casen, hvor et negativt child-ID eller en IDispatch returneres af `IAccessible::get_accSelection`, nu håndteret korrekt. (#13277)
 * Nye bekvemme funktioner `registerExecutableWithAppModule` og `unregisterExecutable` er blevet tilføjet til `appModuleHandler`-modulet.
 De kan bruges til at bruge et enkelt App Module med flere eksekverbare filer. (#13366)
 
@@ -1300,6 +1307,7 @@ For tilføjelsesudviklere, bedes du åbne en GitHub-issue, hvis disse ændringer
 
 * `appModuleHandler.NVDAProcessID` er afskrevet, brug `globalVars.appPid` i stedet. (#13646)
 * `gui.quit` er afskrevet, brug `wx.CallAfter(mainFrame.onExitCommand, None)` i stedet. (#13498)
+  -
 * Nogle alias-appModules er markeret som afskrevet.
 Kode, der importerer fra en af dem, bør i stedet importere fra erstatningsmodulet. (#13366)
 
@@ -1434,7 +1442,8 @@ Bemærk:
 * `soffice` appModule har fjernet følgende klasser og funktioner: `JAB_OOTableCell`, `JAB_OOTable`, `gridCoordStringToNumbers`. (#12849)
 * `core.CallCancelled` er nu `exceptions.CallCancelled`. (#12940)
 * Alle konstanter, der starter med `RPC` fra `core` og `logHandler`, er blevet flyttet til `RPCConstants.RPC` enum. (#12940)
-* Det anbefales, at `mouseHandler.doPrimaryClick` og `mouseHandler.doSecondaryClick` funktionerne bruges til at klikke med musen for at udføre en logisk handling, såsom aktivering (primær) eller sekundær (vise kontekstmenu), i stedet for at bruge `executeMouseEvent` og specificere venstre eller højre museknap specifikt.
+* Det anbefales, at `mouseHandler.doPrimaryClick` og `mouseHandler.doSecondaryClick` funktionerne bruges til at klikke med musen for at udføre en logisk handling, såsom aktivering (primær) eller sekundær (vise kontekstmenu),
+i stedet for at bruge `executeMouseEvent` og specificere venstre eller højre museknap.
 Dette sikrer, at koden vil respektere Windows-brugerindstillingen for at bytte primær museknap. (#12642)
 * `config.getSystemConfigPath` er blevet fjernet - der er ingen erstatning. (#12943)
 * `shlobj.SHGetFolderPath` er blevet fjernet - brug `shlobj.SHGetKnownFolderPath` i stedet. (#12943)
@@ -1624,54 +1633,62 @@ De er stadig tilgængelige på modulniveau, men er forældede og fjernes i NVDA 
 
 ## 2021.2
 
-Denne udgave indeholder foreløbig understøttelse af Windows 11. Selvom Windows 11 ikke er udgivet endnu, har man testet med forhåndsversioner af Windows 11. Versionen af NVDA indeholder også en vigtig rettelse til skærmtæppefunktionen (læs vigtige bemærkninger). Værktøjet til løsning af almindelige problemer kan nu også løse yderligere problemer med NVDA. Der er opdateringer til talesyntesen eSpeak-NG og punktoversættelsen LibLouis. Der er desuden mange fejlrettelser, bl.a. til Windows-terminalprogrammer, emoji-panelet, udklipshistorik og lommeregner, samt punktskriftsunderstøttelse i NVDA.
+Denne udgave indeholder foreløbig understøttelse af Windows 11.
+Selvom Windows 11 ikke er udgivet endnu, har man testet med forhåndsversioner af Windows 11.
+Versionen af NVDA indeholder også en vigtig rettelse til skærmtæppefunktionen (læs vigtige bemærkninger).
+Værktøjet til løsning af almindelige problemer kan nu også løse yderligere problemer med NVDA.
+Der er opdateringer til talesyntesen eSpeak-NG og punktoversættelsen LibLouis.
+Der er desuden mange fejlrettelser, bl.a. til Windows-terminalprogrammer, emoji-panelet, udklipshistorik og lommeregner, samt punktskriftsunderstøttelse i NVDA.
 
 ### Vigtige bemærkninger
 
-Pga. ændringer i Windows Magnification API, var det nødvendigt at opdatere skærmtæppefunktionen for at understøtte de nyeste versioner af Windows. Benyt NVDA 2021.2 til at aktivere skærmtæppet med Windows 10 21H2 (10.0.19044) eller nyere. Dette gælder også Windows 10 Insiders og Windows 11. Af sikkerhedsmæssige årsager kan det være en god idé at få bekræftet af en seende person, hvorvidt skærmtæppefunktionen er aktiv og gør skærmen fuldstændigt sort, når denne benyttes med nyere versioner af Windows.
+Pga. ændringer i Windows Magnification API, var det nødvendigt at opdatere skærmtæppefunktionen for at understøtte de nyeste versioner af Windows.
+Benyt NVDA 2021.2 til at aktivere skærmtæppet med Windows 10 21H2 (10.0.19044) eller nyere.
+Dette gælder også Windows 10 Insiders og Windows 11.
+Af sikkerhedsmæssige årsager kan det være en god idé at få bekræftet af en seende person, hvorvidt skærmtæppefunktionen er aktiv og gør skærmen fuldstændigt sort, når denne benyttes med nyere versioner af Windows.
 
 ### Nye funktioner
 
-- Eksperimentel understøttelse for ARIA-annotationer:
-  - Tilføjet en kommando, der giver en oversigt over detaljerne for et objekt med ARIA-detaljer. (#12364)
-  - Tilføjet en indstilling under "Avanceret" i NVDAs indstillinger, der bestemmer om NVDA skal oplyse, når et objekt har yderligere detaljer i gennemsynstilstand. (#12439)
-- NVDA vil nu oplyse antallet af søgeforslag i Stifinder i Windows 10 Version 1909 og nyere, samt Windows 11. (#10341, #12628)
-- NVDA vil nu oplyse, når du bruger kommandoerne til indrykning og hængende indrykning i Microsoft Word. (#6269)
+* Eksperimentel understøttelse for ARIA-annotationer:
+  * Tilføjet en kommando, der giver en oversigt over detaljerne for et objekt med ARIA-detaljer. (#12364)
+  * Tilføjet en indstilling under "Avanceret" i NVDAs indstillinger, der bestemmer om NVDA skal oplyse, når et objekt har yderligere detaljer i gennemsynstilstand. (#12439)
+* NVDA vil nu oplyse antallet af søgeforslag i Stifinder i Windows 10 Version 1909 og nyere, samt Windows 11. (#10341, #12628)
+* NVDA vil nu oplyse, når du bruger kommandoerne til indrykning og hængende indrykning i Microsoft Word. (#6269)
 
 ### Ændringer
 
-- Espeak-ng er opdateret til 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`. (#12449, #12202, #12280, #12568)
-- NVDA vil annoncere "artikel" efter læsning af indholdet, hvis indstillingen er slået til under "Dokumentformatering" i indstillingspanelet. (#11103)
-- Opdaterede LibLouis punktoversættelse til version 3.18.0. (#12526)
-  - Nye punkttabeller: Bulgarsk niveau 1, burmesisk niveau 1, burmesisk niveau 2, kasakhisk niveau 1, Khmer niveau 1, nordkurdisk niveau 0, Sepedi niveau 1, Sepedi niveau 2, Sesotho niveau 1, Sesotho niveau 2, Setswana niveau 1, Setswana niveau 2, tatarisk niveau 1, vietnamesisk niveau 0, vietnamesisk niveau 2, sydvietnamesisk niveau 1, Xhosa niveau 1, Xhosa niveau 2, Yakut niveau 1, zulu niveau 1, zulu niveau 2
-- Windows 10 Tekstgenkendelse er blevet omdøbt til Windows Tekstgenkendelse. (#12690)
+* Espeak-ng er opdateret til 1.51-dev commit `ab11439b18238b7a08b965d1d5a6ef31cbb05cbb`. (#12449, #12202, #12280, #12568)
+* NVDA vil annoncere "artikel" efter læsning af indholdet, hvis indstillingen er slået til under "Dokumentformatering" i indstillingspanelet. (#11103)
+* Opdaterede LibLouis punktoversættelse til version 3.18.0. (#12526)
+  * Nye punkttabeller: Bulgarsk niveau 1, burmesisk niveau 1, burmesisk niveau 2, kasakhisk niveau 1, Khmer niveau 1, nordkurdisk niveau 0, Sepedi niveau 1, Sepedi niveau 2, Sesotho niveau 1, Sesotho niveau 2, Setswana niveau 1, Setswana niveau 2, tatarisk niveau 1, vietnamesisk niveau 0, vietnamesisk niveau 2, sydvietnamesisk niveau 1, Xhosa niveau 1, Xhosa niveau 2, Yakut niveau 1, zulu niveau 1, zulu niveau 2
+* Windows 10 Tekstgenkendelse er blevet omdøbt til Windows Tekstgenkendelse. (#12690)
 
 ### Fejlrettelser
 
-- NVDA vil nu vise regneudtryk på et punktdisplay i Windows 10 Lommeregner. (#12268)
-- I terminalprogrammer i Windows 10 version 1607 og nyere, vil du ikke længere få tegn til højre for markøren oplæst, når du sletter eller indsætter tegn midtpå en linje. (#3200)
-  - Diff Match Patch er nu aktiveret som standard. (#12485)
-- Punktindtastning virker nu korrekt med følgende punkttabeller med forkortet punktskrift: Arabisk niveau 2, spansk niveau 2, urdu niveau 2, kinesisk (Kina, mandarin) niveau 2. (#12541)
-- Værktøjet til løsning af almindelige problemer løser nu endnu flere problemer, særligt med 64-bit varianter af Windows. (#12560)
-- Forbedringer til knappehåndtering på Seika-notatapparatet fra Nippon Telesoft. (#12598)
-- Forbedring til oplæsning af Emoji-panelet og historikken for udklipsholderen. (#11485)
-- Opdaterede de bengalske alfabettegnbeskrivelser. (#12502)
-- NVDA afslutter nu på en sikker måde, når en ny proces igangsættes. (#12605)
-- Genvalg af Handy Tech driveren til punktdisplays vil ikke længere fejle fra dialogen til valg af punktdisplay. (#12618)
-- Windows version 10.0.22000 eller nyere genkendes nu som Windows 11 og ikke Windows 10. (#12626)
-- Understøttelse for skærmtæppefunktionen er rettet og testet med Windows versioner op til 10.0.22000. (#12684)
-- Hvis ingen søgeresultater vises, når du filtrerer kommandoer, vil dialogen fortsætte med at virke som forventet. (#12673)
-- Rettede en fejl, hvor første menupunkt i en undermenu ikke blev oplæst i nogle tilfælde. (#12624)
+* NVDA vil nu vise regneudtryk på et punktdisplay i Windows 10 Lommeregner. (#12268)
+* I terminalprogrammer i Windows 10 version 1607 og nyere, vil du ikke længere få tegn til højre for markøren oplæst, når du sletter eller indsætter tegn midtpå en linje. (#3200)
+  * Diff Match Patch er nu aktiveret som standard. (#12485)
+* Punktindtastning virker nu korrekt med følgende punkttabeller med forkortet punktskrift: Arabisk niveau 2, spansk niveau 2, urdu niveau 2, kinesisk (Kina, mandarin) niveau 2. (#12541)
+* Værktøjet til løsning af almindelige problemer løser nu endnu flere problemer, særligt med 64-bit varianter af Windows. (#12560)
+* Forbedringer til knappehåndtering på Seika-notatapparatet fra Nippon Telesoft. (#12598)
+* Forbedring til oplæsning af Emoji-panelet og historikken for udklipsholderen. (#11485)
+* Opdaterede de bengalske alfabettegnbeskrivelser. (#12502)
+* NVDA afslutter nu på en sikker måde, når en ny proces igangsættes. (#12605)
+* Genvalg af Handy Tech driveren til punktdisplays vil ikke længere fejle fra dialogen til valg af punktdisplay. (#12618)
+* Windows version 10.0.22000 eller nyere genkendes nu som Windows 11 og ikke Windows 10. (#12626)
+* Understøttelse for skærmtæppefunktionen er rettet og testet med Windows versioner op til 10.0.22000. (#12684)
+* Hvis ingen søgeresultater vises, når du filtrerer kommandoer, vil dialogen fortsætte med at virke som forventet. (#12673)
+* Rettede en fejl, hvor første menupunkt i en undermenu ikke blev oplæst i nogle tilfælde. (#12624)
 
 ### Ændringer for udviklere
 
-- `characterProcessing.SYMLVL_*` konstanterne skal udskiftes med deres tilsvarende `SymbolLevel.*` før 2022.1. (#11856, #12636)
-- `controlTypes` er blevet opdelt i forskellige undermoduler, og symboler markeret til afskrivning skal udskiftes før 2022.1. (#12510)
-  - `ROLE_*` og `STATE_*` konstanterne skal udskiftes med deres tilsvarende `Role.*` og `State.*`.
-  - `roleLabels`, `stateLabels` og `negativeStateLabels` er blevet afskrevet, og brugen af `roleLabels[ROLE_*]` skal erstattes med deres tilsvarende `Role.*.displayString` eller `State.*.negativeDisplayString`.
-  - `processPositiveStates` og `processNegativeStates` er blevet afskrevet og vil blive fjernet.
-- På Windows 10 Version 1511 og senere (inklusive Insider Preview builds), hentes det nuværende Windows feature update-udgivelsesnavn fra Windows Registry. (#12509)
-- Afskrevet: `winVersion.WIN10_RELEASE_NAME_TO_BUILDS` vil blive fjernet i 2022.1 og har ingen direkte erstatning. (#12544)
+* `characterProcessing.SYMLVL_*` konstanterne skal udskiftes med deres tilsvarende `SymbolLevel.*` før 2022.1. (#11856, #12636)
+* `controlTypes` er blevet opdelt i forskellige undermoduler, og symboler markeret til afskrivning skal udskiftes før 2022.1. (#12510)
+* `ROLE_*` og `STATE_*` konstanterne skal udskiftes med deres tilsvarende `Role.*` og `State.*`.
+  * `roleLabels`, `stateLabels` og `negativeStateLabels` er blevet afskrevet, og brugen af `roleLabels[ROLE_*]` skal erstattes med deres tilsvarende `Role.*.displayString` eller `State.*.negativeDisplayString`.
+  * `processPositiveStates` og `processNegativeStates` er blevet afskrevet og vil blive fjernet.
+* På Windows 10 Version 1511 og senere (inklusive Insider Preview builds), hentes det nuværende Windows feature update-udgivelsesnavn fra Windows Registry. (#12509)
+* Afskrevet: `winVersion.WIN10_RELEASE_NAME_TO_BUILDS` vil blive fjernet i 2022.1 og har ingen direkte erstatning. (#12544)
 
 ## 2021.1
 
@@ -1680,10 +1697,10 @@ Der er rettelser for flere sprog og en rettelse, så man kan aktivere links via 
 Der er opdateringer til Unicode CLDR, matematiske symboler og LibLouis.
 Der er også mange fejlrettelser til Office, Visual Studio samt flere sprog.
 
-### Bemærk:
+Bemærk:
 
-* Denne opdatering er ikke kompatibel med eksisterende tilføjelser, før disse modtager opdateringer.
-* Denne opdatering understøtter ikke længere Adobe Flash.
+ * Denne opdatering er ikke kompatibel med eksisterende tilføjelser, før disse modtager opdateringer.
+ * Denne opdatering understøtter ikke længere Adobe Flash.
 
 ### Nye funktioner
 
