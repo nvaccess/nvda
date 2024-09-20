@@ -1075,12 +1075,6 @@ class GeneralSettingsPanel(SettingsPanel):
 				self,
 			)
 
-	# def isValid(self) -> bool:
-	# self.updateMirrorTextBox.SetValue(
-	# url_normalize(self.updateMirrorTextBox.GetValue().strip()).rstrip("/"),
-	# )
-	# return True
-
 	def onSave(self):
 		if (
 			not languageHandler.isLanguageForced()
@@ -1111,7 +1105,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["autoCheck"] = self.autoCheckForUpdatesCheckBox.IsChecked()
 			config.conf["update"]["allowUsageStats"] = self.allowUsageStatsCheckBox.IsChecked()
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
-			# config.conf["update"]["serverURL"] = self.updateMirrorTextBox.GetValue()
 			updateCheck.terminate()
 			updateCheck.initialize()
 
