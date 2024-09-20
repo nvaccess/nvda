@@ -27,6 +27,10 @@ In order to use this feature, the application volume adjuster needs to be enable
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
   * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
+* Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
+  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
+  * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
+  * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 
 ### Bug Fixes
 
@@ -39,6 +43,7 @@ In order to use this feature, the application volume adjuster needs to be enable
   * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
   * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
+* The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 
 ### Changes for Developers
 
@@ -60,7 +65,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
-* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 
 #### API Breaking Changes
 
