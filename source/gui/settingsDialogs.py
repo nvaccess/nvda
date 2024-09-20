@@ -992,7 +992,7 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def onChangeMirrorURL(self, evt: wx.Event):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
-		changeMirror = SetURLDialog(
+		changeMirror = _SetURLDialog(
 			self,
 			# Translators: Title of the dialog used to change NVDA's update server mirror URL.
 			title=_("Set NVDA Update Mirror"),
@@ -5524,7 +5524,7 @@ class SpeechSymbolsDialog(SettingsDialog):
 		evt.Skip()
 
 
-class SetURLDialog(SettingsDialog):
+class _SetURLDialog(SettingsDialog):
 	class _URLTestStatus(Enum):
 		UNTESTED = auto()
 		PASSED = auto()
@@ -5592,13 +5592,13 @@ class SetURLDialog(SettingsDialog):
 		self._normalize()
 		if self._url == self._getFromConfig():
 			shouldSave = False
-		elif self._url and self._testStatus != SetURLDialog._URLTestStatus.PASSED:
+		elif self._url and self._testStatus != _SetURLDialog._URLTestStatus.PASSED:
 			ret = gui.messageBox(
 				_(
 					# Translators: Message shown to users when saving a potentially invalid URL to NVDA's settings.
 					"The URL you have entered failed the connection test. Are you sure you want to save it anyway?",
 				)
-				if self._testStatus == SetURLDialog._URLTestStatus.FAILED
+				if self._testStatus == _SetURLDialog._URLTestStatus.FAILED
 				else _(
 					# Translators: Message shown to users when saving an untested URL to NVDA's settings.
 					"The URL you have entered has not been tested. Are you sure you want to save it without attempting to connect to it first?",
@@ -5628,7 +5628,7 @@ class SetURLDialog(SettingsDialog):
 		"""Enable the "Test..." button only when there is text in the URL control, and change the URL's test status when the URL changes."""
 		value = self._url
 		self._testButton.Enable(not (len(value) == 0 or value.isspace()))
-		self._testStatus = SetURLDialog._URLTestStatus.UNTESTED
+		self._testStatus = _SetURLDialog._URLTestStatus.UNTESTED
 
 	def _onTest(self, evt: wx.CommandEvent):
 		"""Normalize the URL, start a background thread to test it, and show an indeterminate progress dialog to the user."""
@@ -5660,7 +5660,7 @@ class SetURLDialog(SettingsDialog):
 		"""Notify the user that we successfully connected to their URL."""
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
-		self._testStatus = SetURLDialog._URLTestStatus.PASSED
+		self._testStatus = _SetURLDialog._URLTestStatus.PASSED
 		wx.CallAfter(
 			gui.messageBox,
 			# Translators: Message shown to users when testing a given URL has succeeded.
@@ -5674,7 +5674,7 @@ class SetURLDialog(SettingsDialog):
 		"""Notify the user that testing their URL failed."""
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
-		self._testStatus = SetURLDialog._URLTestStatus.FAILED
+		self._testStatus = _SetURLDialog._URLTestStatus.FAILED
 		wx.CallAfter(
 			gui.messageBox,
 			_(
