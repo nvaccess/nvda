@@ -5579,7 +5579,8 @@ class SetURLDialog(SettingsDialog):
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self._onTest)
-		# Order of operations is important here.
+		# We need to bind the text change handler before setting the text of the URL control so that it gets called when we populate the URL control.
+		# This allows us to rely on the URL control emitting the text event which will enable the test button, rather than having to doo so manually.
 		urlControl.Bind(wx.EVT_TEXT, self._onTextChange)
 		self._url = self._getFromConfig()
 
