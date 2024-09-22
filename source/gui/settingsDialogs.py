@@ -1119,7 +1119,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				url
 				if (url := config.conf["update"]["serverURL"])
 				# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
-				else _("(None)")
+				else _("No mirror")
 			),
 		)
 
