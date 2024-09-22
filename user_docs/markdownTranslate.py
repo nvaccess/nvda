@@ -13,7 +13,6 @@ import uuid
 import re
 from itertools import zip_longest
 from xml.sax.saxutils import escape as xmlEscape
-from xml.sax.saxutils import unescape as xmlUnescape
 import difflib
 from dataclasses import dataclass
 import subprocess
@@ -158,7 +157,7 @@ def extractSkeleton(xliffPath: str, outputPath: str):
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
 		skeletonContent = skeletonNode.text.strip()
-		outputFile.write(xmlUnescape(skeletonContent))
+		outputFile.write(skeletonContent)
 		print(f"Extracted skeleton to {prettyPathString(outputPath)}")
 
 
@@ -347,7 +346,7 @@ def translateXliff(
 		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
-		skeletonContent = xmlUnescape(skeletonNode.text).strip()
+		skeletonContent = skeletonNode.text.strip()
 		for lineNo, (skelLine, pretranslatedLine) in enumerate(
 			zip_longest(skeletonContent.splitlines(), pretranslatedMdFile.readlines()),
 			start=1,
@@ -416,7 +415,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
-		skeletonContent = skeletonNode.text).strip()
+		skeletonContent = skeletonNode.text.strip()
 		for lineNum, line in enumerate(skeletonContent.splitlines(keepends=True), 1):
 			res.numTotalLines += 1
 			if m := re_translationID.match(line):
@@ -438,10 +437,6 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 						targetText = target.text
 						if targetText:
 							translation = targetText
-							unescapedTargetText = xmlUnescape(targetText)
-							if unescapedTargetText != targetText:
-								print(f"Warning: line {lineNum} contained escaped characters. Unescaped: {unescapedTargetText}")
-								translation = unescapedTargetText
 					# Crowdin treats empty targets (<target/>) as a literal translation.
 					# Filter out such strings and count them as bad translations.
 					if translation in (
@@ -460,7 +455,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 					sourceText = source.text
 					if sourceText is None:
 						raise ValueError(f"No source text found for unit {ID}")
-					translation = xmlUnescape(sourceText)
+					translation = sourceText
 				outputFile.write(f"{prefix}{translation}{suffix}\n")
 			else:
 				outputFile.write(line)
