@@ -1833,7 +1833,7 @@ class WordDocument(Window):
 			"kb:control+alt+1",
 			"kb:control+alt+2",
 			"kb:control+alt+3",
-		]
+		],
 	)
 	def script_increaseDecreaseOutlineLevel(self, gesture):
 		if not self.WinwordSelectionObject:
