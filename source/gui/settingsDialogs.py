@@ -959,7 +959,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			settingsSizerHelper.addItem(item)
 
 			# Translators: The label for the update mirror on the General Settings panel.
-			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror:"))
+			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
 			mirrorBox = mirrorBoxSizer.GetStaticBox()
 			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
 			settingsSizerHelper.addItem(mirrorBoxSizerHelper)
