@@ -1837,7 +1837,7 @@ These controls allow you to specify an alternative URL to use to check for updat
 This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
 
 The read-only text box shows the current mirror URL.
-If no mirror is in use (I.E. the NV Access NVDA update server is being used), "(None)" is displayed.
+If no mirror is in use (I.E. the NV Access NVDA update server is being used), "No mirror" is displayed.
 
 If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetUpdateMirror).
 
