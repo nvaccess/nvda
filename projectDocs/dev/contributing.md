@@ -121,3 +121,6 @@ Please ensure you follow [our coding standards document](./codingStandards.md).
 
 ## Technical design
 Please checkout our [technical design overview](../design/technicalDesignOverview.md).
+
+## Copyright headers
+Please refer to our guide on creating or updating [copyright headers](./copyrightHeaders.md)

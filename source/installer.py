@@ -151,7 +151,6 @@ def getDocFilePath(fileName, installDir):
 def copyProgramFiles(destPath):
 	sourcePath = globalVars.appDir
 	detectUserConfig = True
-	detectNVDAExe = True  # noqa: F841
 	for curSourceDir, subDirs, files in os.walk(sourcePath):
 		if detectUserConfig:
 			detectUserConfig = False

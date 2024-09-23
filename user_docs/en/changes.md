@@ -27,6 +27,10 @@ In order to use this feature, the application volume adjuster needs to be enable
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
   * You can still disable this functionality in the Speech category of the NVDA Settings dialog.
+* Changes to the COM Registration Fixing Tool: (#12355, @XLTechie)
+  * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
+  * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
+  * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 
 ### Bug Fixes
 
@@ -34,10 +38,12 @@ In order to use this feature, the application volume adjuster needs to be enable
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+* When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
 * Configuration profiles:
   * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
   * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
+* The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 
 ### Changes for Developers
 
@@ -48,6 +54,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
   * Updated Ruff to 0.6.3. (#17102)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
+  * Updated wxPython to 4.2.2. (#17181, @dpy013)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
@@ -58,7 +65,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * `BrowseModeTreeInterceptor` object has a new `getLinkTypeInDocument` method which accepts an URL to check the link type of the object
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
-* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, XLTechie)
+* Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 
 #### API Breaking Changes
 
@@ -72,6 +79,8 @@ As the Add-on Store base URL is now configurable directly within NVDA, no replac
 * The following symbols in `appModules.soffice` have been renamed (#6915, @michaelweghorn):
   * `SymphonyDocument.announceToolbarButtonToggle` to `SymphonyDocument.announceFormattingGestureChange`
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
+* The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
+* The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 
 #### Deprecations
 

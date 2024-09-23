@@ -109,7 +109,7 @@ def disconnectConsole():
 	# Unregister any win events we are using
 	for handle in consoleWinEventHookHandles:
 		winUser.unhookWinEvent(handle)
-	consoleEventHookHandles = []  # noqa: F841
+	consoleWinEventHookHandles = []
 	consoleObject.stopMonitoring()
 	winKernel.closeHandle(consoleOutputHandle)
 	consoleOutputHandle = None
