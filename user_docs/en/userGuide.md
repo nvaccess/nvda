@@ -5260,7 +5260,7 @@ Following are the command line options for NVDA:
 
 Much as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
 
-NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
 
 Following are the command line options for NVDA's uninstaller:
 
