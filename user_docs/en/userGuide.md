@@ -1831,6 +1831,38 @@ This information greatly aides NV Access to prioritize future development of NVD
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
+##### Update Mirror {#UpdateMirror}
+
+These controls allow you to specify an alternative URL to use to check for updates to NVDA.
+This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+
+The read-only text box shows the current mirror URL.
+If no mirror is in use (I.E. the NV Access NVDA update server is being used), "No mirror" is displayed.
+
+If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetUpdateMirror).
+
+#### Set Update Mirror {#SetUpdateMirror}
+
+This dialog, which is accessed from the [Update mirror section of the General page in NVDA's Settings dialog](#UpdateMirror), allows you to set a mirror to use when checking for NVDA updates.
+This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+
+Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
+Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
+
+##### URL {#UpdateMirrorURL}
+
+Enter the URL (web address) of the update server mirror you wish to use here.
+Only HTTP and HTTPS URLs are supported.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
+
+Leave this blank to use the NV Access NVDA update check server.
+
+##### Test... {#UpdateMirrorTest}
+
+Press this button to test the NVDA update server URL you have entered.
+You must be connected to the internet for the test to succeed.
+It is recommended that you always test the URL before saving it.
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->
