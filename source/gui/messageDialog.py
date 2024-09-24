@@ -99,17 +99,17 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		Subclasses may implement this method.
 		"""
 
-	def _setIcon(self, type: MessageDialogType):
+	def __setIcon(self, type: MessageDialogType):
 		if (iconID := type._wxIconId) is not None:
 			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
 			self.SetIcons(icon)
 
-	def _setSound(self, type: MessageDialogType):
-		self._soundID = type._windowsSoundId
+	def __setSound(self, type: MessageDialogType):
+		self.__soundID = type._windowsSoundId
 
-	def _playSound(self):
-		if self._soundID is not None:
-			winsound.MessageBeep(self._soundID)
+	def __playSound(self):
+		if self.__soundID is not None:
+			winsound.MessageBeep(self.__soundID)
 
 	def __init__(
 		self,
@@ -120,8 +120,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	):
 		super().__init__(parent, title=title)
 
-		self._setIcon(dialogType)
-		self._setSound(dialogType)
+		self.__setIcon(dialogType)
+		self.__setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
 		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 
@@ -163,6 +163,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:type evt: wx.ShowEvent
 		"""
 		if evt.IsShown():
-			self._playSound()
+			self.__playSound()
 			self.GetDefaultItem().SetFocus()
 		evt.Skip()
