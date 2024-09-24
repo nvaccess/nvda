@@ -42,6 +42,7 @@ class WinwordWordDocument(WordDocument):
 			ui.message(_("Change tracking off"))
 
 	__gestures = {
+		"kb:control+shift+b": "toggleBold",
 		"kb:control+shift+w": "toggleUnderline",
 		"kb:control+shift+a": "toggleCaps",
 	}

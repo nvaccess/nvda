@@ -107,8 +107,7 @@ class WdUnderline(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self) -> dict[Self, str]:
 		return {
-			# Translators: an underline style in Microsoft Word as announced in the font window.
-			WdUnderline.SINGLE: _("Single"),
+			WdUnderline.SINGLE: "",  # For single underline we just say "underline"
 			# Translators: an underline style in Microsoft Word as announced in the font window.
 			WdUnderline.WORDS: _("Words only"),
 			# Translators: an underline style in Microsoft Word as announced in the font window.
@@ -1573,7 +1572,7 @@ class WordDocument(Window):
 			curTime = time.time()
 		return curVal
 
-	@script(gestures=["kb:control+b", "kb:control+shift+b"])
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1623,9 +1622,11 @@ class WordDocument(Window):
 		)
 		if val != WdUnderline.NONE:
 			try:
-				msg = WdUnderline(val).displayString
+				style = WdUnderline(val).displayString
+				if len(style) > 0:
+					style += " "
 				# Translators: a message when toggling formatting in Microsoft word
-				ui.message(_("Underline {style}").format(style=msg))
+				ui.message(_("Underline{style} on").format(style=style))
 			except ValueError:
 				# In case an unlisted value is returned by Word Object model.
 				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
