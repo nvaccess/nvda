@@ -69,6 +69,7 @@ import speechViewer
 import winUser
 import api
 import NVDAState
+from gui.messageDialog import MessageDialog as NMD
 
 
 if NVDAState._allowDeprecatedAPI():
@@ -534,6 +535,23 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
 
+	def onOkDialog(self, evt):
+		# self.prePopup()
+		dlg = NMD(
+			self,
+			"This is a dialog with an Ok button. Test that:\n"
+			"- The dialog has the expected buttons\n"
+			"- Pressing the Ok button has the intended effect\n"
+			"- Pressing Esc has the intended effect\n"
+			"- Pressing Alt+F4 has the intended effect\n"
+			"- Using the close icon/system menu close item has the intended effect\n"
+			"- You are still able to interact with NVDA's GUI\n"
+			"- Exiting NVDA does not cause errors",
+			"Non-modal Ok Dialog",
+		)
+		dlg.Show()
+		# self.postPopup()
+
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
@@ -639,6 +657,15 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Exit NVDA"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
+
+		dialogMenu = wx.Menu()
+		item = dialogMenu.Append(wx.ID_ANY, "Ok")
+		self.Bind(wx.EVT_MENU, frame.onOkDialog, item)
+		item = dialogMenu.Append(wx.ID_ANY, "Ok and Cancel")
+		item = dialogMenu.Append(wx.ID_ANY, "Yes and No")
+		item = dialogMenu.Append(wx.ID_ANY, "Yes, No and Cancel")
+
+		self.menu.AppendSubMenu(dialogMenu, "&Dialog")
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
