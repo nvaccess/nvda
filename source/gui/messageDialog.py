@@ -82,7 +82,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			label=_("OK"),
 		)
 		# ok.SetDefault()
-		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+		# ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
 		cancel = buttonHelper.addButton(
 			self,
@@ -90,8 +90,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			# Translators: A cancel button on a message dialog.
 			label=_("Cancel"),
 		)
-		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-		cancel.SetDefault()
+		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+		# cancel.SetDefault()
 		# self.SetDefaultItem(cancel)
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
@@ -124,6 +124,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.__setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
 		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
+		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
@@ -167,3 +168,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			if (defaultItem := self.GetDefaultItem()) is not None:
 				defaultItem.SetFocus()
 		evt.Skip()
+
+	def _onCloseEvent(self, evt: wx.CloseEvent):
+		self.Destroy()
