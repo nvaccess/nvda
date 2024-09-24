@@ -1700,7 +1700,7 @@ class WordDocument(Window):
 		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
 		ui.message(msg)
 
-	@script(gestures=["kb:control+=", "kb:control+shift+=", "kb:control+plus", "kb:control+shift+plus"])
+	@script(gestures=["kb:control+=", "kb:control+shift+="])
 	def script_toggleSuperscriptSubscript(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
