@@ -101,8 +101,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def _setIcon(self, type: MessageDialogType):
 		if (iconID := type._wxIconId) is not None:
-			icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
-			self.SetIcon(icon)
+			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
+			self.SetIcons(icon)
 
 	def _setSound(self, type: MessageDialogType):
 		self._soundID = type._windowsSoundId
