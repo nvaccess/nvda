@@ -44,5 +44,4 @@ class WinwordWordDocument(WordDocument):
 	__gestures = {
 		"kb:control+shift+w": "toggleUnderline",
 		"kb:control+shift+a": "toggleCaps",
-		"kb:shift+f3": "changeCase",
 	}
