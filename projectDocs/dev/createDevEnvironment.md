@@ -62,11 +62,17 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
-* When you are using Visual Studio Code as your integrated development environment of preference, you can make use of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/) for [Visual Studio Code](https://code.visualstudio.com/).
-	While this VSCode project is not included as a submodule in the NVDA repository, you can easily check out the workspace configuration in your repository by executing the following from the root of the repository.
+* When you are using [Visual Studio Code](https://code.visualstudio.com/) as your integrated development environment of preference, you get the benefit of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/), which is included as a submodule.
+If you do not wish to use the pre-populated VS Code workspace configuration, you can unregister the `.vscode` submodule.
 
 	```sh
-	git clone https://github.com/nvaccess/vscode-nvda.git .vscode
+	git submodule deinit .vscode
+	```
+
+	If you change your mind, you can re-enable it at any time.
+
+	```sh
+	git submodule init .vscode
 	```
 
 ### Git Submodules
