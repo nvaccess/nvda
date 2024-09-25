@@ -74,7 +74,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 
 ### Git Submodules
 
-Some of the dependencies are contained in Git submodules.
+Some of the dependencies are contained in [Git submodules](https://git-scm.com/docs/gitsubmodules).
 If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
