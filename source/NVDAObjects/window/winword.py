@@ -1609,7 +1609,7 @@ class WordDocument(Window):
 			ui.message(_("Italic off"))
 
 	@script(gestures=["kb:control+u", "kb:control+shift+u", "kb:control+shift+d"])
-	def script_toggleUnderline(self, gesture):
+	def script_toggleUnderline(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
 			# or its within Windows Defender Application Guard.
@@ -1638,7 +1638,7 @@ class WordDocument(Window):
 			ui.message(_("Underline off"))
 
 	@script(gesture="kb:control+shift+k")
-	def script_toggleCaps(self, gesture):
+	def script_toggleCaps(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
