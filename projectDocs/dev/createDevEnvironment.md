@@ -120,7 +120,10 @@ The following build time dependencies are included in the miscDeps git submodule
 
 ### Python dependencies
 
-NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+NVDA and its build system also depend on an extensive list of Python packages.
+They are all listed with their specific versions in the `requirements.txt` file in the root of this repository.
+However, the build system takes care of fetching these itself when needed.
+These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
 
 ### Other dependencies
 
