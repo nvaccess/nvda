@@ -44,6 +44,7 @@ In order to use this feature, the application volume adjuster needs to be enable
   * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
+* When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
 
 ### Changes for Developers
 
