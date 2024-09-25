@@ -67,6 +67,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * A `toggleBooleanValue` helper function has been added to `globalCommands`.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
+* Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 
 #### API Breaking Changes
 
