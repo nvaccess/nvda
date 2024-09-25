@@ -1,7 +1,10 @@
+# Create NVDA Development Environment
+
 ## Getting the Source Code
+
 The NVDA project uses the [git](https://www.git-scm.com/) version control system for its source code and documentation.
 
-The NVDA repository is located at https://github.com/nvaccess/nvda.
+The NVDA repository is located at <https://github.com/nvaccess/nvda>.
 
 If you plan on contributing to NVDA, you will need to [fork and clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo) the repository.
 
@@ -11,12 +14,13 @@ After forking the repository into your user account (`YOUR-USERNAME`), clone wit
 git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
 ```
 
-
 ### Keeping the fork in sync
+
 When you fork the repository, GitHub will create a copy of the master branch.
 However, this branch will not be updated when the nvaccess master branch is updated.
 To ensure your work is always based on the latest commit in the nvaccess master branch, it is recommended that your master branch be linked to the nvaccess master branch, rather than the master branch in your GitHub fork.
 You can do this from the command line as follows:
+
 ```sh
 # Add a remote for the NV Access repository.
 git remote add nvaccess https://github.com/nvaccess/nvda.git
@@ -31,20 +35,25 @@ git pull
 ```
 
 ## Supported Operating Systems
+
 Although NVDA can run on any Windows version starting from Windows 8.1, building NVDA from source is currently limited to only Windows 10 and above.
 
 ## Dependencies
+
 The NVDA source depends on several other packages to run correctly.
 
 ### Installed Dependencies
+
 The following dependencies need to be installed on your system:
 
 #### Python
+
 [Python](https://www.python.org/), version 3.11, 32 bit.
 
 To replicate the production build environment, use the 3.11.x minor version of Python that [AppVeyor uses for the Visual Studio 2022 environment](https://www.appveyor.com/docs/windows-images-software/#python).
 
 #### Microsoft Visual Studio
+
 * Microsoft Visual Studio 2022
 	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022).
 	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
@@ -64,6 +73,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
 
 ### Git Submodules
+
 Some of the dependencies are contained in Git submodules.
 If you didn't pass the `--recursive` option to git clone, you will need to run `git submodule update --init`.
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
