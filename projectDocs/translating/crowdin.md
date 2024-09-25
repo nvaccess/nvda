@@ -36,7 +36,7 @@ There are 2 common workflows for translating with Crowdin:
 
 1. Translating strings directly via Crowdin's interface. Or
 1. Downloading from Crowdin, translating with Poedit and uploading again.
-    
+
 ## Translating using PoEdit
 
 After opening a .po or .xliff file you will be placed on a list with all of the strings to translate.
@@ -154,7 +154,7 @@ In Crowdin, this information appears at the end of the context section.
 
 Whenever you add or update your interface translations, repeat the steps above (copying the updated .mo file and restarting NVDA) to test your updated translation messages.
 
-## Translating NvDA' s user documentation 
+## Translating NvDA' s user documentation
 
 Documentation available for translation includes:
 * The NVDA user guide (userGuide.xliff)
@@ -170,10 +170,10 @@ To translate any of these files:
 ```
 nvdaL10nUtil stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
 ```
-* Upload the xliff file back to Crowdin. If it is a stripped xliff file, it is safe to check the `allow target to match source` checkbox. 
+* Upload the xliff file back to Crowdin. If it is a stripped xliff file, it is safe to check the `allow target to match source` checkbox.
 
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
- 
+
 ### Translating markdown
 The English NVDA user documentation is written in markdown syntax.
 The xliff file you are directly translating has been generated from that markdown file.
@@ -195,5 +195,3 @@ When ever you have saved the xliff file with Poedit, you can use the nvdaL10nUti
 ```
 nvdaL10nUtil xliff2html -t [userGuide|changes|keyCommands] -l <lang> <xliff file> <output html file>
 ```
-
-
