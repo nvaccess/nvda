@@ -62,18 +62,6 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
 		* C++ ATL for v143 build tools (ARM64/ARM64EC)
-* When you are using [Visual Studio Code](https://code.visualstudio.com/) as your integrated development environment of preference, you get the benefit of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/), which is included as a submodule.
-If you do not wish to use the pre-populated VS Code workspace configuration, you can unregister the `.vscode` submodule.
-
-	```sh
-	git submodule deinit .vscode
-	```
-
-	If you change your mind, you can re-enable it at any time.
-
-	```sh
-	git submodule init .vscode
-	```
 
 ### Git Submodules
 Some of the dependencies are contained in Git submodules.
@@ -81,7 +69,7 @@ If you didn't pass the `--recursive` option to git clone, you will need to run `
 Whenever a required submodule commit changes (e.g. after git pull), you will need to run `git submodule update`.
 If you aren't sure, run `git submodule update` after every git pull, merge or checkout.
 
-For reference, the following run time dependencies are included in Git submodules:
+#### Run time dependencies
 
 * [eSpeak NG](https://github.com/espeak-ng/espeak-ng), version 1.52-dev commit `961454ffaa894d981526f4d424daef1d3bc4175f`
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
@@ -106,6 +94,21 @@ Additionally, the following build time dependencies are included in the miscDeps
 The following dependencies aren't needed by most people, and are not included in Git submodules:
 * To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
 
+
+#### VS Code
+
+* If you use [Visual Studio Code](https://code.visualstudio.com/) as your integrated development environment, you get the benefit of our [prepopulated workspace configuration](https://github.com/nvaccess/vscode-nvda/), which is included as a submodule.
+  If you do not wish to use the pre-populated VS Code workspace configuration, you can unregister the `.vscode` submodule.
+
+  ```sh
+  git submodule deinit .vscode
+  ```
+
+  If you change your mind, you can re-enable it at any time.
+
+  ```sh
+  git submodule init .vscode
+  ```
 
 ### Python dependencies
 NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
