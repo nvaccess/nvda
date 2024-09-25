@@ -556,7 +556,7 @@ class MainFrame(wx.Frame):
 		)
 
 		dlg.Show()
-		# self.postPopup()
+		self.postPopup()
 
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
