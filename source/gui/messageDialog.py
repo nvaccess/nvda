@@ -4,6 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
+from typing import Any, Callable
 import winsound
 
 import wx
@@ -75,24 +76,26 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def _addButtons(self, buttonHelper):
 		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
-		ok = buttonHelper.addButton(
-			self,
-			id=wx.ID_OK,
-			# Translators: An ok button on a message dialog.
-			label=_("OK"),
-		)
+		# ok = buttonHelper.addButton(
+		# self,
+		# id=wx.ID_OK,
+		# Translators: An ok button on a message dialog.
+		# label=_("OK"),
+		# )
 		# ok.SetDefault()
 		# ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
-		cancel = buttonHelper.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A cancel button on a message dialog.
-			label=_("Cancel"),
-		)
+		# cancel = buttonHelper.addButton(
+		# self,
+		# id=wx.ID_CANCEL,
+		# Translators: A cancel button on a message dialog.
+		# label=_("Cancel"),
+		# )
 		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 		# cancel.SetDefault()
 		# self.SetDefaultItem(cancel)
+		self.addOkButton()
+		self.addCancelButton()
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
 		"""Adds additional contents  to the dialog, before the buttons.
@@ -137,6 +140,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._addContents(contentsSizer)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		self.__buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
 		contentsSizer.addDialogDismissButtons(buttonHelper)
 
@@ -171,3 +175,28 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
 		self.Destroy()
+
+	def addButton(self, *args, callback: Callable[[wx.CommandEvent], Any] | None = None, **kwargs):
+		button = self.__buttonHelper.addButton(*args, **kwargs)
+		button.Bind(wx.EVT_BUTTON, callback)
+
+	def addOkButton(self):
+		self.addButton(
+			self,
+			id=wx.ID_OK,
+			# Translators: An ok button on a message dialog.
+			label=_("OK"),
+		)
+		# ok.SetDefault()
+		# ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+
+	def addCancelButton(self):
+		self.addButton(
+			self,
+			id=wx.ID_CANCEL,
+			# Translators: A cancel button on a message dialog.
+			label=_("Cancel"),
+		)
+		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+		# cancel.SetDefault()
+		# self.SetDefaultItem(cancel)
