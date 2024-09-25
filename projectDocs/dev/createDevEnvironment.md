@@ -97,13 +97,11 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [wil](https://github.com/microsoft/wil/)
 * [NVDA DiffMatchPatch](https://github.com/codeofdusk/nvda_dmp)
 
-Additionally, the following build time dependencies are included in the miscDeps git submodule:
+#### Build time dependencies
+
+The following build time dependencies are included in the miscDeps git submodule:
 
 * xgettext and msgfmt from [GNU gettext](https://sourceforge.net/projects/cppcms/files/boost_locale/gettext_for_windows/)
-
-The following dependencies aren't needed by most people, and are not included in Git submodules:
-* To generate [developer documentation for nvdaHelper](#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15:
-
 
 #### VS Code
 
@@ -121,4 +119,11 @@ The following dependencies aren't needed by most people, and are not included in
   ```
 
 ### Python dependencies
+
 NVDA and its build system also depend on an extensive list of Python packages. They are all listed with their specific versions in the requirements.txt file in the root of this repository. However, the build system takes care of fetching these itself when needed. These packages will be installed into an isolated Python virtual environment within this repository, and will not affect your system-wide set of packages.
+
+### Other dependencies
+
+The following dependencies aren't needed by most people.
+
+* To generate [developer documentation for nvdaHelper](./buildingDevDocumentation.md#building-nvdahelper-developer-documentation): [Doxygen Windows installer](http://www.doxygen.nl/download.html), version 1.8.15.
