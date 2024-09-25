@@ -17,18 +17,18 @@ git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
 ### Keeping the fork in sync
 
 When you fork the repository, GitHub will create a copy of the master branch.
-However, this branch will not be updated when the nvaccess master branch is updated.
-To ensure your work is always based on the latest commit in the nvaccess master branch, it is recommended that your master branch be linked to the nvaccess master branch, rather than the master branch in your GitHub fork.
+However, this branch will not be updated when the NV Access master branch is updated.
+To ensure your work is always based on the latest commit in the NV Access master branch, it is recommended that your master branch be linked to the NV Access master branch, rather than the master branch in your GitHub fork.
 You can do this from the command line as follows:
 
 ```sh
 # Add a remote for the NV Access repository.
 git remote add nvaccess https://github.com/nvaccess/nvda.git
-# Fetch the nvaccess branches.
+# Fetch the NV Access branches.
 git fetch nvaccess
 # Switch to the local master branch.
 git checkout master
-# Set the local master to use the nvaccess master as its upstream.
+# Set the local master to use the NV Access master as its upstream.
 git branch -u nvaccess/master
 # Update the local master.
 git pull
