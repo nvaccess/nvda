@@ -94,8 +94,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
 		# cancel.SetDefault()
 		# self.SetDefaultItem(cancel)
-		self.addOkButton()
-		self.addCancelButton()
+		# self.addOkButton()
+		# self.addCancelButton()
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
 		"""Adds additional contents  to the dialog, before the buttons.
@@ -184,23 +184,32 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		**kwargs,
 	):
 		button = self.__buttonHelper.addButton(*args, **kwargs)
-		button.Bind(wx.EVT_BUTTON, callback)
+		button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
 		if default:
 			button.SetDefault()
 		return self
 
-	def addOkButton(self):
+	def addOkButton(self, callback):
 		return self.addButton(
 			self,
 			id=wx.ID_OK,
 			# Translators: An ok button on a message dialog.
 			label=_("OK"),
+			callback=callback,
 		)
 
-	def addCancelButton(self):
+	def addCancelButton(self, callback):
 		return self.addButton(
 			self,
 			id=wx.ID_CANCEL,
 			# Translators: A cancel button on a message dialog.
 			label=_("Cancel"),
+			callback=callback,
 		)
+
+	def __closeFirst(self, callback):
+		def function(*args, **kwargs):
+			self.Close()
+			return callback(*args, **kwargs)
+
+		return function
