@@ -176,27 +176,31 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def _onCloseEvent(self, evt: wx.CloseEvent):
 		self.Destroy()
 
-	def addButton(self, *args, callback: Callable[[wx.CommandEvent], Any] | None = None, **kwargs):
+	def addButton(
+		self,
+		*args,
+		callback: Callable[[wx.CommandEvent], Any] | None = None,
+		default: bool = False,
+		**kwargs,
+	):
 		button = self.__buttonHelper.addButton(*args, **kwargs)
 		button.Bind(wx.EVT_BUTTON, callback)
+		if default:
+			button.SetDefault()
+		return self
 
 	def addOkButton(self):
-		self.addButton(
+		return self.addButton(
 			self,
 			id=wx.ID_OK,
 			# Translators: An ok button on a message dialog.
 			label=_("OK"),
 		)
-		# ok.SetDefault()
-		# ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
 
 	def addCancelButton(self):
-		self.addButton(
+		return self.addButton(
 			self,
 			id=wx.ID_CANCEL,
 			# Translators: A cancel button on a message dialog.
 			label=_("Cancel"),
 		)
-		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-		# cancel.SetDefault()
-		# self.SetDefaultItem(cancel)
