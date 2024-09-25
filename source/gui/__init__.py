@@ -535,20 +535,26 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
 
-	def onOkDialog(self, evt):
-		# self.prePopup()
-		dlg = NMD(
-			self,
-			"This is a dialog with an Ok button. Test that:\n"
-			"- The dialog has the expected buttons\n"
-			"- Pressing the Ok button has the intended effect\n"
-			"- Pressing Esc has the intended effect\n"
-			"- Pressing Alt+F4 has the intended effect\n"
-			"- Using the close icon/system menu close item has the intended effect\n"
-			"- You are still able to interact with NVDA's GUI\n"
-			"- Exiting NVDA does not cause errors",
-			"Non-modal Ok Dialog",
+	def onModelessOkCancelDialog(self, evt):
+		self.prePopup()
+		dlg = (
+			NMD(
+				self,
+				"This is a modeless dialog with OK and Cancel buttons. Test that:\n"
+				"- The dialog appears correctly both visually and to NVDA\n"
+				"- The dialog has the expected buttons\n"
+				"- Pressing the Ok or Cancel button has the intended effect\n"
+				"- Pressing Esc has the intended effect\n"
+				"- Pressing Alt+F4 has the intended effect\n"
+				"- Using the close icon/system menu close item has the intended effect\n"
+				"- You are still able to interact with NVDA's GUI\n"
+				"- Exiting NVDA does not cause errors",
+				"Non-modal OK/Cancel Dialog",
+			)
+			.addOkButton(callback=lambda _: messageBox("You pressed OK!"))
+			.addCancelButton(callback=lambda _: messageBox("You pressed Cancel!"))
 		)
+
 		dlg.Show()
 		# self.postPopup()
 
@@ -660,8 +666,8 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 		dialogMenu = wx.Menu()
 		item = dialogMenu.Append(wx.ID_ANY, "Ok")
-		self.Bind(wx.EVT_MENU, frame.onOkDialog, item)
 		item = dialogMenu.Append(wx.ID_ANY, "Ok and Cancel")
+		self.Bind(wx.EVT_MENU, frame.onModelessOkCancelDialog, item)
 		item = dialogMenu.Append(wx.ID_ANY, "Yes and No")
 		item = dialogMenu.Append(wx.ID_ANY, "Yes, No and Cancel")
 

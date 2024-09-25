@@ -13,6 +13,7 @@ from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
+from logHandler import log
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -49,13 +50,18 @@ class MessageDialogType(Enum):
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
-	# def Show(self) -> None:
-	# """Show a non-blocking dialog.
-	# Attach buttons with button handlers"""
-	# pass
+	def Show(self) -> None:
+		"""Show a non-blocking dialog.
+		Attach buttons with button handlers"""
+		log.info(f"{self.__isLayoutFullyRealized=}")
+		if not self.__isLayoutFullyRealized:
+			self.__contentsSizer.addDialogDismissButtons(self.__buttonHelper)
+			self.__mainSizer.Fit(self)
+			self.__isLayoutFullyRealized = True
+		super().Show()
 
-	# def defaultAction(self) -> None:
-	# return None
+	def defaultAction(self) -> None:
+		return None
 
 	@staticmethod
 	def CloseInstances() -> None:
@@ -122,6 +128,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		dialogType: MessageDialogType = MessageDialogType.STANDARD,
 	):
 		super().__init__(parent, title=title)
+		self.__isLayoutFullyRealized = False
 
 		self.__setIcon(dialogType)
 		self.__setSound(dialogType)
@@ -131,6 +138,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+		self.__contentsSizer = contentsSizer
+		self.__mainSizer = mainSizer
 
 		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
 		text = wx.StaticText(self)
@@ -141,15 +150,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		self.__buttonHelper = buttonHelper
-		self._addButtons(buttonHelper)
-		contentsSizer.addDialogDismissButtons(buttonHelper)
+		# self._addButtons(buttonHelper)
 
 		mainSizer.Add(
 			contentsSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.ALL,
 		)
-		mainSizer.Fit(self)
+		# mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		# Import late to avoid circular import
 		from gui import mainFrame
