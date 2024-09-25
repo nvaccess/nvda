@@ -1626,7 +1626,7 @@ class WordDocument(Window):
 				if len(style) > 0:
 					style += " "
 				# Translators: a message when toggling formatting in Microsoft word
-				ui.message(_("Underline{style} on").format(style=style))
+				ui.message(_("Underline {style}on").format(style=style))
 			except ValueError:
 				# In case an unlisted value is returned by Word Object model.
 				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
