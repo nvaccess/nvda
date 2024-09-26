@@ -15,6 +15,7 @@ from enum import IntEnum
 from locale import strxfrm
 import re
 import typing
+import requests
 import wx
 from NVDAState import WritePaths
 
@@ -5520,3 +5521,14 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
+	try:
+		# Attempt to parse the response as JSON
+		data = response.json()
+	except ValueError:
+		# Add-on Store cache hash is JSON, so this can't be it.
+		return False
+	# Add-on Store cache hash is a git commit hash as a string.
+	return isinstance(data, str) and bool(re.fullmatch("[0-9a-fA-F]{7,40}", data))
