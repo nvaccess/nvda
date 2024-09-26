@@ -203,7 +203,7 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 			or (
 				keyCode == lastNVDAModifier
 				and lastNVDAModifierReleaseTime
-				and time.time() - lastNVDAModifierReleaseTime < config.conf["keyboard"]["multiPressTimeout"]
+				and time.time() - lastNVDAModifierReleaseTime < config.conf["keyboard"]["multiPressTimeout"] / 1000
 			)
 		):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.
