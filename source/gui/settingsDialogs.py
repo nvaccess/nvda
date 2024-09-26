@@ -3274,16 +3274,7 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
-		# Translators: This is the label for a text box in the add-on store settings dialog.
-		self.addonMetadataMirrorLabelText = _("Server &mirror URL")
-		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
-			self.addonMetadataMirrorLabelText,
-			wx.TextCtrl,
-		)
-		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
-		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
-
-		# Translators: The label for the update mirror on the General Settings panel.
+		# Translators: The label for the server  mirror on the Add-on store Settings panel.
 		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Server mirror"))
 		mirrorBox = mirrorBoxSizer.GetStaticBox()
 		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
