@@ -63,7 +63,6 @@ from typing import (
 	Set,
 	cast,
 )
-from url_normalize import url_normalize
 import core
 import keyboardHandler
 import characterProcessing
@@ -3284,17 +3283,82 @@ class AddonStorePanel(SettingsPanel):
 		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
 		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
 
-	def isValid(self) -> bool:
-		self.addonMetadataMirrorTextbox.SetValue(
-			url_normalize(self.addonMetadataMirrorTextbox.GetValue().strip()).rstrip("/"),
+		# Translators: The label for the update mirror on the General Settings panel.
+		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Server mirror"))
+		mirrorBox = mirrorBoxSizer.GetStaticBox()
+		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+		sHelper.addItem(mirrorBoxSizerHelper)
+
+		# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+		# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
+		# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
+		self.mirrorURLTextBox = ExpandoTextCtrl(
+			mirrorBox,
+			size=(self.scaleSize(250), -1),
+			style=wx.TE_READONLY,
 		)
-		return True
+		# Translators: This is the label for the button used to change the Add-on Store mirror URL,
+		# it appears in the context of the Server mirror group on the Add-on Store page of NVDA's settings.
+		changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+		mirrorBoxSizerHelper.addItem(
+			guiHelper.associateElements(
+				self.mirrorURLTextBox,
+				changeMirrorBtn,
+			),
+		)
+		self.bindHelpEvent("AddonStoreMetadataMirror", mirrorBox)
+		self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+		changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+
+	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
+		"""Show the dialog to change the Add-on Store mirror URL, and refresh the dialog in response to the URL being changed."""
+		# Import late to avoid circular dependency.
+		from gui._SetURLDialog import _SetURLDialog
+
+		changeMirror = _SetURLDialog(
+			self,
+			# Translators: Title of the dialog used to change the Add-on Store server mirror URL.
+			title=_("Set Add-on Store Server Mirror"),
+			configPath=("addonStore", "baseServerURL"),
+			helpId="SetUpdateMirror",
+			urlTransformer=lambda url: f"{url}/cacheHash.json",
+			responseValidator=_isResponseAddonStoreCacheHash,
+		)
+		ret = changeMirror.ShowModal()
+		if ret == wx.ID_OK:
+			self.Freeze()
+			# trigger a refresh of the settings
+			self.onPanelActivated()
+			self._sendLayoutUpdatedEvent()
+			self.Thaw()
+
+	def _enterTriggersOnChangeMirrorURL(self, evt: wx.KeyEvent):
+		"""Open the change update mirror URL dialog in response to the enter key in the mirror URL read-only text box."""
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeMirrorURL(evt)
+		else:
+			evt.Skip()
+
+	def _updateCurrentMirrorURL(self):
+		self.mirrorURLTextBox.SetValue(
+			(
+				url
+				if (url := config.conf["addonStore"]["baseServerURL"])
+				# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
+				else _("No mirror")
+			),
+		)
+
+	def onPanelActivated(self):
+		self._updateCurrentMirrorURL()
+		super().onPanelActivated()
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
-
-		config.conf["addonStore"]["baseServerURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
 
 
 class TouchInteractionPanel(SettingsPanel):
