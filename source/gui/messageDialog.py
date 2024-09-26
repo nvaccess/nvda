@@ -14,6 +14,7 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from logHandler import log
+from functools import partial
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -55,6 +56,7 @@ class MessageDialogType(Enum):
 class MessageDialogButton(NamedTuple):
 	id: MessageDialogReturnCode
 	label: str
+	callback: Callable[[wx.CommandEvent], Any] | None = None
 	default: bool = False
 	closes_dialog: bool = True
 
@@ -68,8 +70,6 @@ class DefaultMessageDialogButtons(MessageDialogButton, Enum):
 	APPLY = MessageDialogButton(id=MessageDialogReturnCode.APPLY, label=_("&Apply"))
 	CLOSE = MessageDialogButton(id=MessageDialogReturnCode.CLOSE, label=_("Close"))
 	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
-
-
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
@@ -215,7 +215,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		**kwargs,
 	):
 		button = self.__buttonHelper.addButton(*args, **kwargs)
-		button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
+		# button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
+		button.Bind(wx.EVT_BUTTON, partial(self.__call_callback, should_close=True, callback=callback))
 		if default:
 			button.SetDefault()
 		return self
@@ -238,9 +239,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			callback=callback,
 		)
 
-	def __closeFirst(self, callback):
-		def function(*args, **kwargs):
+	def __call_callback(self, *args, should_close, callback, **kwargs):
+		if should_close:
 			self.Close()
-			return callback(*args, **kwargs)
-
-		return function
+		return callback(*args, **kwargs)
