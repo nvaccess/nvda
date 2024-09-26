@@ -2,6 +2,28 @@
 requires = ["setuptools~=72.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[project]
+name = "nvda"
+description = "NonVisual Desktop Access (NVDA)"
+maintainers = [
+	{name = "NV Access", email = "info@nvaccess.org"},
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: Microsoft :: Windows",
+    "Programming Language :: Python :: 3",
+    "Topic :: Accessibility",
+]
+readme = "readme.md"
+license = {file = "copying.txt"}
+
+[project.urls]
+Homepage = "https://www.nvaccess.org/"
+Repository = "https://github.com/nvaccess/nvda.git"
+Issues = "https://github.com/nvaccess/nvda/issues"
+
 [tool.ruff]
 line-length = 110
 
@@ -61,25 +83,16 @@ logger-objects = ["logHandler.log"]
 
 [tool.licensecheck]
 using = "requirements:requirements.txt"
-only_licenses = ["BSD", "MIT", "Python", "LGPLV3+"]
+only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
-	# Incompatible Apache licenses.
-	# These are current license violations and are bundled with NVDA.
-	"fast-diff-match-patch",  # See also #16633
-	"requests",
-
-	# Incompatible Apache licenses.
-	# Bundled with a dependency, but not bundled with NVDA.
-	"importlib-metadata",
-	"opencv-python",
-
-	# Incompatible Apache licenses.
-	# System testing frameworks, not bundled with NVDA.
-	"robotframework",
-	"robotframework-screencaplibrary",
-	"robotremoteserver",
-
 	# Compatible licenses:
+	"fast-diff-match-patch",  # Apache 2
+	"importlib-metadata",  # Apache 2
+	"opencv-python",  # Apache 2
+	"requests",  # Apache 2
+	"robotframework",  # Apache 2
+	"robotframework-screencaplibrary",  # Apache 2
+	"robotremoteserver",  # Apache 2
 	"certifi",  # Mozilla Public License 2.0
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
