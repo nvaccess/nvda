@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-from typing import Any, Callable
+from typing import Any, Callable, NamedTuple
 import winsound
 
 import wx
@@ -17,11 +17,14 @@ from logHandler import log
 
 
 class MessageDialogReturnCode(IntEnum):
-	OK = wx.OK
-	YES = wx.YES
-	NO = wx.NO
-	CANCEL = wx.CANCEL
-
+	OK = wx.ID_OK
+	CANCEL = wx.ID_CANCEL
+	YES = wx.ID_YES
+	NO = wx.ID_NO
+	SAVE = wx.ID_SAVE
+	APPLY = wx.ID_APPLY
+	CLOSE = wx.ID_CLOSE
+	HELP = wx.ID_HELP
 
 class MessageDialogType(Enum):
 	STANDARD = auto()
@@ -47,6 +50,26 @@ class MessageDialogType(Enum):
 				return winsound.MB_ICONASTERISK
 			case _:
 				return None
+
+
+class MessageDialogButton(NamedTuple):
+	id: MessageDialogReturnCode
+	label: str
+	default: bool = False
+	closes_dialog: bool = True
+
+
+class DefaultMessageDialogButtons(MessageDialogButton, Enum):
+	OK = MessageDialogButton(id=MessageDialogReturnCode.OK, label=_("OK"), default=True)
+	YES = MessageDialogButton(id=MessageDialogReturnCode.YES, label=_("&Yes"), default=True)
+	NO = MessageDialogButton(id=MessageDialogReturnCode.NO, label=_("&No"))
+	CANCEL = MessageDialogButton(id=MessageDialogReturnCode.CANCEL, label=_("Cancel"))
+	SAVE = MessageDialogButton(id=MessageDialogReturnCode.SAVE, label=_("&Save"))
+	APPLY = MessageDialogButton(id=MessageDialogReturnCode.APPLY, label=_("&Apply"))
+	CLOSE = MessageDialogButton(id=MessageDialogReturnCode.CLOSE, label=_("Close"))
+	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
+
+
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
