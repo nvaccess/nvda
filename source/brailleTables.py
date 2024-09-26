@@ -76,6 +76,7 @@ _inputTableForLangs = dict()
 _translationTableForLangs = dict()
 """Maps languages to translation L{BrailleTable.fileName}."""
 
+
 def getDefaultTableForCurLang(mode):
 	if mode == "input":
 		langDict = _inputTableForLangs
@@ -437,7 +438,10 @@ addTable("IPA.utb", _("International Phonetic Alphabet"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable(
-	"it-it-comp6.utb", _("Italian 6 dot computer braille"), inputForLangs={"it"}, translationForLangs={"it"}
+	"it-it-comp6.utb",
+	_("Italian 6 dot computer braille"),
+	inputForLangs={"it"},
+	translationForLangs={"it"},
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -445,7 +449,10 @@ addTable("it-it-comp8.utb", _("Italian 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable(
-	"ja-kantenji.utb", _("Japanese (Kantenji) literary braille"), input=False, translationForLangs={"ja"}
+	"ja-kantenji.utb",
+	_("Japanese (Kantenji) literary braille"),
+	input=False,
+	translationForLangs={"ja"},
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
@@ -845,6 +852,7 @@ def terminate():
 	# Clear all the custom tables, preserving only the builtin ones.
 	_tablesDirs.clear()
 	_tables.clear()
+
 
 DEFAULT_INPUT_BRAILLE_TABLE = getDefaultTableForCurLang("input")
 DEFAULT_TRANSLATION_BRAILLE_TABLE = getDefaultTableForCurLang("translation")
