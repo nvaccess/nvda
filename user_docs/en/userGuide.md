@@ -3107,12 +3107,34 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Server mirror URL {#AddonStoreMetadataMirror}
+##### Server mirror {#AddonStoreMetadataMirror}
 
-This option allows you to specify an alternative URL to download Add-on Store data from.
+These controls allow you to specify an alternative URL to download Add-on Store data from.
 This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
 
-Leave this blank to use the default NV Access Add-on Store server.
+The read-only text box shows the current mirror URL.
+If no mirror is in use (I.E. the NV Access NVDA Add-on Store server is being used), "No mirror" is displayed.
+
+If you wish to change the Add-on Store server mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetAddonStoreMirror).
+
+#### Set Add-on Store Server Mirror {#SetAddonStoreMirror}
+
+This dialog, which is accessed from the [Server mirror section of the Add-on Store page in NVDA's Settings dialog](#AddonStoreMetadataMirror), allows you to set a mirror to use when accessing the [Add-on Store](#AddonsManager).
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
+
+##### URL {#AddonStoreMirrorUrl}
+
+Enter the URL (web address) of the Add-on Store server mirror you wish to use here.
+Only HTTP and HTTPS URLs are supported.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
+
+Leave this blank to use the NV Access Add-on Store server.
+
+##### Test... {#AddonStoreMirrorTest}
+
+Press this button to test the Add-on Store server URL you have entered.
+You must be connected to the internet for the test to succeed.
+It is recommended that you always test the URL before saving it.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
