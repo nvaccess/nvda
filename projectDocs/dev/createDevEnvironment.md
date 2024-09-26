@@ -18,7 +18,7 @@ git clone --recursive https://github.com/YOUR-USERNAME/nvda.git
 
 When you fork the repository, GitHub will create a copy of the master branch.
 However, this branch will not be updated when the NV Access master branch is updated.
-To ensure your work is always based on the latest commit in the NV Access master branch, it is recommended that your master branch be linked to the NV Access master branch, rather than the master branch in your GitHub fork.
+To ensure your work is always based on the latest commit in the `nvaccess/nvda` master branch, it is recommended that your master branch be linked to the `nvaccess/nvda` master branch, rather than the master branch in your GitHub fork.
 You can do this from the command line as follows:
 
 ```sh
@@ -56,10 +56,10 @@ To replicate the production build environment, use the 3.11.x minor version of P
 
 * Microsoft Visual Studio 2022
 	* To replicate the production build environment, use the [version of Visual Studio 2022 that AppVeyor is using](https://www.appveyor.com/docs/windows-images-software/#visual-studio-2022).
-	* When you do not use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe)
-	* When you are intending to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor.
-	The Professional and Enterprise versions are also supported.
-	Preview versions are *not* supported.
+	* If you don't use the Visual Studio IDE itself, you can download the [build tools](https://aka.ms/vs/17/release/vs_BuildTools.exe).
+	* If you do intend to use the Visual Studio IDE (not required for NVDA development), you can download [the community version](https://aka.ms/vs/17/release/vs_Community.exe), which is also used by AppVeyor.
+		* The Professional and Enterprise versions are also supported.
+		* Preview versions are *not* supported.
 * When installing Visual Studio, additional components must be included:
 	* You can automatically fetch these using [NVDAs .vsconfig](../../.vsconfig) using the [import feature of the VS installer](https://learn.microsoft.com/en-us/visualstudio/install/import-export-installation-configurations?view=vs-2022#import-a-configuration).
 	* In the list on the Workloads tab, in the Desktop grouping:
