@@ -69,6 +69,11 @@ The first map will be loaded when calling L{initialize} with the custom tables,
 and cleared when calling L{terminate}.
 """
 
+_inputTableForLangs = dict()
+"""Maps languages to input L{BrailleTable.fileName}."""
+
+_translationTableForLangs = dict()
+"""Maps languages to translation L{BrailleTable.fileName}."""
 
 def addTable(
 	fileName: str,
@@ -77,6 +82,8 @@ def addTable(
 	output: bool = True,
 	input: bool = True,
 	source: str = TableSource.BUILTIN,
+	inputForLangs: set[str] | None = None
+	translationForLangs: set[str] | None = None
 ):
 	"""Register a braille translation table.
 	At least one of C{input} or C{output} must be C{True}.
@@ -86,11 +93,20 @@ def addTable(
 	:param output: True if this table can be used for output, False if not.
 	:param input: True if this table can be used for input, False if not.
 	:param source: An identifier describing the source of the table.
+	:param inputForLangs: A set of languages available in NVDA or C{None}.
+	:param translationForLangs: A set of languages available in NVDA or C{None}.
 	"""
 	if not output and not input:
 		raise ValueError("input and output cannot both be False")
 	table = BrailleTable(fileName, displayName, contracted, output, input, source)
 	_tables[fileName] = table
+	if inputForLangs is not None:
+		for lang in inputForLangs:
+			_inputTableForLangs[lang] = table
+		if translationForLangs is not None:
+			for lang in translationForLangs:
+				_translationTableForLangs[lang] = table
+
 
 
 def getTable(fileName: str) -> BrailleTable:
