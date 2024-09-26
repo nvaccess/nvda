@@ -180,18 +180,32 @@ class _SetURLDialog(SettingsDialog):
 
 	def _failure(self, error: Exception):
 		"""Notify the user that testing their URL failed."""
+		if isinstance(error, _ValidationError):
+			message = _(
+				# Translators: Message shown to users when testing a given URL has failed because the response was invalid.
+				"The URL you have entered failed the connection test. The response received from the server was invalid. Check the URL is correct before trying again.",
+			)
+		elif isinstance(error, requests.HTTPError):
+			message = _(
+				# Translators: Message shown to users when testing a given URL has failed because the server returned an error.
+				"The URL you have entered failed the connection test. The server returned an error. Check that the URL is correct before trying again.",
+			)
+		elif isinstance(error, requests.ConnectionError):
+			message = _(
+				# Translators: Message shown to users when testing a given URL has failed because of a network error.
+				"The URL you have entered failed the connection test. There was a network error. Check that you are connected to the internet and try again.",
+			)
+		else:
+			message = _(
+				# Translators: Message shown to users when testing a given URL has failed for unknown reasons.
+				"The URL you have entered failed the connection test. Make sure you are connected to the internet and the URL is correct.",
+			)
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		self._testStatus = _SetURLDialog._URLTestStatus.FAILED
 		wx.CallAfter(
 			gui.messageBox,
-			# Translators: Message displayed to users when testing a URL has failed due to validation errors.
-			_("The URL did not return a valid resource.")
-			if isinstance(error, _ValidationError)
-			else _(
-				# Translators: Message displayed to users when testing a URL has failed due to connection errors.
-				"Unable to connect to the given URL. Check that you are connected to the internet and the URL is correct.",
-			),
+			message,
 			# Translators: The title of a dialog presented when an error occurs.
 			"Error",
 			wx.OK | wx.ICON_ERROR,
