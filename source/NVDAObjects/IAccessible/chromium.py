@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2022 NV Access Limited
+# Copyright (C) 2010-2024 NV Access Limited, hwf1324.
 
 """NVDAObjects for the Chromium browser project"""
 
@@ -11,6 +11,8 @@ from comtypes import COMError
 
 import config
 import controlTypes
+import IAccessibleHandler
+import winUser
 from NVDAObjects.IAccessible import IAccessible
 from virtualBuffers.gecko_ia2 import Gecko_ia2 as GeckoVBuf, Gecko_ia2_TextInfo as GeckoVBufTextInfo
 from . import ia2Web
@@ -185,11 +187,35 @@ class Editor(ia2Web.Editor):
 	TextInfo = EditorTextInfo
 
 
+class RedirectDocument(ia2Web.Ia2Web):
+	"""The NVDAObject for the redirect document object in Electron."""
+
+	def objectFromPointRedirect(self, x: int, y: int):
+		docObj: Document = self.previous.lastChild
+		redirect = docObj.IAccessibleObject.accHitTest(x, y)
+
+		if not redirect:
+			return None
+
+		redirect = IAccessibleHandler.normalizeIAccessible(redirect)
+		obj: IAccessible = IAccessible(IAccessibleObject=redirect, IAccessibleChildID=winUser.CHILDID_SELF)
+
+		return obj
+
+
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Chromium objects.
 	This works similarly to L{NVDAObjects.NVDAObject.findOverlayClasses} except that it never calls any other findOverlayClasses method.
 	"""
 	if (
+		obj.role == controlTypes.Role.PANE
+		and obj.childCount == 0
+		and obj.previous
+		and obj.previous.childCount != 0
+		and obj.previous.lastChild.windowClassName == "Chrome_RenderWidgetHostHWND"
+	):
+		clsList.append(RedirectDocument)
+	elif (
 		obj.role == controlTypes.Role.LISTITEM
 		and obj.parent
 		and obj.parent.parent
