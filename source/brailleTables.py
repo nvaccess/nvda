@@ -383,10 +383,10 @@ addTable("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fil-g2.ctb", _("Filipino grade 2"), contracted=True)
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
 addTable(
 	"fr-bfu-comp6.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	_("French (unified) 6 dot computer braille"),
 	inputForLangs={"fr"},
 	translationForLangs={"fr"},
@@ -448,10 +448,10 @@ addTable("is.ctb", _("Icelandic 8 dot computer braille"), inputForLangs={"is"}, 
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("IPA.utb", _("International Phonetic Alphabet"), input=False)
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
 addTable(
 	"it-it-comp6.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	_("Italian 6 dot computer braille"),
 	inputForLangs={"it"},
 	translationForLangs={"it"},
@@ -459,10 +459,11 @@ addTable(
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("it-it-comp8.utb", _("Italian 8 dot computer braille"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
+
 addTable(
 	"ja-kantenji.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	_("Japanese (Kantenji) literary braille"),
 	input=False,
 	translationForLangs={"ja"},
@@ -755,12 +756,11 @@ addTable("xh-za-g2.ctb", _("Xhosa grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("yi.utb", _("Yiddish grade 1"))
-
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-# This should be translated to '中文中国汉语通用盲文' in Mandarin.
 addTable(
 	"zhcn-cbs.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	# This should be translated to '中文中国汉语通用盲文' in Mandarin.
 	_("Chinese common braille (simplified Chinese characters)"),
 	input=False,
 	translationForLangs={"zh_CN"},
@@ -769,11 +769,12 @@ addTable(
 # braille settings dialog.
 # This should be translated to '中文中国汉语现行盲文（无声调）' in Mandarin.
 addTable("zh-chn.ctb", _("Chinese (China, Mandarin) Current Braille System (no tones)"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-# This should be translated to '中文中国汉语现行盲文' in Mandarin.
+
 addTable(
 	"zhcn-g1.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	# This should be translated to '中文中国汉语现行盲文' in Mandarin.
 	_("Chinese (China, Mandarin) Current Braille System"),
 	inputForLangs={"zh_HK"},
 	translationForLangs={"zh_HK"},
