@@ -129,6 +129,8 @@ def getTable(fileName: str) -> BrailleTable:
 	@return: The table information.
 	@raise LookupError: If there is no table registered with this file name.
 	"""
+	if fileName == "auto":
+		fileName = "en-ueb-g1.ctb"
 	return _tables[fileName]
 
 
@@ -844,13 +846,13 @@ def initialize():
 					"Error while applying custom braille tables config from scratchpad manifest: "
 					f"{manifestPath}",
 				)
+	if config.conf["braille"]["translationTable"] == "auto":
+		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang("translation")
+	if config.conf["braille"]["inputTable"] == "auto":
+		config.conf["braille"]["inputTable"] = getDefaultTableForCurLang("input")
 
 
 def terminate():
 	# Clear all the custom tables, preserving only the builtin ones.
 	_tablesDirs.clear()
 	_tables.clear()
-
-
-DEFAULT_INPUT_BRAILLE_TABLE = getDefaultTableForCurLang("input")
-DEFAULT_TRANSLATION_BRAILLE_TABLE = getDefaultTableForCurLang("translation")
