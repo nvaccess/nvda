@@ -30,6 +30,13 @@ class TableSource(StrEnum):
 	"""The name of the scratchpad table source"""
 
 
+class TableType(StrEnum):
+	INPUT = "input"
+	"""The name of the input type for braille tables"""
+	TRANSLATION = "translation"
+	"""The name of the translation type for braille tables"""
+
+
 _tablesDirs = collections.ChainMap(
 	{
 		TableSource.BUILTIN: TABLES_DIR,
@@ -77,10 +84,14 @@ _translationTableForLangs = dict()
 """Maps languages to translation L{BrailleTable.fileName}."""
 
 
-def getDefaultTableForCurLang(mode):
-	if mode == "input":
+def getDefaultTableForCurLang(tableType: TableType) -> BrailleTable.fileName:
+	"""Gets the file name of the braille table for the current NVDA language.
+	:param tableType: input or translation.
+	:return: A L{BrailleTable} fileName.
+	"""
+	if tableType == TableType.INPUT:
 		langDict = _inputTableForLangs
-	elif mode == "translation":
+	elif tableType == TableType.TRANSLATION:
 		langDict = _translationTableForLangs
 	lang = languageHandler.getLanguage()
 	table = langDict.get(lang)
