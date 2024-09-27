@@ -209,9 +209,8 @@ def findExtraOverlayClasses(obj, clsList):
 	"""
 	if (
 		obj.role == controlTypes.Role.PANE
-		and obj.childCount == 0
 		and obj.previous
-		and obj.previous.childCount != 0
+		and obj.previous.lastChild
 		and obj.previous.lastChild.windowClassName == "Chrome_RenderWidgetHostHWND"
 	):
 		clsList.append(RedirectDocument)
