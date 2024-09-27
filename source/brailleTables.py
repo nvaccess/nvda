@@ -84,7 +84,7 @@ _translationTableForLangs = dict()
 """Maps languages to translation L{BrailleTable.fileName}."""
 
 
-def getDefaultTableForCurLang(tableType: TableType) -> BrailleTable.fileName:
+def getDefaultTableForCurLang(tableType: TableType) -> str:
 	"""Gets the file name of the braille table for the current NVDA language.
 	:param tableType: input or translation.
 	:return: A L{BrailleTable} fileName.
@@ -93,6 +93,9 @@ def getDefaultTableForCurLang(tableType: TableType) -> BrailleTable.fileName:
 		langDict = _inputTableForLangs
 	elif tableType == TableType.TRANSLATION:
 		langDict = _translationTableForLangs
+	else:
+		raise ValueError(f"Unknown tableType: {tableType}")
+	lang = languageHandler.getLanguage()
 	lang = languageHandler.getLanguage()
 	table = langDict.get(lang)
 	if table is not None:
@@ -859,9 +862,9 @@ def initialize():
 					f"{manifestPath}",
 				)
 	if config.conf["braille"]["translationTable"] == "auto":
-		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang("translation")
+		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang(TableType.TRANSLATION)
 	if config.conf["braille"]["inputTable"] == "auto":
-		config.conf["braille"]["inputTable"] = getDefaultTableForCurLang("input")
+		config.conf["braille"]["inputTable"] = getDefaultTableForCurLang(TableType.INPUT)
 
 
 def terminate():
