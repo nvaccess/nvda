@@ -183,7 +183,7 @@ Structural lines that do not contain any translatable content (such as blank lin
 
 Structural syntax from the beginning and end of lines (such as heading prefix like `###`, heading anchors like `{#Introduction}`, and initial and final vertical bars on table rows) has been removed from the content to translate, but is available to view in the translator notes for that line.
 Content may still however contain inline markdown syntax such as links, inline code fences (`\``), and table column separators (`|`).
-This syntax must be kept in tact when translating.
+This syntax must be kept intact when translating.
 
 All strings for translation contain translator notes which include:
 * Line: the original line number in the markdown file.
