@@ -473,7 +473,7 @@ addTable(
 )
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("ka-in-g1.utb", _("Kannada grade 1"), inputForLangs={"ka"}, translationForLangs={"ka"})
+addTable("ka-in-g1.utb", _("Kannada grade 1"), inputForLangs={"kn"}, translationForLangs={"kn"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ka.utb", _("Georgian literary braille"))
@@ -482,7 +482,7 @@ addTable("ka.utb", _("Georgian literary braille"))
 addTable("kk.utb", _("Kazakh grade 1"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("km-g1.utb", _("Khmer grade 1"), inputForLangs={"kmr"}, translationForLangs={"kmr"})
+addTable("km-g1.utb", _("Khmer grade 1"), inputForLangs={"km"}, translationForLangs={"km"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("kmr.tbl", _("Northern Kurdish grade 0"))
