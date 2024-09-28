@@ -378,10 +378,15 @@ addTable("fa-ir-comp8.ctb", _("Persian 8 dot computer braille"))
 addTable("fa-ir-g1.utb", _("Persian grade 1"), inputForLangs={"fa"}, translationForLangs={"fa"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("fi.utb", _("Finnish 6 dot"), inputForLangs={"fi"}, translationForLangs={"fi"})
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("fi-fi-8dot.ctb", _("Finnish 8 dot computer braille"))
+addTable("fi.utb", _("Finnish 6 dot"))
+addTable(
+	"fi-fi-8dot.ctb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Finnish 8 dot computer braille"),
+	inputForLangs={"fi"},
+	translationForLangs={"fi"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fil-g2.ctb", _("Filipino grade 2"), contracted=True)
