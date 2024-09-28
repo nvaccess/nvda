@@ -232,10 +232,10 @@ addTable("bel.utb", _("Belarusian literary braille"))
 addTable("bel-detailed.utb", _("Belarusian literary braille (detailed)"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("bg.ctb", _("Bulgarian 8 dot computer braille"))
+addTable("bg.ctb", _("Bulgarian 8 dot computer braille"), inputForLangs={"bg"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("bg.utb", _("Bulgarian grade 1"), inputForLangs={"bg"}, translationForLangs={"bg"})
+addTable("bg.utb", _("Bulgarian grade 1"), translationForLangs={"bg"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("ca-g1.ctb", _("Catalan grade 1"), inputForLangs={"ca"}, translationForLangs={"ca"})
