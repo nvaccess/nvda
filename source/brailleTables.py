@@ -429,12 +429,17 @@ addTable("he-IL-comp8.utb", _("Hebrew computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("hi-in-g1.utb", _("Hindi grade 1"), inputForLangs={"hi"}, translationForLangs={"hi"})
+addTable(
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	"hr-comp8.utb",
+	_("Croatian 8 dot computer braille"),
+	inputForLangs={"hr"},
+	translationForLangs={"hr"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("hr-comp8.utb", _("Croatian 8 dot computer braille"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("hr-g1.ctb", _("Croatian grade 1"), inputForLangs={"hr"}, translationForLangs={"hr"})
+addTable("hr-g1.ctb", _("Croatian grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("hu-hu-comp8.ctb", _("Hungarian 8 dot computer braille"))
@@ -575,9 +580,14 @@ addTable("ny-mw.utb", _("Chichewa (Malawi) literary braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("or-in-g1.utb", _("Oriya grade 1"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("pl-pl-comp8.ctb", _("Polish 8 dot computer braille"))
+addTable(
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	"pl-pl-comp8.ctb",
+	_("Polish 8 dot computer braille"),
+	inputForLangs={"pl"},
+	translationForLangs={"pl"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("Pl-Pl-g1.utb", _("Polish literary braille"))
