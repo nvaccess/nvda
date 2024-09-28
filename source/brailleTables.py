@@ -96,7 +96,6 @@ def getDefaultTableForCurLang(tableType: TableType) -> str:
 	else:
 		raise ValueError(f"Unknown tableType: {tableType}")
 	lang = languageHandler.getLanguage()
-	lang = languageHandler.getLanguage()
 	table = langDict.get(lang)
 	if table is not None:
 		return table
