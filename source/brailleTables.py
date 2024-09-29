@@ -427,10 +427,15 @@ addTable("grc-international-es.utb", _("Spanish for Greek text"))
 addTable("hbo.utb", _("Hebrew (Biblical) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("he-IL.utb", _("Israeli grade 1"), inputForLangs={"he"}, translationForLangs={"he"})
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("he-IL-comp8.utb", _("Hebrew computer braille"))
+addTable("he-IL.utb", _("Israeli grade 1"))
+addTable(
+	"he-IL-comp8.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
+	_("Hebrew computer braille"),
+	inputForLangs={"he"},
+	translationForLangs={"he"},
+)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("hi-in-g1.utb", _("Hindi grade 1"), inputForLangs={"hi"}, translationForLangs={"hi"})
