@@ -190,7 +190,7 @@ class Editor(ia2Web.Editor):
 class RedirectDocument(ia2Web.Ia2Web):
 	"""The NVDAObject for the redirect document object in Electron."""
 
-	def objectFromPointRedirect(self, x: int, y: int) -> IAccessible:
+	def objectFromPointRedirect(self, x: int, y: int) -> IAccessible | None:
 		docObj: Document = self.previous.lastChild
 		redirect = docObj.IAccessibleObject.accHitTest(x, y)
 
