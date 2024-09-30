@@ -390,17 +390,17 @@ addTable(
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fil-g2.ctb", _("Filipino grade 2"), contracted=True)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("fr-bfu-comp6.utb", _("French (unified) 6 dot computer braille"))
 addTable(
-	"fr-bfu-comp6.utb",
+	"fr-bfu-comp8.utb",
 	# Translators: The name of a braille table displayed in the
 	# braille settings dialog.
-	_("French (unified) 6 dot computer braille"),
+	_("French (unified) 8 dot computer braille"),
 	inputForLangs={"fr"},
 	translationForLangs={"fr"},
 )
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
-addTable("fr-bfu-comp8.utb", _("French (unified) 8 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fr-bfu-g2.ctb", _("French (unified) grade 2"), contracted=True)
