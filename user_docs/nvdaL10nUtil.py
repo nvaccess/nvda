@@ -12,6 +12,26 @@ import markdownTranslate
 import md2html
 
 
+def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
+	"""
+	Fetch the language from an xliff file.
+	:param xliffPath: Path to the xliff file
+	:param source: If True, fetch the source language, otherwise fetch the target language
+	:return: The language code
+	"""
+	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
+	xliff = lxml.etree.parse(xliffPath)
+	xliffRoot = xliff.getroot()
+	if xliffRoot.tag != "{urn:oasis:names:tc:xliff:document:2.0}xliff":
+		raise ValueError(f"Not an xliff file: {xliffPath}")
+	lang = xliffRoot.get("srcLang" if source else "trgLang")
+	if lang is None:
+		print(f"Could not detect language for xliff file {xliffPath}, {source=}")
+	else:
+		print(f"Detected language {lang} for xliff file {xliffPath}, {source=}")
+	return lang
+
+
 def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None= None):
 	print(f"Creating stripped xliff at {outputPath} from {xliffPath}")
 	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
@@ -97,7 +117,7 @@ if __name__ == "__main__":
 	command_md2html.add_argument("mdPath", help="Path to the markdown file")
 	command_md2html.add_argument("htmlPath", help="Path to the resulting html file")
 	command_xliff2html = commands.add_parser("xliff2html", help="Convert xliff to html")
-	command_xliff2html.add_argument("-l", "--lang", help="Language code", action="store", default="en")
+	command_xliff2html.add_argument("-l", "--lang", help="Language code", action="store", required=False)
 	command_xliff2html.add_argument("-t", "--docType", help="Type of document", action="store", choices=["userGuide", "developerGuide", "changes", "keyCommands"])
 	command_xliff2html.add_argument("-u", "--untranslated", help="Produce the untranslated markdown file", action="store_true", default=False)
 	command_xliff2html.add_argument("xliffPath", help="Path to the xliff file")
@@ -113,11 +133,12 @@ if __name__ == "__main__":
 		case "md2html":
 			md2html.main(source=args.mdPath, dest=args.htmlPath, lang=args.lang, docType=args.docType)
 		case "xliff2html":
+			lang = args.lang or fetchLanguageFromXliff(args.xliffPath, source=args.untranslated)
 			temp_mdFile = tempfile.NamedTemporaryFile(suffix=".md", delete=False, mode="w", encoding="utf-8")
 			temp_mdFile.close()
 			try:
 				markdownTranslate.generateMarkdown(xliffPath=args.xliffPath, outputPath=temp_mdFile.name, translated=not args.untranslated)
-				md2html.main(source=temp_mdFile.name, dest=args.htmlPath, lang=args.lang, docType=args.docType)
+				md2html.main(source=temp_mdFile.name, dest=args.htmlPath, lang=lang, docType=args.docType)
 			finally:
 				os.remove(temp_mdFile.name)
 		case "stripXliff":
