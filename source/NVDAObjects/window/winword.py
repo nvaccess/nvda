@@ -10,6 +10,7 @@ from typing import (
 	Optional,
 	Dict,
 	Generator,
+	Self,
 	TYPE_CHECKING,
 )
 
@@ -43,6 +44,7 @@ from . import _msOfficeChart
 import locationHelper
 from enum import IntEnum
 import documentBase
+from utils.displayString import DisplayStringIntEnum
 
 if TYPE_CHECKING:
 	import inputCore
@@ -78,6 +80,69 @@ wdStartOfRangeRowNumber = 13
 wdMaximumNumberOfRows = 15
 wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
+
+
+class WdUnderline(DisplayStringIntEnum):
+	# Word underline styles
+	# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
+	NONE = 0
+	SINGLE = 1
+	WORDS = 2
+	DOUBLE = 3
+	DOTTED = 4
+	THICK = 6
+	DASH = 7
+	DOT_DASH = 9
+	DOT_DOT_DASH = 10
+	WAVY = 11
+	DOTTED_HEAVY = 20
+	DASH_HEAVY = 23
+	DOT_DASH_HEAVY = 25
+	DOT_DOT_DASH_HEAVY = 26
+	WAVY_HEAVY = 27
+	DASH_LONG = 39
+	WAVY_DOUBLE = 43
+	DASH_LONG_HEAVY = 55
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			WdUnderline.SINGLE: "",  # For single underline we just say "underline"
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WORDS: _("Words only"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOUBLE: _("Double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED: _("Dotted"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.THICK: _("Thick"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH: _("Dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH: _("Dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH: _("Dot dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY: _("Wave"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED_HEAVY: _("Dotted heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_HEAVY: _("Dashed heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH_HEAVY: _("Dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH_HEAVY: _("Dot dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_HEAVY: _("Wave heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG: _("Dashed long"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_DOUBLE: _("Wave double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG_HEAVY: _("Dashed long heavy"),
+		}
+
+
 # Horizontal alignment
 wdAlignParagraphLeft = 0
 wdAlignParagraphCenter = 1
@@ -1507,6 +1572,7 @@ class WordDocument(Window):
 			curTime = time.time()
 		return curVal
 
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1524,6 +1590,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
+	@script(gestures=["kb:control+i", "kb:control+shift+i"])
 	def script_toggleItalic(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1541,23 +1608,59 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
-	def script_toggleUnderline(self, gesture):
+	@script(gestures=["kb:control+u", "kb:control+shift+u", "kb:control+shift+d"])
+	def script_toggleUnderline(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the format change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
-			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
 			lambda: self.WinwordSelectionObject.font.underline,
 		)
-		if val:
-			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("Underline on"))
+		if val != WdUnderline.NONE:
+			try:
+				style = WdUnderline(val).displayString
+				if len(style) > 0:
+					style += " "
+				# Translators: a message when toggling formatting in Microsoft word
+				ui.message(_("Underline {style}on").format(style=style))
+			except ValueError:
+				# In case an unlisted value is returned by Word Object model.
+				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
+				# apply the underline style (e.g. too short timeout, gesture mismatch due to localization mismatch
+				# between Word and NVDA, etc.)
+				log.debugWarning(f"No underline value for {val}")
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
 
+	@script(gesture="kb:control+shift+k")
+	def script_toggleCaps(self, gesture: "inputCore.InputGesture"):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: (self.WinwordSelectionObject.font.allcaps, self.WinwordSelectionObject.font.smallcaps),
+		)
+		if val[0]:
+			# Translators: a message when toggling formatting to 'all capital' in Microsoft word
+			ui.message(_("All caps on"))
+		elif val[1]:
+			# Translators: a message when toggling formatting to 'small capital' in Microsoft word
+			ui.message(_("Small caps on"))
+		else:
+			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
+			ui.message(_("Caps off"))
+
+	@script(gestures=["kb:control+l", "kb:control+e", "kb:control+r", "kb:control+j"])
 	def script_toggleAlignment(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1598,6 +1701,7 @@ class WordDocument(Window):
 		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
 		ui.message(msg)
 
+	@script(gestures=["kb:control+=", "kb:control+shift+="])
 	def script_toggleSuperscriptSubscript(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1621,6 +1725,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	@script(gesture="kb:alt+shift+downArrow")
 	def script_moveParagraphDown(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1636,6 +1741,7 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved below a blank paragraph
 				ui.message(_("Moved below blank paragraph"))
 
+	@script(gesture="kb:alt+shift+upArrow")
 	def script_moveParagraphUp(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1652,6 +1758,16 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved above a blank paragraph
 				ui.message(_("Moved above blank paragraph"))
 
+	@script(
+		gestures=[
+			"kb:alt+shift+rightArrow",
+			"kb:alt+shift+leftArrow",
+			"kb:control+shift+n",
+			"kb:control+alt+1",
+			"kb:control+alt+2",
+			"kb:control+alt+3",
+		],
+	)
 	def script_increaseDecreaseOutlineLevel(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1668,6 +1784,7 @@ class WordDocument(Window):
 			_("{styleName} style, outline level {outlineLevel}").format(styleName=style, outlineLevel=val),
 		)
 
+	@script(gestures=["kb:control+[", "kb:control+]", "kb:control+shift+,", "kb:control+shift+."])
 	def script_increaseDecreaseFontSize(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1779,6 +1896,7 @@ class WordDocument(Window):
 					offset,
 				).format(offset=offset)
 
+	@script(gestures=["kb:control+1", "kb:control+2", "kb:control+5"])
 	def script_changeLineSpacing(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1822,30 +1940,6 @@ class WordDocument(Window):
 			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection")
 
 	__gestures = {
-		"kb:control+[": "increaseDecreaseFontSize",
-		"kb:control+]": "increaseDecreaseFontSize",
-		"kb:control+shift+,": "increaseDecreaseFontSize",
-		"kb:control+shift+.": "increaseDecreaseFontSize",
-		"kb:control+b": "toggleBold",
-		"kb:control+i": "toggleItalic",
-		"kb:control+u": "toggleUnderline",
-		"kb:control+=": "toggleSuperscriptSubscript",
-		"kb:control+shift+=": "toggleSuperscriptSubscript",
-		"kb:control+l": "toggleAlignment",
-		"kb:control+e": "toggleAlignment",
-		"kb:control+r": "toggleAlignment",
-		"kb:control+j": "toggleAlignment",
-		"kb:alt+shift+downArrow": "moveParagraphDown",
-		"kb:alt+shift+upArrow": "moveParagraphUp",
-		"kb:alt+shift+rightArrow": "increaseDecreaseOutlineLevel",
-		"kb:alt+shift+leftArrow": "increaseDecreaseOutlineLevel",
-		"kb:control+shift+n": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+1": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+2": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+3": "increaseDecreaseOutlineLevel",
-		"kb:control+1": "changeLineSpacing",
-		"kb:control+2": "changeLineSpacing",
-		"kb:control+5": "changeLineSpacing",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}
