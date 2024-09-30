@@ -46,6 +46,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
+* In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
 * Fix mouse tracking in Electron. E.g. VS Code. (#17108, #17190, @hwf1324)
 
 ### Changes for Developers

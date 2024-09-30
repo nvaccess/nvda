@@ -605,9 +605,12 @@ class AppModule(appModuleHandler.AppModule):
 				hasattr(obj, "IAccessibleTable2Object") or hasattr(obj, "IAccessibleTableObject")
 			):
 				clsList.insert(0, SymphonyTable)
-			elif hasattr(obj, "IAccessibleTextObject"):
+			elif hasattr(obj, "IAccessibleTextObject") and role in {
+				controlTypes.Role.EDITABLETEXT,
+				controlTypes.Role.HEADING,
+			}:
 				clsList.insert(0, SymphonyText)
-			if role == controlTypes.Role.PARAGRAPH:
+			if role in {controlTypes.Role.BLOCKQUOTE, controlTypes.Role.PARAGRAPH}:
 				clsList.insert(0, SymphonyParagraph)
 
 	def event_NVDAObject_init(self, obj):
