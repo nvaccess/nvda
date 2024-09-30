@@ -996,7 +996,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			# Translators: Title of the dialog used to change NVDA's update server mirror URL.
 			title=_("Set NVDA Update Mirror"),
 			configPath=("update", "serverURL"),
-			helpId="SetUpdateMirror",
+			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
 		)
 		ret = changeMirror.ShowModal()
@@ -3314,7 +3314,7 @@ class AddonStorePanel(SettingsPanel):
 			# Translators: Title of the dialog used to change the Add-on Store server mirror URL.
 			title=_("Set Add-on Store Server Mirror"),
 			configPath=("addonStore", "baseServerURL"),
-			helpId="SetUpdateMirror",
+			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}/cacheHash.json",
 			responseValidator=_isResponseAddonStoreCacheHash,
 		)

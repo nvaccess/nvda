@@ -75,13 +75,13 @@ class _SetURLDialog(SettingsDialog):
 			wx.TextCtrl,
 			size=(250, -1),
 		)
-		self.bindHelpEvent("UpdateMirrorURL", urlControl)
+		self.bindHelpEvent("SetURLTextbox", urlControl)
 		self._testButton = testButton = wx.Button(
 			self,
 			# Translators: A button in a dialog which allows the user to test a URL that they have entered.
 			label=_("&Test..."),
 		)
-		self.bindHelpEvent("UpdateMirrorTest", testButton)
+		self.bindHelpEvent("SetURLTest", testButton)
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self._onTest)
