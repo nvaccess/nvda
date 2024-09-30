@@ -1,5 +1,4 @@
 # Novidades do NVDA
-## Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 ## 2024.3
 
@@ -400,8 +399,8 @@ Abra um issue — debate — no  GitHub se o seu complemento tiver um problema c
   * nose, em vez disso, o unittest-xml-reporting é usado para gerar relatórios XML. (#15544)
 * `IAccessibleHandler.SecureDesktopNVDAObject` foi removido.
 Em vez disso, quando o NVDA estiver sendo executado no perfil do usuário, rastreie a existência da área de trabalho segura com o ponto de extensão: `winAPI.secureDesktop.post_secureDesktopStateChange`. (#14488)
-* braille.BrailleHandler.handlePendingCaretUpdatefoi removido sem substituição pública. (#15163, @LeonarddeR)
-* `bdDetect.addUsbDevices` e `bdDetect.addBluetoothDevices` foram removidos.
+* `braille.BrailleHandler.handlePendingCaretUpdate` foi removido sem substituição pública. (#15163, @LeonarddeR)
+* `bdDetect.addUsbDevices e bdDetect.addBluetoothDevices` foram removidos.
 Os drivers de linhas Braille devem implementar o método de classe `registerAutomaticDetection`.
 Esse método recebe um objeto `DriverRegistrar` no qual os métodos `addUsbDevices` e `addBluetoothDevices` podem ser usados. (#15200, @LeonarddeR)
 * A implementação padrão do método de verificação — check — em `BrailleDisplayDriver` agora requer que os atributos `threadSafe` e `supportsAutomaticDetection` sejam definidos como `True`. (#15200, @LeonarddeR)
@@ -654,7 +653,7 @@ eSpeak-NG, Transcritor braille LibLouis e Unicode CLDR foram atualizados.
   * Driver braille Baum: adicionados vários comandos — gestos — com conjunto de teclas — acordes — braille para executar comandos de teclado comuns, como `windows+d` e `alt+tab`.
   Consulte o Guia do Usuário do NVDA para obter uma lista completa. (#14714)
 * Adicionada pronúncia de símbolos Unicode:
-  * símbolos braille como "⠣⠄⠃⠗⠇⠠⠜". (#14548)
+  * símbolos braille como `⠣⠄⠃⠗⠇⠠⠜`. (#14548)
   * Símbolo da tecla Option do Mac `⌥`. (#14682)
 * Comandos — Gestos — adicionados para linhas braille Tivomatic Caiku Albatross. (#14844, #15002)
   * mostrar a caixa de diálogo de configurações braille
@@ -1557,7 +1556,7 @@ Esta especificação visa padronizar o suporte para linhas Braille sem a necessi
 Há atualizações para eSpeak-NG e LibLouis, incluindo novas tabelas em Russo e Venda.
 Os sons de erro podem ser habilitados em compilações estáveis do NVDA por meio de uma nova opção de configurações avançadas.
 Leitura contínua em Word agora rola a tela para manter a posição atual visível.
- Existem muitas melhorias ao usar o Office com UIA.
+Existem muitas melhorias ao usar o Office com UIA.
 Uma correção UIA é que o Outlook agora ignora mais tipos de tabelas de leiaute nas mensagens.
 
 Notas importantes:
@@ -2297,7 +2296,6 @@ Os destaques desta versão incluem a detecção automática de linhas braille da
 * O volume do sintetizador agora é aumentado e diminuído em 5 em vez de 10 quando se usa o anel de configurações. (#6754)
 * Esclarecido o texto no gerenciador de complementos quando o NVDA é iniciado com o sinalizador — flag — --disable-addons. (#9473)
 * Anotações emoji atualizadas do Repositório de Dados de Localidade Comum Unicode — Common Locale Data Repository — para a versão 35.0. (#9445)
-* Atualizado o transcritor braille liblouis para a versão 3.9.0. (#9439)
 * A tecla de atalho para o campo de filtro na lista de elementos no modo de navegação foi alterada para alt+y. (#8728)
 * Quando uma linha braille detectada automaticamente é conectada via Bluetooth, o NVDA continuará procurando por linhas USB suportadas pelo mesmo driver e alternará para uma conexão USB se disponível. (#8853)
 * eSpeak-NG atualizado para commit 67324cc.
@@ -2629,8 +2627,6 @@ Os destaques desta versão incluem Suporte para tabelas no Kindle para PC, supor
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * A informação do desenvolvedor — developer info — para objetos UIA agora contém uma lista dos padrões UIA disponíveis. (#5712)
 * Os módulos de aplicativos — app modules — agora podem forçar certas janelas a usar sempre o UIA implementando o método isGoodUIAWindow. (#7961)
 * O sinalizador — flag — booleano oculto "outputPass1Only" na seção braille da configuração foi removido novamente. Liblouis não suporta mais saída de só 1 passagem. (#7839)
@@ -2686,8 +2682,6 @@ Os destaques desta versão incluem suporte para gráficos em Microsoft word e Po
 * O NVDA não deixa de ser iniciado no Windows 7 reclamando duma dll api-ms interna, quando uma outra versão do Visual Studio 2017 redistribuível foi instalada por outro aplicativo. (#7975)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Adicionado uma sinalização — flag — booleana oculta à seção braille na configuração: "outputPass1Only". (#7301, #7693, #7702)
  * Esta sinalização — flag — padrão é True — verdadeira —. Se for False — falsa —, as regras de passagem múltipla liblouis serão usadas para a saída em braille.
@@ -2755,8 +2749,6 @@ Observe que esta versão do NVDA não suporta mais o Windows XP ou o Windows Vis
 * A funcionalidade de rolagem para trás foi corrigida para linhas Braille da Freedom Scientific contendo uma left bumper bar — barra balanceadora esquerda —. (#7713)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * "scons tests" agora verifica se as cadeias traduzíveis têm comentários do tradutor. Você também pode executar isso sozinho com "scons checkPot". (#7492)
 * Existe agora um novo módulo extensionPoints que fornece uma estrutura genérica — framework — para permitir a extensibilidade do código em pontos específicos do código. Isso permite que as partes interessadas se inscrevam para serem notificadas quando ocorre alguma ação (extensionPoints.Action), para modificar um tipo específico de dado (extensionPoints.filter) ou para participar em decisão se algo será feito (extensionPoints.Decider). (#3393)
@@ -2844,8 +2836,6 @@ Os destaques desta versão incluem a entrada de braille abreviado, suporte para 
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Carimbos de hora — Timestamps — no log agora incluem milissegundos. (#7163)
 * O NVDA agora deve ser compilado com o Visual Studio Community 2015. O Visual Studio Express não é mais suportado. (#7110)
  * O Windows 10 Tools e SDK agora também são requeridos, o que pode ser ativado ao instalar o Visual Studio.
@@ -2896,8 +2886,6 @@ Os destaques desta versão incluem suporte total para áudio prioritário no Win
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Os argumentos de linha de comando agora são processados com o módulo argparse do Python, em vez de optparse. Isso permite que certas opções como -r e -q sejam tratadas exclusivamente. (#6865)
 * core.callLater agora coloca a chamada de retorno para a fila principal do NVDA após o atraso dado, em vez de despertar o núcleo e executá-lo diretamente. Isso previne possíveis congelamentos devido ao núcleo entrar acidentalmente em suspensão depois de processar um retorno de chamada, no meio de uma chamada modal como a desativação de uma caixa de mensagem. (#6797)
 * A propriedade InputGesture.identifiers foi alterada para que não seja mais normalizada. (#6945)
@@ -2934,8 +2922,11 @@ Os destaques desta versão incluem o anúncio de seções e colunas de texto no 
 
 ### Alterações
 
-* Atualizado o eSpeak NG para a versão e095f008, 10 de Janeiro de 2017. (#6717)
+* The minimum braille cursor blink rate is now 200 ms. If this was previously set lower, it will be increased to 200 ms. (#6470)
+* A check box has been added to the braille settings dialog to allow enabling/disabling braille cursor blinking. Previously a value of zero was used to achieve this. (#6470)
+* Atualizado o eSpeak NG para a versão (commit e095f008, 10 de Janeiro de 2017). (#6717)
 * Devido às alterações no Windows 10 Atualização para Criadores, o modo "Sempre reduzir" não está mais disponível nas configurações de redução de áudio do NVDA. A opção continua disponível em versões anteriores do windows 10. (#6684)
+* Due to changes in the  Windows 10 Creators Update, the "Duck when outputting speech and sounds" mode can no longer ensure audio has ducked fully before starting to speak, nor will it keep audio ducked long enough after speaking to stop rappid bouncing in volume. These changes do not   affect older windows 10 releases. (#6684)
 
 ### Correção de Falhas
 
@@ -2952,8 +2943,6 @@ Os destaques desta versão incluem o anúncio de seções e colunas de texto no 
 * O NVDA já não se torna inutilizável depois de encerrar o Windows Media Player enquanto um controle deslizante é focado. (#5467)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Profiles and configuration files are now automatically upgraded to meet the requirements of schema modifications. If there is an error during upgrade, a notification is shown, the configuration is reset and the old configuration file is available in the NVDA log at 'Info' level. (#6470)
 
@@ -3011,8 +3000,6 @@ Os destaques desta versão incluem melhoras no suporte para o Microsoft Edge; mo
 * No Firefox com o recurso multi-processos ativado, o modo de navegação e os campos de texto editáveis agora funcionam corretamente. (#6380)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Agora é possível criar módulos de aplicativo (app modules) para executáveis que contenham um ponto (.) em seus nomes. Os pontos são substituídos por sublinhados (_). (#5323)
 * The new gui.guiHelper module includes utilities to simplify the creation of wxPython GUIs, including automatic management of spacing. This facilitates better visual appearance and consistency, as well as easing creation of new GUIs for blind developers. (#6287)
@@ -3072,8 +3059,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Logging information directly from a property no longer results in the property being called recursively over and over again. (#6122)
 
 ## 2016.2.1
@@ -3124,8 +3109,6 @@ Os destaques desta versão incluem a possibilidade de indicar erros ortográfico
 * Em modo de navegação no Microsoft Word, os comandos Mover para depois do fim/antes do início de elementos que contém outros (vírgula e shift+vírgula) agora funcionam para tabelas. (#5883)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Os componentes do NVDA em C++ agora são integrados com o Microsoft Visual Studio 2015. (#5592)
 * You can now present a text or HTML message to the user in browse mode using ui.browseableMessage. (#4908)
@@ -3337,8 +3320,6 @@ Os destaques desta versão incluem o modo de navegação para documentos no Micr
 
 ### Alterações específicas para desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Atualizado o wxPython para a versão 3.0.2.0. (#3763)
 
 ## 2014.4
@@ -3455,8 +3436,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 
 ### Alterações específicas para desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * O NVDA agora possui suporte unificado para a documentação de seus complementos. Consulte a seção Add-on Documentation do Developer Guide para mais detalhes. (#2694)
 * When providing gesture bindings on a ScriptableObject via __gestures, it is now possible to provide the None keyword as the script. This unbinds the gesture in any base classes. (#4240)
 * It is now possible to change the shortcut key used to start NVDA for locales where the normal shortcut causes problems. (#2209)
@@ -3562,8 +3541,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 
 ### Alterações específicas para desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Os appModules agora contém as propriedades productName and productVersion. Essa informação agora também é incluída no Developer Info (NVDA+f1). (#1625)
 * No Console Python, você agora pode pressionar a tecla tab para completar o identificador atual. (#433)
  * Caso existam múltiplas possibilidades, é possível pressionar tab outra vez para selecionar a partir de uma lista.
@@ -3606,8 +3583,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 * Resolvido um problema onde as teclas de linhas braille da Freedom Scientific não eram detectadas em algumas circunstâncias. (#3401, #3662)
 
 ### Alterações específicas para desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Você pode especificar a categoria a ser mostrada ao usuário para scripts usando o atributo scriptCategory em classes ScriptableObject e o atributo category em métodos script. Consulte a documentação da baseObject.ScriptableObject para mais detalhes. (#1532)
 * config.save foi descontinuado e pode ser removido numa versão futura. Use config.conf.save em seu lugar. (#667)
@@ -3681,8 +3656,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 * O NVDA agora detecta corretamente o próximo slaide com foco ao apagar um slaide no visualizador de miniaturas do Microsoft PowerPoint. (#3415)
 
 ### Alterações Específicas Para desenvolvedores
-
- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * windowUtils.findDescendantWindow foi adicionado para buscar uma janela descendente (HWND) que corresponda à visibilidade especificada, ID de controle e/ou nome de classe.
 * O console Python remoto não tem mais o tempo limite de 10 segundos ao esperar entrada. (#3126)
@@ -3785,8 +3758,6 @@ Suporte para marcas de formulários em documentos no modo de navegação, caso s
 * Agora é possível usar o modo de navegação para páginas no Internet Explorer 10 em modos standards; um exemplo é a página de login [www.gmail.com](http://www.gmail.com). (#3151)
 
 ### Alterações Específicas para Desenvolvedores
-
- Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Os drivers para linhas braille agora podem suportar a seleção manual de portas. (#426)
  * This is most useful for braille displays which support connection via a legacy serial port.
@@ -3904,8 +3875,6 @@ Entre os destaques desta versão estão inclusos o suporte para entrada de carac
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * O arquivo contendo o log anterior agora é copiado para nvda-old.log a quando da inicialização do NVDA. Com efeito, caso ele trave ou seja reiniciado, as informações do log daquela sessão continuarão acessíveis para inspeção. (#916)
 * Fetching the role property in chooseNVDAObjectOverlayClasses no longer causes the role to be incorrect and thus not reported on focus for certain objects such as Windows command consoles and Scintilla controls. (#2569)
 * Os menus Preferências, Ferramentas e Ajuda são agora acessíveis como atributos em gui.mainFrame.sysTrayIcon com as respectivas denominações de preferencesMenu, toolsMenu e helpMenu. Isso permite que plugins adicionem itens mais ´facilmente a esses menus.
@@ -3961,8 +3930,6 @@ Os destaques dessa versão incluem um instalador integrado com o recurso de cria
 * O ícone do NVDA para os atalhos da área de trabalho e do menu iniciar agora é mostrado corretamente em edições de 64 bit do Windows. (#354)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * Devido à substituição do anterior instalador do NVDA NSIS por um instalador integrado escrito em Python, já não se faz necessário aos tradutores manter os arquivos langstrings.txt para o instalador. Todas as strings de localização agora são controladas pelos arquivos gettext po.
 
@@ -4039,8 +4006,6 @@ Alguns itens ou termos desta seção não serão traduzidos, uma vez que são de
 
 ### Alterações Específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * Agora existe um console Python remoto para situações onde seja necessária uma depuração remota. Consulte o Guia do Desenvolvedor para mais detalhes.
 * The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
 * TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
@@ -4112,8 +4077,6 @@ Os destaques desta versão incluem a mudança automática do idioma do sintetiza
 * Ao mover-se para fora de campos de edição de texto usando as teclas seta a esquerda, seta acima ou pageUp estando em modo de foco, agora alterna corretamente para o modo de navegação se a opção Modo de foco automático quando o cursor da aplicação muda estiver ativada. (#1733)
 
 ### Alterações Específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * O NVDA agora pode instruir aos sintetizadores de voz para alternar o idioma em seções particulares da fala.
  * Para suportar essa função, os drivers precisam ter controle de speech.LangChangeCommand em seqüências passadas para SynthDriver.speak().
@@ -4236,8 +4199,6 @@ Os destaques desta versão incluem maiores implementações no tocante à pontua
 
 ### Alterações específicas para Desenvolvedores
 
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
-
 * A documentação para desenvolvedores agora pode ser gerada usando SCons. Consulte o arquivo readme.txt na raiz da distribuição do código para detalhes, incluindo dependências associadas.
 * Locales agora podem fornecer descrições para caracteres. Consulte a Seção sobre Descrições de Caracteres no Guia do Desenvolvedor para obter detalhes. (#55)
 * Locales agora podem fornecer informações sobre a pronúncia da pontuação e outros sinais específicos. Consulte a seção sobre Pronúncia de Pontuação no Guia do Desenvolvedor para obter detalhes. (#332)
@@ -4333,8 +4294,6 @@ Os destaques desta versão incluem o anúncio de cores para alguns controles; an
 * em linhas braille ALVA BC640/BC680 o NVDA já não ignora as teclas da linha que ainda estão sendo pressionadas depois que outra tecla é solta.
 
 ### Alterações específicas para Desenvolvedores
-
-Alguns itens ou termos desta seção não serão traduzidos, uma vez que são demasiado técnicos e relevantes apenas para desenvolvedores. Todavia, os itens que possam ser relevantes para usuários comuns, serão traduzidos.
 
 * SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
 * The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
