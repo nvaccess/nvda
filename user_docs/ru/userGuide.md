@@ -4271,63 +4271,63 @@ NVDA поддерживает брайлевские дисплеи Braille Sens
 
 | Название |Комбинация клавиш|
 |---|---|
-|Scroll braille display back |left|
-|Scroll braille display forward |right|
-|Say all |space+Backspace|
-|NVDA Menu |Left+Right|
-|Move braille display to previous line |LJ up|
-|Move braille display to next line |LJ down|
-|Toggle braille tethered to |LJ center|
+|Прокрутить дисплей Брайля назад |left|
+|Прокрутить дисплей Брайля вперёд |right|
+|Читать всё |space+Backspace|
+|Меню NVDA |Left+Right|
+|Перемещение дисплея Брайля на предыдущую строку |LJ вверх|
+|Перемещение дисплея Брайля на следующую строку |LJ вниз|
+|Переключить привязку Брайля |LJ center|
 |tab |LJ right|
 |shift+tab |LJ left|
-|upArrow key |RJ up|
-|downArrow key |RJ down|
-|leftArrow key |RJ left|
-|rightArrow key |RJ right|
-|Route to braille cell |routing|
-|shift+upArrow key |Space+RJ up, Backspace+RJ up|
-|shift+downArrow key |Space+RJ down, Backspace+RJ down|
-|shift+leftArrow key |Space+RJ left, Backspace+RJ left|
-|shift+rightArrow key |Space+RJ right, Backspace+RJ right|
-|enter key |RJ center, dot8|
-|escape key |Space+RJ center|
-|windows key |Backspace+RJ center|
-|space key |Space, Backspace|
-|backspace key |dot7|
-|pageup key |space+LJ right|
+|Стрелка вверх |RJ up|
+|Стрелка вниз |RJ down|
+|Стрелка вправо |RJ left|
+|Стрелка влево |RJ вправо|
+|Переход к ячейке Брайля |routing|
+|shift+стрелка верх |Space+RJ вверх, Backspace+RJ вверх|
+|shift+стрелка вниз |Space+RJ вниз, Backspace+RJ вниз|
+|shift+стрелка влево |Space+RJ left, Backspace+RJ left|
+|shift+стрелка вправо |Space+RJ вправо, Backspace+RJ вправо|
+|enter |RJ center, dot8|
+|escape |Space+RJ center|
+|клавиша windows |Backspace+RJ center|
+|space |Space, Backspace|
+|backspace |dot7|
+|pageup |space+LJ right|
 |pagedown key |space+LJ left|
-|home key |space+LJ up|
-|end key |space+LJ down|
-|control+home key |backspace+LJ up|
-|control+end key |backspace+LJ down|
+|home |space+LJ up|
+|end |space+LJ down|
+|control+home |backspace+LJ up|
+|control+end  |backspace+LJ down|
 
-### Papenmeier BRAILLEX Newer Models {#Papenmeier}
+### Новые модели Papenmeier BRAILLEX {#Papenmeier}
 
-The following Braille displays are supported: 
+Поддерживаются следующие дисплеи Брайля: 
 
 * BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 * BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-* BRAILLEX Trio (USB and bluetooth)
-* BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
+* BRAILLEX Trio (USB и bluetooth)
+* BRAILLEX Live 20, BRAILLEX Live и BRAILLEX Live Plus (USB и bluetooth)
 
-These displays do not support NVDA's automatic background braille display detection functionality.
-There is an option in the display's USB driver which can cause an issue with loading the display.
-Please try the following:
+Эти дисплеи не поддерживают функцию автоматического обнаружения дисплея Брайля NVDA.
+В драйвере USB дисплея есть опция, которая может вызвать проблему с загрузкой дисплея.
+Пожалуйста, попробуйте сделать следующее:
 
-1. Please make sure that you have installed the [latest driver](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
-1. Open the Windows Device Manager.
-1. Scroll down the list to "USB Controllers" or "USB Devices".
-1. Select "Papenmeier Braillex USB Device".
-1. Open the properties and switch to the "Advanced" tab.
-Sometimes the "Advanced" tab doesn't appear.
-If this is the case, disconnect the braille display from the computer, exit NVDA, wait a moment and reconnect the braille display.
-Repeat this 4 to 5 times if necessary.
-If the "Advanced" tab is still not displayed, please restart the computer.
-1. Disable the "Load VCP" option.
+1. Убедитесь, что установлен [последний драйвер](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
+1. Откройте диспетчер устройств Windows.
+1. Прокрутите список вниз до раздела «Контроллеры USB» или «Устройства USB».
+1. Выберите «Papenmeier Braillex USB Device».
+1. Откройте свойства и перейдите на вкладку «Дополнительно».
+Иногда вкладка «Дополнительно» не отображается.
+В этом случае отсоедините дисплей Брайля от компьютера, завершите работу NVDA, подождите некоторое время и снова подсоедините дисплей Брайля.
+При необходимости повторите эти действия 4-5 раз.
+Если вкладка «Дополнительно» по-прежнему не отображается, перезагрузите компьютер.
+1. Отключите опцию «Загрузить VCP».
 
-Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
-The EAB can be moved in four directions where generally each direction has two switches.
-The C and Live series are the only exceptions to this rule.
+Большинство устройств оснащены панелью легкого доступа (EAB), которая обеспечивает интуитивно понятное и быстрое управление.
+По панели EAB можно перемещаться в четырёх направлениях, причем в каждом направлении обычно имеется по два переключателя.
+Исключением из этого правила являются устройства серий C и Live.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.

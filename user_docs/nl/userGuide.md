@@ -2749,7 +2749,7 @@ In het invoerveld kunt u het aantal karakters per regel instellen dat een docume
 
 ##### Aantal regels per pagina {#BrowseModeSettingsPageLines}
 
- Je kunt hier het aantal regels invoeren dat opschuift als je page up of page down indrukt terwijl je je in een document in bladermodus bevindt.
+Dit invoervak bepaalt het aantal regels dat opschuift als je page up of page down indrukt terwijl je je in bladermodus bevindt.
 
 <!-- KC:setting -->
 
@@ -4011,8 +4011,8 @@ Waar de toetsen zich bevinden, leest u in de documentatie bij de leesregels.
 |`shift+tab` toets |`spatie+punt1+punt3`|
 |`tab` toets |`spatie+punt4+punt6`|
 |`alt` toets |`spatie+punt1+punt3+punt4` (`spatie+m`)|
-|`escape` toets` |`spatie+punt1+punt5` (`spatie+e`)|
-|	 windows` toets |`spatie+punt3+punt4`|
+|`escape` toets |`spatie+punt1+punt5` (`spatie+e`)|
+|`windows` toets |`spatie+punt3+punt4`|
 |`alt+tab` toets |`spatie+punt2+punt3+punt4+punt5` (`spatie+t`)|
 |NVDA-menu |`spatie+punt1+punt3+punt4+punt5` (`spatie+n`)|
 |`windows+d` sneltoets (minimaliseer alle applicaties) |`spatie+punt1+punt4+punt5` (`spatie+d`)|
@@ -5060,7 +5060,7 @@ Die parameters moeten achter de optie worden geplaatst en moeten daarvan geschei
 |---|---|
 |`nvda -l 10` |Geeft NVDA opdracht te starten met log-niveau ingesteld op debug|
 |`nvda --log-file=c:\nvda.log` |Geeft NVDA opdracht te loggen naar `c:\nvda.log`|
-|`nvda --log-level=20 -f c:\nvda.log` |Geeft NVDA opdracht te starten met het log-niveau ingesteld op info en te loggen naar c:\nvda.log|
+|`nvda --log-level=20 -f c:\nvda.log` |Geeft NVDA opdracht te starten met het log-niveau ingesteld op info en te loggen naar `c:\nvda.log`|
 
 Hieronder volgen de commandoregelopties voor NVDA:
 
