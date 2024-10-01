@@ -1400,7 +1400,7 @@ NVDA предлагает несколько таких встроенных с�
 
 | Название |Комбинация клавиш |Описание|
 |---|---|---|
-|Переключает состояние затемнения экрана |`NVDA+control+escape` |Переключает состояние затемнения экрана, делая экран полностью чёрным, или вновь отображая его содержимое. Однократное нажатие включает затемнение экрана до следующей перезагрузки NVDA. Двойное нажатие включает затемнение до тех пор, пока вы не отключите его вручную.|
+|Переключает состояние затемнения экрана |`NVDA+control+escape` |Включите, чтобы сделать экран чёрным, или отключите, чтобы отобразить содержимое экрана. При однократном нажатии затемнение экрана будет включено до тех пор, пока вы не перезапустите NVDA. При двойном нажатии затемнение экрана будет включено до тех пор, пока вы его не отключите.|
 
 <!-- KC:endInclude -->
 
@@ -4016,7 +4016,7 @@ VarioUltra и Pronto! используют HID протокол.
 |`alt+tab` key |`space+dot2+dot3+dot4+dot5` (`space+t`)|
 |NVDA Menu |`space+dot1+dot3+dot4+dot5` (`space+n`)|
 |`windows+d` key (minimize all applications) |`space+dot1+dot4+dot5` (`space+d`)|
-|Читать все |`space+dot1+dot2+dot3+dot4+dot5+dot6`|
+|Say all |`space+dot1+dot2+dot3+dot4+dot5+dot6`|
 
 Для брайлевских дисплеев с джойстиком:
 
@@ -4049,13 +4049,13 @@ Hedo ProfiLine USB компании [hedo Reha-Technik](https://www.hedo.de/) п
 |Перемещение брайлевского дисплея к следующей строке |B5|
 |Перемещение к брайлевской клетке |routing|
 |Переключение между брайлевскими привязками |K2|
-|Читать всё |B6|
+|Читай всё |B6|
 
 <!-- KC:endInclude -->
 
 ### hedo MobilLine USB {#HedoMobilLine}
 
-NVDA поддерживает брайлевский дисплей Hedo MobilLine USB компании [hedo Reha-Technik](https://www.hedo.de/).
+Hedo MobilLine USB компании [hedo Reha-Technik](https://www.hedo.de/) поддерживается.
 Сначала установите USB драйвера предоставленные производителем.
 
 Автоопределение для этого брайлевского дисплея не поддерживается.
@@ -4072,7 +4072,7 @@ NVDA поддерживает брайлевский дисплей Hedo MobilLi
 |Перемещение брайлевского дисплея к следующей строке |B5|
 |Перемещение к брайлевской клетке |routing|
 |Переключение между брайлевскими привязками |K2|
-|Читать всё |B6|
+|Читай всё |B6|
 
 <!-- KC:endInclude -->
 
@@ -4088,9 +4088,9 @@ USB-драйверы не нужны, если выбран протокол Ope
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
-  * Обратите внимание, что Zoomax в настоящее время не поддерживается без внешних драйверов
+  * Note that the Zoomax is currently not supported without external drivers
 
-В NVDA используются следующие комбинации клавиш для брайлевских дисплеев Brailliant BI/B и BrailleNote touch.
+В NVDA используются следующие клавишные комбинации для брайлевских дисплеев Brailliant BI/B и BrailleNote touch.
 Для описания расположения клавиш, пожалуйста, обратитесь к документации по брайлевскому дисплею.
 
 #### Комбинации клавиш для всех моделей {#HumanWareBrailliantKeyAssignmentForAllModels}
@@ -4118,7 +4118,7 @@ USB-драйверы не нужны, если выбран протокол Ope
 |alt+tab |пробел+точка2+точка3+точка4+точка5 (пробел+t)|
 |NVDA меню |пробел+точка1+точка3+точка4+точка5 (пробел+n)|
 |windows+d (свернуть все приложения) |пробел+точка1+точка4+точка5 (пробел+d)|
-|Читать всё |пробел+точка1+точка2+точка3+точка4+точка5+точка6|
+|Читай всё |пробел+точка1+точка2+точка3+точка4+точка5+точка6|
 
 <!-- KC:endInclude -->
 
@@ -4223,111 +4223,111 @@ NVDA поддерживает брайлевские дисплеи Braille Sens
 
 <!-- KC:endInclude -->
 
-### Дисплеи Брайля Seika {#Seika}
+### Seika Braille Displays {#Seika}
 
-Следующие дисплеи Брайля Seika от Nippon Telesoft поддерживаются в двух группах с разной функциональностью:
+The following Seika Braille displays from Nippon Telesoft are supported in two groups with different functionality:
 
-* [Seika Version 3, 4 и 5 (40 ячеек), Seika80 (80 ячеек)](#SeikaBrailleDisplays)
-* [MiniSeika (16, 24 ячейки), V6 и V6Pro (40 ячеек)](#SeikaNotetaker)
+* [Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells)](#SeikaBrailleDisplays)
+* [MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)](#SeikaNotetaker)
 
-Более подробную информацию о дисплеях можно найти на сайте https://en.seika-braille.com/down/index.html.
+You can find more information about the displays at https://en.seika-braille.com/down/index.html.
 
-#### Seika Version 3, 4 и 5 (40 ячеек), Seika80 (80 ячеек) {#SeikaBrailleDisplays}
+#### Seika Version 3, 4, and 5 (40 cells), Seika80 (80 cells) {#SeikaBrailleDisplays}
 
-* Эти дисплеи пока не поддерживают функцию автоматического определения брайлевских дисплеев NVDA.
-* Выберите «Дисплеи Seika Braille» для ручной настройки.
-* Перед использованием Seika v3/4/5/80 необходимо установить драйверы устройства.
-Драйверы [предоставлены производителем](https://en.seika-braille.com/down/index.html).
+* These displays do not yet support NVDA's automatic background braille display detection functionality.
+* Select "Seika Braille Displays" to manually configure
+* A device drivers must be installed before using Seika v3/4/5/80.
+The drivers are [provided by the manufacturer](https://en.seika-braille.com/down/index.html).
 
-Ниже приведено назначение клавиш дисплея Seika Braille.
-Описание этих клавиш см. в документации к дисплею.
+The Seika Braille Display key assignments follow.
+Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
 
 | Название |Комбинация клавиш|
 |---|---|
-|Прокрутить дисплей брайля назад |left|
-|Прокрутить дисплей Брайля вперёд |right|
-|Перемещение дисплея Брайля на предыдущую строку |b3|
-|Перемещение дисплея Брайля на следующую строку |b4|
-|Переключить привязку к шрифту Брайля |b5|
-|Читать всё |b6|
+|Scroll braille display back |left|
+|Scroll braille display forward |right|
+|Move braille display to previous line |b3|
+|Move braille display to next line |b4|
+|Toggle braille tethered to |b5|
+|Say all |b6|
 |tab |b1|
 |shift+tab |b2|
 |alt+tab |b1+b2|
-|Меню NVDA |left+right|
-|Переход к ячейке брайля |routing|
+|NVDA Menu |left+right|
+|Route to braille cell |routing|
 
 <!-- KC:endInclude -->
 
-#### MiniSeika (16, 24 ячейки), V6 и V6Pro (40 ячеек) {#SeikaNotetaker}
+#### MiniSeika (16, 24 cells), V6, and V6Pro (40 cells) {#SeikaNotetaker}
 
-* Функция автоматического определения фонового брайлевского дисплея NVDA поддерживается через USB и Bluetooth.
-* Выберите «Seika Notetaker» или «auto» для настройки.
-* При использовании дисплея Брайля Seika Notetaker дополнительные драйверы не требуются.
+* NVDA's automatic background braille display detection functionality is supported via USB and Bluetooth.
+* Select "Seika Notetaker" or "auto" to configure.
+* No extra drivers are required when using a Seika Notetaker braille display.
 
-Назначения клавиш Seika Notetaker приведены ниже.
-Описание этих клавиш см. в документации к дисплею.
+The Seika Notetaker key assignments follow.
+Please see the display's documentation for descriptions of where these keys can be found.
 <!-- KC:beginInclude -->
 
 | Название |Комбинация клавиш|
 |---|---|
-|Прокрутить дисплей Брайля назад |left|
-|Прокрутить дисплей Брайля вперёд |right|
-|Читать всё |space+Backspace|
-|Меню NVDA |Left+Right|
-|Перемещение дисплея Брайля на предыдущую строку |LJ вверх|
-|Перемещение дисплея Брайля на следующую строку |LJ вниз|
-|Переключить привязку Брайля |LJ center|
+|Scroll braille display back |left|
+|Scroll braille display forward |right|
+|Say all |space+Backspace|
+|NVDA Menu |Left+Right|
+|Move braille display to previous line |LJ up|
+|Move braille display to next line |LJ down|
+|Toggle braille tethered to |LJ center|
 |tab |LJ right|
 |shift+tab |LJ left|
-|Стрелка вверх |RJ up|
-|Стрелка вниз |RJ down|
-|Стрелка вправо |RJ left|
-|Стрелка влево |RJ вправо|
-|Переход к ячейке Брайля |routing|
-|shift+стрелка верх |Space+RJ вверх, Backspace+RJ вверх|
-|shift+стрелка вниз |Space+RJ вниз, Backspace+RJ вниз|
-|shift+стрелка влево |Space+RJ left, Backspace+RJ left|
-|shift+стрелка вправо |Space+RJ вправо, Backspace+RJ вправо|
-|enter |RJ center, dot8|
-|escape |Space+RJ center|
-|клавиша windows |Backspace+RJ center|
-|space |Space, Backspace|
-|backspace |dot7|
-|pageup |space+LJ right|
+|upArrow key |RJ up|
+|downArrow key |RJ down|
+|leftArrow key |RJ left|
+|rightArrow key |RJ right|
+|Route to braille cell |routing|
+|shift+upArrow key |Space+RJ up, Backspace+RJ up|
+|shift+downArrow key |Space+RJ down, Backspace+RJ down|
+|shift+leftArrow key |Space+RJ left, Backspace+RJ left|
+|shift+rightArrow key |Space+RJ right, Backspace+RJ right|
+|enter key |RJ center, dot8|
+|escape key |Space+RJ center|
+|windows key |Backspace+RJ center|
+|space key |Space, Backspace|
+|backspace key |dot7|
+|pageup key |space+LJ right|
 |pagedown key |space+LJ left|
-|home |space+LJ up|
-|end |space+LJ down|
-|control+home |backspace+LJ up|
-|control+end  |backspace+LJ down|
+|home key |space+LJ up|
+|end key |space+LJ down|
+|control+home key |backspace+LJ up|
+|control+end key |backspace+LJ down|
 
-### Новые модели Papenmeier BRAILLEX {#Papenmeier}
+### Papenmeier BRAILLEX Newer Models {#Papenmeier}
 
-Поддерживаются следующие дисплеи Брайля: 
+The following Braille displays are supported: 
 
 * BRAILLEX EL 40c, EL 80c, EL 20c, EL 60c (USB)
 * BRAILLEX EL 40s, EL 80s, EL 2d80s, EL 70s, EL 66s (USB)
-* BRAILLEX Trio (USB и bluetooth)
-* BRAILLEX Live 20, BRAILLEX Live и BRAILLEX Live Plus (USB и bluetooth)
+* BRAILLEX Trio (USB and bluetooth)
+* BRAILLEX Live 20, BRAILLEX Live and BRAILLEX Live Plus (USB and bluetooth)
 
-Эти дисплеи не поддерживают функцию автоматического обнаружения дисплея Брайля NVDA.
-В драйвере USB дисплея есть опция, которая может вызвать проблему с загрузкой дисплея.
-Пожалуйста, попробуйте сделать следующее:
+These displays do not support NVDA's automatic background braille display detection functionality.
+There is an option in the display's USB driver which can cause an issue with loading the display.
+Please try the following:
 
-1. Убедитесь, что установлен [последний драйвер](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
-1. Откройте диспетчер устройств Windows.
-1. Прокрутите список вниз до раздела «Контроллеры USB» или «Устройства USB».
-1. Выберите «Papenmeier Braillex USB Device».
-1. Откройте свойства и перейдите на вкладку «Дополнительно».
-Иногда вкладка «Дополнительно» не отображается.
-В этом случае отсоедините дисплей Брайля от компьютера, завершите работу NVDA, подождите некоторое время и снова подсоедините дисплей Брайля.
-При необходимости повторите эти действия 4-5 раз.
-Если вкладка «Дополнительно» по-прежнему не отображается, перезагрузите компьютер.
-1. Отключите опцию «Загрузить VCP».
+1. Please make sure that you have installed the [latest driver](https://www.papenmeier-rehatechnik.de/en/service/downloadcenter/software/articles/software-braille-devices.html).
+1. Open the Windows Device Manager.
+1. Scroll down the list to "USB Controllers" or "USB Devices".
+1. Select "Papenmeier Braillex USB Device".
+1. Open the properties and switch to the "Advanced" tab.
+Sometimes the "Advanced" tab doesn't appear.
+If this is the case, disconnect the braille display from the computer, exit NVDA, wait a moment and reconnect the braille display.
+Repeat this 4 to 5 times if necessary.
+If the "Advanced" tab is still not displayed, please restart the computer.
+1. Disable the "Load VCP" option.
 
-Большинство устройств оснащены панелью легкого доступа (EAB), которая обеспечивает интуитивно понятное и быстрое управление.
-По панели EAB можно перемещаться в четырёх направлениях, причем в каждом направлении обычно имеется по два переключателя.
-Исключением из этого правила являются устройства серий C и Live.
+Most devices have an Easy Access Bar (EAB) that allows intuitive and fast operation.
+The EAB can be moved in four directions where generally each direction has two switches.
+The C and Live series are the only exceptions to this rule.
 
 The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.
 Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.

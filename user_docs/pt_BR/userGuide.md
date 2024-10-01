@@ -1,9 +1,9 @@
 # Guia do Usuário do NVDA NVDA_VERSION
+## Traduzido por: Gustavo Tavares Dantas; Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
 [TOC]
 
 <!-- KC:title: Referência Rápida de Comandos do NVDA NVDA_VERSION -->
-
 
 
 ## Introdução {#Introduction}
