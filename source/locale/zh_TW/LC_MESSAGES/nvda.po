@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 07:19+0000\n"
-"PO-Revision-Date: 2024-09-16 00:03\n"
+"POT-Creation-Date: 2024-10-01 01:15+0000\n"
+"PO-Revision-Date: 2024-10-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: Chinese Traditional\n"
 "Language: zh_TW\n"
@@ -3928,7 +3928,7 @@ msgstr "讀出字型大小 開"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:579
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr "循環切換字型屬性提示方式，包括語音、點字、語音和點字、不提示。"
+msgstr "循環切換提示字型屬性方式，包括語音、點字、語音及點字、關。"
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:589
@@ -3938,17 +3938,17 @@ msgstr "不提示字型屬性"
 #. Translators: A state in which font attributes are only spoken.
 #: globalCommands.py:592
 msgid "Speak font attributes"
-msgstr "語音字型屬性"
+msgstr "語音提示字型屬性"
 
 #. Translators: A state in which font attributes are only brailled.
 #: globalCommands.py:595
 msgid "Braille font attributes"
-msgstr "點字字型屬性"
+msgstr "點字提示字型屬性"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:598
 msgid "Speak and braille font attributes"
-msgstr "語音及點字字型屬性"
+msgstr "語音及點字提示字型屬性"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:604
@@ -5371,12 +5371,12 @@ msgstr "切換在文字中定位游標時讀出游標所在字元"
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3606
 msgid "Enabled speak character when routing cursor in text"
-msgstr "啟用在文字中定位游標時讀出游標所在字元"
+msgstr "啟用在文字中定位游標時讀出字元"
 
 #. Translators: The message announced when toggling off speaking character when routing.
 #: globalCommands.py:3609
 msgid "Disabled speak character when routing cursor in text"
-msgstr "停用在文字中定位游標時讀出游標所在字元"
+msgstr "停用在文字中定位游標時讀出字元"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3614
@@ -6324,25 +6324,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "桌上型電腦"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "筆記型電腦"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "不明的%s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "開"
@@ -6351,7 +6351,7 @@ msgstr "開"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "關"
@@ -6359,13 +6359,13 @@ msgstr "關"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "%s 鍵盤"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "鍵盤, 所有配置"
 
@@ -8875,20 +8875,20 @@ msgstr "註解"
 #: appModules\poedit.py:180
 msgctxt "poedit"
 msgid "Reports the previous source text, if any. If pressed twice, presents the text in browse mode"
-msgstr "若有的話，讀出之前的來源文字。連按兩次以瀏覽模式顯示文字"
+msgstr "如果有的話，讀出先前的原文，連按兩下在瀏覽模式呈現文字"
 
 #. Translators: The description of the "previous source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:191
 msgctxt "poedit"
 msgid "previous source text"
-msgstr "之前的來源文字"
+msgstr "先前的原文"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:206
 msgctxt "poedit"
 msgid "Reports a translation issue, if any. If pressed twice, presents the warning in browse mode"
-msgstr "若有的話，讀出翻譯問題。連按兩次在瀏覽模式下顯示警告"
+msgstr "如果有的話，讀出翻譯問題，連按兩下在瀏覽模式呈現警告"
 
 #. Translators: The description of the "translation issue" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
@@ -9536,7 +9536,7 @@ msgstr "Caiku Albatross 46/80"
 #: brailleDisplayDrivers\albatross\driver.py:485
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr "若要將 Albatross 與 NVDA 連接使用，請將 Albatross 上選單中的狀態儲存格數量變更為最多 {maxCells}，然後根據需要重新啟動 Albatross 和 NVDA。"
+msgstr "要將 Albatross 與 NVDA 連接使用，請將 Albatross 上選單中的狀態儲存格數量變更為最多 {maxCells}，然後根據需要重新啟動 Albatross 和 NVDA。"
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -9712,7 +9712,7 @@ msgstr "兩個空格 (  )"
 #: config\configFlags.py:271
 msgctxt "paragraphMarker"
 msgid "Pilcrow (¶)"
-msgstr "段落標記 (¶)"
+msgstr "段落符號 (¶)"
 
 #. Translators: Label for an option in NVDA settings.
 #: config\featureFlagEnums.py:53
@@ -12554,7 +12554,7 @@ msgstr "處理來自其他應用程式的按鍵(&A)"
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:1991
 msgid "&Multiple key press timeout (ms):"
-msgstr "多個按鍵逾時(mS):"
+msgstr "按鍵連按逾時(以毫秒計)(&M):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2007
@@ -13675,7 +13675,7 @@ msgstr "顯示選取範圍(&L)"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4442
 msgid "Formatting &display"
-msgstr "格式呈現(&D):"
+msgstr "格式呈現(&D)"
 
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4451
@@ -14712,7 +14712,7 @@ msgstr "不支援與數學內容互動。"
 #: NVDAObjects\__init__.py:662
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
-msgstr "物件邊緣距螢幕左邊緣百分之 {left:.1f}，距螢幕上邊緣百分之 {top:.1f}，寬度佔螢幕的百分之 {width:.1f}，高度佔螢幕的百分之 {height:.1f}"
+msgstr "物件與螢幕左邊緣距離為百分之 {left:.1f}，與螢幕上邊緣距離為百分之 {top:.1f}，寬度為百分之 {width:.1f}，高度為百分之 {height:.1f}"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -14862,7 +14862,7 @@ msgstr "在第 {rowNumber} 列第 {columnNumber} 欄找不到列標題"
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "讀出系統游標所在的註解文字，按兩下在瀏覽模式中顯示資訊"
+msgstr "讀出系統游標所在的註解文字，連按兩下在瀏覽模式呈現資訊。"
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:420 NVDAObjects\UIA\wordDocument.py:684
@@ -15102,7 +15102,7 @@ msgstr "本文件不支援以句子導覽"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:662
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr ""
+msgstr "讀出系統游標所在的註解文字，連按兩下在瀏覽模式呈現資訊"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -16178,7 +16178,7 @@ msgstr "已設定 {address} 為欄標題的開頭"
 #: NVDAObjects\window\excel.py:1632
 #, python-brace-format
 msgid "Removed {address} from column headers"
-msgstr "已從 {address} 移除欄標題"
+msgstr "從 {address} 移除欄標題"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1636
@@ -16234,7 +16234,7 @@ msgstr "輸入訊息是 {message}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1850
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "讀出目前儲存格的附註，連按兩下在瀏覽模式呈現資訊"
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog

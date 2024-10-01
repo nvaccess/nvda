@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 07:19+0000\n"
-"PO-Revision-Date: 2024-09-16 00:03\n"
+"POT-Creation-Date: 2024-10-01 01:15+0000\n"
+"PO-Revision-Date: 2024-10-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: Portuguese\n"
 "Language: pt_PT\n"
@@ -1314,13 +1314,13 @@ msgstr "Gujarati grau 1"
 #. braille settings dialog.
 #: brailleTables.py:362
 msgid "Greek international braille (2-cell accented letters)"
-msgstr ""
+msgstr "Grego Braille internacional (letras acentuadas em 2 células)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables.py:365
 msgid "Greek international braille (single-cell accented letters)"
-msgstr ""
+msgstr "Grego Braille internacional (letras acentuadas numa só célula)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1848,13 +1848,13 @@ msgstr "Tailandês Braille de computador 8 pontos"
 #. braille settings dialog.
 #: brailleTables.py:632
 msgid "Thai grade 0"
-msgstr ""
+msgstr "Tailandês grau 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables.py:635
 msgid "Thai grade 1"
-msgstr ""
+msgstr "Tailandês grau 1"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -6328,25 +6328,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "desktop (computador de secretária)"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "laptop (computador portátil)"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "desconhecido %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "ligado"
@@ -6355,7 +6355,7 @@ msgstr "ligado"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "desligado"
@@ -6363,13 +6363,13 @@ msgstr "desligado"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "teclado %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "teclado, todos os esquemas"
 
@@ -9562,7 +9562,7 @@ msgstr "Caiku Albatross 46/80"
 #: brailleDisplayDrivers\albatross\driver.py:485
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr ""
+msgstr "Para utilizar uma linha Albatross com o NVDA, altere o número de células de estado no menu interno da Albatross para, no máximo, {maxCells}, e reinicie o Albatross e o NVDA, se necessário."
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
