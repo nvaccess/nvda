@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 07:19+0000\n"
-"PO-Revision-Date: 2024-09-16 00:03\n"
+"POT-Creation-Date: 2024-10-01 01:15+0000\n"
+"PO-Revision-Date: 2024-10-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -45,7 +45,7 @@ msgstr "частично буквенно-цифровой"
 #. Translators: For Japanese character input: half-shaped (single-byte) Katacana input mode.
 #: NVDAHelper.py:502
 msgid "half katakana"
-msgstr "частично katakana"
+msgstr "частично катакана"
 
 #. Translators: For Japanese character input: alpha numeric (roman/english) mode.
 #: NVDAHelper.py:504 NVDAHelper.py:514
@@ -3479,17 +3479,17 @@ msgstr "Нет совпадений"
 #. Translators: Input help message for NVDA's find command.
 #: cursorManager.py:228
 msgid "find a text string from the current cursor position"
-msgstr "поиск текста от текущей позиции курсора"
+msgstr "выполняет поиск текста от текущей позиции курсора"
 
 #. Translators: Input help message for find next command.
 #: cursorManager.py:233
 msgid "find the next occurrence of the previously entered text string from the current cursor's position"
-msgstr "поиск следующего вхождения ранее введённого текста от текущей позиции курсора"
+msgstr "выполняет поиск следующего вхождения ранее введённого текста от текущей позиции курсора"
 
 #. Translators: Input help message for find previous command.
 #: cursorManager.py:251
 msgid "find the previous occurrence of the previously entered text string from the current cursor's position"
-msgstr "поиск предыдущего вхождения ранее введённого текста от текущей позиции курсора"
+msgstr "выполняет поиск предыдущего вхождения ранее введённого текста от текущей позиции курсора"
 
 #. Translators: Reported when there is no text selected (for copying).
 #. Translators: The message reported when there is no selection
@@ -4188,7 +4188,7 @@ msgstr "чтение таблиц включено"
 #. Translators: Input help mode message for toggle report table row/column headers command.
 #: globalCommands.py:847
 msgid "Cycle through the possible modes to report table row and column headers"
-msgstr "Переключение возможных режимов чтения заголовков строк и столбцов в таблицах"
+msgstr "Переключает возможные режимы чтения заголовков строк и столбцов в таблицах"
 
 #. Translators: Reported when the user cycles through report table header modes.
 #. {mode} will be replaced with the mode; e.g. None, Rows and columns, Rows or Columns.
@@ -6336,25 +6336,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "настольная"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "ноутбук"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "неизвестно %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "включено"
@@ -6363,7 +6363,7 @@ msgstr "включено"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "выключено"
@@ -6371,13 +6371,13 @@ msgstr "выключено"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "клавиатура, %s раскладка"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "клавиатура, все раскладки"
 
@@ -11330,7 +11330,7 @@ msgstr "Диалог, в котором вы можете сформироват
 #. Translators: The label for the menu item to open Voice specific speech dictionary dialog.
 #: gui\__init__.py:682
 msgid "&Voice dictionary..."
-msgstr "Словарь для &голоса..."
+msgstr "Словарь &голоса..."
 
 #. Translators: The help text for the menu item
 #. to open Voice specific speech dictionary dialog.
@@ -14996,7 +14996,7 @@ msgid_plural "{} suggestions"
 msgstr[0] "{} предложение"
 msgstr[1] "{} предложения"
 msgstr[2] "{} предложений"
-msgstr[3] ""
+msgstr[3] "{} предложений"
 
 #. Translators: the description of a script
 #: NVDAObjects\UIA\excel.py:195

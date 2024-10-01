@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 07:19+0000\n"
-"PO-Revision-Date: 2024-09-16 00:03\n"
+"POT-Creation-Date: 2024-10-01 01:15+0000\n"
+"PO-Revision-Date: 2024-10-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: French\n"
 "Language: fr_FR\n"
@@ -5100,7 +5100,7 @@ msgstr "Positionnement automatique du focus système aux éléments focalisables
 #. Translators: Input help mode message for report battery status command.
 #: globalCommands.py:3124
 msgid "Reports battery status and time remaining if AC is not plugged in"
-msgstr "Annoncer l'état de la batterie et le temps restant si l'adaptateur secteur n'est pas connecté"
+msgstr "Annoncer l'état de la batterie et le temps restant si l'adaptateur secteur n'est pas branché"
 
 #. Translators: Input help mode message for pass next key through command.
 #: globalCommands.py:3135
@@ -6328,25 +6328,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "ordinateur de bureau"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "ordinateur portable"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "%s inconnu"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "activé"
@@ -6355,7 +6355,7 @@ msgstr "activé"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "désactivé"
@@ -6363,13 +6363,13 @@ msgstr "désactivé"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "Clavier %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "clavier, toutes les dispositions"
 
@@ -17578,12 +17578,12 @@ msgstr "Pas de batterie"
 #. Translators: Reported when the battery is plugged in, and now is charging.
 #: winAPI\_powerTracking.py:216
 msgid "Plugged in"
-msgstr "Connecté"
+msgstr "Branché"
 
 #. Translators: Reported when the battery is no longer plugged in, and now is not charging.
 #: winAPI\_powerTracking.py:219
 msgid "Unplugged"
-msgstr "Déconnecté"
+msgstr "Débranché"
 
 #. Translators: This is the hour string part of the estimated remaining runtime of the laptop battery.
 #. E.g. if the full string is "1 hour and 34 minutes remaining", this string is "1 hour".

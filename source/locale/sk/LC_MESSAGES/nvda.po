@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-12 07:19+0000\n"
-"PO-Revision-Date: 2024-09-16 00:03\n"
+"POT-Creation-Date: 2024-10-01 01:15+0000\n"
+"PO-Revision-Date: 2024-10-01 06:50\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -659,56 +659,56 @@ msgstr "Bluetooth"
 #: braille.py:410
 msgctxt "braille formatting symbol"
 msgid "⠃"
-msgstr ""
+msgstr "⠆"
 
 #. Translators: Brailled at the end of bold text.
 #. This is the English letter "b" plus dot 7 in braille.
 #: braille.py:413
 msgctxt "braille formatting symbol"
 msgid "⡃"
-msgstr ""
+msgstr "⠣⠆"
 
 #. Translators: Brailled at the start of italic text.
 #. This is the English letter "i" in braille.
 #: braille.py:418
 msgctxt "braille formatting symbol"
 msgid "⠊"
-msgstr ""
+msgstr "⠔"
 
 #. Translators: Brailled at the end of italic text.
 #. This is the English letter "i" plus dot 7 in braille.
 #: braille.py:421
 msgctxt "braille formatting symbol"
 msgid "⡊"
-msgstr ""
+msgstr "⠣⠔"
 
 #. Translators: Brailled at the start of underlined text.
 #. This is the English letter "u" in braille.
 #: braille.py:426
 msgctxt "braille formatting symbol"
 msgid "⠥"
-msgstr ""
+msgstr "⠤"
 
 #. Translators: Brailled at the end of underlined text.
 #. This is the English letter "u" plus dot 7 in braille.
 #: braille.py:429
 msgctxt "braille formatting symbol"
 msgid "⡥"
-msgstr ""
+msgstr "⠣⠤"
 
 #. Translators: Brailled at the start of strikethrough text.
 #. This is the English letter "s" in braille.
 #: braille.py:434
 msgctxt "braille formatting symbol"
 msgid "⠎"
-msgstr ""
+msgstr "⠈⠱"
 
 #. Translators: Brailled at the end of strikethrough text.
 #. This is the English letter "s" plus dot 7 in braille.
 #: braille.py:437
 msgctxt "braille formatting symbol"
 msgid "⡎"
-msgstr ""
+msgstr "⠣⠈⠱"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:650 speech\speech.py:2057
@@ -1314,13 +1314,13 @@ msgstr "Gujaratčina plnopis"
 #. braille settings dialog.
 #: brailleTables.py:362
 msgid "Greek international braille (2-cell accented letters)"
-msgstr ""
+msgstr "Medzinárodná Gréčtina (dvojbunkový zápis znakov s diakritikou)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables.py:365
 msgid "Greek international braille (single-cell accented letters)"
-msgstr ""
+msgstr "Medzinárodná Gréčtina (jednobunkový zápis znakov s diakritikou)"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -1848,13 +1848,13 @@ msgstr "Thaičina 8 bodový počítačový kód"
 #. braille settings dialog.
 #: brailleTables.py:632
 msgid "Thai grade 0"
-msgstr ""
+msgstr "Thaičina stupeň 0"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
 #: brailleTables.py:635
 msgid "Thai grade 1"
-msgstr ""
+msgstr "Thaičina plnopis"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -3936,7 +3936,7 @@ msgstr "oznamovať veľkosť písma"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:579
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr "Cyklicky prepína oznamovanie vlastností písma medzi možnosťami reč, brail, reč aj brail, alebo vypnuté."
+msgstr "Cyklicky prepína oznamovanie vlastností písma medzi možnosťami vyslovovať, zobrazovať v brailovom písme, vyslovovať aj zobrazovať v brailovom písme, alebo neoznamovať."
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:589
@@ -3946,17 +3946,17 @@ msgstr "Neoznamovať vlastnosti písma"
 #. Translators: A state in which font attributes are only spoken.
 #: globalCommands.py:592
 msgid "Speak font attributes"
-msgstr "Hovoriť vlastnosti písma"
+msgstr "Vyslovovať vlastnosti písma"
 
 #. Translators: A state in which font attributes are only brailled.
 #: globalCommands.py:595
 msgid "Braille font attributes"
-msgstr "Zobrazovať vlastnosti písma na brailovom riadku"
+msgstr "Zobrazovať vlastnosti písma v brailovom písme"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:598
 msgid "Speak and braille font attributes"
-msgstr "Hovoriť aj zobrazovať vlastnosti písma na brailovom riadku"
+msgstr "Vyslovovať aj zobrazovať vlastnosti písma v brailovom písme"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:604
@@ -6335,25 +6335,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "Neznámy kláves %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "zapnuté"
@@ -6362,7 +6362,7 @@ msgstr "zapnuté"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "vypnuté"
@@ -6370,13 +6370,13 @@ msgstr "vypnuté"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "rozloženie %s"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "Všetky rozloženia"
 
@@ -8896,27 +8896,27 @@ msgstr "komentár"
 #: appModules\poedit.py:180
 msgctxt "poedit"
 msgid "Reports the previous source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "Oznámi predchádzajúci zdrojový text, ak je k dispozícii. Stlačené dva krát rýchlo za sebou, zobrazí predchádzajúci zdrojový text v režime prehliadania"
 
 #. Translators: The description of the "previous source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:191
 msgctxt "poedit"
 msgid "previous source text"
-msgstr ""
+msgstr "predchádzajúci zdrojový text"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:206
 msgctxt "poedit"
 msgid "Reports a translation issue, if any. If pressed twice, presents the warning in browse mode"
-msgstr ""
+msgstr "Oznámi chybu prekladu, ak je dostupná. Stlačené dvakrát zobrazí chybu v režime prehliadania"
 
 #. Translators: The description of the "translation issue" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:217
 msgctxt "poedit"
 msgid "translation issue"
-msgstr ""
+msgstr "chyba prekladu"
 
 #. Translators: The name of a category of NVDA commands.
 #: appModules\powerpnt.py:43
@@ -9611,7 +9611,7 @@ msgstr "Caiku Albatross 46/80"
 #: brailleDisplayDrivers\albatross\driver.py:485
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr ""
+msgstr "Pred používaním riadku Albatross s NVDA, zmeňte počet stavových buniek v internej ponuke Albatross na najmenej {maxCells} a podľa potreby reštartujte NVDA aj Albatross."
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -9767,7 +9767,7 @@ msgstr "Upozorňovať"
 #. Translators: A label for an option to choose a method of reporting information, e.g. font attributes.
 #: config\configFlags.py:252
 msgid "Speech and braille"
-msgstr "Hovoriť aj zobrazovať v braily"
+msgstr "Vyslovovať aj zobrazovať v brailovom písme"
 
 #. Translators: This is a label for a paragraph start marker.
 #: config\configFlags.py:265
@@ -12632,7 +12632,7 @@ msgstr "Spracovať vstup z externých &programov"
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:1991
 msgid "&Multiple key press timeout (ms):"
-msgstr "Časový li&mit pre stlačenie viacerých klávesov (ms):"
+msgstr "Časový li&mit pre viacnásobné stlačenie (ms):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2007
@@ -13764,7 +13764,7 @@ msgstr "Vyslovovať zna&ky pri posúvaní kurzora smerovými tlačidlami"
 #. (try to avoid splitting words at the end of the braille display).
 #: gui\settingsDialogs.py:4464
 msgid "Avoid splitting &words when possible"
-msgstr "Zabrániť deleniu sl&ov keď  je to možné"
+msgstr "Zabrániť deleniu sl&ov, keď je to možné"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4483
@@ -14956,7 +14956,7 @@ msgstr "V hlavičke pre riadky nie je možné nájsť riadok {rowNumber} stĺpec
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr "Oznámi komentár pod systémovým kurzorom. Stlačené dva krát rýchlo za sebou zobrazí obsah komentára v režime prehliadania."
+msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dva krát rýchlo za sebou zobrazí informáciu v režime prehliadania."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:420 NVDAObjects\UIA\wordDocument.py:684
@@ -15205,7 +15205,7 @@ msgstr "Navigácia po vetách nie je podporovaná v tomto dokumente"
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:662
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr "Oznámi komentár pod systémovým kurzorom. Stlačené dva krát rýchlo za sebou zobrazí obsah komentára v režime prehliadania."
+msgstr "Oznámi text komentára na pozícii systémového kurzora. Stlačené dva krát rýchlo za sebou zobrazí informáciu v režime prehliadania"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -15672,7 +15672,7 @@ msgstr "položka"
 #: NVDAObjects\window\_msOfficeChart.py:805
 #, python-brace-format
 msgid "Series color: {colorName}"
-msgstr ""
+msgstr "Farba radu: {colorName}"
 
 #. Translators: A type of element in a Microsoft Office chart.
 #: NVDAObjects\window\_msOfficeChart.py:446
