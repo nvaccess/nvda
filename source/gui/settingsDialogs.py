@@ -5585,5 +5585,6 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 	except ValueError:
 		# Add-on Store cache hash is JSON, so this can't be it.
 		return False
-	# Add-on Store cache hash is a git commit hash as a string.
-	return isinstance(data, str) and bool(re.fullmatch("[0-9a-fA-F]{7,40}", data))
+	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
+	# Therefor, we only check if the data is a non-empty string.
+	return isinstance(data, str) and bool(data)
