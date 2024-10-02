@@ -27,13 +27,22 @@ class MessageDialogReturnCode(IntEnum):
 	CLOSE = wx.ID_CLOSE
 	HELP = wx.ID_HELP
 
+
 class MessageDialogType(Enum):
+	"""Types of message dialogs.
+	These are used to determine the icon and sound to play when the dialog is shown.
+	"""
+
 	STANDARD = auto()
 	WARNING = auto()
 	ERROR = auto()
 
 	@property
 	def _wxIconId(self) -> int | None:
+		"""The wx icon ID to use for this dialog type.
+		This is used to determine the icon to display in the dialog.
+		This will be None when the default icon should be used.
+		"""
 		match self:
 			case self.ERROR:
 				return wx.ART_ERROR
@@ -44,6 +53,10 @@ class MessageDialogType(Enum):
 
 	@property
 	def _windowsSoundId(self) -> int | None:
+		"""The Windows sound ID to play for this dialog type.
+		This is used to determine the sound to play when the dialog is shown.
+		This will be None when no sound should be played.
+		"""
 		match self:
 			case self.ERROR:
 				return winsound.MB_ICONHAND
@@ -54,21 +67,42 @@ class MessageDialogType(Enum):
 
 
 class MessageDialogButton(NamedTuple):
+	"""A button to add to a message dialog."""
+
 	id: MessageDialogReturnCode
+	"""The ID to use for this button."""
+
 	label: str
+	"""The label to display on the button."""
+
 	callback: Callable[[wx.CommandEvent], Any] | None = None
+	"""The callback to call when the button is clicked."""
+
 	default: bool = False
+	"""Whether this button should be the default button."""
+
 	closes_dialog: bool = True
+	"""Whether this button should close the dialog when clicked."""
 
 
 class DefaultMessageDialogButtons(MessageDialogButton, Enum):
+	"""Default buttons for message dialogs."""
+
+	# Translators: An ok button on a message dialog.
 	OK = MessageDialogButton(id=MessageDialogReturnCode.OK, label=_("OK"), default=True)
+	# Translators: A yes button on a message dialog.
 	YES = MessageDialogButton(id=MessageDialogReturnCode.YES, label=_("&Yes"), default=True)
+	# Translators: A no button on a message dialog.
 	NO = MessageDialogButton(id=MessageDialogReturnCode.NO, label=_("&No"))
+	# Translators: A cancel button on a message dialog.
 	CANCEL = MessageDialogButton(id=MessageDialogReturnCode.CANCEL, label=_("Cancel"))
+	# Translators: A save button on a message dialog.
 	SAVE = MessageDialogButton(id=MessageDialogReturnCode.SAVE, label=_("&Save"))
+	# Translators: An apply button on a message dialog.
 	APPLY = MessageDialogButton(id=MessageDialogReturnCode.APPLY, label=_("&Apply"))
+	# Translators: A close button on a message dialog.
 	CLOSE = MessageDialogButton(id=MessageDialogReturnCode.CLOSE, label=_("Close"))
+	# Translators: A help button on a message dialog.
 	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
 
 
