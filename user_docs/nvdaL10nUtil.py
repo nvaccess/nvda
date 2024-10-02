@@ -19,7 +19,6 @@ def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
 	:param source: If True, fetch the source language, otherwise fetch the target language
 	:return: The language code
 	"""
-	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
 	xliff = lxml.etree.parse(xliffPath)
 	xliffRoot = xliff.getroot()
 	if xliffRoot.tag != "{urn:oasis:names:tc:xliff:document:2.0}xliff":
