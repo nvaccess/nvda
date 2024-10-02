@@ -157,6 +157,7 @@ Whenever you add or update your interface translations, repeat the steps above (
 ## Translating NvDA' s user documentation
 
 Documentation available for translation includes:
+
 * The NVDA user guide (userGuide.xliff)
 * The NVDA What's New document (changes.xliff)
 
@@ -175,6 +176,7 @@ nvdaL10nUtil stripXliff -o <old xliff file> <translated xliff file> <output stri
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
 ### Translating markdown
+
 The English NVDA user documentation is written in markdown syntax.
 The xliff file you are directly translating has been generated from that markdown file.
 It contains the content of any line that requires translation, shown in the order it appears in the original markdown file.
@@ -182,7 +184,7 @@ It contains the content of any line that requires translation, shown in the orde
 Structural lines that do not contain any translatable content (such as blank lines, hidden table header rows, table header body separator lines etc) are not included here.
 
 Structural syntax from the beginning and end of lines (such as heading prefix like `###`, heading anchors like `{#Introduction}`, and initial and final vertical bars on table rows) has been removed from the content to translate, but is available to view in the translator notes for that line.
-Content may still however contain inline markdown syntax such as links, inline code fences (`\``), and table column separators (`|`).
+Content may still however contain inline markdown syntax such as links, inline code fences (``` `` ```), and table column separators (`|`).
 This syntax must be kept intact when translating.
 
 All strings for translation contain translator notes which include:
@@ -191,6 +193,7 @@ All strings for translation contain translator notes which include:
 * Suffix: any structural markdown on the line after this content.
 
 ### Verifying your translation
+
 When ever you have saved the xliff file with Poedit, you can use the nvdaL10nUtil program to generate the html version of the documentation file. E.g.
 ```
 nvdaL10nUtil xliff2html -t [userGuide|changes|keyCommands] -l <lang> <xliff file> <output html file>

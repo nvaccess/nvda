@@ -133,7 +133,7 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	return htmlOutput
 
 
-def main(source: str, dest: str, lang="en", docType=None):
+def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
 	print(f"Converting {docType or 'document'} at {source} to {dest}, {lang=}")
 	isUserGuide = docType == "userGuide"
 	isDevGuide = docType == "developerGuide"

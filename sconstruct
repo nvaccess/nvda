@@ -345,7 +345,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
-	# first substitute some variables such as NvDA version and URL into the markdown file
+	# first substitute some variables such as NVDA version and URL into the markdown file
 	mdFileSub = env.Substfile(
 		target=mdFile.abspath.replace(".md", ".md.sub"),
 		source=mdFile,

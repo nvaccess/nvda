@@ -32,14 +32,14 @@ def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
 	return lang
 
 
-def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None= None):
+def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None):
 	print(f"Creating stripped xliff at {outputPath} from {xliffPath}")
 	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
 	xliff = lxml.etree.parse(xliffPath)
 	xliffRoot = xliff.getroot()
 	if xliffRoot.tag != "{urn:oasis:names:tc:xliff:document:2.0}xliff":
 		raise ValueError(f"Not an xliff file: {xliffPath}")
-	skeletonNode = xliffRoot.find(f'./xliff:file/xliff:skeleton', namespaces=namespace)
+	skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 	if skeletonNode is not None:
 		skeletonNode.getparent().remove(skeletonNode)
 	if oldXliffPath:
@@ -49,8 +49,8 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None= None):
 			raise ValueError(f"Not an xliff file: {oldXliffPath}")
 	else:
 		oldXliffRoot = None
-	file = xliffRoot.find(f'./xliff:file', namespaces=namespace)
-	units = file.findall(f'./xliff:unit', namespaces=namespace)
+	file = xliffRoot.find("./xliff:file", namespaces=namespace)
+	units = file.findall("./xliff:unit", namespaces=namespace)
 	segmentCount = 0
 	emptyTargetCount = 0
 	corruptTargetcount = 0
