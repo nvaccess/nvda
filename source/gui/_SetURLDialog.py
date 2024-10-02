@@ -181,25 +181,22 @@ class _SetURLDialog(SettingsDialog):
 	def _failure(self, error: Exception):
 		"""Notify the user that testing their URL failed."""
 		if isinstance(error, _ValidationError):
-			message = _(
-				# Translators: Message shown to users when testing a given URL has failed because the response was invalid.
-				"The URL you have entered failed the connection test. The response received from the server was invalid. Check the URL is correct before trying again.",
+			tip = _(
+				# Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
+				"The response from the server was not recognised. Check the URL is correct before trying again.",
 			)
 		elif isinstance(error, requests.HTTPError):
-			message = _(
-				# Translators: Message shown to users when testing a given URL has failed because the server returned an error.
-				"The URL you have entered failed the connection test. The server returned an error. Check that the URL is correct before trying again.",
-			)
+			# Translators: Tip shown to users when testing a given URL has failed because the server returned an error.
+			tip = _("The server returned an error. Check that the URL is correct before trying again.")
 		elif isinstance(error, requests.ConnectionError):
-			message = _(
-				# Translators: Message shown to users when testing a given URL has failed because of a network error.
-				"The URL you have entered failed the connection test. There was a network error. Check that you are connected to the internet and try again.",
-			)
+			# Translators: Tip shown to users when testing a given URL has failed because of a network error.
+			tip = _("There was a network error. Check that you are connected to the internet and try again.")
 		else:
-			message = _(
-				# Translators: Message shown to users when testing a given URL has failed for unknown reasons.
-				"The URL you have entered failed the connection test. Make sure you are connected to the internet and the URL is correct.",
-			)
+			# Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
+			tip = _("Make sure you are connected to the internet and the URL is correct.")
+		# Translators: Message shown to users when testing a given URL has failed.
+		# {tip} will be replaced with a tip on how to resolve the issue.
+		message = _("The URL you have entered failed the connection test. {tip}").format(tip=tip)
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		self._testStatus = _SetURLDialog._URLTestStatus.FAILED
