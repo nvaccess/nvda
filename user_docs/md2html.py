@@ -183,7 +183,13 @@ def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
 if __name__ == "__main__":
 	args = argparse.ArgumentParser()
 	args.add_argument("-l", "--lang", help="Language code", action="store", default="en")
-	args.add_argument("-t", "--docType", help="Type of document", action="store", choices=["userGuide", "developerGuide", "changes", "keyCommands"])
+	args.add_argument(
+		"-t",
+		"--docType",
+		help="Type of document",
+		action="store",
+		choices=["userGuide", "developerGuide", "changes", "keyCommands"],
+	)
 	args.add_argument("source", help="Path to the markdown file")
 	args.add_argument("dest", help="Path to the resulting html file")
 	args = args.parse_args()
