@@ -196,5 +196,5 @@ All strings for translation contain translator notes which include:
 
 When ever you have saved the xliff file with Poedit, you can use the nvdaL10nUtil program to generate the html version of the documentation file. E.g.
 ```
-nvdaL10nUtil xliff2html -t [userGuide|changes|keyCommands] -l <lang> <xliff file> <output html file>
+nvdaL10nUtil xliff2html -t [userGuide|changes|keyCommands] <xliff file> <output html file>
 ```
