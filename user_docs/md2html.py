@@ -6,7 +6,6 @@
 import argparse
 from copy import deepcopy
 import io
-import pathlib
 import re
 import shutil
 
