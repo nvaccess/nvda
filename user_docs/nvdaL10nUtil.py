@@ -15,6 +15,7 @@ import md2html
 def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
 	"""
 	Fetch the language from an xliff file.
+	This function also prints a message to the console stating the detected language if found, or a warning if not found.
 	:param xliffPath: Path to the xliff file
 	:param source: If True, fetch the source language, otherwise fetch the target language
 	:return: The language code
@@ -32,6 +33,14 @@ def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
 
 
 def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None):
+	"""
+	Remove prefilled, empty or corrupt target tags from an xliff file before upload to Crowdin.
+	Optionally also remove translations that already exist in an old xliff file.
+	This function also prints a message to the console stating the number of segments processed and the numbers of empty, corrupt, source and existing translations removed.
+	:param xliffPath: Path to the xliff file to be stripped
+	:param outputPath: Path to the resulting xliff file
+	:param oldXliffPath: Path to the old xliff file containing existing translations that should be also stripped.
+	"""
 	print(f"Creating stripped xliff at {outputPath} from {xliffPath}")
 	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
 	xliff = lxml.etree.parse(xliffPath)
