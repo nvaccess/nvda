@@ -1837,7 +1837,7 @@ These controls allow you to specify an alternative URL to use to check for updat
 This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
 
 The read-only text box shows the current mirror URL.
-If no mirror is in use (i.e. the NV Access NVDA update server is being used), "No mirror" is displayed.
+If no mirror is in use (i.e. the NV Access update server is being used), "No mirror" is displayed.
 
 If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetURLDialog).
 
@@ -3088,7 +3088,7 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Server mirror {#AddonStoreMetadataMirror}
+##### Mirror server {#AddonStoreMetadataMirror}
 
 These controls allow you to specify an alternative URL to download Add-on Store data from.
 This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
@@ -3096,7 +3096,7 @@ This may be of use in locations where access to the NV Access Add-on Store serve
 The read-only text box shows the current mirror URL.
 If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "No mirror" is displayed.
 
-If you wish to change the Add-on Store server mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
+If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3121,7 +3121,7 @@ This dialog allows you to specify the URL of a mirror to use when [updating NVDA
 This may be of use in locations where access to the NV Access servers for these functions is slow or unavailable.
 
 * When setting the [NVDA update mirror](#UpdateMirror), the title of this dialog will be "Set NVDA Update Mirror".
-* When setting the [Add-on Store server mirror](#AddonStoreMetadataMirror), the title of this dialog will be "Set Add-on Store Server Mirror".
+* When setting the [Add-on Store mirror](#AddonStoreMetadataMirror), the title of this dialog will be "Set Add-on Store Mirror Server".
 
 ##### URL {#SetURLTextbox}
 

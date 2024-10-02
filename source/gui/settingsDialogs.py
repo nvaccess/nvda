@@ -3274,8 +3274,8 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
-		# Translators: The label for the server mirror on the Add-on Store Settings panel.
-		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Server mirror"))
+		# Translators: The label for the mirror server on the Add-on Store Settings panel.
+		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Mirror server"))
 		mirrorBox = mirrorBoxSizer.GetStaticBox()
 		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
 		sHelper.addItem(mirrorBoxSizerHelper)
@@ -3292,7 +3292,7 @@ class AddonStorePanel(SettingsPanel):
 			style=wx.TE_READONLY,
 		)
 		# Translators: This is the label for the button used to change the Add-on Store mirror URL,
-		# it appears in the context of the Server mirror group on the Add-on Store page of NVDA's settings.
+		# it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
 		changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
 		mirrorBoxSizerHelper.addItem(
 			guiHelper.associateElements(
@@ -3311,8 +3311,8 @@ class AddonStorePanel(SettingsPanel):
 
 		changeMirror = _SetURLDialog(
 			self,
-			# Translators: Title of the dialog used to change the Add-on Store server mirror URL.
-			title=_("Set Add-on Store Server Mirror"),
+			# Translators: Title of the dialog used to change the Add-on Store mirror URL.
+			title=_("Set Add-on Store Mirror Server"),
 			configPath=("addonStore", "baseServerURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}/cacheHash.json",
@@ -5586,5 +5586,5 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 		# Add-on Store cache hash is JSON, so this can't be it.
 		return False
 	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
-	# Therefor, we only check if the data is a non-empty string.
+	# Therefore, we only check if the data is a non-empty string.
 	return isinstance(data, str) and bool(data)
