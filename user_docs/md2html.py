@@ -148,7 +148,7 @@ def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
 		title = _getTitle(mdBuffer, isKeyCommands)
 
 	if isUserGuide or isDevGuide:
-		extraStylesheet = ""
+		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
 	elif isChanges or isKeyCommands:
 		extraStylesheet = ""
 	else:
