@@ -147,8 +147,6 @@ def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
 		mdBuffer.write(mdStr)
 		title = _getTitle(mdBuffer, isKeyCommands)
 
-	lang = pathlib.Path(source).parent.name
-
 	if isUserGuide or isDevGuide:
 		extraStylesheet = ""
 	elif isChanges or isKeyCommands:
