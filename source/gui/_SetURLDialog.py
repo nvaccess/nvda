@@ -191,6 +191,16 @@ class _SetURLDialog(SettingsDialog):
 		elif isinstance(error, requests.ConnectionError):
 			# Translators: Tip shown to users when testing a given URL has failed because of a network error.
 			tip = _("There was a network error. Check that you are connected to the internet and try again.")
+		elif isinstance(
+			error,
+			(
+				requests.exceptions.InvalidURL,
+				requests.exceptions.MissingSchema,
+				requests.exceptions.InvalidSchema,
+			),
+		):
+			# Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
+			tip = _("The URL you have entered is not valid. Check that it is correct and try again.")
 		else:
 			# Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
 			tip = _("Make sure you are connected to the internet and the URL is correct.")
