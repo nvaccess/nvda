@@ -3274,7 +3274,7 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
-		# Translators: The label for the server  mirror on the Add-on store Settings panel.
+		# Translators: The label for the server mirror on the Add-on Store Settings panel.
 		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Server mirror"))
 		mirrorBox = mirrorBoxSizer.GetStaticBox()
 		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
