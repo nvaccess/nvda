@@ -17,7 +17,7 @@ Please include your Crowdin username and the languages you wish to translate.
 
 It is recommended that you use the latest version of PoEdit and NVDA for translating.
 Alternatively, you can use the [Crowdin web interface](https://support.crowdin.com/online-editor/) directly.
-As PoEdit only supports viewing approved strings, large translators team need to co-ordinate submitting unapproved strings to prevent conflicts.
+As PoEdit only supports viewing approved strings, large translator teams need to co-ordinate submitting unapproved strings to prevent conflicts.
 Using Crowdin's interface avoids this problem.
 
 PoEdit's homepage is: <http://www.poedit.net/>
@@ -166,7 +166,7 @@ To translate any of these files:
 * Download the xliff file from the Files section of your language on Crowdin.
     * Make sure to choose "Download" not "Export xliff".
 * Make a copy of this file.
-* Open the po file in Poedit, translate, and save the file.
+* Open the xliff file in Poedit, translate, and save the file.
 * Use the nvdaL10nUtil program to strip the xliff so that it only contains translations that were added / changed. E.g.
 ```
 nvdaL10nUtil stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
