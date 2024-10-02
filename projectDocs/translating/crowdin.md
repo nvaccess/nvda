@@ -154,7 +154,7 @@ In Crowdin, this information appears at the end of the context section.
 
 Whenever you add or update your interface translations, repeat the steps above (copying the updated .mo file and restarting NVDA) to test your updated translation messages.
 
-## Translating NvDA' s user documentation
+## Translating User Documentation
 
 Documentation available for translation includes:
 
