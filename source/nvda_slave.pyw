@@ -50,8 +50,22 @@ def getNvdaHelperRemote():
 	return remoteLib
 
 
+def createLogFile():
+	logFilePath = os.path.join(globalVars.appDir, "nvda_slave.log")
+	try:
+		with open(logFilePath, "a") as logFile:
+			pass
+	except PermissionError:
+		logHandler.log.error(f"Permission denied: {logFilePath}")
+		return False
+	return True
+
+
 def main():
 	import installer
+
+	if not createLogFile():
+		sys.exit(1)
 
 	try:
 		action = sys.argv[1]
