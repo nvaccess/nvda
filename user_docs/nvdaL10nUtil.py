@@ -104,7 +104,8 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 		elif oldXliffRoot is not None:
 			unitId = unit.get("id")
 			oldTarget = oldXliffRoot.find(
-				f'./xliff:file/xliff:unit[@id="{unitId}"]/xliff:segment/xliff:target', namespaces=namespace
+				f'./xliff:file/xliff:unit[@id="{unitId}"]/xliff:segment/xliff:target',
+				namespaces=namespace,
 			)
 			if oldTarget is not None and oldTarget.text == targetText:
 				existingTranslationCount += 1
@@ -114,7 +115,7 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 		segmentCount - emptyTargetCount - corruptTargetcount - sourceTargetcount - existingTranslationCount
 	)
 	print(
-		f"Processed {segmentCount} segments, removing {emptyTargetCount} empty targets, {corruptTargetcount} corrupt targets, {sourceTargetcount} source targets, and {existingTranslationCount} existing translations, resulting in {keptTranslations} translations kept"
+		f"Processed {segmentCount} segments, removing {emptyTargetCount} empty targets, {corruptTargetcount} corrupt targets, {sourceTargetcount} source targets, and {existingTranslationCount} existing translations, resulting in {keptTranslations} translations kept",
 	)
 
 
@@ -177,7 +178,9 @@ if __name__ == "__main__":
 	match args.command:
 		case "xliff2md":
 			markdownTranslate.generateMarkdown(
-				xliffPath=args.xliffPath, outputPath=args.mdPath, translated=not args.untranslated
+				xliffPath=args.xliffPath,
+				outputPath=args.mdPath,
+				translated=not args.untranslated,
 			)
 		case "md2html":
 			md2html.main(source=args.mdPath, dest=args.htmlPath, lang=args.lang, docType=args.docType)
@@ -187,7 +190,9 @@ if __name__ == "__main__":
 			temp_mdFile.close()
 			try:
 				markdownTranslate.generateMarkdown(
-					xliffPath=args.xliffPath, outputPath=temp_mdFile.name, translated=not args.untranslated
+					xliffPath=args.xliffPath,
+					outputPath=temp_mdFile.name,
+					translated=not args.untranslated,
 				)
 				md2html.main(source=temp_mdFile.name, dest=args.htmlPath, lang=lang, docType=args.docType)
 			finally:

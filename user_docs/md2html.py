@@ -21,7 +21,7 @@ DEFAULT_EXTENSIONS = frozenset(
 		"markdown_link_attr_modifier",
 		# Adds links to GitHub authors, issues and PRs
 		"mdx_gh_links",
-	}
+	},
 )
 
 EXTENSIONS_CONFIG = {
@@ -160,7 +160,7 @@ def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
 			dir="rtl" if lang in RTL_LANG_CODES else "ltr",
 			title=title,
 			extraStylesheet=extraStylesheet,
-		)
+		),
 	)
 
 	htmlOutput = _generateSanitizedHTML(mdStr, isKeyCommands)

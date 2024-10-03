@@ -36,7 +36,9 @@ def prettyPathString(path: str) -> str:
 
 @contextlib.contextmanager
 def createAndDeleteTempFilePath_contextManager(
-	dir: str | None = None, prefix: str | None = None, suffix: str | None = None
+	dir: str | None = None,
+	prefix: str | None = None,
+	suffix: str | None = None,
 ) -> Generator[str, None, None]:
 	"""A context manager that creates a temporary file and deletes it when the context is exited"""
 	with tempfile.NamedTemporaryFile(dir=dir, prefix=prefix, suffix=suffix, delete=False) as tempFile:
@@ -63,7 +65,10 @@ def getLastCommitID(filePath: str) -> str:
 def getGitDir() -> str:
 	# Run the git rev-parse command to get the root of the git directory
 	result = subprocess.run(
-		["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True, check=True
+		["git", "rev-parse", "--show-toplevel"],
+		capture_output=True,
+		text=True,
+		check=True,
 	)
 	gitDir = result.stdout.strip()
 	if not os.path.isdir(gitDir):
@@ -129,7 +134,7 @@ def generateSkeleton(mdPath: str, outputPath: str) -> Result_generateSkeleton:
 				skelLine = mdLine
 			outputFile.write(skelLine)
 		print(
-			f"Generated skeleton file with {res.numTotalLines} total lines and {res.numTranslationPlaceholders} translation placeholders"
+			f"Generated skeleton file with {res.numTotalLines} total lines and {res.numTranslationPlaceholders} translation placeholders",
 		)
 		return res
 
@@ -162,10 +167,13 @@ def extractSkeleton(xliffPath: str, outputPath: str):
 
 
 def updateSkeleton(
-	origMdPath: str, newMdPath: str, origSkelPath: str, outputPath: str
+	origMdPath: str,
+	newMdPath: str,
+	origSkelPath: str,
+	outputPath: str,
 ) -> Result_updateSkeleton:
 	print(
-		f"Creating updated skeleton file {prettyPathString(outputPath)} from {prettyPathString(origSkelPath)} with changes from {prettyPathString(origMdPath)} to {prettyPathString(newMdPath)}..."
+		f"Creating updated skeleton file {prettyPathString(outputPath)} from {prettyPathString(origSkelPath)} with changes from {prettyPathString(origMdPath)} to {prettyPathString(newMdPath)}...",
 	)
 	res = Result_updateSkeleton()
 	with contextlib.ExitStack() as stack:
@@ -203,7 +211,7 @@ def updateSkeleton(
 			f"Updated skeleton file with {res.numAddedLines} added lines "
 			f"({res.numAddedTranslationPlaceholders} translation placeholders), "
 			f"{res.numRemovedLines} removed lines ({res.numRemovedTranslationPlaceholders} translation placeholders), "
-			f"and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)"
+			f"and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)",
 		)
 		return res
 
@@ -226,14 +234,14 @@ def generateXliff(
 					dir=os.path.dirname(outputPath),
 					prefix=os.path.basename(mdPath),
 					suffix=".skel",
-				)
+				),
 			)
 			generateSkeleton(mdPath=mdPath, outputPath=skelPath)
 		with open(skelPath, "r", encoding="utf8") as skelFile:
 			skelContent = skelFile.read()
 	res = Result_generateXliff()
 	print(
-		f"Generating xliff file {prettyPathString(outputPath)} from {prettyPathString(mdPath)} and {prettyPathString(skelPath)}..."
+		f"Generating xliff file {prettyPathString(outputPath)} from {prettyPathString(mdPath)} and {prettyPathString(skelPath)}...",
 	)
 	with contextlib.ExitStack() as stack:
 		mdFile = stack.enter_context(open(mdPath, "r", encoding="utf8"))
@@ -244,12 +252,13 @@ def generateXliff(
 		outputFile.write(
 			'<?xml version="1.0"?>\n'
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
-			f'<file id="{fileID}" original="{mdUri}">\n'
+			f'<file id="{fileID}" original="{mdUri}">\n',
 		)
 		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}\n</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
-			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)), start=1
+			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)),
+			start=1,
 		):
 			mdLine = mdLine.rstrip()
 			skelLine = skelLine.rstrip()
@@ -262,7 +271,7 @@ def generateXliff(
 					raise ValueError(f'Line {lineNo}: does not end with "{suffix}", {mdLine=}, {skelLine=}')
 				source = mdLine[len(prefix) : len(mdLine) - len(suffix)]
 				outputFile.write(
-					f'<unit id="{ID}">\n' "<notes>\n" f'<note appliesTo="source">line: {lineNo + 1}</note>\n'
+					f'<unit id="{ID}">\n' "<notes>\n" f'<note appliesTo="source">line: {lineNo + 1}</note>\n',
 				)
 				if prefix:
 					outputFile.write(f'<note appliesTo="source">prefix: {xmlEscape(prefix)}</note>\n')
@@ -273,7 +282,7 @@ def generateXliff(
 					f"<segment>\n"
 					f"<source>{xmlEscape(source)}</source>\n"
 					"</segment>\n"
-					"</unit>\n"
+					"</unit>\n",
 				)
 			else:
 				if mdLine != skelLine:
@@ -296,19 +305,19 @@ def updateXliff(
 	# uses generateMarkdown, extractSkeleton, updateSkeleton, and generateXliff to generate an updated xliff file.
 	outputDir = os.path.dirname(outputPath)
 	print(
-		f"Generating updated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} and {prettyPathString(mdPath)}..."
+		f"Generating updated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} and {prettyPathString(mdPath)}...",
 	)
 	with contextlib.ExitStack() as stack:
 		origMdPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="generated_", suffix=".md")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="generated_", suffix=".md"),
 		)
 		generateMarkdown(xliffPath=xliffPath, outputPath=origMdPath, translated=False)
 		origSkelPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="extracted_", suffix=".skel")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="extracted_", suffix=".skel"),
 		)
 		extractSkeleton(xliffPath=xliffPath, outputPath=origSkelPath)
 		updatedSkelPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="updated_", suffix=".skel")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="updated_", suffix=".skel"),
 		)
 		updateSkeleton(
 			origMdPath=origMdPath,
@@ -332,7 +341,7 @@ def translateXliff(
 	allowBadAnchors: bool = False,
 ) -> Result_translateXliff:
 	print(
-		f"Creating {lang} translated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} using {prettyPathString(pretranslatedMdPath)}..."
+		f"Creating {lang} translated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} using {prettyPathString(pretranslatedMdPath)}...",
 	)
 	res = Result_translateXliff()
 	with contextlib.ExitStack() as stack:
@@ -357,7 +366,7 @@ def translateXliff(
 				prefix, ID, suffix = m.groups()
 				if prefix and not pretranslatedLine.startswith(prefix):
 					raise ValueError(
-						f'Line {lineNo} of translation does not start with "{prefix}", {pretranslatedLine=}, {skelLine=}'
+						f'Line {lineNo} of translation does not start with "{prefix}", {pretranslatedLine=}, {skelLine=}',
 					)
 				if suffix and not pretranslatedLine.endswith(suffix):
 					if allowBadAnchors and (m := re_heading.match(pretranslatedLine)):
@@ -365,7 +374,7 @@ def translateXliff(
 						suffix = m.group(3)
 				if suffix and not pretranslatedLine.endswith(suffix):
 					raise ValueError(
-						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}'
+						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}',
 					)
 				translation = pretranslatedLine[len(prefix) : len(pretranslatedLine) - len(suffix)]
 				try:
@@ -387,7 +396,7 @@ def translateXliff(
 					raise
 			elif skelLine != pretranslatedLine:
 				raise ValueError(
-					f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}"
+					f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}",
 				)
 		xliff.write(outputPath, encoding="utf8", xml_declaration=True)
 		print(f"Translated xliff file with {res.numTranslatedStrings} translated strings")
@@ -460,7 +469,7 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 			else:
 				outputFile.write(line)
 		print(
-			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings. Ignoring {res.numBadTranslationStrings} bad translated strings"
+			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings. Ignoring {res.numBadTranslationStrings} bad translated strings",
 		)
 		return res
 
@@ -480,7 +489,7 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 					and line1.count("|") == line2.count("|")
 				):
 					print(
-						f"Warning: ignoring cell padding of post table header line at line {lineNo}: {line1}, {line2}"
+						f"Warning: ignoring cell padding of post table header line at line {lineNo}: {line1}, {line2}",
 					)
 					continue
 				if (
@@ -489,7 +498,7 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 					and line1.count("|") == line2.count("|")
 				):
 					print(
-						f"Warning: ignoring cell padding of hidden header row at line {lineNo}: {line1}, {line2}"
+						f"Warning: ignoring cell padding of hidden header row at line {lineNo}: {line1}, {line2}",
 					)
 					continue
 				if allowBadAnchors and (m1 := re_heading.match(line1)) and (m2 := re_heading.match(line2)):
@@ -577,14 +586,29 @@ if __name__ == "__main__":
 		help="The markdown file to generate the xliff file for",
 	)
 	generateXliffParser.add_argument(
-		"-o", "--output", dest="output", type=str, required=True, help="The file to output the xliff file to"
+		"-o",
+		"--output",
+		dest="output",
+		type=str,
+		required=True,
+		help="The file to output the xliff file to",
 	)
 	updateXliffParser = commandParser.add_parser("updateXliff")
 	updateXliffParser.add_argument(
-		"-x", "--xliff", dest="xliff", type=str, required=True, help="The original xliff file"
+		"-x",
+		"--xliff",
+		dest="xliff",
+		type=str,
+		required=True,
+		help="The original xliff file",
 	)
 	updateXliffParser.add_argument(
-		"-m", "--newMarkdown", dest="md", type=str, required=True, help="The new markdown file"
+		"-m",
+		"--newMarkdown",
+		dest="md",
+		type=str,
+		required=True,
+		help="The new markdown file",
 	)
 	updateXliffParser.add_argument(
 		"-o",
@@ -596,10 +620,20 @@ if __name__ == "__main__":
 	)
 	translateXliffParser = commandParser.add_parser("translateXliff")
 	translateXliffParser.add_argument(
-		"-x", "--xliff", dest="xliff", type=str, required=True, help="The xliff file to translate"
+		"-x",
+		"--xliff",
+		dest="xliff",
+		type=str,
+		required=True,
+		help="The xliff file to translate",
 	)
 	translateXliffParser.add_argument(
-		"-l", "--lang", dest="lang", type=str, required=True, help="The language to translate to"
+		"-l",
+		"--lang",
+		dest="lang",
+		type=str,
+		required=True,
+		help="The language to translate to",
 	)
 	translateXliffParser.add_argument(
 		"-p",
