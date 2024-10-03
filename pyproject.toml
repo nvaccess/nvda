@@ -74,6 +74,10 @@ ignore_packages = [
 	"opencv-python",
 
 	# Incompatible Apache licenses.
+	# For building NVDA, but not included.
+	"nuitka",
+
+	# Incompatible Apache licenses.
 	# System testing frameworks, not bundled with NVDA.
 	"robotframework",
 	"robotframework-screencaplibrary",
