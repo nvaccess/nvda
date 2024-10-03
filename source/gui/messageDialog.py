@@ -276,4 +276,5 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def __call_callback(self, *args, should_close, callback, **kwargs):
 		if should_close:
 			self.Close()
-		return callback(*args, **kwargs)
+		if callback is not None:
+			return callback(*args, **kwargs)
