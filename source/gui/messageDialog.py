@@ -14,7 +14,7 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from logHandler import log
-from functools import partial
+from functools import partial, singledispatchmethod
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -241,6 +241,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def _onCloseEvent(self, evt: wx.CloseEvent):
 		self.Destroy()
 
+	@singledispatchmethod
 	def addButton(
 		self,
 		*args,
@@ -254,6 +255,28 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if default:
 			button.SetDefault()
 		return self
+
+	@addButton.register
+	def _(
+		self,
+		button: MessageDialogButton,
+		*args,
+		callback: Callable[[wx.CommandEvent], Any] | None = None,
+		default: bool | None = None,
+		**kwargs,
+	):
+		keywords = dict(
+			id=button.id,
+			label=button.label,
+			callback=button.callback,
+			default=button.default,
+		)
+		if default is not None:
+			keywords["default"] = default
+		if callback is not None:
+			keywords["callback"] = callback
+		keywords.update(kwargs)
+		return self.addButton(self, *args, **keywords)
 
 	def addOkButton(self, callback):
 		return self.addButton(
