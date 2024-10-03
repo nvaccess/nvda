@@ -14,7 +14,7 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from logHandler import log
-from functools import partial, singledispatchmethod
+from functools import partial, partialmethod, singledispatchmethod
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -278,23 +278,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		keywords.update(kwargs)
 		return self.addButton(self, *args, **keywords)
 
-	def addOkButton(self, callback):
-		return self.addButton(
-			self,
-			id=wx.ID_OK,
-			# Translators: An ok button on a message dialog.
-			label=_("OK"),
-			callback=callback,
-		)
-
-	def addCancelButton(self, callback):
-		return self.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A cancel button on a message dialog.
-			label=_("Cancel"),
-			callback=callback,
-		)
+	addOkButton = partialmethod(addButton, DefaultMessageDialogButtons.OK)
+	addCancelButton = partialmethod(addButton, DefaultMessageDialogButtons.CANCEL)
 
 	def __call_callback(self, *args, should_close, callback, **kwargs):
 		if should_close:
