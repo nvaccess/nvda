@@ -1788,7 +1788,7 @@ Microsoft Office、Visual Studio、およびいくつかの言語に関する多
 * REASON_QUICKNAV は browseMode から削除されました - かわりに controlTypes.OutputReason.QUICKNAV を使用します。 (#11969)
 * `NVDAObject` (およびその派生) のプロパティ `isCurrent` は Enum クラス `controlTypes.IsCurrent` を返します。 (#11782)
   * `isCurrent` は Optional ではありません。つまり None を返さなくなりました。
-  * オブジェクトが current でない場合は `controlTypes.IsCurrent.NO` を返します。
+    * オブジェクトが current でない場合は `controlTypes.IsCurrent.NO` を返します。
 * `controlTypes.isCurrentLabels` のマッピングを削除しました。 (#11782)
   * かわりに `controlTypes.IsCurrent` enum 値の `displayString` プロパティを使います。例えば `controlTypes.IsCurrent.YES.displayString` です。
     * 例: `controlTypes.IsCurrent.YES.displayString`
@@ -2679,6 +2679,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * 音声および点字ディスプレイ出力において、コントロールの状態が、「あり」と「なし」の違いにかかわらず、常に同じ順序で報告されるようになりました。(#7076)
 * Windows 10 Mail などのアプリにおいてバックスペースが押されたときに NVDA が削除された文字の報告をできなかった不具合を修正しました。(#7456)
 * Hims Braille Sense Polaris ディスプレイのすべてのキーが期待通りに動作するようになりました。(#7865)
+* NVDA no longer fails to start on Windows 7 complaining about an internal api-ms dll, when a particular version of the Visual Studio 2017 redistributables have been installed by another application. (#7975)
 
 ### 開発者向けの変更
 
@@ -2961,6 +2962,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Baum SuperVario2, Baum Vario 340 および HumanWare Brailliant2 点字ディスプレイに対応しました。 (#6116)
 * Microsoft Edge のアニバーサリーアップデート版に対して初期的なサポートを行いました。 (#6271)
 * Windows 10 の「メール」アプリでメールの内容を読むときにブラウズモードが使われるようになりました。 (#6271)
+* New language: Lithuanian.
 
 ### 変更点
 
@@ -3234,6 +3236,11 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * HumanWare Brailliant BI/B シリーズ点字ディスプレイに USB 接続していて、接続をやり直した場合にフリーズすることがある不具合を修正しました。(#5406)
 * 特定の文字が使われる言語において、文字説明がアルファベット大文字で適切に動作するようになりました。(#5375)
 * Windows 10 のスタートメニューが開くときに NVDA がフリーズすることがある問題に対応しました。(#5417)
+* In Skype for Desktop, notifications which are displayed before a previous notification disappears are now reported. (#4841)
+* Notifications are now reported correctly in Skype for Desktop 7.12 and later. (#5405)
+* NVDA now correctly reports the focus when dismissing a context menu in some applications such as Jart. (#5302)
+* In Windows 7 and later, Color is again reported in certain applications such as Wordpad. (#5352)
+* When editing in Microsoft PowerPoint, pressing enter now reports automatically entered text such as a bullet or number. (#5360)
 
 ## 2015.3
 
@@ -3249,6 +3256,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * 新しい点訳テーブル: フィンランド語6点、アイルランド語1級点字、アイルランド語2級点字、韓国語1級点字(2006), 韓国語2級点字(2006) (#5137, #5074, #5097)
 * Papenmeier BRAILLEX Live Plus 点字ディスプレイの QWERTY キーボードに対応しました。(#5181)
 * Microsoft Edge ウェブブラウザーと Windows 10 のブラウザーエンジンを試験的にサポートしました。 (#5212)
+* New language: Kannada.
 
 ### 変更点
 
@@ -3313,8 +3321,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * PowerPoint スライドショーで PageUp/PageDown によるスライドの切替ができない不具合を修正しました。 (#4850)
 * デスクトップ版 Skype 7.2 以降において、文字入力が適切に通知されるようになりました。また会話の外にフォーカスが移動した直後に起きていた不具合を修正しました。 (#4972)
 * 入力ジェスチャーのダイアログのフィルターにカッコなど特定の記号文字を入力した場合に起きていた不具合を修正しました。 (#5060)
-* Internet Explorer および MSHTML コントロールにおいて、G または Shift+G を押して前後の画像に移動する機能が、アクセシビリティ目的の画像マークアップ(ARIA role img)
-を正しく処理するようになりました。 (#5062)
+* Internet Explorer および MSHTML コントロールにおいて、G または Shift+G を押して前後の画像に移動する機能が、アクセシビリティ目的の画像マークアップ(ARIA role img)を正しく処理するようになりました。 (#5062)
 
 ### 開発者向けの変更
 
@@ -3421,6 +3428,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Eclipseのいろいろなバージョン、例えば Spring Tool Suite や Android Developer Tools バンドルなどが Eclipse として認識され、適切に動作するようになりました。(#4360, #4454)
 * Internet Explorer などの MSHTML コントロール(多くの Windows 8 アプリケーションにも含まれます)において、マウス追跡およびタッチ探索が、高解像度ディスプレイの場合やドキュメントのズーム倍率が変更された場合に不適切に動作していた問題に対応しました。(#3494) 
 * Internet Explorer などの MSHTML コントロールにおいてマウス追跡とタッチ探索は、より多くのボタンでラベルの通知を行うようになりました。(#4173)
+* When using a Papenmeier BRAILLEX braille display with BrxCom, keys on the display now work as expected. (#4614)
 
 ### 開発者向けの変更
 
@@ -3653,6 +3661,9 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Microsoft Excel で NVDA は結合されたセルを、複数セルの選択とは区別して通知するようになりました。 (#3567)
 * ダイアログやドキュメントに埋め込まれたアプリケーションから他の場所に移動したときに、ブラウズモードのカーソル位置が不適切になる問題を修正しました。 (#3145)
 * HumanWare Brailliant BI/B シリーズの点字ディスプレイをUSBで接続しているにも関わらず、このドライバーが点字設定ダイアログの選択肢として見つからない場合がある不具合を修正しました。
+* NVDA no longer fails  to switch to screen review when the navigator object has no actual screen location. In this case the review cursor is now placed at the top of the screen. (#3454)
+* Fixed an issue which caused the Freedom Scientific braille display driver to fail when the port was set to USB in some circumstances. (#3509, #3662)
+* Fixed an issue where keys on Freedom Scientific braille displays weren't detected in some circumstances. (#3401, #3662)
 
 ### 開発者向けの変更
 
@@ -3722,6 +3733,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * 点字ディスプレイに複数のスペースを表示するときにスペース1個に変換されないようになりました。(#1366)
 * Zend Eclipse PHP Developer Tools が Eclipse と同じようにサポートされました。(#3353)
 * Internet Explorer において、埋め込みオブジェクト(Frashコンテンツなど)でEnterキーを押したあと、さらにTabキーを押さなくても操作が有効になりました。(#3364)
+* When editing text in Microsoft PowerPoint, the last line is no longer reported as the line above, if the final line is blank. (#3403)
 * Microsoft PowerPointにおいて選択したり編集しようとしたオブジェクトを2回重複して通知する現象を解決しました。(#3394)
 * Adobe Reader でテーブルの外に行が存在するような不適切なPDFファイルを開くとNVDAが不正終了する問題を解決しました。(#3399)
 * Microsoft PowerPointのサムネイルビューで、フォーカスされた次のスライドを、スライドが削除されたときにも正しく扱えるようにしました。(#3415)
@@ -3863,7 +3875,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Microsoft Outlook 2007 のメールアドレス入力で、自動補完候補をNVDAが通知するようになりました。 (#689)
 * 新しい eSpeak の音声 Gene および Gene2 が追加されました。 (#2512)
 * Adobe Readerにおいて、ページ番号を通知するようになりました。 (#2534)
-* Reader XI において、ページのラベルが存在すれば、セクションごとにページ番号のつけかたが変わっていても、通知されるようになりました。過去のバージョンでは、連続的なページ番号しか通知できませんでした。
+ * Reader XI において、ページのラベルが存在すれば、セクションごとにページ番号のつけかたが変わっていても、通知されるようになりました。過去のバージョンでは、連続的なページ番号しか通知できませんでした。
 * NVDA+コントロール+R をすばやく3回押すか、NVDA メニューの"設定をリセットして初期値に戻す"を選ぶことで、NVDA の設定を初期化できるようになりました。 (#2086)
 * 日本テレソフトの点字ディスプレイ清華バージョン3,4,5および清華80に対応しました。 (#2452)
 * Freedom Scientific の PAC Mate と Focus Braille 点字ディスプレイで前後へのスクロールができるようになりました。 (#2556)
@@ -4075,6 +4087,19 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * 句読点及び記号の発音のユーザーによる変更が、NVDAを再起動することなく、または自動言語変更を無効化することなくすぐに反映されるようになりました。
 * eSpeakを使用中で、NVDAログビューアーの名前をつけて保存のダイアログを開いた時に読み上げが停止しないようになりました。 (#2145)
 
+### Changes for Developers
+
+* There is now a remote Python console for situations where remote debugging is useful. See the Developer Guide for details.
+* The base path of NVDA's code is now stripped from tracebacks in the log to improve readability. (#1880)
+* TextInfo objects now have an activate() method to activate the position represented by the TextInfo.
+ * This is used by braille to activate the position using cursor routing keys on a braille display. However, there may be other callers in future.
+* TreeInterceptors and NVDAObjects which only expose one page of text at a time can support automatic page turns during say all by using the textInfos.DocumentWithPageTurns mix-in. (#1978)
+* Several control and output constants have been renamed or moved. (#228)
+ * speech.REASON_* constants have been moved to controlTypes.
+ * In controlTypes, speechRoleLabels and speechStateLabels have been renamed to just roleLabels and stateLabels, respectively.
+* Braille output is now logged at level input/output. First, the untranslated text of all regions is logged, followed by the braille cells of the window being displayed. (#2102)
+* subclasses of the sapi5 synthDriver can now override _getVoiceTokens and extend init to support custom voice tokens such as with sapi.spObjectTokenCategory to get tokens from a custom registry location.
+
 ## 2011.3
 
 このリリースにおけるハイライトには、適切な言語設定が行われているドキュメントを読み上げる際に自動的に言語を切り替える機能、64ビット版Java Runtime Environmentsのサポート、Mozillaアプリケーションのブラウズモードにおける書式情報の通知、アプリケーションのフリーズやクラッシュへのより良い対応及びWindows 8への初期対応が含まれています。
@@ -4135,6 +4160,12 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Windowsのエディットコントロールにおける単語によるレビューを直しました。 (#1877)
 * キャレットの移動を追跡する自動フォーカスモードが有効な時、フォーカスモードのエディットフィールドから左矢印、上矢印またはPageUpで正しくブラウズモードに抜けられるようになりました。 (#1733)
 
+### Changes for Developers
+
+* NVDA can now instruct speech synthesizers to switch languages for particular sections of speech.
+ * To support this, drivers must handle speech.LangChangeCommand in sequences past to SynthDriver.speak().
+ * SynthDriver objects should also provide the language argument to VoiceInfo objects (or override the language attribute to retrieve the current language). Otherwise, NVDA's user interface language will be used.
+
 ## 2011.2
 
 このリリースにおけるハイライトには、変更可能な読み上げレベルや読み方のカスタマイズ、文字の説明読みを含む句読点及び記号読み上げの強化、すべて読み上げ中の行末の無音の抑制、Internet ExplorerにおけるARIA対応の強化、Adobe Reader内のXFA/LiveCycleのサポート強化、より多くのアプリケーションで書かれたテキストへのアクセス、画面上のテキストの書式情報へのアクセスが含まれています。
@@ -4152,7 +4183,7 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * Internet Explorer及びその他のMSHTMLコントローラーにおいて、フォーカスが (fieldsetで囲まれた) コントロールのグループ内に移動したときに、グループの名称 (legend)  を読み上げるようになりました。 (#535)
 * Internet Explorer及びその他のMSHTMLコントローラーにおいて、aria-labelledBy及びaria-describedByプロパティーに対応しました。
 * Internet Explorer及びその他のMSHTMLコントローラーにおいて、ARIA list、gridcell、slider及びprogressbar controlのサポートが強化されました。
- * 利用者自身が句読点及びその他の記号の発音と読み上げレベルを変更できるようになりました。
+* 利用者自身が句読点及びその他の記号の発音と読み上げレベルを変更できるようになりました。
 * Microsoft Excelにおいて、Ctrl+PageUpまたはCtrl+PageDownを使ってシート間を移動した場合、現在アクティブなシートの名称を通知するようになりました。 (#760)
 * Microsoft Word内のテーブルをTabキーを使って移動している時、移動した先のセルを読み上げるようになりました。 (#159)
 * テーブルセルの座行を通知するかどうかを、書式設定ダイアログで設定できるようになりました。 (#719)
@@ -4250,6 +4281,24 @@ NVDA 2019.3は非常に重要なリリースです。Python 2からPython 3へ�
 * In Internet Explorer and other MSHTML controls, some extraneous line breaks have been eliminated in browse mode. specifically, HTML elements with a display style of None no longer force a line break. (#1685)
 * If NVDA is unable to start, failure to play the Windows critical stop sound no longer clobbers the critical error message in the log file.
 
+### Changes for Developers
+
+* Developer documentation can now be generated using SCons. See readme.txt at the root of the source distribution for details, including associated dependencies.
+* Locales can now provide descriptions for characters. See the Character Descriptions section of the Developer Guide for details. (#55)
+* Locales can now provide information about the pronunciation of specific punctuation and other symbols. See the Symbol Pronunciation section of the Developer Guide for details. (#332)
+* You can now build NVDAHelper with several debugging options using the nvdaHelperDebugFlags SCons variable. See readme.txt at the root of the source distribution for details. (#1390)
+* Synth drivers are now passed a sequence of text and speech commands to speak, instead of just text and an index.
+ * This allows for embedded indexes, parameter changes, etc.
+ * Drivers should implement SynthDriver.speak() instead of SynthDriver.speakText() and SynthDriver.speakCharacter().
+ * The old methods will be used if SynthDriver.speak() is not implemented, but they are deprecated and will be removed in a future release.
+* gui.execute() has been removed. wx.CallAfter() should be used instead.
+* gui.scriptUI has been removed.
+ * For message dialogs, use wx.CallAfter(gui.messageBox, ...).
+ * For all other dialogs, real wx dialogs should be used instead.
+ * A new gui.runScriptModalDialog() function simplifies using modal dialogs from scripts.
+* Synth drivers can now support boolean settings. See SynthDriverHandler.BooleanSynthSetting.
+* SCons now accepts a certTimestampServer variable specifying the URL of a timestamping server to use to timestamp authenticode signatures. (#1644)
+
 ## 2011.1.1
 
 This release fixes several security and other important issues found in NVDA 2011.1.
@@ -4337,6 +4386,41 @@ Highlights of this release include automatic reporting of new text output in mIR
 * In the Visual Studio 2005/2008 code editor, NVDA no longer reads the entire text after every typed character. (#975)
 * Fixed the issue where some braille displays weren't cleared properly when NVDA was exited or the display was changed.
 * The initial focus is no longer sometimes spoken twice when NVDA starts. (#1359)
+
+### Changes for Developers
+
+* SCons is now used to prepare the source tree and create binary builds, portable archives, installers, etc. See readme.txt at the root of the source distribution for details.
+* The key names used by NVDA (including key maps) have been made more friendly/logical; e.g. upArrow instead of extendedUp and numpadPageUp instead of prior. See the vkCodes module for a list.
+* All input from the user is now represented by an inputCore.InputGesture instance. (#601)
+ * Each source of input subclasses the base InputGesture class.
+ * Key presses on the system keyboard are encompassed by the keyboardHandler.KeyboardInputGesture class.
+ * Presses of buttons, wheels and other controls on a braille display are encompassed by subclasses of the braille.BrailleDisplayGesture class. These subclasses are provided by each braille display driver.
+* Input gestures are bound to ScriptableObjects using the ScriptableObject.bindGesture() method on an instance or an __gestures dict on the class which maps gesture identifiers to script names. See baseObject.ScriptableObject for details.
+* App modules no longer have key map files. All input gesture bindings must be done in the app module itself.
+* All scripts now take an InputGesture instance instead of a key press.
+ * KeyboardInputGestures can be sent on to the OS using the send() method of the gesture.
+* To send an arbitrary key press, you must now create a KeyboardInputGesture using KeyboardInputGesture.fromName() and then use its send() method.
+* Locales may now provide an input gesture map file to add new bindings or override existing bindings for scripts anywhere in NVDA. (#810)
+ * Locale gesture maps should be placed in locale\LANG\gestures.ini, where LANG is the language code.
+ * See inputCore.GlobalGestureMap for details of the file format.
+* The new LiveText and Terminal NVDAObject behaviors facilitate automatic reporting of new text. See those classes in NVDAObjects.behaviors for details. (#936)
+ * The NVDAObjects.window.DisplayModelLiveText overlay class can be used for objects which must retrieve text written to the display.
+ * See the mirc and putty app modules for usage examples.
+* There is no longer an _default app module. App modules should instead subclass appModuleHandler.AppModule (the base AppModule class).
+* Support for global plugins which can globally bind scripts, handle NVDAObject events and choose NVDAObject overlay classes. (#281) See globalPluginHandler.GlobalPlugin for details.
+* On SynthDriver objects, the available* attributes for string settings (e.g. availableVoices and availableVariants)  are now OrderedDicts keyed by ID instead of lists.
+* synthDriverHandler.VoiceInfo now takes an optional language argument which specifies the language of the voice.
+* SynthDriver objects now provide a language attribute which specifies the language of the current voice.
+ * The base implementation uses the language specified on the VoiceInfo objects in availableVoices. This is suitable for most synthesisers which support one language per voice.
+* Braille display drivers have been enhanced to allow buttons, wheels and other controls to be bound to NVDA scripts:
+ * Drivers can provide a global input gesture map to add bindings for scripts anywhere in NVDA.
+ * They can also provide their own scripts to perform display specific functions.
+ * See braille.BrailleDisplayDriver for details and existing braille display drivers for examples.
+* The 'selfVoicing' property on AppModule classes has now been renamed to 'sleepMode'.
+* The app module events event_appLoseFocus and event_appGainFocus have now been renamed to event_appModule_loseFocus and event_appModule_gainFocus, respectivly, in order to make the naming convention consistent with app modules and tree interceptors.
+* All braille display drivers should now use braille.BrailleDisplayDriver instead of braille.BrailleDisplayDriverWithCursor.
+ * The cursor is now managed outside of the driver.
+ * Existing drivers need only change their class statement accordingly and rename their _display method to display.
 
 ## 2010.2
 
