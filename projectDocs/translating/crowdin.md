@@ -167,9 +167,9 @@ To translate any of these files:
     * Make sure to choose "Download" not "Export xliff".
 * Make a copy of this file.
 * Open the xliff file in Poedit, translate, and save the file.
-* Use the nvdaL10nUtil program to strip the xliff so that it only contains translations that were added / changed. E.g.
+* Use the NVDA l10nUtil program to strip the xliff so that it only contains translations that were added / changed. E.g.
 ```
-nvdaL10nUtil stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
+l10nUtil.exe stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
 ```
 * Upload the xliff file back to Crowdin. If it is a stripped xliff file, it is safe to check the `allow target to match source` checkbox.
 
@@ -194,7 +194,7 @@ All strings for translation contain translator notes which include:
 
 ### Verifying your translation
 
-When ever you have saved the xliff file with Poedit, you can use the nvdaL10nUtil program to generate the html version of the documentation file. E.g.
+When ever you have saved the xliff file with Poedit, you can use the NVDA l10nUtil program to generate the html version of the documentation file. E.g.
 ```
-nvdaL10nUtil xliff2html -t [userGuide|changes|keyCommands] <xliff file> <output html file>
+l10nUtil.exe xliff2html -t [userGuide|changes|keyCommands] <xliff file> <output html file>
 ```
