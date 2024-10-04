@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-from typing import Any, Callable, NamedTuple
+from typing import Any, Callable, Iterable, NamedTuple
 import winsound
 
 import wx
@@ -229,9 +229,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onShowEvt(self, evt: wx.ShowEvent):
-		"""
-		:type evt: wx.ShowEvent
-		"""
 		if evt.IsShown():
 			self.__playSound()
 			if (defaultItem := self.GetDefaultItem()) is not None:
@@ -280,6 +277,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	addOkButton = partialmethod(addButton, DefaultMessageDialogButtons.OK)
 	addCancelButton = partialmethod(addButton, DefaultMessageDialogButtons.CANCEL)
+
+	def addButtons(self, *buttons: Iterable[MessageDialogButton]):
+		for button in buttons:
+			self.addButton(button)
+		return self
 
 	def __call_callback(self, *args, should_close, callback, **kwargs):
 		if should_close:
