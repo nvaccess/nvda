@@ -13,7 +13,6 @@ import uuid
 import re
 from itertools import zip_longest
 from xml.sax.saxutils import escape as xmlEscape
-from xml.sax.saxutils import unescape as xmlUnescape
 import difflib
 from dataclasses import dataclass
 import subprocess
@@ -32,12 +31,17 @@ re_translationID = re.compile(r"^(.*)\$\(ID:([0-9a-f-]+)\)(.*)$")
 
 
 def prettyPathString(path: str) -> str:
+	cwd = os.getcwd()
+	if os.path.normcase(os.path.splitdrive(path)[0]) != os.path.normcase(os.path.splitdrive(cwd)[0]):
+		return path
 	return os.path.relpath(path, os.getcwd())
 
 
 @contextlib.contextmanager
 def createAndDeleteTempFilePath_contextManager(
-	dir: str | None = None, prefix: str | None = None, suffix: str | None = None
+	dir: str | None = None,
+	prefix: str | None = None,
+	suffix: str | None = None,
 ) -> Generator[str, None, None]:
 	"""A context manager that creates a temporary file and deletes it when the context is exited"""
 	with tempfile.NamedTemporaryFile(dir=dir, prefix=prefix, suffix=suffix, delete=False) as tempFile:
@@ -64,7 +68,10 @@ def getLastCommitID(filePath: str) -> str:
 def getGitDir() -> str:
 	# Run the git rev-parse command to get the root of the git directory
 	result = subprocess.run(
-		["git", "rev-parse", "--show-toplevel"], capture_output=True, text=True, check=True
+		["git", "rev-parse", "--show-toplevel"],
+		capture_output=True,
+		text=True,
+		check=True,
 	)
 	gitDir = result.stdout.strip()
 	if not os.path.isdir(gitDir):
@@ -130,7 +137,7 @@ def generateSkeleton(mdPath: str, outputPath: str) -> Result_generateSkeleton:
 				skelLine = mdLine
 			outputFile.write(skelLine)
 		print(
-			f"Generated skeleton file with {res.numTotalLines} total lines and {res.numTranslationPlaceholders} translation placeholders"
+			f"Generated skeleton file with {res.numTotalLines} total lines and {res.numTranslationPlaceholders} translation placeholders",
 		)
 		return res
 
@@ -158,15 +165,18 @@ def extractSkeleton(xliffPath: str, outputPath: str):
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
 		skeletonContent = skeletonNode.text.strip()
-		outputFile.write(xmlUnescape(skeletonContent))
+		outputFile.write(skeletonContent)
 		print(f"Extracted skeleton to {prettyPathString(outputPath)}")
 
 
 def updateSkeleton(
-	origMdPath: str, newMdPath: str, origSkelPath: str, outputPath: str
+	origMdPath: str,
+	newMdPath: str,
+	origSkelPath: str,
+	outputPath: str,
 ) -> Result_updateSkeleton:
 	print(
-		f"Creating updated skeleton file {prettyPathString(outputPath)} from {prettyPathString(origSkelPath)} with changes from {prettyPathString(origMdPath)} to {prettyPathString(newMdPath)}..."
+		f"Creating updated skeleton file {prettyPathString(outputPath)} from {prettyPathString(origSkelPath)} with changes from {prettyPathString(origMdPath)} to {prettyPathString(newMdPath)}...",
 	)
 	res = Result_updateSkeleton()
 	with contextlib.ExitStack() as stack:
@@ -204,7 +214,7 @@ def updateSkeleton(
 			f"Updated skeleton file with {res.numAddedLines} added lines "
 			f"({res.numAddedTranslationPlaceholders} translation placeholders), "
 			f"{res.numRemovedLines} removed lines ({res.numRemovedTranslationPlaceholders} translation placeholders), "
-			f"and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)"
+			f"and {res.numUnchangedLines} unchanged lines ({res.numUnchangedTranslationPlaceholders} translation placeholders)",
 		)
 		return res
 
@@ -227,14 +237,14 @@ def generateXliff(
 					dir=os.path.dirname(outputPath),
 					prefix=os.path.basename(mdPath),
 					suffix=".skel",
-				)
+				),
 			)
 			generateSkeleton(mdPath=mdPath, outputPath=skelPath)
 		with open(skelPath, "r", encoding="utf8") as skelFile:
 			skelContent = skelFile.read()
 	res = Result_generateXliff()
 	print(
-		f"Generating xliff file {prettyPathString(outputPath)} from {prettyPathString(mdPath)} and {prettyPathString(skelPath)}..."
+		f"Generating xliff file {prettyPathString(outputPath)} from {prettyPathString(mdPath)} and {prettyPathString(skelPath)}...",
 	)
 	with contextlib.ExitStack() as stack:
 		mdFile = stack.enter_context(open(mdPath, "r", encoding="utf8"))
@@ -245,12 +255,13 @@ def generateXliff(
 		outputFile.write(
 			'<?xml version="1.0"?>\n'
 			f'<xliff xmlns="urn:oasis:names:tc:xliff:document:2.0" version="2.0" srcLang="en">\n'
-			f'<file id="{fileID}" original="{mdUri}">\n'
+			f'<file id="{fileID}" original="{mdUri}">\n',
 		)
 		outputFile.write(f"<skeleton>\n{xmlEscape(skelContent)}\n</skeleton>\n")
 		res.numTranslatableStrings = 0
 		for lineNo, (mdLine, skelLine) in enumerate(
-			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)), start=1
+			zip_longest(mdFile.readlines(), skelContent.splitlines(keepends=True)),
+			start=1,
 		):
 			mdLine = mdLine.rstrip()
 			skelLine = skelLine.rstrip()
@@ -263,7 +274,7 @@ def generateXliff(
 					raise ValueError(f'Line {lineNo}: does not end with "{suffix}", {mdLine=}, {skelLine=}')
 				source = mdLine[len(prefix) : len(mdLine) - len(suffix)]
 				outputFile.write(
-					f'<unit id="{ID}">\n' "<notes>\n" f'<note appliesTo="source">line: {lineNo + 1}</note>\n'
+					f'<unit id="{ID}">\n' "<notes>\n" f'<note appliesTo="source">line: {lineNo + 1}</note>\n',
 				)
 				if prefix:
 					outputFile.write(f'<note appliesTo="source">prefix: {xmlEscape(prefix)}</note>\n')
@@ -274,7 +285,7 @@ def generateXliff(
 					f"<segment>\n"
 					f"<source>{xmlEscape(source)}</source>\n"
 					"</segment>\n"
-					"</unit>\n"
+					"</unit>\n",
 				)
 			else:
 				if mdLine != skelLine:
@@ -297,19 +308,19 @@ def updateXliff(
 	# uses generateMarkdown, extractSkeleton, updateSkeleton, and generateXliff to generate an updated xliff file.
 	outputDir = os.path.dirname(outputPath)
 	print(
-		f"Generating updated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} and {prettyPathString(mdPath)}..."
+		f"Generating updated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} and {prettyPathString(mdPath)}...",
 	)
 	with contextlib.ExitStack() as stack:
 		origMdPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="generated_", suffix=".md")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="generated_", suffix=".md"),
 		)
 		generateMarkdown(xliffPath=xliffPath, outputPath=origMdPath, translated=False)
 		origSkelPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="extracted_", suffix=".skel")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="extracted_", suffix=".skel"),
 		)
 		extractSkeleton(xliffPath=xliffPath, outputPath=origSkelPath)
 		updatedSkelPath = stack.enter_context(
-			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="updated_", suffix=".skel")
+			createAndDeleteTempFilePath_contextManager(dir=outputDir, prefix="updated_", suffix=".skel"),
 		)
 		updateSkeleton(
 			origMdPath=origMdPath,
@@ -333,7 +344,7 @@ def translateXliff(
 	allowBadAnchors: bool = False,
 ) -> Result_translateXliff:
 	print(
-		f"Creating {lang} translated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} using {prettyPathString(pretranslatedMdPath)}..."
+		f"Creating {lang} translated xliff file {prettyPathString(outputPath)} from {prettyPathString(xliffPath)} using {prettyPathString(pretranslatedMdPath)}...",
 	)
 	res = Result_translateXliff()
 	with contextlib.ExitStack() as stack:
@@ -347,7 +358,7 @@ def translateXliff(
 		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
-		skeletonContent = xmlUnescape(skeletonNode.text).strip()
+		skeletonContent = skeletonNode.text.strip()
 		for lineNo, (skelLine, pretranslatedLine) in enumerate(
 			zip_longest(skeletonContent.splitlines(), pretranslatedMdFile.readlines()),
 			start=1,
@@ -358,7 +369,7 @@ def translateXliff(
 				prefix, ID, suffix = m.groups()
 				if prefix and not pretranslatedLine.startswith(prefix):
 					raise ValueError(
-						f'Line {lineNo} of translation does not start with "{prefix}", {pretranslatedLine=}, {skelLine=}'
+						f'Line {lineNo} of translation does not start with "{prefix}", {pretranslatedLine=}, {skelLine=}',
 					)
 				if suffix and not pretranslatedLine.endswith(suffix):
 					if allowBadAnchors and (m := re_heading.match(pretranslatedLine)):
@@ -366,22 +377,30 @@ def translateXliff(
 						suffix = m.group(3)
 				if suffix and not pretranslatedLine.endswith(suffix):
 					raise ValueError(
-						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}'
+						f'Line {lineNo} of translation: does not end with "{suffix}", {pretranslatedLine=}, {skelLine=}',
 					)
 				translation = pretranslatedLine[len(prefix) : len(pretranslatedLine) - len(suffix)]
-				unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
-				if unit is not None:
-					segment = unit.find("./xliff:segment", namespaces=namespace)
-					if segment is not None:
-						target = lxml.etree.Element("target")
-						target.text = xmlEscape(translation)
-						target.tail = "\n"
-						segment.append(target)
-						res.numTranslatedStrings += 1
+				try:
+					unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
+					if unit is not None:
+						segment = unit.find("./xliff:segment", namespaces=namespace)
+						if segment is not None:
+							target = lxml.etree.Element("target")
+							target.text = translation
+							target.tail = "\n"
+							segment.append(target)
+							res.numTranslatedStrings += 1
+						else:
+							raise ValueError(f"No segment found for unit {ID}")
 					else:
-						raise ValueError(f"No segment found for unit {ID}")
-				else:
-					raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+						raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+				except Exception as e:
+					e.add_note(f"Line {lineNo}: {pretranslatedLine=}, {skelLine=}")
+					raise
+			elif skelLine != pretranslatedLine:
+				raise ValueError(
+					f"Line {lineNo}: pretranslated line {pretranslatedLine!r}, does not match skeleton line {skelLine!r}",
+				)
 		xliff.write(outputPath, encoding="utf8", xml_declaration=True)
 		print(f"Translated xliff file with {res.numTranslatedStrings} translated strings")
 		return res
@@ -392,6 +411,7 @@ class Result_generateMarkdown:
 	numTotalLines = 0
 	numTranslatableStrings = 0
 	numTranslatedStrings = 0
+	numBadTranslationStrings = 0
 
 
 def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -> Result_generateMarkdown:
@@ -407,37 +427,52 @@ def generateMarkdown(xliffPath: str, outputPath: str, translated: bool = True) -
 		skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 		if skeletonNode is None:
 			raise ValueError("No skeleton found in xliff file")
-		skeletonContent = xmlUnescape(skeletonNode.text).strip()
-		for line in skeletonContent.splitlines(keepends=True):
+		skeletonContent = skeletonNode.text.strip()
+		for lineNum, line in enumerate(skeletonContent.splitlines(keepends=True), 1):
 			res.numTotalLines += 1
 			if m := re_translationID.match(line):
 				prefix, ID, suffix = m.groups()
 				res.numTranslatableStrings += 1
 				unit = xliffRoot.find(f'./xliff:file/xliff:unit[@id="{ID}"]', namespaces=namespace)
-				if unit is not None:
-					segment = unit.find("./xliff:segment", namespaces=namespace)
-					if segment is not None:
-						source = segment.find("./xliff:source", namespaces=namespace)
-						if translated:
-							target = segment.find("./xliff:target", namespaces=namespace)
-						else:
-							target = None
-						if target is not None and target.text:
-							res.numTranslatedStrings += 1
-							translation = xmlUnescape(target.text)
-						elif source is not None and source.text:
-							translation = xmlUnescape(source.text)
-						else:
-							raise ValueError(f"No source or target found for unit {ID}")
-					else:
-						raise ValueError(f"No segment found for unit {ID}")
-				else:
+				if unit is None:
 					raise ValueError(f"Cannot locate Unit {ID} in xliff file")
+				segment = unit.find("./xliff:segment", namespaces=namespace)
+				if segment is None:
+					raise ValueError(f"No segment found for unit {ID}")
+				source = segment.find("./xliff:source", namespaces=namespace)
+				if source is None:
+					raise ValueError(f"No source found for unit {ID}")
+				translation = ""
+				if translated:
+					target = segment.find("./xliff:target", namespaces=namespace)
+					if target is not None:
+						targetText = target.text
+						if targetText:
+							translation = targetText
+					# Crowdin treats empty targets (<target/>) as a literal translation.
+					# Filter out such strings and count them as bad translations.
+					if translation in (
+						"<target/>",
+						"&lt;target/&gt;",
+						"<target></target>",
+						"&lt;target&gt;&lt;/target&gt;",
+					):
+						res.numBadTranslationStrings += 1
+						print(f"Warning: line {lineNum} contained a corrupt empty translation. Using source")
+						translation = ""
+					else:
+						res.numTranslatedStrings += 1
+				# If we have no translation, use the source text
+				if not translation:
+					sourceText = source.text
+					if sourceText is None:
+						raise ValueError(f"No source text found for unit {ID}")
+					translation = sourceText
 				outputFile.write(f"{prefix}{translation}{suffix}\n")
 			else:
 				outputFile.write(line)
 		print(
-			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings"
+			f"Generated markdown file with {res.numTotalLines} total lines, {res.numTranslatableStrings} translatable strings, and {res.numTranslatedStrings} translated strings. Ignoring {res.numBadTranslationStrings} bad translated strings",
 		)
 		return res
 
@@ -457,7 +492,7 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 					and line1.count("|") == line2.count("|")
 				):
 					print(
-						f"Warning: ignoring cell padding of post table header line at line {lineNo}: {line1}, {line2}"
+						f"Warning: ignoring cell padding of post table header line at line {lineNo}: {line1}, {line2}",
 					)
 					continue
 				if (
@@ -466,7 +501,7 @@ def ensureMarkdownFilesMatch(path1: str, path2: str, allowBadAnchors: bool = Fal
 					and line1.count("|") == line2.count("|")
 				):
 					print(
-						f"Warning: ignoring cell padding of hidden header row at line {lineNo}: {line1}, {line2}"
+						f"Warning: ignoring cell padding of hidden header row at line {lineNo}: {line1}, {line2}",
 					)
 					continue
 				if allowBadAnchors and (m1 := re_heading.match(line1)) and (m2 := re_heading.match(line2)):
@@ -554,14 +589,29 @@ if __name__ == "__main__":
 		help="The markdown file to generate the xliff file for",
 	)
 	generateXliffParser.add_argument(
-		"-o", "--output", dest="output", type=str, required=True, help="The file to output the xliff file to"
+		"-o",
+		"--output",
+		dest="output",
+		type=str,
+		required=True,
+		help="The file to output the xliff file to",
 	)
 	updateXliffParser = commandParser.add_parser("updateXliff")
 	updateXliffParser.add_argument(
-		"-x", "--xliff", dest="xliff", type=str, required=True, help="The original xliff file"
+		"-x",
+		"--xliff",
+		dest="xliff",
+		type=str,
+		required=True,
+		help="The original xliff file",
 	)
 	updateXliffParser.add_argument(
-		"-m", "--newMarkdown", dest="md", type=str, required=True, help="The new markdown file"
+		"-m",
+		"--newMarkdown",
+		dest="md",
+		type=str,
+		required=True,
+		help="The new markdown file",
 	)
 	updateXliffParser.add_argument(
 		"-o",
@@ -573,10 +623,20 @@ if __name__ == "__main__":
 	)
 	translateXliffParser = commandParser.add_parser("translateXliff")
 	translateXliffParser.add_argument(
-		"-x", "--xliff", dest="xliff", type=str, required=True, help="The xliff file to translate"
+		"-x",
+		"--xliff",
+		dest="xliff",
+		type=str,
+		required=True,
+		help="The xliff file to translate",
 	)
 	translateXliffParser.add_argument(
-		"-l", "--lang", dest="lang", type=str, required=True, help="The language to translate to"
+		"-l",
+		"--lang",
+		dest="lang",
+		type=str,
+		required=True,
+		help="The language to translate to",
 	)
 	translateXliffParser.add_argument(
 		"-p",
