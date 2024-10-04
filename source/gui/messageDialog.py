@@ -13,7 +13,6 @@ from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
-from logHandler import log
 from functools import partial, partialmethod, singledispatchmethod
 
 
@@ -110,7 +109,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def Show(self) -> None:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
-		log.info(f"{self.__isLayoutFullyRealized=}")
 		if not self.__isLayoutFullyRealized:
 			self.__contentsSizer.addDialogDismissButtons(self.__buttonHelper)
 			self.__mainSizer.Fit(self)
@@ -138,27 +136,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		pass
 
 	def _addButtons(self, buttonHelper):
-		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
-		# ok = buttonHelper.addButton(
-		# self,
-		# id=wx.ID_OK,
-		# Translators: An ok button on a message dialog.
-		# label=_("OK"),
-		# )
-		# ok.SetDefault()
-		# ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-
-		# cancel = buttonHelper.addButton(
-		# self,
-		# id=wx.ID_CANCEL,
-		# Translators: A cancel button on a message dialog.
-		# label=_("Cancel"),
-		# )
-		# cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-		# cancel.SetDefault()
-		# self.SetDefaultItem(cancel)
-		# self.addOkButton()
-		# self.addCancelButton()
+		"""Adds additional buttons to the dialog, before any other buttons are added.
+		Subclasses may implement this method.
+		"""
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
 		"""Adds additional contents  to the dialog, before the buttons.
@@ -207,7 +187,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		self.__buttonHelper = buttonHelper
-		# self._addButtons(buttonHelper)
+		self._addButtons(buttonHelper)
 
 		mainSizer.Add(
 			contentsSizer.sizer,
@@ -246,6 +226,15 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		default: bool = False,
 		**kwargs,
 	):
+		"""Add a button to the dialog.
+
+		Any additional arguments are passed to `ButtonHelper.addButton`.
+
+		:param callback: Function to call when the button is pressed, defaults to None.
+		:param default: Whether the button should be the default (first focused) button in the dialog, defaults to False.
+			If multiple buttons with `default=True` are added, the last one added will be the default button.
+		:return: The dialog instance.
+		"""
 		button = self.__buttonHelper.addButton(*args, **kwargs)
 		# button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
 		button.Bind(wx.EVT_BUTTON, partial(self.__call_callback, should_close=True, callback=callback))
@@ -262,6 +251,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		default: bool | None = None,
 		**kwargs,
 	):
+		"""Add a c{MessageDialogButton} to the dialog.
+
+		:param button: The button to add.
+		:param callback: Override for the callback specified in `button`, defaults to None.
+		:param default: Override for the default specified in `button`, defaults to None.
+			If multiple buttons with `default=True` are added, the last one added will be the default button.
+		:return: The dialog instance.
+		"""
 		keywords = dict(
 			id=button.id,
 			label=button.label,
@@ -276,9 +273,16 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return self.addButton(self, *args, **keywords)
 
 	addOkButton = partialmethod(addButton, DefaultMessageDialogButtons.OK)
+	addOkButton.__doc__ = "Add an OK button to the dialog."
 	addCancelButton = partialmethod(addButton, DefaultMessageDialogButtons.CANCEL)
+	addCancelButton.__doc__ = "Add a Cancel button to the dialog."
 
 	def addButtons(self, *buttons: Iterable[MessageDialogButton]):
+		"""Add multiple buttons to the dialog.
+
+		:return: The dialog instance.
+		"""
+
 		for button in buttons:
 			self.addButton(button)
 		return self
