@@ -736,6 +736,6 @@ nvdaL10nUtil = env.Command(
 	target=outputDir.File("nvdaL10nUtil.exe"),
 	source="user_docs/nvdaL10nUtil.py",
 	ENV=os.environ,
-	action=f"nuitka --standalone --onefile --output-dir={outputDir.abspath} --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links user_docs/nvdaL10nUtil.py",
+	action=f"nuitka --assume-yes-for-downloads --standalone --onefile --output-dir={outputDir.abspath} --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links user_docs/nvdaL10nUtil.py",
 )
 env.Alias("nvdaL10nUtil", nvdaL10nUtil)
