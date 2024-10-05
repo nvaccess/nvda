@@ -559,7 +559,7 @@ addTable("my-g2.ctb", _("Burmese grade 2"), contracted=True, input=False)
 addTable("nl-NL-g0.utb", _("Dutch 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-comp8.utb", _("Dutch 8 dot"))
+addTable("nl-comp8.utb", _("Dutch 8 dot"), inputForLangs={"nl"}, translationForLangs={"nl"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("no-no-8dot.utb", _("Norwegian 8 dot computer braille"))
