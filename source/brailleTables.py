@@ -372,7 +372,7 @@ addTable("et-g0.utb", _("Estonian grade 0"))
 addTable("ethio-g1.ctb", _("Ethiopic grade 1"), inputForLangs={"am"}, translationForLangs={"am"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("fa-ir-comp8.ctb", _("Persian 8 dot computer braille"), inputForLangs="fa")
+addTable("fa-ir-comp8.ctb", _("Persian 8 dot computer braille"), inputForLangs={"fa"})
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("fa-ir-g1.utb", _("Persian grade 1"), translationForLangs={"fa"})
@@ -556,7 +556,7 @@ addTable("my-g1.utb", _("Burmese grade 1"), inputForLangs={"my"}, translationFor
 addTable("my-g2.ctb", _("Burmese grade 2"), contracted=True, input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
-addTable("nl-NL-g0.utb", _("Dutch 6 dot"), inputForLangs={"nl"}, translationForLangs={"nl"})
+addTable("nl-NL-g0.utb", _("Dutch 6 dot"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("nl-comp8.utb", _("Dutch 8 dot"))
