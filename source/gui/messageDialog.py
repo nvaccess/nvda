@@ -263,13 +263,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		:param callback: Function to call when the button is pressed, defaults to None.
 		:param default: Whether the button should be the default (first focused) button in the dialog, defaults to False.
+		:param closes_dialog: Whether the button should close the dialog when pressed, defaults to True.
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
 		:return: The dialog instance.
 		"""
 		button = self.__buttonHelper.addButton(*args, **kwargs)
-		# button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
-		# button.Bind(wx.EVT_BUTTON, partial(self.__call_callback, should_close=True, callback=callback))
-		# button.Bind(wx.EVT_BUTTON, self._onButton)
+		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		self._commands[button.GetId()] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
 		if default:
 			button.SetDefault()
@@ -282,6 +281,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		*args,
 		callback: Callable[[wx.CommandEvent], Any] | None = None,
 		default: bool | None = None,
+		closes_dialog: bool | None = None,
 		**kwargs,
 	):
 		"""Add a c{MessageDialogButton} to the dialog.
@@ -290,18 +290,16 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param callback: Override for the callback specified in `button`, defaults to None.
 		:param default: Override for the default specified in `button`, defaults to None.
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
+		:param closes_dialog: Override for `button`'s `closes_dialog` property, defaults to None.
 		:return: The dialog instance.
 		"""
-		keywords = dict(
-			id=button.id,
-			label=button.label,
-			callback=button.callback,
-			default=button.default,
-		)
+		keywords = button._asdict()
 		if default is not None:
 			keywords["default"] = default
 		if callback is not None:
 			keywords["callback"] = callback
+		if closes_dialog is not None:
+			keywords["closes_dialog"] = closes_dialog
 		keywords.update(kwargs)
 		return self.addButton(self, *args, **keywords)
 
@@ -331,9 +329,3 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		for button in buttons:
 			self.addButton(button)
 		return self
-
-	def __call_callback(self, *args, should_close, callback, **kwargs):
-		if should_close:
-			self.Close()
-		if callback is not None:
-			return callback(*args, **kwargs)
