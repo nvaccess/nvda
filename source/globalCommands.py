@@ -3660,6 +3660,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off speaking when navigating by lines or paragraph with braille"),
 		category=SCRCAT_BRAILLE,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
 	def script_toggleSpeakingOnNavigatingByUnit(self, gesture: inputCore.InputGesture):
 		toggleBooleanValue(
 			configSection="braille",
