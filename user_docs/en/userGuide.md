@@ -2297,6 +2297,12 @@ If this is enabled, NVDA will automatically speak the character at the cursor wh
 
 To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+##### Speak character when navigating by line or paragraph {#BrailleSpeakOnNavigating}
+
+If this is enabled, NVDA will automatically speak the current line or paragraph when navigating to it with braille navigation keys.
+
+To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
