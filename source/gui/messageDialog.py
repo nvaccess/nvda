@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-from typing import Any, Callable, Iterable, NamedTuple
+from typing import Any, Callable, Deque, Iterable, NamedTuple
 import winsound
 
 import wx
@@ -14,7 +14,7 @@ from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partial, partialmethod, singledispatchmethod
-
+from collections import deque
 
 class MessageDialogReturnCode(IntEnum):
 	OK = wx.ID_OK
@@ -106,6 +106,7 @@ class DefaultMessageDialogButtons(MessageDialogButton, Enum):
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
+	_instances: Deque["MessageDialog"] = deque()
 	def Show(self) -> None:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
@@ -114,6 +115,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.__mainSizer.Fit(self)
 			self.__isLayoutFullyRealized = True
 		super().Show()
+		self._instances.append(self)
 
 	def defaultAction(self) -> None:
 		return None
@@ -217,6 +219,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
 		self.Destroy()
+		self._instances.remove(self)
 
 	@singledispatchmethod
 	def addButton(
