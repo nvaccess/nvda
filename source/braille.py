@@ -3855,7 +3855,8 @@ def _speakOnNavigatingByUnit(info: textInfos.TextInfo):
 	if not config.conf["braille"]["speakOnNavigatingByUnit"]:
 		return
 	# Import late to avoid circular import.
-	from speech.speech import speakTextInfo
+	from speech.speech import cancelSpeech, speakTextInfo
 
 	readingUnit = handler.buffer.regions[-1]._getReadingUnit()
+	cancelSpeech()
 	speakTextInfo(info, unit=readingUnit, reason=controlTypes.OutputReason.CARET)
