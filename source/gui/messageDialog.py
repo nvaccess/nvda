@@ -30,6 +30,11 @@ class MessageDialogReturnCode(IntEnum):
 	APPLY = wx.ID_APPLY
 	CLOSE = wx.ID_CLOSE
 	HELP = wx.ID_HELP
+	CUSTOM_1 = wx.ID_HIGHEST + 1
+	CUSTOM_2 = wx.ID_HIGHEST + 2
+	CUSTOM_3 = wx.ID_HIGHEST + 3
+	CUSTOM_4 = wx.ID_HIGHEST + 4
+	CUSTOM_5 = wx.ID_HIGHEST + 5
 
 
 class MessageDialogType(Enum):
