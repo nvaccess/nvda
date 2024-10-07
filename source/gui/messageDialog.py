@@ -304,6 +304,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addOkButton.__doc__ = "Add an OK button to the dialog."
 	addCancelButton = partialmethod(addButton, DefaultMessageDialogButtons.CANCEL)
 	addCancelButton.__doc__ = "Add a Cancel button to the dialog."
+	addYesButton = partialmethod(addButton, DefaultMessageDialogButtons.YES)
+	addYesButton.__doc__ = "Add a Yes button to the dialog."
+	addNoButton = partialmethod(addButton, DefaultMessageDialogButtons.NO)
+	addNoButton.__doc__ = "Add a No button to the dialog."
+	addSaveButton = partialmethod(addButton, DefaultMessageDialogButtons.SAVE)
+	addSaveButton.__doc__ = "Add a Save button to the dialog."
+	addApplyButton = partialmethod(addButton, DefaultMessageDialogButtons.APPLY)
+	addApplyButton.__doc__ = "Add an Apply button to the dialog."
+	addCloseButton = partialmethod(addButton, DefaultMessageDialogButtons.CLOSE)
+	addCloseButton.__doc__ = "Add a Close button to the dialog."
+	addHelpButton = partialmethod(addButton, DefaultMessageDialogButtons.HELP)
+	addHelpButton.__doc__ = "Add a Help button to the dialog."
 
 	def addButtons(self, *buttons: Iterable[MessageDialogButton]):
 		"""Add multiple buttons to the dialog.
