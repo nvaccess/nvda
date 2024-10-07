@@ -4613,7 +4613,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
-# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
+		# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
 		speakOnNavigatingText = _("Speak &line or paragraph when navigating by them with braille")
 		self.speakOnNavigatingCheckBox = followCursorGroupHelper.addItem(
 			wx.CheckBox(self.followCursorGroupBox, label=speakOnNavigatingText),
