@@ -3556,7 +3556,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for cycle through
-		# braille move system caret when routing review cursor command.
+		# braille move system caret when routing
+		#  review cursor command.
 		description=_("Cycle through the braille move system caret when routing review cursor states"),
 		category=SCRCAT_BRAILLE,
 	)
@@ -3653,6 +3654,21 @@ class GlobalCommands(ScriptableObject):
 			# Translators: The message announced when toggling off speaking character when routing.
 			state = _("Disabled speak character when routing cursor in text")
 		ui.message(state)
+
+	@script(
+		# Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
+		description=_("Toggles on and off speaking when navigating by lines or paragraph with braille"),
+		category=SCRCAT_BRAILLE,
+	)
+	def script_toggleSpeakingOnNavigatingByUnit(self, gesture: inputCore.InputGesture):
+		toggleBooleanValue(
+			configSection="braille",
+			configKey="speakOnNavigatingByUnit",
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
+		)
 
 	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
