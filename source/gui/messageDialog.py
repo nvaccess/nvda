@@ -4,7 +4,7 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-from typing import Any, Callable, Deque, Iterable, NamedTuple
+from typing import Any, Callable, Deque, Iterable, NamedTuple, TypeAlias
 import winsound
 
 import wx
@@ -13,8 +13,13 @@ from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
 from .guiHelper import SIPABCMeta
 from gui import guiHelper
-from functools import partial, partialmethod, singledispatchmethod
+from functools import partialmethod, singledispatchmethod
 from collections import deque
+
+
+# TODO: Change to type statement when Python 3.12 or later is in use.
+MessageDialogCallback: TypeAlias = Callable[[wx.CommandEvent], Any]
+
 
 class MessageDialogReturnCode(IntEnum):
 	OK = wx.ID_OK
@@ -74,7 +79,7 @@ class MessageDialogButton(NamedTuple):
 	label: str
 	"""The label to display on the button."""
 
-	callback: Callable[[wx.CommandEvent], Any] | None = None
+	callback: MessageDialogCallback | None = None
 	"""The callback to call when the button is clicked."""
 
 	default: bool = False
@@ -105,13 +110,19 @@ class DefaultMessageDialogButtons(MessageDialogButton, Enum):
 	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
 
 
+class _MessageDialogCommand(NamedTuple):
+	callback: MessageDialogCallback | None = None
+	closes_dialog: bool = True
+
+
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
 	_instances: Deque["MessageDialog"] = deque()
+	_commands: dict[int, _MessageDialogCommand] = {}
+
 	def Show(self) -> None:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
 		if not self.__isLayoutFullyRealized:
-			self.__contentsSizer.addDialogDismissButtons(self.__buttonHelper)
 			self.__mainSizer.Fit(self)
 			self.__isLayoutFullyRealized = True
 		super().Show()
@@ -174,6 +185,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
 		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
+		self.Bind(wx.EVT_BUTTON, self._onButton)
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
@@ -188,6 +200,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._addContents(contentsSizer)
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		contentsSizer.addDialogDismissButtons(buttonHelper)
 		self.__buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
 
@@ -221,12 +234,22 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.Destroy()
 		self._instances.remove(self)
 
+	def _onButton(self, evt: wx.CommandEvent):
+		command = self._commands.get(evt.GetId())
+		if command is None:
+			return
+		if command.callback is not None:
+			command.callback(evt)
+		if command.closes_dialog:
+			self.Close()
+
 	@singledispatchmethod
 	def addButton(
 		self,
 		*args,
 		callback: Callable[[wx.CommandEvent], Any] | None = None,
 		default: bool = False,
+		closes_dialog: bool = True,
 		**kwargs,
 	):
 		"""Add a button to the dialog.
@@ -240,7 +263,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		button = self.__buttonHelper.addButton(*args, **kwargs)
 		# button.Bind(wx.EVT_BUTTON, self.__closeFirst(callback))
-		button.Bind(wx.EVT_BUTTON, partial(self.__call_callback, should_close=True, callback=callback))
+		# button.Bind(wx.EVT_BUTTON, partial(self.__call_callback, should_close=True, callback=callback))
+		# button.Bind(wx.EVT_BUTTON, self._onButton)
+		self._commands[button.GetId()] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
 		if default:
 			button.SetDefault()
 		return self
