@@ -4613,6 +4613,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
+# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
+		speakOnNavigatingText = _("Speak &line or paragraph when navigating by them with braille")
+		self.speakOnNavigatingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=speakOnNavigatingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnNavigating", self.speakOnNavigatingCheckBox)
+		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4681,6 +4689,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			self.paragraphStartMarkersComboBox.GetSelection()
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
+		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
