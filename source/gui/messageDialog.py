@@ -15,6 +15,7 @@ from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
+from logHandler import log
 
 
 # TODO: Change to type statement when Python 3.12 or later is in use.
@@ -122,7 +123,6 @@ class _MessageDialogCommand(NamedTuple):
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
 	_instances: Deque["MessageDialog"] = deque()
-	_commands: dict[int, _MessageDialogCommand] = {}
 
 	def Show(self) -> None:
 		"""Show a non-blocking dialog.
@@ -133,7 +133,29 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		super().Show()
 		self._instances.append(self)
 
-	def defaultAction(self) -> None:
+	def ShowModal(self):
+		"""Show a blocking dialog.
+		Attach buttons with button handlers"""
+		if not self.__isLayoutFullyRealized:
+			self.__mainSizer.Fit(self)
+			self.__isLayoutFullyRealized = True
+		self.__ShowModal = self.ShowModal
+		self.ShowModal = super().ShowModal
+		from .message import displayDialogAsModal
+
+		self._instances.append(self)
+		displayDialogAsModal(self)
+		self.ShowModal = self.__ShowModal
+
+	@property
+	def _defaultAction(self) -> MessageDialogCallback:
+		if (defaultReturnCode := self._defaultReturnCode) is not None:
+			try:
+				return self._commands[defaultReturnCode]
+			except KeyError:
+				raise RuntimeError(
+					f"Default return code {defaultReturnCode} is not associated with a callback",
+				)
 		return None
 
 	@staticmethod
@@ -145,13 +167,21 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def BlockingInstancesExist() -> bool:
 		"""Check if dialogs are open without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		pass
+		return any(dialog.isBlocking() for dialog in MessageDialog._instances)
 
 	@staticmethod
 	def FocusBlockingInstances() -> None:
 		"""Raise and focus open dialogs without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		pass
+		for dialog in MessageDialog._instances:
+			if dialog.isBlocking():
+				dialog.Raise()
+				dialog.SetFocus()
+				break
+
+	def isBlocking(self) -> bool:
+		"""Check if the dialog is blocking"""
+		return self.IsModal() and self._defaultReturnCode is None
 
 	def _addButtons(self, buttonHelper):
 		"""Adds additional buttons to the dialog, before any other buttons are added.
@@ -184,6 +214,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	):
 		super().__init__(parent, title=title)
 		self.__isLayoutFullyRealized = False
+		self._commands: dict[int, _MessageDialogCommand] = {}
+		self._defaultReturnCode: MessageDialogReturnCode | None = None
 
 		self.__setIcon(dialogType)
 		self.__setSound(dialogType)
@@ -236,17 +268,26 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
-		self.Destroy()
+		log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
+		# self.GetEscapeId()
+		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
+		self.DestroyLater()
 		self._instances.remove(self)
 
 	def _onButton(self, evt: wx.CommandEvent):
 		command = self._commands.get(evt.GetId())
 		if command is None:
 			return
+		if command.closes_dialog:
+			closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
+			closeEvent.SetEventObject(evt.GetEventObject())
+			self.GetEventHandler().QueueEvent(closeEvent)
+			# wx.PostEvent(self.GetEventHandler(), closeEvent)
+			# self.ProcessPendingEvents()
+			# self.ProcessEvent(wx.CloseEvent(id=evt.GetId()))
+			# self.Close()
 		if command.callback is not None:
 			command.callback(evt)
-		if command.closes_dialog:
-			self.Close()
 
 	@singledispatchmethod
 	def addButton(

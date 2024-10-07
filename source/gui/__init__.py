@@ -596,7 +596,7 @@ class MainFrame(wx.Frame):
 			.addCancelButton(callback=lambda _: messageBox("You pressed Cancel!"))
 		)
 
-		dlg.Show()
+		dlg.ShowModal()
 		self.postPopup()
 
 
