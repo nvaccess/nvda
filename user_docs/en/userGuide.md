@@ -1837,31 +1837,12 @@ These controls allow you to specify an alternative URL to use to check for updat
 This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
 
 The read-only text box shows the current mirror URL.
-If no mirror is in use (I.E. the NV Access NVDA update server is being used), "No mirror" is displayed.
+If no mirror is in use (i.e. the NV Access update server is being used), "No mirror" is displayed.
 
-If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetUpdateMirror).
-
-#### Set Update Mirror {#SetUpdateMirror}
-
-This dialog, which is accessed from the [Update mirror section of the General page in NVDA's Settings dialog](#UpdateMirror), allows you to set a mirror to use when checking for NVDA updates.
-This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetURLDialog).
 
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
-
-##### URL {#UpdateMirrorURL}
-
-Enter the URL (web address) of the update server mirror you wish to use here.
-Only HTTP and HTTPS URLs are supported.
-For your privacy, NV Access recommends using HTTPS URLs whenever possible.
-
-Leave this blank to use the NV Access NVDA update check server.
-
-##### Test... {#UpdateMirrorTest}
-
-Press this button to test the NVDA update server URL you have entered.
-You must be connected to the internet for the test to succeed.
-It is recommended that you always test the URL before saving it.
 
 #### Speech Settings {#SpeechSettings}
 
@@ -3107,12 +3088,15 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Server mirror URL {#AddonStoreMetadataMirror}
+##### Mirror server {#AddonStoreMetadataMirror}
 
-This option allows you to specify an alternative URL to download Add-on Store data from.
+These controls allow you to specify an alternative URL to download Add-on Store data from.
 This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
 
-Leave this blank to use the default NV Access Add-on Store server.
+The read-only text box shows the current mirror URL.
+If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "No mirror" is displayed.
+
+If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3130,6 +3114,28 @@ When this checkbox is enabled, NVDA will automatically refresh the recognized co
 This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
 The refresh takes place every one and a half seconds.
 This option is disabled by default.
+
+#### Set Mirror Dialog {#SetURLDialog}
+
+This dialog allows you to specify the URL of a mirror to use when [updating NVDA](#GeneralSettingsCheckForUpdates) or [using the Add-on Store](#AddonsManager).
+This may be of use in locations where access to the NV Access servers for these functions is slow or unavailable.
+
+* When setting the [NVDA update mirror](#UpdateMirror), the title of this dialog will be "Set NVDA Update Mirror".
+* When setting the [Add-on Store mirror](#AddonStoreMetadataMirror), the title of this dialog will be "Set Add-on Store Mirror Server".
+
+##### URL {#SetURLTextbox}
+
+Enter the URL (web address) of the mirror you wish to use here.
+Only HTTP and HTTPS URLs are supported.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
+
+Leave this blank to use the default NV Access server.
+
+##### Test... {#SetURLTest}
+
+Press this button to test the mirror URL you have entered.
+You must be connected to the internet for the test to succeed.
+It is recommended that you always test the URL before saving it.
 
 #### Advanced Settings {#AdvancedSettings}
 
