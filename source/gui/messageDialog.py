@@ -271,23 +271,26 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
 		# self.GetEscapeId()
 		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
+		# self.EndModal(0)
+		# wx.CallAfter(self.Destroy)
 		self.DestroyLater()
-		self._instances.remove(self)
+		# self._instances.remove(self)
 
 	def _onButton(self, evt: wx.CommandEvent):
-		command = self._commands.get(evt.GetId())
+		id = evt.GetId()
+		command = self._commands.get(id)
 		if command is None:
 			return
-		if command.closes_dialog:
+		callback, close = command
+		if callback is not None:
+			if close:
+				self.Hide()
+			callback(evt)
+		if close:
 			closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
 			closeEvent.SetEventObject(evt.GetEventObject())
+			self.SetReturnCode(id)
 			self.GetEventHandler().QueueEvent(closeEvent)
-			# wx.PostEvent(self.GetEventHandler(), closeEvent)
-			# self.ProcessPendingEvents()
-			# self.ProcessEvent(wx.CloseEvent(id=evt.GetId()))
-			# self.Close()
-		if command.callback is not None:
-			command.callback(evt)
 
 	@singledispatchmethod
 	def addButton(
