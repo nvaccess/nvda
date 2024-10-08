@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 01:15+0000\n"
-"PO-Revision-Date: 2024-10-01 06:50\n"
+"POT-Creation-Date: 2024-10-07 00:09+0000\n"
+"PO-Revision-Date: 2024-10-08 00:29\n"
 "Last-Translator: \n"
 "Language-Team: Slovak\n"
 "Language: sk_SK\n"
@@ -666,7 +666,7 @@ msgstr "⠆"
 #: braille.py:413
 msgctxt "braille formatting symbol"
 msgid "⡃"
-msgstr "⠣⠆"
+msgstr "⠆⠜"
 
 #. Translators: Brailled at the start of italic text.
 #. This is the English letter "i" in braille.
@@ -680,7 +680,7 @@ msgstr "⠔"
 #: braille.py:421
 msgctxt "braille formatting symbol"
 msgid "⡊"
-msgstr "⠣⠔"
+msgstr "⠔⠜"
 
 #. Translators: Brailled at the start of underlined text.
 #. This is the English letter "u" in braille.
@@ -694,7 +694,7 @@ msgstr "⠤"
 #: braille.py:429
 msgctxt "braille formatting symbol"
 msgid "⡥"
-msgstr "⠣⠤"
+msgstr "⠤⠜"
 
 #. Translators: Brailled at the start of strikethrough text.
 #. This is the English letter "s" in braille.
@@ -708,7 +708,7 @@ msgstr "⠈⠱"
 #: braille.py:437
 msgctxt "braille formatting symbol"
 msgid "⡎"
-msgstr "⠣⠈⠱"
+msgstr "⠈⠱⠜"
 
 #. Translators: Braille when there are further details/annotations that can be fetched manually.
 #: braille.py:650 speech\speech.py:2057
@@ -5335,7 +5335,7 @@ msgstr "Nedostupné, lebo brailový kurzor je zviazaný s fokusom."
 #: globalCommands.py:3541
 #, python-format
 msgid "Braille move system caret when routing review cursor default (%s)"
-msgstr "systémový kurzor predvolene nasleduje prezerací kurzor po stlačení smerových tlačidiel (%s)"
+msgstr "Systémový kurzor predvolene nasleduje prezerací kurzor po stlačení privolávacích tlačidiel (%s)"
 
 #. Translators: Used when reporting braille move system caret when routing review cursor state.
 #: globalCommands.py:3549
@@ -5354,7 +5354,7 @@ msgstr "Prepína spôsob prezentácie kontextových informácií na brailovom ri
 #: globalCommands.py:3575
 #, python-format
 msgid "Braille focus context presentation: %s"
-msgstr "Prezentácia fokusu na brailovskom riadku: %s"
+msgstr "Prezentácia fokusu na brailovom riadku: %s"
 
 #. Translators: Input help mode message for toggle braille cursor command.
 #: globalCommands.py:3579
@@ -5374,17 +5374,17 @@ msgstr "brailový kurzor zapnutý"
 #. Translators: Input help mode message for speak on routing command.
 #: globalCommands.py:3598
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
-msgstr "Prepína vyslovovanie znakov pod kurzorom pri používaní smerových tlačidiel brailového riadku"
+msgstr "Prepína vyslovovanie znakov pod kurzorom pri používaní privolávacích tlačidiel brailového riadku"
 
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3606
 msgid "Enabled speak character when routing cursor in text"
-msgstr "Vyslovovať znaky pri posúvaní kurzora smerovými tlačidlami brailového riadku"
+msgstr "Vyslovovať znaky pri posúvaní kurzora privolávacími tlačidlami brailového riadku"
 
 #. Translators: The message announced when toggling off speaking character when routing.
 #: globalCommands.py:3609
 msgid "Disabled speak character when routing cursor in text"
-msgstr "Nevyslovovať znaky pri posúvaní kurzora smerovými tlačidlami brailového riadku"
+msgstr "Nevyslovovať znaky pri posúvaní kurzora privolávacími tlačidlami brailového riadku"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3614
@@ -5551,7 +5551,7 @@ msgstr "V braily prejde na nasledujúci riadok"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3937
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Vloží znaky pomocou vstavanej klávesnice brailovského zobrazovača"
+msgstr "Vloží znaky pomocou vstavanej klávesnice brailového riadku"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3946
@@ -13728,7 +13728,7 @@ msgstr "Brailový kurzor zviaza&ný:"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4369
 msgid "Move system caret when ro&uting review cursor"
-msgstr "Smerové tlačidlá posúvajú prezerací aj systémový kur&zor"
+msgstr "Privolávacie tlačidlá posúvajú prezerací aj systémový kur&zor"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 #: gui\settingsDialogs.py:4385
@@ -13758,7 +13758,7 @@ msgstr "Zobrazovanie formátovania"
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4451
 msgid "Spea&k character when routing cursor in text"
-msgstr "Vyslovovať zna&ky pri posúvaní kurzora smerovými tlačidlami"
+msgstr "Vyslovovať zna&ky pri posúvaní kurzora privolávacími tlačidlami"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
