@@ -1,23 +1,14 @@
 ﻿#locale/nl/symbols.dic
 #A part of NonVisual Desktop Access (NVDA)
-#Copyright (c) 2011-2019 NVDA Contributors
+#Copyright (c) 2011-2024 NVDA Contributors
 #This file is covered by the GNU General Public License.
 
 complexSymbols:
 # identifier	regexp
-# Sentence endings.
-. sentence ending	(?<=[^\s.])\.(?=[\"'”’)\s]|$)
-! sentence ending	(?<=[^\s!])\!(?=[\"'”’)\s]|$)
-? sentence ending	(?<=[^\s?])\?(?=[\"'”’)\s]|$)
-# Phrase endings.
-; phrase ending	(?<=[^\s;]);(?=\s|$)
-: phrase ending	(?<=[^\s:]):(?=\s|$)
-# Series of dots used for visual presentation, e.g. in table of contents
-multiple .	\.{4,}
 # Others
-decimal point	(?<![^\d -])\.(?=\d)
-in-word '	(?<=[^\W_])['’]
-negative number	(?<!\w)[-−]{1}(?=[$£€¥.]?\d)
+decimal point	(?<![^\d -])\,(?=\d)
+thousands separator	(?<=\d)\.(?=\d{3})
+begin-word '	((?<=\s)|(?<=^))'(?=\w(\s|$|[-.,?!]))
 
 symbols:
 # identifier	replacement[[	level][	preserve]][	# display name]
@@ -28,9 +19,10 @@ symbols:
 ? sentence ending	vraagteken	all	always
 ; phrase ending	puntcomma	most	always
 : phrase ending	dubbele punt	most	always
-multiple .	een reeks punten	all	always
-decimal point		none	always
+multiple .	meerdere punten	all	always
+thousands separator	punt	all	norep
 in-word '	apostrof	all	norep
+begin-word '	apostrofe	all	norep
 negative number	minus	none	norep
 
 # Whi	tespace
@@ -44,7 +36,7 @@ negative number	minus	none	norep
 
 # Standard punctuation/symbols
 !	uitroepteken	all
-！	grootformaat uitroepteken	all
+！	breed uitroepteken	all
 "	aanhalingsteken	most
 \#	hekje	some
 $	dollar	all	norep
@@ -54,10 +46,10 @@ $	dollar	all	norep
 ¥	yen	all	norep
 ₹	roepie	some	norep
 ƒ	gulden	all	norep
-¤	currency sign	all	norep
+¤	valutateken	all	norep
 %	procent	some
 ‰	promille	some
-&	en	some
+&	en-teken	some
 '	apostrof	all
 (	haakje openen	most	always
 )	haakje sluiten	most	always
@@ -67,16 +59,16 @@ $	dollar	all	norep
 ،	arabische komma	all	always
 -	min	most
 .	punt	some
-．	(dikke) punt	some
+．	brede punt	some
 /	slash	some
 :	dubbele punt	most	norep
-：	fullwidth dubbele punt	most	norep
+：	brede dubbele punt	most	norep
 ;	puntcomma	most
 ؛	arabische puntkolon	most
-；	fullwidth puntkomma	most
+；	brede puntkomma	most
 ?	vraagteken	all
 ؟	arabisch vraagteken	all
-？	fullwidth vraagteken	all
+？	breed vraagteken	all
 @	at	some
 [	rechte haak openen	most
 ]	rechte haak sluiten	most
@@ -87,15 +79,15 @@ _	onderstreping	most
 {	accolade openen	most
 }	accolade sluiten	most
 |	pijp	most
-¦	onderbroken pijp	most
+¦	gebroken pijp	most
 ~	tilde	most
 ¡	omgekeerd uitroepteken	some
 ¿	omgekeerd vraagteken	some
 ·	hoge punt	most
-‚	laag rechter enkel aanhalingsteken	most
-„	laag rechter dubbel aanhalingsteken	most
-′	prime sans serif 	some
-″	dubbel prime	some
+‚	enkel laag aanhalingsteken	most
+„	dubbel laag aanhalingsteken	most
+′	prime	some
+″	dubbele prime	some
 ‴	drievoudige prime	some
 
 # Other characters
@@ -118,15 +110,15 @@ _	onderstreping	most
 ¸	cedille	most
 ‎	links naar rechts markering	char
 ‏	rechts naar links markering	char
-¶	alineamarkering	most
+¶	paragraafteken	most
 ■	zwart vierkant	some
 ▪	zwart vierkant	some
 ◾	zwart vierkant	some
-□	white square	some
+□	wit vierkant	some
 ◦	wit opsommingsteken	some
 ⇨	doorzichtige pijl naar rechts	some
 ➔	pijl naar rechts	some
-➢	naar rechtswijzende pijlpunt	some
+➢	pijlpunt naar rechts	some
 ❖	zwarte ruitvorm minus wit X	some
 ♣	zwart klaveren	some
 ♦	zwart ruiten	some
@@ -147,7 +139,7 @@ _	onderstreping	most
 ⁸	superscript 8	some
 ⁹	superscript 9	some
 ⁺	superscript plus	some
-⁼	superscript is gelijk aan	some
+⁼	superscript gelijk aan	some
 ⁽	superscript haakje openen	some
 ⁾	superscript haakje sluiten	some
 ⁿ	superscript n	some
@@ -163,7 +155,7 @@ _	onderstreping	most
 ₉	subscript 9	some
 ₊	subscript plus	some
 ₋	subscript minus	some
-₌	subscript is gelijk aan	some
+₌	subscript gelijk aan	some
 ₍	subscript haakje openen	some
 ₎	subscript haakje sluiten	some
 ®	geregistreerd	some
@@ -177,8 +169,8 @@ _	onderstreping	most
 ✓	vinkje	some
 ✔	vinkje	some
 🡺	pijl naar rechts	some
-†	zuil	some
-‡	dubbele zuil	some
+†	Obelisk	some
+‡	dubbele Obelisk	some
 ‣	driehoekig opsommingsteken	none
 ✗	x-vormig opsommingsteken	none
 ⊕	omcirkeld plusteken	none
@@ -189,14 +181,14 @@ _	onderstreping	most
 #Arithmetic operators
 +	plus	some
 −	minus	some
-×	vermenigvuldigteken	some
+×	maal	some
 ⋅	maal	some
 ⨯	maal	none
 ∕	gedeeld door	some
-⁄	deel van	some
+⁄	gedeeld door	some
 ÷	delen door	some
-∓	min of meer	some
-±	plus of Minus	some
+∓	minus of plus	some
+±	plusminus	some
 
 #Set operations
 ∖	set minus	none
@@ -219,12 +211,12 @@ _	onderstreping	most
 ⊌	multiset	none
 
 #Equality signs
-=	is gelijk aan	some
+=	gelijk aan	some
 ≃	asymptotisch gelijk aan	none
 ≄	niet asymptotisch gelijk aan	none
 ≅	ongeveer gelijk aan	none
 ≆	ongeveer maar niet werkelijk gelijk aan	none
-≈	bijna Gelijk aan	none
+≈	bijna gelijk aan	none
 ≌	alles gelijk aan	none
 ≍	equivalent aan	none
 ≭	niet equivalent aan	none
@@ -237,21 +229,21 @@ _	onderstreping	most
 ≣	strikt identiek aan	none
 ≢	niet identiek aan	none
 ∼	soortgelijk aan	none
-≙	naar schatting	none
-≟	questioned equal to	none
+≙	schatting	none
+≟	betwist gelijk aan	none
 
 #comparison signs
-<	minder	some
->	groter	some
-≤	minder- dan of gelijk aan	none
-≦	minder- dan of gelijk aan	none
+<	kleiner dan	some
+>	groter dan	some
+≤	kleiner dan of gelijk aan	none
+≦	kleiner dan of gelijk aan	none
 ≪	veel kleiner dan	none
-≥	groter-dan of gelijk aan	none
-≧	groter-dan of gelijk aan	none
+≥	groter dan of gelijk aan	none
+≧	groter dan of gelijk aan	none
 ≫	veel groter dan	none
-≶	minder dan of groter dan	none
-≷	groter dan of minder dan	none
-≮	niet minder dan	none
+≶	kleiner dan of groter dan	none
+≷	groter dan of kleiner dan	none
+≮	niet kleiner dan	none
 ≯	niet groter dan	none
 
 #Functions
