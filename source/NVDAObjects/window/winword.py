@@ -82,6 +82,13 @@ wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
 
 
+class MsoHyperlinkEnum(IntEnum):
+	# See https://learn.microsoft.com/en-us/office/vba/api/office.msohyperlinktype
+	RANGE = 0
+	SHAPE = 1
+	INLINE_SHAPE = 2
+
+
 class WdUnderline(DisplayStringIntEnum):
 	# Word underline styles
 	# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
@@ -804,14 +811,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						initialDocument=self.obj,
 					),
 				)
+	
 		# Handle activating links.
+		link = self._getLinkAtCaretPosition()
+		if link:
+			link.follow()
+			return
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
-		tempRange.expand(wdWord)
-		links = tempRange.hyperlinks
-		if links.count > 0:
-			links[1].follow()
-			return
 		tempRange.expand(wdParagraph)
 		fields = tempRange.fields
 		for field in (fields.item(i) for i in range(1, fields.count + 1)):
@@ -846,6 +853,42 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
+
+	def _getLinkAtCaretPosition(self):
+		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		links = tempRange.hyperlinks
+		if links.count > 0:
+			return links[1]
+		return None
+			
+	def _getShapeAtCaretPosition(self):
+		# It is necessary to expand to word to get a shape as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		shapes = tempRange.InlineShapes
+		if shapes.count > 0:
+			return shapes[1]
+		return None
+			
+	
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		link = self._getLinkAtCaretPosition()
+		if not link:
+			return None
+		if link.Type == MsoHyperlinkEnum.RANGE:
+			text = link.TextToDisplay
+		elif link.Type == MsoHyperlinkEnum.INLINE_SHAPE:
+			shape = self._getShapeAtCaretPosition()
+			text = shape.AlternativeText
+		else:
+			log.debugWarning(f"No text to display for link type {link.Type}")
+			text = None
+		return textInfos._Link(
+			displayText=text,
+			destination=link.Address,
+		)
 
 	def _expandToLineAtCaret(self):
 		lineStart = ctypes.c_int()

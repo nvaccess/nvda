@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -11,6 +11,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 
 from abc import abstractmethod
 from enum import Enum
+from dataclasses import dataclass
 import weakref
 import re
 import typing
@@ -704,6 +705,9 @@ class TextInfo(baseObject.AutoPropertyObject):
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX, oldY)
 
+	def _getLinkDataAtCaretPosition(self):
+		raise NotImplementedError
+
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
 		This will only be called for control fields with a role of L{controlTypes.Role.MATH}.
@@ -755,7 +759,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			exactly 1 character.
 			A good illustration of this is in Microsoft Word with UIA enabled always,
 			the first character of a bullet list item would be represented by three pythonic codepoint characters:
-			* Bullet character "•"
+			* Bullet character "ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬Ãƒâ€šÃ‚Â¢"
 			* Tab character \t
 			* And the first character of of list item per se.
 
@@ -1010,3 +1014,11 @@ class CommentType(Enum):
 	GENERAL = "general"
 	DRAFT = "draft"
 	RESOLVED = "resolved"
+
+
+@dataclass
+class _Link:
+	"""Class to store information on a link in text."""
+	
+	displayText: str | None
+	destination: str
