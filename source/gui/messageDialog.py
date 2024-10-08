@@ -128,22 +128,31 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
 		if not self.__isLayoutFullyRealized:
+			log.debug("Laying out")
 			self.__mainSizer.Fit(self)
 			self.__isLayoutFullyRealized = True
+			log.debug("Layout completed")
+		log.debug("Showing")
 		super().Show()
+		log.debug("Adding to instances")
 		self._instances.append(self)
 
 	def ShowModal(self):
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
 		if not self.__isLayoutFullyRealized:
+			log.debug("Laying out")
 			self.__mainSizer.Fit(self)
 			self.__isLayoutFullyRealized = True
+			log.debug("Layout completed")
+
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
 		from .message import displayDialogAsModal
 
+		log.debug("Adding to instances")
 		self._instances.append(self)
+		log.debug("Showing modal")
 		displayDialogAsModal(self)
 		self.ShowModal = self.__ShowModal
 
@@ -268,13 +277,15 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
-		log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
+		# log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
 		# self.GetEscapeId()
 		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
 		# self.EndModal(0)
 		# wx.CallAfter(self.Destroy)
+		log.debug("Queueing destroy")
 		self.DestroyLater()
-		# self._instances.remove(self)
+		log.debug("Removing from instances")
+		self._instances.remove(self)
 
 	def _onButton(self, evt: wx.CommandEvent):
 		id = evt.GetId()
