@@ -6,9 +6,10 @@
 
 ### New Features
 
-* The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
-* Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
-In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
+* Commands to adjust the volume of other applications besides NVDA have been added. To use this feature, "allow application volume adjustment" must be enabled in the audio settings panel. (#16052, @mltony, @codeofdusk)
+    * <kbd>NVDA</kbd>+<kbd>Alt</kbd>+<kbd>Pageup</kbd>: Increase the volume of all other applications.
+    * <kbd>NVDA</kbd>+<kbd>Alt</kbd>+<kbd>Pagedown</kbd>: Decrease the volume of all other applications.
+    * <kbd>NVDA</kbd>+<kbd>Alt</kbd>+<kbd>Delete</kbd>: Mute the volume of all other applications.
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
