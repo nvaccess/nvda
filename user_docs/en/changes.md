@@ -44,6 +44,7 @@ In order to use this feature, the application volume adjuster needs to be enable
   * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
   * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
+* NVDA should no longer play error sounds or spam the log file when using the display speech output braille mode while no braille display is connected. (#17092, @Emil-18)
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
 * In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
