@@ -4,10 +4,13 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
+import time
 from typing import Any, Callable, Deque, Iterable, NamedTuple, TypeAlias
 import winsound
 
 import wx
+
+import gui
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -127,25 +130,27 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def Show(self) -> None:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
-		if not self.__isLayoutFullyRealized:
-			log.debug("Laying out")
-			self.__mainSizer.Fit(self)
-			self.__isLayoutFullyRealized = True
-			log.debug("Layout completed")
+		self._realize_layout()
 		log.debug("Showing")
 		super().Show()
 		log.debug("Adding to instances")
 		self._instances.append(self)
 
+	def _realize_layout(self):
+		if self.__isLayoutFullyRealized:
+			return
+		if gui._isDebug():
+			startTime = time.time()
+			log.debug("Laying out message dialog")
+		self.__mainSizer.Fit(self)
+		self.__isLayoutFullyRealized = True
+		if gui._isDebug():
+			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
+
 	def ShowModal(self):
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
-		if not self.__isLayoutFullyRealized:
-			log.debug("Laying out")
-			self.__mainSizer.Fit(self)
-			self.__isLayoutFullyRealized = True
-			log.debug("Layout completed")
-
+		self._realize_layout()
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
 		from .message import displayDialogAsModal
@@ -327,6 +332,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._commands[button.GetId()] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
 		if default:
 			button.SetDefault()
+		self.__isLayoutFullyRealized = False
 		return self
 
 	@addButton.register
