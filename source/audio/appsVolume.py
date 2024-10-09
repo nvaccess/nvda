@@ -107,14 +107,13 @@ def _updateAppsVolumeImpl(
 
 WASAPI_DISABLED_MESSAGE: str = _(
 	# Translators: error message when wasapi is turned off.
-	"Application volumes cannot be adjusted. "
-	"Please enable WASAPI in the advanced settings panel",
+	"Application volumes cannot be adjusted. " "Please enable WASAPI in the advanced settings panel",
 )
 
 
 VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 	# Translators: error message when applications' volume is disabled
-	"Application volume adjustment disabled"
+	"Application volume adjustment disabled",
 )
 
 
