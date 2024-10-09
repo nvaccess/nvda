@@ -3,8 +3,8 @@
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
 # Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
-# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
+# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto,
+# jakubl7545, Tony Malykh, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -3028,8 +3028,9 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		# Translators: This is a label for the applications volume adjuster combo box in settings.
-		label = _("&Application volume adjuster status")
+		# Translators: This is a label for the
+		# "allow application volume adjustment" combo box in settings.
+		label = _("&Allow application volume adjustment:")
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
