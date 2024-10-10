@@ -312,22 +312,24 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 	# region Public class methods
-	@staticmethod
-	def CloseInstances() -> None:
+	@classmethod
+	def CloseInstances(cls) -> None:
 		"""Close all dialogs with a default action"""
-		pass
+		for instance in cls._instances:
+			if not instance.isBlocking:
+				instance.Close()
 
-	@staticmethod
-	def BlockingInstancesExist() -> bool:
+	@classmethod
+	def BlockingInstancesExist(cls) -> bool:
 		"""Check if dialogs are open without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		return any(dialog.isBlocking() for dialog in MessageDialog._instances)
+		return any(dialog.isBlocking() for dialog in cls._instances)
 
-	@staticmethod
-	def FocusBlockingInstances() -> None:
+	@classmethod
+	def FocusBlockingInstances(cls) -> None:
 		"""Raise and focus open dialogs without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		for dialog in MessageDialog._instances:
+		for dialog in cls._instances:
 			if dialog.isBlocking():
 				dialog.Raise()
 				dialog.SetFocus()
@@ -394,11 +396,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
-		# log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
-		# self.GetEscapeId()
-		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
-		# self.EndModal(0)
-		# wx.CallAfter(self.Destroy)
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
