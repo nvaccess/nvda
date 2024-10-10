@@ -384,6 +384,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
 		# self.EndModal(0)
 		# wx.CallAfter(self.Destroy)
+		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
 		log.debug("Queueing destroy")
