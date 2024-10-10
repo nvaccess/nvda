@@ -588,6 +588,7 @@ def _setUpWxApp() -> "wx.App":
 	import config
 	import nvwave
 	import speech
+	import gui.guiHelper
 
 	log.info(f"Using wx version {wx.version()} with six version {six.__version__}")
 
@@ -610,6 +611,18 @@ def _setUpWxApp() -> "wx.App":
 			This code may need to be revisited when we update Python / wxPython.
 			"""
 			pass
+
+		def FilterEvent(self, event: wx.Event):
+			"""FilterEvent is called for every UI event in the entire application.  Keep it quick to
+			avoid slowing everything down."""
+			try:
+				if isinstance(event, wx.WindowCreateEvent):
+					gui.darkMode.handleEvent(event.EventObject, event.EventType)
+				elif isinstance(event, wx.ShowEvent) and event.IsShown:
+					gui.darkMode.handleEvent(event.EventObject, event.EventType)
+			except Exception:
+				log.exception("Error applying dark mode")
+			return -1
 
 	app = App(redirect=False)
 
