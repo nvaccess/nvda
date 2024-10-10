@@ -127,98 +127,7 @@ class _MessageDialogCommand(NamedTuple):
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
 	_instances: Deque["MessageDialog"] = deque()
 
-	def Show(self) -> None:
-		"""Show a non-blocking dialog.
-		Attach buttons with button handlers"""
-		self._realize_layout()
-		log.debug("Showing")
-		super().Show()
-		log.debug("Adding to instances")
-		self._instances.append(self)
-
-	def _realize_layout(self):
-		if self.__isLayoutFullyRealized:
-			return
-		if gui._isDebug():
-			startTime = time.time()
-			log.debug("Laying out message dialog")
-		self.__mainSizer.Fit(self)
-		self.__isLayoutFullyRealized = True
-		if gui._isDebug():
-			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
-
-	def ShowModal(self):
-		"""Show a blocking dialog.
-		Attach buttons with button handlers"""
-		self._realize_layout()
-		self.__ShowModal = self.ShowModal
-		self.ShowModal = super().ShowModal
-		from .message import displayDialogAsModal
-
-		log.debug("Adding to instances")
-		self._instances.append(self)
-		log.debug("Showing modal")
-		displayDialogAsModal(self)
-		self.ShowModal = self.__ShowModal
-
-	@property
-	def _defaultAction(self) -> MessageDialogCallback:
-		if (defaultReturnCode := self._defaultReturnCode) is not None:
-			try:
-				return self._commands[defaultReturnCode]
-			except KeyError:
-				raise RuntimeError(
-					f"Default return code {defaultReturnCode} is not associated with a callback",
-				)
-		return None
-
-	@staticmethod
-	def CloseInstances() -> None:
-		"""Close all dialogs with a default action"""
-		pass
-
-	@staticmethod
-	def BlockingInstancesExist() -> bool:
-		"""Check if dialogs are open without a default return code
-		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		return any(dialog.isBlocking() for dialog in MessageDialog._instances)
-
-	@staticmethod
-	def FocusBlockingInstances() -> None:
-		"""Raise and focus open dialogs without a default return code
-		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		for dialog in MessageDialog._instances:
-			if dialog.isBlocking():
-				dialog.Raise()
-				dialog.SetFocus()
-				break
-
-	def isBlocking(self) -> bool:
-		"""Check if the dialog is blocking"""
-		return self.IsModal() and self._defaultReturnCode is None
-
-	def _addButtons(self, buttonHelper):
-		"""Adds additional buttons to the dialog, before any other buttons are added.
-		Subclasses may implement this method.
-		"""
-
-	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
-		"""Adds additional contents  to the dialog, before the buttons.
-		Subclasses may implement this method.
-		"""
-
-	def __setIcon(self, type: MessageDialogType):
-		if (iconID := type._wxIconId) is not None:
-			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
-			self.SetIcons(icon)
-
-	def __setSound(self, type: MessageDialogType):
-		self.__soundID = type._windowsSoundId
-
-	def __playSound(self):
-		if self.__soundID is not None:
-			winsound.MessageBeep(self.__soundID)
-
+	# region Constructors
 	def __init__(
 		self,
 		parent: wx.Window | None,
@@ -271,43 +180,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		else:
 			self.CentreOnParent()
 
-	def _onDialogActivated(self, evt):
-		evt.Skip()
+	# endregion
 
-	def _onShowEvt(self, evt: wx.ShowEvent):
-		if evt.IsShown():
-			self.__playSound()
-			if (defaultItem := self.GetDefaultItem()) is not None:
-				defaultItem.SetFocus()
-		evt.Skip()
-
-	def _onCloseEvent(self, evt: wx.CloseEvent):
-		# log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
-		# self.GetEscapeId()
-		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
-		# self.EndModal(0)
-		# wx.CallAfter(self.Destroy)
-		log.debug("Queueing destroy")
-		self.DestroyLater()
-		log.debug("Removing from instances")
-		self._instances.remove(self)
-
-	def _onButton(self, evt: wx.CommandEvent):
-		id = evt.GetId()
-		command = self._commands.get(id)
-		if command is None:
-			return
-		callback, close = command
-		if callback is not None:
-			if close:
-				self.Hide()
-			callback(evt)
-		if close:
-			closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
-			closeEvent.SetEventObject(evt.GetEventObject())
-			self.SetReturnCode(id)
-			self.GetEventHandler().QueueEvent(closeEvent)
-
+	# region Public object API
 	@singledispatchmethod
 	def addButton(
 		self,
@@ -390,3 +265,143 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		for button in buttons:
 			self.addButton(button)
 		return self
+
+	def Show(self) -> None:
+		"""Show a non-blocking dialog.
+		Attach buttons with button handlers"""
+		self._realize_layout()
+		log.debug("Showing")
+		super().Show()
+		log.debug("Adding to instances")
+		self._instances.append(self)
+
+	def ShowModal(self):
+		"""Show a blocking dialog.
+		Attach buttons with button handlers"""
+		self._realize_layout()
+		self.__ShowModal = self.ShowModal
+		self.ShowModal = super().ShowModal
+		from .message import displayDialogAsModal
+
+		log.debug("Adding to instances")
+		self._instances.append(self)
+		log.debug("Showing modal")
+		displayDialogAsModal(self)
+		self.ShowModal = self.__ShowModal
+
+	def isBlocking(self) -> bool:
+		"""Check if the dialog is blocking"""
+		return self.IsModal() and self._defaultReturnCode is None
+
+	# endregion
+
+	# region Public class methods
+	@staticmethod
+	def CloseInstances() -> None:
+		"""Close all dialogs with a default action"""
+		pass
+
+	@staticmethod
+	def BlockingInstancesExist() -> bool:
+		"""Check if dialogs are open without a default return code
+		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
+		return any(dialog.isBlocking() for dialog in MessageDialog._instances)
+
+	@staticmethod
+	def FocusBlockingInstances() -> None:
+		"""Raise and focus open dialogs without a default return code
+		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
+		for dialog in MessageDialog._instances:
+			if dialog.isBlocking():
+				dialog.Raise()
+				dialog.SetFocus()
+				break
+
+	# endregion
+
+	# region Methods for subclasses
+	def _addButtons(self, buttonHelper):
+		"""Adds additional buttons to the dialog, before any other buttons are added.
+		Subclasses may implement this method.
+		"""
+
+	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
+		"""Adds additional contents  to the dialog, before the buttons.
+		Subclasses may implement this method.
+		"""
+
+	# endregion
+
+	# region Internal API
+	def _realize_layout(self):
+		if self.__isLayoutFullyRealized:
+			return
+		if gui._isDebug():
+			startTime = time.time()
+			log.debug("Laying out message dialog")
+		self.__mainSizer.Fit(self)
+		self.__isLayoutFullyRealized = True
+		if gui._isDebug():
+			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
+
+	@property
+	def _defaultAction(self) -> MessageDialogCallback:
+		if (defaultReturnCode := self._defaultReturnCode) is not None:
+			try:
+				return self._commands[defaultReturnCode]
+			except KeyError:
+				raise RuntimeError(
+					f"Default return code {defaultReturnCode} is not associated with a callback",
+				)
+		return None
+
+	def __setIcon(self, type: MessageDialogType):
+		if (iconID := type._wxIconId) is not None:
+			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
+			self.SetIcons(icon)
+
+	def __setSound(self, type: MessageDialogType):
+		self.__soundID = type._windowsSoundId
+
+	def __playSound(self):
+		if self.__soundID is not None:
+			winsound.MessageBeep(self.__soundID)
+
+	def _onDialogActivated(self, evt):
+		evt.Skip()
+
+	def _onShowEvt(self, evt: wx.ShowEvent):
+		if evt.IsShown():
+			self.__playSound()
+			if (defaultItem := self.GetDefaultItem()) is not None:
+				defaultItem.SetFocus()
+		evt.Skip()
+
+	def _onCloseEvent(self, evt: wx.CloseEvent):
+		# log.debug(f"{evt.GetId()=}, {evt.GetEventObject().Label=}")
+		# self.GetEscapeId()
+		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
+		# self.EndModal(0)
+		# wx.CallAfter(self.Destroy)
+		log.debug("Queueing destroy")
+		self.DestroyLater()
+		log.debug("Removing from instances")
+		self._instances.remove(self)
+
+	def _onButton(self, evt: wx.CommandEvent):
+		id = evt.GetId()
+		command = self._commands.get(id)
+		if command is None:
+			return
+		callback, close = command
+		if callback is not None:
+			if close:
+				self.Hide()
+			callback(evt)
+		if close:
+			closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
+			closeEvent.SetEventObject(evt.GetEventObject())
+			self.SetReturnCode(id)
+			self.GetEventHandler().QueueEvent(closeEvent)
+
+	# endregion
