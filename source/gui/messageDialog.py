@@ -41,6 +41,11 @@ class MessageDialogReturnCode(IntEnum):
 	CUSTOM_5 = wx.ID_HIGHEST + 5
 
 
+class MessageDialogEscapeCode(IntEnum):
+	NONE = wx.ID_NONE
+	DEFAULT = wx.ID_ANY
+
+
 class MessageDialogType(Enum):
 	"""Types of message dialogs.
 	These are used to determine the icon and sound to play when the dialog is shown.
