@@ -286,8 +286,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug("Adding to instances")
 		self._instances.append(self)
 		log.debug("Showing modal")
-		displayDialogAsModal(self)
+		ret = displayDialogAsModal(self)
 		self.ShowModal = self.__ShowModal
+		return ret
 
 	def isBlocking(self) -> bool:
 		"""Check if the dialog is blocking"""
@@ -383,6 +384,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# self._onButton(wx.CommandEvent(wx.wxEVT_BUTTON, self.GetEscapeId()))
 		# self.EndModal(0)
 		# wx.CallAfter(self.Destroy)
+		if self.IsModal():
+			self.EndModal(self.GetReturnCode())
 		log.debug("Queueing destroy")
 		self.DestroyLater()
 		log.debug("Removing from instances")
