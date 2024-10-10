@@ -40,6 +40,24 @@ class MessageDialogReturnCode(IntEnum):
 	CUSTOM_4 = wx.ID_HIGHEST + 4
 	CUSTOM_5 = wx.ID_HIGHEST + 5
 
+	@property
+	def _isStandardButton(self) -> bool:
+		"""Whether or not a button with this ID can be added to a wx.StdDialogButtonSizer."""
+		# See https://docs.wxpython.org/wx.StdDialogButtonSizer.html#wx.StdDialogButtonSizer.AddButton
+		return self.value in frozenset(
+			(
+				wx.ID_OK,
+				wx.ID_YES,
+				wx.ID_SAVE,
+				wx.ID_APPLY,
+				wx.ID_CLOSE,
+				wx.ID_NO,
+				wx.ID_CANCEL,
+				wx.ID_HELP,
+				wx.ID_CONTEXT_HELP,
+			),
+		)
+
 
 class MessageDialogEscapeCode(IntEnum):
 	NONE = wx.ID_NONE
