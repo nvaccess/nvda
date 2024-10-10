@@ -198,7 +198,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self,
 		*args,
 		callback: Callable[[wx.CommandEvent], Any] | None = None,
-		default_button: bool = False,
+		default_focus: bool = False,
+		default_action: bool = False,
 		closes_dialog: bool = True,
 		**kwargs,
 	):
@@ -207,16 +208,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		Any additional arguments are passed to `ButtonHelper.addButton`.
 
 		:param callback: Function to call when the button is pressed, defaults to None.
-		:param default_button: Whether the button should be the default (first focused) button in the dialog, defaults to False.
+		:param default_focus: Whether the button should be the default (first focused) button in the dialog, defaults to False.
 		:param closes_dialog: Whether the button should close the dialog when pressed, defaults to True.
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
 		:return: The dialog instance.
 		"""
 		button = self.__buttonHelper.addButton(*args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
-		self._commands[button.GetId()] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
-		if default_button:
+		buttonId = button.GetId()
+		self.AddMainButtonId(buttonId)
+		self._commands[buttonId] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
+		if default_focus:
 			button.SetDefault()
+		if default_action:
+			self.SetEscapeId(buttonId)
 		self.__isLayoutFullyRealized = False
 		return self
 
@@ -226,7 +231,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		button: MessageDialogButton,
 		*args,
 		callback: Callable[[wx.CommandEvent], Any] | None = None,
-		default_button: bool | None = None,
+		default_focus: bool | None = None,
 		closes_dialog: bool | None = None,
 		**kwargs,
 	):
@@ -234,14 +239,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		:param button: The button to add.
 		:param callback: Override for the callback specified in `button`, defaults to None.
-		:param default_button: Override for the default specified in `button`, defaults to None.
+		:param default_focus: Override for the default specified in `button`, defaults to None.
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
 		:param closes_dialog: Override for `button`'s `closes_dialog` property, defaults to None.
 		:return: The dialog instance.
 		"""
 		keywords = button._asdict()
-		if default_button is not None:
-			keywords["default_button"] = default_button
+		if default_focus is not None:
+			keywords["default_focus"] = default_focus
 		if callback is not None:
 			keywords["callback"] = callback
 		if closes_dialog is not None:
