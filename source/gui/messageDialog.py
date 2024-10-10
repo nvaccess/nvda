@@ -187,7 +187,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		contentsSizer.addItem(text)
 		self._addContents(contentsSizer)
 
-		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		buttonHelper = self.CreateStdDialogButtonSizer(0)
 		contentsSizer.addDialogDismissButtons(buttonHelper)
 		self.__buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
@@ -231,7 +232,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
 		:return: The dialog instance.
 		"""
-		button = self.__buttonHelper.addButton(*args, **kwargs)
+		button = wx.Button(*args, **kwargs)
+		self.__buttonHelper.AddButton(button)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
@@ -375,6 +377,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
+		self.__buttonHelper.Realize()
 		self.__mainSizer.Fit(self)
 		self.__isLayoutFullyRealized = True
 		if gui._isDebug():
