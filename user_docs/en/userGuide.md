@@ -2471,7 +2471,6 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications, even if they start after this setting is changed.
 This volume can also be controlled via the following keyboard commands from anywhere:
 
 | Name | Key | Description |
@@ -2481,10 +2480,9 @@ This volume can also be controlled via the following keyboard commands from anyw
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Muting other applications {#OtherAppMute}
+##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
-This mute setting will apply to all other applications, even if they start after this setting is changed.
 
 The following keyboard command can also be used from anywhere:
 
