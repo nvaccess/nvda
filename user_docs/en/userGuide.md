@@ -2299,7 +2299,7 @@ To toggle this option from anywhere, please assign a custom gesture using the [I
 
 ##### Speak when navigating by line or paragraph {#BrailleSpeakOnNavigating}
 
-If this is enabled, NVDA will automatically speak the current line or paragraph when navigating to it with braille navigation keys.
+If this is enabled, NVDA will speak the reached line or paragraph when moving the braille display to the previous or next line.
 
 To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
