@@ -3,15 +3,11 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
+import argparse
 from copy import deepcopy
-from importlib.util import find_spec
 import io
-import pathlib
 import re
 import shutil
-
-import SCons.Node.FS
-import SCons.Environment
 
 DEFAULT_EXTENSIONS = frozenset(
 	{
@@ -53,16 +49,6 @@ HTML_HEADERS = """
 </head>
 <body>
 """.strip()
-
-
-def _replaceNVDATags(md: str, env: SCons.Environment.Environment) -> str:
-	import versionInfo
-
-	# Replace tags in source file
-	md = md.replace("NVDA_VERSION", env["version"])
-	md = md.replace("NVDA_URL", versionInfo.url)
-	md = md.replace("NVDA_COPYRIGHT_YEARS", versionInfo.copyrightYears)
-	return md
 
 
 def _getTitle(mdBuffer: io.StringIO, isKeyCommands: bool = False) -> str:
@@ -122,7 +108,7 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 
 	extensions = set(DEFAULT_EXTENSIONS)
 	if isKeyCommands:
-		from user_docs.keyCommandsDoc import KeyCommandsExtension
+		from keyCommandsDoc import KeyCommandsExtension
 
 		extensions.add(KeyCommandsExtension())
 
@@ -145,36 +131,27 @@ def _generateSanitizedHTML(md: str, isKeyCommands: bool = False) -> str:
 	return htmlOutput
 
 
-def md2html_actionFunc(
-	target: list[SCons.Node.FS.File],
-	source: list[SCons.Node.FS.File],
-	env: SCons.Environment.Environment,
-):
-	isKeyCommands = target[0].path.endswith("keyCommands.html")
-	isUserGuide = target[0].path.endswith("userGuide.html")
-	isDevGuide = target[0].path.endswith("developerGuide.html")
-	isChanges = target[0].path.endswith("changes.html")
-
-	with open(source[0].path, "r", encoding="utf-8") as mdFile:
+def main(source: str, dest: str, lang: str = "en", docType: str | None = None):
+	print(f"Converting {docType or 'document'} at {source} to {dest}, {lang=}")
+	isUserGuide = docType == "userGuide"
+	isDevGuide = docType == "developerGuide"
+	isChanges = docType == "changes"
+	isKeyCommands = docType == "keyCommands"
+	if docType and not any([isUserGuide, isDevGuide, isChanges, isKeyCommands]):
+		raise ValueError(f"Unknown docType {docType}")
+	with open(source, "r", encoding="utf-8") as mdFile:
 		mdStr = mdFile.read()
-
-	mdStr = _replaceNVDATags(mdStr, env)
 
 	with io.StringIO() as mdBuffer:
 		mdBuffer.write(mdStr)
 		title = _getTitle(mdBuffer, isKeyCommands)
-
-	lang = pathlib.Path(source[0].path).parent.name
-	if isDevGuide and lang == "developerGuide":
-		# Parent folder in this case is the developerGuide folder in project docs
-		lang = "en"
 
 	if isUserGuide or isDevGuide:
 		extraStylesheet = '<link rel="stylesheet" href="numberedHeadings.css">'
 	elif isChanges or isKeyCommands:
 		extraStylesheet = ""
 	else:
-		raise ValueError(f"Unknown target type for {target[0].path}")
+		raise ValueError(f"Unknown target type for {dest}")
 
 	htmlBuffer = io.StringIO()
 	htmlBuffer.write(
@@ -195,7 +172,7 @@ def md2html_actionFunc(
 	htmlBuffer.seek(0, io.SEEK_END)
 	htmlBuffer.write("\n</body>\n</html>\n")
 
-	with open(target[0].path, "w", encoding="utf-8") as targetFile:
+	with open(dest, "w", encoding="utf-8") as targetFile:
 		# Make next read at start of buffer
 		htmlBuffer.seek(0)
 		shutil.copyfileobj(htmlBuffer, targetFile)
@@ -203,23 +180,17 @@ def md2html_actionFunc(
 	htmlBuffer.close()
 
 
-def exists(env: SCons.Environment.Environment) -> bool:
-	for ext in [
-		"markdown",
-		"markdown_link_attr_modifier",
-		"mdx_truly_sane_lists",
-		"mdx_gh_links",
-		"nh3",
-		"user_docs.keyCommandsDoc",
-	]:
-		if find_spec(ext) is None:
-			return False
-	return True
-
-
-def generate(env: SCons.Environment.Environment):
-	env["BUILDERS"]["md2html"] = env.Builder(
-		action=env.Action(md2html_actionFunc, lambda t, s, e: f"Converting {s[0].path} to {t[0].path}"),
-		suffix=".html",
-		src_suffix=".md",
+if __name__ == "__main__":
+	args = argparse.ArgumentParser()
+	args.add_argument("-l", "--lang", help="Language code", action="store", default="en")
+	args.add_argument(
+		"-t",
+		"--docType",
+		help="Type of document",
+		action="store",
+		choices=["userGuide", "developerGuide", "changes", "keyCommands"],
 	)
+	args.add_argument("source", help="Path to the markdown file")
+	args.add_argument("dest", help="Path to the resulting html file")
+	args = args.parse_args()
+	main(source=args.source, dest=args.dest, lang=args.lang, docType=args.docType)

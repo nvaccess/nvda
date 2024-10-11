@@ -19105,7 +19105,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Move system caret when routing review cursor</source>
-        <target>Smerové tlačidlá posúvajú systémový aj prezerací kurzor</target>
+        <target>Privolávacie tlačidlá posúvajú systémový aj prezerací kurzor</target>
       </segment>
     </unit>
     <unit id="b089cc37-a9d0-4b76-93d3-29b98b24d035">
@@ -19114,7 +19114,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>This setting determines if the system caret should also be moved with a routing button press.</source>
-        <target>Toto nastavenie určuje, či sa systémový kurzor posúva pri použití smerových tlačidiel na brailovom riadku.</target>
+        <target>Toto nastavenie určuje, či sa pri používaní privolávacích tlačidiel na brailovom riadku posúva aj systémový kurzor.</target>
       </segment>
     </unit>
     <unit id="c584e728-9e32-48a9-8a4d-79c857e2e618">
@@ -19132,7 +19132,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>When this option is set to Always, and [braille tethering](#BrailleTether) is set to "automatically" or "to review", pressing a cursor routing key will also move the system caret or focus when supported.</source>
-        <target>Ak je táto možnosť nastavená na vždy, a súčasne je [Brailový kurzor zviazaný s](#BrailleTether) nastavený na automaticky, alebo na prezerací kurzor, stlačenie smerových tlačidiel presunie aj systémový kurzor, alebo zameranie, ak je to možné.</target>
+        <target>Ak je táto možnosť nastavená na vždy, a súčasne je [Brailový kurzor zviazaný s](#BrailleTether) nastavený na automaticky, alebo na prezerací kurzor, stlačenie privolávacích tlačidiel presunie aj systémový kurzor, alebo zameria položku pod kurzorom, ak je to možné.</target>
       </segment>
     </unit>
     <unit id="46ca02cd-2af4-499f-8602-bcbd2ff791cc">
@@ -19150,7 +19150,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In this case, NVDA tries to focus the object under the text you're routing to.</source>
-        <target>V tomto prípade sa NVDA pokúsi premiestniť fokus na objekt, na ktorého texte ste použili smerové tlačidlá.</target>
+        <target>V tomto prípade sa NVDA pokúsi premiestniť fokus na objekt, na ktorého texte ste použili privolávacie tlačidlá.</target>
       </segment>
     </unit>
     <unit id="20f59bee-bc3f-4455-8230-f07f1ab2620c">
@@ -19177,7 +19177,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In that case, pressing a cursor routing key will only move the system caret or focus when NVDA is tethered to the review cursor automatically, whereas no movement will occur when manually tethered to the review cursor.</source>
-        <target>V tomto prípade budú smerové tlačidlá posúvať systémový kurzor len vtedy, ak došlo automaticky k zviazaniu systémového a prezeracieho kurzora.</target>
+        <target>V tomto prípade budú privolávacie tlačidlá posúvať systémový kurzor len vtedy, ak došlo automaticky k zviazaniu systémového a prezeracieho kurzora.</target>
       </segment>
     </unit>
     <unit id="e84a54fe-a113-409d-9f14-106f86f7c453">
@@ -19724,7 +19724,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>These tags start with ⣋ and end with ⣙.</source>
-        <target>Tieto značky sa začínajú symbolom ⣋ (bodmi 12478) a končia symbolom ⣙ (bodmi 14578).</target>
+        <target>Každá takáto značka zmeny formátovania sa začína symbolom ⣋ (bodmi 12478) a končia symbolom ⣙ (bodmi 14578).</target>
       </segment>
     </unit>
     <unit id="e41ce1a1-60b2-4fcb-b697-e8d342e054d8">
@@ -19775,7 +19775,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> ⡃ ("b" with dot 7) | End bold </source>
-        <target> ⠣⠆ (body 126, body 23) | Koniec tučného textu </target>
+        <target> ⠆⠜ (body 23 a body 345) | Koniec tučného textu </target>
       </segment>
     </unit>
     <unit id="9bd3ee5e-2489-459b-9c31-04ed37a36fac">
@@ -19797,7 +19797,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> ⡊ ("i" with dot 7) | End italic </source>
-        <target> ⠣⠔ (body 126 a body 35) | Koniec textu kurzívou </target>
+        <target> ⠔⠜ (body 35 a body 345) | Koniec textu písaného kurzívou </target>
       </segment>
     </unit>
     <unit id="812545e3-4557-45ed-bdc3-2909c1f918e4">
@@ -19819,7 +19819,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> ⡥ ("u" with dot 7) | End underline </source>
-        <target> ⠣⠤ (body 126 a body 36) | Koniec podčiarknutého textu </target>
+        <target> ⠤⠜ (body 36 a body 345) | Koniec podčiarknutého textu </target>
       </segment>
     </unit>
     <unit id="4a8a3b4f-ce28-4ea3-97cc-15fbe996312a">
@@ -19841,7 +19841,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source> ⡎ ("s" with dot 7) | End strikethrough </source>
-        <target> ⠣⠄ (body 126 a bod 3) | Koniec prečiarknutého textu </target>
+        <target> ⠄⠜ (bod 3 a body 345) | Koniec prečiarknutého textu </target>
       </segment>
     </unit>
     <unit id="d3e37afb-f884-4413-98a7-d9195d313527">
@@ -19852,7 +19852,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>Speak character when routing cursor in text</source>
-        <target>Vyslovovať znaky pri posúvaní kurzora smerovými tlačidlami brailového riadku</target>
+        <target>Vyslovovať znaky pri posúvaní kurzora privolávacími tlačidlami brailového riadku</target>
       </segment>
     </unit>
     <unit id="ce9d14d3-37ab-4530-9a35-936260e3f028">
@@ -19861,7 +19861,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="translated">
         <source>If this is enabled, NVDA will automatically speak the character at the cursor when routing to it with braille cursor routing keys.</source>
-        <target>Ak je to povolené, NVDA automaticky vysloví znak v texte, na ktorý presuniete kurzor použitím smerových tlačidiel brailového riadku.</target>
+        <target>Ak je to povolené, NVDA automaticky vysloví znak v texte, na ktorý presuniete kurzor použitím privolávacích tlačidiel brailového riadku.</target>
       </segment>
     </unit>
     <unit id="8a0854a6-0935-487b-9f7d-b1e7055e0c9a">
@@ -29844,7 +29844,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="32d4e54f-a099-49ef-b180-abeee6ceb762">
@@ -30478,7 +30478,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="8ab64c83-f10c-4afb-b04e-594f7df9e9fc">
@@ -30927,7 +30927,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="bb4210a8-c1f1-4a4b-91f2-aba4c4816c2f">
@@ -31212,7 +31212,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |route</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="13ff64b2-07d8-42e8-af31-6b16d47ac21b">
@@ -31463,7 +31463,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Prejsť na znak v brailly |`smerové tlačidlá`</target>
+        <target>Prejsť na znak v brailly |`privolávacie tlačidlá kurzora`</target>
       </segment>
     </unit>
     <unit id="72e24c2e-a0b4-4245-a9b4-4ea8c08a901b">
@@ -31759,7 +31759,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="dfff1d93-9e2a-425e-8521-5725d572337b">
@@ -31903,7 +31903,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="7478d59c-2fba-480a-a774-7edca572dddf">
@@ -32117,7 +32117,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá kurzora</target>
       </segment>
     </unit>
     <unit id="4d36c134-cc87-45ab-bd07-4fa34ce40b37">
@@ -34000,7 +34000,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The c-series and some other displays have two routing rows whereby the upper row is used to report formatting information.</source>
-        <target>Tieto a aj niektoré ďalšie riadky majú dva rady smerových tlačidiel, pričom prvý rad sa používa na získanie informácii o formátovaní.</target>
+        <target>Tieto a aj niektoré ďalšie riadky majú dva rady privolávacích tlačidiel kurzora, pričom prvý rad sa používa na získanie informácii o formátovaní.</target>
       </segment>
     </unit>
     <unit id="7ff824e2-8779-46b3-a8aa-b4945f2d2897">
@@ -34009,7 +34009,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Holding one of the upper routing keys and pressing the EAB on c-series devices emulates the second switch state.</source>
-        <target>Stlačením niektorého zo smerových tlačidiel v prvom rade v kombinácii s pohybom panela rýchleho prístupu emulujete prepnutie prepínača.</target>
+        <target>Stlačením niektorého z privolávacích tlačidiel v prvom rade v kombinácii s pohybom panela rýchleho prístupu emulujete prepnutie prepínača.</target>
       </segment>
     </unit>
     <unit id="f83400d8-385a-4cc9-be28-076975bf023d">
@@ -34027,7 +34027,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>The second step may be emulated by pressing one of the routing keys and pressing the EAB in the corresponding direction.</source>
-        <target>Druhý krok dosiahnete tak, že stlačíte príslušné smerové tlačidlo a panel rýchleho prístupu v požadovanom smere.</target>
+        <target>Druhý krok dosiahnete tak, že stlačíte príslušné privolávacie tlačidlo kurzora a panel rýchleho prístupu v požadovanom smere.</target>
       </segment>
     </unit>
     <unit id="d195c5df-c4ee-43dc-ae4d-d1ac8a428c62">
@@ -34263,7 +34263,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá</target>
       </segment>
     </unit>
     <unit id="3f59af2b-f8ef-4f2d-8c03-586ab93d5327">
@@ -34373,7 +34373,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report text formatting under braille cell |upper routing row</source>
-        <target>Oznámiť formátovanie textu pod brailovým znakom |prvý rad smerových tlačidiel</target>
+        <target>Oznámiť formátovanie textu pod brailovým znakom |prvý rad privolávacích tlačidiel</target>
       </segment>
     </unit>
     <unit id="0faf4053-caa9-44a8-b2c3-3dd2a44b408b">
@@ -34997,7 +34997,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report text formatting under braille cell |upper routing strip</source>
-        <target>Oznámiť formátovanie textu pod brailovým znakom |prvý rad smerových tlačidiel</target>
+        <target>Oznámiť formátovanie textu pod brailovým znakom |prvý rad privolávacích tlačidiel</target>
       </segment>
     </unit>
     <unit id="a4c50842-e454-4d4c-9a50-7f487c833625">
@@ -35235,7 +35235,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Report text formatting under braille cell |upper routing strip</source>
-        <target>Oznámiť formátovanie textu pod aktuálnym brailovým znakom |horný rád smerových tlačidiel</target>
+        <target>Oznámiť formátovanie textu pod aktuálnym brailovým znakom |horný rad privolávacích tlačidiel</target>
       </segment>
     </unit>
     <unit id="4945f837-96b5-4d7a-877c-75b62b96ac1d">
@@ -35593,7 +35593,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |routing</source>
-        <target>Prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá</target>
       </segment>
     </unit>
     <unit id="567e7146-4957-4d8f-88cb-551263386be2">
@@ -36299,7 +36299,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |Routing</source>
-        <target>prejsť na znak v brailly |smerové tlačidlá</target>
+        <target>Prejsť na znak v brailly |privolávacie tlačidlá</target>
       </segment>
     </unit>
     <unit id="b3ea9364-c0ca-494c-bb0b-9c7f61ad3220">
@@ -37302,7 +37302,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Prejsť na znak v brailly |`smerové tlačidlá`</target>
+        <target>Prejsť na znak v brailly |`privolávacie tlačidlá`</target>
       </segment>
     </unit>
     <unit id="c579259f-ca69-429f-8a9c-20a5b5fbf817">
@@ -37500,7 +37500,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Prejsť na znak v braily |`smerové tlačidlá`</target>
+        <target>Prejsť na znak v braily |`privolávacie tlačidlá`</target>
       </segment>
     </unit>
     <unit id="18c1af70-1ca8-427a-9350-fe4248493159">
@@ -37676,7 +37676,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Prejsť na znak v braily |`smerové tlačidlá`</target>
+        <target>Prejsť na znak v braily |`privolávacie tlačidlá`</target>
       </segment>
     </unit>
     <unit id="eeba28ea-d254-49d7-a1fa-f182052ac474">
@@ -37852,7 +37852,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Route to braille cell |`routing`</source>
-        <target>Prejsť na znak v braily |`smerové tlačidlá`</target>
+        <target>Prejsť na znak v braily |`privolávacie tlačidlá`</target>
       </segment>
     </unit>
     <unit id="a8ad7006-66a1-4e38-a5dc-fdb60646f474">
@@ -38871,7 +38871,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Cycle the "braille move system caret when routing review cursor" states |`f1+f3`, `f9+f11`</source>
-        <target>Prepína režimi pre nastavenie "smerové tlačidlá posúvajú prezerací aj systémový kurzor" |`f1+f3`, `f9+f11`</target>
+        <target>Prepína režimi pre nastavenie "Privolávacie tlačidlá posúvajú prezerací aj systémový kurzor" |`f1+f3`, `f9+f11`</target>
       </segment>
     </unit>
     <unit id="b2fbd831-d066-428b-b0a8-5de07d26d7fc">
