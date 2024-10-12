@@ -83,7 +83,7 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode = None
 		try:
 			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(
-				self.IAccessibleChildID
+				self.IAccessibleChildID,
 			)
 		except COMError:
 			log.debugWarning("FAILED: get_PDDomNode")
@@ -149,7 +149,7 @@ class AcrobatNode(IAccessible):
 		# There could be other stuff before the math element. Ug.
 		mathMl = self.pdDomNode.GetValue()
 		log.debug(
-			f'\n_get_mathMl: math recognized: {mathMl.startswith("<math")}, child count={self.pdDomNode.GetChildCount()}'
+			f'\n_get_mathMl: math recognized: {mathMl.startswith("<math")}, child count={self.pdDomNode.GetChildCount()}',
 		)
 		log.debug(f"\nname={self.pdDomNode.GetName()}\nvalue={self.pdDomNode.GetValue()}")
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
