@@ -2452,7 +2452,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	_showSpeechInBrailleRegions: list[TextRegion] = []
 
 	def _showSpeechInBraille(self, speechSequence: "SpeechSequence"):
-		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value:
+		if config.conf["braille"]["mode"] == BrailleMode.FOLLOW_CURSORS.value or not self.enabled:
 			return
 		_showSpeechInBrailleRegions = self._showSpeechInBrailleRegions
 		regionsText = "".join([i.rawText for i in _showSpeechInBrailleRegions])
