@@ -7,6 +7,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import importlib
 import itertools
 import re
 from typing import Tuple, Union, Dict
@@ -16,14 +17,16 @@ from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
 import gui
 from logHandler import log
-
+import core
 from typing import List, Optional
 import keyboardHandler
+import scriptHandler
 from . import guiHelper
 import inputCore
 import keyLabels
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
+# import scriptHandler
 
 
 #: Type for structure returned by inputCore
@@ -627,6 +630,11 @@ class InputGesturesDialog(SettingsDialog):
 		bHelper.sizer.Add(resetButton)
 		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
 
+		bHelper.sizer.AddStretchSpacer()
+		# Translators: The label of a button to run the selected command in the Input Gestures dialog.
+		self.runButton = wx.Button(self, label=_("Run"))
+		bHelper.sizer.Add(self.runButton)
+		self.runButton.Bind(wx.EVT_BUTTON, self.onRun)
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
 
@@ -665,6 +673,7 @@ class InputGesturesDialog(SettingsDialog):
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
+		self.runButton.Enabled = bool(item and item.canAdd or item.canRemove)
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
@@ -812,6 +821,28 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		self.gesturesVM.reset()
 		self.tree.doRefresh()
+
+	def onRun(self, evt):
+		selectedItems = self.tree.getSelectedItemData()
+		assert selectedItems is not None
+		catVM, scriptVM, gestureVM = selectedItems
+		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
+		scriptModule = scriptVM.scriptInfo.moduleName
+		module = importlib.import_module(scriptModule)
+
+		className = getattr(module, scriptVM.scriptInfo.className)
+		o = className()
+		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
+		gesture = inputCore.InputGesture
+		if gestureVM is not None:
+			for g in scriptVM.gestures:
+				if g.displayName == gestureVM.displayName:
+					gesture = g
+		script = getattr(o, scriptName)
+		self.onCancel(None)
+
+		core.callLater(2000, scriptHandler.executeScript, script, gesture=gesture)
+
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
