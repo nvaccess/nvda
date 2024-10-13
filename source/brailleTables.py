@@ -355,10 +355,10 @@ addTable("en-us-g2.ctb", _("English (U.S.) grade 2"), contracted=True)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("eo-g1.ctb", _("Esperanto grade 1"))
-# Translators: The name of a braille table displayed in the
-# braille settings dialog.
 addTable(
 	"Es-Es-G0.utb",
+	# Translators: The name of a braille table displayed in the
+	# braille settings dialog.
 	_("Spanish 8 dot computer braille"),
 	inputForLangs={"es", "gl"},
 	translationForLangs={"es", "gl"},
