@@ -115,7 +115,7 @@ The size in bytes sent must be equal to the `OutputReportByteLength` of the devi
 Braille Display devices allow being controlled by Screen Readers using a variety of connections such as Serial, USB and Bluetooth.
 The protocols used over these channels have traditionally been Braille Display manufacturer specific.
 This has meant that in order for a Screen Reader to support a particular Braille display, it must have specific logic in the Screen Reader that knows how to speak the required device-specific protocol.
-Further to this, On Windows at least, an OS-level driver provided by the Braille Display manufacturer must also be installed by the user in order for the computer to detect and communicate with the device.
+Further to this, on Windows at least, an OS-level driver provided by the Braille Display manufacturer must also be installed by the user in order for the computer to detect and communicate with the device.
 With the introduction of the HID (Human Interface Device) standard for USB (and later Bluetooth), it became possible to remove the need for the required OS-level device driver on Windows if the Braille Display manufacturer exposed the device as a custom HID device, however the Screen Reader still needed device-specific code, as being custom HID only simplified the low-level bytes communication, but did not standardise what those bytes actually meant.
 
 In 2018, The HID specification was extended to define the concept of a Braille Display device, including setting of braille cells, and the standardizing of common buttons found on Braille displays such as routing keys, Braille dot input keys, braille space and panning keys.
@@ -123,7 +123,7 @@ A new Usage Page was added to the HID specification: HID_USAGE_PAGE_BRAILLE (0x4
 This page contains new Usage IDs such as:
 * BRAILLE_DISPLAY (0x1): the usage ID for the HID device's top-level collection.
 * Collections such as BRAILLE_ROW (for containing braille cells)
-* 8_dot_BRAILLE_CELL (0x3) and 6_dot_braille_cell (0x4), which is an output value that represents a physical braille cell on a the device.
+* 8_dot_BRAILLE_CELL (0x3) and 6_dot_braille_cell (0x4), which is an output value that represents a physical braille cell on a device.
 * BRAILLE_KEYBOARD_DOT_1 through BRAILLE_KEYBOARD_DOT_8: the Braille dot input buttons for typing braille characters.
 * left, right and centre braille space keys (for typing a space).
 * Joystick and dpad buttons
