@@ -102,7 +102,10 @@ GestureMapEntries = {
 		"kb:shift+tab": ("br(eurobraille):dot2+dot3+dot5+space",),
 		"kb:printScreen": ("br(eurobraille):dot1+dot3+dot4+dot6+space",),
 		"kb:pause": ("br(eurobraille):dot1+dot4+space",),
-		"kb:applications": ("br(eurobraille):dot5+dot6+backspace",),
+		"kb:applications": (
+			"br(eurobraille):dot5+dot6+backspace",
+			"br(eurobraille):l2+l4",
+		),
 		"kb:f1": ("br(eurobraille):dot1+backspace",),
 		"kb:f2": ("br(eurobraille):dot1+dot2+backspace",),
 		"kb:f3": ("br(eurobraille):dot1+dot4+backspace",),
@@ -119,23 +122,29 @@ GestureMapEntries = {
 		"kb:capsLock": ("br(eurobraille):dot7+backspace", "br(eurobraille):dot8+backspace"),
 		"kb:numLock": ("br(eurobraille):dot3+backspace", "br(eurobraille):dot6+backspace"),
 		"braille_toggleShift": (
-			"br(eurobraille):dot1+dot7+space",
-			"br(eurobraille):dot4+dot7+space",
+			#"br(eurobraille):dot1+dot7+space",
+			#"br(eurobraille):dot4+dot7+space",
 			"br(eurobraille):l4",
+			"br(eurobraille):dot7+space"
 		),
-		"kb:shift": ("br(eurobraille):dot7+space",),
+		#"kb:shift": ("br(eurobraille):dot7+space",),
 		"braille_toggleControl": (
-			"br(eurobraille):dot1+dot7+dot8+space",
-			"br(eurobraille):dot4+dot7+dot8+space",
+			#"br(eurobraille):dot1+dot7+dot8+space",
+			#"br(eurobraille):dot4+dot7+dot8+space",
 			"br(eurobraille):l5",
+			"br(eurobraille):dot7+dot8+space",
 		),
-		"kb:control": ("br(eurobraille):dot7+dot8+space",),
+		#"kb:control": ("br(eurobraille):dot7+dot8+space",),
 		"braille_toggleAlt": (
-			"br(eurobraille):dot1+dot8+space",
-			"br(eurobraille):dot4+dot8+space",
+			#"br(eurobraille):dot1+dot8+space",
+			#"br(eurobraille):dot4+dot8+space",
 			"br(eurobraille):l6",
+			"br(eurobraille):dot8+space",
 		),
-		"kb:alt": ("br(eurobraille):dot8+space"),
+		"kb:alt": (
+			#"br(eurobraille):dot8+space",
+			"br(eurobraille):joystick1Down"
+		),
 		"braille_toggleNVDAKey": ("br(eurobraille):l7", "br(eurobraille):dot3+dot5+space"),
 		"kb:control+home": (
 			"br(eurobraille):joystick2left+joystick2up",
@@ -150,6 +159,7 @@ GestureMapEntries = {
 		"braille_toggleWindows": (
 			"br(eurobraille):backspace+dot1+dot2+dot3+dot4",
 			"br(eurobraille):dot2+dot4+dot5+dot6+space",
+			"br(eurobraille):l2+l3"
 		),
 		"kb:control+shift+e": ("br(eurobraille):dot1+dot5+space",),
 	},
