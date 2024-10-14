@@ -1019,6 +1019,6 @@ class CommentType(Enum):
 @dataclass
 class _Link:
 	"""Class to store information on a link in text."""
-	
+
 	displayText: str | None
 	destination: str

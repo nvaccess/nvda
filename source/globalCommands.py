@@ -4218,7 +4218,7 @@ class GlobalCommands(ScriptableObject):
 						name=text,
 						closeButton=True,
 						copyButton=True,
-					)
+					),
 				)
 			elif presses == 0:  # One press
 				ui.message(link.destination)  # Speak the link
@@ -4227,7 +4227,6 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Tell user that the command has been run on something that is not a link
 			ui.message(_("Not a link."))
-
 
 	def _getLinkDataAtCaretPosition(self, ti: textInfos.TextInfo) -> textInfos._Link | None:
 		ti.expand(textInfos.UNIT_CHARACTER)
@@ -4244,10 +4243,10 @@ class GlobalCommands(ScriptableObject):
 		):
 			return textInfos._Link(
 				displayText=obj.name,
-				destination = obj.value,
+				destination=obj.value,
 			)
 		return None
-			
+
 	@script(
 		description=_(
 			# Translators: input help mode message for Report URL of a link in a window command

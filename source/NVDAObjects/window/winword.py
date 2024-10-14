@@ -811,7 +811,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						initialDocument=self.obj,
 					),
 				)
-	
+
 		# Handle activating links.
 		link = self._getLinkAtCaretPosition()
 		if link:
@@ -862,7 +862,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if links.count > 0:
 			return links[1]
 		return None
-			
+
 	def _getShapeAtCaretPosition(self):
 		# It is necessary to expand to word to get a shape as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
@@ -871,8 +871,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		if shapes.count > 0:
 			return shapes[1]
 		return None
-			
-	
+
 	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
 		link = self._getLinkAtCaretPosition()
 		if not link:
