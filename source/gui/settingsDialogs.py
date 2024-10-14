@@ -3031,7 +3031,7 @@ class AudioPanel(SettingsPanel):
 
 		# Translators: This is a label for the
 		# "allow application volume adjustment" combo box in settings.
-		label = _("&Allow application volume adjustment:")
+		label = _("&Allow NVDA to control the volume of other applications:")
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
