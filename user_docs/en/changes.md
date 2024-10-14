@@ -47,6 +47,7 @@ In order to use this feature, the application volume adjuster needs to be enable
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
 * In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
+* In Word or Outlook, when using legacy object model, the command to report the destination URL of a link does not report any longer "Not a link" when there is one to report. (#17292, @CyrilleB79)
 
 ### Changes for Developers
 
