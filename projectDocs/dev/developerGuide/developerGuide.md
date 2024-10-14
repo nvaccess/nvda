@@ -1248,6 +1248,9 @@ These variables are:
 * fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
 * fg: The current foreground object
 * nav: The current navigator object
+* caretObj: The object which contains the caret (focus or tree interceptor if any)
+* caretPos: A text info at the position of the caret
+* review: The current TextInfo instance representing the user's review position
 * mouse: The current mouse object
 * brlRegions: The braille regions from the active braille buffer
 
