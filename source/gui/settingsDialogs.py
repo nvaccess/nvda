@@ -3033,7 +3033,7 @@ class AudioPanel(SettingsPanel):
 		# "allow NVDA to control the volume of other applications"
 		# combo box in settings.
 		label = _(
-			"&Allow NVDA to control the volume of other applications:"
+			"&Allow NVDA to control the volume of other applications:",
 		)
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
