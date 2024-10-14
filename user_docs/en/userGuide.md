@@ -2451,7 +2451,7 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Allow application volume adjustment {#AppsVolumeAdjusterStatus}
+##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -2463,10 +2463,11 @@ This combo box determines whether NVDA commands can be used to adjust the volume
 Possible values are:
 
 * No: NVDA doesn't interfere with the volume levels of other applications.
-* Yes: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
+* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
 Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
 
 ##### Volume of other applications {#OtherAppVolume}
 

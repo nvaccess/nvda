@@ -3030,8 +3030,11 @@ class AudioPanel(SettingsPanel):
 		self._appendSoundSplitModesList(sHelper)
 
 		# Translators: This is a label for the
-		# "allow application volume adjustment" combo box in settings.
-		label = _("&Allow NVDA to control the volume of other applications:")
+		# "allow NVDA to control the volume of other applications"
+		# combo box in settings.
+		label = _(
+			"&Allow NVDA to control the volume of other applications:"
+		)
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,

@@ -114,7 +114,7 @@ WASAPI_DISABLED_MESSAGE: str = _(
 
 VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 	# Translators: error message when applications' volume is disabled
-	"Application volume adjustment disabled",
+	"Application volume control disabled",
 )
 
 
