@@ -107,7 +107,7 @@ def _updateAppsVolumeImpl(
 
 WASAPI_DISABLED_MESSAGE: str = _(
 	# Translators: error message when wasapi is turned off.
-	"Application volumes cannot be modified by NVDA when WASAPI is disabled. "
+	"Application volume cannot be controlled by NVDA when WASAPI is disabled. "
 	"Please enable it in the advanced settings panel.",
 )
 
