@@ -2476,8 +2476,8 @@ This volume can also be controlled via the following keyboard commands from anyw
 
 | Name | Key | Description |
 |---|---|---|
-| Increase application volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
-| Decrease application volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+| Increase application volume | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
+| Decrease application volume | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
