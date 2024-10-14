@@ -17,7 +17,6 @@ from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
 import gui
 from logHandler import log
-import core
 from typing import List, Optional
 import keyboardHandler
 import scriptHandler
@@ -26,7 +25,8 @@ import inputCore
 import keyLabels
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
-# import scriptHandler
+import core
+import speech
 
 
 #: Type for structure returned by inputCore
@@ -829,7 +829,6 @@ class InputGesturesDialog(SettingsDialog):
 		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
 		scriptModule = scriptVM.scriptInfo.moduleName
 		module = importlib.import_module(scriptModule)
-
 		className = getattr(module, scriptVM.scriptInfo.className)
 		o = className()
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
@@ -839,10 +838,30 @@ class InputGesturesDialog(SettingsDialog):
 				if g.displayName == gestureVM.displayName:
 					gesture = g
 		script = getattr(o, scriptName)
-		self.onCancel(None)
+		from globalCommands import (
+			SCRCAT_FOCUS,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_MOUSE,
+			SCRCAT_SYSTEMCARET,
+			SCRCAT_TEXTREVIEW,
+		)
 
-		core.callLater(2000, scriptHandler.executeScript, script, gesture=gesture)
-
+		if catVM.displayName in (
+			SCRCAT_FOCUS,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_MOUSE,
+			SCRCAT_SYSTEMCARET,
+			SCRCAT_TEXTREVIEW,
+		):
+			self.onCancel(None)
+			try:
+				gui.mainFrame.prevFocus.setFocus()
+			except Exception:
+				import ui
+				ui.message("no")
+			core.callLater(100, scriptHandler.executeScript, script, gesture)
+		else:
+			scriptHandler.executeScript(script, gesture)
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
