@@ -848,6 +848,7 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_SYSTEMCARET,
 			SCRCAT_TEXTREVIEW,
 		)
+
 		if catVM.displayName in (
 			SCRCAT_FOCUS,
 			SCRCAT_MOUSE,
@@ -868,7 +869,6 @@ class InputGesturesDialog(SettingsDialog):
 			self.onRun(None)
 		else:
 			evt.Skip()
-
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
