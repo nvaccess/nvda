@@ -27,12 +27,12 @@ class DictionaryEntryDialog(
 	helpId = "SpeechDictionaries"
 
 	TYPE_LABELS = {
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
-		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
-		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
+		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("Anywhere"),
+		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_WORD: _("Whole word"),
+		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular expression"),
 	}
 	TYPE_LABELS_ORDERING = (
 		speechDictHandler.ENTRY_TYPE_ANYWHERE,
@@ -63,12 +63,13 @@ class DictionaryEntryDialog(
 		caseSensitiveText = _("Case &sensitive")
 		self.caseSensitiveCheckBox = sHelper.addItem(wx.CheckBox(self, label=caseSensitiveText))
 
-		# Translators: This is a label for a set of radio buttons in add dictionary entry dialog.
+		# Translators: This is a label for a dropdown list in add dictionary entry dialog.
 		typeText = _("&Type")
 		typeChoices = [
 			DictionaryEntryDialog.TYPE_LABELS[i] for i in DictionaryEntryDialog.TYPE_LABELS_ORDERING
 		]
-		self.typeRadioBox = sHelper.addItem(wx.RadioBox(self, label=typeText, choices=typeChoices))
+		self.typeList = sHelper.addLabeledControl(typeText, wx.Choice, choices=typeChoices)
+		self.typeList.SetSelection(0)
 
 		sHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, separated=True)
 
@@ -80,10 +81,10 @@ class DictionaryEntryDialog(
 		self.Bind(wx.EVT_BUTTON, self.onOk, id=wx.ID_OK)
 
 	def getType(self):
-		typeRadioValue = self.typeRadioBox.GetSelection()
-		if typeRadioValue == wx.NOT_FOUND:
+		selection = self.typeList.GetSelection()
+		if selection == wx.NOT_FOUND:
 			return speechDictHandler.ENTRY_TYPE_ANYWHERE
-		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[typeRadioValue]
+		return DictionaryEntryDialog.TYPE_LABELS_ORDERING[selection]
 
 	def onOk(self, evt):
 		if not self.patternTextCtrl.GetValue():
@@ -142,7 +143,7 @@ class DictionaryEntryDialog(
 		evt.Skip()
 
 	def setType(self, type):
-		self.typeRadioBox.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
+		self.typeList.SetSelection(DictionaryEntryDialog.TYPE_LABELS_ORDERING.index(type))
 
 
 class DictionaryDialog(
