@@ -12,7 +12,20 @@ env = env.Clone()
 devDocsOutputDir = outputDir.Dir("devDocs")
 
 # Build the developer guide and move it to the output directory
-htmlFile = env.md2html("developerGuide.md")
+mdFile = env.File("developerGuide.md")
+# first substitute some variables such as NvDA version and URL into the markdown file
+mdFileSub = env.Substfile(
+	target=mdFile.abspath.replace(".md", ".md.sub"),
+	source=mdFile,
+	SUBST_DICT={
+		"NVDA_VERSION": env["version"],
+	},
+)
+htmlFile = env.Command(
+	target=mdFile.abspath.replace(".md", ".html"),
+	source=mdFileSub,
+	action=[f'@{sys.executable} user_docs/md2html.py -t developerGuide "$SOURCE" "$TARGET"'],
+)
 devGuide = env.Command(
 	target=devDocsOutputDir.File("developerGuide.html"), source=htmlFile, action=Move("$TARGET", "$SOURCE")
 )
