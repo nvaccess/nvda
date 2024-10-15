@@ -26,7 +26,6 @@ import keyLabels
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
 import core
-import speech
 
 
 #: Type for structure returned by inputCore
@@ -861,6 +860,7 @@ class InputGesturesDialog(SettingsDialog):
 				gui.mainFrame.prevFocus.setFocus()
 			except Exception:
 				import ui
+
 				ui.message("no")
 			core.callLater(100, scriptHandler.executeScript, script, gesture)
 		else:
