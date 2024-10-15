@@ -15,6 +15,7 @@ from typing import Tuple, Union, Dict
 import wx
 from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
+import api
 import gui
 from logHandler import log
 from typing import List, Optional
@@ -612,7 +613,7 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-# Translators: The label of a button to run the selected command in the Input Gestures dialog.
+		# Translators: The label of a button to run the selected command in the Input Gestures dialog.
 		self.runButton = wx.Button(self, label=_("Run"))
 		bHelper.sizer.Add(self.runButton)
 
@@ -628,7 +629,6 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton = bHelper.addButton(self, label=_("&Remove"))
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
-
 
 		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
@@ -850,21 +850,18 @@ class InputGesturesDialog(SettingsDialog):
 
 		if catVM.displayName in (
 			SCRCAT_FOCUS,
-			SCRCAT_OBJECTNAVIGATION,
 			SCRCAT_MOUSE,
 			SCRCAT_SYSTEMCARET,
 			SCRCAT_TEXTREVIEW,
 		):
 			self.onCancel(None)
-			try:
-				gui.mainFrame.prevFocus.setFocus()
-			except Exception:
-				import ui
-
-				ui.message("no")
 			core.callLater(100, scriptHandler.executeScript, script, gesture)
 		else:
+			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+				api.setNavigatorObject(gui.mainFrame.prevNavObj)
 			scriptHandler.executeScript(script, gesture)
+			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+				gui.mainFrame.prevNavObj = api.getNavigatorObject()
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
