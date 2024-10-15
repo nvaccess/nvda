@@ -608,6 +608,7 @@ class InputGesturesDialog(SettingsDialog):
 		self.gesturesVM = _InputGesturesViewModel()
 		tree = self.tree = _GesturesTree(self, self.gesturesVM)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
+		tree.Bind(wx.EVT_CHAR, self.onChar)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
@@ -616,8 +617,8 @@ class InputGesturesDialog(SettingsDialog):
 		# Translators: The label of a button to run the selected command in the Input Gestures dialog.
 		self.runButton = wx.Button(self, label=_("Run"))
 		bHelper.sizer.Add(self.runButton)
-
 		self.runButton.Bind(wx.EVT_BUTTON, self.onRun)
+		self.runButton.SetDefault()
 		bHelper.sizer.AddStretchSpacer()
 
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
@@ -847,7 +848,6 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_SYSTEMCARET,
 			SCRCAT_TEXTREVIEW,
 		)
-
 		if catVM.displayName in (
 			SCRCAT_FOCUS,
 			SCRCAT_MOUSE,
@@ -862,6 +862,13 @@ class InputGesturesDialog(SettingsDialog):
 			scriptHandler.executeScript(script, gesture)
 			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
 				gui.mainFrame.prevNavObj = api.getNavigatorObject()
+
+	def onChar(self, evt):
+		if evt.GetKeyCode() == wx.WXK_SPACE:
+			self.onRun(None)
+		else:
+			evt.Skip()
+
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
