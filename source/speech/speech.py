@@ -418,11 +418,12 @@ def _getSpellingSpeechWithoutCharMode(
 	reportNormalizedForCharacterNavigation: bool = False,
 ) -> Generator[SequenceItemT, None, None]:
 	"""
-	Processes text when spoken by character.
+	Processes text when spelling by character.
 	This doesn't take care of character mode (Option "Use spelling functionality").
 	:param text: The text to speak.
-		This is usually one character or a string containing a decomposite character (or glyph)
-	:param locale: The locale used to generate character descrptions, if applicable.
+		This is usually one character or a string containing a decomposite character (or glyph),
+		however it can also be a word or line of text spoken by a spell command.
+	:param locale: The locale used to generate character descriptions, if applicable.
 	:param useCharacterDescriptions: Whether or not to use character descriptions,
 		e.g. speak "a" as "alpha".
 	:param sayCapForCapitals: Indicates if 'cap' should be reported
@@ -453,13 +454,13 @@ def _getSpellingSpeechWithoutCharMode(
 		text = text.rstrip()
 
 	textLength = len(text)
-	isNormalized = False
+	textIsNormalized = False
 	if unicodeNormalization and textLength > 1:
 		normalized = unicodeNormalize(text)
 		if len(normalized) == 1:
 			# Normalization of a composition
 			text = normalized
-			isNormalized = True
+			textIsNormalized = True
 	localeHasConjuncts = True if locale.split("_", 1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
 	charDescList = getCharDescListFromText(text, locale) if localeHasConjuncts else text
 	for item in charDescList:
@@ -472,6 +473,7 @@ def _getSpellingSpeechWithoutCharMode(
 			speakCharAs = item
 			if useCharacterDescriptions:
 				charDesc = characterProcessing.getCharacterDescription(locale, speakCharAs.lower())
+		itemIsNormalized = textIsNormalized
 		uppercase = speakCharAs.isupper()
 		if useCharacterDescriptions and charDesc:
 			IDEOGRAPHIC_COMMA = "\u3001"
@@ -481,12 +483,12 @@ def _getSpellingSpeechWithoutCharMode(
 		else:
 			if (symbol := characterProcessing.processSpeechSymbol(locale, speakCharAs)) != speakCharAs:
 				speakCharAs = symbol
-			elif not isNormalized and unicodeNormalization:
+			elif not textIsNormalized and unicodeNormalization:
 				if (normalized := unicodeNormalize(speakCharAs)) != speakCharAs:
 					speakCharAs = " ".join(
 						characterProcessing.processSpeechSymbol(locale, normChar) for normChar in normalized
 					)
-					isNormalized = True
+					itemIsNormalized = True
 		if config.conf["speech"]["autoLanguageSwitching"]:
 			yield LangChangeCommand(locale)
 		yield from _getSpellingCharAddCapNotification(
@@ -494,7 +496,7 @@ def _getSpellingSpeechWithoutCharMode(
 			uppercase and sayCapForCapitals,
 			capPitchChange if uppercase else 0,
 			uppercase and beepForCapitals,
-			isNormalized and reportNormalizedForCharacterNavigation,
+			itemIsNormalized and reportNormalizedForCharacterNavigation,
 		)
 		yield EndUtteranceCommand()
 
