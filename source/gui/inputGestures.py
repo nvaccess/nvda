@@ -613,6 +613,12 @@ class InputGesturesDialog(SettingsDialog):
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+# Translators: The label of a button to run the selected command in the Input Gestures dialog.
+		self.runButton = wx.Button(self, label=_("Run"))
+		bHelper.sizer.Add(self.runButton)
+
+		self.runButton.Bind(wx.EVT_BUTTON, self.onRun)
+		bHelper.sizer.AddStretchSpacer()
 
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
 		self.addButton = bHelper.addButton(self, label=_("&Add"))
@@ -624,17 +630,14 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
-		bHelper.sizer.AddStretchSpacer()
+
 		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
 		bHelper.sizer.Add(resetButton)
 		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
 
 		bHelper.sizer.AddStretchSpacer()
-		# Translators: The label of a button to run the selected command in the Input Gestures dialog.
-		self.runButton = wx.Button(self, label=_("Run"))
-		bHelper.sizer.Add(self.runButton)
-		self.runButton.Bind(wx.EVT_BUTTON, self.onRun)
+
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
 
