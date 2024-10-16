@@ -1659,7 +1659,8 @@ class TextInfoRegion(Region):
 				return
 		dest.collapse()
 		self._setCursor(dest)
-		dest.expand(self._getReadingUnit())
+		copy = dest.copy()
+		copy.expand(self._getReadingUnit())
 		_speakOnNavigatingByUnit(dest)
 
 	def previousLine(self, start=False):
@@ -1680,7 +1681,7 @@ class TextInfoRegion(Region):
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_LAST)
 			else:
-				# no page turn supportcode ..\nvda
+				# no page turn support
 				return
 		dest.collapse()
 		self._setCursor(dest)
