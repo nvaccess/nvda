@@ -5,7 +5,10 @@
 ### Important notes
 
 ### New Features
-* Support for math in PDFs has been added. This works for formulas that have MathML in an Associated File. Tagged formulas are supported in newer versions of TeX/LaTeX (9288, @NSoiffer)
+
+* Support for math in PDFs has been added.
+This works for formulas that have MathML in an Associated File.
+Tagged formulas are supported in newer versions of TeX/LaTeX (#9288, @NSoiffer)
 * The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
 * Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
 In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
