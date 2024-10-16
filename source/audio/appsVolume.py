@@ -105,14 +105,14 @@ def _updateAppsVolumeImpl(
 	_activeCallback.register()
 
 
-WASAPI_DISABLED_MESSAGE: str = _(
+_WASAPI_DISABLED_MESSAGE: str = _(
 	# Translators: error message when wasapi is turned off.
 	"Application volume cannot be controlled by NVDA when WASAPI is disabled. "
 	"Please enable it in the advanced settings panel.",
 )
 
 
-VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
+_VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 	# Translators: error message when applications' volume is disabled
 	"Application volume control disabled",
 )
@@ -122,13 +122,13 @@ def _adjustAppsVolume(
 	volumeAdjustment: int | None = None,
 ):
 	if not nvwave.usingWasapiWavePlayer():
-		ui.message(WASAPI_DISABLED_MESSAGE)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		ui.message(VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
+		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	volume += volumeAdjustment
 	volume = max(0, min(100, volume))
@@ -150,7 +150,7 @@ _APPS_VOLUME_STATES_ORDER = [
 
 def _toggleAppsVolumeState():
 	if not nvwave.usingWasapiWavePlayer():
-		ui.message(WASAPI_DISABLED_MESSAGE)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
@@ -168,13 +168,13 @@ def _toggleAppsVolumeState():
 
 def _toggleAppsVolumeMute():
 	if not nvwave.usingWasapiWavePlayer():
-		ui.message(WASAPI_DISABLED_MESSAGE)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		ui.message(VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
+		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	muted = not muted
 	config.conf["audio"]["applicationsSoundMuted"] = muted
