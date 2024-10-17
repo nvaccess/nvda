@@ -153,7 +153,7 @@ class AcrobatNode(IAccessible):
 					f"_get_mathMl: math recognized: {mathMl.startswith('<math')}, "
 					f"child count={self.pdDomNode.GetChildCount()},"
 					f"\n  name='{self.pdDomNode.GetName()}', value='{mathMl}'"
-				)
+				),
 			)
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
 		if mathMl.startswith("<math"):
