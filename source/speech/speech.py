@@ -25,6 +25,7 @@ import speechDictHandler
 import characterProcessing
 import languageHandler
 from textUtils import unicodeNormalize
+from textUtils.uniscribe import splitAtCharacterBoundaries
 from . import manager
 from .extensions import speechCanceled, pre_speechCanceled, pre_speech
 from .extensions import filter_speechSequence
@@ -462,7 +463,12 @@ def _getSpellingSpeechWithoutCharMode(
 			text = normalized
 			textIsNormalized = True
 	localeHasConjuncts = True if locale.split("_", 1)[0] in LANGS_WITH_CONJUNCT_CHARS else False
-	charDescList = getCharDescListFromText(text, locale) if localeHasConjuncts else text
+	if localeHasConjuncts:
+		charDescList = getCharDescListFromText(text, locale)
+	elif not textIsNormalized and unicodeNormalization:
+		charDescList = list(splitAtCharacterBoundaries(text))
+	else:
+		charDescList = text
 	for item in charDescList:
 		if localeHasConjuncts:
 			# item is a tuple containing character and its description
