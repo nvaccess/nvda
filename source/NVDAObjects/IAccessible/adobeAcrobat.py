@@ -146,15 +146,17 @@ class AcrobatNode(IAccessible):
 		if self.pdDomNode is None:
 			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
 			raise LookupError
-		# There could be other stuff before the math element. Ug.
 		mathMl = self.pdDomNode.GetValue()
-		log.debug(
-			f'\n_get_mathMl: math recognized: {mathMl.startswith("<math")}, child count={self.pdDomNode.GetChildCount()}'
-		)
-		log.debug(f"\nname={self.pdDomNode.GetName()}\nvalue={self.pdDomNode.GetValue()}")
+		if log.isEnabledFor(log.DEBUG):
+			log.debug(
+				f'_get_mathMl: math recognized: {mathMl.startswith("<math")},
+					child count={self.pdDomNode.GetChildCount()}
+					name={self.pdDomNode.GetName()} value={mathMl}'
+			)
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
 		if mathMl.startswith("<math"):
 			return mathMl.replace('xmlns:mml="http://www.w3.org/1998/Math/MathML"', "")
+		# Alternative for tagging: all the sub expressions are tagged -- gather up the MathML
 		for childNum in range(self.pdDomNode.GetChildCount()):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
@@ -165,7 +167,8 @@ class AcrobatNode(IAccessible):
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
 		# fall back to return the contents, which is hopefully to be alt text
-		log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
 		return f"<math><mtext>{self.pdDomNode.GetValue()}</mtext></math>"
 
 
