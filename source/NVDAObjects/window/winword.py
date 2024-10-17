@@ -82,7 +82,7 @@ wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
 
 
-class MsoHyperlinkEnum(IntEnum):
+class MsoHyperlink(IntEnum):
 	# See https://learn.microsoft.com/en-us/office/vba/api/office.msohyperlinktype
 	RANGE = 0
 	SHAPE = 1
