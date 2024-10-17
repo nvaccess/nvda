@@ -856,12 +856,16 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_TEXTREVIEW,
 		)
 
-		if catVM.displayName in (
-			SCRCAT_FOCUS,
-			SCRCAT_MOUSE,
-			SCRCAT_SYSTEMCARET,
-			SCRCAT_TEXTREVIEW,
-		) or o == self.prevFocus.appModule:
+		if (
+			catVM.displayName
+			in (
+				SCRCAT_FOCUS,
+				SCRCAT_MOUSE,
+				SCRCAT_SYSTEMCARET,
+				SCRCAT_TEXTREVIEW,
+			)
+			or o == self.prevFocus.appModule
+		):
 			self.onCancel(None)
 			core.callLater(100, scriptHandler.executeScript, script, gesture)
 		else:
