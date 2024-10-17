@@ -149,9 +149,11 @@ class AcrobatNode(IAccessible):
 		mathMl = self.pdDomNode.GetValue()
 		if log.isEnabledFor(log.DEBUG):
 			log.debug(
-				f'_get_mathMl: math recognized: {mathMl.startswith("<math")},
-					child count={self.pdDomNode.GetChildCount()},
-					name={self.pdDomNode.GetName()}, value={mathMl}'
+				(
+					f"_get_mathMl: math recognized: {mathMl.startswith('<math')}, "
+					f"child count={self.pdDomNode.GetChildCount()},"
+					f"\n  name='{self.pdDomNode.GetName()}', value='{mathMl}'"
+				)
 			)
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
 		if mathMl.startswith("<math"):
@@ -163,7 +165,8 @@ class AcrobatNode(IAccessible):
 			except COMError:
 				log.debugWarning(f"COMError trying to get childNum={childNum}")
 				continue
-			log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
+			if log.isEnabledFor(log.DEBUG):
+				log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
 		# fall back to return the contents, which is hopefully to be alt text
