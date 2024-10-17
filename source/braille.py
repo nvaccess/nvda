@@ -3134,7 +3134,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 			self._tether = configuredTether
 		if config.conf["braille"]["translationTable"] == "auto":
 			config.conf["braille"]["translationTable"] = brailleTables.getDefaultTableForCurLang(
-				brailleTables.TableType.OUTPUT
+				brailleTables.TableType.OUTPUT,
 			)
 		tableName = config.conf["braille"]["translationTable"]
 		# #6140: Migrate to new table names as smoothly as possible.
