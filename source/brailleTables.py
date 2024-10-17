@@ -888,8 +888,7 @@ def initialize():
 				)
 	if config.conf["braille"]["translationTable"] == "auto":
 		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang(TableType.OUTPUT)
-	if config.conf["braille"]["inputTable"] == "auto":
-		config.conf["braille"]["inputTable"] = getDefaultTableForCurLang(TableType.INPUT)
+
 
 
 def terminate():
