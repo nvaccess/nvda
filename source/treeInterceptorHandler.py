@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Davy Kager, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -227,6 +227,9 @@ class RootProxyTextInfo(textInfos.TextInfo):
 
 	def activate(self):
 		return self.innerTextInfo.activate()
+
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		return self.innerTextInfo._getLinkDataAtCaretPosition()
 
 	def compareEndPoints(self, other, which):
 		return self.innerTextInfo.compareEndPoints(other.innerTextInfo, which)
