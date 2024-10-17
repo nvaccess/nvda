@@ -83,7 +83,7 @@ class AcrobatNode(IAccessible):
 			self.pdDomNode = None
 		try:
 			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(
-				self.IAccessibleChildID
+				self.IAccessibleChildID,
 			)
 		except COMError:
 			log.debugWarning("FAILED: get_PDDomNode")
@@ -142,7 +142,7 @@ class AcrobatNode(IAccessible):
 					yield sub
 		yield "</%s>" % tag
 
-	def _get_mathMl(self):
+	def _get_mathMl(self) -> str:
 		if self.pdDomNode is None:
 			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
 			raise LookupError
@@ -150,8 +150,8 @@ class AcrobatNode(IAccessible):
 		if log.isEnabledFor(log.DEBUG):
 			log.debug(
 				f'_get_mathMl: math recognized: {mathMl.startswith("<math")},
-					child count={self.pdDomNode.GetChildCount()}
-					name={self.pdDomNode.GetName()} value={mathMl}'
+					child count={self.pdDomNode.GetChildCount()},
+					name={self.pdDomNode.GetName()}, value={mathMl}'
 			)
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
 		if mathMl.startswith("<math"):
@@ -163,7 +163,7 @@ class AcrobatNode(IAccessible):
 			except COMError:
 				log.debugWarning(f"COMError trying to get childNum={childNum}")
 				continue
-			log.debug(f"  get_mathMl: tag={child.GetTagName()}")
+			log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
 		# fall back to return the contents, which is hopefully to be alt text
