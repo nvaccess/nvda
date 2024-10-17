@@ -3846,7 +3846,7 @@ def _speakOnRouting(info: textInfos.TextInfo):
 	spellTextInfo(info)
 
 
-def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) ->None:
+def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None:
 	"""Speaks the reading unit after navigating by it with braille.
 
 	:param info: The TextInfo at the cursor position after navigating.
