@@ -890,7 +890,6 @@ def initialize():
 		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang(TableType.OUTPUT)
 
 
-
 def terminate():
 	# Clear all the custom tables, preserving only the builtin ones.
 	_tablesDirs.clear()
