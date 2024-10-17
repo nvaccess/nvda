@@ -854,7 +854,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			braille.handler.handleCaretMove(self)
 			return
 
-	def _getLinkAtCaretPosition(self):
+	def _getLinkAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
 		tempRange.expand(wdWord)
@@ -863,7 +863,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return links[1]
 		return None
 
-	def _getShapeAtCaretPosition(self):
+	def _getShapeAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
 		# It is necessary to expand to word to get a shape as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
 		tempRange.expand(wdWord)
@@ -876,14 +876,15 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		link = self._getLinkAtCaretPosition()
 		if not link:
 			return None
-		if link.Type == MsoHyperlinkEnum.RANGE:
-			text = link.TextToDisplay
-		elif link.Type == MsoHyperlinkEnum.INLINE_SHAPE:
-			shape = self._getShapeAtCaretPosition()
-			text = shape.AlternativeText
-		else:
-			log.debugWarning(f"No text to display for link type {link.Type}")
-			text = None
+		match link.Type:
+			case MsoHyperlink.RANGE:
+				text = link.TextToDisplay
+			case MsoHyperlink.INLINE_SHAPE:
+				shape = self._getShapeAtCaretPosition()
+				text = shape.AlternativeText
+			case _:
+				log.debugWarning(f"No text to display for link type {link.Type}")
+				text = None
 		return textInfos._Link(
 			displayText=text,
 			destination=link.Address,

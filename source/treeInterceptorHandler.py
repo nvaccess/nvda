@@ -228,7 +228,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def activate(self):
 		return self.innerTextInfo.activate()
 
-	def _getLinkDataAtCaretPosition(self):
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
 		return self.innerTextInfo._getLinkDataAtCaretPosition()
 
 	def compareEndPoints(self, other, which):
