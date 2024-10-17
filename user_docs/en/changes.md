@@ -5,6 +5,7 @@
 ### Important notes
 
 ### New Features
+
 * Support for math in PDFs has been added.
 This works for Formulas that have MathML in an Associated File (AF) when rendered by a PDF processor that implements taking that MathML and putting it into the content of the Formula tag.
 Adding AFs to Formulas are supported in newer versions of TeX/LaTeX.
