@@ -592,6 +592,9 @@ class InputGesturesDialog(SettingsDialog):
 	def __init__(self, parent: "InputGesturesDialog"):
 		#: The index in the _GesturesTree of the prompt for entering a new gesture
 		super().__init__(parent, resizeable=True)
+		self.prevFocus = api.getFocusObject()
+		self.prevNav = api.getNavigatorObject()
+		self.prevForeground = api.getForegroundObject()
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -833,7 +836,11 @@ class InputGesturesDialog(SettingsDialog):
 		scriptModule = scriptVM.scriptInfo.moduleName
 		module = importlib.import_module(scriptModule)
 		className = getattr(module, scriptVM.scriptInfo.className)
-		o = className()
+		try:
+			o = className()
+		except Exception:
+			log.info(className)
+			o = self.prevFocus.appModule
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = inputCore.InputGesture
 		if gestureVM is not None:
@@ -854,15 +861,15 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_MOUSE,
 			SCRCAT_SYSTEMCARET,
 			SCRCAT_TEXTREVIEW,
-		):
+		) or o == self.prevFocus.appModule:
 			self.onCancel(None)
 			core.callLater(100, scriptHandler.executeScript, script, gesture)
 		else:
 			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
-				api.setNavigatorObject(gui.mainFrame.prevNavObj)
+				api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
 			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
-				gui.mainFrame.prevNavObj = api.getNavigatorObject()
+				self.prevNav = api.getNavigatorObject()
 
 	def onChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_SPACE:
