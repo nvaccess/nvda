@@ -21,7 +21,7 @@ import XMLFormatting
 import scriptHandler
 from scriptHandler import script
 import speech  # noqa: F401
-import NVDAObjects  # noqa: F401
+import NVDAObjects
 import api
 import controlTypes
 import textInfos.offsets
@@ -507,6 +507,27 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 
 	def activate(self):
 		self.obj._activatePosition(info=self)
+
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		self.expand(textInfos.UNIT_CHARACTER)
+		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
+		if obj.role == controlTypes.role.Role.GRAPHIC and (
+			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
+		):
+			# In Firefox, graphics with a parent link also expose the parents link href value.
+			# In Chromium, the link href value must be fetched from the parent object. (#14779)
+			obj = obj.parent
+		if (
+			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
+			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
+		):
+			return textInfos._Link(
+				displayText=obj.name,
+				destination=obj.value,
+			)
+		return None
+
+	
 
 	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
