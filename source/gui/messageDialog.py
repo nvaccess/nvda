@@ -305,8 +305,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.ShowModal = self.__ShowModal
 		return ret
 
+	@property
 	def isBlocking(self) -> bool:
-		"""Check if the dialog is blocking"""
+		"""Whether or not the dialog is blocking"""
 		return self.IsModal() and self._defaultReturnCode is None
 
 	# endregion
@@ -323,14 +324,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def BlockingInstancesExist(cls) -> bool:
 		"""Check if dialogs are open without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
-		return any(dialog.isBlocking() for dialog in cls._instances)
+		return any(dialog.isBlocking for dialog in cls._instances)
 
 	@classmethod
 	def FocusBlockingInstances(cls) -> None:
 		"""Raise and focus open dialogs without a default return code
 		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
 		for dialog in cls._instances:
-			if dialog.isBlocking():
+			if dialog.isBlocking:
 				dialog.Raise()
 				dialog.SetFocus()
 				break
