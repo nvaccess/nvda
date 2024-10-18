@@ -49,6 +49,9 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
 * In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
+* When spelling, unicode normalization now works more appropriately:
+  * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
+  * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
 
 ### Changes for Developers
 
