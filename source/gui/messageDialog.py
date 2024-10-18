@@ -26,6 +26,8 @@ MessageDialogCallback: TypeAlias = Callable[[wx.CommandEvent], Any]
 
 
 class MessageDialogReturnCode(IntEnum):
+	"""Enumeration of possible returns from c{MessageDialog}."""
+
 	OK = wx.ID_OK
 	CANCEL = wx.ID_CANCEL
 	YES = wx.ID_YES
@@ -42,6 +44,8 @@ class MessageDialogReturnCode(IntEnum):
 
 
 class MessageDialogEscapeCode(IntEnum):
+	"""Enumeration of the behavior of the escape key and programmatic attempts to close a c{MessageDialog}."""
+
 	NONE = wx.ID_NONE
 	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
 	DEFAULT = wx.ID_ANY
@@ -130,8 +134,12 @@ class DefaultMessageDialogButtons(MessageDialogButton, Enum):
 
 
 class _MessageDialogCommand(NamedTuple):
+	"""Internal representation of a command for a message dialog."""
+
 	callback: MessageDialogCallback | None = None
+	"""The callback function to be executed. Defaults to None."""
 	closes_dialog: bool = True
+	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
