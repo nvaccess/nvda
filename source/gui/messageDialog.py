@@ -5,7 +5,7 @@
 
 from enum import Enum, IntEnum, auto
 import time
-from typing import Any, Callable, Deque, Iterable, NamedTuple, TypeAlias
+from typing import Any, Callable, Deque, Iterable, NamedTuple, TypeAlias, Self
 import winsound
 
 import wx
@@ -202,7 +202,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		default_action: bool = False,
 		closes_dialog: bool = True,
 		**kwargs,
-	):
+	) -> Self:
 		"""Add a button to the dialog.
 
 		Any additional arguments are passed to `ButtonHelper.addButton`.
@@ -234,7 +234,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		default_focus: bool | None = None,
 		closes_dialog: bool | None = None,
 		**kwargs,
-	):
+	) -> Self:
 		"""Add a c{MessageDialogButton} to the dialog.
 
 		:param button: The button to add.
@@ -271,7 +271,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addHelpButton = partialmethod(addButton, DefaultMessageDialogButtons.HELP)
 	addHelpButton.__doc__ = "Add a Help button to the dialog."
 
-	def addButtons(self, *buttons: Iterable[MessageDialogButton]):
+	def addButtons(self, *buttons: Iterable[MessageDialogButton]) -> Self:
 		"""Add multiple buttons to the dialog.
 
 		:return: The dialog instance.
@@ -339,12 +339,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 	# region Methods for subclasses
-	def _addButtons(self, buttonHelper):
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
 		"""Adds additional buttons to the dialog, before any other buttons are added.
 		Subclasses may implement this method.
 		"""
 
-	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
+	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper) -> None:
 		"""Adds additional contents  to the dialog, before the buttons.
 		Subclasses may implement this method.
 		"""
@@ -352,7 +352,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 	# region Internal API
-	def _realize_layout(self):
+	def _realize_layout(self) -> None:
 		if self.__isLayoutFullyRealized:
 			return
 		if gui._isDebug():
@@ -364,7 +364,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
 	@property
-	def _defaultAction(self) -> MessageDialogCallback:
+	def _defaultAction(self) -> MessageDialogCallback | None:
 		if (defaultReturnCode := self._defaultReturnCode) is not None:
 			try:
 				return self._commands[defaultReturnCode]
@@ -374,19 +374,19 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				)
 		return None
 
-	def __setIcon(self, type: MessageDialogType):
+	def __setIcon(self, type: MessageDialogType) -> None:
 		if (iconID := type._wxIconId) is not None:
 			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
 			self.SetIcons(icon)
 
-	def __setSound(self, type: MessageDialogType):
+	def __setSound(self, type: MessageDialogType) -> None:
 		self.__soundID = type._windowsSoundId
 
-	def __playSound(self):
+	def __playSound(self) -> None:
 		if self.__soundID is not None:
 			winsound.MessageBeep(self.__soundID)
 
-	def _onDialogActivated(self, evt):
+	def _onDialogActivated(self, evt: wx.ActivateEvent):
 		evt.Skip()
 
 	def _onShowEvt(self, evt: wx.ShowEvent):
