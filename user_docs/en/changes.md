@@ -32,7 +32,7 @@ In order to use this feature, the application volume adjuster needs to be enable
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
-* By default, translation and input braille tables will be set to `auto`, that is, according to NVDA's language when a table for the current language is available (#16390, #290, @nvdaes)
+* Default input and output braille tables will now be determined based on the NVDA language. (#16390, #290, @nvdaes)
 
 ### Bug Fixes
 

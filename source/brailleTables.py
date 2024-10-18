@@ -30,11 +30,11 @@ class TableSource(StrEnum):
 	"""The name of the scratchpad table source"""
 
 
-class TableType(StrEnum):
-	INPUT = "input"
-	"""The name of the input type for braille tables"""
-	OUTPUT = "OUTPUT"
-	"""The name of the output type for braille tables"""
+class TableType(Enum):
+	INPUT = auto()
+	"""Input type for braille tables for back-translation"""
+	OUTPUT = auto()
+	"""Output type for braille tables for translation"""
 
 
 _tablesDirs = collections.ChainMap(
@@ -77,16 +77,16 @@ The first map will be loaded when calling L{initialize} with the custom tables,
 and cleared when calling L{terminate}.
 """
 
-_inputTableForLangs = dict()
+_inputTableForLangs: dict[str, str] = dict()
 """Maps languages to input L{BrailleTable.fileName}."""
 
-_outputTableForLangs = dict()
+_outputTableForLangs: dict[str, str] = dict()
 """Maps languages to output L{BrailleTable.fileName}."""
 
 
 def getDefaultTableForCurLang(tableType: TableType) -> str:
 	"""Gets the file name of the braille table for the current NVDA language.
-	:param tableType: input or OUTPUT.
+	:param tableType: INPUT (back-translation) or OUTPUT (translation).
 	:return: A L{BrailleTable} fileName.
 	"""
 	match tableType:
@@ -102,7 +102,7 @@ def getDefaultTableForCurLang(tableType: TableType) -> str:
 		return table
 	if "_" in lang:
 		lang = lang.split("_")[0]
-	return langDict.get(lang, "en-ueb-g1.ctb")
+	return langDict.get(lang, DEFAULT_TABLE)
 
 
 def addTable(
@@ -132,6 +132,8 @@ def addTable(
 	_tables[fileName] = table
 	if inputForLangs is not None:
 		for lang in inputForLangs:
+			if lang in _inputTableForLangs:
+				log.warning(f"input table lang {lang} already set to {_inputTableForLangs[lang]} overwriting to {table.fileName}"
 			_inputTableForLangs[lang] = table.fileName
 	if outputForLangs is not None:
 		for lang in outputForLangs:
@@ -144,7 +146,7 @@ def getTable(fileName: str) -> BrailleTable:
 	@raise LookupError: If there is no table registered with this file name.
 	"""
 	if fileName == "auto":
-		fileName = "en-ueb-g1.ctb"
+		fileName = DEFAULT_TABLE
 	return _tables[fileName]
 
 
