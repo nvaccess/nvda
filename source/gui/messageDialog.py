@@ -152,7 +152,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		message: str,
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: MessageDialogType = MessageDialogType.STANDARD,
+		*,
+		helpId: str = "",
 	):
+		self.helpId = helpId
 		super().__init__(parent, title=title)
 		self.__isLayoutFullyRealized = False
 		self._commands: dict[int, _MessageDialogCommand] = {}
