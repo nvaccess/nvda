@@ -6,9 +6,11 @@
 
 ### New Features
 
-* The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
-* Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
-In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
+* Commands to adjust the volume of other applications besides NVDA have been added.
+To use this feature, "allow NVDA to control the volume of other applications" must be enabled in the audio settings panel. (#16052, @mltony, @codeofdusk)
+  * `NVDA+alt+pageUp`: Increase the volume of all other applications.
+  * `NVDA+alt+pageDown`: Decrease the volume of all other applications.
+  * `NVDA+alt+delete`: Mute the volume of all other applications.
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
@@ -32,6 +34,7 @@ In order to use this feature, the application volume adjuster needs to be enable
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
+* Default input and output braille tables will now be determined based on the NVDA language. (#16390, #290, @nvdaes)
 
 ### Bug Fixes
 
@@ -47,6 +50,9 @@ In order to use this feature, the application volume adjuster needs to be enable
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
 * In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
+* When spelling, unicode normalization now works more appropriately:
+  * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
+  * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
 * In Word or Outlook, when using legacy object model, the command to report the destination URL of a link does not report any longer "Not a link" when there is one to report. (#17292, @CyrilleB79)
 
 ### Changes for Developers
@@ -73,6 +79,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
+* In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 
 #### API Breaking Changes
 
