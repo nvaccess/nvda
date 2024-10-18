@@ -20,6 +20,12 @@ from . import guiHelper
 from .settingsDialogs import SettingsDialog
 
 
+class _ValidationError(ValueError):
+	"""Exception raised when validation of an OK response returns False.
+	This is only used internally.
+	"""
+
+
 class _SetURLDialog(SettingsDialog):
 	class _URLTestStatus(Enum):
 		UNTESTED = auto()
@@ -36,6 +42,7 @@ class _SetURLDialog(SettingsDialog):
 		configPath: Iterable[str],
 		helpId: str | None = None,
 		urlTransformer: Callable[[str], str] = lambda url: url,
+		responseValidator: Callable[[requests.Response], bool] = lambda response: True,
 		*args,
 		**kwargs,
 	):
@@ -46,6 +53,8 @@ class _SetURLDialog(SettingsDialog):
 		:param configPath: Where in the config the URL is to be stored.
 		:param helpId: Anchor of the user guide section for this dialog, defaults to None
 		:param urlTransformer: Function to transform the given URL into something usable, eg by adding required query parameters. Defaults to the identity function.
+		:param responseValidator: Function to check that the response returned when querying the transformed URL is valid.
+			The response will always have a status of 200 (OK). Defaults to always returning True.
 		:raises ValueError: If no config path is given.
 		"""
 		if not configPath or len(configPath) < 1:
@@ -54,6 +63,7 @@ class _SetURLDialog(SettingsDialog):
 		self.helpId = helpId
 		self._configPath = configPath
 		self._urlTransformer = urlTransformer
+		self._responseValidator = responseValidator
 		super().__init__(parent, *args, **kwargs)
 
 	def makeSettings(self, settingsSizer: wx.Sizer):
@@ -65,13 +75,13 @@ class _SetURLDialog(SettingsDialog):
 			wx.TextCtrl,
 			size=(250, -1),
 		)
-		self.bindHelpEvent("UpdateMirrorURL", urlControl)
+		self.bindHelpEvent("SetURLTextbox", urlControl)
 		self._testButton = testButton = wx.Button(
 			self,
 			# Translators: A button in a dialog which allows the user to test a URL that they have entered.
 			label=_("&Test..."),
 		)
-		self.bindHelpEvent("UpdateMirrorTest", testButton)
+		self.bindHelpEvent("SetURLTest", testButton)
 		urlControlsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=urlControl.GetContainingSizer())
 		urlControlsSizerHelper.addItem(testButton)
 		testButton.Bind(wx.EVT_BUTTON, self._onTest)
@@ -147,9 +157,11 @@ class _SetURLDialog(SettingsDialog):
 		try:
 			with requests.get(self._urlTransformer(self._url)) as r:
 				r.raise_for_status()
+				if not self._responseValidator(r):
+					raise _ValidationError
 			self._success()
-		except RequestException as e:
-			log.debug(f"Failed to check URL: {e}")
+		except (RequestException, _ValidationError) as e:
+			log.debug(f"URL check failed: {e}")
 			self._failure(e)
 
 	def _success(self):
@@ -168,15 +180,39 @@ class _SetURLDialog(SettingsDialog):
 
 	def _failure(self, error: Exception):
 		"""Notify the user that testing their URL failed."""
+		if isinstance(error, _ValidationError):
+			tip = _(
+				# Translators: Tip shown to users when testing a given URL has failed because the response was invalid.
+				"The response from the server was not recognised. Check the URL is correct before trying again.",
+			)
+		elif isinstance(error, requests.HTTPError):
+			# Translators: Tip shown to users when testing a given URL has failed because the server returned an error.
+			tip = _("The server returned an error. Check that the URL is correct before trying again.")
+		elif isinstance(error, requests.ConnectionError):
+			# Translators: Tip shown to users when testing a given URL has failed because of a network error.
+			tip = _("There was a network error. Check that you are connected to the internet and try again.")
+		elif isinstance(
+			error,
+			(
+				requests.exceptions.InvalidURL,
+				requests.exceptions.MissingSchema,
+				requests.exceptions.InvalidSchema,
+			),
+		):
+			# Translators: Tip shown to users when testing a given URL has failed because the URL was invalid.
+			tip = _("The URL you have entered is not valid. Check that it is correct and try again.")
+		else:
+			# Translators: Tip shown to users when testing a given URL has failed for unknown reasons.
+			tip = _("Make sure you are connected to the internet and the URL is correct.")
+		# Translators: Message shown to users when testing a given URL has failed.
+		# {tip} will be replaced with a tip on how to resolve the issue.
+		message = _("The URL you have entered failed the connection test. {tip}").format(tip=tip)
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		self._testStatus = _SetURLDialog._URLTestStatus.FAILED
 		wx.CallAfter(
 			gui.messageBox,
-			_(
-				# Translators: Message displayed to users when testing a URL has failed.
-				"Unable to connect to the given URL. Check that you are connected to the internet and the URL is correct.",
-			),
+			message,
 			# Translators: The title of a dialog presented when an error occurs.
 			"Error",
 			wx.OK | wx.ICON_ERROR,

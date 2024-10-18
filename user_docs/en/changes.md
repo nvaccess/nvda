@@ -6,9 +6,11 @@
 
 ### New Features
 
-* The volume of other applications can be adjusted by `NVDA+alt+pageUp` and `NVDA+alt+pageDown`. In order to use this feature, application volume adjuster needs to be enabled in Audio pane of NVDA settings. (#16052, @mltony)
-* Added command to mute or unmute all other applications, assigned to `NVDA+alt+delete`.
-In order to use this feature, the application volume adjuster needs to be enabled in the Audio category of NVDA settings. (#16052, @mltony)
+* Commands to adjust the volume of other applications besides NVDA have been added.
+To use this feature, "allow NVDA to control the volume of other applications" must be enabled in the audio settings panel. (#16052, @mltony, @codeofdusk)
+  * `NVDA+alt+pageUp`: Increase the volume of all other applications.
+  * `NVDA+alt+pageDown`: Decrease the volume of all other applications.
+  * `NVDA+alt+delete`: Mute the volume of all other applications.
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
@@ -47,6 +49,10 @@ In order to use this feature, the application volume adjuster needs to be enable
 * NVDA is able to read the popup submenu items on Thunderbird search results page. (#4708, @thgcode)
 * The COM Registration Fixing Tool no longer reports success on failure. (#12355, @XLTechie)
 * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
+* In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
+* When spelling, unicode normalization now works more appropriately:
+  * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
+  * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -58,6 +64,8 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated Ruff to 0.6.3. (#17102)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
+  * Updated SCons to 4.8.1. (#17254)
+  * Updated sphinx to 8.1.2 and sphinx-rtd-theme to 3.0.1. (#17284, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types

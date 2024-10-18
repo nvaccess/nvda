@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024 NV Access Limited, Tony Malykh, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -105,24 +105,30 @@ def _updateAppsVolumeImpl(
 	_activeCallback.register()
 
 
+_WASAPI_DISABLED_MESSAGE: str = _(
+	# Translators: error message when wasapi is turned off.
+	"Application volume cannot be controlled by NVDA when WASAPI is disabled. "
+	"Please enable it in the advanced settings panel.",
+)
+
+
+_VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
+	# Translators: error message when applications' volume is disabled
+	"Application volume control disabled",
+)
+
+
 def _adjustAppsVolume(
 	volumeAdjustment: int | None = None,
 ):
 	if not nvwave.usingWasapiWavePlayer():
-		message = _(
-			# Translators: error message when wasapi is turned off.
-			"Other applications' volume cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
-		)
-		ui.message(message)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		# Translators: error message when applications' volume is disabled
-		msg = _("Please enable applications' volume adjuster in order to adjust applications' volume")
-		ui.message(msg)
+		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	volume += volumeAdjustment
 	volume = max(0, min(100, volume))
@@ -132,7 +138,7 @@ def _adjustAppsVolume(
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	# Translators: Announcing new applications' volume message
-	msg = _("Applications volume {}").format(volume)
+	msg = _("{} percent application volume").format(volume)
 	ui.message(msg)
 
 
@@ -144,12 +150,7 @@ _APPS_VOLUME_STATES_ORDER = [
 
 def _toggleAppsVolumeState():
 	if not nvwave.usingWasapiWavePlayer():
-		message = _(
-			# Translators: error message when wasapi is turned off.
-			"Other applications' volume cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
-		)
-		ui.message(message)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
@@ -167,20 +168,13 @@ def _toggleAppsVolumeState():
 
 def _toggleAppsVolumeMute():
 	if not nvwave.usingWasapiWavePlayer():
-		message = _(
-			# Translators: error message when wasapi is turned off.
-			"Other applications' mute status cannot be adjusted. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
-		)
-		ui.message(message)
+		ui.message(_WASAPI_DISABLED_MESSAGE)
 		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		# Translators: error message when applications' volume is disabled
-		msg = _("Please enable applications' volume adjuster in order to mute other applications")
-		ui.message(msg)
+		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	muted = not muted
 	config.conf["audio"]["applicationsSoundMuted"] = muted
