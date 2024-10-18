@@ -137,14 +137,14 @@ def addTable(
 		for lang in inputForLangs:
 			if lang in _inputTableForLangs:
 				log.warning(
-					f"input table lang {lang} already set to {_inputTableForLangs[lang]} overwriting to {table.fileName}"
+					f"input table lang {lang} already set to {_inputTableForLangs[lang]} overwriting to {table.fileName}",
 				)
 			_inputTableForLangs[lang] = table.fileName
 	if outputForLangs is not None:
 		for lang in outputForLangs:
 			if lang in _outputTableForLangs:
 				log.warning(
-					f"output table lang {lang} already set to {_outputTableForLangs[lang]} overwriting to {table.fileName}"
+					f"output table lang {lang} already set to {_outputTableForLangs[lang]} overwriting to {table.fileName}",
 				)
 			_outputTableForLangs[lang] = table.fileName
 
