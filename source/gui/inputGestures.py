@@ -7,6 +7,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import importlib
 import itertools
 import re
 from typing import Tuple, Union, Dict
@@ -14,16 +15,18 @@ from typing import Tuple, Union, Dict
 import wx
 from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
+import api
 import gui
 from logHandler import log
-
 from typing import List, Optional
 import keyboardHandler
+import scriptHandler
 from . import guiHelper
 import inputCore
 import keyLabels
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
+import core
 
 
 #: Type for structure returned by inputCore
@@ -589,6 +592,9 @@ class InputGesturesDialog(SettingsDialog):
 	def __init__(self, parent: "InputGesturesDialog"):
 		#: The index in the _GesturesTree of the prompt for entering a new gesture
 		super().__init__(parent, resizeable=True)
+		self.prevFocus = api.getFocusObject()
+		self.prevNav = api.getNavigatorObject()
+		self.prevForeground = api.getForegroundObject()
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -605,11 +611,18 @@ class InputGesturesDialog(SettingsDialog):
 		self.gesturesVM = _InputGesturesViewModel()
 		tree = self.tree = _GesturesTree(self, self.gesturesVM)
 		tree.Bind(wx.EVT_TREE_SEL_CHANGED, self.onTreeSelect)
+		tree.Bind(wx.EVT_CHAR, self.onChar)
 		settingsSizer.Add(tree, proportion=1, flag=wx.EXPAND)
 
 		settingsSizer.AddSpacer(guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
 		bHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Translators: The label of a button to run the selected command in the Input Gestures dialog.
+		self.runButton = wx.Button(self, label=_("Run"))
+		bHelper.sizer.Add(self.runButton)
+		self.runButton.Bind(wx.EVT_BUTTON, self.onRun)
+		self.runButton.SetDefault()
+		bHelper.sizer.AddStretchSpacer()
 
 		# Translators: The label of a button to add a gesture in the Input Gestures dialog.
 		self.addButton = bHelper.addButton(self, label=_("&Add"))
@@ -621,11 +634,12 @@ class InputGesturesDialog(SettingsDialog):
 		self.removeButton.Bind(wx.EVT_BUTTON, self.onRemove)
 		self.removeButton.Disable()
 
-		bHelper.sizer.AddStretchSpacer()
 		# Translators: The label of a button to reset all gestures in the Input Gestures dialog.
 		resetButton = wx.Button(self, label=_("Reset to factory &defaults"))
 		bHelper.sizer.Add(resetButton)
 		resetButton.Bind(wx.EVT_BUTTON, self.onReset)
+
+		bHelper.sizer.AddStretchSpacer()
 
 		settingsSizer.Add(bHelper.sizer, flag=wx.EXPAND)
 		self.tree.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyTree)
@@ -665,6 +679,7 @@ class InputGesturesDialog(SettingsDialog):
 		pendingAdd = self.gesturesVM.isExpectingNewEmuGesture or self.gesturesVM.isExpectingNewGesture
 		self.addButton.Enabled = bool(item and item.canAdd and not pendingAdd)
 		self.removeButton.Enabled = bool(item and item.canRemove and not pendingAdd)
+		self.runButton.Enabled = bool(item and item.canAdd or item.canRemove)
 
 	def onAdd(self, evt):
 		if inputCore.manager._captureFunc:
@@ -812,6 +827,59 @@ class InputGesturesDialog(SettingsDialog):
 			return
 		self.gesturesVM.reset()
 		self.tree.doRefresh()
+
+	def onRun(self, evt):
+		selectedItems = self.tree.getSelectedItemData()
+		assert selectedItems is not None
+		catVM, scriptVM, gestureVM = selectedItems
+		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
+		scriptModule = scriptVM.scriptInfo.moduleName
+		module = importlib.import_module(scriptModule)
+		className = getattr(module, scriptVM.scriptInfo.className)
+		try:
+			o = className()
+		except Exception:
+			log.info(className)
+			o = self.prevFocus.appModule
+		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
+		gesture = inputCore.InputGesture
+		if gestureVM is not None:
+			for g in scriptVM.gestures:
+				if g.displayName == gestureVM.displayName:
+					gesture = g
+		script = getattr(o, scriptName)
+		from globalCommands import (
+			SCRCAT_FOCUS,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_MOUSE,
+			SCRCAT_SYSTEMCARET,
+			SCRCAT_TEXTREVIEW,
+		)
+
+		if (
+			catVM.displayName
+			in (
+				SCRCAT_FOCUS,
+				SCRCAT_MOUSE,
+				SCRCAT_SYSTEMCARET,
+				SCRCAT_TEXTREVIEW,
+			)
+			or o == self.prevFocus.appModule
+		):
+			self.onCancel(None)
+			core.callLater(100, scriptHandler.executeScript, script, gesture)
+		else:
+			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+				api.setNavigatorObject(self.prevNav)
+			scriptHandler.executeScript(script, gesture)
+			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+				self.prevNav = api.getNavigatorObject()
+
+	def onChar(self, evt):
+		if evt.GetKeyCode() == wx.WXK_SPACE:
+			self.onRun(None)
+		else:
+			evt.Skip()
 
 	def onOk(self, evt):
 		if not self.gesturesVM.commitChanges():
