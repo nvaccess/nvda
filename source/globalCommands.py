@@ -3556,8 +3556,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for cycle through
-		# braille move system caret when routing
-		#  review cursor command.
+		# braille move system caret when routing review cursor command.
 		description=_("Cycle through the braille move system caret when routing review cursor states"),
 		category=SCRCAT_BRAILLE,
 	)

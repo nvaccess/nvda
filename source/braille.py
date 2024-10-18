@@ -3848,6 +3848,8 @@ def _speakOnRouting(info: textInfos.TextInfo):
 
 def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None:
 	"""Speaks the reading unit after navigating by it with braille.
+	
+	This only has an effect if the user has enabled "Speak when navigating by line or paragraph" in braille settings.
 
 	:param info: The TextInfo at the cursor position after navigating.
 	:param readingUnit: The reading unit to expand TextInfo.
@@ -3857,7 +3859,7 @@ def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None
 	# Import late to avoid circular import.
 	from speech.speech import cancelSpeech, speakTextInfo
 
-	cancelSpeech()
 	copy = info.copy()
 	copy.expand(readingUnit)
+	cancelSpeech()
 	speakTextInfo(copy, unit=readingUnit, reason=controlTypes.OutputReason.CARET)

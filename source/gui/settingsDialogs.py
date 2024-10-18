@@ -4614,7 +4614,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
 		# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
-		speakOnNavigatingText = _("Provide speech feedback when moving by &line")
+		speakOnNavigatingText = _("Speak when navigating by &line or paragraph")
 		self.speakOnNavigatingCheckBox = followCursorGroupHelper.addItem(
 			wx.CheckBox(self.followCursorGroupBox, label=speakOnNavigatingText),
 		)
