@@ -112,7 +112,7 @@ class MessageDialogButton(NamedTuple):
 	"""Whether this button should close the dialog when clicked."""
 
 
-class DefaultMessageDialogButtons(MessageDialogButton, Enum):
+class DefaultMessageDialogButton(MessageDialogButton, Enum):
 	"""Default buttons for message dialogs."""
 
 	# Translators: An ok button on a message dialog.
@@ -265,21 +265,21 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		keywords.update(kwargs)
 		return self.addButton(self, *args, **keywords)
 
-	addOkButton = partialmethod(addButton, DefaultMessageDialogButtons.OK)
+	addOkButton = partialmethod(addButton, DefaultMessageDialogButton.OK)
 	addOkButton.__doc__ = "Add an OK button to the dialog."
-	addCancelButton = partialmethod(addButton, DefaultMessageDialogButtons.CANCEL)
+	addCancelButton = partialmethod(addButton, DefaultMessageDialogButton.CANCEL)
 	addCancelButton.__doc__ = "Add a Cancel button to the dialog."
-	addYesButton = partialmethod(addButton, DefaultMessageDialogButtons.YES)
+	addYesButton = partialmethod(addButton, DefaultMessageDialogButton.YES)
 	addYesButton.__doc__ = "Add a Yes button to the dialog."
-	addNoButton = partialmethod(addButton, DefaultMessageDialogButtons.NO)
+	addNoButton = partialmethod(addButton, DefaultMessageDialogButton.NO)
 	addNoButton.__doc__ = "Add a No button to the dialog."
-	addSaveButton = partialmethod(addButton, DefaultMessageDialogButtons.SAVE)
+	addSaveButton = partialmethod(addButton, DefaultMessageDialogButton.SAVE)
 	addSaveButton.__doc__ = "Add a Save button to the dialog."
-	addApplyButton = partialmethod(addButton, DefaultMessageDialogButtons.APPLY)
+	addApplyButton = partialmethod(addButton, DefaultMessageDialogButton.APPLY)
 	addApplyButton.__doc__ = "Add an Apply button to the dialog."
-	addCloseButton = partialmethod(addButton, DefaultMessageDialogButtons.CLOSE)
+	addCloseButton = partialmethod(addButton, DefaultMessageDialogButton.CLOSE)
 	addCloseButton.__doc__ = "Add a Close button to the dialog."
-	addHelpButton = partialmethod(addButton, DefaultMessageDialogButtons.HELP)
+	addHelpButton = partialmethod(addButton, DefaultMessageDialogButton.HELP)
 	addHelpButton.__doc__ = "Add a Help button to the dialog."
 
 	def addButtons(self, *buttons: Iterable[MessageDialogButton]) -> Self:
