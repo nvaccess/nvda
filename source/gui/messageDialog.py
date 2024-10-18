@@ -289,16 +289,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.addButton(button)
 		return self
 
-	def Show(self) -> None:
+	def Show(self) -> bool:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
 		self._realize_layout()
 		log.debug("Showing")
-		super().Show()
-		log.debug("Adding to instances")
-		self._instances.append(self)
+		ret = super().Show()
+		if ret:
+			log.debug("Adding to instances")
+			self._instances.append(self)
+		return ret
 
-	def ShowModal(self):
+	def ShowModal(self) -> MessageDialogReturnCode:
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
 		self._realize_layout()
@@ -311,7 +313,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug("Showing modal")
 		ret = displayDialogAsModal(self)
 		self.ShowModal = self.__ShowModal
-		return ret
+		return MessageDialogReturnCode(ret)
 
 	@property
 	def isBlocking(self) -> bool:
