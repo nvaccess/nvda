@@ -295,6 +295,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def Show(self) -> bool:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
+		if not self.GetMainButtonIds():
+			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
 		self._realize_layout()
 		log.debug("Showing")
 		ret = super().Show()
@@ -306,6 +308,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def ShowModal(self) -> MessageDialogReturnCode:
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
+		if not self.GetMainButtonIds():
+			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
 		self._realize_layout()
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
