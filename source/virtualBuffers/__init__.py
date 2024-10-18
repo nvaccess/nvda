@@ -527,8 +527,6 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 			)
 		return None
 
-	
-
 	def getMathMl(self, field):
 		docHandle = int(field["controlIdentifier_docHandle"])
 		nodeId = int(field["controlIdentifier_ID"])
