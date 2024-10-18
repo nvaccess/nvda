@@ -3848,7 +3848,7 @@ def _speakOnRouting(info: textInfos.TextInfo):
 
 def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None:
 	"""Speaks the reading unit after navigating by it with braille.
-	
+
 	This only has an effect if the user has enabled "Speak when navigating by line or paragraph" in braille settings.
 
 	:param info: The TextInfo at the cursor position after navigating.
