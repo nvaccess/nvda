@@ -451,6 +451,10 @@ class BrailleInputHandler(AutoPropertyObject):
 		self.flushBuffer()
 
 	def handlePostConfigProfileSwitch(self):
+		if config.conf["braille"]["inputTable"] == "auto":
+			config.conf["braille"]["inputTable"] = brailleTables.getDefaultTableForCurLang(
+				brailleTables.TableType.INPUT,
+			)
 		# #6140: Migrate to new table names as smoothly as possible.
 		tableName = config.conf["braille"]["inputTable"]
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
