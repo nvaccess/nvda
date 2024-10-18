@@ -133,6 +133,28 @@ class DefaultMessageDialogButton(MessageDialogButton, Enum):
 	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
 
 
+class DefaultMessageDialogButtons(tuple[DefaultMessageDialogButton], Enum):
+	OK_CANCEL = (
+		DefaultMessageDialogButton.OK,
+		DefaultMessageDialogButton.CANCEL,
+	)
+	YES_NO = (
+		DefaultMessageDialogButton.YES,
+		DefaultMessageDialogButton.NO,
+	)
+	YES_NO_CANCEL = (
+		DefaultMessageDialogButton.YES,
+		DefaultMessageDialogButton.NO,
+		DefaultMessageDialogButton.CANCEL,
+	)
+	SAVE_NO_CANCEL = (
+		DefaultMessageDialogButton.SAVE,
+		# Translators: A don't save button on a message dialog.
+		DefaultMessageDialogButton.NO._replace(label=_("Do&n't save")),
+		DefaultMessageDialogButton.CANCEL,
+	)
+
+
 class _MessageDialogCommand(NamedTuple):
 	"""Internal representation of a command for a message dialog."""
 
@@ -153,6 +175,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: MessageDialogType = MessageDialogType.STANDARD,
 		*,
+		buttons: Iterable[MessageDialogButton] | None = (DefaultMessageDialogButton.OK,),
 		helpId: str = "",
 	):
 		self.helpId = helpId
@@ -184,6 +207,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		contentsSizer.addDialogDismissButtons(buttonHelper)
 		self.__buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
+		if buttons is not None:
+			self.addButtons(*buttons)
 
 		mainSizer.Add(
 			contentsSizer.sizer,
