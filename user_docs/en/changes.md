@@ -34,6 +34,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
+* Default input and output braille tables will now be determined based on the NVDA language. (#16390, #290, @nvdaes)
 
 ### Bug Fixes
 
@@ -77,6 +78,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
+* In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 
 #### API Breaking Changes
 
