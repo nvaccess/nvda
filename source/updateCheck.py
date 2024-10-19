@@ -118,6 +118,27 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
+def parseUpdateCheckResponse(data: str) -> Optional[Dict[str, str]]:
+	"""
+	Parses the update response and returns a dictionary with metadata.
+
+	:param data: The raw server response as a UTF-8 decoded string.
+	:return: A dictionary containing the update metadata, or None if the format is invalid.
+	"""
+	if not data.strip():
+		return None
+
+	metadata = {}
+	for line in data.splitlines():
+		try:
+			key, val = line.split(": ", 1)
+			metadata[key] = val
+		except ValueError:
+			return None  # Invalid format
+
+	return metadata
+
+
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
@@ -187,15 +208,10 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			raise
 	if res.code != 200:
 		raise RuntimeError("Checking for update failed with code %d" % res.code)
-	info = {}
-	for line in res:
-		# #9819: update description resource returns bytes, so make it Unicode.
-		line = line.decode("utf-8").rstrip()
-		try:
-			key, val = line.split(": ", 1)
-		except ValueError:
-			raise RuntimeError("Error in update check output")
-		info[key] = val
+
+	data = res.text
+	info = parseUpdateCheckResponse(data)
+
 	if not info:
 		return None
 	return info
