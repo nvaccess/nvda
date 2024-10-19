@@ -4753,7 +4753,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the volume of the other applications",
+			"Increases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageUp",
@@ -4764,7 +4764,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the volume of the other applications",
+			"Decreases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageDown",

@@ -1,9 +1,9 @@
 # Translating using Crowdin
 
-Crowdin is used to translate the main NVDA interface.
+Crowdin is used to translate the main NVDA interface and user documentation.
 NVDA's Crowdin project: <https://crowdin.com/project/nvda>.
 
-This document covers setting up a Crowdin account, connecting it with PoEdit, and translating the main interface using Crowdin and PoEdit.
+This document covers setting up a Crowdin account, connecting it with PoEdit, and translating the main interface and user documentation using Crowdin and PoEdit.
 
 ## Setup
 
@@ -17,47 +17,29 @@ Please include your Crowdin username and the languages you wish to translate.
 
 It is recommended that you use the latest version of PoEdit and NVDA for translating.
 Alternatively, you can use the [Crowdin web interface](https://support.crowdin.com/online-editor/) directly.
-As PoEdit only supports viewing approved strings, large translators team need to co-ordinate submitting unapproved strings to prevent conflicts.
+As PoEdit only supports viewing approved strings, large translator teams need to co-ordinate submitting unapproved strings to prevent conflicts.
 Using Crowdin's interface avoids this problem.
 
-PoEdit supports connecting with Crowdin directly.
 PoEdit's homepage is: <http://www.poedit.net/>
 
 1. Download the latest Windows PoEdit version at <https://poedit.net/download>
 1. Install it by following the on-screen instructions, the default options should be sufficient.
-1. When launching PoEdit:
-    1. Choose "Translate cloud project"
-    1. Connect your Crowdin account
-    1. Select NVDA and the language you wish to translate
 
 ### Translation reviews
-
-Translated strings will need to be reviewed and approved by a proofreader before being included in NVDA.
-A proofreader is required for each language.
-Proofreader status is granted on a case-by-case basis by messaging the [translators mailing list](https://groups.io/g/nvda-translations) or <info@nvaccess.org>
-
-Proofreaders approve strings using the [Crowdin web interface](https://support.crowdin.com/online-editor/).
-PoEdit does not support viewing unapproved strings from other translators.
-When manually uploading to Crowdin from PoEdit, proofreaders are able to auto-approve all submitted strings.
+Due to accessibility issues, for now translation approvals have been disabled on Crowdin.
+Any translation uploaded to Crowdin is automatically available in the project.
+However, joining the project as a translator is by invitation only.
 
 ## Translation workflows
 
-There are 3 common workflows for translating with Crowdin:
+There are 2 common workflows for translating with Crowdin:
 
-1. Only on Crowdin's web interface, either with:
-    - only one proofreader approving their own translations,
-    - or with many translators making suggestions and a proofreader approving them.
-1. Multiple translators translating on PoEdit.
-    - Using Crowdin cloud synchronization.
-    - Proofreaders approve the translations on Crowdin's web interface.
-1. Translating on PoEdit without cloud synchronization and performing manual uploads to Crowdin.
-    - Translators with proofreader status can upload strings manually with automatic approval.
-    As such, this may be a preference for single or small-team translators using PoEdit.
-    - Manual uploads without cloud synchronization means conflicts can occur, translator teams must be co-ordinated if following this approach.
+1. Translating strings directly via Crowdin's interface. Or
+1. Downloading from Crowdin, translating with Poedit and uploading again.
 
 ## Translating using PoEdit
 
-After opening a .po file you will be placed on a list with all of the strings to translate.
+After opening a .po or .xliff file you will be placed on a list with all of the strings to translate.
 
 You can read the status bar to see how many strings have already been translated, the number of untranslated messages, and how many are fuzzy.
 A fuzzy string is a message which has been automatically translated, thus it may be wrong.
@@ -77,12 +59,15 @@ Each time you press this key, PoEdit saves the po file, and if you check compile
 
 NVDA provides additional shortcuts for PoEdit which are described in [the User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#Poedit).
 
-If you are unsure of meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
+If you are unsure of the meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
 
-## Translating the interface
+## Translating NVDA's interface
 
-Open "nvda.po" for the language you want to translate in PoEdit.
+* Download nvda.po from the Files section of your language on Crowdin.
+* Open the po file in Poedit, translate, and save the file.
+* Upload the po file back to Crowdin.
+
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
 ### Messages with formatting strings
@@ -160,7 +145,7 @@ In Crowdin, this information appears at the end of the context section.
 
 ### Testing the interface translation
 
-1. To test the current interface messages, save the current nvda.po file, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
+1. To test the current interface messages, save the current nvda.po file in Poedit, and copy the nvda.mo file to the following location: `nvdadir/locale/langcode/LC_MESSAGES`
     - `nvdadir`: the directory where NVDA has been installed
     - `langcode`: the ISO 639-1 language code for your language (e.g. en for English, es for Spanish, etc.)
 1. Restart NVDA, then go to the NVDA menu, go to Preferences and choose General Settings, or press `NVDA+control+g` to open General Settings.
@@ -168,3 +153,48 @@ In Crowdin, this information appears at the end of the context section.
 1. The messages you have translated should now be heard or brailled in your native language provided that the synthesizer you are using supports your language or a braille code for your language exists.
 
 Whenever you add or update your interface translations, repeat the steps above (copying the updated .mo file and restarting NVDA) to test your updated translation messages.
+
+## Translating User Documentation
+
+Documentation available for translation includes:
+
+* The NVDA user guide (userGuide.xliff)
+* The NVDA What's New document (changes.xliff)
+
+To translate any of these files:
+
+* Download the xliff file from the Files section of your language on Crowdin.
+    * Make sure to choose "Download" not "Export xliff".
+* Make a copy of this file.
+* Open the xliff file in Poedit, translate, and save the file.
+* Use the NVDA l10nUtil program to strip the xliff so that it only contains translations that were added / changed. E.g.
+```
+l10nUtil.exe stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
+```
+* Upload the xliff file back to Crowdin. If it is a stripped xliff file, it is safe to check the `allow target to match source` checkbox.
+
+Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
+
+### Translating markdown
+
+The English NVDA user documentation is written in markdown syntax.
+The xliff file you are directly translating has been generated from that markdown file.
+It contains the content of any line that requires translation, shown in the order it appears in the original markdown file.
+
+Structural lines that do not contain any translatable content (such as blank lines, hidden table header rows, table header body separator lines etc) are not included here.
+
+Structural syntax from the beginning and end of lines (such as heading prefix like `###`, heading anchors like `{#Introduction}`, and initial and final vertical bars on table rows) has been removed from the content to translate, but is available to view in the translator notes for that line.
+Content may still however contain inline markdown syntax such as links, inline code fences (``` `` ```), and table column separators (`|`).
+This syntax must be kept intact when translating.
+
+All strings for translation contain translator notes which include:
+* Line: the original line number in the markdown file.
+* prefix: any structural markdown on the line before this content.
+* Suffix: any structural markdown on the line after this content.
+
+### Verifying your translation
+
+When ever you have saved the xliff file with Poedit, you can use the NVDA l10nUtil program to generate the html version of the documentation file. E.g.
+```
+l10nUtil.exe xliff2html -t [userGuide|changes|keyCommands] <xliff file> <output html file>
+```
