@@ -143,6 +143,7 @@ class AcrobatNode(IAccessible):
 		yield "</%s>" % tag
 
 	def _get_mathMl(self) -> str:
+		"""Return the MathML associated with a Formula tag"""
 		if self.pdDomNode is None:
 			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
 			raise LookupError
@@ -169,7 +170,7 @@ class AcrobatNode(IAccessible):
 				log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
-		# fall back to return the contents, which is hopefully to be alt text
+		# fall back to return the contents, which is hopefully alt text
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
 		return f"<math><mtext>{self.pdDomNode.GetValue()}</mtext></math>"
