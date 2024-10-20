@@ -66,6 +66,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
   * Updated SCons to 4.8.1. (#17254)
   * Updated sphinx to 8.1.2 and sphinx-rtd-theme to 3.0.1. (#17284, @josephsl)
+  * Updated ruff and pre-commit to 0.7.0 and 4.0.1. (#17305, @dpy013)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
