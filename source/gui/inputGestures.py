@@ -855,14 +855,16 @@ class InputGesturesDialog(SettingsDialog):
 				if g.displayName == gestureVM.displayName:
 					gesture = g
 		script = getattr(o, scriptName)
-		self.onCancel(None)
-		core.callLater(100, scriptHandler.executeScript, script, gesture)
-		log.info(f"gesture {gesture.displayName}")
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
-		if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
+		else:
+			self.onCancel(None)
+			core.callLater(100, scriptHandler.executeScript, script, gesture)
+		log.info(f"gesture {gesture.displayName}")
+		log.info(f"cat {catVM}")
 
 	def onChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_SPACE:
