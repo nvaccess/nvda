@@ -987,6 +987,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				mirrorBox.Disable()
 
+
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		# Import late to avoid circular dependency.
@@ -999,6 +1000,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			configPath=("update", "serverURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
+			responseValidator=_isResponseUpdateMirrorValid
 		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
@@ -5595,3 +5597,18 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
 	# Therefore, we only check if the data is a non-empty string.
 	return isinstance(data, str) and bool(data)
+
+
+def _isResponseUpdateMirrorValid(response: requests.Response) -> bool:
+    if not response.ok:
+        return False
+
+    responseContent = response.text
+
+    try:
+        parsedResponse = updateCheck.parseUpdateCheckResponse(responseContent)
+    except Exception as e:
+        log.error(f"Error parsing update mirror response: {e}")
+        return False
+
+    return parsedResponse is not None
