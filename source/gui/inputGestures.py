@@ -859,6 +859,7 @@ class InputGesturesDialog(SettingsDialog):
 		core.callLater(100, scriptHandler.executeScript, script, gesture)
 		log.info(f"gesture {gesture.displayName}")
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
+
 		if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
