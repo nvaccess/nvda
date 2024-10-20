@@ -856,6 +856,7 @@ class InputGesturesDialog(SettingsDialog):
 					gesture = g
 		script = getattr(o, scriptName)
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
+
 		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
