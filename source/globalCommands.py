@@ -67,6 +67,7 @@ import winVersion
 from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
+from utils.urlUtils import _getLinkDataAtCaretPosition
 import audio
 from audio import appsVolume
 
@@ -4195,7 +4196,7 @@ class GlobalCommands(ScriptableObject):
 		try:
 			link = ti._getLinkDataAtCaretPosition()
 		except NotImplementedError:
-			link = self._getLinkDataAtCaretPosition(ti)
+			link = _getLinkDataAtCaretPosition(ti)
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
 			if link.destination is None:
@@ -4227,25 +4228,6 @@ class GlobalCommands(ScriptableObject):
 		else:
 			# Translators: Tell user that the command has been run on something that is not a link
 			ui.message(_("Not a link."))
-
-	def _getLinkDataAtCaretPosition(self, ti: textInfos.TextInfo) -> textInfos._Link | None:
-		ti.expand(textInfos.UNIT_CHARACTER)
-		obj: NVDAObject = ti.NVDAObjectAtStart
-		if obj.role == controlTypes.role.Role.GRAPHIC and (
-			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
-		):
-			# In Firefox, graphics with a parent link also expose the parents link href value.
-			# In Chromium, the link href value must be fetched from the parent object. (#14779)
-			obj = obj.parent
-		if (
-			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
-			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
-		):
-			return textInfos._Link(
-				displayText=obj.name,
-				destination=obj.value,
-			)
-		return None
 
 	@script(
 		description=_(
