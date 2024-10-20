@@ -987,7 +987,6 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				mirrorBox.Disable()
 
-
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		# Import late to avoid circular dependency.
@@ -1000,7 +999,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			configPath=("update", "serverURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
-			responseValidator=_isResponseUpdateMirrorValid
+			responseValidator=_isResponseUpdateMirrorValid,
 		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
@@ -5600,15 +5599,15 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 
 
 def _isResponseUpdateMirrorValid(response: requests.Response) -> bool:
-    if not response.ok:
-        return False
+	if not response.ok:
+		return False
 
-    responseContent = response.text
+	responseContent = response.text
 
-    try:
-        parsedResponse = updateCheck.parseUpdateCheckResponse(responseContent)
-    except Exception as e:
-        log.error(f"Error parsing update mirror response: {e}")
-        return False
+	try:
+		parsedResponse = updateCheck.parseUpdateCheckResponse(responseContent)
+	except Exception as e:
+		log.error(f"Error parsing update mirror response: {e}")
+		return False
 
-    return parsedResponse is not None
+	return parsedResponse is not None
