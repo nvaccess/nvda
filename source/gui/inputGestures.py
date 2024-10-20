@@ -595,6 +595,7 @@ class InputGesturesDialog(SettingsDialog):
 		self.prevFocus = api.getFocusObject()
 		self.prevNav = api.getNavigatorObject()
 		self.prevForeground = api.getForegroundObject()
+		self.prevProcessID = self.prevFocus.processID
 
 	def makeSettings(self, settingsSizer):
 		filterSizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -835,12 +836,18 @@ class InputGesturesDialog(SettingsDialog):
 		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
 		scriptModule = scriptVM.scriptInfo.moduleName
 		module = importlib.import_module(scriptModule)
-		className = getattr(module, scriptVM.scriptInfo.className)
-		try:
-			o = className()
-		except Exception:
-			log.info(className)
-			o = self.prevFocus.appModule
+		classObj = getattr(module, scriptVM.scriptInfo.className)
+		className = scriptVM.scriptInfo.className
+		log.info(f"class {className}")
+		match className.split(".")[-1]:
+			case "AppModule":
+				o = classObj(self.prevProcessID)
+			case "GlobalPlugin":
+				o = classObj()
+			case "GlobalCommands":
+				o = classObj()
+			case _:
+				o = self.prevFocus
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = inputCore.InputGesture
 		if gestureVM is not None:
@@ -848,32 +855,14 @@ class InputGesturesDialog(SettingsDialog):
 				if g.displayName == gestureVM.displayName:
 					gesture = g
 		script = getattr(o, scriptName)
-		from globalCommands import (
-			SCRCAT_FOCUS,
-			SCRCAT_OBJECTNAVIGATION,
-			SCRCAT_MOUSE,
-			SCRCAT_SYSTEMCARET,
-			SCRCAT_TEXTREVIEW,
-		)
-
-		if (
-			catVM.displayName
-			in (
-				SCRCAT_FOCUS,
-				SCRCAT_MOUSE,
-				SCRCAT_SYSTEMCARET,
-				SCRCAT_TEXTREVIEW,
-			)
-			or o == self.prevFocus.appModule
-		):
-			self.onCancel(None)
-			core.callLater(100, scriptHandler.executeScript, script, gesture)
-		else:
-			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
-				api.setNavigatorObject(self.prevNav)
+		self.onCancel(None)
+		core.callLater(100, scriptHandler.executeScript, script, gesture)
+		log.info(f"gesture {gesture.displayName}")
+		from globalCommands import SCRCAT_OBJECTNAVIGATION
+		if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
+			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
-			if catVM.displayName == SCRCAT_OBJECTNAVIGATION:
-				self.prevNav = api.getNavigatorObject()
+			self.prevNav = api.getNavigatorObject()
 
 	def onChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_SPACE:
