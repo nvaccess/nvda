@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -203,7 +203,10 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 			or (
 				keyCode == lastNVDAModifier
 				and lastNVDAModifierReleaseTime
-				and time.time() - lastNVDAModifierReleaseTime < 0.5
+				and (
+					time.time() - lastNVDAModifierReleaseTime
+					< config.conf["keyboard"]["multiPressTimeout"] / 1000
+				)
 			)
 		):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.

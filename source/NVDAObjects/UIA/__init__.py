@@ -1410,14 +1410,6 @@ class UIA(Window):
 				# TermControl represents an up-to-date version of the UWP (standard)
 				# Windows Terminal control.
 				"TermControl",
-				# TermControl2 was going to represent a
-				# terminal that supported UIA notifications (i.e. one where
-				# microsoft/terminal#12358 has been merged). However, the UIA class
-				# name was not changed in microsoft/terminal#12358 due to backward
-				# compat concerns raised by Freedom Scientific. However, a check for
-				# it is kept here just in case it should later become necessary to
-				# change it.
-				"TermControl2",
 				# WPFTermControl represents an embedded Windows Terminal control
 				# In .NET apps, such as LTS Visual Studio.
 				# WPFTermControl does not follow the same update cadence as TermControl

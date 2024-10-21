@@ -23,19 +23,14 @@ For further information please see the [Release Process page](https://github.com
 You can view [Crowdin](https://crowdin.com/project/nvda) for an up to date report on the status of translating the NVDA interface.
 If you would like to improve or would like to work on a new language, please write to the [NVDA translations mailing list](https://groups.io/g/nvda-translations).
 
-The translation status of user documentation (User Guide and Changes) can only be checked by translators.
-
 ## New Localization
 
 Start by subscribing to the translation list above so that you can get help and advice.
 
 The current process for translation is split between multiple processes:
 
-- Crowdin for the NVDA interface
-- The legacy SVN translation system for the User Guide and Changes files.
-This is planned to move to Crowdin.
-- The legacy SVN translation system for Character Descriptions, Symbols and Gestures.
-This is planned to move to GitHub.
+- Crowdin for the NVDA interface and user documentation
+- Github for Character Descriptions, Symbols and Gestures.
 
 Read [Files to be Localized](#files-to-be-localized) to learn the translation for process for these.
 
@@ -57,6 +52,6 @@ Note that linked guides may be out of date, as the translation system is undergo
 - characterDescriptions.dic: names of characters in your language, see [Translating Character Descriptions](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#characterDescriptions) for more info.
 - symbols.dic: names of symbols and punctuation in your language, see [Translating Symbols](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#symbolPronunciation) for more information.
 - gestures.ini: remapping of gestures for your language, see [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures) for more information.
-- userGuide.md: the User Guide, see [Translating the User Guide](https://github.com/nvaccess/nvda/wiki/TranslatingUserGuide) for more information.
-- changes.md (optional): a list of changes between releases, see [Translating Changes](https://github.com/nvaccess/nvda/wiki/TranslatingChanges) for more information.
+- userGuide.md: the User Guide, see [Translating using Crowdin](./crowdin.md) for more information.
+- changes.md (optional): a list of changes between releases, see [Translating using Crowdin](./crowdin.md) for more information.
 - Add-ons (optional): a set of optional features that users can install, see [Translating Addons](https://github.com/nvaccess/nvda/wiki/TranslatingAddons) for more information.
