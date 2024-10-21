@@ -4388,11 +4388,15 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
-		outTableChoices = [table.displayName for table in self.outTables]
+		outTableChoices = [_("Automatic")]
+		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
 		try:
-			selection = self.outTables.index(braille.handler.table)
+			if config.conf["braille"]["translationTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.outTables.index(braille.handler.table) + 1
 			self.outTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4405,11 +4409,15 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
 		self.inTables = [table for table in tables if table.input]
-		inTableChoices = [table.displayName for table in self.inTables]
+		inTableChoices = [_("Automatic")]
+		inTableChoices.extend([table.displayName for table in self.inTables])
 		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		self.bindHelpEvent("BrailleSettingsInputTable", self.inTableList)
 		try:
-			selection = self.inTables.index(brailleInput.handler.table)
+			if config.conf["braille"]["inputTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.inTables.index(brailleInput.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4714,13 +4722,17 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
-
-		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
-		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
+		if self.outTableList.GetSelection():
+			braille.handler.table = self.outTables[self.outTableList.GetSelection() -1]
+		else:
+			config.conf["braille"]["translationTable"] == "auto"
+		if self.inTableList.GetSelection():
+			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() -1]
+		else:
+			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
-		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
