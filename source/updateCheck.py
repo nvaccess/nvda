@@ -118,7 +118,7 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
-def parseUpdateCheckResponse(data: str) -> Optional[Dict[str, str]]:
+def parseUpdateCheckResponse(data: str) -> dict[str, str] | None:
 	"""
 	Parses the update response and returns a dictionary with metadata.
 
