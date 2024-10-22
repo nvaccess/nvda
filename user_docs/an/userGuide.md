@@ -2295,7 +2295,7 @@ Puetz eliminar un simbolo que adhibiés anteriorment pretando lo botón d'elimin
 En que remates, preta lo botón d'acceptar pa alzar los tuyos cambios u lo botón de cancelar pa descartar-los.
 
 En o caso de simbolos compleixos, lo campo de reemplazar puede haber d'incluyir qualques referencias de grupo d'o texto coincident. Por eixemplo, pa un patrón que coincida con una calendata completa, \1, \2, y \3 habría d'amaneixer en o campo, pa estar reemplazau por las partis correspondients d'a calendata.
-Por tanto, las barras inversas normals en o campo de reemplazar habrían de duplicar-sen, por eixemplo, "a\\b" habría d'escribir-se pa obtener lo reemplazo "a\b".
+Por tanto, las barras inversas normals en o campo de reemplazar habrían de duplicar-sen, por eixemplo, "a\\\\b" habría d'escribir-se pa obtener lo reemplazo "a\\b".
 
 #### Cenyos de Dentrada {#InputGestures}
 
