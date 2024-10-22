@@ -3136,7 +3136,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 		# #6140: Migrate to new table names as smoothly as possible.
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
 		if newTableName:
-			tableName =  newTableName
+			tableName = newTableName
 		if tableName != self._table.fileName:
 			try:
 				if config.conf["braille"]["translationTable"] == "auto":

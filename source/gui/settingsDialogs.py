@@ -4388,7 +4388,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
-		outTableForCurLangIndex = self.outTableNames.index(brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT))
+		outTableForCurLangIndex = self.outTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT)
+		)
 		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
 		outTableChoices = [_("Automatic (%s)" % self.outTableForCurLang.displayName)]
@@ -4414,7 +4416,9 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.inTables = [table for table in tables if table.input]
 		self.inTableNames = [table.fileName for table in self.inTables]
 
-		inTableForCurLangIndex = self.inTableNames.index(brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT))
+		inTableForCurLangIndex = self.inTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT)
+		)
 		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
 		inTableChoices = [_("Automatic (%s)" % self.inTableForCurLang.displayName)]
