@@ -4736,7 +4736,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		AutoSettingsMixin.onSave(self)
 		if self.outTableList.GetSelection():
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
-			config.conf["braille"]["translationTable"] = "auto"
 		else:
 			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
