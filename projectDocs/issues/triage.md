@@ -143,10 +143,10 @@ An issue is triaged if it is ready to be worked on.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
 Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
 A `triaged` issue should also have a [priority label](#priority).
-Generally these labels are provided by NV Access only, particularly for issues that are controversial, or priority is unclear.
 
-For controversial changes, a product decision from NV Access may be required before applying the `triaged` label.
-This can be indicated with adding the label `blocked/needs-product-decision`.
+Community members should avoid adding a `triaged` label to feature requests or other product decisions, deferring to NV Access.
+The label should also be avoided for other issues that are controversial, or the priority is unclear, such as bug fixes with an unclear solution.
+For changes where a product decision from NV Access is required before applying the `triaged` label, the label `blocked/needs-product-decision` should be used.
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
