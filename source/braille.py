@@ -3132,17 +3132,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		if (configuredTether := config.conf["braille"]["tetherTo"]) != TetherTo.AUTO.value:
 			self._tether = configuredTether
+
 		tableName = config.conf["braille"]["translationTable"]
 		# #6140: Migrate to new table names as smoothly as possible.
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
 		if newTableName:
 			tableName = config.conf["braille"]["translationTable"] = newTableName
+		if config.conf["braille"]["translationTable"] == "auto":
+			table = brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT)
+		else:
+			table = tableName
 		if tableName != self._table.fileName:
 			try:
-				if config.conf["braille"]["translationTable"] == "auto":
-					self._table = brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT)
-				else:
-					self._table = brailleTables.getTable(tableName)
+				self._table = brailleTables.getTable(table)
 			except LookupError:
 				log.error(
 					f"Invalid translation table ({tableName}), "
