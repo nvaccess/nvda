@@ -2469,7 +2469,7 @@ This option is not available if you have started NVDA with [WASAPI disabled for 
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |No, Yes|
+|Options |Default (No), No, Yes|
 |Default |No|
 
 This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
