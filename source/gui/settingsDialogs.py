@@ -4731,12 +4731,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
 		if self.outTableList.GetSelection():
-			braille.handler.table = self.outTables[self.outTableList.GetSelection() -1]
+			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
 			braille.handler.table = self.outTableForCurLang
 			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
-			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() -1]
+			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
 			braille.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
