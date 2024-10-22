@@ -93,8 +93,7 @@ class BrailleInputHandler(AutoPropertyObject):
 
 	def _set_table(self, table: brailleTables.BrailleTable):
 		self._table = table
-		if config.conf["braille"["inputTable"] == "auto"]:
-			config.conf["braille"]["inputTable"] = table.fileName
+		config.conf["braille"]["inputTable"] = table.fileName
 
 	# Provided by auto property: L{_get_currentFocusIsTextObj}
 	currentFocusIsTextObj: bool
