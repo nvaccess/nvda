@@ -4415,7 +4415,6 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		inputLabelText = _("&Input table:")
 		self.inTables = [table for table in tables if table.input]
 		self.inTableNames = [table.fileName for table in self.inTables]
-
 		inTableForCurLangIndex = self.inTableNames.index(
 			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT),
 		)
@@ -4742,7 +4741,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if self.inTableList.GetSelection():
 			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
 		else:
-			braille.handler.table = self.inTableForCurLang
+			brailleInput.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
