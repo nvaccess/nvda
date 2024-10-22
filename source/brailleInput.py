@@ -457,7 +457,7 @@ class BrailleInputHandler(AutoPropertyObject):
 		if newTableName:
 			tableName = config.conf["braille"]["inputTable"] = newTableName
 		if config.conf["braille"]["inputTable"] == "auto":
-			table = brailleTables.getDefaultTableForCurLang(
+			tableName = brailleTables.getDefaultTableForCurLang(
 				brailleTables.TableType.INPUT,
 			)
 		else:

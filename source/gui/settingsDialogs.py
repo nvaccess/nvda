@@ -4393,7 +4393,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-		outTableChoices = [_("Automatic (%s)" % self.outTableForCurLang.displayName)]
+		outTableChoices = [_("Automatic ({name})").format(name=self.outTableForCurLang.displayName]
 		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
@@ -4733,7 +4733,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
-		if self.outTableList.GetSelection():
+		if self.outTableList.GetSelection() > 0:
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
 		else:
 			braille.handler.table = self.outTableForCurLang
