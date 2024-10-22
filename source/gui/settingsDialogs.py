@@ -4388,7 +4388,10 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
-		outTableChoices = [_("Automatic")]
+		outTableForCurLangIndex = self.outTableNames.index(brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT))
+		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		outTableChoices = [_("Automatic (%s)" % self.outTableForCurLang.displayName)]
 		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
@@ -4409,7 +4412,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
 		self.inTables = [table for table in tables if table.input]
-		inTableChoices = [_("Automatic")]
+		self.inTableNames = [table.fileName for table in self.inTables]
+
+		inTableForCurLangIndex = self.inTableNames.index(brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT))
+		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		inTableChoices = [_("Automatic (%s)" % self.inTableForCurLang.displayName)]
 		inTableChoices.extend([table.displayName for table in self.inTables])
 		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		self.bindHelpEvent("BrailleSettingsInputTable", self.inTableList)
@@ -4725,10 +4733,12 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		if self.outTableList.GetSelection():
 			braille.handler.table = self.outTables[self.outTableList.GetSelection() -1]
 		else:
-			config.conf["braille"]["translationTable"] == "auto"
+			braille.handler.table = self.outTableForCurLang
+			config.conf["braille"]["translationTable"] = "auto"
 		if self.inTableList.GetSelection():
 			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() -1]
 		else:
+			braille.handler.table = self.inTableForCurLang
 			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
