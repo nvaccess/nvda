@@ -4389,7 +4389,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
 		outTableForCurLangIndex = self.outTableNames.index(
-			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT)
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT),
 		)
 		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
@@ -4417,7 +4417,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.inTableNames = [table.fileName for table in self.inTables]
 
 		inTableForCurLangIndex = self.inTableNames.index(
-			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT)
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT),
 		)
 		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
