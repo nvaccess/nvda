@@ -460,11 +460,9 @@ class BrailleInputHandler(AutoPropertyObject):
 			tableName = brailleTables.getDefaultTableForCurLang(
 				brailleTables.TableType.INPUT,
 			)
-		else:
-			table = config.conf["braille"]["inputTable"]
-		if table != self._table.fileName:
+		if tableName != self._table.fileName:
 			try:
-				self._table = brailleTables.getTable(table)
+				self._table = brailleTables.getTable(tableName)
 			except LookupError:
 				log.error(
 					f"Invalid input table ({tableName}), " f"falling back to default ({FALLBACK_TABLE}).",
