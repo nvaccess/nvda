@@ -4393,7 +4393,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-		outTableChoices = [_("Automatic ({name})").format(name=self.outTableForCurLang.displayName]
+		outTableChoices = [_("Automatic ({name})").format(name=self.outTableForCurLang.displayName)]
 		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
@@ -4420,7 +4420,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		)
 		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
 		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
-		inTableChoices = [_("Automatic (%s)" % self.inTableForCurLang.displayName)]
+		inTableChoices = [_("Automatic ({name})").format(name=self.inTableForCurLang.displayName)]
 		inTableChoices.extend([table.displayName for table in self.inTables])
 		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		self.bindHelpEvent("BrailleSettingsInputTable", self.inTableList)
