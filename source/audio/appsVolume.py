@@ -164,13 +164,13 @@ def _toggleAppsVolumeState():
 	config.conf["audio"]["applicationsVolumeMode"] = state.name
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	if state == AppsVolumeAdjusterFlag.ENABLED:
-		# Translators: Reported as a result of the command to allow or disallow to control the volume of other
-		# applications
+		# Translators: Reported as a result of the command to toggle whether control of other applications' volume
+		# is enabled.
 		msg = _("Enabled control of other applications' volume")
 	else:
-		# Translators: Reported as a result of the command to allow or disallow to control the volume of other
-		# applications
-		msg = _("Disallowed to control the volume of other applications")
+		# Translators: Reported as a result of the command to toggle whether control of other applications' volume
+		# is enabled.
+		msg = _("Enabled control of other applications' volume")
 	ui.message(msg)
 
 
