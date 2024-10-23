@@ -2301,7 +2301,7 @@ To toggle this option from anywhere, please assign a custom gesture using the [I
 
 Enabling this option will cause NVDA to speak lines or paragraphs reached using the braille display's navigation controls.
 
-To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
 
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
