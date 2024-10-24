@@ -49,6 +49,7 @@ class AppModule(appModuleHandler.AppModule):
 		else:
 			api.copyToClip(title, notify=True)
 
+
 class WinwordWordDocument(WordDocument):
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
