@@ -6,7 +6,6 @@
 import controlTypes
 from urllib.parse import ParseResult, urlparse, urlunparse
 from logHandler import log
-from NVDAObjects import textInfos, NVDAObject
 
 
 def getLinkType(targetURL: str, rootURL: str) -> controlTypes.State | None:
@@ -53,23 +52,3 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 	return targetURLOnPageWithoutFragments == rootURLWithoutFragments and not any(
 		char in parsedTargetURLOnPage.fragment for char in fragmentInvalidChars
 	)
-
-
-def _getLinkDataAtCaretPosition(ti: textInfos.TextInfo) -> textInfos._Link | None:
-	ti.expand(textInfos.UNIT_CHARACTER)
-	obj: NVDAObject = ti.NVDAObjectAtStart
-	if obj.role == controlTypes.role.Role.GRAPHIC and (
-		obj.parent and obj.parent.role == controlTypes.role.Role.LINK
-	):
-		# In Firefox, graphics with a parent link also expose the parents link href value.
-		# In Chromium, the link href value must be fetched from the parent object. (#14779)
-		obj = obj.parent
-	if (
-		obj.role == controlTypes.role.Role.LINK  # If it's a link, or
-		or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
-	):
-		return textInfos._Link(
-			displayText=obj.name,
-			destination=obj.value,
-		)
-	return None

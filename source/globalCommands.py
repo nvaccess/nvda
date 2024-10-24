@@ -67,7 +67,6 @@ import winVersion
 from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
-from utils.urlUtils import _getLinkDataAtCaretPosition
 import audio
 from audio import appsVolume
 
@@ -4193,10 +4192,7 @@ class GlobalCommands(ScriptableObject):
 		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
 			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
-		try:
-			link = ti._getLinkDataAtCaretPosition()
-		except NotImplementedError:
-			link = _getLinkDataAtCaretPosition(ti)
+		link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
 			if link.destination is None:

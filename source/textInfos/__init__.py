@@ -339,6 +339,14 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
 
 
+@dataclass
+class _Link:
+	"""Class to store information on a link in text."""
+
+	displayText: str | None
+	destination: str
+
+
 class TextInfo(baseObject.AutoPropertyObject):
 	"""Provides information about a range of text in an object and facilitates access to all text in the widget.
 	A TextInfo represents a specific range of text, providing access to the text itself, as well as information about the text such as its formatting and any associated controls.
@@ -705,8 +713,24 @@ class TextInfo(baseObject.AutoPropertyObject):
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX, oldY)
 
-	def _getLinkDataAtCaretPosition(self):
-		raise NotImplementedError
+	def _getLinkDataAtCaretPosition(self) -> _Link | None:
+		self.expand(UNIT_CHARACTER)
+		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
+		if obj.role == controlTypes.role.Role.GRAPHIC and (
+			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
+		):
+			# In Firefox, graphics with a parent link also expose the parents link href value.
+			# In Chromium, the link href value must be fetched from the parent object. (#14779)
+			obj = obj.parent
+		if (
+			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
+			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
+		):
+			return _Link(
+				displayText=obj.name,
+				destination=obj.value,
+			)
+		return None
 
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
@@ -759,7 +783,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			exactly 1 character.
 			A good illustration of this is in Microsoft Word with UIA enabled always,
 			the first character of a bullet list item would be represented by three pythonic codepoint characters:
-			* Bullet character "•"
+			* Bullet character "Ã¢â‚¬Â¢"
 			* Tab character \t
 			* And the first character of of list item per se.
 
@@ -1014,11 +1038,3 @@ class CommentType(Enum):
 	GENERAL = "general"
 	DRAFT = "draft"
 	RESOLVED = "resolved"
-
-
-@dataclass
-class _Link:
-	"""Class to store information on a link in text."""
-
-	displayText: str | None
-	destination: str
