@@ -54,6 +54,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When spelling, unicode normalization now works more appropriately:
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
+* If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
 
 ### Changes for Developers
 
