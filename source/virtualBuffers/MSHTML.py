@@ -283,9 +283,13 @@ class MSHTML(VirtualBuffer):
 			return False
 		if not winUser.isWindow(root.windowHandle):
 			return False
-		if root.appModule and root.appModule.appName.startswith("wwahost") and not winUser.isDescendantWindow(
-			winUser.getForegroundWindow(),
-			root.windowHandle,
+		if (
+			root.appModule
+			and root.appModule.appName.startswith("wwahost")
+			and not winUser.isDescendantWindow(
+				winUser.getForegroundWindow(),
+				root.windowHandle,
+			)
 		):
 			# #4572: When a wwahost hosted app is in the background it gets suspended and all COM calls freeze.
 			# Therefore we don't have enough info to say whether its dead or not. We assume it is alive until we can get a better answer.
