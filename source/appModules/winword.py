@@ -12,7 +12,8 @@ import api
 import appModuleHandler
 import controlTypes
 import globalCommands
-from scriptHandler import script
+import speech
+from scriptHandler import script, getLastScriptRepeatCount
 import ui
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
@@ -31,21 +32,22 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:NVDA+t",
 	)
 	def script_title(self, gesture):
-		title = api.getForegroundObject().name
+		foregroundWindowName = api.getForegroundObject().name
+		title = foregroundWindowName
 		statusBar = api.getStatusBar()
-		if statusBar is None:
+		if statusBar is not None:
+			for child in statusBar.children:
+				if controlTypes.state.State.PRESSED in child.states:
+					documentLayout = child.name
+					title = f"{foregroundWindowName} - {documentLayout}"
+					break
+		repeatCount = getLastScriptRepeatCount()
+		if repeatCount == 0:
 			ui.message(title)
-			return
-		documentLayout = None
-		for child in statusBar.children:
-			if controlTypes.state.State.PRESSED in child.states:
-				documentLayout = child.name
-				break
-		if documentLayout is None:
-			ui.message(title)
+		elif repeatCount == 1:
+			speech.speakSpelling(title)
 		else:
-			ui.message(f"{title} - {documentLayout}")
-
+			api.copyToClip(title, notify=True)
 
 class WinwordWordDocument(WordDocument):
 	@script(gesture="kb:control+shift+e")
