@@ -35,6 +35,7 @@ def initialize() -> None:
 		# Muted flag should not be persistent.
 		config.conf["audio"]["applicationsSoundMuted"] = False
 		muted = False
+	log.warn(f"asdf init {volume=} {muted=}, {str(state)}")
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 
 
@@ -88,7 +89,7 @@ def _updateAppsVolumeImpl(
 	state: AppsVolumeAdjusterFlag,
 ):
 	global _activeCallback
-	if state == AppsVolumeAdjusterFlag.DISABLED:
+	if state in [AppsVolumeAdjusterFlag.DEFAULT, AppsVolumeAdjusterFlag.DISABLED]:
 		newCallback = DummyAudioSessionCallback()
 		runTerminators = True
 	else:
