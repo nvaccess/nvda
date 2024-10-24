@@ -8,7 +8,10 @@ Word and Outlook share a lot of code and components. This app module gathers the
 Microsoft Word only.
 """
 
+import api
 import appModuleHandler
+import controlTypes
+import globalCommands
 from scriptHandler import script
 import ui
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
@@ -20,6 +23,28 @@ class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
 			clsList.insert(0, WinwordWordDocument)
+
+	@script(
+		category=globalCommands.SCRCAT_FOCUS,
+		# Translators: Message presented in input help mode to describe a command in Microsoft Word documents.
+		description=_("Reports the window title and document layout"),
+		gesture="kb:NVDA+t",
+	)
+	def script_title(self, gesture):
+		title = api.getForegroundObject().name
+		statusBar = api.getStatusBar()
+		if statusBar is None:
+			ui.message(title)
+			return
+		documentLayout = None
+		for child in statusBar.children:
+			if controlTypes.state.State.PRESSED in child.states:
+				documentLayout = child.name
+				break
+		if documentLayout is None:
+			ui.message(title)
+		else:
+			ui.message(f"{title} - {documentLayout}")
 
 
 class WinwordWordDocument(WordDocument):
