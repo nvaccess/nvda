@@ -30,6 +30,7 @@ class AppModule(appModuleHandler.AppModule):
 		# Translators: Message presented in input help mode to describe a command in Microsoft Word documents.
 		description=_("Reports the window title and document layout"),
 		gesture="kb:NVDA+t",
+		speakOnDemand=True,
 	)
 	def script_title(self, gesture):
 		title = api.getForegroundObject().name
