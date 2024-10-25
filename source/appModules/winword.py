@@ -32,13 +32,13 @@ class AppModule(appModuleHandler.AppModule):
 		gesture="kb:NVDA+t",
 	)
 	def script_title(self, gesture):
-		foregroundWindowName = api.getForegroundObject().name
-		title = foregroundWindowName
+		title = api.getForegroundObject().name
 		statusBar = api.getStatusBar()
 		if statusBar is not None:
 			for child in statusBar.children:
 				if controlTypes.state.State.PRESSED in child.states:
 					documentLayout = child.name
+					foregroundWindowName = title
 					title = f"{foregroundWindowName} - {documentLayout}"
 					break
 		repeatCount = getLastScriptRepeatCount()
