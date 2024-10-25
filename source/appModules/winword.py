@@ -27,8 +27,8 @@ class AppModule(appModuleHandler.AppModule):
 
 	@script(
 		category=globalCommands.SCRCAT_FOCUS,
-		# Translators: Message presented in input help mode to describe a command in Microsoft Word documents.
 		description=_(
+			# Translators: Input help mode message for report title bar command.
 			"In Microsoft Word, reports the title and the layout of the current document. If pressed twice, spells this information. If pressed three times, copies it to the clipboard"
 		),
 		gesture="kb:NVDA+t",
