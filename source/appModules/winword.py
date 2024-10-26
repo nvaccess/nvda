@@ -50,8 +50,11 @@ class AppModule(appModuleHandler.AppModule):
 class WinwordWordDocument(WordDocument):
 
 	def _get_description(self) -> str:
-		curView = self.WinwordWindowObject.view.Type
-		return ViewType(curView).displayString
+		try:
+			curView = self.WinwordWindowObject.view.Type
+			return ViewType(curView).displayString
+		except AttributeError:
+			return super()._get_description()
 
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
