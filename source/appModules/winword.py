@@ -8,52 +8,51 @@ Word and Outlook share a lot of code and components. This app module gathers the
 Microsoft Word only.
 """
 
-import api
 import appModuleHandler
-import controlTypes
-import globalCommands
-import speech
-from scriptHandler import script, getLastScriptRepeatCount
+from scriptHandler import script
 import ui
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 from NVDAObjects.window.winword import WordDocument
+from utils.displayString import DisplayStringIntEnum
 
+
+class ViewTypes(DisplayStringIntEnum):
+	"""Enumeration containing the possible view types in Word documents."""
+
+	DRAFT = 1
+	OUTLINE = 2
+	PRINT = 3
+	WEB = 6
+	READ = 7
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: One of the view types in Word documents.
+			ViewTypes.DRAFT: _("DRAFT"),
+			# Translators: One of the view types in Word documents.
+			ViewTypes.OUTLINE: _("Outline"),
+			# Translators: One of the view types in Word documents.
+			ViewTypes.PRINT: _("Print layout"),
+			# Translators: One of the view types in Word documents.
+			ViewTypes.WEB: _("Web layout"),
+			# Translators: One of the view types in Word documents.
+			ViewTypes.READ: _("Read mode"),
+		}
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
 			clsList.insert(0, WinwordWordDocument)
 
-	@script(
-		category=globalCommands.SCRCAT_FOCUS,
-		description=_(
-			# Translators: Input help mode message for report title bar command in Microsoft Word.
-			"In Microsoft Word, reports the title and the layout of the current document. If pressed twice, spells this information. If pressed three times, copies it to the clipboard",
-		),
-		gesture="kb:NVDA+t",
-		speakOnDemand=True,
-	)
-	def script_title(self, gesture):
-		title = api.getForegroundObject().name
-		statusBar = api.getStatusBar()
-		if statusBar is not None:
-			for child in statusBar.children:
-				if controlTypes.state.State.PRESSED in child.states:
-					documentLayout = child.name
-					foregroundWindowName = title
-					title = f"{foregroundWindowName} - {documentLayout}"
-					break
-		repeatCount = getLastScriptRepeatCount()
-		if repeatCount == 0:
-			ui.message(title)
-		elif repeatCount == 1:
-			speech.speakSpelling(title)
-		else:
-			api.copyToClip(title, notify=True)
-
 
 class WinwordWordDocument(WordDocument):
+
+	def _get_description(self) -> str:
+		curView = self.WinwordWindowObject.view.Type
+		return ViewTypes(curView).displayString
+
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
 		if not self.WinwordDocumentObject:
