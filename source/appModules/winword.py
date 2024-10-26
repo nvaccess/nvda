@@ -41,6 +41,7 @@ class ViewType(DisplayStringIntEnum):
 			ViewType.READ: _("Read mode"),
 		}
 
+
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		if UIAWordDocument in clsList or IAccessibleWordDocument in clsList:
@@ -48,7 +49,6 @@ class AppModule(appModuleHandler.AppModule):
 
 
 class WinwordWordDocument(WordDocument):
-
 	def _get_description(self) -> str:
 		try:
 			curView = self.WinwordWindowObject.view.Type
