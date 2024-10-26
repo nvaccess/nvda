@@ -17,7 +17,7 @@ from NVDAObjects.window.winword import WordDocument
 from utils.displayString import DisplayStringIntEnum
 
 
-class ViewTypes(DisplayStringIntEnum):
+class ViewType(DisplayStringIntEnum):
 	"""Enumeration containing the possible view types in Word documents."""
 
 	DRAFT = 1
@@ -30,15 +30,15 @@ class ViewTypes(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: One of the view types in Word documents.
-			ViewTypes.DRAFT: _("DRAFT"),
+			ViewType.DRAFT: _("DRAFT"),
 			# Translators: One of the view types in Word documents.
-			ViewTypes.OUTLINE: _("Outline"),
+			ViewType.OUTLINE: _("Outline"),
 			# Translators: One of the view types in Word documents.
-			ViewTypes.PRINT: _("Print layout"),
+			ViewType.PRINT: _("Print layout"),
 			# Translators: One of the view types in Word documents.
-			ViewTypes.WEB: _("Web layout"),
+			ViewType.WEB: _("Web layout"),
 			# Translators: One of the view types in Word documents.
-			ViewTypes.READ: _("Read mode"),
+			ViewType.READ: _("Read mode"),
 		}
 
 class AppModule(appModuleHandler.AppModule):
@@ -51,7 +51,7 @@ class WinwordWordDocument(WordDocument):
 
 	def _get_description(self) -> str:
 		curView = self.WinwordWindowObject.view.Type
-		return ViewTypes(curView).displayString
+		return ViewType(curView).displayString
 
 	@script(gesture="kb:control+shift+e")
 	def script_toggleChangeTracking(self, gesture):
