@@ -346,7 +346,9 @@ class Math(Ia2Web):
 			if self.IA2Attributes.get("tag") != "math":
 				# Could be a <span> (etc) that has role = math -- check the child
 				# If there is a single <math> child, recurse on the assumption that is what was the intended math
-				mathObjs: str | None = [child for child in self.children if child.IA2Attributes.get("tag") == 'math']
+				mathObjs: str | None = [
+					child for child in self.children if child.IA2Attributes.get("tag") == "math"
+				]
 				if len(mathObjs) == 1:
 					return mathObjs[0].mathMl
 				# This isn't MathML
