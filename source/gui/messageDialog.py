@@ -253,7 +253,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
-		self._commands[buttonId] = _MessageDialogCommand(callback=callback, closes_dialog=closes_dialog)
+		# Default actions that do not close the dialog do not make sense.
+		self._commands[buttonId] = _MessageDialogCommand(
+			callback=callback,
+			closes_dialog=closes_dialog or default_action,
+		)
 		if default_focus:
 			button.SetDefault()
 		if default_action:
