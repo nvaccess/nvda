@@ -10,10 +10,11 @@ from enum import Enum
 from functools import wraps
 import globalVars
 from typing import Callable
+from speech.priorities import SpeechPriority
 import ui
 from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
 from gui.message import isModalMessageBoxActive
-import queueHandler
+import core
 
 
 @dataclass
@@ -74,7 +75,15 @@ def when(*contexts: Context):
 		def funcWrapper(*args, **kwargs):
 			for context in contexts:
 				if context.blockActionIf():
-					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, context.translatedMessage)
+					if context == Context.MODAL_DIALOG_OPEN:
+						# Import late to avoid circular import
+						from gui.messageDialog import MessageDialog
+
+						if MessageDialog.BlockingInstancesExist():
+							MessageDialog.FocusBlockingInstances()
+					# We need to delay this message so that, if a dialog is to be focused, the appearance of the dialog doesn't interrupt it.
+					# 1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
+					core.callLater(1, ui.message, context.translatedMessage, SpeechPriority.NOW)
 					return
 			return func(*args, **kwargs)
 
