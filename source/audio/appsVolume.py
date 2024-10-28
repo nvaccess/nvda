@@ -170,7 +170,7 @@ def _toggleAppsVolumeState():
 	else:
 		# Translators: Reported as a result of the command to toggle whether control of other applications' volume
 		# is enabled.
-		msg = _("Disabled control of other applications' volume")
+		msg = _("Application volume control off")
 	ui.message(msg)
 
 
