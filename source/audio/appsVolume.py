@@ -79,7 +79,7 @@ def _updateAppsVolumeImpl(
 		volumeAndMute=VolumeAndMute(
 			volume=volume,
 			mute=muted,
-		)
+		),
 	)
 	runTerminators = False
 	if _activeCallback is not None:
