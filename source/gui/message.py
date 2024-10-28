@@ -9,6 +9,7 @@ import threading
 from typing import Optional
 
 import wx
+import warnings
 
 import extensionPoints
 
@@ -97,6 +98,11 @@ def messageBox(
 	Because an answer is required to continue after a modal messageBox is opened,
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
+	warnings.warn(
+		DeprecationWarning(
+			"gui.message.messageBox is deprecated. Use gui.message.MessageDialog instead.",
+		),
+	)
 	from gui import mainFrame
 	import core
 	from logHandler import log
