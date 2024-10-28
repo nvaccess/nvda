@@ -18,7 +18,9 @@ from utils.displayString import DisplayStringIntEnum
 
 
 class ViewType(DisplayStringIntEnum):
-	"""Enumeration containing the possible view types in Word documents."""
+	"""Enumeration containing the possible view types in Word documents:.
+	https://learn.microsoft.com/en-us/office/vba/api/word.wdviewtype
+	"""
 
 	DRAFT = 1
 	OUTLINE = 2
