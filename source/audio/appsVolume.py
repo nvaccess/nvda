@@ -166,7 +166,7 @@ def _toggleAppsVolumeState():
 	if state == AppsVolumeAdjusterFlag.ENABLED:
 		# Translators: Reported as a result of the command to toggle whether control of other applications' volume
 		# is enabled.
-		msg = _("Enabled control of other applications' volume")
+		msg = _("Application volume control on")
 	else:
 		# Translators: Reported as a result of the command to toggle whether control of other applications' volume
 		# is enabled.
