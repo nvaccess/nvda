@@ -4775,7 +4775,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggle whether control of other applications' volume is enabled.",
+			"Toggles application volume control on and off",
 		),
 		category=SCRCAT_AUDIO,
 	)
