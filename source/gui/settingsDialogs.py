@@ -3107,48 +3107,6 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		label = _(
-			# Translators: This is a label for the
-			# "allow NVDA to control the volume of other applications"
-			# combo box in settings.
-			"&Allow NVDA to control the volume of other applications:",
-		)
-		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf,
-		)
-		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
-		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
-
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100,
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		if 0 <= volume <= 100:
-			self.appSoundVolSlider.SetValue(volume)
-		else:
-			log.error("Invalid volume level: {}", volume)
-			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
-			self.appSoundVolSlider.SetValue(defaultVolume)
-
-		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
-			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Mute other apps")),
-		)
-		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
-		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
-
-		self._onSoundVolChange(None)
-
 		audioAwakeTimeLabelText = _(
 			# Translators: The label for a setting in Audio settings panel
 			# to change how long the audio device is kept awake after speech
@@ -3207,14 +3165,6 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
-		self.appVolAdjusterCombo.saveCurrentValueToConf()
-		audio.appsVolume._updateAppsVolumeImpl(
-			volume=self.appSoundVolSlider.GetValue() / 100.0,
-			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentValue(),
-		)
 
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
@@ -3224,7 +3174,6 @@ class AudioPanel(SettingsPanel):
 		config.conf["audio"]["audioAwakeTime"] = self.audioAwakeTimeEdit.GetValue()
 
 	def onPanelActivated(self):
-		self._onSoundVolChange(None)
 		super().onPanelActivated()
 
 	def _onSoundVolChange(self, event: wx.Event) -> None:
@@ -3236,15 +3185,6 @@ class AudioPanel(SettingsPanel):
 		)
 		self.soundSplitComboBox.Enable(wasapi)
 		self.soundSplitModesList.Enable(wasapi)
-
-		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.muteOtherAppsCheckBox.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.appVolAdjusterCombo.Enable(wasapi)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems

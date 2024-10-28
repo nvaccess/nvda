@@ -2465,50 +2465,6 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |No, Yes|
-|Default |No|
-
-This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
-
-Possible values are:
-
-* No: NVDA doesn't interfere with the volume levels of other applications.
-* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
-Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
-
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume can also be controlled via the following keyboard commands from anywhere:
-
-| Name | Key | Description |
-|---|---|---|
-| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
-| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
-##### Mute other applications {#OtherAppMute}
-
-This check box allows you to mute or unmute all applications except NVDA at once.
-
-The following keyboard command can also be used from anywhere:
-
-| Name | Key | Description |
-|---|---|---|
-| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
-
-Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
 This edit box specifies how long NVDA keeps the audio device awake after speech ends.

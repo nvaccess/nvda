@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited
+# Copyright (C) 2024 NV Access Limited, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -33,8 +33,6 @@ def initialize() -> None:
 			return
 		log.debug("Initializing utils")
 		utils.initialize()
-		log.debug("Initializing appsVolume")
-		appsVolume.initialize()
 		log.debug("Initializing soundSplit")
 		soundSplit.initialize()
 		global audioUtilitiesInitialized

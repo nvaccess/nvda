@@ -66,23 +66,6 @@ class BoolFlag(DisplayStringEnum):
 		return self == BoolFlag.ENABLED
 
 
-class AppsVolumeAdjusterFlag(DisplayStringEnum):
-	@property
-	def _displayStringLabels(self):
-		return {
-			# Translators: A choice disabling "application volume adjustment"
-			# in the audio settings panel.
-			self.DISABLED: _("No"),
-			# Translators: A choice enabling "application volume adjustment"
-			# in the audio settings panel.
-			self.ENABLED: _("Yes"),
-		}
-
-	DEFAULT = enum.auto()
-	DISABLED = enum.auto()
-	ENABLED = enum.auto()
-
-
 class ParagraphNavigationFlag(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self):
