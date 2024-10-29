@@ -165,6 +165,15 @@ class _MessageDialogCommand(NamedTuple):
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
+	"""Provides a more flexible message dialog.
+
+	Creating dialogs with this class is extremely flexible. You can create a dialog, passing almost all parameters to the initialiser, and only call `Show` or `ShowModal` on the instance.
+	You can also call the initialiser with very few arguments, and modify the dialog by calling methods on the created instance.
+	Mixing and matching both patterns is also allowed.
+
+	When subclassing this class, you can override `_addButtons` and `_addContents` to insert custom buttons or contents that you want your subclass to always have.
+	"""
+
 	_instances: Deque["MessageDialog"] = deque()
 	"""Double-ended queue of open instances.
 	When programatically closing non-blocking instances or focusing blocking instances, this should operate like a stack (I.E. LIFO behaviour).
