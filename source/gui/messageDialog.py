@@ -362,7 +362,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug("Showing modal")
 		ret = displayDialogAsModal(self)
 		self.ShowModal = self.__ShowModal
-		return MessageDialogReturnCode(ret)
+		return ret
 
 	@property
 	def isBlocking(self) -> bool:
@@ -456,6 +456,16 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
+		log.debug(f"Got {'vetoable' if evt.CanVeto() else 'non-vetoable'} close event.")
+		if not evt.CanVeto():
+			# We must close the dialog, regardless of state.
+			self._instances.remove(self)
+			self.EndModal()
+			self.Destroy()
+			return
+		if self.GetReturnCode() == 0:
+			# No button has been pressed, so this must be a close event from elsewhere.
+			pass
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
@@ -466,6 +476,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	def _onButton(self, evt: wx.CommandEvent):
 		id = evt.GetId()
+		log.debug(f"Got button event on {id=}")
 		command = self._commands.get(id)
 		if command is None:
 			return
@@ -475,9 +486,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				self.Hide()
 			callback(evt)
 		if close:
-			closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
-			closeEvent.SetEventObject(evt.GetEventObject())
+			# closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
+			# closeEvent.SetEventObject(evt.GetEventObject())
 			self.SetReturnCode(id)
-			self.GetEventHandler().QueueEvent(closeEvent)
+			# self.GetEventHandler().QueueEvent(closeEvent)
+			self.Close()
 
 	# endregion
