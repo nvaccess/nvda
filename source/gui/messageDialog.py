@@ -166,6 +166,10 @@ class _MessageDialogCommand(NamedTuple):
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
 	_instances: Deque["MessageDialog"] = deque()
+	"""Double-ended queue of open instances.
+	When programatically closing non-blocking instances or focusing blocking instances, this should operate like a stack (I.E. LIFO behaviour).
+	Random access still needs to be supported for the case of non-modal dialogs being closed out of order.
+	"""
 
 	# region Constructors
 	def __init__(
