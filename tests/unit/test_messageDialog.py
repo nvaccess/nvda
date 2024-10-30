@@ -51,3 +51,53 @@ class Test_MessageDialog_Sounds(MDTestBase):
 		self.dialog._MessageDialog__setSound(type)
 		self.dialog._MessageDialog__playSound()
 		mocked_MessageBeep.assert_not_called()
+
+
+class Test_MessageDialog_Buttons(MDTestBase):
+	def test_addOkButton(self):
+		"""Test adding an OK button to the dialog."""
+		self.dialog.addOkButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_OK])
+
+	def test_addCancelButton(self):
+		"""Test adding a Cancel button to the dialog."""
+		self.dialog.addCancelButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CANCEL])
+
+	def test_addYesButton(self):
+		"""Test adding a Yes button to the dialog."""
+		self.dialog.addYesButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_YES])
+
+	def test_addNoButton(self):
+		"""Test adding a No button to the dialog."""
+		self.dialog.addNoButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_NO])
+
+	def test_addSaveButton(self):
+		"""Test adding a Save button to the dialog."""
+		self.dialog.addSaveButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_SAVE])
+
+	def test_addApplyButton(self):
+		"""Test adding an Apply button to the dialog."""
+		self.dialog.addApplyButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_APPLY), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_APPLY])
+
+	def test_addCloseButton(self):
+		"""Test adding a Close button to the dialog."""
+		self.dialog.addCloseButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CLOSE), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CLOSE])
+
+	def test_addHelpButton(self):
+		"""Test adding a Help button to the dialog."""
+		self.dialog.addHelpButton()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_HELP), wx.Button)
+		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_HELP])
