@@ -55,8 +55,8 @@ class WinwordWordDocument(WordDocument):
 		try:
 			curView = self.WinwordWindowObject.view.Type
 			description = super().description
-			if isinstance(super()._get_description(), str) and (description := description.strip()):
-				return f"{ViewType(curView).displayString} {description}".strip()
+			if isinstance(description, str) and not description.isspace():
+				return f"{ViewType(curView).displayString} {description}"
 			return curView.displayString
 		except AttributeError:
 			return super()._get_description()
