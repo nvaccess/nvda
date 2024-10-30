@@ -188,7 +188,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: MessageDialogType = MessageDialogType.STANDARD,
 		*,
-		buttons: Iterable[MessageDialogButton] | None = (DefaultMessageDialogButton.OK,),
+		buttons: Iterable[MessageDialogButton] | None = None,
 		helpId: str = "",
 	):
 		self.helpId = helpId
