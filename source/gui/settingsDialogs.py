@@ -5568,7 +5568,9 @@ class SpeechSymbolsDialog(SettingsDialog):
 				continue
 			self.symbolProcessor.updateSymbol(symbol)
 		try:
-			self.symbolProcessor.userSymbols.save()
+			self.symbolProcessor.userSymbols.save(
+				WritePaths.getSymbolsConfigFile(self.symbolProcessor.locale),
+			)
 		except IOError as e:
 			log.error("Error saving user symbols info: %s" % e)
 		characterProcessing._localeSpeechSymbolProcessors.invalidateLocaleData(self.symbolProcessor.locale)
