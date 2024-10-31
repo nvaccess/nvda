@@ -5,7 +5,7 @@
 
 from enum import Enum, IntEnum, auto
 import time
-from typing import Any, Callable, Deque, Iterable, NamedTuple, TypeAlias, Self
+from typing import Any, NamedTuple, TypeAlias, Self
 import winsound
 
 import wx
@@ -18,6 +18,7 @@ from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
+from collections.abc import Iterable, Iterator, Callable
 from logHandler import log
 
 
@@ -174,7 +175,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	When subclassing this class, you can override `_addButtons` and `_addContents` to insert custom buttons or contents that you want your subclass to always have.
 	"""
 
-	_instances: Deque["MessageDialog"] = deque()
+	_instances: deque["MessageDialog"] = deque()
 	"""Double-ended queue of open instances.
 	When programatically closing non-blocking instances or focusing blocking instances, this should operate like a stack (I.E. LIFO behaviour).
 	Random access still needs to be supported for the case of non-modal dialogs being closed out of order.
@@ -324,13 +325,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addHelpButton = partialmethod(addButton, DefaultMessageDialogButton.HELP)
 	addHelpButton.__doc__ = "Add a Help button to the dialog."
 
-	def addButtons(self, *buttons: Iterable[MessageDialogButton]) -> Self:
+	def addButtons(self, *buttons: DefaultMessageDialogButtons | MessageDialogButton) -> Self:
 		"""Add multiple buttons to the dialog.
 
 		:return: The dialog instance.
 		"""
-
-		for button in buttons:
+		for button in _flattenButtons(buttons):
 			self.addButton(button)
 		return self
 
@@ -493,3 +493,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
+
+
+def _flattenButtons(
+	buttons: Iterable[DefaultMessageDialogButtons | MessageDialogButton],
+) -> Iterator[MessageDialogButton]:
+	"""Flatten an iterable of c{MessageDialogButton} or c{DefaultMessageDialogButtons} instances into an iterator of c{MessageDialogButton} instances.
+
+	:param buttons: The iterator of buttons and button sets to flatten.
+	:yield: Each button contained in the input iterator or its children.
+	"""
+	for item in buttons:
+		if isinstance(item, DefaultMessageDialogButtons):
+			yield from item
+		else:
+			yield item
