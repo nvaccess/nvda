@@ -101,3 +101,29 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.dialog.addHelpButton()
 		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_HELP), wx.Button)
 		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_HELP])
+
+	def test_addOkCancelButtons(self):
+		self.dialog.addOkCancelButtons()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_OK, wx.ID_CANCEL))
+
+	def test_addYesNoButtons(self):
+		self.dialog.addYesNoButtons()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO))
+
+	def test_addYesNoCancelButtons(self):
+		self.dialog.addYesNoCancelButtons()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO, wx.ID_CANCEL))
+
+	def test_addSaveNoCancelButtons(self):
+		self.dialog.addSaveNoCancelButtons()
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_SAVE, wx.ID_NO, wx.ID_CANCEL))

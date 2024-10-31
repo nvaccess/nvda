@@ -334,6 +334,15 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.addButton(button)
 		return self
 
+	addOkCancelButtons = partialmethod(addButtons, DefaultMessageDialogButtons.OK_CANCEL)
+	addOkCancelButtons.__doc__ = "Add OK and Cancel buttons to the dialog."
+	addYesNoButtons = partialmethod(addButtons, DefaultMessageDialogButtons.YES_NO)
+	addYesNoButtons.__doc__ = "Add Yes and No buttons to the dialog."
+	addYesNoCancelButtons = partialmethod(addButtons, DefaultMessageDialogButtons.YES_NO_CANCEL)
+	addYesNoCancelButtons.__doc__ = "Add Yes, No and Cancel buttons to the dialog."
+	addSaveNoCancelButtons = partialmethod(addButtons, DefaultMessageDialogButtons.SAVE_NO_CANCEL)
+	addSaveNoCancelButtons.__doc__ = "Add Save, Don't save and Cancel buttons to the dialog."
+
 	def Show(self) -> bool:
 		"""Show a non-blocking dialog.
 		Attach buttons with button handlers"""
