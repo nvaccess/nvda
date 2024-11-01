@@ -12,6 +12,14 @@ import wx
 from gui.messageDialog import MessageDialog, MessageDialogType
 
 
+def dummyCallback1(*a):
+	pass
+
+
+def dummyCallback2(*a):
+	pass
+
+
 class MDTestBase(unittest.TestCase):
 	"""Base class for test cases testing MessageDialog. Handles wx initialisation."""
 
@@ -204,42 +212,24 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test default action assignment."):
 			self.assertIsNotNone(self.dialog._getDefaultAction())
 
+
+class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_defaultAction_defaultEscape_OkCancel(self):
-		def okCallback():
-			pass
-
-		def cancelCallback(*a):
-			pass
-
-		self.dialog.addOkButton(callback=okCallback).addCancelButton(callback=cancelCallback)
-		self.assertEqual(self.dialog._getDefaultAction().callback, cancelCallback)
+		"""Test that when adding OK and Cancel buttons with default escape code, that the default action is cancel."""
+		self.dialog.addOkButton(callback=dummyCallback1).addCancelButton(callback=dummyCallback2)
+		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback2)
 
 	def test_defaultAction_defaultEscape_CancelOk(self):
-		def okCallback():
-			pass
-
-		def cancelCallback(*a):
-			pass
-
-		self.dialog.addCancelButton(callback=cancelCallback).addOkButton(callback=okCallback)
-		self.assertEqual(self.dialog._getDefaultAction().callback, cancelCallback)
+		"""Test that when adding cancel and ok buttons with default escape code, that the default action is cancel."""
+		self.dialog.addCancelButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
+		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback2)
 
 	def test_defaultAction_defaultEscape_OkClose(self):
-		def okCallback():
-			pass
-
-		def closeCallback(*a):
-			pass
-
-		self.dialog.addOkButton(callback=okCallback).addCloseButton(callback=closeCallback)
-		self.assertEqual(self.dialog._getDefaultAction().callback, okCallback)
+		"""Test that when adding OK and Close buttons with default escape code, that the default action is OK."""
+		self.dialog.addOkButton(callback=dummyCallback1).addCloseButton(callback=dummyCallback2)
+		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback1)
 
 	def test_defaultAction_defaultEscape_CloseOk(self):
-		def okCallback():
-			pass
-
-		def closeCallback(*a):
-			pass
-
-		self.dialog.addCloseButton(callback=closeCallback).addOkButton(callback=okCallback)
-		self.assertEqual(self.dialog._getDefaultAction().callback, okCallback)
+		"""Test that when adding Close and OK buttons with default escape code, that the default action is OK."""
+		self.dialog.addCloseButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
+		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback1)
