@@ -135,6 +135,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addOkCancelButtons(self):
+		"""Test adding OK and Cancel buttons to the dialog."""
 		self.dialog.addOkCancelButtons()
 		with self.subTest("Check button types"):
 			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
@@ -145,6 +146,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addYesNoButtons(self):
+		"""Test adding Yes and No buttons to the dialog."""
 		self.dialog.addYesNoButtons()
 		with self.subTest("Check button types"):
 			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
@@ -155,6 +157,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addYesNoCancelButtons(self):
+		"""Test adding Yes, No and Cancel buttons to the dialog."""
 		self.dialog.addYesNoCancelButtons()
 		with self.subTest("Check button types"):
 			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
@@ -166,6 +169,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addSaveNoCancelButtons(self):
+		"""Test adding Save, Don't save and Cancel buttons to the dialog."""
 		self.dialog.addSaveNoCancelButtons()
 		with self.subTest("Check button types"):
 			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
