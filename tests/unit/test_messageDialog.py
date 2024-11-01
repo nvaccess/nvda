@@ -57,73 +57,121 @@ class Test_MessageDialog_Buttons(MDTestBase):
 	def test_addOkButton(self):
 		"""Test adding an OK button to the dialog."""
 		self.dialog.addOkButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_OK])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_OK])
+		with self.subTest("Test has default action."):
+			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addCancelButton(self):
 		"""Test adding a Cancel button to the dialog."""
 		self.dialog.addCancelButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CANCEL])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CANCEL])
+		with self.subTest("Test has default action."):
+			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addYesButton(self):
 		"""Test adding a Yes button to the dialog."""
 		self.dialog.addYesButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_YES])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_YES])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addNoButton(self):
 		"""Test adding a No button to the dialog."""
 		self.dialog.addNoButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_NO])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_NO])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addSaveButton(self):
 		"""Test adding a Save button to the dialog."""
 		self.dialog.addSaveButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_SAVE])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_SAVE])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addApplyButton(self):
 		"""Test adding an Apply button to the dialog."""
 		self.dialog.addApplyButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_APPLY), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_APPLY])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_APPLY), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_APPLY])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addCloseButton(self):
 		"""Test adding a Close button to the dialog."""
 		self.dialog.addCloseButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CLOSE), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CLOSE])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CLOSE), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CLOSE])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addHelpButton(self):
 		"""Test adding a Help button to the dialog."""
 		self.dialog.addHelpButton()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_HELP), wx.Button)
-		self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_HELP])
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_HELP), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_HELP])
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addOkCancelButtons(self):
 		self.dialog.addOkCancelButtons()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_OK, wx.ID_CANCEL))
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_OK, wx.ID_CANCEL))
+		with self.subTest("Test has default action."):
+			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addYesNoButtons(self):
 		self.dialog.addYesNoButtons()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO))
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO))
+		with self.subTest("Test has default action."):
+			self.assertFalse(self.dialog.hasDefaultAction)
 
 	def test_addYesNoCancelButtons(self):
 		self.dialog.addYesNoCancelButtons()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO, wx.ID_CANCEL))
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO, wx.ID_CANCEL))
+		with self.subTest("Test has default action."):
+			self.assertTrue(self.dialog.hasDefaultAction)
 
 	def test_addSaveNoCancelButtons(self):
 		self.dialog.addSaveNoCancelButtons()
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_SAVE, wx.ID_NO, wx.ID_CANCEL))
+		with self.subTest("Check button types"):
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
+			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
+		with self.subTest("Test in main buttons"):
+			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_SAVE, wx.ID_NO, wx.ID_CANCEL))
+		with self.subTest("Test has default action."):
+			self.assertTrue(self.dialog.hasDefaultAction)

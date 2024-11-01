@@ -378,6 +378,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Whether or not the dialog is blocking"""
 		return self.IsModal() and self._defaultReturnCode is None
 
+	@property
+	def hasDefaultAction(self) -> bool:
+		escapeId = self.GetEscapeId()
+		return escapeId != MessageDialogEscapeCode.NONE and (
+			any(
+				command in (MessageDialogReturnCode.CANCEL, MessageDialogReturnCode.OK)
+				for command in self._commands
+			)
+			if escapeId == MessageDialogEscapeCode.DEFAULT
+			else True
+		)
+
 	# endregion
 
 	# region Public class methods
