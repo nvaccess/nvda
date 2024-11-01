@@ -1,5 +1,14 @@
 # What's New in NVDA
 
+## 2024.4.1
+
+This patch release includes a fix for Outlook on certain Windows 10 systems.
+It also includes a fix for saving speech symbol dictionaries.
+
+### Bug fixes
+
+* Fixed bug where speech dictionaries were not saved and the dialog would not be closed. (#17345)
+
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
