@@ -23,7 +23,7 @@ from logHandler import log
 
 
 # TODO: Change to type statement when Python 3.12 or later is in use.
-MessageDialogCallback: TypeAlias = Callable[[wx.CommandEvent], Any]
+MessageDialogCallback: TypeAlias = Callable[[], Any]
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -530,19 +530,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def _onButton(self, evt: wx.CommandEvent):
 		id = evt.GetId()
 		log.debug(f"Got button event on {id=}")
-		command = self._commands.get(id)
-		if command is None:
-			return
+		try:
+			self._execute_command(id)
+		except KeyError:
+			log.debug(f"No command registered for {id=}.")
+
+	def _execute_command(self, id: int):
+		command = self._commands[id]
 		callback, close = command
 		if callback is not None:
 			if close:
 				self.Hide()
-			callback(evt)
+			callback()
 		if close:
-			# closeEvent = wx.PyEvent(0, wx.EVT_CLOSE.typeId)
-			# closeEvent.SetEventObject(evt.GetEventObject())
 			self.SetReturnCode(id)
-			# self.GetEventHandler().QueueEvent(closeEvent)
 			self.Close()
 
 	# endregion
