@@ -443,16 +443,48 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
-	@property
-	def _defaultAction(self) -> MessageDialogCallback | None:
-		if (defaultReturnCode := self._defaultReturnCode) is not None:
+	def _getDefaultAction(self) -> _MessageDialogCommand | None:
+		escapeId = self.GetEscapeId()
+		if escapeId == MessageDialogEscapeCode.NONE:
+			return None
+		elif escapeId == MessageDialogEscapeCode.DEFAULT:
+			return self._commands.get(
+				MessageDialogReturnCode.CANCEL,
+				self._commands.get(self.GetAffirmativeId(), None),
+			)
+		else:
 			try:
-				return self._commands[defaultReturnCode]
+				return self._commands[escapeId]
 			except KeyError:
 				raise RuntimeError(
-					f"Default return code {defaultReturnCode} is not associated with a callback",
+					f"Escape ID {escapeId} is not associated with a command",
 				)
-		return None
+
+	def _getDefaultActionOrFallback(self) -> _MessageDialogCommand:
+		# Try using the user-specified default action.
+		try:
+			if (defaultAction := self._getDefaultAction()) is not None:
+				return defaultAction
+		except KeyError:
+			log.exception("Default action was not in commands. This indicates a logic error.")
+
+		# Default action is unavailable. Try using the default focus instead.
+		try:
+			if (defaultFocus := self.GetDefaultItem()) is not None:
+				return self._commands[defaultFocus.getId()]
+		except KeyError:
+			log.exception("Default focus was not in commands. This indicates a logic error.")
+
+		# Default focus is unavailable. Try using the first button instead.
+		try:
+			return next(iter(self._commands.values()))
+		except StopIteration:
+			log.exception(
+				"No commands have been registered. If the dialog is shown, this indicates a logic error.",
+			)
+
+		# No commands have been registered. Create one of our own.
+		return _MessageDialogCommand()
 
 	def __setIcon(self, type: MessageDialogType) -> None:
 		if (iconID := type._wxIconId) is not None:
