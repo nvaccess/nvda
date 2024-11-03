@@ -443,18 +443,25 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
-	def _getDefaultAction(self) -> _MessageDialogCommand | None:
+	def _getDefaultAction(self) -> tuple[int, _MessageDialogCommand | None]:
 		escapeId = self.GetEscapeId()
 		if escapeId == MessageDialogEscapeCode.NONE:
-			return None
+			return escapeId, None
 		elif escapeId == MessageDialogEscapeCode.DEFAULT:
-			return self._commands.get(
-				MessageDialogReturnCode.CANCEL,
-				self._commands.get(self.GetAffirmativeId(), None),
-			)
+			affirmativeAction: _MessageDialogCommand | None = None
+			affirmativeId: int = self.GetAffirmativeId()
+			for id, command in self._commands.items():
+				if id == MessageDialogReturnCode.CANCEL:
+					return id, command
+				elif id == affirmativeId:
+					affirmativeAction = command
+			if affirmativeAction is None:
+				return MessageDialogEscapeCode.NONE, None
+			else:
+				return affirmativeId, affirmativeAction
 		else:
 			try:
-				return self._commands[escapeId]
+				return escapeId, self._commands[escapeId]
 			except KeyError:
 				raise RuntimeError(
 					f"Escape ID {escapeId} is not associated with a command",
@@ -513,11 +520,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self._instances.remove(self)
-			self.EndModal()
+			self.EndModal(self.GetReturnCode())
 			self.Destroy()
 			return
 		if self.GetReturnCode() == 0:
 			# No button has been pressed, so this must be a close event from elsewhere.
+			self._execute_command(self._getDefaultAction())
 			pass
 		self.Hide()
 		if self.IsModal():
@@ -535,8 +543,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		except KeyError:
 			log.debug(f"No command registered for {id=}.")
 
-	def _execute_command(self, id: int):
-		command = self._commands[id]
+	def _execute_command(self, id: int, command: _MessageDialogCommand | None = None):
+		if command is None:
+			command = self._commands[id]
 		callback, close = command
 		if callback is not None:
 			if close:

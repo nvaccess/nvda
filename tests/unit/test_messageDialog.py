@@ -9,7 +9,15 @@ import unittest
 from unittest.mock import MagicMock, patch
 
 import wx
-from gui.messageDialog import MessageDialog, MessageDialogType
+from gui.messageDialog import (
+	MessageDialog,
+	MessageDialogEscapeCode,
+	MessageDialogReturnCode,
+	MessageDialogType,
+)
+
+
+NO_CALLBACK = (MessageDialogEscapeCode.NONE, None)
 
 
 def dummyCallback1(*a):
@@ -72,7 +80,9 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertTrue(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNotNone(self.dialog._getDefaultAction())
+			id, callback = self.dialog._getDefaultAction()
+			self.assertEqual(id, MessageDialogReturnCode.OK)
+			self.assertIsNotNone(callback)
 
 	def test_addCancelButton(self):
 		"""Test adding a Cancel button to the dialog."""
@@ -84,7 +94,9 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertTrue(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNotNone(self.dialog._getDefaultAction())
+			id, callback = self.dialog._getDefaultAction()
+			self.assertEqual(id, MessageDialogReturnCode.CANCEL)
+			self.assertIsNotNone(callback)
 
 	def test_addYesButton(self):
 		"""Test adding a Yes button to the dialog."""
@@ -96,7 +108,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addNoButton(self):
 		"""Test adding a No button to the dialog."""
@@ -108,7 +120,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addSaveButton(self):
 		"""Test adding a Save button to the dialog."""
@@ -120,7 +132,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addApplyButton(self):
 		"""Test adding an Apply button to the dialog."""
@@ -132,7 +144,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addCloseButton(self):
 		"""Test adding a Close button to the dialog."""
@@ -144,7 +156,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addHelpButton(self):
 		"""Test adding a Help button to the dialog."""
@@ -156,7 +168,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addOkCancelButtons(self):
 		"""Test adding OK and Cancel buttons to the dialog."""
@@ -182,7 +194,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Test has default action."):
 			self.assertFalse(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
-			self.assertIsNone(self.dialog._getDefaultAction())
+			self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
 
 	def test_addYesNoCancelButtons(self):
 		"""Test adding Yes, No and Cancel buttons to the dialog."""
@@ -217,19 +229,27 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_defaultAction_defaultEscape_OkCancel(self):
 		"""Test that when adding OK and Cancel buttons with default escape code, that the default action is cancel."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCancelButton(callback=dummyCallback2)
-		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback2)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.CANCEL)
+		self.assertEqual(command.callback, dummyCallback2)
 
 	def test_defaultAction_defaultEscape_CancelOk(self):
 		"""Test that when adding cancel and ok buttons with default escape code, that the default action is cancel."""
 		self.dialog.addCancelButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
-		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback2)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.CANCEL)
+		self.assertEqual(command.callback, dummyCallback2)
 
 	def test_defaultAction_defaultEscape_OkClose(self):
 		"""Test that when adding OK and Close buttons with default escape code, that the default action is OK."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCloseButton(callback=dummyCallback2)
-		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback1)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.OK)
+		self.assertEqual(command.callback, dummyCallback1)
 
 	def test_defaultAction_defaultEscape_CloseOk(self):
 		"""Test that when adding Close and OK buttons with default escape code, that the default action is OK."""
 		self.dialog.addCloseButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
-		self.assertEqual(self.dialog._getDefaultAction().callback, dummyCallback1)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.OK)
+		self.assertEqual(command.callback, dummyCallback1)
