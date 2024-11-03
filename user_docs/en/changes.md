@@ -2,7 +2,6 @@
 
 ## 2024.4.1
 
-This patch release includes a fix for Outlook on certain Windows 10 systems.
 It also includes a fix for saving speech symbol dictionaries.
 
 ### Bug fixes
