@@ -467,31 +467,33 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 					f"Escape ID {escapeId} is not associated with a command",
 				)
 
-	def _getDefaultActionOrFallback(self) -> _MessageDialogCommand:
+	def _getDefaultActionOrFallback(self) -> tuple[int, _MessageDialogCommand]:
 		# Try using the user-specified default action.
 		try:
-			if (defaultAction := self._getDefaultAction()) is not None:
-				return defaultAction
+			id, action = self._getDefaultAction()
+			if action is not None:
+				return id, action
 		except KeyError:
 			log.exception("Default action was not in commands. This indicates a logic error.")
 
 		# Default action is unavailable. Try using the default focus instead.
 		try:
 			if (defaultFocus := self.GetDefaultItem()) is not None:
-				return self._commands[defaultFocus.getId()]
+				id = defaultFocus.getId()
+				return id, self._commands[id]
 		except KeyError:
 			log.exception("Default focus was not in commands. This indicates a logic error.")
 
 		# Default focus is unavailable. Try using the first button instead.
 		try:
-			return next(iter(self._commands.values()))
+			return next(iter(self._commands.items()))
 		except StopIteration:
 			log.exception(
 				"No commands have been registered. If the dialog is shown, this indicates a logic error.",
 			)
 
 		# No commands have been registered. Create one of our own.
-		return _MessageDialogCommand()
+		return MessageDialogEscapeCode.NONE, _MessageDialogCommand()
 
 	def __setIcon(self, type: MessageDialogType) -> None:
 		if (iconID := type._wxIconId) is not None:
@@ -519,6 +521,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug(f"Got {'vetoable' if evt.CanVeto() else 'non-vetoable'} close event.")
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
+			self._execute_command(self._getDefaultActionOrFallback())
 			self._instances.remove(self)
 			self.EndModal(self.GetReturnCode())
 			self.Destroy()
@@ -543,10 +546,17 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		except KeyError:
 			log.debug(f"No command registered for {id=}.")
 
-	def _execute_command(self, id: int, command: _MessageDialogCommand | None = None):
+	def _execute_command(
+		self,
+		id: int,
+		command: _MessageDialogCommand | None = None,
+		*,
+		_canCallClose: bool = True,
+	):
 		if command is None:
 			command = self._commands[id]
 		callback, close = command
+		close &= _canCallClose
 		if callback is not None:
 			if close:
 				self.Hide()
