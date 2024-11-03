@@ -88,7 +88,7 @@ def _updateAppsVolumeImpl(
 	state: AppsVolumeAdjusterFlag,
 ):
 	global _activeCallback
-	if state == AppsVolumeAdjusterFlag.DISABLED:
+	if state.calculated() == AppsVolumeAdjusterFlag.DISABLED:
 		newCallback = DummyAudioSessionCallback()
 		runTerminators = True
 	else:
