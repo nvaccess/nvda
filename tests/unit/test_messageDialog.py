@@ -43,12 +43,12 @@ class Test_MessageDialog_Icons(MDTestBase):
 	def test_setIcon_with_type_with_icon(self, mocked_GetIconBundle: MagicMock):
 		mocked_GetIconBundle.return_value = wx.IconBundle()
 		type = MessageDialogType.ERROR
-		self.dialog._MessageDialog__setIcon(type)
+		self.dialog._setIcon(type)
 		mocked_GetIconBundle.assert_called_once()
 
 	def test_setIcon_with_type_without_icon(self, mocked_GetIconBundle: MagicMock):
 		type = MessageDialogType.STANDARD
-		self.dialog._MessageDialog__setIcon(type)
+		self.dialog._setIcon(type)
 		mocked_GetIconBundle.assert_not_called()
 
 
@@ -58,14 +58,14 @@ class Test_MessageDialog_Sounds(MDTestBase):
 
 	def test_playSound_with_type_with_Sound(self, mocked_MessageBeep: MagicMock):
 		type = MessageDialogType.ERROR
-		self.dialog._MessageDialog__setSound(type)
-		self.dialog._MessageDialog__playSound()
+		self.dialog._setSound(type)
+		self.dialog._playSound()
 		mocked_MessageBeep.assert_called_once()
 
 	def test_playSound_with_type_without_Sound(self, mocked_MessageBeep: MagicMock):
 		type = MessageDialogType.STANDARD
-		self.dialog._MessageDialog__setSound(type)
-		self.dialog._MessageDialog__playSound()
+		self.dialog._setSound(type)
+		self.dialog._playSound()
 		mocked_MessageBeep.assert_not_called()
 
 

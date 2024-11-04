@@ -194,12 +194,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	):
 		self.helpId = helpId
 		super().__init__(parent, title=title)
-		self.__isLayoutFullyRealized = False
+		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _MessageDialogCommand] = {}
 		self._defaultReturnCode: MessageDialogReturnCode | None = None
 
-		self.__setIcon(dialogType)
-		self.__setSound(dialogType)
+		self._setIcon(dialogType)
+		self._setSound(dialogType)
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
 		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
@@ -207,8 +207,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-		self.__contentsSizer = contentsSizer
-		self.__mainSizer = mainSizer
+		self._contentsSizer = contentsSizer
+		self._mainSizer = mainSizer
 
 		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
 		text = wx.StaticText(self)
@@ -219,7 +219,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		contentsSizer.addDialogDismissButtons(buttonHelper)
-		self.__buttonHelper = buttonHelper
+		self._buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
 		if buttons is not None:
 			self.addButtons(*buttons)
@@ -263,7 +263,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			If multiple buttons with `default=True` are added, the last one added will be the default button.
 		:return: The dialog instance.
 		"""
-		button = self.__buttonHelper.addButton(*args, **kwargs)
+		button = self._buttonHelper.addButton(*args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
@@ -276,7 +276,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.SetDefaultItem(button)
 		if default_action:
 			self.setDefaultAction(buttonId)
-		self.__isLayoutFullyRealized = False
+		self._isLayoutFullyRealized = False
 		return self
 
 	@addButton.register
@@ -452,13 +452,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	# region Internal API
 	def _realize_layout(self) -> None:
-		if self.__isLayoutFullyRealized:
+		if self._isLayoutFullyRealized:
 			return
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
-		self.__mainSizer.Fit(self)
-		self.__isLayoutFullyRealized = True
+		self._mainSizer.Fit(self)
+		self._isLayoutFullyRealized = True
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
@@ -528,24 +528,24 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			command = command._replace(closes_dialog=True)
 		return id, command
 
-	def __setIcon(self, type: MessageDialogType) -> None:
+	def _setIcon(self, type: MessageDialogType) -> None:
 		if (iconID := type._wxIconId) is not None:
 			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
 			self.SetIcons(icon)
 
-	def __setSound(self, type: MessageDialogType) -> None:
-		self.__soundID = type._windowsSoundId
+	def _setSound(self, type: MessageDialogType) -> None:
+		self._soundID = type._windowsSoundId
 
-	def __playSound(self) -> None:
-		if self.__soundID is not None:
-			winsound.MessageBeep(self.__soundID)
+	def _playSound(self) -> None:
+		if self._soundID is not None:
+			winsound.MessageBeep(self._soundID)
 
 	def _onDialogActivated(self, evt: wx.ActivateEvent):
 		evt.Skip()
 
 	def _onShowEvt(self, evt: wx.ShowEvent):
 		if evt.IsShown():
-			self.__playSound()
+			self._playSound()
 			if (defaultItem := self.GetDefaultItem()) is not None:
 				defaultItem.SetFocus()
 		evt.Skip()
