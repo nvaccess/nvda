@@ -60,6 +60,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
 * In Word or Outlook, when using legacy object model, the command to report the destination URL of a link does not report any longer "Not a link" when there is one to report. (#17292, @CyrilleB79)
+* NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
 
 ### Changes for Developers
 
