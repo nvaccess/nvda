@@ -783,7 +783,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			exactly 1 character.
 			A good illustration of this is in Microsoft Word with UIA enabled always,
 			the first character of a bullet list item would be represented by three pythonic codepoint characters:
-			* Bullet character "Ã¢â‚¬Â¢"
+			* Bullet character "•"
 			* Tab character \t
 			* And the first character of of list item per se.
 
