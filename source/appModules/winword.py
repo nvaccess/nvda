@@ -54,7 +54,10 @@ class WinwordWordDocument(WordDocument):
 	def _get_description(self) -> str:
 		try:
 			curView = self.WinwordWindowObject.view.Type
-			return f"{ViewType(curView).displayString} {super()._get_description()}"
+			description = super().description
+			if isinstance(description, str) and not description.isspace():
+				return f"{ViewType(curView).displayString} {description}"
+			return ViewType(curView).displayString
 		except AttributeError:
 			return super()._get_description()
 
