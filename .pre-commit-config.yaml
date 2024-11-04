@@ -31,7 +31,7 @@ repos:
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v5.0.0
   hooks:
     # Prevents commits to certain branches
     - id: no-commit-to-branch
@@ -97,7 +97,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.6.3
+  rev: v0.7.2
   hooks:
     - id: ruff
       name: lint with ruff
