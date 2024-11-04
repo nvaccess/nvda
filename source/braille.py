@@ -1659,6 +1659,7 @@ class TextInfoRegion(Region):
 				return
 		dest.collapse()
 		self._setCursor(dest)
+		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
 
 	def previousLine(self, start=False):
 		dest = self._readingInfo.copy()
@@ -1678,10 +1679,12 @@ class TextInfoRegion(Region):
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_LAST)
 					dest.expand(unit)
-			else:  # no page turn support
+			else:
+				# no page turn support
 				return
 		dest.collapse()
 		self._setCursor(dest)
+		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
 
 
 class CursorManagerRegion(TextInfoRegion):
@@ -3846,3 +3849,22 @@ def _speakOnRouting(info: textInfos.TextInfo):
 
 	info.expand(textInfos.UNIT_CHARACTER)
 	spellTextInfo(info)
+
+
+def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None:
+	"""Speaks the reading unit after navigating by it with braille.
+
+	This only has an effect if the user has enabled "Speak when navigating by line or paragraph" in braille settings.
+
+	:param info: The TextInfo at the cursor position after navigating.
+	:param readingUnit: The reading unit to expand TextInfo.
+	"""
+	if not config.conf["braille"]["speakOnNavigatingByUnit"]:
+		return
+	# Import late to avoid circular import.
+	from speech.speech import cancelSpeech, speakTextInfo
+
+	copy = info.copy()
+	copy.expand(readingUnit)
+	cancelSpeech()
+	speakTextInfo(copy, unit=readingUnit, reason=controlTypes.OutputReason.CARET)

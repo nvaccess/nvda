@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt
+# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 """Framework for accessing text content in widgets.
 The core component of this framework is the L{TextInfo} class.
@@ -11,6 +11,7 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 
 from abc import abstractmethod
 from enum import Enum
+from dataclasses import dataclass
 import weakref
 import re
 import typing
@@ -336,6 +337,14 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	import speech.types
 
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
+
+
+@dataclass
+class _Link:
+	"""Class to store information on a link in text."""
+
+	displayText: str | None
+	destination: str
 
 
 class TextInfo(baseObject.AutoPropertyObject):
@@ -703,6 +712,25 @@ class TextInfo(baseObject.AutoPropertyObject):
 		winUser.setCursorPos(p.x, p.y)
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX, oldY)
+
+	def _getLinkDataAtCaretPosition(self) -> _Link | None:
+		self.expand(UNIT_CHARACTER)
+		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
+		if obj.role == controlTypes.role.Role.GRAPHIC and (
+			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
+		):
+			# In Firefox, graphics with a parent link also expose the parents link href value.
+			# In Chromium, the link href value must be fetched from the parent object. (#14779)
+			obj = obj.parent
+		if (
+			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
+			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
+		):
+			return _Link(
+				displayText=obj.name,
+				destination=obj.value,
+			)
+		return None
 
 	def getMathMl(self, field):
 		"""Get MathML for a math control field.
