@@ -3655,6 +3655,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
+		description=_("Toggles on and off speaking when navigating by lines or paragraph with braille"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_toggleSpeakingOnNavigatingByUnit(self, gesture: inputCore.InputGesture):
+		toggleBooleanValue(
+			configSection="braille",
+			configKey="speakOnNavigatingByUnit",
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
+		)
+
+	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE,
