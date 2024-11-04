@@ -23,7 +23,7 @@ from logHandler import log
 
 
 # TODO: Change to type statement when Python 3.12 or later is in use.
-MessageDialogCallback: TypeAlias = Callable[[], Any]
+MessageDialogCallback_T: TypeAlias = Callable[[], Any]
 
 
 class MessageDialogReturnCode(IntEnum):
@@ -50,7 +50,9 @@ class MessageDialogEscapeCode(IntEnum):
 	NONE = wx.ID_NONE
 	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
 	DEFAULT = wx.ID_ANY
-	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog. If no Cancel button is present, the affirmative button should be used."""
+	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
+	If no Cancel button is present, the affirmative button should be used.
+	"""
 
 
 class MessageDialogType(Enum):
@@ -95,31 +97,50 @@ class MessageDialogButton(NamedTuple):
 	"""A button to add to a message dialog."""
 
 	id: MessageDialogReturnCode
-	"""The ID to use for this button."""
+	"""The ID to use for this button.
+
+	This will be returned after showing the dialog modally.
+	It is also used to modify the button later.
+	"""
 
 	label: str
 	"""The label to display on the button."""
 
-	callback: MessageDialogCallback | None = None
+	callback: MessageDialogCallback_T | None = None
 	"""The callback to call when the button is clicked."""
 
 	default_focus: bool = False
-	"""Whether this button should be the default button."""
+	"""Whether this button should explicitly be the default focused button.
+
+	:note: This only overrides the default focus.
+	If no buttons have this property, the first button will be the default focus.
+	"""
 
 	default_action: bool = False
-	"""Whether this button is the default action. That is, whether pressing escape, the system close button, or programatically closing the dialog, should simulate pressing this button."""
+	"""Whether this button is the default action.
+
+	The default action is called when the user presses escape, the title bar close button, or the system menu close item.
+	It is also called when programatically closing the dialog, such as when shutting down NVDA.
+
+	:note: This only sets whether to override the default action.
+		MessageDialogEscapeCode.DEFAULT may still result in this button being the default action.
+	"""
 
 	closes_dialog: bool = True
-	"""Whether this button should close the dialog when clicked."""
+	"""Whether this button should close the dialog when clicked.
+
+	:note: Buttons with default_action=True and closes_dialog=False are not supported.
+		See the documentation of c{MessageDialog} for information on how these buttons are handled.
+	"""
 
 
 class DefaultMessageDialogButton(MessageDialogButton, Enum):
 	"""Default buttons for message dialogs."""
 
 	# Translators: An ok button on a message dialog.
-	OK = MessageDialogButton(id=MessageDialogReturnCode.OK, label=_("OK"), default_focus=True)
+	OK = MessageDialogButton(id=MessageDialogReturnCode.OK, label=_("OK"))
 	# Translators: A yes button on a message dialog.
-	YES = MessageDialogButton(id=MessageDialogReturnCode.YES, label=_("&Yes"), default_focus=True)
+	YES = MessageDialogButton(id=MessageDialogReturnCode.YES, label=_("&Yes"))
 	# Translators: A no button on a message dialog.
 	NO = MessageDialogButton(id=MessageDialogReturnCode.NO, label=_("&No"))
 	# Translators: A cancel button on a message dialog.
@@ -127,11 +148,11 @@ class DefaultMessageDialogButton(MessageDialogButton, Enum):
 	# Translators: A save button on a message dialog.
 	SAVE = MessageDialogButton(id=MessageDialogReturnCode.SAVE, label=_("&Save"))
 	# Translators: An apply button on a message dialog.
-	APPLY = MessageDialogButton(id=MessageDialogReturnCode.APPLY, label=_("&Apply"))
+	APPLY = MessageDialogButton(id=MessageDialogReturnCode.APPLY, label=_("&Apply"), closes_dialog=False)
 	# Translators: A close button on a message dialog.
 	CLOSE = MessageDialogButton(id=MessageDialogReturnCode.CLOSE, label=_("Close"))
 	# Translators: A help button on a message dialog.
-	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"))
+	HELP = MessageDialogButton(id=MessageDialogReturnCode.HELP, label=_("Help"), closes_dialog=False)
 
 
 class DefaultMessageDialogButtons(tuple[DefaultMessageDialogButton], Enum):
@@ -159,7 +180,7 @@ class DefaultMessageDialogButtons(tuple[DefaultMessageDialogButton], Enum):
 class _MessageDialogCommand(NamedTuple):
 	"""Internal representation of a command for a message dialog."""
 
-	callback: MessageDialogCallback | None = None
+	callback: MessageDialogCallback_T | None = None
 	"""The callback function to be executed. Defaults to None."""
 	closes_dialog: bool = True
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
@@ -196,7 +217,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		super().__init__(parent, title=title)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _MessageDialogCommand] = {}
-		self._defaultReturnCode: MessageDialogReturnCode | None = None
 
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
@@ -348,13 +368,34 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addSaveNoCancelButtons.__doc__ = "Add Save, Don't save and Cancel buttons to the dialog."
 
 	def setDefaultFocus(self, id: MessageDialogReturnCode) -> Self:
+		"""Set the button to be focused when the dialog first opens.
+
+		:param id: The id of the button to set as default.
+		:raises KeyError: If no button with id exists.
+		:return: The updated dialog.
+		"""
 		if (win := self.FindWindowById(id)) is not None:
 			self.SetDefaultItem(win)
 		else:
-			raise ValueError(f"Unable to find button with {id=}.")
+			raise KeyError(f"Unable to find button with {id=}.")
 		return self
 
 	def SetEscapeId(self, id: MessageDialogReturnCode | MessageDialogEscapeCode) -> Self:
+		"""Set the action to take when closing the dialog by any means other than a button in the dialog.
+
+		:param id: The ID of the action to take.
+			This should be the ID of the button that the user can press to explicitly perform this action.
+			The action should have closes_dialog=True.
+
+			The following special values are also supported:
+				* MessageDialogEscapeCode.NONE: If the dialog should only be closable via presses of internal buttons.
+				* MessageDialogEscapeCode.DEFAULT: If the cancel or affirmative (usually OK) button should be used.
+					If no Cancel or affirmative button is present, most attempts to close the dialog by means other than via buttons in the dialog wil have no effect.
+
+		:raises KeyError: If no action with the given id has been registered.
+		:raises ValueError: If the action with the given id does not close the dialog.
+		:return: The updated dialog instance.
+		"""
 		if id not in (MessageDialogEscapeCode.DEFAULT, MessageDialogEscapeCode.NONE):
 			if id not in self._commands:
 				raise KeyError(f"No command registered for {id=}.")
@@ -364,6 +405,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return self
 
 	def setDefaultAction(self, id: MessageDialogReturnCode | MessageDialogEscapeCode) -> Self:
+		"""See MessageDialog.SetEscapeId."""
 		return self.SetEscapeId(id)
 
 	def Show(self) -> bool:
@@ -399,10 +441,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	@property
 	def isBlocking(self) -> bool:
 		"""Whether or not the dialog is blocking"""
-		return self.IsModal() and self._defaultReturnCode is None
+		return self.IsModal() and self.hasDefaultAction
 
 	@property
 	def hasDefaultAction(self) -> bool:
+		"""Whether the dialog has a valid default action."""
 		escapeId = self.GetEscapeId()
 		return escapeId != MessageDialogEscapeCode.NONE and (
 			any(
@@ -467,6 +510,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
 	def _getDefaultAction(self) -> tuple[int, _MessageDialogCommand | None]:
+		"""Get the default action of this dialog.
+
+		:raises RuntimeError: If attempting to get the default command from commands fails.
+		:return: The id and command of the default action.
+		"""
 		escapeId = self.GetEscapeId()
 		if escapeId == MessageDialogEscapeCode.NONE:
 			return escapeId, None
@@ -491,6 +539,21 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				)
 
 	def _getDefaultActionOrFallback(self) -> tuple[int, _MessageDialogCommand]:
+		"""Get a command that is guaranteed to close this dialog.
+
+		Commands are returned in the following order of preference:
+
+		1. The developer-set default action.
+		2. The developer-set default focus.
+		3. The first button in the dialog explicitly set to close the dialog.
+		4. The first button in the dialog, regardless of whether it closes the dialog.
+		5. A new action, with id=MessageDialogEscapeCode.NONE and no callback.
+
+		In all cases, if the command has `closes_dialog=False`, this will be overridden to `True` in the returned copy.
+
+		:return: Id and command of the default command.
+		"""
+
 		def getAction() -> tuple[int, _MessageDialogCommand]:
 			# Try using the user-specified default action.
 			try:
@@ -533,14 +596,17 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return id, command
 
 	def _setIcon(self, type: MessageDialogType) -> None:
+		"""Set the icon to be displayed on the dialog."""
 		if (iconID := type._wxIconId) is not None:
 			icon = wx.ArtProvider.GetIconBundle(iconID, client=wx.ART_MESSAGE_BOX)
 			self.SetIcons(icon)
 
 	def _setSound(self, type: MessageDialogType) -> None:
+		"""Set the sound to be played when the dialog is shown."""
 		self._soundID = type._windowsSoundId
 
 	def _playSound(self) -> None:
+		"""Play the sound set for this dialog."""
 		if self._soundID is not None:
 			winsound.MessageBeep(self._soundID)
 
@@ -595,6 +661,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		*,
 		_canCallClose: bool = True,
 	):
+		"""Execute a command on this dialog.
+
+		:param id: ID of the command to execute.
+		:param command: Command to execute, defaults to None
+			If None, the command to execute will be looked up in the dialog's registered commands.
+		:param _canCallClose: Whether or not to close the dialog if the command says to, defaults to True
+			Set to False when calling from a close handler.
+		"""
 		if command is None:
 			command = self._commands[id]
 		callback, close = command
