@@ -273,7 +273,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			closes_dialog=closes_dialog or default_action,
 		)
 		if default_focus:
-			button.SetDefault()
+			self.SetDefaultItem(button)
 		if default_action:
 			self.SetEscapeId(buttonId)
 		self.__isLayoutFullyRealized = False
@@ -342,6 +342,25 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addYesNoCancelButtons.__doc__ = "Add Yes, No and Cancel buttons to the dialog."
 	addSaveNoCancelButtons = partialmethod(addButtons, DefaultMessageDialogButtons.SAVE_NO_CANCEL)
 	addSaveNoCancelButtons.__doc__ = "Add Save, Don't save and Cancel buttons to the dialog."
+
+	def setDefaultFocus(self, id: MessageDialogReturnCode) -> Self:
+		if (win := self.FindWindowById(id)) is not None:
+			self.SetDefaultItem(win)
+		else:
+			raise ValueError(f"Unable to find button with {id=}.")
+		return self
+
+	def SetEscapeId(self, id: MessageDialogReturnCode | MessageDialogEscapeCode) -> Self:
+		if id not in (MessageDialogEscapeCode.DEFAULT, MessageDialogEscapeCode.NONE):
+			if id not in self._commands:
+				raise KeyError(f"No command registered for {id=}.")
+		if not self._commands[id].closes_dialog:
+			raise ValueError("Default actions that do not close the dialog are not supported.")
+		super().SetEscapeId(id)
+		return self
+
+	def setDefaultAction(self, id: MessageDialogReturnCode | MessageDialogEscapeCode) -> Self:
+		return self.SetEscapeId(id)
 
 	def Show(self) -> bool:
 		"""Show a non-blocking dialog.
@@ -479,7 +498,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# Default action is unavailable. Try using the default focus instead.
 		try:
 			if (defaultFocus := self.GetDefaultItem()) is not None:
-				id = defaultFocus.getId()
+				id = defaultFocus.GetId()
 				return id, self._commands[id]
 		except KeyError:
 			log.exception("Default focus was not in commands. This indicates a logic error.")

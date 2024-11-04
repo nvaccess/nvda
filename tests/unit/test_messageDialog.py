@@ -230,26 +230,100 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		"""Test that when adding OK and Cancel buttons with default escape code, that the default action is cancel."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCancelButton(callback=dummyCallback2)
 		id, command = self.dialog._getDefaultAction()
-		self.assertEqual(id, MessageDialogReturnCode.CANCEL)
-		self.assertEqual(command.callback, dummyCallback2)
+		with self.subTest("Test getting the default action."):
+			self.assertEqual(id, MessageDialogReturnCode.CANCEL)
+			self.assertEqual(command.callback, dummyCallback2)
+		with self.subTest(
+			"Test getting the default action or fallback returns the same as getting the default action.",
+		):
+			self.assertEqual((id, command), self.dialog._getDefaultActionOrFallback())
 
 	def test_defaultAction_defaultEscape_CancelOk(self):
 		"""Test that when adding cancel and ok buttons with default escape code, that the default action is cancel."""
 		self.dialog.addCancelButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		id, command = self.dialog._getDefaultAction()
-		self.assertEqual(id, MessageDialogReturnCode.CANCEL)
-		self.assertEqual(command.callback, dummyCallback2)
+		with self.subTest("Test getting the default action."):
+			self.assertEqual(id, MessageDialogReturnCode.CANCEL)
+			self.assertEqual(command.callback, dummyCallback2)
+		with self.subTest(
+			"Test getting the default action or fallback returns the same as getting the default action.",
+		):
+			self.assertEqual((id, command), self.dialog._getDefaultActionOrFallback())
 
 	def test_defaultAction_defaultEscape_OkClose(self):
 		"""Test that when adding OK and Close buttons with default escape code, that the default action is OK."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCloseButton(callback=dummyCallback2)
 		id, command = self.dialog._getDefaultAction()
-		self.assertEqual(id, MessageDialogReturnCode.OK)
-		self.assertEqual(command.callback, dummyCallback1)
+		with self.subTest("Test getting the default action."):
+			self.assertEqual(id, MessageDialogReturnCode.OK)
+			self.assertEqual(command.callback, dummyCallback1)
+		with self.subTest(
+			"Test getting the default action or fallback returns the same as getting the default action.",
+		):
+			self.assertEqual((id, command), self.dialog._getDefaultActionOrFallback())
 
 	def test_defaultAction_defaultEscape_CloseOk(self):
 		"""Test that when adding Close and OK buttons with default escape code, that the default action is OK."""
 		self.dialog.addCloseButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		id, command = self.dialog._getDefaultAction()
-		self.assertEqual(id, MessageDialogReturnCode.OK)
-		self.assertEqual(command.callback, dummyCallback1)
+		with self.subTest("Test getting the default action."):
+			self.assertEqual(id, MessageDialogReturnCode.OK)
+			self.assertEqual(command.callback, dummyCallback1)
+		with self.subTest(
+			"Test getting the default action or fallback returns the same as getting the default action.",
+		):
+			self.assertEqual((id, command), self.dialog._getDefaultActionOrFallback())
+
+	def test_setDefaultAction_existant_action(self):
+		self.dialog.addYesNoButtons()
+		self.dialog.setDefaultAction(MessageDialogReturnCode.YES)
+		id, command = self.dialog._getDefaultAction()
+		with self.subTest("Test getting the default action."):
+			self.assertEqual(id, MessageDialogReturnCode.YES)
+			self.assertIsNone(command.callback)
+		with self.subTest(
+			"Test getting the default action or fallback returns the same as getting the default action.",
+		):
+			self.assertEqual((id, command), self.dialog._getDefaultActionOrFallback())
+
+	def test_setDefaultAction_nonexistant_action(self):
+		self.dialog.addYesNoButtons()
+		with self.assertRaises(KeyError):
+			self.dialog.setDefaultAction(MessageDialogReturnCode.APPLY)
+		self.assertEqual(self.dialog._getDefaultAction(), NO_CALLBACK)
+
+	def test_setDefaultAction_nonclosing_action(self):
+		self.dialog.addOkButton().addApplyButton(closes_dialog=False)
+		with self.assertRaises(ValueError):
+			self.dialog.setDefaultAction(MessageDialogReturnCode.APPLY)
+
+	def test_getDefaultActionOrFallback_no_controls(self):
+		id, command = self.dialog._getDefaultActionOrFallback()
+		self.assertEqual(id, MessageDialogEscapeCode.NONE)
+		self.assertIsNotNone(command)
+		self.assertEqual(command.closes_dialog, True)
+
+	def test_getDefaultActionOrFallback_no_defaultFocus(self):
+		self.dialog.addApplyButton().addCloseButton()
+		self.assertIsNone(self.dialog.GetDefaultItem())
+		id, command = self.dialog._getDefaultActionOrFallback()
+		self.assertEqual(id, MessageDialogReturnCode.APPLY)
+		self.assertIsNotNone(command)
+		self.assertEqual(command.closes_dialog, True)
+
+	def test_getDefaultActionOrFallback_no_defaultAction(self):
+		self.dialog.addApplyButton().addCloseButton()
+		self.dialog.setDefaultFocus(MessageDialogReturnCode.CLOSE)
+		self.assertEqual(self.dialog.GetDefaultItem().GetId(), MessageDialogReturnCode.CLOSE)
+		id, command = self.dialog._getDefaultActionOrFallback()
+		self.assertEqual(id, MessageDialogReturnCode.CLOSE)
+		self.assertIsNotNone(command)
+		self.assertEqual(command.closes_dialog, True)
+
+	def test_getDefaultActionOrFallback_custom_defaultAction(self):
+		self.dialog.addApplyButton().addCloseButton()
+		self.dialog.setDefaultAction(MessageDialogReturnCode.CLOSE)
+		id, command = self.dialog._getDefaultActionOrFallback()
+		self.assertEqual(id, MessageDialogReturnCode.CLOSE)
+		self.assertIsNotNone(command)
+		self.assertEqual(command.closes_dialog, True)
