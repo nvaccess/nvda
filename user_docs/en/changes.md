@@ -108,6 +108,14 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
 
+## 2024.4.1
+
+It also includes a fix for saving speech symbol dictionaries.
+
+### Bug fixes
+
+* Fixed bug where speech symbols dictionaries were not saved and the dialog would not be closed. (#17344)
+
 ## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
