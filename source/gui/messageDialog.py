@@ -487,32 +487,46 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				)
 
 	def _getDefaultActionOrFallback(self) -> tuple[int, _MessageDialogCommand]:
-		# Try using the user-specified default action.
-		try:
-			id, action = self._getDefaultAction()
-			if action is not None:
-				return id, action
-		except KeyError:
-			log.exception("Default action was not in commands. This indicates a logic error.")
+		def getAction() -> tuple[int, _MessageDialogCommand]:
+			# Try using the user-specified default action.
+			try:
+				id, action = self._getDefaultAction()
+				if action is not None:
+					return id, action
+			except KeyError:
+				log.debug("Default action was not in commands. This indicates a logic error.")
 
-		# Default action is unavailable. Try using the default focus instead.
-		try:
-			if (defaultFocus := self.GetDefaultItem()) is not None:
-				id = defaultFocus.GetId()
-				return id, self._commands[id]
-		except KeyError:
-			log.exception("Default focus was not in commands. This indicates a logic error.")
+			# Default action is unavailable. Try using the default focus instead.
+			try:
+				if (defaultFocus := self.GetDefaultItem()) is not None:
+					id = defaultFocus.GetId()
+					return id, self._commands[id]
+			except KeyError:
+				log.debug("Default focus was not in commands. This indicates a logic error.")
 
-		# Default focus is unavailable. Try using the first button instead.
-		try:
-			return next(iter(self._commands.items()))
-		except StopIteration:
-			log.exception(
-				"No commands have been registered. If the dialog is shown, this indicates a logic error.",
-			)
+			# Default focus is unavailable. Try using the first registered command that closes the dialog instead.
+			firstCommand: tuple[int, _MessageDialogCommand] | None = None
+			for id, command in self._commands.items():
+				if command.closes_dialog:
+					return id, command
+				if firstCommand is None:
+					firstCommand = (id, command)
+			# No commands that close the dialog have been registered. Use the first command instead.
+			if firstCommand is not None:
+				return firstCommand
+			else:
+				log.debug(
+					"No commands have been registered. If the dialog is shown, this indicates a logic error.",
+				)
 
-		# No commands have been registered. Create one of our own.
-		return MessageDialogEscapeCode.NONE, _MessageDialogCommand()
+			# No commands have been registered. Create one of our own.
+			return MessageDialogEscapeCode.NONE, _MessageDialogCommand()
+
+		id, command = getAction()
+		if not command.closes_dialog:
+			log.warn(f"Overriding command for {id=} to close dialog.")
+			command = command._replace(closes_dialog=True)
+		return id, command
 
 	def __setIcon(self, type: MessageDialogType) -> None:
 		if (iconID := type._wxIconId) is not None:

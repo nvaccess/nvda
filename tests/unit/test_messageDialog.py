@@ -233,6 +233,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the default action."):
 			self.assertEqual(id, MessageDialogReturnCode.CANCEL)
 			self.assertEqual(command.callback, dummyCallback2)
+			self.assertTrue(command.closes_dialog)
 		with self.subTest(
 			"Test getting the default action or fallback returns the same as getting the default action.",
 		):
@@ -245,6 +246,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the default action."):
 			self.assertEqual(id, MessageDialogReturnCode.CANCEL)
 			self.assertEqual(command.callback, dummyCallback2)
+			self.assertTrue(command.closes_dialog)
 		with self.subTest(
 			"Test getting the default action or fallback returns the same as getting the default action.",
 		):
@@ -257,6 +259,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the default action."):
 			self.assertEqual(id, MessageDialogReturnCode.OK)
 			self.assertEqual(command.callback, dummyCallback1)
+			self.assertTrue(command.closes_dialog)
 		with self.subTest(
 			"Test getting the default action or fallback returns the same as getting the default action.",
 		):
@@ -269,6 +272,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the default action."):
 			self.assertEqual(id, MessageDialogReturnCode.OK)
 			self.assertEqual(command.callback, dummyCallback1)
+			self.assertTrue(command.closes_dialog)
 		with self.subTest(
 			"Test getting the default action or fallback returns the same as getting the default action.",
 		):
@@ -282,6 +286,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the default action."):
 			self.assertEqual(id, MessageDialogReturnCode.YES)
 			self.assertIsNone(command.callback)
+			self.assertTrue(command.closes_dialog)
 		with self.subTest(
 			"Test getting the default action or fallback returns the same as getting the default action.",
 		):
@@ -308,16 +313,25 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		id, command = self.dialog._getDefaultActionOrFallback()
 		self.assertEqual(id, MessageDialogEscapeCode.NONE)
 		self.assertIsNotNone(command)
-		self.assertEqual(command.closes_dialog, True)
+		self.assertTrue(command.closes_dialog)
 
-	def test_getDefaultActionOrFallback_no_defaultFocus(self):
+	def test_getDefaultActionOrFallback_no_defaultFocus_closing_button(self):
 		"""Test that getDefaultActionOrFallback returns the first button when no default action or default focus is specified."""
-		self.dialog.addApplyButton().addCloseButton()
+		self.dialog.addApplyButton(closes_dialog=False).addCloseButton()
+		self.assertIsNone(self.dialog.GetDefaultItem())
+		id, command = self.dialog._getDefaultActionOrFallback()
+		self.assertEqual(id, MessageDialogReturnCode.CLOSE)
+		self.assertIsNotNone(command)
+		self.assertTrue(command.closes_dialog)
+
+	def test_getDefaultActionOrFallback_no_defaultFocus_no_closing_button(self):
+		"""Test that getDefaultActionOrFallback returns the first button when no default action or default focus is specified."""
+		self.dialog.addApplyButton(closes_dialog=False).addCloseButton(closes_dialog=False)
 		self.assertIsNone(self.dialog.GetDefaultItem())
 		id, command = self.dialog._getDefaultActionOrFallback()
 		self.assertEqual(id, MessageDialogReturnCode.APPLY)
 		self.assertIsNotNone(command)
-		self.assertEqual(command.closes_dialog, True)
+		self.assertTrue(command.closes_dialog)
 
 	def test_getDefaultActionOrFallback_no_defaultAction(self):
 		"""Test that getDefaultActionOrFallback returns the default focus if one is specified but there is no default action."""
@@ -327,7 +341,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		id, command = self.dialog._getDefaultActionOrFallback()
 		self.assertEqual(id, MessageDialogReturnCode.CLOSE)
 		self.assertIsNotNone(command)
-		self.assertEqual(command.closes_dialog, True)
+		self.assertTrue(command.closes_dialog)
 
 	def test_getDefaultActionOrFallback_custom_defaultAction(self):
 		"""Test that getDefaultActionOrFallback returns the custom defaultAction if set."""
@@ -336,4 +350,4 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		id, command = self.dialog._getDefaultActionOrFallback()
 		self.assertEqual(id, MessageDialogReturnCode.CLOSE)
 		self.assertIsNotNone(command)
-		self.assertEqual(command.closes_dialog, True)
+		self.assertTrue(command.closes_dialog)
