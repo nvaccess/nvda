@@ -65,7 +65,7 @@ class DialogType(Enum):
 	ERROR = auto()
 
 	@property
-	def _wxIconId(self) -> int | None:
+	def _wxIconId(self) -> "wx.ArtID | None":  # type: ignore
 		"""The wx icon ID to use for this dialog type.
 		This is used to determine the icon to display in the dialog.
 		This will be None when the default icon should be used.
@@ -267,7 +267,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def addButton(
 		self,
 		*args,
-		callback: Callable[[wx.CommandEvent], Any] | None = None,
+		callback: Callback_T | None = None,
 		default_focus: bool = False,
 		default_action: bool = False,
 		closes_dialog: bool = True,
@@ -618,7 +618,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
-		log.debug(f"Got {'vetoable' if evt.CanVeto() else 'non-vetoable'} close event.")
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
