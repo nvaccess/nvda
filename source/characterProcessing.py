@@ -237,11 +237,11 @@ class SpeechSymbols:
 	This is all handled by L{SpeechSymbolProcessor}.
 	"""
 
-	def __init__(self):
+	def __init__(self, filename: str | None = None):
 		"""Constructor."""
 		self.complexSymbols = collections.OrderedDict()
 		self.symbols = collections.OrderedDict()
-		self.fileName = None
+		self.fileName = filename
 
 	def load(self, fileName: str, allowComplexSymbols: bool = True) -> None:
 		"""Load symbol information from a file.
@@ -826,7 +826,7 @@ class SymbolDictionaryDefinition:
 
 	def _initSymbols(self, locale: str) -> SpeechSymbols:
 		raiseOnError = self.source != _SymbolDefinitionSource.USER
-		symbols = SpeechSymbols()
+		symbols = SpeechSymbols(self.path.format(locale=locale))
 		if locale not in self.availableLocales:
 			msg = f"No {self.name!r} data for locale {locale!r}"
 			if raiseOnError:
