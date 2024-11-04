@@ -268,6 +268,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
 		# Default actions that do not close the dialog do not make sense.
+		if default_action and not closes_dialog:
+			log.warning(
+				"Default actions that do not close the dialog are not supported. Forcing close_dialog to True.",
+			)
 		self._commands[buttonId] = _MessageDialogCommand(
 			callback=callback,
 			closes_dialog=closes_dialog or default_action,

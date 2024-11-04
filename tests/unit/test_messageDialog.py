@@ -11,6 +11,7 @@ from unittest.mock import MagicMock, patch
 import wx
 from gui.messageDialog import (
 	MessageDialog,
+	MessageDialogButton,
 	MessageDialogEscapeCode,
 	MessageDialogReturnCode,
 	MessageDialogType,
@@ -41,12 +42,14 @@ class Test_MessageDialog_Icons(MDTestBase):
 	"""Test that message dialog icons are set correctly."""
 
 	def test_setIcon_with_type_with_icon(self, mocked_GetIconBundle: MagicMock):
+		"""Test that setting the dialog's icons has an effect when the dialog's type has icons."""
 		mocked_GetIconBundle.return_value = wx.IconBundle()
 		type = MessageDialogType.ERROR
 		self.dialog._setIcon(type)
 		mocked_GetIconBundle.assert_called_once()
 
 	def test_setIcon_with_type_without_icon(self, mocked_GetIconBundle: MagicMock):
+		"""Test that setting the dialog's icons doesn't have an effect when the dialog's type doesn't have icons."""
 		type = MessageDialogType.STANDARD
 		self.dialog._setIcon(type)
 		mocked_GetIconBundle.assert_not_called()
@@ -57,12 +60,14 @@ class Test_MessageDialog_Sounds(MDTestBase):
 	"""Test that message dialog sounds are set and played correctly."""
 
 	def test_playSound_with_type_with_Sound(self, mocked_MessageBeep: MagicMock):
+		"""Test that sounds are played for message dialogs whose type has an associated sound."""
 		type = MessageDialogType.ERROR
 		self.dialog._setSound(type)
 		self.dialog._playSound()
 		mocked_MessageBeep.assert_called_once()
 
 	def test_playSound_with_type_without_Sound(self, mocked_MessageBeep: MagicMock):
+		"""Test that no sounds are played for message dialogs whose type has an associated sound."""
 		type = MessageDialogType.STANDARD
 		self.dialog._setSound(type)
 		self.dialog._playSound()
@@ -223,6 +228,41 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.assertTrue(self.dialog.hasDefaultAction)
 		with self.subTest("Test default action assignment."):
 			self.assertIsNotNone(self.dialog._getDefaultAction())
+
+	def test_addButton_with_default_focus(self):
+		"""Test adding a button with default focus."""
+		self.dialog.addButton(
+			MessageDialogButton(label="Custom", id=MessageDialogReturnCode.CUSTOM_1, default_focus=True),
+		)
+		self.assertEqual(self.dialog.GetDefaultItem().GetId(), MessageDialogReturnCode.CUSTOM_1)
+
+	def test_addButton_with_default_action(self):
+		"""Test adding a button with default action."""
+		self.dialog.addButton(
+			MessageDialogButton(
+				label="Custom",
+				id=MessageDialogReturnCode.CUSTOM_1,
+				default_action=True,
+				closes_dialog=True,
+			),
+		)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.CUSTOM_1)
+		self.assertTrue(command.closes_dialog)
+
+	def test_addButton_with_non_closing_default_action(self):
+		"""Test adding a button with default action that does not close the dialog."""
+		self.dialog.addButton(
+			MessageDialogButton(
+				label="Custom",
+				id=MessageDialogReturnCode.CUSTOM_1,
+				default_action=True,
+				closes_dialog=False,
+			),
+		)
+		id, command = self.dialog._getDefaultAction()
+		self.assertEqual(id, MessageDialogReturnCode.CUSTOM_1)
+		self.assertTrue(command.closes_dialog)
 
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
