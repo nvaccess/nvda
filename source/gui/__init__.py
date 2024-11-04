@@ -593,8 +593,8 @@ class MainFrame(wx.Frame):
 				"- Exiting NVDA does not cause errors",
 				"Non-modal OK/Cancel Dialog",
 			)
-			.addOkButton(callback=lambda _: messageBox("You pressed OK!"))
-			.addCancelButton(callback=lambda _: messageBox("You pressed Cancel!"))
+			.addOkButton(callback=lambda: messageBox("You pressed OK!"))
+			.addCancelButton(callback=lambda: messageBox("You pressed Cancel!"))
 		)
 
 		dlg.ShowModal()

@@ -275,7 +275,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if default_focus:
 			self.SetDefaultItem(button)
 		if default_action:
-			self.SetEscapeId(buttonId)
+			self.setDefaultAction(buttonId)
 		self.__isLayoutFullyRealized = False
 		return self
 
@@ -540,15 +540,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		log.debug(f"Got {'vetoable' if evt.CanVeto() else 'non-vetoable'} close event.")
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
-			self._execute_command(self._getDefaultActionOrFallback())
+			self.Hide()
+			self._execute_command(*self._getDefaultActionOrFallback())
 			self._instances.remove(self)
 			self.EndModal(self.GetReturnCode())
 			self.Destroy()
 			return
 		if self.GetReturnCode() == 0:
 			# No button has been pressed, so this must be a close event from elsewhere.
-			self._execute_command(self._getDefaultAction())
-			pass
+			id, command = self._getDefaultAction()
+			if id == MessageDialogEscapeCode.NONE or command is None or not command.closes_dialog:
+				evt.Veto()
+				return
+			self.Hide()
+			self._execute_command(id, command, _canCallClose=False)
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
