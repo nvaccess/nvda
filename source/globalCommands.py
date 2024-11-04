@@ -4791,10 +4791,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles other applications volume adjuster status",
+			"Toggles application volume control on and off",
 		),
 		category=SCRCAT_AUDIO,
-		gesture=None,
 	)
 	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()
