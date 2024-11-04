@@ -1659,6 +1659,7 @@ class TextInfoRegion(Region):
 				return
 		dest.collapse()
 		self._setCursor(dest)
+		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
 
 	def previousLine(self, start=False):
 		dest = self._readingInfo.copy()
@@ -1678,10 +1679,12 @@ class TextInfoRegion(Region):
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_LAST)
 					dest.expand(unit)
-			else:  # no page turn support
+			else:
+				# no page turn support
 				return
 		dest.collapse()
 		self._setCursor(dest)
+		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
 
 
 class CursorManagerRegion(TextInfoRegion):
@@ -3132,18 +3135,19 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 
 		if (configuredTether := config.conf["braille"]["tetherTo"]) != TetherTo.AUTO.value:
 			self._tether = configuredTether
-		if config.conf["braille"]["translationTable"] == "auto":
-			config.conf["braille"]["translationTable"] = brailleTables.getDefaultTableForCurLang(
-				brailleTables.TableType.OUTPUT,
-			)
+
 		tableName = config.conf["braille"]["translationTable"]
 		# #6140: Migrate to new table names as smoothly as possible.
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
 		if newTableName:
 			tableName = config.conf["braille"]["translationTable"] = newTableName
+		if config.conf["braille"]["translationTable"] == "auto":
+			table = brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT)
+		else:
+			table = tableName
 		if tableName != self._table.fileName:
 			try:
-				self._table = brailleTables.getTable(tableName)
+				self._table = brailleTables.getTable(table)
 			except LookupError:
 				log.error(
 					f"Invalid translation table ({tableName}), "
@@ -3845,3 +3849,22 @@ def _speakOnRouting(info: textInfos.TextInfo):
 
 	info.expand(textInfos.UNIT_CHARACTER)
 	spellTextInfo(info)
+
+
+def _speakOnNavigatingByUnit(info: textInfos.TextInfo, readingUnit: str) -> None:
+	"""Speaks the reading unit after navigating by it with braille.
+
+	This only has an effect if the user has enabled "Speak when navigating by line or paragraph" in braille settings.
+
+	:param info: The TextInfo at the cursor position after navigating.
+	:param readingUnit: The reading unit to expand TextInfo.
+	"""
+	if not config.conf["braille"]["speakOnNavigatingByUnit"]:
+		return
+	# Import late to avoid circular import.
+	from speech.speech import cancelSpeech, speakTextInfo
+
+	copy = info.copy()
+	copy.expand(readingUnit)
+	cancelSpeech()
+	speakTextInfo(copy, unit=readingUnit, reason=controlTypes.OutputReason.CARET)

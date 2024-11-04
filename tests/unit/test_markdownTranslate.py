@@ -31,7 +31,11 @@ class TestMarkdownTranslate(unittest.TestCase):
 	def runMarkdownTranslateCommand(self, description: str, args: list[str]):
 		failed = False
 		try:
-			subprocess.run([sys.executable, self.markdownTranslateScriptPath, *args], check=True)
+			subprocess.run(
+				[sys.executable, self.markdownTranslateScriptPath, *args],
+				check=True,
+				capture_output=True,
+			)
 		except subprocess.CalledProcessError:
 			failed = True
 		if failed:

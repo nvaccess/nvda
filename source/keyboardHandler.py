@@ -149,14 +149,14 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 		# This is only possible in Windows 10 1607 and above
 		and winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
-			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
+			# The focus is within a UWP app, where WM_CHAR never gets sent
+			focus.windowClassName.startswith("Windows.UI.Core")
+			# Or we couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
-			(
+			or (
 				not (focus.appModule and focus.appModule.helperLocalBindingHandle)
 				and focus.windowClassName != "ConsoleWindowClass"
 			)
-			# or the focus is within a UWP app, where WM_CHAR never gets sent
-			or focus.windowClassName.startswith("Windows.UI.Core")
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
 		)
