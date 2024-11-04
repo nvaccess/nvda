@@ -40,7 +40,6 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
 
-
 ### Bug Fixes
 
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
