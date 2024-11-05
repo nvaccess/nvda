@@ -408,14 +408,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""See MessageDialog.SetEscapeId."""
 		return self.SetEscapeId(id)
 
-	def Show(self) -> bool:
+	def Show(self, show: bool = True) -> bool:
 		"""Show a non-blocking dialog.
-		Attach buttons with button handlers"""
+
+		Attach buttons with button handlers
+
+		:param show: If True, show the dialog. If False, hide it. Defaults to True.
+		"""
+		if not show:
+			return self.Hide()
 		if not self.GetMainButtonIds():
 			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
 		self._realize_layout()
 		log.debug("Showing")
-		ret = super().Show()
+		ret = super().Show(show)
 		if ret:
 			log.debug("Adding to instances")
 			self._instances.append(self)
