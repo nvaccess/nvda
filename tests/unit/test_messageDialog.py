@@ -10,11 +10,14 @@ from unittest.mock import MagicMock, patch
 
 import wx
 from gui.messageDialog import (
+	DefaultButton,
+	DefaultButtonSet,
 	MessageDialog,
 	Button,
 	EscapeCode,
 	ReturnCode,
 	DialogType,
+	_flattenButtons,
 )
 
 
@@ -391,3 +394,38 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertEqual(id, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closes_dialog)
+
+
+class Test_FlattenButtons(unittest.TestCase):
+	"""Tests for the _flattenButtons function."""
+
+	def test_flatten_single_button(self):
+		"""Test flattening a single button."""
+		button = Button(id=ReturnCode.OK, label="OK")
+		result = list(_flattenButtons([button]))
+		self.assertEqual(result, [button])
+
+	def test_flatten_multiple_buttons(self):
+		"""Test flattening multiple buttons."""
+		button1 = Button(id=ReturnCode.OK, label="OK")
+		button2 = Button(id=ReturnCode.CANCEL, label="Cancel")
+		result = list(_flattenButtons([button1, button2]))
+		self.assertEqual(result, [button1, button2])
+
+	def test_flatten_default_button_set(self):
+		"""Test flattening a default button set."""
+		result = list(_flattenButtons([DefaultButtonSet.OK_CANCEL]))
+		expected = [DefaultButton.OK.value, DefaultButton.CANCEL.value]
+		self.assertEqual(result, expected)
+
+	def test_flatten_mixed_buttons_and_sets(self):
+		"""Test flattening a mix of buttons and default button sets."""
+		button = Button(id=ReturnCode.YES, label="Yes")
+		result = list(_flattenButtons([button, DefaultButtonSet.OK_CANCEL]))
+		expected = [button, DefaultButton.OK.value, DefaultButton.CANCEL.value]
+		self.assertEqual(result, expected)
+
+	def test_flatten_empty(self):
+		"""Test flattening an empty iterable."""
+		result = list(_flattenButtons([]))
+		self.assertEqual(result, [])
