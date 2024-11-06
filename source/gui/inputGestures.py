@@ -850,11 +850,14 @@ class InputGesturesDialog(SettingsDialog):
 				o = self.prevFocus
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = None
-		if gestureVM is not None and gestureVM.normalizedGestureIdentifier.startswith("kb"):
+		if gestureVM is not None:
+			gestureSourceClass = inputCore._getGestureClsForIdentifier(gestureVM.normalizedGestureIdentifier)
+			log.info(f"{gestureSourceClass.__name__}")
+		if gestureSourceClass.__name__ == "KeyboardInputGestures":
 			source, normalizedMain = inputCore.normalizeGestureIdentifier(
 				gestureVM.normalizedGestureIdentifier, True
 			).split(":", 1)
-			gesture = keyboardHandler.KeyboardInputGesture.fromName(normalizedMain)
+			gesture = gestureSourceClass.fromName(normalizedMain)
 		script = getattr(o, scriptName)
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
 
