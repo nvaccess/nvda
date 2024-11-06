@@ -10,6 +10,7 @@ class MsoHyperlink(IntEnum):
 	"""Enumeration of hyperlink types in the Microsoft Office object model.
 	See https://learn.microsoft.com/en-us/office/vba/api/office.msohyperlinktype
 	"""
+
 	RANGE = 0
 	SHAPE = 1
 	INLINE_SHAPE = 2
