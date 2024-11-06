@@ -266,6 +266,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	@singledispatchmethod
 	def addButton(
 		self,
+		id: ReturnCode,
+		label: str,
 		*args,
 		callback: Callback_T | None = None,
 		default_focus: bool = False,
@@ -275,15 +277,20 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	) -> Self:
 		"""Add a button to the dialog.
 
-		Any additional arguments are passed to `ButtonHelper.addButton`.
-
+		:param id: The ID to use for the button.
+			If the dialog is to be shown modally, this will also be the return value if the dialog is closed with this button.
+		:param label: Text label to show on this button.
 		:param callback: Function to call when the button is pressed, defaults to None.
-		:param default_focus: Whether the button should be the default (first focused) button in the dialog, defaults to False.
+			This is most useful for dialogs that are shown modelessly.
+		:param default_focus: whether this button should receive focus when the dialog is first opened, defaults to False.
+			If multiple buttons with `default_focus=True` are added, the last one added will receive initial focus.
+		:param default_action: Whether or not this button should be the default action for the dialog, defaults to False.
+			The default action is called when the user closes the dialog with the escape key, title bar close button, system menu close item etc.
+			If multiple buttons with `default_action=True` are added, the last one added will be the default action.
 		:param closes_dialog: Whether the button should close the dialog when pressed, defaults to True.
-			If multiple buttons with `default=True` are added, the last one added will be the default button.
-		:return: The dialog instance.
+		:return: The updated instance for chaining.
 		"""
-		button = self._buttonHelper.addButton(*args, **kwargs)
+		button = self._buttonHelper.addButton(self, id, *args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
@@ -308,29 +315,41 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self,
 		button: Button,
 		*args,
-		callback: Callable[[wx.CommandEvent], Any] | None = None,
+		label: str | None = None,
+		callback: Callback_T | None = None,
 		default_focus: bool | None = None,
+		default_action: bool | None = None,
 		closes_dialog: bool | None = None,
 		**kwargs,
 	) -> Self:
-		"""Add a c{Button} to the dialog.
+		"""Add a :class:`Button` to the dialog.
 
 		:param button: The button to add.
-		:param callback: Override for the callback specified in `button`, defaults to None.
-		:param default_focus: Override for the default specified in `button`, defaults to None.
-			If multiple buttons with `default=True` are added, the last one added will be the default button.
-		:param closes_dialog: Override for `button`'s `closes_dialog` property, defaults to None.
-		:return: The dialog instance.
+		:param label: Override for `button.label`, defaults to None.
+		:param callback: Override for `button.callback`, defaults to None.
+		:param default_focus: Override for `button.default_focus`, defaults to None.
+		:param default_action: Override for `button.default_action`, defaults to None
+		:param closes_dialog: Override for `button.closes_dialog`, defaults to None
+		:return: Updated dialog instance for chaining.
+
+		.. seealso:: :class:`Button`
 		"""
+		# We need to pass `id` as a positional argument as `singledispatchmethod` matches on the type of the first argument.
+		id = button.id
 		keywords = button._asdict()
+		del keywords["id"]  # Guaranteed to exist.
+		if label is not None:
+			keywords["label"] = label
 		if default_focus is not None:
 			keywords["default_focus"] = default_focus
+		if default_action is not None:
+			keywords["default_action"] = default_action
 		if callback is not None:
 			keywords["callback"] = callback
 		if closes_dialog is not None:
 			keywords["closes_dialog"] = closes_dialog
 		keywords.update(kwargs)
-		return self.addButton(self, *args, **keywords)
+		return self.addButton(id, *args, **keywords)
 
 	addOkButton = partialmethod(addButton, DefaultButton.OK)
 	addOkButton.__doc__ = "Add an OK button to the dialog."
