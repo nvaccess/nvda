@@ -851,10 +851,13 @@ class InputGesturesDialog(SettingsDialog):
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = None
 		if gestureVM is not None and gestureVM.normalizedGestureIdentifier.startswith("kb"):
-			source, normalizedMain = inputCore.normalizeGestureIdentifier(gestureVM.normalizedGestureIdentifier, True).split(":", 1)
+			source, normalizedMain = inputCore.normalizeGestureIdentifier(
+				gestureVM.normalizedGestureIdentifier, True
+			).split(":", 1)
 			gesture = keyboardHandler.KeyboardInputGesture.fromName(normalizedMain)
 		script = getattr(o, scriptName)
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
+
 		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
