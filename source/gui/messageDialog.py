@@ -267,6 +267,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def addButton(
 		self,
 		id: ReturnCode,
+		/,
 		label: str,
 		*args,
 		callback: Callback_T | None = None,
@@ -314,6 +315,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def _(
 		self,
 		button: Button,
+		/,
 		*args,
 		label: str | None = None,
 		callback: Callback_T | None = None,
