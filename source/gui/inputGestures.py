@@ -855,7 +855,8 @@ class InputGesturesDialog(SettingsDialog):
 			log.info(f"{gestureSourceClass.__name__}")
 		if gestureSourceClass.__name__ == "KeyboardInputGestures":
 			source, normalizedMain = inputCore.normalizeGestureIdentifier(
-				gestureVM.normalizedGestureIdentifier, True
+				gestureVM.normalizedGestureIdentifier,
+				True,
 			).split(":", 1)
 			gesture = gestureSourceClass.fromName(normalizedMain)
 		script = getattr(o, scriptName)
