@@ -58,7 +58,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When spelling, unicode normalization now works more appropriately:
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
-* In Word or Outlook when using legacy object model and in Excel, the command to report the destination URL of a link now works as expected. (#17292, #17362, @CyrilleB79)
+* The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
 
 ### Changes for Developers
 
