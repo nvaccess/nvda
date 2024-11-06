@@ -172,7 +172,7 @@ class DefaultButtonSet(tuple[DefaultButton], Enum):
 	SAVE_NO_CANCEL = (
 		DefaultButton.SAVE,
 		# Translators: A don't save button on a message dialog.
-		DefaultButton.NO._replace(label=_("Do&n't save")),
+		DefaultButton.NO.value._replace(label=_("Do&n't save")),
 		DefaultButton.CANCEL,
 	)
 
@@ -290,7 +290,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param closes_dialog: Whether the button should close the dialog when pressed, defaults to True.
 		:return: The updated instance for chaining.
 		"""
-		button = self._buttonHelper.addButton(self, id, *args, **kwargs)
+		button = self._buttonHelper.addButton(self, id, label, *args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
