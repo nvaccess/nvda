@@ -37,7 +37,7 @@ class MDTestBase(unittest.TestCase):
 
 	def setUp(self) -> None:
 		self.app = wx.App()
-		self.dialog = MessageDialog(None, "Test dialog")
+		self.dialog = MessageDialog(None, "Test dialog", buttons=None)
 
 
 @patch.object(wx.ArtProvider, "GetIconBundle")

@@ -210,7 +210,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: DialogType = DialogType.STANDARD,
 		*,
-		buttons: Iterable[Button] | None = None,
+		buttons: Iterable[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
 	):
 		self.helpId = helpId
