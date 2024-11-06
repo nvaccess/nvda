@@ -892,7 +892,7 @@ class KbEmuScriptInfo(AllGesturesScriptInfo):
 	pass
 
 
-def normalizeGestureIdentifier(identifier):
+def normalizeGestureIdentifier(identifier: str, reverse: bool = False):
 	"""Normalize a gesture identifier so that it matches other identifiers for the same gesture.
 	First, the entire identifier is converted to lower case.
 	Then, any items separated by a + sign after the source prefix are considered to be of indeterminate order
@@ -906,7 +906,7 @@ def normalizeGestureIdentifier(identifier):
 	# The order of the parts doesn't matter as far as the user is concerned,
 	# but we need them to be in a determinate order so they will match other gesture identifiers.
 	# We sort them by character.
-	main.sort()
+	main.sort(reverse=reverse)
 	main = "+".join(main)
 	return "{0}:{1}".format(prefix, main)
 

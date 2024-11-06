@@ -849,14 +849,12 @@ class InputGesturesDialog(SettingsDialog):
 			case _:
 				o = self.prevFocus
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
-		gesture = inputCore.InputGesture
-		if gestureVM is not None:
-			for g in scriptVM.gestures:
-				if g.displayName == gestureVM.displayName:
-					gesture = g
+		gesture = None
+		if gestureVM is not None and gestureVM.normalizedGestureIdentifier.startswith("kb"):
+			source, normalizedMain = inputCore.normalizeGestureIdentifier(gestureVM.normalizedGestureIdentifier, True).split(":", 1)
+			gesture = keyboardHandler.KeyboardInputGesture.fromName(normalizedMain)
 		script = getattr(o, scriptName)
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
-
 		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
@@ -864,7 +862,6 @@ class InputGesturesDialog(SettingsDialog):
 		else:
 			self.onCancel(None)
 			core.callLater(100, scriptHandler.executeScript, script, gesture)
-		log.info(f"gesture {gesture.displayName}")
 		log.info(f"cat {catVM}")
 
 	def onChar(self, evt):
