@@ -39,6 +39,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
+* In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 
 ### Bug Fixes
 
@@ -59,6 +60,8 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
 * The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
+* NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
+* If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
 
 ### Changes for Developers
 
