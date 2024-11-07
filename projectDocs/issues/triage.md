@@ -158,6 +158,7 @@ Community members should apply the `triaged` where an issue is:
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
+You can do this by tagging @nvaccess/developers or mailing info@nvaccess.org.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
 
