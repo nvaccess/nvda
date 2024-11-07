@@ -61,6 +61,7 @@ from addonStore.models.version import (  # noqa: E402
 	getAddonCompatibilityMessage,
 	getAddonCompatibilityConfirmationMessage,
 )
+import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
 import config
 import winKernel
@@ -452,7 +453,7 @@ class UpdateResultDialog(
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
-			showAddonCompat = any(
+			showAddonCompat = (self.backCompatTo[0] > addonAPIVersion.BACK_COMPAT_TO[0]) and any(
 				getIncompatibleAddons(
 					currentAPIVersion=self.apiVersion,
 					backCompatToAPIVersion=self.backCompatTo,
