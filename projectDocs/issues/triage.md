@@ -145,7 +145,7 @@ Once a bug has clear steps to reproduce and is well documented, the `triaged` la
 A `triaged` issue should also have a [priority label](#priority).
 
 Community members should avoid adding a `triaged` label to feature requests or other decisions potentially involving significant or controversial changes to NVDA features or functionality, which may require community input or approval from NV Access.
-The label should also be avoided for other issues that are controversial, or the priority is unclear, such as bug fixes with an unclear solution.
+The label should also be avoided for other issues that are controversial, or where the priority is unclear, such as bug fixes with an unclear solution.
 For changes where a product decision from NV Access is required before applying the `triaged` label, the label `blocked/needs-product-decision` should be used.
 Community members should apply the `triaged` where an issue is:
 
