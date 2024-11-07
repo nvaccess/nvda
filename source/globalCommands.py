@@ -3405,7 +3405,6 @@ class GlobalCommands(ScriptableObject):
 		self.lastFocusedObject = api.getFocusObject()
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
 
-
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.
 		description=_("Reports the name of the current NVDA configuration profile"),
