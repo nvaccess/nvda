@@ -629,9 +629,6 @@ class WinmmWavePlayer(garbageHandler.TrackedObject):
 			return False
 
 
-WavePlayer = WinmmWavePlayer
-
-
 def _getOutputDevices():
 	"""Generator, returning device ID and device Name in device ID order.
 	@note: Depending on number of devices being fetched, this may take some time (~3ms)
@@ -689,10 +686,6 @@ def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 		return WAVE_MAPPER
 	else:
 		raise LookupError("No such device name")
-
-
-fileWavePlayer: Optional[WavePlayer] = None
-fileWavePlayerThread = None
 
 
 def playWaveFile(
@@ -1107,12 +1100,12 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		return name == next(_getOutputDevices())[1]
 
 
+WavePlayer = WasapiWavePlayer
+fileWavePlayer: Optional[WavePlayer] = None
+fileWavePlayerThread = None
+
+
 def initialize():
-	global WavePlayer
-	if not config.conf["audio"]["WASAPI"]:
-		getOnErrorSoundRequested().register(playErrorSound)
-		return
-	WavePlayer = WasapiWavePlayer
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
 		NVDAHelper.localLib.wasPlay_startup,
