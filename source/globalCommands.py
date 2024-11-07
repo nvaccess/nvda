@@ -151,6 +151,26 @@ def toggleBooleanValue(
 class GlobalCommands(ScriptableObject):
 	"""Commands that are available at all times, regardless of the current focus."""
 
+	lastSavedScript = None
+	lastSavedGesture = None
+	lastFocusedObject = None
+
+	@script(
+		# Translators: Message presented in input help mode
+		description=_("Runs the last script saved from input gestures dialog"),
+		category=SCRCAT_INPUT,
+		gesture="kb:NVDA+j",
+	)
+	def script_runLastSavedScript(self, gesture):
+		if self.lastSavedScript is None:
+			# Translators: Reported when there is not a saved script to run.
+			ui.message(_("No saved script to run"))
+		elif api.getFocusObject() == self.lastFocusedObject:
+			scriptHandler.executeScript(self.lastSavedScript, self.lastSavedGesture)
+		else:
+			# Translators: Reported when the last saved script cannot be run since the focus is not in the appropriate object.
+			ui.message(_("Focus has been moved outside the object for the last script"))
+
 	@script(
 		description=_(
 			# Translators: Describes the Cycle audio ducking mode command.
@@ -3382,7 +3402,9 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	def script_activateInputGesturesDialog(self, gesture):
+		self.lastFocusedObject = api.getFocusObject()
 		wx.CallAfter(gui.mainFrame.onInputGesturesCommand, None)
+
 
 	@script(
 		# Translators: Input help mode message for the report current configuration profile command.

@@ -24,9 +24,9 @@ import scriptHandler
 from . import guiHelper
 import inputCore
 import keyLabels
+import ui
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
-import core
 
 
 #: Type for structure returned by inputCore
@@ -839,26 +839,28 @@ class InputGesturesDialog(SettingsDialog):
 		classObj = getattr(module, scriptVM.scriptInfo.className)
 		className = scriptVM.scriptInfo.className
 		log.info(f"class {className}")
+		from globalCommands import commands
+
 		match className.split(".")[-1]:
 			case "AppModule":
 				o = classObj(self.prevProcessID)
 			case "GlobalPlugin":
 				o = classObj()
 			case "GlobalCommands":
-				o = classObj()
+				o = commands
 			case _:
 				o = self.prevFocus
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = None
+		gestureSourceClass = None
 		if gestureVM is not None:
 			gestureSourceClass = inputCore._getGestureClsForIdentifier(gestureVM.normalizedGestureIdentifier)
-			log.info(f"{gestureSourceClass.__name__}")
-		if gestureSourceClass.__name__ == "KeyboardInputGestures":
-			source, normalizedMain = inputCore.normalizeGestureIdentifier(
-				gestureVM.normalizedGestureIdentifier,
-				True,
-			).split(":", 1)
-			gesture = gestureSourceClass.fromName(normalizedMain)
+			if gestureSourceClass.__name__ == "KeyboardInputGesture":
+				source, normalizedMain = inputCore.normalizeGestureIdentifier(
+					gestureVM.normalizedGestureIdentifier,
+					True,
+				).split(":", 1)
+				gesture = gestureSourceClass.fromName(normalizedMain)
 		script = getattr(o, scriptName)
 		from globalCommands import SCRCAT_OBJECTNAVIGATION
 
@@ -866,10 +868,13 @@ class InputGesturesDialog(SettingsDialog):
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
+		elif o is commands:
+			scriptHandler.executeScript(script, gesture)
 		else:
-			self.onCancel(None)
-			core.callLater(100, scriptHandler.executeScript, script, gesture)
-		log.info(f"cat {catVM}")
+			commands.lastSavedScript = script
+			commands.lastSavedGesture = gesture
+			# Translators: Reported when a command has been saved from input gestures dialog.
+			ui.message(_("Command saved"))
 
 	def onChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_SPACE:
@@ -886,7 +891,6 @@ class InputGesturesDialog(SettingsDialog):
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
-
 		super(InputGesturesDialog, self).onOk(evt)
 
 	def _onDestroyTree(self, evt: wx.WindowDestroyEvent):
