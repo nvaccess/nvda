@@ -29,6 +29,7 @@ import gui  # noqa: E402
 from logHandler import log  # noqa: E402
 import braille  # noqa: E402
 import gui.contextHelp  # noqa: E402
+import textInfos
 
 
 class HelpCommand(object):
@@ -223,7 +224,6 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		import config
 		import controlTypes
 		import globalPlugins
-		import textInfos
 		import vision
 
 		self.namespace.clear()
@@ -255,25 +255,34 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		Typically, used before the NVDA python console is opened, after which, calls
 		to the 'api' module will refer to this new focus.
 		"""
-		try:
-			caretPos = api.getCaretPosition()
-		except RuntimeError:
-			log.debug("Unable to set caretPos snapshot variable for python console.")
-			caretPos = None
+		def _getCaretPos() -> textInfos.TextInfo | None:
+			try:
+				return api.getCaretPosition()
+			except RuntimeError:
+				log.debug("Unable to set caretPos snapshot variable for python console.")
+				return None
 
-		self._namespaceSnapshotVars = {
-			"focus": api.getFocusObject(),
+		self._namespaceSnapshotVarsGetters = {
+			"focus": (lambda: api.getFocusObject()),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
-			"focusAnc": list(api.getFocusAncestors()),
-			"fdl": api.getFocusDifferenceLevel(),
-			"fg": api.getForegroundObject(),
-			"nav": api.getNavigatorObject(),
-			"caretObj": api.getCaretObject(),
-			"caretPos": caretPos,
-			"review": api.getReviewPosition(),
-			"mouse": api.getMouseObject(),
-			"brlRegions": braille.handler.buffer.regions,
+			"focusAnc": (lambda: list(api.getFocusAncestors())),
+			"fdl": (lambda: api.getFocusDifferenceLevel()),
+			"fg": (lambda: api.getForegroundObject()),
+			"nav": (lambda: api.getNavigatorObject()),
+			"caretObj": (lambda: api.getCaretObject()),
+			"caretPos": _getCaretPos,
+			"review": (lambda: api.getReviewPosition()),
+			"mouse": (lambda: api.getMouseObject()),
+			"brlRegions": (lambda: braille.handler.buffer.regions),
 		}
+		self._namespaceSnapshotVars = {}
+		for name, getter in self._namespaceSnapshotVarsGetters.items():
+			try:
+				value = getter()
+			except Exception:
+				log.error(f"Unable to set {name} snapshot variable for python console.", exc_info=True)
+				value = None
+			self._namespaceSnapshotVars[name] = value
 		self.namespace.update(self._namespaceSnapshotVars)
 
 	def removeNamespaceSnapshotVars(self):
