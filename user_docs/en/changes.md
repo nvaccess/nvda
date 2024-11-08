@@ -71,13 +71,14 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
-  * Updated Ruff to 0.6.3. (#17102)
+  * Updated Ruff to 0.7.2. (#17102, #17260)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
   * Updated SCons to 4.8.1. (#17254)
   * Updated sphinx to 8.1.2 and sphinx-rtd-theme to 3.0.1. (#17284, @josephsl)
   * Updated Robot Framework to 7.1.1. (#17329, @josephsl)
   * Updated configobj to 5.1.0 commit `8be5462`. (#17328)
+  * Updated pre-commit to 4.0.1. (#17260)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types

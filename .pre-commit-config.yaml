@@ -68,6 +68,8 @@ repos:
     - id: check-xml
     # Ensures that links to lines in files under version control point to a particular commit.
     - id: check-vcs-permalinks
+    # Avoids using reserved Windows filenames.
+    - id: check-illegal-windows-names
     # Checks that tests are named test_*.py.
     - id: name-tests-test
       args: ["--unittest"]
