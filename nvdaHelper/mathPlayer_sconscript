@@ -30,8 +30,8 @@ tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile = env.Typ
 )
 # #7036: hack: Ignore midl.exe when deciding to rebuild, as its position in the dependencies
 # is different in the run before the idl files are copied versus subsequent runs.
-midl = env.WhereIs(env["MIDL"])
-for target in (tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile):
-	env.Ignore(target, midl)
+# midl = env.WhereIs(env["MIDL"])
+# for target in (tlbFile, headerFile, iidSourceFile, proxySourceFile, dlldataSourceFile):
+	# env.Ignore(target, midl)
 
 Return(["tlbFile", "headerFile", "iidSourceFile", "proxySourceFile", "dlldataSourceFile"])
