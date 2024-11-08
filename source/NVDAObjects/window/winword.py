@@ -41,6 +41,7 @@ import browseMode
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
+from ._msOffice import MsoHyperlink
 import locationHelper
 from enum import IntEnum
 import documentBase
@@ -80,13 +81,6 @@ wdStartOfRangeRowNumber = 13
 wdMaximumNumberOfRows = 15
 wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
-
-
-class MsoHyperlink(IntEnum):
-	# See https://learn.microsoft.com/en-us/office/vba/api/office.msohyperlinktype
-	RANGE = 0
-	SHAPE = 1
-	INLINE_SHAPE = 2
 
 
 class WdUnderline(DisplayStringIntEnum):
