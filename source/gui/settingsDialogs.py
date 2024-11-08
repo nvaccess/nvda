@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
-# Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
-# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
+#  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
+# Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
+# Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
+# Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -1124,6 +1125,8 @@ class GeneralSettingsPanel(SettingsPanel):
 
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
+			config.conf["braille"]["translationTable"] = "auto"
+			config.conf["braille"]["inputTable"] = "auto"
 			LanguageRestartDialog(self).ShowModal()
 
 
@@ -3104,8 +3107,12 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		# Translators: This is a label for the applications volume adjuster combo box in settings.
-		label = _("&Application volume adjuster status")
+		label = _(
+			# Translators: This is a label for the
+			# "allow NVDA to control the volume of other applications"
+			# combo box in settings.
+			"&Allow NVDA to control the volume of other applications:",
+		)
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
@@ -3206,7 +3213,7 @@ class AudioPanel(SettingsPanel):
 		audio.appsVolume._updateAppsVolumeImpl(
 			volume=self.appSoundVolSlider.GetValue() / 100.0,
 			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentValue(),
+			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
 		)
 
 		if audioDucking.isAudioDuckingSupported():
@@ -4381,11 +4388,20 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
-		outTableChoices = [table.displayName for table in self.outTables]
+		outTableForCurLangIndex = self.outTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT),
+		)
+		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		outTableChoices = [_("Automatic ({name})").format(name=self.outTableForCurLang.displayName)]
+		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
 		try:
-			selection = self.outTables.index(braille.handler.table)
+			if config.conf["braille"]["translationTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.outTables.index(braille.handler.table) + 1
 			self.outTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4398,11 +4414,21 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
 		self.inTables = [table for table in tables if table.input]
-		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableNames = [table.fileName for table in self.inTables]
+		inTableForCurLangIndex = self.inTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT),
+		)
+		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		inTableChoices = [_("Automatic ({name})").format(name=self.inTableForCurLang.displayName)]
+		inTableChoices.extend([table.displayName for table in self.inTables])
 		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		self.bindHelpEvent("BrailleSettingsInputTable", self.inTableList)
 		try:
-			selection = self.inTables.index(brailleInput.handler.table)
+			if config.conf["braille"]["inputTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.inTables.index(brailleInput.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4669,6 +4695,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
+		# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
+		speakOnNavigatingText = _("Speak when navigating by &line or paragraph")
+		self.speakOnNavigatingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=speakOnNavigatingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnNavigating", self.speakOnNavigatingCheckBox)
+		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4707,13 +4741,19 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
-
-		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
-		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
+		if self.outTableList.GetSelection() > 0:
+			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
+		else:
+			braille.handler.table = self.outTableForCurLang
+			config.conf["braille"]["translationTable"] = "auto"
+		if self.inTableList.GetSelection():
+			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
+		else:
+			brailleInput.handler.table = self.inTableForCurLang
+			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
-		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -4737,6 +4777,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			self.paragraphStartMarkersComboBox.GetSelection()
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
+		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[

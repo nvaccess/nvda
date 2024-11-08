@@ -41,6 +41,7 @@ import browseMode
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
+from ._msOffice import MsoHyperlink
 import locationHelper
 from enum import IntEnum
 import documentBase
@@ -804,14 +805,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						initialDocument=self.obj,
 					),
 				)
+
 		# Handle activating links.
+		link = self._getLinkAtCaretPosition()
+		if link:
+			link.follow()
+			return
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
-		tempRange.expand(wdWord)
-		links = tempRange.hyperlinks
-		if links.count > 0:
-			links[1].follow()
-			return
 		tempRange.expand(wdParagraph)
 		fields = tempRange.fields
 		for field in (fields.item(i) for i in range(1, fields.count + 1)):
@@ -846,6 +847,42 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
+
+	def _getLinkAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
+		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		links = tempRange.hyperlinks
+		if links.count > 0:
+			return links[1]
+		return None
+
+	def _getShapeAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
+		# It is necessary to expand to word to get a shape as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		shapes = tempRange.InlineShapes
+		if shapes.count > 0:
+			return shapes[1]
+		return None
+
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		link = self._getLinkAtCaretPosition()
+		if not link:
+			return None
+		match link.Type:
+			case MsoHyperlink.RANGE:
+				text = link.TextToDisplay
+			case MsoHyperlink.INLINE_SHAPE:
+				shape = self._getShapeAtCaretPosition()
+				text = shape.AlternativeText
+			case _:
+				log.debugWarning(f"No text to display for link type {link.Type}")
+				text = None
+		return textInfos._Link(
+			displayText=text,
+			destination=link.Address,
+		)
 
 	def _expandToLineAtCaret(self):
 		lineStart = ctypes.c_int()

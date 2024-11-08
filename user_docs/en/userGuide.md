@@ -2076,6 +2076,7 @@ The next option you will come to in this category is the braille output table co
 In this combo box, you will find braille tables for different languages, braille standards and grades.
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
+If you select "Automatic", the table will be selected according with NVDA's current language.
 
 ##### Input Table {#BrailleSettingsInputTable}
 
@@ -2278,6 +2279,12 @@ If this is enabled, NVDA will automatically speak the character at the cursor wh
 
 To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+##### Speak when navigating by line or paragraph {#BrailleSpeakOnNavigating}
+
+Enabling this option will cause NVDA to speak lines or paragraphs reached using the braille display's navigation controls.
+
+To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
@@ -2465,35 +2472,39 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
+##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
 
-This combo box allows you to select the status of the applications volume adjuster.
-The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (No), No, Yes|
+|Default |No|
+
+This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
 
 Possible values are:
 
-* Disabled: NVDA doesn't interfere with volume levels of other applications.
-* Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
+* No: NVDA doesn't interfere with the volume levels of other applications.
+* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
+Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
 
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
 This volume can also be controlled via the following keyboard commands from anywhere:
 
 | Name | Key | Description |
 |---|---|---|
-| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
-| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
+| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Muting other applications {#OtherAppMute}
+##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
-This mute setting will apply to all other applications sound output, even if they start after this setting is changed.
 
 The following keyboard command can also be used from anywhere:
 
@@ -3446,7 +3457,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
 In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
-Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\\\b" should be typed in order to get the "a\\b" replacement.
 
 #### Input Gestures {#InputGestures}
 

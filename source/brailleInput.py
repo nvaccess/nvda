@@ -456,8 +456,11 @@ class BrailleInputHandler(AutoPropertyObject):
 		newTableName = brailleTables.RENAMED_TABLES.get(tableName)
 		if newTableName:
 			tableName = config.conf["braille"]["inputTable"] = newTableName
-		table = config.conf["braille"]["inputTable"]
-		if table != self._table.fileName:
+		if config.conf["braille"]["inputTable"] == "auto":
+			tableName = brailleTables.getDefaultTableForCurLang(
+				brailleTables.TableType.INPUT,
+			)
+		if tableName != self._table.fileName:
 			try:
 				self._table = brailleTables.getTable(tableName)
 			except LookupError:
