@@ -147,7 +147,7 @@ A `triaged` issue should also have a [priority label](#priority).
 Community members should avoid adding a `triaged` label to feature requests or other decisions potentially involving significant or controversial changes to NVDA features or functionality, which may require community input or approval from NV Access.
 The label should also be avoided for other issues that are controversial, or where the priority is unclear, such as bug fixes with an unclear solution.
 For changes where a product decision from NV Access is required before applying the `triaged` label, the label `blocked/needs-product-decision` should be used.
-Community members should apply the `triaged` where an issue is:
+Community members should apply the `triaged` label where an issue is:
 
 * A well formed bug report following the issue template
 * Which can easily be understood
@@ -158,7 +158,7 @@ Community members should apply the `triaged` where an issue is:
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
-You can do this by tagging @nvaccess/developers or mailing info@nvaccess.org.
+You can do this by tagging @nvaccess/developers or emailing info@nvaccess.org.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
 
