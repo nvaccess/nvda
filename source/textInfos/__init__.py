@@ -340,8 +340,8 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 
 
 @dataclass
-class _Link:
-	"""Class to store information on a link in text."""
+class _LinkData:
+	"""Class to store information on a link."""
 
 	displayText: str | None
 	destination: str
@@ -713,7 +713,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX, oldY)
 
-	def _getLinkDataAtCaretPosition(self) -> _Link | None:
+	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
 		self.expand(UNIT_CHARACTER)
 		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
 		if obj.role == controlTypes.role.Role.GRAPHIC and (
@@ -726,7 +726,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
 			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
 		):
-			return _Link(
+			return _LinkData(
 				displayText=obj.name,
 				destination=obj.value,
 			)
@@ -783,7 +783,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			exactly 1 character.
 			A good illustration of this is in Microsoft Word with UIA enabled always,
 			the first character of a bullet list item would be represented by three pythonic codepoint characters:
-			* Bullet character "•"
+			* Bullet character "Ã¢â‚¬Â¢"
 			* Tab character \t
 			* And the first character of of list item per se.
 

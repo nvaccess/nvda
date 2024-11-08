@@ -29,6 +29,7 @@ from tableUtils import HeaderCellTracker
 import config
 from config.configFlags import ReportCellBorders
 import textInfos
+from textInfos import _LinkData
 import colors
 import eventHandler
 import api
@@ -1368,21 +1369,6 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 	def _get_locationText(self):
 		return self.obj.getCellPosition()
 
-	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
-		links = self.obj.excelCellObject.Hyperlinks
-		if links.count == 0:
-			return None
-		link = links(1)
-		if link.Type == MsoHyperlink.RANGE:
-			text = link.TextToDisplay
-		else:
-			log.debugWarning(f"No text to display for link type {link.Type}")
-			text = None
-		return textInfos._Link(
-			displayText=text,
-			destination=link.Address,
-		)
-
 
 NVCELLINFOFLAG_ADDRESS = 0x1
 NVCELLINFOFLAG_TEXT = 0x2
@@ -1709,6 +1695,21 @@ class ExcelCell(ExcelBase):
 		if controlTypes.State.LINKED in self.states:
 			return controlTypes.Role.LINK
 		return controlTypes.Role.TABLECELL
+
+	def _get_linkData(self) -> _LinkData | None:
+		links = self.excelCellObject.Hyperlinks
+		if links.count == 0:
+			return None
+		link = links(1)
+		if link.Type == MsoHyperlink.RANGE:
+			text = link.TextToDisplay
+		else:
+			log.debugWarning(f"No text to display for link type {link.Type}")
+			text = None
+		return _LinkData(
+			displayText=text,
+			destination=link.Address,
+		)
 
 	TextInfo = ExcelCellTextInfo
 

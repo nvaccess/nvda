@@ -4282,10 +4282,13 @@ class GlobalCommands(ScriptableObject):
 		"""
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
+			link = ti._getLinkDataAtCaretPosition()
 		except RuntimeError:
-			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
-		link = ti._getLinkDataAtCaretPosition()
+			obj = api.getFocusObject()
+			try:
+				link = obj.linkData
+			except NotImplementedError:
+				link = None
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
 			if link.destination is None:
