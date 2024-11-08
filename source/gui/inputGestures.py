@@ -28,7 +28,6 @@ import ui
 from locale import strxfrm
 from .settingsDialogs import SettingsDialog
 
-
 #: Type for structure returned by inputCore
 _ScriptsModel = Dict[
 	str,  # script display name
@@ -839,7 +838,29 @@ class InputGesturesDialog(SettingsDialog):
 		classObj = getattr(module, scriptVM.scriptInfo.className)
 		className = scriptVM.scriptInfo.className
 		log.info(f"class {className}")
-		shouldRunInmediately = True
+		from globalCommands import (
+			SCRCAT_AUDIO,
+			SCRCAT_CONFIG,
+			SCRCAT_CONFIG_PROFILES,
+			SCRCAT_DOCUMENTFORMATTING,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_SPEECH,
+			SCRCAT_TEXTREVIEW,
+			SCRCAT_TOOLS,
+			SCRCAT_VISION,
+		)
+
+		shouldRunInmediately = scriptVM.scriptInfo.category in (
+			SCRCAT_AUDIO,
+			SCRCAT_CONFIG,
+			SCRCAT_CONFIG_PROFILES,
+			SCRCAT_DOCUMENTFORMATTING,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_SPEECH,
+			SCRCAT_TEXTREVIEW,
+			SCRCAT_TOOLS,
+			SCRCAT_VISION,
+		)
 		from globalCommands import commands
 
 		match className.split(".")[-1]:
@@ -869,8 +890,6 @@ class InputGesturesDialog(SettingsDialog):
 				).split(":", 1)
 				gesture = gestureSourceClass.fromName(normalizedMain)
 		script = getattr(o, scriptName)
-		from globalCommands import SCRCAT_OBJECTNAVIGATION
-
 		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
