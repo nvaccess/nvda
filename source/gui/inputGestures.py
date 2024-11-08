@@ -839,17 +839,24 @@ class InputGesturesDialog(SettingsDialog):
 		classObj = getattr(module, scriptVM.scriptInfo.className)
 		className = scriptVM.scriptInfo.className
 		log.info(f"class {className}")
+		shouldRunInmediately = True
 		from globalCommands import commands
 
 		match className.split(".")[-1]:
 			case "AppModule":
 				o = classObj(self.prevProcessID)
+				shouldRunInmediately = False
 			case "GlobalPlugin":
 				o = classObj()
+				shouldRunInmediately = False
 			case "GlobalCommands":
 				o = commands
+			case "ConfigProfileActivationCommands":
+				o = classObj()
+				shouldRunInmediately = False
 			case _:
 				o = self.prevFocus
+				shouldRunInmediately = False
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		gesture = None
 		gestureSourceClass = None
@@ -868,7 +875,7 @@ class InputGesturesDialog(SettingsDialog):
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
-		elif o is commands:
+		elif shouldRunInmediately:
 			scriptHandler.executeScript(script, gesture)
 		else:
 			commands.lastSavedScript = script
