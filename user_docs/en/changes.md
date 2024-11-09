@@ -63,6 +63,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
 * NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
+* When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
 
 ### Changes for Developers
 

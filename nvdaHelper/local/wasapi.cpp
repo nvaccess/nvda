@@ -43,6 +43,8 @@ const IID IID_IAudioRenderClient = __uuidof(IAudioRenderClient);
 const IID IID_IAudioClock = __uuidof(IAudioClock);
 const IID IID_IMMNotificationClient = __uuidof(IMMNotificationClient);
 const IID IID_IAudioStreamVolume = __uuidof(IAudioStreamVolume);
+const IID IID_IAudioSessionManager2 = __uuidof(IAudioSessionManager2);
+const IID IID_IAudioSessionControl2 = __uuidof(IAudioSessionControl2);
 
 /**
  * C++ RAII class to manage the lifecycle of a standard Windows HANDLE closed
@@ -214,6 +216,8 @@ class WasapiPlayer {
 	HRESULT getPreferredDevice(CComPtr<IMMDevice>& preferredDevice);
 	bool didPreferredDeviceBecomeAvailable();
 
+	HRESULT disableCommunicationDucking(IMMDevice* device);
+
 	enum class PlayState {
 		stopped,
 		playing,
@@ -303,6 +307,11 @@ HRESULT WasapiPlayer::open(bool force) {
 		return hr;
 	}
 	playState = PlayState::stopped;
+	hr = disableCommunicationDucking(device);
+	if (FAILED(hr)) {
+		// Gracefully ignore failure, as disabling ducking isn't critical.
+		LOG_DEBUGWARNING(L"Couldn't disable communication ducking: " << hr);
+	}
 	return S_OK;
 }
 
@@ -632,6 +641,29 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 		return hr;
 	}
 	return volume->SetChannelVolume(channel, level);
+}
+
+HRESULT WasapiPlayer::disableCommunicationDucking(IMMDevice* device) {
+	// Disable the default ducking experience used when a communication audio
+	// session is active, as we never want NVDA's audio to be ducked.
+	// https://learn.microsoft.com/en-us/windows/win32/coreaudio/stream-attenuation
+	// https://learn.microsoft.com/en-us/windows/win32/coreaudio/disabling-the-ducking-experience
+	CComPtr<IAudioSessionManager2> manager;
+	HRESULT hr = device->Activate(IID_IAudioSessionManager2, CLSCTX_ALL, nullptr,
+		(void**)&manager);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	CComPtr<IAudioSessionControl> control;
+	hr = manager->GetAudioSessionControl(nullptr, 0, &control);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	CComQIPtr<IAudioSessionControl2, &IID_IAudioSessionControl2> control2(control);
+	if (!control2) {
+		return E_NOINTERFACE;
+	}
+	return control2->SetDuckingPreference(TRUE);
 }
 
 /**
