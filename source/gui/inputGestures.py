@@ -854,27 +854,17 @@ class InputGesturesDialog(SettingsDialog):
 		if scriptCategory in (SCRCAT_BRAILLE, SCRCAT_KBEMU):
 			ui.message(
 				_(
-<<<<<<< HEAD
 					# Translators: Presented when a command is intended to be run from a braille display."
 					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display."
 				)
-=======
-					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display.",
-				),
->>>>>>> 9c63f6f74741f9d36c0f007e4e56163f4245cdd2
 			)
 			return
 		if scriptCategory == SCRCAT_TOUCH:
 			ui.message(
 				_(
-<<<<<<< HEAD
 					# Translators: Presented when a command is intended to be run from a braille display."
 					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen."
 				)
-=======
-					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen.",
-				),
->>>>>>> 9c63f6f74741f9d36c0f007e4e56163f4245cdd2
 			)
 			return
 		shouldRunInmediately = scriptCategory in (
