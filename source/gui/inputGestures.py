@@ -855,16 +855,16 @@ class InputGesturesDialog(SettingsDialog):
 			ui.message(
 				_(
 					# Translators: Presented when a command is intended to be run from a braille display."
-					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display."
-				)
+					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display.",
+				),
 			)
 			return
 		if scriptCategory == SCRCAT_TOUCH:
 			ui.message(
 				_(
 					# Translators: Presented when a command is intended to be run from a braille display."
-					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen."
-				)
+					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen.",
+				),
 			)
 			return
 		shouldRunInmediately = scriptCategory in (
@@ -935,8 +935,8 @@ class InputGesturesDialog(SettingsDialog):
 			ui.message(
 				_(
 					# Translators: Reported when a command has been saved from input gestures dialog.
-					"Command saved. To run this command, press the OK button and then NVDA+j or the corresponding custom gesture."
-				)
+					"Command saved. To run this command, press the OK button and then NVDA+j or the corresponding custom gesture.",
+				),
 			)
 
 	def onChar(self, evt):
