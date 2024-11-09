@@ -592,7 +592,6 @@ class InputGesturesDialog(SettingsDialog):
 		super().__init__(parent, resizeable=True)
 		self.prevFocus = api.getFocusObject()
 		self.prevNav = api.getNavigatorObject()
-		self.prevReviewPosition = api.getReviewPosition()
 		self.prevProcessID = self.prevFocus.processID
 
 	def makeSettings(self, settingsSizer):
@@ -841,7 +840,6 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_DOCUMENTFORMATTING,
 			SCRCAT_OBJECTNAVIGATION,
 			SCRCAT_SPEECH,
-			SCRCAT_TEXTREVIEW,
 			SCRCAT_TOOLS,
 			SCRCAT_TOUCH,
 			SCRCAT_VISION,
@@ -874,7 +872,6 @@ class InputGesturesDialog(SettingsDialog):
 			SCRCAT_DOCUMENTFORMATTING,
 			SCRCAT_OBJECTNAVIGATION,
 			SCRCAT_SPEECH,
-			SCRCAT_TEXTREVIEW,
 			SCRCAT_TOOLS,
 			SCRCAT_VISION,
 		)
@@ -921,13 +918,11 @@ class InputGesturesDialog(SettingsDialog):
 		script = getattr(o, scriptName)
 		if scriptName == "script_reviewCursorToStatusLine":
 			shouldRunInmediately = False
-		if scriptCategory in (SCRCAT_OBJECTNAVIGATION, SCRCAT_TEXTREVIEW) and shouldRunInmediately:
+		if scriptCategory == SCRCAT_OBJECTNAVIGATION:
 			api.setNavigatorObject(self.prevNav)
-			api.setReviewPosition(self.prevReviewPosition)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
-			self.prevReviewPosition = api.getReviewPosition()
-		elif shouldRunInmediately:
+		elif -shouldRunInmediately:
 			scriptHandler.executeScript(script, gesture)
 		else:
 			commands.lastSavedScript = script
