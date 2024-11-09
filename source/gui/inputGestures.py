@@ -924,6 +924,7 @@ class InputGesturesDialog(SettingsDialog):
 			"script_navigatorObject_toFocus",
 			"script_reviewMode_previous",
 			"script_reviewMode_next",
+			"script_runLastSavedScript",
 		):
 			shouldRunInmediately = False
 		if scriptCategory in (SCRCAT_OBJECTNAVIGATION, SCRCAT_TEXTREVIEW) and shouldRunInmediately:
@@ -934,6 +935,8 @@ class InputGesturesDialog(SettingsDialog):
 			self.prevReviewPosition = api.getReviewPosition()
 		elif -shouldRunInmediately:
 			scriptHandler.executeScript(script, gesture)
+		elif scriptName == "script_runLastSavedScript":
+			return
 		else:
 			commands.lastSavedScript = script
 			commands.lastSavedGesture = gesture
