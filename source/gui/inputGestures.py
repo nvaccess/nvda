@@ -592,7 +592,7 @@ class InputGesturesDialog(SettingsDialog):
 		super().__init__(parent, resizeable=True)
 		self.prevFocus = api.getFocusObject()
 		self.prevNav = api.getNavigatorObject()
-		self.prevForeground = api.getForegroundObject()
+		self.prevReviewPosition = api.getReviewPosition()
 		self.prevProcessID = self.prevFocus.processID
 
 	def makeSettings(self, settingsSizer):
@@ -852,17 +852,17 @@ class InputGesturesDialog(SettingsDialog):
 
 		scriptCategory = scriptVM.scriptInfo.category
 		if scriptCategory in (SCRCAT_BRAILLE, SCRCAT_KBEMU):
-			# Translators: Presented when a command is intended to be run from a braille display."
 			ui.message(
 				_(
+					# Translators: Presented when a command is intended to be run from a braille display."
 					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display."
 				)
 			)
 			return
 		if scriptCategory == SCRCAT_TOUCH:
-			# Translators: Presented when a command is intended to be run from a braille display."
 			ui.message(
 				_(
+					# Translators: Presented when a command is intended to be run from a braille display."
 					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen."
 				)
 			)
@@ -923,16 +923,18 @@ class InputGesturesDialog(SettingsDialog):
 			shouldRunInmediately = False
 		if scriptCategory in (SCRCAT_OBJECTNAVIGATION, SCRCAT_TEXTREVIEW) and shouldRunInmediately:
 			api.setNavigatorObject(self.prevNav)
+			api.setReviewPosition(self.prevReviewPosition)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
+			self.prevReviewPosition = api.getReviewPosition()
 		elif shouldRunInmediately:
 			scriptHandler.executeScript(script, gesture)
 		else:
 			commands.lastSavedScript = script
 			commands.lastSavedGesture = gesture
-			# Translators: Reported when a command has been saved from input gestures dialog.
 			ui.message(
 				_(
+					# Translators: Reported when a command has been saved from input gestures dialog.
 					"Command saved. To run this command, press the OK button and then NVDA+j or the corresponding custom gesture."
 				)
 			)
