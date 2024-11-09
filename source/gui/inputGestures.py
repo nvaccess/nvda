@@ -11,7 +11,6 @@ import importlib
 import itertools
 import re
 from typing import Tuple, Union, Dict
-
 import wx
 from wx.lib.mixins.treemixin import VirtualTree
 import wx.lib.newevent
@@ -833,34 +832,59 @@ class InputGesturesDialog(SettingsDialog):
 		assert selectedItems is not None
 		catVM, scriptVM, gestureVM = selectedItems
 		log.debug(f"selection: {catVM}, {scriptVM}, {gestureVM}")
+
+		from globalCommands import (
+			SCRCAT_AUDIO,
+			SCRCAT_BRAILLE,
+			SCRCAT_CONFIG,
+			SCRCAT_CONFIG_PROFILES,
+			SCRCAT_DOCUMENTFORMATTING,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_SPEECH,
+			SCRCAT_TEXTREVIEW,
+			SCRCAT_TOOLS,
+			SCRCAT_TOUCH,
+			SCRCAT_VISION,
+		)
+		from inputCore import (
+			SCRCAT_KBEMU,
+		)
+
+		scriptCategory = scriptVM.scriptInfo.category
+		if scriptCategory in (SCRCAT_BRAILLE, SCRCAT_KBEMU):
+			# Translators: Presented when a command is intended to be run from a braille display."
+			ui.message(
+				_(
+					"This command cannot be run from the input gestures dialog. It's intended to be run from a braille display."
+				)
+			)
+			return
+		if scriptCategory == SCRCAT_TOUCH:
+			# Translators: Presented when a command is intended to be run from a braille display."
+			ui.message(
+				_(
+					"This command cannot be run from the input gestures dialog. It's intended to be run from a touchscreen."
+				)
+			)
+			return
+		shouldRunInmediately = scriptCategory in (
+			SCRCAT_AUDIO,
+			SCRCAT_CONFIG,
+			SCRCAT_CONFIG_PROFILES,
+			SCRCAT_DOCUMENTFORMATTING,
+			SCRCAT_OBJECTNAVIGATION,
+			SCRCAT_SPEECH,
+			SCRCAT_TEXTREVIEW,
+			SCRCAT_TOOLS,
+			SCRCAT_VISION,
+		)
 		scriptModule = scriptVM.scriptInfo.moduleName
 		module = importlib.import_module(scriptModule)
 		classObj = getattr(module, scriptVM.scriptInfo.className)
 		className = scriptVM.scriptInfo.className
 		log.info(f"class {className}")
-		from globalCommands import (
-			SCRCAT_AUDIO,
-			SCRCAT_CONFIG,
-			SCRCAT_CONFIG_PROFILES,
-			SCRCAT_DOCUMENTFORMATTING,
-			SCRCAT_OBJECTNAVIGATION,
-			SCRCAT_SPEECH,
-			SCRCAT_TEXTREVIEW,
-			SCRCAT_TOOLS,
-			SCRCAT_VISION,
-		)
-
-		shouldRunInmediately = scriptVM.scriptInfo.category in (
-			SCRCAT_AUDIO,
-			SCRCAT_CONFIG,
-			SCRCAT_CONFIG_PROFILES,
-			SCRCAT_DOCUMENTFORMATTING,
-			SCRCAT_OBJECTNAVIGATION,
-			SCRCAT_SPEECH,
-			SCRCAT_TEXTREVIEW,
-			SCRCAT_TOOLS,
-			SCRCAT_VISION,
-		)
+		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
+		log.info(scriptName)
 		from globalCommands import commands
 
 		match className.split(".")[-1]:
@@ -875,14 +899,19 @@ class InputGesturesDialog(SettingsDialog):
 			case "ConfigProfileActivationCommands":
 				o = classObj()
 				shouldRunInmediately = False
+			case "BrowseModeTreeInterceptor":
+				o = self.prevFocus.treeInterceptor
+			case "CursorManager":
+				o = self.prevFocus.treeInterceptor
 			case _:
 				o = self.prevFocus
 				shouldRunInmediately = False
-		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
+
 		gesture = None
 		gestureSourceClass = None
 		if gestureVM is not None:
 			gestureSourceClass = inputCore._getGestureClsForIdentifier(gestureVM.normalizedGestureIdentifier)
+			log.info(gestureSourceClass.__name__)
 			if gestureSourceClass.__name__ == "KeyboardInputGesture":
 				source, normalizedMain = inputCore.normalizeGestureIdentifier(
 					gestureVM.normalizedGestureIdentifier,
@@ -890,7 +919,9 @@ class InputGesturesDialog(SettingsDialog):
 				).split(":", 1)
 				gesture = gestureSourceClass.fromName(normalizedMain)
 		script = getattr(o, scriptName)
-		if scriptVM.scriptInfo.category == SCRCAT_OBJECTNAVIGATION:
+		if scriptName == "script_reviewCursorToStatusLine":
+			shouldRunInmediately = False
+		if scriptCategory in (SCRCAT_OBJECTNAVIGATION, SCRCAT_TEXTREVIEW) and shouldRunInmediately:
 			api.setNavigatorObject(self.prevNav)
 			scriptHandler.executeScript(script, gesture)
 			self.prevNav = api.getNavigatorObject()
@@ -900,7 +931,11 @@ class InputGesturesDialog(SettingsDialog):
 			commands.lastSavedScript = script
 			commands.lastSavedGesture = gesture
 			# Translators: Reported when a command has been saved from input gestures dialog.
-			ui.message(_("Command saved"))
+			ui.message(
+				_(
+					"Command saved. To run this command, press the OK button and then NVDA+j or the corresponding custom gesture."
+				)
+			)
 
 	def onChar(self, evt):
 		if evt.GetKeyCode() == wx.WXK_SPACE:
