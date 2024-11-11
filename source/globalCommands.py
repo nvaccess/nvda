@@ -374,6 +374,29 @@ class GlobalCommands(ScriptableObject):
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
 
+	@staticmethod
+	def _getSelection() -> textInfos.TextInfo | None:
+		"""Gets the current selection, if any.
+		:return: The TextInfo corresponding to the current selection, or None if no selection is available.
+		"""
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+		except (RuntimeError, NotImplementedError):
+			info = None
+		if not info or info.isCollapsed:
+			# Translators: The message reported when there is no selection
+			ui.message(_("No selection"))
+			return None
+		selection = info.copy()
+		return selection
+
 	@script(
 		description=_(
 			# Translators: Input help mode message for report date and time command.
@@ -2188,16 +2211,43 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
-			# Translators: Input help mode message for move review cursor to end of current line command.
-			"Moves the review cursor to the last character of the line "
-			"where it is situated in the current navigator object and speaks it",
+			# Translators: Input help mode message for move review cursor to start of selection command.
+			"Moves the review cursor to the first character of the selection, and speaks it"
 		),
 		category=SCRCAT_TEXTREVIEW,
-		gestures=("kb:shift+numpad3", "kb(laptop):NVDA+end"),
+		gesture="kb:NVDA+alt+home",
 	)
-	def script_review_endOfLine(self, gesture: inputCore.InputGesture):
-		info = api.getReviewPosition().copy()
-		info.expand(textInfos.UNIT_LINE)
+	def script_review_startOfSelection(self, gesture: inputCore.InputGesture):
+		info = self._getSelection()
+		if info is None:
+			return
+		info.collapse()
+
+		# This script is available on the lock screen via getSafeScripts, as such
+		# ensure the review position does not contain secure information
+		# before announcing this object
+		if api.setReviewPosition(info):
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(
+				info,
+				unit=textInfos.UNIT_CHARACTER,
+				reason=controlTypes.OutputReason.CARET,
+			)
+		else:
+			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for move review cursor to end of selection command.
+			"Moves the review cursor to the last character of the selection, and speaks it"
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+alt+end",
+	)
+	def script_review_endOfSelection(self, gesture: inputCore.InputGesture):
+		info = self._getSelection()
+		if info is None:
+			return
 		info.collapse(end=True)
 		info.move(textInfos.UNIT_CHARACTER, -1)
 
@@ -2213,7 +2263,6 @@ class GlobalCommands(ScriptableObject):
 			)
 		else:
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
-			return
 
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
