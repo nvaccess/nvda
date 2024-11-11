@@ -29,7 +29,7 @@ import gui  # noqa: E402
 from logHandler import log  # noqa: E402
 import braille  # noqa: E402
 import gui.contextHelp  # noqa: E402
-import textInfos
+import textInfos  # noqa: E402
 
 
 class HelpCommand(object):
