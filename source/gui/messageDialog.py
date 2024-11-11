@@ -109,27 +109,27 @@ class Button(NamedTuple):
 	callback: Callback_T | None = None
 	"""The callback to call when the button is clicked."""
 
-	default_focus: bool = False
+	defaultFocus: bool = False
 	"""Whether this button should explicitly be the default focused button.
 
 	:note: This only overrides the default focus.
 	If no buttons have this property, the first button will be the default focus.
 	"""
 
-	default_action: bool = False
-	"""Whether this button is the default action.
+	fallbackAction: bool = False
+	"""Whether this button is the fallback action.
 
-	The default action is called when the user presses escape, the title bar close button, or the system menu close item.
+	The fallback action is called when the user presses escape, the title bar close button, or the system menu close item.
 	It is also called when programatically closing the dialog, such as when shutting down NVDA.
 
-	:note: This only sets whether to override the default action.
-		EscapeCode.DEFAULT may still result in this button being the default action.
+	:note: This only sets whether to override the fallback action.
+		`EscapeCode.DEFAULT` may still result in this button being the fallback action, even if `fallbackAction=False`.
 	"""
 
-	closes_dialog: bool = True
+	closesDialog: bool = True
 	"""Whether this button should close the dialog when clicked.
 
-	:note: Buttons with default_action=True and closes_dialog=False are not supported.
+	:note: Buttons with fallbackAction=True and closesDialog=False are not supported.
 		See the documentation of c{MessageDialog} for information on how these buttons are handled.
 	"""
 
@@ -148,11 +148,11 @@ class DefaultButton(Button, Enum):
 	# Translators: A save button on a message dialog.
 	SAVE = Button(id=ReturnCode.SAVE, label=_("&Save"))
 	# Translators: An apply button on a message dialog.
-	APPLY = Button(id=ReturnCode.APPLY, label=_("&Apply"), closes_dialog=False)
+	APPLY = Button(id=ReturnCode.APPLY, label=_("&Apply"), closesDialog=False)
 	# Translators: A close button on a message dialog.
 	CLOSE = Button(id=ReturnCode.CLOSE, label=_("Close"))
 	# Translators: A help button on a message dialog.
-	HELP = Button(id=ReturnCode.HELP, label=_("Help"), closes_dialog=False)
+	HELP = Button(id=ReturnCode.HELP, label=_("Help"), closesDialog=False)
 
 
 class DefaultButtonSet(tuple[DefaultButton], Enum):
@@ -182,7 +182,7 @@ class _Command(NamedTuple):
 
 	callback: Callback_T | None = None
 	"""The callback function to be executed. Defaults to None."""
-	closes_dialog: bool = True
+	closesDialog: bool = True
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
 
 
@@ -271,9 +271,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		label: str,
 		*args,
 		callback: Callback_T | None = None,
-		default_focus: bool = False,
-		default_action: bool = False,
-		closes_dialog: bool = True,
+		defaultFocus: bool = False,
+		fallbackAction: bool = False,
+		closesDialog: bool = True,
 		**kwargs,
 	) -> Self:
 		"""Add a button to the dialog.
@@ -283,30 +283,30 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param label: Text label to show on this button.
 		:param callback: Function to call when the button is pressed, defaults to None.
 			This is most useful for dialogs that are shown modelessly.
-		:param default_focus: whether this button should receive focus when the dialog is first opened, defaults to False.
-			If multiple buttons with `default_focus=True` are added, the last one added will receive initial focus.
-		:param default_action: Whether or not this button should be the default action for the dialog, defaults to False.
-			The default action is called when the user closes the dialog with the escape key, title bar close button, system menu close item etc.
-			If multiple buttons with `default_action=True` are added, the last one added will be the default action.
-		:param closes_dialog: Whether the button should close the dialog when pressed, defaults to True.
+		:param defaultFocus: whether this button should receive focus when the dialog is first opened, defaults to False.
+			If multiple buttons with `defaultFocus=True` are added, the last one added will receive initial focus.
+		:param fallbackAction: Whether or not this button should be the fallback action for the dialog, defaults to False.
+			The fallback action is called when the user closes the dialog with the escape key, title bar close button, system menu close item etc.
+			If multiple buttons with `fallbackAction=True` are added, the last one added will be the fallback action.
+		:param closesDialog: Whether the button should close the dialog when pressed, defaults to True.
 		:return: The updated instance for chaining.
 		"""
 		button = self._buttonHelper.addButton(self, id, label, *args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
 		self.AddMainButtonId(buttonId)
-		# Default actions that do not close the dialog do not make sense.
-		if default_action and not closes_dialog:
+		# fallback actions that do not close the dialog do not make sense.
+		if fallbackAction and not closesDialog:
 			log.warning(
-				"Default actions that do not close the dialog are not supported. Forcing close_dialog to True.",
+				"fallback actions that do not close the dialog are not supported. Forcing close_dialog to True.",
 			)
 		self._commands[buttonId] = _Command(
 			callback=callback,
-			closes_dialog=closes_dialog or default_action,
+			closesDialog=closesDialog or fallbackAction,
 		)
-		if default_focus:
+		if defaultFocus:
 			self.SetDefaultItem(button)
-		if default_action:
+		if fallbackAction:
 			self.setDefaultAction(buttonId)
 		self._isLayoutFullyRealized = False
 		return self
@@ -319,9 +319,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		*args,
 		label: str | None = None,
 		callback: Callback_T | None = None,
-		default_focus: bool | None = None,
-		default_action: bool | None = None,
-		closes_dialog: bool | None = None,
+		defaultFocus: bool | None = None,
+		fallbackAction: bool | None = None,
+		closesDialog: bool | None = None,
 		**kwargs,
 	) -> Self:
 		"""Add a :class:`Button` to the dialog.
@@ -329,9 +329,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param button: The button to add.
 		:param label: Override for `button.label`, defaults to None.
 		:param callback: Override for `button.callback`, defaults to None.
-		:param default_focus: Override for `button.default_focus`, defaults to None.
-		:param default_action: Override for `button.default_action`, defaults to None
-		:param closes_dialog: Override for `button.closes_dialog`, defaults to None
+		:param defaultFocus: Override for `button.defaultFocus`, defaults to None.
+		:param fallbackAction: Override for `button.fallbackAction`, defaults to None
+		:param closesDialog: Override for `button.closesDialog`, defaults to None
 		:return: Updated dialog instance for chaining.
 
 		.. seealso:: :class:`Button`
@@ -342,14 +342,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		del keywords["id"]  # Guaranteed to exist.
 		if label is not None:
 			keywords["label"] = label
-		if default_focus is not None:
-			keywords["default_focus"] = default_focus
-		if default_action is not None:
-			keywords["default_action"] = default_action
+		if defaultFocus is not None:
+			keywords["defaultFocus"] = defaultFocus
+		if fallbackAction is not None:
+			keywords["fallbackAction"] = fallbackAction
 		if callback is not None:
 			keywords["callback"] = callback
-		if closes_dialog is not None:
-			keywords["closes_dialog"] = closes_dialog
+		if closesDialog is not None:
+			keywords["closesDialog"] = closesDialog
 		keywords.update(kwargs)
 		return self.addButton(id, *args, **keywords)
 
@@ -406,7 +406,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		:param id: The ID of the action to take.
 			This should be the ID of the button that the user can press to explicitly perform this action.
-			The action should have closes_dialog=True.
+			The action should have `closesDialog=True`.
 
 			The following special values are also supported:
 				* EscapeCode.NONE: If the dialog should only be closable via presses of internal buttons.
@@ -420,8 +420,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if id not in (EscapeCode.DEFAULT, EscapeCode.NONE):
 			if id not in self._commands:
 				raise KeyError(f"No command registered for {id=}.")
-		if not self._commands[id].closes_dialog:
-			raise ValueError("Default actions that do not close the dialog are not supported.")
+		if not self._commands[id].closesDialog:
+			raise ValueError("fallback actions that do not close the dialog are not supported.")
 		super().SetEscapeId(id)
 		return self
 
@@ -472,7 +472,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	@property
 	def hasDefaultAction(self) -> bool:
-		"""Whether the dialog has a valid default action."""
+		"""Whether the dialog has a valid fallback action."""
 		escapeId = self.GetEscapeId()
 		return escapeId != EscapeCode.NONE and (
 			any(command in (ReturnCode.CANCEL, ReturnCode.OK) for command in self._commands)
@@ -485,7 +485,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# region Public class methods
 	@classmethod
 	def CloseInstances(cls) -> None:
-		"""Close all dialogs with a default action"""
+		"""Close all dialogs with a fallback action"""
 		for instance in cls._instances:
 			if not instance.isBlocking:
 				instance.Close()
@@ -533,11 +533,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
-	def _getDefaultAction(self) -> tuple[int, _Command | None]:
-		"""Get the default action of this dialog.
+	def _getFallbackAction(self) -> tuple[int, _Command | None]:
+		"""Get the fallback action of this dialog.
 
 		:raises RuntimeError: If attempting to get the default command from commands fails.
-		:return: The id and command of the default action.
+		:return: The id and command of the fallback action.
 		"""
 		escapeId = self.GetEscapeId()
 		if escapeId == EscapeCode.NONE:
@@ -562,32 +562,32 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 					f"Escape ID {escapeId} is not associated with a command",
 				)
 
-	def _getDefaultActionOrFallback(self) -> tuple[int, _Command]:
+	def _getFallbackActionOrFallback(self) -> tuple[int, _Command]:
 		"""Get a command that is guaranteed to close this dialog.
 
 		Commands are returned in the following order of preference:
 
-		1. The developer-set default action.
+		1. The developer-set fallback action.
 		2. The developer-set default focus.
 		3. The first button in the dialog explicitly set to close the dialog.
 		4. The first button in the dialog, regardless of whether it closes the dialog.
 		5. A new action, with id=EscapeCode.NONE and no callback.
 
-		In all cases, if the command has `closes_dialog=False`, this will be overridden to `True` in the returned copy.
+		In all cases, if the command has `closesDialog=False`, this will be overridden to `True` in the returned copy.
 
 		:return: Id and command of the default command.
 		"""
 
 		def getAction() -> tuple[int, _Command]:
-			# Try using the user-specified default action.
+			# Try using the developer-specified fallback action.
 			try:
-				id, action = self._getDefaultAction()
+				id, action = self._getFallbackAction()
 				if action is not None:
 					return id, action
 			except KeyError:
-				log.debug("Default action was not in commands. This indicates a logic error.")
+				log.debug("fallback action was not in commands. This indicates a logic error.")
 
-			# Default action is unavailable. Try using the default focus instead.
+			# fallback action is unavailable. Try using the default focus instead.
 			try:
 				if (defaultFocus := self.GetDefaultItem()) is not None:
 					id = defaultFocus.GetId()
@@ -598,7 +598,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			# Default focus is unavailable. Try using the first registered command that closes the dialog instead.
 			firstCommand: tuple[int, _Command] | None = None
 			for id, command in self._commands.items():
-				if command.closes_dialog:
+				if command.closesDialog:
 					return id, command
 				if firstCommand is None:
 					firstCommand = (id, command)
@@ -614,9 +614,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			return EscapeCode.NONE, _Command()
 
 		id, command = getAction()
-		if not command.closes_dialog:
+		if not command.closesDialog:
 			log.warn(f"Overriding command for {id=} to close dialog.")
-			command = command._replace(closes_dialog=True)
+			command = command._replace(closesDialog=True)
 		return id, command
 
 	def _setIcon(self, type: DialogType) -> None:
@@ -648,15 +648,15 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
-			self._execute_command(*self._getDefaultActionOrFallback())
+			self._execute_command(*self._getFallbackActionOrFallback())
 			self._instances.remove(self)
 			self.EndModal(self.GetReturnCode())
 			self.Destroy()
 			return
 		if self.GetReturnCode() == 0:
 			# No button has been pressed, so this must be a close event from elsewhere.
-			id, command = self._getDefaultAction()
-			if id == EscapeCode.NONE or command is None or not command.closes_dialog:
+			id, command = self._getFallbackAction()
+			if id == EscapeCode.NONE or command is None or not command.closesDialog:
 				evt.Veto()
 				return
 			self.Hide()
