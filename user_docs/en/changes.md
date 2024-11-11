@@ -63,6 +63,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
 * NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
+* When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
 * Opening the Python console will no longer fail in case an error occurs while retrieving snapshot variables.
 
 ### Changes for Developers
@@ -72,13 +73,14 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
-  * Updated Ruff to 0.6.3. (#17102)
+  * Updated Ruff to 0.7.2. (#17102, #17260)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
   * Updated SCons to 4.8.1. (#17254)
   * Updated sphinx to 8.1.2 and sphinx-rtd-theme to 3.0.1. (#17284, @josephsl)
   * Updated Robot Framework to 7.1.1. (#17329, @josephsl)
   * Updated configobj to 5.1.0 commit `8be5462`. (#17328)
+  * Updated pre-commit to 4.0.1. (#17260)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
@@ -117,7 +119,7 @@ Please use `braille.filter_displayDimensions` instead. (#17011)
 
 ## 2024.4.1
 
-It also includes a fix for saving speech symbol dictionaries.
+This is a patch release to fix a bug when saving speech symbol dictionaries.
 
 ### Bug fixes
 
