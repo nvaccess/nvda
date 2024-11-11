@@ -3492,6 +3492,8 @@ For instance, setting the emulated input `a` and configuring an input gesture of
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
+From this dialog, you can also run available commands. From a command or a gesture, press the space bar or the Run button. The command will be executed inmediately, from the dialog, when possible. For commands that require that the dialog is not active, they will be saved with the selected gesture (if any), to be run by pressing `NVDA+j`. A message will be presented when a command has been saved to be run later.
+
 ### Saving and Reloading the configuration {#SavingAndReloading}
 
 By default NVDA will automatically save your settings on exit.
