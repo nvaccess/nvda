@@ -19,6 +19,8 @@ from gui.messageDialog import (
 	DialogType,
 	_flattenButtons,
 )
+from parameterized import parameterized
+from typing import Iterable, NamedTuple
 
 
 NO_CALLBACK = (EscapeCode.NONE, None)
@@ -30,6 +32,13 @@ def dummyCallback1(*a):
 
 def dummyCallback2(*a):
 	pass
+
+
+class AddDefaultButtonHelpersArgList(NamedTuple):
+	func: str
+	expectedButtons: Iterable[int]
+	expectedHasFallback: bool = False
+	expectedFallbackId: int = wx.ID_NONE
 
 
 class MDTestBase(unittest.TestCase):
@@ -78,159 +87,70 @@ class Test_MessageDialog_Sounds(MDTestBase):
 
 
 class Test_MessageDialog_Buttons(MDTestBase):
-	def test_addOkButton(self):
-		"""Test adding an OK button to the dialog."""
-		self.dialog.addOkButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_OK])
-		with self.subTest("Test has fallback action."):
-			self.assertTrue(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			id, callback = self.dialog._getFallbackAction()
-			self.assertEqual(id, ReturnCode.OK)
-			self.assertIsNotNone(callback)
-
-	def test_addCancelButton(self):
-		"""Test adding a Cancel button to the dialog."""
-		self.dialog.addCancelButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CANCEL])
-		with self.subTest("Test has fallback action."):
-			self.assertTrue(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			id, callback = self.dialog._getFallbackAction()
-			self.assertEqual(id, ReturnCode.CANCEL)
-			self.assertIsNotNone(callback)
-
-	def test_addYesButton(self):
-		"""Test adding a Yes button to the dialog."""
-		self.dialog.addYesButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_YES])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addNoButton(self):
-		"""Test adding a No button to the dialog."""
-		self.dialog.addNoButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_NO])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addSaveButton(self):
-		"""Test adding a Save button to the dialog."""
-		self.dialog.addSaveButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_SAVE])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addApplyButton(self):
-		"""Test adding an Apply button to the dialog."""
-		self.dialog.addApplyButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_APPLY), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_APPLY])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addCloseButton(self):
-		"""Test adding a Close button to the dialog."""
-		self.dialog.addCloseButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CLOSE), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_CLOSE])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addHelpButton(self):
-		"""Test adding a Help button to the dialog."""
-		self.dialog.addHelpButton()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_HELP), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertEqual(self.dialog.GetMainButtonIds(), [wx.ID_HELP])
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addOkCancelButtons(self):
-		"""Test adding OK and Cancel buttons to the dialog."""
-		self.dialog.addOkCancelButtons()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_OK), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_OK, wx.ID_CANCEL))
-		with self.subTest("Test has fallback action."):
-			self.assertTrue(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertIsNotNone(self.dialog._getFallbackAction())
-
-	def test_addYesNoButtons(self):
-		"""Test adding Yes and No buttons to the dialog."""
-		self.dialog.addYesNoButtons()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO))
-		with self.subTest("Test has fallback action."):
-			self.assertFalse(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertEqual(self.dialog._getFallbackAction(), NO_CALLBACK)
-
-	def test_addYesNoCancelButtons(self):
-		"""Test adding Yes, No and Cancel buttons to the dialog."""
-		self.dialog.addYesNoCancelButtons()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_YES), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_YES, wx.ID_NO, wx.ID_CANCEL))
-		with self.subTest("Test has fallback action."):
-			self.assertTrue(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertIsNotNone(self.dialog._getFallbackAction())
-
-	def test_addSaveNoCancelButtons(self):
-		"""Test adding Save, Don't save and Cancel buttons to the dialog."""
-		self.dialog.addSaveNoCancelButtons()
-		with self.subTest("Check button types"):
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_SAVE), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_NO), wx.Button)
-			self.assertIsInstance(self.dialog.FindWindowById(wx.ID_CANCEL), wx.Button)
-		with self.subTest("Test in main buttons"):
-			self.assertCountEqual(self.dialog.GetMainButtonIds(), (wx.ID_SAVE, wx.ID_NO, wx.ID_CANCEL))
-		with self.subTest("Test has fallback action."):
-			self.assertTrue(self.dialog.hasDefaultAction)
-		with self.subTest("Test fallback action assignment."):
-			self.assertIsNotNone(self.dialog._getFallbackAction())
+	@parameterized.expand(
+		[
+			AddDefaultButtonHelpersArgList(
+				func="addOkButton",
+				expectedButtons=(wx.ID_OK,),
+				expectedHasFallback=True,
+				expectedFallbackId=wx.ID_OK,
+			),
+			AddDefaultButtonHelpersArgList(
+				func="addCancelButton",
+				expectedButtons=(wx.ID_CANCEL,),
+				expectedHasFallback=True,
+				expectedFallbackId=wx.ID_CANCEL,
+			),
+			AddDefaultButtonHelpersArgList(func="addYesButton", expectedButtons=(wx.ID_YES,)),
+			AddDefaultButtonHelpersArgList(func="addNoButton", expectedButtons=(wx.ID_NO,)),
+			AddDefaultButtonHelpersArgList(func="addSaveButton", expectedButtons=(wx.ID_SAVE,)),
+			AddDefaultButtonHelpersArgList(func="addApplyButton", expectedButtons=(wx.ID_APPLY,)),
+			AddDefaultButtonHelpersArgList(func="addCloseButton", expectedButtons=(wx.ID_CLOSE,)),
+			AddDefaultButtonHelpersArgList(func="addHelpButton", expectedButtons=(wx.ID_HELP,)),
+			AddDefaultButtonHelpersArgList(
+				func="addOkCancelButtons",
+				expectedButtons=(wx.ID_OK, wx.ID_CANCEL),
+				expectedHasFallback=True,
+				expectedFallbackId=wx.ID_CANCEL,
+			),
+			AddDefaultButtonHelpersArgList(func="addYesNoButtons", expectedButtons=(wx.ID_YES, wx.ID_NO)),
+			AddDefaultButtonHelpersArgList(
+				func="addYesNoCancelButtons",
+				expectedButtons=(wx.ID_YES, wx.ID_NO, wx.ID_CANCEL),
+				expectedHasFallback=True,
+				expectedFallbackId=wx.ID_CANCEL,
+			),
+			AddDefaultButtonHelpersArgList(
+				func="addSaveNoCancelButtons",
+				expectedButtons=(wx.ID_SAVE, wx.ID_NO, wx.ID_CANCEL),
+				expectedHasFallback=True,
+				expectedFallbackId=wx.ID_CANCEL,
+			),
+		],
+	)
+	def test_addDefaultButtonHelpers(
+		self,
+		func: str,
+		expectedButtons: Iterable[int],
+		expectedHasFallback: bool,
+		expectedFallbackId: int,
+	):
+		"""Test the various /add*buttons?/ functions."""
+		getattr(self.dialog, func)()
+		with self.subTest("Test all expected buttons are in main buttons"):
+			self.assertCountEqual(self.dialog.GetMainButtonIds(), expectedButtons)
+		for id in expectedButtons:
+			with self.subTest("Check that all buttons have the expected type", id=id):
+				self.assertIsInstance(self.dialog.FindWindowById(id), wx.Button)
+		with self.subTest("Test whether the fallback status is as expected."):
+			self.assertEqual(self.dialog.hasDefaultAction, expectedHasFallback)
+		with self.subTest("Test whether getting the fallback action returns the expected id and action type"):
+			actualFallbackId, actualFallbackAction = self.dialog._getFallbackAction()
+			self.assertEqual(actualFallbackId, expectedFallbackId)
+			if expectedHasFallback:
+				self.assertIsNotNone(actualFallbackAction)
+			else:
+				self.assertIsNone(actualFallbackAction)
 
 	def test_addButton_with_defaultFocus(self):
 		"""Test adding a button with default focus."""
