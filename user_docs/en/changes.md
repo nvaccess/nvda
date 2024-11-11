@@ -118,7 +118,7 @@ Please use `braille.filter_displayDimensions` instead. (#17011)
 
 ## 2024.4.1
 
-It also includes a fix for saving speech symbol dictionaries.
+This is a patch release to fix a bug when saving speech symbol dictionaries.
 
 ### Bug fixes
 
