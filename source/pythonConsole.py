@@ -255,6 +255,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		Typically, used before the NVDA python console is opened, after which, calls
 		to the 'api' module will refer to this new focus.
 		"""
+
 		def _getCaretPos() -> textInfos.TextInfo | None:
 			try:
 				return api.getCaretPosition()
