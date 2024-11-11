@@ -2212,7 +2212,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for move review cursor to start of selection command.
-			"Moves the review cursor to the first character of the selection, and speaks it"
+			"Moves the review cursor to the first character of the selection, and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+alt+home",
@@ -2239,7 +2239,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for move review cursor to end of selection command.
-			"Moves the review cursor to the last character of the selection, and speaks it"
+			"Moves the review cursor to the last character of the selection, and speaks it",
 		),
 		category=SCRCAT_TEXTREVIEW,
 		gesture="kb:NVDA+alt+end",
