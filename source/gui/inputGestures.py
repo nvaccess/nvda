@@ -909,8 +909,8 @@ class InputGesturesDialog(SettingsDialog):
 		elif issubclass(classObj, CursorManager):
 			o = self.prevFocus.treeInterceptor
 		else:
-				o = self.prevFocus
-				shouldRunInmediately = False
+			o = self.prevFocus
+			shouldRunInmediately = False
 
 		gesture = None
 		gestureSourceClass = None
