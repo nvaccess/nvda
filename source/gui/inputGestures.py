@@ -887,25 +887,28 @@ class InputGesturesDialog(SettingsDialog):
 		log.info(f"class {className}")
 		scriptName = f"script_{scriptVM.scriptInfo.scriptName}"
 		log.info(scriptName)
-		from globalCommands import commands
+		from globalCommands import commands, GlobalCommands, ConfigProfileActivationCommands
+		from globalPluginHandler import GlobalPlugin
+		from appModuleHandler import AppModule
+		from browseMode import BrowseModeTreeInterceptor
+		from cursorManager import CursorManager
 
-		match className.split(".")[-1]:
-			case "AppModule":
-				o = classObj(self.prevProcessID)
-				shouldRunInmediately = False
-			case "GlobalPlugin":
-				o = classObj()
-				shouldRunInmediately = False
-			case "GlobalCommands":
-				o = commands
-			case "ConfigProfileActivationCommands":
-				o = classObj()
-				shouldRunInmediately = False
-			case "BrowseModeTreeInterceptor":
-				o = self.prevFocus.treeInterceptor
-			case "CursorManager":
-				o = self.prevFocus.treeInterceptor
-			case _:
+		if issubclass(classObj, AppModule):
+			o = classObj(self.prevProcessID)
+			shouldRunInmediately = False
+		elif issubclass(classObj, GlobalPlugin):
+			o = classObj()
+			shouldRunInmediately = False
+		elif issubclass(classObj, GlobalCommands):
+			o = commands
+		elif issubclass(classObj, ConfigProfileActivationCommands):
+			o = classObj()
+			shouldRunInmediately = False
+		elif issubclass(classObj, BrowseModeTreeInterceptor):
+			o = self.prevFocus.treeInterceptor
+		elif issubclass(classObj, CursorManager):
+			o = self.prevFocus.treeInterceptor
+		else:
 				o = self.prevFocus
 				shouldRunInmediately = False
 
