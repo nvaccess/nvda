@@ -2248,8 +2248,8 @@ class GlobalCommands(ScriptableObject):
 		info = self._getSelection()
 		if info is None:
 			return
+		info.move(textInfos.UNIT_CHARACTER, -1, "end")
 		info.collapse(end=True)
-		info.move(textInfos.UNIT_CHARACTER, -1)
 
 		# This script is available on the lock screen via getSafeScripts, as such
 		# ensure the review position does not contain secure information
