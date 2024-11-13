@@ -460,13 +460,14 @@ class NewProfileDialog(
 		# in the new configuration profile dialog.
 		self.triggers = triggers = [(None, _("Manual activation"), True)]
 		triggers.extend(parent.getSimpleTriggers())
-		self.triggerChoice = sHelper.addLabeledControl(
-			_("Use this profile for:"),
-			wx.Choice,
-			choices=[trig[1] for trig in triggers],
+		self.triggerChoice = sHelper.addItem(
+			wx.RadioBox(
+				self,
+				label=_("Use this profile for:"),
+				choices=[trig[1] for trig in triggers],
+			),
 		)
-		self.triggerChoice.Bind(wx.EVT_CHOICE, self.onTriggerChoice)
-		self.triggerChoice.SetSelection(0)
+		self.triggerChoice.Bind(wx.EVT_RADIOBOX, self.onTriggerChoice)
 		self.autoProfileName = ""
 		self.onTriggerChoice(None)
 
