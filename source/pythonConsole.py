@@ -4,32 +4,30 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
-import watchdog
-
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
-
-import builtins  # noqa: E402
-import os  # noqa: E402
-from typing import Sequence  # noqa: E402
-import code  # noqa: E402
-import codeop  # noqa: E402
-import sys  # noqa: E402
-import pydoc  # noqa: E402
-import re  # noqa: E402
-import itertools  # noqa: E402
-import rlcompleter  # noqa: E402
-import wx  # noqa: E402
-from baseObject import AutoPropertyObject  # noqa: E402
-import speech  # noqa: E402
-import queueHandler  # noqa: E402
-import api  # noqa: E402
-import gui  # noqa: E402
-from logHandler import log  # noqa: E402
-import braille  # noqa: E402
-import gui.contextHelp  # noqa: E402
-import textInfos  # noqa: E402
+import watchdog
+import builtins
+import os
+from typing import Sequence
+import code
+import codeop
+import sys
+import pydoc
+import re
+import itertools
+import rlcompleter
+import wx
+from baseObject import AutoPropertyObject
+import speech
+import queueHandler
+import api
+import gui
+from logHandler import log
+import braille
+import gui.contextHelp
+import textInfos
 
 
 class HelpCommand(object):
