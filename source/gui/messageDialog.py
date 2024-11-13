@@ -210,7 +210,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		title: str = wx.MessageBoxCaptionStr,
 		dialogType: DialogType = DialogType.STANDARD,
 		*,
-		buttons: Iterable[Button] | None = (DefaultButton.OK,),
+		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
 	):
 		self.helpId = helpId
@@ -242,7 +242,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._buttonHelper = buttonHelper
 		self._addButtons(buttonHelper)
 		if buttons is not None:
-			self.addButtons(*buttons)
+			self.addButtons(buttons)
 
 		mainSizer.Add(
 			contentsSizer.sizer,
@@ -292,7 +292,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:return: The updated instance for chaining.
 		"""
 		if id in self._commands:
-			raise KeyError("A button with {id=} has already been added.")
+			raise KeyError(f"A button with {id=} has already been added.")
 		button = self._buttonHelper.addButton(self, id, label, *args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
