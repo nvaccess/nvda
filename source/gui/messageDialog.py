@@ -18,7 +18,7 @@ from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
-from collections.abc import Collection, Iterable, Iterator, Callable
+from collections.abc import Collection, Iterable, Callable
 from logHandler import log
 
 
@@ -382,7 +382,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			raise KeyError("Button IDs must be unique.")
 		if not buttonIds.isdisjoint(self._commands):
 			raise KeyError("You may not add a new button with an existing id.")
-		for button in _flattenButtons(buttons):
+		for button in buttons:
 			self.addButton(button)
 		return self
 
@@ -712,18 +712,3 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
-
-
-def _flattenButtons(
-	buttons: Iterable[DefaultButtonSet | Button],
-) -> Iterator[Button]:
-	"""Flatten an iterable of c{Button} or c{DefaultButtonSet} instances into an iterator of c{Button} instances.
-
-	:param buttons: The iterator of buttons and button sets to flatten.
-	:yield: Each button contained in the input iterator or its children.
-	"""
-	for item in buttons:
-		if isinstance(item, DefaultButtonSet):
-			yield from item
-		else:
-			yield item
