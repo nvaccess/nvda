@@ -7,6 +7,7 @@
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
+
 import watchdog
 import builtins
 import os
