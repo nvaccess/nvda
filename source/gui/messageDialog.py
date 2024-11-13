@@ -18,7 +18,7 @@ from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
-from collections.abc import Iterable, Iterator, Callable
+from collections.abc import Collection, Iterable, Iterator, Callable
 from logHandler import log
 
 
@@ -372,18 +372,16 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addHelpButton = partialmethod(addButton, DefaultButton.HELP)
 	addHelpButton.__doc__ = "Add a Help button to the dialog."
 
-	def addButtons(self, *buttons: DefaultButtonSet | Button) -> Self:
+	def addButtons(self, buttons: Collection[Button]) -> Self:
 		"""Add multiple buttons to the dialog.
 
 		:return: The dialog instance.
 		"""
-		uniqueButtons = set(button.id for button in _flattenButtons(buttons))
-		flatButtons = tuple(_flattenButtons(buttons))
-		if len(uniqueButtons) != len(flatButtons):
+		buttonIds = set(button.id for button in buttons)
+		if len(buttonIds) != len(buttons):
 			raise KeyError("Button IDs must be unique.")
-		if not uniqueButtons.isdisjoint(self._commands):
+		if not buttonIds.isdisjoint(self._commands):
 			raise KeyError("You may not add a new button with an existing id.")
-
 		for button in _flattenButtons(buttons):
 			self.addButton(button)
 		return self
