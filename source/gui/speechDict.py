@@ -27,11 +27,11 @@ class DictionaryEntryDialog(
 	helpId = "SpeechDictionaries"
 
 	TYPE_LABELS = {
-		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_ANYWHERE: _("&Anywhere"),
-		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_WORD: _("Whole &word"),
-		# Translators: This is a label for an Entry Type choice in add dictionary entry dialog.
+		# Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 		speechDictHandler.ENTRY_TYPE_REGEXP: _("Regular &expression"),
 	}
 	TYPE_LABELS_ORDERING = (
