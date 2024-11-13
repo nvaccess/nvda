@@ -18,7 +18,7 @@ from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
-from collections.abc import Collection, Iterable, Callable
+from collections.abc import Collection, Callable
 from logHandler import log
 
 
@@ -485,7 +485,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Whether the dialog has a valid fallback action."""
 		escapeId = self.GetEscapeId()
 		return escapeId != EscapeCode.NONE and (
-			any(id in (ReturnCode.CANCEL, self.GetAffirmativeId()) and command.closesDialog for id, command in self._commands.items())
+			any(
+				id in (ReturnCode.CANCEL, self.GetAffirmativeId()) and command.closesDialog
+				for id, command in self._commands.items()
+			)
 			if escapeId == EscapeCode.DEFAULT
 			else True
 		)
