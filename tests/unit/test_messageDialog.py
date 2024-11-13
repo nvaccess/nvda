@@ -5,6 +5,7 @@
 
 """Unit tests for the message dialog API."""
 
+from copy import deepcopy
 import unittest
 from unittest.mock import MagicMock, patch
 
@@ -20,7 +21,7 @@ from gui.messageDialog import (
 	_flattenButtons,
 )
 from parameterized import parameterized
-from typing import Iterable, NamedTuple
+from typing import Any, Iterable, NamedTuple
 
 
 NO_CALLBACK = (EscapeCode.NONE, None)
@@ -34,11 +35,32 @@ def dummyCallback2(*a):
 	pass
 
 
+def getDialogState(dialog: MessageDialog):
+	"""Capture internal state of a :class:`gui.messageDialog.MessageDialog` for later analysis.
+
+	Currently this only captures state relevant to adding buttons.
+	Further tests wishing to use this dialog should be sure to add any state potentially modified by the functions under test.
+
+	As this is currently only used to ensure internal state does not change between calls, the order of return should be considered arbitrary.
+	"""
+	return (dialog.GetMainButtonIds(),)
+	(deepcopy(dialog._commands),)
+	(item.GetId() if (item := dialog.GetDefaultItem()) is not None else None,)
+	(dialog.GetEscapeId(),)
+	dialog._isLayoutFullyRealized
+
+
 class AddDefaultButtonHelpersArgList(NamedTuple):
 	func: str
 	expectedButtons: Iterable[int]
 	expectedHasFallback: bool = False
 	expectedFallbackId: int = wx.ID_NONE
+
+
+class MethodCall(NamedTuple):
+	name: str
+	args: tuple[Any] = tuple()
+	kwargs: dict[str, Any] = dict()
 
 
 class MDTestBase(unittest.TestCase):
@@ -186,6 +208,39 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		id, command = self.dialog._getFallbackAction()
 		self.assertEqual(id, ReturnCode.CUSTOM_1)
 		self.assertTrue(command.closesDialog)
+
+	@parameterized.expand(
+		(
+			(
+				"buttons_same_id",
+				MethodCall("addOkButton", kwargs={"callback": dummyCallback1}),
+				MethodCall("addOkButton", kwargs={"callback": dummyCallback2}),
+			),
+			(
+				"Button_then_ButtonSet_containing_same_id",
+				MethodCall("addOkButton"),
+				MethodCall("addOkCancelButtons"),
+			),
+			(
+				"ButtonSet_then_Button_with_id_from_set",
+				MethodCall("addOkCancelButtons"),
+				MethodCall("addOkButton"),
+			),
+			(
+				"ButtonSets_containing_same_id",
+				MethodCall("addOkCancelButtons"),
+				MethodCall("addYesNoCancelButtons"),
+			),
+		),
+	)
+	def test_subsequent_add(self, _, func1: MethodCall, func2: MethodCall):
+		"""Test that adding buttons that already exist in the dialog fails."""
+		getattr(self.dialog, func1.name)(*func1.args, **func1.kwargs)
+		oldState = getDialogState(self.dialog)
+		with self.subTest("Test calling second function raises."):
+			self.assertRaises(KeyError, getattr(self.dialog, func2.name), *func2.args, **func2.kwargs)
+		with self.subTest("Check state hasn't changed."):
+			self.assertEqual(oldState, getDialogState(self.dialog))
 
 
 class Test_MessageDialog_DefaultAction(MDTestBase):

@@ -291,6 +291,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:param closesDialog: Whether the button should close the dialog when pressed, defaults to True.
 		:return: The updated instance for chaining.
 		"""
+		if id in self._commands:
+			raise KeyError("A button with {id=} has already been added.")
 		button = self._buttonHelper.addButton(self, id, label, *args, **kwargs)
 		# Get the ID from the button instance in case it was created with id=wx.ID_ANY.
 		buttonId = button.GetId()
@@ -375,6 +377,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		:return: The dialog instance.
 		"""
+		uniqueButtons = set(button.id for button in _flattenButtons(buttons))
+		flatButtons = tuple(_flattenButtons(buttons))
+		if len(uniqueButtons) != len(flatButtons):
+			raise KeyError("Button IDs must be unique.")
+		if not uniqueButtons.isdisjoint(self._commands):
+			raise KeyError("You may not add a new button with an existing id.")
+
 		for button in _flattenButtons(buttons):
 			self.addButton(button)
 		return self
