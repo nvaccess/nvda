@@ -264,16 +264,16 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 				return None
 
 		self._namespaceSnapshotVarsGetters = {
-			"focus": api.getFocusObject),
+			"focus": api.getFocusObject,
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
 			"focusAnc": (lambda: list(api.getFocusAncestors())),
-			"fdl": (lambda: api.getFocusDifferenceLevel()),
-			"fg": (lambda: api.getForegroundObject()),
-			"nav": (lambda: api.getNavigatorObject()),
-			"caretObj": (lambda: api.getCaretObject()),
+			"fdl": api.getFocusDifferenceLevel,
+			"fg": api.getForegroundObject,
+			"nav": api.getNavigatorObject,
+			"caretObj": api.getCaretObject,
 			"caretPos": _getCaretPos,
-			"review": (lambda: api.getReviewPosition()),
-			"mouse": (lambda: api.getMouseObject()),
+			"review": api.getReviewPosition,
+			"mouse": api.getMouseObject,
 			"brlRegions": (lambda: braille.handler.buffer.regions),
 		}
 		self._namespaceSnapshotVars = {}
