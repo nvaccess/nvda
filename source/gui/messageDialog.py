@@ -215,6 +215,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	):
 		self.helpId = helpId
 		super().__init__(parent, title=title)
+		self.EnableCloseButton(False)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
 
@@ -310,6 +311,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.SetDefaultItem(button)
 		if fallbackAction:
 			self.setDefaultAction(buttonId)
+		self.EnableCloseButton(self.hasDefaultAction)
 		self._isLayoutFullyRealized = False
 		return self
 
@@ -427,8 +429,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if id not in (EscapeCode.DEFAULT, EscapeCode.NONE):
 			if id not in self._commands:
 				raise KeyError(f"No command registered for {id=}.")
-		if not self._commands[id].closesDialog:
-			raise ValueError("fallback actions that do not close the dialog are not supported.")
+			if not self._commands[id].closesDialog:
+				raise ValueError("fallback actions that do not close the dialog are not supported.")
+		self.EnableCloseButton(id != EscapeCode.NONE)
 		super().SetEscapeId(id)
 		return self
 
@@ -482,7 +485,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Whether the dialog has a valid fallback action."""
 		escapeId = self.GetEscapeId()
 		return escapeId != EscapeCode.NONE and (
-			any(command in (ReturnCode.CANCEL, ReturnCode.OK) for command in self._commands)
+			any(id in (ReturnCode.CANCEL, self.GetAffirmativeId()) and command.closesDialog for id, command in self._commands.items())
 			if escapeId == EscapeCode.DEFAULT
 			else True
 		)
