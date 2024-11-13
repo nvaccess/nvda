@@ -264,7 +264,7 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 				return None
 
 		self._namespaceSnapshotVarsGetters = {
-			"focus": (lambda: api.getFocusObject()),
+			"focus": api.getFocusObject),
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
 			"focusAnc": (lambda: list(api.getFocusAncestors())),
 			"fdl": (lambda: api.getFocusDifferenceLevel()),
