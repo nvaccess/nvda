@@ -104,28 +104,27 @@ def messageBox(
 		),
 	)
 	from gui import mainFrame
+	from gui.messageDialog import (
+		MessageDialog,
+		_messageBoxButtonStylesToMessageDialogButtons,
+		_MessageButtonIconStylesToMessageDialogType,
+		_messageDialogReturnCodeToMessageBoxReturnCode,
+	)
 	import core
 	from logHandler import log
 
-	global _messageBoxCounter
-	with _messageBoxCounterLock:
-		_messageBoxCounter += 1
-
-	try:
-		if not parent:
-			mainFrame.prePopup()
-		if not core._hasShutdownBeenTriggered:
-			res = wx.MessageBox(message, caption, style, parent or mainFrame)
-		else:
-			log.debugWarning("Not displaying message box as shutdown has been triggered.", stack_info=True)
-			res = wx.ID_CANCEL
-	finally:
-		if not parent:
-			mainFrame.postPopup()
-		with _messageBoxCounterLock:
-			_messageBoxCounter -= 1
-
-	return res
+	if not core._hasShutdownBeenTriggered:
+		res = MessageDialog(
+			parent=parent or mainFrame,
+			message=message,
+			title=caption,
+			dialogType=_MessageButtonIconStylesToMessageDialogType(style),
+			buttons=_messageBoxButtonStylesToMessageDialogButtons(style),
+		).ShowModal()
+	else:
+		log.debugWarning("Not displaying message box as shutdown has been triggered.", stack_info=True)
+		res = wx.CANCEL
+	return _messageDialogReturnCodeToMessageBoxReturnCode(res)
 
 
 class DisplayableError(Exception):

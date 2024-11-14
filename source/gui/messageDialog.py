@@ -253,13 +253,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
 		# Import late to avoid circular import
-		from gui import mainFrame
+		# from gui import mainFrame
 
-		if parent == mainFrame:
-			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
-			self.CentreOnScreen()
-		else:
-			self.CentreOnParent()
+		# if parent == mainFrame:
+		# 	# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
+		# 	self.CentreOnScreen()
+		# else:
+		# 	self.CentreOnParent()
 
 	# endregion
 
@@ -542,6 +542,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			startTime = time.time()
 			log.debug("Laying out message dialog")
 		self._mainSizer.Fit(self)
+		from gui import mainFrame
+
+		if self.Parent == mainFrame:
+			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
+			self.CentreOnScreen()
+		else:
+			self.CentreOnParent()
 		self._isLayoutFullyRealized = True
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
@@ -718,3 +725,51 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
+
+
+def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> int:
+	match returnCode:
+		case ReturnCode.YES:
+			return wx.YES
+		case ReturnCode.NO:
+			return wx.NO
+		case ReturnCode.CANCEL:
+			return wx.CANCEL
+		case ReturnCode.OK:
+			return wx.OK
+		case ReturnCode.HELP:
+			return wx.HELP
+		case _:
+			raise ValueError(f"Unsupported return for wx.MessageBox: {returnCode}")
+
+
+def _MessageButtonIconStylesToMessageDialogType(flags: int) -> DialogType:
+	# Order of precedence seems to be none, then error, then warning.
+	if flags & wx.ICON_NONE:
+		return DialogType.STANDARD
+	elif flags & wx.ICON_ERROR:
+		return DialogType.ERROR
+	elif flags & wx.ICON_WARNING:
+		return DialogType.WARNING
+	else:
+		return DialogType.STANDARD
+
+
+def _messageBoxButtonStylesToMessageDialogButtons(flags: int) -> tuple[Button, ...]:
+	buttons: list[Button] = []
+	if flags & (wx.YES | wx.NO):
+		# Wx will add yes and no buttons, even if only one of wx.YES or wx.NO is given.
+		buttons.extend(
+			(DefaultButton.YES, DefaultButton.NO._replace(defaultFocus=bool(flags & wx.NO_DEFAULT))),
+		)
+	else:
+		buttons.append(DefaultButton.OK)
+	if flags & wx.CANCEL:
+		buttons.append(
+			DefaultButton.CANCEL._replace(
+				defaultFocus=(flags & wx.CANCEL_DEFAULT) & ~(flags & wx.NO & wx.NO_DEFAULT),
+			),
+		)
+	if flags & wx.HELP:
+		buttons.append(DefaultButton.HELP)
+	return tuple(buttons)

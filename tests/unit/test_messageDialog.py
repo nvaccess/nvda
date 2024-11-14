@@ -16,6 +16,7 @@ from gui.messageDialog import (
 	EscapeCode,
 	ReturnCode,
 	DialogType,
+	_messageBoxButtonStylesToMessageDialogButtons,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
@@ -366,3 +367,46 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertEqual(id, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
+
+
+class Test_MessageBox_Shim(unittest.TestCase):
+	def test_messageBoxButtonStylesToMessageDialogButtons(self):
+		YES, NO, OK, CANCEL, HELP = wx.YES, wx.NO, wx.OK, wx.CANCEL, wx.HELP
+		outputToInputsMap = {
+			(ReturnCode.OK,): (OK, 0),
+			(ReturnCode.OK, ReturnCode.CANCEL): (OK | CANCEL, CANCEL),
+			(ReturnCode.OK, ReturnCode.HELP): (OK | HELP, HELP),
+			(ReturnCode.OK, ReturnCode.CANCEL, ReturnCode.HELP): (OK | CANCEL | HELP, CANCEL | HELP),
+			(ReturnCode.YES, ReturnCode.NO): (YES | NO, YES, NO, YES | OK, NO | OK, YES | NO | OK),
+			(ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL): (
+				YES | NO | CANCEL,
+				YES | CANCEL,
+				NO | CANCEL,
+				YES | OK | CANCEL,
+				NO | OK | CANCEL,
+				YES | NO | OK | CANCEL,
+			),
+			(ReturnCode.YES, ReturnCode.NO, ReturnCode.HELP): (
+				YES | NO | HELP,
+				YES | HELP,
+				NO | HELP,
+				YES | OK | HELP,
+				NO | OK | HELP,
+				YES | NO | OK | HELP,
+			),
+			(ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL, ReturnCode.HELP): (
+				YES | NO | CANCEL | HELP,
+				YES | CANCEL | HELP,
+				NO | CANCEL | HELP,
+				YES | OK | CANCEL | HELP,
+				NO | OK | CANCEL | HELP,
+				YES | NO | OK | CANCEL | HELP,
+			),
+		}
+		for expectedOutput, inputs in outputToInputsMap.items():
+			for input in inputs:
+				with self.subTest(flags=input):
+					self.assertCountEqual(
+						expectedOutput,
+						(button.id for button in _messageBoxButtonStylesToMessageDialogButtons(input)),
+					)
