@@ -44,6 +44,8 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 
 ### Bug Fixes
 
+* Math reading has been fixed for some web elements.
+Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
