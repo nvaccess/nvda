@@ -4,8 +4,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-"""Check a translation template (pot) for strings without translator comments.
-"""
+"""Check a translation template (pot) for strings without translator comments."""
 
 import sys
 from typing import Set
@@ -18,68 +17,68 @@ from typing import Set
 # Note that checkPot will fail with an unexpected success
 # if a translator comment is found for one of these messages.
 EXPECTED_MESSAGES_WITHOUT_COMMENTS = {
-	'border',
-	'filler',
-	'line',
-	'data item',
-	'header item',
-	'calendar',
-	'video',
-	'audio',
-	'modal',
-	'iconified',
-	'editable',
-	'checkable',
-	'draggable',
-	'dragging',
-	'sorted',
-	'sorted ascending',
-	'sorted descending',
-	'gesture map File Error',
-	'Type help(object) to get help about object.',
-	'Type exit() to exit the console',
-	'NVDA Python Console',
-	'Emulates pressing %s on the system keyboard',
-	'continuous section break',
-	'new column section break',
-	'new page section break',
-	'even pages section break',
-	'odd pages section break',
-	'column break',
-	'background pattern {pattern}',
-	'NVDA Speech Viewer',
-	'text mode',
-	'object mode',
-	'NonVisual Desktop Access',
-	'A free and open source screen reader for Microsoft Windows',
-	'Copyright (C) {years} NVDA Contributors',
-	'Display',
-	'left',
-	'right',
-	'E&xit',
-	'Error renaming profile.',
-	'Use this profile for:',
-	'This change requires administrator privileges.',
-	'Insufficient Privileges',
-	'word',
-	'Taskbar',
-	'invoke',
-	'Desktop',
-	'Input Message is {title}: {message}',
-	'Input Message is {message}',
-	'Comments',
-	'Endnotes',
-	'Even pages footer',
-	'Even pages header',
-	'First page footer',
-	'First page header',
-	'Footnotes',
-	'Primary footer',
-	'Primary header',
-	'Text frame',
+	"border",
+	"filler",
+	"line",
+	"data item",
+	"header item",
+	"calendar",
+	"video",
+	"audio",
+	"modal",
+	"iconified",
+	"editable",
+	"checkable",
+	"draggable",
+	"dragging",
+	"sorted",
+	"sorted ascending",
+	"sorted descending",
+	"gesture map File Error",
+	"Type help(object) to get help about object.",
+	"Type exit() to exit the console",
+	"NVDA Python Console",
+	"Emulates pressing %s on the system keyboard",
+	"continuous section break",
+	"new column section break",
+	"new page section break",
+	"even pages section break",
+	"odd pages section break",
+	"column break",
+	"background pattern {pattern}",
+	"NVDA Speech Viewer",
+	"text mode",
+	"object mode",
+	"NonVisual Desktop Access",
+	"A free and open source screen reader for Microsoft Windows",
+	"Copyright (C) {years} NVDA Contributors",
+	"Display",
+	"left",
+	"right",
+	"Error renaming profile.",
+	"Use this profile for:",
+	"This change requires administrator privileges.",
+	"Insufficient Privileges",
+	"word",
+	"Taskbar",
+	"invoke",
+	"Desktop",
+	"Input Message is {title}: {message}",
+	"Input Message is {message}",
+	"Comments",
+	"Endnotes",
+	"Even pages footer",
+	"Even pages header",
+	"First page footer",
+	"First page header",
+	"Footnotes",
+	"Primary footer",
+	"Primary header",
+	"Text frame",
 	# core.py:87
 	r'Your gesture map file contains errors.\n"More details about the errors can be found in the log file."',
 }
+
 
 def checkPot(fileName):
 	"""Returns the number of errors.
@@ -157,29 +156,34 @@ def checkPot(fileName):
 					expectedErrors += 1
 					continue
 				if hasComment and isExpectedError:
-					error = ("Message has translator comment, but one wasn't expected.\n"
-						"This is good, but please remove from EXPECTED_MESSAGES_WITHOUT_COMMENTS in tests/checkPot.py")
+					error = (
+						"Message has translator comment, but one wasn't expected.\n"
+						"This is good, but please remove from EXPECTED_MESSAGES_WITHOUT_COMMENTS in tests/checkPot.py"
+					)
 					unexpectedSuccesses += 1
 				elif not hasComment:
 					errors += 1
 					error = "Message has no translator comment."
 				else:
 					continue
-				print("{error}\n"
-					"Source lines: {lines}\n"
-					"Message: {message}\n"
-					.format(error=error, lines=" ".join(sourceLines), message=message))
+				print(
+					"{error}\n" "Source lines: {lines}\n" "Message: {message}\n".format(
+						error=error,
+						lines=" ".join(sourceLines),
+						message=message,
+					),
+				)
 				continue
 	removedTranslatableMessages = EXPECTED_MESSAGES_WITHOUT_COMMENTS - foundMessagesWithOutComments
 	if removedTranslatableMessages:
 		print(
 			"The following messages are no longer present in the source code "
-			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:"
+			"and should be removed from `EXPECTED_MESSAGES_WITHOUT_COMMENTS`:",
 		)
-		print('\n'.join(removedTranslatableMessages))
+		print("\n".join(removedTranslatableMessages))
 	print(
 		f"{errors} errors, {unexpectedSuccesses} unexpected successes, {expectedErrors} expected errors, "
-		f"{len(removedTranslatableMessages)} messages marked as expected errors not present in the source code"
+		f"{len(removedTranslatableMessages)} messages marked as expected errors not present in the source code",
 	)
 	return errors + unexpectedSuccesses + len(removedTranslatableMessages)
 
@@ -194,6 +198,7 @@ def getStringFromLine(line):
 		quoted = line.split(" ", 1)[1]
 	# Strip the quotes.
 	return quoted[1:-1]
+
 
 if __name__ == "__main__":
 	# Support command line usage for quick testing.

@@ -9,12 +9,10 @@ from NVDAObjects.window.edit import UnidentifiedEdit
 
 
 class TSynMemo(DisplayModelEditableText):
-
 	name = None  # Name is complete garbage as well.
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClass = obj.windowClassName
 		if windowClass == "TSynMemo":

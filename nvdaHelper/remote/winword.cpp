@@ -60,7 +60,7 @@ constexpr int formatConfig_initialFormatFlags =(formatConfig_reportPage|formatCo
 constexpr wchar_t PAGE_BREAK_VALUE = L'\x0c';
 constexpr wchar_t COLUMN_BREAK_VALUE = L'\x0e';
 
-// A class that disables MS Word screen updating while it is alive. 
+// A class that disables MS Word screen updating while it is alive.
 class ScreenUpdatingDisabler {
 	private:
 	IDispatchPtr pDispatchApplication {nullptr};
@@ -666,7 +666,7 @@ void generateXMLAttribsForFormatting(IDispatch* pDispatchRange, int startOffset,
 				}
 				if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_HIDDEN,VT_I4,&iVal)==S_OK&&iVal) {
 					formatAttribsStream<<L"hidden=\"1\" ";
-				}			
+				}
 			}
 			if(formatConfig&formatConfig_reportSuperscriptsAndSubscripts) {
 			    if(_com_dispatch_raw_propget(pDispatchFont,wdDISPID_FONT_SUPERSCRIPT,VT_I4,&iVal)==S_OK&&iVal) {
@@ -1290,7 +1290,7 @@ void winword_getTextInRange_helper(HWND hwnd, winword_getTextInRange_args* args)
 				}
 				_com_dispatch_raw_propget(pDispatchRange,wdDISPID_RANGE_END,VT_I4,&chunkEndOffset);
 			}
-			XMLStream<<L"<text _startOffset=\""<<chunkStartOffset<<L"\" _endOffset=\""<<chunkEndOffset<<L"\" ";
+			XMLStream<<L"<text ";
 			XMLStream<<initialFormatAttribsStream.str();
 
 			{	// scope for xmlAttribsFormatConfig

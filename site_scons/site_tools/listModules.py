@@ -12,9 +12,9 @@ import SCons
 
 
 def _generateModuleList(
-		target: list[SCons.Node.FS.File],
-		source: list[SCons.Node.FS.Dir],
-		env: SCons.Environment.Environment
+	target: list[SCons.Node.FS.File],
+	source: list[SCons.Node.FS.Dir],
+	env: SCons.Environment.Environment,
 ) -> None:
 	"""
 	Generate a list of Python modules from compiled '.pyc' files within `library.zip` in the source folder.
@@ -42,10 +42,12 @@ def _generateModuleList(
 
 	# Convert the file paths to python module format
 	# eg: NVDAObjects/IAccessible/__init__.pyc --> NVDAObjects.IAccessible
-	importedModules = sorted({
-		re.sub(r"(.__init__|.__version__|._version)?\.pyc$", "", module_path).replace("/", ".")
-		for module_path in pycFiles
-	})
+	importedModules = sorted(
+		{
+			re.sub(r"(.__init__|.__version__|._version)?\.pyc$", "", module_path).replace("/", ".")
+			for module_path in pycFiles
+		},
+	)
 
 	# Sanity check for something guaranteed to be in library.zip
 	if "NVDAObjects.UIA" not in importedModules:
@@ -58,7 +60,8 @@ def _generateModuleList(
 
 def generate(env: SCons.Environment.Environment):
 	env["BUILDERS"]["GenerateModuleList"] = SCons.Builder.Builder(
-		action=SCons.Action.Action(_generateModuleList))
+		action=SCons.Action.Action(_generateModuleList),
+	)
 
 
 def exists(env: SCons.Environment.Environment) -> bool:

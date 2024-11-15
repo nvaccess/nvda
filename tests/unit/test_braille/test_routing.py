@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023-2024 NV Access Limited, Leonard de Ruijter
 
-"""Unit tests for braille cursor routing.
-"""
+"""Unit tests for braille cursor routing."""
 
 import config
 import braille
@@ -18,7 +17,6 @@ from config.featureFlagEnums import ReviewRoutingMovesSystemCaretFlag
 
 
 class CursorManagerTextInfo(CursorManager.TextInfo):
-
 	def updateCaret(self):
 		super().updateCaret()
 		self.obj.caretLastUpdateTime = time.time()
@@ -104,7 +102,9 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		whereas it should activate the current position when the review cursor is already at that position.
 		The caret should always move when routing.
 		"""
-		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = (
+			ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		)
 		curTime = time.time()
 		braille.handler.routeTo(3)  # Route to the fourth cell
 		self.assertLess(self.cm.lastActivateTime, curTime)
@@ -133,7 +133,9 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 		This test ensures that this behavior will work, even when it is the first routing action in a sequence.
 		The caret should also have been moved even though routing didn't touch the review cursor position.
 		"""
-		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		config.conf["braille"]["reviewRoutingMovesSystemCaret"] = (
+			ReviewRoutingMovesSystemCaretFlag.ALWAYS.name
+		)
 		curTime = time.time()
 		review = self.caret.copy()
 		review.move(textInfos.UNIT_CHARACTER, 3)
@@ -150,8 +152,8 @@ class TestReviewRoutingMovesSystemCaretInNavigableText(unittest.TestCase):
 class TestTextInfoRegionRouting(unittest.TestCase):
 	"""A test for TextInfoRegion.getTextInfoForBraillePos, which is used in braille cursor routing.
 	This test ensures that braille routes to the expected character when dealing with emoji
-	containing modifier characters.
-	These emoji are threated as one character by uniscribe, however they span multiple characters
+	or other composites.
+	These glyphs are threated as one character by uniscribe, however they span multiple characters
 	on a braille display.
 	Note that due to the nature of this test, it relies on uniscribe to be available.
 	"""
@@ -173,3 +175,30 @@ class TestTextInfoRegionRouting(unittest.TestCase):
 		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
 		ti.expand(textInfos.UNIT_CHARACTER)
 		self.assertEqual(ti.text, testText[index])
+
+	def test_routeToComposite(self):
+		testText = "רבְּר"
+		obj = BasicTextProvider(text=testText)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[0])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])
+		ti.collapse(end=True)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[4])
+		region = braille.TextInfoRegion(obj)
+		region.update()
+		index = 1  # Position of ב
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])
+		index = 3  # Position of ּ (\u5bc)
+		pos = region.rawToBraillePos[index]
+		region.routeTo(pos)
+		ti = obj.makeTextInfo(textInfos.POSITION_CARET)
+		ti.expand(textInfos.UNIT_CHARACTER)
+		self.assertEqual(ti.text, testText[1:4])

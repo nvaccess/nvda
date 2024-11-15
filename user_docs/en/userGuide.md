@@ -39,9 +39,20 @@ Major highlights include:
 
 ### System Requirements {#SystemRequirements}
 
+#### Minimum System Requirements {#MinimumSystemRequirements}
+
 * Operating Systems: all 32-bit and 64-bit editions of Windows 8.1, Windows 10, Windows 11, and all Server Operating Systems starting from Windows Server 2012 R2.
   * both AMD64 and ARM64 variants of Windows are supported.
-* at least 150 MB of storage space.
+  * Note that 32-bit operating systems are no longer under active support.
+  * Note that Windows 8.1 and Windows Server versions older than 2022 are no longer under active support.
+* at least 500 MB of storage space.
+
+#### Recommended System Requirements {#RecommendedSystemRequirements}
+
+* Operating Systems: 64-bit editions of Windows 10, Windows 11, and Windows Server 2022.
+  * both AMD64 and ARM64 variants of Windows are supported.
+* at least 500 MB of storage space.
+* at least 4 GB of RAM.
 
 ### Internationalization {#Internationalization}
 
@@ -82,7 +93,7 @@ For details regarding exceptions, access the license document from the NVDA menu
 ## NVDA Quick Start Guide {#NVDAQuickStartGuide}
 
 This quick start guide contains three main sections: downloading, initial setup, and running NVDA.
-These are followed by information on adjusting preferences, participating in the community and getting help.
+These are followed by information on adjusting preferences, using add-ons, participating in the community and getting help.
 The information in this guide is condensed from other parts of the NVDA User Guide.
 Please refer to the full User Guide for more detailed information on each topic.
 
@@ -248,10 +259,9 @@ The actual commands will not execute while in input help mode.
 |Move to next synth setting |`NVDA+control+rightArrow` |`NVDA+shift+control+rightArrow` |Moves to the next available speech setting after the current, wrapping around to the first setting again after the last|
 |Move to previous synth setting |`NVDA+control+leftArrow` |`NVDA+shift+control+leftArrow` |Moves to the next available speech setting before the current, wrapping around to the last setting after the first|
 |Increment current synth setting |`NVDA+control+upArrow` |`NVDA+shift+control+upArrow` |increases the current speech setting you are on. E.g. increases the rate, chooses the next voice, increases the volume|
-|Increment the current synth setting in a larger step |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
-
+|Increment the current synth setting in larger steps |`NVDA+control+pageUp` |`NVDA+shift+control+pageUp` |Increases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump forward every 20 voices; when you're on slider settings (rate, pitch, etc) it will jump forward the value up to 20%|
 |Decrement current synth setting |`NVDA+control+downArrow` |`NVDA+shift+control+downArrow` |decreases the current speech setting you are on. E.g. decreases the rate, chooses the previous voice, decreases the volume|
-|Decrement the current synth setting in a larger step |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
+|Decrement the current synth setting in larger steps |`NVDA+control+pageDown` |`NVDA+shift+control+pageDown` |Decreases the value of the current speech setting you're on in larger steps. e.g. when you're on a voice setting, it will jump backward every 20 voices; when you're on a slider setting, it will jump backward the value up to 20%.|
 
 It is also possible to set the first or last value of the current synth setting by assign custom gestures in [Input Gestures dialog](#InputGestures), under the speech category.
 This means, for example, when you're on a rate setting, it will set the rate to 0 or 100.
@@ -280,6 +290,81 @@ Settings, and other options, are available via NVDA's menu.
 To open NVDA's menu, press `NVDA+n`.
 To open NVDA's general settings dialog directly, press `NVDA+control+g`.
 Many settings screens have keystrokes to open them directly, such as `NVDA+control+s` for synthesizer, or `NVDA+control+v` for other voice options.
+
+### Add-ons {#Addons}
+Add-ons are programs which provide new or changed functionality for NVDA.
+Add-ons are developed by the NVDA community, or external companies and are unaffiliated with NV Access.
+As with any software, it is important to trust the developer of an add-on before using it.
+Please refer to [Installing Add-ons](#AddonStoreInstalling) for ways to verify add-ons prior to installation.
+
+The first time the Add-on Store is opened, NVDA displays a warning about add-ons.
+Add-ons are not vetted by NV Access and may have unrestricted functionality and access to information.
+Press `spacebar` if you have read the warning and do not need to see it next time.
+Press `tab` to reach the "OK" button, then `enter` to accept the warning and proceed to the Add-on Store.
+The "[Add-ons and the Add-on Store](#AddonsManager)" section of the User Guide contains information about every feature of the Add-on Store.
+
+The Add-on Store is available from the Tools menu.
+Press `NVDA+n` to open the NVDA menu, then `t` for tools, then `a` for Add-on Store.
+When the Add-on Store opens, it shows "Available add-ons" if no add-ons are installed.
+When add-ons are installed, the Add-on Store opens to the "Installed add-ons" tab.
+
+#### Available add-ons {#AvailableAddons}
+When the window first opens, add-ons may take a few seconds to load.
+NVDA will read the name of the first add-on once the list of add-ons finishes loading.
+Available add-ons are listed alphabetically in a multi-column list.
+To browse the list and find out about a specific add-on:
+
+1. Use the arrow keys or press the first letter of an add-on name to move around the list.
+1. Press `tab` once to move to a description of the currently selected add-on.
+1. Use the [reading keys](#ReadingText) or arrow keys to read the full description.
+1. Press `tab` to the "Actions" button, which can be used to install the add-on, among other actions.
+1. Press `tab` to "Other Details", which lists details such as the publisher, version and homepage.
+1. To return to the list of add-ons, press `alt+a`, or `shift+tab` until reaching the list.
+
+#### Searching for add-ons {#SearchingForAddons}
+As well as browsing all available add-ons, it is possible to filter the add-ons shown.
+To search, press `alt+s` to jump to the "Search" field and type the text to search for.
+Searching checks for matches in the add-on ID, display name, publisher, author and description fields.
+The list updates while typing the search terms.
+Once done, press `tab` to go to the filtered list of add-ons and browse the results.
+
+#### Installing add-ons {#InstallingAddons}
+
+To install an add-on:
+
+1. With the focus on an add-on you would like to install, press `enter`.
+1. The actions menu opens with a list of actions; the first action is "Install".
+1. To install the add-on, press `i` or `downArrow` to "Install" and press `enter`.
+1. The focus returns to the add-on in the list and NVDA will read the details about the add-on.
+1. The "Status" information reported by NVDA changes from "Available" to "Downloading".
+1. Once the add-on has finished downloading, it will change to "Downloaded. Pending install".
+1. Repeat with any other add-ons you would like to install at the same time.
+1. Once finished, press `tab` until the focus is on the "Close" button, then press `enter`.
+1. The downloaded add-ons will start the installation process once the Add-on Store is closed.
+During the installation process, add-ons may display dialogs that you will need to respond to.
+1. When the add-ons have been installed, a dialog appears advising that changes were made, and you must restart NVDA for the add-on installation to complete.
+1. Press `enter` to restart NVDA.
+
+#### Managing installed add-ons {#ManagingInstalledAddons}
+Press `control+tab` to move between the tabs of the Add-on Store.
+The tabs include: "Installed add-ons", "Updatable add-ons", "Available add-ons" and "Installed incompatible add-ons".
+Each of the tabs are set out similar to each other, as a list of add-ons, a panel for more details on the selected add-on, and a button to perform actions for the selected add-on.
+The actions menu of installed add-ons includes "Disable" and "Remove" rather than "Install".
+Disabling an add-on stops NVDA from loading it, but leaves it installed.
+To re-enable a disabled add-on, activate "Enable" from the actions menu.
+After enabling, disabling, or removing add-ons, you will be prompted to restart NVDA when closing the Add-on Store.
+These changes will only take effect once NVDA is restarted.
+Note that in the Add-on Store window `escape` works the same as the Close button.
+
+#### Updating add-ons {#UpdatingAddons}
+When an update to an add-on you have installed is available, it will be listed in the "Updatable add-ons" tab.
+Press `control+tab` to get to this tab from anywhere in the Add-on Store.
+The status of the add-on will be listed as "Update available".
+The list will display the currently installed version and the available version.
+Press `enter` on the add-on to open the actions list; choose "Update".
+
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
 
 ### Community {#Community}
 
@@ -337,8 +422,6 @@ There will also be a button present to review the add-ons that will be disabled.
 Refer to the [incompatible add-ons dialog section](#incompatibleAddonsManager) for more help on this button.
 After installation, you are able to re-enable incompatible add-ons at your own risk from within the [Add-on Store](#AddonsManager).
 
-Note that add-ons might introduce vulnerabilities, so check out the [note on security and privacy](#AddonSecurityAndPrivacy) to make sure you have all information needed before installing them.
-
 #### Use NVDA during sign-in {#StartAtWindowsLogon}
 
 This option allows you to choose whether or not NVDA should automatically start while at the Windows sign-in screen, before you have entered a password.
@@ -361,10 +444,16 @@ This option is only available when installing from a portable copy, not when ins
 If creating a portable copy directly from the NVDA download package, press the Create Portable Copy button.
 If you have already closed this dialog or you are running an installed copy of NVDA, choose the Create Portable copy menu item found under Tools in the NVDA menu.
 
-The Dialog that appears allows you to choose where the portable copy should be created.
+The dialog that appears allows you to choose where the portable copy should be created.
 This can be a directory on your hard drive or a location on a USB thumb drive or other portable media.
-There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use  with the newly created portable copy.
+By default, a new directory is created for the portable copy.
+You can also choose to use an existing directory, this will overwrite files in the directory.
+If the existing directory is a portable copy of NVDA, that copy will be updated.
+
+There is also an option to choose whether NVDA should copy the logged on user's current NVDA configuration for use with the newly created portable copy.
+This also includes add-ons.
 This option is only available when creating a portable copy from an installed copy, not when creating from the download package.
+
 Pressing Continue will create the portable copy.
 Once creation is complete, a message will appear telling you it was successful.
 Press OK to dismiss this dialog.
@@ -424,8 +513,7 @@ The third lets you control if this Welcome dialog should appear each time NVDA s
 
 #### Data usage statistics dialog {#UsageStatsDialog}
 
-Starting from NVDA 2018.3, the user is asked if they want to allow usage data to be sent to NV Access in order to help improve NVDA in the future.
-When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA.
+When starting NVDA for the first time, a dialog will appear which will ask you if you want to accept sending data to NV Access while using NVDA, in order to help improve NVDA in the future.
 You can read more info about the data gathered by NV Access in the general settings section, [Allow NV Access to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
 Note: pressing on "yes" or "no" will save this setting and the dialog will never appear again unless you reinstall NVDA.
 However, you can enable or disable the data gathering process manually in NVDA's general settings panel. For changing this setting manually, you can check or uncheck the checkbox called [Allow the NVDA project to gather NVDA usage statistics](#GeneralSettingsGatherUsageStats).
@@ -436,8 +524,8 @@ However, you can enable or disable the data gathering process manually in NVDA's
 Most NVDA-specific keyboard commands consist of pressing a particular key called the NVDA modifier key in conjunction with one or more other keys.
 Notable exceptions to this are the text review commands for the desktop keyboard layout which just use the numpad keys by themselves, but there are some other exceptions as well.
 
-NVDA can be configured so that the Insert, numpad Insert, and/or Caps Lock key can be used as the NVDA modifier key.
-By default, both the Insert and numpad Insert keys are set as NVDA modifier keys.
+NVDA can be configured so that the `insert`, `numpadInsert`, and/or `capsLock` key can be used as the `NVDA` modifier key.
+By default, both the `insert` and `numpadInsert` keys are set as NVDA modifier keys.
 
 If you wish to cause one of the NVDA modifier keys to behave as it usually would if NVDA were not running (e.g. you wish to turn Caps Lock on when you have set Caps Lock to be an NVDA modifier key), you can press the key twice in quick succession.
 
@@ -471,7 +559,7 @@ You can also keep your finger on the screen and move it around to read other con
 When NVDA commands are described later in this user guide, they may list a touch gesture which can be used to activate that command with the touchscreen.
 Following are some instructions on how to perform the various touch gestures.
 
-##### Taps {#toc45}
+##### Taps {#Taps}
 
 Tap the screen quickly with one or more fingers.
 
@@ -483,7 +571,7 @@ Tapping twice will result in a double-tap.
 Tapping 3 times will result in a triple-tap and so on.
 Of course, these multi-tap gestures also recognize how many fingers were used, so it's possible to have gestures like a 2-finger triple-tap, a 4-finger tap, etc.
 
-##### Flicks {#toc46}
+##### Flicks {#Flicks}
 
 Quickly swipe your finger across the screen.
 
@@ -831,6 +919,7 @@ These extra mouse features are not turned on by default in NVDA.
 If you wish to take advantage of them, you can configure them from the [Mouse settings](#MouseSettings) category of the [NVDA Settings](#NVDASettings) dialog, found in the NVDA Preferences menu.
 
 Although a physical mouse or trackpad should be used to navigate with the mouse, NVDA provides some commands related to the mouse:
+
 <!-- KC:beginInclude -->
 
 | Name |Desktop key |Laptop key |Touch |Description|
@@ -839,6 +928,10 @@ Although a physical mouse or trackpad should be used to navigate with the mouse,
 |Left mouse button lock |shift+numpadDivide |NVDA+control+[ |none |Locks the left mouse button down. Press again to release it. To drag the mouse, press this key to lock the left button down and then move the mouse either physically or use one of the other mouse routing commands|
 |Right mouse click |numpadMultiply |NVDA+] |tap and hold |Clicks the right mouse button once, mostly used to open context menu at the location of the mouse.|
 |Right mouse button lock |shift+numpadMultiply |NVDA+control+] |none |Locks the right mouse button down. Press again to release it. To drag the mouse, press this key to lock the right button down and then move the mouse either physically or use one of the other mouse routing commands|
+|Scroll up at the mouse position |none |none |none |Scrolls the mouse wheel up at the current mouse position|
+|Scroll down at the mouse position|none |none |none |Scrolls the mouse wheel down at the current mouse position|
+|Scroll left at the mouse position |none |none |none |Scrolls the mouse wheel left at the current mouse position|
+|Scroll right at the mouse position |none |none |none |Scrolls the mouse wheel right at the current mouse position|
 |Move mouse to current navigator object |NVDA+numpadDivide |NVDA+shift+m |none |Moves the mouse to the location of the current navigator object and review cursor|
 |Navigate to the object under the mouse |NVDA+numpadMultiply |NVDA+shift+n |none |Set the navigator object to the object located at the position of the mouse|
 
@@ -1053,9 +1146,9 @@ However, for scenarios where you wish to copy an entire table or paragraph of ri
 
 ## Reading Mathematical Content {#ReadingMath}
 
-NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille. 
+NVDA can read and navigate mathematical content on the web and in other applications, providing access in both speech and braille.
 However, in order for NVDA to read and interact with mathematical content, you will first need to install a Math component for NvDA.
-There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math). 
+There are several NVDA add-ons available in the NVDA Add-on Store that provide support for math, including the [MathCAT NVDA add-on](https://nsoiffer.github.io/MathCAT/) and [Access8Math](https://github.com/tsengwoody/Access8Math).
 Please refer to the [Add-on Store section](#AddonsManager) to learn how to browse and install available add-ons in NVDA.
 NVDA also can make use of the older [MathPlayer](https://info.wiris.com/mathplayer-info) software from Wiris if found on your system, though this software is no longer maintained.
 
@@ -1124,7 +1217,7 @@ Although it is generally recommended to use one of the newer NVDA add-ons to sup
 E.g. MathPlayer may support a particular language or Braille code that is unsupported in newer add-ons.
 MathPlayer is available for free from the Wiris website.
 [Download MathPlayer](https://downloads.wiris.com/mathplayer/MathPlayerSetup.exe).
-After installing MathPlayer, you will need to restart NVDA. 
+After installing MathPlayer, you will need to restart NVDA.
 Please note that information about MathPlayer may state that it is only for older browsers such as Internet Explorer 8.
 This is only referring to using MathPlayer to display mathematical content visually, and can be ignored by those using it to read or navigate math with NVDA.
 
@@ -1192,7 +1285,7 @@ In order to fit as much information as possible on a braille display, the follow
 |tv |tree view|
 |tvbtn |tree view button|
 |tvitem |tree view item|
-|lv N |a tree view item has a hierarchical level N||
+|lv N |a tree view item has a hierarchical level N|
 |wnd |window|
 |⠤⠤⠤⠤⠤ |separator|
 |mrkd |marked content|
@@ -1396,7 +1489,8 @@ The Elements List can list headings, links, annotations (which includes comments
 #### Reporting Comments {#WordReportingComments}
 
 <!-- KC:beginInclude -->
-To report any comments at the current caret position, press NVDA+alt+c.
+To report any comments at the current caret position, press `NVDA+alt+c`.
+Pressing twice shows the information in a browsable message.
 <!-- KC:endInclude -->
 All comments for the document, along with other tracked changes, can also be listed in the NVDA Elements List  when selecting Annotations as the type.
 
@@ -1444,7 +1538,8 @@ Selecting a form field and pressing enter or the Move to button moves to that fi
 #### Reporting Notes {#ExcelReportingComments}
 
 <!-- KC:beginInclude -->
-To report any notes for the currently focused cell, press NVDA+alt+c.
+To report any notes for the currently focused cell, press `NVDA+alt+c`.
+Pressing twice shows the information in a browsable message.
 In Microsoft 2016, 365 and newer, the classic comments in Microsoft Excel have been renamed to "notes".
 <!-- KC:endInclude -->
 All notes for the worksheet can also be listed in the NVDA Elements List after pressing NVDA+f7.
@@ -1515,7 +1610,7 @@ Note: The above shortcuts work only with the default formatting string for fooba
 
 ### Poedit {#Poedit}
 
-NVDA offers enhanced support for Poedit 3.4 or newer.
+NVDA offers enhanced support for Poedit 3.5 or newer.
 
 <!-- KC:beginInclude -->
 
@@ -1637,7 +1732,7 @@ The settings categories found in the NVDA Settings dialog will be outlined below
 
 <!-- KC:setting -->
 
-##### Open General settings {#toc110}
+##### Open General settings {#OpenGeneralSettings}
 
 Key: `NVDA+control+g`
 
@@ -1660,7 +1755,13 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 ##### Show exit options when exiting NVDA {#GeneralSettingsShowExitOptions}
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
-When checked, a dialog will appear when you attempt to exit NVDA asking whether you want to exit, restart, restart with add-ons disabled or install pending updates (if any).
+When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+* exit
+* restart
+* restart with add-ons disabled and debug logging enabled
+* restart with debug logging enabled
+* install pending updates (if any).
+
 When unchecked, NVDA will exit immediately.
 
 ##### Play sounds when starting or exiting NVDA {#GeneralSettingsPlaySounds}
@@ -1712,10 +1813,11 @@ The following information is always sent:
 
 ##### Allow NV Access to gather NVDA usage statistics {#GeneralSettingsGatherUsageStats}
 
-If this is enabled, NV Access will use the information from update checks in order to track  the number of NVDA users including particular demographics such as Operating system and country of origin.
+If this is enabled, NV Access will use the information from update checks in order to track the number of NVDA users including particular demographics such as the operating system and country of origin.
 Note that although your IP address will be used to calculate your country during the update check, the IP address is never kept.
 Apart from the mandatory information required to check for updates, the following extra information is also currently sent:
 
+* A unique ID for the current NVDA user, this changes once a month
 * NVDA interface language
 * Whether this copy of NVDA is portable or installed
 * Name of the current speech synthesizer in use (including the name of the add-on the driver comes from)
@@ -1729,11 +1831,24 @@ This information greatly aides NV Access to prioritize future development of NVD
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
+##### Update Mirror {#UpdateMirror}
+
+These controls allow you to specify an alternative URL to use to check for updates to NVDA.
+This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+
+The read-only text box shows the current mirror URL.
+If no mirror is in use (i.e. the NV Access update server is being used), "No mirror" is displayed.
+
+If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetURLDialog).
+
+Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
+Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->
 
-##### Open Speech settings {#toc123}
+##### Open Speech settings {#OpenSpeechSettings}
 
 Key: `NVDA+control+v`
 
@@ -1744,7 +1859,8 @@ The Speech Settings category contains the following options:
 
 ##### Change synthesizer {#SpeechSettingsChange}
 
-The first option in the Speech Settings category is the Change... button. This button activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer and output device.
+The first option in the Speech Settings category is the Change... button.
+This button activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer.
 This dialog opens on top of the NVDA Settings dialog.
 Saving or dismissing the settings in the Select Synthesizer dialog will return you to the NVDA Settings dialog.
 
@@ -1809,6 +1925,39 @@ This option applies to all synthesizers, not just the currently active synthesiz
 On by default, this option tells NVDA if the current voice's language can be trusted when processing symbols and characters.
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
+##### Unicode normalization {#SpeechUnicodeNormalization}
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
+
+When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
+This is beneficial when speaking characters that can be represented in several forms.
+NVDA uses the NFKC (Normalization Form Compatibility Composition) algorithm, which provides the following benefits, among others:
+
+1. The bold and italic versions of characters that are part of the unicode standard and are commonly used on social media are normalized to their most common compatible equivalent.
+For example, the latin letter "h" can also be presented as "𝐡" (bold), "ℎ" (itallic), etc. but will always be spoken as "h" when normalization is enabled.
+This aspect of normalization also aids in reading equations in the Microsoft Word equation editor.
+
+1. Normalization to composed characters.
+For example, the character "ü" (u with umlaut/diaeresis), a common character in languages like German and Turkish can be represented in two forms:
+  1. One stand alone unicode character (ü)
+  1. A decomposition into two characters (ü), namely the normal latin letter u and a diaeresis modifier
+  Unicode normalization ensures that only one form will be used throughout all speech output, which is the one character variant.
+
+1. Decomposition of some ligatures, Including "ĳ" (ligature ij) to their two letter form ("ij").
+
+1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
+
+This setting is a checkbox that, when checked, tells NVDA to explicitly report that a character is normalized when spoken as an individual character such as when spelling.
+For example, when this option is enabled, spelling the character "ĳ" will pronounce it as "i j normalized".
+
+Note that this setting is only available when "[Unicode normalization](#SpeechUnicodeNormalization)" is enabled.
+
 ##### Include Unicode Consortium data (including emoji) when processing characters and symbols {#SpeechSettingsCLDR}
 
 When this checkbox is checked, NVDA will include additional symbol pronunciation dictionaries when pronouncing characters and symbols.
@@ -1847,6 +1996,7 @@ Most synthesizers do support it.
 
 This option should generally be enabled.
 However, some Microsoft Speech API synthesizers do not implement this correctly and behave strangely when it is enabled.
+Synthesizers from Code Factory, both the add-on and the SAPI application, do not implement it correctly either and cause unwanted spelling of the spoken text (e.g. in NVDA menu or dialogs).
 If you are having problems with the pronunciation of individual characters, try disabling this option.
 
 ##### Delayed descriptions for characters on cursor movement {#delayedCharacterDescriptions}
@@ -1876,7 +2026,7 @@ Note that it is necessary to check at least two modes.
 
 <!-- KC:setting -->
 
-##### Open Select Synthesizer dialog {#toc144}
+##### Open Select Synthesizer dialog {#OpenSelectSynthesizer}
 
 Key: `NVDA+control+s`
 
@@ -1926,6 +2076,7 @@ The next option you will come to in this category is the braille output table co
 In this combo box, you will find braille tables for different languages, braille standards and grades.
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
+If you select "Automatic", the table will be selected according with NVDA's current language.
 
 ##### Input Table {#BrailleSettingsInputTable}
 
@@ -1948,7 +2099,7 @@ Currently, two braille modes are supported, "follow cursors" and "display speech
 
 When follow cursors is selected, the braille display will follow either the system focus/caret or the navigator object/review cursor, depending on what braille is tethered to.
 
-When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk"
+When display speech output is selected, the braille display will show what NVDA speaks, or would have spoken if speech mode was set to "talk".
 
 ##### Expand to computer braille for the word at the cursor {#BrailleSettingsExpandToComputerBraille}
 
@@ -2007,11 +2158,6 @@ In this case, Braille  will not follow system focus and system caret.
 
 ##### Move system caret when routing review cursor {#BrailleSettingsReviewRoutingMovesSystemCaret}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Never), Never, Only when tethered automatically, Always|
-|Default |Never|
-
 This setting determines if the system caret should also be moved with a routing button press.
 This option is set to Never by default, meaning that routing will never move the caret when routing the review cursor.
 
@@ -2027,6 +2173,11 @@ This option is shown only if "[tether braille](#BrailleTether)" is set to "autom
 
 To toggle move system caret when routing review cursor from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Never), Never, Only when tethered automatically, Always|
+|Default |Never|
+
 ##### Read by Paragraph {#BrailleSettingsReadByParagraph}
 
 If enabled, braille will be displayed by paragraphs instead of lines.
@@ -2035,18 +2186,18 @@ This means that you do not have to scroll the display at the end of each line ev
 This may allow for more fluent reading of large amounts of text.
 It is disabled by default.
 
-##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+##### Paragraph start marker {#BrailleParagraphStartMarkers}
 
-If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
-Instead, there will be some blank space at the end of the display.
-When you scroll the display, you will be able to read the entire word.
-This is sometimes called "word wrap".
-Note that if the word is too large to fit on the display even by itself, the word must still be split.
+If "Read by paragraph" is checked, the selected start marker will be displayed to indicate the start of a paragraph.
+This can be especially helpful in applications used to read large pieces of text, like structured documents or books.
+In such documents, knowing where paragraphs start may be useful to understand the structure of the content, or to set bookmarks or annotations based on paragraph position.
 
-If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
-When you scroll the display, you will then be able to read the rest of the word.
+The options include using two spaces as a subtle paragraph break, and the paragraph symbol, pilcrow (¶), as a more obvious one.
 
-Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |No paragraph start marker, Double space (  ), Pilcrow (¶)|
+|Default |No paragraph start marker|
 
 ##### Focus context presentation {#BrailleSettingsFocusContextPresentation}
 
@@ -2075,12 +2226,92 @@ However, in order for you to read the context (i.e. that you are in a list and t
 
 To toggle focus context presentation from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
+##### Show selection {#BrailleSettingsShowSelection}
+
+This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
+The option is enabled by default so the selection indicator is shown.
+The selection indicator might be a distraction while reading.
+Disabling this option may improve readability.
+
+To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
+
+##### Formatting display {#BrailleFormattingDisplay}
+
+This setting determines how NVDA will display text formatting in braille.
+This option only has an effect if NVDA is set to [display font attributes in braille](#DocumentFormattingFontAttributes).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Default (Liblouis), Liblouis, Tags |
+| Default | Liblouis |
+
+| Option | Behaviour |
+|---|---|
+| Liblouis | Use native Braille formatting. Note that this option will only indicate bold, italic and underlined text, and only if the selected braille table supports indicating these attributes. |
+| [Tags](#BrailleFormattingDisplayTags) | Use tags that describe how and where text formatting changes. |
+
+###### Tags {#BrailleFormattingDisplayTags}
+
+When "Formatting display" is set to "Tags", a formatting tag is displayed in braille when a change in formatting is detected.
+These tags start with ⣋ and end with ⣙.
+A formatting tag will contain one or more symbols which describe the text formatting.
+The following symbols are defined:
+
+| Symbol | Meaning |
+|---|---|
+| ⠃ ("b") | Start bold |
+| ⡃ ("b" with dot 7) | End bold |
+| ⠊ ("i") | Start italic |
+| ⡊ ("i" with dot 7) | End italic |
+| ⠥ ("u") | Start underline |
+| ⡥ ("u" with dot 7) | End underline |
+| ⠎ ("s")| Start strikethrough |
+| ⡎ ("s" with dot 7) | End strikethrough |
+
+##### Speak character when routing cursor in text {#BrailleSpeakOnRouting}
+
+If this is enabled, NVDA will automatically speak the character at the cursor when routing to it with braille cursor routing keys.
+
+To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+##### Speak when navigating by line or paragraph {#BrailleSpeakOnNavigating}
+
+Enabling this option will cause NVDA to speak lines or paragraphs reached using the braille display's navigation controls.
+
+To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
+##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
+
+If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
+Instead, there will be some blank space at the end of the display.
+When you scroll the display, you will be able to read the entire word.
+This is sometimes called "word wrap".
+Note that if the word is too large to fit on the display even by itself, the word must still be split.
+
+If this is disabled, as much of the word as possible will be displayed, but the rest will be cut off.
+When you scroll the display, you will then be able to read the rest of the word.
+
+Enabling this may allow for more fluent reading, but generally requires you to scroll the display more.
+
+##### Unicode normalization {#BrailleUnicodeNormalization}
+
+When this option is enabled, unicode normalization is performed on the text that is brailled on the braille display.
+This is beneficial when coming across characters in braille that are unknown in a particular braille table and which have a compatible alternative, like the bold and italic characters commonly used on social media.
+Other benefits of unicode normalization are explained in greater detail in the [section for the equivalent speech setting](#SpeechUnicodeNormalization).
+
+To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Disabled), Enabled, Disabled|
+|Default |Disabled|
+
+##### Interrupt speech while scrolling {#BrailleSettingsInterruptSpeech}
 
 This setting determines if speech should be interrupted when the Braille display is scrolled backwards/forwards.
 Previous/next line commands always interrupt speech.
@@ -2090,25 +2321,16 @@ For this reason the option is enabled by default, interrupting speech when scrol
 
 Disabling this option allows speech to be heard while simultaneously reading Braille.
 
-##### Show selection {#BrailleSettingsShowSelection}
-
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Enabled, Disabled|
 |Default |Enabled|
 
-This setting determines if selection indicator (dots 7 and 8) is shown by the braille display.
-The option is enabled by default so the selection indicator is shown.
-The selection indicator might be a distraction while reading.
-Disabling this option may improve readability.
-
-To toggle show selection from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
 #### Select Braille Display {#SelectBrailleDisplay}
 
 <!-- KC:setting -->
 
-##### Open Select Braille Display dialog {#toc168}
+##### Open Select Braille Display dialog {#OpenSelectBrailleDisplay}
 
 Key: `NVDA+control+a`
 
@@ -2160,7 +2382,7 @@ Therefore it is recommended to only connect one Braille Display of a given type 
 
 <!-- KC:setting -->
 
-##### Open Audio settings {#toc173}
+##### Open Audio settings {#OpenAudioSettings}
 
 Key: `NVDA+control+u`
 
@@ -2203,23 +2425,11 @@ This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Time to keep audio device awake after speech {#AudioAwakeTime}
-
-This edit box specifies how long NVDA keeps the audio device awake after speech ends.
-This allows NVDA to avoid certain speech glitches like dropped parts of words.
-This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
-This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
-
-Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
-Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
-
-You can set the time to zero in order to disable this feature.
-
 ##### Sound split {#SelectSoundSplitMode}
 
 The sound split feature allows users to make use of their stereo output devices, such as headphones and speakers.
 Sound split makes it possible to have NVDA speech in one channel (e.g. left) and have all other applications play their sounds in the other channel (e.g. right).
-By default sound split is disabled, which means that all applications including NVDA will play sounds in both left and right channels.
+By default sound split is disabled.
 A gesture allows cycling through the various sound split modes:
 <!-- KC:beginInclude -->
 
@@ -2231,19 +2441,23 @@ A gesture allows cycling through the various sound split modes:
 
 By default this command will cycle between the following modes:
 
-* Disabled sound split: both NVDA and other applications output sounds to both left and right channels.
+* Sound split disabled: NVDA does not apply any sound split processing.
 * NVDA on the left and applications on the right: NVDA will speak in the left channel, while other applications will play sounds in the right channel.
-* NVDA on the right and applications on the left: NVDA will speak in the right channel, while other applications will play sounds in the left channel.
+* NVDA on the left and applications in both channels: NVDA will speak in the left channel, while other applications will play sounds in  both left and right channels.
 
 There are more advanced sound split modes available in NVDA setting combo box.
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
+Among these modes, "NVDA in both channels and applications in both channels" forces all the sounds to be directed in both channels.
+This mode may differ from "Sound split disabled" mode in case other audio processing interfers with channel volumes.
+
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
+
+If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
-In order to mitigate this, please restart NVDA.
+In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
 ##### Customizing Sound split modes {#CustomizeSoundSplitModes}
 
@@ -2251,45 +2465,68 @@ This checkable list allows selecting which sound split modes are included when c
 Modes which are unchecked are excluded.
 By default only three modes are included.
 
-* Sound split disabled: both NVDA and applications play sounds in both left and right channels.
-* NVDA on the left and all other applications on the right channel.
-* NVDA on the right and all other applications on the left channel.
+* Sound split disabled.
+* NVDA on the left and applications on the right.
+* NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
+##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (No), No, Yes|
+|Default |No|
+
+This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
+
+Possible values are:
+
+* No: NVDA doesn't interfere with the volume levels of other applications.
+* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
+Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
+
+This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
+
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
 This volume can also be controlled via the following keyboard commands from anywhere:
 
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
+| Name | Key | Description |
 |---|---|---|
-|Increase applications volume |`NVDA+alt+pageUp` |Increases volume of all applications except NVDA.|
-|Decrease applications volume |`NVDA+alt+pageDown` |Decreases volume of all applications except NVDA.|
-
-<!-- KC:endInclude -->
+| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
+| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Mute other applications {#MuteApplications}
+##### Mute other applications {#OtherAppMute}
 
-This checkbox allows you to mute all applications other than NVDA.
-This mute setting will apply to all other applications outputting sound, even if they start after this setting is changed.
+This check box allows you to mute or unmute all applications except NVDA at once.
+
 The following keyboard command can also be used from anywhere:
 
-<!-- KC:beginInclude -->
-
-| Name |Key |Description|
+| Name | Key | Description |
 |---|---|---|
-|Toggle mute other applications |`NVDA+alt+delete` |Mutes or unmutes all applications other than NVDA.|
+| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
 
-<!-- KC:endInclude -->
+Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+
+##### Time to keep audio device awake after speech {#AudioAwakeTime}
+
+This edit box specifies how long NVDA keeps the audio device awake after speech ends.
+This allows NVDA to avoid certain speech glitches like dropped parts of words.
+This can happen due to audio devices (especially Bluetooth and wireless devices) entering standby mode.
+This might also be helpful in other use cases, such as when running NVDA inside a virtual machine (e.g. Citrix Virtual Desktop), or on certain laptops.
+
+Lower values may allow audio to be cut-off more often, as a device may enter standby mode too soon, causing the start of the following speech to be clipped.
+Setting the value too high may cause the battery of the sound output device to discharge faster, as it stays active for longer while no sound is being sent.
+
+You can set the time to zero in order to disable this feature.
 
 #### Vision {#VisionSettings}
 
@@ -2334,7 +2571,7 @@ For the supported settings per provider, please refer to the documentation for t
 
 <!-- KC:setting -->
 
-##### Open Keyboard settings {#toc188}
+##### Open Keyboard settings {#OpenKeyboardSettings}
 
 Key: `NVDA+control+k`
 
@@ -2407,11 +2644,21 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 This option allows the user to control if key presses generated by applications such as on-screen keyboards and speech recognition software should be processed by NVDA.
 This option is on by default, though certain users may wish to turn this off, such as those typing Vietnamese with the UniKey typing software as it will  cause incorrect character input.
 
+##### Multiple key press timeout {#MultiPressTimeout}
+
+Some NVDA keyboard gestures perform different actions based upon how many times the same key is pressed in rapid succession.
+An example of this is the "Report current character of navigator object" command.
+This command reports the character if pressed once, a phonetic description of the character if pressed twice, and the numeric value of the character if pressed three times.
+This option configures the timeout after which an additional press of the same key will start a new gesture, rather than being taken as a subsequent press of the first one.
+For the example command, a too short timeout will cause two presses to report the current character twice, rather than the phonetic description.
+The default timeout is 500 ms, i.e. half a second.
+Increasing this timeout may be especially useful for people using sticky keys, or who have a physical disability.
+
 #### Mouse {#MouseSettings}
 
 <!-- KC:setting -->
 
-##### Open Mouse settings {#toc201}
+##### Open Mouse settings {#OpenMouseSettings}
 
 Key: `NVDA+control+m`
 
@@ -2514,7 +2761,7 @@ To toggle simple review mode from anywhere, please assign a custom gesture using
 
 <!-- KC:setting -->
 
-##### Open Object Presentation settings {#toc218}
+##### Open Object Presentation settings {#OpenObjectPresentationSettings}
 
 Key: `NVDA+control+o`
 
@@ -2629,7 +2876,7 @@ This option is on by default.
 
 <!-- KC:setting -->
 
-##### Open Browse Mode settings {#toc236}
+##### Open Browse Mode settings {#OpenBrowseModeSettings}
 
 Key: `NVDA+control+b`
 
@@ -2721,7 +2968,7 @@ Enabling this option may improve support for some websites at the cost of perfor
 
 <!-- KC:setting -->
 
-##### Open Document Formatting settings {#toc250}
+##### Open Document Formatting settings {#OpenDocumentFormattingSettings}
 
 Key: `NVDA+control+d`
 
@@ -2734,7 +2981,7 @@ You can configure reporting of:
 * Font
   * Font name
   * Font size
-  * Font attributes
+  * Font attributes [(Off, Speech, Braille, Speech and braille)](#DocumentFormattingFontAttributes)
   * Superscripts and subscripts
   * Emphasis
   * Highlighted (Marked) text
@@ -2761,6 +3008,7 @@ You can configure reporting of:
 * Elements
   * Headings
   * Links
+  * Link type (destination to same page)
   * Graphics
   * Lists
   * Block quotes
@@ -2772,6 +3020,17 @@ You can configure reporting of:
   * Clickable
 
 To toggle these settings from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
+
+##### Font attributes {#DocumentFormattingFontAttributes}
+
+This option allows you to select how certain font attributes, such as bold, italics, underline and strikethrough are reported.
+The font attributes combo box has four options:
+
+* Off: NVDA will not report these font attributes.
+* Speech: NVDA will announce when these font attributes change.
+* Braille: NVDA will display these attributes in braille.
+Exactly how they are displayed can be configured in [NVDA's braille settings](#BrailleFormattingDisplay).
+* Speech and braille: NVDA will report font attributes using both of the above methods.
 
 ##### Report formatting changes after the cursor {#DocumentFormattingDetectFormatAfterCursor}
 
@@ -2819,6 +3078,37 @@ Note that this paragraph style cannot be used in Microsoft Word or Microsoft Out
 
 You may toggle through the available paragraph styles from anywhere by assigning a key in the [Input Gestures dialog](#InputGestures).
 
+#### Add-on Store Settings {#AddonStoreSettings}
+
+This category allows you to adjust the behaviour of the Add-on Store.
+
+##### Update Notifications {#AutomaticAddonUpdates}
+
+When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
+This check is performed every 24 hours.
+Notifications will only occur for add-ons with updates available within the same channel.
+For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Notify (Default), Disabled |
+|Default |Notify |
+
+|Option |Behaviour |
+|---|---|
+|Notify |Notify when updates are available to add-ons within the same channel |
+|Disabled |Do not automatically check for updates to add-ons |
+
+##### Mirror server {#AddonStoreMetadataMirror}
+
+These controls allow you to specify an alternative URL to download Add-on Store data from.
+This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
+
+The read-only text box shows the current mirror URL.
+If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "No mirror" is displayed.
+
+If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -2835,6 +3125,28 @@ When this checkbox is enabled, NVDA will automatically refresh the recognized co
 This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
 The refresh takes place every one and a half seconds.
 This option is disabled by default.
+
+#### Set Mirror Dialog {#SetURLDialog}
+
+This dialog allows you to specify the URL of a mirror to use when [updating NVDA](#GeneralSettingsCheckForUpdates) or [using the Add-on Store](#AddonsManager).
+This may be of use in locations where access to the NV Access servers for these functions is slow or unavailable.
+
+* When setting the [NVDA update mirror](#UpdateMirror), the title of this dialog will be "Set NVDA Update Mirror".
+* When setting the [Add-on Store mirror](#AddonStoreMetadataMirror), the title of this dialog will be "Set Add-on Store Mirror Server".
+
+##### URL {#SetURLTextbox}
+
+Enter the URL (web address) of the mirror you wish to use here.
+Only HTTP and HTTPS URLs are supported.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
+
+Leave this blank to use the default NV Access server.
+
+##### Test... {#SetURLTest}
+
+Press this button to test the mirror URL you have entered.
+You must be connected to the internet for the test to succeed.
+It is recommended that you always test the URL before saving it.
 
 #### Advanced Settings {#AdvancedSettings}
 
@@ -3145,7 +3457,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
 In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
-Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\\\b" should be typed in order to get the "a\\b" replacement.
 
 #### Input Gestures {#InputGestures}
 
@@ -3176,8 +3488,7 @@ Note:
 
 * Emulated keys must have gestures assigned in order to persist when saving / closing the dialog.
 * An input gesture with modifier keys may not be able to be mapped to an emulated gesture without modifier keys.
-For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result
-in the application receiving `ctrl+a`.
+For instance, setting the emulated input `a` and configuring an input gesture of `ctrl+m`, may result in the application receiving `ctrl+a`.
 
 When you are finished making changes, press the OK button to save them or the Cancel button to discard them.
 
@@ -3324,34 +3635,6 @@ If you install an add-on with paid components and change your mind about using i
 The Add-on Store is accessed from the Tools submenu of the NVDA menu.
 To access the Add-on Store from anywhere, assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-## Note on security and privacy when using Add-ons {#AddonSecurityAndPrivacy}
-Installing add-ons leads to the integration of non-NV Access code into NVDA, in order to enhance NVDA or make new features possible.
-Add-ons can be created by any person or organization.
-They may include or utilize external components and third party services to serve their purpose and provide the features for which they have been developed.
-
-Automated tests of add-ons happen before they are published in the NVDA Add-on Store.
-These include a basic automated check for vulnerabilities by security analysis tools such as [CodeQL](https://codeql.github.com/).
-Add-ons are not reviewed by NV Access staff before publication to the Add-on Store, but from time to time NV Access lets [VirusTotal](https://docs.virustotal.com/docs/how-it-works) check the vulnerability of add-ons.
-Additionally, many add-ons have discussion areas where users can leave feedback.
-The [community reviews area](#AddonStoreReviews) can be accessed via the actions menu of each add-on.
-
-As a general rule, NVDA's add-ons or third-party extensions in other software such as browsers, have the potential to introduce security and/or privacy vulnerabilities, depending on the permissions they need and actions they perform in order to provide their stated functionality.
-Risks may include, but are not limited to:
-
-* Insecure network connections
-* Files stored with insecure file permissions or in an unprotected location
-* Writing sensitive information to a log file without notifying the user
-* Vulnerabilities in third-party libraries
-* Cryptographic vulnerabilities
-
-Users install NVDA add-ons at their own risk.
-Therefore, the following considerations should be kept in mind when installing them:
-
-* If the developer has a website, spend some time evaluating whether it appears to be a serious source you can trust.
-* Read the description carefully. Does the add-on need questionable permissions? Does it track data? Does it share sensitive data with other sources that you don’t trust?
-* Check out the [community reviews #AddonStoreReviews] for the add-on. Are there any complaints about the add-on? Are there any reports about data being taken, or for anything that makes you feel unsafe?
-* The risk of vulnerabilities increases the more add-ons you installed. Therefore, be sure to remain aware of where you are downloading your add-ons from. Sources other than the official NVDA Add-on Store may be malicious, may include out of date versions, or may not perform any quality checks.
-
 ### Browsing add-ons {#AddonStoreBrowsing}
 
 When opened, the Add-on Store displays a list of add-ons.
@@ -3404,6 +3687,13 @@ You can reach it by pressing `shift+tab` from the list of add-ons.
 Type a keyword or two for the kind of add-on you're looking for, then `tab` to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
+#### Sorting the add-ons list by column {#AddonStoreSortByColumn}
+
+By default, the add-ons list is sorted by the add-ons' display name.
+The "Sort by column" combo box can be used to sort the list by the available columns for each tab.
+For example, you may wish to sort add-ons by publisher, available version, etc.
+Add-ons can be sortered in ascending or descending order.
+
 ### Add-on actions {#AddonStoreActions}
 
 Add-ons have associated actions, such as install, help, disable, and remove.
@@ -3420,6 +3710,8 @@ This could include accessing your personal data or even the entire system.
 You can install and update add-ons by [browsing Available add-ons](#AddonStoreBrowsing).
 Select an add-on from the "Available add-ons" or "Updatable add-ons" tab.
 Then use the update, install, or replace action to start the installation.
+If the download or installation fails you can retry the installation.
+It is also possible to cancel the install before exiting the Add-on Store.
 
 You can also install multiple add-ons at once.
 This can be done by selecting multiple add-ons in the available add-ons tab, then activating the context menu on the selection and choosing the "Install selected add-ons" action.
@@ -3432,6 +3724,9 @@ If NVDA is installed and running on your system, you can also open an add-on fil
 
 When an add-on is being installed from an external source, NVDA will ask you to confirm the installation.
 Once the add-on is installed, NVDA must be restarted for the add-on to start running, although you may postpone restarting NVDA if you have other add-ons to install or update.
+
+By default, after NVDA startup, you will be notified if any add-on updates are available.
+To learn more about and configure this behaviour, refer to ["Update Notifications"](#AutomaticAddonUpdates).
 
 #### Removing Add-ons {#AddonStoreRemoving}
 
@@ -3547,38 +3842,32 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 For more information, please see the [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
 
-### Add-on Store {#toc314}
+### Add-on Store {#AddonStoreMenuItem}
 
 This will open the [NVDA Add-on Store](#AddonsManager).
 For more information, read the in-depth section: [Add-ons and the Add-on Store](#AddonsManager).
 
 ### Create portable copy {#CreatePortableCopy}
 
-This will open a dialog which allows you to create a portable copy of NVDA out of the installed version.
-Either way, when running a portable copy of NVDA, in the extra tool sub menu the menu item will be called "install NVDA on this PC" instead of "create portable copy).
+This will open a dialog which allows you to create a portable copy of NVDA out of the currently running version.
 
-The dialog to create a portable copy of NVDA or to install NVDA on this PC will prompt you to choose a folder path in which NVDA should create the portable copy or in which NVDA should be installed.
-
-In this dialog you can enable or disable the following:
-
-* Copy current user configuration (this includes the files in %appdata%\roaming\NVDA or in the user configuration of your portable copy and also includes add-ons and other modules)
-* Start the new portable copy after creation or start NVDA after installation (starts NVDA automatically after the portable copy creation or the installation)
+Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for more information.
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
-Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
-As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
+This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
+THE COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
-This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+The types of problem this tool can fix include:
 
-The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+* NVDA reporting "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, Windows Explorer, the task bar, and other programs.
+* NVDA failing to switch between focus mode and browse mode when you expect it to.
+* Buttons which previously had their names spoken, suddenly being reported only as "button".
+* NVDA being very slow when navigating in browsers while using browse mode.
 
-Specifically, following issues can be solved by running this tool:
-
-* NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
-* NVDA fails to switch between focus mode and browse mode
-* NVDA is very slow when navigating in browsers while using browse mode
-* And possibly other issues.
+Because this tool corrects entries in the Windows registry, it requires administrative access to work, just like when installing a program.
+If you have UAC (User Access Control) enabled, as most users do, you will need to follow whatever prompts are presented by UAC, to run the tool successfully.
 
 ### Reload plugins {#ReloadPlugins}
 
@@ -3992,11 +4281,12 @@ The following extra devices are also supported (and do not require any special d
 * APH Chameleon 20
 * Humanware BrailleOne
 * NLS eReader
+  * Note that the Zoomax is currently not supported without external drivers
 
 Following are the key assignments for  the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
 
-#### Key assignments for All models {#toc334}
+#### Key assignments for All models {#HumanWareBrailliantKeyAssignmentForAllModels}
 
 <!-- KC:beginInclude -->
 
@@ -4025,7 +4315,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#toc335}
+#### Key assignments for Brailliant BI 32, BI 40 and B 80 {#HumanWareBrailliantKeyAssignmentForBI32BI40AndB80}
 
 <!-- KC:beginInclude -->
 
@@ -4037,7 +4327,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 <!-- KC:endInclude -->
 
-#### Key assignments for Brailliant BI 14 {#toc336}
+#### Key assignments for Brailliant BI 14 {#HumanWareBrailliantKeyAssignmentForBI14}
 
 <!-- KC:beginInclude -->
 
@@ -4203,6 +4493,8 @@ Please see the display's documentation for descriptions of where these keys can 
 |end key |space+LJ down|
 |control+home key |backspace+LJ up|
 |control+end key |backspace+LJ down|
+
+<!-- KC:endInclude -->
 
 ### Papenmeier BRAILLEX Newer Models {#Papenmeier}
 
@@ -4552,12 +4844,12 @@ Due to this, and to maintain compatibility with other screen readers in Taiwan, 
 
 ### Eurobraille displays {#Eurobraille}
 
-The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.  
-These devices have a braille keyboard with 10 keys. 
+The b.book, b.note, Esys, Esytime and Iris displays from Eurobraille are supported by NVDA.
+These devices have a braille keyboard with 10 keys.
 Please refer to the display's documentation for descriptions of these keys.
 Of the two keys placed like a space bar, the left key is corresponding to the backspace key and the right key to the space key.
 
-These devices are connected via USB and have one stand-alone USB keyboard. 
+These devices are connected via USB and have one stand-alone USB keyboard.
 It is possible to enable/disable this keyboard by toggling "HID Keyboard simulation" using an input gesture.
 The braille keyboard functions described directly below is when "HID Keyboard simulation" is disabled.
 
@@ -4885,6 +5177,31 @@ Following are the current key assignments for these displays.
 
 <!-- KC:endInclude -->
 
+### Dot Pad {#dotPad}
+
+The Dot Pad from Dot Inc is a device that can display refreshable tactile graphics and braille.
+NVDA can display either a single line of braille on the devices dedicated braille display line, or multiple lines of braille on its tactile graphics area.
+The A300 model has a tactile graphics area of 120 by 80 dots, which can fit 8 lines of 20 cells each.
+
+You can configure whether NVDA displays braille on the dedicated braille display line or on the tactile graphics area via the Braille Destination option in NVDA's Braille settings for this driver.
+
+Panning keys are supported, but due to limited buttons on the device, other commands and routing capabilities are currently not available.
+
+When selecting the Dot Pad driver in NVDA, you must manually select the USB / Bluetooth virtual serial port the Dot Pad is connected to.
+This driver does not support auto detection.
+
+Please note that due to hardware limitations, the Dot Pad will not refresh all dots correctly while your hand is on the device.
+Make sure to lift your hand entirely off the device when navigating with NVDA, and only start reading again once it has fully updated.
+
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back | `pan_left` |
+|Scroll braille display forward | `pan_right` |
+
+<!-- KC:endInclude -->
+
 ## Advanced Topics {#AdvancedTopics}
 ### Secure Mode {#SecureMode}
 
@@ -4986,9 +5303,19 @@ Following are the command line options for NVDA:
 |None |`--install-silent` |Silently installs NVDA (does not start the newly installed copy)|
 |None |`--enable-start-on-logon=True|False` |When installing, enable NVDA's [Use NVDA during Windows sign-in](#StartAtWindowsLogon)|
 |None |`--copy-portable-config` |When installing, copy the portable configuration from the provided path (`--config-path`, `-c`) to the current user account|
-|None |`--create-portable` |Creates a portable copy of NVDA (starting the newly created copy). Requires `--portable-path` to be specified|
-|None |`--create-portable-silent` |Creates a portable copy of NVDA (does not start the newly installed copy). Requires `--portable-path` to be specified|
+|None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
+|None |`--create-portable-silent` |Creates a portable copy of NVDA  (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
 |None |`--portable-path=PORTABLEPATH` |The path where a portable copy will be created|
+
+Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+
+NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+
+The following are the command line options for NVDA's uninstaller:
+
+| Short |Long |Description|
+|---|---|---|
+|`/S` |None |Silently uninstall NVDA. |
 
 ### System Wide Parameters {#SystemWideParameters}
 
@@ -5011,4 +5338,3 @@ The following values can be set under this registry key:
 If you require further information or assistance regarding NVDA, please visit the [NVDA web site](NVDA_URL).
 Here, you can find additional documentation, as well as technical support and community resources.
 This site also provides information and resources concerning NVDA development.
-

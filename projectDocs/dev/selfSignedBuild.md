@@ -7,7 +7,7 @@ Copies of NVDA signed by a self-signed certificate will not function on systems 
 
 Following are instructions on how to generate and install a self-signed certificate.
 This is not supported and should only be attempted by developers who know what they are doing and are aware of the risks.
-If the private key is compromised, this poses a serious security risk to your system. 
+If the private key is compromised, this poses a serious security risk to your system.
 
 Do not forget to [remove the certificate](#remove-the-certificate) when you are done testing.
 
@@ -70,8 +70,13 @@ Thumbprint                                Subject
 148CB69869B802A36B3D8D801BA8D9D0F3C1484F  CN=Test NVDA Build, O=NV Access Dev, C=US
 ```
 
-For Windows 7, you will need to use an alternative method.
+#### Note for older versions of Windows
+
 On any supported version of Windows, you can manage certifications through the "Certificate Manager".
+
+Importing A Windows 11 certificate via PowerShell may fail on older versions of Windows.
+On Windows 10, open the certificate file and go through the installation dialog.
+Install it to "Local Machine", in the store: "Trusted Root Certification Authorities".
 
 ### Using the certificate
 

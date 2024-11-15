@@ -1,47 +1,50 @@
 ## Code Style
 
-Python code style is enforced with the flake8 linter, see [`tests/lint/readme.md`](https://github.com/nvaccess/nvda/tree/master/tests/lint/readme.md) for more information.
+Python code style is enforced with the Ruff linter, see [linting](../testing/automated.md#linting-your-changes) for more information.
 
 ### Encoding
+
 * Where Python files contain non-ASCII characters, they should be encoded in UTF-8.
-    * There should be no Unicode BOM at the start of the file, as this unfortunately breaks one of the translation tools we use (`xgettext`).
-    Instead, include this as the first line of the file, only if the file contains non-ASCII characters:
-        ```py
-        # -*- coding: UTF-8 -*-
-        ```
-    * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
+  * There should be no Unicode BOM at the start of the file, as this unfortunately breaks one of the translation tools we use (`xgettext`).
+  Instead, include this as the first line of the file, only if the file contains non-ASCII characters:
+
+  ```py
+  # -*- coding: UTF-8 -*-
+  ```
+
+  * This coding comment must also be included if strings in the code (even strings that aren't translatable) contain escape sequences that produce non-ASCII characters; e.g. `"\xff"`.
     This is particularly relevant for braille display drivers.
     This is due to a `gettext` bug; see [comment on #2592](https://github.com/nvaccess/nvda/issues/2592#issuecomment-155299911).
-* New files should contain `LF` line endings, however NVDA currently uses a mix of LF and CRLF line endings.
-See issue [#12387](https://github.com/nvaccess/nvda/issues/12387).
+* Text files should be committed with `LF` line endings.
+Files can be checked out locally using CRLF if needed for Windows development using [git](https://git-scm.com/book/en/v2/Customizing-Git-Git-Configuration#_core_autocrlf).
 
 ### Indentation
 * Indentation must be done with tabs (one per level), not spaces.
 * When splitting a single statement over multiple lines, just indent one or more additional levels.
-  Don't use vertical alignment; e.g. lining up with the bracket on the previous line.
+  Don't use vertical alignment; i.e. lining up with the bracket on the previous line.
   - Be aware that this requires a new-line after an opening parenthesis/bracket/brace if you intend
     to split the statement over multiple lines.
-  - For the parameter list of function definitions, double indent, this differentiates the
-    parameters and the body of the function.
 
 ### Identifier Names
 * Use descriptive names
   - name constants to avoid "magic numbers" and hint at intent or origin of the value.
     Consider, what does this represent?
 * Functions, variables, properties, etc. should use mixed case to separate words, starting with a lower case letter;
-  - e.g. `speakText`.
+  - E.g. `speakText`.
 * Boolean functions or variables
   - Use the positive form of the language.
     Avoid double negatives like `shouldNotDoSomething = False`
   - Start with a "question word" to hint at their boolean nature.
-  - e.g. `shouldX`, `isX`, `hasX`
+  - E.g. `shouldX`, `isX`, `hasX`
 * Classes should use mixed case to separate words, starting with an upper case letter;
-  - e.g. `BrailleHandler`.
+  - E.g. `BrailleHandler`.
 * Constants should be all upper case, separating words with underscores;
-  - e.g. `LANGS_WITH_CONJUNCT_CHARS`.
-* Event handlers are prefixed with "event_", subsequent words in camel case.
+  - E.g. `LANGS_WITH_CONJUNCT_CHARS`.
+* Scripts (the targets of gestures) are prefixed with "script_", with subsequent words in camel case.
+  - E.g. `script_cycleAudioDuckingMode`.
+* Event handlers are prefixed with "event_", with subsequent words in camel case.
   Note, `object` and `action` are separated by underscores.
-  - e.g.: `event_action` or `event_object_action`.
+  - E.g.: `event_action` or `event_object_action`.
   - `object` refers to the class type that the `action` refers to.
   - Examples: `event_caret`, `event_appModule_gainFocus`
 * Extension points:
@@ -49,12 +52,12 @@ See issue [#12387](https://github.com/nvaccess/nvda/issues/12387).
     - Prefixed with `pre_` or `post_` to specify that handlers are being notified before / after the
       action has taken place.
   * `Decider`
-    - Prefixed with `should_` to turn them into a question e.g. `should_doSomething`
+    - Prefixed with `should_` to turn them into a question, e.g. `should_doSomething`
   * `Filter`
-    - Prefixed with `filter_` e.g. `filter_displaySize_preRefresh`
+    - Prefixed with `filter_`, e.g. `filter_displaySize_preRefresh`
     - Should describe the filtering action and the data being returned
     - Should communicate if the filtering happens before or after some action
-* Enums should be formatted using the expected mix of above eg:
+* Enums should be formatted using the expected mix of the above, e.g.:
   ```python
   class ExampleGroupOfData(Enum):
       CONSTANT_VALUE_MEMBER = auto()
@@ -92,8 +95,8 @@ self.copySettingsButton = wx.Button(
 * Unused imports should be removed where possible.
   - Anything imported into a (sub)module can also be imported from that submodule.
   - As a result, removing unused imports may break compatibility, and should be done in compatibility breaking releases (see `deprecations.md`).
-* Unused imports will give a lint warning. These can be handled the following ways: 
-  - If these imports are inteded to be imported from other modules, they can be done included in a definition for `__all__`. This will override and define the symbols imported when performing a star import, eg `from module import *`.
+* Unused imports will give a lint warning. These can be handled the following ways:
+  - If these imports are intended to be imported from other modules, they can be included in a definition for `__all__`. This will override and define the symbols imported when performing a star import, e.g. `from module import *`.
   - Otherwise, with a comment like `# noqa: <explanation>`.
 
 ### Considering future backwards compatibility

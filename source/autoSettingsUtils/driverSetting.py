@@ -6,7 +6,7 @@
 
 """Classes used to represent settings for Drivers and other AutoSettings instances
 
-	Naming of these classes is historical, kept for backwards compatibility purposes.
+Naming of these classes is historical, kept for backwards compatibility purposes.
 """
 
 from typing import Optional
@@ -21,6 +21,7 @@ class DriverSetting(AutoPropertyObject):
 	Used for synthesizer or braille display setting such as voice, variant or dot firmness as
 	well as for settings in Vision Providers
 	"""
+
 	id: str
 	displayName: str
 	displayNameWithAccelerator: str
@@ -38,13 +39,13 @@ class DriverSetting(AutoPropertyObject):
 		return "string(default={defaultVal})".format(defaultVal=self.defaultVal)
 
 	def __init__(
-			self,
-			id: str,
-			displayNameWithAccelerator: str,
-			availableInSettingsRing: bool = False,
-			defaultVal: object = None,
-			displayName: Optional[str] = None,
-			useConfig: bool = True
+		self,
+		id: str,
+		displayNameWithAccelerator: str,
+		availableInSettingsRing: bool = False,
+		defaultVal: object = None,
+		displayName: Optional[str] = None,
+		useConfig: bool = True,
 	):
 		"""
 		@param id: internal identifier of the setting
@@ -76,21 +77,25 @@ class NumericDriverSetting(DriverSetting):
 
 	def _get_configSpec(self):
 		return "integer(default={defaultVal},min={minVal},max={maxVal})".format(
-			defaultVal=self.defaultVal, minVal=self.minVal, maxVal=self.maxVal)
+			defaultVal=self.defaultVal,
+			minVal=self.minVal,
+			maxVal=self.maxVal,
+		)
 
 	def __init__(
-			self,
-			id,
-			displayNameWithAccelerator,
-			availableInSettingsRing=False,
-			defaultVal: int = 50,
-			minVal: int = 0,
-			maxVal: int = 100,
-			minStep: int = 1,
-			normalStep: int = 5,
-			largeStep: int = 10,
-			displayName: Optional[str] = None,
-			useConfig: bool = True):
+		self,
+		id,
+		displayNameWithAccelerator,
+		availableInSettingsRing=False,
+		defaultVal: int = 50,
+		minVal: int = 0,
+		maxVal: int = 100,
+		minStep: int = 1,
+		normalStep: int = 5,
+		largeStep: int = 10,
+		displayName: Optional[str] = None,
+		useConfig: bool = True,
+	):
 		"""
 		@param defaultVal: Specifies the default value for a numeric driver setting.
 		@param minVal: Specifies the minimum valid value for a numeric driver setting.
@@ -109,7 +114,7 @@ class NumericDriverSetting(DriverSetting):
 			availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal,
 			displayName=displayName,
-			useConfig=useConfig
+			useConfig=useConfig,
 		)
 		self.minVal = minVal
 		self.maxVal = max(maxVal, self.defaultVal)
@@ -122,16 +127,17 @@ class BooleanDriverSetting(DriverSetting):
 	"""Represents a boolean driver setting such as rate boost or automatic time sync.
 	GUI representation is a wx.Checkbox
 	"""
+
 	defaultVal: bool
 
 	def __init__(
-			self,
-			id: str,
-			displayNameWithAccelerator: str,
-			availableInSettingsRing: bool = False,
-			displayName: Optional[str] = None,
-			defaultVal: bool = False,
-			useConfig: bool = True
+		self,
+		id: str,
+		displayNameWithAccelerator: str,
+		availableInSettingsRing: bool = False,
+		displayName: Optional[str] = None,
+		defaultVal: bool = False,
+		useConfig: bool = True,
 	):
 		"""
 		@param defaultVal: Specifies the default value for a boolean driver setting.
@@ -142,7 +148,7 @@ class BooleanDriverSetting(DriverSetting):
 			availableInSettingsRing=availableInSettingsRing,
 			defaultVal=defaultVal,
 			displayName=displayName,
-			useConfig=useConfig
+			useConfig=useConfig,
 		)
 
 	def _get_configSpec(self):

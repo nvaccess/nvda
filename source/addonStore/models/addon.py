@@ -6,6 +6,7 @@
 import dataclasses
 import json
 import os
+from datetime import datetime
 from typing import (
 	TYPE_CHECKING,
 	Any,
@@ -35,6 +36,7 @@ if TYPE_CHECKING:
 		AddonBase as AddonHandlerBaseModel,
 		AddonManifest,
 	)
+
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
@@ -50,6 +52,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	"""Needed to display information in add-on store.
 	May come from manifest or add-on store data.
 	"""
+
 	addonId: str
 	displayName: str
 	description: str
@@ -78,6 +81,7 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 	def _addonHandlerModel(self) -> Optional["AddonHandlerModel"]:
 		"""Returns the Addon model tracked in addonHandler, if it exists."""
 		from ..dataManager import addonDataManager
+
 		if addonDataManager is None:
 			return None
 		return addonDataManager._installedAddonsCache.installedAddons.get(self.addonId)
@@ -122,16 +126,19 @@ class _AddonStoreModel(_AddonGUIModel):
 	sha256: str
 	addonVersionNumber: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 
 	@property
 	def tempDownloadPath(self) -> str:
 		"""
 		Path where this add-on should be downloaded to.
 		After download completion, the add-on is moved to cachedDownloadPath.
+
+		Usage should be protected by AddonFileDownloader.DOWNLOAD_LOCK.
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}.download"
+			f"{self.name}.download",
 		)
 
 	@property
@@ -143,19 +150,29 @@ class _AddonStoreModel(_AddonGUIModel):
 		"""
 		return os.path.join(
 			WritePaths.addonStoreDownloadDir,
-			f"{self.name}-{self.addonVersionName}.nvda-addon"
+			f"{self.name}-{self.addonVersionName}.nvda-addon",
 		)
 
 	@property
 	def isPendingInstall(self) -> bool:
-		"""True if this addon has not yet been fully installed."""
+		"""True if this addon has not yet been fully installed.
+
+		Note: That the download might not be completed yet.
+		"""
 		from ..dataManager import addonDataManager
+
 		assert addonDataManager
 		nameInDownloadsPendingInstall = filter(
 			lambda m: m[0].model.name == self.name,
 			# add-ons which have been downloaded but
 			# have not been installed yet
-			addonDataManager._downloadsPendingInstall
+			addonDataManager._downloadsPendingInstall,
+		)
+		nameInDownloadsPendingCompletion = filter(
+			lambda m: m.model.name == self.name,
+			# add-ons which are currently being downloaded
+			# and have not been cancelled
+			addonDataManager._downloadsPendingCompletion,
 		)
 		return (
 			super().isPendingInstall
@@ -163,14 +180,23 @@ class _AddonStoreModel(_AddonGUIModel):
 			# has not been installed yet
 			or bool(next(nameInDownloadsPendingInstall, False))
 			# True if this add-on is currently being downloaded
-			or os.path.exists(self.tempDownloadPath)
+			# and the download has not been cancelled
+			or bool(next(nameInDownloadsPendingCompletion, False))
 		)
+
+	@property
+	def publicationDate(self) -> str | None:
+		if self.submissionTime is None:
+			return None
+		# Convert `self.submissionTime` to seconds.
+		return datetime.strftime(datetime.fromtimestamp(self.submissionTime // 1000), "%x")
 
 
 class _AddonManifestModel(_AddonGUIModel):
 	"""Get data from an add-on's manifest.
 	Can be from an add-on bundle or installed add-on.
 	"""
+
 	addonId: str
 	addonVersionName: str
 	channel: Channel
@@ -205,6 +231,7 @@ class AddonManifestModel(_AddonManifestModel):
 	"""Get data from an add-on's manifest.
 	Can be from an add-on bundle or installed add-on.
 	"""
+
 	addonId: str
 	addonVersionName: str
 	channel: Channel
@@ -224,6 +251,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	"""
 	Data from an add-on installed from the add-on store.
 	"""
+
 	addonId: str
 	publisher: str
 	addonVersionName: str
@@ -238,6 +266,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -247,6 +276,7 @@ class InstalledAddonStoreModel(_AddonManifestModel, _AddonStoreModel):
 	@property
 	def manifest(self) -> "AddonManifest":
 		from ..dataManager import addonDataManager
+
 		assert addonDataManager
 		return addonDataManager._installedAddonsCache.installedAddons[self.name].manifest
 
@@ -256,6 +286,7 @@ class AddonStoreModel(_AddonStoreModel):
 	"""
 	Data from an add-on from the add-on store.
 	"""
+
 	addonId: str
 	displayName: str
 	description: str
@@ -272,6 +303,7 @@ class AddonStoreModel(_AddonStoreModel):
 	minNVDAVersion: MajorMinorPatch
 	lastTestedVersion: MajorMinorPatch
 	reviewURL: Optional[str]
+	submissionTime: int | None
 	legacy: bool = False
 	"""
 	Legacy add-ons contain invalid metadata
@@ -304,6 +336,7 @@ def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonS
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewURL"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -326,6 +359,7 @@ def _createStoreModelFromData(addon: Dict[str, Any]) -> AddonStoreModel:
 		minNVDAVersion=MajorMinorPatch(**addon["minNVDAVersion"]),
 		lastTestedVersion=MajorMinorPatch(**addon["lastTestedVersion"]),
 		reviewURL=addon.get("reviewUrl"),
+		submissionTime=addon.get("submissionTime"),
 		legacy=addon.get("legacy", False),
 	)
 
@@ -352,11 +386,7 @@ def _createAddonGUICollection() -> "AddonGUICollectionT":
 	as add-on IDs are installed to a case insensitive path.
 	Therefore addon IDs should be treated as case insensitive.
 	"""
-	return {
-		channel: CaseInsensitiveDict()
-		for channel in Channel
-		if channel != Channel.ALL
-	}
+	return {channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL}
 
 
 def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT":

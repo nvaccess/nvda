@@ -54,7 +54,7 @@ RPC_STATUS rpcSrv_initialize() {
 	status=RpcServerUseProtseq((RPC_WSTR)L"ncalrpc",RPC_C_PROTSEQ_MAX_REQS_DEFAULT,NULL);
 	//We can ignore the error where the endpoint is already set
 	if(status!=RPC_S_OK&&status!=RPC_S_DUPLICATE_ENDPOINT) {
-		LOG_ERROR(L"Unable to use RPC endPoint. RPC error "<<status); 
+		LOG_ERROR(L"Unable to use RPC endPoint. RPC error "<<status);
 		return status;
 	}
 	if((status=RpcServerInqBindings(&bindingVector))!=RPC_S_OK) {

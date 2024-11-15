@@ -1,47 +1,52 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvda-project.org/
-#Copyright 2013-2017 NV Access Limited.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvda-project.org/
+# Copyright 2013-2017 NV Access Limited.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 from typing import List
 import re
 from SCons.Node.FS import File
 
 Import(
-	'env',
+	"env",
 )
 
-import importlib.util
+import importlib.util  # noqa: E402
 
 # Monkeypatch comtypes to clear the importlib cache when importing a new module
-import comtypes.client._generate
+import comtypes.client._generate  # noqa: E402
+
 old_my_import = comtypes.client._generate._my_import
+
+
 def new_my_import(fullname):
 	importlib.invalidate_caches()
 	return old_my_import(fullname)
+
+
 comtypes.client._generate._my_import = new_my_import
 
-def makeIDEFriendly(path:str) -> None:
+
+def makeIDEFriendly(path: str) -> None:
 	"""
 	Add a local import of * so that tools and IDE's can find definitions.
 	Prefer to import from comtypes.gen, at runtime behavior will not have changed.
 	@param path: Path to the friendly name comInterfaces module.
 	"""
-	importTemplate = (
-"""try:
+	importTemplate = """try:
 	from comtypes.gen import {libIdentifier}
 except ModuleNotFoundError:
 	import {libIdentifier}
 	from {libIdentifier} import *
-""")
+"""
 
 	importPattern = re.compile(r"from comtypes\.gen import ([\w]+)\n")
 	IDEFriendlyContent = list()
@@ -57,12 +62,12 @@ except ModuleNotFoundError:
 		interfaceFile.writelines(IDEFriendlyContent)
 
 
-def interfaceAction(target:List[File], source, env):
-	clsid = env.get('clsid')
+def interfaceAction(target: List[File], source, env):
+	clsid = env.get("clsid")
 	if clsid:
-		source=(clsid, env['majorVersion'], env['minorVersion'])
+		source = (clsid, env["majorVersion"], env["minorVersion"])
 	else:
-		source=str(source[0])
+		source = str(source[0])
 	comtypes.client.GetModule(source)
 	# re-write the the "friendlyNameFile" so that tools/IDEs can find the
 	# definitions
@@ -71,54 +76,53 @@ def interfaceAction(target:List[File], source, env):
 		if path.endswith(".py"):
 			makeIDEFriendly(path)
 
-interfaceBuilder=env.Builder(
+
+interfaceBuilder = env.Builder(
 	action=env.Action(interfaceAction),
 )
-env['BUILDERS']['comtypesInterface'] = interfaceBuilder
+env["BUILDERS"]["comtypesInterface"] = interfaceBuilder
 
 # Force comtypes generated interfaces in to our directory
-import comtypes.client
-comtypes.client.gen_dir=Dir('comInterfaces').abspath
+import comtypes.client  # noqa: E402
+
+comtypes.client.gen_dir = Dir("comInterfaces").abspath
 
 COM_INTERFACES = {
 	"IAccessible2Lib.py": "typelibs/ia2.tlb",
 	"ISimpleDOM.py": "typelibs/ISimpleDOMNode.tlb",
+	"Scripting.py": ("{420B2830-E718-11CF-893D-00A0C9054228}", 1, 0),  # Used for browseable messages
 	"MathPlayer.py": "typelibs/mathPlayerDLL.tlb",
-	"Accessibility.py": ('{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}',1,0),
-	"tom.py": ('{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}',1,0),
-	"SpeechLib.py": ('{C866CA3A-32F7-11D2-9602-00C04F8EE628}',5,0),
+	"Accessibility.py": ("{1EA4DBF0-3C3B-11CF-810C-00AA00389B71}", 1, 0),
+	"tom.py": ("{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}", 1, 0),
+	"SpeechLib.py": ("{C866CA3A-32F7-11D2-9602-00C04F8EE628}", 5, 0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
-	# We don't generate UIAutomationClient (and _944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py)
-	# because we don't know what version is available on Appveyor.
-	# Instead we locally generate the file and include it in the repository.
-	# Ensuring that adjustments performed by 'makeIDEFriendly' are incorporated.
-	# "UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
+	# As long as Appveyor is on a Windows version that has an acceptable version of UIAutomationClient,
+	# we generate it at build time.
+	"UIAutomationClient.py": ("{944DE083-8FB8-45CF-BCB7-C477ACB2F897}", 1, 0),
 }
 
-for k,v in COM_INTERFACES.items():
-	targets=[
-		Dir('comInterfaces').File(k),
+for k, v in COM_INTERFACES.items():
+	targets = [
+		Dir("comInterfaces").File(k),
 		# This builds a .pyc file as well.
-		Dir('comInterfaces').File(importlib.util.cache_from_source(k))
-		]
+		Dir("comInterfaces").File(importlib.util.cache_from_source(k)),
+	]
 	source = clsid = majorVersion = None
 	if isinstance(v, str):
 		env.comtypesInterface(targets, v)
 	else:
 		env.comtypesInterface(
 			targets,
-			Dir('comInterfaces').File('__init__.py'),
+			Dir("comInterfaces").File("__init__.py"),
 			clsid=v[0],
 			majorVersion=v[1],
-			minorVersion=v[2]
+			minorVersion=v[2],
 		)
 
 
-
 # When cleaning comInterfaces get rid of everything
-# except for things starting with __ (e.g. __init__.py), and files tracked by Git
+# except for the readme.md and __init__.py files tracked by Git
 env.Clean(
-	Dir('comInterfaces'),
-	Glob('comInterfaces/[!_]*', exclude=['comInterfaces/readme.md', 'comInterfaces/UIAutomationClient.py'])
-	+ Glob('comInterfaces/_[!_]*', exclude='comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py')
+	Dir("comInterfaces"),
+	Glob("comInterfaces/*", exclude=["comInterfaces/readme.md", "comInterfaces/__init__.py"]),
 )

@@ -19,5 +19,5 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 
 RPC_STATUS startServer();
 RPC_STATUS stopServer();
- 
+
 #endif

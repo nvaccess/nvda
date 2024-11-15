@@ -12,7 +12,7 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Series of dots used for visual presentation, e.g. in table of contents
-padding .	\.{4,}
+multiple .	\.{4,}
 # Others
 decimal point	(?<=\d)\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -30,7 +30,7 @@ symbols:
 ? sentence ending	கேள்வி?	all	always
 ; phrase ending	அரைப் புள்ளி	most	always
 : phrase ending	முக்கால் புள்ளி	most	always
-padding .	padding dots	all	always
+multiple .	multiple dots	all	always
 decimal point	புள்ளி	all	always
 in-word '	ஒற்றை மேற்கோள்	all	norep
 negative number	கழித்தல்	none	norep

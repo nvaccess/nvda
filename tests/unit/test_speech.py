@@ -1,15 +1,16 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2021 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2021-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
-"""Unit tests for the speech module.
-"""
+"""Unit tests for the speech module."""
+
 import gettext
 import typing
 import unittest
 
 import config
+from characterProcessing import processSpeechSymbol
 from speech import (
 	_getSpellingCharAddCapNotification,
 	_getSpellingSpeechAddCharMode,
@@ -31,68 +32,78 @@ from .extensionPointTestHelpers import actionTester
 class Test_getSpellingSpeechAddCharMode(unittest.TestCase):
 	def test_symbolNamesAtStartAndEnd(self):
 		# Spelling ¡hola!
-		seq = (c for c in [
-			'inverted exclamation point',
-			EndUtteranceCommand(),
-			'h',
-			EndUtteranceCommand(),
-			'o',
-			EndUtteranceCommand(),
-			'l',
-			EndUtteranceCommand(),
-			'a',
-			EndUtteranceCommand(),
-			'bang',
-			EndUtteranceCommand()
-		])
-		expected = repr([
-			'inverted exclamation point',
-			EndUtteranceCommand(),
-			CharacterModeCommand(True),
-			'h',
-			EndUtteranceCommand(),
-			'o',
-			EndUtteranceCommand(),
-			'l',
-			EndUtteranceCommand(),
-			'a',
-			EndUtteranceCommand(),
-			CharacterModeCommand(False),
-			'bang',
-			EndUtteranceCommand()
-		])
+		seq = (
+			c
+			for c in [
+				"inverted exclamation point",
+				EndUtteranceCommand(),
+				"h",
+				EndUtteranceCommand(),
+				"o",
+				EndUtteranceCommand(),
+				"l",
+				EndUtteranceCommand(),
+				"a",
+				EndUtteranceCommand(),
+				"bang",
+				EndUtteranceCommand(),
+			]
+		)
+		expected = repr(
+			[
+				"inverted exclamation point",
+				EndUtteranceCommand(),
+				CharacterModeCommand(True),
+				"h",
+				EndUtteranceCommand(),
+				"o",
+				EndUtteranceCommand(),
+				"l",
+				EndUtteranceCommand(),
+				"a",
+				EndUtteranceCommand(),
+				CharacterModeCommand(False),
+				"bang",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechAddCharMode(seq)
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_manySymbolNamesInARow(self):
 		# Spelling a...b
-		seq = (c for c in [
-			'a',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'b',
-			EndUtteranceCommand()
-		])
-		expected = repr([
-			CharacterModeCommand(True),
-			'a',
-			EndUtteranceCommand(),
-			CharacterModeCommand(False),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			'dot',
-			EndUtteranceCommand(),
-			CharacterModeCommand(True),
-			'b',
-			EndUtteranceCommand()
-		])
+		seq = (
+			c
+			for c in [
+				"a",
+				EndUtteranceCommand(),
+				"dot",
+				EndUtteranceCommand(),
+				"dot",
+				EndUtteranceCommand(),
+				"dot",
+				EndUtteranceCommand(),
+				"b",
+				EndUtteranceCommand(),
+			]
+		)
+		expected = repr(
+			[
+				CharacterModeCommand(True),
+				"a",
+				EndUtteranceCommand(),
+				CharacterModeCommand(False),
+				"dot",
+				EndUtteranceCommand(),
+				"dot",
+				EndUtteranceCommand(),
+				"dot",
+				EndUtteranceCommand(),
+				CharacterModeCommand(True),
+				"b",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechAddCharMode(seq)
 		self.assertEqual(repr(list(output)), expected)
 
@@ -130,13 +141,15 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def tearDown(self) -> None:
 		self.translationsFake.translationResults.clear()
-	
+
 	def test_noNotifications(self):
-		expected = repr([
-			'A',
-		])
+		expected = repr(
+			[
+				"A",
+			],
+		)
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
 			sayCapForCapitals=False,
 			capPitchChange=0,
 			beepForCapitals=False,
@@ -144,13 +157,15 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_pitchNotifications(self):
-		expected = repr([
-			PitchCommand(offset=30),
-			'A',
-			PitchCommand()
-		])
+		expected = repr(
+			[
+				PitchCommand(offset=30),
+				"A",
+				PitchCommand(),
+			],
+		)
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
 			sayCapForCapitals=False,
 			capPitchChange=30,
 			beepForCapitals=False,
@@ -158,12 +173,14 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_beepNotifications(self):
-		expected = repr([
-			BeepCommand(2000, 50, left=50, right=50),
-			'A',
-		])
+		expected = repr(
+			[
+				BeepCommand(2000, 50, left=50, right=50),
+				"A",
+			],
+		)
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
 			sayCapForCapitals=False,
 			capPitchChange=0,
 			beepForCapitals=True,
@@ -171,12 +188,14 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_capNotifications(self):
-		expected = repr([
-			'cap ',
-			'A',
-		])
+		expected = repr(
+			[
+				"cap ",
+				"A",
+			],
+		)
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
 			sayCapForCapitals=True,
 			capPitchChange=0,
 			beepForCapitals=False,
@@ -185,54 +204,75 @@ class Test_getSpellingCharAddCapNotification(unittest.TestCase):
 
 	def test_capNotificationsWithPlaceHolderBefore(self):
 		self.translationsFake.translationResults["cap %s"] = "%s cap"
-		expected = repr(['A', ' cap', ])  # for English this would be "cap A"
+		expected = repr(["A", " cap"])  # for English this would be "cap A"
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
 			sayCapForCapitals=True,
 			capPitchChange=0,
 			beepForCapitals=False,
 		)
 		self.assertEqual(repr(list(output)), expected)
 
-	def test_allNotifications(self):
-		expected = repr([
-			PitchCommand(offset=30),
-			BeepCommand(2000, 50, left=50, right=50),
-			'cap ',
-			'A',
-			PitchCommand()
-		])
+	def test_normalizedNotifications(self):
+		expected = repr(
+			[
+				"A",
+				" normalized",
+			],
+		)
 		output = _getSpellingCharAddCapNotification(
-			speakCharAs='A',
+			speakCharAs="A",
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			reportNormalized=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_allNotifications(self):
+		expected = repr(
+			[
+				PitchCommand(offset=30),
+				BeepCommand(2000, 50, left=50, right=50),
+				"cap ",
+				"A",
+				" normalized",
+				PitchCommand(),
+			],
+		)
+		output = _getSpellingCharAddCapNotification(
+			speakCharAs="A",
 			sayCapForCapitals=True,
 			capPitchChange=30,
 			beepForCapitals=True,
+			reportNormalized=True,
 		)
 		self.assertEqual(repr(list(output)), expected)
 
 
 class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
-
 	def setUp(self):
-		config.conf['speech']['autoLanguageSwitching'] = False
+		config.conf["speech"]["autoLanguageSwitching"] = False
 
 	def tearDown(self):
 		# Restore default value
-		config.conf['speech']['autoLanguageSwitching'] = config.conf.getConfigValidation(
-			['speech', 'autoLanguageSwitching']
+		config.conf["speech"]["autoLanguageSwitching"] = config.conf.getConfigValidation(
+			["speech", "autoLanguageSwitching"],
 		).default
-	
+
 	def test_simpleSpelling(self):
-		expected = repr([
-			'a',
-			EndUtteranceCommand(),
-			'b',
-			EndUtteranceCommand(),
-			'c',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"a",
+				EndUtteranceCommand(),
+				"b",
+				EndUtteranceCommand(),
+				"c",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='abc',
+			text="abc",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -242,16 +282,18 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_cap(self):
-		expected = repr([
-			PitchCommand(offset=30),
-			BeepCommand(2000, 50, left=50, right=50),
-			'cap ',
-			'A',
-			PitchCommand(),
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				PitchCommand(offset=30),
+				BeepCommand(2000, 50, left=50, right=50),
+				"cap ",
+				"A",
+				PitchCommand(),
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='A',
+			text="A",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=True,
@@ -259,15 +301,17 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 			beepForCapitals=True,
 		)
 		self.assertEqual(repr(list(output)), expected)
-	
+
 	def test_characterMode(self):
-		expected = repr([
-			'Alfa',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"Alfa",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='a',
-			locale='en',
+			text="a",
+			locale="en",
 			useCharacterDescriptions=True,
 			sayCapForCapitals=False,
 			capPitchChange=0,
@@ -276,11 +320,13 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_blank(self):
-		expected = repr([
-			'blank',
-		])
+		expected = repr(
+			[
+				"blank",
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='',
+			text="",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -290,14 +336,16 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_onlySpaces(self):
-		expected = repr([
-			'space',
-			EndUtteranceCommand(),
-			'tab',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"space",
+				EndUtteranceCommand(),
+				"tab",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text=' \t',
+			text=" \t",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -307,12 +355,14 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_trimRightSpace(self):
-		expected = repr([
-			'a',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"a",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='a   ',
+			text="a   ",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -322,12 +372,14 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_symbol(self):
-		expected = repr([
-			'bang',
-			EndUtteranceCommand(),
-		])
+		expected = repr(
+			[
+				"bang",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='!',
+			text="!",
 			locale=None,
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
@@ -337,15 +389,17 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		self.assertEqual(repr(list(output)), expected)
 
 	def test_languageDetection(self):
-		config.conf['speech']['autoLanguageSwitching'] = True
-		expected = repr([
-			LangChangeCommand('fr_FR'),
-			'a',
-			EndUtteranceCommand(),
-		])
+		config.conf["speech"]["autoLanguageSwitching"] = True
+		expected = repr(
+			[
+				LangChangeCommand("fr_FR"),
+				"a",
+				EndUtteranceCommand(),
+			],
+		)
 		output = _getSpellingSpeechWithoutCharMode(
-			text='a',
-			locale='fr_FR',
+			text="a",
+			locale="fr_FR",
 			useCharacterDescriptions=False,
 			sayCapForCapitals=False,
 			capPitchChange=0,
@@ -353,9 +407,184 @@ class Test_getSpellingSpeechWithoutCharMode(unittest.TestCase):
 		)
 		self.assertEqual(repr(list(output)), expected)
 
+	def test_ligature_normalizeOff(self):
+		expected = repr(
+			[
+				"ĳ",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="ĳ",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_ligature_normalizeOnDontReport(self):
+		expected = repr(
+			[
+				"i j",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="ĳ",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_ligature_normalizeOnReport(self):
+		expected = repr(
+			[
+				"i j",
+				" normalized",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="ĳ",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOff(self):
+		expected = repr(
+			[
+				"E",
+				EndUtteranceCommand(),
+				"́",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="É",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOnDontReport(self):
+		expected = repr(
+			[
+				"É",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="É",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_decomposed_normalizeOnReport(self):
+		expected = repr(
+			[
+				"É",
+				" normalized",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="É",
+			locale=None,
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOff(self):
+		expected = repr(
+			[
+				"·",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="·",
+			locale="en",
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=False,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOnDontReport(self):
+		expected = repr(
+			[
+				processSpeechSymbol("en", "·"),
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="·",
+			locale="en",
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=False,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
+	def test_normalizedInSymbolDict_normalizeOnReport(self):
+		expected = repr(
+			[
+				processSpeechSymbol("en", "·"),
+				" normalized",
+				EndUtteranceCommand(),
+			],
+		)
+		output = _getSpellingSpeechWithoutCharMode(
+			text="·",
+			locale="en",
+			useCharacterDescriptions=False,
+			sayCapForCapitals=False,
+			capPitchChange=0,
+			beepForCapitals=False,
+			unicodeNormalization=True,
+			reportNormalizedForCharacterNavigation=True,
+		)
+		self.assertEqual(repr(list(output)), expected)
+
 
 class SpeechExtensionPoints(unittest.TestCase):
-
 	def test_speechCanceledExtensionPoint(self):
 		with actionTester(
 			self,

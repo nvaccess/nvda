@@ -9,12 +9,11 @@ import UIAHandler
 
 
 class AppModule(appModuleHandler.AppModule):
-
 	def shouldProcessUIAPropertyChangedEvent(self, sender, propertyId):
 		if propertyId in (
 			UIAHandler.UIA_NamePropertyId,
 			UIAHandler.UIA_ItemStatusPropertyId,
-			UIAHandler.UIA_IsEnabledPropertyId
+			UIAHandler.UIA_IsEnabledPropertyId,
 		):
 			# #10508: 1Password floods property change events, resulting in very poor
 			# performance. Just drop them.

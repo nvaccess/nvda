@@ -68,6 +68,7 @@ def when(*contexts: Context):
 	and in the Windows Store version (per installation), decorate it with
 	`@blockAction.when(blockAction.Context.WINDOWS_STORE_VERSION, blockAction.Context.MODAL_DIALOG_OPEN)`.
 	"""
+
 	def _wrap(func):
 		@wraps(func)
 		def funcWrapper(*args, **kwargs):
@@ -76,5 +77,7 @@ def when(*contexts: Context):
 					queueHandler.queueFunction(queueHandler.eventQueue, ui.message, context.translatedMessage)
 					return
 			return func(*args, **kwargs)
+
 		return funcWrapper
+
 	return _wrap

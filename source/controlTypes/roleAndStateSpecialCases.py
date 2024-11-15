@@ -14,7 +14,7 @@ from typing import (
 
 
 def transformRoleStates(role: Role, states: Set[State]) -> Tuple[Role, Set[State]]:
-	""" Map NVDA Role-State combinations to adjusted NVDA Role-State combinations.
+	"""Map NVDA Role-State combinations to adjusted NVDA Role-State combinations.
 	Some combinations of roles and states may be better represented with some alternative combination.
 	As an example:
 	Role.PROGRESSBAR with State.INDETERMINATE should be represented by only the Role.BUSY_INDICATOR, with
@@ -23,9 +23,8 @@ def transformRoleStates(role: Role, states: Set[State]) -> Tuple[Role, Set[State
 	@param states: NVDA States to consider
 	@return: A tuple with the new Role and modified States set.
 	"""
-	if(
-		role in [Role.PROGRESSBAR, Role.BUSY_INDICATOR]
-		and states.intersection({State.INDETERMINATE, State.HALFCHECKED})
+	if role in [Role.PROGRESSBAR, Role.BUSY_INDICATOR] and states.intersection(
+		{State.INDETERMINATE, State.HALFCHECKED},
 	):
 		# Don't report indeterminate progress bars as "half-checked"
 		# L{State.HALFCHECKED} maps from oleacc.STATE_SYSTEM_MIXED,

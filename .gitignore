@@ -1,9 +1,6 @@
 *.mo
 source/comInterfaces/*.py
 !source/comInterfaces/__init__.py
-# These are manually generated and updated, so don't delete them
-!source/comInterfaces/UIAutomationClient.py
-!source/comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py
 *.log
 source/userConfig
 build
@@ -27,6 +24,7 @@ source/louis
 dlldata.c
 *.pdb
 .sconsign.dblite
+*.md.sub
 user_docs/*/*.html
 user_docs/*/*.css
 extras/controllerClient/x86/nvdaController.h
@@ -46,8 +44,8 @@ tests/system/settingsCache/*
 !tests/system/settingsCache/2020.4/*.txt
 source/locale/en/LC_MESSAGES/nvda.po
 source/locale/*/cldr.dic
-.vscode
 .vs
 .venv
 nvdaHelper/docs/
 *.pfx
+appveyor-tools/

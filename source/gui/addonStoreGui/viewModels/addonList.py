@@ -53,13 +53,13 @@ class AddonListField(_AddonListFieldData, Enum):
 	displayName = (
 		# Translators: The name of the column that contains names of addons.
 		pgettext("addonStore", "Name"),
-		150,
+		100,
 	)
 	status = (
 		# Translators: The name of the column that contains the status of the addon.
 		# e.g. available, downloading installing
 		pgettext("addonStore", "Status"),
-		150
+		100,
 	)
 	currentAddonVersionName = (
 		# Translators: The name of the column that contains the installed addon's version string.
@@ -82,13 +82,18 @@ class AddonListField(_AddonListFieldData, Enum):
 		# Translators: The name of the column that contains the addon's publisher.
 		pgettext("addonStore", "Publisher"),
 		100,
-		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED})
+		frozenset({_StatusFilterKey.INCOMPATIBLE, _StatusFilterKey.INSTALLED}),
 	)
 	author = (
 		# Translators: The name of the column that contains the addon's author.
 		pgettext("addonStore", "Author"),
 		100,
-		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE})
+		frozenset({_StatusFilterKey.AVAILABLE, _StatusFilterKey.UPDATE}),
+	)
+	publicationDate = (
+		# Translators: The name of the column that contains the publication date of the add-on.
+		pgettext("addonStore", "Date"),
+		50,
 	)
 
 
@@ -97,9 +102,9 @@ _AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
 
 class AddonListItemVM(Generic[_AddonModelT]):
 	def __init__(
-			self,
-			model: _AddonModelT,
-			status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE
+		self,
+		model: _AddonModelT,
+		status: AvailableAddonStatus = AvailableAddonStatus.AVAILABLE,
 	):
 		self._model: _AddonModelT = model  # read-only
 		self._status: AvailableAddonStatus = status  # modifications triggers L{updated.notify}
@@ -140,6 +145,12 @@ class AddonListItemVM(Generic[_AddonModelT]):
 	def canUseReplaceAction(self) -> bool:
 		return self.status == AvailableAddonStatus.REPLACE_SIDE_LOAD
 
+	def canUseRetryAction(self) -> bool:
+		return self.status in {AvailableAddonStatus.DOWNLOAD_FAILED, AvailableAddonStatus.INSTALL_FAILED}
+
+	def canUseCancelInstallAction(self) -> bool:
+		return self.status in (AvailableAddonStatus.DOWNLOADING, AvailableAddonStatus.DOWNLOAD_SUCCESS)
+
 	def canUseRemoveAction(self) -> bool:
 		return (
 			self.model.isInstalled
@@ -148,19 +159,27 @@ class AddonListItemVM(Generic[_AddonModelT]):
 		)
 
 	def canUseEnableAction(self) -> bool:
-		return self.status == AvailableAddonStatus.DISABLED or self.status == AvailableAddonStatus.PENDING_DISABLE
+		return (
+			self.status == AvailableAddonStatus.DISABLED
+			or self.status == AvailableAddonStatus.PENDING_DISABLE
+		)
 
 	def canUseEnableOverrideIncompatibilityAction(self) -> bool:
-		return self.status in (
-			AvailableAddonStatus.INCOMPATIBLE_DISABLED,
-			AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
-		) and self.model.canOverrideCompatibility
+		return (
+			self.status
+			in (
+				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
+				AvailableAddonStatus.PENDING_INCOMPATIBLE_DISABLED,
+			)
+			and self.model.canOverrideCompatibility
+		)
 
 	def canUseDisableAction(self) -> bool:
 		return (
 			self.model.isInstalled
 			and self.status in _installedAddonStatuses
-			and self.status not in (
+			and self.status
+			not in (
 				AvailableAddonStatus.DISABLED,
 				AvailableAddonStatus.PENDING_DISABLE,
 				AvailableAddonStatus.INCOMPATIBLE_DISABLED,
@@ -192,9 +211,9 @@ class AddonDetailsVM:
 
 class AddonListVM:
 	def __init__(
-			self,
-			addons: List[AddonListItemVM],
-			storeVM: "AddonStoreVM",
+		self,
+		addons: List[AddonListItemVM],
+		storeVM: "AddonStoreVM",
 	):
 		self._isLoading: bool = False
 		self._addons: CaseInsensitiveDict[AddonListItemVM[_AddonGUIModel]] = CaseInsensitiveDict()
@@ -206,13 +225,14 @@ class AddonListVM:
 		self.lastSelectedAddonId = self.selectedAddonId
 		self._sortByModelField: AddonListField = AddonListField.displayName
 		self._filterString: Optional[str] = None
+		self._reverseSort: bool = False
 
 		self._setSelectionPending = False
 		self._addonsFilteredOrdered: List[str] = self._getFilteredSortedIds()
 		self._validate(
 			sortField=self._sortByModelField,
 			selectionIndex=self.getSelectedIndex(),
-			selectionId=self.selectedAddonId
+			selectionId=self.selectedAddonId,
 		)
 		self.selectedAddonId = self._tryPersistSelection(self._addonsFilteredOrdered)
 		self.resetListItems(addons)
@@ -239,10 +259,7 @@ class AddonListVM:
 			_addonListItemVM.updated.unregister(self._itemDataUpdated)
 
 		# set new ID:listItemVM mapping.
-		self._addons = CaseInsensitiveDict({
-			vm.Id: vm
-			for vm in listVMs
-		})
+		self._addons = CaseInsensitiveDict({vm.Id: vm for vm in listVMs})
 		self._updateAddonListing()
 
 		# allow new listItemVMs to notify of updates.
@@ -254,7 +271,7 @@ class AddonListVM:
 		core.callLater(delay=0, callable=self.updated.notify)
 
 	def getAddonFieldText(self, index: int, field: AddonListField) -> Optional[str]:
-		""" Get the text for an item's attribute.
+		"""Get the text for an item's attribute.
 		@param index: The index of the item in _addonsFilteredOrdered
 		@param field: The field attribute for the addon. See L{AddonList.presentedFields}
 		@return: The text for the addon attribute
@@ -281,7 +298,7 @@ class AddonListVM:
 			return listItemVM.status.displayString
 		if field is AddonListField.channel:
 			return listItemVM.model.channel.displayString
-		return getattr(listItemVM.model, field.name)
+		return getattr(listItemVM.model, field.name, "")
 
 	def getCount(self) -> int:
 		return len(self._addonsFilteredOrdered)
@@ -317,10 +334,10 @@ class AddonListVM:
 		return self._addons.get(self.selectedAddonId)
 
 	def _validate(
-			self,
-			sortField: Optional[AddonListField] = None,
-			selectionIndex: Optional[int] = None,
-			selectionId: Optional[str] = None,
+		self,
+		sortField: Optional[AddonListField] = None,
+		selectionIndex: Optional[int] = None,
+		selectionId: Optional[str] = None,
 	):
 		if sortField is not None:
 			assert sortField in AddonListField
@@ -329,17 +346,48 @@ class AddonListVM:
 		if selectionId is not None:
 			assert selectionId in self._addons.keys()
 
-	def setSortField(self, modelField: AddonListField):
+	def setSortField(self, modelField: AddonListField, reverse: bool = False):
 		oldOrder = self._addonsFilteredOrdered
 		self._validate(sortField=modelField)
 		self._sortByModelField = modelField
+		self._reverseSort = reverse
 		self._updateAddonListing()
 		if oldOrder != self._addonsFilteredOrdered:
 			# ensure calling on the main thread.
 			core.callLater(delay=0, callable=self.updated.notify)
 
+	@property
+	def _columnSortChoices(self) -> list[str]:
+		columnChoices = []
+		for c in self.presentedFields:
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in ascending order.
+					# {column} will be replaced with the column display string.
+					"{column} (ascending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+			columnChoices.append(
+				pgettext(
+					"addonStore",
+					# Translators: An option of a combo box to sort columns in the add-on store, in descending order.
+					# {column} will be replaced with the column display string.
+					"{column} (descending)",
+				).format(
+					column=c.displayString,
+				),
+			)
+		return columnChoices
+
 	def _getFilteredSortedIds(self) -> List[str]:
 		def _getSortFieldData(listItemVM: AddonListItemVM) -> "SupportsLessThan":
+			if self._sortByModelField == AddonListField.publicationDate:
+				if getattr(listItemVM.model, "submissionTime", None):
+					return listItemVM.model.submissionTime
+				return 0
 			return strxfrm(self._getAddonFieldText(listItemVM, self._sortByModelField))
 
 		def _containsTerm(detailsVM: AddonListItemVM, term: str) -> bool:
@@ -356,20 +404,20 @@ class AddonListVM:
 			)
 
 		filtered = (
-			vm for vm in self._addons.values()
+			vm
+			for vm in self._addons.values()
 			if self._filterString is None or _containsTerm(vm, self._filterString)
 		)
-		filteredSorted = list([
-			vm.Id for vm in sorted(filtered, key=_getSortFieldData)
-		])
+		filteredSorted = list(
+			[vm.Id for vm in sorted(filtered, key=_getSortFieldData, reverse=self._reverseSort)],
+		)
 		return filteredSorted
 
 	def _tryPersistSelection(
-			self,
-			newOrder: List[str],
+		self,
+		newOrder: List[str],
 	) -> Optional[str]:
-		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet.
-		"""
+		"""Get the ID of the selection in new order, _addonsFilteredOrdered should not have changed yet."""
 		selectedIndex = self.getSelectedIndex()
 		selectedId = self.selectedAddonId
 		if selectedId in newOrder:
@@ -377,7 +425,7 @@ class AddonListVM:
 			log.debug(f"Selected Id in new order {selectedId}")
 			return selectedId
 		elif not newOrder:
-			log.debug(f"No entries in new order")
+			log.debug("No entries in new order")
 			# no entries after filter, select None
 			return None
 		elif selectedIndex is not None:
@@ -392,7 +440,7 @@ class AddonListVM:
 				f"oldSelectedIndex: {selectedIndex}, "
 				f"oldMaxIndex: {oldMaxIndex}, "
 				f"newSelectedIndex: {newSelectedIndex}, "
-				f"newMaxIndex: {newMaxIndex}"
+				f"newMaxIndex: {newMaxIndex}",
 			)
 			return newOrder[newSelectedIndex]
 		elif self.lastSelectedAddonId in newOrder:
@@ -402,7 +450,7 @@ class AddonListVM:
 			# if there is any addon select it.
 			return newOrder[0]
 		else:
-			log.debug(f"No selection")
+			log.debug("No selection")
 			# no selection.
 			return None
 

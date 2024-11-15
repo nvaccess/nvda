@@ -3,8 +3,7 @@
 # See the file COPYING for more details.
 # Copyright (C) 2023 NV Access Limited.
 
-"""Unit tests for the foobar appModule.
-"""
+"""Unit tests for the foobar appModule."""
 
 from datetime import timedelta
 import unittest
@@ -18,10 +17,10 @@ from appModules.foobar2000 import (
 
 class Test_TimeParsing(unittest.TestCase):
 	def _test_time_format(
-			self,
-			exampleTimeStr: str,
-			expectedTimeInputFormat: TimeOutputFormat,
-			expectedTimeDelta: timedelta,
+		self,
+		exampleTimeStr: str,
+		expectedTimeInputFormat: TimeOutputFormat,
+		expectedTimeDelta: timedelta,
 	):
 		"""Covers testing _getTimeOutputFormat, _parseTimeStrToTimeDelta"""
 		actualTimeInputFormat = _getTimeOutputFormat(exampleTimeStr)

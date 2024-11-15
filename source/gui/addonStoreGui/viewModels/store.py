@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -58,21 +58,24 @@ from .addonList import (
 
 
 class AddonStoreVM:
+	onDisplayableError = DisplayableError.OnDisplayableErrorT()
+	"""
+	An extension point used to notify the add-on store VM when an error
+	occurs that can be displayed to the user.
+
+	This allows the add-on store GUI to handle displaying an error.
+
+	@param displayableError: Error that can be displayed to the user.
+	@type displayableError: gui.message.DisplayableError
+	"""
+
+	_downloader = AddonFileDownloader()
+
 	def __init__(self):
 		assert addonDataManager
 		self._installedAddons = addonDataManager._installedAddonsCache.installedAddonGUICollection
 		self._availableAddons = _createAddonGUICollection()
 		self.hasError = extensionPoints.Action()
-		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
-		"""
-		An extension point used to notify the add-on store VM when an error
-		occurs that can be displayed to the user.
-
-		This allows the add-on store GUI to handle displaying an error.
-
-		@param displayableError: Error that can be displayed to the user.
-		@type displayableError: gui.message.DisplayableError
-		"""
 		self._filteredStatusKey: _StatusFilterKey = _StatusFilterKey.INSTALLED
 		"""
 		Filters the add-on list view model by add-on status.
@@ -89,14 +92,12 @@ class AddonStoreVM:
 		"""
 		self._filterIncludeIncompatible: bool = False
 
-		self._downloader = AddonFileDownloader()
-
 		self.listVM: AddonListVM = AddonListVM(
 			addons=self._createListItemVMs(),
 			storeVM=self,
 		)
 		self.detailsVM: AddonDetailsVM = AddonDetailsVM(
-			listVM=self.listVM
+			listVM=self.listVM,
 		)
 		self.actionVMList = self._makeActionsList()
 		self.listVM.selectionChanged.register(self._onSelectedItemChanged)
@@ -116,28 +117,35 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "&Install"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.canUseInstallAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Install (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: aVM.canUseInstallOverrideIncompatibilityAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that updates the selected addon
 				displayName=pgettext("addonStore", "&Update"),
 				actionHandler=self.getAddon,
 				validCheck=lambda aVM: aVM.canUseUpdateAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that installs the selected addon
 				displayName=pgettext("addonStore", "&Update (override incompatibility)"),
 				actionHandler=self.installOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: aVM.canUseUpdateOverrideIncompatibilityAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that retries the selected addon
+				displayName=pgettext("addonStore", "Re&try install"),
+				actionHandler=self.getAddon,
+				validCheck=lambda aVM: aVM.canUseRetryAction(),
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that replaces the selected addon with
@@ -145,28 +153,35 @@ class AddonStoreVM:
 				displayName=pgettext("addonStore", "Re&place"),
 				actionHandler=self.replaceAddon,
 				validCheck=lambda aVM: aVM.canUseReplaceAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
+			),
+			AddonActionVM(
+				# Translators: Label for an action that cancels the installation of the selected addon
+				displayName=pgettext("addonStore", "Ca&ncel install"),
+				actionHandler=self.cancelInstallForAddon,
+				validCheck=lambda aVM: aVM.canUseCancelInstallAction(),
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that disables the selected addon
 				displayName=pgettext("addonStore", "&Disable"),
 				actionHandler=self.disableAddon,
 				validCheck=lambda aVM: aVM.canUseDisableAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable"),
 				actionHandler=self.enableAddon,
 				validCheck=lambda aVM: aVM.canUseEnableAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that enables the selected addon
 				displayName=pgettext("addonStore", "&Enable (override incompatibility)"),
 				actionHandler=self.enableOverrideIncompatibilityForAddon,
 				validCheck=lambda aVM: aVM.canUseEnableOverrideIncompatibilityAction(),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that removes the selected addon
@@ -174,14 +189,15 @@ class AddonStoreVM:
 				actionHandler=self.removeAddon,
 				validCheck=lambda aVM: (
 					aVM.canUseRemoveAction()
-					and self._filteredStatusKey in (
+					and self._filteredStatusKey
+					in (
 						# Removing add-ons in the updatable view fails,
 						# as the updated version cannot be removed.
 						_StatusFilterKey.INSTALLED,
 						_StatusFilterKey.INCOMPATIBLE,
 					)
 				),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens help for the selected addon
@@ -189,7 +205,8 @@ class AddonStoreVM:
 				actionHandler=self.helpAddon,
 				validCheck=lambda aVM: (
 					aVM.model.isInstalled
-					and self._filteredStatusKey in (
+					and self._filteredStatusKey
+					in (
 						# Showing help in the updatable add-ons view is misleading
 						# as we can only fetch the add-on help from the installed version.
 						_StatusFilterKey.INSTALLED,
@@ -198,14 +215,14 @@ class AddonStoreVM:
 					and aVM.model._addonHandlerModel is not None
 					and aVM.model._addonHandlerModel.getDocFilePath() is not None
 				),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the homepage for the selected addon
 				displayName=pgettext("addonStore", "Ho&mepage"),
 				actionHandler=lambda aVM: startfile(aVM.model.homepage),
 				validCheck=lambda aVM: aVM.model.homepage is not None,
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the license for the selected addon
@@ -213,21 +230,20 @@ class AddonStoreVM:
 				actionHandler=lambda aVM: startfile(
 					cast(
 						str,
-						cast(_AddonStoreModel, aVM.model).licenseURL
-					)
+						cast(_AddonStoreModel, aVM.model).licenseURL,
+					),
 				),
 				validCheck=lambda aVM: (
-					isinstance(aVM.model, _AddonStoreModel)
-					and aVM.model.licenseURL is not None
+					isinstance(aVM.model, _AddonStoreModel) and aVM.model.licenseURL is not None
 				),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the source code for the selected addon
 				displayName=pgettext("addonStore", "Source &Code"),
 				actionHandler=lambda aVM: startfile(cast(_AddonStoreModel, aVM.model).sourceURL),
 				validCheck=lambda aVM: isinstance(aVM.model, _AddonStoreModel),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 			AddonActionVM(
 				# Translators: Label for an action that opens the webpage to see and send feedback for the selected add-on
@@ -235,14 +251,13 @@ class AddonStoreVM:
 				actionHandler=lambda aVM: startfile(
 					cast(
 						str,
-						cast(_AddonStoreModel, aVM.model).reviewURL
-					)
+						cast(_AddonStoreModel, aVM.model).reviewURL,
+					),
 				),
 				validCheck=lambda aVM: (
-					isinstance(aVM.model, _AddonStoreModel)
-					and aVM.model.reviewURL is not None
+					isinstance(aVM.model, _AddonStoreModel) and aVM.model.reviewURL is not None
 				),
-				actionTarget=selectedListItem
+				actionTarget=selectedListItem,
 			),
 		]
 
@@ -253,12 +268,13 @@ class AddonStoreVM:
 		startfile(path)
 
 	def removeAddon(
-			self,
-			listItemVM: AddonListItemVM[_AddonGUIModel],
-			askConfirmation: bool = True,
-			useRememberChoiceCheckbox: bool = False,
+		self,
+		listItemVM: AddonListItemVM[_AddonGUIModel],
+		askConfirmation: bool = True,
+		useRememberChoiceCheckbox: bool = False,
 	) -> tuple[bool, bool]:
 		from gui import mainFrame
+
 		assert addonDataManager
 		assert listItemVM.model
 		if askConfirmation:
@@ -291,7 +307,7 @@ class AddonStoreVM:
 					else:
 						log.debug(
 							f"Skipping {aVM.Id} as removal has been previously declined for all remaining"
-							" add-ons."
+							" add-ons.",
 						)
 				else:
 					shouldRemove, shouldRememberChoice = self.removeAddon(
@@ -300,13 +316,15 @@ class AddonStoreVM:
 						useRememberChoiceCheckbox=True,
 					)
 
+	@classmethod
 	def installOverrideIncompatibilityForAddon(
-			self,
-			listItemVM: AddonListItemVM,
-			askConfirmation: bool = True,
-			useRememberChoiceCheckbox: bool = False,
+		cls,
+		listItemVM: AddonListItemVM[_AddonStoreModel],
+		askConfirmation: bool = True,
+		useRememberChoiceCheckbox: bool = False,
 	) -> tuple[bool, bool]:
 		from gui import mainFrame
+
 		if askConfirmation:
 			shouldInstall, shouldRememberChoice = _shouldInstallWhenAddonTooOldDialog(
 				mainFrame,
@@ -318,24 +336,28 @@ class AddonStoreVM:
 			shouldRememberChoice = True
 		if shouldInstall:
 			listItemVM.model.enableCompatibilityOverride()
-			self.getAddon(listItemVM)
+			cls.getAddon(listItemVM)
 		return shouldInstall, shouldRememberChoice
 
 	_enableErrorMessage: str = pgettext(
 		"addonStore",
 		# Translators: The message displayed when the add-on cannot be enabled.
 		# {addon} is replaced with the add-on name.
-		"Could not enable the add-on: {addon}."
+		"Could not enable the add-on: {addon}.",
 	)
 
 	_disableErrorMessage: str = pgettext(
 		"addonStore",
 		# Translators: The message displayed when the add-on cannot be disabled.
 		# {addon} is replaced with the add-on name.
-		"Could not disable the add-on: {addon}."
+		"Could not disable the add-on: {addon}.",
 	)
 
-	def _handleEnableDisable(self, listItemVM: AddonListItemVM[_AddonManifestModel], shouldEnable: bool) -> None:
+	def _handleEnableDisable(
+		self,
+		listItemVM: AddonListItemVM[_AddonManifestModel],
+		shouldEnable: bool,
+	) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
 		except addonHandler.AddonError:
@@ -345,26 +367,30 @@ class AddonStoreVM:
 				errorMessage = self._disableErrorMessage
 			log.debug(errorMessage, exc_info=True)
 			displayableError = DisplayableError(
-				displayMessage=errorMessage.format(addon=listItemVM.model.displayName)
+				displayMessage=errorMessage.format(addon=listItemVM.model.displayName),
 			)
 			# ensure calling on the main thread.
-			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
+			core.callLater(
+				delay=0,
+				callable=self.onDisplayableError.notify,
+				displayableError=displayableError,
+			)
 
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
 		self.refresh()
 
 	def enableOverrideIncompatibilityForAddon(
-			self,
-			listItemVM: AddonListItemVM[_AddonManifestModel],
-			askConfirmation: bool = True,
-			useRememberChoiceCheckbox: bool = False,
+		self,
+		listItemVM: AddonListItemVM[_AddonManifestModel],
+		askConfirmation: bool = True,
+		useRememberChoiceCheckbox: bool = False,
 	) -> tuple[bool, bool]:
 		from ... import mainFrame
+
 		if askConfirmation:
 			shouldEnable, shouldRememberChoice = _shouldEnableWhenAddonTooOldDialog(
 				mainFrame,
 				listItemVM.model,
-				
 				useRememberChoiceCheckbox=useRememberChoiceCheckbox,
 			)
 		else:
@@ -389,13 +415,15 @@ class AddonStoreVM:
 					else:
 						log.debug(
 							f"Skipping {aVM.Id} as override incompatibility has been previously declined for all remaining"
-							" add-ons."
+							" add-ons.",
 						)
 				else:
-					shouldEnableIncompatible, shouldRememberChoice = self.enableOverrideIncompatibilityForAddon(
-						aVM,
-						askConfirmation=True,
-						useRememberChoiceCheckbox=True,
+					shouldEnableIncompatible, shouldRememberChoice = (
+						self.enableOverrideIncompatibilityForAddon(
+							aVM,
+							askConfirmation=True,
+							useRememberChoiceCheckbox=True,
+						)
 					)
 			elif aVM.canUseEnableAction():
 				self.enableAddon(aVM)
@@ -412,13 +440,15 @@ class AddonStoreVM:
 			else:
 				self.disableAddon(aVM)
 
+	@classmethod
 	def replaceAddon(
-			self,
-			listItemVM: AddonListItemVM,
-			askConfirmation: bool = True,
-			useRememberChoiceCheckbox: bool = False,
+		cls,
+		listItemVM: AddonListItemVM,
+		askConfirmation: bool = True,
+		useRememberChoiceCheckbox: bool = False,
 	) -> tuple[bool, bool]:
 		from ... import mainFrame
+
 		assert listItemVM.model
 		if askConfirmation:
 			shouldReplace, shouldRememberChoice = _shouldProceedWhenInstalledAddonVersionUnknown(
@@ -430,7 +460,7 @@ class AddonStoreVM:
 			shouldReplace = True
 			shouldRememberChoice = True
 		if shouldReplace:
-			self.getAddon(listItemVM)
+			cls.getAddon(listItemVM)
 		return shouldReplace, shouldRememberChoice
 
 	def replaceAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
@@ -445,7 +475,7 @@ class AddonStoreVM:
 						self.replaceAddon(aVM, askConfirmation=False)
 					else:
 						log.debug(
-							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining add-ons."
+							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining add-ons.",
 						)
 				else:
 					shouldReplace, shouldRememberChoice = self.replaceAddon(
@@ -454,31 +484,33 @@ class AddonStoreVM:
 						useRememberChoiceCheckbox=True,
 					)
 
-	def getAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]) -> None:
+	@classmethod
+	def getAddon(cls, listItemVM: AddonListItemVM[_AddonStoreModel]) -> None:
 		assert addonDataManager
 		addonDataManager._downloadsPendingCompletion.add(listItemVM)
 		listItemVM.status = AvailableAddonStatus.DOWNLOADING
 		log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
-		self._downloader.download(listItemVM, self._downloadComplete, self.onDisplayableError)
+		cls._downloader.download(listItemVM, cls._downloadComplete, cls.onDisplayableError)
 
-	def getAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
+	@classmethod
+	def getAddons(cls, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
 		shouldReplace = True
 		shouldInstallIncompatible = True
 		shouldRememberReplaceChoice = False
 		shouldRememberInstallChoice = False
 		for aVM in listItemVMs:
 			if aVM.canUseInstallAction() or aVM.canUseUpdateAction():
-				self.getAddon(aVM)
+				cls.getAddon(aVM)
 			elif aVM.canUseReplaceAction():
 				if shouldRememberReplaceChoice:
 					if shouldReplace:
-						self.replaceAddon(aVM, askConfirmation=False)
+						cls.replaceAddon(aVM, askConfirmation=False)
 					else:
 						log.debug(
-							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining add-ons."
+							f"Skipping {aVM.Id} as replacement has been previously declined for all remaining add-ons.",
 						)
 				else:
-					shouldReplace, shouldRememberReplaceChoice = self.replaceAddon(
+					shouldReplace, shouldRememberReplaceChoice = cls.replaceAddon(
 						aVM,
 						askConfirmation=True,
 						useRememberChoiceCheckbox=True,
@@ -486,25 +518,28 @@ class AddonStoreVM:
 			elif not aVM.model.isCompatible and aVM.model.canOverrideCompatibility:
 				if shouldRememberInstallChoice:
 					if shouldInstallIncompatible:
-						self.installOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
+						cls.installOverrideIncompatibilityForAddon(aVM, askConfirmation=False)
 					else:
 						log.debug(
 							f"Skipping {aVM.Id} as override incompatibility has been previously declined for all remaining"
-							" add-ons."
+							" add-ons.",
 						)
 				else:
-					shouldInstallIncompatible, shouldRememberInstallChoice = self.installOverrideIncompatibilityForAddon(
-						aVM,
-						askConfirmation=True,
-						useRememberChoiceCheckbox=True
+					shouldInstallIncompatible, shouldRememberInstallChoice = (
+						cls.installOverrideIncompatibilityForAddon(
+							aVM,
+							askConfirmation=True,
+							useRememberChoiceCheckbox=True,
+						)
 					)
 			else:
 				log.debug(f"Skipping {aVM.Id} ({aVM.status}) as it is not available or updatable")
 
+	@classmethod
 	def _downloadComplete(
-			self,
-			listItemVM: AddonListItemVM[_AddonStoreModel],
-			fileDownloaded: Optional[PathLike]
+		cls,
+		listItemVM: AddonListItemVM[_AddonStoreModel],
+		fileDownloaded: Optional[PathLike],
 	):
 		try:
 			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
@@ -523,15 +558,17 @@ class AddonStoreVM:
 		assert addonDataManager
 		addonDataManager._downloadsPendingInstall.add((listItemVM, fileDownloaded))
 
-	def installPending(self):
+	@classmethod
+	def installPending(cls):
 		if not core.isMainThread():
 			# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
 			log.error("installation must happen on main thread.")
 		while addonDataManager._downloadsPendingInstall:
 			listItemVM, fileDownloaded = addonDataManager._downloadsPendingInstall.pop()
-			self._doInstall(listItemVM, fileDownloaded)
+			cls._doInstall(listItemVM, fileDownloaded)
 
-	def _doInstall(self, listItemVM: AddonListItemVM, fileDownloaded: PathLike):
+	@classmethod
+	def _doInstall(cls, listItemVM: AddonListItemVM, fileDownloaded: PathLike):
 		if not core.isMainThread():
 			# Add-ons can have "installTasks", which often call the GUI assuming they are on the main thread.
 			log.error("installation must happen on main thread.")
@@ -543,7 +580,7 @@ class AddonStoreVM:
 		except DisplayableError as displayableError:
 			listItemVM.status = AvailableAddonStatus.INSTALL_FAILED
 			log.debug(f"{listItemVM.Id} status: {listItemVM.status}")
-			core.callLater(delay=0, callable=self.onDisplayableError.notify, displayableError=displayableError)
+			core.callLater(delay=0, callable=cls.onDisplayableError.notify, displayableError=displayableError)
 			return
 		listItemVM.status = AvailableAddonStatus.INSTALLED
 		addonDataManager._cacheInstalledAddon(listItemVM.model)
@@ -604,11 +641,59 @@ class AddonStoreVM:
 		core.callLater(delay=0, callable=self.detailsVM.updated.notify, addonDetailsVM=self.detailsVM)
 		log.debug("completed refresh")
 
-	def cancelDownloads(self):
+	def _cancelDownloadForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling download for {listItemVM.Id}")
+
+		try:
+			addonDataManager._downloadsPendingCompletion.remove(listItemVM)
+		except KeyError:
+			log.debug("Download already completed")
+			return self._cancelPendingInstallForAddon(listItemVM)
+		else:
+			futuresCopy = self._downloader._pending.copy()
+			for addon in futuresCopy.values():
+				if listItemVM == addon[0]:
+					self._downloader.progress.pop(addon[0], None)
+
+	def _cancelPendingInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		pendingInstallCopy = addonDataManager._downloadsPendingInstall.copy()
+		for addonData, fileDownloaded in pendingInstallCopy:
+			if addonData == listItemVM:
+				addonDataManager._downloadsPendingInstall.remove((addonData, fileDownloaded))
+				# Clean up download file
+				try:
+					os.remove(fileDownloaded)
+				except FileNotFoundError:
+					log.debugWarning(f"File already removed {fileDownloaded}")
+				except Exception as e:
+					log.error(f"Failed to delete downloaded file {fileDownloaded}: {e}")
+
+	def cancelInstallForAddon(self, listItemVM: AddonListItemVM[_AddonStoreModel]):
+		log.debug(f"Cancelling install of {listItemVM.Id}")
+
+		if AvailableAddonStatus.DOWNLOADING == getStatus(listItemVM.model, self._filteredStatusKey):
+			with self._downloader.DOWNLOAD_LOCK:
+				self._cancelDownloadForAddon(listItemVM)
+		elif AvailableAddonStatus.DOWNLOAD_SUCCESS == getStatus(listItemVM.model, self._filteredStatusKey):
+			self._cancelPendingInstallForAddon(listItemVM)
+
+		log.debug(f"Completed cancelling install of {listItemVM.Id}")
+		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
+			listItemVM.model.name,
+		)
+		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
+
+	def cancelInstallForAddons(self, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]):
+		for aVM in listItemVMs:
+			if aVM.canUseCancelInstallAction():
+				self.cancelInstallForAddon(aVM)
+
+	@classmethod
+	def cancelDownloads(cls):
 		while addonDataManager._downloadsPendingCompletion:
 			listItem = addonDataManager._downloadsPendingCompletion.pop()
 			listItem.status = AvailableAddonStatus.AVAILABLE
-		self._downloader.cancelAll()
+		cls._downloader.cancelAll()
 
 	def _filterByEnabledKey(self, model: _AddonGUIModel) -> bool:
 		if EnabledStatus.ALL == self._filterEnabledDisabled:
@@ -616,17 +701,11 @@ class AddonStoreVM:
 
 		elif EnabledStatus.ENABLED == self._filterEnabledDisabled:
 			return model.isPendingEnable or (
-				not model.isDisabled
-				and not model.isPendingDisable
-				and not model.isBlocked
+				not model.isDisabled and not model.isPendingDisable and not model.isBlocked
 			)
 
 		elif EnabledStatus.DISABLED == self._filterEnabledDisabled:
-			return (
-				model.isDisabled
-				or model.isPendingDisable
-				or model.isBlocked
-			)
+			return model.isDisabled or model.isPendingDisable or model.isBlocked
 
 		raise NotImplementedError(f"Invalid EnabledStatus: {self._filterEnabledDisabled}")
 

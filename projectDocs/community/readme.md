@@ -9,7 +9,7 @@ Whether you are a beginner, an advanced user, a new or a long time developer; or
 This includes information on reporting issues, triaging issues, testing, translating, contributing code/documentation and creating add-ons.
 * The NVDA repository [Wiki](https://github.com/nvaccess/nvda/wiki) contains more guides and documentation.
 * [NVDA development snapshots](https://www.nvaccess.org/files/nvda/snapshots/): Automatically generated builds of the project in its current state of development
-* [Translating NVDA](https://github.com/nvaccess/nvda/wiki/Translating): Information about how to translate NVDA into another language
+* [Translating NVDA](../translating/readme.md): Information about how to translate NVDA into another language
 
 ### Documentation
 * [NVDA User Guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html)

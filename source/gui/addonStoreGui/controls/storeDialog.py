@@ -47,10 +47,11 @@ class AddonStoreDialog(SettingsDialog):
 	# point to the Add-on Store one.
 	helpId = "AddonsManager"
 
-	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM):
+	def __init__(self, parent: wx.Window, storeVM: AddonStoreVM, openToTab: _StatusFilterKey | None = None):
 		self._storeVM = storeVM
 		self._storeVM.onDisplayableError.register(self.handleDisplayableError)
 		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
+		self.openToTab = openToTab
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
 		if config.conf["addonStore"]["showWarning"]:
 			displayDialogAsModal(_SafetyWarningDialog(parent))
@@ -78,12 +79,14 @@ class AddonStoreDialog(SettingsDialog):
 		for statusFilter in _statusFilters:
 			self.addonListTabs.AddPage(dynamicTabPage, statusFilter.displayString)
 		tabPageHelper.addItem(self.addonListTabs, flag=wx.EXPAND)
-		if any(self._storeVM._installedAddons[channel] for channel in self._storeVM._installedAddons):
-			# If there's any installed add-ons, use the installed add-ons page by default
-			self.addonListTabs.SetSelection(0)
-		else:
-			availableTabIndex = list(_statusFilters.keys()).index(_StatusFilterKey.AVAILABLE)
-			self.addonListTabs.SetSelection(availableTabIndex)
+		openToTab = self.openToTab
+		if openToTab is None:
+			if any(self._storeVM._installedAddons[channel] for channel in self._storeVM._installedAddons):
+				openToTab = _StatusFilterKey.INSTALLED
+			else:
+				openToTab = _StatusFilterKey.AVAILABLE
+		openToTabIndex = list(_statusFilters.keys()).index(openToTab)
+		self.addonListTabs.SetSelection(openToTabIndex)
 		self.addonListTabs.Bind(wx.EVT_NOTEBOOK_PAGE_CHANGED, self.onListTabPageChange, self.addonListTabs)
 
 		filterCtrlHelper = guiHelper.BoxSizerHelper(self, wx.VERTICAL)
@@ -97,7 +100,7 @@ class AddonStoreDialog(SettingsDialog):
 		self.listLabel = wx.StaticText(self)
 		tabPageHelper.addItem(
 			self.listLabel,
-			flag=wx.EXPAND
+			flag=wx.EXPAND,
 		)
 		self._setListLabels()
 
@@ -152,34 +155,55 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
-		self.channelFilterCtrl = cast(wx.Choice, filterCtrlsLine0.addLabeledControl(
-			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "Cha&nnel:"),
-			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in _channelFilters),
-		))
+		self.columnFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Sort by colu&mn:"),
+				wxCtrlClass=wx.Choice,
+				choices=self._storeVM.listVM._columnSortChoices,
+			),
+		)
+		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
+
+		self.channelFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Cha&nnel:"),
+				wxCtrlClass=wx.Choice,
+				choices=list(c.displayString for c in _channelFilters),
+			),
+		)
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
-		self.includeIncompatibleCtrl = cast(wx.CheckBox, filterCtrlsLine0.addItem(
-			wx.CheckBox(self, label=incompatibleAddonsLabel)
-		))
+		self.includeIncompatibleCtrl = cast(
+			wx.CheckBox,
+			filterCtrlsLine0.addItem(
+				wx.CheckBox(self, label=incompatibleAddonsLabel),
+			),
+		)
 		self.includeIncompatibleCtrl.SetValue(0)
 		self.includeIncompatibleCtrl.Bind(
 			wx.EVT_CHECKBOX,
 			self.onIncompatibleFilterChange,
-			self.includeIncompatibleCtrl
+			self.includeIncompatibleCtrl,
 		)
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
-		self.enabledFilterCtrl = cast(wx.Choice, filterCtrlsLine0.addLabeledControl(
-			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
-			wxCtrlClass=wx.Choice,
-			choices=list(c.displayString for c in EnabledStatus),
-		))
+		self.enabledFilterCtrl = cast(
+			wx.Choice,
+			filterCtrlsLine0.addLabeledControl(
+				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+				labelText=pgettext("addonStore", "Ena&bled/disabled:"),
+				wxCtrlClass=wx.Choice,
+				choices=list(c.displayString for c in EnabledStatus),
+			),
+		)
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
 
@@ -225,7 +249,7 @@ class AddonStoreDialog(SettingsDialog):
 					numInProgress,
 				).format(numInProgress),
 				self._installationPromptTitle,
-				style=wx.YES_NO
+				style=wx.YES_NO,
 			)
 			if res == wx.YES:
 				log.debug("Cancelling the download.")
@@ -247,7 +271,7 @@ class AddonStoreDialog(SettingsDialog):
 					"Installing {} add-on, please wait.",
 					"Installing {} add-ons, please wait.",
 					nAddonsPendingInstall,
-				).format(nAddonsPendingInstall)
+				).format(nAddonsPendingInstall),
 			)
 			self._storeVM.installPending()
 
@@ -264,14 +288,12 @@ class AddonStoreDialog(SettingsDialog):
 	@property
 	def _requiresRestart(self) -> bool:
 		from addonHandler import state, AddonStateCategory
-		if (
-			addonDataManager._downloadsPendingInstall
-			or state[AddonStateCategory.PENDING_INSTALL]
-		):
+
+		if addonDataManager._downloadsPendingInstall or state[AddonStateCategory.PENDING_INSTALL]:
 			log.debug(
 				"Add-ons pending install, restart required.\n"
 				f"Downloads pending install (add-on store installs): {addonDataManager._downloadsPendingInstall}.\n"
-				f"Addons pending install (external installs): {state[AddonStateCategory.PENDING_INSTALL]}.\n"
+				f"Addons pending install (external installs): {state[AddonStateCategory.PENDING_INSTALL]}.\n",
 			)
 			return True
 
@@ -295,7 +317,9 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _titleText(self) -> str:
-		return f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
+		return (
+			f"{self.title} - {self._statusFilterKey.displayString} ({self._channelFilterKey.displayString})"
+		)
 
 	@property
 	def _listLabelText(self) -> str:
@@ -311,6 +335,9 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.columnFilterCtrl.Clear()
+		for c in self._storeVM.listVM._columnSortChoices:
+			self.columnFilterCtrl.Append(c)
 		self.channelFilterCtrl.Clear()
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:
@@ -319,7 +346,12 @@ class AddonStoreDialog(SettingsDialog):
 			_StatusFilterKey.AVAILABLE,
 			_StatusFilterKey.UPDATE,
 		}:
-			self._storeVM._filterChannelKey = Channel.STABLE
+			if self._storeVM._filteredStatusKey == _StatusFilterKey.UPDATE and (
+				self._storeVM._installedAddons[Channel.DEV] or self._storeVM._installedAddons[Channel.BETA]
+			):
+				self._storeVM._filterChannelKey = Channel.ALL
+			else:
+				self._storeVM._filterChannelKey = Channel.STABLE
 			self.enabledFilterCtrl.Hide()
 			self.enabledFilterCtrl.Disable()
 			self.includeIncompatibleCtrl.Enable()
@@ -341,6 +373,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
+		self.columnFilterCtrl.SetSelection(0)
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[0])
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -352,6 +386,15 @@ class AddonStoreDialog(SettingsDialog):
 		# avoid erratic focus on the contained panel
 		if not self.addonListTabs.HasFocus():
 			self.addonListTabs.SetFocus()
+
+	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
+		# Each col index will correspond to 2 choices in the combo box (ascending and descending)
+		colIndex = evt.GetSelection() // 2
+		# Descending sort should be applied for odd choices of the combo box
+		reverse = evt.GetSelection() % 2
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex], reverse)
+		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
+		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey
@@ -393,6 +436,10 @@ class AddonStoreDialog(SettingsDialog):
 		try:
 			addonGui.installAddon(self, addonPath)
 		except DisplayableError as displayableError:
-			callLater(delay=0, callable=self._storeVM.onDisplayableError.notify, displayableError=displayableError)
+			callLater(
+				delay=0,
+				callable=self._storeVM.onDisplayableError.notify,
+				displayableError=displayableError,
+			)
 			return
 		self._storeVM.refresh()

@@ -3,22 +3,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import atexit
 import config
 from enum import IntEnum, unique
 import globalVars
 from logHandler import log
 import nvwave
-from pycaw.api.audiopolicy import IAudioSessionManager2
-from pycaw.callbacks import AudioSessionNotification, AudioSessionEvents
-from pycaw.utils import AudioSession, AudioUtilities
+from pycaw.utils import AudioSession
 import ui
 from utils.displayString import DisplayStringIntEnum
 from dataclasses import dataclass
-import os
-from comtypes import COMError
-from threading import Lock
-import core
+from .utils import AudioSessionCallback, DummyAudioSessionCallback
 
 VolumeTupleT = tuple[float, float]
 
@@ -33,7 +27,6 @@ class SoundSplitState(DisplayStringIntEnum):
 	NVDA_RIGHT_APPS_BOTH = 5
 	NVDA_BOTH_APPS_LEFT = 6
 	NVDA_BOTH_APPS_RIGHT = 7
-	
 
 	@property
 	def _displayStringLabels(self) -> dict[IntEnum, str]:
@@ -90,221 +83,111 @@ class SoundSplitState(DisplayStringIntEnum):
 				raise RuntimeError(f"Unexpected or unknown state {self=}")
 
 
-audioSessionManager: IAudioSessionManager2 | None = None
-activeCallback: AudioSessionNotification | None = None
+_activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
-	if nvwave.usingWasapiWavePlayer():
-		global audioSessionManager
-		try:
-			audioSessionManager = AudioUtilities.GetAudioSessionManager()
-		except COMError:
-			log.exception("Could not initialize audio session manager")
-			return
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		config.conf["audio"]["applicationsMuted"] = False
-		setSoundSplitState(state, initial=True)
-	else:
-		log.debug("Cannot initialize sound split as WASAPI is disabled")
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	_setSoundSplitState(state)
 
 
-@atexit.register
 def terminate():
-	if nvwave.usingWasapiWavePlayer():
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		if state != SoundSplitState.OFF:
-			setSoundSplitState(SoundSplitState.OFF, appsVolume=1.0)
-		unregisterCallback()
-	else:
-		log.debug("Skipping terminating sound split as WASAPI is disabled.")
+	global _activeCallback
+	if _activeCallback is not None:
+		_activeCallback.unregister()
+		_activeCallback = None
 
 
 @dataclass(unsafe_hash=True)
-class AudioSessionNotificationWrapper(AudioSessionNotification):
-	listener: AudioSessionNotification
-
-	def on_session_created(self, new_session: AudioSession):
-		pid = new_session.ProcessId
-		with applicationExitCallbacksLock:
-			if pid not in applicationExitCallbacks:
-				volumeRestorer = VolumeRestorer(pid, new_session)
-				new_session.register_notification(volumeRestorer)
-				applicationExitCallbacks[pid] = volumeRestorer
-		self.listener.on_session_created(new_session)
-
-
-def applyToAllAudioSessions(
-		callback: AudioSessionNotification,
-		applyToFuture: bool = True,
-) -> None:
-	"""
-		Executes provided callback function on all active audio sessions.
-		Additionally, if applyToFuture is True, then it will register a notification with audio session manager,
-		which will execute the same callback for all future sessions as they are created.
-		That notification will be active until next invokation of this function,
-		or until unregisterCallback() is called.
-	"""
-	unregisterCallback()
-	callback = AudioSessionNotificationWrapper(callback)
-	if applyToFuture:
-		audioSessionManager.RegisterSessionNotification(callback)
-		# The following call is required to make callback to work:
-		audioSessionManager.GetSessionEnumerator()
-		global activeCallback
-		activeCallback = callback
-	sessions: list[AudioSession] = AudioUtilities.GetAllSessions()
-	for session in sessions:
-		callback.on_session_created(session)
-
-
-def unregisterCallback() -> None:
-	global activeCallback
-	if activeCallback is not None:
-		audioSessionManager.UnregisterSessionNotification(activeCallback)
-		activeCallback = None
-
-
-@dataclass(unsafe_hash=True)
-class VolumeSetter(AudioSessionNotification):
-	leftVolume: float
-	rightVolume: float
-	leftNVDAVolume: float
-	rightNVDAVolume: float
+class ChannelVolumeSetter(AudioSessionCallback):
+	leftVolume: float = 0.0
+	rightVolume: float = 0.0
+	leftNVDAVolume: float = 0.0
+	rightNVDAVolume: float = 0.0
 	foundSessionWithNot2Channels: bool = False
 
-	def on_session_created(self, new_session: AudioSession):
-		pid = new_session.ProcessId
-		process = new_session.Process
-		if process is not None:
-			exe = os.path.basename(process.exe())
-			isNvda = exe.lower() == "nvda.exe"
-		else:
-			isNvda = False
-		channelVolume = new_session.channelAudioVolume()
+	def onSessionUpdate(self, session: AudioSession) -> None:
+		pid = session.ProcessId
+		channelVolume = session.channelAudioVolume()
 		channelCount = channelVolume.GetChannelCount()
 		if channelCount != 2:
-			log.warning(f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!")
+			log.warning(
+				f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!",
+			)
 			self.foundSessionWithNot2Channels = True
 			return
-		if pid == globalVars.appPid:
-			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
-			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
-		elif isNvda:
-			# This might be NVDA running on secure screen; don't adjust its volume
-			pass
-		else:
+		if pid != globalVars.appPid:
 			channelVolume.SetChannelVolume(0, self.leftVolume, None)
 			channelVolume.SetChannelVolume(1, self.rightVolume, None)
-
-
-def setSoundSplitState(
-		state: SoundSplitState,
-		appsVolume: float | None = None,
-		initial: bool = False
-) -> dict:
-	applyToFuture = True
-	if state == SoundSplitState.OFF:
-		if initial:
-			return {}
 		else:
-			# Disabling sound split via command or via settings
-			# We need to restore volume of all applications, but then don't set up callback for future audio sessions
-			state = SoundSplitState.NVDA_BOTH_APPS_BOTH
-			applyToFuture = False
-	leftVolume, rightVolume = state.getAppVolume()
-	if appsVolume is None:
-		appsVolume = (
-			config.conf["audio"]["applicationsSoundVolume"] / 100
-			* (1 - int(config.conf["audio"]["applicationsMuted"]))
-		)
+			channelVolume.SetChannelVolume(0, self.leftNVDAVolume, None)
+			channelVolume.SetChannelVolume(1, self.rightNVDAVolume, None)
 
-	leftVolume *= appsVolume
-	rightVolume *= appsVolume
-	leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
-	volumeSetter = VolumeSetter(leftVolume, rightVolume, leftNVDAVolume, rightNVDAVolume)
-	applyToAllAudioSessions(volumeSetter, applyToFuture=applyToFuture)
-	return {
-		"foundSessionWithNot2Channels": volumeSetter.foundSessionWithNot2Channels,
-	}
-
-
-def updateSoundSplitState(increment: int | None = None) -> None:
-	if not nvwave.usingWasapiWavePlayer():
-		message = _(
-			# Translators: error message when wasapi is turned off.
-			"Sound split cannot be used. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it."
-		)
-		ui.message(message)
-		return
-	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-	if increment is None:
-		newState = state
-	else:
-		allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
+	def onSessionTerminated(self, session: AudioSession) -> None:
+		pid = session.ProcessId
 		try:
-			i = allowedStates.index(state)
-		except ValueError:
-			# State not found, resetting to default (OFF)
-			i = -1
-		i = (i + increment) % len(allowedStates)
-		newState = SoundSplitState(allowedStates[i])
-	result = setSoundSplitState(newState)
-	config.conf["audio"]["soundSplitState"] = newState.value
-	if increment is not None:
-		ui.message(newState.displayString)
-	if result["foundSessionWithNot2Channels"]:
-		msg = _(
-			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
-			# had number of channels other than 2 .
-			"Warning: couldn't set volumes for sound split: "
-			"one of audio sessions is either mono, or has more than 2 audio channels."
-		)
-		ui.message(msg)
-
-
-@dataclass(unsafe_hash=True)
-class VolumeRestorer(AudioSessionEvents):
-	pid: int
-	audioSession: AudioSession
-
-	def on_state_changed(self, new_state: str, new_state_id: int):
-		if new_state == "Expired":
-			# For some reason restoring volume doesn't work in this thread, so scheduling in the main thread.
-			core.callLater(0, self.restoreVolume)
-
-	def restoreVolume(self):
-		# Application connected to this audio session is terminating. Restore its volume.
-		try:
-			channelVolume = self.audioSession.channelAudioVolume()
+			channelVolume = session.channelAudioVolume()
 			channelCount = channelVolume.GetChannelCount()
 			if channelCount != 2:
 				log.warning(
-					f"Audio session for pid {self.pid} has {channelCount} channels instead of 2 - cannot set volume!"
+					f"Audio session for pid {pid} has {channelCount} channels instead of 2 - cannot set volume!",
 				)
 				return
 			channelVolume.SetChannelVolume(0, 1.0, None)
 			channelVolume.SetChannelVolume(1, 1.0, None)
 		except Exception:
-			log.exception(f"Could not restore volume of process {self.pid} upon exit.")
-		self.unregister()
-
-	def unregister(self):
-		with applicationExitCallbacksLock:
-			try:
-				del applicationExitCallbacks[self.pid]
-			except KeyError:
-				pass
-			try:
-				self.audioSession.unregister_notification()
-			except Exception:
-				log.exception(f"Cannot unregister audio session for process {self.pid}")
+			log.exception(f"Could not restore channel volume of process {pid} upon exit.")
 
 
-applicationExitCallbacksLock = Lock()
-applicationExitCallbacks: dict[int, VolumeRestorer] = {}
+def _setSoundSplitState(state: SoundSplitState) -> dict:
+	global _activeCallback
+	if _activeCallback is not None:
+		_activeCallback.unregister()
+		_activeCallback = None
+	if state == SoundSplitState.OFF:
+		_activeCallback = DummyAudioSessionCallback()
+	else:
+		leftVolume, rightVolume = state.getAppVolume()
+		leftNVDAVolume, rightNVDAVolume = state.getNVDAVolume()
+		_activeCallback = ChannelVolumeSetter(
+			leftVolume=leftVolume,
+			rightVolume=rightVolume,
+			leftNVDAVolume=leftNVDAVolume,
+			rightNVDAVolume=rightNVDAVolume,
+		)
+	_activeCallback.register()
+	notTwoChannels = False if state == SoundSplitState.OFF else _activeCallback.foundSessionWithNot2Channels
+	return {
+		"foundSessionWithNot2Channels": notTwoChannels,
+	}
 
 
-def toggleSoundSplitState() -> None:
-	updateSoundSplitState(increment=1)
+def _toggleSoundSplitState() -> None:
+	if not nvwave.usingWasapiWavePlayer():
+		message = _(
+			# Translators: error message when wasapi is turned off.
+			"Sound split cannot be used. "
+			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
+		)
+		ui.message(message)
+		return
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
+	try:
+		i = allowedStates.index(state)
+	except ValueError:
+		# State not found, resetting to default (OFF)
+		i = -1
+	i = (i + 1) % len(allowedStates)
+	newState = SoundSplitState(allowedStates[i])
+	result = _setSoundSplitState(newState)
+	config.conf["audio"]["soundSplitState"] = newState.value
+	ui.message(newState.displayString)
+	if result["foundSessionWithNot2Channels"]:
+		msg = _(
+			# Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
+			# had number of channels other than 2 .
+			"Warning: couldn't set volumes for sound split: "
+			"one of audio sessions is either mono, or has more than 2 audio channels.",
+		)
+		ui.message(msg)

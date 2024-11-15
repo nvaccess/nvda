@@ -29,7 +29,7 @@ import ui
 import winKernel
 
 
-BATTERY_LIFE_TIME_UNKNOWN = 0xffffffff
+BATTERY_LIFE_TIME_UNKNOWN = 0xFFFFFFFF
 
 
 class PowerBroadcast(IntEnum):
@@ -92,7 +92,7 @@ class SystemPowerStatus(ctypes.Structure):
 		("BatteryLifePercent", ctypes.c_byte),
 		("Reserved1", ctypes.c_byte),
 		("BatteryLifeTime", ctypes.wintypes.DWORD),
-		("BatteryFullLiveTime", ctypes.wintypes.DWORD)
+		("BatteryFullLiveTime", ctypes.wintypes.DWORD),
 	]
 
 	BatteryFlag: BatteryFlag
@@ -173,9 +173,9 @@ def _getPowerStatus() -> Optional[SystemPowerStatus]:
 
 
 def _getSpeechForBatteryStatus(
-		systemPowerStatus: Optional[SystemPowerStatus],
-		context: _ReportContext,
-		oldPowerState: PowerState,
+	systemPowerStatus: Optional[SystemPowerStatus],
+	context: _ReportContext,
+	oldPowerState: PowerState,
 ) -> List[str]:
 	if not systemPowerStatus or systemPowerStatus.BatteryFlag == BatteryFlag.UNKNOWN:
 		# Translators: This is presented when there is an error retrieving the battery status.
@@ -186,10 +186,7 @@ def _getSpeechForBatteryStatus(
 		# and laptops with battery pack removed.
 		return [_("No system battery")]
 
-	if (
-		context == _ReportContext.AC_STATUS_CHANGE
-		and systemPowerStatus.ACLineStatus == oldPowerState
-	):
+	if context == _ReportContext.AC_STATUS_CHANGE and systemPowerStatus.ACLineStatus == oldPowerState:
 		# Sometimes, the power change event double fires.
 		# The power change event also fires when the battery level decreases by 3%.
 		return []
@@ -245,7 +242,9 @@ def _getBatteryInformation(systemPowerStatus: SystemPowerStatus) -> List[str]:
 			"{minutes:d} minutes",
 			nMinutes,
 		).format(minutes=nMinutes)
-		# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
-		# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
-		text.append(_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText))
+		text.append(
+			# Translators: This is the main string for the estimated remaining runtime of the laptop battery.
+			# E.g. hourText is replaced by "1 hour" and minuteText by "34 minutes".
+			_("{hourText} and {minuteText} remaining").format(hourText=hourText, minuteText=minuteText),
+		)
 	return text

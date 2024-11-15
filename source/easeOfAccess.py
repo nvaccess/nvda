@@ -3,8 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Utilities for working with the Windows Ease of Access Center.
-"""
+"""Utilities for working with the Windows Ease of Access Center."""
 
 from enum import Enum, IntEnum
 from typing import Any, List
@@ -43,6 +42,7 @@ class RegistryKey(str, Enum):
 
 class AutoStartContext(IntEnum):
 	"""Registry HKEY used for tracking when NVDA starts automatically"""
+
 	ON_LOGON_SCREEN = winreg.HKEY_LOCAL_MACHINE
 	AFTER_LOGON = winreg.HKEY_CURRENT_USER
 
@@ -53,7 +53,7 @@ def isRegistered() -> bool:
 			winreg.HKEY_LOCAL_MACHINE,
 			RegistryKey.APP.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 		return True
 	except FileNotFoundError:
@@ -100,7 +100,7 @@ def willAutoStart(autoStartContext: AutoStartContext) -> bool:
 
 	Returns False on failure
 	"""
-	return (_APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext))
+	return _APP_KEY_NAME in _getAutoStartConfiguration(autoStartContext)
 
 
 def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:
@@ -115,7 +115,7 @@ def _getAutoStartConfiguration(autoStartContext: AutoStartContext) -> List[str]:
 			autoStartContext.value,
 			RegistryKey.ROOT.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WOW64_64KEY,
 		)
 	except FileNotFoundError:
 		log.debug(f"Unable to find existing {autoStartContext} {RegistryKey.ROOT}")
@@ -164,12 +164,12 @@ def setAutoStart(autoStartContext: AutoStartContext, enable: bool) -> None:
 			autoStartContext.value,
 			RegistryKey.ROOT.value,
 			0,
-			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY
+			winreg.KEY_READ | winreg.KEY_WRITE | winreg.KEY_WOW64_64KEY,
 		)
 		winreg.SetValueEx(
 			k,
 			"Configuration",
 			None,
 			winreg.REG_SZ,
-			",".join(conf)
+			",".join(conf),
 		)

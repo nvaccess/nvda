@@ -1,23 +1,26 @@
 ###
-#This file is a part of the NVDA project.
-#URL: http://www.nvaccess.org/
-#Copyright 2017 NV Access Limited.
-#This program is free software: you can redistribute it and/or modify
-#it under the terms of the GNU General Public License version 2.0, as published by
-#the Free Software Foundation.
-#This program is distributed in the hope that it will be useful,
-#but WITHOUT ANY WARRANTY; without even the implied warranty of
-#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-#This license can be found at:
-#http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+# This file is a part of the NVDA project.
+# URL: http://www.nvaccess.org/
+# Copyright 2017 NV Access Limited.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License version 2.0, as published by
+# the Free Software Foundation.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# This license can be found at:
+# http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 ###
 
 import checkPot
 
 Import("env", "sourceDir", "pot")
 
+
 def checkPotAction(target, source, env):
 	return checkPot.checkPot(source[0].abspath)
+
+
 checkPotTarget = env.Command("checkPot", pot, checkPotAction)
 env.Depends(checkPotTarget, pot)
 env.AlwaysBuild(checkPotTarget)

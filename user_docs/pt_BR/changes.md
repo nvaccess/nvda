@@ -1,20 +1,124 @@
 # Novidades do NVDA
 ## Traduzido por: Marlin Rodrigues da Silva; Cleverson Casarin Uliana; Tiago Melo Casal.
 
+## 2024.3
+
+A Loja de Complementos agora irá notificá-lo se houver atualizações de complementos disponíveis na inicialização do NVDA.
+
+Agora existem opções para aplicar a Normalização Unicode à saída de fala e braille.
+Isso pode ser útil ao ler caracteres que são desconhecidos para um sintetizador de fala ou tabela braille em particular e que têm uma alternativa compatível, como os caracteres em negrito e itálico comumente usados em mídias sociais.
+Também permite a leitura de equações no editor de equações do Microsoft Word.
+
+As linhas braille Help Tech Activator Pro agora são suportadas.
+
+Comandos não atribuídos foram adicionados para rolar a roda do mouse vertical e horizontalmente.
+
+Há várias correções de falhas, particularmente para o Painel de Emojis do Windows 11 e histórico da Área de Transferência.
+Para navegadores web, há correções para relatar mensagens de erro, figuras, legendas, rótulos de tabela e itens de menu de caixa de seleção/botão de opção.
+
+O LibLouis foi atualizado, adicionando novas tabelas Braille para o cirílico sérvio, iídiche, vários idiomas antigos, turco e o alfabeto fonético internacional.
+O eSpeak foi atualizado, adicionando suporte para o idioma Caracalpaque.
+O Unicode CLDR também foi atualizado.
+
+### Novas Características
+
+* Novos comandos de teclas:
+  * Adicionados comandos não atribuídos para rolagem vertical e horizontal da roda do mouse, para aprimorar a navegação em páginas web e aplicativos com conteúdo dinâmico, como Dism++. (#16462, @Cary-Rowen)
+* Adicionado suporte para Normalização Unicode para saída de fala e braille. (#11570, #16466 @LeonarddeR).
+  * Isso pode ser útil ao ler caracteres que são desconhecidos para um sintetizador de fala ou tabela braille específica e que têm uma alternativa compatível, como os caracteres em negrito e itálico comumente usados em mídias sociais.
+  * Também permite a leitura de equações no editor de equações do Microsoft Word. (#4631)
+  * Você pode habilitar essa funcionalidade para fala e braille em suas respectivas categorias de configurações no diálogo Configurações do NVDA.
+* Por padrão, após a inicialização do NVDA, você será notificado se houver atualizações de complementos disponíveis. (#15035)
+  * Isso pode ser desabilitado na categoria de configurações "Loja de Complementos".
+  * O NVDA verifica diariamente se há atualizações de complementos.
+  * Somente atualizações dentro do mesmo canal serão verificadas (por exemplo, complementos beta instalados só notificarão sobre atualizações no canal beta).
+* Adicionado suporte para as linhas Help Tech Activator Pro. (#16668)
+
+### Alterações
+
+* Atualizações de componentes:
+  * eSpeak NG foi atualizado para 1.52-dev commit `54ee11a79`. (#16495)
+    * Adicionado novo idioma Caracalpaque.
+  * Unicode CLDR atualizado para a versão 45.0. (#16507, @OzancanKaratas)
+  * Atualizado o fast_diff_match_patch (usado para detectar alterações em terminais e outros conteúdos dinâmicos) para a versão 2.1.0. (#16508, @codeofdusk)
+  * Transcritor braille LibLouis atualizado para [3.30.0](https://github.com/liblouis/liblouis/releases/tag/v3.30.0). (#16652, @codeofdusk)
+    * Novas tabelas braille:
+      * Cirílico Sérvio.
+      * Iídiche.
+      * Várias línguas antigas: hebraico bíblico, acadiano, siríaco, ugarítico e texto cuneiforme transliterado.
+      * Turco grau 2. (#16735)
+      * Alfabeto Fonético Internacional. (#16773)
+  * NSIS atualizado para 3.10 (#16674, @dpy013)
+  * Markdown atualizado para 3.6 (#16725, @dpy013)
+  * Atualizado nh3 para 0.2.17 (#16725, @dpy013)
+* A tabela de entrada braille de fallback agora é igual à tabela de saída de fallback, que é o Código Braille Inglês Unificado grau 1. (#9863, @JulienCochuyt, @LeonarddeR)
+* O NVDA agora relatará figuras sem filhos acessíveis, mas com um rótulo ou descrição. (#14514)
+* Ao ler por linha no modo de navegação, "legenda" não é mais relatada em cada linha de uma figura longa ou legenda de tabela. (#14874)
+* No console Python, o último comando não executado não será mais perdido ao se mover no histórico de entrada. (#16653, @CyrilleB79)
+* Um ID anônimo exclusivo agora é enviado como parte da coleta opcional de estatísticas de uso do NVDA. (#16266)
+* Por padrão, uma nova pasta será criada ao fazer uma cópia portátil.
+Uma mensagem de aviso informará se você tentar gravar em um diretório não vazio. (#16686)
+
+### Correção de Falhas
+
+* Correções em Windows 11:
+  * O NVDA não parecerá mais travar ao fechar o histórico da área de transferência e o painel de emojis. (#16346, #16347, @josephsl)
+  * O NVDA anunciará novamente os candidatos visíveis ao abrir a interface do IME. (#14023, @josephsl)
+  * O NVDA não anunciará mais "histórico da área de transferência" duas vezes ao navegar pelos itens do menu do painel de emojis. (#16532, @josephsl)
+  * O NVDA não cortará mais a fala e o braille ao revisar kaomojis e símbolos no painel de emojis. (#16533, @josephsl)
+* Correções em navegador Web:
+  * Mensagens de erro referenciadas com `aria-errormessage` agora são relatadas no Google Chrome e no Mozilla Firefox. (#8318)
+  * Se presente, o NVDA agora usará `aria-labelledby` para fornecer nomes acessíveis para tabelas no Mozilla Firefox. (#5183)
+  * O NVDA anunciará corretamente os itens de menu de rádio e caixa de seleção ao entrar pela primeira vez em submenus no Google Chrome e no Mozilla Firefox. (#14550)
+  * A funcionalidade de localização do modo de navegação do NVDA agora é mais precisa quando a página contém emojis. (#16317, @LeonarddeR)
+  * No Mozilla Firefox, o NVDA agora informa corretamente o caractere, a palavra e a linha atuais quando o cursor está no ponto de inserção no final de uma linha. (#3156, @jcsteh)
+  * Não faz mais com que o Google Chrome falhe ao fechar um documento ou sair do Chrome. (#16893)
+* O NVDA anunciará corretamente as sugestões de preenchimento automático no Eclipse e outros ambientes baseados em Eclipse no Windows 11. (#16416, @thgcode)
+* Maior confiabilidade da leitura automática de texto, especialmente em aplicações de terminal. (#15850, #16027, @Danstiv)
+* Mais uma vez, é possível redefinir a configuração para os padrões de fábrica de forma confiável. (#16755, @Emil-18)
+* O NVDA anunciará corretamente as alterações de seleção ao editar o texto de uma célula no Microsoft Excel. (#15843)
+* Em aplicativos que usam o Java Access Bridge, o NVDA agora lerá corretamente a última linha em branco de um texto em vez de repetir a linha anterior. (#9376, @dmitrii-drobotov)
+* No LibreOffice Writer (versão 24.8 e mais recentes), ao alternar a formatação de texto (negrito, itálico, sublinhado, subscrito/sobrescrito, alinhamento) usando o atalho de teclado correspondente, o NVDA anuncia o novo atributo de formatação (por exemplo, "Negrito ativado", "Negrito desativado"). (#4248, @michaelweghorn)
+* Ao navegar com as teclas do cursor em caixas de texto em aplicativos que usam UI Automation — Automação de Interface do Usuário —, o NVDA não relata mais caracteres, palavras, etc, errados. (#16711, @jcsteh)
+* Ao colar na Calculadora do Windows 10/11, o NVDA agora informa corretamente o número completo colado. (#16573, @TristanBurchett)
+* A fala não fica mais silenciosa após desconectar e reconectar a uma sessão de Área de Trabalho Remota. (#16722, @jcsteh)
+* Suporte adicionado para comandos de exploração de texto para o nome de um objeto no Visual Studio Code. (#16248, @Cary-Rowen)
+* A reprodução de sons do NVDA não falha mais em um dispositivo de áudio mono. (#16770, @jcsteh)
+* O NVDA relatará endereços ao navegar pelos campos Para/CC/CCO no outlook.com / Outlook Moderno. (#16856)
+* O NVDA agora lida com falhas de instalação de complementos de forma mais elegante. (#16704)
+
+### Alterações para Desenvolvedores
+
+* O NVDA agora usa Ruff em vez de flake8 para linting. (#14817)
+* Corrigido o sistema de compilação do NVDA para funcionar corretamente ao usar o Visual Studio 2022 versão 17.10 e superior. (#16480, @LeonarddeR)
+* Uma fonte de largura fixa agora é usada no Visualizador de Log e no Console Python do NVDA para que o cursor permaneça na mesma coluna durante a navegação vertical.
+É especialmente útil ler os marcadores de localização de erro em tracebacks. (#16321, @CyrilleB79)
+* Foi adicionado suporte para tabelas braille personalizadas. (#3304, #16208, @JulienCochuyt, @LeonarddeR)
+  * As tabelas podem ser fornecidas na pasta `brailleTables` num pacote de complemento.
+  * Os metadados da tabela podem ser adicionados a uma seção `brailleTables` opcional no manifesto — manifest — do complemento ou a um arquivo `.ini` com o mesmo formato encontrado no subdiretório brailleTables do diretório scratchpad.
+  * Consulte a [seção de tabelas de transcrição braille no guia do desenvolvedor](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#BrailleTables) para obter mais detalhes.
+* Quando um evento `gainFocus` é enfileirado — queued — com um objeto que tem uma propriedade `focusRedirect` válida, o objeto apontado pela propriedade `focusRedirect` agora é mantido por `eventHandler.lastQueuedFocusObject`, em vez do objeto originalmente enfileirado. (#15843)
+* O NVDA registrará — colocará no log — sua arquitetura executável (x86) na inicialização. (#16432, @josephsl)
+* `wx.CallAfter`, que é encapsulado em `monkeyPatches/wxMonkeyPatches.py`, agora inclui indicação `functools.wraps` adequada. (#16520, @XLTechie)
+* Há um novo módulo para agendamento de tarefas `utils.schedule`, usando o módulo pip `schedule`. (#16636)
+  * Você pode usar para `scheduleThread.scheduleDailyJobAtStartUp` agendar automaticamente um trabalho que acontece depois que o NVDA inicia, e a cada 24 horas depois disso.
+  Os trabalhos são agendados com um atraso para evitar conflitos.
+  * `scheduleThread.scheduleDailyJob` e `scheduleJob` pode ser usado para agendar trabalhos em horários personalizados, onde um `JobClashError` será gerado em um conflito conhecido de agendamento de trabalhos.
+* Agora é possível criar módulos de aplicativo — app modules — para aplicativos que hospedam controles Edge WebView2 (msedgewebview2.exe). (#16705, @josephsl
 
 ## 2024.2
 
 Há um novo recurso chamado divisão de som.
-Isso permite dividir os sons do NVDA em um canal (por exemplo, à esquerda) enquanto os sons de todos os outros aplicativos são colocados no outro canal (por exemplo, à direita).
+Isso permite dividir os sons do NVDA em um canal (por exemplo, à esquerda), enquanto os sons de todos os outros aplicativos são direcionados para o outro canal (por exemplo, à direita).
 
-Existem novos comandos para modificar o anel de configurações de voz, permitindo aos usuários pular para a primeira ou última configuração e aumentar ou diminuir a configuração atual em um intervalo maior.
+Existem novos comandos para modificar o anel de configurações de voz, permitindo aos usuários pular para a primeira ou última configuração e aumentar ou diminuir a configuração atual em intervalos maiores.
 Existem também novos comandos de navegação rápida, permitindo que os usuários vinculem atalhos — gestos — para saltar rapidamente entre: parágrafo, parágrafo alinhado verticalmente, texto de mesmo estilo, texto de estilo diferente, item de menu, botão de alternância, barra de progresso, figura e fórmula matemática.
 
 Há muitos novos recursos braille e correções de falhas.
 Um novo modo braille chamado "exibir saída de fala" foi adicionado.
-Quando ativo, a linha braille mostra exatamente o que o NVDA prepara para falar.
-Também foi adicionado suporte para dispositivos braille BrailleEdgeS2, BrailleEdgeS3.
-LibLouis foi atualizado, adicionando novas Tabelas Braille detalhadas (com letras maiúsculas indicadas) de bielorrusso e ucraniano, juntamente com uma tabela em espanhol para leitura de textos gregos.
+Quando ativo, a linha braille mostra exatamente o que o NVDA fala.
+Também foi adicionado suporte para as linhas BrailleEdgeS2 e BrailleEdgeS3.
+LibLouis foi atualizado, adicionando novas tabelas braille detalhadas (com letras maiúsculas indicadas) de bielorrusso e ucraniano, uma tabela do Laos e uma tabela de espanhol para leitura de textos gregos.
 
 eSpeak foi atualizado, adicionando novo idioma Tigrínia.
 
@@ -36,21 +140,19 @@ Existem muitas pequenas correções de falhas para aplicativos, como Thunderbird
   * Adicionados comandos para pular ao primeiro, último, avançar e retroceder no anel de configurações de voz. (#13768, #16095, @rmcpantoja)
     * Definir a primeira/última configuração no anel de configurações de voz não tem nenhum atalho — gesto — atribuído. (#13768)
     * Diminua e aumente a configuração atual do anel de configurações de voz em um intervalo maior (#13768):
-      * Computador de mesa: `NVDA+control+pageUp` ou `NVDA+control+pageDown`.
-      * Computador portátil: `NVDA+control+shift+pageUp` ou `NVDA+control+shift+pageDown`.
+      * Computador de mesa: `NVDA+control+pageUp` e `NVDA+control+pageDown`.
+      * Computador portátil: `NVDA+control+shift+pageUp` e `NVDA+control+shift+pageDown`.
   * Adicionado um novo comando — gesto de entrada — não atribuído para alternar o relato de figuras e legendas. (#10826, #14349)
 * Braille:
-  * Adicionado suporte para o dispositivo braille BrailleEdgeS2, BrailleEdgeS3. (#16033, #16279, @EdKweon)
+  * Adicionado suporte para as linhas BrailleEdgeS2 e BrailleEdgeS3. (#16033, #16279, @EdKweon)
   * Um novo modo braille chamado "exibir saída de fala" foi adicionado. (#15898, @Emil-18)
-    * Quando ativo, a linha braille mostra exatamente o que o NVDA prepara para falar.
+    * Quando ativo, a linha braille mostra exatamente o que o NVDA fala.
     * Pode ser alternado pressionando `NVDA+alt+t` ou no diálogo de configurações de braille.
 * Divisão de som: (#12985, @mltony)
-  * Permite dividir os sons do NVDA em um canal (por exemplo, à esquerda) enquanto os sons de todos os outros aplicativos são colocados no outro canal (por exemplo, à direita).
+  * Permite dividir os sons do NVDA em um canal (por exemplo, à esquerda) enquanto os sons de todos os outros aplicativos são direcionados para o outro canal (por exemplo, à direita).
   * Alternado por `NVDA+alt+s`.
-  * O volume dos outros aplicativos pode ser ajustado por `NVDA+alt+pageUp` e `NVDA+alt+pageDown`. (#16052, @mltony)
-  * O som de outros aplicativos pode ser silenciado com `NVDA+alt+delete`. (#16052, @mltony)
 * Relatar cabeçalhos de linhas e colunas agora é suportado em elementos de conteúdo HTML editáveis. (#14113)
-* Adicionada a opção de desabilitar relatar figuras e legendas nas configurações de Formatação de Documentos. (#10826, #14349)
+* Adicionada uma opção de desabilitar relatar figuras e legendas nas configurações de Formatação de Documentos. (#10826, #14349)
 * No Windows 11, o NVDA anunciará alertas de digitação por voz e ações sugeridas, incluindo a sugestão principal ao copiar dados como números de telefone para a área de transferência (Windows 11 Atualização de 2022 e posteriores). (#16009, @josephsl)
 * O NVDA manterá o dispositivo de áudio despertado após a fala parar, para evitar que o início da próxima fala seja cortado com alguns dispositivos de áudio, como fones de ouvido Bluetooth. (#14386, @jcsteh, @mltony)
 * O HP Secure Browser agora é compatível. (#16377)
@@ -59,10 +161,12 @@ Existem muitas pequenas correções de falhas para aplicativos, como Thunderbird
 
 * Loja de Complementos:
   * A versão mínima e a última versão testada do NVDA para um complemento são agora exibidas na área "outros detalhes". (#15776, @Nael-Sayegh)
-  * A ação de resenhas da comunidade estará disponível, e a página web de avaliações será mostrada no painel de detalhes, em todas as abas da loja. (#16179, @nvdaes)
+  * A ação de resenhas da comunidade estará disponível em todas as abas da loja. (#16179, @nvdaes)
 * Atualizações de componentes:
   * Transcritor Braille LibLouis atualizado para  [3.29.0](https://github.com/liblouis/liblouis/releases/tag/v3.29.0). (#16259, @codeofdusk)
-    * Adicionadas novas tabelas Braille detalhadas (com letras maiúsculas indicadas) de bielorrusso e ucraniano, juntamente com uma tabela em espanhol para leitura de textos gregos.
+    * Novas tabelas Braille detalhadas (com letras maiúsculas indicadas) de bielorrusso e ucraniano.
+    * Nova tabela espanhola para leitura de textos gregos.
+    * Nova tabela para o Laos Grau 1. (#16470)
   * eSpeak NG foi atualizado para 1.52-dev commit  `cb62d93fd7`. (#15913)
     * Adicionado novo idioma Tigrínia.
 * Alterados vários comandos — gestos — para dispositivos BrailleSense para evitar conflitos com caracteres da tabela braille francesa. (#15306)
@@ -79,6 +183,7 @@ Existem muitas pequenas correções de falhas para aplicativos, como Thunderbird
   * Na versão 24H2 (Atualização de 2024 e Windows Server 2025), a interação por mouse e toque pode ser usada em configurações rápidas. (#16348, @josephsl)
 * Loja de Complementos:
   * Ao pressionar `ctrl+tab`, o foco se move corretamente para o novo título da aba atual. (#14986, @ABuffEr)
+  * Se os arquivos de cache não estiverem corretos, o NVDA não será mais reiniciado. (#16362, @nvdaes)
 * Correções para navegadores baseados em Chromium quando usados com UIA:
   * Corrigidas falhas que faziam com que o NVDA travasse. (#16393, #16394)
   * A tecla Backspace agora funciona corretamente nos campos de login do Gmail. (#16395)
@@ -88,7 +193,9 @@ Existem muitas pequenas correções de falhas para aplicativos, como Thunderbird
 * Corrigido uma falha que fazia com que o NVDA não conseguisse ler a faixa de opções e as opções do Geekbench. (#16251, @mzanm)
 * Corrigido um caso raro em que salvar a configuração poderia falhar ao salvar todos os perfis. (#16343, @CyrilleB79)
 * Nos navegadores baseados em Firefox e Chromium, o NVDA entrará corretamente no modo de foco ao pressionar enter quando posicionado dentro de uma lista de apresentação (ul / ol) dentro de conteúdo editável. (#16325)
-* Mudança de estado da coluna é relatada automaticamente ao selecionar colunas para exibir na lista de mensagens do Thunderbird. (#16323)
+* A alteração do estado da coluna agora é relatada corretamente ao selecionar colunas a serem exibidas na lista de mensagens do Thunderbird. (#16323)
+* A opção de linha de comando `-h`/`--help` funciona corretamente novamente. (#16522, @XLTechie)
+* O suporte do NVDA para o software de tradução Poedit versão 3.4 ou superior funciona corretamente ao traduzir idiomas com 1 ou mais de 2 formas plurais (por exemplo, chinês, polonês). (#16318)
 
 ### Alterações para Desenvolvedores
 
@@ -4794,4 +4901,3 @@ O mais destacável desta versão inclui o suporte para versões de 64 bit do Win
 * O NVDA agora pergunta se deve salvar suas configurações e reiniciá-lo quando o usuário altera seu idioma através do Diálogo de Opções da Interface. Para que o novo idioma seja carregado, a configuração tem de ser salva e o NVDA reiniciado.
 * Quando um sintetizador não pode ser carregado ao ser escolhido a partir do Diálogo de Sintetizadores, uma caixa de diálogo agora avisa ao usuário desse fato.
 * Ao carregar um sintetizador pela primeira vez, o NVDA deixa que ele escolha os parâmetros mais adequados de voz, velocidade e tom, em lugar de forçá-lo a usar os padrões que este supõe estar adequados. Isso resolve um problema com os sintetizadores Eloquence e Viavoice sapi4 que iniciavam a falar de forma excessivamente rápida para uma primeira vez.
-

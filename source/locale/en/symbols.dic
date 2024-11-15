@@ -12,7 +12,7 @@ complexSymbols:
 ; phrase ending	(?<=[^\s;]);(?=\s|$)
 : phrase ending	(?<=[^\s:]):(?=\s|$)
 # Series of dots used for visual presentation, e.g. in table of contents
-padding .	\.{4,}
+multiple .	\.{4,}
 # Others
 decimal point	(?<![^\d -])\.(?=\d)
 in-word '	(?<=[^\W_])['’]
@@ -27,7 +27,7 @@ symbols:
 ? sentence ending	question	all	always
 ; phrase ending	semi	most	always
 : phrase ending	colon	most	always
-padding .	padding dots	all	always
+multiple .	multiple dots	all	always
 decimal point		none	always
 in-word '	tick	all	norep
 negative number	minus	none	norep

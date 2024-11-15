@@ -4,7 +4,7 @@
 # Copyright (C) 2022 NV Access Limited
 
 from typing import (
-	Optional
+	Optional,
 )
 
 from NVDAObjects import NVDAObject

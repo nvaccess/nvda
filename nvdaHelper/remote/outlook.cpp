@@ -60,7 +60,7 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	}
 	auto HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp");
 	if(!HrGetOneProp) {
-		// Some versions of mapi32.dll name the HrGetOneProp symbol with an arguments size suffix 
+		// Some versions of mapi32.dll name the HrGetOneProp symbol with an arguments size suffix
 		HrGetOneProp=(funcType_HrGetOneProp)GetProcAddress(mapi32lib,"HrGetOneProp@12");
 	}
 	if(!HrGetOneProp) {
@@ -74,14 +74,14 @@ error_status_t nvdaInProcUtils_outlook_getMAPIProp(handle_t bindingHandle, const
 	}
 	// NVDA gave us an IUnknown pointer representing the MAPI object from Outlook.
 	// As the MAPIProp interface is not marshallable, we need to access it from its original STA thread as a real (non-proxied) raw pointer.
-	// Therefore register the IUnknown in the COM global interface table so we can unmarshal it in the main GUI thread. 
+	// Therefore register the IUnknown in the COM global interface table so we can unmarshal it in the main GUI thread.
 	nvCOMUtils::InterfaceMarshaller im;
 	HRESULT res=im.marshal(mapiObject);
 	if(res!=S_OK) {
 		LOG_ERROR(L"Failed to marshal MAPI object from rpc thread");
 		return E_UNEXPECTED;
 	}
-	// Execute the following code in Outlook's GUI thread. 
+	// Execute the following code in Outlook's GUI thread.
 	execInThread(threadID,[=,&res,&im](){
 		// Unmarshal the IUnknown pointer from the COM global interface table.
 		IUnknownPtr mapiObject=im.unmarshal<IUnknown>();

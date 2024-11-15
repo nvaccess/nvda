@@ -14,10 +14,8 @@ complexSymbols:
 文末の疑問符	(?<=[^\s？])\？(?=[\"'”’)\s]|$)
 # Others
 decimal point	(?<=\d)\.(?=\d)
-in-word '	(?<=[^\W_])['’]
 negative number	(?<!\w)[-−]{1}(?=[$＄€£￡¢￠¥\\￥]?\d)
 comma between numbers	(?<=\d)\,(?=\d)
-複数のピリオド	(?<=\.)\.|\.(?=\.)
 単語中のピリオド	(?<=[\w])\.+(?=[\w])
 数字の間の全角ピリオド	(?<=[\d])．(?=[\d])
 数字の間の全角コンマ	(?<=[\d])，(?=[\d])
@@ -31,6 +29,7 @@ symbols:
 ? sentence ending	クエスチョン	some	never
 ; phrase ending	セミコロン	some	never
 : phrase ending	コロン	some	never
+multiple .	複数のドット
 decimal point		none	always
 comma between numbers		none	always
 in-word '	アポストロフィ	some
@@ -39,7 +38,6 @@ negative number	マイナス	none	norep
 文中の点	テン	some
 文末の感嘆符	カンタンフ	some
 文末の疑問符	ギモンフ	some
-複数のピリオド	ドット	some
 単語中のピリオド	ドット	some
 数字の間の全角ピリオド		none	always
 数字の間の全角コンマ		none	always
@@ -131,8 +129,8 @@ _	アンダーライン	some
 ➢	ミギ クサビガタ ヤジルシ	some
 ⮚	ミギ クサビガタ ヤジルシ	some
 ❖	ヨツビシ	some
-♣	クラブ	most
-♦	ダイヤ	some
+♣	クラブ	none
+♦	ダイヤ	none
 §	セクション	all
 °	ド	all
 «	ヒダリ ダブル ブラケット
@@ -754,7 +752,7 @@ _	アンダーライン	some
 ☆	ホシ	some
 ★	クロボシ	some
 ☓	ナナメジュージ	some
-♠	スペード	most
+♠	スペード	none
 ♡	ハート	most
 ♢	ダイヤ	most
 ♯	シャープ	some
@@ -1154,6 +1152,7 @@ _	アンダーライン	some
 ゞ	クリカエシ ダクテン	char	always
 〔	キッコー カッコ	most
 〕	キッコートジ	most
+〜	ナミダッシュ	some
 〈	ヤマカッコ	most
 〉	ヤマカッコトジ	most
 《	ニジューヤマカッコ	most
@@ -1268,6 +1267,7 @@ _	アンダーライン	some
 䪼	セツ	none
 䯒	コー	none
 俠	キョー	none
+你	ナンジ	none
 呃	アク	none
 嘈	ソー	none
 噦	エツ	none

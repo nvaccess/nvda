@@ -3,3 +3,84 @@
 # Every person expected to commit po files should change their personal config file as described here:
 # https://mail.gnome.org/archives/kupfer-list/2010-June/msg00002.html
 *.po filter=cleanpo
+
+eol=lf
+*	text=auto
+
+# Files which should not be renormalized
+*.dic   -text
+*.po    -text
+
+# Git files
+.gitignore       text
+.gitattributes   text
+CODEOWNERS       text
+
+# Documentation files
+*.md     text
+*.txt    text
+
+# Scripts
+*.ps1    text
+*.bat    text
+*.nsi    text
+
+# Config files
+*.ini    text
+*.yml    text
+*.robot  text
+*.subst  text
+Doxyfile     text
+Makefile     text
+
+# Other files
+*.def text
+*.css text
+*.svg text
+
+# Source files
+# ============
+# Python Sources
+*.py     text diff=python
+*.pyw    text diff=python
+*_sconscript  text diff=python
+sconscript    text diff=python
+sconstruct    text diff=python
+# C++ Sources
+*.c     text diff=c
+*.cpp   text diff=cpp
+*.h     text diff=c
+*.idl   text diff=c
+*.acf   text diff=c
+
+# Binary files
+# ============
+# Python binary files
+# *.db     binary
+# *.p      binary
+# *.pkl    binary
+# *.pickle binary
+# *.pyc    binary
+# *.pyd    binary
+# *.pyo    binary
+# # Compiled C++ Object files
+# *.slo   binary
+# *.lo    binary
+# *.o     binary
+# *.obj   binary
+# # Precompiled C++ Headers
+# *.gch   binary
+# *.pch   binary
+# # Compiled C++ Dynamic libraries
+# *.so    binary
+# *.dylib binary
+# *.dll   binary
+# # Compiled C++ Static libraries
+# *.lai   binary
+# *.la    binary
+# *.a     binary
+# *.lib   binary
+# # C++ Executables
+# *.exe   binary
+# *.out   binary
+# *.app   binary

@@ -10,7 +10,8 @@ This includes information on reporting issues, triaging issues, testing, transla
 ### Documentation
 * [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html)
 * [Technical design overview](../design/technicalDesignOverview.md)
-* [Configuring AppVeyor to build forks of NVDA (making a local build environment unnecessary)](./buildingNVDAOnAppveyor.md)
+* [Configuring AppVeyor to build forks of NVDA (making a local build environment unnecessary)](./buildingNVDAOnAppVeyor.md)
+* [Remote debugging NVDA (for when you need to step through NVDA's code as it runs)](./remoteDebugging.md)
 * [NVDA ControllerClient manual (NVDA API for external applications to directly speak or braille messages, etc.)](https://github.com/nvaccess/nvda/tree/master/extras/controllerClient)
 * [Release process](../community/releaseProcess.md)
 

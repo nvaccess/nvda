@@ -10,8 +10,9 @@ For example, you might wish to notify about a configuration profile switch
 or allow modification of spoken messages before they are passed to the synthesizer.
 See the L{Action}, L{Filter}, L{Decider} and L{AccumulatingDecider} classes.
 """
+
 from logHandler import log
-from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref
+from .util import HandlerRegistrar, callWithSupportedKwargs, BoundMethodWeakref  # noqa: F401
 from typing import (
 	Callable,
 	Generator,
@@ -53,7 +54,7 @@ class Action(HandlerRegistrar[Callable[..., None]]):
 		for handler in self.handlers:
 			try:
 				callWithSupportedKwargs(handler, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 
 	def notifyOnce(self, **kwargs):
@@ -74,8 +75,8 @@ FilterValueT = TypeVar("FilterValueT")
 
 
 class Filter(
-		HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
-		Generic[FilterValueT]
+	HandlerRegistrar[Union[Callable[..., FilterValueT], Callable[[FilterValueT], FilterValueT]]],
+	Generic[FilterValueT],
 ):
 	"""Allows interested parties to register to modify a specific kind of data.
 	For example, this might be used to allow modification of spoken messages before they are passed to the synthesizer.
@@ -114,7 +115,7 @@ class Filter(
 		for handler in self.handlers:
 			try:
 				value = callWithSupportedKwargs(handler, value, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 		return value
 
@@ -162,7 +163,7 @@ class Decider(HandlerRegistrar[Callable[..., bool]]):
 		for handler in self.handlers:
 			try:
 				decision = callWithSupportedKwargs(handler, **kwargs)
-			except:
+			except:  # noqa: E722
 				log.exception("Error running handler %r for %r" % (handler, self))
 				continue
 			if not decision:
@@ -222,7 +223,7 @@ class AccumulatingDecider(HandlerRegistrar[Callable[..., bool]]):
 				log.exception("Error running handler %r for %r" % (handler, self))
 				continue
 		if (not self.defaultDecision) in decisions:
-			return (not self.defaultDecision)
+			return not self.defaultDecision
 		return self.defaultDecision
 
 

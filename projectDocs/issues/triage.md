@@ -53,7 +53,7 @@ This is the kind of information that might help when investigating the issue fur
 	- an error noise
 	- A log message
 	- If there was an error noise or log message, was there any unexpected behaviour aside from this? For example, did NVDA fail to report something it should have?
-- Even if it seems obvious, what should happen instead? 
+- Even if it seems obvious, what should happen instead?
 	- Its worth clarifying this with the user, it helps to make sure everyone is on the same page, and that we truly understand what the issue is about.
 - What version of NVDA was being used. Its good to get something like: stable, beta, rc, alpha. But much better to get the exact version of NVDA, retrieved from the NVDA menu by going to "Help" then "About". "alpha-28931,186a8d70"
 - In which version of NVDA did this work as expected?
@@ -143,13 +143,21 @@ An issue is triaged if it is ready to be worked on.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
 Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
 A `triaged` issue should also have a [priority label](#priority).
-Generally these labels are provided by NV Access only, particularly for issues that are controversial, or priority is unclear.
 
-For controversial changes, a product decision from NV Access may be required before applying the `triaged` label.
-This can be indicated with adding the label `blocked/needs-product-decision`.
+Community members should avoid adding a `triaged` label to feature requests or decisions potentially involving significant or controversial changes to NVDA features or functionality, which may require community input or approval from NV Access.
+The label should also be avoided for other issues that are controversial, or where the priority is unclear, such as bug fixes with an unclear solution.
+For changes where a product decision from NV Access is required before applying the `triaged` label, the label `blocked/needs-product-decision` should be used.
+Community members should apply the `triaged` label where an issue is a well formed bug report following the issue template, and has the following characteristics:
+
+* Can easily be understood
+* Isn't missing any important debug information
+* Can clearly be reproduced
+* Can clearly be prioritised
+* Doesn't require a controversial solution
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
+You can do this by tagging `@nvaccess/developers` or emailing <info@nvaccess.org>.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
 
@@ -183,14 +191,14 @@ Bugs/regressions are given priorities based on an estimate of their severity and
   - UX inefficient (e.g. double speaking)
   - Web standard not followed causing app/web authors to require workarounds
 - `P5`
-  - Other feature requests affecting a small subset of users 
+  - Other feature requests affecting a small subset of users
 
 ## Legacy issues
 Many older issues do not follow our issue template and have missing information.
 Often they have conversation spanning years.
 Summarising this information and opening a new issue filling out the issue template would be extremely useful in triaging these issues.
 
-NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`. 
+NV Access migrated tickets from our old issue tracker (Trac) into Github issues. These issues can be identified by having an author of `nvaccessauto`.
 
 ### Missing attachments
 Some of the migrated issues have comments that indicate an attachment should be available, but it is not.

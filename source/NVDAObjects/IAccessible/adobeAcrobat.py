@@ -1,8 +1,8 @@
-#braille.py
-#A part of NonVisual Desktop Access (NVDA)
-#Copyright (C) 2008-2014 NV Access Limited
-#This file is covered by the GNU General Public License.
-#See the file COPYING for more details.
+# braille.py
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2008-2014 NV Access Limited
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 import typing
 
 import api
@@ -25,7 +25,7 @@ stdNamesToRoles = {
 	"Div": controlTypes.Role.SECTION,
 	"BlockQuote": controlTypes.Role.BLOCKQUOTE,
 	"Caption": controlTypes.Role.CAPTION,
-	# Toc? Toci? Index? Nonstruct? Private? 
+	# Toc? Toci? Index? Nonstruct? Private?
 	# Table, TR, TH, TD covered by IAccessible
 	"L": controlTypes.Role.LIST,
 	"LI": controlTypes.Role.LISTITEM,
@@ -56,8 +56,8 @@ def normalizeStdName(stdName: str) -> typing.Tuple[controlTypes.Role, typing.Opt
 
 	raise LookupError
 
-class AcrobatNode(IAccessible):
 
+class AcrobatNode(IAccessible):
 	def initOverlayClass(self):
 		try:
 			serv = self.IAccessibleObject.QueryInterface(IServiceProvider)
@@ -77,8 +77,16 @@ class AcrobatNode(IAccessible):
 
 		# Get the IPDDomNode.
 		try:
-			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(self.IAccessibleChildID)
+			serv.QueryService(SID_GetPDDomNode, IGetPDDomNode)
 		except COMError:
+			log.debugWarning("FAILED: QueryService(SID_GetPDDomNode, IGetPDDomNode)")
+			self.pdDomNode = None
+		try:
+			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(
+				self.IAccessibleChildID,
+			)
+		except COMError:
+			log.debugWarning("FAILED: get_PDDomNode")
 			self.pdDomNode = None
 
 		if self.pdDomNode:
@@ -134,16 +142,39 @@ class AcrobatNode(IAccessible):
 					yield sub
 		yield "</%s>" % tag
 
-	def _get_mathMl(self):
-		# There could be other stuff before the math element. Ug.
+	def _get_mathMl(self) -> str:
+		"""Return the MathML associated with a Formula tag"""
+		if self.pdDomNode is None:
+			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
+			raise LookupError
+		mathMl = self.pdDomNode.GetValue()
+		if log.isEnabledFor(log.DEBUG):
+			log.debug(
+				(
+					f"_get_mathMl: math recognized: {mathMl.startswith('<math')}, "
+					f"child count={self.pdDomNode.GetChildCount()},"
+					f"\n  name='{self.pdDomNode.GetName()}', value='{mathMl}'"
+				),
+			)
+		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
+		if mathMl.startswith("<math"):
+			return mathMl.replace('xmlns:mml="http://www.w3.org/1998/Math/MathML"', "")
+		# Alternative for tagging: all the sub expressions are tagged -- gather up the MathML
 		for childNum in range(self.pdDomNode.GetChildCount()):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
 			except COMError:
+				log.debugWarning(f"COMError trying to get childNum={childNum}")
 				continue
+			if log.isEnabledFor(log.DEBUG):
+				log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
-		raise LookupError
+		# fall back to return the contents, which is hopefully alt text
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
+		return f"<math><mtext>{self.pdDomNode.GetValue()}</mtext></math>"
+
 
 class RootNode(AcrobatNode):
 	shouldAllowIAccessibleFocusEvent = True
@@ -158,12 +189,13 @@ class RootNode(AcrobatNode):
 		obj = getNVDAObjectFromEvent(self.windowHandle, winUser.OBJID_CLIENT, 0)
 		if not obj:
 			return
-		eventHandler.queueEvent("gainFocus",obj)
+		eventHandler.queueEvent("gainFocus", obj)
+
 
 class Document(RootNode):
-
 	def _get_treeInterceptorClass(self):
 		import virtualBuffers.adobeAcrobat
+
 		return virtualBuffers.adobeAcrobat.AdobeAcrobat
 
 	def _get_shouldAllowIAccessibleFocusEvent(self):
@@ -178,17 +210,17 @@ class Document(RootNode):
 				pass
 		return super(Document, self).shouldAllowIAccessibleFocusEvent
 
+
 class RootTextNode(RootNode):
-	"""The message text node that appears instead of the document when the document is not available.
-	"""
+	"""The message text node that appears instead of the document when the document is not available."""
 
 	def _get_parent(self):
-		#hack: This code should be taken out once the crash is fixed in Adobe Reader X.
-		#If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
+		# hack: This code should be taken out once the crash is fixed in Adobe Reader X.
+		# If going parent on a root text node after saying ok to the accessibility options (untagged) and before the processing document dialog appears, Reader X will crash.
 		return api.getDesktopObject()
 
-class AcrobatTextInfo(NVDAObjectTextInfo):
 
+class AcrobatTextInfo(NVDAObjectTextInfo):
 	def _getStoryText(self):
 		return self.obj.value or ""
 
@@ -201,14 +233,15 @@ class AcrobatTextInfo(NVDAObjectTextInfo):
 		except (ValueError, TypeError):
 			raise RuntimeError("Bad caret index")
 
+
 class EditableTextNode(EditableText, AcrobatNode):
 	TextInfo = AcrobatTextInfo
 
 	def event_valueChange(self):
 		pass
 
-class AcrobatSDIWindowClient(IAccessible):
 
+class AcrobatSDIWindowClient(IAccessible):
 	def initOverlayClass(self):
 		if self.name or not self.parent:
 			return
@@ -225,14 +258,15 @@ class AcrobatSDIWindowClient(IAccessible):
 		self.IAccessibleObject = acc
 		self.invalidateCache()
 
+
 class BadFocusStates(AcrobatNode):
-	"""An object which reports focus states when it shouldn't.
-	"""
+	"""An object which reports focus states when it shouldn't."""
 
 	def _get_states(self):
 		states = super(BadFocusStates, self).states
 		states.difference_update({controlTypes.State.FOCUSABLE, controlTypes.State.FOCUSED})
 		return states
+
 
 def findExtraOverlayClasses(obj, clsList):
 	"""Determine the most appropriate class(es) for Acrobat objects.
@@ -240,7 +274,9 @@ def findExtraOverlayClasses(obj, clsList):
 	"""
 	role = obj.role
 	states = obj.states
-	if role == controlTypes.Role.DOCUMENT or (role == controlTypes.Role.PAGE and controlTypes.State.READONLY in states):
+	if role == controlTypes.Role.DOCUMENT or (
+		role == controlTypes.Role.PAGE and controlTypes.State.READONLY in states
+	):
 		clsList.append(Document)
 	elif obj.event_childID == 0 and obj.event_objectID == winUser.OBJID_CLIENT:
 		# Other root node.

@@ -4,7 +4,7 @@
 
 
 
-## Introduction {#toc2}
+## Introduction {#introduction}
 
 This guide provides information concerning NVDA development, including translation and the development of components for NVDA.
 
@@ -12,7 +12,7 @@ This guide provides information concerning NVDA development, including translati
 
 The NVDA Add-on API includes all NVDA internals, except symbols that are prefixed with an underscore.
 
-The NVDA Add-on API changes over time, such as removals, deprecations and new features.
+The NVDA Add-on API changes over time, for example because of the addition of new features, removal or replacement of outdated libraries, deprecation of unused or replaced code and methodologies, and changes to Python.
 Important changes to the API are announced on the [NVDA API mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-api/about).
 Changes relevant to developers are also announced via the [NVDA changes file](https://www.nvaccess.org/files/nvda/documentation/changes.html).
 Any changes to the API policy outlined in this section will be conveyed via these two channels.
@@ -27,61 +27,76 @@ Deprecations may also have no scheduled removal date, and will remain supported 
 Note, the roadmap for removals is 'best effort' and may be subject to change.
 Please open a GitHub issue if the described add-on API changes result in the API no longer meeting the needs of an add-on you develop or maintain.
 
-### A Note About Python {#toc4}
+### A Note About Python {#aboutPython}
 
 NVDA and its components are primarily written in the Python programming language.
 It is not the goal of this guide to teach you Python, though examples are provided through out this guide which will help to familiarise you with the Python syntax.
 Documentation and other resources related to the Python language can be found at [www.python.org/](http://www.python.org/)
 
-### C++ {#toc5}
+### C++ {#cPlusPlus}
 
 Some of NVDA is written in C++, e.g. nvdaHelper.
 For an overview of nvdaHelper, including how to configure Visual Studio to enable intellisense see the
 [nvdaHelper readme](https://github.com/nvaccess/nvda/blob/master/nvdaHelper/readme.md)
 
-## Translation {#toc6}
+## Translation {#translation}
 
-In order to support multiple languages/locales, NVDA must be translated and data specific to the locale must be provided.
+In order to support multiple languages/locales, NVDA must be translated, and data specific to the locale must be provided.
 This section only includes information on custom NVDA file formats required for translation.
 Other items need to be translated, such as the NVDA user interface and documentation, but these use standard file formats.
-For complete documentation about translating NVDA, please see the [Translating wiki page](https://github.com/nvaccess/nvda/wiki/Translating)
+For complete documentation about translating NVDA, please see the [Translating page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
 
-### Character Descriptions {#toc7}
+### Character Descriptions {#characterDescriptions}
 
-Sometimes, it can be very difficult or even impossible to distinguish one character from another.
+Sometimes it can be very difficult or even impossible to distinguish one character from another.
 For example, two characters might be pronounced the same way, even though they are actually different characters.
 To help users when this occurs, character descriptions can be provided which describe the character in a unique way.
 
-Character descriptions can be provided for a locale in a file named characterDescriptions.dic in the directory for the locale.
+Character descriptions can be provided for a locale in a file named `characterDescriptions.dic` in the directory for the locale.
 This is a UTF-8 encoded text file.
-Blank lines and lines beginning with a "#" character are ignored.
+Blank lines and lines beginning with a "`#`" character are ignored.
 All other lines should contain a character, followed by a tab, then one or more descriptions separated by tabs.
+Multiple descriptions for a character will be read with natural pauses between them when reading a single character, e.g. when using `leftArrow` or `rightArrow`.
+When reading character descriptions of multiple subsequent characters using spelling commands, the first description is used for each character, e.g. spelling the current line with triple press on `NVDA+upArrow`.
 
 For example:
 
-    # This is a comment.
-    a	alpha
-    b	bravo
+```
+# This is a comment.
+a	alpha
+b	bravo beta
+```
 
-See the file locale\en\characterDescriptions.dic for a full example.
+In this example, "a" will read "alpha" as the character description, and "b" will read as "bravo, beta".
 
 In most cases, the characters in this file should be a single lower case character.
 It is assumed that characters will have the same description regardless of their case, so upper case characters are converted to lower case before looking up their character descriptions.
 
-### Symbol Pronunciation {#toc8}
+#### Translating this file {#TranslatingCharacterDescriptionsFile}
+
+Translation of `characterDescriptions.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+
+For a full example and reference, please look at [the English `characterDescriptions.dic` file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
+
+### Symbol Pronunciation {#symbolPronunciation}
 
 It is often useful to hear punctuation and other symbols pronounced as words when reading text, particularly when moving by character.
 Unfortunately, the pronunciation of symbols is inconsistent between speech synthesisers and many synthesisers do not speak many symbols and/or do not allow control over what symbols are spoken.
 Therefore, NVDA allows information about symbol pronunciation to be provided.
 
-This is done for a locale by providing a file named symbols.dic in the directory for the locale.
+This is done for a locale by providing a file named `symbols.dic` in the directory for the locale.
 This is a UTF-8 encoded text file.
-Blank lines and lines beginning with a "#" character are ignored.
+Blank lines and lines beginning with a "`#`" character are ignored.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden.
 
-The file contains two sections.
+The file contains two sections, [complex symbols](#complexSymbols) and [symbols](#symbolInformation).
 
-#### Defining Complex Symbols {#toc9}
+#### Translating this file {#TranslatingSymbolsFile}
+
+Translation of `symbols.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
+
+#### Defining Complex Symbols {#complexSymbols}
 
 The first section is optional and defines regular expression patterns for complex symbols.
 Complex symbols are symbols which aren't simply a character or sequence of characters, but instead require a more complicated match.
@@ -90,86 +105,250 @@ The "." is used for multiple purposes, so a more complicated check is required t
 
 The complex symbols section begins with the line:
 
-    complexSymbols:
+```
+complexSymbols:
+```
 
 Subsequent lines contain a textual identifier used to identify the symbol, a tab and the regular expression pattern for that symbol.
 For example:
 
-    . sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
-    dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+```re
+sentence ending	(?<=[^\s.])\.(?=[\"')\s]|$)
+dates with .	\b(\d\d)\.(\d\d)\.(\d{2}|\d{4})\b
+```
 
 Again, the English symbols are inherited by all other locales, so you need not include any complex symbols already defined for English.
 
-#### Defining Symbol Information {#toc10}
+#### Defining Symbol Information {#symbolInformation}
 
 The second section provides information about when and how to pronounce all symbols.
 It begins with the line:
 
-    symbols:
+```
+symbols:
+```
 
 Subsequent lines should contain several fields separated by tabs.
 The only mandatory fields are the identifier and replacement.
 The default will be used for omitted fields.
 The fields are as follows:
 
-* identifier: The identifier of the symbol.
-In most cases, this is just the character or characters of the symbol.
-However, it can also be the identifier of a complex symbol.
-Certain characters cannot be typed into the file, so the following special sequences can be used:
-  * \0: null
-  * \t: tab
-  * \n: line feed
-  * \r: carriage return
-  * \f: form feed
-  * \#: # character (needed because # at the start of a line denotes a comment)
-* replacement: The text which should be spoken for the symbol.
-If the symbol is a complex symbol, \1, \2, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
-This also means that to get a \ character in the replacement, one has to type \\.
-* level: The symbol level at which the symbol should be spoken.
-The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
-This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
-"char" means that the symbol should only be pronounced when moving by character.
-The default is to inherit the value or "all" if there is nothing to inherit.
-* preserve: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
-For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
-This field should be one of the following:
-  * never: Never preserve the symbol.
-  * always: Always preserve the symbol.
-  * norep: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
-  * -: Use the default.
-  * The default is to inherit the value or "never" if there is nothing to inherit.
+* `identifier`: The identifier of the symbol.
+  In most cases, this is just the character or characters of the symbol.
+  However, it can also be the identifier of a complex symbol.
+  Certain characters cannot be typed into the file, so the following special sequences can be used:
+  * `\0`: null
+  * `\t`: tab
+  * `\n`: line feed
+  * `\r`: carriage return
+  * `\f`: form feed
+  * `\#`: # character (needed because # at the start of a line denotes a comment)
+* `replacement:` The text which should be spoken for the symbol.
+  If the symbol is a complex symbol, `\1`, `\2`, etc. can be used to refer to the groups matches, which will be inlined in the replacement, allowing for simpler rules.
+  This also means that to get a `\` character in the replacement, one has to type `\\`.
+* `level`: The symbol level at which the symbol should be spoken.
+  * The symbol level is configured by the user and specifies the amount of symbols that should be spoken.
+  * This field should contain one of the levels "none", "some", "most", "all" or "char", or "-" to use the default.
+  * "char" means that the symbol should only be pronounced when moving by character.
+  * The default is to inherit the value or "all" if there is nothing to inherit.
+* `preserve`: Whether the symbol itself should be preserved to facilitate correct pronunciation by the synthesiser.
+  For example, symbols which cause pauses or inflection (such as the comma in English) should be preserved.
+  This field should be one of the following:
+  * `never`: Never preserve the symbol.
+  * `always`: Always preserve the symbol.
+  * `norep`: Only preserve the symbol if it is not being replaced; i.e. the user has set symbol level lower than the level of this symbol.
+  * `-`: Use the default.
+  The default is to inherit the value or "never" if there is nothing to inherit.
 
 Finally, a display name for the symbol can be provided in a comment after a tab at the end of the line.
 This will be shown to users when editing the symbol information and is especially useful for translators to define translated names for English complex symbols.
 
-Here are some examples:
+#### Examples {#TranslatingSymbolsExamples}
 
-    (	left paren	most
+```
+(	left paren	most
+```
 
 This means that the "(" character should be spoken as "left paren" only when the symbol level is set to most or higher; i.e. most or all.
 
-    ,	comma	all	always
+```
+,	comma	all	always
+```
 
 This means that the "," character should be spoken as "comma" when the symbol level is set to all and that the character itself should always be preserved so that the synthesiser will pause appropriately.
 
-    . sentence ending	point	# . fin de phrase
+```
+. sentence ending	point	# . fin de phrase
+```
 
 This line appears in the French symbols.dic file.
 It means that the ". sentence ending" complex symbol should be spoken as "point".
 Level and preserve are not specified, so they will be taken from English.
 A display name is provided so that French users will know what the symbol represents.
 
-    dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
+dates with .	\1 point \2 point \3	all	norep	# date avec points
+```
 
 This line appears in the French symbols.dic file.
 It means that the first, second, and third groups of the match will be included, separated by the word 'point'.
 The effect is thus to replace the dots from the date with the word 'point'.
 
-Please see the file locale\en\symbols.dic for the English definitions which are inherited for all locales.
-This is also a good full example.
+If your language uses a thousands separator such as a full stop (.) which is handled incorrectly due to other rules, you will need to define a complex symbol pattern for it.
+For example, if your language uses a comma (,) as its thousands separator, you would include the following in the complex symbols section:
 
-## Plugins {#toc11}
-### Overview {#toc12}
+```re
+thousands separator	(?<=\d)\,(?=\d)
+```
+
+You would also include something like the following in the main symbols section:
+
+```
+thousands separator	comma	all	norep
+```
+
+### Gestures {#TranslatingGestures}
+
+The gestures defined originally in NVDA are configured to expect English software and keyboard layout.
+In most cases, these gestures can also be executed on other keyboard layouts without any problem.
+However, sometimes a gesture originally defined by NVDA is not suitable for a specific locale (keyboard layout or software).
+The need to modify an original gesture may be due to the following reasons:
+
+* The original gesture is defined with a character that is not a key name on the locale keyboard layout.
+Generally, the key names are the characters that can be input without the help of a modifier key (`shift`, `control`, etc.)
+* The original gesture takes advantage of the key's physical location on the English keyboard layout, but this advantage does not exist with the locale keyboard layout.
+* The original gesture is defined to match a native shortcut in Windows or in an application, but the shortcut in the local version of Windows or of this application is not the same as the English one.
+
+In all of these cases, NVDA allows remapping of this gesture for this specific locale.
+
+#### Examples {#TranslatingGesturesExamples}
+
+Below are three detailed examples of `gestures.ini` files corresponding to the three listed situations where a gesture remapping could be required.
+
+##### Example 1: The original gesture is defined with a character that is not a key name on the locale keyboard layout {#TranslatingGesturesEx1}
+
+In the original English version, the scripts for left and right mouse click (laptop layout) are executed with `NVDA+[` and `NVDA+]`, respectively.
+
+* On an English keyboard layout, the `[` and `]` keys are the two keys to the right of the `p` key.
+* On an Italian keyboard layout, `[` and `]` characters can only be input with the help of the `altGr` modifier: `altGr+è` and `altGr+plus`, respectively.
+
+Thus, the Italian translators decided to remap these scripts using the two keys at the right of the `p` key on the Italian keyboard layout, i.e. `è` and `+`.
+To do this, they have added the following lines in the `gestures.ini` file:
+
+```
+[globalCommands.GlobalCommands]
+	leftMouseClick = kb(laptop):NVDA+è
+	rightMouseClick = kb(laptop):NVDA+plus
+```
+
+##### Example 2: The original gesture takes advantage of the keys physical location {#TranslatingGesturesEx2}
+
+Looking again at the scripts for left and right mouse click (laptop layout) we can see that they are originally mapped (in English) to two neighboring keys.
+This corresponds to the left and right buttons of the mouse.
+As seen in example 1, many translators have had to modify these keys.
+Most of them (if not all) have chosen two neighboring keys.
+For example, in the French `gestures.ini`, the following lines have been added:
+
+```
+[globalCommands.GlobalCommands]
+	None = kb(laptop):nvda+[, kb(laptop):nvda+control+[, kb(laptop):nvda+], kb(laptop):nvda+control+], kb(laptop):nvda+shift+., kb(laptop):nvda+., kb(laptop):nvda+control+.
+	leftMouseClick = kb(laptop):nvda+ù
+	rightMouseClick = kb(laptop):nvda+*
+```
+
+The `ù` and `*` on the French layout are not at the same location as `[` and `]` of the English layout, but these are still two neighboring keys.
+Moreover we can see here that `NVDA+[` and `NVDA+]`, among others, have been mapped to `None`, in order to unbind these gestures.
+For the French (France) layout, this was not mandatory since there is no possibility to input `NVDA+[` or `NVDA+]` without any other modifier key.
+
+##### Example 3: The original gesture is defined to match a native shortcut {#TranslatingGesturesEx3}
+
+NVDA provides a script for the Word document object named `toggleBold`.
+This script is mapped to the same gesture as the Word native shortcut to set text bold, i.e. `control+b` in the English version of Word.
+However in the French version of Word, the shortcut to turn text bold is `control+g`.
+The G stands for "gras" meaning "bold" in French.
+The following lines have been added in the French `gestures.ini` file to remap this script:
+
+```
+[NVDAObjects.window.winword.WordDocument]
+	None = kb:control+b, kb:control+[, kb:control+], "kb:control+shift+,", kb:control+shift+., kb:control+l, kb:control+r
+	toggleBold = kb:control+g, kb:control+shift+b
+```
+
+We can see that `control+b` has been unbound.
+This was necessary because it is the shortcut of another command in the French version of Word.
+No remapping has been done for the `toggleItalic` script, since the shortcut is the same for French and English versions of Word.
+
+#### How to remap a shortcut key {#TranslatingGesturesSteps}
+
+##### Identify the class, the script and the original gesture to be remapped {#TranslatingGesturesStepIdentify}
+
+To edit the `gesture.ini` file, you will have to identify the class, the script and the original shortcut you want to remap.
+
+##### Case of a global command script {#TranslatingGesturesStepCaseGlobal}
+
+If the gesture to be remapped is a global command, you may execute the following steps to find out the class and the script name of the command:
+
+* activate input help (`NVDA+1`)
+* press the gesture you want to remap, e.g. `NVDA+]` (laptop layout)
+* de-activate input help (`NVDA+1`)
+* open the log (`NVDA+F1`)
+* find the line corresponding to the moment you executed the gesture, e.g.:
+
+  ```
+  Input help: gesture kb(laptop):NVDA+], bound to script rightMouseClick on globalCommands.GlobalCommands
+  ```
+
+The information you are searching is on this line:
+
+* script name: `rightMouseClick`
+* class name: `globalCommands.GlobalCommands` (Note that this is always the class for global commands)
+* original gesture: `kb(laptop):NVDA+]`
+
+##### Case of an application specific script {#TranslatingGesturesStepCaseApplication}
+
+In case you want to remap an application specific script, you will have to follow the same steps as those for a global command script.
+You just need to ensure before proceeding that you are in the targeted application.
+
+##### Case of an object specific script {#TranslatingGesturesStepCaseObject}
+
+For object specific scripts such as the ones linked to `NVDAObjects.window.winword.WordDocument`, you may follow the same steps as those for application specific scripts, paying attention to the following two points:
+
+* You need to ensure before proceeding that the object to which the script is bound is focused.
+* Some of these scripts have no help message, so you may not hear anything when executing them in input help mode; but the script's name and the class of the object will still appear in the log.
+
+Note that the class of the object appearing in the log may be a subclass of the one where the original gesture is actually bound.
+In this case, you will have to explore NVDA's source code to find this parent class.
+
+#### Translating this file {#TranslatingGesturesFile}
+
+Translations for `gestures.ini` happen on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+
+1. In your local copy of the screenReaderTranslations repository, check if the `gestures.ini` file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
+   * If this file does not exist, create it by copying it from the last version of NVDA.
+   * If it already exists, all is fine.
+2. In this file the sections correspond to the class to which the script belongs.
+If the class your looking for does not exist, create this section.
+3. Under the targeted section, add a line corresponding to the new shortcut. e.g.:
+
+   ```
+   toggleBold = kb:control+g, kb:control+shift+b
+   ```
+
+   If a line already exists for the script name, but you want to modify the shortcut, add the new shortcut on the same line, separating each shortcut with a comma ("`,`").
+
+4. If you want to unmap the original shortcut, just map it to `None`, e.g.:
+
+   ```
+   None = kb:control+b
+   ```
+
+   Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
+
+5. Save your file in UTF-8 format.
+6. Commit your changes to the screenReaderTranslations repo.
+
+## Plugins {#plugins}
+### Overview {#pluginsOverview}
 
 Plugins allow you to customize the way NVDA behaves overall or within a particular application.
 They are able to:
@@ -182,7 +361,7 @@ They are able to:
 This section provides an introduction to developing plugins.
 Developers should consult the code documentation for a complete reference.
 
-### Types of Plugins {#toc13}
+### Types of Plugins {#pluginsTypes}
 
 There are two types of plugins. These are:
 
@@ -200,7 +379,7 @@ Both App Modules and Global Plugins share a common look and feel.
 They are both Python source files (with a .py extension), they both define a special class containing all events, scripts and bindings, and they both may define custom classes to access controls, text content and complex documents.
 However, they do differ in some ways.
 
-Custom appModules and globalPlugins can be packaged into NVDA add-ons. 
+Custom appModules and globalPlugins can be packaged into NVDA add-ons.
 This allows easy distribution, and provides a safe way for the user to install and uninstall the custom code.
 Please refer to the [Add-ons section](#Addons) later on in this document.
 
@@ -211,7 +390,7 @@ The Advanced category also contains a button to easily open the Developer Scratc
 The following few sections will talk separately about App Modules and Global Plugins.
 After this point, discussion is again more general.
 
-### Basics of an App Module {#toc14}
+### Basics of an App Module {#appModuleBasics}
 
 App Module files have a .py extension, and in most cases should be named the same as either the main executable of the application for which you wish them to be used or the package inside a host executable.
 For example, an App Module for notepad would be called notepad.py, as notepad's main executable is called notepad.exe.
@@ -237,19 +416,22 @@ As explained above, sometimes the default way of associating an App Module with 
 In such cases you can distribute a small global plugin along with your App Module which maps it to the executable.
 For example to map the App Module named "time_app_mod" to the "time" executable the plugin may be written as follows:
 
-    import appModuleHandler
-    import globalPluginHandler
-    
-    
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
-    	def __init__(self, *args, **kwargs):
-    		super().__init__(*args, **kwargs)
-    		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
-    
-    	def terminate(self, *args, **kwargs):
-    		super().terminate(*args, **kwargs)
-    		appModuleHandler.unregisterExecutable("time")
+```py
+import appModuleHandler
+import globalPluginHandler
+
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def __init__(self, *args, **kwargs):
+		super().__init__(*args, **kwargs)
+		appModuleHandler.registerExecutableWithAppModule("time", "time_app_mod")
+
+	def terminate(self, *args, **kwargs):
+		super().terminate(*args, **kwargs)
+		appModuleHandler.unregisterExecutable("time")
+```
+
 ### Example 1: An App Module that Beeps on Focus Change Events {#Example1}
 
 The following example App Module makes NVDA beep each time the focus changes within the notepad application.
@@ -264,20 +446,19 @@ Finally, open Notepad and move the focus around the application; e.g. move along
 You should hear beeps each time the focus changes.
 Note though that if you move outside of Notepad - for instance, to Windows Explorer - you do not hear beeps.
 
-    --- start ---
-    # Notepad App Module for NVDA
-    # Developer guide example 1
-    
-    import appModuleHandler
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	def event_gainFocus(self, obj, nextHandler):
-    		import tones
-    		tones.beep(550, 50)
-    		nextHandler()
-    
-    --- end ---
+```py
+# Notepad App Module for NVDA
+# Developer guide example 1
+
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+```
 
 This App Module file starts with two comment lines, which describe what the file is for.
 
@@ -293,41 +474,57 @@ Events will be covered in greater detail later.
 
 As with other examples in this guide, remember to delete the created app module when you are finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
-### App modules for hosted apps {#toc17}
+### App modules for hosted apps {#appModulesForHostedApps}
 
-Some executables host various apps inside.
-These include javaw.exe for running various Java programs and wwahost.exe for some apps in Windows 8 and later.
+Some executables host various apps inside or are employed by an app to display their interfaces.
+These include `javaw.exe` for running various Java programs, `wwahost.exe` for some apps in Windows 8 and later, and `msedgewebview2.exe` for displaying web-like interfaces on apps employing Edge WebView2 runtime.
 
-If an app runs inside a host executable, the name of the app module must be the name as defined by the host executable, which can be found through AppModule.appName property.
-For example, an app module for a Java app named "test" hosted inside javaw.exe must be named test.py.
-For apps hosted inside wwahost, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in wwahost.
+If an app runs inside a host executable or employs a different app to display the interface, the name of the app module must be the name as defined by the host or the interface executable, which can be found through the `AppModule.appName` property.
+For example, an app module for a Java app named "`test`" hosted inside `javaw.exe` must be named `test.py`.
+For apps hosted inside `wwahost`, not only must the app module name be the name of the loaded app, but the app module must subclass the app module class found in `wwahost`.
+By default, apps employing Edge WebView2 such as modern Outlook (olk.exe) are displayed as a webpage.
 
-### Example 2: an app module for an app hosted by wwahost.exe {#toc18}
+### Example 2: an app module for an app hosted by `wwahost.exe` {#example2}
 
-The following example is same as Notepad app module above except this is for an app hosted by wwahost.exe.
+The following example is the same as the Notepad app module above, except this is for an app hosted by `wwahost.exe`.
 
-    --- start ---
-    # wwahost/test App Module for NVDA
-    # Developer guide example 2
-    
-    from nvdaBuiltin.appModules.wwahost import *
-    
-    class AppModule(AppModule):
-    
-    	def event_gainFocus(self, obj, nextHandler):
-    		import tones
-    		tones.beep(550, 50)
-    		nextHandler()
-    
-    --- end ---
+```py
+# wwahost/test App Module for NVDA
+# Developer guide example 2
 
-The biggest difference from Notepad app module is where wwahost app module comes from.
-As a built-in app module, wwahost can be imported from nvdaBuiltin.appModules.
+from nvdaBuiltin.appModules.wwahost import *
+
+class AppModule(AppModule):
+
+	def event_gainFocus(self, obj, nextHandler):
+		import tones
+		tones.beep(550, 50)
+		nextHandler()
+```
+
+The biggest difference from the Notepad app module is where the `wwahost` app module comes from.
+As a built-in app module, `wwahost` can be imported from `nvdaBuiltin.appModules`.
 
 Another difference is how the app module class is defined.
 As wwahost app module provides necessary infrastructure for apps hosted inside, you just need to subclass the wwahost AppModule class.
 
-### Basics of a Global Plugin {#toc19}
+### Example 3: an app module for an app employing Edge WebView2 (`msedgewebview2.exe`) {#example3}
+
+The following example is an app module employing Edge WebView2 runtime with browse mode disabled by default, using modern Outlook (olk.exe) as an example.
+
+```py
+# msedgewebview2 example (modern Outlook/olk.py)
+
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+	disableBrowseModeByDefault: bool = True
+```
+
+Browse mode is disabled for this example because apps employing WebView2 display their interfaces as webpages.
+You can remove the "disableBrowseModeByDefault" line if you would like to let users navigate the app using browse mode commands.
+
+### Basics of a Global Plugin {#globalPluginBasics}
 
 Global Plugin files have a .py extension, and should have a short unique name which identifies what they do.
 
@@ -339,7 +536,7 @@ This will all be covered in depth later.
 
 NVDA loads all global plugins as soon as it starts, and unloads them on exit.
 
-### Example 3: a Global Plugin Providing a Script to Announce the NVDA Version {#toc20}
+### Example 3: a Global Plugin Providing a Script to Announce the NVDA Version {#example3}
 
 The following example Global Plugin Allows you to press NVDA+shift+v while anywhere in the Operating System to find out NVDA's version.
 This example is only to show you the basic layout of a Global Plugin.
@@ -349,24 +546,23 @@ Be very careful to keep all tabs and spaces intact.
 
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
-From anywhere, you can now press NVDA+shift+v to have NVDA's version spoken and brailled.
+From anywhere, you can now press `NVDA+shift+v` to have NVDA's version spoken and brailled.
 
-    --- start ---
-    # Version announcement plugin for NVDA
-    # Developer guide example 3
-    
-    import globalPluginHandler
-    from scriptHandler import script
-    import ui
-    import versionInfo
-    
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
-    	@script(gesture="kb:NVDA+shift+v")
-    	def script_announceNVDAVersion(self, gesture):
-    		ui.message(versionInfo.version)
-    
-    --- end ---
+```py
+# Version announcement plugin for NVDA
+# Developer guide example 3
+
+import globalPluginHandler
+from scriptHandler import script
+import ui
+import versionInfo
+
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+	@script(gesture="kb:NVDA+shift+v")
+	def script_announceNVDAVersion(self, gesture):
+		ui.message(versionInfo.version)
+```
 
 This Global Plugin file starts with two comment lines, which describe what the file is for.
 
@@ -385,7 +581,7 @@ More information about scripts and the script decorator can be found in the [Def
 
 As with other examples in this guide, remember to delete the created Global Plugin when finished testing and then restart NVDA or reload plugins, so that original functionality is restored.
 
-### NVDA Objects {#toc21}
+### NVDA Objects {#NVDAObjects}
 
 NVDA represents controls and other GUI elements as NVDA Objects.
 These NVDA Objects contain standardised properties, such as name, role, value, states and description, which allow other parts of NVDA to query or present information about a control in a generalised way.
@@ -435,7 +631,7 @@ The code may then retrieve information from that object or perhaps even retrieve
 
 Just like App Modules and Global Plugins, NVDA Objects can also define events, scripts and gesture bindings.
 
-### Scripts and Gesture Bindings {#toc22}
+### Scripts and Gesture Bindings {#scripts}
 
 App Modules, Global Plugins and NVDA Objects can define special methods which can be bound to a particular piece of input such as a key press.
 NVDA refers to these methods as scripts.
@@ -487,22 +683,23 @@ In short, a decorator is a function that modifies the behavior of a particular f
 The script decorator modifies the script in such a way that it will be properly bound to the desired gestures.
 Furthermore, it ensures that the script is listed with the description you specify, and that it is categorised under the desired category in the input gestures dialog.
 
-In order for you to use the script decorator, you will have to import it from the scriptHandler module.
+In order for you to use the `script` decorator, you will have to import it from the `scriptHandler` module.
 
-    from scriptHandler import script
+```py
+from scriptHandler import script
+```
 
-After that, just above your script definition, add the script decorator, providing it the desired arguments.
+After that, just above your script definition, add the `script` decorator, providing the desired arguments.
 For example:
 
-    --- start ---
-    	@script(
-    		description=_("Speaks the date and time"),
-    		category=inputCore.SCRCAT_MISC,
-    		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
-    	)
-    	def script_sayDateTime(self, gesture):
-    
-    --- end ---
+```py
+	@script(
+		description=_("Speaks the date and time"),
+		category=inputCore.SCRCAT_MISC,
+		gestures=["kb:NVDA+shift+t", "kb:NVDA+alt+r"]
+	)
+	def script_sayDateTime(self, gesture):
+```
 
 In this example, your script will be listed in the input gestures dialog under the "Miscellaneous" category.
 It will have the description "Speaks the date and time", and will be bound to the "NVDA+shift+t" and "NVDA+alt+r" key combinations on the keyboard.
@@ -543,7 +740,7 @@ However, beware not to include an inline docstring at the start of the method if
 The script decorator does not suffer from this limitation, so you are encouraged to provide inline docstrings as needed when using it.
 Furthermore, an alternative way of specifying the script's category is by means of setting a "category" attribute on the script method to a string containing the name of the category.
 
-### Example 4: A Global Plugin to Find out Window Class and Control ID {#toc24}
+### Example 4: A Global Plugin to Find out Window Class and Control ID {#example4}
 
 The following Global Plugin allows you to press NVDA+leftArrow to have the window class of the current focus announced, and NVDA+rightArrow to have the window control ID of the current focus announced.
 This example shows you how to define one or more scripts and gesture bindings on a class such as an App Module, Global Plugin or NVDA Object.
@@ -553,39 +750,39 @@ Be very careful to keep all tabs and spaces intact.
 
 Once saved in the right place, either restart NVDA or choose Reload Plugins found under Tools in the NVDA menu.
 
-    --- start ---
-    #Window utility scripts for NVDA
-    #Developer guide example 4
-    
-    import globalPluginHandler
-    from scriptHandler import script
-    import ui
-    import api
-    
-    class GlobalPlugin(globalPluginHandler.GlobalPlugin):
-    
-    	@script(
-    		description=_("Announces the window class name of the current focus object"),
-    		gesture="kb:NVDA+leftArrow"
-    	)
-    	def script_announceWindowClassName(self, gesture):
-    		focusObj = api.getFocusObject()
-    		name = focusObj.name
-    		windowClassName = focusObj.windowClassName
-    		ui.message("class for %s window: %s" % (name, windowClassName))
-    
-    	@script(
-    		description=_("Announces the window control ID of the current focus object"),
-    		gesture="kb:NVDA+rightArrow"
-    	)
-    	def script_announceWindowControlID(self, gesture):
-    		focusObj = api.getFocusObject()
-    		name = focusObj.name
-    		windowControlID = focusObj.windowControlID
-    		ui.message("Control ID for %s window: %d" % (name, windowControlID))
-    
-    --- end ---
-### Events {#toc25}
+```py
+#Window utility scripts for NVDA
+#Developer guide example 4
+
+import globalPluginHandler
+from scriptHandler import script
+import ui
+import api
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	@script(
+		description=_("Announces the window class name of the current focus object"),
+		gesture="kb:NVDA+leftArrow"
+	)
+	def script_announceWindowClassName(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowClassName = focusObj.windowClassName
+		ui.message(f"class for {name} window: {windowClassName}")
+
+	@script(
+		description=_("Announces the window control ID of the current focus object"),
+		gesture="kb:NVDA+rightArrow"
+	)
+	def script_announceWindowControlID(self, gesture):
+		focusObj = api.getFocusObject()
+		name = focusObj.name
+		windowControlID = focusObj.windowControlID
+		ui.message(f"Control ID for {name} window: {windowControlID}")
+```
+
+### Events {#events}
 
 When NVDA detects particular toolkit, API or Operating System events, it abstracts these and fires its own internal events on plugins and NVDA Objects.
 
@@ -629,7 +826,7 @@ There are many other events, though those listed above are usually the most usef
 
 For an example of an event handled by an App Module, please refer to [example 1](#Example1) (focus beeps in notepad).
 
-### the App Module SleepMode variable {#toc26}
+### the App Module SleepMode variable {#appModuleSleepMode}
 
 App Modules have one very useful property called "sleepMode", which if set to true almost completely disables NVDA within that application.
 Sleep Mode is very useful for self voicing applications that have their own screen reading functionality, or perhaps even some games that need full use of the keyboard.
@@ -637,20 +834,20 @@ Sleep Mode is very useful for self voicing applications that have their own scre
 Although sleep mode can be toggled on and off by the user with the key command NVDA+shift+s, a developer can choose to have sleep mode enabled by default for an application.
 This is done by providing an App Module for that application which simply sets sleepMode to True in the AppModule class.
 
-### Example 5: A Sleep Mode App Module {#toc27}
+### Example 5: A Sleep Mode App Module {#example5}
 
-The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of the application you wish to enable sleep mode for.
-As always, the file must have a .py extension.
+The following code can be copied and pasted in to a text file, then saved in the `appModules` directory with the name of the application you wish to enable sleep mode for.
+As always, the file must have a `.py` extension.
 
-    --- start ---
-    import appModuleHandler
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	sleepMode = True
-    
-    --- end ---
-### Providing Custom NVDA Object Classes {#toc28}
+```py
+import appModuleHandler
+
+class AppModule(appModuleHandler.AppModule):
+
+	sleepMode = True
+```
+
+### Providing Custom NVDA Object Classes {#customNVDAObjectClasses}
 
 Providing custom NVDA Object classes is probably the most powerful and useful way to improve the experience of an application in an NVDA plugin.
 This method allows you to place all the needed logic for a particular control altogether in one NVDA Object class for that control, rather than scattering code for many controls across a plugin's events.
@@ -658,108 +855,121 @@ This method allows you to place all the needed logic for a particular control al
 There are two steps to providing a custom NVDA Object class:
 
 * Define the NVDA Object class and its events, scripts, gesture bindings and overridden properties.
-* Tell NVDA to use this NVDA Object class in specific situations by handling it in the plugin's chooseNVDAObjectOverlayClasses method.
+* Tell NVDA to use this NVDA Object class in specific situations by handling it in the plugin's `chooseNVDAObjectOverlayClasses` method.
 
 When defining a custom NVDAObject class, you have many NVDAObject base classes to choose from.
 These base classes contain the base support for the particular accessibility or OS API underlying the control, such as win32, MSAA or Java access Bridge.
 You should usually inherit your custom NVDAObject class from the highest base class you need in order to choose your class in the first place.
-For example, if you choose to use your custom NVDAObject class when the window class name is "Edit" and the window control ID is 15, you should probably inherit from NVDAObjects.window.Window, as clearly you are aware that this is a Window object.
-Similarly, if you match on MSAA's accRole property, you would probably need to inherit from NVDAObjects.IAccessible.IAccessible.
+For example, if you choose to use your custom NVDAObject class when the window class name is "Edit" and the window control ID is 15, you should probably inherit from `NVDAObjects.window.Window`, as you are clearly aware that this is a Window object.
+Similarly, if you match on MSAA's `accRole` property, you would probably need to inherit from `NVDAObjects.IAccessible.IAccessible`.
 You should also consider what properties you are going to override on the custom NVDA Object.
-For instance, if you are going to override an IAccessible specific property, such as shouldAllowIAccessibleFocusEvent, then you need to inherit from NVDAObjects.IAccessible.IAccessible.
+For instance, if you are going to override an IAccessible specific property, such as `shouldAllowIAccessibleFocusEvent`, then you need to inherit from `NVDAObjects.IAccessible.IAccessible`.
 
-The chooseNVDAObjectOverlayClasses method can be implemented on app modules or global plugin classes.
+The `chooseNVDAObjectOverlayClasses` method can be implemented on app modules or global plugin classes.
 It takes 3 arguments:
 
-1. self: the app module or global plugin instance.
-1. obj: the NVDAObject for which classes are being chosen.
-1. clsList: a Python list of NVDAObject classes that will be used for obj.
+1. `self`: the app module or global plugin instance.
+1. `obj`: the `NVDAObject` for which classes are being chosen.
+1. `clsList`: a Python list of `NVDAObject` classes that will be used for `obj`.
 
 Inside this method, you should decide which custom NVDA Object class(es) (if any) this NVDA Object should use by checking its properties, etc.
 If a custom class should be used, it must be inserted into the class list, usually at the beginning.
 You can also remove classes chosen by NVDA from the class list, although this is rarely required.
 
-### Example 6: Command to Retrieve the Length of Text in an Edit Field Using a Custom NVDA Object {#toc29}
+### Example 6: Command to Retrieve the Length of Text in an Edit Field Using a Custom NVDA Object {#example6}
 
 This app module for notepad provides a command to report the number of characters in edit fields.
-You can activate it using NVDA+l.
+You can activate it using `NVDA+l`.
 Notice that the command is specific to edit fields; i.e. it only works while you are focused in an edit field, rather than anywhere in the application.
 
-The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+The following code can be copied and pasted in to a text file, then saved in the `appModules` directory with the name of `notepad.py`.
 
-    --- start ---
-    import appModuleHandler
-    from scriptHandler import script
-    from NVDAObjects.IAccessible import IAccessible
-    import controlTypes
-    import ui
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
-    		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
-    			clsList.insert(0, EnhancedEditField)
-    
-    class EnhancedEditField(IAccessible):
-    
-    	@script(gesture="kb:NVDA+l")
-    	def script_reportLength(self, gesture):
-    		ui.message("%d" % len(self.value))
-    
-    --- end ---
-### Making Small Changes to an NVDA Object in App Modules {#toc30}
+```py
+import appModuleHandler
+from scriptHandler import script
+from NVDAObjects.IAccessible import IAccessible
+import controlTypes
+import ui
+
+class AppModule(appModuleHandler.AppModule):
+
+	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
+		if obj.windowClassName == "Edit" and obj.role == controlTypes.Role.EDITABLETEXT:
+			clsList.insert(0, EnhancedEditField)
+
+class EnhancedEditField(IAccessible):
+
+	@script(gesture="kb:NVDA+l")
+	def script_reportLength(self, gesture):
+		ui.message(f"{len(self.value)}")
+```
+
+### Making Small Changes to an NVDA Object in App Modules {#smallChangesToNVDAObjectInAppModules}
 
 Sometimes, you may wish to make only small changes to an NVDA Object in an application, such as overriding its name or role.
 In these cases, you don't need the full power of a custom NVDA Object class.
-To do this, you can use the NVDAObject_init event available only on App Modules.
+To do this, you can use the `NVDAObject_init` event available only on App Modules.
 
-The event_NVDAObject_init method takes two arguments:
+The `event_NVDAObject_init` method takes two arguments:
 
-1. self: the AppModule instance.
-1. obj: the NVDAObject being initialized.
+1. `self`: the AppModule instance.
+1. `obj`: the `NVDAObject` being initialized.
 
 Inside this method, you can check whether this object is relevant and then override properties accordingly.
 
-### Example 7: Labelling the Notepad Edit Field Using event_NVDAObject_init {#toc31}
+### Example 7: Labelling the Notepad Edit Field Using event_NVDAObject_init {#example7}
 
 This app module for notepad makes NVDA report Notepad's main edit field as having a name of "content".
 That is, when it receives focus, NVDA will say "Content edit".
 
-The following code can be copied and pasted in to a text file, then saved in the appModules directory with the name of notepad.py.
+The following code can be copied and pasted in to a text file, then saved in the `appModules` directory with the name of `notepad.py`.
 
-    --- start ---
-    import appModuleHandler
-    from NVDAObjects.window import Window
-    
-    class AppModule(appModuleHandler.AppModule):
-    
-    	def event_NVDAObject_init(self, obj):
-    		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
-    			obj.name = "Content"
-    --- end ---
+```py
+import appModuleHandler
+from NVDAObjects.window import Window
+
+class AppModule(appModuleHandler.AppModule):
+
+	def event_NVDAObject_init(self, obj):
+		if isinstance(obj, Window) and obj.windowClassName == "Edit" and obj.windowControlID == 15:
+			obj.name = "Content"
+```
+
 ### Parsing additional command line arguments in your plugin {#PluginCLIArgs}
 
-By default NVDA accepts limited set of command line arguments and shows an error for an unknown ones.
-However if you want to use any additional arguments, this is possible by adding a handler to the extension point `addonHandler.isCLIParamKnown`.
-Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in the global plugin, since app modules or other drivers may not be loaded at this stage.
+By default NVDA accepts a limited set of command line arguments and shows an error for unknown ones.
+However, if you want to use any additional arguments, this is possible by adding a handler to the [extension point](#ExtensionPoints) `addonHandler.isCLIParamKnown`.
+Note that since command line arguments are processed just after NVDA starts, your add-on needs to process them in a global plugin, since app modules or other drivers may not be loaded at this stage.
 A sample handler can be written as follows:
 
-    def processArgs(cliArgument: str) -> bool:
-    	if cliArgument == "--enable-addon-feature":
-    		...
-    		return True  # Argument is known to the add-on and should not be flagged by NVDA
-    	return False  # unknown argument - NVDA should warn user
+```py
+def processArgs(cliArgument: str) -> bool:
+	if cliArgument == "--enable-addon-feature":
+		# Code to process your argument...
+		return True  # Argument is known to the add-on and should not be flagged by NVDA
+	return False  # unknown argument - NVDA should warn user
+```
 
-Then the handler needs to be registered - preferably in the constructor of your global plugin:
+Then the handler needs to be registered, preferably in the constructor of your global plugin:
 
-    addonHandler.isCLIParamKnown.register(processArgs)
+```py
+import addonHandler
+
+class GlobalPlugin(globalPluginHandler.GlobalPlugin):
+
+	def __init__(self) -> None:
+		super().__init__()
+		addonHandler.isCLIParamKnown.register(processArgs)
+```
+
 ## Packaging Code as NVDA Add-ons {#Addons}
 
-To make it easy for users to share and install plugins, drivers and braille translation tables, they can be packaged in to a single NVDA add-on package which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
-Add-on packages are only supported in NVDA 2012.2 and later.
-An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`" which contains a manifest file, optional install/uninstall code and one or more directories containing plugins, drivers and/or and braille translation tables.
+Add-ons make it easy for users to share and install plugins, drivers, speech symbol dictionaries and braille translation tables.
+They can be packaged in to a single NVDA add-on package, which the user can then install into a copy of NVDA via the Add-on Store found under Tools in the NVDA menu.
+An add-on package is simply a standard zip archive with the file extension of "`nvda-addon`".
+It can contain a manifest file, install/uninstall code and directories containing plugins, drivers, speech symbol dictionaries and braille translation tables.
 
-### Non-ASCII File Names in Zip Archives {#toc34}
+### Non-ASCII File Names in Zip Archives {#nonASCIIFileNamesInZip}
 
 If your add-on includes files which contain non-ASCII (non-English) characters, you should create the zip archive such that it uses UTF-8 file names.
 This means that these files can be extracted properly on all systems, regardless of the system's configured language.
@@ -767,13 +977,13 @@ Unfortunately, many zip archivers do not support this, including Windows Explore
 Generally, it has to be explicitly enabled even in archivers that do support it.
 [7-Zip](http://www.7-zip.org/) supports this, though it must be enabled by specifying the "cu=on" method parameter.
 
-### Manifest Files {#toc35}
+### Manifest Files {#manifest}
 
 Each add-on package must contain a manifest file named manifest.ini.
 This must be a UTF-8 encoded text file.
 This manifest file contains key = value pairs declaring info such as the add-on's name, version and description.
 
-#### Available Fields {#toc36}
+#### Available Fields {#manifestFields}
 
 Although it is highly suggested that manifests contain all fields, the fields marked as mandatory must be included.
 Otherwise, the add-on will not install.
@@ -819,74 +1029,119 @@ The lastTestedNVDAVersion field in particular is used to ensure that users can b
 It allows the add-on author to make an assurance that the add-on will not cause instability, or break the users system.
 When this is not provided, or is less than the current version of NVDA (ignoring minor point updates e.g. 2018.3.1) then the user will be warned not to install the add-on.
 
-The manifest can also specify information regarding the additional braille translation tables provided by the add-on.
-Please refer to the [braille translation tables section](#BrailleTables) later on in this document.
+The manifest can also specify information regarding any additional speech symbol dictionaries or braille translation tables provided by the add-on.
+Please refer to the [speech symbol dictionaries](#AddonSymbolDictionaries) and [braille translation tables](#BrailleTables) sections.
 
-#### An Example Manifest File {#toc37}
-    --- start ---
-    name = "myTestAddon"
-    summary = "Cool Test Add-on"
-    version = "1.0.0"
-    description = "An example add-on showing how to create add-ons!"
-    author = "Michael Curran <mick@example.com>"
-    url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
-    docFileName = "readme.html"
-    minimumNVDAVersion = "2021.1"
-    lastTestedNVDAVersion = "2022.3.3"
-    --- end ---
-### Plugins and Drivers {#toc38}
+#### An Example Manifest File {#manifestExample}
+
+```ini
+name = "myTestAddon"
+summary = "Cool Test Add-on"
+version = "1.0.0"
+description = "An example add-on showing how to create add-ons!"
+author = "Michael Curran <mick@example.com>"
+url = "https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/addons.md"
+docFileName = "readme.html"
+minimumNVDAVersion = "2021.1"
+lastTestedNVDAVersion = "2022.3.3"
+```
+
+### Plugins and Drivers {#pluginsAndDrivers}
 
 The following plugins and drivers can be included in an add-on:
 
-* App modules: Place them in an appModules directory in the archive.
-* Braille display drivers: Place them in a brailleDisplayDrivers directory in the archive.
-* Global plugins: Place them in a globalPlugins directory in the archive.
-* Synthesizer drivers: Place them in a synthDrivers directory in the archive.
-* [Braille translation tables](#BrailleTables): Place them in a brailleTables directory in the archive.
+* App modules: Place them in an `appModules` directory in the archive.
+* Braille display drivers: Place them in a `brailleDisplayDrivers` directory in the archive.
+* Global plugins: Place them in a `globalPlugins` directory in the archive.
+* Synthesizer drivers: Place them in a `synthDrivers` directory in the archive.
+* [Speech symbol dictionaries](#AddonSymbolDictionaries): Place them in the directory for one or more [locales](#localizingAddons) with a file name of `symbols-<name>.dic`, e.g. `locale\en\symbols-greek.dic`.
+* [Braille translation tables](#BrailleTables): Place them in a `brailleTables` directory in the archive.
 
-### Optional install / Uninstall code {#toc39}
+### Optional install / Uninstall code {#installUninstallCode}
 
-If you need to execute code as your add-on is being installed or uninstalled from NVDA (e.g. to validate license information or to copy files to a custom location), you can provide a Python file called installTasks.py in the archive which contains special functions that NVDA will call while installing or uninstalling your add-on.
+If you need to execute code as your add-on is being installed or uninstalled from NVDA (e.g. to validate license information or to copy files to a custom location), you can provide a Python file called `installTasks.py` in the archive which contains special functions that NVDA will call while installing or uninstalling your add-on.
 This file should avoid loading any modules that are not absolutely necessary, especially Python C extensions or dlls from your own add-on, as this could cause later removal of the add-on to fail.
-However, if this does happen, the add-on directory will be renamed and then deleted after the next restart of NVDA. 
-Finally, it should not depend on the existence or state of other add-ons, as they may not be installed, have already been removed or not yet be initialized.
+However, if this does happen, the add-on directory will be renamed and then deleted after the next restart of NVDA.
+Finally, it should not depend on the existence or state of other add-ons, as they may not be installed, may have already been removed or may not yet be initialized.
 
-#### the onInstall function {#toc40}
+#### the onInstall function {#onInstall}
 
-NVDA will look for and execute an onInstall function in installTasks.py after it has finished extracting the add-on into NVDA.
-Note that although the add-on will have been extracted at this time, its directory will have a .pendingInstall suffix until NVDA is restarted, the directory is renamed and the add-on is really loaded for the first time.
+NVDA will look for and execute an `onInstall` function in `installTasks.py` after it has finished extracting the add-on into NVDA.
+Note that although the add-on will have been extracted at this point, its directory will have a `.pendingInstall` suffix until NVDA is restarted, the directory is renamed and the add-on is really loaded for the first time.
 If this function raises an exception, the installation of the add-on will fail and its directory will be cleaned up.
 
-#### The onUninstall Function {#toc41}
+#### The onUninstall Function {#onUninstall}
 
-NVDA will look for and execute an onUninstall function in installTasks.py when NVDA is restarted after the user has chosen to remove the add-on.
+NVDA will look for and execute an `onUninstall` function in `installTasks.py` when NVDA is restarted after the user has chosen to remove the add-on.
 After this function completes, the add-on's directory will automatically be removed.
 As this happens on NVDA startup before other components are initialized, this function cannot request input from the user.
 
-### Localizing Add-ons {#toc42}
+### Localizing Add-ons {#localizingAddons}
 
 It is possible to provide locale-specific information and messages for your add-on.
 Locale information can be stored in a locale directory in the archive.
 This directory should contain directories for each language it supports, using the same language code format as the rest of NVDA; e.g. en for English, fr_CA for French Canadian.
 
-#### Locale-specific Manifest Files {#toc43}
+#### Locale-specific Manifest Files {#localeManifest}
 
 Each of these language directories can contain a locale-specific manifest file called manifest.ini, which can contain a small subset of the manifest fields for translation.
-These fields are summary and description.
+These fields are `summary` and `description`.
+You can also override the `displayName` field for speech symbol dictionaries and braille translation tables.
 All other fields will be ignored.
 
-#### Locale-specific Messages {#toc44}
+#### Locale-specific Messages {#localeMessages}
 
 Each language directory can also contain gettext information, which is the system used to translate the rest of NVDA's user interface and reported messages.
 As with the rest of NVDA, an `nvda.mo` compiled gettext database file should be placed in the `LC_MESSAGES` directory within this directory.
 To allow plugins in your add-on to access gettext message information via calls to `_()`, `ngettext()`, `npgettext()` and `pgettext()` you must initialize translations at the top of each Python module by calling `addonHandler.initTranslation()`.
 This function cannot be called in modules that do not belong to an add-on, e.g. in a scratchpad subdirectory.
-For more information about gettext and NVDA translation in general, please read the [Translating NVDA wiki page](https://github.com/nvaccess/nvda/wiki/Translating)
+For more information about gettext and NVDA translation in general, please read the [Translating NVDA page](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/readme.md)
+
+#### Speech symbol dictionaries {#AddonSymbolDictionaries}
+
+You can provide custom speech symbol dictionaries in add-ons to improve symbol pronunciation.
+The process to create custom speech symbol dictionaries is very similar to that of the [translation process of existing symbols](#symbolPronunciation).
+Note that [complex symbols](#complexSymbols) are not supported.
+
+Custom dictionaries must be placed in a language directory and have a filename in the form `symbols-<name>.dic`, where `<name>` is the name that has to be provided in the add-ons manifest.
+All locales implicitly inherit the symbol information for English, though any of this information can be overridden for specific locales.
+
+When adding a dictionary not marked as mandatory, some information must be provided such as its display name, since it should be shown in the speech category of the settings dialog.
+A dictionary can also be marked mandatory, in which case it is always enabled with the add-on.
+When an add-on ships with dictionaries, this information is included in its manifest in the optional `symbolDictionaries` section.
+For example:
+
+```ini
+[symbolDictionaries]
+[[greek]]
+displayName = Greek
+mandatory = false
+
+[[hebrew]]
+displayName = Biblical Hebrew
+mandatory = true
+```
+
+In the above example, `greek` is a dictionary that is optional and will be listed in the speech category of NVDA's settings dialog under the "Extra dictionaries for character and symbol processing" setting.
+Its file will be stored as `locale\en\symbols-greek.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-greek.dic`.
+When using NVDA in French, symbols that aren't defined in the French dictionary inherit the symbol information for English.
+
+Also in the example, the `hebrew` dictionary is marked mandatory and will therefore always be enabled as long as the add-on is active.
+Its file will be stored as `locale\en\symbols-hebrew.dic`, whereas French translations of the symbols are stored in `locale\fr\symbols-hebrew.dic`.
+
+Note that for the display name of the dictionary to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[symbolDictionaries]
+[[hebrew]]
+displayName = Hébreu Biblique
+```
 
 ### Add-on Documentation {#AddonDoc}
 
-Documentation for an add-on should be placed in a doc directory in the archive.
-Similar to the locale directory, this directory should contain directories for each language in which documentation is available.
+Documentation for an add-on should be placed in the `doc` directory in the archive.
+Similar to the `locale` directory, this directory should contain directories for each language in which documentation is available.
 
 Users can access documentation for a particular add-on by opening the Add-on Store, selecting the add-on and pressing the Add-on help button.
 This will open the file named in the docFileName parameter of the manifest.
@@ -902,8 +1157,8 @@ These tables can either replace standard tables shipped with NVDA or be complete
 When adding a table, some information must be provided such as its display name in the Preferences dialog, whether it supports input and/or output and whether it is for contracted braille.
 When an add-on ships with tables, this information is included in its manifest in the optional brailleTables section.
 For example:
+
 ```
---- start ---
 [brailleTables]
 [[fr-bfu-tabmod-comp8.utb]]
 displayName = French (unified) 8 dot computer braille - Addition
@@ -916,10 +1171,9 @@ displayName = Norwegian 8 dot computer braille - Replacement
 contracted = False
 output = True
 input = True
---- end ---
 ```
 
-In the above example, `fr-bfu-tabmod-comp8.utb` is a new table,  while `no-no-8dot.utb` replaces a table that is already included in NVDA.
+In the above example, `fr-bfu-tabmod-comp8.utb` is a new table, while `no-no-8dot.utb` replaces a table that is already included in NVDA.
 Both tables need to be shipped in the brailleTables directory of the add-on.
 It is also possible to include a table in the manifest that is shipped with NVDA but otherwise unavailable for selection in the Preferences dialog.
 In that case, the table does not need to be shipped in the add-on's brailleTables directory.
@@ -927,6 +1181,15 @@ In that case, the table does not need to be shipped in the add-on's brailleTable
 Providing a custom table, whether it has the same file name as a standard table or a different name, thus requires you to define the table in the add-on's manifest.
 The only exception to this rule applies to tables that are included within other tables.
 While they don't have to be included in the manifest of the add-on, they can only be included from other tables that are part of the same add-on.
+
+Note that for the display name of the table to be translated, an entry should be added to a [locale manifest](#localeManifest).
+For example, add the following to `locale\fr\manifest.ini`:
+
+```ini
+[brailleTables]
+[[no-no-8dot.utb]]
+displayName = Norvégien Braille informatique 8 points - Remplacement
+```
 
 Custom tables can also be placed in the brailleTables subdirectory of the scratchpad directory.
 In this case, the table metadata can be placed in a `manifest.ini` file in the root of the scratchpad in the exact same format as the example above.
@@ -941,7 +1204,7 @@ Please refer to the [liblouis documentation](https://liblouis.io/documentation/)
 The NVDA Python console emulates the interactive Python interpreter from within NVDA.
 It is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
 
-### Usage {#toc47}
+### Usage {#pythonConsoleUsage}
 
 The console can be activated in two ways:
 
@@ -952,7 +1215,7 @@ See [Snapshot Variables](#PythonConsoleSnapshotVariables) for more details.
 
 The console is similar to the standard interactive Python interpreter.
 Input is accepted one line at a time and processed when enter is pressed.
-Multiple lines can be pasted at once from the clipboard and will be processed one by one. 
+Multiple lines can be pasted at once from the clipboard and will be processed one by one.
 You can navigate through the history of previously entered lines using the up and down arrow keys.
 
 Output (responses from the interpreter) will be spoken when enter is pressed.
@@ -968,7 +1231,7 @@ Closing the console window (with escape or alt+F4) simply hides it.
 This allows the user to return to the session as it was left when it was closed, including history and variables.
 
 ### Namespace {#PythonConsoleNamespace}
-#### Automatic Imports {#toc49}
+#### Automatic Imports {#pythonConsoleAutoImports}
 
 For convenience, the following modules and variables are automatically imported in the console:
 sys, os, wx, log (from logHandler), api, queueHandler, config, controlTypes, textInfos, braille, speech, vision, appModules, globalPlugins
@@ -980,17 +1243,20 @@ See: pythonConsole.PythonConsole.initNamespace
 Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
 These variables are:
 
-* focus: The current focus object
-* focusAnc: The ancestors of the current focus object
-* fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
-* fg: The current foreground object
-* nav: The current navigator object
-* mouse: The current mouse object
-* brlRegions: The braille regions from the active braille buffer
+* `focus`: The current focus object
+* `focusAnc`: The ancestors of the current focus object
+* `fdl`: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
+* `fg`: The current foreground object
+* `nav`: The current navigator object
+* `caretObj`: The object which contains the caret (focus or tree interceptor if any)
+* `caretPos`: A text info at the position of the caret
+* `review`: The current `TextInfo` instance representing the user's review position
+* `mouse`: The current mouse object
+* `brlRegions`: The braille regions from the active braille buffer
 
-### Tab completion {#toc51}
+### Tab completion {#pythonConsoleTab}
 
-The input control supports tab-completion of variables and member attributes names.
+The input control supports tab-completion of variables and member attribute names.
 Hit the tab key once to complete the current input if there is one single candidate.
 If there is more than one, hit the tab key a second time to open a menu listing all matching possibilities.
 By default, only "public" member attributes are listed.
@@ -998,7 +1264,7 @@ That is, if the input is "nav.", attribute names with no leading underscore are 
 If the input is "nav._", attribute names with a single leading underscore are proposed.
 Similarly, if the input is "nav.__", attribute names with two leading underscores are proposed.
 
-## Remote Python Console {#toc52}
+## Remote Python Console {#remotePythonConsole}
 
 A remote Python console is available in source builds of NVDA, for situations where remote debugging of NVDA is useful.
 It is similar to the [local Python console](#PythonConsole) discussed above, but is accessed via TCP.
@@ -1006,7 +1272,7 @@ It is similar to the [local Python console](#PythonConsole) discussed above, but
 Please be aware that this is a huge security risk.
 It is not available in binary builds distributed by NV Access, and You should only enable it if you are connected to trusted networks.
 
-### Usage {#toc53}
+### Usage {#remotePythonConsoleUsage}
 
 To enable the remote Python console, use the local Python console to import remotePythonConsole and call remotePythonConsole.initialize().
 You can then connect to it via TCP port 6832.
@@ -1022,7 +1288,7 @@ There are some special functions:
 
 ## Extension Points {#ExtensionPoints}
 
-NVDA's `extensionPoints` module, allows code in different parts of NVDA, or in add-ons, to perform tasks such as:
+NVDA's `extensionPoints` module allows code in different parts of NVDA, or in add-ons, to perform tasks such as:
 
 * Be notified when an action occurs or a state is changed.
 * Receive, as part of being notified, variables related to the action or changed state.
@@ -1050,7 +1316,8 @@ For examples of how to define and use new extension points, please see the code 
 
 | Type |Extension Point |Description|
 |---|---|---|
-|`Filter` |`filter_displaySize` |Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displaySize` | [Deprecated] Allows components or add-ons to change the display size used for braille output.|
+|`Filter` |`filter_displayDimensions` | Allows components or add-ons to change the number of rows and columns of the display used for braille output.|
 |`Action` |`displaySizeChanged` |Notifies of display size changes.|
 |`Action` |`pre_writeCells` |Notifies when cells are about to be written to a braille display|
 |`Action` |`displayChanged` |Notifies of braille display changes.|
@@ -1176,4 +1443,3 @@ Please see the `EventExtensionPoints` class documentation for more information, 
 |`Action` |`post_reviewMove` |the position of the review cursor has changed.|
 |`Action` |`post_mouseMove` |the mouse has moved.|
 |`Action` |`post_coreCycle` |the end of each core cycle has been reached.|
-
