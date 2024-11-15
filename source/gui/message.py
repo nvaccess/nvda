@@ -103,28 +103,16 @@ def messageBox(
 			"gui.message.messageBox is deprecated. Use gui.message.MessageDialog instead.",
 		),
 	)
-	from gui import mainFrame
-	from gui.messageDialog import (
-		MessageDialog,
-		_messageBoxButtonStylesToMessageDialogButtons,
-		_MessageButtonIconStylesToMessageDialogType,
-		_messageDialogReturnCodeToMessageBoxReturnCode,
-	)
+	from gui.messageDialog import MessageBoxShim
 	import core
 	from logHandler import log
 
 	if not core._hasShutdownBeenTriggered:
-		res = MessageDialog(
-			parent=parent or mainFrame,
-			message=message,
-			title=caption,
-			dialogType=_MessageButtonIconStylesToMessageDialogType(style),
-			buttons=_messageBoxButtonStylesToMessageDialogButtons(style),
-		).ShowModal()
+		res = MessageBoxShim().messageBox(message, caption, style, parent)
 	else:
 		log.debugWarning("Not displaying message box as shutdown has been triggered.", stack_info=True)
 		res = wx.CANCEL
-	return _messageDialogReturnCodeToMessageBoxReturnCode(res)
+	return res
 
 
 class DisplayableError(Exception):

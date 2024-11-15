@@ -4,6 +4,8 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
+import sys
+import threading
 import time
 from typing import Any, NamedTuple, TypeAlias, Self
 import winsound
@@ -725,6 +727,38 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.Close()
 
 	# endregion
+
+
+class MessageBoxShim:
+	def __init__(self):
+		self.event = threading.Event()
+
+	def messageBox(self, message: str, caption: str, style: int, parent: wx.Window | None):
+		if wx.IsMainThread():
+			self._messageBoxImpl(message, caption, style, parent)
+		else:
+			wx.CallAfter(self._messageBoxImpl, message, caption, style, parent)
+			self.event.wait()
+		try:
+			return self.result
+		except AttributeError:
+			raise self.exception
+
+	def _messageBoxImpl(self, message: str, caption: str, style: int, parent: wx.Window | None):
+		from gui import mainFrame
+
+		try:
+			dialog = MessageDialog(
+				parent=parent or mainFrame,
+				message=message,
+				title=caption,
+				dialogType=_MessageButtonIconStylesToMessageDialogType(style),
+				buttons=_messageBoxButtonStylesToMessageDialogButtons(style),
+			)
+			self.result = _messageDialogReturnCodeToMessageBoxReturnCode(dialog.ShowModal())
+		except Exception:
+			self.exception = sys.exception
+		self.event.set()
 
 
 def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> int:
