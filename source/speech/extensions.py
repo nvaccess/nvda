@@ -22,6 +22,14 @@ Notifies when speech is about to be canceled.
 Handlers are called without arguments.
 """
 
+speechPaused = Action()
+"""
+Notifies when speech is paused.
+
+@param switch: True if speech is paused, False if speech is resumed.
+@type switch: bool
+"""
+
 pre_speech = Action()
 """
 Notifies when code attempts to speak text.
