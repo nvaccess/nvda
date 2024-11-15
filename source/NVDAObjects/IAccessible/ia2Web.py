@@ -344,7 +344,14 @@ class Math(Ia2Web):
 					attr = mathPres.insertLanguageIntoMath(attr, self.language)
 				return attr
 			if self.IA2Attributes.get("tag") != "math":
-				# This isn't MathML.
+				# Could be a <span> (etc) that has role = math -- check the child
+				# If there is a single <math> child, recurse on the assumption that is what was the intended math
+				mathObjs: list["NVDAObjects.NVDAObject"] = [
+					child for child in self.children if child.IA2Attributes.get("tag") == "math"
+				]
+				if len(mathObjs) == 1:
+					return mathObjs[0].mathMl
+				# This isn't MathML
 				raise LookupError
 			if self.language:
 				attrs = ' xml:lang="%s"' % self.language

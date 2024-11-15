@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -149,11 +149,14 @@ def shouldUseToUnicodeEx(focus: Optional["NVDAObject"] = None):
 		# This is only possible in Windows 10 1607 and above
 		and winVersion.getWinVer() >= winVersion.WIN10_1607
 		and (  # Either of
-			# We couldn't inject in-process, and its not a legacy console window without keyboard support.
+			# The focus is within a UWP app, where WM_CHAR never gets sent
+			focus.windowClassName.startswith("Windows.UI.Core")
+			# Or we couldn't inject in-process, and its not a legacy console window without keyboard support.
 			# console windows have their own specific typed character support.
-			(not focus.appModule.helperLocalBindingHandle and focus.windowClassName != "ConsoleWindowClass")
-			# or the focus is within a UWP app, where WM_CHAR never gets sent
-			or focus.windowClassName.startswith("Windows.UI.Core")
+			or (
+				not (focus.appModule and focus.appModule.helperLocalBindingHandle)
+				and focus.windowClassName != "ConsoleWindowClass"
+			)
 			# Or this is a console with keyboard support, where WM_CHAR messages are doubled
 			or isinstance(focus, KeyboardHandlerBasedTypedCharSupport)
 		)
@@ -203,7 +206,10 @@ def internal_keyDownEvent(vkCode, scanCode, extended, injected):
 			or (
 				keyCode == lastNVDAModifier
 				and lastNVDAModifierReleaseTime
-				and time.time() - lastNVDAModifierReleaseTime < 0.5
+				and (
+					time.time() - lastNVDAModifierReleaseTime
+					< config.conf["keyboard"]["multiPressTimeout"] / 1000
+				)
 			)
 		):
 			# The user wants the key to serve its normal function instead of acting as an NVDA modifier key.

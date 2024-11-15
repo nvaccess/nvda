@@ -1831,6 +1831,19 @@ This information greatly aides NV Access to prioritize future development of NVD
 If this is enabled, NVDA will inform you when there is a pending update on startup, offering you the possibility to install it.
 You can also manually install the pending update from the Exit NVDA dialog (if enabled),  from the NVDA menu, or when you perform a new check from the Help menu.
 
+##### Update Mirror {#UpdateMirror}
+
+These controls allow you to specify an alternative URL to use to check for updates to NVDA.
+This may be of use in locations where access to the NV Access NVDA update server is slow or unavailable.
+
+The read-only text box shows the current mirror URL.
+If no mirror is in use (i.e. the NV Access update server is being used), "No mirror" is displayed.
+
+If you wish to change the update mirror, press the "Change..." button to open the [Set Update Mirror dialog](#SetURLDialog).
+
+Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
+Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->
@@ -1846,7 +1859,8 @@ The Speech Settings category contains the following options:
 
 ##### Change synthesizer {#SpeechSettingsChange}
 
-The first option in the Speech Settings category is the Change... button. This button activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer and output device.
+The first option in the Speech Settings category is the Change... button.
+This button activates the [Select Synthesizer](#SelectSynthesizer) dialog, which allows you to select the active speech synthesizer.
 This dialog opens on top of the NVDA Settings dialog.
 Saving or dismissing the settings in the Select Synthesizer dialog will return you to the NVDA Settings dialog.
 
@@ -2062,6 +2076,7 @@ The next option you will come to in this category is the braille output table co
 In this combo box, you will find braille tables for different languages, braille standards and grades.
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
+If you select "Automatic", the table will be selected according with NVDA's current language.
 
 ##### Input Table {#BrailleSettingsInputTable}
 
@@ -2264,6 +2279,12 @@ If this is enabled, NVDA will automatically speak the character at the cursor wh
 
 To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+##### Speak when navigating by line or paragraph {#BrailleSpeakOnNavigating}
+
+Enabling this option will cause NVDA to speak lines or paragraphs reached using the braille display's navigation controls.
+
+To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
@@ -2451,35 +2472,39 @@ By default only three modes are included.
 Note that it is necessary to check at least one mode.
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Applications volume adjuster status {#AppsVolumeAdjusterStatus}
+##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
 
-This combo box allows you to select the status of the applications volume adjuster.
-The applications volume adjuster allows you to adjust volume of all other applications except for NVDA or mute them with a single keystroke.
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (No), No, Yes|
+|Default |No|
+
+This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
 
 Possible values are:
 
-* Disabled: NVDA doesn't interfere with volume levels of other applications.
-* Enabled: volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume).
+* No: NVDA doesn't interfere with the volume levels of other applications.
+* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
+Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
 
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume setting will apply to all other applications sound output, even if they start after this setting is changed.
 This volume can also be controlled via the following keyboard commands from anywhere:
 
 | Name | Key | Description |
 |---|---|---|
-| Increase applications volume | `NVDA+alt+pageUp` | Increases volume of all applications except NVDA. |
-| Decrease applications volume | `NVDA+alt+pageDown` | Decreases volume of all applications except NVDA. |
+| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
+| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
 
 This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
-##### Muting other applications {#OtherAppMute}
+##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
-This mute setting will apply to all other applications sound output, even if they start after this setting is changed.
 
 The following keyboard command can also be used from anywhere:
 
@@ -3082,12 +3107,15 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
 
-##### Server mirror URL {#AddonStoreMetadataMirror}
+##### Mirror server {#AddonStoreMetadataMirror}
 
-This option allows you to specify an alternative URL to download Add-on Store data from.
+These controls allow you to specify an alternative URL to download Add-on Store data from.
 This may be of use in locations where access to the NV Access Add-on Store server is slow or unavailable.
 
-Leave this blank to use the default NV Access Add-on Store server.
+The read-only text box shows the current mirror URL.
+If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "No mirror" is displayed.
+
+If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3105,6 +3133,28 @@ When this checkbox is enabled, NVDA will automatically refresh the recognized co
 This can be very useful when you want to monitor constantly changing content, such as when watching a video with subtitles.
 The refresh takes place every one and a half seconds.
 This option is disabled by default.
+
+#### Set Mirror Dialog {#SetURLDialog}
+
+This dialog allows you to specify the URL of a mirror to use when [updating NVDA](#GeneralSettingsCheckForUpdates) or [using the Add-on Store](#AddonsManager).
+This may be of use in locations where access to the NV Access servers for these functions is slow or unavailable.
+
+* When setting the [NVDA update mirror](#UpdateMirror), the title of this dialog will be "Set NVDA Update Mirror".
+* When setting the [Add-on Store mirror](#AddonStoreMetadataMirror), the title of this dialog will be "Set Add-on Store Mirror Server".
+
+##### URL {#SetURLTextbox}
+
+Enter the URL (web address) of the mirror you wish to use here.
+Only HTTP and HTTPS URLs are supported.
+For your privacy, NV Access recommends using HTTPS URLs whenever possible.
+
+Leave this blank to use the default NV Access server.
+
+##### Test... {#SetURLTest}
+
+Press this button to test the mirror URL you have entered.
+You must be connected to the internet for the test to succeed.
+It is recommended that you always test the URL before saving it.
 
 #### Advanced Settings {#AdvancedSettings}
 
@@ -3415,7 +3465,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
 In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
-Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\\\b" should be typed in order to get the "a\\b" replacement.
 
 #### Input Gestures {#InputGestures}
 
@@ -3645,6 +3695,13 @@ You can reach it by pressing `shift+tab` from the list of add-ons.
 Type a keyword or two for the kind of add-on you're looking for, then `tab` to the list of add-ons.
 Add-ons will be listed if the search text can be found in the add-on ID, display name, publisher, author or description.
 
+#### Sorting the add-ons list by column {#AddonStoreSortByColumn}
+
+By default, the add-ons list is sorted by the add-ons' display name.
+The "Sort by column" combo box can be used to sort the list by the available columns for each tab.
+For example, you may wish to sort add-ons by publisher, available version, etc.
+Add-ons can be sortered in ascending or descending order.
+
 ### Add-on actions {#AddonStoreActions}
 
 Add-ons have associated actions, such as install, help, disable, and remove.
@@ -3806,19 +3863,19 @@ Follow the directions in [Creating a portable copy](#CreatingAPortableCopy) for 
 
 ### Run COM registration fixing tool... {#RunCOMRegistrationFixingTool}
 
-Installing and uninstalling programs on a computer can, in certain cases, cause COM DLL files to get unregistered.
-As COM Interfaces such as IAccessible depend on correct COM DLL registrations, issues can appear in case the correct registration is missing.
+Sometimes, problems can develop with the Windows Registry, that result in NVDA behaving abnormally.
+This can be caused by, for example, installing or uninstalling certain programs (such as Adobe Reader or Math Player), as well as Windows updates and other events.
+THE COM Registration Fixing Tool attempts to fix these issues by repairing accessibility entries in the registry.
 
-This can happen i.e. after installing and uninstalling Adobe Reader, Math Player and other programs.
+The types of problem this tool can fix include:
 
-The missing registration can cause issues in browsers, desktop apps, task bar and other interfaces.
+* NVDA reporting "unknown" or "pane", when navigating in browsers such as Firefox or Edge, mail programs such as Thunderbird, Windows Explorer, the task bar, and other programs.
+* NVDA failing to switch between focus mode and browse mode when you expect it to.
+* Buttons which previously had their names spoken, suddenly being reported only as "button".
+* NVDA being very slow when navigating in browsers while using browse mode.
 
-Specifically, following issues can be solved by running this tool:
-
-* NVDA reports "unknown" when navigating in browsers such as Firefox, Thunderbird etc.
-* NVDA fails to switch between focus mode and browse mode
-* NVDA is very slow when navigating in browsers while using browse mode
-* And possibly other issues.
+Because this tool corrects entries in the Windows registry, it requires administrative access to work, just like when installing a program.
+If you have UAC (User Access Control) enabled, as most users do, you will need to follow whatever prompts are presented by UAC, to run the tool successfully.
 
 ### Reload plugins {#ReloadPlugins}
 
@@ -4444,6 +4501,8 @@ Please see the display's documentation for descriptions of where these keys can 
 |end key |space+LJ down|
 |control+home key |backspace+LJ up|
 |control+end key |backspace+LJ down|
+
+<!-- KC:endInclude -->
 
 ### Papenmeier BRAILLEX Newer Models {#Papenmeier}
 
@@ -5255,6 +5314,16 @@ Following are the command line options for NVDA:
 |None |`--create-portable` |Creates a portable copy of NVDA (and starts the new copy). Requires `--portable-path` to be specified|
 |None |`--create-portable-silent` |Creates a portable copy of NVDA  (without starting the new copy). Requires `--portable-path` to be specified. This option suppresses warnings when writing to non-empty directories and may overwrite files without warning.|
 |None |`--portable-path=PORTABLEPATH` |The path where a portable copy will be created|
+
+Just as you can silently install NVDA by passing the `--install-silent` command line option to NVDA, it can be silently uninstalled by passing the `/S` command to the uninstaller.
+
+NVDA's uninstaller is called `uninstall.exe` and resides under the NVDA installation directory, `%ProgramFiles(x86)%\nvda` on 64-bit Windows, or `%ProgramFiles%\nvda` on 32-bit Windows.
+
+The following are the command line options for NVDA's uninstaller:
+
+| Short |Long |Description|
+|---|---|---|
+|`/S` |None |Silently uninstall NVDA. |
 
 ### System Wide Parameters {#SystemWideParameters}
 

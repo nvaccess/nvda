@@ -73,8 +73,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [braille]
 	display = string(default=auto)
 	mode = option("followCursors", "speechOutput", default="followCursors")
-	translationTable = string(default=en-ueb-g1.ctb)
-	inputTable = string(default=en-ueb-g1.ctb)
+	translationTable = string(default=auto)
+	inputTable = string(default=auto)
 	expandAtCursor = boolean(default=true)
 	showCursor = boolean(default=true)
 	cursorBlink = boolean(default=true)
@@ -96,6 +96,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	focusContextPresentation = option("changedContext", "fill", "scroll", default="changedContext")
 	interruptSpeechWhileScrolling = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	speakOnRouting = boolean(default=false)
+	speakOnNavigatingByUnit = boolean(default=false)
 	showSelection = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	reportLiveRegions = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	fontFormattingDisplay = featureFlag(optionsEnum="FontFormattingBrailleModeFlag", behaviorOfDefault="LIBLOUIS")
@@ -293,6 +294,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	startupNotification = boolean(default=true)
 	allowUsageStats = boolean(default=false)
 	askedAllowUsageStats = boolean(default=false)
+	serverURL = string(default="")
 
 [inputComposition]
 	autoReportAllCandidates = boolean(default=True)
@@ -322,9 +324,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	language = string(default="")
 	autoRefresh = boolean(default=false)
 	autoRefreshInterval = integer(default=1500, min=100)
-
-[upgrade]
-	newLaptopKeyboardLayout = boolean(default=false)
 
 [editableText]
 	caretMoveTimeoutMs = integer(min=0, max=2000, default=100)

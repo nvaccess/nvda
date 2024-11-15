@@ -3655,6 +3655,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
+		description=_("Toggles on and off speaking when navigating by lines or paragraph with braille"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_toggleSpeakingOnNavigatingByUnit(self, gesture: inputCore.InputGesture):
+		toggleBooleanValue(
+			configSection="braille",
+			configKey="speakOnNavigatingByUnit",
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
+		)
+
+	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE,
@@ -4192,21 +4208,10 @@ class GlobalCommands(ScriptableObject):
 		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
 			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		obj: NVDAObject = ti.NVDAObjectAtStart
+		link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
-		if obj.role == controlTypes.role.Role.GRAPHIC and (
-			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
-		):
-			# In Firefox, graphics with a parent link also expose the parents link href value.
-			# In Chromium, the link href value must be fetched from the parent object. (#14779)
-			obj = obj.parent
-		if (
-			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
-			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
-		):
-			linkDestination = obj.value
-			if linkDestination is None:
+		if link:
+			if link.destination is None:
 				# Translators: Informs the user that the link has no destination
 				ui.message(_("Link has no apparent destination"))
 				return
@@ -4214,16 +4219,22 @@ class GlobalCommands(ScriptableObject):
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
+				text = link.displayText
+				if text is None:
+					# Translators: Title of the browseable message when requesting the destination of a graphical link.
+					text = _("Graphic")
 				ui.browseableMessage(
-					linkDestination,
+					link.destination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(name=obj.name),
-					closeButton=True,
-					copyButton=True,
+					title=_("Destination of: {name}").format(
+						name=text,
+						closeButton=True,
+						copyButton=True,
+					),
 				)
 			elif presses == 0:  # One press
-				ui.message(linkDestination)  # Speak the link
+				ui.message(link.destination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
 		else:
@@ -4753,7 +4764,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the volume of the other applications",
+			"Increases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageUp",
@@ -4764,7 +4775,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the volume of the other applications",
+			"Decreases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageDown",
@@ -4775,10 +4786,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles other applications volume adjuster status",
+			"Toggles application volume control on and off",
 		),
 		category=SCRCAT_AUDIO,
-		gesture=None,
 	)
 	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()
