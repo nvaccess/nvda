@@ -16,7 +16,7 @@ from gui.messageDialog import (
 	EscapeCode,
 	ReturnCode,
 	DialogType,
-	_messageBoxButtonStylesToMessageDialogButtons,
+	MessageBoxShim,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
@@ -369,7 +369,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertTrue(command.closesDialog)
 
 
-class Test_MessageBox_Shim(unittest.TestCase):
+class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
 		YES, NO, OK, CANCEL, HELP = wx.YES, wx.NO, wx.OK, wx.CANCEL, wx.HELP
 		outputToInputsMap = {
@@ -408,5 +408,5 @@ class Test_MessageBox_Shim(unittest.TestCase):
 				with self.subTest(flags=input):
 					self.assertCountEqual(
 						expectedOutput,
-						(button.id for button in _messageBoxButtonStylesToMessageDialogButtons(input)),
+						(button.id for button in MessageBoxShim._buttonStylesToButtons(input)),
 					)
