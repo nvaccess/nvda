@@ -4,7 +4,6 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-import sys
 import threading
 import time
 from typing import Any, NamedTuple, TypeAlias, Self
@@ -16,7 +15,7 @@ import gui
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from .guiHelper import SIPABCMeta
+from .guiHelper import SIPABCMeta, wxCallOnMain
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
@@ -749,33 +748,19 @@ class MessageBoxShim:
 		:raises Exception: Any exception raised by attempting to create a message box.
 		:return: See :fun:`wx.MessageBox`.
 		"""
-		if wx.IsMainThread():
-			self._messageBoxImpl(message, caption, style, parent)
-		else:
-			wx.CallAfter(self._messageBoxImpl, message, caption, style, parent)
-			self._event.wait()
-		try:
-			return self._result
-		except AttributeError:
-			# If event is True and result is undefined, exception must be an exception.
-			raise self._exception  # type: ignore
+		return wxCallOnMain(self._messageBoxImpl, message, caption, style, parent)
 
 	def _messageBoxImpl(self, message: str, caption: str, style: int, parent: wx.Window | None):
 		from gui import mainFrame
 
-		try:
-			dialog = MessageDialog(
-				parent=parent or mainFrame,
-				message=message,
-				title=caption,
-				dialogType=self._iconStylesToDialogType(style),
-				buttons=self._buttonStylesToButtons(style),
-			)
-			self._result = self._returnCodeToWxButtonCode(dialog.ShowModal())
-		except Exception:
-			self._exception = sys.exception
-		# Signal that we've returned.
-		self._event.set()
+		dialog = MessageDialog(
+			parent=parent or mainFrame,
+			message=message,
+			title=caption,
+			dialogType=self._iconStylesToDialogType(style),
+			buttons=self._buttonStylesToButtons(style),
+		)
+		return self._returnCodeToWxButtonCode(dialog.ShowModal())
 
 	@staticmethod
 	def _returnCodeToWxButtonCode(returnCode: ReturnCode) -> int:
