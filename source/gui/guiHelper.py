@@ -43,11 +43,15 @@ class myDialog(wx.Dialog):
 	...
 """
 
+from collections.abc import Callable
 from contextlib import contextmanager
+import sys
+import threading
 import weakref
 from typing import (
 	Generic,
 	Optional,
+	ParamSpec,
 	Type,
 	TypeVar,
 	Union,
@@ -458,3 +462,57 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 	pass
+
+
+class _WxCallOnMainResult:
+	__slots__ = ("result", "exception")
+
+
+# TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
+_WxCallOnMain_P = ParamSpec("_WxCallOnMain_P")
+_WxCallOnMain_T = TypeVar("_WxCallOnMain_T")
+
+
+def wxCallOnMain(
+	function: Callable[_WxCallOnMain_P, _WxCallOnMain_T],
+	*args: _WxCallOnMain_P.args,
+	**kwargs: _WxCallOnMain_P.kwargs,
+) -> _WxCallOnMain_T:
+	"""Call a non-thread-safe wx function in a thread-safe way.
+
+	Using this function is prefferable over calling :fun:`wx.CallAfter` directly when you care about the return time value of the function.
+
+	:param function: Callable to call on the main GUI thread.
+		If this thread is the GUI thread, the function will be called immediately.
+		Otherwise, it will be scheduled to be called on the GUI thread, and this thread will wait until it returns.
+	:return: Return value from calling the function with given positional and keyword arguments.
+	"""
+	result = _WxCallOnMainResult()
+	event = threading.Event()
+
+	def functionWrapper():
+		print("In wrapper.")
+		try:
+			print("Calling function.")
+			result.result = function(*args, **kwargs)
+		except Exception:
+			print("Got an exception.")
+			result.exception = sys.exception
+		print("Set event.")
+		event.set()
+		print("Out of wrapper.")
+
+	if wx.IsMainThread():
+		print("On main thread, calling immediately.")
+		functionWrapper()
+	else:
+		print("In background, using call after.")
+		wx.CallAfter(functionWrapper)
+		print("Waiting...")
+		event.wait()
+		print("Done waiting.")
+	try:
+		return result.result
+	except AttributeError:
+		# If result is undefined, exception must be defined.
+		raise result.exception  # type: ignore
