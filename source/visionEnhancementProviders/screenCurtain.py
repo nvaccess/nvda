@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
@@ -10,7 +10,7 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 import os
 from vision import providerBase
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
-from ctypes.wintypes import BOOL
+from ctypes.wintypes import BOOL, HWND, RECT
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
@@ -51,14 +51,29 @@ class Magnification:
 	# Set full screen color effect
 	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
+	MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
+		("MagSetFullscreenColorEffect", _magnification),
+		_MagSetFullscreenColorEffectArgTypes,
+	)
+	MagSetFullscreenColorEffect.errcheck = _errCheck
 
 	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
+	MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
+		("MagGetFullscreenColorEffect", _magnification),
+		_MagGetFullscreenColorEffectArgTypes,
+	)
+	MagGetFullscreenColorEffect.errcheck = _errCheck
 
 	# show system cursor
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
 	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
+	MagShowSystemCursor = _MagShowSystemCursorFuncType(
+		("MagShowSystemCursor", _magnification),
+		_MagShowSystemCursorArgTypes,
+	)
+	MagShowSystemCursor.errcheck = _errCheck
 
 	# initialize
 	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
@@ -70,28 +85,22 @@ class Magnification:
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
 
-	# These magnification functions are not available on versions of Windows prior to Windows 8,
-	# and therefore looking them up from the magnification library will raise an AttributeError.
-	try:
-		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-			("MagSetFullscreenColorEffect", _magnification),
-			_MagSetFullscreenColorEffectArgTypes,
-		)
-		MagSetFullscreenColorEffect.errcheck = _errCheck
-		MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-			("MagGetFullscreenColorEffect", _magnification),
-			_MagGetFullscreenColorEffectArgTypes,
-		)
-		MagGetFullscreenColorEffect.errcheck = _errCheck
-		MagShowSystemCursor = _MagShowSystemCursorFuncType(
-			("MagShowSystemCursor", _magnification),
-			_MagShowSystemCursorArgTypes,
-		)
-		MagShowSystemCursor.errcheck = _errCheck
-	except AttributeError:
-		MagSetFullscreenColorEffect = None
-		MagGetFullscreenColorEffect = None
-		MagShowSystemCursor = None
+	_MagSetWindowSourceFuncType = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))
+	_MagSetWindowSourceArgTypes = ((1, "hwnd"), (1, "rect"))
+	MagSetWindowSource = _MagSetWindowSourceFuncType(
+		("MagSetWindowSource", _magnification),
+		_MagSetWindowSourceArgTypes,
+	)
+	MagSetWindowSource.errcheck = _errCheck
+
+	# Create transformation window
+	_MagGetInputTransformFuncType = WINFUNCTYPE(BOOL, POINTER(RECT), POINTER(RECT))
+	_MagGetInputTransformArgTypes = ((1, "src"), (2, "dest"))
+	MagGetInputTransform = _MagGetInputTransformFuncType(
+		("MagGetInputTransform", _magnification),
+		_MagGetInputTransformArgTypes,
+	)
+	MagGetInputTransform.errcheck = _errCheck
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
