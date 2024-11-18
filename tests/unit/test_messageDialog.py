@@ -16,7 +16,7 @@ from gui.messageDialog import (
 	EscapeCode,
 	ReturnCode,
 	DialogType,
-	MessageBoxShim,
+	_MessageBoxButtonStylesToMessageDialogButtons,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
@@ -408,5 +408,5 @@ class Test_MessageBoxShim(unittest.TestCase):
 				with self.subTest(flags=input):
 					self.assertCountEqual(
 						expectedOutput,
-						(button.id for button in MessageBoxShim._buttonStylesToButtons(input)),
+						(button.id for button in _MessageBoxButtonStylesToMessageDialogButtons(input)),
 					)

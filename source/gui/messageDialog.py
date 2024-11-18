@@ -4,7 +4,6 @@
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
 from enum import Enum, IntEnum, auto
-import threading
 import time
 from typing import Any, NamedTuple, TypeAlias, Self
 import winsound
@@ -15,7 +14,7 @@ import gui
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from .guiHelper import SIPABCMeta, wxCallOnMain
+from .guiHelper import SIPABCMeta
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
@@ -728,113 +727,101 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 
-class MessageBoxShim:
-	"""Shim between :fun:`gui.message.messageBox` and :class:`MessageDialog`."""
+def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | None):
+	"""Display a message box with the given message, caption, style, and parent window.
 
-	def __init__(self):
-		self._event = threading.Event()
+	Shim between :fun:`gui.message.messageBox` and :class:`MessageDialog`.
+	Must be called from the GUI thread.
 
-	def messageBox(self, message: str, caption: str, style: int, parent: wx.Window | None):
-		"""Display a message box with the given message, caption, style, and parent window.
+	:param message: The message to display.
+	:param caption: Title of the message box.
+	:param style: See :fun:`wx.MessageBox`.
+	:param parent: Parent of the dialog. If None, `gui.mainFrame` will be used.
+	:raises Exception: Any exception raised by attempting to create a message box.
+	:return: See :fun:`wx.MessageBox`.
+	"""
+	dialog = MessageDialog(
+		parent=parent,
+		message=message,
+		title=caption,
+		dialogType=_messageBoxIconStylesToMessageDialogType(style),
+		buttons=_MessageBoxButtonStylesToMessageDialogButtons(style),
+	)
+	return _messageDialogReturnCodeToMessageBoxReturnCode(dialog.ShowModal())
 
-		If called from the main thread, the message box is directly shown.
-		If called from a different thread, the message box is scheduled to be shown on the main thread, and we wait for it to complete.
-		In either case, the return value of the message box is returned.
 
-		:param message: The message to display.
-		:param caption: Title of the message box.
-		:param style: See :fun:`wx.MessageBox`.
-		:param parent: Parent of the dialog. If None, `gui.mainFrame` will be used.
-		:raises Exception: Any exception raised by attempting to create a message box.
-		:return: See :fun:`wx.MessageBox`.
-		"""
-		return wxCallOnMain(self._messageBoxImpl, message, caption, style, parent)
+def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> int:
+	"""Map from an instance of :class:`ReturnCode` to an int as returned by :fun:`wx.MessageBox`.
 
-	def _messageBoxImpl(self, message: str, caption: str, style: int, parent: wx.Window | None):
-		from gui import mainFrame
+	Note that only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.`
 
-		dialog = MessageDialog(
-			parent=parent or mainFrame,
-			message=message,
-			title=caption,
-			dialogType=self._iconStylesToDialogType(style),
-			buttons=self._buttonStylesToButtons(style),
+	:param returnCode: Return from :class:`MessageDialog`.
+	:raises ValueError: If the return code is not supported by :fun:`wx.MessageBox`.
+	:return: Integer as would be returned by :fun:`wx.MessageBox`.
+	"""
+	match returnCode:
+		case ReturnCode.YES:
+			return wx.YES
+		case ReturnCode.NO:
+			return wx.NO
+		case ReturnCode.CANCEL:
+			return wx.CANCEL
+		case ReturnCode.OK:
+			return wx.OK
+		case ReturnCode.HELP:
+			return wx.HELP
+		case _:
+			raise ValueError(f"Unsupported return for wx.MessageBox: {returnCode}")
+
+
+def _messageBoxIconStylesToMessageDialogType(flags: int) -> DialogType:
+	"""Map from a bitmask of styles as expected by :fun:`wx.MessageBox` to a :Class:`DialogType`.
+
+	Note that this may not be a one-to-one correspondance, as not all icon styles supported by :fun:`wx.MessageBox` are associated with a :class:`DialogType`.
+
+	:param flags: Style flags.
+	:return: Corresponding dialog type.
+	"""
+	# Order of precedence seems to be none, then error, then warning.
+	if flags & wx.ICON_NONE:
+		return DialogType.STANDARD
+	elif flags & wx.ICON_ERROR:
+		return DialogType.ERROR
+	elif flags & wx.ICON_WARNING:
+		return DialogType.WARNING
+	else:
+		return DialogType.STANDARD
+
+
+def _MessageBoxButtonStylesToMessageDialogButtons(flags: int) -> tuple[Button, ...]:
+	"""Map from a bitmask of styles as expected by :fun:`wx.MessageBox` to a list of :class:`Button`s.
+
+	Note that :fun:`wx.MessageBox` only supports YES, NO, OK, CANCEL and HELP buttons, so this function only supports those buttons too.
+	Providing other buttons will fail silently.
+
+	Note that providing `wx.CANCEL_DEFAULT` without `wx.CANCEL`, or `wx.NO_DEFAULT` without `wx.NO` is invalid.
+	Wx will raise an assertion error about this, but wxPython will still create the dialog.
+	Providing these invalid combinations to this function fails silently.
+
+	This function will always return a tuple of at least one button, typically an OK button.
+
+	:param flags: Style flags.
+	:return: Tuple of :class:`Button` instances.
+	"""
+	buttons: list[Button] = []
+	if flags & (wx.YES | wx.NO):
+		# Wx will add yes and no buttons, even if only one of wx.YES or wx.NO is given.
+		buttons.extend(
+			(DefaultButton.YES, DefaultButton.NO._replace(defaultFocus=bool(flags & wx.NO_DEFAULT))),
 		)
-		return self._returnCodeToWxButtonCode(dialog.ShowModal())
-
-	@staticmethod
-	def _returnCodeToWxButtonCode(returnCode: ReturnCode) -> int:
-		"""Map from an instance of :class:`ReturnCode` to an int as returned by :fun:`wx.MessageBox`.
-
-		Note that only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.`
-
-		:param returnCode: Return from :class:`MessageDialog`.
-		:raises ValueError: If the return code is not supported by :fun:`wx.MessageBox`.
-		:return: Integer as would be returned by :fun:`wx.MessageBox`.
-		"""
-		match returnCode:
-			case ReturnCode.YES:
-				return wx.YES
-			case ReturnCode.NO:
-				return wx.NO
-			case ReturnCode.CANCEL:
-				return wx.CANCEL
-			case ReturnCode.OK:
-				return wx.OK
-			case ReturnCode.HELP:
-				return wx.HELP
-			case _:
-				raise ValueError(f"Unsupported return for wx.MessageBox: {returnCode}")
-
-	@staticmethod
-	def _iconStylesToDialogType(flags: int) -> DialogType:
-		"""Map from a bitmask of styles as expected by :fun:`wx.MessageBox` to a :Class:`DialogType`.
-
-		Note that this may not be a one-to-one correspondance, as not all icon styles supported by :fun:`wx.MessageBox` are associated with a :class:`DialogType`.
-
-		:param flags: Style flags.
-		:return: Corresponding dialog type.
-		"""
-		# Order of precedence seems to be none, then error, then warning.
-		if flags & wx.ICON_NONE:
-			return DialogType.STANDARD
-		elif flags & wx.ICON_ERROR:
-			return DialogType.ERROR
-		elif flags & wx.ICON_WARNING:
-			return DialogType.WARNING
-		else:
-			return DialogType.STANDARD
-
-	@staticmethod
-	def _buttonStylesToButtons(flags: int) -> tuple[Button, ...]:
-		"""Map from a bitmask of styles as expected by :fun:`wx.MessageBox` to a list of :class:`Button`s.
-
-		Note that :fun:`wx.MessageBox` only supports YES, NO, OK, CANCEL and HELP buttons, so this function only supports those buttons too.
-		Providing other buttons will fail silently.
-
-		Note that providing `wx.CANCEL_DEFAULT` without `wx.CANCEL`, or `wx.NO_DEFAULT` without `wx.NO` is invalid.
-		Wx will raise an assertion error about this, but wxPython will still create the dialog.
-		Providing these invalid combinations to this function fails silently.
-
-		This function will always return a tuple of at least one button, typically an OK button.
-
-		:param flags: Style flags.
-		:return: Tuple of :class:`Button` instances.
-		"""
-		buttons: list[Button] = []
-		if flags & (wx.YES | wx.NO):
-			# Wx will add yes and no buttons, even if only one of wx.YES or wx.NO is given.
-			buttons.extend(
-				(DefaultButton.YES, DefaultButton.NO._replace(defaultFocus=bool(flags & wx.NO_DEFAULT))),
-			)
-		else:
-			buttons.append(DefaultButton.OK)
-		if flags & wx.CANCEL:
-			buttons.append(
-				DefaultButton.CANCEL._replace(
-					defaultFocus=(flags & wx.CANCEL_DEFAULT) & ~(flags & wx.NO & wx.NO_DEFAULT),
-				),
-			)
-		if flags & wx.HELP:
-			buttons.append(DefaultButton.HELP)
-		return tuple(buttons)
+	else:
+		buttons.append(DefaultButton.OK)
+	if flags & wx.CANCEL:
+		buttons.append(
+			DefaultButton.CANCEL._replace(
+				defaultFocus=(flags & wx.CANCEL_DEFAULT) & ~(flags & wx.NO & wx.NO_DEFAULT),
+			),
+		)
+	if flags & wx.HELP:
+		buttons.append(DefaultButton.HELP)
+	return tuple(buttons)
