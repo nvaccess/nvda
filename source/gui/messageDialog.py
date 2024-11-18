@@ -5,7 +5,7 @@
 
 from enum import Enum, IntEnum, auto
 import time
-from typing import Any, NamedTuple, TypeAlias, Self
+from typing import Any, Literal, NamedTuple, TypeAlias, Self
 import winsound
 
 import wx
@@ -14,7 +14,7 @@ import gui
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from .guiHelper import SIPABCMeta
+from .guiHelper import SIPABCMeta, wxCallOnMain
 from gui import guiHelper
 from functools import partialmethod, singledispatchmethod
 from collections import deque
@@ -522,6 +522,90 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				dialog.Raise()
 		if lastDialog:
 			lastDialog.SetFocus()
+
+	@classmethod
+	def alert(
+		cls,
+		message: str,
+		caption: str = wx.MessageBoxCaptionStr,
+		parent: wx.Window | None = None,
+		*,
+		okLabel: str | None = None,
+	):
+		"""Display a blocking dialog with an OK button.
+
+		:param message: The message to be displayed in the alert dialog.
+		:param caption: The caption of the alert dialog, defaults to wx.MessageBoxCaptionStr.
+		:param parent: The parent window of the alert dialog, defaults to None.
+		:param okLabel: Override for the label of the OK button, defaults to None.
+		"""
+
+		def impl():
+			cls(parent, message, caption, buttons=None).addOkButton(label=okLabel).ShowModal()
+
+		wxCallOnMain(impl)
+
+	@classmethod
+	def confirm(
+		cls,
+		message,
+		caption=wx.MessageBoxCaptionStr,
+		parent=None,
+		*,
+		okLabel=None,
+		cancelLabel=None,
+	) -> Literal[ReturnCode.OK, ReturnCode.CANCEL]:
+		"""Display a confirmation dialog with OK and Cancel buttons.
+
+		:param message: The message to be displayed in the dialog.
+		:param caption: The caption of the dialog window, defaults to wx.MessageBoxCaptionStr.
+		:param parent: The parent window for the dialog, defaults to None.
+		:param okLabel: Override for the label of the OK button, defaults to None.
+		:param cancelLabel: Override for the label of the Cancel button, defaults to None.
+		:return: ReturnCode.OK if OK is pressed, ReturnCode.CANCEL if Cancel is pressed.
+		"""
+
+		def impl():
+			return (
+				cls(parent, message, caption, buttons=None)
+				.addOkButton(label=okLabel)
+				.addCancelButton(label=cancelLabel)
+				.ShowModal()
+			)
+
+		return wxCallOnMain(impl)  # type: ignore
+
+	@classmethod
+	def ask(
+		cls,
+		message,
+		caption=wx.MessageBoxCaptionStr,
+		parent=None,
+		yesLabel=None,
+		noLabel=None,
+		cancelLabel=None,
+	) -> Literal[ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL]:
+		"""Display a query dialog with Yes, No, and Cancel buttons.
+
+		:param message: The message to be displayed in the dialog.
+		:param caption: The title of the dialog window, defaults to wx.MessageBoxCaptionStr.
+		:param parent: The parent window for the dialog, defaults to None.
+		:param yesLabel: Override for the label of the Yes button, defaults to None.
+		:param noLabel: Override for the label of the No button, defaults to None.
+		:param cancelLabel: Override for the label of the Cancel button, defaults to None.
+		:return: ReturnCode.YES, ReturnCode.NO or ReturnCode.CANCEL, according to the user's action.
+		"""
+
+		def impl():
+			return (
+				cls(parent, message, caption, buttons=None)
+				.addYesButton(label=yesLabel)
+				.addNoButton(label=noLabel)
+				.addCancelButton(label=cancelLabel)
+				.ShowModal()
+			)
+
+		return wxCallOnMain(impl)  # type: ignore
 
 	# endregion
 
