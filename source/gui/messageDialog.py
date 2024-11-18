@@ -213,6 +213,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
 	):
+		if not wx.IsMainThread():
+			raise RuntimeError("Message dialogs can only be created from the GUI thread.")
 		self.helpId = helpId
 		super().__init__(parent, title=title)
 		self.EnableCloseButton(False)
