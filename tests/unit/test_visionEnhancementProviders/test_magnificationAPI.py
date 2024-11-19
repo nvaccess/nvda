@@ -29,7 +29,7 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 					self.assertEqual(
 						TRANSFORM_BLACK.transform[i][j],
 						resultEffect.transform[i][j],
-						msg=f"i={i}, j={j}, resultEffect={resultEffect}"
+						msg=f"i={i}, j={j}, resultEffect={resultEffect}",
 					)
 
 	def test_getDefaultIdentityFullscreenColorEffect(self):
@@ -41,7 +41,7 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 					self.assertEqual(
 						int(i == j),
 						resultEffect.transform[i][j],
-						msg=f"i={i}, j={j}, resultEffect={resultEffect}"
+						msg=f"i={i}, j={j}, resultEffect={resultEffect}",
 					)
 
 
