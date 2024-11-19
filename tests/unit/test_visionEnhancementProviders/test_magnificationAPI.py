@@ -10,36 +10,42 @@ import unittest
 from visionEnhancementProviders.screenCurtain import Magnification, TRANSFORM_BLACK
 
 
-class Test_ScreenCurtain(unittest.TestCase):
+class _Test_MagnificationAPI(unittest.TestCase):
 	def setUp(self):
 		self.assertTrue(Magnification.MagInitialize())
 
 	def tearDown(self):
 		self.assertTrue(Magnification.MagUninitialize())
 
+
+class Test_ScreenCurtain(_Test_MagnificationAPI):
 	def test_setAndConfirmBlackFullscreenColorEffect(self):
 		result = Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 		self.assertTrue(result)
 		resultEffect = Magnification.MagGetFullscreenColorEffect()
 		for i in range(5):
 			for j in range(5):
-				self.assertEqual(TRANSFORM_BLACK.transform[i][j], resultEffect.transform[i][j])
+				with self.subTest(i=i, j=j):
+					self.assertEqual(
+						TRANSFORM_BLACK.transform[i][j],
+						resultEffect.transform[i][j],
+						msg=f"i={i}, j={j}, resultEffect={resultEffect}"
+					)
 
 	def test_getDefaultIdentityFullscreenColorEffect(self):
 		resultEffect = Magnification.MagGetFullscreenColorEffect()
 		for i in range(5):
 			for j in range(5):
-				# The transform matrix should be the identity matrix
-				self.assertEqual(int(i == j), resultEffect.transform[i][j], f"i={i}, j={j}")
+				with self.subTest(i=i, j=j):
+					# The transform matrix should be the identity matrix
+					self.assertEqual(
+						int(i == j),
+						resultEffect.transform[i][j],
+						msg=f"i={i}, j={j}, resultEffect={resultEffect}"
+					)
 
 
-class Test_Mouse(unittest.TestCase):
-	def setUp(self):
-		self.assertTrue(Magnification.MagInitialize())
-
-	def tearDown(self):
-		self.assertTrue(Magnification.MagUninitialize())
-
+class Test_Mouse(_Test_MagnificationAPI):
 	def test_MagShowSystemCursor(self):
 		result = Magnification.MagShowSystemCursor(True)
 		self.assertTrue(result)
