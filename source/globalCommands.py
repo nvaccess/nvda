@@ -123,6 +123,8 @@ SCRCAT_AUDIO = _("Audio")
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
 NO_SETTINGS_MSG = _("No settings")
+# Translators: Reported when there is no selection
+NO_SELECTION_MESSAGE = _("No selection")
 
 
 def toggleBooleanValue(
@@ -388,14 +390,9 @@ class GlobalCommands(ScriptableObject):
 			obj = treeInterceptor
 		try:
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			return info.copy()
 		except (RuntimeError, NotImplementedError):
-			info = None
-		if info is None or info.isCollapsed:
-			# Translators: The message reported when there is no selection
-			ui.message(_("No selection"))
 			return None
-		selection = info.copy()
-		return selection
 
 	@script(
 		description=_(
@@ -2248,7 +2245,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_startOfSelection(self, gesture: inputCore.InputGesture):
 		info = self._getSelection()
-		if info is None:
+		if info is None or info.isCollapsed:
+			ui.message(NO_SELECTION_MESSAGE)
 			return
 		info.collapse()
 
@@ -2275,7 +2273,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_review_endOfSelection(self, gesture: inputCore.InputGesture):
 		info = self._getSelection()
-		if info is None:
+		if info is None or info.isCollapsed:
+			ui.message(NO_SELECTION_MESSAGE)
 			return
 		info.move(textInfos.UNIT_CHARACTER, -1, "end")
 		info.collapse(end=True)
