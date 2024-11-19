@@ -2211,6 +2211,35 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		description=_(
+			# Translators: Input help mode message for move review cursor to end of current line command.
+			"Moves the review cursor to the last character of the line "
+			"where it is situated in the current navigator object and speaks it",
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gestures=("kb:shift+numpad3", "kb(laptop):NVDA+end"),
+	)
+	def script_review_endOfLine(self, gesture: inputCore.InputGesture):
+		info = api.getReviewPosition().copy()
+		info.expand(textInfos.UNIT_LINE)
+		info.collapse(end=True)
+		info.move(textInfos.UNIT_CHARACTER, -1)
+
+		# This script is available on the lock screen via getSafeScripts, as such
+		# ensure the review position does not contain secure information
+		# before announcing this object
+		if api.setReviewPosition(info):
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(
+				info,
+				unit=textInfos.UNIT_CHARACTER,
+				reason=controlTypes.OutputReason.CARET,
+			)
+		else:
+			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+			return
+
+	@script(
+		description=_(
 			# Translators: Input help mode message for move review cursor to start of selection command.
 			"Moves the review cursor to the first character of the selection, and speaks it",
 		),
