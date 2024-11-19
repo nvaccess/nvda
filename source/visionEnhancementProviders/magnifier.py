@@ -64,7 +64,9 @@ class HostWindow(CustomWindow):
 	@property
 	def targetRect(self) -> RectLTRB:
 		# Top quarter of screen
-		return RectLTRB(0, 0, _displayTracking._orientationState.width, _displayTracking._orientationState.height / 4)
+		return RectLTRB(
+			0, 0, _displayTracking._orientationState.width, _displayTracking._orientationState.height / 4
+		)
 
 	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
 		log.debug(f"received window proc message: {msg}")
