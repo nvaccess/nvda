@@ -390,7 +390,7 @@ class GlobalCommands(ScriptableObject):
 			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
 		except (RuntimeError, NotImplementedError):
 			info = None
-		if not info or info.isCollapsed:
+		if info is None or info.isCollapsed:
 			# Translators: The message reported when there is no selection
 			ui.message(_("No selection"))
 			return None
