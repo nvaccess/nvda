@@ -85,8 +85,6 @@ class Magnification:
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
 
-	
-
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,
 # making it black.

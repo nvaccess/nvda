@@ -7,10 +7,10 @@
 
 import unittest
 
-from visionEnhancementProviders.screenCurtain import Magnification, MAGCOLOREFFECT, TRANSFORM_BLACK
+from visionEnhancementProviders.screenCurtain import Magnification, TRANSFORM_BLACK
+
 
 class Test_ScreenCurtain(unittest.TestCase):
-
 	def setUp(self):
 		self.assertTrue(Magnification.MagInitialize())
 
@@ -34,7 +34,6 @@ class Test_ScreenCurtain(unittest.TestCase):
 
 
 class Test_Mouse(unittest.TestCase):
-
 	def setUp(self):
 		self.assertTrue(Magnification.MagInitialize())
 
@@ -48,4 +47,3 @@ class Test_Mouse(unittest.TestCase):
 	def test_MagHideSystemCursor(self):
 		result = Magnification.MagShowSystemCursor(False)
 		self.assertTrue(result)
-
