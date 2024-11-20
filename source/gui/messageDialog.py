@@ -463,8 +463,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		if not show:
 			return self.Hide()
-		if not self.GetMainButtonIds():
-			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
+		self._assertShowable()
 		self._realize_layout()
 		log.debug("Showing")
 		ret = super().Show(show)
@@ -476,10 +475,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def ShowModal(self) -> ReturnCode:
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
-		if not wx.IsMainThread():
-			raise RuntimeError("Message dialogs can only be shown modally from the main thread.")
-		if not self.GetMainButtonIds():
-			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
+		self._assertShowable()
 		self._realize_layout()
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
@@ -638,6 +634,21 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 	# region Internal API
+	def _assertShowable(self, *, checkMainThread: bool = True, checkButtons: bool = True):
+		"""Checks that must pass in order to show a Message Dialog.
+
+		If any of the specified tests fails, an appropriate exception will be raised.
+
+		:param checkMainThread: Whether to check that we're running on the GUI thread, defaults to True
+		:param checkButtons: Whether to check there is at least one command registered, defaults to True
+		:raises RuntimeError: If the main thread check fails.
+		:raises RuntimeError: If the button check fails.
+		"""
+		if checkMainThread and not wx.IsMainThread():
+			raise RuntimeError("Message dialogs can only be shown from the main thread.")
+		if checkButtons and not self.GetMainButtonIds():
+			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
+
 	def _realize_layout(self) -> None:
 		if self._isLayoutFullyRealized:
 			return
