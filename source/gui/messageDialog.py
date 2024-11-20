@@ -203,6 +203,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	"""
 
 	# region Constructors
+	def __new__(cls, *args, **kwargs) -> Self:
+		if not wx.IsMainThread():
+			raise RuntimeError("Message dialogs can only be created from the GUI thread.")
+		return super().__new__(cls, *args, **kwargs)
+
 	def __init__(
 		self,
 		parent: wx.Window | None,
@@ -214,7 +219,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		helpId: str = "",
 	):
 		if not wx.IsMainThread():
-			raise RuntimeError("Message dialogs can only be created from the GUI thread.")
+			raise RuntimeError("Message dialogs can only be initialised from the GUI thread.")
 		self.helpId = helpId
 		super().__init__(parent, title=title)
 		self.EnableCloseButton(False)
@@ -471,6 +476,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def ShowModal(self) -> ReturnCode:
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
+		if not wx.IsMainThread():
+			raise RuntimeError("Message dialogs can only be shown modally from the main thread.")
 		if not self.GetMainButtonIds():
 			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
 		self._realize_layout()
