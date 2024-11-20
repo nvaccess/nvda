@@ -25,7 +25,6 @@ from gui import messageDialog
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
-	contextHelp,
 )
 import winUser
 import winsound
@@ -416,7 +415,6 @@ class LegasyMessageDialog(DPIScaledDialog):
 
 
 class _ContinueCancelDialog(
-	contextHelp.ContextHelpMixin,
 	MessageDialog,
 ):
 	"""
