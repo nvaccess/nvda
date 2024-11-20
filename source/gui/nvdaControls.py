@@ -303,6 +303,9 @@ class MessageDialog(messageDialog.MessageDialog):
 			buttons=None,
 		)
 
+	def _assertShowable(self, *, checkButtons: bool = False, **kwargs):
+		return super()._assertShowable(checkButtons=checkButtons, **kwargs)
+
 
 class LegasyMessageDialog(DPIScaledDialog):
 	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
