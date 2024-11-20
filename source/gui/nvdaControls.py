@@ -21,6 +21,7 @@ from config.featureFlag import (
 	FeatureFlag,
 	FlagValueEnum as FeatureFlagEnumT,
 )
+from gui import messageDialog
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
@@ -270,7 +271,41 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 
-class MessageDialog(DPIScaledDialog):
+class MessageDialog(messageDialog.MessageDialog):
+	"""Adapter around messageDialog.MessageDialog for compatibility."""
+
+	# Dialog types currently supported
+	DIALOG_TYPE_STANDARD = 1
+	DIALOG_TYPE_WARNING = 2
+	DIALOG_TYPE_ERROR = 3
+
+	@staticmethod
+	def _legasyDialogTypeToDialogType(dialogType: int) -> messageDialog.DialogType:
+		match dialogType:
+			case MessageDialog.DIALOG_TYPE_ERROR:
+				return messageDialog.DialogType.ERROR
+			case MessageDialog.DIALOG_TYPE_WARNING:
+				return messageDialog.DialogType.WARNING
+			case _:
+				return messageDialog.DialogType.STANDARD
+
+	def __init__(
+		self,
+		parent: wx.Window | None,
+		title: str,
+		message: str,
+		dialogType: int = DIALOG_TYPE_STANDARD,
+	):
+		super().__init__(
+			parent,
+			message=message,
+			title=title,
+			dialogType=self._legasyDialogTypeToDialogType(dialogType),
+			buttons=None,
+		)
+
+
+class LegasyMessageDialog(DPIScaledDialog):
 	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
 	buttons and behaviour.
 	"""
