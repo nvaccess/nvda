@@ -11,6 +11,7 @@ from typing import (
 	OrderedDict,
 	Type,
 )
+import warnings
 
 import wx
 from wx.lib import scrolledpanel
@@ -273,6 +274,10 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 class MessageDialog(messageDialog.MessageDialog):
 	"""Adapter around messageDialog.MessageDialog for compatibility."""
 
+	# We don't want the new message dialog's guard rails, as they may be incompatible with old code
+	_FAIL_ON_NO_BUTTONS = False
+	_FAIL_ON_NONMAIN_THREAD = False
+
 	# Dialog types currently supported
 	DIALOG_TYPE_STANDARD = 1
 	DIALOG_TYPE_WARNING = 2
@@ -287,6 +292,13 @@ class MessageDialog(messageDialog.MessageDialog):
 				return messageDialog.DialogType.WARNING
 			case _:
 				return messageDialog.DialogType.STANDARD
+
+	def __new__(cls, *args, **kwargs):
+		warnings.warn(
+			"gui.nvdaControls.MessageDialog is deprecated. Use gui.messageDialog.MessageDialog instead.",
+			DeprecationWarning,
+		)
+		return super().__new__(cls, *args, **kwargs)
 
 	def __init__(
 		self,
@@ -303,8 +315,9 @@ class MessageDialog(messageDialog.MessageDialog):
 			buttons=None,
 		)
 
-	def _assertShowable(self, *, checkButtons: bool = False, **kwargs):
-		return super()._assertShowable(checkButtons=checkButtons, **kwargs)
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
+		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
+		self.addOkCancelButtons()
 
 
 class LegasyMessageDialog(DPIScaledDialog):
