@@ -201,11 +201,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	When programatically closing non-blocking instances or focusing blocking instances, this should operate like a stack (I.E. LIFO behaviour).
 	Random access still needs to be supported for the case of non-modal dialogs being closed out of order.
 	"""
+	_FAIL_ON_NONMAIN_THREAD = True
+	_FAIL_ON_NO_BUTTONS = True
 
 	# region Constructors
 	def __new__(cls, *args, **kwargs) -> Self:
-		if not wx.IsMainThread():
-			raise RuntimeError("Message dialogs can only be created from the GUI thread.")
+		cls._checkMainThread()
 		return super().__new__(cls, *args, **kwargs)
 
 	def __init__(
@@ -218,8 +219,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
 	):
-		if not wx.IsMainThread():
-			raise RuntimeError("Message dialogs can only be initialised from the GUI thread.")
+		self._checkMainThread()
 		self.helpId = helpId
 		super().__init__(parent, title=title)
 		self.EnableCloseButton(False)
@@ -463,7 +463,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		if not show:
 			return self.Hide()
-		self._assertShowable()
+		self._checkShowable()
 		self._realize_layout()
 		log.debug("Showing")
 		ret = super().Show(show)
@@ -475,7 +475,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	def ShowModal(self) -> ReturnCode:
 		"""Show a blocking dialog.
 		Attach buttons with button handlers"""
-		self._assertShowable()
+		self._checkShowable()
 		self._realize_layout()
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
@@ -634,7 +634,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# endregion
 
 	# region Internal API
-	def _assertShowable(self, *, checkMainThread: bool = True, checkButtons: bool = True):
+	def _checkShowable(self, *, checkMainThread: bool | None = None, checkButtons: bool | None = None):
 		"""Checks that must pass in order to show a Message Dialog.
 
 		If any of the specified tests fails, an appropriate exception will be raised.
@@ -644,10 +644,21 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:raises RuntimeError: If the main thread check fails.
 		:raises RuntimeError: If the button check fails.
 		"""
-		if checkMainThread and not wx.IsMainThread():
-			raise RuntimeError("Message dialogs can only be shown from the main thread.")
-		if checkButtons and not self.GetMainButtonIds():
+		self._checkMainThread(checkMainThread)
+		self._checkHasButtons(checkButtons)
+
+	def _checkHasButtons(self, check: bool | None = None):
+		if check is None:
+			check = self._FAIL_ON_NO_BUTTONS
+		if check and not self.GetMainButtonIds():
 			raise RuntimeError("MessageDialogs cannot be shown without buttons.")
+
+	@classmethod
+	def _checkMainThread(cls, check: bool | None = None):
+		if check is None:
+			check = cls._FAIL_ON_NONMAIN_THREAD
+		if check and not wx.IsMainThread():
+			raise RuntimeError("Message dialogs can only be used from the main thread.")
 
 	def _realize_layout(self) -> None:
 		if self._isLayoutFullyRealized:
