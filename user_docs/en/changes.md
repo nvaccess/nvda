@@ -67,6 +67,8 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
 * When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
 * Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)
+* In Notepad and other UIA documents on Windows 11, if the last line is empty, the `braille next line command` will move the cursor to the last line.
+In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, @nvdaes)
 
 ### Changes for Developers
 
