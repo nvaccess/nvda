@@ -295,9 +295,9 @@ class WdCharacterCase(DisplayStringIntEnum):
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.NO_CASE: _("No case"),
 			# Translators: a Microsoft Word character case type
-			WdCharacterCase.LOWER_CASE: _("Lowercase"),
+			WdCharacterCase.LOWER_CASE: _("lowercase"),
 			# Translators: a Microsoft Word character case type
-			WdCharacterCase.UPPER_CASE: _("Uppercase"),
+			WdCharacterCase.UPPER_CASE: _("UUPPERCASE"),
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.TITLE_WORD: _("Each word capitalized"),
 			# Translators: a Microsoft Word character case type
