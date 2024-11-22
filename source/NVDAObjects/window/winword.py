@@ -1745,18 +1745,18 @@ class WordDocument(Window):
 		else:
 			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
 			ui.message(_("Caps off"))
-	
+
 	@script(gesture="kb:shift+f3")
 	def script_changeCase(self, gesture):
 		if (
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
 			# or its within Windows Defender Application Guard.
-			not self.WinwordSelectionObject
-			or scriptHandler.isScriptWaiting()
+			not self.WinwordSelectionObject or scriptHandler.isScriptWaiting()
 		):
 			# Just let the gesture through and don't report anything.
 			return gesture.send()
+
 		def action():
 			gesture.send()
 			# The object model for the "case" property is not fully reliable when using switch case command. During
@@ -1764,6 +1764,7 @@ class WordDocument(Window):
 			# Outlook. Thus we artificially add an empirical delay after the gesture has been send and before the
 			# first check.
 			time.sleep(0.15)
+
 		val = self._WaitForValueChangeForAction(
 			action=action,
 			fetcher=lambda: self.WinwordSelectionObject.Range.Case,
