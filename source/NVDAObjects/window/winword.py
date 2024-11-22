@@ -1752,7 +1752,9 @@ class WordDocument(Window):
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
 			# or its within Windows Defender Application Guard.
-			not self.WinwordSelectionObject or scriptHandler.isScriptWaiting()
+			not self.WinwordSelectionObject 
+			# Or we do not want to apply the delay due in case of multipe repetition of the script.
+			or scriptHandler.isScriptWaiting()
 		):
 			# Just let the gesture through and don't report anything.
 			return gesture.send()
