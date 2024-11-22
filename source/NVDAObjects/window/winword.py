@@ -20,6 +20,7 @@ import comtypes.automation
 import colorsys
 import eventHandler
 import braille
+import scriptHandler
 from scriptHandler import script
 import languageHandler
 import ui
@@ -265,6 +266,54 @@ wdThemeColorMainLight1 = 1
 wdThemeColorMainLight2 = 3
 wdThemeColorText1 = 13
 wdThemeColorText2 = 15
+
+
+class WdCharacterCase(DisplayStringIntEnum):
+	# Word enumeration that specifies the case of the text in the specified range.
+	# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
+
+	# No case: Returned when the selection range contains only case-insensitive characters.
+	# Note: MS also uses it as a command for "next case" (Toggles between uppercase, lowercase, and sentence
+	# case).
+	NO_CASE = -1
+	LOWER_CASE = 0
+	UPPER_CASE = 1
+	TITLE_WORD = 2
+	TITLE_SENTENCE = 4
+	# Mixed case: Unorganized mix of lower and upper case.
+	# Note: MS also uses it as a command for toggle case (Switches uppercase characters to lowercase, and
+	# lowercase characters to uppercase)
+	MIXED_CASE = 5
+	HALF_WIDTH = 6  # Used for Japanese characters.
+	FULL_WIDTH = 7  # Used for Japanese characters.
+	KATAKANA = 8  # Used with Japanese text.
+	HIRAGANA = 9  # Used with Japanese text.
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.NO_CASE: _("No case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.LOWER_CASE: _("Lowercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.UPPER_CASE: _("Uppercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_WORD: _("Each word capitalized"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_SENTENCE: _("Sentence case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.MIXED_CASE: _("Mixed case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HALF_WIDTH: _("Half width:"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.FULL_WIDTH: _("Full width"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.KATAKANA: _("Katakana"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HIRAGANA: _("Hiragana"),
+		}
+
 
 # Word Field types
 FIELD_TYPE_REF = 3  # cross reference field
@@ -1696,6 +1745,31 @@ class WordDocument(Window):
 		else:
 			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
 			ui.message(_("Caps off"))
+	
+	@script(gesture="kb:shift+f3")
+	def script_changeCase(self, gesture):
+		if (
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			not self.WinwordSelectionObject
+			or scriptHandler.isScriptWaiting()
+		):
+			# Just let the gesture through and don't report anything.
+			return gesture.send()
+		def action():
+			gesture.send()
+			# The object model for the "case" property is not fully reliable when using switch case command. During
+			# the switch, the "case" property quickly transitions through "lower case" or "no case", especially in
+			# Outlook. Thus we artificially add an empirical delay after the gesture has been send and before the
+			# first check.
+			time.sleep(0.15)
+		val = self._WaitForValueChangeForAction(
+			action=action,
+			fetcher=lambda: self.WinwordSelectionObject.Range.Case,
+		)
+		# Translators: a message when changing case in Microsoft Word
+		ui.message(WdCharacterCase(val).displayString)
 
 	@script(gestures=["kb:control+l", "kb:control+e", "kb:control+r", "kb:control+j"])
 	def script_toggleAlignment(self, gesture):
