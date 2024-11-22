@@ -1975,6 +1975,8 @@ class WordDocument(Window):
 			self.bindGesture("kb:alt+shift+end", "caret_changeSelection")
 			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection")
 			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection")
+			self.bindGesture("kb:f8", "caret_changeSelection")
+			self.bindGesture("kb:shift+f8", "caret_changeSelection")
 
 	__gestures = {
 		"kb:control+pageUp": "caret_moveByLine",
