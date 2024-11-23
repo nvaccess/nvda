@@ -595,16 +595,8 @@ class SpeechExtensionPoints(unittest.TestCase):
 			cancelSpeech()
 
 	def test_speechPausedExtensionPoint(self):
-		with actionTester(
-			self,
-			speechPaused,
-			switch=True
-		):
+		with actionTester(self, speechPaused, switch=True):
 			pauseSpeech(True)
 
-		with actionTester(
-			self,
-			speechPaused,
-			switch=False
-		):
+		with actionTester(self, speechPaused, switch=False):
 			pauseSpeech(False)

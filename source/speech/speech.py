@@ -211,7 +211,7 @@ def cancelSpeech():
 
 def pauseSpeech(switch):
 	getSynth().pause(switch)
-	speechPaused.notify(switch)
+	speechPaused.notify(switch=switch)
 	_speechState.isPaused = switch
 	_speechState.beenCanceled = False
 
