@@ -313,6 +313,11 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 				tempOffset -= 1
 		return [start, end]
 
+	def collapse(self, end=False):
+		if end:
+			self.expand(textInfos.UNIT_LINE)
+		super().collapse(end=end)
+
 
 # The Scintilla NVDA object, inherists the generic MSAA NVDA object
 class Scintilla(EditableTextWithAutoSelectDetection, Window):
