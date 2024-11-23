@@ -36,6 +36,28 @@ Notifies when code attempts to speak text.
 @type priority: priorities.Spri
 """
 
+pre_filter_speechSequence = Action()
+"""
+Notifies before a speech sequence is filtered.
+
+:param value: speech sequence.
+:type value: SpeechSequence
+"""
+
+post_filter_speechSequence = Action()
+"""
+Notifies when speech has been filtered and is ready to be passed onto the synthesizer.
+
+:param value: a planned speech sequence.
+:type value: SpeechSequence
+What NVDA would speak with speech turned on and uninterrupted.
+A speech sequence that has been generated somewhere in NVDA,
+and is finished being processed or modified by external modules such as add-ons.
+Prepared speech may be cancelled or processed further to prepare it for the synthesizer; but this is as close to what is actually going to be spoken as it is possible to get before the synthesizer receives it.
+This extension point is useful for tracking prepared speech in NVDA.
+i.e. for speech viewer, capturing speech history, or mirroring speech in braille.
+"""
+
 filter_speechSequence = Filter[SpeechSequence]()
 """
 Filters speech sequence before it passes to synthDriver.

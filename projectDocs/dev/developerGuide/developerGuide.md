@@ -1382,7 +1382,9 @@ For examples of how to define and use new extension points, please see the code 
 |`Action` |`speechCanceled` |Triggered when speech is canceled.|
 |`Action` |`pre_speechCanceled` |Triggered before speech is canceled.|
 |`Action` |`pre_speech` |Triggered before NVDA handles prepared speech.|
-|`Filter` |`filter_speechSequence` |Allows components or add-ons to filter speech sequence before it passes to the synth driver.|
+| ``Action`` | ``pre_filter_speechSequence`` | Notifies before speech sequence filters are processed. |
+| ``Action`` | ``post_filter_speechSequence`` | Notifies after a speech sequence has optionally been filtered by NVDA components and/or add-ons. |
+| ``Filter`` | ``filter_speechSequence`` | Allows components or add-ons to filter a speech sequence before it is passed to the Synth driver. |
 
 ### synthDriverHandler {#synthDriverHandlerExtPts}
 

@@ -99,6 +99,10 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Added the following extension points:
+  * ``speech.filter_speechSequence``. (#16191, @beqabeqa473)
+  * ``speech.pre_filter_speechSequence``. (#16213, @beqabeqa473)
+  * ``speech.post_filter_speechSequence``. (#16213, @beqabeqa473)
 
 #### API Breaking Changes
 
