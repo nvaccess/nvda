@@ -452,6 +452,17 @@ class GlobalGestureMap:
 		return NotImplemented
 
 
+decide_handleRawKey = extensionPoints.Decider()
+"""
+Notifies when a raw keyboard event is received, before any NVDA processing.
+Handlers can decide whether the key should be processed by NVDA and/or passed to the OS.
+@param vkCode: The virtual key code
+@param scanCode: The scan code
+@param extended: Whether this is an extended key
+@param pressed: Whether this is a key press or release
+@return: True to allow normal processing, False to block the key
+"""
+
 decide_executeGesture = extensionPoints.Decider()
 """
 Notifies when a gesture is about to be executed,

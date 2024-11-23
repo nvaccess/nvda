@@ -27,7 +27,7 @@ import languageHandler
 from textUtils import unicodeNormalize
 from textUtils.uniscribe import splitAtCharacterBoundaries
 from . import manager
-from .extensions import speechCanceled, pre_speechCanceled, pre_speech
+from .extensions import speechCanceled, speechPaused, pre_speechCanceled, pre_speech
 from .extensions import filter_speechSequence
 from .commands import (
 	# Commands that are used in this file.
@@ -211,6 +211,7 @@ def cancelSpeech():
 
 def pauseSpeech(switch):
 	getSynth().pause(switch)
+	speechPaused.notify(switch=switch)
 	_speechState.isPaused = switch
 	_speechState.beenCanceled = False
 
