@@ -1747,7 +1747,7 @@ class WordDocument(Window):
 			ui.message(_("Caps off"))
 
 	@script(gesture="kb:shift+f3")
-	def script_changeCase(self, gesture):
+	def script_changeCase(self, gesture: "inputCore.InputGesture"):
 		if (
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
