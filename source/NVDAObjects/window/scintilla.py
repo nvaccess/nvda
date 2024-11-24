@@ -319,7 +319,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		in Notepad++ documents.
 		https://github.com/nvaccess/nvda/issues/17430
 		"""
-		if end:
+		if end and self.obj.makeTextInfo(textInfos.POSITION_SELECTION).isCollapsed:
 			self.expand(textInfos.UNIT_LINE)
 		super().collapse(end=end)
 
