@@ -314,7 +314,7 @@ class ScintillaTextInfo(textInfos.offsets.OffsetsTextInfo):
 		return [start, end]
 
 	def collapse(self, end=False):
-		"""Before collapsing to end, TextInfo is expanded to line.
+		"""Before collapsing to end, if no text is selected, TextInfo is expanded to line.
 		This fixes a bug where next braille line command didn't move the cursor to the last empty line
 		in Notepad++ documents.
 		https://github.com/nvaccess/nvda/issues/17430
