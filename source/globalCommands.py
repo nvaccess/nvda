@@ -4307,11 +4307,9 @@ class GlobalCommands(ScriptableObject):
 					link.destination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(
-						name=text,
-						closeButton=True,
-						copyButton=True,
-					),
+					title=_("Destination of: {name}").format(name=text),
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(link.destination)  # Speak the link
