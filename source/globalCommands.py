@@ -4280,19 +4280,19 @@ class GlobalCommands(ScriptableObject):
 		positioned on a link, or an element with an included link such as a graphic.
 		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
+		focus = api.getFocusObject()
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
 			link = ti._getLinkDataAtCaretPosition()
 		except RuntimeError:
-			obj = api.getFocusObject()
 			try:
-				link = obj.linkData
+				link = focus.linkData
 			except NotImplementedError:
 				link = None
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
 			if link.destination is None:
-				# Translators: Informs the user that the link has no destination
+				# Translators: Reported when using the command to report the destination of a link.
 				ui.message(_("Link has no apparent destination"))
 				return
 			if (
@@ -4317,8 +4317,11 @@ class GlobalCommands(ScriptableObject):
 				ui.message(link.destination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
+		elif focus.role == controlTypes.Role.LINK or controlTypes.State.LINKED in focus.states:
+			# Translators: Reported when using the command to report the destination of a link.
+			ui.message(_("Unable to get the destination of this link."))
 		else:
-			# Translators: Tell user that the command has been run on something that is not a link
+			# Translators: Reported when using the command to report the destination of a link.
 			ui.message(_("Not a link."))
 
 	@script(
