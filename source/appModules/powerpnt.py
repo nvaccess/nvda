@@ -1008,7 +1008,6 @@ class Shape(PpObject):
 				destination=mouseClickSetting.Hyperlink.Address,
 			)
 			return None
-		
 
 	__gestures = {
 		"kb:leftArrow": "moveHorizontal",
@@ -1178,7 +1177,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 
 	def _getCurrentRun(
 		self,
-		offset: int
+		offset: int,
 	) -> tuple[comtypes.client.lazybind.Dispatch | None, int, int]:
 		runs = self.obj.ppObject.textRange.runs()
 		for run in runs:

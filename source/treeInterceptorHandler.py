@@ -24,7 +24,7 @@ import extensionPoints
 
 if TYPE_CHECKING:
 	import NVDAObjects
-	from  textInfos import _LinkData
+	from textInfos import _LinkData
 
 post_browseModeStateChange = extensionPoints.Action()
 """
