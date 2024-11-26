@@ -295,9 +295,9 @@ class WdCharacterCase(DisplayStringIntEnum):
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.NO_CASE: _("No case"),
 			# Translators: a Microsoft Word character case type
-			WdCharacterCase.LOWER_CASE: _("lowercase"),
+			WdCharacterCase.LOWER_CASE: _("Lowercase"),
 			# Translators: a Microsoft Word character case type
-			WdCharacterCase.UPPER_CASE: _("UUPPERCASE"),
+			WdCharacterCase.UPPER_CASE: _("Uppercase"),
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.TITLE_WORD: _("Each word capitalized"),
 			# Translators: a Microsoft Word character case type
@@ -305,7 +305,7 @@ class WdCharacterCase(DisplayStringIntEnum):
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.MIXED_CASE: _("Mixed case"),
 			# Translators: a Microsoft Word character case type
-			WdCharacterCase.HALF_WIDTH: _("Half width:"),
+			WdCharacterCase.HALF_WIDTH: _("Half width"),
 			# Translators: a Microsoft Word character case type
 			WdCharacterCase.FULL_WIDTH: _("Full width"),
 			# Translators: a Microsoft Word character case type
