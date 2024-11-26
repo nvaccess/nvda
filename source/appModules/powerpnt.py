@@ -1201,7 +1201,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		formatField = textInfos.FormatField()
 		curRun = None
 		if calculateOffsets:
-			curRun, startOffset, endOffset = _getCurrentRun(self)
+			curRun, startOffset, endOffset = self._getCurrentRun(self)
 		if not curRun:
 			curRun = self.obj.ppObject.textRange.characters(offset + 1)
 			startOffset, endOffset = offset, self._endOffset
