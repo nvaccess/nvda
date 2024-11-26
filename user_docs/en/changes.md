@@ -104,10 +104,9 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 * Retrieving the `labeledBy` property now works for UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
-* Added the following extension points:
-  * inputCore.decide_handleRawKey: called on each keypress
-  * speech.extensions.speechPaused: Called when speech is paused or unpaused
-pause)
+* Added the following extension points (#17428):
+  * `inputCore.decide_handleRawKey`: called on each keypress
+  * `speech.extensions.post_speechPaused`: Called when speech is paused or unpaused
 
 #### API Breaking Changes
 

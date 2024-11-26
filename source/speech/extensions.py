@@ -22,7 +22,7 @@ Notifies when speech is about to be canceled.
 Handlers are called without arguments.
 """
 
-speechPaused = Action()
+post_speechPaused = Action()
 """
 Notifies when speech is paused.
 
