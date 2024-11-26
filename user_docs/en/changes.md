@@ -70,6 +70,7 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)
 * In Notepad and other UIA documents on Windows 11, if the last line is empty, the `braille next line command` will move the cursor to the last line.
 In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, @nvdaes)
+* In NVDA's Python console, retrieving the "labeledBy" property now works for objects in applications implementing the "labelled-by" IAccessible2 relation and no longer triggers an error. (#17436, @michaelweghorn)
 
 ### Changes for Developers
 

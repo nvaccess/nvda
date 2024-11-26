@@ -1163,12 +1163,19 @@ class IAccessible(Window):
 		return True
 
 	def _get_labeledBy(self):
+		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
+		if label:
+			return label
+
 		try:
-			(pacc, accChild) = IAccessibleHandler.accNavigate(
+			ret = IAccessibleHandler.accNavigate(
 				self.IAccessibleObject,
 				self.IAccessibleChildID,
 				IAccessibleHandler.NAVRELATION_LABELLED_BY,
 			)
+			if not ret:
+				return None
+			(pacc, accChild) = ret
 			obj = IAccessible(IAccessibleObject=pacc, IAccessibleChildID=accChild)
 			return obj
 		except COMError:
