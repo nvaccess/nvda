@@ -2386,6 +2386,19 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
+	def _get_labeledBy(self):
+		try:
+			val = self._getUIACacheablePropertyValue(UIAHandler.UIA_LabeledByPropertyId)
+			if not val or val == UIAHandler.handler.reservedNotSupportedValue:
+				return None
+			element = val.QueryInterface(UIAHandler.IUIAutomationElement).buildUpdatedCache(
+				UIAHandler.handler.baseCacheRequest,
+			)
+			return UIA(UIAElement=element)
+		except COMError:
+			pass
+		return super()._get_labeledBy()
+
 	def event_UIA_controllerFor(self) -> None:
 		return self.event_controllerForChange()
 
