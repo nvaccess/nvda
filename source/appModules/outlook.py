@@ -735,6 +735,10 @@ class OutlookWordDocument(WordDocument, BaseOutlookWordDocument):
 		True  # This includes page sections, and page columns. None of which are appropriate for outlook.
 	)
 
+	__gestures = {
+		"kb:control+shift+a": "changeCase",
+	}
+
 
 class OutlookUIAWordDocument(UIAWordDocument, BaseOutlookWordDocument):
 	"""Forces browse mode to be used on the UI Automation Outlook message viewer if the message is being read)."""
