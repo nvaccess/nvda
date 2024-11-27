@@ -6,6 +6,7 @@
 
 """Support for UI Automation (UIA) controls."""
 
+from __future__ import annotations
 import typing
 from typing import (
 	Generator,
@@ -2386,7 +2387,7 @@ class UIA(Window):
 				objList.append(obj)
 		return objList
 
-	def _get_labeledBy(self):
+	def _get_labeledBy(self) -> UIA | None:
 		try:
 			val = self._getUIACacheablePropertyValue(UIAHandler.UIA_LabeledByPropertyId)
 			if not val or val == UIAHandler.handler.reservedNotSupportedValue:
