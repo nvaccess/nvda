@@ -10,7 +10,6 @@ from typing import (
 	Optional,
 	Tuple,
 	Union,
-	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
@@ -1948,7 +1947,7 @@ class IAccessible(Window):
 		# due to caching of baseObject.AutoPropertyObject, do not attempt to return a generator.
 		return tuple(detailsRelsGen)
 
-	def _get_controllerFor(self) -> List[NVDAObject]:
+	def _get_controllerFor(self) -> typing.List[NVDAObject]:
 		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
 		if control:
 			return [control]
