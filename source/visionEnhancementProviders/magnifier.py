@@ -65,7 +65,10 @@ class HostWindow(CustomWindow):
 	def targetRect(self) -> RectLTRB:
 		# Top quarter of screen
 		return RectLTRB(
-			0, 0, _displayTracking._orientationState.width, _displayTracking._orientationState.height / 4
+			0,
+			0,
+			_displayTracking._orientationState.width,
+			_displayTracking._orientationState.height / 4,
 		)
 
 	def windowProc(self, hwnd: int, msg: int, wParam: int, lParam: int):
