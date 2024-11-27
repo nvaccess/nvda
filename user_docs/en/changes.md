@@ -70,7 +70,6 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)
 * In Notepad and other UIA documents on Windows 11, if the last line is empty, the `braille next line command` will move the cursor to the last line.
 In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, @nvdaes)
-* In NVDA's Python console, retrieving the "labeledBy" property now works for UIA elements supporting the corresponding LabeledBy UIA property. (#17442, @michaelweghorn)
 
 ### Changes for Developers
 
@@ -100,6 +99,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Retrieving the "labeledBy" property now works for UIA elements supporting the corresponding LabeledBy UIA property. (#17442, @michaelweghorn)
 
 #### API Breaking Changes
 
