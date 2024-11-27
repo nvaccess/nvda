@@ -3,6 +3,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
 import typing
 from typing import (
 	Generator,
@@ -1162,7 +1163,7 @@ class IAccessible(Window):
 			return False
 		return True
 
-	def _get_labeledBy(self):
+	def _get_labeledBy(self) -> IAccessible | None:
 		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
 		if label:
 			return label
