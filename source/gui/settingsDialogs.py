@@ -800,16 +800,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
 		if languageHandler.isLanguageForced():
-			try:
-				cmdLangDescription = next(
-					ld for code, ld in self.languageNames if code == globalVars.appArgs.language
-				)
-			except StopIteration:
-				# In case --lang=Windows is passed to the command line, globalVars.appArgs.language is the current
-				# Windows language,, which may not be in the list of NVDA supported languages, e.g. Windows language may
-				# be 'fr_FR' but NVDA only supports 'fr'.
-				# In this situation, only use language code as a description.
-				cmdLangDescription = globalVars.appArgs.language
+			cmdLangDescription = next(
+				ld for code, ld in self.languageNames if code == globalVars.appArgs.language
+			)
 			languageChoices.append(
 				# Translators: Shown for a language which has been provided from the command line
 				# 'langDesc' would be replaced with description of the given locale.
