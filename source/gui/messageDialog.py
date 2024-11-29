@@ -26,6 +26,14 @@ from logHandler import log
 Callback_T: TypeAlias = Callable[[], Any]
 
 
+class _Missing_Type:
+	def __repr(self):
+		return "MISSING"
+
+
+_MISSING = _Missing_Type()
+
+
 class ReturnCode(IntEnum):
 	"""Enumeration of possible returns from c{MessageDialog}."""
 
@@ -328,11 +336,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		button: Button,
 		/,
 		*args,
-		label: str | None = None,
-		callback: Callback_T | None = None,
-		defaultFocus: bool | None = None,
-		fallbackAction: bool | None = None,
-		closesDialog: bool | None = None,
+		label: str | _Missing_Type = _MISSING,
+		callback: Callback_T | _Missing_Type = _MISSING,
+		defaultFocus: bool | _Missing_Type = _MISSING,
+		fallbackAction: bool | _Missing_Type = _MISSING,
+		closesDialog: bool | _Missing_Type = _MISSING,
 		**kwargs,
 	) -> Self:
 		"""Add a :class:`Button` to the dialog.
@@ -347,19 +355,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		.. seealso:: :class:`Button`
 		"""
-		# We need to pass `id` as a positional argument as `singledispatchmethod` matches on the type of the first argument.
-		id = button.id
 		keywords = button._asdict()
-		del keywords["id"]  # Guaranteed to exist.
-		if label is not None:
+		# We need to pass `id` as a positional argument as `singledispatchmethod` matches on the type of the first argument.
+		id = keywords.pop("id")
+		if label is not _MISSING:
 			keywords["label"] = label
-		if defaultFocus is not None:
+		if defaultFocus is not _MISSING:
 			keywords["defaultFocus"] = defaultFocus
-		if fallbackAction is not None:
+		if fallbackAction is not _MISSING:
 			keywords["fallbackAction"] = fallbackAction
-		if callback is not None:
+		if callback is not _MISSING:
 			keywords["callback"] = callback
-		if closesDialog is not None:
+		if closesDialog is not _MISSING:
 			keywords["closesDialog"] = closesDialog
 		keywords.update(kwargs)
 		return self.addButton(id, *args, **keywords)
