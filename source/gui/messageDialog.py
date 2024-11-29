@@ -141,6 +141,12 @@ class Button(NamedTuple):
 		See the documentation of c{MessageDialog} for information on how these buttons are handled.
 	"""
 
+	returnCode: ReturnCode | None = None
+	"""Override for the default return code, which is the button's ID.
+
+	:note: If None, the button's ID will be used as the return code when closing a modal dialog with this button.
+	"""
+
 
 class DefaultButton(Button, Enum):
 	"""Default buttons for message dialogs."""
@@ -188,10 +194,11 @@ class DefaultButtonSet(tuple[DefaultButton], Enum):
 class _Command(NamedTuple):
 	"""Internal representation of a command for a message dialog."""
 
-	callback: Callback_T | None = None
+	callback: Callback_T | None
 	"""The callback function to be executed. Defaults to None."""
-	closesDialog: bool = True
+	closesDialog: bool
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
+	ReturnCode: ReturnCode
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
@@ -290,6 +297,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		defaultFocus: bool = False,
 		fallbackAction: bool = False,
 		closesDialog: bool = True,
+		returnCode: ReturnCode | None = None,
 		**kwargs,
 	) -> Self:
 		"""Add a button to the dialog.
@@ -316,11 +324,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		# fallback actions that do not close the dialog do not make sense.
 		if fallbackAction and not closesDialog:
 			log.warning(
-				"fallback actions that do not close the dialog are not supported. Forcing close_dialog to True.",
+				"fallback actions that do not close the dialog are not supported. Forcing closesDialog to True.",
 			)
+			closesDialog = True
 		self._commands[buttonId] = _Command(
 			callback=callback,
 			closesDialog=closesDialog or fallbackAction,
+			ReturnCode=buttonId if returnCode is None else returnCode,
 		)
 		if defaultFocus:
 			self.SetDefaultItem(button)
@@ -341,6 +351,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		defaultFocus: bool | _Missing_Type = _MISSING,
 		fallbackAction: bool | _Missing_Type = _MISSING,
 		closesDialog: bool | _Missing_Type = _MISSING,
+		returnCode: ReturnCode | None | _Missing_Type = _MISSING,
 		**kwargs,
 	) -> Self:
 		"""Add a :class:`Button` to the dialog.
@@ -368,6 +379,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			keywords["callback"] = callback
 		if closesDialog is not _MISSING:
 			keywords["closesDialog"] = closesDialog
+		if returnCode is not _MISSING:
+			keywords["returnCode"] = returnCode
 		keywords.update(kwargs)
 		return self.addButton(id, *args, **keywords)
 
@@ -763,7 +776,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				)
 
 			# No commands have been registered. Create one of our own.
-			return EscapeCode.NONE, _Command()
+			return EscapeCode.NONE, _Command(callback=None, closesDialog=True, ReturnCode=wx.ID_NONE)
 
 		id, command = getAction()
 		if not command.closesDialog:
@@ -846,14 +859,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		if command is None:
 			command = self._commands[id]
-		callback, close = command
+		callback, close, returnCode = command
 		close &= _canCallClose
 		if callback is not None:
 			if close:
 				self.Hide()
 			callback()
 		if close:
-			self.SetReturnCode(id)
+			self.SetReturnCode(returnCode)
 			self.Close()
 
 	# endregion
