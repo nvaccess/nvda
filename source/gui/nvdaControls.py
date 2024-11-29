@@ -317,7 +317,8 @@ class MessageDialog(messageDialog.MessageDialog):
 
 	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
 		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
-		self.addOkCancelButtons()
+		self.addOkButton(returnCode=wx.OK)
+		self.addCancelButton(returnCode=wx.CANCEL)
 
 
 class LegasyMessageDialog(DPIScaledDialog):
@@ -430,9 +431,7 @@ class LegasyMessageDialog(DPIScaledDialog):
 		evt.Skip()
 
 
-class _ContinueCancelDialog(
-	MessageDialog,
-):
+class _ContinueCancelDialog(MessageDialog):
 	"""
 	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
 	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
@@ -463,29 +462,24 @@ class _ContinueCancelDialog(
 		if helpId is not None:
 			self.helpId = helpId
 		super().__init__(parent, title, message, dialogType)
+		if helpId is not None:
+			# Help event has already been bound (in supersuperclass), so we need to re-bind it.
+			self.bindHelpEvent(helpId, self)
 
 	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
 		"""Override to add Continue and Cancel buttons."""
-
-		# Note: the order of the Continue and Cancel buttons is important, because running SetDefault()
-		# on the Cancel button while the Continue button is first, has no effect. Therefore the only way to
-		# allow a caller to make Cancel the default, is to put it first.
-		def _makeContinue(self, buttonHelper: guiHelper.ButtonHelper) -> wx.Button:
+		self.addOkButton(
 			# Translators: The label for the Continue button in an NVDA dialog.
-			return buttonHelper.addButton(self, id=wx.ID_OK, label=_("&Continue"))
-
-		def _makeCancel(self, buttonHelper: guiHelper.ButtonHelper) -> wx.Button:
+			label=_("&Continue"),
+			returnCode=wx.OK,
+			defaultFocus=self.continueButtonFirst,
+		)
+		self.addCancelButton(
 			# Translators: The label for the Cancel button in an NVDA dialog.
-			return buttonHelper.addButton(self, id=wx.ID_CANCEL, label=_("Cancel"))
-
-		if self.continueButtonFirst:
-			continueButton = _makeContinue(self, buttonHelper)
-			cancelButton = _makeCancel(self, buttonHelper)
-		else:
-			cancelButton = _makeCancel(self, buttonHelper)
-			continueButton = _makeContinue(self, buttonHelper)
-		continueButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
-		cancelButton.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
+			label=_("Cancel"),
+			returnCode=wx.CANCEL,
+			defaultFocus=not self.continueButtonFirst,
+		)
 
 
 class EnhancedInputSlider(wx.Slider):
