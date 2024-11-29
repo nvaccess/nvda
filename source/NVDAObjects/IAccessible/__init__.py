@@ -3,7 +3,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+# required for Python < 3.14 for IAccessible return type annotation
+# within IAccessible class itself, see https://peps.python.org/pep-0563/
+# and and https://peps.python.org/pep-0649/
 from __future__ import annotations
+
 import typing
 from typing import (
 	Generator,
