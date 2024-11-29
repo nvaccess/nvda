@@ -104,6 +104,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 * Retrieving the `labeledBy` property now works for UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+* Basic functions to draw lines and rectangles on tactile buffers have been added in the `tactile.drawing` module (@bramd)
 
 #### API Breaking Changes
 
