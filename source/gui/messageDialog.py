@@ -254,9 +254,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._mainSizer = mainSizer
 
 		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
-		text = wx.StaticText(self)
-		text.SetLabelText(message)
-		text.Wrap(self.scaleSize(self.GetSize().Width))
+		self._messageControl = text = wx.StaticText(self)
+		self.setMessage(message)
 		contentsSizer.addItem(text)
 		self._addContents(contentsSizer)
 
@@ -274,14 +273,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		)
 		# mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
-		# Import late to avoid circular import
-		# from gui import mainFrame
-
-		# if parent == mainFrame:
-		# 	# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
-		# 	self.CentreOnScreen()
-		# else:
-		# 	self.CentreOnParent()
 
 	# endregion
 
@@ -448,7 +439,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		)
 		return self
 
-	def setMessage(self, message: str) -> Self: ...
+	def setMessage(self, message: str) -> Self:
+		self._messageControl.SetLabelText(message)
+		self._isLayoutFullyRealized = False
+		return self
 
 	def setDefaultFocus(self, id: ReturnCode) -> Self:
 		"""Set the button to be focused when the dialog first opens.
@@ -704,6 +698,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			startTime = time.time()
 			log.debug("Laying out message dialog")
+		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
 		self._mainSizer.Fit(self)
 		from gui import mainFrame
 
