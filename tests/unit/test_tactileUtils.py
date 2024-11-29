@@ -31,8 +31,8 @@ class TestTactileUtils(unittest.TestCase):
 		self.assertFalse(isPointInBounds(self.buffer, -1, 0))  # Left edge
 		self.assertFalse(isPointInBounds(self.buffer, 0, -1))  # Top edge
 		self.assertFalse(isPointInBounds(self.buffer, 10, 5))  # Right edge
-		self.assertFalse(isPointInBounds(self.buffer, 5, 8))   # Bottom edge
-		self.assertFalse(isPointInBounds(self.buffer, -1, -1)) # Outside corner
+		self.assertFalse(isPointInBounds(self.buffer, 5, 8))  # Bottom edge
+		self.assertFalse(isPointInBounds(self.buffer, -1, -1))  # Outside corner
 
 	def test_setDotIfInBounds(self):
 		# Test setting dots inside bounds
