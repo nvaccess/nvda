@@ -424,12 +424,30 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addSaveNoCancelButtons = partialmethod(addButtons, DefaultButtonSet.SAVE_NO_CANCEL)
 	addSaveNoCancelButtons.__doc__ = "Add Save, Don't save and Cancel buttons to the dialog."
 
-	def setButtonLabel(self, id: ReturnCode, label: str) -> Self: ...
-	def setOkLabel(self, label: str) -> Self: ...
-	def setHelpLabel(self, label: str) -> Self: ...
-	def setOkCancelLabels(self, okLabel: str, cancelLabel: str) -> Self: ...
-	def setYesNoLabels(self, yesLabel: str, noLabel: str) -> Self: ...
-	def setYesNoCancelLabels(self, yesLabel: str, noLabel: str, cancelLabel: str) -> Self: ...
+	def setButtonLabel(self, id: ReturnCode, label: str) -> Self:
+		self._setButtonLabels((id,), (label,))
+		return self
+
+	setOkLabel = partialmethod(setButtonLabel, ReturnCode.OK)
+	setOkLabel.__doc__ = "Set the label of the OK button in the dialog, if there is one."
+	setHelpLabel = partialmethod(setButtonLabel, ReturnCode.HELP)
+	setHelpLabel.__doc__ = "Set the label of the help button in the dialog, if there is one."
+
+	def setOkCancelLabels(self, okLabel: str, cancelLabel: str) -> Self:
+		self._setButtonLabels((ReturnCode.OK, ReturnCode.CANCEL), (okLabel, cancelLabel))
+		return self
+
+	def setYesNoLabels(self, yesLabel: str, noLabel: str) -> Self:
+		self._setButtonLabels((ReturnCode.YES, ReturnCode.NO), (yesLabel, noLabel))
+		return self
+
+	def setYesNoCancelLabels(self, yesLabel: str, noLabel: str, cancelLabel: str) -> Self:
+		self._setButtonLabels(
+			(ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL),
+			(yesLabel, noLabel, cancelLabel),
+		)
+		return self
+
 	def setMessage(self, message: str) -> Self: ...
 
 	def setDefaultFocus(self, id: ReturnCode) -> Self:
@@ -783,6 +801,22 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			log.warn(f"Overriding command for {id=} to close dialog.")
 			command = command._replace(closesDialog=True)
 		return id, command
+
+	def _setButtonLabels(self, ids: Collection[ReturnCode], labels: Collection[str]):
+		if len(ids) != len(labels):
+			raise ValueError("The number of IDs and labels must be equal.")
+		buttons: list[wx.Button] = []
+		for id in ids:
+			if id not in self._commands:
+				raise KeyError("No button with {id=} registered.")
+			elif isinstance((button := self.FindWindow(id)), wx.Button):
+				buttons.append(button)
+			else:
+				raise ValueError(
+					f"{id=} exists in command registry, but does not refer to a wx.Button. This indicates a logic error.",
+				)
+		for button, label in zip(buttons, labels):
+			button.SetLabel(label)
 
 	def _setIcon(self, type: DialogType) -> None:
 		"""Set the icon to be displayed on the dialog."""
