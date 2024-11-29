@@ -44,6 +44,6 @@ def getLineDirections(x1: int, y1: int, x2: int, y2: int) -> Tuple[int, int, int
 	"""
 	dx = abs(x2 - x1)
 	dy = abs(y2 - y1)
-	xDirection = 1 if x1 < x2 else -1
+	xDirection = 1 if x1 == x2 else (1 if x1 < x2 else -1)
 	yDirection = 1 if y1 == y2 else (1 if y1 < y2 else -1)
 	return dx, dy, xDirection, yDirection
