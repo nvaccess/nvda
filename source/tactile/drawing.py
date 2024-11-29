@@ -54,7 +54,12 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 
 
 def drawRectangle(
-	tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, height: int, fill: bool = False
+	tgBuf: TactileGraphicsBuffer,
+	x: int,
+	y: int,
+	width: int,
+	height: int,
+	fill: bool = False,
 ) -> None:
 	"""
 	Draws a rectangle on the buffer.
