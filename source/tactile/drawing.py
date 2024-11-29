@@ -8,11 +8,11 @@ This module provides functions for drawing basic shapes on a TactileGraphicsBuff
 Implements common shapes like lines and rectangles with bounds checking and optional filling.
 """
 
-from typing import Tuple
 from . import TactileGraphicsBuffer
 
 
 from .utils import setDotIfInBounds, getLineDirections
+
 
 def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -> None:
 	"""
@@ -26,7 +26,7 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 	"""
 	dx, dy, xDirection, yDirection = getLineDirections(x1, y1, x2, y2)
 	currentX, currentY = x1, y1
-	
+
 	# Choose the driving axis based on which has the larger delta
 	if dx > dy:
 		# X-axis is driving
@@ -48,12 +48,14 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 				currentX += xDirection
 				error += dy
 			currentY += yDirection
-	
+
 	# Draw the final point
 	setDotIfInBounds(tgBuf, currentX, currentY)
 
 
-def drawRectangle(tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, height: int, fill: bool = False) -> None:
+def drawRectangle(
+	tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, height: int, fill: bool = False
+) -> None:
 	"""
 	Draws a rectangle on the buffer.
 	:param tgBuf: The TactileGraphicsBuffer to draw on
@@ -72,12 +74,12 @@ def drawRectangle(tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, heig
 		# Draw outline by drawing four lines
 		right = x + width - 1
 		bottom = y + height - 1
-		
+
 		# Draw horizontal edges
 		for currentX in range(x, x + width):
 			setDotIfInBounds(tgBuf, currentX, y)  # Top edge
 			setDotIfInBounds(tgBuf, currentX, bottom)  # Bottom edge
-		
+
 		# Draw vertical edges
 		for currentY in range(y, y + height):
 			setDotIfInBounds(tgBuf, x, currentY)  # Left edge

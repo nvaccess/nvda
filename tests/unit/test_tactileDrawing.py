@@ -45,17 +45,24 @@ class TestTactileDrawing(unittest.TestCase):
 	def test_drawRectangle_outline(self):
 		drawRectangle(self.buffer, 1, 1, 3, 3, fill=False)
 		expected_dots = {
-			(1, 1), (2, 1), (3, 1),  # Top edge
-			(1, 2), (3, 2),          # Middle edges
-			(1, 3), (2, 3), (3, 3)   # Bottom edge
+			(1, 1),
+			(2, 1),
+			(3, 1),  # Top edge
+			(1, 2),
+			(3, 2),  # Middle edges
+			(1, 3),
+			(2, 3),
+			(3, 3),  # Bottom edge
 		}
 		self.assertEqual(self.buffer.dots, expected_dots)
 
 	def test_drawRectangle_filled(self):
 		drawRectangle(self.buffer, 1, 1, 2, 2, fill=True)
 		expected_dots = {
-			(1, 1), (2, 1),  # Top row
-			(1, 2), (2, 2)   # Bottom row
+			(1, 1),
+			(2, 1),  # Top row
+			(1, 2),
+			(2, 2),  # Bottom row
 		}
 		self.assertEqual(self.buffer.dots, expected_dots)
 
@@ -63,7 +70,9 @@ class TestTactileDrawing(unittest.TestCase):
 		# Rectangle partially out of bounds
 		drawRectangle(self.buffer, -1, -1, 3, 3, fill=True)
 		expected_dots = {
-			(0, 0), (1, 0),
-			(0, 1), (1, 1)
+			(0, 0),
+			(1, 0),
+			(0, 1),
+			(1, 1),
 		}
 		self.assertEqual(self.buffer.dots, expected_dots)
