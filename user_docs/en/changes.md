@@ -91,7 +91,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
-* The `gui.message.messageBox` function is deprecated.
+* The `gui.message.messageBox` function and `gui.nvdaControls.MessageDialog` class are deprecated.
 Use `gui.message.MessageDialog` instead.
 
 ## 2024.4
