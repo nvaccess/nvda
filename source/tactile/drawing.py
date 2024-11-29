@@ -12,43 +12,7 @@ from typing import Tuple
 from . import TactileGraphicsBuffer
 
 
-def _isPointInBounds(tgBuf: TactileGraphicsBuffer, x: int, y: int) -> bool:
-	"""
-	Check if a point lies within the buffer boundaries.
-	:param tgBuf: The buffer to check against
-	:param x: X coordinate to check
-	:param y: Y coordinate to check
-	:return: True if the point is within bounds, False otherwise
-	"""
-	return 0 <= x < tgBuf.width and 0 <= y < tgBuf.height
-
-
-def _setDotIfInBounds(tgBuf: TactileGraphicsBuffer, x: int, y: int) -> None:
-	"""
-	Set a dot at the given coordinates if they are within the buffer boundaries.
-	:param tgBuf: The buffer to draw on
-	:param x: X coordinate
-	:param y: Y coordinate
-	"""
-	if _isPointInBounds(tgBuf, x, y):
-		tgBuf.setDot(x, y)
-
-
-def _getLineDirections(x1: int, y1: int, x2: int, y2: int) -> Tuple[int, int, int, int]:
-	"""
-	Calculate direction and delta values for line drawing.
-	:param x1: Starting x coordinate
-	:param y1: Starting y coordinate
-	:param x2: Ending x coordinate
-	:param y2: Ending y coordinate
-	:return: Tuple of (dx, dy, xDirection, yDirection)
-	"""
-	dx = abs(x2 - x1)
-	dy = abs(y2 - y1)
-	xDirection = 1 if x1 < x2 else -1
-	yDirection = 1 if y1 < y2 else -1
-	return dx, dy, xDirection, yDirection
-
+from .utils import setDotIfInBounds, getLineDirections
 
 def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -> None:
 	"""
@@ -60,7 +24,7 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 	:param x2: Ending x coordinate
 	:param y2: Ending y coordinate
 	"""
-	dx, dy, xDirection, yDirection = _getLineDirections(x1, y1, x2, y2)
+	dx, dy, xDirection, yDirection = getLineDirections(x1, y1, x2, y2)
 	currentX, currentY = x1, y1
 	
 	# Choose the driving axis based on which has the larger delta
@@ -68,7 +32,7 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 		# X-axis is driving
 		error = dx / 2.0
 		while currentX != x2:
-			_setDotIfInBounds(tgBuf, currentX, currentY)
+			setDotIfInBounds(tgBuf, currentX, currentY)
 			error -= dy
 			if error < 0:
 				currentY += yDirection
