@@ -99,7 +99,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
-* Retrieving the "labeledBy" property now works for objects in applications implementing the "labelled-by" IAccessible2 relation and no longer triggers an error. (#17436, @michaelweghorn)
+* Retrieving the `labeledBy` property now works for objects in applications implementing the `labelled-by` IAccessible2 relation and no longer triggers an error. (#17436, @michaelweghorn)
 
 #### API Breaking Changes
 
