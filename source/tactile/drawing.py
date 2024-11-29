@@ -42,7 +42,7 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 		# Y-axis is driving
 		error = dy / 2.0
 		while currentY != y2:
-			_setDotIfInBounds(tgBuf, currentX, currentY)
+			setDotIfInBounds(tgBuf, currentX, currentY)
 			error -= dx
 			if error < 0:
 				currentX += xDirection
@@ -50,7 +50,7 @@ def drawLine(tgBuf: TactileGraphicsBuffer, x1: int, y1: int, x2: int, y2: int) -
 			currentY += yDirection
 	
 	# Draw the final point
-	_setDotIfInBounds(tgBuf, currentX, currentY)
+	setDotIfInBounds(tgBuf, currentX, currentY)
 
 
 def drawRectangle(tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, height: int, fill: bool = False) -> None:
@@ -67,7 +67,7 @@ def drawRectangle(tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, heig
 		# Draw filled rectangle by setting all dots within the bounds
 		for currentY in range(y, y + height):
 			for currentX in range(x, x + width):
-				_setDotIfInBounds(tgBuf, currentX, currentY)
+				setDotIfInBounds(tgBuf, currentX, currentY)
 	else:
 		# Draw outline by drawing four lines
 		right = x + width - 1
@@ -75,10 +75,10 @@ def drawRectangle(tgBuf: TactileGraphicsBuffer, x: int, y: int, width: int, heig
 		
 		# Draw horizontal edges
 		for currentX in range(x, x + width):
-			_setDotIfInBounds(tgBuf, currentX, y)  # Top edge
-			_setDotIfInBounds(tgBuf, currentX, bottom)  # Bottom edge
+			setDotIfInBounds(tgBuf, currentX, y)  # Top edge
+			setDotIfInBounds(tgBuf, currentX, bottom)  # Bottom edge
 		
 		# Draw vertical edges
 		for currentY in range(y, y + height):
-			_setDotIfInBounds(tgBuf, x, currentY)  # Left edge
-			_setDotIfInBounds(tgBuf, right, currentY)  # Right edge
+			setDotIfInBounds(tgBuf, x, currentY)  # Left edge
+			setDotIfInBounds(tgBuf, right, currentY)  # Right edge
