@@ -456,16 +456,16 @@ decide_handleRawKey = extensionPoints.Decider()
 """
 Notifies when a raw keyboard event is received, before any NVDA processing.
 Handlers can decide whether the key should be processed by NVDA and/or passed to the OS.
-@param vkCode: The virtual key code
-@type vkCode: int
-@param scanCode: The scan code
-@type scanCode: int
-@param extended: Whether this is an extended key
-@type extended: bool
-@param pressed: Whether this is a key press or release
-@type pressed: bool
-@return: True to allow normal processing, False to block the key
-@rtype: bool
+:param vkCode: The virtual key code
+:type vkCode: int
+:param scanCode: The scan code
+:type scanCode: int
+:param extended: Whether this is an extended key
+:type extended: bool
+:param pressed: Whether this is a key press or release
+:type pressed: bool
+:return: True to allow normal processing, False to block the key
+:rtype: bool
 """
 
 decide_executeGesture = extensionPoints.Decider()

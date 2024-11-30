@@ -26,8 +26,8 @@ post_speechPaused = Action()
 """
 Notifies when speech is paused.
 
-@param switch: True if speech is paused, False if speech is resumed.
-@type switch: bool
+:param switch: True if speech is paused, False if speech is resumed.
+:type switch: bool
 """
 
 pre_speech = Action()
