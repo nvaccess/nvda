@@ -91,6 +91,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated typing-extensions to 4.12.2. (#17438, @josephsl)
   * Updated licensecheck to 2024.3. (#17440, @josephsl)
   * Updated schedule to 1.2.2. (#17455, @josephsl)
+  * Updated requests to 2.32.3. (#17456, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
