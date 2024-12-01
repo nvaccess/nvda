@@ -106,7 +106,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Retrieving the `labeledBy` property now works for UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
 * Added the following extension points (#17428):
   * `inputCore.decide_handleRawKey`: called on each keypress
-  * `speech.extensions.post_speechPaused`: Called when speech is paused or unpaused
+  * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
 
 #### API Breaking Changes
 
