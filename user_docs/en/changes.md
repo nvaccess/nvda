@@ -90,6 +90,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated pre-commit to 4.0.1. (#17260)
   * Updated typing-extensions to 4.12.2. (#17438, @josephsl)
   * Updated licensecheck to 2024.3. (#17440, @josephsl)
+  * Updated markdown to 3.7. (#17459, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
