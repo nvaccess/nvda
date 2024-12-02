@@ -569,7 +569,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle speak command keys command.
-		description=_("Toggles on and off the speaking of typed keys, that are not specifically characters"),
+		description=_("Toggles on and off the speaking of command keys"),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+4",
 	)
