@@ -90,6 +90,11 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated pre-commit to 4.0.1. (#17260)
   * Updated typing-extensions to 4.12.2. (#17438, @josephsl)
   * Updated licensecheck to 2024.3. (#17440, @josephsl)
+  * Updated markdown to 3.7. (#17459, @josephsl)
+  * Updated nh3 0.2.19. (#17465, @josephsl)
+  * Updated nuitka to 2.5.4. (#17458, @josephsl)
+  * Updated schedule to 1.2.2. (#17455, @josephsl)
+  * Updated requests to 2.32.3. (#17456, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
@@ -103,7 +108,9 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
-* Retrieving the `labeledBy` property now works for UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+* Retrieving the `labeledBy` property now works for:
+  * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
+  * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
 * Added the following extension points (#17428, @ctoth):
   * `inputCore.decide_handleRawKey`: called on each keypress
   * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
