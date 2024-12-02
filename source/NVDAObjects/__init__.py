@@ -47,7 +47,7 @@ import aria
 from winAPI.sessionTracking import isLockScreenModeActive
 
 if TYPE_CHECKING:
-	from textInfos import _LinkData
+	from utils.urlUtils import _LinkData
 
 
 class NVDAObjectTextInfo(textInfos.offsets.OffsetsTextInfo):

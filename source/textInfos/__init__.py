@@ -11,7 +11,6 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 
 from abc import abstractmethod
 from enum import Enum
-from dataclasses import dataclass
 import weakref
 import re
 import typing
@@ -31,6 +30,7 @@ import controlTypes
 from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
+from utils.urlUtils import _LinkData
 
 if typing.TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only
@@ -337,14 +337,6 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	import speech.types
 
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
-
-
-@dataclass
-class _LinkData:
-	"""Class to store information on a link."""
-
-	displayText: str | None
-	destination: str
 
 
 class TextInfo(baseObject.AutoPropertyObject):
@@ -783,7 +775,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			exactly 1 character.
 			A good illustration of this is in Microsoft Word with UIA enabled always,
 			the first character of a bullet list item would be represented by three pythonic codepoint characters:
-			* Bullet character "Ã¢â‚¬Â¢"
+			* Bullet character "•"
 			* Tab character \t
 			* And the first character of of list item per se.
 

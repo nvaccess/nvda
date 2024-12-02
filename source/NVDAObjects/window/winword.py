@@ -47,7 +47,7 @@ import locationHelper
 from enum import IntEnum
 import documentBase
 from utils.displayString import DisplayStringIntEnum
-from textInfos import _LinkData
+from utils.urlUtils import _LinkData
 
 if TYPE_CHECKING:
 	import inputCore

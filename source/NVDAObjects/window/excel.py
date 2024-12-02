@@ -29,7 +29,7 @@ from tableUtils import HeaderCellTracker
 import config
 from config.configFlags import ReportCellBorders
 import textInfos
-from textInfos import _LinkData
+from utils.urlUtils import _LinkData
 import colors
 import eventHandler
 import api

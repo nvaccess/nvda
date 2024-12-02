@@ -42,7 +42,7 @@ from logHandler import log
 import scriptHandler
 from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
-from textInfos import _LinkData
+from utils.urlUtils import _LinkData
 
 # Translators: The name of a category of NVDA commands.
 SCRCAT_POWERPOINT = _("PowerPoint")
