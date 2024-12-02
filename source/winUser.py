@@ -142,6 +142,9 @@ WS_HSCROLL = 0x100000
 WS_VSCROLL = 0x200000
 WS_CAPTION = 0xC00000
 WS_CLIPCHILDREN = 0x02000000
+WS_MAXIMIZEBOX = 0x00010000
+WS_CHILD = 0x40000000
+MS_SHOWMAGNIFIEDCURSOR = 0x0001
 WS_EX_TOPMOST = 0x00000008
 WS_EX_LAYERED = 0x80000
 WS_EX_TOOLWINDOW = 0x00000080
@@ -533,7 +536,7 @@ def getControlID(hwnd):
 	return user32.GetWindowLongW(hwnd, GWL_ID)
 
 
-def getClientRect(hwnd):
+def getClientRect(hwnd: HWND) -> RECT:
 	r = RECT()
 	if not user32.GetClientRect(hwnd, byref(r)):
 		raise WinError()
