@@ -9,6 +9,7 @@ This module provides functions for drawing Braille cells on a TactileGraphicsBuf
 """
 
 from . import TactileGraphicsBuffer
+from .utils import isPointInBounds
 
 
 CELL_WIDTH = 2
@@ -47,7 +48,6 @@ def drawBrailleCells(tgBuf: TactileGraphicsBuffer, x: int, y: int, cells: list[i
 		for dot in range(0, 8):
 			if 1 << dot & cell:
 				dotX, dotY = _brailleDotCoords[dot]
-				# Check if the coordinates are within bounds
-				if 0 <= (x + dotX) < tgBuf.width and 0 <= (y + dotY) < tgBuf.height:
+				if isPointInBounds(tgBuf, x + dotX, y + dotY):
 					tgBuf.setDot(x + dotX, y + dotY)
 		x += CELL_WIDTH + hCellPadding
