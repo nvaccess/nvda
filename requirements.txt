@@ -6,9 +6,9 @@ comtypes==1.4.6
 pyserial==3.5
 wxPython==4.2.2
 configobj @ git+https://github.com/DiffSK/configobj@8be54629ee7c26acb5c865b74c76284e80f3aa31#egg=configobj
-requests==2.32.0
+requests==2.32.3
 url-normalize==1.4.3
-schedule==1.2.1
+schedule==1.2.2
 -c constraints.txt
 
 #NVDA_DMP requires diff-match-patch
@@ -23,7 +23,7 @@ pycaw==20240210
 # Packaging NVDA
 py2exe==0.13.0.2
 # xliff2html is packaged with nuitka 
-nuitka==2.4.8
+nuitka==2.5.4
 
 # Creating XML unit test reports
 unittest-xml-reporting==3.2.0
