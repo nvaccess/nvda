@@ -27,11 +27,14 @@ Callback_T: TypeAlias = Callable[[], Any]
 
 
 class _Missing_Type:
+	"""Sentinel class to provide a nice repr."""
+
 	def __repr(self):
 		return "MISSING"
 
 
 _MISSING = _Missing_Type()
+"""Sentinel for discriminating between `None` and an actually omitted argument."""
 
 
 class ReturnCode(IntEnum):
@@ -217,10 +220,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	Random access still needs to be supported for the case of non-modal dialogs being closed out of order.
 	"""
 	_FAIL_ON_NONMAIN_THREAD = True
+	"""Class default for whether to run the :meth:`._checkMainThread` test."""
 	_FAIL_ON_NO_BUTTONS = True
+	"""Class default for whether to run the :meth:`._checkHasButtons` test."""
 
 	# region Constructors
 	def __new__(cls, *args, **kwargs) -> Self:
+		"""Override to disallow creation on non-main threads."""
 		cls._checkMainThread()
 		return super().__new__(cls, *args, **kwargs)
 
@@ -292,7 +298,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Add a button to the dialog.
 
 		:param id: The ID to use for the button.
-			If the dialog is to be shown modally, this will also be the return value if the dialog is closed with this button.
 		:param label: Text label to show on this button.
 		:param callback: Function to call when the button is pressed, defaults to None.
 			This is most useful for dialogs that are shown modelessly.
@@ -302,6 +307,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			The fallback action is called when the user closes the dialog with the escape key, title bar close button, system menu close item etc.
 			If multiple buttons with `fallbackAction=True` are added, the last one added will be the fallback action.
 		:param closesDialog: Whether the button should close the dialog when pressed, defaults to True.
+		:param returnCode: Override for the value returned from calls to :meth:`.ShowModal` when this button is pressed, defaults to None.
+			If None, the button's ID will be used instead.
+		:raises KeyError: If a button with this ID has already been added.
 		:return: The updated instance for chaining.
 		"""
 		if id in self._commands:
@@ -336,7 +344,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		/,
 		*args,
 		label: str | _Missing_Type = _MISSING,
-		callback: Callback_T | _Missing_Type = _MISSING,
+		callback: Callback_T | None | _Missing_Type = _MISSING,
 		defaultFocus: bool | _Missing_Type = _MISSING,
 		fallbackAction: bool | _Missing_Type = _MISSING,
 		closesDialog: bool | _Missing_Type = _MISSING,
@@ -346,14 +354,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Add a :class:`Button` to the dialog.
 
 		:param button: The button to add.
-		:param label: Override for `button.label`, defaults to None.
-		:param callback: Override for `button.callback`, defaults to None.
-		:param defaultFocus: Override for `button.defaultFocus`, defaults to None.
-		:param fallbackAction: Override for `button.fallbackAction`, defaults to None
-		:param closesDialog: Override for `button.closesDialog`, defaults to None
-		:return: Updated dialog instance for chaining.
-
-		.. seealso:: :class:`Button`
+		:param label: Override for :attr:`~.Button.label`, defaults to the passed button's `label`.
+		:param callback: Override for :attr:`~.Button.callback`, defaults to the passed button's `callback`.
+		:param defaultFocus: Override for :attr:`~.Button.defaultFocus`, defaults to the passed button's `defaultFocus`.
+		:param fallbackAction: Override for :attr:`~.Button.fallbackAction`, defaults to the passed button's `fallbackAction`.
+		:param closesDialog: Override for :attr:`~.Button.closesDialog`, defaults to the passed button's `closesDialog`.
+		:param returnCode: Override for :attr:`~.Button.returnCode`, defaults to the passed button's `returnCode`.
+		:return: The updated instance for chaining.
 		"""
 		keywords = button._asdict()
 		# We need to pass `id` as a positional argument as `singledispatchmethod` matches on the type of the first argument.
@@ -414,6 +421,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	addSaveNoCancelButtons.__doc__ = "Add Save, Don't save and Cancel buttons to the dialog."
 
 	def setButtonLabel(self, id: ReturnCode, label: str) -> Self:
+		"""Set the label of a button in the dialog.
+
+		:param id: ID of the button whose label you want to change.
+		:param label: New label for the button.
+		:return: Updated instance for chaining.
+		"""
 		self._setButtonLabels((id,), (label,))
 		return self
 
@@ -423,14 +436,33 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	setHelpLabel.__doc__ = "Set the label of the help button in the dialog, if there is one."
 
 	def setOkCancelLabels(self, okLabel: str, cancelLabel: str) -> Self:
+		"""Set the labels of the ok and cancel buttons in the dialog, if they exist."
+
+		:param okLabel: New label for the ok button.
+		:param cancelLabel: New label for the cancel button.
+		:return: Updated instance for chaining.
+		"""
 		self._setButtonLabels((ReturnCode.OK, ReturnCode.CANCEL), (okLabel, cancelLabel))
 		return self
 
 	def setYesNoLabels(self, yesLabel: str, noLabel: str) -> Self:
+		"""Set the labels of the yes and no buttons in the dialog, if they exist."
+
+		:param yesLabel: New label for the yes button.
+		:param noLabel: New label for the no button.
+		:return: Updated instance for chaining.
+		"""
 		self._setButtonLabels((ReturnCode.YES, ReturnCode.NO), (yesLabel, noLabel))
 		return self
 
 	def setYesNoCancelLabels(self, yesLabel: str, noLabel: str, cancelLabel: str) -> Self:
+		"""Set the labels of the yes and no buttons in the dialog, if they exist."
+
+		:param yesLabel: New label for the yes button.
+		:param noLabel: New label for the no button.
+		:param cancelLabel: New label for the cancel button.
+		:return: Updated instance for chaining.
+		"""
 		self._setButtonLabels(
 			(ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL),
 			(yesLabel, noLabel, cancelLabel),
@@ -438,6 +470,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return self
 
 	def setMessage(self, message: str) -> Self:
+		"""Set the textual message to display in the dialog.
+
+		:param message: New message to show.
+		:return: Updated instance for chaining.
+		"""
+		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
 		self._messageControl.SetLabelText(message)
 		self._isLayoutFullyRealized = False
 		return self
@@ -481,13 +519,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return self
 
 	def setDefaultAction(self, id: ReturnCode | EscapeCode) -> Self:
-		"""See MessageDialog.SetEscapeId."""
+		"""See :meth:`MessageDialog.SetEscapeId`."""
 		return self.SetEscapeId(id)
 
 	def Show(self, show: bool = True) -> bool:
 		"""Show a non-blocking dialog.
 
-		Attach buttons with button handlers
+		Attach buttons with :meth:`.addButton`, :meth:`.addButtons`, or any of their more specific helpers.
 
 		:param show: If True, show the dialog. If False, hide it. Defaults to True.
 		"""
@@ -496,25 +534,32 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._checkShowable()
 		self._realize_layout()
 		log.debug("Showing")
-		ret = super().Show(show)
-		if ret:
+		shown = super().Show(show)
+		if shown:
 			log.debug("Adding to instances")
 			self._instances.append(self)
-		return ret
+		return shown
 
 	def ShowModal(self) -> ReturnCode:
 		"""Show a blocking dialog.
-		Attach buttons with button handlers"""
+
+		Attach buttons with :meth:`.addButton`, :meth:`.addButtons`, or any of their more specific helpers.
+		"""
 		self._checkShowable()
 		self._realize_layout()
+
+		# We want to call `gui.message.showScriptModal` from our implementation of ShowModal, so we need to switch our instance out now that it's running and replace it with that provided by :class:`wx.Dialog`.
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
+		# Import late to avoid circular import.
 		from .message import displayDialogAsModal
 
 		log.debug("Adding to instances")
 		self._instances.append(self)
 		log.debug("Showing modal")
 		ret = displayDialogAsModal(self)
+
+		# Restore our implementation of ShowModal.
 		self.ShowModal = self.__ShowModal
 		return ret
 
@@ -525,7 +570,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	@property
 	def hasDefaultAction(self) -> bool:
-		"""Whether the dialog has a valid fallback action."""
+		"""Whether the dialog has a valid fallback action.
+
+		Assumes that any explicit action (i.e. not EscapeCode.NONE or EscapeCode.DEFAULT) is valid.
+		"""
 		escapeId = self.GetEscapeId()
 		return escapeId != EscapeCode.NONE and (
 			any(
@@ -541,21 +589,22 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	# region Public class methods
 	@classmethod
 	def CloseInstances(cls) -> None:
-		"""Close all dialogs with a fallback action"""
+		"""Close all dialogs with a fallback action.
+
+		This does not force-close all instances, so instances may vito being closed.
+		"""
 		for instance in cls._instances:
 			if not instance.isBlocking:
 				instance.Close()
 
 	@classmethod
 	def BlockingInstancesExist(cls) -> bool:
-		"""Check if dialogs are open without a default return code
-		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
+		"""Check if modal dialogs are open without a fallback action."""
 		return any(dialog.isBlocking for dialog in cls._instances)
 
 	@classmethod
 	def FocusBlockingInstances(cls) -> None:
-		"""Raise and focus open dialogs without a default return code
-		(eg Show without `self._defaultReturnCode`, or ShowModal without `wx.CANCEL`)"""
+		"""Raise and focus open modal dialogs without a fallback action."""
 		lastDialog: MessageDialog | None = None
 		for dialog in cls._instances:
 			if dialog.isBlocking:
@@ -672,16 +721,23 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Checks that must pass in order to show a Message Dialog.
 
 		If any of the specified tests fails, an appropriate exception will be raised.
+		See test implementations for details.
 
-		:param checkMainThread: Whether to check that we're running on the GUI thread, defaults to True
-		:param checkButtons: Whether to check there is at least one command registered, defaults to True
-		:raises RuntimeError: If the main thread check fails.
-		:raises RuntimeError: If the button check fails.
+		:param checkMainThread: Whether to check that we're running on the GUI thread, defaults to True.
+			Implemented in :meth:`._checkMainThread`.
+		:param checkButtons: Whether to check there is at least one command registered, defaults to True.
+			Implemented in :meth:`._checkHasButtons`.
 		"""
 		self._checkMainThread(checkMainThread)
 		self._checkHasButtons(checkButtons)
 
 	def _checkHasButtons(self, check: bool | None = None):
+		"""Check that the dialog has at least one button.
+
+		:param check: Whether to run the test or fallback to the class default, defaults to None.
+			If `None`, the value set in :const:`._FAIL_ON_NO_BUTTONS` is used.
+		:raises RuntimeError: If the dialog does not have any buttons.
+		"""
 		if check is None:
 			check = self._FAIL_ON_NO_BUTTONS
 		if check and not self.GetMainButtonIds():
@@ -689,12 +745,19 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 	@classmethod
 	def _checkMainThread(cls, check: bool | None = None):
+		"""Check that we're running on the main (GUI) thread.
+
+		:param check: Whether to run the test or fallback to the class default, defaults to None
+			If `None`, :const:`._FAIL_ON_NONMAIN_THREAD` is used.
+		:raises RuntimeError: If running on any thread other than the wxPython GUI thread.
+		"""
 		if check is None:
 			check = cls._FAIL_ON_NONMAIN_THREAD
 		if check and not wx.IsMainThread():
 			raise RuntimeError("Message dialogs can only be used from the main thread.")
 
 	def _realize_layout(self) -> None:
+		"""Perform layout adjustments prior to showing the dialog."""
 		if self._isLayoutFullyRealized:
 			return
 		if gui._isDebug():
@@ -800,6 +863,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		return id, command
 
 	def _setButtonLabels(self, ids: Collection[ReturnCode], labels: Collection[str]):
+		"""Set a batch of button labels atomically.
+
+		:param ids: IDs of the buttons whose labels should be changed.
+		:param labels: Labels for those buttons.
+		:raises ValueError: If the number of IDs and labels is not equal.
+		:raises KeyError: If any of the given IDs does not exist in the command registry.
+		:raises TypeError: If any of the IDs does not refer to a :class:`wx.Button`.
+		"""
 		if len(ids) != len(labels):
 			raise ValueError("The number of IDs and labels must be equal.")
 		buttons: list[wx.Button] = []
@@ -834,6 +905,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onShowEvt(self, evt: wx.ShowEvent):
+		"""Event handler for when the dialog is shown.
+
+		Responsible for playing the alert sound and focusing the default button.
+		"""
 		if evt.IsShown():
 			self._playSound()
 			if (defaultItem := self.GetDefaultItem()) is not None:
@@ -841,6 +916,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
+		"""Event handler for when the dialog is asked to close.
+
+		Responsible for calling fallback event handlers and scheduling dialog distruction.
+		"""
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
@@ -866,6 +945,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self._instances.remove(self)
 
 	def _onButton(self, evt: wx.CommandEvent):
+		"""Event handler for button presses.
+
+		Responsible for executing commands associated with buttons.
+		"""
 		id = evt.GetId()
 		log.debug(f"Got button event on {id=}")
 		try:
@@ -883,9 +966,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""Execute a command on this dialog.
 
 		:param id: ID of the command to execute.
-		:param command: Command to execute, defaults to None
+		:param command: Command to execute, defaults to None.
 			If None, the command to execute will be looked up in the dialog's registered commands.
-		:param _canCallClose: Whether or not to close the dialog if the command says to, defaults to True
+		:param _canCallClose: Whether or not to close the dialog if the command says to, defaults to True.
 			Set to False when calling from a close handler.
 		"""
 		if command is None:
@@ -912,7 +995,7 @@ def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | 
 	:param message: The message to display.
 	:param caption: Title of the message box.
 	:param style: See :fun:`wx.MessageBox`.
-	:param parent: Parent of the dialog. If None, `gui.mainFrame` will be used.
+	:param parent: Parent of the dialog. If None, :data:`gui.mainFrame` will be used.
 	:raises Exception: Any exception raised by attempting to create a message box.
 	:return: See :fun:`wx.MessageBox`.
 	"""
@@ -929,7 +1012,7 @@ def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | 
 def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> int:
 	"""Map from an instance of :class:`ReturnCode` to an int as returned by :fun:`wx.MessageBox`.
 
-	Note that only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.`
+	Note that only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.
 
 	:param returnCode: Return from :class:`MessageDialog`.
 	:raises ValueError: If the return code is not supported by :fun:`wx.MessageBox`.
