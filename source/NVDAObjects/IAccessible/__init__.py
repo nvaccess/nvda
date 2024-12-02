@@ -9,7 +9,6 @@ from typing import (
 	Optional,
 	Tuple,
 	Union,
-	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
@@ -1162,13 +1161,20 @@ class IAccessible(Window):
 			return False
 		return True
 
-	def _get_labeledBy(self):
+	def _get_labeledBy(self) -> "IAccessible | None":
+		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
+		if label:
+			return label
+
 		try:
-			(pacc, accChild) = IAccessibleHandler.accNavigate(
+			ret = IAccessibleHandler.accNavigate(
 				self.IAccessibleObject,
 				self.IAccessibleChildID,
 				IAccessibleHandler.NAVRELATION_LABELLED_BY,
 			)
+			if not ret:
+				return None
+			(pacc, accChild) = ret
 			obj = IAccessible(IAccessibleObject=pacc, IAccessibleChildID=accChild)
 			return obj
 		except COMError:
@@ -1940,7 +1946,7 @@ class IAccessible(Window):
 		# due to caching of baseObject.AutoPropertyObject, do not attempt to return a generator.
 		return tuple(detailsRelsGen)
 
-	def _get_controllerFor(self) -> List[NVDAObject]:
+	def _get_controllerFor(self) -> list[NVDAObject]:
 		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
 		if control:
 			return [control]
