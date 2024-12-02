@@ -584,7 +584,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 
 		def impl():
-			cls(parent, message, caption, buttons=None).addOkButton(label=okLabel).ShowModal()
+			dlg = cls(parent, message, caption, buttons=(DefaultButton.OK,))
+			if okLabel is not None:
+				dlg.setOkLabel(okLabel)
+			dlg.ShowModal()
 
 		wxCallOnMain(impl)
 
@@ -609,12 +612,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 
 		def impl():
-			return (
-				cls(parent, message, caption, buttons=None)
-				.addOkButton(label=okLabel)
-				.addCancelButton(label=cancelLabel)
-				.ShowModal()
-			)
+			dlg = cls(parent, message, caption, buttons=DefaultButtonSet.OK_CANCEL)
+			if okLabel is not None:
+				dlg.setOkLabel(okLabel)
+			if cancelLabel is not None:
+				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
+			return dlg.ShowModal()
 
 		return wxCallOnMain(impl)  # type: ignore
 
@@ -640,13 +643,14 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 
 		def impl():
-			return (
-				cls(parent, message, caption, buttons=None)
-				.addYesButton(label=yesLabel)
-				.addNoButton(label=noLabel)
-				.addCancelButton(label=cancelLabel)
-				.ShowModal()
-			)
+			dlg = cls(parent, message, caption, buttons=DefaultButtonSet.YES_NO_CANCEL)
+			if yesLabel is not None:
+				dlg.setButtonLabel(ReturnCode.YES, yesLabel)
+			if noLabel is not None:
+				dlg.setButtonLabel(ReturnCode.NO, noLabel)
+			if cancelLabel is not None:
+				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
+			return dlg.ShowModal()
 
 		return wxCallOnMain(impl)  # type: ignore
 
