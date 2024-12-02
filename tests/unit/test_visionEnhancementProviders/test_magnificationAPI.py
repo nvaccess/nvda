@@ -7,7 +7,7 @@
 
 import unittest
 
-from visionEnhancementProviders.screenCurtain import Magnification, TRANSFORM_BLACK
+from visionEnhancementProviders.screenCurtain import Magnification, TRANSFORM_BLACK, MAGCOLOREFFECT
 
 
 class _Test_MagnificationAPI(unittest.TestCase):
@@ -19,6 +19,29 @@ class _Test_MagnificationAPI(unittest.TestCase):
 
 
 class Test_ScreenCurtain(_Test_MagnificationAPI):
+	def _isIdentityMatrix(self, magTransformMatrix: MAGCOLOREFFECT) -> bool:
+		for i in range(5):
+			for j in range(5):
+				if i == j:
+					if magTransformMatrix.transform[i][j] != 1:
+						return False
+				else:
+					if magTransformMatrix.transform[i][j] != 0:
+						return False
+		return True
+
+	def setUp(self):
+		super().setUp()
+		resultEffect = Magnification.MagGetFullscreenColorEffect()
+		if not self._isIdentityMatrix(resultEffect):
+			# If the resultEffect is not the identity matrix, skip the test.
+			# This is because a full screen colour effect is already set external to testing.
+			self.skipTest(
+				f"resultEffect={resultEffect}, should be identity matrix. "
+				"Full screen colour effect set external to tests. "
+			)
+		return
+
 	def test_setAndConfirmBlackFullscreenColorEffect(self):
 		result = Magnification.MagSetFullscreenColorEffect(TRANSFORM_BLACK)
 		self.assertTrue(result)
@@ -28,18 +51,6 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 				with self.subTest(i=i, j=j):
 					self.assertEqual(
 						TRANSFORM_BLACK.transform[i][j],
-						resultEffect.transform[i][j],
-						msg=f"i={i}, j={j}, resultEffect={resultEffect}",
-					)
-
-	def test_getDefaultIdentityFullscreenColorEffect(self):
-		resultEffect = Magnification.MagGetFullscreenColorEffect()
-		for i in range(5):
-			for j in range(5):
-				with self.subTest(i=i, j=j):
-					# The transform matrix should be the identity matrix
-					self.assertEqual(
-						int(i == j),
 						resultEffect.transform[i][j],
 						msg=f"i={i}, j={j}, resultEffect={resultEffect}",
 					)
