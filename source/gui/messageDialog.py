@@ -235,44 +235,42 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		helpId: str = "",
 	):
 		self._checkMainThread()
-		self.helpId = helpId
+		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
 		super().__init__(parent, title=title)
-		self.EnableCloseButton(False)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
 
+		# Stylistic matters.
+		self.EnableCloseButton(False)
 		self._setIcon(dialogType)
 		self._setSound(dialogType)
+
+		# Bind event listeners.
 		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
 		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
 		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
 		self.Bind(wx.EVT_BUTTON, self._onButton)
 
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-		self._contentsSizer = contentsSizer
-		self._mainSizer = mainSizer
-
-		# Use SetLabelText to avoid ampersands being interpreted as accelerators.
-		self._messageControl = text = wx.StaticText(self)
-		self.setMessage(message)
-		contentsSizer.addItem(text)
-		self._addContents(contentsSizer)
-
-		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
+		# Scafold the dialog.
+		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizer = self._contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
+		messageControl = self._messageControl = wx.StaticText(self)
+		contentsSizer.addItem(messageControl)
+		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
 		contentsSizer.addDialogDismissButtons(buttonHelper)
-		self._buttonHelper = buttonHelper
-		self._addButtons(buttonHelper)
-		if buttons is not None:
-			self.addButtons(buttons)
-
 		mainSizer.Add(
 			contentsSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
 			flag=wx.ALL,
 		)
-		# mainSizer.Fit(self)
 		self.SetSizer(mainSizer)
+
+		# Finally, populate the dialog.
+		self.setMessage(message)
+		self._addContents(contentsSizer)
+		self._addButtons(buttonHelper)
+		if buttons is not None:
+			self.addButtons(buttons)
 
 	# endregion
 
@@ -320,7 +318,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			closesDialog = True
 		self._commands[buttonId] = _Command(
 			callback=callback,
-			closesDialog=closesDialog or fallbackAction,
+			closesDialog=closesDialog,
 			ReturnCode=buttonId if returnCode is None else returnCode,
 		)
 		if defaultFocus:
@@ -811,7 +809,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			elif isinstance((button := self.FindWindow(id)), wx.Button):
 				buttons.append(button)
 			else:
-				raise ValueError(
+				raise TypeError(
 					f"{id=} exists in command registry, but does not refer to a wx.Button. This indicates a logic error.",
 				)
 		for button, label in zip(buttons, labels):
