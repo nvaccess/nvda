@@ -69,8 +69,9 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
 * When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
 * Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)
-* In Notepad and other UIA documents on Windows 11, if the last line is empty, the `braille next line command` will move the cursor to the last line.
-In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, @nvdaes)
+* In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
+In any document, if the cursor is on the last line, it will be moved to the end when using this command.
+(#17251, #17430, @nvdaes)
 
 ### Changes for Developers
 
@@ -87,6 +88,13 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Updated Robot Framework to 7.1.1. (#17329, @josephsl)
   * Updated configobj to 5.1.0 commit `8be5462`. (#17328)
   * Updated pre-commit to 4.0.1. (#17260)
+  * Updated typing-extensions to 4.12.2. (#17438, @josephsl)
+  * Updated licensecheck to 2024.3. (#17440, @josephsl)
+  * Updated markdown to 3.7. (#17459, @josephsl)
+  * Updated nh3 0.2.19. (#17465, @josephsl)
+  * Updated nuitka to 2.5.4. (#17458, @josephsl)
+  * Updated schedule to 1.2.2. (#17455, @josephsl)
+  * Updated requests to 2.32.3. (#17456, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
@@ -100,6 +108,10 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Retrieving the `labeledBy` property now works for:
+  * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
+  * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+
 
 #### API Breaking Changes
 
@@ -117,6 +129,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
+* In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
 
