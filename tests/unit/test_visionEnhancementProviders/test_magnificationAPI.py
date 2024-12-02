@@ -38,7 +38,7 @@ class Test_ScreenCurtain(_Test_MagnificationAPI):
 			# This is because a full screen colour effect is already set external to testing.
 			self.skipTest(
 				f"resultEffect={resultEffect}, should be identity matrix. "
-				"Full screen colour effect set external to tests. "
+				"Full screen colour effect set external to tests. ",
 			)
 		return
 
