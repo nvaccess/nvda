@@ -58,5 +58,6 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 @dataclass
 class _LinkData:
 	"""Class to store information on a link."""
+
 	displayText: str | None
 	destination: str
