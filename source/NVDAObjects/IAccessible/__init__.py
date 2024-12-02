@@ -1161,7 +1161,7 @@ class IAccessible(Window):
 			return False
 		return True
 
-	def _get_labeledBy(self) -> "IAccessible" | None:
+	def _get_labeledBy(self) -> "IAccessible | None":
 		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
 		if label:
 			return label
