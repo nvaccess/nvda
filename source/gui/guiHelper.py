@@ -465,6 +465,8 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 
 
 class _WxCallOnMainResult:
+	"""Container to hold either the return value or exception raised by a function."""
+
 	__slots__ = ("result", "exception")
 
 
@@ -480,37 +482,33 @@ def wxCallOnMain(
 ) -> _WxCallOnMain_T:
 	"""Call a non-thread-safe wx function in a thread-safe way.
 
-	Using this function is prefferable over calling :fun:`wx.CallAfter` directly when you care about the return time value of the function.
+	Using this function is prefferable over calling :fun:`wx.CallAfter` directly when you care about the return time or return value of the function.
+
+	This function blocks the thread on which it is called.
 
 	:param function: Callable to call on the main GUI thread.
 		If this thread is the GUI thread, the function will be called immediately.
-		Otherwise, it will be scheduled to be called on the GUI thread, and this thread will wait until it returns.
-	:return: Return value from calling the function with given positional and keyword arguments.
+		Otherwise, it will be scheduled to be called on the GUI thread.
+		In either case, the current thread will be blocked until it returns.
+	:raises Exception: If `function` raises an exception, it is transparently re-raised so it can be handled on the calling thread.
+	:return: Return value from calling `function` with the given positional and keyword arguments.
 	"""
 	result = _WxCallOnMainResult()
 	event = threading.Event()
 
 	def functionWrapper():
-		print("In wrapper.")
 		try:
-			print("Calling function.")
 			result.result = function(*args, **kwargs)
 		except Exception:
-			print("Got an exception.")
 			result.exception = sys.exception
-		print("Set event.")
 		event.set()
-		print("Out of wrapper.")
 
 	if wx.IsMainThread():
-		print("On main thread, calling immediately.")
 		functionWrapper()
 	else:
-		print("In background, using call after.")
 		wx.CallAfter(functionWrapper)
-		print("Waiting...")
 		event.wait()
-		print("Done waiting.")
+
 	try:
 		return result.result
 	except AttributeError:
