@@ -245,6 +245,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		super().__init__(parent, title=title)
 		self._isLayoutFullyRealized = False
 		self._commands: dict[int, _Command] = {}
+		"""Registry of commands bound to this MessageDialog."""
 
 		# Stylistic matters.
 		self.EnableCloseButton(False)
