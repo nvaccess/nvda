@@ -567,7 +567,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	@property
 	def isBlocking(self) -> bool:
 		"""Whether or not the dialog is blocking"""
-		return self.IsModal() and not self.hasDefaultAction
+		return self.IsModal() or not self.hasDefaultAction
 
 	@property
 	def hasDefaultAction(self) -> bool:
