@@ -68,7 +68,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
-* A new function, `gui.guiHelper.wxCallOnMain`, has been added, which allows safely and syncronously calling wx functions from non-GUI threads, and getting their return value.
+* A new function, `gui.guiHelper.wxCallOnMain`, has been added, which allows safely and syncronously calling wx functions from non-GUI threads, and getting their return value. (#17304)
 
 #### API Breaking Changes
 
@@ -92,7 +92,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
 * The `gui.message.messageBox` function and `gui.nvdaControls.MessageDialog` class are deprecated.
-Use `gui.message.MessageDialog` instead.
+Use `gui.message.MessageDialog` instead. (#17304)
 
 ## 2024.4
 
