@@ -594,11 +594,9 @@ class GlobalCommands(ScriptableObject):
 			configSection="keyboard",
 			configKey="maskPasswords",
 			# Translators: The message announced when toggling the mask passwords setting.
-			enabledMsg=_(
-				"Mask passwords while typing on",
-			),
+			enabledMsg=_("Mask passwords while typing on"),
 			# Translators: The message announced when toggling the mask passwords setting.
-			disabledMsg=_("mask passwords while typing off"),
+			disabledMsg=_("Mask passwords while typing off"),
 		)
 
 	@script(
