@@ -353,16 +353,15 @@ def setNavigatorObject(obj: NVDAObjects.NVDAObject, isFocus: bool = False) -> bo
 	return True
 
 
-def isTypingProtected():
+def isTypingProtected() -> bool:
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
-	@returns: True if it should be suppressed, False otherwise.
-	@rtype: boolean
+	:return: True if it should be suppressed, False otherwise.
 	"""
 	focusObject = getFocusObject()
-	if focusObject and focusObject.isProtected:
-		return True
-	else:
+	isFocusProtected = focusObject is not None and focusObject.isProtected
+	if not config.conf["keyboard"]["maskPasswords"]:
 		return False
+	return isFocusProtected
 
 
 def createStateList(states):

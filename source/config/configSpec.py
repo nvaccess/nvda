@@ -187,6 +187,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	speechInterruptForEnter = boolean(default=true)
 	allowSkimReadingInSayAll = boolean(default=False)
 	alertForSpellingErrors = boolean(default=True)
+	maskPasswords = boolean(default=True)
 	handleInjectedKeys= boolean(default=true)
 	multiPressTimeout = integer(default=500, min=100, max=20000)
 

@@ -27,6 +27,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
 * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
+* From keyboard settings, the masking of passwords can be disabled so that real typed characters can be announced even in protected edit boxes (#17451, @nvdaes)
 
 ### Changes
 
