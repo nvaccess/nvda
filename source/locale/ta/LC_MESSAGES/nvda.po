@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 23:33+0000\n"
-"PO-Revision-Date: 2024-09-09 00:08\n"
+"POT-Creation-Date: 2024-10-07 00:09+0000\n"
+"PO-Revision-Date: 2024-10-08 00:29\n"
 "Last-Translator: \n"
 "Language-Team: Tamil\n"
 "Language: ta_IN\n"
@@ -2707,22 +2707,22 @@ msgstr "முந்தைய கீற்று ஏதுமில்லை"
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1155
 msgid "moves to the next figure"
-msgstr "அடுத்த வடிவத்திற்கு நகர்கிறது"
+msgstr "அடுத்த உருவத்திற்கு நகர்கிறது"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1157
 msgid "no next figure"
-msgstr "அடுத்த வடிவம் ஏதுமில்லை"
+msgstr "அடுத்த உருவம் ஏதுமில்லை"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1159
 msgid "moves to the previous figure"
-msgstr "முந்தைய வடிவத்திற்கு நகர்கிறது"
+msgstr "முந்தைய உருவத்திற்கு நகர்கிறது"
 
 #. Translators: Message presented when the browse mode element is not found.
 #: browseMode.py:1161
 msgid "no previous figure"
-msgstr "முந்தைய வடிவம் ஏதுமில்லை"
+msgstr "முந்தைய உருவம் ஏதுமில்லை"
 
 #. Translators: Input help message for a quick navigation command in browse mode.
 #: browseMode.py:1167
@@ -4386,19 +4386,19 @@ msgstr "சொடுக்கப்படக்கூடியதா என்�
 #. Translators: Input help mode message for toggle report figures and captions command.
 #: globalCommands.py:1067
 msgid "Toggles on and off the reporting of figures and captions"
-msgstr "வடிவங்கள் மற்றும் வடிவவிளக்கங்களின் அறிவித்தலை முடுக்குகிறது, அல்லது முடக்குகிறது"
+msgstr "உருவங்கள் மற்றும் உருவவிளக்கங்களின் அறிவித்தலை முடுக்குகிறது, அல்லது முடக்குகிறது"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
 #: globalCommands.py:1074
 msgid "report figures and captions off"
-msgstr "வடிவங்கள் மற்றும் வடிவவிளக்கங்களின் அறிவித்தல் முடக்கப்பட்டது"
+msgstr "உருவங்கள் மற்றும் உருவவிளக்கங்களின் அறிவித்தல் முடக்கப்பட்டது"
 
 #. Translators: The message announced when toggling the report figures and captions document formatting
 #. setting.
 #: globalCommands.py:1079
 msgid "report figures and captions on"
-msgstr "வடிவங்கள் மற்றும் வடிவவிளக்கங்களின் அறிவித்தல் முடுக்கப்பட்டது"
+msgstr "உருவங்கள் மற்றும் உருவவிளக்கங்களின் அறிவித்தல் முடுக்கப்பட்டது"
 
 #. Translators: Input help mode message for cycle through automatic language switching mode command.
 #: globalCommands.py:1086
@@ -6328,25 +6328,25 @@ msgid "tab"
 msgstr "தத்தல்"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "மேசைக்கணினி"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "மடிக்கணினி"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "அறியப்படாதது %s"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "இடப்பட்டது"
@@ -6355,7 +6355,7 @@ msgstr "இடப்பட்டது"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "நீக்கப்பட்டது"
@@ -6363,13 +6363,13 @@ msgstr "நீக்கப்பட்டது"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "%s விசைப்பலகை"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "விசைப்பலகை; எல்லாத் தளவமைப்புகளும்"
 
@@ -9562,7 +9562,7 @@ msgstr "கேய்க்கு ஆல்பட்ராஸ் 46/80"
 #: brailleDisplayDrivers\albatross\driver.py:485
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr ""
+msgstr "என்விடிஏவுடன் அல்பட்ராஸைப் பயன்படுத்த, அல்பட்ராஸின் உள்ளக பட்டியலில் காணப்படும் நிலைப் பிரெயில் களங்களின் எண்ணிக்கையை 'பல' {maxCells} என மாற்றி, தேவைப்பட்டால், அல்பட்ராஸையும், என்விடிஏவையும் மறுதுவக்கவும்."
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -10794,7 +10794,7 @@ msgstr "பகுதி"
 #. Translators: Identifies a figure (commonly seen on some websites).
 #: controlTypes\role.py:522
 msgid "figure"
-msgstr "வடிவம்"
+msgstr "உருவம்"
 
 #. Translators: Identifies marked (highlighted) content
 #: controlTypes\role.py:524
@@ -12581,7 +12581,7 @@ msgstr "பிற பயன்பாடுகளின் விசைகளை�
 #. Translators: The label for a control in keyboard settings to modify the timeout for a multiple keypress.
 #: gui\settingsDialogs.py:1991
 msgid "&Multiple key press timeout (ms):"
-msgstr "பல்விசை அழுத்தத்திற்கான காலாவதி நேரம் (நுண்ணொடிகளில்) (&M):"
+msgstr "பல விசைகள் அழுத்தத்திற்கான காலாவதி நேரம் (நுண்வினாடிகளில்) (&M):"
 
 #. Translators: Message to report wrong configuration of the NVDA key
 #: gui\settingsDialogs.py:2007
@@ -13088,7 +13088,7 @@ msgstr "சட்டகங்கள் (&M)"
 #. document formatting settings panel.
 #: gui\settingsDialogs.py:2845
 msgid "&Figures and captions"
-msgstr "வடிவங்களும் வடிவவிளக்கங்களும் (&F)"
+msgstr "உருவங்களும் உருவவிளக்கங்களும் (&F)"
 
 #. Translators: This is the label for a checkbox in the
 #. document formatting settings panel.
@@ -13495,7 +13495,7 @@ msgstr "தொகுக்கப்படக்்கூடிய உரை"
 #. Advanced settings panel.
 #: gui\settingsDialogs.py:3584
 msgid "Caret movement timeout (in ms)"
-msgstr "சுட்டியின் நகர்வு காட்சியளிக்கும் நேரம் (நுண்ணொடிகளில்)"
+msgstr "சுட்டியின் நகர்வு காட்சியளிக்கும் நேரம் (நுண்வினாடிகளில்)"
 
 #. Translators: This is the label for a checkbox control in the
 #. Advanced settings panel.
@@ -13646,7 +13646,7 @@ msgstr "சுட்டி இமைத்தல்"
 #. Translators: The label for a setting in braille settings to change cursor blink rate in milliseconds (1 second is 1000 milliseconds).
 #: gui\settingsDialogs.py:4244
 msgid "Cursor blink rate (ms)"
-msgstr "சுட்டி இமைக்கும் விகிதம் (நுண்ணொடிகளில்)"
+msgstr "சுட்டி இமைக்கும் விகிதம் (நுண்வினாடிகளில்)"
 
 #. Translators: The label for a setting in braille settings to select the cursor shape when tethered to focus.
 #: gui\settingsDialogs.py:4266

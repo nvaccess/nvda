@@ -10,6 +10,7 @@ from typing import (
 	Optional,
 	Dict,
 	Generator,
+	Self,
 	TYPE_CHECKING,
 )
 
@@ -19,6 +20,7 @@ import comtypes.automation
 import colorsys
 import eventHandler
 import braille
+import scriptHandler
 from scriptHandler import script
 import languageHandler
 import ui
@@ -40,9 +42,11 @@ import browseMode
 from . import Window
 from ..behaviors import EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
+from ._msOffice import MsoHyperlink
 import locationHelper
 from enum import IntEnum
 import documentBase
+from utils.displayString import DisplayStringIntEnum
 
 if TYPE_CHECKING:
 	import inputCore
@@ -78,6 +82,69 @@ wdStartOfRangeRowNumber = 13
 wdMaximumNumberOfRows = 15
 wdStartOfRangeColumnNumber = 16
 wdMaximumNumberOfColumns = 18
+
+
+class WdUnderline(DisplayStringIntEnum):
+	# Word underline styles
+	# see https://docs.microsoft.com/en-us/office/vba/api/word.wdunderline
+	NONE = 0
+	SINGLE = 1
+	WORDS = 2
+	DOUBLE = 3
+	DOTTED = 4
+	THICK = 6
+	DASH = 7
+	DOT_DASH = 9
+	DOT_DOT_DASH = 10
+	WAVY = 11
+	DOTTED_HEAVY = 20
+	DASH_HEAVY = 23
+	DOT_DASH_HEAVY = 25
+	DOT_DOT_DASH_HEAVY = 26
+	WAVY_HEAVY = 27
+	DASH_LONG = 39
+	WAVY_DOUBLE = 43
+	DASH_LONG_HEAVY = 55
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			WdUnderline.SINGLE: "",  # For single underline we just say "underline"
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WORDS: _("Words only"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOUBLE: _("Double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED: _("Dotted"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.THICK: _("Thick"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH: _("Dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH: _("Dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH: _("Dot dot dash"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY: _("Wave"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOTTED_HEAVY: _("Dotted heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_HEAVY: _("Dashed heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DASH_HEAVY: _("Dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DOT_DOT_DASH_HEAVY: _("Dot dot dash heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_HEAVY: _("Wave heavy"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG: _("Dashed long"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.WAVY_DOUBLE: _("Wave double"),
+			# Translators: an underline style in Microsoft Word as announced in the font window.
+			WdUnderline.DASH_LONG_HEAVY: _("Dashed long heavy"),
+		}
+
+
 # Horizontal alignment
 wdAlignParagraphLeft = 0
 wdAlignParagraphCenter = 1
@@ -199,6 +266,54 @@ wdThemeColorMainLight1 = 1
 wdThemeColorMainLight2 = 3
 wdThemeColorText1 = 13
 wdThemeColorText2 = 15
+
+
+class WdCharacterCase(DisplayStringIntEnum):
+	# Word enumeration that specifies the case of the text in the specified range.
+	# See https://docs.microsoft.com/en-us/office/vba/api/word.wdcharactercase
+
+	# No case: Returned when the selection range contains only case-insensitive characters.
+	# Note: MS also uses it as a command for "next case" (Toggles between uppercase, lowercase, and sentence
+	# case).
+	NO_CASE = -1
+	LOWER_CASE = 0
+	UPPER_CASE = 1
+	TITLE_WORD = 2
+	TITLE_SENTENCE = 4
+	# Mixed case: Unorganized mix of lower and upper case.
+	# Note: MS also uses it as a command for toggle case (Switches uppercase characters to lowercase, and
+	# lowercase characters to uppercase)
+	MIXED_CASE = 5
+	HALF_WIDTH = 6  # Used for Japanese characters.
+	FULL_WIDTH = 7  # Used for Japanese characters.
+	KATAKANA = 8  # Used with Japanese text.
+	HIRAGANA = 9  # Used with Japanese text.
+
+	@property
+	def _displayStringLabels(self) -> dict[Self, str]:
+		return {
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.NO_CASE: _("No case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.LOWER_CASE: _("Lowercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.UPPER_CASE: _("Uppercase"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_WORD: _("Each word capitalized"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.TITLE_SENTENCE: _("Sentence case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.MIXED_CASE: _("Mixed case"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HALF_WIDTH: _("Half width"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.FULL_WIDTH: _("Full width"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.KATAKANA: _("Katakana"),
+			# Translators: a Microsoft Word character case type
+			WdCharacterCase.HIRAGANA: _("Hiragana"),
+		}
+
 
 # Word Field types
 FIELD_TYPE_REF = 3  # cross reference field
@@ -739,14 +854,14 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 						initialDocument=self.obj,
 					),
 				)
+
 		# Handle activating links.
+		link = self._getLinkAtCaretPosition()
+		if link:
+			link.follow()
+			return
 		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
 		tempRange = self._rangeObj.duplicate
-		tempRange.expand(wdWord)
-		links = tempRange.hyperlinks
-		if links.count > 0:
-			links[1].follow()
-			return
 		tempRange.expand(wdParagraph)
 		fields = tempRange.fields
 		for field in (fields.item(i) for i in range(1, fields.count + 1)):
@@ -781,6 +896,42 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			speech.speakTextInfo(tiCopy, reason=controlTypes.OutputReason.FOCUS)
 			braille.handler.handleCaretMove(self)
 			return
+
+	def _getLinkAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
+		# It is necessary to expand to word to get a link as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		links = tempRange.hyperlinks
+		if links.count > 0:
+			return links[1]
+		return None
+
+	def _getShapeAtCaretPosition(self) -> comtypes.client.lazybind.Dispatch | None:
+		# It is necessary to expand to word to get a shape as the link's first character is never actually in the link!
+		tempRange = self._rangeObj.duplicate
+		tempRange.expand(wdWord)
+		shapes = tempRange.InlineShapes
+		if shapes.count > 0:
+			return shapes[1]
+		return None
+
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		link = self._getLinkAtCaretPosition()
+		if not link:
+			return None
+		match link.Type:
+			case MsoHyperlink.RANGE:
+				text = link.TextToDisplay
+			case MsoHyperlink.INLINE_SHAPE:
+				shape = self._getShapeAtCaretPosition()
+				text = shape.AlternativeText
+			case _:
+				log.debugWarning(f"No text to display for link type {link.Type}")
+				text = None
+		return textInfos._Link(
+			displayText=text,
+			destination=link.Address,
+		)
 
 	def _expandToLineAtCaret(self):
 		lineStart = ctypes.c_int()
@@ -966,8 +1117,6 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 		return newField
 
 	def _normalizeFormatField(self, field, extraDetail=False):
-		_startOffset = int(field.pop("_startOffset"))
-		_endOffset = int(field.pop("_endOffset"))
 		lineSpacingRule = field.pop("wdLineSpacingRule", None)
 		lineSpacingVal = field.pop("wdLineSpacing", None)
 		if lineSpacingRule is not None:
@@ -1509,6 +1658,7 @@ class WordDocument(Window):
 			curTime = time.time()
 		return curVal
 
+	@script(gesture="kb:control+b")
 	def script_toggleBold(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1526,6 +1676,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Bold off"))
 
+	@script(gestures=["kb:control+i", "kb:control+shift+i"])
 	def script_toggleItalic(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1543,23 +1694,87 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Italic off"))
 
-	def script_toggleUnderline(self, gesture):
+	@script(gestures=["kb:control+u", "kb:control+shift+u", "kb:control+shift+d"])
+	def script_toggleUnderline(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the format change.
-			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail, or its within Windows Defender Application Guard.
-			# Eventually UIA will have its own way of detecting format changes at the cursor. For now, just let the gesture through and don't erport anything.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
 			return gesture.send()
 		val = self._WaitForValueChangeForAction(
 			lambda: gesture.send(),
 			lambda: self.WinwordSelectionObject.font.underline,
 		)
-		if val:
-			# Translators: a message when toggling formatting in Microsoft word
-			ui.message(_("Underline on"))
+		if val != WdUnderline.NONE:
+			try:
+				style = WdUnderline(val).displayString
+				if len(style) > 0:
+					style += " "
+				# Translators: a message when toggling formatting in Microsoft word
+				ui.message(_("Underline {style}on").format(style=style))
+			except ValueError:
+				# In case an unlisted value is returned by Word Object model.
+				# This may happen if the selection contains multiple underline styles and if the gesture has failed to
+				# apply the underline style (e.g. too short timeout, gesture mismatch due to localization mismatch
+				# between Word and NVDA, etc.)
+				log.debugWarning(f"No underline value for {val}")
 		else:
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Underline off"))
 
+	@script(gesture="kb:control+shift+k")
+	def script_toggleCaps(self, gesture: "inputCore.InputGesture"):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			# Eventually UIA will have its own way of detecting format changes at the cursor.
+			# For now, just let the gesture through and don't report anything.
+			return gesture.send()
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: (self.WinwordSelectionObject.font.allcaps, self.WinwordSelectionObject.font.smallcaps),
+		)
+		if val[0]:
+			# Translators: a message when toggling formatting to 'all capital' in Microsoft word
+			ui.message(_("All caps on"))
+		elif val[1]:
+			# Translators: a message when toggling formatting to 'small capital' in Microsoft word
+			ui.message(_("Small caps on"))
+		else:
+			# Translators: a message when toggling formatting to 'No capital' in Microsoft word
+			ui.message(_("Caps off"))
+
+	@script(gesture="kb:shift+f3")
+	def script_changeCase(self, gesture: "inputCore.InputGesture"):
+		if (
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or its within Windows Defender Application Guard.
+			not self.WinwordSelectionObject
+			# Or we do not want to apply the delay due in case of multipe repetition of the script.
+			or scriptHandler.isScriptWaiting()
+		):
+			# Just let the gesture through and don't report anything.
+			return gesture.send()
+
+		def action():
+			gesture.send()
+			# The object model for the "case" property is not fully reliable when using switch case command. During
+			# the switch, the "case" property quickly transitions through "lower case" or "no case", especially in
+			# Outlook. Thus we artificially add an empirical delay after the gesture has been send and before the
+			# first check.
+			time.sleep(0.15)
+
+		val = self._WaitForValueChangeForAction(
+			action=action,
+			fetcher=lambda: self.WinwordSelectionObject.Range.Case,
+		)
+		# Translators: a message when changing case in Microsoft Word
+		ui.message(WdCharacterCase(val).displayString)
+
+	@script(gestures=["kb:control+l", "kb:control+e", "kb:control+r", "kb:control+j"])
 	def script_toggleAlignment(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1600,6 +1815,7 @@ class WordDocument(Window):
 		msg = self.getLocalizedMeasurementTextForPointSize(margin + val)
 		ui.message(msg)
 
+	@script(gestures=["kb:control+=", "kb:control+shift+="])
 	def script_toggleSuperscriptSubscript(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1623,6 +1839,7 @@ class WordDocument(Window):
 			# Translators: a message when toggling formatting in Microsoft word
 			ui.message(_("Baseline"))
 
+	@script(gesture="kb:alt+shift+downArrow")
 	def script_moveParagraphDown(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1638,6 +1855,7 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved below a blank paragraph
 				ui.message(_("Moved below blank paragraph"))
 
+	@script(gesture="kb:alt+shift+upArrow")
 	def script_moveParagraphUp(self, gesture):
 		oldBookmark = self.makeTextInfo(textInfos.POSITION_CARET).bookmark
 		gesture.send()
@@ -1654,6 +1872,16 @@ class WordDocument(Window):
 				# Translators: a message reported when a paragraph is moved above a blank paragraph
 				ui.message(_("Moved above blank paragraph"))
 
+	@script(
+		gestures=[
+			"kb:alt+shift+rightArrow",
+			"kb:alt+shift+leftArrow",
+			"kb:control+shift+n",
+			"kb:control+alt+1",
+			"kb:control+alt+2",
+			"kb:control+alt+3",
+		],
+	)
 	def script_increaseDecreaseOutlineLevel(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1670,6 +1898,7 @@ class WordDocument(Window):
 			_("{styleName} style, outline level {outlineLevel}").format(styleName=style, outlineLevel=val),
 		)
 
+	@script(gestures=["kb:control+[", "kb:control+]", "kb:control+shift+,", "kb:control+shift+."])
 	def script_increaseDecreaseFontSize(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1781,6 +2010,7 @@ class WordDocument(Window):
 					offset,
 				).format(offset=offset)
 
+	@script(gestures=["kb:control+1", "kb:control+2", "kb:control+5"])
 	def script_changeLineSpacing(self, gesture):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
@@ -1822,32 +2052,10 @@ class WordDocument(Window):
 			self.bindGesture("kb:alt+shift+end", "caret_changeSelection")
 			self.bindGesture("kb:alt+shift+pageUp", "caret_changeSelection")
 			self.bindGesture("kb:alt+shift+pageDown", "caret_changeSelection")
+			self.bindGesture("kb:f8", "caret_changeSelection")
+			self.bindGesture("kb:shift+f8", "caret_changeSelection")
 
 	__gestures = {
-		"kb:control+[": "increaseDecreaseFontSize",
-		"kb:control+]": "increaseDecreaseFontSize",
-		"kb:control+shift+,": "increaseDecreaseFontSize",
-		"kb:control+shift+.": "increaseDecreaseFontSize",
-		"kb:control+b": "toggleBold",
-		"kb:control+i": "toggleItalic",
-		"kb:control+u": "toggleUnderline",
-		"kb:control+=": "toggleSuperscriptSubscript",
-		"kb:control+shift+=": "toggleSuperscriptSubscript",
-		"kb:control+l": "toggleAlignment",
-		"kb:control+e": "toggleAlignment",
-		"kb:control+r": "toggleAlignment",
-		"kb:control+j": "toggleAlignment",
-		"kb:alt+shift+downArrow": "moveParagraphDown",
-		"kb:alt+shift+upArrow": "moveParagraphUp",
-		"kb:alt+shift+rightArrow": "increaseDecreaseOutlineLevel",
-		"kb:alt+shift+leftArrow": "increaseDecreaseOutlineLevel",
-		"kb:control+shift+n": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+1": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+2": "increaseDecreaseOutlineLevel",
-		"kb:control+alt+3": "increaseDecreaseOutlineLevel",
-		"kb:control+1": "changeLineSpacing",
-		"kb:control+2": "changeLineSpacing",
-		"kb:control+5": "changeLineSpacing",
 		"kb:control+pageUp": "caret_moveByLine",
 		"kb:control+pageDown": "caret_moveByLine",
 	}

@@ -1243,13 +1243,16 @@ See: pythonConsole.PythonConsole.initNamespace
 Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
 These variables are:
 
-* focus: The current focus object
-* focusAnc: The ancestors of the current focus object
-* fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
-* fg: The current foreground object
-* nav: The current navigator object
-* mouse: The current mouse object
-* brlRegions: The braille regions from the active braille buffer
+* `focus`: The current focus object
+* `focusAnc`: The ancestors of the current focus object
+* `fdl`: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
+* `fg`: The current foreground object
+* `nav`: The current navigator object
+* `caretObj`: The object which contains the caret (focus or tree interceptor if any)
+* `caretPos`: A text info at the position of the caret
+* `review`: The current `TextInfo` instance representing the user's review position
+* `mouse`: The current mouse object
+* `brlRegions`: The braille regions from the active braille buffer
 
 ### Tab completion {#pythonConsoleTab}
 

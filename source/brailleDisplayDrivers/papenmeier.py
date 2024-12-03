@@ -152,7 +152,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 				key=lambda item: "bluetoothName" in item,
 			):
 				port = portInfo["port"]
-				hwID = portInfo["hardwareID"]  # noqa: F841
 				if "bluetoothName" in portInfo:
 					if (
 						portInfo["bluetoothName"][0:14] == "braillex trio "

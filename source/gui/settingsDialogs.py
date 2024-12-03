@@ -1,10 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
-# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler, Thomas Stivers,
-# Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed, Łukasz Golonka, Aaron Cannon,
-# Adriani90, André-Abush Clause, Dawid Pieper, Heiko Folkerts, Takuya Nishimoto, Thomas Stivers,
-# jakubl7545, mltony, Rob Meredith, Burman's Computer and Education Ltd, hwf1324.
+# Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
+#  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
+# Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
+# Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
+# Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -15,6 +16,7 @@ from enum import IntEnum
 from locale import strxfrm
 import re
 import typing
+import requests
 import wx
 from NVDAState import WritePaths
 
@@ -62,7 +64,6 @@ from typing import (
 	Set,
 	cast,
 )
-from url_normalize import url_normalize
 import core
 import keyboardHandler
 import characterProcessing
@@ -918,6 +919,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		if globalVars.appArgs.secure or not config.isInstalledCopy():
 			self.copySettingsButton.Disable()
 		settingsSizerHelper.addItem(self.copySettingsButton)
+
 		if updateCheck:
 			item = self.autoCheckForUpdatesCheckBox = wx.CheckBox(
 				self,
@@ -952,6 +954,66 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				item.Disable()
 			settingsSizerHelper.addItem(item)
+
+			# Translators: The label for the update mirror on the General Settings panel.
+			mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Update mirror"))
+			mirrorBox = mirrorBoxSizer.GetStaticBox()
+			mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+			settingsSizerHelper.addItem(mirrorBoxSizerHelper)
+
+			# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+			# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+			# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+			# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+			# display here.
+			# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
+			self.mirrorURLTextBox = ExpandoTextCtrl(
+				mirrorBox,
+				size=(self.scaleSize(250), -1),
+				style=wx.TE_READONLY,
+			)
+			# Translators: This is the label for the button used to change the NVDA update mirror URL,
+			# it appears in the context of the update mirror group on the General page of NVDA's settings.
+			changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+			mirrorBoxSizerHelper.addItem(
+				guiHelper.associateElements(
+					self.mirrorURLTextBox,
+					changeMirrorBtn,
+				),
+			)
+			self.bindHelpEvent("UpdateMirror", mirrorBox)
+			self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+			changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+			if globalVars.appArgs.secure:
+				mirrorBox.Disable()
+
+	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
+		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
+		# Import late to avoid circular dependency.
+		from gui._SetURLDialog import _SetURLDialog
+
+		changeMirror = _SetURLDialog(
+			self,
+			# Translators: Title of the dialog used to change NVDA's update server mirror URL.
+			title=_("Set NVDA Update Mirror"),
+			configPath=("update", "serverURL"),
+			helpId="SetURLDialog",
+			urlTransformer=lambda url: f"{url}?versionType=stable",
+		)
+		ret = changeMirror.ShowModal()
+		if ret == wx.ID_OK:
+			self.Freeze()
+			# trigger a refresh of the settings
+			self.onPanelActivated()
+			self._sendLayoutUpdatedEvent()
+			self.Thaw()
+
+	def _enterTriggersOnChangeMirrorURL(self, evt: wx.KeyEvent):
+		"""Open the change update mirror URL dialog in response to the enter key in the mirror URL read-only text box."""
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeMirrorURL(evt)
+		else:
+			evt.Skip()
 
 	def onCopySettings(self, evt):
 		if os.path.isdir(WritePaths.addonsDir) and 0 < len(os.listdir(WritePaths.addonsDir)):
@@ -1046,8 +1108,25 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.terminate()
 			updateCheck.initialize()
 
+	def onPanelActivated(self):
+		if updateCheck:
+			self._updateCurrentMirrorURL()
+		super().onPanelActivated()
+
+	def _updateCurrentMirrorURL(self):
+		self.mirrorURLTextBox.SetValue(
+			(
+				url
+				if (url := config.conf["update"]["serverURL"])
+				# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
+				else _("No mirror")
+			),
+		)
+
 	def postSave(self):
 		if self.oldLanguage != config.conf["general"]["language"]:
+			config.conf["braille"]["translationTable"] = "auto"
+			config.conf["braille"]["inputTable"] = "auto"
 			LanguageRestartDialog(self).ShowModal()
 
 
@@ -3028,8 +3107,12 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		# Translators: This is a label for the applications volume adjuster combo box in settings.
-		label = _("&Application volume adjuster status")
+		label = _(
+			# Translators: This is a label for the
+			# "allow NVDA to control the volume of other applications"
+			# combo box in settings.
+			"&Allow NVDA to control the volume of other applications:",
+		)
 		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
 			labelText=label,
 			wxCtrlClass=nvdaControls.FeatureFlagCombo,
@@ -3057,8 +3140,10 @@ class AudioPanel(SettingsPanel):
 			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
 			self.appSoundVolSlider.SetValue(defaultVolume)
 
-		# Translators: Mute other apps checkbox in settings
-		self.muteOtherAppsCheckBox = wx.CheckBox(self, label=_("Mute other apps"))
+		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
+			# Translators: Mute other apps checkbox in settings
+			wx.CheckBox(self, label=_("Mute other apps")),
+		)
 		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
 		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
 
@@ -3128,7 +3213,7 @@ class AudioPanel(SettingsPanel):
 		audio.appsVolume._updateAppsVolumeImpl(
 			volume=self.appSoundVolSlider.GetValue() / 100.0,
 			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentValue(),
+			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
 		)
 
 		if audioDucking.isAudioDuckingSupported():
@@ -3196,26 +3281,82 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
-		# Translators: This is the label for a text box in the add-on store settings dialog.
-		self.addonMetadataMirrorLabelText = _("Server &mirror URL")
-		self.addonMetadataMirrorTextbox = sHelper.addLabeledControl(
-			self.addonMetadataMirrorLabelText,
-			wx.TextCtrl,
-		)
-		self.addonMetadataMirrorTextbox.SetValue(config.conf["addonStore"]["baseServerURL"])
-		self.bindHelpEvent("AddonStoreMetadataMirror", self.addonMetadataMirrorTextbox)
+		# Translators: The label for the mirror server on the Add-on Store Settings panel.
+		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Mirror server"))
+		mirrorBox = mirrorBoxSizer.GetStaticBox()
+		mirrorBoxSizerHelper = guiHelper.BoxSizerHelper(self, sizer=mirrorBoxSizer)
+		sHelper.addItem(mirrorBoxSizerHelper)
 
-	def isValid(self) -> bool:
-		self.addonMetadataMirrorTextbox.SetValue(
-			url_normalize(self.addonMetadataMirrorTextbox.GetValue().strip()).rstrip("/"),
+		# Use an ExpandoTextCtrl because even when read-only it accepts focus from keyboard, which
+		# standard read-only TextCtrl does not. ExpandoTextCtrl is a TE_MULTILINE control, however
+		# by default it renders as a single line. Standard TextCtrl with TE_MULTILINE has two lines,
+		# and a vertical scroll bar. This is not neccessary for the single line of text we wish to
+		# display here.
+		# Note: To avoid code duplication, the value of this text box will be set in `onPanelActivated`.
+		self.mirrorURLTextBox = ExpandoTextCtrl(
+			mirrorBox,
+			size=(self.scaleSize(250), -1),
+			style=wx.TE_READONLY,
 		)
-		return True
+		# Translators: This is the label for the button used to change the Add-on Store mirror URL,
+		# it appears in the context of the mirror server group on the Add-on Store page of NVDA's settings.
+		changeMirrorBtn = wx.Button(mirrorBox, label=_("Change..."))
+		mirrorBoxSizerHelper.addItem(
+			guiHelper.associateElements(
+				self.mirrorURLTextBox,
+				changeMirrorBtn,
+			),
+		)
+		self.bindHelpEvent("AddonStoreMetadataMirror", mirrorBox)
+		self.mirrorURLTextBox.Bind(wx.EVT_CHAR_HOOK, self._enterTriggersOnChangeMirrorURL)
+		changeMirrorBtn.Bind(wx.EVT_BUTTON, self.onChangeMirrorURL)
+
+	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
+		"""Show the dialog to change the Add-on Store mirror URL, and refresh the dialog in response to the URL being changed."""
+		# Import late to avoid circular dependency.
+		from gui._SetURLDialog import _SetURLDialog
+
+		changeMirror = _SetURLDialog(
+			self,
+			# Translators: Title of the dialog used to change the Add-on Store mirror URL.
+			title=_("Set Add-on Store Mirror Server"),
+			configPath=("addonStore", "baseServerURL"),
+			helpId="SetURLDialog",
+			urlTransformer=lambda url: f"{url}/cacheHash.json",
+			responseValidator=_isResponseAddonStoreCacheHash,
+		)
+		ret = changeMirror.ShowModal()
+		if ret == wx.ID_OK:
+			self.Freeze()
+			# trigger a refresh of the settings
+			self.onPanelActivated()
+			self._sendLayoutUpdatedEvent()
+			self.Thaw()
+
+	def _enterTriggersOnChangeMirrorURL(self, evt: wx.KeyEvent):
+		"""Open the change update mirror URL dialog in response to the enter key in the mirror URL read-only text box."""
+		if evt.KeyCode == wx.WXK_RETURN:
+			self.onChangeMirrorURL(evt)
+		else:
+			evt.Skip()
+
+	def _updateCurrentMirrorURL(self):
+		self.mirrorURLTextBox.SetValue(
+			(
+				url
+				if (url := config.conf["addonStore"]["baseServerURL"])
+				# Translators: A value that appears in NVDA's Settings to indicate that no mirror is in use.
+				else _("No mirror")
+			),
+		)
+
+	def onPanelActivated(self):
+		self._updateCurrentMirrorURL()
+		super().onPanelActivated()
 
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
-
-		config.conf["addonStore"]["baseServerURL"] = self.addonMetadataMirrorTextbox.Value.strip().rstrip("/")
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -3701,7 +3842,6 @@ class AdvancedPanelControls(
 		# Advanced settings panel
 		label = _("Audio")
 		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		audioBox = audio.GetStaticBox()  # noqa: F841
 		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
 		sHelper.addItem(audioGroup)
 
@@ -4248,11 +4388,20 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		outputsLabelText = _("&Output table:")
 		self.outTables = [table for table in tables if table.output]
 		self.outTableNames = [table.fileName for table in self.outTables]
-		outTableChoices = [table.displayName for table in self.outTables]
+		outTableForCurLangIndex = self.outTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.OUTPUT),
+		)
+		self.outTableForCurLang = self.outTables[outTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		outTableChoices = [_("Automatic ({name})").format(name=self.outTableForCurLang.displayName)]
+		outTableChoices.extend([table.displayName for table in self.outTables])
 		self.outTableList = sHelper.addLabeledControl(outputsLabelText, wx.Choice, choices=outTableChoices)
 		self.bindHelpEvent("BrailleSettingsOutputTable", self.outTableList)
 		try:
-			selection = self.outTables.index(braille.handler.table)
+			if config.conf["braille"]["translationTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.outTables.index(braille.handler.table) + 1
 			self.outTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4265,11 +4414,21 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: The label for a setting in braille settings to select the input table (the braille table used to type braille characters on a braille keyboard).
 		inputLabelText = _("&Input table:")
 		self.inTables = [table for table in tables if table.input]
-		inTableChoices = [table.displayName for table in self.inTables]
+		self.inTableNames = [table.fileName for table in self.inTables]
+		inTableForCurLangIndex = self.inTableNames.index(
+			brailleTables.getDefaultTableForCurLang(brailleTables.TableType.INPUT),
+		)
+		self.inTableForCurLang = self.inTables[inTableForCurLangIndex]
+		# Translators: An option in Braille settings to select a braille table automatically, according to the current language.
+		inTableChoices = [_("Automatic ({name})").format(name=self.inTableForCurLang.displayName)]
+		inTableChoices.extend([table.displayName for table in self.inTables])
 		self.inTableList = sHelper.addLabeledControl(inputLabelText, wx.Choice, choices=inTableChoices)
 		self.bindHelpEvent("BrailleSettingsInputTable", self.inTableList)
 		try:
-			selection = self.inTables.index(brailleInput.handler.table)
+			if config.conf["braille"]["inputTable"] == "auto":
+				selection = 0
+			else:
+				selection = self.inTables.index(brailleInput.handler.table) + 1
 			self.inTableList.SetSelection(selection)
 		except:  # noqa: E722
 			log.exception()
@@ -4536,6 +4695,14 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("BrailleSpeakOnRouting", self.speakOnRoutingCheckBox)
 		self.speakOnRoutingCheckBox.Value = config.conf["braille"]["speakOnRouting"]
 
+		# Translators: The label for a setting in braille settings to speak the current line or paragraph when navigating by them with braille.
+		speakOnNavigatingText = _("Speak when navigating by &line or paragraph")
+		self.speakOnNavigatingCheckBox = followCursorGroupHelper.addItem(
+			wx.CheckBox(self.followCursorGroupBox, label=speakOnNavigatingText),
+		)
+		self.bindHelpEvent("BrailleSpeakOnNavigating", self.speakOnNavigatingCheckBox)
+		self.speakOnNavigatingCheckBox.Value = config.conf["braille"]["speakOnNavigatingByUnit"]
+
 		self.followCursorGroupBox.Enable(
 			list(braille.BrailleMode)[self.brailleModes.GetSelection()] is braille.BrailleMode.FOLLOW_CURSORS,
 		)
@@ -4574,13 +4741,19 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 
 	def onSave(self):
 		AutoSettingsMixin.onSave(self)
-
-		braille.handler.table = self.outTables[self.outTableList.GetSelection()]
-		brailleInput.handler.table = self.inTables[self.inTableList.GetSelection()]
+		if self.outTableList.GetSelection() > 0:
+			braille.handler.table = self.outTables[self.outTableList.GetSelection() - 1]
+		else:
+			braille.handler.table = self.outTableForCurLang
+			config.conf["braille"]["translationTable"] = "auto"
+		if self.inTableList.GetSelection():
+			brailleInput.handler.table = self.inTables[self.inTableList.GetSelection() - 1]
+		else:
+			brailleInput.handler.table = self.inTableForCurLang
+			config.conf["braille"]["inputTable"] = "auto"
 		mode = list(braille.BrailleMode)[self.brailleModes.GetSelection()]
 		config.conf["braille"]["mode"] = mode.value
 		braille.handler.mainBuffer.clear()
-		config.conf["braille"]["translationTable"] = self.outTableNames[self.outTableList.GetSelection()]
 		config.conf["braille"]["expandAtCursor"] = self.expandAtCursorCheckBox.GetValue()
 		config.conf["braille"]["showCursor"] = self.showCursorCheckBox.GetValue()
 		config.conf["braille"]["cursorBlink"] = self.cursorBlinkCheckBox.GetValue()
@@ -4604,6 +4777,7 @@ class BrailleSettingsSubPanel(AutoSettingsMixin, SettingsPanel):
 			self.paragraphStartMarkersComboBox.GetSelection()
 		]
 		config.conf["braille"]["speakOnRouting"] = self.speakOnRoutingCheckBox.Value
+		config.conf["braille"]["speakOnNavigatingByUnit"] = self.speakOnNavigatingCheckBox.Value
 		config.conf["braille"]["wordWrap"] = self.wordWrapCheckBox.Value
 		self.unicodeNormalizationCombo.saveCurrentValueToConf()
 		config.conf["braille"]["focusContextPresentation"] = self.focusContextPresentationValues[
@@ -5443,3 +5617,15 @@ class SpeechSymbolsDialog(SettingsDialog):
 		self.filter(self.filterEdit.Value)
 		self._refreshVisibleItems()
 		evt.Skip()
+
+
+def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
+	try:
+		# Attempt to parse the response as JSON
+		data = response.json()
+	except ValueError:
+		# Add-on Store cache hash is JSON, so this can't be it.
+		return False
+	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
+	# Therefore, we only check if the data is a non-empty string.
+	return isinstance(data, str) and bool(data)

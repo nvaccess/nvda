@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-05 23:33+0000\n"
-"PO-Revision-Date: 2024-09-09 00:08\n"
+"POT-Creation-Date: 2024-10-07 00:09+0000\n"
+"PO-Revision-Date: 2024-10-08 00:28\n"
 "Last-Translator: \n"
 "Language-Team: Kurmanji (Kurdish)\n"
 "Language: kmr_TR\n"
@@ -3335,7 +3335,7 @@ msgstr "qehweyî-zer"
 #: core.py:84
 msgid "The following add-on failed to update: {}."
 msgid_plural "The following add-ons failed to update: {}."
-msgstr[0] ""
+msgstr[0] "Pêvekek nehat rojanekirin: {}."
 msgstr[1] ""
 
 #. Translators: Shown when one or more add-ons failed to be uninstalled.
@@ -5564,22 +5564,22 @@ msgstr ""
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3986
 msgid "Translates any braille input"
-msgstr ""
+msgstr "Wergera Braille"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3995
 msgid "Virtually toggles the shift key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkojka Shiftê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4004
 msgid "Virtually toggles the control key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkoka kontrolê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4013
 msgid "Virtually toggles the alt key to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkoka Altê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4023
@@ -5604,22 +5604,22 @@ msgstr ""
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4066
 msgid "Virtually toggles the left windows and shift keys to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkokên Şîftê û wîndowsa çepê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4078
 msgid "Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkokên Shiftê û NVDA biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4089
 msgid "Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkokên kontrolê û Altê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4100
 msgid "Virtually toggles the control, alt, and shift keys to emulate a keyboard shortcut with braille input"
-msgstr ""
+msgstr "Cihê bişkokên kontrolê, Altê û Şîftê biguhezînin da ku hilberek Braille bi hîpotezî kurtebirrek klavyeyê nîşan bide"
 
 #. Translators: Input help mode message for reload plugins command.
 #: globalCommands.py:4112
@@ -6328,25 +6328,25 @@ msgid "tab"
 msgstr "tab"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:440
+#: keyboardHandler.py:443
 msgid "desktop"
 msgstr "Desktop"
 
 #. Translators: One of the keyboard layouts for NVDA.
-#: keyboardHandler.py:442
+#: keyboardHandler.py:445
 msgid "laptop"
 msgstr "Laptop"
 
 #. Translators: Reported for an unknown key press.
 #. %s will be replaced with the key code.
-#: keyboardHandler.py:530
+#: keyboardHandler.py:533
 #, python-format
 msgid "unknown %s"
 msgstr "ji %s nayê zanîn"
 
 #. Translators: a state that denotes a control is currently on
 #. E.g. a switch control.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:198
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:198
 #: gui\speechDict.py:198
 msgid "on"
 msgstr "vekirî"
@@ -6355,7 +6355,7 @@ msgstr "vekirî"
 #. Translators: An option for progress bar output in the Object Presentation dialog
 #. which disables reporting of progress bars.
 #. See Progress bar output in the Object Presentation Settings section of the User Guide.
-#: keyboardHandler.py:600 synthSettingsRing.py:117 controlTypes\state.py:221
+#: keyboardHandler.py:603 synthSettingsRing.py:117 controlTypes\state.py:221
 #: gui\settingsDialogs.py:2272 gui\speechDict.py:198
 msgid "off"
 msgstr "girtî"
@@ -6363,13 +6363,13 @@ msgstr "girtî"
 #. Translators: Used when describing keys on the system keyboard with a particular layout.
 #. %s is replaced with the layout name.
 #. For example, in English, this might produce "laptop keyboard".
-#: keyboardHandler.py:716
+#: keyboardHandler.py:719
 #, python-format
 msgid "%s keyboard"
 msgstr "ji %s klavye"
 
 #. Translators: Used when describing keys on the system keyboard applying to all layouts.
-#: keyboardHandler.py:721
+#: keyboardHandler.py:724
 msgid "keyboard, all layouts"
 msgstr "klavye, hemû rêgez"
 

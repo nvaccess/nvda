@@ -1,4 +1,4 @@
-exclude: ^user_docs/(?!en/).*$
+exclude: ^user_docs/(?!en/).+/.+\.md$
 
 # https://pre-commit.ci/
 # Configuration for Continuous Integration service
@@ -31,7 +31,7 @@ repos:
     - id: check-hooks-apply
 
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.6.0
+  rev: v5.0.0
   hooks:
     # Prevents commits to certain branches
     - id: no-commit-to-branch
@@ -68,6 +68,8 @@ repos:
     - id: check-xml
     # Ensures that links to lines in files under version control point to a particular commit.
     - id: check-vcs-permalinks
+    # Avoids using reserved Windows filenames.
+    - id: check-illegal-windows-names
     # Checks that tests are named test_*.py.
     - id: name-tests-test
       args: ["--unittest"]
@@ -97,7 +99,7 @@ repos:
 
 - repo: https://github.com/astral-sh/ruff-pre-commit
   # Matches Ruff version in requirements.
-  rev: v0.6.3
+  rev: v0.7.2
   hooks:
     - id: ruff
       name: lint with ruff

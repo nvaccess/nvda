@@ -8,7 +8,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	}
 	# Notify the NV Access server if this is an NV Access build.
 	if ($env:APPVEYOR_REPO_NAME.StartsWith("nvaccess/")) {
-		$exe = Get-ChildItem -Name output\*.exe
+		$exe = Get-ChildItem -Name output\nvda_*.exe
 		$hash = (Get-FileHash "output\$exe" -Algorithm SHA1).Hash.ToLower()
 		$apiVersion = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import CURRENT; print('{}.{}.{}'.format(*CURRENT))")
 		echo apiversion: $apiVersion

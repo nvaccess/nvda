@@ -35,7 +35,7 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 	if not targetURLOnPage or not rootURL:
 		return False
 
-	validSchemes = ("http", "https")
+	validSchemes = ("http", "https", "file")
 	# Parse the URLs
 	parsedTargetURLOnPage: ParseResult = urlparse(targetURLOnPage)
 	if parsedTargetURLOnPage.scheme not in validSchemes:

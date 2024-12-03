@@ -29,3 +29,4 @@ class RelationType(str, enum.Enum):
 	CONTROLLER_FOR = "controllerFor"
 	ERROR = "error"
 	ERROR_FOR = "errorFor"
+	LABELLED_BY = "labelledBy"

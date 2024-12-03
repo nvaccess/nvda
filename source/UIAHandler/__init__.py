@@ -129,7 +129,6 @@ textChangeUIAClassNames = (
 
 windowsTerminalUIAClassNames = (
 	"TermControl",
-	"TermControl2",
 	"WPFTermControl",
 )
 
