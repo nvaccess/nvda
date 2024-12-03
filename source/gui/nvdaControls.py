@@ -272,7 +272,14 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 
 
 class MessageDialog(messageDialog.MessageDialog):
-	"""Adapter around messageDialog.MessageDialog for compatibility."""
+	"""Provides a more flexible message dialog.
+
+	.. warning:: This class is deprecated.
+		Use :class:`gui.messageDialog.MessageDialog` instead.
+		This class is an adapter around that class, and will be removed in 2026.1.
+
+	Consider overriding _addButtons, to set your own buttons and behaviour.
+	"""
 
 	# We don't want the new message dialog's guard rails, as they may be incompatible with old code
 	_FAIL_ON_NO_BUTTONS = False
