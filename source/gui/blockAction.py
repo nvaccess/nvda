@@ -3,13 +3,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Callable
 import config
 from config.configFlags import BrailleMode
 from dataclasses import dataclass
 from enum import Enum
 from functools import wraps
 import globalVars
-from typing import Callable
+from typing import Any
 from speech.priorities import SpeechPriority
 import ui
 from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
@@ -17,10 +18,20 @@ from gui.message import isModalMessageBoxActive
 import core
 
 
+def _modalDialogOpenCallback():
+	"""Focus any open blocking :class:`MessageDialog` instances."""
+	# Import late to avoid circular import
+	from gui.messageDialog import MessageDialog
+
+	if MessageDialog.BlockingInstancesExist():
+		MessageDialog.FocusBlockingInstances()
+
+
 @dataclass
 class _Context:
 	blockActionIf: Callable[[], bool]
 	translatedMessage: str
+	callback: Callable[[], Any] | None = None
 
 
 class Context(_Context, Enum):
@@ -40,6 +51,7 @@ class Context(_Context, Enum):
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
 		# for a response from a modal dialog
 		_("Action unavailable while a dialog requires a response"),
+		_modalDialogOpenCallback,
 	)
 	WINDOWS_LOCKED = (
 		lambda: isLockScreenModeActive() or isRunningOnSecureDesktop(),
@@ -75,13 +87,9 @@ def when(*contexts: Context):
 		def funcWrapper(*args, **kwargs):
 			for context in contexts:
 				if context.blockActionIf():
-					if context == Context.MODAL_DIALOG_OPEN:
-						# Import late to avoid circular import
-						from gui.messageDialog import MessageDialog
-
-						if MessageDialog.BlockingInstancesExist():
-							MessageDialog.FocusBlockingInstances()
-					# We need to delay this message so that, if a dialog is to be focused, the appearance of the dialog doesn't interrupt it.
+					if context.callback is not None:
+						context.callback()
+					# We need to delay this message so that, if a UI change is triggered by the callback, the UI change doesn't interrupt it.
 					# 1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
 					core.callLater(1, ui.message, context.translatedMessage, SpeechPriority.NOW)
 					return
