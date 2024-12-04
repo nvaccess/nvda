@@ -57,7 +57,7 @@ class AddDefaultButtonHelpersArgList(NamedTuple):
 
 class MethodCall(NamedTuple):
 	name: str
-	args: tuple[Any] = tuple()
+	args: tuple[Any, ...] = tuple()
 	kwargs: dict[str, Any] = dict()
 
 
