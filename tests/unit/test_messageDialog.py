@@ -75,14 +75,15 @@ class MDTestBase(unittest.TestCase):
 class Test_MessageDialog_Icons(MDTestBase):
 	"""Test that message dialog icons are set correctly."""
 
-	def test_setIcon_with_type_with_icon(self, mocked_GetIconBundle: MagicMock):
+	@parameterized.expand(((DialogType.ERROR,), (DialogType.WARNING,)))
+	def test_setIconWithTypeWithIcon(self, mocked_GetIconBundle: MagicMock, type: DialogType):
 		"""Test that setting the dialog's icons has an effect when the dialog's type has icons."""
 		mocked_GetIconBundle.return_value = wx.IconBundle()
-		type = DialogType.ERROR
 		self.dialog._setIcon(type)
 		mocked_GetIconBundle.assert_called_once()
 
-	def test_setIcon_with_type_without_icon(self, mocked_GetIconBundle: MagicMock):
+	@parameterized.expand(((DialogType.STANDARD,),))
+	def test_setIconWithTypeWithoutIcon(self, mocked_GetIconBundle: MagicMock, type: DialogType):
 		"""Test that setting the dialog's icons doesn't have an effect when the dialog's type doesn't have icons."""
 		type = DialogType.STANDARD
 		self.dialog._setIcon(type)
@@ -93,16 +94,16 @@ class Test_MessageDialog_Icons(MDTestBase):
 class Test_MessageDialog_Sounds(MDTestBase):
 	"""Test that message dialog sounds are set and played correctly."""
 
-	def test_playSound_with_type_with_Sound(self, mocked_MessageBeep: MagicMock):
+	@parameterized.expand(((DialogType.ERROR,), (DialogType.WARNING,)))
+	def test_playSoundWithTypeWithSound(self, mocked_MessageBeep: MagicMock, type: DialogType):
 		"""Test that sounds are played for message dialogs whose type has an associated sound."""
-		type = DialogType.ERROR
 		self.dialog._setSound(type)
 		self.dialog._playSound()
 		mocked_MessageBeep.assert_called_once()
 
-	def test_playSound_with_type_without_Sound(self, mocked_MessageBeep: MagicMock):
+	@parameterized.expand(((DialogType.STANDARD,),))
+	def test_playSoundWithTypeWithoutSound(self, mocked_MessageBeep: MagicMock, type: DialogType):
 		"""Test that no sounds are played for message dialogs whose type has an associated sound."""
-		type = DialogType.STANDARD
 		self.dialog._setSound(type)
 		self.dialog._playSound()
 		mocked_MessageBeep.assert_not_called()
