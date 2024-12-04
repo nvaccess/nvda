@@ -16,7 +16,9 @@ from speech import (
 	_getSpellingSpeechAddCharMode,
 	_getSpellingSpeechWithoutCharMode,
 	cancelSpeech,
+	pauseSpeech,
 	speechCanceled,
+	post_speechPaused,
 )
 from speech.commands import (
 	BeepCommand,
@@ -591,3 +593,10 @@ class SpeechExtensionPoints(unittest.TestCase):
 			speechCanceled,
 		):
 			cancelSpeech()
+
+	def test_post_speechPausedExtensionPoint(self):
+		with actionTester(self, post_speechPaused, switch=True):
+			pauseSpeech(True)
+
+		with actionTester(self, post_speechPaused, switch=False):
+			pauseSpeech(False)
