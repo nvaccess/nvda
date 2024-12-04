@@ -41,11 +41,13 @@ def getDialogState(dialog: MessageDialog):
 
 	As this is currently only used to ensure internal state does not change between calls, the order of return should be considered arbitrary.
 	"""
-	return ({id: dialog.FindWindow(id).GetLabel() for id in dialog.GetMainButtonIds()},)
-	(deepcopy(dialog._commands),)
-	(item.GetId() if (item := dialog.GetDefaultItem()) is not None else None,)
-	(dialog.GetEscapeId(),)
-	dialog._isLayoutFullyRealized
+	return (
+		{id: dialog.FindWindow(id).GetLabel() for id in dialog.GetMainButtonIds()},
+		deepcopy(dialog._commands),
+		item.GetId() if (item := dialog.GetDefaultItem()) is not None else None,
+		dialog.GetEscapeId(),
+		dialog._isLayoutFullyRealized,
+	)
 
 
 class AddDefaultButtonHelpersArgList(NamedTuple):
