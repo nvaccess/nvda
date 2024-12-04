@@ -242,6 +242,67 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Check state hasn't changed."):
 			self.assertEqual(oldState, getDialogState(self.dialog))
 
+	def test_setButtonLabelExistantId(self):
+		"""Test that setting the label of a button works."""
+		NEW_LABEL = "test"
+		self.dialog.addOkButton()
+		self.dialog.setButtonLabel(ReturnCode.OK, NEW_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.OK).GetLabel(), NEW_LABEL)
+
+	def testSetButtonLabelNonexistantId(self):
+		"""Test that setting the label of a button that does not exist in the dialog fails."""
+		self.dialog.addOkButton()
+		oldState = getDialogState(self.dialog)
+		self.assertRaises(KeyError, self.dialog.setButtonLabel, ReturnCode.CANCEL, "test")
+		self.assertEqual(oldState, getDialogState(self.dialog))
+
+	def test_setButtonLabelsExistantIds(self):
+		"""Test that setting multiple button labels at once works."""
+		NEW_YES_LABEL, NEW_NO_LABEL, NEW_CANCEL_LABEL = "test 1", "test 2", "test 3"
+		self.dialog.addYesNoCancelButtons()
+		self.dialog.setYesNoCancelLabels(NEW_YES_LABEL, NEW_NO_LABEL, NEW_CANCEL_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.YES).GetLabel(), NEW_YES_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.NO).GetLabel(), NEW_NO_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.CANCEL).GetLabel(), NEW_CANCEL_LABEL)
+
+	def test_setSomeButtonLabels(self):
+		"""Test that setting the labels of a subset of the existant buttons in the dialog works."""
+		NEW_YES_LABEL, NEW_NO_LABEL = "test 1", "test 2"
+		self.dialog.addYesNoCancelButtons()
+		OLD_CANCEL_LABEL = self.dialog.FindWindow(ReturnCode.CANCEL).GetLabel()
+		self.dialog.setYesNoLabels(NEW_YES_LABEL, NEW_NO_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.YES).GetLabel(), NEW_YES_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.NO).GetLabel(), NEW_NO_LABEL)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.CANCEL).GetLabel(), OLD_CANCEL_LABEL)
+
+	@parameterized.expand(
+		(
+			(
+				"noExistantIds",
+				MethodCall("addYesNoButtons"),
+				MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
+			),
+			(
+				"ExistantAndNonexistantIds",
+				MethodCall("addYesNoCancelButtons"),
+				MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
+			),
+		),
+	)
+	def test_setButtonLabelsBadIds(self, _, setupFunc: MethodCall, setLabelFunc: MethodCall):
+		"""Test that attempting to set button labels with IDs that don't appear in the dialog fails and does not alter the dialog."""
+		getattr(self.dialog, setupFunc.name)(*setupFunc.args, **setupFunc.kwargs)
+		oldState = getDialogState(self.dialog)
+		with self.subTest("Test that the operation raises."):
+			self.assertRaises(
+				KeyError,
+				getattr(self.dialog, setLabelFunc.name),
+				*setLabelFunc.args,
+				**setLabelFunc.kwargs,
+			)
+		with self.subTest("Check state hasn't changed."):
+			self.assertEqual(oldState, getDialogState(self.dialog))
+
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_defaultAction_defaultEscape_OkCancel(self):
