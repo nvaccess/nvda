@@ -2644,7 +2644,7 @@ This option is only available if reporting of spelling errors is enabled in NVDA
 ##### Allow speaking typed text in password fields {#SpeakPasswords}
 
 If this option is enabled, while typing in a protected edit box such as a password field, NVDA will be able to speak the real typed text, instead of replacing it with "star".
-This option is off by default, but people who has difficulties using the keyboard may would like to turn it on, so that real typed characters can be reported even in protected fields.
+This option is off by default, but people who have difficulties using the keyboard may would like to turn it on, so that real typed characters can be reported even in protected fields.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
