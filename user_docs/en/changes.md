@@ -45,6 +45,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
+  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 
 ### Bug Fixes
 
