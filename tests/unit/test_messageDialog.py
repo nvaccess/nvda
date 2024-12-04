@@ -250,7 +250,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.dialog.setButtonLabel(ReturnCode.OK, NEW_LABEL)
 		self.assertEqual(self.dialog.FindWindow(ReturnCode.OK).GetLabel(), NEW_LABEL)
 
-	def testSetButtonLabelNonexistantId(self):
+	def test_setButtonLabelNonexistantId(self):
 		"""Test that setting the label of a button that does not exist in the dialog fails."""
 		self.dialog.addOkButton()
 		oldState = getDialogState(self.dialog)
