@@ -357,10 +357,10 @@ def isTypingProtected() -> bool:
 	"""Checks to see if key echo should be suppressed because the focus is currently on an object that has its protected state set.
 	:return: True if it should be suppressed, False otherwise.
 	"""
+	if config.conf["keyboard"]["speakPasswords"]:
+		return False
 	focusObject = getFocusObject()
 	isFocusProtected = focusObject is not None and focusObject.isProtected
-	if not config.conf["keyboard"]["maskPasswords"]:
-		return False
 	return isFocusProtected
 
 

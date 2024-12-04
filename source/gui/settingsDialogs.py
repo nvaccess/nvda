@@ -2060,12 +2060,12 @@ class KeyboardSettingsPanel(SettingsPanel):
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
-		maskPasswordsText = _("Mask passwords while typing")
-		self.maskPasswordsCheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=maskPasswordsText),
+		speakPasswordsText = _("Allow speaking typed text in password fields")
+		self.speakPasswordsCheckBox = sHelper.addItem(
+			wx.CheckBox(self, label=speakPasswordsText),
 		)
-		self.bindHelpEvent("MaskPasswordsWhileTyping", self.maskPasswordsCheckBox)
-		self.maskPasswordsCheckBox.SetValue(config.conf["keyboard"]["maskPasswords"])
+		self.bindHelpEvent("SpeakPasswords", self.speakPasswordsCheckBox)
+		self.speakPasswordsCheckBox.SetValue(config.conf["keyboard"]["speakPasswords"])
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
@@ -2117,7 +2117,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["beepForLowercaseWithCapslock"] = self.beepLowercaseCheckBox.IsChecked()
 		config.conf["keyboard"]["speakCommandKeys"] = self.commandKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["alertForSpellingErrors"] = self.alertForSpellingErrorsCheckBox.IsChecked()
-		config.conf["keyboard"]["maskPasswords"] = self.maskPasswordsCheckBox.IsChecked()
+		config.conf["keyboard"]["speakPasswords"] = self.speakPasswordsCheckBox.IsChecked()
 		config.conf["keyboard"]["handleInjectedKeys"] = self.handleInjectedKeysCheckBox.IsChecked()
 		config.conf["keyboard"]["multiPressTimeout"] = self.multiPressTimeoutEdit.GetValue()
 

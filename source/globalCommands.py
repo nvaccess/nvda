@@ -592,11 +592,11 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleMaskingPasswords(self, gesture):
 		toggleBooleanValue(
 			configSection="keyboard",
-			configKey="maskPasswords",
-			# Translators: The message announced when toggling the mask passwords setting.
-			enabledMsg=_("Mask passwords while typing on"),
-			# Translators: The message announced when toggling the mask passwords setting.
-			disabledMsg=_("Mask passwords while typing off"),
+			configKey="speakPasswords",
+			# Translators: The message announced when toggling the speak passwords setting.
+			enabledMsg=_("Allow speaking typed text in password fields on"),
+			# Translators: The message announced when toggling the speak passwords setting.
+			disabledMsg=_("Allow speaking typed text in password fields off"),
 		)
 
 	@script(

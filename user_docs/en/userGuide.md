@@ -2641,10 +2641,10 @@ When enabled, NVDA will announce all non-character keys you type on the keyboard
 When enabled, a short buzzer sound will be played when a word you type contains a spelling error.
 This option is only available if reporting of spelling errors is enabled in NVDA's [Document Formatting Settings](#DocumentFormattingSettings), found in the NVDA Settings dialog.
 
-##### Mask passwords while typing {#MaskPasswordsWhileTyping}
+##### Allow speaking typed text in password fields {#SpeakPasswords}
 
-If this option is enabled, while typing in a protected edit box such as a password field, NVDA will mask typed characters while typing, reporting "start" instead of the actual typed character.
-This option is on by default, but people who has difficulties using the keyboard may would like to turn it off, so that real typed characters can be reported even in protected fields.
+If this option is enabled, while typing in a protected edit box such as a password field, NVDA will be able to speak the real typed text, instead of replacing it with "star".
+This option is off by default, but people who has difficulties using the keyboard may would like to turn it on, so that real typed characters can be reported even in protected fields.
 
 ##### Handle keys from other applications {#KeyboardSettingsHandleKeys}
 
