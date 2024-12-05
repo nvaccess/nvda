@@ -468,6 +468,19 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
+	def test_getFallbackActionOrFallback_escapeIdNotACommand(self):
+		self.dialog.addOkCancelButtons()
+		super(MessageDialog, self.dialog).SetEscapeId(ReturnCode.CLOSE)
+		id, command = self.dialog._getFallbackActionOrFallback()
+		self.assertEqual(id, ReturnCode.OK)
+		self.assertIsNotNone(command)
+		self.assertTrue(command.closesDialog)
+
+	def test_getFallbackAction_escapeCode_None(self):
+		self.dialog.addOkCancelButtons()
+		self.dialog.SetEscapeId(EscapeCode.NONE)
+		self.assertEqual(self.dialog._getFallbackAction(), (EscapeCode.NONE, None))
+
 
 class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
