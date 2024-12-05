@@ -188,7 +188,9 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleInputHelp(self, gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
 		# Translators: This will be presented when the input help is toggled.
-		stateOn = _("input help on. Press {gestureKeys} again to turn it off.").format(gestureKeys=gesture.displayName)
+		stateOn = _("input help on. Press {gestureKeys} again to turn it off.").format(
+			gestureKeys=gesture.displayName
+		)
 		# Translators: This will be presented when the input help is toggled.
 		stateOff = _("input help off")
 		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
