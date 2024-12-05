@@ -488,7 +488,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:raises KeyError: If no button with id exists.
 		:return: The updated dialog.
 		"""
-		if (win := self.FindWindowById(id)) is not None:
+		if (win := self.FindWindow(id)) is not None:
 			self.SetDefaultItem(win)
 		else:
 			raise KeyError(f"Unable to find button with {id=}.")
