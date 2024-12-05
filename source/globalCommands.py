@@ -589,7 +589,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Toggles on and off the speaking of passwords while typing"),
 		category=SCRCAT_SPEECH,
 	)
-	def script_toggleSpeakPasswords(self, gesture):
+	def script_toggleSpeakPasswords(self, gesture: "inputCore.InputGesture"):
 		toggleBooleanValue(
 			configSection="keyboard",
 			configKey="speakPasswords",
