@@ -304,6 +304,26 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.subTest("Check state hasn't changed."):
 			self.assertEqual(oldState, getDialogState(self.dialog))
 
+	def test_addButtonFromButtonWithOverrides(self):
+		"""Test adding a button from a :class:`Button` with overrides for its properties."""
+		LABEL = "test"
+		CALLBACK = dummyCallback1
+		DEFAULT_FOCUS = FALLBACK_ACTION = CLOSES_DIALOG = True
+		RETURN_CODE = 1
+		self.dialog.addYesButton().addApplyButton(
+			label=LABEL,
+			callback=CALLBACK,
+			defaultFocus=DEFAULT_FOCUS,
+			fallbackAction=FALLBACK_ACTION,
+			closesDialog=CLOSES_DIALOG,
+			returnCode=RETURN_CODE,
+		)
+		self.assertEqual(self.dialog.FindWindow(ReturnCode.APPLY).GetLabel(), LABEL)
+		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].callback, CALLBACK)
+		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].closesDialog, CLOSES_DIALOG)
+		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].ReturnCode, RETURN_CODE)
+		self.assertEqual(self.dialog.GetEscapeId(), ReturnCode.APPLY)
+
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_defaultAction_defaultEscape_OkCancel(self):
