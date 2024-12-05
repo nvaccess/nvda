@@ -777,7 +777,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if gui._isDebug():
 			log.debug(f"Layout completed in {time.time() - startTime:.3f} seconds")
 
-	def _getFallbackAction(self) -> tuple[int, _Command | None]:
+	def _getFallbackAction(self) -> _Command | None:
 		"""Get the fallback action of this dialog.
 
 		:raises RuntimeError: If attempting to get the default command from commands fails.
@@ -785,23 +785,23 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		"""
 		escapeId = self.GetEscapeId()
 		if escapeId == EscapeCode.NONE:
-			return escapeId, None
+			return None
 		elif escapeId == EscapeCode.DEFAULT:
 			affirmativeAction: _Command | None = None
 			affirmativeId: int = self.GetAffirmativeId()
 			for id, command in self._commands.items():
 				if id == ReturnCode.CANCEL:
-					return id, command
+					return command
 				elif id == affirmativeId:
 					affirmativeAction = command
 			if affirmativeAction is None:
-				return EscapeCode.NONE, None
+				return None
 			else:
-				return affirmativeId, affirmativeAction
+				return affirmativeAction
 		else:
-			return escapeId, self._commands[escapeId]
+			return self._commands[escapeId]
 
-	def _getFallbackActionOrFallback(self) -> tuple[int, _Command]:
+	def _getFallbackActionOrFallback(self) -> _Command:
 		"""Get a command that is guaranteed to close this dialog.
 
 		Commands are returned in the following order of preference:
@@ -817,45 +817,54 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:return: Id and command of the default command.
 		"""
 
-		def getAction() -> tuple[int, _Command]:
+		def getAction() -> _Command:
 			# Try using the developer-specified fallback action.
 			try:
-				id, action = self._getFallbackAction()
-				if action is not None:
-					return id, action
+				if (action := self._getFallbackAction()) is not None:
+					return action
 			except KeyError:
 				log.debug("fallback action was not in commands. This indicates a logic error.")
 
 			# fallback action is unavailable. Try using the default focus instead.
 			if (defaultFocus := self.GetDefaultItem()) is not None:
-				id = defaultFocus.GetId()
 				# Default focus does not have to be a command, for instance if a custom control has been added and made the default focus.
-				if (command := self._commands.get(id, None)) is not None:
-					return id, self._commands[id]
+				if (action := self._commands.get(defaultFocus.GetId(), None)) is not None:
+					return action
 
 			# Default focus is unavailable or not a command. Try using the first registered command that closes the dialog instead.
-			firstCommand: tuple[int, _Command] | None = None
-			for id, command in self._commands.items():
-				if command.closesDialog:
-					return id, command
-				if firstCommand is None:
-					firstCommand = (id, command)
-			# No commands that close the dialog have been registered. Use the first command instead.
-			if firstCommand is not None:
-				return firstCommand
+			if len(self._commands) > 0:
+				try:
+					return next(command for command in self._commands.values() if command.closesDialog)
+				except StopIteration:
+					# No commands that close the dialog have been registered. Use the first command instead.
+					return next(iter(self._commands.values()))
 			else:
 				log.debug(
 					"No commands have been registered. If the dialog is shown, this indicates a logic error.",
 				)
 
-			# No commands have been registered. Create one of our own.
-			return EscapeCode.NONE, _Command(callback=None, closesDialog=True, ReturnCode=wx.ID_NONE)
+			# firstCommand: tuple[int, _Command] | None = None
+			# for id, command in self._commands.items():
+			# if command.closesDialog:
+			# return command
+			# if firstCommand is None:
+			# firstCommand = (id, command)
+			# No commands that close the dialog have been registered. Use the first command instead.
+			# if firstCommand is not None:
+			# return firstCommand
+			# else:
+			# log.debug(
+			# "No commands have been registered. If the dialog is shown, this indicates a logic error.",
+			# )
 
-		id, command = getAction()
+			# No commands have been registered. Create one of our own.
+			return _Command(callback=None, closesDialog=True, ReturnCode=wx.ID_NONE)
+
+		command = getAction()
 		if not command.closesDialog:
 			log.debugWarning(f"Overriding command for {id=} to close dialog.")
 			command = command._replace(closesDialog=True)
-		return id, command
+		return command
 
 	def _setButtonLabels(self, ids: Collection[ReturnCode], labels: Collection[str]):
 		"""Set a batch of button labels atomically.
@@ -918,19 +927,19 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
-			self._execute_command(*self._getFallbackActionOrFallback())
+			self._execute_command(self._getFallbackActionOrFallback())
 			self._instances.remove(self)
 			self.EndModal(self.GetReturnCode())
 			self.Destroy()
 			return
 		if self.GetReturnCode() == 0:
 			# No button has been pressed, so this must be a close event from elsewhere.
-			id, command = self._getFallbackAction()
-			if id == EscapeCode.NONE or command is None or not command.closesDialog:
+			command = self._getFallbackAction()
+			if command is None or not command.closesDialog:
 				evt.Veto()
 				return
 			self.Hide()
-			self._execute_command(id, command, _canCallClose=False)
+			self._execute_command(command, _canCallClose=False)
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
@@ -947,27 +956,22 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		id = evt.GetId()
 		log.debug(f"Got button event on {id=}")
 		try:
-			self._execute_command(id)
+			self._execute_command(self._commands[id])
 		except KeyError:
 			log.debug(f"No command registered for {id=}.")
 
 	def _execute_command(
 		self,
-		id: int,
-		command: _Command | None = None,
+		command: _Command,
 		*,
 		_canCallClose: bool = True,
 	):
 		"""Execute a command on this dialog.
 
-		:param id: ID of the command to execute.
-		:param command: Command to execute, defaults to None.
-			If None, the command to execute will be looked up in the dialog's registered commands.
+		:param command: Command to execute.
 		:param _canCallClose: Whether or not to close the dialog if the command says to, defaults to True.
 			Set to False when calling from a close handler.
 		"""
-		if command is None:
-			command = self._commands[id]
 		callback, close, returnCode = command
 		close &= _canCallClose
 		if callback is not None:
