@@ -65,11 +65,18 @@ class MethodCall(NamedTuple):
 	kwargs: dict[str, Any] = dict()
 
 
-class MDTestBase(unittest.TestCase):
-	"""Base class for test cases testing MessageDialog. Handles wx initialisation."""
+class WxTestBase(unittest.TestCase):
+	"""Base class for test cases which need wx to be initialised."""
 
 	def setUp(self) -> None:
 		self.app = wx.App()
+
+
+class MDTestBase(WxTestBase):
+	"""Base class for test cases needing a MessageDialog instance to work on."""
+
+	def setUp(self) -> None:
+		super().setUp()
 		self.dialog = MessageDialog(None, "Test dialog", buttons=None)
 
 
