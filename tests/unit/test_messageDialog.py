@@ -533,6 +533,33 @@ class Test_MessageDialog_Threading(WxTestBase):
 				tpe.submit(dlg.ShowModal).result()
 
 
+@patch.object(wx.Dialog, "Show")
+class Test_MessageDialog_Show(MDTestBase):
+	def test_show_noButtons(self, mocked_show: MagicMock):
+		with self.assertRaises(RuntimeError):
+			self.dialog.Show()
+		mocked_show.assert_not_called()
+
+	def test_show(self, mocked_show: MagicMock):
+		self.dialog.addOkButton()
+		self.dialog.Show()
+		mocked_show.assert_called_once()
+
+
+@patch("gui.mainFrame")
+@patch.object(wx.Dialog, "ShowModal")
+class Test_MessageDialog_ShowModal(MDTestBase):
+	def test_show_noButtons(self, mocked_showModal: MagicMock, _):
+		with self.assertRaises(RuntimeError):
+			self.dialog.ShowModal()
+		mocked_showModal.assert_not_called()
+
+	def test_show(self, mocked_showModal: MagicMock, _):
+		self.dialog.addOkButton()
+		self.dialog.ShowModal()
+		mocked_showModal.assert_called_once()
+
+
 class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
 		YES, NO, OK, CANCEL, HELP = wx.YES, wx.NO, wx.OK, wx.CANCEL, wx.HELP
