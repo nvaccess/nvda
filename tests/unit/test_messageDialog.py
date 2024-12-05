@@ -330,6 +330,16 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.assertRaises(KeyError):
 			self.dialog.addButtons((*DefaultButtonSet.OK_CANCEL, *DefaultButtonSet.YES_NO_CANCEL))
 
+	def test_setDefaultFocus_goodId(self):
+		self.dialog.addOkCancelButtons()
+		self.dialog.setDefaultFocus(ReturnCode.CANCEL)
+		self.assertEqual(self.dialog.GetDefaultItem().GetId(), ReturnCode.CANCEL)
+
+	def test_setDefaultFocus_badId(self):
+		self.dialog.addOkCancelButtons()
+		with self.assertRaises(KeyError):
+			self.dialog.setDefaultFocus(ReturnCode.APPLY)
+
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_defaultAction_defaultEscape_OkCancel(self):
