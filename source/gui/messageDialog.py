@@ -799,12 +799,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			else:
 				return affirmativeId, affirmativeAction
 		else:
-			try:
-				return escapeId, self._commands[escapeId]
-			except KeyError:
-				raise RuntimeError(
-					f"Escape ID {escapeId} is not associated with a command",
-				)
+			return escapeId, self._commands[escapeId]
 
 	def _getFallbackActionOrFallback(self) -> tuple[int, _Command]:
 		"""Get a command that is guaranteed to close this dialog.
