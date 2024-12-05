@@ -859,7 +859,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 
 		id, command = getAction()
 		if not command.closesDialog:
-			log.warn(f"Overriding command for {id=} to close dialog.")
+			log.debugWarning(f"Overriding command for {id=} to close dialog.")
 			command = command._replace(closesDialog=True)
 		return id, command
 
