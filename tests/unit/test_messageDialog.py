@@ -549,15 +549,24 @@ class Test_MessageDialog_Show(MDTestBase):
 @patch("gui.mainFrame")
 @patch.object(wx.Dialog, "ShowModal")
 class Test_MessageDialog_ShowModal(MDTestBase):
-	def test_show_noButtons(self, mocked_showModal: MagicMock, _):
+	def test_showModal_noButtons(self, mocked_showModal: MagicMock, _):
 		with self.assertRaises(RuntimeError):
 			self.dialog.ShowModal()
 		mocked_showModal.assert_not_called()
 
-	def test_show(self, mocked_showModal: MagicMock, _):
+	def test_showModal(self, mocked_showModal: MagicMock, _):
 		self.dialog.addOkButton()
-		self.dialog.ShowModal()
-		mocked_showModal.assert_called_once()
+		with patch("gui.message._messageBoxCounter") as mocked_messageBoxCounter:
+			mocked_messageBoxCounter.__iadd__.return_value = (
+				mocked_messageBoxCounter.__isub__.return_value
+			) = mocked_messageBoxCounter
+			self.dialog.ShowModal()
+			print(mocked_messageBoxCounter.mock_calls)
+			mocked_showModal.assert_called_once()
+			mocked_messageBoxCounter.__iadd__.assert_called_once()
+			mocked_messageBoxCounter.__isub__.assert_called_once()
+
+		# raise Exception
 
 
 class Test_MessageBoxShim(unittest.TestCase):
