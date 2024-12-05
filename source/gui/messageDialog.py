@@ -827,14 +827,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				log.debug("fallback action was not in commands. This indicates a logic error.")
 
 			# fallback action is unavailable. Try using the default focus instead.
-			try:
-				if (defaultFocus := self.GetDefaultItem()) is not None:
-					id = defaultFocus.GetId()
+			if (defaultFocus := self.GetDefaultItem()) is not None:
+				id = defaultFocus.GetId()
+				# Default focus does not have to be a command, for instance if a custom control has been added and made the default focus.
+				if (command := self._commands.get(id, None)) is not None:
 					return id, self._commands[id]
-			except KeyError:
-				log.debug("Default focus was not in commands. This indicates a logic error.")
 
-			# Default focus is unavailable. Try using the first registered command that closes the dialog instead.
+			# Default focus is unavailable or not a command. Try using the first registered command that closes the dialog instead.
 			firstCommand: tuple[int, _Command] | None = None
 			for id, command in self._commands.items():
 				if command.closesDialog:
