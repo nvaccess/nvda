@@ -11,6 +11,7 @@ from unittest.mock import MagicMock, patch
 
 import wx
 from gui.messageDialog import (
+	DefaultButtonSet,
 	MessageDialog,
 	Button,
 	EscapeCode,
@@ -323,6 +324,11 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].closesDialog, CLOSES_DIALOG)
 		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].ReturnCode, RETURN_CODE)
 		self.assertEqual(self.dialog.GetEscapeId(), ReturnCode.APPLY)
+
+	def test_addButtonsNonuniqueIds(self):
+		"""Test that adding a set of buttons with non-unique IDs fails."""
+		with self.assertRaises(KeyError):
+			self.dialog.addButtons((*DefaultButtonSet.OK_CANCEL, *DefaultButtonSet.YES_NO_CANCEL))
 
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
