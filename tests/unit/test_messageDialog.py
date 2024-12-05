@@ -506,7 +506,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertEqual(self.dialog._getFallbackAction(), (EscapeCode.NONE, None))
 
 
-class test_messageDialogThreading(WxTestBase):
+class Test_MessageDialog_Threading(WxTestBase):
 	def test_new_onNonmain(self):
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
