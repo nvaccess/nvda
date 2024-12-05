@@ -587,6 +587,21 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle speaking passwords.
+		description=_("Toggles on and off the speaking of passwords while typing"),
+		category=SCRCAT_SPEECH,
+	)
+	def script_toggleSpeakPasswords(self, gesture: "inputCore.InputGesture"):
+		toggleBooleanValue(
+			configSection="keyboard",
+			configKey="speakPasswords",
+			# Translators: The message announced when toggling the speak passwords setting.
+			enabledMsg=_("Allow speaking typed text in password fields on"),
+			# Translators: The message announced when toggling the speak passwords setting.
+			disabledMsg=_("Allow speaking typed text in password fields off"),
+		)
+
+	@script(
 		# Translators: Input help mode message for toggle report font name command.
 		description=_("Toggles on and off the reporting of font changes"),
 		category=SCRCAT_DOCUMENTFORMATTING,
