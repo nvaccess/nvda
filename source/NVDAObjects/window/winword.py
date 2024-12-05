@@ -47,6 +47,7 @@ import locationHelper
 from enum import IntEnum
 import documentBase
 from utils.displayString import DisplayStringIntEnum
+from utils.urlUtils import _LinkData
 
 if TYPE_CHECKING:
 	import inputCore
@@ -915,7 +916,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			return shapes[1]
 		return None
 
-	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
 		link = self._getLinkAtCaretPosition()
 		if not link:
 			return None
@@ -928,7 +929,7 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 			case _:
 				log.debugWarning(f"No text to display for link type {link.Type}")
 				text = None
-		return textInfos._Link(
+		return _LinkData(
 			displayText=text,
 			destination=link.Address,
 		)
