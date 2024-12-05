@@ -18,6 +18,7 @@ from gui.messageDialog import (
 	ReturnCode,
 	DialogType,
 	_MessageBoxButtonStylesToMessageDialogButtons,
+	_Command,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
@@ -257,6 +258,21 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		oldState = getDialogState(self.dialog)
 		self.assertRaises(KeyError, self.dialog.setButtonLabel, ReturnCode.CANCEL, "test")
 		self.assertEqual(oldState, getDialogState(self.dialog))
+
+	def test_setButtonLabel_notAButton(self):
+		messageControlId = self.dialog._messageControl.GetId()
+		# This is not a case that should be encountered unless users tamper with internal state.
+		self.dialog._commands[messageControlId] = _Command(
+			closesDialog=True,
+			callback=None,
+			ReturnCode=ReturnCode.APPLY,
+		)
+		with self.assertRaises(TypeError):
+			self.dialog.setButtonLabel(messageControlId, "test")
+
+	def test_setButtonLabels_countMismatch(self):
+		with self.assertRaises(ValueError):
+			self.dialog._setButtonLabels((ReturnCode.APPLY, ReturnCode.CANCEL), ("Apply", "Cancel", "Ok"))
 
 	def test_setButtonLabelsExistantIds(self):
 		"""Test that setting multiple button labels at once works."""
