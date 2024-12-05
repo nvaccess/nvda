@@ -569,6 +569,15 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 		# raise Exception
 
 
+class Test_MessageDialog_EventHandlers(WxTestBase):
+	def test_defaultFocus(self):
+		dialog = MessageDialog(None, "Test").addCancelButton(defaultFocus=True)
+		evt = wx.ShowEvent(dialog.GetId(), True)
+		with patch.object(wx.Window, "SetFocus") as mocked_setFocus:
+			dialog._onShowEvt(evt)
+			mocked_setFocus.assert_called_once()
+
+
 class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
 		YES, NO, OK, CANCEL, HELP = wx.YES, wx.NO, wx.OK, wx.CANCEL, wx.HELP
