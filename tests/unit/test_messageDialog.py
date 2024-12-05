@@ -22,6 +22,7 @@ from gui.messageDialog import (
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
+from concurrent.futures import ThreadPoolExecutor
 
 
 NO_CALLBACK = (EscapeCode.NONE, None)
@@ -503,6 +504,33 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addOkCancelButtons()
 		self.dialog.SetEscapeId(EscapeCode.NONE)
 		self.assertEqual(self.dialog._getFallbackAction(), (EscapeCode.NONE, None))
+
+
+class test_messageDialogThreading(WxTestBase):
+	def test_new_onNonmain(self):
+		with ThreadPoolExecutor(max_workers=1) as tpe:
+			with self.assertRaises(RuntimeError):
+				tpe.submit(MessageDialog.__new__, MessageDialog).result()
+
+	def test_init_onNonMain(self):
+		dlg = MessageDialog.__new__(MessageDialog)
+		with ThreadPoolExecutor(max_workers=1) as tpe:
+			with self.assertRaises(RuntimeError):
+				tpe.submit(dlg.__init__, None, "Test").result()
+
+	def test_show_onNonMain(self):
+		# self.app = wx.App()
+		dlg = MessageDialog(None, "Test")
+		with ThreadPoolExecutor(max_workers=1) as tpe:
+			with self.assertRaises(RuntimeError):
+				tpe.submit(dlg.Show).result()
+
+	def test_showModal_onNonMain(self):
+		# self.app = wx.App()
+		dlg = MessageDialog(None, "Test")
+		with ThreadPoolExecutor(max_workers=1) as tpe:
+			with self.assertRaises(RuntimeError):
+				tpe.submit(dlg.ShowModal).result()
 
 
 class Test_MessageBoxShim(unittest.TestCase):
