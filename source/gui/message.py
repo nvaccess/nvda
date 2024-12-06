@@ -5,14 +5,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from enum import IntEnum
 import threading
+import warnings
+import winsound
+from enum import Enum, IntEnum, auto
 from typing import Optional
 
-import wx
-import warnings
-
 import extensionPoints
+import wx
 
 _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
@@ -104,11 +104,12 @@ def messageBox(
 		),
 	)
 	# Import late to avoid circular import.
-	from gui import mainFrame
-	from gui.messageDialog import _messageBoxShim
-	from gui.guiHelper import wxCallOnMain
 	import core
 	from logHandler import log
+
+	from gui import mainFrame
+	from gui.guiHelper import wxCallOnMain
+	from gui.messageDialog import _messageBoxShim
 
 	if not core._hasShutdownBeenTriggered:
 		res = wxCallOnMain(_messageBoxShim, message, caption, style, parent=parent or mainFrame)
@@ -178,3 +179,52 @@ class EscapeCode(IntEnum):
 	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
 	If no Cancel button is present, the affirmative button should be used.
 	"""
+
+
+class DialogType(Enum):
+	"""Types of message dialogs.
+	These are used to determine the icon and sound to play when the dialog is shown.
+	"""
+
+	STANDARD = auto()
+	"""A simple message dialog, with no icon or sound.
+	This should be used in most situations.
+	"""
+
+	WARNING = auto()
+	"""A warning dialog, which makes the Windows alert sound and has an exclamation mark icon.
+	This should be used when you have critical information to present to the user, such as when their action may result in irreversible loss of data.
+	"""
+
+	ERROR = auto()
+	"""An error dialog, which has a cross mark icon and makes the Windows error sound.
+	This should be used when a critical error has been encountered.
+	"""
+
+	@property
+	def _wxIconId(self) -> "wx.ArtID | None":  # type: ignore
+		"""The wx icon ID to use for this dialog type.
+		This is used to determine the icon to display in the dialog.
+		This will be None when the default icon should be used.
+		"""
+		match self:
+			case self.ERROR:
+				return wx.ART_ERROR
+			case self.WARNING:
+				return wx.ART_WARNING
+			case _:
+				return None
+
+	@property
+	def _windowsSoundId(self) -> int | None:
+		"""The Windows sound ID to play for this dialog type.
+		This is used to determine the sound to play when the dialog is shown.
+		This will be None when no sound should be played.
+		"""
+		match self:
+			case self.ERROR:
+				return winsound.MB_ICONHAND
+			case self.WARNING:
+				return winsound.MB_ICONASTERISK
+			case _:
+				return None

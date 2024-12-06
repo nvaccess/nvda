@@ -23,6 +23,7 @@ from config.featureFlag import (
 	FlagValueEnum as FeatureFlagEnumT,
 )
 from gui import messageDialog
+import gui.message
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
 	guiHelper,
@@ -290,14 +291,14 @@ class MessageDialog(messageDialog.MessageDialog):
 	DIALOG_TYPE_ERROR = 3
 
 	@staticmethod
-	def _legasyDialogTypeToDialogType(dialogType: int) -> messageDialog.DialogType:
+	def _legasyDialogTypeToDialogType(dialogType: int) -> gui.message.DialogType:
 		match dialogType:
 			case MessageDialog.DIALOG_TYPE_ERROR:
-				return messageDialog.DialogType.ERROR
+				return gui.message.DialogType.ERROR
 			case MessageDialog.DIALOG_TYPE_WARNING:
-				return messageDialog.DialogType.WARNING
+				return gui.message.DialogType.WARNING
 			case _:
-				return messageDialog.DialogType.STANDARD
+				return gui.message.DialogType.STANDARD
 
 	def __new__(cls, *args, **kwargs):
 		warnings.warn(

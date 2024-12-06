@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from enum import Enum, auto
+from enum import Enum
 import time
 from typing import Any, Literal, NamedTuple, TypeAlias, Self
 import winsound
@@ -11,7 +11,7 @@ import winsound
 import wx
 
 import gui
-from gui.message import EscapeCode, ReturnCode
+from gui.message import DialogType, EscapeCode, ReturnCode
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -36,55 +36,6 @@ class _Missing_Type:
 
 _MISSING = _Missing_Type()
 """Sentinel for discriminating between `None` and an actually omitted argument."""
-
-
-class DialogType(Enum):
-	"""Types of message dialogs.
-	These are used to determine the icon and sound to play when the dialog is shown.
-	"""
-
-	STANDARD = auto()
-	"""A simple message dialog, with no icon or sound.
-	This should be used in most situations.
-	"""
-
-	WARNING = auto()
-	"""A warning dialog, which makes the Windows alert sound and has an exclamation mark icon.
-	This should be used when you have critical information to present to the user, such as when their action may result in irreversible loss of data.
-	"""
-
-	ERROR = auto()
-	"""An error dialog, which has a cross mark icon and makes the Windows error sound.
-	This should be used when a critical error has been encountered.
-	"""
-
-	@property
-	def _wxIconId(self) -> "wx.ArtID | None":  # type: ignore
-		"""The wx icon ID to use for this dialog type.
-		This is used to determine the icon to display in the dialog.
-		This will be None when the default icon should be used.
-		"""
-		match self:
-			case self.ERROR:
-				return wx.ART_ERROR
-			case self.WARNING:
-				return wx.ART_WARNING
-			case _:
-				return None
-
-	@property
-	def _windowsSoundId(self) -> int | None:
-		"""The Windows sound ID to play for this dialog type.
-		This is used to determine the sound to play when the dialog is shown.
-		This will be None when no sound should be played.
-		"""
-		match self:
-			case self.ERROR:
-				return winsound.MB_ICONHAND
-			case self.WARNING:
-				return winsound.MB_ICONASTERISK
-			case _:
-				return None
 
 
 class Button(NamedTuple):
