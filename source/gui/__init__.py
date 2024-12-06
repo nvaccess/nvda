@@ -30,8 +30,8 @@ from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
+	MessageDialog,
 )
-from .message import MessageDialog
 from . import blockAction
 from .speechDict import (
 	DefaultDictionaryDialog,
@@ -71,7 +71,6 @@ import speechViewer
 import winUser
 import api
 import NVDAState
-from gui.message import MessageDialog as NMD
 
 
 if NVDAState._allowDeprecatedAPI():
@@ -577,30 +576,6 @@ class MainFrame(wx.Frame):
 		ProfilesDialog(mainFrame).Show()
 		self.postPopup()
 
-	def onModelessOkCancelDialog(self, evt):
-		self.prePopup()
-		dlg = (
-			NMD(
-				self,
-				"This is a modeless dialog with OK and Cancel buttons. Test that:\n"
-				"- The dialog appears correctly both visually and to NVDA\n"
-				"- The dialog has the expected buttons\n"
-				"- Pressing the Ok or Cancel button has the intended effect\n"
-				"- Pressing Esc has the intended effect\n"
-				"- Pressing Alt+F4 has the intended effect\n"
-				"- Using the close icon/system menu close item has the intended effect\n"
-				"- You are still able to interact with NVDA's GUI\n"
-				"- Exiting NVDA does not cause errors",
-				"Non-modal OK/Cancel Dialog",
-				buttons=None,
-			)
-			.addOkButton(callback=lambda: messageBox("You pressed OK!"))
-			.addCancelButton(callback=lambda: messageBox("You pressed Cancel!"))
-		)
-
-		dlg.ShowModal()
-		self.postPopup()
-
 
 class SysTrayIcon(wx.adv.TaskBarIcon):
 	def __init__(self, frame: MainFrame):
@@ -706,15 +681,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 			_("Exit NVDA"),
 		)
 		self.Bind(wx.EVT_MENU, frame.onExitCommand, item)
-
-		dialogMenu = wx.Menu()
-		item = dialogMenu.Append(wx.ID_ANY, "Ok")
-		item = dialogMenu.Append(wx.ID_ANY, "Ok and Cancel")
-		self.Bind(wx.EVT_MENU, frame.onModelessOkCancelDialog, item)
-		item = dialogMenu.Append(wx.ID_ANY, "Yes and No")
-		item = dialogMenu.Append(wx.ID_ANY, "Yes, No and Cancel")
-
-		self.menu.AppendSubMenu(dialogMenu, "&Dialog")
 
 		self.Bind(wx.adv.EVT_TASKBAR_LEFT_DOWN, self.onActivate)
 		self.Bind(wx.adv.EVT_TASKBAR_RIGHT_DOWN, self.onActivate)
