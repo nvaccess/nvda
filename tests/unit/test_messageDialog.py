@@ -619,11 +619,14 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		"""Test that a non-vetoable close event is executed."""
 		evt.SetCanVeto(False)
 		self.dialog._instances.append(self.dialog)
-		with patch.object(wx.Dialog, "Destroy") as mocked_destroy, patch.object(
-			self.dialog,
-			"_executeCommand",
-			wraps=self.dialog._executeCommand,
-		) as mocked_executeCommand:
+		with (
+			patch.object(wx.Dialog, "Destroy") as mocked_destroy,
+			patch.object(
+				self.dialog,
+				"_executeCommand",
+				wraps=self.dialog._executeCommand,
+			) as mocked_executeCommand,
+		):
 			self.dialog._onCloseEvent(evt)
 			mocked_destroy.assert_called_once()
 			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
@@ -635,10 +638,13 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
 		MessageDialog._instances.append(self.dialog)
-		with patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater, patch.object(
-			self.dialog,
-			"_executeCommand",
-		) as mocked_executeCommand:
+		with (
+			patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater,
+			patch.object(
+				self.dialog,
+				"_executeCommand",
+			) as mocked_executeCommand,
+		):
 			self.dialog._onCloseEvent(evt)
 			mocked_destroyLater.assert_not_called()
 			mocked_executeCommand.assert_not_called()
@@ -650,11 +656,14 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		self.dialog.addOkCancelButtons()
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
 		MessageDialog._instances.append(self.dialog)
-		with patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater, patch.object(
-			self.dialog,
-			"_executeCommand",
-			wraps=self.dialog._executeCommand,
-		) as mocked_executeCommand:
+		with (
+			patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater,
+			patch.object(
+				self.dialog,
+				"_executeCommand",
+				wraps=self.dialog._executeCommand,
+			) as mocked_executeCommand,
+		):
 			self.dialog._onCloseEvent(evt)
 			mocked_destroyLater.assert_called_once()
 			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
@@ -673,10 +682,13 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		returnCode = sentinel.return_code
 		callback = Mock()
 		command = _Command(callback=callback, closesDialog=closesDialog, ReturnCode=returnCode)
-		with patch.object(self.dialog, "Close") as mocked_close, patch.object(
-			self.dialog,
-			"SetReturnCode",
-		) as mocked_setReturnCode:
+		with (
+			patch.object(self.dialog, "Close") as mocked_close,
+			patch.object(
+				self.dialog,
+				"SetReturnCode",
+			) as mocked_setReturnCode,
+		):
 			self.dialog._executeCommand(command, _canCallClose=canCallClose)
 			callback.assert_called_once()
 			if expectedCloseCalled:
@@ -740,11 +752,14 @@ class Test_MessageDialog_Blocking(MDTestBase):
 	)
 	def test_isBlocking(self, _, isModal: bool, hasFallback: bool, expectedIsBlocking: bool):
 		"""Test that isBlocking works correctly in a number of situations."""
-		with patch.object(self.dialog, "IsModal", return_value=isModal), patch.object(
-			type(self.dialog),
-			"hasFallback",
-			new_callable=PropertyMock,
-			return_value=hasFallback,
+		with (
+			patch.object(self.dialog, "IsModal", return_value=isModal),
+			patch.object(
+				type(self.dialog),
+				"hasFallback",
+				new_callable=PropertyMock,
+				return_value=hasFallback,
+			),
 		):
 			self.assertEqual(self.dialog.isBlocking, expectedIsBlocking)
 
