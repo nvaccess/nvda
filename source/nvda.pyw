@@ -190,9 +190,10 @@ parser.add_argument(
 	"The default value is forced if secure mode is enabled.\n",
 )
 parser.add_argument(
+	"-n",
 	"--lang",
 	dest="language",
-	default="en",
+	default=None,
 	type=stringToLang,
 	help=(
 		"Override the configured NVDA language.\n"
@@ -218,7 +219,12 @@ parser.add_argument(
 	help="Starts NVDA in secure mode",
 )
 parser.add_argument(
-	"--disable-addons", action="store_true", dest="disableAddons", default=False, help="Disable all add-ons"
+	"-d",
+	"--disable-addons",
+	action="store_true",
+	dest="disableAddons",
+	default=False,
+	help="Disable all add-ons",
 )
 parser.add_argument(
 	"--debug-logging",
@@ -320,6 +326,8 @@ parser.add_argument(
 	help="Started by Windows Ease of Access",
 )
 (globalVars.appArgs, globalVars.unknownAppArgs) = parser.parse_known_args()
+# Copy original app args
+globalVars.originalAppArgs = argparse.Namespace(**{k: v for (k, v) in globalVars.appArgs._get_kwargs()})
 # Make any app args path values absolute
 # So as to not be affected by the current directory changing during process lifetime.
 pathAppArgs = [
