@@ -15,6 +15,7 @@ import comtypes.client
 import ctypes
 
 import comtypes.client.lazybind
+import config
 import oleacc
 import comHelper
 import ui
@@ -1386,8 +1387,10 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	def event_treeInterceptor_gainFocus(self):
 		braille.handler.handleGainFocus(self)
 		self.rootNVDAObject.reportFocus()
+		doSayAll = not self.hadFocusOnce and config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]
 		if not self.hadFocusOnce:
 			self.hadFocusOnce = True
+		if doSayAll:
 			self.reportNewSlide()
 		else:
 			info = self.selection
