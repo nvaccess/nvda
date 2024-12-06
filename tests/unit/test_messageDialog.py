@@ -80,6 +80,12 @@ class FocusBlockingInstancesDialogs(NamedTuple):
 	expectedSetFocus: bool
 
 
+class SubsequentCallArgList(NamedTuple):
+	label: str
+	meth1: MethodCall
+	meth2: MethodCall
+
+
 class WxTestBase(unittest.TestCase):
 	"""Base class for test cases which need wx to be initialised."""
 
@@ -135,7 +141,7 @@ class Test_MessageDialog_Sounds(MDTestBase):
 
 class Test_MessageDialog_Buttons(MDTestBase):
 	@parameterized.expand(
-		[
+		(
 			AddDefaultButtonHelpersArgList(
 				func="addOkButton",
 				expectedButtons=(wx.ID_OK,),
@@ -173,7 +179,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 				expectedHasFallback=True,
 				expectedFallbackId=wx.ID_CANCEL,
 			),
-		],
+		),
 	)
 	def test_addDefaultButtonHelpers(
 		self,
@@ -238,25 +244,25 @@ class Test_MessageDialog_Buttons(MDTestBase):
 
 	@parameterized.expand(
 		(
-			(
+			SubsequentCallArgList(
 				"buttons_same_id",
-				MethodCall("addOkButton", kwargs={"callback": dummyCallback1}),
-				MethodCall("addOkButton", kwargs={"callback": dummyCallback2}),
+				meth1=MethodCall("addOkButton", kwargs={"callback": dummyCallback1}),
+				meth2=MethodCall("addOkButton", kwargs={"callback": dummyCallback2}),
 			),
-			(
+			SubsequentCallArgList(
 				"Button_then_ButtonSet_containing_same_id",
-				MethodCall("addOkButton"),
-				MethodCall("addOkCancelButtons"),
+				meth1=MethodCall("addOkButton"),
+				meth2=MethodCall("addOkCancelButtons"),
 			),
-			(
+			SubsequentCallArgList(
 				"ButtonSet_then_Button_with_id_from_set",
-				MethodCall("addOkCancelButtons"),
-				MethodCall("addOkButton"),
+				meth1=MethodCall("addOkCancelButtons"),
+				meth2=MethodCall("addOkButton"),
 			),
-			(
+			SubsequentCallArgList(
 				"ButtonSets_containing_same_id",
-				MethodCall("addOkCancelButtons"),
-				MethodCall("addYesNoCancelButtons"),
+				meth1=MethodCall("addOkCancelButtons"),
+				meth2=MethodCall("addYesNoCancelButtons"),
 			),
 		),
 	)
@@ -321,15 +327,15 @@ class Test_MessageDialog_Buttons(MDTestBase):
 
 	@parameterized.expand(
 		(
-			(
+			SubsequentCallArgList(
 				"noExistantIds",
-				MethodCall("addYesNoButtons"),
-				MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
+				meth1=MethodCall("addYesNoButtons"),
+				meth2=MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
 			),
-			(
+			SubsequentCallArgList(
 				"ExistantAndNonexistantIds",
-				MethodCall("addYesNoCancelButtons"),
-				MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
+				meth1=MethodCall("addYesNoCancelButtons"),
+				meth2=MethodCall("setOkCancelLabels", ("Test 1", "Test 2")),
 			),
 		),
 	)
@@ -656,13 +662,13 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 
 	@parameterized.expand(
 		(
-			(True, True, True),
-			(True, False, False),
-			(False, True, False),
-			(False, False, False),
+			("closableCanCallClose", True, True, True),
+			("ClosableCannotCallClose", True, False, False),
+			("UnclosableCanCallClose", False, True, False),
+			("UnclosableCannotCallClose", False, False, False),
 		),
 	)
-	def test_executeCommand(self, closesDialog: bool, canCallClose: bool, expectedCloseCalled: bool):
+	def test_executeCommand(self, _, closesDialog: bool, canCallClose: bool, expectedCloseCalled: bool):
 		"""Test that _executeCommand performs as expected in a number of situations."""
 		returnCode = sentinel.return_code
 		callback = Mock()
