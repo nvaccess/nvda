@@ -679,6 +679,23 @@ class Test_MessageDialog_Blocking(MDTestBase):
 
 	@parameterized.expand(
 		(
+			("modalWithFallback", True, True, True),
+			("ModalWithoutFallback", True, False, True),
+			("ModelessWithFallback", False, True, False),
+			("ModelessWithoutFallback", False, False, True),
+		),
+	)
+	def test_isBlocking(self, _, isModal: bool, hasFallback: bool, expectedIsBlocking: bool):
+		with patch.object(self.dialog, "IsModal", return_value=isModal), patch.object(
+			type(self.dialog),
+			"hasDefaultAction",
+			new_callable=PropertyMock,
+			return_value=hasFallback,
+		):
+			self.assertEqual(self.dialog.isBlocking, expectedIsBlocking)
+
+	@parameterized.expand(
+		(
 			(
 				"oneNonblockingDialog",
 				(
