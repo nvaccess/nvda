@@ -1,30 +1,30 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from collections import deque
-from collections.abc import Callable, Collection
-from functools import partialmethod, singledispatchmethod
 import threading
 import time
 import warnings
 import winsound
+from collections import deque
+from collections.abc import Callable, Collection
 from enum import Enum, IntEnum, auto
+from functools import partialmethod, singledispatchmethod
 from typing import Any, Literal, NamedTuple, Optional, Self, TypeAlias
 
-
+import core
 import extensionPoints
 import wx
-
 from logHandler import log
-from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-from .guiHelper import SIPABCMeta, wxCallOnMain
-from . import guiHelper
+
 import gui
 
+from . import guiHelper
+from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from .guiHelper import SIPABCMeta, wxCallOnMain
 
 _messageBoxCounterLock = threading.Lock()
 _messageBoxCounter = 0
@@ -65,19 +65,17 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	Because an answer is required to continue after a modal messageBox is opened,
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
-	from gui import mainFrame
-
 	global _messageBoxCounter
 	with _messageBoxCounterLock:
 		_messageBoxCounter += 1
 
 	try:
 		if not dialog.GetParent():
-			mainFrame.prePopup()
+			gui.mainFrame.prePopup()
 		res = dialog.ShowModal()
 	finally:
 		if not dialog.GetParent():
-			mainFrame.postPopup()
+			gui.mainFrame.postPopup()
 		with _messageBoxCounterLock:
 			_messageBoxCounter -= 1
 
@@ -115,9 +113,6 @@ def messageBox(
 			"gui.message.messageBox is deprecated. Use gui.message.MessageDialog instead.",
 		),
 	)
-	# Import late to avoid circular import.
-	import core
-
 	if not core._hasShutdownBeenTriggered:
 		res = wxCallOnMain(_messageBoxShim, message, caption, style, parent=parent or gui.mainFrame)
 	else:
@@ -711,12 +706,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self._checkShowable()
 		self._realizeLayout()
 
-		# We want to call `gui.message.showScriptModal` from our implementation of ShowModal, so we need to switch our instance out now that it's running and replace it with that provided by :class:`wx.Dialog`.
+		# We want to call `displayDialogAsModal` from our implementation of ShowModal, so we need to switch our instance out now that it's running and replace it with that provided by :class:`wx.Dialog`.
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
-		# Import late to avoid circular import.
-		from .message import displayDialogAsModal
-
 		log.debug("Adding to instances")
 		self._instances.append(self)
 		log.debug("Showing modal")
@@ -928,9 +920,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			log.debug("Laying out message dialog")
 		self._messageControl.Wrap(self.scaleSize(self.GetSize().Width))
 		self._mainSizer.Fit(self)
-		from gui import mainFrame
-
-		if self.Parent == mainFrame:
+		if self.Parent == gui.mainFrame:
 			# NVDA's main frame is not visible on screen, so centre on screen rather than on `mainFrame` to avoid the dialog appearing at the top left of the screen.
 			self.CentreOnScreen()
 		else:
