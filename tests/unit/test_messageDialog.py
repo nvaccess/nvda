@@ -7,7 +7,7 @@
 
 from copy import deepcopy
 import unittest
-from unittest.mock import MagicMock, PropertyMock, patch
+from unittest.mock import ANY, MagicMock, PropertyMock, patch
 
 import wx
 from gui.messageDialog import (
@@ -583,13 +583,56 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 		# raise Exception
 
 
-class Test_MessageDialog_EventHandlers(WxTestBase):
-	def test_defaultFocus(self):
-		dialog = MessageDialog(None, "Test").addCancelButton(defaultFocus=True)
-		evt = wx.ShowEvent(dialog.GetId(), True)
+class Test_MessageDialog_EventHandlers(MDTestBase):
+	def test_onShowEvent_defaultFocus(self):
+		self.dialog.addOkButton().addCancelButton(defaultFocus=True)
+		evt = wx.ShowEvent(self.dialog.GetId(), True)
 		with patch.object(wx.Window, "SetFocus") as mocked_setFocus:
-			dialog._onShowEvt(evt)
+			self.dialog._onShowEvt(evt)
 			mocked_setFocus.assert_called_once()
+
+	def test_onCloseEvent_nonVetoable(self):
+		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
+		evt.SetCanVeto(False)
+		self.dialog._instances.append(self.dialog)
+		with patch.object(wx.Dialog, "Destroy") as mocked_destroy, patch.object(
+			self.dialog,
+			"_executeCommand",
+			wraps=self.dialog._executeCommand,
+		) as mocked_executeCommand:
+			self.dialog._onCloseEvent(evt)
+			mocked_destroy.assert_called_once()
+			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
+			self.assertNotIn(self.dialog, MessageDialog._instances)
+
+	def test_onCloseEvent_noFallbackAction(self):
+		self.dialog.addYesNoButtons()
+		self.dialog.SetEscapeId(EscapeCode.NONE)
+		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
+		MessageDialog._instances.append(self.dialog)
+		with patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater, patch.object(
+			self.dialog,
+			"_executeCommand",
+		) as mocked_executeCommand:
+			self.dialog._onCloseEvent(evt)
+			mocked_destroyLater.assert_not_called()
+			mocked_executeCommand.assert_not_called()
+			self.assertTrue(evt.GetVeto())
+			self.assertIn(self.dialog, MessageDialog._instances)
+
+	def test_onCloseEvent_fallbackAction(self):
+		self.dialog.addOkCancelButtons()
+		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
+		MessageDialog._instances.append(self.dialog)
+		with patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater, patch.object(
+			self.dialog,
+			"_executeCommand",
+			wraps=self.dialog._executeCommand,
+		) as mocked_executeCommand:
+			self.dialog._onCloseEvent(evt)
+			mocked_destroyLater.assert_called_once()
+			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
+			self.assertNotIn(self.dialog, MessageDialog._instances)
 
 
 class Test_MessageDialog_Blocking(MDTestBase):
