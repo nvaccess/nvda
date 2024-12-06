@@ -184,6 +184,8 @@ class DefaultButton(Button, Enum):
 
 
 class DefaultButtonSet(tuple[DefaultButton], Enum):
+	"""Commonly needed button combinations."""
+
 	OK_CANCEL = (
 		DefaultButton.OK,
 		DefaultButton.CANCEL,

@@ -54,6 +54,11 @@ def getDialogState(dialog: MessageDialog):
 
 
 def mockDialogFactory(isBlocking: bool = False) -> MagicMock:
+	"""Mock a dialog with certain properties set.
+
+	:param isBlocking: Whether the mocked dialog is blocking.
+	:return: A mock with the same API as :class:`MessageDialog`.
+	"""
 	mock = MagicMock(spec_set=MessageDialog)
 	type(mock).isBlocking = PropertyMock(return_value=isBlocking)
 	return mock
@@ -282,6 +287,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.assertEqual(oldState, getDialogState(self.dialog))
 
 	def test_setButtonLabel_notAButton(self):
+		"""Test that calling setButtonLabel with an id that does not refer to a wx.Button fails as expected."""
 		messageControlId = self.dialog._messageControl.GetId()
 		# This is not a case that should be encountered unless users tamper with internal state.
 		self.dialog._commands[messageControlId] = _Command(
@@ -294,6 +300,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 
 	def test_setButtonLabels_countMismatch(self):
 		with self.assertRaises(ValueError):
+			"""Test that calling _setButtonLabels with a mismatched collection of IDs and labels fails as expected."""
 			self.dialog._setButtonLabels((ReturnCode.APPLY, ReturnCode.CANCEL), ("Apply", "Cancel", "Ok"))
 
 	def test_setButtonLabelsExistantIds(self):
@@ -369,11 +376,13 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			self.dialog.addButtons((*DefaultButtonSet.OK_CANCEL, *DefaultButtonSet.YES_NO_CANCEL))
 
 	def test_setDefaultFocus_goodId(self):
+		"""Test that setting the default focus works as expected."""
 		self.dialog.addOkCancelButtons()
 		self.dialog.setDefaultFocus(ReturnCode.CANCEL)
 		self.assertEqual(self.dialog.GetDefaultItem().GetId(), ReturnCode.CANCEL)
 
 	def test_setDefaultFocus_badId(self):
+		"""Test that setting the default focus to an ID that doesn't exist in the dialog fails as expected."""
 		self.dialog.addOkCancelButtons()
 		with self.assertRaises(KeyError):
 			self.dialog.setDefaultFocus(ReturnCode.APPLY)
@@ -507,6 +516,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertTrue(command.closesDialog)
 
 	def test_getFallbackActionOrFallback_escapeIdNotACommand(self):
+		"""Test that calling _getFallbackActionOrFallback on a dialog whose EscapeId is not a command falls back to returning the default focus."""
 		self.dialog.addOkCancelButtons()
 		super(MessageDialog, self.dialog).SetEscapeId(ReturnCode.CLOSE)
 		command = self.dialog._getFallbackActionOrFallback()
@@ -515,6 +525,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertTrue(command.closesDialog)
 
 	def test_getFallbackAction_escapeCode_None(self):
+		"""Test that setting EscapeCode to None causes _getFallbackAction to return None."""
 		self.dialog.addOkCancelButtons()
 		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
 		self.assertIsNone(self.dialog._getFallbackAction())
@@ -522,11 +533,13 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 
 class Test_MessageDialog_Threading(WxTestBase):
 	def test_new_onNonmain(self):
+		"""Test that creating a MessageDialog on a non GUI thread fails."""
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
 				tpe.submit(MessageDialog.__new__, MessageDialog).result()
 
 	def test_init_onNonMain(self):
+		"""Test that initializing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog.__new__(MessageDialog)
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
@@ -534,12 +547,14 @@ class Test_MessageDialog_Threading(WxTestBase):
 
 	def test_show_onNonMain(self):
 		# self.app = wx.App()
+		"""Test that showing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog(None, "Test")
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
 				tpe.submit(dlg.Show).result()
 
 	def test_showModal_onNonMain(self):
+		"""Test that showing a MessageDialog modally on a non-GUI thread fails."""
 		# self.app = wx.App()
 		dlg = MessageDialog(None, "Test")
 		with ThreadPoolExecutor(max_workers=1) as tpe:
@@ -550,11 +565,13 @@ class Test_MessageDialog_Threading(WxTestBase):
 @patch.object(wx.Dialog, "Show")
 class Test_MessageDialog_Show(MDTestBase):
 	def test_show_noButtons(self, mocked_show: MagicMock):
+		"""Test that showing a MessageDialog with no buttons fails."""
 		with self.assertRaises(RuntimeError):
 			self.dialog.Show()
 		mocked_show.assert_not_called()
 
 	def test_show(self, mocked_show: MagicMock):
+		"""Test that showing a MessageDialog works as expected."""
 		self.dialog.addOkButton()
 		self.dialog.Show()
 		mocked_show.assert_called_once()
@@ -564,11 +581,13 @@ class Test_MessageDialog_Show(MDTestBase):
 @patch.object(wx.Dialog, "ShowModal")
 class Test_MessageDialog_ShowModal(MDTestBase):
 	def test_showModal_noButtons(self, mocked_showModal: MagicMock, _):
+		"""Test that showing a MessageDialog modally with no buttons fails."""
 		with self.assertRaises(RuntimeError):
 			self.dialog.ShowModal()
 		mocked_showModal.assert_not_called()
 
 	def test_showModal(self, mocked_showModal: MagicMock, _):
+		"""Test that showing a MessageDialog works as expected."""
 		self.dialog.addOkButton()
 		with patch("gui.message._messageBoxCounter") as mocked_messageBoxCounter:
 			mocked_messageBoxCounter.__iadd__.return_value = (
@@ -585,6 +604,7 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 
 class Test_MessageDialog_EventHandlers(MDTestBase):
 	def test_onShowEvent_defaultFocus(self):
+		"""Test that _onShowEvent correctly focuses the default focus."""
 		self.dialog.addOkButton().addCancelButton(defaultFocus=True)
 		evt = wx.ShowEvent(self.dialog.GetId(), True)
 		with patch.object(wx.Window, "SetFocus") as mocked_setFocus:
@@ -593,6 +613,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 
 	def test_onCloseEvent_nonVetoable(self):
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
+		"""Test that a non-vetoable close event is executed."""
 		evt.SetCanVeto(False)
 		self.dialog._instances.append(self.dialog)
 		with patch.object(wx.Dialog, "Destroy") as mocked_destroy, patch.object(
@@ -606,6 +627,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			self.assertNotIn(self.dialog, MessageDialog._instances)
 
 	def test_onCloseEvent_noFallbackAction(self):
+		"""Test that a vetoable call to close is vetoed if there is no fallback action."""
 		self.dialog.addYesNoButtons()
 		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
@@ -621,6 +643,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			self.assertIn(self.dialog, MessageDialog._instances)
 
 	def test_onCloseEvent_fallbackAction(self):
+		"""Test that _onCloseEvent works properly when there is an there is a fallback action."""
 		self.dialog.addOkCancelButtons()
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
 		MessageDialog._instances.append(self.dialog)
@@ -643,6 +666,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		),
 	)
 	def test_executeCommand(self, closesDialog: bool, canCallClose: bool, expectedCloseCalled: bool):
+		"""Test that _executeCommand performs as expected in a number of situations."""
 		returnCode = sentinel.return_code
 		callback = Mock()
 		command = _Command(callback=callback, closesDialog=closesDialog, ReturnCode=returnCode)
@@ -698,6 +722,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		instances: tuple[MagicMock],
 		expectedBlockingInstancesExist: bool,
 	):
+		"""Test that blockingInstancesExist is correct in a number of situations."""
 		MessageDialog._instances.extend(instances)
 		print(MessageDialog._instances)
 		self.assertEqual(MessageDialog.BlockingInstancesExist(), expectedBlockingInstancesExist)
@@ -711,6 +736,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		),
 	)
 	def test_isBlocking(self, _, isModal: bool, hasFallback: bool, expectedIsBlocking: bool):
+		"""Test that isBlocking works correctly in a number of situations."""
 		with patch.object(self.dialog, "IsModal", return_value=isModal), patch.object(
 			type(self.dialog),
 			"hasFallback",
@@ -789,6 +815,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		),
 	)
 	def test_focusBlockingInstances(self, _, dialogs: tuple[FocusBlockingInstancesDialogs]):
+		"""Test that focusBlockingInstances works as expected in a number of situations."""
 		MessageDialog._instances.extend(dialog.dialog for dialog in dialogs)
 		MessageDialog.FocusBlockingInstances()
 		for dialog, expectedRaise, expectedSetFocus in dialogs:
@@ -802,6 +829,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 				dialog.SetFocus.assert_not_called()
 
 	def test_closeNonblockingInstances(self):
+		"""Test that closing non-blocking instances works in a number of situations."""
 		bd1, bd2 = mockDialogFactory(True), mockDialogFactory(True)
 		nd1, nd2, nd3 = mockDialogFactory(False), mockDialogFactory(False), mockDialogFactory(False)
 		MessageDialog._instances.extend((nd1, bd1, nd2, bd2, nd3))
@@ -815,6 +843,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 
 class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
+		"""Test that mapping from style flags to Buttons works as expected."""
 		YES, NO, OK, CANCEL, HELP = wx.YES, wx.NO, wx.OK, wx.CANCEL, wx.HELP
 		outputToInputsMap = {
 			(ReturnCode.OK,): (OK, 0),
