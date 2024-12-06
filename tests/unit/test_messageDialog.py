@@ -10,12 +10,12 @@ import unittest
 from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 
 import wx
+from gui.message import ReturnCode
 from gui.messageDialog import (
 	DefaultButtonSet,
 	MessageDialog,
 	Button,
 	EscapeCode,
-	ReturnCode,
 	DialogType,
 	_MessageBoxButtonStylesToMessageDialogButtons,
 	_Command,

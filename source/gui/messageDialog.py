@@ -11,6 +11,7 @@ import winsound
 import wx
 
 import gui
+from gui.message import ReturnCode
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -35,24 +36,6 @@ class _Missing_Type:
 
 _MISSING = _Missing_Type()
 """Sentinel for discriminating between `None` and an actually omitted argument."""
-
-
-class ReturnCode(IntEnum):
-	"""Enumeration of possible returns from :class:`MessageDialog`."""
-
-	OK = wx.ID_OK
-	CANCEL = wx.ID_CANCEL
-	YES = wx.ID_YES
-	NO = wx.ID_NO
-	SAVE = wx.ID_SAVE
-	APPLY = wx.ID_APPLY
-	CLOSE = wx.ID_CLOSE
-	HELP = wx.ID_HELP
-	CUSTOM_1 = wx.ID_HIGHEST + 1
-	CUSTOM_2 = wx.ID_HIGHEST + 2
-	CUSTOM_3 = wx.ID_HIGHEST + 3
-	CUSTOM_4 = wx.ID_HIGHEST + 4
-	CUSTOM_5 = wx.ID_HIGHEST + 5
 
 
 class EscapeCode(IntEnum):
