@@ -1644,3 +1644,16 @@ The following default button sets are available:
 | `YES_NO` | `DefaultButton.YES` and `DefaultButton.NO` | `addYesNoButtons` | You must set a fallback action if you want the user to be able to press escape to close a dialog with only these buttons. |
 | `YES_NO_CANCEL` | `DefaultButton.YES`, `DefaultButton.NO` and `DefaultButton.CANCEL` | `addYesNoCancelButtons` | |
 | `SAVE_NO_CANCEL` | `DefaultButton.SAVE`, `DefaultButton.NO`, `DefaultButton.CANCEL` | `addSaveNoCancelButtons` | The label of the no button is overridden to be "Do&n't save". |
+
+#### Convenience methods
+
+The `MessageDialog` class also provides a number of convenience methods for showing common types of modal dialogs.
+Each of them requires a message string, and optionally a title string and parent window.
+They all also support overriding the labels on their buttons.
+The following convenience class methods are provided:
+
+| Method | Buttons | Return values |
+|---|---|---|
+| `alert` | OK (`okLabel`) | `None` |
+| `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.Cancel` |
+| `ask` | Yes (`yesLabel`), No (`noLabel`) and Cancel (`cancelLabel`) | `ReturnCode.YES`, `ReturnCode.NO` or `ReturnCode.CANCEL` |
