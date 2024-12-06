@@ -167,3 +167,14 @@ class ReturnCode(IntEnum):
 	CUSTOM_3 = wx.ID_HIGHEST + 3
 	CUSTOM_4 = wx.ID_HIGHEST + 4
 	CUSTOM_5 = wx.ID_HIGHEST + 5
+
+
+class EscapeCode(IntEnum):
+	"""Enumeration of the behavior of the escape key and programmatic attempts to close a :class:`MessageDialog`."""
+
+	NO_FALLBACK = wx.ID_NONE
+	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
+	CANCEL_OR_AFFIRMATIVE = wx.ID_ANY
+	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
+	If no Cancel button is present, the affirmative button should be used.
+	"""

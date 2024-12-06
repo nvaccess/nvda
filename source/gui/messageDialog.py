@@ -3,7 +3,7 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from enum import Enum, IntEnum, auto
+from enum import Enum, auto
 import time
 from typing import Any, Literal, NamedTuple, TypeAlias, Self
 import winsound
@@ -11,7 +11,7 @@ import winsound
 import wx
 
 import gui
-from gui.message import ReturnCode
+from gui.message import EscapeCode, ReturnCode
 
 from .contextHelp import ContextHelpMixin
 from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -36,17 +36,6 @@ class _Missing_Type:
 
 _MISSING = _Missing_Type()
 """Sentinel for discriminating between `None` and an actually omitted argument."""
-
-
-class EscapeCode(IntEnum):
-	"""Enumeration of the behavior of the escape key and programmatic attempts to close a :class:`MessageDialog`."""
-
-	NO_FALLBACK = wx.ID_NONE
-	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
-	CANCEL_OR_AFFIRMATIVE = wx.ID_ANY
-	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
-	If no Cancel button is present, the affirmative button should be used.
-	"""
 
 
 class DialogType(Enum):
