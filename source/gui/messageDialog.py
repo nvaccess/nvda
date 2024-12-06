@@ -253,6 +253,18 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		buttons: Collection[Button] | None = (DefaultButton.OK,),
 		helpId: str = "",
 	):
+		"""Initialize the MessageDialog.
+
+		:param parent: Parent window of this dialog.
+			If given, this window will become inoperable while the dialog is shown modally.
+		:param message: Message to display in the dialog.
+		:param title: Window title for the dialog.
+		:param dialogType: The type of the dialog, defaults to DialogType.STANDARD.
+			Affects things like the icon and sound of the dialog.
+		:param buttons: What buttons to place in the dialog, defaults to (DefaultButton.OK,).
+			Further buttons can easily be added later.
+		:param helpId: URL fragment of the relevant help entry in the user guide for this dialog, defaults to ""
+		"""
 		self._checkMainThread()
 		self.helpId = helpId  # Must be set before initialising ContextHelpMixin.
 		super().__init__(parent, title=title)
