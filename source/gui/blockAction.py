@@ -14,14 +14,19 @@ from typing import Any
 from speech.priorities import SpeechPriority
 import ui
 from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
-from gui.message import isModalMessageBoxActive
 import core
+
+
+def _isModalMessageBoxActive() -> bool:
+	from gui.message import isModalMessageBoxActive
+
+	return isModalMessageBoxActive()
 
 
 def _modalDialogOpenCallback():
 	"""Focus any open blocking :class:`MessageDialog` instances."""
 	# Import late to avoid circular import
-	from gui.messageDialog import MessageDialog
+	from gui.message import MessageDialog
 
 	if MessageDialog.BlockingInstancesExist():
 		MessageDialog.FocusBlockingInstances()
@@ -47,7 +52,7 @@ class Context(_Context, Enum):
 		_("Action unavailable in NVDA Windows Store version"),
 	)
 	MODAL_DIALOG_OPEN = (
-		isModalMessageBoxActive,
+		_isModalMessageBoxActive,
 		# Translators: Reported when an action cannot be performed because NVDA is waiting
 		# for a response from a modal dialog
 		_("Action unavailable while a dialog requires a response"),

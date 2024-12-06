@@ -22,7 +22,6 @@ from config.featureFlag import (
 	FeatureFlag,
 	FlagValueEnum as FeatureFlagEnumT,
 )
-from gui import messageDialog
 import gui.message
 from .dpiScalingHelper import DpiScalingHelperMixin
 from . import (
@@ -271,7 +270,7 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 
-class MessageDialog(messageDialog.MessageDialog):
+class MessageDialog(gui.message.MessageDialog):
 	"""Provides a more flexible message dialog.
 
 	.. warning:: This class is deprecated.

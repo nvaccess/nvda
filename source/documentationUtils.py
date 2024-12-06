@@ -13,7 +13,6 @@ import NVDAState
 from logHandler import log
 import ui
 import queueHandler
-from gui.message import messageBox
 import wx
 
 
@@ -65,6 +64,9 @@ def reportNoDocumentation(fileName: str, useMsgBox: bool = False) -> None:
 		f"Documentation not found ({fileName}): possible cause - running from source without building user docs.",
 	)
 	if useMsgBox:
+		# Import late to avoid circular impoort.
+		from gui.message import messageBox
+
 		messageBox(
 			noDocMessage,
 			# Translators: the title of an error message dialog

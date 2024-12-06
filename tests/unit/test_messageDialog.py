@@ -10,17 +10,16 @@ import unittest
 from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 
 import wx
-from gui.message import DialogType, EscapeCode, ReturnCode
-from gui.messageDialog import (
-	DefaultButtonSet,
-	MessageDialog,
-	Button,
+from gui.message import _Command, DefaultButtonSet, DialogType, EscapeCode, ReturnCode
+from gui.message import (
 	_MessageBoxButtonStylesToMessageDialogButtons,
-	_Command,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
 from concurrent.futures import ThreadPoolExecutor
+
+from gui.message import Button
+from gui.message import MessageDialog
 
 
 NO_CALLBACK = (EscapeCode.NO_FALLBACK, None)

@@ -31,7 +31,7 @@ from .message import (
 	# be cautious when removing
 	messageBox,
 )
-from .messageDialog import MessageDialog
+from .message import MessageDialog
 from . import blockAction
 from .speechDict import (
 	DefaultDictionaryDialog,
@@ -71,7 +71,7 @@ import speechViewer
 import winUser
 import api
 import NVDAState
-from gui.messageDialog import MessageDialog as NMD
+from gui.message import MessageDialog as NMD
 
 
 if NVDAState._allowDeprecatedAPI():
