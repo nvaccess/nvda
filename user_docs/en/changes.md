@@ -52,9 +52,10 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
-* Improvements when editing in Microsoft PowerPoint:
+* Improvements in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+  * NVDA no longer starts say all when starting a slide show and the browse mode setting "Automatic Say All on page load" is disabled. (#17488, @LeonarddeR)
 * When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
 * Configuration profiles:
   * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
