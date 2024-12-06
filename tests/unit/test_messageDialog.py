@@ -759,6 +759,17 @@ class Test_MessageDialog_Blocking(MDTestBase):
 			else:
 				dialog.SetFocus.assert_not_called()
 
+	def test_closeNonblockingInstances(self):
+		bd1, bd2 = mockDialogFactory(True), mockDialogFactory(True)
+		nd1, nd2, nd3 = mockDialogFactory(False), mockDialogFactory(False), mockDialogFactory(False)
+		MessageDialog._instances.extend((nd1, bd1, nd2, bd2, nd3))
+		MessageDialog.CloseInstances()
+		bd1.Close.assert_not_called()
+		bd2.Close.assert_not_called()
+		nd1.Close.assert_called()
+		nd2.Close.assert_called()
+		nd3.Close.assert_called()
+
 
 class Test_MessageBoxShim(unittest.TestCase):
 	def test_messageBoxButtonStylesToMessageDialogButtons(self):
