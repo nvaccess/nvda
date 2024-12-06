@@ -1440,3 +1440,207 @@ Please see the `EventExtensionPoints` class documentation for more information, 
 |`Action` |`post_reviewMove` |the position of the review cursor has changed.|
 |`Action` |`post_mouseMove` |the mouse has moved.|
 |`Action` |`post_coreCycle` |the end of each core cycle has been reached.|
+
+## Communicating with the user
+
+### The message dialog API
+
+The message dialog API provides a flexible way of presenting interactive messages to the user. The messages are highly customisable, with options to change icons and sounds, button labels, return values, and close behaviour, as well as to attach your own callbacks.
+
+In many simple cases, you will be able to achieve what you need by simply creating a message dialog and calling `Show` or `ShowModal`. For example:
+
+```py
+MessageDialog(
+	mainFrame,
+	"Hello world!",
+).Show()
+```
+
+This will show a non-modal (that is, non-blocking) dialog with the text "Hello world!" and an OK button.
+
+If you want the dialog to be modal (that is, to block the user from performing other actions in NVDA until they have responded to it), you can call `ShowModal` instead.
+
+With modal dialogs, the easiest way to respond to user input is via the return code.
+
+```py
+saveDialog = MessageDialog(
+	mainFrame,
+	"Would you like to save your changes before exiting?",
+	"Save changes?",
+	buttons=DefaultButtonSet.SAVE_NO_CANCEL
+)
+
+match saveDialog.ShowModal():
+	case ReturnCode.SAVE:
+		...  # Save the changes and close
+	case ReturnCode.NO:
+		...  # Discard changes and close
+	case ReturnCode.CANCEL:
+		...  # Do not close
+```
+
+For non-modal dialogs, the easiest way to respond to the user pressing a button is via callback methods.
+
+```py
+def read_changelog():
+	...  # Do something
+
+def download_update():
+	...  # Do something
+
+def remind_later():
+	...  # Do something
+
+updateDialog = MessageDialog(
+	mainFrame,
+	"An update is available. "
+	"Would you like to download it now?",
+	"Update",
+	buttons=None,
+).addButton(
+	ReturnCode.YES,
+	label="Yes",
+	default_focus=True,
+	callback=download_update
+).addButton(
+	ReturnCode.NO,
+	default_action=True,
+	label="Remind me later",
+	callback=remind_later
+).addButton(
+	ReturnCode.HELP,
+	closes_dialog=False,
+	label="What's new",
+	callback=read_changelog
+)
+
+updateDialog.Show()
+```
+
+You can set many of the parameters to `addButton` later, too:
+
+* The default focus can be set by calling `setDefaultFocus` on your message dialog instance, and passing it the ID of the button to make the default focus.
+* The fallback action can be set later by calling `setFallbackAction` or `SetEscapeId` with the ID of the button which performs the fallback action.
+* The button's label can be changed by calling `setButtonLabel` with the ID of the button and the new label.
+
+#### Fallback actions
+
+It is worth interrogating the fallback action further.
+The fallback action is the action performed when the dialog is closed without the user pressing one of the buttons you added to the dialog.
+This can happen for several reasons:
+
+* The user pressed `esc` or `alt+f4` to close the dialog.
+* The user used the title bar close button or system menu close item to close the dialog.
+* The user closed the dialog from the Task View, Taskbar or App Switcher.
+* The user is quitting NVDA.
+* Some other part of NVDA or an add-on has asked the dialog to close.
+
+By default, the fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE`.
+This means that the fallback action will be the cancel button if there is one, the ok button if there is no cancel button but there is an ok button[^fn_defaultFallbackOk], or otherwise `None`.
+The fallback action can also be set to `EscapeCode.NO_FALLBACK` to disable closing the dialog like this entirely.
+If it is set to any other value, the value must be the id of a button to use as the default action.
+
+[^fn_defaultFallbackOk]: In actuality, the value of `dialog.GetAffirmativeId()` is used to find the button to use as fallback if using `EscapeCode.CANCEL_OR_AFFIRMATIVE` and there is no button with `id=ReturnCode.CANCEL`.
+You can use `dialog.SetAffirmativeId(id)` to change it, if desired.
+
+In some cases, the dialog may be forced to close.
+If the dialog is shown modally, a fallback action will be used if the default action is `EscapeCode.NO_FALLBACK` or not found.
+The order of precedence is as follows:
+
+1. The developer-set fallback action.
+2. The developer-set default focus.
+3. The first button added to the dialog that closes the dialog.
+4. The first button added to the dialog, regardless of whether it closes the dialog.
+5. A dummy action that does nothing but close the dialog.
+   In this case, and only this case, the return code from showing the dialog modally will be `EscapeCode.NO_FALLBACK`.
+
+#### A note on threading
+
+Just like wxPython, most of the methods available on `MessageDialog` and its instances are **not** thread safe.
+When calling non thread safe methods on `MessageDialog` or its instances, be sure to do so on the GUI thread.
+To do this with wxPython, you can use `wx.CallAfter` or  `wx.CallLater`.
+As these operations schedule the passed callable to occur on the GUI thread, they will return immediately, and will not return the return value of the passed callable.
+If you want to wait until the callable has completed, or care about its return value, consider using `gui.guiHelper.wxCallOnMain`.
+
+The `wxCallOnMain` function executes the callable you pass to it, along with any positional and keyword arguments, on the GUI thread.
+It blocks the calling thread until the passed callable returns or raises an exception, at which point it returns the returned value, or re-raises the raised exception.
+
+```py
+# To call
+some_function(arg1, arg2, kw1=value1, kw2=value2)
+# on the GUI thread:
+wxCallOnMain(some_function, arg1, arg2, kw=value1, kw2=value2)
+```
+
+In fact, you cannot create, initialise, or show (modally or non-modally) `MessageDialog`s from any thread other than the GUI thread.
+
+#### Buttons
+
+You can add buttons in a number of ways:
+
+* By passing a `Collection` of `Button`s to the `buttons` keyword-only parameter to `MessageDialog` when initialising.
+* By calling `addButton` on a `MessageDialog` instance, either with a `Button` instance, or with simple parameters.
+  * When calling `addButton` with a `Button` instance, you can override all of its parameters except `id` by providing their values as keyword arguments.
+  * When calling `addButton` with simple parameters, the parameters it accepts are the same as those of `Button`.
+  * In both cases, `id` or `button` is the first argument, and is positional only.
+* By calling `addButtons` with a `Collection` of `Button`s.
+* By calling any of the add button helpers.
+
+Regardless of how you add them, you cannot add multiple buttons with the same ID to the same `MessageDialog`.
+
+A `Button` is an immutable data structure containing all of the information needed to add a button to a `MessageDialog`.
+Its fields are as follows:
+
+| Field | Type | Default | Explanation |
+|---|---|---|---|
+| `id` | `ReturnCode` | No default | The ID used to refer to the button. |
+| `label` | `str` | No default | The text label to display on the button. Prefix accelerator keys with an ampersand (&). |
+| `callback` | `Callable` or `None` | `None` | The function to call when the button is clicked. This is most useful for non-modal dialogs. |
+| `defaultFocus` | `bool` | `False` | Whether to explicitly set the button as the default focus[^fn_defaultFocus]. |
+| `fallbackAction` | `bool` | `False` | Whether the button should be the fallback action, which is called when the user presses `esc`, uses the system menu or title bar close buttons, or the dialog is asked to close programmatically[^fn_fallbackAction]. |
+| `closesDialog` | `bool` | `True` | Whether the button should close the dialog when pressed[^fn_closesDialog]. |
+| `returnCode` | `ReturnCode` or `None` | `None` | Value to return when a modal dialog is closed. If `None`, the button's ID will be used. |
+
+[^fn_defaultFocus]: Setting `defaultFocus` only overrides the default focus:
+
+    * If no buttons have this property, the first button will be the default focus.
+    * If multiple buttons have this property, the last one will be the default focus.
+
+[^fn_fallbackAction]: `fallbackAction` only sets whether to override the fallback action:
+
+    * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or `ReturnCode.OK` if there is no button with `id=ReturnCode.OK`), even if it is added with `fallbackAction=False`.
+      To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
+    * If multiple buttons have this property, the last one will be the fallback action.
+
+[^fn_closesDialog]: Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
+
+    * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
+    * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
+
+A number of pre-configured buttons are available for you to use from the `DefaultButton` enumeration, complete with pre-translated labels.
+None of these buttons will explicitly set themselves as the fallback action.
+You can also add any of these buttons to an existing `MessageDialog` instance with its add button helper, which also allows you to override all but the `id` parameter.
+The following default buttons are available:
+
+| Button | Label | ID/return code | Closes dialog | Add button helper |
+|---|---|---|---|---|
+| `APPLY` | &Apply | `ReturnCode.APPLY` | No | `addApplyButton` |
+| `CANCEL` | Cancel | `ReturnCode.CANCEL` | Yes | `addCancelButton` |
+| `CLOSE` | Close | `ReturnCode.CLOSE` | Yes | `addCloseButton` |
+| `HELP` | Help | `ReturnCode.HELP` | No | `addHelpButton` |
+| `NO` | &No | `ReturnCode.NO` | Yes | `addNoButton` |
+| `OK` | OK | `ReturnCode.OK` | Yes | `addOkButton` |
+| `SAVE` | &Save | `ReturnCode.SAVE` | Yes | `addSaveButton` |
+| `YES` | &Yes | `ReturnCode.YES` | Yes | `addYesButton` |
+
+As you usually want more than one button on a dialog, there are also a number of pre-defined sets of buttons available as members of the `DefaultButtonSet` enumeration.
+All of them comprise members of `DefaultButton`.
+You can also add any of these default button sets to an existing `MessageDialog` with one of its add buttons helpers.
+The following default button sets are available:
+
+| Button set | Contains | Add button set helper | Notes |
+|---|---|---|---|
+| `OK_CANCEL` | `DefaultButton.OK` and `DefaultButton.Cancel` | `addOkCancelButtons` | |
+| `YES_NO` | `DefaultButton.YES` and `DefaultButton.NO` | `addYesNoButtons` | You must set a fallback action if you want the user to be able to press escape to close a dialog with only these buttons. |
+| `YES_NO_CANCEL` | `DefaultButton.YES`, `DefaultButton.NO` and `DefaultButton.CANCEL` | `addYesNoCancelButtons` | |
+| `SAVE_NO_CANCEL` | `DefaultButton.SAVE`, `DefaultButton.NO`, `DefaultButton.CANCEL` | `addSaveNoCancelButtons` | The label of the no button is overridden to be "Do&n't save". |
