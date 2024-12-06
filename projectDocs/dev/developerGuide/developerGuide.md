@@ -1447,6 +1447,17 @@ Please see the `EventExtensionPoints` class documentation for more information, 
 
 The message dialog API provides a flexible way of presenting interactive messages to the user. The messages are highly customisable, with options to change icons and sounds, button labels, return values, and close behaviour, as well as to attach your own callbacks.
 
+All classes that make up the message dialog API are importable from `gui.message`.
+While you are unlikely to need all of them, they are enumerated below:
+
+* `ReturnCode`: Possible return codes from modal `MessageDialog`s.
+* `EscapeCode`: Escape behaviour of `MessageDialog`s.
+* `DialogType`: Types of dialogs (sets the dialog's sound and icon).
+* `Button`: Button configuration data structure.
+* `DefaultButton`: Enumeration of pre-configured buttons.
+* `DefaultButtonSet`: Enumeration of common combinations of buttons.
+* `MessageDialog`: The actual dialog class.
+
 In many simple cases, you will be able to achieve what you need by simply creating a message dialog and calling `Show` or `ShowModal`. For example:
 
 ```py
