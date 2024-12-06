@@ -432,10 +432,10 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_setDefaultAction_existant_action(self):
+	def test_setFallbackAction_existant_action(self):
 		"""Test that setting the fallback action results in the correct action being returned from both getFallbackAction and getFallbackActionOrFallback."""
 		self.dialog.addYesNoButtons()
-		self.dialog.setDefaultAction(ReturnCode.YES)
+		self.dialog.setFallbackAction(ReturnCode.YES)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
 			self.assertEqual(command.ReturnCode, ReturnCode.YES)
@@ -446,21 +446,21 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_setDefaultAction_nonexistant_action(self):
+	def test_setFallbackAction_nonexistant_action(self):
 		"""Test that setting the fallback action to an action that has not been set up results in KeyError, and that a fallback action is returned from getFallbackActionOrFallback."""
 		self.dialog.addYesNoButtons()
 		with self.subTest("Test getting the fallback action."):
 			with self.assertRaises(KeyError):
-				self.dialog.setDefaultAction(ReturnCode.APPLY)
+				self.dialog.setFallbackAction(ReturnCode.APPLY)
 		with self.subTest("Test getting the fallback fallback action."):
 			self.assertIsNone(self.dialog._getFallbackAction())
 
-	def test_setDefaultAction_nonclosing_action(self):
+	def test_setFallbackAction_nonclosing_action(self):
 		"""Check that setting the fallback action to an action that does not close the dialog fails with a ValueError."""
 		self.dialog.addOkButton().addApplyButton(closesDialog=False)
 		with self.subTest("Test setting the fallback action."):
 			with self.assertRaises(ValueError):
-				self.dialog.setDefaultAction(ReturnCode.APPLY)
+				self.dialog.setFallbackAction(ReturnCode.APPLY)
 
 	def test_getFallbackActionOrFallback_no_controls(self):
 		"""Test that getFallbackActionOrFallback returns wx.ID_NONE and a close command with no callback when the dialog has no buttons."""
@@ -500,7 +500,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_getFallbackActionOrFallback_custom_defaultAction(self):
 		"""Test that getFallbackActionOrFallback returns the custom defaultAction if set."""
 		self.dialog.addApplyButton().addCloseButton()
-		self.dialog.setDefaultAction(ReturnCode.CLOSE)
+		self.dialog.setFallbackAction(ReturnCode.CLOSE)
 		command = self.dialog._getFallbackActionOrFallback()
 		self.assertEqual(command.ReturnCode, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)

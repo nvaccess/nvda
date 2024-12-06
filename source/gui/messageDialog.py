@@ -344,7 +344,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if defaultFocus:
 			self.SetDefaultItem(button)
 		if fallbackAction:
-			self.setDefaultAction(buttonId)
+			self.setFallbackAction(buttonId)
 		self.EnableCloseButton(self.hasFallback)
 		self._isLayoutFullyRealized = False
 		return self
@@ -530,7 +530,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		super().SetEscapeId(id)
 		return self
 
-	def setDefaultAction(self, id: ReturnCode | EscapeCode) -> Self:
+	def setFallbackAction(self, id: ReturnCode | EscapeCode) -> Self:
 		"""See :meth:`MessageDialog.SetEscapeId`."""
 		return self.SetEscapeId(id)
 
