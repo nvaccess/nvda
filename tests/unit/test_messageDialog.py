@@ -188,7 +188,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			with self.subTest("Check that all buttons have the expected type", id=id):
 				self.assertIsInstance(self.dialog.FindWindowById(id), wx.Button)
 		with self.subTest("Test whether the fallback status is as expected."):
-			self.assertEqual(self.dialog.hasDefaultAction, expectedHasFallback)
+			self.assertEqual(self.dialog.hasFallback, expectedHasFallback)
 		with self.subTest(
 			"Test whether getting the fallback action returns the expected action type and return code",
 		):
@@ -688,7 +688,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 	def test_isBlocking(self, _, isModal: bool, hasFallback: bool, expectedIsBlocking: bool):
 		with patch.object(self.dialog, "IsModal", return_value=isModal), patch.object(
 			type(self.dialog),
-			"hasDefaultAction",
+			"hasFallback",
 			new_callable=PropertyMock,
 			return_value=hasFallback,
 		):

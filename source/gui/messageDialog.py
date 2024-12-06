@@ -334,7 +334,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 			self.SetDefaultItem(button)
 		if fallbackAction:
 			self.setDefaultAction(buttonId)
-		self.EnableCloseButton(self.hasDefaultAction)
+		self.EnableCloseButton(self.hasFallback)
 		self._isLayoutFullyRealized = False
 		return self
 
@@ -567,10 +567,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 	@property
 	def isBlocking(self) -> bool:
 		"""Whether or not the dialog is blocking"""
-		return self.IsModal() or not self.hasDefaultAction
+		return self.IsModal() or not self.hasFallback
 
 	@property
-	def hasDefaultAction(self) -> bool:
+	def hasFallback(self) -> bool:
 		"""Whether the dialog has a valid fallback action.
 
 		Assumes that any explicit action (i.e. not EscapeCode.NONE or EscapeCode.DEFAULT) is valid.
