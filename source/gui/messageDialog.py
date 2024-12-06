@@ -856,20 +856,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 					"No commands have been registered. If the dialog is shown, this indicates a logic error.",
 				)
 
-			# firstCommand: tuple[int, _Command] | None = None
-			# for id, command in self._commands.items():
-			# if command.closesDialog:
-			# return command
-			# if firstCommand is None:
-			# firstCommand = (id, command)
-			# No commands that close the dialog have been registered. Use the first command instead.
-			# if firstCommand is not None:
-			# return firstCommand
-			# else:
-			# log.debug(
-			# "No commands have been registered. If the dialog is shown, this indicates a logic error.",
-			# )
-
 			# No commands have been registered. Create one of our own.
 			return _Command(callback=None, closesDialog=True, ReturnCode=wx.ID_NONE)
 
