@@ -7,7 +7,7 @@
 
 from copy import deepcopy
 import unittest
-from unittest.mock import ANY, MagicMock, PropertyMock, patch
+from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 
 import wx
 from gui.messageDialog import (
@@ -633,6 +633,31 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			mocked_destroyLater.assert_called_once()
 			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
 			self.assertNotIn(self.dialog, MessageDialog._instances)
+
+	@parameterized.expand(
+		(
+			(True, True, True),
+			(True, False, False),
+			(False, True, False),
+			(False, False, False),
+		),
+	)
+	def test_executeCommand(self, closesDialog: bool, canCallClose: bool, expectedCloseCalled: bool):
+		returnCode = sentinel.return_code
+		callback = Mock()
+		command = _Command(callback=callback, closesDialog=closesDialog, ReturnCode=returnCode)
+		with patch.object(self.dialog, "Close") as mocked_close, patch.object(
+			self.dialog,
+			"SetReturnCode",
+		) as mocked_setReturnCode:
+			self.dialog._executeCommand(command, _canCallClose=canCallClose)
+			callback.assert_called_once()
+			if expectedCloseCalled:
+				mocked_setReturnCode.assert_called_with(returnCode)
+				mocked_close.assert_called_once()
+			else:
+				mocked_setReturnCode.assert_not_called()
+				mocked_close.assert_not_called()
 
 
 class Test_MessageDialog_Blocking(MDTestBase):
