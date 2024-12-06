@@ -7,7 +7,7 @@
 
 from copy import deepcopy
 import unittest
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock, PropertyMock, patch
 
 import wx
 from gui.messageDialog import (
@@ -53,6 +53,12 @@ def getDialogState(dialog: MessageDialog):
 	)
 
 
+def mockDialogFactory(isBlocking: bool = False) -> MagicMock:
+	mock = MagicMock(spec_set=MessageDialog)
+	type(mock).isBlocking = PropertyMock(return_value=isBlocking)
+	return mock
+
+
 class AddDefaultButtonHelpersArgList(NamedTuple):
 	func: str
 	expectedButtons: Iterable[int]
@@ -64,6 +70,12 @@ class MethodCall(NamedTuple):
 	name: str
 	args: tuple[Any, ...] = tuple()
 	kwargs: dict[str, Any] = dict()
+
+
+class FocusBlockingInstancesDialogs(NamedTuple):
+	dialog: MagicMock
+	expectedRaise: bool
+	expectedSetFocus: bool
 
 
 class WxTestBase(unittest.TestCase):
@@ -578,6 +590,131 @@ class Test_MessageDialog_EventHandlers(WxTestBase):
 		with patch.object(wx.Window, "SetFocus") as mocked_setFocus:
 			dialog._onShowEvt(evt)
 			mocked_setFocus.assert_called_once()
+
+
+class Test_MessageDialog_Blocking(MDTestBase):
+	def tearDown(self) -> None:
+		MessageDialog._instances.clear()
+		super().tearDown()
+
+	@parameterized.expand(
+		(
+			("noInstances", tuple(), False),
+			("nonBlockingInstance", (mockDialogFactory(isBlocking=False),), False),
+			("blockingInstance", (mockDialogFactory(isBlocking=True),), True),
+			(
+				"onlyBlockingInstances",
+				(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=True)),
+				True,
+			),
+			(
+				"onlyNonblockingInstances",
+				(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=False)),
+				False,
+			),
+			(
+				"blockingFirstNonBlockingSecond",
+				(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=False)),
+				True,
+			),
+			(
+				"nonblockingFirstblockingSecond",
+				(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=True)),
+				True,
+			),
+		),
+	)
+	def test_blockingInstancesExist(
+		self,
+		_,
+		instances: tuple[MagicMock],
+		expectedBlockingInstancesExist: bool,
+	):
+		MessageDialog._instances.extend(instances)
+		print(MessageDialog._instances)
+		self.assertEqual(MessageDialog.BlockingInstancesExist(), expectedBlockingInstancesExist)
+
+	@parameterized.expand(
+		(
+			(
+				"oneNonblockingDialog",
+				(
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(False),
+						expectedRaise=False,
+						expectedSetFocus=False,
+					),
+				),
+			),
+			(
+				"oneBlockingDialog",
+				(
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(True),
+						expectedRaise=True,
+						expectedSetFocus=True,
+					),
+				),
+			),
+			(
+				"blockingThenNonblocking",
+				(
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(True),
+						expectedRaise=True,
+						expectedSetFocus=True,
+					),
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(False),
+						expectedRaise=False,
+						expectedSetFocus=False,
+					),
+				),
+			),
+			(
+				"nonblockingThenBlocking",
+				(
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(False),
+						expectedRaise=False,
+						expectedSetFocus=False,
+					),
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(True),
+						expectedRaise=True,
+						expectedSetFocus=True,
+					),
+				),
+			),
+			(
+				"blockingThenBlocking",
+				(
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(True),
+						expectedRaise=True,
+						expectedSetFocus=False,
+					),
+					FocusBlockingInstancesDialogs(
+						mockDialogFactory(True),
+						expectedRaise=True,
+						expectedSetFocus=True,
+					),
+				),
+			),
+		),
+	)
+	def test_focusBlockingInstances(self, _, dialogs: tuple[FocusBlockingInstancesDialogs]):
+		MessageDialog._instances.extend(dialog.dialog for dialog in dialogs)
+		MessageDialog.FocusBlockingInstances()
+		for dialog, expectedRaise, expectedSetFocus in dialogs:
+			if expectedRaise:
+				dialog.Raise.assert_called_once()
+			else:
+				dialog.Raise.assert_not_called()
+			if expectedSetFocus:
+				dialog.SetFocus.assert_called_once()
+			else:
+				dialog.SetFocus.assert_not_called()
 
 
 class Test_MessageBoxShim(unittest.TestCase):
