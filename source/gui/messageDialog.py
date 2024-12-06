@@ -927,7 +927,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
-			self._execute_command(self._getFallbackActionOrFallback(), _canCallClose=False)
+			self._executeCommand(self._getFallbackActionOrFallback(), _canCallClose=False)
 			self._instances.remove(self)
 			if self.IsModal():
 				self.EndModal(self.GetReturnCode())
@@ -940,7 +940,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				evt.Veto()
 				return
 			self.Hide()
-			self._execute_command(command, _canCallClose=False)
+			self._executeCommand(command, _canCallClose=False)
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
@@ -957,11 +957,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		id = evt.GetId()
 		log.debug(f"Got button event on {id=}")
 		try:
-			self._execute_command(self._commands[id])
+			self._executeCommand(self._commands[id])
 		except KeyError:
 			log.debug(f"No command registered for {id=}.")
 
-	def _execute_command(
+	def _executeCommand(
 		self,
 		command: _Command,
 		*,
