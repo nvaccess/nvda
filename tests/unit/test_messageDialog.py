@@ -25,7 +25,7 @@ from typing import Any, Iterable, NamedTuple
 from concurrent.futures import ThreadPoolExecutor
 
 
-NO_CALLBACK = (EscapeCode.NONE, None)
+NO_CALLBACK = (EscapeCode.NO_FALLBACK, None)
 
 
 def dummyCallback1(*a):
@@ -465,7 +465,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_getFallbackActionOrFallback_no_controls(self):
 		"""Test that getFallbackActionOrFallback returns wx.ID_NONE and a close command with no callback when the dialog has no buttons."""
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, EscapeCode.NONE)
+		self.assertEqual(command.ReturnCode, EscapeCode.NO_FALLBACK)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -516,7 +516,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 
 	def test_getFallbackAction_escapeCode_None(self):
 		self.dialog.addOkCancelButtons()
-		self.dialog.SetEscapeId(EscapeCode.NONE)
+		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
 		self.assertIsNone(self.dialog._getFallbackAction())
 
 
@@ -607,7 +607,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 
 	def test_onCloseEvent_noFallbackAction(self):
 		self.dialog.addYesNoButtons()
-		self.dialog.SetEscapeId(EscapeCode.NONE)
+		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
 		MessageDialog._instances.append(self.dialog)
 		with patch.object(wx.Dialog, "DestroyLater") as mocked_destroyLater, patch.object(

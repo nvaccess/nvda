@@ -58,9 +58,9 @@ class ReturnCode(IntEnum):
 class EscapeCode(IntEnum):
 	"""Enumeration of the behavior of the escape key and programmatic attempts to close a :class:`MessageDialog`."""
 
-	NONE = wx.ID_NONE
+	NO_FALLBACK = wx.ID_NONE
 	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
-	DEFAULT = wx.ID_ANY
+	CANCEL_OR_AFFIRMATIVE = wx.ID_ANY
 	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
 	If no Cancel button is present, the affirmative button should be used.
 	"""
@@ -521,12 +521,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:raises ValueError: If the action with the given id does not close the dialog.
 		:return: The updated dialog instance.
 		"""
-		if id not in (EscapeCode.DEFAULT, EscapeCode.NONE):
+		if id not in (EscapeCode.CANCEL_OR_AFFIRMATIVE, EscapeCode.NO_FALLBACK):
 			if id not in self._commands:
 				raise KeyError(f"No command registered for {id=}.")
 			if not self._commands[id].closesDialog:
 				raise ValueError("fallback actions that do not close the dialog are not supported.")
-		self.EnableCloseButton(id != EscapeCode.NONE)
+		self.EnableCloseButton(id != EscapeCode.NO_FALLBACK)
 		super().SetEscapeId(id)
 		return self
 
@@ -587,12 +587,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		Assumes that any explicit action (i.e. not EscapeCode.NONE or EscapeCode.DEFAULT) is valid.
 		"""
 		escapeId = self.GetEscapeId()
-		return escapeId != EscapeCode.NONE and (
+		return escapeId != EscapeCode.NO_FALLBACK and (
 			any(
 				id in (ReturnCode.CANCEL, self.GetAffirmativeId()) and command.closesDialog
 				for id, command in self._commands.items()
 			)
-			if escapeId == EscapeCode.DEFAULT
+			if escapeId == EscapeCode.CANCEL_OR_AFFIRMATIVE
 			else True
 		)
 
@@ -795,9 +795,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		:return: The id and command of the fallback action.
 		"""
 		escapeId = self.GetEscapeId()
-		if escapeId == EscapeCode.NONE:
+		if escapeId == EscapeCode.NO_FALLBACK:
 			return None
-		elif escapeId == EscapeCode.DEFAULT:
+		elif escapeId == EscapeCode.CANCEL_OR_AFFIRMATIVE:
 			affirmativeAction: _Command | None = None
 			affirmativeId: int = self.GetAffirmativeId()
 			for id, command in self._commands.items():
