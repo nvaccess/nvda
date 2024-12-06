@@ -23,7 +23,7 @@ from logHandler import log
 
 
 # TODO: Change to type statement when Python 3.12 or later is in use.
-Callback_T: TypeAlias = Callable[[], Any]
+_Callback_T: TypeAlias = Callable[[], Any]
 
 
 class _Missing_Type:
@@ -72,8 +72,19 @@ class DialogType(Enum):
 	"""
 
 	STANDARD = auto()
+	"""A simple message dialog, with no icon or sound.
+	This should be used in most situations.
+	"""
+
 	WARNING = auto()
+	"""A warning dialog, which makes the Windows alert sound and has an exclamation mark icon.
+	This should be used when you have critical information to present to the user, such as when their action may result in irreversible loss of data.
+	"""
+
 	ERROR = auto()
+	"""An error dialog, which has a cross mark icon and makes the Windows error sound.
+	This should be used when a critical error has been encountered.
+	"""
 
 	@property
 	def _wxIconId(self) -> "wx.ArtID | None":  # type: ignore
@@ -117,7 +128,7 @@ class Button(NamedTuple):
 	label: str
 	"""The label to display on the button."""
 
-	callback: Callback_T | None = None
+	callback: _Callback_T | None = None
 	"""The callback to call when the button is clicked."""
 
 	defaultFocus: bool = False
@@ -197,7 +208,7 @@ class DefaultButtonSet(tuple[DefaultButton], Enum):
 class _Command(NamedTuple):
 	"""Internal representation of a command for a message dialog."""
 
-	callback: Callback_T | None
+	callback: _Callback_T | None
 	"""The callback function to be executed. Defaults to None."""
 	closesDialog: bool
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
@@ -289,7 +300,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		/,
 		label: str,
 		*args,
-		callback: Callback_T | None = None,
+		callback: _Callback_T | None = None,
 		defaultFocus: bool = False,
 		fallbackAction: bool = False,
 		closesDialog: bool = True,
@@ -345,7 +356,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		/,
 		*args,
 		label: str | _Missing_Type = _MISSING,
-		callback: Callback_T | None | _Missing_Type = _MISSING,
+		callback: _Callback_T | None | _Missing_Type = _MISSING,
 		defaultFocus: bool | _Missing_Type = _MISSING,
 		fallbackAction: bool | _Missing_Type = _MISSING,
 		closesDialog: bool | _Missing_Type = _MISSING,
