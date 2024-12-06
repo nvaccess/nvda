@@ -69,6 +69,8 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * A new function, `gui.guiHelper.wxCallOnMain`, has been added, which allows safely and syncronously calling wx functions from non-GUI threads, and getting their return value. (#17304)
+* A new message dialog API has been added to `gui.message`. (#13007)
+  * Added classes: `ReturnCode`, `EscapeCode`, `DialogType`, `Button`, `DefaultButton`, `DefaultButtonSet`, `MessageDialog`.
 
 #### API Breaking Changes
 
