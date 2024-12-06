@@ -207,14 +207,14 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			else:
 				self.assertIsNone(actualFallbackAction)
 
-	def test_addButton_with_defaultFocus(self):
+	def test_addButtonWithDefaultFocus(self):
 		"""Test adding a button with default focus."""
 		self.dialog.addButton(
 			Button(label="Custom", id=ReturnCode.CUSTOM_1, defaultFocus=True),
 		)
 		self.assertEqual(self.dialog.GetDefaultItem().GetId(), ReturnCode.CUSTOM_1)
 
-	def test_addButton_with_fallbackAction(self):
+	def test_addButtonWithFallbackAction(self):
 		"""Test adding a button with fallback action."""
 		self.dialog.addButton(
 			Button(
@@ -228,7 +228,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.assertEqual(command.ReturnCode, ReturnCode.CUSTOM_1)
 		self.assertTrue(command.closesDialog)
 
-	def test_addButton_with_non_closing_fallbackAction(self):
+	def test_addButtonWithNonClosingFallbackAction(self):
 		"""Test adding a button with fallback action that does not close the dialog."""
 		self.dialog.addButton(
 			Button(
@@ -266,7 +266,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			),
 		),
 	)
-	def test_subsequent_add(self, _, func1: MethodCall, func2: MethodCall):
+	def test_subsequentAdd(self, _, func1: MethodCall, func2: MethodCall):
 		"""Test that adding buttons that already exist in the dialog fails."""
 		getattr(self.dialog, func1.name)(*func1.args, **func1.kwargs)
 		oldState = getDialogState(self.dialog)
@@ -289,7 +289,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.assertRaises(KeyError, self.dialog.setButtonLabel, ReturnCode.CANCEL, "test")
 		self.assertEqual(oldState, getDialogState(self.dialog))
 
-	def test_setButtonLabel_notAButton(self):
+	def test_setButtonLabelNotAButton(self):
 		"""Test that calling setButtonLabel with an id that does not refer to a wx.Button fails as expected."""
 		messageControlId = self.dialog._messageControl.GetId()
 		# This is not a case that should be encountered unless users tamper with internal state.
@@ -301,7 +301,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.assertRaises(TypeError):
 			self.dialog.setButtonLabel(messageControlId, "test")
 
-	def test_setButtonLabels_countMismatch(self):
+	def test_setButtonLabelsCountMismatch(self):
 		with self.assertRaises(ValueError):
 			"""Test that calling _setButtonLabels with a mismatched collection of IDs and labels fails as expected."""
 			self.dialog._setButtonLabels((ReturnCode.APPLY, ReturnCode.CANCEL), ("Apply", "Cancel", "Ok"))
@@ -378,13 +378,13 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		with self.assertRaises(KeyError):
 			self.dialog.addButtons((*DefaultButtonSet.OK_CANCEL, *DefaultButtonSet.YES_NO_CANCEL))
 
-	def test_setDefaultFocus_goodId(self):
+	def test_setDefaultFocusGoodId(self):
 		"""Test that setting the default focus works as expected."""
 		self.dialog.addOkCancelButtons()
 		self.dialog.setDefaultFocus(ReturnCode.CANCEL)
 		self.assertEqual(self.dialog.GetDefaultItem().GetId(), ReturnCode.CANCEL)
 
-	def test_setDefaultFocus_badId(self):
+	def test_setDefaultFocusBadId(self):
 		"""Test that setting the default focus to an ID that doesn't exist in the dialog fails as expected."""
 		self.dialog.addOkCancelButtons()
 		with self.assertRaises(KeyError):
@@ -392,7 +392,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 
 
 class Test_MessageDialog_DefaultAction(MDTestBase):
-	def test_defaultAction_defaultEscape_OkCancel(self):
+	def test_defaultActionDefaultEscape_OkCancel(self):
 		"""Test that when adding OK and Cancel buttons with default escape code, that the fallback action is cancel."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCancelButton(callback=dummyCallback2)
 		command = self.dialog._getFallbackAction()
@@ -405,7 +405,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_defaultAction_defaultEscape_CancelOk(self):
+	def test_defaultActionDefaultEscape_CancelOk(self):
 		"""Test that when adding cancel and ok buttons with default escape code, that the fallback action is cancel."""
 		self.dialog.addCancelButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		command = self.dialog._getFallbackAction()
@@ -418,7 +418,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_defaultAction_defaultEscape_OkClose(self):
+	def test_defaultActionDefaultEscape_OkClose(self):
 		"""Test that when adding OK and Close buttons with default escape code, that the fallback action is OK."""
 		self.dialog.addOkButton(callback=dummyCallback1).addCloseButton(callback=dummyCallback2)
 		command = self.dialog._getFallbackAction()
@@ -431,7 +431,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_defaultAction_defaultEscape_CloseOk(self):
+	def test_defaultActionDefaultEscape_CloseOk(self):
 		"""Test that when adding Close and OK buttons with default escape code, that the fallback action is OK."""
 		self.dialog.addCloseButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		command = self.dialog._getFallbackAction()
@@ -444,7 +444,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_setFallbackAction_existant_action(self):
+	def test_setFallbackActionExistantAction(self):
 		"""Test that setting the fallback action results in the correct action being returned from both getFallbackAction and getFallbackActionOrFallback."""
 		self.dialog.addYesNoButtons()
 		self.dialog.setFallbackAction(ReturnCode.YES)
@@ -458,7 +458,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		):
 			self.assertEqual(command, self.dialog._getFallbackActionOrFallback())
 
-	def test_setFallbackAction_nonexistant_action(self):
+	def test_setFallbackActionNonexistantAction(self):
 		"""Test that setting the fallback action to an action that has not been set up results in KeyError, and that a fallback action is returned from getFallbackActionOrFallback."""
 		self.dialog.addYesNoButtons()
 		with self.subTest("Test getting the fallback action."):
@@ -467,21 +467,21 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		with self.subTest("Test getting the fallback fallback action."):
 			self.assertIsNone(self.dialog._getFallbackAction())
 
-	def test_setFallbackAction_nonclosing_action(self):
+	def test_setFallbackActionNonclosingAction(self):
 		"""Check that setting the fallback action to an action that does not close the dialog fails with a ValueError."""
 		self.dialog.addOkButton().addApplyButton(closesDialog=False)
 		with self.subTest("Test setting the fallback action."):
 			with self.assertRaises(ValueError):
 				self.dialog.setFallbackAction(ReturnCode.APPLY)
 
-	def test_getFallbackActionOrFallback_no_controls(self):
+	def test_getFallbackActionOrFallbackNoControls(self):
 		"""Test that getFallbackActionOrFallback returns wx.ID_NONE and a close command with no callback when the dialog has no buttons."""
 		command = self.dialog._getFallbackActionOrFallback()
 		self.assertEqual(command.ReturnCode, EscapeCode.NO_FALLBACK)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackActionOrFallback_no_defaultFocus_closing_button(self):
+	def test_getFallbackActionOrFallbackNoDefaultFocusClosingButton(self):
 		"""Test that getFallbackActionOrFallback returns the first button when no fallback action or default focus is specified."""
 		self.dialog.addApplyButton(closesDialog=False).addCloseButton()
 		self.assertIsNone(self.dialog.GetDefaultItem())
@@ -490,7 +490,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackActionOrFallback_no_defaultFocus_no_closing_button(self):
+	def test_getFallbackActionOrFallbackNoDefaultFocusNoClosingButton(self):
 		"""Test that getFallbackActionOrFallback returns the first button when no fallback action or default focus is specified."""
 		self.dialog.addApplyButton(closesDialog=False).addCloseButton(closesDialog=False)
 		self.assertIsNone(self.dialog.GetDefaultItem())
@@ -499,7 +499,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackActionOrFallback_no_defaultAction(self):
+	def test_getFallbackActionOrFallbackNoDefaultAction(self):
 		"""Test that getFallbackActionOrFallback returns the default focus if one is specified but there is no fallback action."""
 		self.dialog.addApplyButton().addCloseButton()
 		self.dialog.setDefaultFocus(ReturnCode.CLOSE)
@@ -509,7 +509,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackActionOrFallback_custom_defaultAction(self):
+	def test_getFallbackActionOrFallbackCustomDefaultAction(self):
 		"""Test that getFallbackActionOrFallback returns the custom defaultAction if set."""
 		self.dialog.addApplyButton().addCloseButton()
 		self.dialog.setFallbackAction(ReturnCode.CLOSE)
@@ -518,7 +518,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackActionOrFallback_escapeIdNotACommand(self):
+	def test_getFallbackActionOrFallbackEscapeIdNotACommand(self):
 		"""Test that calling _getFallbackActionOrFallback on a dialog whose EscapeId is not a command falls back to returning the default focus."""
 		self.dialog.addOkCancelButtons()
 		super(MessageDialog, self.dialog).SetEscapeId(ReturnCode.CLOSE)
@@ -527,7 +527,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
-	def test_getFallbackAction_escapeCode_None(self):
+	def test_getFallbackActionEscapeCode_None(self):
 		"""Test that setting EscapeCode to None causes _getFallbackAction to return None."""
 		self.dialog.addOkCancelButtons()
 		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
@@ -535,20 +535,20 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 
 
 class Test_MessageDialog_Threading(WxTestBase):
-	def test_new_onNonmain(self):
+	def test_newOnNonmain(self):
 		"""Test that creating a MessageDialog on a non GUI thread fails."""
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
 				tpe.submit(MessageDialog.__new__, MessageDialog).result()
 
-	def test_init_onNonMain(self):
+	def test_initOnNonMain(self):
 		"""Test that initializing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog.__new__(MessageDialog)
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
 				tpe.submit(dlg.__init__, None, "Test").result()
 
-	def test_show_onNonMain(self):
+	def test_showOnNonMain(self):
 		# self.app = wx.App()
 		"""Test that showing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog(None, "Test")
@@ -556,7 +556,7 @@ class Test_MessageDialog_Threading(WxTestBase):
 			with self.assertRaises(RuntimeError):
 				tpe.submit(dlg.Show).result()
 
-	def test_showModal_onNonMain(self):
+	def test_showModalOnNonMain(self):
 		"""Test that showing a MessageDialog modally on a non-GUI thread fails."""
 		# self.app = wx.App()
 		dlg = MessageDialog(None, "Test")
@@ -567,7 +567,7 @@ class Test_MessageDialog_Threading(WxTestBase):
 
 @patch.object(wx.Dialog, "Show")
 class Test_MessageDialog_Show(MDTestBase):
-	def test_show_noButtons(self, mocked_show: MagicMock):
+	def test_showNoButtons(self, mocked_show: MagicMock):
 		"""Test that showing a MessageDialog with no buttons fails."""
 		with self.assertRaises(RuntimeError):
 			self.dialog.Show()
@@ -583,7 +583,7 @@ class Test_MessageDialog_Show(MDTestBase):
 @patch("gui.mainFrame")
 @patch.object(wx.Dialog, "ShowModal")
 class Test_MessageDialog_ShowModal(MDTestBase):
-	def test_showModal_noButtons(self, mocked_showModal: MagicMock, _):
+	def test_showModalNoButtons(self, mocked_showModal: MagicMock, _):
 		"""Test that showing a MessageDialog modally with no buttons fails."""
 		with self.assertRaises(RuntimeError):
 			self.dialog.ShowModal()
@@ -606,7 +606,7 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 
 
 class Test_MessageDialog_EventHandlers(MDTestBase):
-	def test_onShowEvent_defaultFocus(self):
+	def test_onShowEventDefaultFocus(self):
 		"""Test that _onShowEvent correctly focuses the default focus."""
 		self.dialog.addOkButton().addCancelButton(defaultFocus=True)
 		evt = wx.ShowEvent(self.dialog.GetId(), True)
@@ -614,7 +614,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			self.dialog._onShowEvt(evt)
 			mocked_setFocus.assert_called_once()
 
-	def test_onCloseEvent_nonVetoable(self):
+	def test_onCloseEventNonVetoable(self):
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
 		"""Test that a non-vetoable close event is executed."""
 		evt.SetCanVeto(False)
@@ -629,7 +629,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			mocked_executeCommand.assert_called_once_with(ANY, _canCallClose=False)
 			self.assertNotIn(self.dialog, MessageDialog._instances)
 
-	def test_onCloseEvent_noFallbackAction(self):
+	def test_onCloseEventNoFallbackAction(self):
 		"""Test that a vetoable call to close is vetoed if there is no fallback action."""
 		self.dialog.addYesNoButtons()
 		self.dialog.SetEscapeId(EscapeCode.NO_FALLBACK)
@@ -645,7 +645,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 			self.assertTrue(evt.GetVeto())
 			self.assertIn(self.dialog, MessageDialog._instances)
 
-	def test_onCloseEvent_fallbackAction(self):
+	def test_onCloseEventFallbackAction(self):
 		"""Test that _onCloseEvent works properly when there is an there is a fallback action."""
 		self.dialog.addOkCancelButtons()
 		evt = wx.CloseEvent(wx.wxEVT_CLOSE_WINDOW, self.dialog.GetId())
