@@ -544,7 +544,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not show:
 			return self.Hide()
 		self._checkShowable()
-		self._realize_layout()
+		self._realizeLayout()
 		log.debug("Showing")
 		shown = super().Show(show)
 		if shown:
@@ -558,7 +558,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		Attach buttons with :meth:`.addButton`, :meth:`.addButtons`, or any of their more specific helpers.
 		"""
 		self._checkShowable()
-		self._realize_layout()
+		self._realizeLayout()
 
 		# We want to call `gui.message.showScriptModal` from our implementation of ShowModal, so we need to switch our instance out now that it's running and replace it with that provided by :class:`wx.Dialog`.
 		self.__ShowModal = self.ShowModal
@@ -768,7 +768,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if check and not wx.IsMainThread():
 			raise RuntimeError("Message dialogs can only be used from the main thread.")
 
-	def _realize_layout(self) -> None:
+	def _realizeLayout(self) -> None:
 		"""Perform layout adjustments prior to showing the dialog."""
 		if self._isLayoutFullyRealized:
 			return
