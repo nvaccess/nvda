@@ -43,11 +43,15 @@ class myDialog(wx.Dialog):
 	...
 """
 
+from collections.abc import Callable
 from contextlib import contextmanager
+import sys
+import threading
 import weakref
 from typing import (
 	Generic,
 	Optional,
+	ParamSpec,
 	Type,
 	TypeVar,
 	Union,
@@ -458,3 +462,55 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 	pass
+
+
+class _WxCallOnMainResult:
+	"""Container to hold either the return value or exception raised by a function."""
+
+	__slots__ = ("result", "exception")
+
+
+# TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
+_WxCallOnMain_P = ParamSpec("_WxCallOnMain_P")
+_WxCallOnMain_T = TypeVar("_WxCallOnMain_T")
+
+
+def wxCallOnMain(
+	function: Callable[_WxCallOnMain_P, _WxCallOnMain_T],
+	*args: _WxCallOnMain_P.args,
+	**kwargs: _WxCallOnMain_P.kwargs,
+) -> _WxCallOnMain_T:
+	"""Call a non-thread-safe wx function in a thread-safe way.
+
+	Using this function is prefferable over calling :fun:`wx.CallAfter` directly when you care about the return time or return value of the function.
+
+	This function blocks the thread on which it is called.
+
+	:param function: Callable to call on the main GUI thread.
+		If this thread is the GUI thread, the function will be called immediately.
+		Otherwise, it will be scheduled to be called on the GUI thread.
+		In either case, the current thread will be blocked until it returns.
+	:raises Exception: If `function` raises an exception, it is transparently re-raised so it can be handled on the calling thread.
+	:return: Return value from calling `function` with the given positional and keyword arguments.
+	"""
+	result = _WxCallOnMainResult()
+	event = threading.Event()
+
+	def functionWrapper():
+		try:
+			result.result = function(*args, **kwargs)
+		except Exception:
+			result.exception = sys.exception
+		event.set()
+
+	if wx.IsMainThread():
+		functionWrapper()
+	else:
+		wx.CallAfter(functionWrapper)
+		event.wait()
+
+	try:
+		return result.result
+	except AttributeError:
+		# If result is undefined, exception must be defined.
+		raise result.exception  # type: ignore
