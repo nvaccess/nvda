@@ -927,9 +927,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if not evt.CanVeto():
 			# We must close the dialog, regardless of state.
 			self.Hide()
-			self._execute_command(self._getFallbackActionOrFallback())
+			self._execute_command(self._getFallbackActionOrFallback(), _canCallClose=False)
 			self._instances.remove(self)
-			self.EndModal(self.GetReturnCode())
+			if self.IsModal():
+				self.EndModal(self.GetReturnCode())
 			self.Destroy()
 			return
 		if self.GetReturnCode() == 0:
