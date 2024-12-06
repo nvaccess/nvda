@@ -8692,7 +8692,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>For installed copies, NVDA stores the configuration in the roaming application data folder of the current user by default (e.g. "`C:\Users\&lt;user&gt;\AppData\Roaming`").</source>
-        <target>Bei installierten NVDA-Versionen werden die Konfigurationsdateien normalerweise im Roaming-Verzeichnis des aktuell angemeldeten Benutzers gespeichert (z. B. "`C:\Users\&amp;lt;Benutzer&amp;gt;\AppData\Roaming`").</target>
+        <target>Bei installierten NVDA-Versionen werden die Konfigurationsdateien normalerweise im Roaming-Verzeichnis des aktuell angemeldeten Benutzers gespeichert (z. B. "`C:\Users\&lt;Benutzer&gt;\AppData\Roaming`").</target>
       </segment>
     </unit>
     <unit id="b731e377-9666-442b-ab38-13a373574f87">
@@ -14366,7 +14366,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>submnu |displayed when an object has a popup (usually a sub-menu)</source>
-        <target>-&amp;gt; |Wird angezeigt, wenn ein Objekt ein Untermenü enthält.</target>
+        <target>-&gt; |Wird angezeigt, wenn ein Objekt ein Untermenü enthält.</target>
       </segment>
     </unit>
     <unit id="ed722851-82ab-467a-b25f-515d3eda5aaa">
@@ -15108,7 +15108,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Additional languages can be installed by opening the Start menu, choosing Settings, selecting Time &amp; Language -&gt; Region &amp; Language and then choosing Add a language.</source>
-        <target>Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -&amp;gt; Region und Sprache -&amp;gt; Sprache hinzufügen installieren.</target>
+        <target>Zusätzliche Sprachen können Sie in den Einstellungen von Windows unter Zeit und Sprache -&gt; Region und Sprache -&gt; Sprache hinzufügen installieren.</target>
       </segment>
     </unit>
     <unit id="6066c000-aea0-404a-9db6-ed85c380f2ac">
@@ -27369,7 +27369,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>In addition for an installed version of NVDA, on the start menu you can go to programs -&gt; NVDA -&gt; explore user configuration directory.</source>
-        <target>Zusätzlich können Sie bei einer installierten Version von NVDA im Startmenü zu auf "Programme -&amp;gt; NVDA -&amp;gt; Benutzerkonfigurationsverzeichnis öffnen" gehen.</target>
+        <target>Zusätzlich können Sie bei einer installierten Version von NVDA im Startmenü zu auf "Programme -&gt; NVDA -&gt; Benutzerkonfigurationsverzeichnis öffnen" gehen.</target>
       </segment>
     </unit>
     <unit id="697d20a8-b12c-4d6e-96bd-011edbde503a">
@@ -31276,7 +31276,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>Several [Baum](https://www.visiobraille.de/index.php?article_id=1&amp;clang=2), [HumanWare](https://www.humanware.com/), [APH](https://www.aph.org/) and [Orbit](https://www.orbitresearch.com/) displays are supported when connected via USB, bluetooth or serial.</source>
-        <target>Mehrere Braillezeilen von [Baum/VisioBraille](https://www.visiobraille.de/index.php?article_id=1&amp;amp;clang=2), [Humanware](https://www.humanware.com/), [APH](https://www.aph.org/) und [Orbit](https://www.orbitresearch.com/) werden unterstützt, sobald sie über USB, Bluetooth oder seriell angeschlossen bzw. verbunden wurden.</target>
+        <target>Mehrere Braillezeilen von [Baum/VisioBraille](https://www.visiobraille.de/index.php?article_id=1&amp;clang=2), [Humanware](https://www.humanware.com/), [APH](https://www.aph.org/) und [Orbit](https://www.orbitresearch.com/) werden unterstützt, sobald sie über USB, Bluetooth oder seriell angeschlossen bzw. verbunden wurden.</target>
       </segment>
     </unit>
     <unit id="4c71caec-edc7-478a-88c0-76d5b8f27344">
@@ -39767,7 +39767,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`nvda -mc CONFIGPATH` |This will start NVDA with startup sounds and message disabled, and the specified configuration</source>
-        <target>`nvda -mc CONFIG_PATH` |Dadurch wird NVDA mit Starttönen und deaktivierter Meldung sowie der angegebenen Konfiguration gestartet</target>
+        <target>`nvda -mc &lt;Konfigurationspfad&gt;` |Dadurch wird NVDA mit Starttönen und deaktivierter Meldung sowie der angegebenen Konfiguration gestartet.</target>
       </segment>
     </unit>
     <unit id="f32bc7dd-fccc-4369-ab94-ba14b12d2192">
@@ -39778,7 +39778,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`nvda -mc CONFIGPATH --disable-addons` |Same as above, but with add-ons disabled</source>
-        <target>`nvda -mc CONFIG_PATH --disable-addons` |Wie zuvor, jedoch mit deaktivierten NVDA-Erweiterungen</target>
+        <target>`nvda -mc &lt;Konfigurationspfad&gt; --disable-addons` |Wie zuvor, jedoch mit deaktivierten NVDA-Erweiterungen.</target>
       </segment>
     </unit>
     <unit id="bf46356f-86b0-4823-9633-5ee615482ab8">
@@ -39893,7 +39893,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.</source>
-        <target>`-f &amp;lt;Protokolldateiname&amp;gt;` |`--log-file=&amp;lt;Protokolldateiname&amp;gt;` |Legt die Datei fest, in der die Protokollierung stattfinden soll. Die Protokollierung ist im geschützten Modus immer deaktiviert.</target>
+        <target>`-f &lt;Protokolldateiname&gt;` |`--log-file=&lt;Protokolldateiname&gt;` |Legt die Datei fest, in der die Protokollierung stattfinden soll. Die Protokollierung ist im geschützten Modus immer deaktiviert.</target>
       </segment>
     </unit>
     <unit id="9ab444d4-78f5-44f7-b0e5-1e34d897706f">
@@ -39904,7 +39904,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.</source>
-        <target>`-l &amp;lt;Protokollierungsstufe&amp;gt;` |`--log-level=&amp;lt;Protokollierungsstufe&amp;gt;` |Die niedrigste Stufe der protokollierten Meldung (Debug 10, Eingabe/Ausgabe 12, Debug-Warnungen 15, Info 20, Ausgeschaltet 100). Die Protokollierung ist im geschützten Modus immer deaktiviert.</target>
+        <target>`-l &lt;Protokollierungsstufe&gt;` |`--log-level=&lt;Protokollierungsstufe&gt;` |Die niedrigste Stufe der protokollierten Meldung (Debug 10, Eingabe/Ausgabe 12, Debug-Warnungen 15, Info 20, Ausgeschaltet 100). Die Protokollierung ist im geschützten Modus immer deaktiviert.</target>
       </segment>
     </unit>
     <unit id="8fd0f754-30ff-4384-beea-588b241fa1d5">
@@ -39915,7 +39915,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.</source>
-        <target>`-c &amp;lt;Konfigurationspfad&amp;gt;` |`--config-path=&amp;lt;KonfigurationsPfad&amp;gt;` |Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. Der Standardwert wird erzwungen, wenn der geschützte Modus aktiviert ist.</target>
+        <target>`-c &lt;Konfigurationspfad&gt;` |`--config-path=&lt;KonfigurationsPfad&gt;` |Gibt den Ordner an, in dem alle NVDA-Einstellungen gespeichert werden sollen. Der Standardwert wird erzwungen, wenn der geschützte Modus aktiviert ist.</target>
       </segment>
     </unit>
     <unit id="b1f9cffa-a232-485b-9553-5b83d3e10268">
@@ -39926,7 +39926,7 @@ $(ID:061d7d61-cfab-44b3-a92c-4e65cf63213b)
       </notes>
       <segment state="final">
         <source>None |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.</source>
-        <target>Keine |`--lang=&amp;lt;Sprache&amp;gt;` |Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc.</target>
+        <target>Keine |`--lang=&lt;Sprache&gt;` |Setzen Sie die konfigurierte NVDA-Sprache außer Kraft. Setzen Sie "Windows" als Standard für den aktuellen Benutzer, "de" für Deutsch, etc.</target>
       </segment>
     </unit>
     <unit id="5cefc31a-b733-4353-9033-c3b9602e6803">

@@ -4,31 +4,31 @@
 # See the file COPYING for more details.
 # Copyright (C) 2008-2024 NV Access Limited, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 
-import watchdog
-
 """Provides an interactive Python console which can be run from within NVDA.
 To use, call L{initialize} to create a singleton instance of the console GUI. This can then be accessed externally as L{consoleUI}.
 """
 
-import builtins  # noqa: E402
-import os  # noqa: E402
-from typing import Sequence  # noqa: E402
-import code  # noqa: E402
-import codeop  # noqa: E402
-import sys  # noqa: E402
-import pydoc  # noqa: E402
-import re  # noqa: E402
-import itertools  # noqa: E402
-import rlcompleter  # noqa: E402
-import wx  # noqa: E402
-from baseObject import AutoPropertyObject  # noqa: E402
-import speech  # noqa: E402
-import queueHandler  # noqa: E402
-import api  # noqa: E402
-import gui  # noqa: E402
-from logHandler import log  # noqa: E402
-import braille  # noqa: E402
-import gui.contextHelp  # noqa: E402
+import watchdog
+import builtins
+import os
+from typing import Sequence
+import code
+import codeop
+import sys
+import pydoc
+import re
+import itertools
+import rlcompleter
+import wx
+from baseObject import AutoPropertyObject
+import speech
+import queueHandler
+import api
+import gui
+from logHandler import log
+import braille
+import gui.contextHelp
+import textInfos
 
 
 class HelpCommand(object):
@@ -223,7 +223,6 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		import config
 		import controlTypes
 		import globalPlugins
-		import textInfos
 		import vision
 
 		self.namespace.clear()
@@ -255,25 +254,35 @@ class PythonConsole(code.InteractiveConsole, AutoPropertyObject):
 		Typically, used before the NVDA python console is opened, after which, calls
 		to the 'api' module will refer to this new focus.
 		"""
-		try:
-			caretPos = api.getCaretPosition()
-		except RuntimeError:
-			log.debug("Unable to set caretPos snapshot variable for python console.")
-			caretPos = None
 
-		self._namespaceSnapshotVars = {
-			"focus": api.getFocusObject(),
+		def _getCaretPos() -> textInfos.TextInfo | None:
+			try:
+				return api.getCaretPosition()
+			except RuntimeError:
+				log.debug("Unable to set caretPos snapshot variable for python console.")
+				return None
+
+		self._namespaceSnapshotVarsGetters = {
+			"focus": api.getFocusObject,
 			# Copy the focus ancestor list, as it gets mutated once it is replaced in api.setFocusObject.
-			"focusAnc": list(api.getFocusAncestors()),
-			"fdl": api.getFocusDifferenceLevel(),
-			"fg": api.getForegroundObject(),
-			"nav": api.getNavigatorObject(),
-			"caretObj": api.getCaretObject(),
-			"caretPos": caretPos,
-			"review": api.getReviewPosition(),
-			"mouse": api.getMouseObject(),
-			"brlRegions": braille.handler.buffer.regions,
+			"focusAnc": (lambda: list(api.getFocusAncestors())),
+			"fdl": api.getFocusDifferenceLevel,
+			"fg": api.getForegroundObject,
+			"nav": api.getNavigatorObject,
+			"caretObj": api.getCaretObject,
+			"caretPos": _getCaretPos,
+			"review": api.getReviewPosition,
+			"mouse": api.getMouseObject,
+			"brlRegions": (lambda: braille.handler.buffer.regions),
 		}
+		self._namespaceSnapshotVars = {}
+		for name, getter in self._namespaceSnapshotVarsGetters.items():
+			try:
+				value = getter()
+			except Exception:
+				log.error(f"Unable to set {name} snapshot variable for python console.", exc_info=True)
+				value = None
+			self._namespaceSnapshotVars[name] = value
 		self.namespace.update(self._namespaceSnapshotVars)
 
 	def removeNamespaceSnapshotVars(self):

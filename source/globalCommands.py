@@ -123,6 +123,8 @@ SCRCAT_AUDIO = _("Audio")
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
 NO_SETTINGS_MSG = _("No settings")
+# Translators: Reported when there is no selection
+NO_SELECTION_MESSAGE = _("No selection")
 
 
 def toggleBooleanValue(
@@ -186,7 +188,9 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleInputHelp(self, gesture):
 		inputCore.manager.isInputHelpActive = not inputCore.manager.isInputHelpActive
 		# Translators: This will be presented when the input help is toggled.
-		stateOn = _("input help on")
+		stateOn = _("input help on. Press {gestureKeys} again to turn it off.").format(
+			gestureKeys=gesture.displayName,
+		)
 		# Translators: This will be presented when the input help is toggled.
 		stateOff = _("input help off")
 		state = stateOn if inputCore.manager.isInputHelpActive else stateOff
@@ -374,6 +378,24 @@ class GlobalCommands(ScriptableObject):
 				speech.speakTextSelected(info.text)
 				braille.handler.message(selectMessage)
 
+	@staticmethod
+	def _getSelection() -> textInfos.TextInfo | None:
+		"""Gets the current selection, if any.
+		:return: The TextInfo corresponding to the current selection, or None if no selection is available.
+		"""
+		obj = api.getFocusObject()
+		treeInterceptor = obj.treeInterceptor
+		if (
+			isinstance(treeInterceptor, treeInterceptorHandler.DocumentTreeInterceptor)
+			and not treeInterceptor.passThrough
+		):
+			obj = treeInterceptor
+		try:
+			info = obj.makeTextInfo(textInfos.POSITION_SELECTION)
+			return info.copy()
+		except (RuntimeError, NotImplementedError):
+			return None
+
 	@script(
 		description=_(
 			# Translators: Input help mode message for report date and time command.
@@ -549,7 +571,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle speak command keys command.
-		description=_("Toggles on and off the speaking of typed keys, that are not specifically characters"),
+		description=_("Toggles on and off the speaking of command keys"),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+4",
 	)
@@ -2215,6 +2237,63 @@ class GlobalCommands(ScriptableObject):
 			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
 			return
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for move review cursor to start of selection command.
+			"Moves the review cursor to the first character of the selection, and speaks it",
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+alt+home",
+	)
+	def script_review_startOfSelection(self, gesture: inputCore.InputGesture):
+		info = self._getSelection()
+		if info is None or info.isCollapsed:
+			ui.message(NO_SELECTION_MESSAGE)
+			return
+		info.collapse()
+
+		# This script is available on the lock screen via getSafeScripts, as such
+		# ensure the review position does not contain secure information
+		# before announcing this object
+		if api.setReviewPosition(info):
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(
+				info,
+				unit=textInfos.UNIT_CHARACTER,
+				reason=controlTypes.OutputReason.CARET,
+			)
+		else:
+			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for move review cursor to end of selection command.
+			"Moves the review cursor to the last character of the selection, and speaks it",
+		),
+		category=SCRCAT_TEXTREVIEW,
+		gesture="kb:NVDA+alt+end",
+	)
+	def script_review_endOfSelection(self, gesture: inputCore.InputGesture):
+		info = self._getSelection()
+		if info is None or info.isCollapsed:
+			ui.message(NO_SELECTION_MESSAGE)
+			return
+		info.move(textInfos.UNIT_CHARACTER, -1, "end")
+		info.collapse(end=True)
+
+		# This script is available on the lock screen via getSafeScripts, as such
+		# ensure the review position does not contain secure information
+		# before announcing this object
+		if api.setReviewPosition(info):
+			info.expand(textInfos.UNIT_CHARACTER)
+			speech.speakTextInfo(
+				info,
+				unit=textInfos.UNIT_CHARACTER,
+				reason=controlTypes.OutputReason.CARET,
+			)
+		else:
+			ui.reviewMessage(gui.blockAction.Context.WINDOWS_LOCKED.translatedMessage)
+
 	def _getCurrentLanguageForTextInfo(self, info):
 		curLanguage = None
 		if config.conf["speech"]["autoLanguageSwitching"]:
@@ -3655,6 +3734,22 @@ class GlobalCommands(ScriptableObject):
 		ui.message(state)
 
 	@script(
+		# Translators: Input help mode message for toggle speaking when navigating by lines or paragraphs with braille.
+		description=_("Toggles on and off speaking when navigating by lines or paragraph with braille"),
+		category=SCRCAT_BRAILLE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.BRAILLE_MODE_SPEECH_OUTPUT)
+	def script_toggleSpeakingOnNavigatingByUnit(self, gesture: inputCore.InputGesture):
+		toggleBooleanValue(
+			configSection="braille",
+			configKey="speakOnNavigatingByUnit",
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			enabledMsg=_("Speak whenn navigating by line or paragraph with braille on"),
+			# Translators: The message announced when toggling the speaking on navigating by unit braille setting.
+			disabledMsg=_("Speak when navigating by line or paragraph with braille off"),
+		)
+
+	@script(
 		# Translators: Input help mode message for cycle braille cursor shape command.
 		description=_("Cycle through the braille cursor shapes"),
 		category=SCRCAT_BRAILLE,
@@ -4192,21 +4287,10 @@ class GlobalCommands(ScriptableObject):
 		except RuntimeError:
 			log.debugWarning("Unable to get the caret position.", exc_info=True)
 			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
-		ti.expand(textInfos.UNIT_CHARACTER)
-		obj: NVDAObject = ti.NVDAObjectAtStart
+		link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
-		if obj.role == controlTypes.role.Role.GRAPHIC and (
-			obj.parent and obj.parent.role == controlTypes.role.Role.LINK
-		):
-			# In Firefox, graphics with a parent link also expose the parents link href value.
-			# In Chromium, the link href value must be fetched from the parent object. (#14779)
-			obj = obj.parent
-		if (
-			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
-			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
-		):
-			linkDestination = obj.value
-			if linkDestination is None:
+		if link:
+			if link.destination is None:
 				# Translators: Informs the user that the link has no destination
 				ui.message(_("Link has no apparent destination"))
 				return
@@ -4214,16 +4298,22 @@ class GlobalCommands(ScriptableObject):
 				presses == 1  # If pressed twice, or
 				or forceBrowseable  # if a browseable message is preferred unconditionally
 			):
+				text = link.displayText
+				if text is None:
+					# Translators: Title of the browseable message when requesting the destination of a graphical link.
+					text = _("Graphic")
 				ui.browseableMessage(
-					linkDestination,
+					link.destination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(name=obj.name),
-					closeButton=True,
-					copyButton=True,
+					title=_("Destination of: {name}").format(
+						name=text,
+						closeButton=True,
+						copyButton=True,
+					),
 				)
 			elif presses == 0:  # One press
-				ui.message(linkDestination)  # Speak the link
+				ui.message(link.destination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
 		else:
@@ -4753,7 +4843,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Increases the volume of the other applications",
+			"Increases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageUp",
@@ -4764,7 +4854,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Decreases the volume of the other applications",
+			"Decreases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
 		gesture="kb:NVDA+alt+pageDown",
@@ -4775,10 +4865,9 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Describes a command.
-			"Toggles other applications volume adjuster status",
+			"Toggles application volume control on and off",
 		),
 		category=SCRCAT_AUDIO,
-		gesture=None,
 	)
 	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeState()

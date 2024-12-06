@@ -1243,13 +1243,16 @@ See: pythonConsole.PythonConsole.initNamespace
 Whenever NVDA+control+z is pressed, certain variables available in the console will be assigned according to the current state of NVDA.
 These variables are:
 
-* focus: The current focus object
-* focusAnc: The ancestors of the current focus object
-* fdl: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
-* fg: The current foreground object
-* nav: The current navigator object
-* mouse: The current mouse object
-* brlRegions: The braille regions from the active braille buffer
+* `focus`: The current focus object
+* `focusAnc`: The ancestors of the current focus object
+* `fdl`: Focus difference level; i.e. the level at which the ancestors for the current and previous focus differ
+* `fg`: The current foreground object
+* `nav`: The current navigator object
+* `caretObj`: The object which contains the caret (focus or tree interceptor if any)
+* `caretPos`: A text info at the position of the caret
+* `review`: The current `TextInfo` instance representing the user's review position
+* `mouse`: The current mouse object
+* `brlRegions`: The braille regions from the active braille buffer
 
 ### Tab completion {#pythonConsoleTab}
 
@@ -1358,6 +1361,7 @@ For examples of how to define and use new extension points, please see the code 
 
 | Type |Extension Point |Description|
 |---|---|---|
+|`Decider` |`decide_handleRawKey` |Notifies when a raw keyboard event is received, before any NVDA processing, allowing other code to decide if it should be handled.|
 |`Decider` |`decide_executeGesture` |Notifies when a gesture is about to be executed, allowing other code to decide if it should be.|
 
 ### logHandler {#logHandlerExtPts}
@@ -1379,6 +1383,7 @@ For examples of how to define and use new extension points, please see the code 
 |`Action` |`speechCanceled` |Triggered when speech is canceled.|
 |`Action` |`pre_speechCanceled` |Triggered before speech is canceled.|
 |`Action` |`pre_speech` |Triggered before NVDA handles prepared speech.|
+|`Action` |`post_speechPaused` |Triggered when speech is paused or resumed.|
 |`Filter` |`filter_speechSequence` |Allows components or add-ons to filter speech sequence before it passes to the synth driver.|
 
 ### synthDriverHandler {#synthDriverHandlerExtPts}

@@ -1,18 +1,23 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2021 NV Access Limited, Babbage B.V.
+# Copyright (C) 2017-2024 NV Access Limited, Babbage B.V.
 
 """Classes and helper functions for working with rectangles and coordinates."""
 
-from collections import namedtuple
+from typing import NamedTuple
 import windowUtils
 import winUser
 from ctypes.wintypes import RECT, POINT, DWORD
 import wx
 
 
-class Point(namedtuple("Point", ("x", "y"))):
+class _Point(NamedTuple):
+	x: int
+	y: int
+
+
+class Point(_Point):
 	"""Represents a point on the screen."""
 
 	@classmethod
@@ -405,46 +410,60 @@ class _RectMixin:
 		return RectLTRB(left, top, right, bottom)
 
 
-class RectLTWH(_RectMixin, namedtuple("RectLTWH", ("left", "top", "width", "height"))):
+class _RectLTWH(NamedTuple):
+	left: int
+	top: int
+	width: int
+	height: int
+
+
+class RectLTWH(_RectMixin, _RectLTWH):
 	"""
 	Represents a rectangle on the screen, based on left and top coordinates, width and height.
 	To represent a rectangle using left, top, right and bottom coordinates, use L{RectLTRB}.
 	"""
 
 	@property
-	def right(self):
+	def right(self) -> int:
 		return self.left + self.width
 
 	@property
-	def bottom(self):
+	def bottom(self) -> int:
 		return self.top + self.height
 
-	def toLTRB(self):
+	def toLTRB(self) -> "RectLTRB":
 		return RectLTRB(self.left, self.top, self.right, self.bottom)
 
 
-class RectLTRB(_RectMixin, namedtuple("RectLTRB", ("left", "top", "right", "bottom"))):
+class _RectLTRB(NamedTuple):
+	left: int
+	top: int
+	right: int
+	bottom: int
+
+
+class RectLTRB(_RectMixin, _RectLTRB):
 	"""Represents a rectangle on the screen.
 	By convention, the right and bottom edges of the rectangle are normally considered exclusive.
 	To represent a rectangle based on width and height instead, use L{RectLTWH}.
 	"""
 
-	def __new__(cls, left, top, right, bottom):
+	def __new__(cls, left: int, top: int, right: int, bottom: int):
 		if left > right:
-			raise ValueError("left=%d is greater than right=%d, which is not allowed" % (left, right))
+			raise ValueError(f"left={left} is greater than right={right}, which is not allowed")
 		if top > bottom:
-			raise ValueError("top=%d is greater than bottom=%d, which is not allowed" % (top, bottom))
-		return super(RectLTRB, cls).__new__(cls, left, top, right, bottom)
+			raise ValueError(f"top={top} is greater than bottom={bottom}, which is not allowed")
+		return super().__new__(cls, left, top, right, bottom)
 
 	@property
-	def width(self):
+	def width(self) -> int:
 		return self.right - self.left
 
 	@property
-	def height(self):
+	def height(self) -> int:
 		return self.bottom - self.top
 
-	def toLTWH(self):
+	def toLTWH(self) -> "RectLTWH":
 		return RectLTWH(self.left, self.top, self.width, self.height)
 
 

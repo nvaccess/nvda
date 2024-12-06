@@ -51,6 +51,7 @@ import vision
 from utils.displayString import DisplayStringIntEnum
 import NVDAState
 from globalCommands import SCRCAT_SYSTEMCARET
+from ._msOffice import MsoHyperlink
 
 excel2010VersionMajor = 14
 
@@ -1366,6 +1367,21 @@ class ExcelCellTextInfo(NVDAObjectTextInfo):
 
 	def _get_locationText(self):
 		return self.obj.getCellPosition()
+
+	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+		links = self.obj.excelCellObject.Hyperlinks
+		if links.count == 0:
+			return None
+		link = links(1)
+		if link.Type == MsoHyperlink.RANGE:
+			text = link.TextToDisplay
+		else:
+			log.debugWarning(f"No text to display for link type {link.Type}")
+			text = None
+		return textInfos._Link(
+			displayText=text,
+			destination=link.Address,
+		)
 
 
 NVCELLINFOFLAG_ADDRESS = 0x1

@@ -287,6 +287,7 @@ freeze(
 			+ (
 				"__pycache__",
 				"*.md",
+				"*.md.sub",
 				"*.xliff",
 				"*/user_docs/styles.css",
 				"*/user_docs/numberedHeadings.css",
