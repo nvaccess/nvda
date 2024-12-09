@@ -13,25 +13,17 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	windll,
 	POINTER,
 	Structure,
 	c_uint,
-	create_unicode_buffer,
-	sizeof,
 	byref,
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
 )
 from ctypes.wintypes import (
-	HANDLE,
 	WORD,
 	DWORD,
-	LPSTR,
-	WCHAR,
-	UINT,
-	LPUINT,
 )
 from comtypes import HRESULT
 from comtypes.hresult import E_INVALIDARG
@@ -59,10 +51,6 @@ __all__ = (
 	"decide_playWaveFile",
 )
 
-winmm = windll.winmm
-
-HWAVEOUT = HANDLE
-LPHWAVEOUT = POINTER(HWAVEOUT)
 
 decide_playWaveFile = extensionPoints.Decider()
 """
@@ -90,75 +78,14 @@ class WAVEFORMATEX(Structure):
 LPWAVEFORMATEX = POINTER(WAVEFORMATEX)
 
 
-class WAVEHDR(Structure):
-	pass
-
-
-LPWAVEHDR = POINTER(WAVEHDR)
-WAVEHDR._fields_ = [
-	("lpData", LPSTR),
-	("dwBufferLength", DWORD),
-	("dwBytesRecorded", DWORD),
-	("dwUser", DWORD),
-	("dwFlags", DWORD),
-	("dwLoops", DWORD),
-	("lpNext", LPWAVEHDR),
-	("reserved", DWORD),
-]
-WHDR_DONE = 1
-
 WAVE_FORMAT_PCM = 1
 WAVE_MAPPER = -1
-MMSYSERR_NOERROR = 0
 
 CALLBACK_NULL = 0
 # CALLBACK_FUNCTION = 0x30000
 CALLBACK_EVENT = 0x50000
 # waveOutProc = CFUNCTYPE(HANDLE, UINT, DWORD, DWORD, DWORD)
 # WOM_DONE = 0x3bd
-
-MAXPNAMELEN = 32
-
-
-class WAVEOUTCAPS(Structure):
-	_fields_ = [
-		("wMid", WORD),
-		("wPid", WORD),
-		("vDriverVersion", c_uint),
-		("szPname", WCHAR * MAXPNAMELEN),
-		("dwFormats", DWORD),
-		("wChannels", WORD),
-		("wReserved1", WORD),
-		("dwSupport", DWORD),
-	]
-
-
-# Set argument types.
-winmm.waveOutOpen.argtypes = (LPHWAVEOUT, UINT, LPWAVEFORMATEX, DWORD, DWORD, DWORD)
-winmm.waveOutGetID.argtypes = (HWAVEOUT, LPUINT)
-
-
-# Initialize error checking.
-def _winmm_errcheck(res, func, args):
-	if res != MMSYSERR_NOERROR:
-		buf = create_unicode_buffer(256)
-		winmm.waveOutGetErrorTextW(res, buf, sizeof(buf))
-		raise WindowsError(res, buf.value)
-
-
-for func in (
-	winmm.waveOutOpen,
-	winmm.waveOutPrepareHeader,
-	winmm.waveOutWrite,
-	winmm.waveOutUnprepareHeader,
-	winmm.waveOutPause,
-	winmm.waveOutRestart,
-	winmm.waveOutReset,
-	winmm.waveOutClose,
-	winmm.waveOutGetDevCapsW,
-	winmm.waveOutGetID,
-):
-	func.errcheck = _winmm_errcheck
 
 
 def _isDebugForNvWave():
