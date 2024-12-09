@@ -26,6 +26,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
 * Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
+* In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
 
 ### Changes
 
@@ -41,9 +42,15 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071)
+* Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
+  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 
 ### Bug Fixes
 
+* Math reading has been fixed for some web elements.
+Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
 * Improvements when editing in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
@@ -60,9 +67,14 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When spelling, unicode normalization now works more appropriately:
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
-* In Word or Outlook, when using legacy object model, the command to report the destination URL of a link does not report any longer "Not a link" when there is one to report. (#17292, @CyrilleB79)
+* The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
 * NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
+* When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
+* Opening the NVDA Python Console will no longer fail in case an error occurs while retrieving snapshot variables. (#17391, @CyrilleB79)
+* In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
+In any document, if the cursor is on the last line, it will be moved to the end when using this command.
+(#17251, #17430, @nvdaes)
 
 ### Changes for Developers
 
@@ -71,12 +83,21 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
-  * Updated Ruff to 0.6.3. (#17102)
+  * Updated Ruff to 0.8.1. (#17102, #17260, #17473)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
   * Updated SCons to 4.8.1. (#17254)
   * Updated sphinx to 8.1.2 and sphinx-rtd-theme to 3.0.1. (#17284, @josephsl)
   * Updated Robot Framework to 7.1.1. (#17329, @josephsl)
+  * Updated configobj to 5.1.0 commit `8be5462`. (#17328)
+  * Updated pre-commit to 4.0.1. (#17260)
+  * Updated typing-extensions to 4.12.2. (#17438, @josephsl)
+  * Updated licensecheck to 2024.3. (#17440, @josephsl)
+  * Updated markdown to 3.7. (#17459, @josephsl)
+  * Updated nh3 0.2.19. (#17465, @josephsl)
+  * Updated nuitka to 2.5.4. (#17458, @josephsl)
+  * Updated schedule to 1.2.2. (#17455, @josephsl)
+  * Updated requests to 2.32.3. (#17456, @josephsl)
 * `ui.browseableMessage` may now be called with options to present a button for copying to clipboard, and/or a button for closing the window. (#17018, @XLTechie)
 * Several additions to identify link types (#16994, @LeonarddeR, @nvdaes)
   * A new `utils.urlUtils` module with different functions to determine link types
@@ -90,6 +111,12 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Retrieving the `labeledBy` property now works for:
+  * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
+  * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+* Added the following extension points (#17428, @ctoth):
+  * `inputCore.decide_handleRawKey`: called on each keypress
+  * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
 
 #### API Breaking Changes
 
@@ -109,7 +136,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 * As WinMM support has been removed, the following classes and methods have been deleted:
   * `nvwave.WinmmWavePlayer`
-
+* In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
 
@@ -118,7 +145,7 @@ Please use `braille.filter_displayDimensions` instead. (#17011)
 
 ## 2024.4.1
 
-It also includes a fix for saving speech symbol dictionaries.
+This is a patch release to fix a bug when saving speech symbol dictionaries.
 
 ### Bug fixes
 

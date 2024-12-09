@@ -66,7 +66,7 @@ To replicate the production build environment, use the 3.11.x minor version of P
 		* Desktop development with C++.
 			* Once selected, ensure "C++ Clang tools for Windows" is included under the optional grouping.
 	* On the Individual components tab, ensure the following items are selected:
-		* Windows 11 SDK (10.0.22621.0)
+		* Windows 11 SDK (10.0.26100.0)
 		* MSVC v143 - VS 2022 C++ ARM64/ARM64EC build tools
 		* MSVC v143 - VS 2022 C++ x64/x86 build tools
 		* C++ ATL for v143 build tools (x86 & x64)
@@ -85,7 +85,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
 * [liblouis](http://www.liblouis.io/), version 3.31.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 45.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 46.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`

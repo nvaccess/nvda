@@ -51,14 +51,29 @@ class Magnification:
 	# Set full screen color effect
 	_MagSetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagSetFullscreenColorEffectArgTypes = ((1, "effect"),)
+	MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
+		("MagSetFullscreenColorEffect", _magnification),
+		_MagSetFullscreenColorEffectArgTypes,
+	)
+	MagSetFullscreenColorEffect.errcheck = _errCheck
 
 	# Get full screen color effect
 	_MagGetFullscreenColorEffectFuncType = WINFUNCTYPE(BOOL, POINTER(MAGCOLOREFFECT))
 	_MagGetFullscreenColorEffectArgTypes = ((2, "effect"),)
+	MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
+		("MagGetFullscreenColorEffect", _magnification),
+		_MagGetFullscreenColorEffectArgTypes,
+	)
+	MagGetFullscreenColorEffect.errcheck = _errCheck
 
 	# show system cursor
 	_MagShowSystemCursorFuncType = WINFUNCTYPE(BOOL, BOOL)
 	_MagShowSystemCursorArgTypes = ((1, "showCursor"),)
+	MagShowSystemCursor = _MagShowSystemCursorFuncType(
+		("MagShowSystemCursor", _magnification),
+		_MagShowSystemCursorArgTypes,
+	)
+	MagShowSystemCursor.errcheck = _errCheck
 
 	# initialize
 	_MagInitializeFuncType = WINFUNCTYPE(BOOL)
@@ -69,29 +84,6 @@ class Magnification:
 	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
-
-	# These magnification functions are not available on versions of Windows prior to Windows 8,
-	# and therefore looking them up from the magnification library will raise an AttributeError.
-	try:
-		MagSetFullscreenColorEffect = _MagSetFullscreenColorEffectFuncType(
-			("MagSetFullscreenColorEffect", _magnification),
-			_MagSetFullscreenColorEffectArgTypes,
-		)
-		MagSetFullscreenColorEffect.errcheck = _errCheck
-		MagGetFullscreenColorEffect = _MagGetFullscreenColorEffectFuncType(
-			("MagGetFullscreenColorEffect", _magnification),
-			_MagGetFullscreenColorEffectArgTypes,
-		)
-		MagGetFullscreenColorEffect.errcheck = _errCheck
-		MagShowSystemCursor = _MagShowSystemCursorFuncType(
-			("MagShowSystemCursor", _magnification),
-			_MagShowSystemCursorArgTypes,
-		)
-		MagShowSystemCursor.errcheck = _errCheck
-	except AttributeError:
-		MagSetFullscreenColorEffect = None
-		MagGetFullscreenColorEffect = None
-		MagShowSystemCursor = None
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,

@@ -1646,6 +1646,7 @@ class TextInfoRegion(Region):
 
 	def nextLine(self):
 		dest = self._readingInfo.copy()
+		shouldCollapseToEnd = False
 		moved = dest.move(self._getReadingUnit(), 1)
 		if not moved:
 			if self.allowPageTurns and isinstance(dest.obj, textInfos.DocumentWithPageTurns):
@@ -1656,8 +1657,8 @@ class TextInfoRegion(Region):
 				else:
 					dest = dest.obj.makeTextInfo(textInfos.POSITION_FIRST)
 			else:  # no page turn support
-				return
-		dest.collapse()
+				shouldCollapseToEnd = True
+		dest.collapse(shouldCollapseToEnd)
 		self._setCursor(dest)
 		_speakOnNavigatingByUnit(dest, self._getReadingUnit())
 
