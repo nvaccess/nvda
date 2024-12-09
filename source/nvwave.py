@@ -47,6 +47,8 @@ import extensionPoints
 import NVDAHelper
 import core
 import globalVars
+from pycaw.utils import AudioUtilities
+from pycaw.constants import EDataFlow, AudioDeviceState
 
 
 __all__ = (
@@ -174,14 +176,16 @@ def _getOutputDevices():
 	"""Generator, returning device ID and device Name in device ID order.
 	@note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
-	caps = WAVEOUTCAPS()
-	for devID in range(-1, winmm.waveOutGetNumDevs()):
-		try:
-			winmm.waveOutGetDevCapsW(devID, byref(caps), sizeof(caps))
-			yield devID, caps.szPname
-		except WindowsError:
-			# It seems that in certain cases, Windows includes devices which cannot be accessed.
-			pass
+	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
+		EDataFlow.eRender.value,
+		AudioDeviceState.Active.value,
+	)
+	for i in range(endpointCollection.GetCount()):
+		device = AudioUtilities.CreateDevice(endpointCollection.Item(i))
+		if device is not None:
+			yield device.id, device.FriendlyName
+		else:
+			continue
 
 
 def getOutputDeviceNames():
@@ -200,12 +204,14 @@ def outputDeviceIDToName(ID):
 	@return: The device name.
 	@rtype: str
 	"""
-	caps = WAVEOUTCAPS()
-	try:
-		winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
-	except WindowsError:
-		raise LookupError("No such device ID")
-	return caps.szPname
+	# caps = WAVEOUTCAPS()
+	# try:
+	# winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
+	# except WindowsError:
+	# raise LookupError("No such device ID")
+	# return caps.szPname
+	device = AudioUtilities.GetDeviceEnumerator().GetDevice(id)
+	return AudioUtilities.CreateDevice(device).FriendlyName
 
 
 def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
@@ -224,7 +230,7 @@ def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
 
 	# No such ID.
 	if useDefaultIfInvalid:
-		return WAVE_MAPPER
+		return AudioUtilities.GetSpeakers().GetId()
 	else:
 		raise LookupError("No such device name")
 
