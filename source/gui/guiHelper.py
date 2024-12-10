@@ -151,16 +151,13 @@ def associateElements(firstElement: wx.Button, secondElement: wx.CheckBox) -> wx
 def associateElements(firstElement: wx.TextCtrl, secondElement: wx.Button) -> wx.BoxSizer: ...
 
 
-def associateElements(
-	firstElement: wx.StaticText | wx.Button | wx.TextCtrl,
-	secondElement: _HorizontalCtrlT | wx.CheckBox | _VerticalCtrlT | wx.Button,
-) -> wx.BoxSizer:
+def associateElements(firstElement, secondElement) -> wx.BoxSizer:
 	"""Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 	pairings used in the NVDA GUI.
 	Currently handles:
-		wx.StaticText and _HorizontalCtrlT - Horizontal layout
+		wx.StaticText and :const:`_HorizontalCtrlT` - Horizontal layout
 		wx.StaticText and wx.CheckBox - Horizontal layout, control first, label second
-		wx.StaticText and _VerticalCtrlT - Vertical layout
+		wx.StaticText and :const:`_VerticalCtrlT` - Vertical layout
 		wx.Button and wx.CheckBox - Horizontal layout
 		wx.TextCtrl and wx.Button - Horizontal layout
 	"""
