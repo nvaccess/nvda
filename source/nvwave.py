@@ -40,7 +40,7 @@ import NVDAHelper
 import core
 import globalVars
 from pycaw.utils import AudioUtilities
-from pycaw.constants import EDataFlow, AudioDeviceState
+from pycaw.constants import EDataFlow, DEVICE_STATE
 
 
 __all__ = (
@@ -105,10 +105,11 @@ def _getOutputDevices():
 	"""
 	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
 		EDataFlow.eRender.value,
-		AudioDeviceState.Active.value,
+		DEVICE_STATE.ACTIVE.value,
 	)
 	for i in range(endpointCollection.GetCount()):
 		device = AudioUtilities.CreateDevice(endpointCollection.Item(i))
+		# This should never be None, but just to be sure
 		if device is not None:
 			yield device.id, device.FriendlyName
 		else:
@@ -131,12 +132,6 @@ def outputDeviceIDToName(ID):
 	@return: The device name.
 	@rtype: str
 	"""
-	# caps = WAVEOUTCAPS()
-	# try:
-	# winmm.waveOutGetDevCapsW(ID, byref(caps), sizeof(caps))
-	# except WindowsError:
-	# raise LookupError("No such device ID")
-	# return caps.szPname
 	device = AudioUtilities.GetDeviceEnumerator().GetDevice(id)
 	return AudioUtilities.CreateDevice(device).FriendlyName
 
