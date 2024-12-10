@@ -4,7 +4,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 	if ($env:APPVEYOR_REPO_BRANCH -eq "beta" -and $env:feature_crowdinSync) {
 		# Upload files to Crowdin for translation
 		py -m pip install --no-warn-script-location requests
-		py l10n\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
+		py l10nUtils\crowdinSync.py uploadSourceFile 2 output\nvda.pot 2>&1
 	}
 	# Notify the NV Access server if this is an NV Access build.
 	if ($env:APPVEYOR_REPO_NAME.StartsWith("nvaccess/")) {
