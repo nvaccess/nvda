@@ -4292,7 +4292,7 @@ class GlobalCommands(ScriptableObject):
 			link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
-			if link.destination is None:
+			if not link.destination:  # May be None or ""
 				# Translators: Reported when using the command to report the destination of a link.
 				ui.message(_("Link has no apparent destination"))
 				return
