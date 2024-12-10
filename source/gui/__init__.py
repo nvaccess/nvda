@@ -30,6 +30,7 @@ from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
+	MessageDialog,
 )
 from . import blockAction
 from .speechDict import (
@@ -367,7 +368,7 @@ class MainFrame(wx.Frame):
 
 	def onAboutCommand(self, evt):
 		# Translators: The title of the dialog to show about info for NVDA.
-		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
+		MessageDialog(None, versionInfo.aboutMessage, _("About NVDA")).Show()
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
