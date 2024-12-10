@@ -76,6 +76,7 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
 In any document, if the cursor is on the last line, it will be moved to the end when using this command.
 (#17251, #17430, @nvdaes)
+* Details such as context or errors will now be correctly reported during navigation in poedit. (#17166, @CyrilleB79)
 
 ### Changes for Developers
 
