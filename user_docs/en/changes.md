@@ -43,15 +43,19 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071)
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
+  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 
 ### Bug Fixes
 
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
-* Improvements when editing in Microsoft PowerPoint:
+* Improvements in Microsoft PowerPoint:
   * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
   * Character location reporting is now accurate (e.g. when pressing `NVDA+Delete`. (#9941, @LeonarddeR)
+  * NVDA no longer starts say all when starting a slide show and the browse mode setting "Automatic Say All on page load" is disabled. (#17488, @LeonarddeR)
 * When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
 * Configuration profiles:
   * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
@@ -80,7 +84,7 @@ Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/docume
 * Note: this is an Add-on API compatibility breaking release.
 Add-ons will need to be re-tested and have their manifest updated.
 * Component updates:
-  * Updated Ruff to 0.7.2. (#17102, #17260)
+  * Updated Ruff to 0.8.1. (#17102, #17260, #17473)
   * Updated Comtypes to 1.4.6. (#17061, @LeonarddeR)
   * Updated wxPython to 4.2.2. (#17181, @dpy013)
   * Updated SCons to 4.8.1. (#17254)
@@ -111,7 +115,9 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Retrieving the `labeledBy` property now works for:
   * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
   * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
-
+* Added the following extension points (#17428, @ctoth):
+  * `inputCore.decide_handleRawKey`: called on each keypress
+  * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
 
 #### API Breaking Changes
 
