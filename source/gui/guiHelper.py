@@ -52,6 +52,7 @@ from typing import (
 	TypeVar,
 	Union,
 	cast,
+	overload,
 )
 
 import wx
@@ -138,9 +139,21 @@ _HorizontalCtrlT = TypeVar(
 )
 
 
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _HorizontalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _VerticalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.Button, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.TextCtrl, secondElement: wx.Button) -> wx.BoxSizer: ...
+
+
 def associateElements(
-	firstElement: wx.StaticText | wx.StaticText | wx.StaticText | wx.Button | wx.TextCtrl,
-	secondElement: _HorizontalCtrlT | wx.CheckBox | _VerticalCtrlT | wx.CheckBox | wx.Button,
+	firstElement: wx.StaticText | wx.Button | wx.TextCtrl,
+	secondElement: _HorizontalCtrlT | wx.CheckBox | _VerticalCtrlT | wx.Button,
 ) -> wx.BoxSizer:
 	"""Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 	pairings used in the NVDA GUI.
