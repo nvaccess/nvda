@@ -1072,7 +1072,11 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			return
 		if self.GetReturnCode() == 0:
 			# No button has been pressed, so this must be a close event from elsewhere.
-			command = self._getFallbackAction()
+			try:
+				command = self._getFallbackAction()
+			except KeyError:
+				log.debug("Unable to get fallback action from commands. This indicates incorrect usage.")
+				command = None
 			if command is None or not command.closesDialog:
 				evt.Veto()
 				return
