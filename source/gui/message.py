@@ -932,7 +932,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 	def _getFallbackAction(self) -> _Command | None:
 		"""Get the fallback action of this dialog.
 
-		:raises RuntimeError: If attempting to get the default command from commands fails.
 		:return: The id and command of the fallback action.
 		"""
 		escapeId = self.GetEscapeId()
