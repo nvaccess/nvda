@@ -147,7 +147,7 @@ def stringToLang(value: str) -> str:
 
 
 # Process option arguments
-parser = NoConsoleOptionParser(formatter_class=_WideParserHelpFormatter)
+parser = NoConsoleOptionParser(formatter_class=_WideParserHelpFormatter, allow_abbrev=False)
 quitGroup = parser.add_mutually_exclusive_group()
 quitGroup.add_argument(
 	"-q", "--quit", action="store_true", dest="quit", default=False, help="Quit already running copy of NVDA"
