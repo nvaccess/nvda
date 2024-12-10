@@ -1466,6 +1466,9 @@ While you are unlikely to need all of them, they are enumerated below:
 In many simple cases, you will be able to achieve what you need by simply creating a message dialog and calling `Show` or `ShowModal`. For example:
 
 ```py
+from gui.message import MessageDialog
+from gui import mainFrame
+
 MessageDialog(
 	mainFrame,
 	"Hello world!",
