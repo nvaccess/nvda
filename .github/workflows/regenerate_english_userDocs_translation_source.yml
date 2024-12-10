@@ -43,7 +43,7 @@ jobs:
             $markdown = $file
             if (Test-Path $xliff) {
                 Write-Host "Updating $xliff with changes from $markdown"
-                python user_docs/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
+                python l10n/markdownTranslate.py updateXliff -x $xliff -m $file -o $tempXliff
                 Write-Host "Renaming $tempXliff to $xliff"
                 move-item -Path $tempXliff -Destination $xliff -Force
             } else {
@@ -105,7 +105,7 @@ jobs:
         if ($changed) {
             Write-Host "Uploading changes.xliff to Crowdin"
             # 20 is the file ID for changes.xliff in Crowdin.
-            python appVeyor/crowdinSync.py uploadSourceFile 20 user_docs/en/changes.xliff
+            python l10n/crowdinSync.py uploadSourceFile 20 user_docs/en/changes.xliff
         } else {
             Write-Host "Not uploading changes.xliff to Crowdin as it has not changed"
         }

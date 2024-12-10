@@ -341,7 +341,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	env.Command(
 		mdFile,
 		xliffFile,
-		[f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+		[f'@{sys.executable} l10n/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
@@ -734,8 +734,8 @@ env.Alias("moduleList", env.GenerateModuleList(target, source))
 
 nvdaL10nUtil = env.Command(
 	target=outputDir.File("l10nUtil.exe"),
-	source="user_docs/l10nUtil.py",
+	source="l10n/l10nUtil.py",
 	ENV=os.environ,
-	action=f"nuitka --assume-yes-for-downloads --remove-output --standalone --onefile --output-dir={outputDir.abspath} --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links user_docs/l10nUtil.py",
+	action=f"nuitka --assume-yes-for-downloads --remove-output --standalone --onefile --output-dir={outputDir.abspath} --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links l10n/l10nUtil.py",
 )
 env.Alias("nvdaL10nUtil", nvdaL10nUtil)
