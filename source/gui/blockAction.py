@@ -16,6 +16,11 @@ import ui
 from utils.security import isLockScreenModeActive, isRunningOnSecureDesktop
 import core
 
+_DELAY_BEFORE_MESSAGE_MS = 1
+"""Duration in milliseconds for which to delay announcing that an action has been blocked, so that any UI changes don't interrupt it.
+1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
+"""
+
 
 def _isModalMessageBoxActive() -> bool:
 	from gui.message import isModalMessageBoxActive
@@ -95,8 +100,12 @@ def when(*contexts: Context):
 					if context.callback is not None:
 						context.callback()
 					# We need to delay this message so that, if a UI change is triggered by the callback, the UI change doesn't interrupt it.
-					# 1ms is a magic number. It can be increased if it is found to be too short, but it should be kept to a minimum.
-					core.callLater(1, ui.message, context.translatedMessage, SpeechPriority.NOW)
+					core.callLater(
+						_DELAY_BEFORE_MESSAGE_MS,
+						ui.message,
+						context.translatedMessage,
+						SpeechPriority.NOW,
+					)
 					return
 			return func(*args, **kwargs)
 
