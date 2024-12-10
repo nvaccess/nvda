@@ -46,6 +46,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
+* The ability to opt out of using WASAPI for audio output has been removed. (#16080)
 
 ### Bug Fixes
 
@@ -134,8 +135,8 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
-* As WinMM support has been removed, the following classes and methods have been deleted:
-  * `nvwave.WinmmWavePlayer`
+* As WinMM support has been removed, the following symbols have been removed from `nvwave`:
+  * `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, `winmm`.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
