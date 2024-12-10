@@ -1575,7 +1575,9 @@ The order of precedence is as follows:
 
 #### A note on threading
 
-Just like wxPython, most of the methods available on `MessageDialog` and its instances are **not** thread safe.
+**IMPORTANT:** Most `MessageDialog` methods are **not** thread safe.
+Calling these methods from non-GUI threads can cause crashes or unpredictable behavior.
+
 When calling non thread safe methods on `MessageDialog` or its instances, be sure to do so on the GUI thread.
 To do this with wxPython, you can use `wx.CallAfter` or  `wx.CallLater`.
 As these operations schedule the passed callable to occur on the GUI thread, they will return immediately, and will not return the return value of the passed callable.
