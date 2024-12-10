@@ -3353,21 +3353,6 @@ Some GDI applications will highlight text with a background color, NVDA (via dis
 In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
 
-##### Use WASAPI for audio output {#WASAPI}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
-
-This option enables audio output via the Windows Audio Session API (WASAPI).
-WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
-After changing this option, you will need to restart NVDA for the change to take effect.
-Disabling WASAPI will disable the following options:
-
-* [Volume of NVDA sounds follows voice volume](#SoundVolumeFollowsVoice)
-* [Volume of NVDA sounds](#SoundVolume)
-
 ##### Debug logging categories {#AdvancedSettingsDebugLoggingCategories}
 
 The checkboxes in this list allow you to enable specific categories of debug messages in NVDA's log.

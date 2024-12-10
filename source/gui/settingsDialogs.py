@@ -3846,26 +3846,6 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
-		label = _("Audio")
-		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
-		sHelper.addItem(audioGroup)
-
-		# Translators: This is the label for a checkbox control in the Advanced settings panel.
-		label = _("Use WASAPI for audio output (requires restart)")
-		self.wasapiComboBox = cast(
-			nvdaControls.FeatureFlagCombo,
-			audioGroup.addLabeledControl(
-				labelText=label,
-				wxCtrlClass=nvdaControls.FeatureFlagCombo,
-				keyPath=["audio", "WASAPI"],
-				conf=config.conf,
-			),
-		)
-		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
-
-		# Translators: This is the label for a group of advanced options in the
-		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -4050,7 +4030,6 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
-		self.wasapiComboBox.saveCurrentValueToConf()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()
