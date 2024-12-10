@@ -1648,6 +1648,7 @@ class NVDAObject(
 		return ti.getLinkTypeInDocument(self.value)
 
 	linkData: "_LinkData | None"
+
 	def _get_linkData(self) -> "_LinkData | None":
 		"""If the object has an associated link, returns the link's data (target and text)."""
 		raise NotImplementedError
