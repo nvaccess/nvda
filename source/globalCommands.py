@@ -4283,12 +4283,13 @@ class GlobalCommands(ScriptableObject):
 		focus = api.getFocusObject()
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
-			link = ti._getLinkDataAtCaretPosition()
 		except RuntimeError:
 			try:
 				link = focus.linkData
 			except NotImplementedError:
 				link = None
+		else:
+			link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
 			if link.destination is None:
