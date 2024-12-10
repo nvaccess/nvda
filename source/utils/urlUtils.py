@@ -5,6 +5,7 @@
 
 import controlTypes
 from urllib.parse import ParseResult, urlparse, urlunparse
+from dataclasses import dataclass
 from logHandler import log
 
 
@@ -52,3 +53,11 @@ def isSamePageURL(targetURLOnPage: str, rootURL: str) -> bool:
 	return targetURLOnPageWithoutFragments == rootURLWithoutFragments and not any(
 		char in parsedTargetURLOnPage.fragment for char in fragmentInvalidChars
 	)
+
+
+@dataclass
+class _LinkData:
+	"""Class to store information on a link."""
+
+	displayText: str | None
+	destination: str
