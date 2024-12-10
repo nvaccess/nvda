@@ -1666,6 +1666,8 @@ The following default button sets are available:
 | `YES_NO_CANCEL` | `DefaultButton.YES`, `DefaultButton.NO` and `DefaultButton.CANCEL` | `addYesNoCancelButtons` | |
 | `SAVE_NO_CANCEL` | `DefaultButton.SAVE`, `DefaultButton.NO`, `DefaultButton.CANCEL` | `addSaveNoCancelButtons` | The label of the no button is overridden to be "Do&n't save". |
 
+If none of the standard `ReturnCode` values are suitable for your button, you may also use `ReturnCode.CUSTOM_1` through `ReturnCode.CUSTOM_5`, which will not conflict with any built-in identifiers.
+
 #### Convenience methods
 
 The `MessageDialog` class also provides a number of convenience methods for showing common types of modal dialogs.
