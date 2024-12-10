@@ -290,7 +290,7 @@ class MessageDialog(gui.message.MessageDialog):
 	DIALOG_TYPE_ERROR = 3
 
 	@staticmethod
-	def _legasyDialogTypeToDialogType(dialogType: int) -> gui.message.DialogType:
+	def _legacyDialogTypeToDialogType(dialogType: int) -> gui.message.DialogType:
 		match dialogType:
 			case MessageDialog.DIALOG_TYPE_ERROR:
 				return gui.message.DialogType.ERROR
@@ -317,7 +317,7 @@ class MessageDialog(gui.message.MessageDialog):
 			parent,
 			message=message,
 			title=title,
-			dialogType=self._legasyDialogTypeToDialogType(dialogType),
+			dialogType=self._legacyDialogTypeToDialogType(dialogType),
 			buttons=None,
 		)
 
