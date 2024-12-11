@@ -15,6 +15,7 @@ import comtypes.client
 import ctypes
 
 import comtypes.client.lazybind
+import config
 import oleacc
 import comHelper
 import ui
@@ -1386,16 +1387,9 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	def event_treeInterceptor_gainFocus(self):
 		braille.handler.handleGainFocus(self)
 		self.rootNVDAObject.reportFocus()
+		self.reportNewSlide(self.hadFocusOnce)
 		if not self.hadFocusOnce:
 			self.hadFocusOnce = True
-			self.reportNewSlide()
-		else:
-			info = self.selection
-			if not info.isCollapsed:
-				speech.speakPreselectedText(info.text)
-			else:
-				info.expand(textInfos.UNIT_LINE)
-				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 	def event_gainFocus(self, obj, nextHandler):
 		pass
@@ -1405,9 +1399,22 @@ class SlideShowTreeInterceptor(DocumentTreeInterceptor):
 	def makeTextInfo(self, position):
 		return self.TextInfo(self, position)
 
-	def reportNewSlide(self):
-		self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
-		sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
+	def reportNewSlide(self, suppressSayAll: bool = False):
+		"""Reports a new slide, activating say all when appropriate.
+		:param suppressSayAll: When say all should be suppressed always, e.g.
+			because tree interceptor gets focus multiple times.
+		"""
+		doSayAll = not suppressSayAll and config.conf["virtualBuffers"]["autoSayAllOnPageLoad"]
+		if doSayAll:
+			self.makeTextInfo(textInfos.POSITION_FIRST).updateCaret()
+			sayAll.SayAllHandler.readText(sayAll.CURSOR.CARET)
+		else:
+			info = self.selection
+			if not info.isCollapsed:
+				speech.speakPreselectedText(info.text)
+			else:
+				info.expand(textInfos.UNIT_LINE)
+				speech.speakTextInfo(info, reason=controlTypes.OutputReason.CARET, unit=textInfos.UNIT_LINE)
 
 	@scriptHandler.script(
 		description=_(

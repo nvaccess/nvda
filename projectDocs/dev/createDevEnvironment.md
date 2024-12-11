@@ -85,7 +85,7 @@ If you aren't sure, run `git submodule update` after every git pull, merge or ch
 * [Sonic](https://github.com/waywardgeek/sonic), commit `8694c596378c24e340c09ff2cd47c065494233f1`
 * [IAccessible2](https://wiki.linuxfoundation.org/accessibility/iaccessible2/start), commit `3d8c7f0b833453f761ded6b12d8be431507bfe0b`
 * [liblouis](http://www.liblouis.io/), version 3.31.0
-* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 45.0
+* [Unicode Common Locale Data Repository (CLDR)](http://cldr.unicode.org/), version 46.0
 * NVDA images and sounds
 * [Adobe Acrobat accessibility interface, version XI](https://download.macromedia.com/pub/developer/acrobat/AcrobatAccess.zip)
 * [Microsoft Detours](https://github.com/microsoft/Detours), commit `4b8c659f549b0ab21cf649377c7a84eb708f5e68`
