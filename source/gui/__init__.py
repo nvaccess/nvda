@@ -5,8 +5,10 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Callable
 import os
 import ctypes
+import warnings
 import wx
 import wx.adv
 
@@ -31,6 +33,7 @@ from .message import (
 	# be cautious when removing
 	messageBox,
 	MessageDialog,
+	displayDialogAsModal,
 )
 from . import blockAction
 from .speechDict import (
@@ -879,21 +882,24 @@ def showGui():
 	wx.CallAfter(mainFrame.showGui)
 
 
-def runScriptModalDialog(dialog, callback=None):
+def runScriptModalDialog(dialog: wx.Dialog, callback: Callable[[int], Any] | None = None):
 	"""Run a modal dialog from a script.
-	This will not block the caller,
-	but will instead call C{callback} (if provided) with the result from the dialog.
+	This will not block the caller, but will instead call callback (if provided) with the result from the dialog.
 	The dialog will be destroyed once the callback has returned.
-	@param dialog: The dialog to show.
-	@type dialog: C{wx.Dialog}
-	@param callback: The optional callable to call with the result from the dialog.
-	@type callback: callable
+
+	This function is deprecated.
+	Use :class:`message.MessageDialog` instead.
+
+	:param dialog: The dialog to show.
+	:param callback: The optional callable to call with the result from the dialog.
 	"""
+	warnings.warn(
+		"showScriptModalDialog is deprecated. Use an instance of message.MessageDialog and wx.CallAfter instead.",
+		DeprecationWarning,
+	)
 
 	def run():
-		mainFrame.prePopup()
-		res = dialog.ShowModal()
-		mainFrame.postPopup()
+		res = displayDialogAsModal(dialog)
 		if callback:
 			callback(res)
 		dialog.Destroy()
