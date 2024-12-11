@@ -2632,9 +2632,7 @@ def getFormatFieldSpeech(  # noqa: C901
 		)
 		or collapsed != oldCollapsed
 	):
-		# Translators: collapsed text (E.g. a collapsed heading in MS Word)
-		text = _("collapsed")
-		textList.append(text)
+		textList.append(State.COLLAPSED.displayString)
 	if formatConfig["reportStyle"]:
 		style = attrs.get("style")
 		oldStyle = attrsCache.get("style") if attrsCache is not None else None
