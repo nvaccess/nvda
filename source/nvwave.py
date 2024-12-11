@@ -567,7 +567,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 WavePlayer = WasapiWavePlayer
 fileWavePlayer: Optional[WavePlayer] = None
-fileWavePlayerThread = None
+fileWavePlayerThread: threading.Thread | None = None
 
 
 def initialize():
