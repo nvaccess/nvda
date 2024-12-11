@@ -115,6 +115,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Retrieving the `labeledBy` property now works for:
   * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
   * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+* Added the ability to associate `wx.ComboBox` and a label `wx.StaticText` using `gui.guiHelper.associateElements`. (#17476)
 * Added the following extension points (#17428, @ctoth):
   * `inputCore.decide_handleRawKey`: called on each keypress
   * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused

@@ -52,6 +52,7 @@ from typing import (
 	TypeVar,
 	Union,
 	cast,
+	overload,
 )
 
 import wx
@@ -124,12 +125,39 @@ class ButtonHelper(object):
 		return wxButton
 
 
-def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx.BoxSizer:
+# vertical controls where the label should go above visually, and the control should go below
+_VerticalCtrlT = TypeVar("_VerticalCtrlT", wx.ListCtrl, wx.ListBox, wx.TreeCtrl)
+# horizontal controls where the label should go first visually, and the control should go after
+_HorizontalCtrlT = TypeVar(
+	"_HorizontalCtrlT",
+	wx.Button,
+	wx.Choice,
+	wx.ComboBox,
+	wx.Slider,
+	wx.SpinCtrl,
+	wx.TextCtrl,
+)
+
+
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _HorizontalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _VerticalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.Button, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.TextCtrl, secondElement: wx.Button) -> wx.BoxSizer: ...
+
+
+def associateElements(firstElement, secondElement) -> wx.BoxSizer:
 	"""Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 	pairings used in the NVDA GUI.
 	Currently handles:
-		wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
-		wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
+		wx.StaticText and :const:`_HorizontalCtrlT` - Horizontal layout
+		wx.StaticText and wx.CheckBox - Horizontal layout, control first, label second
+		wx.StaticText and :const:`_VerticalCtrlT` - Vertical layout
 		wx.Button and wx.CheckBox - Horizontal layout
 		wx.TextCtrl and wx.Button - Horizontal layout
 	"""
@@ -140,35 +168,25 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 
 	# staticText and input control
 	# likely a labelled control from LabeledControlHelper
-	if isinstance(firstElement, wx.StaticText) and isinstance(
-		secondElement,
-		(
-			wx.Button,
-			wx.Choice,
-			wx.Slider,
-			wx.SpinCtrl,
-			wx.TextCtrl,
-		),
-	):
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		sizer.Add(secondElement)
-	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, wx.CheckBox):
-		# checkbox should go first, and label should go after
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(secondElement)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
-	# staticText and (ListCtrl, ListBox or TreeCtrl)
-	elif isinstance(firstElement, wx.StaticText) and isinstance(
-		secondElement,
-		(wx.ListCtrl, wx.ListBox, wx.TreeCtrl),
-	):
-		sizer = wx.BoxSizer(wx.VERTICAL)
-		sizer.Add(firstElement)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
+	if isinstance(firstElement, wx.StaticText):
+		# Horizontal layout, label first, control second
+		if isinstance(secondElement, _HorizontalCtrlT.__constraints__):
+			sizer = wx.BoxSizer(wx.HORIZONTAL)
+			sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			sizer.Add(secondElement)
+		# Horizontal layout, control first, label second
+		elif isinstance(secondElement, wx.CheckBox):
+			sizer = wx.BoxSizer(wx.HORIZONTAL)
+			sizer.Add(secondElement)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
+		# Vertical layout, label above, control below
+		elif isinstance(secondElement, _VerticalCtrlT.__constraints__):
+			sizer = wx.BoxSizer(wx.VERTICAL)
+			sizer.Add(firstElement)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+			sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
