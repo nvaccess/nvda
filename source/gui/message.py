@@ -109,9 +109,8 @@ def messageBox(
 	:return: Same as for :func:`wx.MessageBox`.
 	"""
 	warnings.warn(
-		DeprecationWarning(
-			"gui.message.messageBox is deprecated. Use gui.message.MessageDialog instead.",
-		),
+		"gui.message.messageBox is deprecated. Use gui.message.MessageDialog instead.",
+		DeprecationWarning,
 	)
 	if not core._hasShutdownBeenTriggered:
 		res = wxCallOnMain(_messageBoxShim, message, caption, style, parent=parent or gui.mainFrame)
