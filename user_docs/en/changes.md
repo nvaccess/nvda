@@ -135,8 +135,9 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
-* As WinMM support has been removed, the following symbols have been removed from `nvwave`:
-  * `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+* Due to the retirement of NVDA's winmm support:
+  * The following symbols have been removed from `nvwave`: `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+  * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
