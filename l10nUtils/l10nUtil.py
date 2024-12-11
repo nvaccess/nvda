@@ -4,13 +4,16 @@
 # See the file COPYING for more details.
 
 
+import sys
 import tempfile
 import lxml.etree
 import os
 import argparse
 import markdownTranslate
-import md2html
 
+
+sys.path.append(os.path.join(os.path.dirname(__file__), "..", "user_docs"))
+import md2html
 
 def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
 	"""
