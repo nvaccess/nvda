@@ -117,11 +117,10 @@ def _getOutputDevices() -> Iterator[tuple[str, str]]:
 			continue
 
 
-def getOutputDeviceNames():
+def getOutputDeviceNames() -> list[str]:
 	"""Obtain the names of all audio output devices on the system.
-	@return: The names of all output devices on the system.
-	@rtype: [str, ...]
-	@note: Depending on number of devices being fetched, this may take some time (~3ms)
+	:return: The names of all output devices on the system.
+	..note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	return [name for ID, name in _getOutputDevices()]
 
