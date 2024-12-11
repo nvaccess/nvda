@@ -3264,6 +3264,7 @@ class AudioPanel(SettingsPanel):
 			return False
 		return super().isValid()
 
+
 class AddonStorePanel(SettingsPanel):
 	# Translators: This is the label for the addon navigation settings panel.
 	title = _("Add-on Store")
@@ -5084,7 +5085,6 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
-
 
 
 class VisionProviderSubPanel_Settings(
