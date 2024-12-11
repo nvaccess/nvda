@@ -24,6 +24,7 @@ import extensionPoints
 
 if TYPE_CHECKING:
 	import NVDAObjects
+	from utils.urlUtils import _LinkData
 
 post_browseModeStateChange = extensionPoints.Action()
 """
@@ -228,7 +229,7 @@ class RootProxyTextInfo(textInfos.TextInfo):
 	def activate(self):
 		return self.innerTextInfo.activate()
 
-	def _getLinkDataAtCaretPosition(self) -> textInfos._Link | None:
+	def _getLinkDataAtCaretPosition(self) -> "_LinkData | None":
 		return self.innerTextInfo._getLinkDataAtCaretPosition()
 
 	def compareEndPoints(self, other, which):

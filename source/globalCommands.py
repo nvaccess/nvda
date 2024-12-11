@@ -4282,16 +4282,20 @@ class GlobalCommands(ScriptableObject):
 		positioned on a link, or an element with an included link such as a graphic.
 		:param forceBrowseable: skips the press once check, and displays the browseableMessage version.
 		"""
+		focus = api.getFocusObject()
 		try:
 			ti: textInfos.TextInfo = api.getCaretPosition()
 		except RuntimeError:
-			log.debugWarning("Unable to get the caret position.", exc_info=True)
-			ti: textInfos.TextInfo = api.getFocusObject().makeTextInfo(textInfos.POSITION_FIRST)
-		link = ti._getLinkDataAtCaretPosition()
+			try:
+				link = focus.linkData
+			except NotImplementedError:
+				link = None
+		else:
+			link = ti._getLinkDataAtCaretPosition()
 		presses = scriptHandler.getLastScriptRepeatCount()
 		if link:
-			if link.destination is None:
-				# Translators: Informs the user that the link has no destination
+			if not link.destination:  # May be None or ""
+				# Translators: Reported when using the command to report the destination of a link.
 				ui.message(_("Link has no apparent destination"))
 				return
 			if (
@@ -4306,18 +4310,19 @@ class GlobalCommands(ScriptableObject):
 					link.destination,
 					# Translators: Informs the user that the window contains the destination of the
 					# link with given title
-					title=_("Destination of: {name}").format(
-						name=text,
-						closeButton=True,
-						copyButton=True,
-					),
+					title=_("Destination of: {name}").format(name=text),
+					closeButton=True,
+					copyButton=True,
 				)
 			elif presses == 0:  # One press
 				ui.message(link.destination)  # Speak the link
 			else:  # Some other number of presses
 				return  # Do nothing
+		elif focus.role == controlTypes.Role.LINK or controlTypes.State.LINKED in focus.states:
+			# Translators: Reported when using the command to report the destination of a link.
+			ui.message(_("Unable to get the destination of this link."))
 		else:
-			# Translators: Tell user that the command has been run on something that is not a link
+			# Translators: Reported when using the command to report the destination of a link.
 			ui.message(_("Not a link."))
 
 	@script(

@@ -28,6 +28,7 @@ import msoAutoShapeTypes
 from treeInterceptorHandler import DocumentTreeInterceptor
 from NVDAObjects import NVDAObjectTextInfo
 from displayModel import DisplayModelTextInfo, EditableTextDisplayModelTextInfo
+import textInfos
 import textInfos.offsets
 import eventHandler
 import appModuleHandler
@@ -42,6 +43,7 @@ from logHandler import log
 import scriptHandler
 from locationHelper import RectLTRB
 from NVDAObjects.window._msOfficeChart import OfficeChart
+from utils.urlUtils import _LinkData
 
 # Translators: The name of a category of NVDA commands.
 SCRCAT_POWERPOINT = _("PowerPoint")
@@ -995,6 +997,19 @@ class Shape(PpObject):
 		except:  # noqa: E722
 			raise LookupError("Couldn't get MathML from MathType")
 
+	def _get_linkData(self) -> _LinkData | None:
+		mouseClickSetting = self.ppObject.ActionSettings(ppMouseClick)
+		if mouseClickSetting.action == ppActionHyperlink:
+			if self.value:
+				text = f"{self.roleText} {self.value}"
+			else:
+				text = self.roleText
+			return _LinkData(
+				displayText=text,
+				destination=mouseClickSetting.Hyperlink.Address,
+			)
+			return None
+
 	__gestures = {
 		"kb:leftArrow": "moveHorizontal",
 		"kb:rightArrow": "moveHorizontal",
@@ -1161,6 +1176,23 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		bottom = self.obj.documentWindow.ppObjectModel.pointsToScreenPixelsY(rangeTop + rangeHeight)
 		return RectLTRB(left, top, right, bottom)
 
+	def _getCurrentRun(
+		self,
+		offset: int,
+	) -> tuple[comtypes.client.lazybind.Dispatch | None, int, int]:
+		runs = self.obj.ppObject.textRange.runs()
+		for run in runs:
+			start = run.start - 1
+			end = start + run.length
+			if start <= offset < end:
+				startOffset = start
+				endOffset = end
+				curRun = run
+				break
+		else:
+			curRun, startOffset, endOffset = None, 0, 0
+		return curRun, startOffset, endOffset
+
 	def _getFormatFieldAndOffsets(
 		self,
 		offset: int,
@@ -1170,15 +1202,7 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		formatField = textInfos.FormatField()
 		curRun = None
 		if calculateOffsets:
-			runs = self.obj.ppObject.textRange.runs()
-			for run in runs:
-				start = run.start - 1
-				end = start + run.length
-				if start <= offset < end:
-					startOffset = start
-					endOffset = end
-					curRun = run
-					break
+			curRun, startOffset, endOffset = self._getCurrentRun(self)
 		if not curRun:
 			curRun = self.obj.ppObject.textRange.characters(offset + 1)
 			startOffset, endOffset = offset, self._endOffset
@@ -1213,6 +1237,17 @@ class TextFrameTextInfo(textInfos.offsets.OffsetsTextInfo):
 		if formatConfig["reportLinks"] and curRun.actionSettings(ppMouseClick).action == ppActionHyperlink:
 			formatField["link"] = True
 		return formatField, (startOffset, endOffset)
+
+	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
+		offset = self._getCaretOffset()
+		curRun, _startOffset, _endOffset = self._getCurrentRun(offset)
+		mouseClickSetting = curRun.actionSettings(ppMouseClick)
+		if mouseClickSetting.action == ppActionHyperlink:
+			return textInfos._LinkData(
+				displayText=mouseClickSetting.Hyperlink.TextToDisplay,
+				destination=mouseClickSetting.Hyperlink.Address,
+			)
+		return None
 
 	def _setCaretOffset(self, offset: int) -> None:
 		return self._setSelectionOffsets(offset, offset)
