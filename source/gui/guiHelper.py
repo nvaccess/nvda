@@ -476,8 +476,9 @@ def wxCallOnMain(
 	**kwargs: _WxCallOnMain_P.kwargs,
 ) -> _WxCallOnMain_T:
 	"""Call a non-thread-safe wx function in a thread-safe way.
+	Blocks current thread.
 
-	Using this function is prefferable over calling :fun:`wx.CallAfter` directly when you care about the return time or return value of the function.
+	Using this function is preferable over calling :fun:`wx.CallAfter` directly when you care about the return time or return value of the function.
 
 	This function blocks the thread on which it is called.
 
