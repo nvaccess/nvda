@@ -31,6 +31,7 @@ import nvwave
 import globalVars
 from typing import List, Union
 import diffHandler
+from config.configFlags import TypingEcho
 
 
 class ProgressBar(NVDAObject):
@@ -571,7 +572,10 @@ class EnhancedTermTypedCharSupport(Terminal):
 		else:
 			self._hasTab = False
 		if (
-			(config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"])
+			(
+				config.conf["keyboard"]["speakTypedCharacters"] > TypingEcho.OFF.value
+				or config.conf["keyboard"]["speakTypedWords"] > TypingEcho.OFF.value
+			)
 			and not config.conf["terminals"]["speakPasswords"]
 			and self._supportsTextChange
 		):

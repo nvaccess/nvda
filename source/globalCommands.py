@@ -44,6 +44,7 @@ from config.configFlags import (
 	ShowMessages,
 	BrailleMode,
 	OutputMode,
+	TypingEcho,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -542,15 +543,12 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+2",
 	)
 	def script_toggleSpeakTypedCharacters(self, gesture):
-		if config.conf["keyboard"]["speakTypedCharacters"]:
-			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters off")
-			config.conf["keyboard"]["speakTypedCharacters"] = False
-		else:
-			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters on")
-			config.conf["keyboard"]["speakTypedCharacters"] = True
-		ui.message(state)
+		numVals = len(TypingEcho)
+		state = TypingEcho((config.conf["keyboard"]["speakTypedCharacters"] + 1) % numVals)
+		config.conf["keyboard"]["speakTypedCharacters"] = state.value
+		# Translators: Reported when the user cycles through speak typed characters modes.
+		# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+		ui.message(_("Speak typed characters {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle speak typed words command.
@@ -559,15 +557,12 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+3",
 	)
 	def script_toggleSpeakTypedWords(self, gesture):
-		if config.conf["keyboard"]["speakTypedWords"]:
-			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words off")
-			config.conf["keyboard"]["speakTypedWords"] = False
-		else:
-			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words on")
-			config.conf["keyboard"]["speakTypedWords"] = True
-		ui.message(state)
+		numVals = len(TypingEcho)
+		state = TypingEcho((config.conf["keyboard"]["speakTypedWords"] + 1) % numVals)
+		config.conf["keyboard"]["speakTypedWords"] = state.value
+		# Translators: Reported when the user cycles through speak typed words modes.
+		# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+		ui.message(_("Speak typed words {mode}").format(mode=state.displayString))
 
 	@script(
 		# Translators: Input help mode message for toggle speak command keys command.
@@ -4226,7 +4221,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the control and alt keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the control and alt keys to emulate a "
+			"keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,

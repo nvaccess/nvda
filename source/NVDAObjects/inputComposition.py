@@ -1,6 +1,7 @@
 import eventHandler
 import queueHandler
 import controlTypes
+from config.configFlags import TypingEcho
 import characterProcessing
 import speech
 import config
@@ -73,7 +74,7 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 		return clsList
 
 	def reportNewText(self, oldString, newString):
-		if config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]:
+		if config.conf["keyboard"]["speakTypedCharacters"] > TypingEcho.OFF.value or config.conf["keyboard"]["speakTypedWords"] > TypingEcho.OFF.value:
 			newText = calculateInsertedChars(oldString.strip("\u3000"), newString.strip("\u3000"))
 			if newText:
 				queueHandler.queueFunction(

@@ -68,6 +68,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import aria
 from .priorities import Spri
@@ -780,8 +781,8 @@ def _getPlaceholderSpeechIfTextEmpty(
 	reason: OutputReason,
 ) -> Tuple[bool, SpeechSequence]:
 	"""Attempt to get speech for placeholder attribute if text for 'obj' is empty. Don't report the placeholder
-		value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
-		user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
+	 value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
+	 user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
 	@return: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
 		placeholder value. (False, []) if text for obj was not considered empty.
 	"""
@@ -1354,6 +1355,10 @@ PROTECTED_CHAR = "*"
 #: i.e. it should have a visual or spatial representation.
 FIRST_NONCONTROL_CHAR = " "
 
+def is_editableControl() -> bool:
+	obj=api.getFocusObject()
+	controls = {controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_TERMINAL}
+	return (obj.role in controls or controlTypes.STATE_EDITABLE in obj.states) and controlTypes.STATE_READONLY not in obj.states
 
 def speakTypedCharacters(ch: str):
 	typingIsProtected = api.isTypingProtected()
@@ -1374,8 +1379,10 @@ def speakTypedCharacters(ch: str):
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s" % typedWord)
-		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-			speakText(typedWord)
+		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
+		if typingEchoMode > TypingEcho.OFF.value and not typingIsProtected:
+			if typingEchoMode == TypingEcho.EDIT_CONTROLS.value and is_editableControl() or typingEchoMode == TypingEcho.ON.value:
+				speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
 		# However, we time out after a short while just in case.
@@ -1387,8 +1394,11 @@ def speakTypedCharacters(ch: str):
 			_speechState._suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
-	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
-		speakSpelling(realChar)
+
+	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
+	if not suppress and typingEchoMode > TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
+		if typingEchoMode == TypingEcho.EDIT_CONTROLS.value and is_editableControl() or typingEchoMode == TypingEcho.ON.value:
+			speakSpelling(realChar)
 
 
 class SpeakTextInfoState(object):

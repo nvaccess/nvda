@@ -179,8 +179,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Default = 6: NumpadInsert + ExtendedInsert
 	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
-	speakTypedCharacters = boolean(default=true)
-	speakTypedWords = boolean(default=false)
+	# 0: Off, 1: on, 2: Only in edit controls
+	speakTypedCharacters = integer(default=1,min=0,max=2)
+	# 0: Off, 1: on, 2: Only in edit controls
+	speakTypedWords = integer(default=1,min=0,max=2)
 	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
 	speechInterruptForCharacters = boolean(default=true)

@@ -38,6 +38,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import languageHandler
 import speech
@@ -1981,24 +1982,27 @@ class KeyboardSettingsPanel(SettingsPanel):
 				checkedItems.append(n)
 		self.modifierList.CheckedItems = checkedItems
 		self.modifierList.Select(0)
-
 		self.bindHelpEvent("KeyboardSettingsModifiers", self.modifierList)
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		charsText = _("Speak typed &characters")
-		self.charsCheckBox = sHelper.addItem(wx.CheckBox(self, label=charsText))
-		self.bindHelpEvent(
-			"KeyboardSettingsSpeakTypedCharacters",
-			self.charsCheckBox,
-		)
-		self.charsCheckBox.SetValue(config.conf["keyboard"]["speakTypedCharacters"])
 
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		speakTypedWordsText = _("Speak typed &words")
-		self.wordsCheckBox = sHelper.addItem(wx.CheckBox(self, label=speakTypedWordsText))
-		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.wordsCheckBox)
-		self.wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
+		# Translators: This is the label for a combobox in the keyboard settings panel.
+		charsLabelText = _("Speak typed &characters:")
+		charsChoices = [mode.displayString for mode in TypingEcho]
+		self.charsList = sHelper.addLabeledControl(charsLabelText, wx.Choice, choices=charsChoices)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.charsList)
+		try:
+			self.charsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
+		except:
+			log.debugWarning("Could not set characters echo list to current setting", exc_info=True)
+
+		# Translators: This is the label for a combobox in the keyboard settings panel.
+		wordsLabelText = _("Speak typed &words:")
+		wordsChoices = [mode.displayString for mode in TypingEcho]
+		self.wordsList = sHelper.addLabeledControl(wordsLabelText, wx.Choice, choices=wordsChoices)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.wordsList)
+		try:
+			self.wordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
+		except:
+			log.debugWarning("Could not set words echo list to current setting", exc_info=True)
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
@@ -2098,8 +2102,8 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["NVDAModifierKeys"] = sum(
 			key.value for (n, key) in enumerate(NVDAKey) if self.modifierList.IsChecked(n)
 		)
-		config.conf["keyboard"]["speakTypedCharacters"] = self.charsCheckBox.IsChecked()
-		config.conf["keyboard"]["speakTypedWords"] = self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["speakTypedCharacters"] = self.charsList.GetSelection()
+		config.conf["keyboard"]["speakTypedWords"] = self.wordsList.GetSelection()
 		config.conf["keyboard"]["speechInterruptForCharacters"] = (
 			self.speechInterruptForCharsCheckBox.IsChecked()
 		)
@@ -3259,7 +3263,6 @@ class AudioPanel(SettingsPanel):
 			)
 			return False
 		return super().isValid()
-
 
 class AddonStorePanel(SettingsPanel):
 	# Translators: This is the label for the addon navigation settings panel.
@@ -5081,6 +5084,7 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
+
 
 
 class VisionProviderSubPanel_Settings(
