@@ -49,6 +49,7 @@ import sys
 import threading
 import weakref
 from typing import (
+	Any,
 	Generic,
 	Optional,
 	ParamSpec,
@@ -464,12 +465,6 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	pass
 
 
-class _WxCallOnMainResult:
-	"""Container to hold either the return value or exception raised by a function."""
-
-	__slots__ = ("result", "exception")
-
-
 # TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
 _WxCallOnMain_P = ParamSpec("_WxCallOnMain_P")
 _WxCallOnMain_T = TypeVar("_WxCallOnMain_T")
@@ -493,14 +488,16 @@ def wxCallOnMain(
 	:raises Exception: If `function` raises an exception, it is transparently re-raised so it can be handled on the calling thread.
 	:return: Return value from calling `function` with the given positional and keyword arguments.
 	"""
-	result = _WxCallOnMainResult()
+	result: Any = None
+	exception: BaseException | None = None
 	event = threading.Event()
 
 	def functionWrapper():
+		nonlocal result, exception
 		try:
-			result.result = function(*args, **kwargs)
+			result = function(*args, **kwargs)
 		except Exception:
-			result.exception = sys.exception
+			exception = sys.exception()
 		event.set()
 
 	if wx.IsMainThread():
@@ -509,8 +506,7 @@ def wxCallOnMain(
 		wx.CallAfter(functionWrapper)
 		event.wait()
 
-	try:
-		return result.result
-	except AttributeError:
-		# If result is undefined, exception must be defined.
-		raise result.exception  # type: ignore
+	if exception is not None:
+		raise exception
+	else:
+		return result
