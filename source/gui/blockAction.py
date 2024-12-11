@@ -18,6 +18,7 @@ import core
 
 
 def _isModalMessageBoxActive() -> bool:
+	"""Avoid circular import of isModalMessageBoxActive"""
 	from gui.message import isModalMessageBoxActive
 
 	return isModalMessageBoxActive()
