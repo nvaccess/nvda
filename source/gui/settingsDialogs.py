@@ -3166,7 +3166,6 @@ class AudioPanel(SettingsPanel):
 			initial=config.conf["audio"]["audioAwakeTime"],
 		)
 		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
-		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 	def _appendSoundSplitModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSoundSplitModes = list(audio.SoundSplitState)
@@ -3206,8 +3205,7 @@ class AudioPanel(SettingsPanel):
 
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
-		if nvwave.usingWasapiWavePlayer():
-			audio._setSoundSplitState(audio.SoundSplitState(index))
+		audio._setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
@@ -3235,22 +3233,11 @@ class AudioPanel(SettingsPanel):
 
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
-		wasapi = nvwave.usingWasapiWavePlayer()
-		self.soundVolFollowCheckBox.Enable(wasapi)
-		self.soundVolSlider.Enable(
-			wasapi and not self.soundVolFollowCheckBox.IsChecked(),
-		)
-		self.soundSplitComboBox.Enable(wasapi)
-		self.soundSplitModesList.Enable(wasapi)
+		self.soundVolSlider.Enable(not self.soundVolFollowCheckBox.IsChecked())
 
 		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.muteOtherAppsCheckBox.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.appVolAdjusterCombo.Enable(wasapi)
+		self.appSoundVolSlider.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
+		self.muteOtherAppsCheckBox.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
