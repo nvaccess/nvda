@@ -11,7 +11,6 @@ A default implementation, L{NVDAObjects.NVDAObjectTextInfo}, is used to enable t
 
 from abc import abstractmethod
 from enum import Enum
-from dataclasses import dataclass
 import weakref
 import re
 import typing
@@ -31,6 +30,7 @@ import controlTypes
 from controlTypes import OutputReason
 import locationHelper
 from logHandler import log
+from utils.urlUtils import _LinkData
 
 if typing.TYPE_CHECKING:
 	import documentBase  # noqa: F401 used for type checking only
@@ -337,14 +337,6 @@ def _logBadSequenceTypes(sequence: SpeechSequence, shouldRaise: bool = True):
 	import speech.types
 
 	return speech.types.logBadSequenceTypes(sequence, raiseExceptionOnError=shouldRaise)
-
-
-@dataclass
-class _Link:
-	"""Class to store information on a link in text."""
-
-	displayText: str | None
-	destination: str
 
 
 class TextInfo(baseObject.AutoPropertyObject):
@@ -713,7 +705,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 		mouseHandler.doPrimaryClick()
 		winUser.setCursorPos(oldX, oldY)
 
-	def _getLinkDataAtCaretPosition(self) -> _Link | None:
+	def _getLinkDataAtCaretPosition(self) -> _LinkData | None:
 		self.expand(UNIT_CHARACTER)
 		obj: NVDAObjects.NVDAObject = self.NVDAObjectAtStart
 		if obj.role == controlTypes.role.Role.GRAPHIC and (
@@ -726,7 +718,7 @@ class TextInfo(baseObject.AutoPropertyObject):
 			obj.role == controlTypes.role.Role.LINK  # If it's a link, or
 			or controlTypes.state.State.LINKED in obj.states  # if it isn't a link but contains one
 		):
-			return _Link(
+			return _LinkData(
 				displayText=obj.name,
 				destination=obj.value,
 			)
