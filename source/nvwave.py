@@ -6,6 +6,7 @@
 
 """Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities."""
 
+from collections.abc import Iterator
 import threading
 import typing
 from typing import (
@@ -99,9 +100,9 @@ class AudioPurpose(Enum):
 	SOUNDS = auto()
 
 
-def _getOutputDevices():
-	"""Generator, returning device ID and device Name in device ID order.
-	@note: Depending on number of devices being fetched, this may take some time (~3ms)
+def _getOutputDevices() -> Iterator[tuple[str, str]]:
+	"""Generator, yielding device ID and device Name in device ID order.
+	..note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
 		EDataFlow.eRender.value,
