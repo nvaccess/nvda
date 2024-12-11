@@ -104,13 +104,6 @@ def _updateAppsVolumeImpl(
 	_activeCallback.register()
 
 
-_WASAPI_DISABLED_MESSAGE: str = _(
-	# Translators: error message when wasapi is turned off.
-	"Application volume cannot be controlled by NVDA when WASAPI is disabled. "
-	"Please enable it in the advanced settings panel.",
-)
-
-
 _VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 	# Translators: error message when applications' volume is disabled
 	"Application volume control disabled",
