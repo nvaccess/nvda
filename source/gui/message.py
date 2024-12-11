@@ -414,6 +414,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self.Bind(wx.EVT_ACTIVATE, self._onActivateEvent, source=self)
 		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
 		self.Bind(wx.EVT_BUTTON, self._onButtonEvent)
+		self.Bind(wx.EVT_WINDOW_DESTROY, self._onDestroyEvent)
 
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -421,7 +422,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		messageControl = self._messageControl = wx.StaticText(self)
 		contentsSizer.addItem(messageControl)
 		buttonHelper = self._buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		contentsSizer.addDialogDismissButtons(buttonHelper)
 		mainSizer.Add(
 			contentsSizer.sizer,
 			border=guiHelper.BORDER_FOR_DIALOGS,
@@ -435,6 +435,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self._addButtons(buttonHelper)
 		if buttons is not None:
 			self.addButtons(buttons)
+		contentsSizer.addDialogDismissButtons(buttonHelper)
 
 	# endregion
 
@@ -1054,6 +1055,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			self._playSound()
 			if (defaultItem := self.GetDefaultItem()) is not None:
 				defaultItem.SetFocus()
+		self.Raise()
 		evt.Skip()
 
 	def _onCloseEvent(self, evt: wx.CloseEvent):
@@ -1101,6 +1103,16 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			self._executeCommand(self._commands[id])
 		except KeyError:
 			log.debug(f"No command registered for {id=}.")
+
+	def _onDestroyEvent(self, evt: wx.WindowDestroyEvent):
+		"""Ensures this instances is removed if the default close event handler is not called."""
+		if self in self._instances:
+			self._instances.remove(self)
+
+	def __del__(self):
+		if self in self._instances:
+			self._instances.remove(self)
+		super().__del__(self)
 
 	def _executeCommand(
 		self,
