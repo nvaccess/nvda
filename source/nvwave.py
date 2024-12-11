@@ -134,15 +134,13 @@ def outputDeviceIDToName(ID: str) -> str:
 	return AudioUtilities.CreateDevice(device).FriendlyName
 
 
-def outputDeviceNameToID(name: str, useDefaultIfInvalid=False) -> int:
+def outputDeviceNameToID(name: str, useDefaultIfInvalid: bool = False) -> str:
 	"""Obtain the device ID of an output device given its name.
-	@param name: The device name.
-	@param useDefaultIfInvalid: C{True} to use the default device (wave mapper) if there is no such device,
-		C{False} to raise an exception.
-	@return: The device ID.
-	@raise LookupError: If there is no such device and C{useDefaultIfInvalid} is C{False}.
-	@note: Depending on number of devices, and the position of the device in the list,
-	this may take some time (~3ms)
+	:param name: The device name.
+	:param useDefaultIfInvalid: `True` to use the default device if there is no such device, `False` to raise an exception.
+	:return: The device ID.
+	:raise LookupError: If there is no such device and `useDefaultIfInvalid` is `False`.
+	..note: Depending on number of devices, and the position of the device in the list, this may take some time (~3ms)
 	"""
 	for curID, curName in _getOutputDevices():
 		if curName == name:
