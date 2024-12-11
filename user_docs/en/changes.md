@@ -138,6 +138,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * Due to the retirement of NVDA's winmm support:
   * The following symbols have been removed from `nvwave`: `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
+  * The `WASAPI ` key has been removed from the `audio` section of the config spec.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
