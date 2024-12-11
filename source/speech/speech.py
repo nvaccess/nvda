@@ -2620,6 +2620,21 @@ def getFormatFieldSpeech(  # noqa: C901
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text = _("heading level %d") % headingLevel
 			textList.append(text)
+	collapsed = attrs.get("collapsed")
+	oldCollapsed = attrsCache.get("collapsed") if attrsCache is not None else None
+	# collapsed state should be spoken when beginning to speak lines or paragraphs
+	# Ensuring a similar experience to if  it was a state on  a controlField
+	if collapsed and (
+		initialFormat
+		and (
+			reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+			or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH)
+		)
+		or collapsed != oldCollapsed
+	):
+		# Translators: collapsed text (E.g. a collapsed heading in MS Word)
+		text = _("collapsed")
+		textList.append(text)
 	if formatConfig["reportStyle"]:
 		style = attrs.get("style")
 		oldStyle = attrsCache.get("style") if attrsCache is not None else None
