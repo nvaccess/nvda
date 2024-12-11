@@ -216,7 +216,7 @@ class NewNVDAInstance:
 
 def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
 	"""Generate an equivalent list of CLI arguments from the values in globalVars.appArgs.
-	:param removeArgsList: A list of value to ignore when looking in globalVars.appArgs.
+	:param removeArgsList: A list of values to ignore when looking in globalVars.appArgs.
 	"""
 	from __main__ import parser  # import from nda.pyw
 

@@ -46,7 +46,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
-* Short versions of the most commonly used command line Options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
+* Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 
 ### Bug Fixes
