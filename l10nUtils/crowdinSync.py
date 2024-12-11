@@ -91,6 +91,26 @@ def downloadTranslationFile(crowdinFilePath: str, localFilePath: str, language: 
 		f.write(r2.content)
 	print(f"Downloaded {crowdinFilePath} for {language} to {localFilePath}")
 
+def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: str) -> None:
+	crowdinFileID = crowdinFileIDs[crowdinFilePath]
+	fn = os.path.basename(localFilePath)
+	print(f"Uploading {localFilePath} to Crowdin temporary storage as {fn}")
+	with open(localFilePath, "rb") as f:
+		r = request(
+			"storages",
+			method=requests.post,
+			headers={"Crowdin-API-FileName": fn},
+			data=f,
+		)
+	storageID = r.json()["data"]["id"]
+	print(f"Updating file {crowdinFileID} ({crowdinFilePath})  on Crowdin with storage ID {storageID}")
+	r = projectRequest(
+		f"translations/{language}",
+		method=requests.post,
+		json={"storageId": storageID, "fileId": crowdinFileID,},
+	)
+	print("Done")
+
 
 def main():
 	parser = argparse.ArgumentParser(
