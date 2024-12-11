@@ -599,10 +599,6 @@ def terminate() -> None:
 	getOnErrorSoundRequested().unregister(playErrorSound)
 
 
-def usingWasapiWavePlayer() -> bool:
-	return issubclass(WavePlayer, WasapiWavePlayer)
-
-
 def playErrorSound() -> None:
 	if isInError():
 		if _isDebugForNvWave():
