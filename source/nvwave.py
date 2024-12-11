@@ -125,12 +125,10 @@ def getOutputDeviceNames() -> list[str]:
 	return [name for ID, name in _getOutputDevices()]
 
 
-def outputDeviceIDToName(ID):
+def outputDeviceIDToName(ID: str) -> str:
 	"""Obtain the name of an output device given its device ID.
-	@param ID: The device ID.
-	@type ID: int
-	@return: The device name.
-	@rtype: str
+	:param ID: The device ID.
+	:return: The device name.
 	"""
 	device = AudioUtilities.GetDeviceEnumerator().GetDevice(id)
 	return AudioUtilities.CreateDevice(device).FriendlyName
