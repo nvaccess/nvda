@@ -611,7 +611,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		self.dialog.addOkButton().addCancelButton(defaultFocus=True)
 		evt = wx.ShowEvent(self.dialog.GetId(), True)
 		with patch.object(wx.Window, "SetFocus") as mocked_setFocus:
-			self.dialog._onShowEvt(evt)
+			self.dialog._onShowEvent(evt)
 			mocked_setFocus.assert_called_once()
 
 	def test_onCloseEventNonVetoable(self):

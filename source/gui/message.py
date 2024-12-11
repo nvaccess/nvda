@@ -410,10 +410,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self._setSound(dialogType)
 
 		# Bind event listeners.
-		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
-		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
+		self.Bind(wx.EVT_SHOW, self._onShowEvent, source=self)
+		self.Bind(wx.EVT_ACTIVATE, self._onActivateEvent, source=self)
 		self.Bind(wx.EVT_CLOSE, self._onCloseEvent)
-		self.Bind(wx.EVT_BUTTON, self._onButton)
+		self.Bind(wx.EVT_BUTTON, self._onButtonEvent)
 
 		# Scafold the dialog.
 		mainSizer = self._mainSizer = wx.BoxSizer(wx.VERTICAL)
@@ -1042,10 +1042,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		if self._soundID is not None:
 			winsound.MessageBeep(self._soundID)
 
-	def _onDialogActivated(self, evt: wx.ActivateEvent):
+	def _onActivateEvent(self, evt: wx.ActivateEvent):
 		evt.Skip()
 
-	def _onShowEvt(self, evt: wx.ShowEvent):
+	def _onShowEvent(self, evt: wx.ShowEvent):
 		"""Event handler for when the dialog is shown.
 
 		Responsible for playing the alert sound and focusing the default button.
@@ -1090,7 +1090,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		log.debug("Removing from instances")
 		self._instances.remove(self)
 
-	def _onButton(self, evt: wx.CommandEvent):
+	def _onButtonEvent(self, evt: wx.CommandEvent):
 		"""Event handler for button presses.
 
 		Responsible for executing commands associated with buttons.
