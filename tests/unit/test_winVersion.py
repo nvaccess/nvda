@@ -24,7 +24,7 @@ class TestWinVersion(unittest.TestCase):
 
 	def test_getWinVerFromNonExistentRelease(self):
 		# Test the fact that there is no Windows 10 2003 (2004 exists, however).
-		with self.assertRaises(IndexError):
+		with self.assertRaises(AttributeError):
 			winVersion.WIN10_2003
 
 	def test_moreRecentWinVer(self):
