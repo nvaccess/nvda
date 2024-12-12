@@ -12,7 +12,7 @@ from unittest.mock import ANY, MagicMock, Mock, PropertyMock, patch, sentinel
 import wx
 from gui.message import _Command, DefaultButtonSet, DialogType, EscapeCode, ReturnCode
 from gui.message import (
-	_MessageBoxButtonStylesToMessageDialogButtons,
+	_messageBoxButtonStylesToMessageDialogButtons,
 )
 from parameterized import parameterized
 from typing import Any, Iterable, NamedTuple
@@ -203,7 +203,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			actualFallbackAction = self.dialog._getFallbackAction()
 			if expectedHasFallback:
 				self.assertIsNotNone(actualFallbackAction)
-				self.assertEqual(actualFallbackAction.ReturnCode, expectedFallbackId)
+				self.assertEqual(actualFallbackAction.returnCode, expectedFallbackId)
 			else:
 				self.assertIsNone(actualFallbackAction)
 
@@ -225,7 +225,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			),
 		)
 		command = self.dialog._getFallbackAction()
-		self.assertEqual(command.ReturnCode, ReturnCode.CUSTOM_1)
+		self.assertEqual(command.returnCode, ReturnCode.CUSTOM_1)
 		self.assertTrue(command.closesDialog)
 
 	def test_addButtonWithNonClosingFallbackAction(self):
@@ -239,7 +239,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 			),
 		)
 		command = self.dialog._getFallbackAction()
-		self.assertEqual(command.ReturnCode, ReturnCode.CUSTOM_1)
+		self.assertEqual(command.returnCode, ReturnCode.CUSTOM_1)
 		self.assertTrue(command.closesDialog)
 
 	@parameterized.expand(
@@ -296,7 +296,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.dialog._commands[messageControlId] = _Command(
 			closesDialog=True,
 			callback=None,
-			ReturnCode=ReturnCode.APPLY,
+			returnCode=ReturnCode.APPLY,
 		)
 		with self.assertRaises(TypeError):
 			self.dialog.setButtonLabel(messageControlId, "test")
@@ -370,7 +370,7 @@ class Test_MessageDialog_Buttons(MDTestBase):
 		self.assertEqual(self.dialog.FindWindow(ReturnCode.APPLY).GetLabel(), LABEL)
 		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].callback, CALLBACK)
 		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].closesDialog, CLOSES_DIALOG)
-		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].ReturnCode, RETURN_CODE)
+		self.assertEqual(self.dialog._commands[ReturnCode.APPLY].returnCode, RETURN_CODE)
 		self.assertEqual(self.dialog.GetEscapeId(), ReturnCode.APPLY)
 
 	def test_addButtonsNonuniqueIds(self):
@@ -397,7 +397,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addOkButton(callback=dummyCallback1).addCancelButton(callback=dummyCallback2)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
-			self.assertEqual(command.ReturnCode, ReturnCode.CANCEL)
+			self.assertEqual(command.returnCode, ReturnCode.CANCEL)
 			self.assertEqual(command.callback, dummyCallback2)
 			self.assertTrue(command.closesDialog)
 		with self.subTest(
@@ -410,7 +410,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addCancelButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
-			self.assertEqual(command.ReturnCode, ReturnCode.CANCEL)
+			self.assertEqual(command.returnCode, ReturnCode.CANCEL)
 			self.assertEqual(command.callback, dummyCallback2)
 			self.assertTrue(command.closesDialog)
 		with self.subTest(
@@ -423,7 +423,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addOkButton(callback=dummyCallback1).addCloseButton(callback=dummyCallback2)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
-			self.assertEqual(command.ReturnCode, ReturnCode.OK)
+			self.assertEqual(command.returnCode, ReturnCode.OK)
 			self.assertEqual(command.callback, dummyCallback1)
 			self.assertTrue(command.closesDialog)
 		with self.subTest(
@@ -436,7 +436,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addCloseButton(callback=dummyCallback2).addOkButton(callback=dummyCallback1)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
-			self.assertEqual(command.ReturnCode, ReturnCode.OK)
+			self.assertEqual(command.returnCode, ReturnCode.OK)
 			self.assertEqual(command.callback, dummyCallback1)
 			self.assertTrue(command.closesDialog)
 		with self.subTest(
@@ -450,7 +450,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.setFallbackAction(ReturnCode.YES)
 		command = self.dialog._getFallbackAction()
 		with self.subTest("Test getting the fallback action."):
-			self.assertEqual(command.ReturnCode, ReturnCode.YES)
+			self.assertEqual(command.returnCode, ReturnCode.YES)
 			self.assertIsNone(command.callback)
 			self.assertTrue(command.closesDialog)
 		with self.subTest(
@@ -477,7 +477,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 	def test_getFallbackActionOrFallbackNoControls(self):
 		"""Test that getFallbackActionOrFallback returns wx.ID_NONE and a close command with no callback when the dialog has no buttons."""
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, EscapeCode.NO_FALLBACK)
+		self.assertEqual(command.returnCode, EscapeCode.NO_FALLBACK)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -486,7 +486,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addApplyButton(closesDialog=False).addCloseButton()
 		self.assertIsNone(self.dialog.GetDefaultItem())
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, ReturnCode.CLOSE)
+		self.assertEqual(command.returnCode, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -495,7 +495,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addApplyButton(closesDialog=False).addCloseButton(closesDialog=False)
 		self.assertIsNone(self.dialog.GetDefaultItem())
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, ReturnCode.APPLY)
+		self.assertEqual(command.returnCode, ReturnCode.APPLY)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -505,7 +505,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.setDefaultFocus(ReturnCode.CLOSE)
 		self.assertEqual(self.dialog.GetDefaultItem().GetId(), ReturnCode.CLOSE)
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, ReturnCode.CLOSE)
+		self.assertEqual(command.returnCode, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -514,7 +514,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addApplyButton().addCloseButton()
 		self.dialog.setFallbackAction(ReturnCode.CLOSE)
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, ReturnCode.CLOSE)
+		self.assertEqual(command.returnCode, ReturnCode.CLOSE)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -523,7 +523,7 @@ class Test_MessageDialog_DefaultAction(MDTestBase):
 		self.dialog.addOkCancelButtons()
 		super(MessageDialog, self.dialog).SetEscapeId(ReturnCode.CLOSE)
 		command = self.dialog._getFallbackActionOrFallback()
-		self.assertEqual(command.ReturnCode, ReturnCode.OK)
+		self.assertEqual(command.returnCode, ReturnCode.OK)
 		self.assertIsNotNone(command)
 		self.assertTrue(command.closesDialog)
 
@@ -681,7 +681,7 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 		"""Test that _executeCommand performs as expected in a number of situations."""
 		returnCode = sentinel.return_code
 		callback = Mock()
-		command = _Command(callback=callback, closesDialog=closesDialog, ReturnCode=returnCode)
+		command = _Command(callback=callback, closesDialog=closesDialog, returnCode=returnCode)
 		with (
 			patch.object(self.dialog, "Close") as mocked_close,
 			patch.object(
@@ -740,7 +740,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		"""Test that blockingInstancesExist is correct in a number of situations."""
 		MessageDialog._instances.extend(instances)
 		print(MessageDialog._instances)
-		self.assertEqual(MessageDialog.BlockingInstancesExist(), expectedBlockingInstancesExist)
+		self.assertEqual(MessageDialog.blockingInstancesExist(), expectedBlockingInstancesExist)
 
 	@parameterized.expand(
 		(
@@ -835,7 +835,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 	def test_focusBlockingInstances(self, _, dialogs: tuple[FocusBlockingInstancesDialogs]):
 		"""Test that focusBlockingInstances works as expected in a number of situations."""
 		MessageDialog._instances.extend(dialog.dialog for dialog in dialogs)
-		MessageDialog.FocusBlockingInstances()
+		MessageDialog.focusBlockingInstances()
 		for dialog, expectedRaise, expectedSetFocus in dialogs:
 			if expectedRaise:
 				dialog.Raise.assert_called_once()
@@ -851,7 +851,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 		bd1, bd2 = mockDialogFactory(True), mockDialogFactory(True)
 		nd1, nd2, nd3 = mockDialogFactory(False), mockDialogFactory(False), mockDialogFactory(False)
 		MessageDialog._instances.extend((nd1, bd1, nd2, bd2, nd3))
-		MessageDialog.CloseInstances()
+		MessageDialog.closeInstances()
 		bd1.Close.assert_not_called()
 		bd2.Close.assert_not_called()
 		nd1.Close.assert_called()
@@ -899,5 +899,5 @@ class Test_MessageBoxShim(unittest.TestCase):
 				with self.subTest(flags=input):
 					self.assertCountEqual(
 						expectedOutput,
-						(button.id for button in _MessageBoxButtonStylesToMessageDialogButtons(input)),
+						(button.id for button in _messageBoxButtonStylesToMessageDialogButtons(input)),
 					)

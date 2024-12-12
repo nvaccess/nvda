@@ -348,7 +348,7 @@ class _Command(NamedTuple):
 	closesDialog: bool
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
 
-	ReturnCode: ReturnCode
+	returnCode: ReturnCode
 
 
 class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPABCMeta):
@@ -488,7 +488,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self._commands[buttonId] = _Command(
 			callback=callback,
 			closesDialog=closesDialog,
-			ReturnCode=buttonId if returnCode is None else returnCode,
+			returnCode=buttonId if returnCode is None else returnCode,
 		)
 		if defaultFocus:
 			self.SetDefaultItem(button)
@@ -746,7 +746,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 
 	# region Public class methods
 	@classmethod
-	def CloseInstances(cls) -> None:
+	def closeInstances(cls) -> None:
 		"""Close all dialogs with a fallback action.
 
 		This does not force-close all instances, so instances may veto being closed.
@@ -756,12 +756,12 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 				instance.Close()
 
 	@classmethod
-	def BlockingInstancesExist(cls) -> bool:
+	def blockingInstancesExist(cls) -> bool:
 		"""Check if modal dialogs are open without a fallback action."""
 		return any(dialog.isBlocking for dialog in cls._instances)
 
 	@classmethod
-	def FocusBlockingInstances(cls) -> None:
+	def focusBlockingInstances(cls) -> None:
 		"""Raise and focus open modal dialogs without a fallback action."""
 		lastDialog: MessageDialog | None = None
 		for dialog in cls._instances:
@@ -998,7 +998,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 				)
 
 			# No commands have been registered. Create one of our own.
-			return _Command(callback=None, closesDialog=True, ReturnCode=wx.ID_NONE)
+			return _Command(callback=None, closesDialog=True, returnCode=wx.ID_NONE)
 
 		command = getAction()
 		if not command.closesDialog:
@@ -1159,7 +1159,7 @@ def _messageBoxShim(message: str, caption: str, style: int, parent: wx.Window | 
 		message=message,
 		title=caption,
 		dialogType=_messageBoxIconStylesToMessageDialogType(style),
-		buttons=_MessageBoxButtonStylesToMessageDialogButtons(style),
+		buttons=_messageBoxButtonStylesToMessageDialogButtons(style),
 	)
 	return _messageDialogReturnCodeToMessageBoxReturnCode(dialog.ShowModal())
 
@@ -1205,7 +1205,7 @@ def _messageBoxIconStylesToMessageDialogType(flags: int) -> DialogType:
 		return DialogType.STANDARD
 
 
-def _MessageBoxButtonStylesToMessageDialogButtons(flags: int) -> tuple[Button, ...]:
+def _messageBoxButtonStylesToMessageDialogButtons(flags: int) -> tuple[Button, ...]:
 	"""Map from a bitmask of styles as expected by :fun:`wx.MessageBox` to a list of :class:`Button`s.
 
 	This function will always return a tuple of at least one button, typically an OK button.

@@ -34,7 +34,7 @@ def _modalDialogOpenCallback():
 	# Import late to avoid circular import
 	from gui.message import MessageDialog
 
-	if MessageDialog.BlockingInstancesExist():
+	if MessageDialog.blockingInstancesExist():
 		MessageDialog.FocusBlockingInstances()
 
 
