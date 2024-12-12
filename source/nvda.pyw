@@ -91,11 +91,11 @@ if not winVersion.isSupportedOS():
 
 
 def __getattr__(attrName: str) -> Any:
-	"""Module level `__getattr__` used to preserve backward compatibility.
-	"""
+	"""Module level `__getattr__` used to preserve backward compatibility."""
 	if NVDAState._allowDeprecatedAPI():
 		if attrName in ("NoConsoleOptionParser", "stringToBool", "stringToLang"):
 			import argsParsing
+
 			log.warning(f"__main__.{attrName} is deprecated, use argsParsing.{attrName} instead.")
 			return getattr(argsParsing, attrName)
 		if attrName == "parser":
