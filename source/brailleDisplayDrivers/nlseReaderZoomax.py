@@ -1,14 +1,11 @@
 # -*- coding: UTF-8 -*-
-#brailleDisplayDrivers/nlseReaderZoomax.py
-#Description:
-#	NLS eReader Zoomax driver for NVDA.
+# brailleDisplayDrivers/nlseReaderZoomax.py
+# Description:
+# NLS eReader Zoomax driver for NVDA.
 
 import time
-from io import BytesIO
 from typing import Union, List, Optional
 
-from collections import OrderedDict
-import hwPortUtils
 import braille
 from hwIo import intToByte, boolToByte
 import inputCore
@@ -16,7 +13,6 @@ from logHandler import log
 import brailleInput
 import hwIo
 import bdDetect
-from struct import unpack
 import serial
 
 TIMEOUT = 0.2
@@ -37,7 +33,7 @@ LOC_ROUTING_KEY = b"\x27"
 LOC_BRAILLE_KEYS = b"\x33"
 LOC_JOYSTICK_KEYS = b"\x34"
 LOC_DEVICE_ID = b"\x84"
-LOC_SERIAL_NUMBER = b"\x8A"
+LOC_SERIAL_NUMBER = b"\x8a"
 
 LOC_RSP_LENGTHS = {
 	LOC_DISPLAY_DATA: 1,
@@ -53,10 +49,27 @@ KEY_NAMES = {
 	LOC_ROUTING_KEYS: None,
 	LOC_ROUTING_KEY: None,
 	LOC_DISPLAY_KEYS: ("d1", "d2", "d3", "d4", "d5", "d6"),
-	LOC_BRAILLE_KEYS: ("bl", "br", "bs", None, "s1", "s2", "s3", "s4", # byte 1
-		"b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8"), # byte 2
+	LOC_BRAILLE_KEYS: (
+		"bl",
+		"br",
+		"bs",
+		None,
+		"s1",
+		"s2",
+		"s3",
+		"s4",  # byte 1
+		"b1",
+		"b2",
+		"b3",
+		"b4",
+		"b5",
+		"b6",
+		"b7",
+		"b8",
+	),  # byte 2
 	LOC_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
+
 
 class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	_dev: hwIo.IoBase
@@ -68,10 +81,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
-		driverRegistrar.addUsbDevices(bdDetect.DeviceType.SERIAL, {
-			"VID_1A86&PID_7523",  # CH340
-		})
-		
+		driverRegistrar.addUsbDevices(
+			bdDetect.DeviceType.SERIAL,
+			{
+				"VID_1A86&PID_7523",  # CH340
+			},
+		)
+
 		driverRegistrar.addBluetoothDevices(lambda m: m.id.startswith("NLS eReader Z"))
 
 	@classmethod
@@ -89,7 +105,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					stopbits=serial.STOPBITS_ONE,
 					timeout=TIMEOUT,
 					writeTimeout=TIMEOUT,
-					onReceive=self._onReceive)
+					onReceive=self._onReceive,
+				)
 			except EnvironmentError:
 				log.info("Port not yet available.")
 				log.debugWarning("", exc_info=True)
@@ -106,10 +123,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				self._dev.waitForRead(TIMEOUT)
 				if self.numCells:
 					break
-			
+
 			if self.numCells:
-				log.info("Device connected via {type} ({port})".format(
-					type=portType, port=port))
+				log.info(
+					"Device connected via {type} ({port})".format(
+						type=portType,
+						port=port,
+					),
+				)
 				return True
 			log.info("Device arrival timeout")
 			self._dev.close()
@@ -140,7 +161,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				pass
 		finally:
 			self._dev.close()
-			
+
 	def _sendRequest(self, command: bytes, arg: Union[bytes, bool, int] = b""):
 		"""
 		:type command: bytes
@@ -159,11 +180,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			raise TypeError(typeErrorString.format("command", "bytes", type(command).__name__))
 
 		arg = arg.replace(ESCAPE, ESCAPE * 2)
-		data = b"".join([
-			ESCAPE,
-			command,
-			arg
-		])
+		data = b"".join(
+			[
+				ESCAPE,
+				command,
+				arg,
+			]
+		)
 		self._dev.write(data)
 
 	def _onReceive(self, data: bytes):
@@ -219,23 +242,25 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		arg = bytes(cells)
 		self._sendRequest(LOC_DISPLAY_DATA, arg)
 
-	gestureMap = inputCore.GlobalGestureMap({
-		"globalCommands.GlobalCommands": {
-			"braille_scrollBack": ("br(nlseReaderZoomax):d2",),
-			"braille_scrollForward": ("br(nlseReaderZoomax):d5",),
-			"braille_previousLine": ("br(nlseReaderZoomax):d1",),
-			"braille_nextLine": ("br(nlseReaderZoomax):d3",),
-			"braille_routeTo": ("br(nlseReaderZoomax):routing",),
-			"kb:upArrow": ("br(nlseReaderZoomax):up",),
-			"kb:downArrow": ("br(nlseReaderZoomax):down",),
-			"kb:leftArrow": ("br(nlseReaderZoomax):left",),
-			"kb:rightArrow": ("br(nlseReaderZoomax):right",),
-			"kb:enter": ("br(nlseReaderZoomax):select",),
-		},
-	})
+	gestureMap = inputCore.GlobalGestureMap(
+		{
+			"globalCommands.GlobalCommands": {
+				"braille_scrollBack": ("br(nlseReaderZoomax):d2",),
+				"braille_scrollForward": ("br(nlseReaderZoomax):d5",),
+				"braille_previousLine": ("br(nlseReaderZoomax):d1",),
+				"braille_nextLine": ("br(nlseReaderZoomax):d3",),
+				"braille_routeTo": ("br(nlseReaderZoomax):routing",),
+				"kb:upArrow": ("br(nlseReaderZoomax):up",),
+				"kb:downArrow": ("br(nlseReaderZoomax):down",),
+				"kb:leftArrow": ("br(nlseReaderZoomax):left",),
+				"kb:rightArrow": ("br(nlseReaderZoomax):right",),
+				"kb:enter": ("br(nlseReaderZoomax):select",),
+			},
+		}
+	)
+
 
 class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture):
-
 	source = BrailleDisplayDriver.name
 
 	def __init__(self, model, keysDown):
@@ -243,12 +268,12 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		# Model identifiers should not contain spaces.
 		if model:
 			self.model = model.replace(" ", "")
-			assert(self.model.isalnum())
+			assert self.model.isalnum()
 		self.keysDown = dict(keysDown)
 
 		self.keyNames = names = []
 		for group, groupKeysDown in keysDown.items():
-			if group == LOC_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xf8:
+			if group == LOC_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xF8:
 				# This is braille input.
 				# 0xfc covers command keys. The space bars are covered by 0x7.
 				self.dots = groupKeysDown >> 8
