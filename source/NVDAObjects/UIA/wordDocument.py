@@ -490,15 +490,15 @@ class WordDocumentTextInfo(UIATextInfo):
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field["text-column-number"] = textColumnNumber
-		expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
-			docElement,
-			textRange,
-			UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
-		)
-		if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
-			formatField.field["collapsed"] = True
-		elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
-			formatField.field["collapsed"] = False
+			expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
+				docElement,
+				textRange,
+				UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
+			)
+			if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
+				formatField.field["collapsed"] = True
+			elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
+				formatField.field["collapsed"] = False
 		return formatField
 
 	def _getIndentValueDisplayString(self, val: float) -> str:
