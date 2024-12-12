@@ -571,7 +571,7 @@ class UpdateAskInstallDialog(
 		# Translators: A message indicating that an update to NVDA is ready to be applied.
 		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
-		showAddonCompat = any(
+		showAddonCompat = (self.backCompatTo[0] > addonAPIVersion.BACK_COMPAT_TO[0]) and any(
 			getIncompatibleAddons(
 				currentAPIVersion=self.apiVersion,
 				backCompatToAPIVersion=self.backCompatTo,
