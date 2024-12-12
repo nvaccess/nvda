@@ -100,6 +100,7 @@ def __getattr__(attrName: str) -> Any:
 			return getattr(argsParsing, attrName)
 		if attrName == "parser":
 			import argsParsing
+
 			log.warning(f"__main__.{attrName} is deprecated, use argsParsing.getParser() instead.")
 			return argsParsing.getParser()
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
