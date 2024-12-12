@@ -1555,12 +1555,10 @@ This can happen for several reasons:
 * Some other part of NVDA or an add-on has asked the dialog to close.
 
 By default, the fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE`.
-This means that the fallback action will be the cancel button if there is one, the ok button if there is no cancel button but there is an ok button[^fn_defaultFallbackOk], or otherwise `None`.
+This means that the fallback action will be the cancel button if there is one, the button whose ID is `dialog.GetAffirmativeId()` (`ReturnCode.OK`, by default), or `None` if no button with either ID exists in the dialog.
+You can use `dialog.SetAffirmativeId(id)` to change the ID of the button used secondarily to Cancel, if you like.
 The fallback action can also be set to `EscapeCode.NO_FALLBACK` to disable closing the dialog like this entirely.
 If it is set to any other value, the value must be the id of a button to use as the default action.
-
-The value of `dialog.GetAffirmativeId()` is used to find the button to use as fallback if using `EscapeCode.CANCEL_OR_AFFIRMATIVE` and there is no button with `id=ReturnCode.CANCEL`.
-You can use `dialog.SetAffirmativeId(id)` to change it, if desired.
 
 In some cases, the dialog may be forced to close.
 If the dialog is shown modally, a fallback action will be used if the default action is `EscapeCode.NO_FALLBACK` or not found.
@@ -1617,26 +1615,26 @@ Its fields are as follows:
 | `id` | `ReturnCode` | No default | The ID used to refer to the button. |
 | `label` | `str` | No default | The text label to display on the button. Prefix accelerator keys with an ampersand (&). |
 | `callback` | `Callable` or `None` | `None` | The function to call when the button is clicked. This is most useful for non-modal dialogs. |
-| `defaultFocus` | `bool` | `False` | Whether to explicitly set the button as the default focus[^fn_defaultFocus]. |
-| `fallbackAction` | `bool` | `False` | Whether the button should be the fallback action, which is called when the user presses `esc`, uses the system menu or title bar close buttons, or the dialog is asked to close programmatically[^fn_fallbackAction]. |
-| `closesDialog` | `bool` | `True` | Whether the button should close the dialog when pressed[^fn_closesDialog]. |
+| `defaultFocus` | `bool` | `False` | Whether to explicitly set the button as the default focus. (1) |
+| `fallbackAction` | `bool` | `False` | Whether the button should be the fallback action, which is called when the user presses `esc`, uses the system menu or title bar close buttons, or the dialog is asked to close programmatically. (2) |
+| `closesDialog` | `bool` | `True` | Whether the button should close the dialog when pressed. (3) |
 | `returnCode` | `ReturnCode` or `None` | `None` | Value to return when a modal dialog is closed. If `None`, the button's ID will be used. |
 
-[^fn_defaultFocus]: Setting `defaultFocus` only overrides the default focus:
+1. Setting `defaultFocus` only overrides the default focus:
 
-    * If no buttons have this property, the first button will be the default focus.
-    * If multiple buttons have this property, the last one will be the default focus.
+  * If no buttons have this property, the first button will be the default focus.
+  * If multiple buttons have this property, the last one will be the default focus.
 
-[^fn_fallbackAction]: `fallbackAction` only sets whether to override the fallback action:
+2. `fallbackAction` only sets whether to override the fallback action:
 
-    * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or `ReturnCode.OK` if there is no button with `id=ReturnCode.OK`), even if it is added with `fallbackAction=False`.
-      To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
-    * If multiple buttons have this property, the last one will be the fallback action.
+  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or `ReturnCode.OK` if there is no button with `id=ReturnCode.OK`), even if it is added with `fallbackAction=False`.
+    To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
+  * If multiple buttons have this property, the last one will be the fallback action.
 
-[^fn_closesDialog]: Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
+3. Buttons with `fallbackAction=True` and `closesDialog=False` are not supported:
 
-    * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
-    * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
+  * When adding a button with `fallbackAction=True` and `closesDialog=False`, `closesDialog` will be set to `True`.
+  * If you attempt to call `setFallbackAction` with the ID of a button that does not close the dialog, `ValueError` will be raised.
 
 A number of pre-configured buttons are available for you to use from the `DefaultButton` enumeration, complete with pre-translated labels.
 None of these buttons will explicitly set themselves as the fallback action.
