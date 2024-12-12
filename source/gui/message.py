@@ -1113,13 +1113,6 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			log.debug(f"Removing {self!r} from instances.")
 			self._instances.remove(self)
 
-	def __del__(self):
-		"""Ensures this instances is removed if the default close event handler is not called."""
-		if self in self._instances:
-			log.debug(f"Removing {self!r} from instances.")
-			self._instances.remove(self)
-		super().__del__(self)
-
 	def _executeCommand(
 		self,
 		command: _Command,
