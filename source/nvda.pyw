@@ -326,8 +326,6 @@ parser.add_argument(
 	help="Started by Windows Ease of Access",
 )
 (globalVars.appArgs, globalVars.unknownAppArgs) = parser.parse_known_args()
-# Copy original app args
-globalVars.originalAppArgs = argparse.Namespace(**{k: v for (k, v) in globalVars.appArgs._get_kwargs()})
 # Make any app args path values absolute
 # So as to not be affected by the current directory changing during process lifetime.
 pathAppArgs = [
