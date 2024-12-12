@@ -44,6 +44,7 @@ class NVDAKey(DisplayStringIntFlag):
 			NVDAKey.EXTENDED_INSERT: localizedKeyLabels["insert"],
 		}
 
+
 @unique
 class TypingEcho(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values for typing echo (characters and words).
@@ -66,6 +67,7 @@ class TypingEcho(DisplayStringIntEnum):
 			# Translators: One of the choices for typing echo in keyboard settings
 			TypingEcho.EDIT_CONTROLS: _("Only in edit controls"),
 		}
+
 
 @unique
 class ShowMessages(DisplayStringIntEnum):

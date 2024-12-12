@@ -1355,10 +1355,14 @@ PROTECTED_CHAR = "*"
 #: i.e. it should have a visual or spatial representation.
 FIRST_NONCONTROL_CHAR = " "
 
+
 def is_editableControl() -> bool:
-	obj=api.getFocusObject()
+	obj = api.getFocusObject()
 	controls = {controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_TERMINAL}
-	return (obj.role in controls or controlTypes.STATE_EDITABLE in obj.states) and controlTypes.STATE_READONLY not in obj.states
+	return (
+		obj.role in controls or controlTypes.STATE_EDITABLE in obj.states
+	) and controlTypes.STATE_READONLY not in obj.states
+
 
 def speakTypedCharacters(ch: str):
 	typingIsProtected = api.isTypingProtected()
@@ -1381,7 +1385,11 @@ def speakTypedCharacters(ch: str):
 			log.io("typed word: %s" % typedWord)
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
 		if typingEchoMode > TypingEcho.OFF.value and not typingIsProtected:
-			if typingEchoMode == TypingEcho.EDIT_CONTROLS.value and is_editableControl() or typingEchoMode == TypingEcho.ON.value:
+			if (
+				typingEchoMode == TypingEcho.EDIT_CONTROLS.value
+				and is_editableControl()
+				or typingEchoMode == TypingEcho.ON.value
+			):
 				speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
@@ -1397,7 +1405,11 @@ def speakTypedCharacters(ch: str):
 
 	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
 	if not suppress and typingEchoMode > TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
-		if typingEchoMode == TypingEcho.EDIT_CONTROLS.value and is_editableControl() or typingEchoMode == TypingEcho.ON.value:
+		if (
+			typingEchoMode == TypingEcho.EDIT_CONTROLS.value
+			and is_editableControl()
+			or typingEchoMode == TypingEcho.ON.value
+		):
 			speakSpelling(realChar)
 
 
