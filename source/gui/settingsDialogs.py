@@ -1991,7 +1991,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.charsList)
 		try:
 			self.charsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Could not set characters echo list to current setting", exc_info=True)
 
 		# Translators: This is the label for a combobox in the keyboard settings panel.
@@ -2001,7 +2001,7 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.wordsList)
 		try:
 			self.wordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
-		except:
+		except:  # noqa: E722
 			log.debugWarning("Could not set words echo list to current setting", exc_info=True)
 
 		# Translators: This is the label for a checkbox in the
