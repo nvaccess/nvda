@@ -46,6 +46,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
+* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, On, and Only in edit controls, replacing the previous On/Off toggles. (#17505, @Cary-rowen)
 
 ### Bug Fixes
 
@@ -138,6 +139,9 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
+* Changed keyboard typing echo configuration from boolean to integer values:
+  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=On, 2=Only in edit controls).
+  * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
 
 #### Deprecations
 
