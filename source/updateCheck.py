@@ -450,7 +450,7 @@ class UpdateResultDialog(
 				# applied.
 				"Update to NVDA version {version} has been downloaded and is ready to be applied.",
 			).format(**updateInfo)
-			log.info(pendingUpdateDetails)
+
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
 			showAddonCompat = (self.backCompatTo[0] > addonAPIVersion.BACK_COMPAT_TO[0]) and any(
