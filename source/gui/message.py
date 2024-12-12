@@ -694,10 +694,10 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			return self.Hide()
 		self._checkShowable()
 		self._realizeLayout()
-		log.debug("Showing")
+		log.debug(f"Showing {self!r} as non-modal.")
 		shown = super().Show(show)
 		if shown:
-			log.debug("Adding to instances")
+			log.debug(f"Adding {self!r} to instances.")
 			self._instances.append(self)
 		return shown
 
@@ -712,9 +712,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		# We want to call `displayDialogAsModal` from our implementation of ShowModal, so we need to switch our instance out now that it's running and replace it with that provided by :class:`wx.Dialog`.
 		self.__ShowModal = self.ShowModal
 		self.ShowModal = super().ShowModal
-		log.debug("Adding to instances")
+		log.debug(f"Adding {self!r} to instances.")
 		self._instances.append(self)
-		log.debug("Showing modal")
+		log.debug(f"Showing {self!r} as modal")
 		ret = displayDialogAsModal(self)
 
 		# Restore our implementation of ShowModal.
@@ -993,7 +993,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 					# No commands that close the dialog have been registered. Use the first command instead.
 					return next(iter(self._commands.values()))
 			else:
-				log.debug(
+				log.error(
 					"No commands have been registered. If the dialog is shown, this indicates a logic error.",
 				)
 
@@ -1069,6 +1069,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			# We must close the dialog, regardless of state.
 			self.Hide()
 			self._executeCommand(self._getFallbackActionOrFallback(), _canCallClose=False)
+			log.debug(f"Removing {self!r} from instances.")
 			self._instances.remove(self)
 			if self.IsModal():
 				self.EndModal(self.GetReturnCode())
@@ -1079,7 +1080,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 			try:
 				command = self._getFallbackAction()
 			except KeyError:
-				log.debug("Unable to get fallback action from commands. This indicates incorrect usage.")
+				log.error("Unable to get fallback action from commands. This indicates incorrect usage.")
 				command = None
 			if command is None or not command.closesDialog:
 				evt.Veto()
@@ -1089,9 +1090,9 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
-		log.debug("Queueing destroy")
+		log.debug("Queueing {self!r} for destruction")
 		self.DestroyLater()
-		log.debug("Removing from instances")
+		log.debug(f"Removing {self!r} from instances.")
 		self._instances.remove(self)
 
 	def _onButtonEvent(self, evt: wx.CommandEvent):
@@ -1109,10 +1110,13 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 	def _onDestroyEvent(self, evt: wx.WindowDestroyEvent):
 		"""Ensures this instances is removed if the default close event handler is not called."""
 		if self in self._instances:
+			log.debug(f"Removing {self!r} from instances.")
 			self._instances.remove(self)
 
 	def __del__(self):
+		"""Ensures this instances is removed if the default close event handler is not called."""
 		if self in self._instances:
+			log.debug(f"Removing {self!r} from instances.")
 			self._instances.remove(self)
 		super().__del__(self)
 
