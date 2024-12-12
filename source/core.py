@@ -24,6 +24,7 @@ from enum import Enum
 import logHandler
 import languageHandler
 import globalVars
+import argsParsing
 from logHandler import log
 import addonHandler
 import extensionPoints
@@ -218,8 +219,8 @@ def computeRestartCLIArgs(removeArgsList: list[str] | None = None) -> list[str]:
 	"""Generate an equivalent list of CLI arguments from the values in globalVars.appArgs.
 	:param removeArgsList: A list of values to ignore when looking in globalVars.appArgs.
 	"""
-	from __main__ import parser  # import from nda.pyw
 
+	parser = argsParsing.getParser()
 	if not removeArgsList:
 		removeArgsList = []
 	args = []
