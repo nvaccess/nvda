@@ -1450,7 +1450,8 @@ Please see the `EventExtensionPoints` class documentation for more information, 
 
 ### The message dialog API
 
-The message dialog API provides a flexible way of presenting interactive messages to the user. The messages are highly customisable, with options to change icons and sounds, button labels, return values, and close behaviour, as well as to attach your own callbacks.
+The message dialog API provides a flexible way of presenting interactive messages to the user.
+The messages are highly customisable, with options to change icons and sounds, button labels, return values, and close behaviour, as well as to attach your own callbacks.
 
 All classes that make up the message dialog API are importable from `gui.message`.
 While you are unlikely to need all of them, they are enumerated below:
@@ -1471,7 +1472,7 @@ from gui import mainFrame
 
 MessageDialog(
 	mainFrame,
-	"Hello world!",
+	_("Hello world!"),
 ).Show()
 ```
 
@@ -1501,7 +1502,7 @@ match saveDialog.ShowModal():
 For non-modal dialogs, the easiest way to respond to the user pressing a button is via callback methods.
 
 ```py
-def read_changelog():
+def readChangelog():
 	...  # Do something
 
 def download_update():
@@ -1519,16 +1520,16 @@ updateDialog = MessageDialog(
 ).addButton(
 	ReturnCode.YES,
 	label="Yes",
-	default_focus=True,
+	defaultFocus=True,
 	callback=download_update
 ).addButton(
 	ReturnCode.NO,
-	default_action=True,
+	defaultAction=True,
 	label="Remind me later",
 	callback=remind_later
 ).addButton(
 	ReturnCode.HELP,
-	closes_dialog=False,
+	closesDialog=False,
 	label="What's new",
 	callback=read_changelog
 )
@@ -1544,7 +1545,6 @@ You can set many of the parameters to `addButton` later, too:
 
 #### Fallback actions
 
-It is worth interrogating the fallback action further.
 The fallback action is the action performed when the dialog is closed without the user pressing one of the buttons you added to the dialog.
 This can happen for several reasons:
 
@@ -1559,7 +1559,7 @@ This means that the fallback action will be the cancel button if there is one, t
 The fallback action can also be set to `EscapeCode.NO_FALLBACK` to disable closing the dialog like this entirely.
 If it is set to any other value, the value must be the id of a button to use as the default action.
 
-[^fn_defaultFallbackOk]: In actuality, the value of `dialog.GetAffirmativeId()` is used to find the button to use as fallback if using `EscapeCode.CANCEL_OR_AFFIRMATIVE` and there is no button with `id=ReturnCode.CANCEL`.
+The value of `dialog.GetAffirmativeId()` is used to find the button to use as fallback if using `EscapeCode.CANCEL_OR_AFFIRMATIVE` and there is no button with `id=ReturnCode.CANCEL`.
 You can use `dialog.SetAffirmativeId(id)` to change it, if desired.
 
 In some cases, the dialog may be forced to close.
@@ -1588,9 +1588,9 @@ It blocks the calling thread until the passed callable returns or raises an exce
 
 ```py
 # To call
-some_function(arg1, arg2, kw1=value1, kw2=value2)
+someFunction(arg1, arg2, kw1=value1, kw2=value2)
 # on the GUI thread:
-wxCallOnMain(some_function, arg1, arg2, kw=value1, kw2=value2)
+wxCallOnMain(someFunction, arg1, arg2, kw=value1, kw2=value2)
 ```
 
 In fact, you cannot create, initialise, or show (modally or non-modally) `MessageDialog`s from any thread other than the GUI thread.
