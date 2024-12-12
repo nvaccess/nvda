@@ -7,7 +7,6 @@ import config
 from enum import IntEnum, unique
 import globalVars
 from logHandler import log
-import nvwave
 from pycaw.utils import AudioSession
 import ui
 from utils.displayString import DisplayStringIntEnum
@@ -163,14 +162,6 @@ def _setSoundSplitState(state: SoundSplitState) -> dict:
 
 
 def _toggleSoundSplitState() -> None:
-	if not nvwave.usingWasapiWavePlayer():
-		message = _(
-			# Translators: error message when wasapi is turned off.
-			"Sound split cannot be used. "
-			"Please enable WASAPI in the Advanced category in NVDA Settings to use it.",
-		)
-		ui.message(message)
-		return
 	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
 	allowedStates: list[int] = config.conf["audio"]["includedSoundSplitModes"]
 	try:
