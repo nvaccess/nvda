@@ -71,14 +71,19 @@ _parser: NoConsoleOptionParser | None = None
 """The arguments parser used by NVDA.
 """
 
+
 def _createNVDAArgParser() -> NoConsoleOptionParser:
-	"""Create a parser to process NVDA option arguments.
-	"""
+	"""Create a parser to process NVDA option arguments."""
 
 	parser = NoConsoleOptionParser(formatter_class=_WideParserHelpFormatter, allow_abbrev=False)
 	quitGroup = parser.add_mutually_exclusive_group()
 	quitGroup.add_argument(
-		"-q", "--quit", action="store_true", dest="quit", default=False, help="Quit already running copy of NVDA"
+		"-q",
+		"--quit",
+		action="store_true",
+		dest="quit",
+		default=False,
+		help="Quit already running copy of NVDA",
 	)
 	parser.add_argument(
 		"-k",
@@ -220,7 +225,11 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		help="The path where a portable copy will be created",
 	)
 	parser.add_argument(
-		"--launcher", action="store_true", dest="launcher", default=False, help="Started from the launcher"
+		"--launcher",
+		action="store_true",
+		dest="launcher",
+		default=False,
+		help="Started from the launcher",
 	)
 	parser.add_argument(
 		"--enable-start-on-logon",
@@ -254,6 +263,7 @@ def _createNVDAArgParser() -> NoConsoleOptionParser:
 		help="Started by Windows Ease of Access",
 	)
 	return parser
+
 
 def getParser() -> NoConsoleOptionParser:
 	global _parser
