@@ -414,3 +414,22 @@ def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
 	log.debug(
 		f"Handled cldr value of {setting!r}. List is now: {profile['speech']['symbolDictionaries']}",
 	)
+
+def upgradeConfigFrom_13_to_14(profile: ConfigObj) -> None:
+	"""Convert keyboard typing echo configuration from boolean to integer values."""
+	try:
+		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
+		if configobj.validate.is_boolean(speakTypedCharacters):
+			profile["keyboard"]["speakTypedCharacters"] = 1 if speakTypedCharacters else 0
+			log.debug("Converted speakTypedCharacters from boolean to integer")
+	except KeyError:
+		log.debug("speakTypedCharacters not present in config, no action taken.")
+
+	try:
+		speakTypedWords = profile["keyboard"]["speakTypedWords"]
+		if configobj.validate.is_boolean(speakTypedWords):
+			profile["keyboard"]["speakTypedWords"] = 1 if speakTypedWords else 0
+			log.debug("Converted speakTypedWords from boolean to integer")
+	except KeyError:
+		log.debug("speakTypedWords not present in config, no action taken.")
+
