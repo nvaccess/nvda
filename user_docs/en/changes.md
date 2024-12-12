@@ -138,6 +138,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * `languageHandler.getLanguageCliArgs` has been removed with no replacement. (#17486, @CyrilleB79)
+* Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 
 #### Deprecations
 
