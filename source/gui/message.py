@@ -160,7 +160,7 @@ _Callback_T: TypeAlias = Callable[[], Any]
 class _Missing_Type:
 	"""Sentinel class to provide a nice repr."""
 
-	def __repr(self):
+	def __repr__(self) -> str:
 		return "MISSING"
 
 
@@ -191,6 +191,7 @@ class EscapeCode(IntEnum):
 
 	NO_FALLBACK = wx.ID_NONE
 	"""The escape key should have no effect, and programatically attempting to close the dialog should fail."""
+
 	CANCEL_OR_AFFIRMATIVE = wx.ID_ANY
 	"""The Cancel button should be emulated when closing the dialog by any means other than with a button in the dialog.
 	If no Cancel button is present, the affirmative button should be used.
@@ -343,8 +344,10 @@ class _Command(NamedTuple):
 
 	callback: _Callback_T | None
 	"""The callback function to be executed. Defaults to None."""
+
 	closesDialog: bool
 	"""Indicates whether the dialog should be closed after the command is executed. Defaults to True."""
+
 	ReturnCode: ReturnCode
 
 
@@ -458,7 +461,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		:param id: The ID to use for the button.
 		:param label: Text label to show on this button.
 		:param callback: Function to call when the button is pressed, defaults to None.
-			This is most useful for dialogs that are shown modelessly.
+			This is most useful for dialogs that are shown as non-modal.
 		:param defaultFocus: whether this button should receive focus when the dialog is first opened, defaults to False.
 			If multiple buttons with `defaultFocus=True` are added, the last one added will receive initial focus.
 		:param fallbackAction: Whether or not this button should be the fallback action for the dialog, defaults to False.
@@ -746,7 +749,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 	def CloseInstances(cls) -> None:
 		"""Close all dialogs with a fallback action.
 
-		This does not force-close all instances, so instances may vito being closed.
+		This does not force-close all instances, so instances may veto being closed.
 		"""
 		for instance in cls._instances:
 			if not instance.isBlocking:
@@ -865,7 +868,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		"""
 
 	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper) -> None:
-		"""Adds additional contents  to the dialog, before the buttons.
+		"""Adds additional contents to the dialog, before the buttons.
 		Subclasses may implement this method.
 		"""
 
@@ -974,7 +977,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 				if (action := self._getFallbackAction()) is not None:
 					return action
 			except KeyError:
-				log.debug("fallback action was not in commands. This indicates a logic error.")
+				log.error("fallback action was not in commands. This indicates a logic error.")
 
 			# fallback action is unavailable. Try using the default focus instead.
 			if (defaultFocus := self.GetDefaultItem()) is not None:
