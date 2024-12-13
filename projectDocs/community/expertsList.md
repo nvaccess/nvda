@@ -6,6 +6,7 @@ This can be used a reference to contact or tag developers in regards to relevant
 ## NV Access
 
 For optimal responses, please avoid tagging NV Access employees on unrelated tickets.
+General enquiries should be directed to <info@nvaccess.org>.
 
 | GitHub | email | topics |
 |---|---|---|
