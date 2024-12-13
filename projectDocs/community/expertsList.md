@@ -20,4 +20,5 @@ For optimal responses, please avoid tagging NV Access employees on unrelated tic
 
 | GitHub | email | topics |
 |---|---|---|
+| @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
 | | | |
