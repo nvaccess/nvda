@@ -44,6 +44,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * The ability to opt out of using WASAPI for audio output has been removed. (#16080)
+* The NVDA installer no longer plays a sound when launched. (#14068)
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
