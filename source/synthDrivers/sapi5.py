@@ -14,7 +14,6 @@ import winreg
 import audioDucking
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
-import nvwave
 from logHandler import log
 import weakref
 import languageHandler
@@ -205,9 +204,10 @@ class SynthDriver(SynthDriver):
 			# Therefore, set the voice before setting the audio output.
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
-		outputDeviceID = nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True)
-		if outputDeviceID >= 0:
-			self.tts.audioOutput = self.tts.getAudioOutputs()[outputDeviceID]
+		for audioOutput in self.tts.GetAudioOutputs():
+			if audioOutput.GetDescription() == config.conf["speech"]["outputDevice"]:
+				self.tts.audioOutput = audioOutput
+				break
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
 		self.tts.EventInterests = (
 			SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream
