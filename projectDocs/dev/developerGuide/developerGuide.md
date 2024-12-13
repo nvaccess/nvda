@@ -1522,11 +1522,11 @@ updateDialog = MessageDialog(
 ).addYesButton(
 	callback=downloadUpdate
 ).addNoButton(
-	label=_("Remi&nd me later"),
+	label=_("&Remind me later"),
 	fallbackAction=True,
 	callback=remindLater
 ).addHelpButton(
-	label=_("W&hat's new"),
+	label=_("What's &new"),
 	callback=readChangelog
 )
 
