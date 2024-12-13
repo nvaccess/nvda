@@ -549,7 +549,6 @@ class Test_MessageDialog_Threading(WxTestBase):
 				tpe.submit(dlg.__init__, None, "Test").result()
 
 	def test_showOnNonMain(self):
-		# self.app = wx.App()
 		"""Test that showing a MessageDialog on a non-GUI thread fails."""
 		dlg = MessageDialog(None, "Test")
 		with ThreadPoolExecutor(max_workers=1) as tpe:
@@ -558,7 +557,6 @@ class Test_MessageDialog_Threading(WxTestBase):
 
 	def test_showModalOnNonMain(self):
 		"""Test that showing a MessageDialog modally on a non-GUI thread fails."""
-		# self.app = wx.App()
 		dlg = MessageDialog(None, "Test")
 		with ThreadPoolExecutor(max_workers=1) as tpe:
 			with self.assertRaises(RuntimeError):
@@ -597,12 +595,10 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 				mocked_messageBoxCounter.__isub__.return_value
 			) = mocked_messageBoxCounter
 			self.dialog.ShowModal()
-			print(mocked_messageBoxCounter.mock_calls)
 			mocked_showModal.assert_called_once()
 			mocked_messageBoxCounter.__iadd__.assert_called_once()
 			mocked_messageBoxCounter.__isub__.assert_called_once()
 
-		# raise Exception
 
 
 class Test_MessageDialog_EventHandlers(MDTestBase):
@@ -739,7 +735,6 @@ class Test_MessageDialog_Blocking(MDTestBase):
 	):
 		"""Test that blockingInstancesExist is correct in a number of situations."""
 		MessageDialog._instances.extend(instances)
-		print(MessageDialog._instances)
 		self.assertEqual(MessageDialog.blockingInstancesExist(), expectedBlockingInstancesExist)
 
 	@parameterized.expand(
