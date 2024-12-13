@@ -1483,10 +1483,12 @@ If you want the dialog to be modal (that is, to block the user from performing o
 With modal dialogs, the easiest way to respond to user input is via the return code.
 
 ```py
+from gui.message import DefaultButtonSet, ReturnCode
+
 saveDialog = MessageDialog(
 	mainFrame,
-	"Would you like to save your changes before exiting?",
-	"Save changes?",
+	_("Would you like to save your changes before exiting?"),
+	_("Save changes?"),
 	buttons=DefaultButtonSet.SAVE_NO_CANCEL
 )
 
@@ -1505,10 +1507,10 @@ For non-modal dialogs, the easiest way to respond to the user pressing a button 
 def readChangelog():
 	...  # Do something
 
-def download_update():
+def downloadUpdate():
 	...  # Do something
 
-def remind_later():
+def remindLater():
 	...  # Do something
 
 updateDialog = MessageDialog(
@@ -1517,21 +1519,15 @@ updateDialog = MessageDialog(
 	"Would you like to download it now?",
 	"Update",
 	buttons=None,
-).addButton(
-	ReturnCode.YES,
-	label="Yes",
-	defaultFocus=True,
-	callback=download_update
-).addButton(
-	ReturnCode.NO,
-	defaultAction=True,
-	label="Remind me later",
-	callback=remind_later
-).addButton(
-	ReturnCode.HELP,
-	closesDialog=False,
-	label="What's new",
-	callback=read_changelog
+).addYesButton(
+	callback=downloadUpdate
+).addNoButton(
+	label=_("Remind me later"),
+	fallbackAction=True,
+	callback=remindLater
+).addHelpButton(
+	label=_("What's new"),
+	callback=readChangelog
 )
 
 updateDialog.Show()
@@ -1561,8 +1557,8 @@ The fallback action can also be set to `EscapeCode.NO_FALLBACK` to disable closi
 If it is set to any other value, the value must be the id of a button to use as the default action.
 
 In some cases, the dialog may be forced to close.
-If the dialog is shown modally, a fallback action will be used if the default action is `EscapeCode.NO_FALLBACK` or not found.
-The order of precedence is as follows:
+If the dialog is shown modally, a calculated fallback action will be used if the fallback action is `EscapeCode.NO_FALLBACK` or not found.
+The order of precedence for calculating the fallback when a dialog is forced to close is as follows:
 
 1. The developer-set fallback action.
 2. The developer-set default focus.
@@ -1627,7 +1623,7 @@ Its fields are as follows:
 
 2. `fallbackAction` only sets whether to override the fallback action:
 
-  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or `ReturnCode.OK` if there is no button with `id=ReturnCode.OK`), even if it is added with `fallbackAction=False`.
+  * This button will still be the fallback action if the dialog's fallback action is set to `EscapeCode.CANCEL_OR_AFFIRMATIVE` (the default) and its ID is `ReturnCode.CANCEL` (or whatever the value of `GetAffirmativeId()` is (`ReturnCode.OK`, by default), if there is no button with `id=ReturnCode.CANCEL`), even if it is added with `fallbackAction=False`.
     To set a dialog to have no fallback action, use `setFallbackAction(EscapeCode.NO_FALLBACK)`.
   * If multiple buttons have this property, the last one will be the fallback action.
 
