@@ -17,6 +17,11 @@ from NVDAObjects.window.winword import WordDocument
 from utils.displayString import DisplayStringIntEnum
 
 
+# From WdOutlineLevel enumeration
+# See https://learn.microsoft.com/fr-fr/office/vba/api/word.wdoutlinelevel
+wdOutlineLevelBodyText = 10
+
+
 class ViewType(DisplayStringIntEnum):
 	"""Enumeration containing the possible view types in Word documents:.
 	https://learn.microsoft.com/en-us/office/vba/api/word.wdviewtype
@@ -78,6 +83,39 @@ class WinwordWordDocument(WordDocument):
 		else:
 			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
+
+	@script(gestures=["kb:alt+shift+-", "kb:alt+shift+="])
+	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture"):
+		if not self.WinwordSelectionObject:
+			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
+			# or it's within Windows Defender Application Guard.
+			# In this case, just let the gesture through and don't report anything.
+			return gesture.send()
+		maxParagraphs = 50
+		for (nParagraph, paragraph) in enumerate(self.WinwordSelectionObject.paragraphs):
+			if paragraph.outlineLevel != wdOutlineLevelBodyText:
+				break
+			if nParagraph >= maxParagraphs:
+				log.debugWarning('Too many paragraphs selected')
+				gesture.send()
+				return
+		else:
+			gesture.send()
+			# Translators: a message when collapsing or expanding headings in MS Word
+			ui.message(_("No heading selected"))
+			return
+		val = self._WaitForValueChangeForAction(
+			lambda: gesture.send(),
+			lambda: paragraph.CollapsedState,
+		)
+		if val:
+			# Translators: a message when collapsing a heading in MS Word
+			msg = _("Collapsed")
+		else:
+			# Translators: a message when expanding a heading in MS Word
+			msg = _("Expanded")
+		ui.message(msg)
 
 	__gestures = {
 		"kb:control+shift+b": "toggleBold",
