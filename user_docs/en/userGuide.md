@@ -4171,6 +4171,7 @@ The following displays support this automatic detection functionality.
 * Nattiq nBraille displays
 * Seika Notetaker: MiniSeika (16, 24 cells), V6, and V6Pro (40 cells)
 * Tivomatic Caiku Albatross 46/80 displays
+* NLS eReader Zoomax
 * Any Display that supports the Standard HID Braille protocol
 
 ### Freedom Scientific Focus/PAC Mate Series {#FreedomScientificFocus}
@@ -4483,8 +4484,7 @@ The following extra devices are also supported (and do not require any special d
 * APH Mantis Q40
 * APH Chameleon 20
 * Humanware BrailleOne
-* NLS eReader
-  * Note that the Zoomax is currently not supported without external drivers
+* NLS eReader Humanware
 
 Following are the key assignments for the Brailliant BI/B and BrailleNote touch displays with NVDA.
 Please see the display's documentation for descriptions of where these keys can be found.
@@ -5344,6 +5344,34 @@ Please see the display's documentation for descriptions of where these keys can 
 |`Windows+e` key (this computer) |`attribute2`|
 |`Windows+b` key (focus system tray) |`attribute3`|
 |`Windows+i` key (Windows settings) |`attribute4`|
+
+<!-- KC:endInclude -->
+
+### NLS eReader Zoomax {#Zoomax}
+
+The NLS eReader Zoomax device supports USB or bluetooth connections.
+The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.
+For computers where the Internet connection is disabled or not available, for the USB connection, a driver can be download from the USB to serial CH340 chip manufacturer  (https://www.wch-ic.com/downloads/CH341SER_EXE.html)
+
+By default, NVDA can automatically detect and connect to this display via USB or bluetooth.
+However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
+
+Following are the key assignments for this display with NVDA.
+Please see the display's documentation for descriptions of where these keys can be found.
+<!-- KC:beginInclude -->
+
+| Name |Key|
+|---|---|
+|Scroll braille display back |`d2`|
+|Scroll braille display forward |`d5`|
+|Move braille display to previous line |`d1`|
+|Move braille display to next line |`d3`|
+|Route to braille cell |`routing`|
+|Up arrow key |`up`|
+|Down arrow key |`down`|
+|Left arrow key |`left`|
+|Right arrow key |`right`|
+|Enter key |`select`|
 
 <!-- KC:endInclude -->
 
