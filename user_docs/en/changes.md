@@ -43,6 +43,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
+* The ability to opt out of using WASAPI for audio output has been removed. (#16080)
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
@@ -137,6 +138,11 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
+* Due to the retirement of NVDA's winmm support:
+  * The following symbols have been removed from `nvwave`: `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+  * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
+  * The `WASAPI` key has been removed from the `audio` section of the config spec.
+  * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 
 #### Deprecations
