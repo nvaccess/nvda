@@ -1,7 +1,7 @@
 # Community experts list
 
 This document outlines NV Access employees and community contributors.
-This can be used as a reference for people to contact or tag in regards to relevant issues and pull requests.
+This can be used as a reference for people to contact or tag in regard to relevant issues and pull requests.
 
 ## NV Access
 
