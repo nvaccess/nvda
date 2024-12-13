@@ -86,6 +86,26 @@ class SubsequentCallArgList(NamedTuple):
 	meth2: MethodCall
 
 
+class ExecuteCommandArgList(NamedTuple):
+	label: str
+	closesDialog: bool
+	canCallClose: bool
+	expectedCloseCalled: bool
+
+
+class BlockingInstancesExistArgList(NamedTuple):
+	label: str
+	instances: tuple[MagicMock, ...]
+	expectedBlockingInstancesExist: bool
+
+
+class IsBlockingArgList(NamedTuple):
+	label: str
+	isModal: bool
+	hasFallback: bool
+	expectedIsBlocking: bool
+
+
 class WxTestBase(unittest.TestCase):
 	"""Base class for test cases which need wx to be initialised."""
 
@@ -600,7 +620,6 @@ class Test_MessageDialog_ShowModal(MDTestBase):
 			mocked_messageBoxCounter.__isub__.assert_called_once()
 
 
-
 class Test_MessageDialog_EventHandlers(MDTestBase):
 	def test_onShowEventDefaultFocus(self):
 		"""Test that _onShowEvent correctly focuses the default focus."""
@@ -667,10 +686,30 @@ class Test_MessageDialog_EventHandlers(MDTestBase):
 
 	@parameterized.expand(
 		(
-			("closableCanCallClose", True, True, True),
-			("ClosableCannotCallClose", True, False, False),
-			("UnclosableCanCallClose", False, True, False),
-			("UnclosableCannotCallClose", False, False, False),
+			ExecuteCommandArgList(
+				label="closableCanCallClose",
+				closesDialog=True,
+				canCallClose=True,
+				expectedCloseCalled=True,
+			),
+			ExecuteCommandArgList(
+				label="ClosableCannotCallClose",
+				closesDialog=True,
+				canCallClose=False,
+				expectedCloseCalled=False,
+			),
+			ExecuteCommandArgList(
+				label="UnclosableCanCallClose",
+				closesDialog=False,
+				canCallClose=True,
+				expectedCloseCalled=False,
+			),
+			ExecuteCommandArgList(
+				label="UnclosableCannotCallClose",
+				closesDialog=False,
+				canCallClose=False,
+				expectedCloseCalled=False,
+			),
 		),
 	)
 	def test_executeCommand(self, _, closesDialog: bool, canCallClose: bool, expectedCloseCalled: bool):
@@ -702,35 +741,47 @@ class Test_MessageDialog_Blocking(MDTestBase):
 
 	@parameterized.expand(
 		(
-			("noInstances", tuple(), False),
-			("nonBlockingInstance", (mockDialogFactory(isBlocking=False),), False),
-			("blockingInstance", (mockDialogFactory(isBlocking=True),), True),
-			(
-				"onlyBlockingInstances",
-				(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=True)),
-				True,
+			BlockingInstancesExistArgList(
+				label="noInstances",
+				instances=tuple(),
+				expectedBlockingInstancesExist=False,
 			),
-			(
-				"onlyNonblockingInstances",
-				(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=False)),
-				False,
+			BlockingInstancesExistArgList(
+				label="nonBlockingInstance",
+				instances=(mockDialogFactory(isBlocking=False),),
+				expectedBlockingInstancesExist=False,
 			),
-			(
-				"blockingFirstNonBlockingSecond",
-				(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=False)),
-				True,
+			BlockingInstancesExistArgList(
+				label="blockingInstance",
+				instances=(mockDialogFactory(isBlocking=True),),
+				expectedBlockingInstancesExist=True,
 			),
-			(
-				"nonblockingFirstblockingSecond",
-				(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=True)),
-				True,
+			BlockingInstancesExistArgList(
+				label="onlyBlockingInstances",
+				instances=(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=True)),
+				expectedBlockingInstancesExist=True,
+			),
+			BlockingInstancesExistArgList(
+				label="onlyNonblockingInstances",
+				instances=(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=False)),
+				expectedBlockingInstancesExist=False,
+			),
+			BlockingInstancesExistArgList(
+				label="blockingFirstNonBlockingSecond",
+				instances=(mockDialogFactory(isBlocking=True), mockDialogFactory(isBlocking=False)),
+				expectedBlockingInstancesExist=True,
+			),
+			BlockingInstancesExistArgList(
+				label="nonblockingFirstblockingSecond",
+				instances=(mockDialogFactory(isBlocking=False), mockDialogFactory(isBlocking=True)),
+				expectedBlockingInstancesExist=True,
 			),
 		),
 	)
 	def test_blockingInstancesExist(
 		self,
 		_,
-		instances: tuple[MagicMock],
+		instances: tuple[MagicMock, ...],
 		expectedBlockingInstancesExist: bool,
 	):
 		"""Test that blockingInstancesExist is correct in a number of situations."""
@@ -739,10 +790,30 @@ class Test_MessageDialog_Blocking(MDTestBase):
 
 	@parameterized.expand(
 		(
-			("modalWithFallback", True, True, True),
-			("ModalWithoutFallback", True, False, True),
-			("ModelessWithFallback", False, True, False),
-			("ModelessWithoutFallback", False, False, True),
+			IsBlockingArgList(
+				label="modalWithFallback",
+				isModal=True,
+				hasFallback=True,
+				expectedIsBlocking=True,
+			),
+			IsBlockingArgList(
+				label="ModalWithoutFallback",
+				isModal=True,
+				hasFallback=False,
+				expectedIsBlocking=True,
+			),
+			IsBlockingArgList(
+				label="ModelessWithFallback",
+				isModal=False,
+				hasFallback=True,
+				expectedIsBlocking=False,
+			),
+			IsBlockingArgList(
+				label="ModelessWithoutFallback",
+				isModal=False,
+				hasFallback=False,
+				expectedIsBlocking=True,
+			),
 		),
 	)
 	def test_isBlocking(self, _, isModal: bool, hasFallback: bool, expectedIsBlocking: bool):
@@ -827,7 +898,7 @@ class Test_MessageDialog_Blocking(MDTestBase):
 			),
 		),
 	)
-	def test_focusBlockingInstances(self, _, dialogs: tuple[FocusBlockingInstancesDialogs]):
+	def test_focusBlockingInstances(self, _, dialogs: tuple[FocusBlockingInstancesDialogs, ...]):
 		"""Test that focusBlockingInstances works as expected in a number of situations."""
 		MessageDialog._instances.extend(dialog.dialog for dialog in dialogs)
 		MessageDialog.focusBlockingInstances()
