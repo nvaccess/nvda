@@ -185,7 +185,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				ESCAPE,
 				command,
 				arg,
-			]
+			],
 		)
 		self._dev.write(data)
 
@@ -256,7 +256,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				"kb:rightArrow": ("br(nlseReaderZoomax):right",),
 				"kb:enter": ("br(nlseReaderZoomax):select",),
 			},
-		}
+		},
 	)
 
 
