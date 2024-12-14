@@ -7,7 +7,7 @@
 from typing import Optional
 from enum import IntEnum
 import locale
-from collections import OrderedDict
+from collections import OrderedDict, deque
 import comtypes.client
 from comtypes import COMError
 import winreg
@@ -78,12 +78,23 @@ class SapiSink(object):
 			log.debugWarning("Called Bookmark method on SapiSink while driver is dead")
 			return
 		synthIndexReached.notify(synth=synth, index=bookmarkId)
+		# remove already triggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			bookmarks = synth._streamBookmarks[streamNum]
+			while bookmarks:
+				if bookmarks.popleft() == bookmarkId:
+					break
 
 	def EndStream(self, streamNum, pos):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called Bookmark method on EndStream while driver is dead")
 			return
+		# trigger all untriggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			for bookmark in synth._streamBookmarks[streamNum]:
+				synthIndexReached.notify(synth=synth, index=bookmark)
+			del synth._streamBookmarks[streamNum]
 		synthDoneSpeaking.notify(synth=synth)
 		if synth._audioDucker:
 			if audioDucking._isDebug():
@@ -138,6 +149,7 @@ class SynthDriver(SynthDriver):
 			self._audioDucker = audioDucking.AudioDucker()
 		self._pitch = 50
 		self._initTts(_defaultVoiceToken)
+		self._streamBookmarks = dict()  # key = stream num, value = deque of bookmarks
 
 	def terminate(self):
 		self._eventsConnection = None
@@ -263,6 +275,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self, speechSequence):
 		textList = []
+		bookmarks = deque()
 
 		# NVDA SpeechCommands are linear, but XML is hierarchical.
 		# Therefore, we track values for non-empty tags.
@@ -298,6 +311,7 @@ class SynthDriver(SynthDriver):
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, IndexCommand):
 				textList.append('<Bookmark Mark="%d" />' % item.index)
+				bookmarks.append(item.index)
 			elif isinstance(item, CharacterModeCommand):
 				if item.state:
 					tags["spell"] = {}
@@ -397,7 +411,8 @@ class SynthDriver(SynthDriver):
 				log.debug("Enabling audio ducking due to speak call")
 			tempAudioDucker.enable()
 		try:
-			self.tts.Speak(text, flags)
+			streamNum = self.tts.Speak(text, flags)
+			self._streamBookmarks[streamNum] = bookmarks
 		finally:
 			if tempAudioDucker:
 				if audioDucking._isDebug():
