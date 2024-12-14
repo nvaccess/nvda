@@ -4,6 +4,8 @@
 
 ### Bug Fixes
 
+* Brailliant BI 40X and similar devices now work as epected with the latest firmware (version 2.4) (#17518, @bramd)
+
 ## 2024.4.1
 
 This is a patch release to fix a bug when saving speech symbol dictionaries.
