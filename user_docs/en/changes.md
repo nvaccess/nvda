@@ -4,6 +4,9 @@
 
 ### Bug Fixes
 
+* When the Standard HID Braille Display driver is explicitly set as braille display driver and the braille display list is fetched again, NVDA reports the HID driver as the selected driver rather than no driver at all. (#17522, @LeonarddeR)
+* The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17522, @LeonarddeR)
+
 ## 2024.4.1
 
 This is a patch release to fix a bug when saving speech symbol dictionaries.
