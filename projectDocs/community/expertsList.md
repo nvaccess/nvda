@@ -23,3 +23,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 |---|---|---|
 | @codeofdusk | <codeofdusk@gmail.com> | Windows Terminal and console, Microsoft UI Automation |
 | @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
+| @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |
