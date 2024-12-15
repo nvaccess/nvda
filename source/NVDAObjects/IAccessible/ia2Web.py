@@ -12,6 +12,7 @@ from typing import (
 )
 from ctypes import c_short
 from comtypes import COMError, BSTR
+from comtypes.hresult import E_NOTIMPL
 
 import oleacc
 from annotation import (
@@ -336,7 +337,13 @@ class Math(Ia2Web):
 			# Try the data-mathml attribute.
 			attrNames = (BSTR * 1)("data-mathml")
 			namespaceIds = (c_short * 1)(0)
-			attr = node.attributesForNames(1, attrNames, namespaceIds)
+			try:
+				attr = node.attributesForNames(1, attrNames, namespaceIds)
+			except COMError as e:
+				if e.hresult != E_NOTIMPL:
+					log.debugWarning(f"MathML getting attr error: {e}")
+					raise
+				attr = None
 			if attr:
 				import mathPres
 
