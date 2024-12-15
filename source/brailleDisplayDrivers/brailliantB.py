@@ -206,6 +206,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 				if reportedNumCells > 0:
 					# Update numCells based on reported cell count from the device
 					numCells = reportedNumCells
+				else:
+					log.debugWarning("Could not get number of cells from HID device using HR_CAPS")
 			except WindowsError:
 				return  # Fail!
 			self.numCells = numCells
