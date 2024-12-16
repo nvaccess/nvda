@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-* Brailliant BI 40X and similar devices now work as epected with the latest firmware (version 2.4) (#17518, @bramd)
+* Humanware Brailliant BI 40X devices running firmware version 2.4 now work as expected. (#17518, @bramd)
 
 ## 2024.4.1
 
