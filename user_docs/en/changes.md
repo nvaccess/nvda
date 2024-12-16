@@ -1,5 +1,13 @@
 # What's New in NVDA
 
+## 2024.4.2
+
+This is a patch release to fix a bug with reading math in Chromium Browsers (Chrome, Edge).
+
+### Bug fixes
+
+* Fixed bug with with reading math in Chromium Browsers (Chrome, Edge). (#17421, @NSoiffer)
+
 ## 2024.4.1
 
 This is a patch release to fix a bug when saving speech symbol dictionaries.
