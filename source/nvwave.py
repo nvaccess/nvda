@@ -267,20 +267,15 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		samplesPerSec: int,
 		bitsPerSample: int,
 		outputDevice: str = DEFAULT_DEVICE_KEY,
-		closeWhenIdle: bool = False,
 		wantDucking: bool = True,
-		buffered: bool = False,
 		purpose: AudioPurpose = AudioPurpose.SPEECH,
 	):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@param samplesPerSec: Samples per second (hz).
 		@param bitsPerSample: The number of bits per sample.
-		@param outputDevice: The name of the audio output device to use,
-			WAVE_MAPPER for default.
-		@param closeWhenIdle: Deprecated; ignored.
+		@param outputDevice: The name of the audio output device to use, defaults to WasapiWavePlayer.DEFAULT_DEVICE_KEY
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
-		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
 		@param purpose: The purpose of this audio.
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
