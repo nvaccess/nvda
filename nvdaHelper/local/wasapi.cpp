@@ -36,16 +36,6 @@ constexpr REFERENCE_TIME REFTIMES_PER_MILLISEC = 10000;
 constexpr DWORD BUFFER_MS = 400;
 constexpr REFERENCE_TIME BUFFER_SIZE = BUFFER_MS * REFTIMES_PER_MILLISEC;
 
-const CLSID CLSID_MMDeviceEnumerator = __uuidof(MMDeviceEnumerator);
-const IID IID_IMMDeviceEnumerator = __uuidof(IMMDeviceEnumerator);
-const IID IID_IAudioClient = __uuidof(IAudioClient);
-const IID IID_IAudioRenderClient = __uuidof(IAudioRenderClient);
-const IID IID_IAudioClock = __uuidof(IAudioClock);
-const IID IID_IMMNotificationClient = __uuidof(IMMNotificationClient);
-const IID IID_IAudioStreamVolume = __uuidof(IAudioStreamVolume);
-const IID IID_IAudioSessionManager2 = __uuidof(IAudioSessionManager2);
-const IID IID_IAudioSessionControl2 = __uuidof(IAudioSessionControl2);
-
 /**
  * C++ RAII class to manage the lifecycle of a standard Windows HANDLE closed
  * with CloseHandle.
@@ -97,7 +87,7 @@ class NotificationClient: public IMMNotificationClient {
 	}
 
 	STDMETHODIMP QueryInterface(REFIID riid, void** ppvObject) final {
-		if (riid == IID_IUnknown || riid == IID_IMMNotificationClient) {
+		if (riid == IID_IUnknown || riid == __uuidof(IMMNotificationClient)) {
 			AddRef();
 			*ppvObject = (void*)this;
 			return S_OK;
@@ -260,7 +250,7 @@ HRESULT WasapiPlayer::open(bool force) {
 	defaultDeviceChangeCount = notificationClient->getDefaultDeviceChangeCount();
 	deviceStateChangeCount = notificationClient->getDeviceStateChangeCount();
 	CComPtr<IMMDeviceEnumerator> enumerator;
-	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
+	HRESULT hr = enumerator.CoCreateInstance(__uuidof(MMDeviceEnumerator));
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -280,7 +270,7 @@ HRESULT WasapiPlayer::open(bool force) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = device->Activate(IID_IAudioClient, CLSCTX_ALL, nullptr, (void**)&client);
+	hr = device->Activate(__uuidof(IAudioClient), CLSCTX_ALL, nullptr, (void**)&client);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -294,11 +284,11 @@ HRESULT WasapiPlayer::open(bool force) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = client->GetService(IID_IAudioRenderClient, (void**)&render);
+	hr = client->GetService(__uuidof(IAudioRenderClient), (void**)&render);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	hr = client->GetService(IID_IAudioClock, (void**)&clock);
+	hr = client->GetService(__uuidof(IAudioClock), (void**)&clock);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -487,7 +477,7 @@ void WasapiPlayer::waitUntilNeeded(UINT64 maxWait) {
 
 HRESULT WasapiPlayer::getPreferredDevice(CComPtr<IMMDevice>& preferredDevice) {
 	CComPtr<IMMDeviceEnumerator> enumerator;
-	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
+	HRESULT hr = enumerator.CoCreateInstance(__uuidof(MMDeviceEnumerator));
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -627,7 +617,7 @@ HRESULT WasapiPlayer::resume() {
 
 HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 	CComPtr<IAudioStreamVolume> volume;
-	HRESULT hr = client->GetService(IID_IAudioStreamVolume, (void**)&volume);
+	HRESULT hr = client->GetService(__uuidof(IAudioStreamVolume), (void**)&volume);
 	if (hr == AUDCLNT_E_DEVICE_INVALIDATED) {
 		// If we're using a specific device, it's just been invalidated. Fall back
 		// to the default device.
@@ -635,7 +625,7 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 		if (FAILED(hr)) {
 			return hr;
 		}
-		hr = client->GetService(IID_IAudioStreamVolume, (void**)&volume);
+		hr = client->GetService(__uuidof(IAudioStreamVolume), (void**)&volume);
 	}
 	if (FAILED(hr)) {
 		return hr;
@@ -649,7 +639,7 @@ HRESULT WasapiPlayer::disableCommunicationDucking(IMMDevice* device) {
 	// https://learn.microsoft.com/en-us/windows/win32/coreaudio/stream-attenuation
 	// https://learn.microsoft.com/en-us/windows/win32/coreaudio/disabling-the-ducking-experience
 	CComPtr<IAudioSessionManager2> manager;
-	HRESULT hr = device->Activate(IID_IAudioSessionManager2, CLSCTX_ALL, nullptr,
+	HRESULT hr = device->Activate(__uuidof(IAudioSessionManager2), CLSCTX_ALL, nullptr,
 		(void**)&manager);
 	if (FAILED(hr)) {
 		return hr;
@@ -659,7 +649,7 @@ HRESULT WasapiPlayer::disableCommunicationDucking(IMMDevice* device) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	CComQIPtr<IAudioSessionControl2, &IID_IAudioSessionControl2> control2(control);
+	CComQIPtr<IAudioSessionControl2, &__uuidof(IAudioSessionControl2)> control2(control);
 	if (!control2) {
 		return E_NOINTERFACE;
 	}
@@ -845,7 +835,7 @@ HRESULT wasPlay_setChannelVolume(
  */
 HRESULT wasPlay_startup() {
 	CComPtr<IMMDeviceEnumerator> enumerator;
-	HRESULT hr = enumerator.CoCreateInstance(CLSID_MMDeviceEnumerator);
+	HRESULT hr = enumerator.CoCreateInstance(__uuidof(MMDeviceEnumerator));
 	if (FAILED(hr)) {
 		return hr;
 	}
