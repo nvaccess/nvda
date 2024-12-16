@@ -124,6 +124,11 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Added the following extension points (#17428, @ctoth):
   * `inputCore.decide_handleRawKey`: called on each keypress
   * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
+* Changes to braille display auto detection registration in `bdDetect.DriverRegistrar`: (#17521, @LeonarddeR)
+  * Added the `addUsbDevice` method to register one USB device at a time.
+  * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
+    * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
+    * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 
 #### API Breaking Changes
 
@@ -149,6 +154,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
+* The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
 
 #### Deprecations
 
