@@ -60,7 +60,6 @@ from .constants import (
 	BOTH_BYTES,
 	KC_INTERVAL,
 	BUS_DEVICE_DESC,
-	VID_AND_PID,
 )
 from .gestures import _gestureMap
 
@@ -84,11 +83,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(
+		driverRegistrar.addUsbDevice(
 			DeviceType.SERIAL,
-			{
-				"VID_0403&PID_6001",  # Caiku Albatross 46/80
-			},
+			"VID_0403&PID_6001",  # Caiku Albatross 46/80
+			# Filter for bus reported device description, which should be "Albatross Braille Display".
+			matchFunc=lambda match: match.deviceInfo.get("busReportedDeviceDescription") == BUS_DEVICE_DESC,
 		)
 
 	@classmethod
@@ -168,11 +167,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
-				# Block port if its vid and pid are correct but bus reported
-				# device description is not "Albatross Braille Display".
-				if portId == VID_AND_PID and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC:
-					log.debug(f"port {port} blocked; port information: {portInfo}")
-					continue
 				# For reconnection
 				self._currentPort = port
 				self._tryToConnect = True
