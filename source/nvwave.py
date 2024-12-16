@@ -80,7 +80,6 @@ LPWAVEFORMATEX = POINTER(WAVEFORMATEX)
 
 
 WAVE_FORMAT_PCM = 1
-WAVE_MAPPER = -1
 
 CALLBACK_NULL = 0
 # CALLBACK_FUNCTION = 0x30000
@@ -258,7 +257,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
-	DEFAULT_DEVICE_KEY = config.conf.getConfigValidation(("speech", "outputDevice")).default
+	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("speech", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
 	_silenceDevice: typing.Optional[str] = None
 
@@ -267,7 +266,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		channels: int,
 		samplesPerSec: int,
 		bitsPerSample: int,
-		outputDevice: typing.Union[str, int] = WAVE_MAPPER,
+		outputDevice: str = DEFAULT_DEVICE_KEY,
 		closeWhenIdle: bool = False,
 		wantDucking: bool = True,
 		buffered: bool = False,
