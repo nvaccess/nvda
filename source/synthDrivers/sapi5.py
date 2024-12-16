@@ -66,6 +66,10 @@ class SapiSink(object):
 		if synth is None:
 			log.debugWarning("Called StartStream method on SapiSink while driver is dead")
 			return
+		# The stream has been started. Move the bookmark list to _streamBookmarks.
+		if streamNum in synth._streamBookmarksNew:
+			synth._streamBookmarks[streamNum] = synth._streamBookmarksNew[streamNum]
+			del synth._streamBookmarksNew[streamNum]
 		if synth._audioDucker:
 			if audioDucking._isDebug():
 				log.debug("Enabling audio ducking due to starting speech stream")
@@ -148,7 +152,9 @@ class SynthDriver(SynthDriver):
 			self._audioDucker = audioDucking.AudioDucker()
 		self._pitch = 50
 		self._initTts(_defaultVoiceToken)
-		self._streamBookmarks = dict()  # key = stream num, value = deque of bookmarks
+		# key = stream num, value = deque of bookmarks
+		self._streamBookmarks = dict()  # bookmarks in currently speaking streams
+		self._streamBookmarksNew = dict()  # bookmarks for streams that haven't been started
 
 	def terminate(self):
 		self._eventsConnection = None
@@ -412,7 +418,9 @@ class SynthDriver(SynthDriver):
 			tempAudioDucker.enable()
 		try:
 			streamNum = self.tts.Speak(text, flags)
-			self._streamBookmarks[streamNum] = bookmarks
+			# When Speak returns, the previous stream may not have been ended.
+			# So the bookmark list is stored in another dict until this stream starts.
+			self._streamBookmarksNew[streamNum] = bookmarks
 		finally:
 			if tempAudioDucker:
 				if audioDucking._isDebug():
