@@ -801,16 +801,9 @@ class GeneralSettingsPanel(SettingsPanel):
 		self.languageNames = languageHandler.getAvailableLanguages(presentational=True)
 		languageChoices = [x[1] for x in self.languageNames]
 		if languageHandler.isLanguageForced():
-			try:
-				cmdLangDescription = next(
-					ld for code, ld in self.languageNames if code == globalVars.appArgs.language
-				)
-			except StopIteration:
-				# In case --lang=Windows is passed to the command line, globalVars.appArgs.language is the current
-				# Windows language,, which may not be in the list of NVDA supported languages, e.g. Windows language may
-				# be 'fr_FR' but NVDA only supports 'fr'.
-				# In this situation, only use language code as a description.
-				cmdLangDescription = globalVars.appArgs.language
+			cmdLangDescription = next(
+				ld for code, ld in self.languageNames if code == globalVars.appArgs.language
+			)
 			languageChoices.append(
 				# Translators: Shown for a language which has been provided from the command line
 				# 'langDesc' would be replaced with description of the given locale.
@@ -3052,17 +3045,19 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		deviceNames = nvwave.getOutputDeviceNames()
-		# #11349: On Windows 10 20H1 and 20H2, Microsoft Sound Mapper returns an empty string.
-		if deviceNames[0] in ("", "Microsoft Sound Mapper"):
-			# Translators: name for default (Microsoft Sound Mapper) audio output device.
-			deviceNames[0] = _("Microsoft Sound Mapper")
+		# The Windows Core Audio device enumeration does not have the concept of an ID for the default output device, so we have to insert something ourselves instead.
+		# Translators: Value to show when choosing to use the default audio output device.
+		deviceNames = (_("Default output device"), *nvwave.getOutputDeviceNames())
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		try:
-			selection = deviceNames.index(config.conf["speech"]["outputDevice"])
-		except ValueError:
+		selectedOutputDevice = config.conf["speech"]["outputDevice"]
+		if selectedOutputDevice == "default":
 			selection = 0
+		else:
+			try:
+				selection = deviceNames.index(selectedOutputDevice)
+			except ValueError:
+				selection = 0
 		self.deviceList.SetSelection(selection)
 
 		# Translators: This is a label for the audio ducking combo box in the Audio Settings dialog.
@@ -3168,7 +3163,6 @@ class AudioPanel(SettingsPanel):
 			initial=config.conf["audio"]["audioAwakeTime"],
 		)
 		self.bindHelpEvent("AudioAwakeTime", self.audioAwakeTimeEdit)
-		self.audioAwakeTimeEdit.Enable(nvwave.usingWasapiWavePlayer())
 
 	def _appendSoundSplitModesList(self, settingsSizerHelper: guiHelper.BoxSizerHelper) -> None:
 		self._allSoundSplitModes = list(audio.SoundSplitState)
@@ -3186,9 +3180,13 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Select(0)
 
 	def onSave(self):
-		if config.conf["speech"]["outputDevice"] != self.deviceList.GetStringSelection():
+		# We already use "default" as the key in the config spec, so use it here as an alternative to Microsoft Sound Mapper.
+		selectedOutputDevice = (
+			"default" if self.deviceList.GetSelection() == 0 else self.deviceList.GetStringSelection()
+		)
+		if config.conf["speech"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
-			config.conf["speech"]["outputDevice"] = self.deviceList.GetStringSelection()
+			config.conf["speech"]["outputDevice"] = selectedOutputDevice
 			currentSynth = getSynth()
 			if not setSynth(currentSynth.name):
 				_synthWarningDialog(currentSynth.name)
@@ -3204,8 +3202,7 @@ class AudioPanel(SettingsPanel):
 
 		index = self.soundSplitComboBox.GetSelection()
 		config.conf["audio"]["soundSplitState"] = index
-		if nvwave.usingWasapiWavePlayer():
-			audio._setSoundSplitState(audio.SoundSplitState(index))
+		audio._setSoundSplitState(audio.SoundSplitState(index))
 		config.conf["audio"]["includedSoundSplitModes"] = [
 			mIndex
 			for mIndex in range(len(self._allSoundSplitModes))
@@ -3233,22 +3230,11 @@ class AudioPanel(SettingsPanel):
 
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
-		wasapi = nvwave.usingWasapiWavePlayer()
-		self.soundVolFollowCheckBox.Enable(wasapi)
-		self.soundVolSlider.Enable(
-			wasapi and not self.soundVolFollowCheckBox.IsChecked(),
-		)
-		self.soundSplitComboBox.Enable(wasapi)
-		self.soundSplitModesList.Enable(wasapi)
+		self.soundVolSlider.Enable(not self.soundVolFollowCheckBox.IsChecked())
 
 		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.muteOtherAppsCheckBox.Enable(
-			wasapi and self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled,
-		)
-		self.appVolAdjusterCombo.Enable(wasapi)
+		self.appSoundVolSlider.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
+		self.muteOtherAppsCheckBox.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
@@ -3844,26 +3830,6 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
-		label = _("Audio")
-		audio = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		audioGroup = guiHelper.BoxSizerHelper(self, sizer=audio)
-		sHelper.addItem(audioGroup)
-
-		# Translators: This is the label for a checkbox control in the Advanced settings panel.
-		label = _("Use WASAPI for audio output (requires restart)")
-		self.wasapiComboBox = cast(
-			nvdaControls.FeatureFlagCombo,
-			audioGroup.addLabeledControl(
-				labelText=label,
-				wxCtrlClass=nvdaControls.FeatureFlagCombo,
-				keyPath=["audio", "WASAPI"],
-				conf=config.conf,
-			),
-		)
-		self.bindHelpEvent("WASAPI", self.wasapiComboBox)
-
-		# Translators: This is the label for a group of advanced options in the
-		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
@@ -4048,7 +4014,6 @@ class AdvancedPanelControls(
 		config.conf["documentFormatting"]["reportTransparentColor"] = (
 			self.reportTransparentColorCheckBox.IsChecked()
 		)
-		self.wasapiComboBox.saveCurrentValueToConf()
 		config.conf["annotations"]["reportDetails"] = self.annotationsDetailsCheckBox.IsChecked()
 		config.conf["annotations"]["reportAriaDescription"] = self.ariaDescCheckBox.IsChecked()
 		self.brailleLiveRegionsCombo.saveCurrentValueToConf()

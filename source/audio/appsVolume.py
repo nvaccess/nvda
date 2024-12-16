@@ -6,7 +6,6 @@
 import config
 import globalVars
 from logHandler import log
-import nvwave
 from pycaw.utils import AudioSession
 import ui
 from dataclasses import dataclass
@@ -105,13 +104,6 @@ def _updateAppsVolumeImpl(
 	_activeCallback.register()
 
 
-_WASAPI_DISABLED_MESSAGE: str = _(
-	# Translators: error message when wasapi is turned off.
-	"Application volume cannot be controlled by NVDA when WASAPI is disabled. "
-	"Please enable it in the advanced settings panel.",
-)
-
-
 _VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 	# Translators: error message when applications' volume is disabled
 	"Application volume control disabled",
@@ -121,9 +113,6 @@ _VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
 def _adjustAppsVolume(
 	volumeAdjustment: int | None = None,
 ):
-	if not nvwave.usingWasapiWavePlayer():
-		ui.message(_WASAPI_DISABLED_MESSAGE)
-		return
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	state = config.conf["audio"]["applicationsVolumeMode"]
@@ -149,9 +138,6 @@ _APPS_VOLUME_STATES_ORDER = [
 
 
 def _toggleAppsVolumeState():
-	if not nvwave.usingWasapiWavePlayer():
-		ui.message(_WASAPI_DISABLED_MESSAGE)
-		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
@@ -175,9 +161,6 @@ def _toggleAppsVolumeState():
 
 
 def _toggleAppsVolumeMute():
-	if not nvwave.usingWasapiWavePlayer():
-		ui.message(_WASAPI_DISABLED_MESSAGE)
-		return
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
