@@ -258,7 +258,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
-	DEFAULT_DEVICE_KEY = "default"
+	DEFAULT_DEVICE_KEY = config.conf.getConfigValidation(("speech", "outputDevice")).default
 	#: The silence output device, None if not initialized.
 	_silenceDevice: typing.Optional[str] = None
 
@@ -303,7 +303,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
-		if self._isDefaultDevice(outputDevice):
+		if outputDevice == self.DEFAULT_DEVICE_KEY:
 			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			outputDevice,
@@ -556,13 +556,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# There's still at least one active stream that wasn't idle.
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
-
-	@classmethod
-	def _isDefaultDevice(cls, name):
-		if name in (WAVE_MAPPER, cls.DEFAULT_DEVICE_KEY):
-			return True
-		# Check if this is the WinMM sound mapper device, which means default.
-		return name == next(_getOutputDevices())[1]
 
 
 WavePlayer = WasapiWavePlayer
