@@ -14,7 +14,6 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	POINTER,
 	Structure,
 	c_uint,
 	byref,
@@ -76,16 +75,7 @@ class WAVEFORMATEX(Structure):
 	]
 
 
-LPWAVEFORMATEX = POINTER(WAVEFORMATEX)
-
-
 WAVE_FORMAT_PCM = 1
-
-CALLBACK_NULL = 0
-# CALLBACK_FUNCTION = 0x30000
-CALLBACK_EVENT = 0x50000
-# waveOutProc = CFUNCTYPE(HANDLE, UINT, DWORD, DWORD, DWORD)
-# WOM_DONE = 0x3bd
 
 
 def _isDebugForNvWave():
