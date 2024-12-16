@@ -4,7 +4,7 @@
 
 ### Bug Fixes
 
-* When the Standard HID Braille Display driver is explicitly set as braille display driver and the braille display list is fetched again, NVDA reports the HID driver as the selected driver rather than no driver at all. (#17522, @LeonarddeR)
+* When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17522, @LeonarddeR)
 * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17522, @LeonarddeR)
 
 ## 2024.4.1
