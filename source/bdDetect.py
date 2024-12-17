@@ -103,10 +103,6 @@ class DeviceMatch(NamedTuple):
 MatchFuncT = Callable[[DeviceMatch], bool]
 
 
-def _DEFAULT_MATCH_FUNC(match):
-	return True
-
-
 @dataclass(frozen=True)
 class _UsbDeviceRegistryEntry:
 	"""An internal class that contains information specific to an USB device registration."""
@@ -121,9 +117,9 @@ class _UsbDeviceRegistryEntry:
 	initial devices, serving as a backup option in case of compatibility issues.
 	This provides flexibility and robustness in managing driver-device connections.
 	"""
-	matchFunc: MatchFuncT = field(default=_DEFAULT_MATCH_FUNC, compare=False)
+	matchFunc: MatchFuncT | None = field(default=None, compare=False)
 	"""
-	A function which determines whether a given device matches.
+	An optional function which determines whether a given device matches.
 	It takes a L{DeviceMatch} as its only argument
 	and returns a C{bool} indicating whether it matched."""
 
@@ -188,11 +184,19 @@ def getDriversForConnectedUsbDevices(
 			if limitToDevices and driver not in limitToDevices:
 				continue
 			for type, typeDefs in devs.items():
-				if match.type == type and (
-					typeDef := next(
-						(t for t in typeDefs if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id),
-						None,
+				if (
+					match.type == type
+					and (
+						typeDef := next(
+							(
+								t
+								for t in typeDefs
+								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id
+							),
+							None,
+						)
 					)
+					and (not callable(typeDef.matchFunc) or typeDef.matchFunc(match))
 				):
 					if typeDef.useAsFallback:
 						fallbackDriversAndMatches.append({driver, match})
@@ -536,11 +540,19 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		else:
 			devs = _driverDevices[driver]
 			for type, typeDefs in devs.items():
-				if match.type == type and (
-					typeDef := next(
-						(t for t in typeDefs if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id),
-						None,
+				if (
+					match.type == type
+					and (
+						typeDef := next(
+							(
+								t
+								for t in typeDefs
+								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id
+							),
+							None,
+						)
 					)
+					and (not callable(typeDef.matchFunc) or typeDef.matchFunc(match))
 				):
 					if typeDef.useAsFallback:
 						fallbackMatches.append(match)
@@ -684,7 +696,7 @@ class DriverRegistrar:
 		type: DeviceType,
 		id: str,
 		useAsFallback: bool = False,
-		matchFunc: MatchFuncT = _DEFAULT_MATCH_FUNC,
+		matchFunc: MatchFuncT | None = None,
 	):
 		"""Associate an USB device with the driver on this instance.
 		:param type: The type of the driver.
@@ -696,11 +708,10 @@ class DriverRegistrar:
 			If True, the device is used only if the primary driver cannot use
 			the initial devices, serving as a backup option in case of compatibility issues.
 			This provides flexibility and robustness in managing driver-device connections.
-		@param matchFunc: A function which determines whether a given device matches.
+		@param matchFunc: An optional function which determines whether a given device matches.
 			It takes a L{DeviceMatch} as its only argument
 			and returns a C{bool} indicating whether it matched.
 			It can be used to further constrain a device registration, such as for a specific HID usage page.
-			It defaults to a no-op that always returns C{True}.
 		:raise ValueError: When the provided ID is malformed.
 		"""
 		if not isinstance(id, str) or not USB_ID_REGEX.match(id):
@@ -716,7 +727,7 @@ class DriverRegistrar:
 		type: DeviceType,
 		ids: set[str],
 		useAsFallback: bool = False,
-		matchFunc: MatchFuncT = _DEFAULT_MATCH_FUNC,
+		matchFunc: MatchFuncT = None,
 	):
 		"""Associate USB devices with the driver on this instance.
 		:param type: The type of the driver.
@@ -728,11 +739,10 @@ class DriverRegistrar:
 			If True, the devices are added to a fallback list and are used only if the primary driver cannot use
 			the initial devices, serving as a backup option in case of compatibility issues.
 			This provides flexibility and robustness in managing driver-device connections.
-		@param matchFunc: A function which determines whether a given device matches.
+		@param matchFunc: An optional function which determines whether a given device matches.
 			It takes a L{DeviceMatch} as its only argument
 			and returns a C{bool} indicating whether it matched.
 			It can be used to further constrain device registrations, such as for a specific HID usage page.
-			It defaults to a no-op that always returns C{True}.
 		:raise ValueError: When one of the provided IDs is malformed.
 		"""
 		malformedIds = [id for id in ids if not isinstance(id, str) or not USB_ID_REGEX.match(id)]
