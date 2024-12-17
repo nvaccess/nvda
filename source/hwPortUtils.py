@@ -538,9 +538,9 @@ def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 					f"Opening device {path} to get additional info failed because the device is being used. "
 					"Falling back to cache for device info",
 				)
-				if cachedInfo := _getHidInfoCache.get(path):
-					cachedInfo.update(info)
-					return cachedInfo
+			if cachedInfo := _getHidInfoCache.get(path):
+				cachedInfo.update(info)
+				return cachedInfo
 		elif _isDebug():
 			log.debugWarning(f"Opening device {path} to get additional info failed: {ctypes.WinError(err)}")
 		return info
