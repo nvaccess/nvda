@@ -3041,17 +3041,15 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		# The Windows Core Audio device enumeration does not have the concept of an ID for the default output device, so we have to insert something ourselves instead.
-		# Translators: Value to show when choosing to use the default audio output device.
-		deviceNames = (_("Default output device"), *nvwave.getOutputDeviceNames())
+		self._deviceIds, deviceNames = zip(*nvwave._getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
 		selectedOutputDevice = config.conf["speech"]["outputDevice"]
-		if selectedOutputDevice == "default":
+		if selectedOutputDevice == config.conf.getConfigValidation(("speech", "outputDevice")).default:
 			selection = 0
 		else:
 			try:
-				selection = deviceNames.index(selectedOutputDevice)
+				selection = self._deviceIds.index(selectedOutputDevice)
 			except ValueError:
 				selection = 0
 		self.deviceList.SetSelection(selection)
@@ -3176,10 +3174,8 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Select(0)
 
 	def onSave(self):
-		# We already use "default" as the key in the config spec, so use it here as an alternative to Microsoft Sound Mapper.
-		selectedOutputDevice = (
-			"default" if self.deviceList.GetSelection() == 0 else self.deviceList.GetStringSelection()
-		)
+		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
+		log.info(f"{selectedOutputDevice=}")
 		if config.conf["speech"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
 			config.conf["speech"]["outputDevice"] = selectedOutputDevice
