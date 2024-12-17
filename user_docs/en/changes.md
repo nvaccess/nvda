@@ -1,5 +1,9 @@
 # What's New in NVDA
 
+## 2024.4.2
+
+### Bug Fixes
+
 ## 2024.4.1
 
 This is a patch release to fix a bug when saving speech symbol dictionaries.
