@@ -4,7 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities."""
+"""Provides a simple Python interface to playing audio using the Windows Audio Session API (WASAPI), as well as other useful utilities."""
 
 from collections.abc import Generator
 import threading
@@ -100,8 +100,13 @@ class AudioPurpose(Enum):
 	SOUNDS = auto()
 
 
-def _getOutputDevices() -> Generator[tuple[str, str]]:
-	"""Generator, yielding device ID and device Name in device ID order.
+class _AudioOutputDevice(typing.NamedTuple):
+	id: str
+	friendlyName: str
+
+
+def _getOutputDevices() -> Generator[_AudioOutputDevice]:
+	"""Generator, yielding device ID and device Name.
 	..note: Depending on number of devices being fetched, this may take some time (~3ms)
 	"""
 	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
@@ -112,7 +117,7 @@ def _getOutputDevices() -> Generator[tuple[str, str]]:
 		device = AudioUtilities.CreateDevice(endpointCollection.Item(i))
 		# This should never be None, but just to be sure
 		if device is not None:
-			yield device.id, device.FriendlyName
+			yield _AudioOutputDevice(device.id, device.FriendlyName)
 		else:
 			continue
 
