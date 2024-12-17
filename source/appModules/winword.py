@@ -93,11 +93,11 @@ class WinwordWordDocument(WordDocument):
 			# In this case, just let the gesture through and don't report anything.
 			return gesture.send()
 		maxParagraphs = 50
-		for (nParagraph, paragraph) in enumerate(self.WinwordSelectionObject.paragraphs):
+		for nParagraph, paragraph in enumerate(self.WinwordSelectionObject.paragraphs):
 			if paragraph.outlineLevel != wdOutlineLevelBodyText:
 				break
 			if nParagraph >= maxParagraphs:
-				log.debugWarning('Too many paragraphs selected')
+				log.debugWarning("Too many paragraphs selected")
 				gesture.send()
 				return
 		else:
