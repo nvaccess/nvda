@@ -500,7 +500,7 @@ class HIDD_ATTRIBUTES(ctypes.Structure):
 _getHidInfoCache: dict[str, dict] = {}
 
 
-def _getHidInfo(hwId: str, path: str) -> dict[str, str | None]:
+def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 	info = {
 		"hardwareID": hwId,
 		"devicePath": path,
