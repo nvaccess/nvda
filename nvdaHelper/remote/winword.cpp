@@ -305,7 +305,7 @@ int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagr
 	if(!headingLevel) return 0;
 	XMLStream<<L"<control role=\"heading\" level=\""<<headingLevel<<L"\" ";
 	// Expose the collapsed state of the heading
-	bool isCollapsed=false;
+	BOOL isCollapsed=false;
 	_com_dispatch_raw_propget(pDispatchParagraph, wdDISPID_PARAGRAPH_COLLAPSED_STATE, VT_BOOL, &isCollapsed);
 	if(isCollapsed) {
 		XMLStream<<L"collapsedState=\"true\" ";
