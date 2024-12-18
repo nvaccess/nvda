@@ -11,10 +11,15 @@ Microsoft Word only.
 import appModuleHandler
 from scriptHandler import script
 import ui
+from logHandler import log
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
 from NVDAObjects.window.winword import WordDocument
 from utils.displayString import DisplayStringIntEnum
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+	import inputCore
 
 
 # From WdOutlineLevel enumeration
