@@ -2,6 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+from collections.abc import Iterable
 import enum
 import typing
 import unittest
@@ -10,6 +11,7 @@ import io
 
 import configobj
 import configobj.validate
+from parameterized import parameterized
 
 from config import (
 	AggregatedSection,
@@ -913,14 +915,18 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 
 
 class TestFriendlyNameToEndpointId(unittest.TestCase):
+	@parameterized.expand(
+		(("", "", (), (), (), (), ""),),
+	)
+	@unittest.expectedFailure
 	def test_friendlyNameToEndpointId(
 		self,
 		_,
 		friendlyName: str,
-		activeDevices,
-		unpluggedDevices,
-		disabledDevices,
-		notpresentDevices,
+		activeDevices: Iterable[typing.Any],
+		unpluggedDevices: Iterable[typing.Any],
+		disabledDevices: Iterable[typing.Any],
+		notpresentDevices: Iterable[typing.Any],
 		expectedEndpointId: str | None,
 	):
 		raise NotImplementedError
