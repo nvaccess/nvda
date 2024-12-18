@@ -1113,6 +1113,11 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field["name"] = name
 				field["alwaysReportName"] = True
 				field["role"] = controlTypes.Role.FRAME
+		collapsedState = field.pop("collapsedState", None) == "true"
+		if collapsedState:
+			if "states" not in field:
+				field["states"] = set()
+			field["states"].add(controlTypes.State.COLLAPSED)
 		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField
