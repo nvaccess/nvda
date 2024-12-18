@@ -427,12 +427,12 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 		log.debug("Output device is set to default. Not writing a new value to config.")
 	elif endpointId := _friendlyNameToEndpointId(friendlyName):
 		log.debug(
-			f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config."
+			f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config.",
 		)
 		profile["audio"]["outputDevice"] = endpointId
 	else:
 		log.debug(
-			f"Could not find an audio output device with {friendlyName=}. Not writing a new value to config."
+			f"Could not find an audio output device with {friendlyName=}. Not writing a new value to config.",
 		)
 	log.debug("Deleting old config value.")
 	del profile["speech"]["outputDevice"]
