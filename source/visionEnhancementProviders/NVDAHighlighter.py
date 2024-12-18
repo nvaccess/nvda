@@ -206,7 +206,14 @@ class HighlightWindow(CustomWindow):
 						winGDI.gdiPlusDrawRectangle(graphicsContext, pen, *rect.toLTWH())
 
 	def refresh(self):
-		winUser.user32.InvalidateRect(self.handle, None, True)
+		# Generic: refactor
+		winUser.user32.InvalidateRect(
+			self.handle,
+			# Rect: invalidate the whole window
+			None,
+			# Erase?
+			True,
+		)
 
 
 _contextOptionLabelsWithAccelerators = {

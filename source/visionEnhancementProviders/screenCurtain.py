@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2018-2024 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Screen curtain implementation based on the windows magnification API.
 The Magnification API has been marked by MS as unsupported for WOW64 applications such as NVDA. (#12491)
@@ -10,7 +10,7 @@ The Magnification API has been marked by MS as unsupported for WOW64 application
 import os
 from vision import providerBase
 from ctypes import Structure, windll, c_float, POINTER, WINFUNCTYPE, WinError
-from ctypes.wintypes import BOOL
+from ctypes.wintypes import BOOL, HWND, RECT
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from autoSettingsUtils.autoSettings import SupportedSettingType
 import wx
@@ -24,6 +24,23 @@ from logHandler import log
 from typing import Optional, Type
 import nvwave
 import globalVars
+
+
+class MAGTRANSFORM(Structure):
+	_fields_ = (("v", c_float * 3 * 3),)
+
+	def __init__(self, magnificationFactor: float = 1.0):
+		"""
+		https://learn.microsoft.com/en-us/windows/win32/api/magnification/ns-magnification-magtransform
+		:param magnificationFactor: defaults to 1.0.
+		The minimum value of this parameter is 1.0, and the maximum value is 4096.0.
+		If this value is 1.0, the screen content is not magnified and no offsets are applied.
+		"""
+		super().__init__()
+		assert 1.0 <= magnificationFactor <= 4096.0
+		self.v[0][0] = magnificationFactor
+		self.v[1][1] = magnificationFactor
+		self.v[2][2] = 1.0
 
 
 class MAGCOLOREFFECT(Structure):
@@ -84,6 +101,40 @@ class Magnification:
 	_MagUninitializeFuncType = WINFUNCTYPE(BOOL)
 	MagUninitialize = _MagUninitializeFuncType(("MagUninitialize", _magnification))
 	MagUninitialize.errcheck = _errCheck
+
+	_MagSetWindowTransformFuncType = WINFUNCTYPE(BOOL, HWND, POINTER(MAGTRANSFORM))
+	_MagSetWindowTransformArgTypes = ((1, "hwnd"), (1, "transform"))
+	MagSetWindowTransform = _MagSetWindowTransformFuncType(
+		("MagSetWindowTransform", _magnification),
+		_MagSetWindowTransformArgTypes,
+	)
+	MagSetWindowTransform.errcheck = _errCheck
+
+	_MagSetWindowSourceFuncType = WINFUNCTYPE(BOOL, HWND, POINTER(RECT))
+	_MagSetWindowSourceArgTypes = ((1, "hwnd"), (1, "rect"))
+	MagSetWindowSource = _MagSetWindowSourceFuncType(
+		("MagSetWindowSource", _magnification),
+		_MagSetWindowSourceArgTypes,
+	)
+	MagSetWindowSource.errcheck = _errCheck
+
+	# Create transformation window
+	_MagGetInputTransformFuncType = WINFUNCTYPE(POINTER(BOOL), POINTER(RECT), POINTER(RECT))
+	_MagGetInputTransformArgTypes = ((2, "enabled"), (2, "src"), (2, "dest"))
+	MagGetInputTransform = _MagGetInputTransformFuncType(
+		("MagGetInputTransform", _magnification),
+		_MagGetInputTransformArgTypes,
+	)
+	MagGetInputTransform.errcheck = _errCheck
+
+	# Create transformation window
+	_MagSetInputTransformFuncType = WINFUNCTYPE(BOOL, POINTER(RECT), POINTER(RECT))
+	_MagSetInputTransformArgTypes = ((1, "enabled"), (1, "src"), (1, "dest"))
+	MagSetInputTransform = _MagGetInputTransformFuncType(
+		("MagSetInputTransform", _magnification),
+		_MagSetInputTransformArgTypes,
+	)
+	MagSetInputTransform.errcheck = _errCheck
 
 
 # Translators: Name for a vision enhancement provider that disables output to the screen,

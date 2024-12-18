@@ -15,6 +15,7 @@ class Context(str, Enum):
 	For example, L{focus} is used when an event is triggered by the focus object or a focus change.
 	"""
 
+	# TODO: add documentation on each of these contexts
 	FOCUS = "focus"
 	FOREGROUND = "foreground"
 	NAVIGATOR = "navigator"

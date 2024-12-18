@@ -100,12 +100,14 @@ class VisionHandler(AutoPropertyObject):
 
 	_allProviders: List[providerInfo.ProviderInfo] = []
 
-	def _getBuiltInProviderIds(self):
+	def _getBuiltInProviderIds(self) -> list[str]:
+		from visionEnhancementProviders.magnifier import MagnifierSettings
 		from visionEnhancementProviders.NVDAHighlighter import NVDAHighlighterSettings
 		from visionEnhancementProviders.screenCurtain import ScreenCurtainSettings
 
 		return [
 			NVDAHighlighterSettings.getId(),
+			MagnifierSettings.getId(),
 			ScreenCurtainSettings.getId(),
 		]
 
