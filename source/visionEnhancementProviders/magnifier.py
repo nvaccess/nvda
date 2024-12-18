@@ -438,8 +438,8 @@ class MagnifierWindow(CustomWindow):
 		if not winUser.user32.SetWindowPos(
 			self.handle,
 			winUser.HWND_TOPMOST,
-			magWindowRect.left,
-			magWindowRect.top,
+			0,
+			0,
 			magWindowRect.width,
 			magWindowRect.height,
 			winUser.SWP_NOACTIVATE | winUser.SWP_NOMOVE | winUser.SWP_NOSIZE,

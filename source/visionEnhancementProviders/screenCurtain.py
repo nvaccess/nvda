@@ -119,7 +119,7 @@ class Magnification:
 	MagSetWindowSource.errcheck = _errCheck
 
 	# Create transformation window
-	_MagGetInputTransformFuncType = WINFUNCTYPE(POINTER(BOOL), POINTER(RECT), POINTER(RECT))
+	_MagGetInputTransformFuncType = WINFUNCTYPE(BOOL, POINTER(BOOL), POINTER(RECT), POINTER(RECT))
 	_MagGetInputTransformArgTypes = ((2, "enabled"), (2, "src"), (2, "dest"))
 	MagGetInputTransform = _MagGetInputTransformFuncType(
 		("MagGetInputTransform", _magnification),
