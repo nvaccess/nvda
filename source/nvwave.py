@@ -14,7 +14,6 @@ from typing import (
 )
 from enum import Enum, auto
 from ctypes import (
-	POINTER,
 	Structure,
 	c_uint,
 	byref,
@@ -76,17 +75,7 @@ class WAVEFORMATEX(Structure):
 	]
 
 
-LPWAVEFORMATEX = POINTER(WAVEFORMATEX)
-
-
 WAVE_FORMAT_PCM = 1
-WAVE_MAPPER = -1
-
-CALLBACK_NULL = 0
-# CALLBACK_FUNCTION = 0x30000
-CALLBACK_EVENT = 0x50000
-# waveOutProc = CFUNCTYPE(HANDLE, UINT, DWORD, DWORD, DWORD)
-# WOM_DONE = 0x3bd
 
 
 def _isDebugForNvWave():
@@ -258,7 +247,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
-	DEFAULT_DEVICE_KEY = "default"
+	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("speech", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
 	_silenceDevice: typing.Optional[str] = None
 
@@ -267,21 +256,16 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		channels: int,
 		samplesPerSec: int,
 		bitsPerSample: int,
-		outputDevice: typing.Union[str, int] = WAVE_MAPPER,
-		closeWhenIdle: bool = False,
+		outputDevice: str = DEFAULT_DEVICE_KEY,
 		wantDucking: bool = True,
-		buffered: bool = False,
 		purpose: AudioPurpose = AudioPurpose.SPEECH,
 	):
 		"""Constructor.
 		@param channels: The number of channels of audio; e.g. 2 for stereo, 1 for mono.
 		@param samplesPerSec: Samples per second (hz).
 		@param bitsPerSample: The number of bits per sample.
-		@param outputDevice: The name of the audio output device to use,
-			WAVE_MAPPER for default.
-		@param closeWhenIdle: Deprecated; ignored.
+		@param outputDevice: The name of the audio output device to use, defaults to WasapiWavePlayer.DEFAULT_DEVICE_KEY
 		@param wantDucking: if true then background audio will be ducked on Windows 8 and higher
-		@param buffered: Whether to buffer small chunks of audio to prevent audio glitches.
 		@param purpose: The purpose of this audio.
 		@note: If C{outputDevice} is a name and no such device exists, the default device will be used.
 		@raise WindowsError: If there was an error opening the audio output device.
@@ -303,7 +287,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
-		if self._isDefaultDevice(outputDevice):
+		if outputDevice == self.DEFAULT_DEVICE_KEY:
 			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			outputDevice,
@@ -556,13 +540,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# There's still at least one active stream that wasn't idle.
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
-
-	@classmethod
-	def _isDefaultDevice(cls, name):
-		if name in (WAVE_MAPPER, cls.DEFAULT_DEVICE_KEY):
-			return True
-		# Check if this is the WinMM sound mapper device, which means default.
-		return name == next(_getOutputDevices())[1]
 
 
 WavePlayer = WasapiWavePlayer

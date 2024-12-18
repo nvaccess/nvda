@@ -141,11 +141,13 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
-* Due to the retirement of NVDA's winmm support:
-  * The following symbols have been removed from `nvwave`: `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+* Due to the retirement of NVDA's winmm support (#17496, #17532):
+  * The following symbols have been removed from `nvwave`: `CALLBACK_EVENT`, `CALLBACK_FUNCTION`, `CALLBACK_NULL`, `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEFORMATEX`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `waveOutProc`, `WAVE_MAPPER`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
   * The `WASAPI` key has been removed from the `audio` section of the config spec.
   * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
+  * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
+  * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
