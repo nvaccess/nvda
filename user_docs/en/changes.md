@@ -53,6 +53,7 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 
 ### Bug Fixes
 
+* Restore reading of math in Chromium-based browsers (Chrome/Edge/...) by handling a change they made (#17421)
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
