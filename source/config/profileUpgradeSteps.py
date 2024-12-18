@@ -417,8 +417,7 @@ def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
 
 
 def upgradeConfigFrom_13_to_14(profile: ConfigObj):
-	"""Set [audio][outputDevice] to the endpointID of [speech][outputDevice], and delete the latter.
-	"""
+	"""Set [audio][outputDevice] to the endpointID of [speech][outputDevice], and delete the latter."""
 	try:
 		friendlyName = profile["speech"]["outputDevice"]
 	except KeyError:
@@ -427,10 +426,14 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 	if friendlyName == "default":
 		log.debug("Output device is set to default. Not writing a new value to config.")
 	elif endpointId := _friendlyNameToEndpointId(friendlyName):
-		log.debug(f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config.")
+		log.debug(
+			f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config."
+		)
 		profile["audio"]["outputDevice"] = endpointId
 	else:
-		log.debug(f"Could not find an audio output device with {friendlyName=}. Not writing a new value to config.")
+		log.debug(
+			f"Could not find an audio output device with {friendlyName=}. Not writing a new value to config."
+		)
 	log.debug("Deleting old config value.")
 	del profile["speech"]["outputDevice"]
 
@@ -459,7 +462,9 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	states = (DEVICE_STATE.ACTIVE, DEVICE_STATE.UNPLUGGED, DEVICE_STATE.DISABLED, DEVICE_STATE.NOTPRESENT)
 	for state in states:
 		try:
-			return next(device for device in _getOutputDevices(stateMask=state) if device.friendlyName == friendlyName).id
+			return next(
+				device for device in _getOutputDevices(stateMask=state) if device.friendlyName == friendlyName
+			).id
 		except StopIteration:
 			# Proceed to the next device state.
 			continue
