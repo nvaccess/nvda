@@ -359,6 +359,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 	Mixing and matching both patterns is also allowed.
 
 	When subclassing this class, you can override `_addButtons` and `_addContents` to insert custom buttons or contents that you want your subclass to always have.
+
+	.. warning:: Unless noted otherwise, the message dialog API is **not** thread safe.
 	"""
 
 	_instances: deque["MessageDialog"] = deque()
@@ -782,6 +784,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 	):
 		"""Display a blocking dialog with an OK button.
 
+		.. note:: This method is thread safe.
+
 		:param message: The message to be displayed in the alert dialog.
 		:param caption: The caption of the alert dialog, defaults to wx.MessageBoxCaptionStr.
 		:param parent: The parent window of the alert dialog, defaults to None.
@@ -807,6 +811,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		cancelLabel=None,
 	) -> Literal[ReturnCode.OK, ReturnCode.CANCEL]:
 		"""Display a confirmation dialog with OK and Cancel buttons.
+
+		.. note:: This method is thread safe.
 
 		:param message: The message to be displayed in the dialog.
 		:param caption: The caption of the dialog window, defaults to wx.MessageBoxCaptionStr.
@@ -837,6 +843,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPAB
 		cancelLabel=None,
 	) -> Literal[ReturnCode.YES, ReturnCode.NO, ReturnCode.CANCEL]:
 		"""Display a query dialog with Yes, No, and Cancel buttons.
+
+		.. note:: This method is thread safe.
 
 		:param message: The message to be displayed in the dialog.
 		:param caption: The title of the dialog window, defaults to wx.MessageBoxCaptionStr.

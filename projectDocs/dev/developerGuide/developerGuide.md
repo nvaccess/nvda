@@ -1666,8 +1666,9 @@ If none of the standard `ReturnCode` values are suitable for your button, you ma
 
 The `MessageDialog` class also provides a number of convenience methods for showing common types of modal dialogs.
 Each of them requires a message string, and optionally a title string and parent window.
-They all also support overriding the labels on their buttons.
-The following convenience class methods are provided:
+They all also support overriding the labels on their buttons via keyword arguments.
+They are all thread safe.
+The following convenience class methods are provided (keyword arguments for overriding button labels indicated in parentheses):
 
 | Method | Buttons | Return values |
 |---|---|---|
