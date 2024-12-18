@@ -45,6 +45,7 @@ const IID IID_IMMNotificationClient = __uuidof(IMMNotificationClient);
 const IID IID_IAudioStreamVolume = __uuidof(IAudioStreamVolume);
 const IID IID_IAudioSessionManager2 = __uuidof(IAudioSessionManager2);
 const IID IID_IAudioSessionControl2 = __uuidof(IAudioSessionControl2);
+const IID IID_IMMEndpoint = __uuidof(IMMEndpoint);
 
 /**
  * C++ RAII class to manage the lifecycle of a standard Windows HANDLE closed
@@ -491,40 +492,39 @@ HRESULT WasapiPlayer::getPreferredDevice(CComPtr<IMMDevice>& preferredDevice) {
 	if (FAILED(hr)) {
 		return hr;
 	}
-	CComPtr<IMMDeviceCollection> devices;
-	hr = enumerator->EnumAudioEndpoints(eRender, DEVICE_STATE_ACTIVE, &devices);
+	CComPtr<IMMDevice> device;
+	hr = enumerator->GetDevice(deviceName.c_str(), &device);
 	if (FAILED(hr)) {
 		return hr;
 	}
-	UINT count = 0;
-	devices->GetCount(&count);
-	for (UINT d = 0; d < count; ++d) {
-		CComPtr<IMMDevice> device;
-		hr = devices->Item(d, &device);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		CComPtr<IPropertyStore> props;
-		hr = device->OpenPropertyStore(STGM_READ, &props);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		PROPVARIANT val;
-		hr = props->GetValue(PKEY_Device_FriendlyName, &val);
-		if (FAILED(hr)) {
-			return hr;
-		}
-		// WinMM device names are truncated to MAXPNAMELEN characters, including the
-		// null terminator.
-		constexpr size_t MAX_CHARS = MAXPNAMELEN - 1;
-		if (wcsncmp(val.pwszVal, deviceName.c_str(), MAX_CHARS) == 0) {
-			PropVariantClear(&val);
-			preferredDevice = std::move(device);
-			return S_OK;
-		}
-		PropVariantClear(&val);
+
+	// We only want to use the device if it is plugged in and enabled.
+	DWORD state;
+	hr = device->GetState(&state);
+	if (FAILED(hr)) {
+		return hr;
+	} else if (state != DEVICE_STATE_ACTIVE) {
+		return E_NOTFOUND;
 	}
-	return E_NOTFOUND;
+
+	// We only want to use the device if it is an output device.
+	IMMEndpoint* endpoint;
+	hr = device->QueryInterface(IID_IMMEndpoint, (void**)&endpoint);
+	if (FAILED(hr)) {
+		return hr;
+	}
+	EDataFlow dataFlow;
+	hr = endpoint->GetDataFlow(&dataFlow);
+	if (FAILED(hr)) {
+		return hr;
+	} else if(dataFlow != eRender) {
+		return E_NOTFOUND;
+	}
+	preferredDevice = std::move(device);
+	endpoint->Release();
+	device.Release();
+	enumerator.Release();
+	return S_OK;
 }
 
 bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
