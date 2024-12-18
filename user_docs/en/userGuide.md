@@ -133,7 +133,7 @@ The setup file is named "nvda_2022.1.exe" or similar.
 The year and version changes between updates to reflect the current release.
 
 1. Run the downloaded file.
-Music plays while a temporary copy of NVDA loads.
+You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 1. The NVDA Launcher window appears with the license agreement.
 Press `downArrow` to read the license agreement if desired.
