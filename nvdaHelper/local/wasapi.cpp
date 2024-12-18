@@ -168,9 +168,9 @@ class WasapiPlayer {
 
 	/**
 	 * Constructor.
-	 * Specify an empty (not null) deviceName to use the default device.
+	 * Specify an empty (not null) endpointId to use the default device.
 	 */
-	WasapiPlayer(wchar_t* deviceName, WAVEFORMATEX format,
+	WasapiPlayer(wchar_t* endpointId, WAVEFORMATEX format,
 		ChunkCompletedCallback callback);
 
 	/**
@@ -230,7 +230,7 @@ class WasapiPlayer {
 	CComPtr<IAudioClock> clock;
 	// The maximum number of frames that will fit in the buffer.
 	UINT32 bufferFrames;
-	std::wstring deviceName;
+	std::wstring endpointId;
 	WAVEFORMATEX format;
 	ChunkCompletedCallback callback;
 	PlayState playState = PlayState::stopped;
@@ -247,9 +247,9 @@ class WasapiPlayer {
 	bool isUsingPreferredDevice = false;
 };
 
-WasapiPlayer::WasapiPlayer(wchar_t* deviceName, WAVEFORMATEX format,
+WasapiPlayer::WasapiPlayer(wchar_t* endpointId, WAVEFORMATEX format,
 	ChunkCompletedCallback callback)
-: deviceName(deviceName), format(format), callback(callback) {
+: endpointId(endpointId), format(format), callback(callback) {
 	wakeEvent = CreateEvent(nullptr, false, false, nullptr);
 }
 
@@ -267,7 +267,7 @@ HRESULT WasapiPlayer::open(bool force) {
 	}
 	CComPtr<IMMDevice> device;
 	isUsingPreferredDevice = false;
-	if (deviceName.empty()) {
+	if (endpointId.empty()) {
 		hr = enumerator->GetDefaultAudioEndpoint(eRender, eConsole, &device);
 	} else {
 		hr = getPreferredDevice(device);
@@ -493,7 +493,7 @@ HRESULT WasapiPlayer::getPreferredDevice(CComPtr<IMMDevice>& preferredDevice) {
 		return hr;
 	}
 	CComPtr<IMMDevice> device;
-	hr = enumerator->GetDevice(deviceName.c_str(), &device);
+	hr = enumerator->GetDevice(endpointId.c_str(), &device);
 	if (FAILED(hr)) {
 		return hr;
 	}
@@ -532,7 +532,7 @@ bool WasapiPlayer::didPreferredDeviceBecomeAvailable() {
 		// We're already using the preferred device.
 		isUsingPreferredDevice ||
 		// A preferred device was not specified.
-		deviceName.empty() ||
+		endpointId.empty() ||
 		// A device hasn't recently changed state.
 		deviceStateChangeCount == notificationClient->getDeviceStateChangeCount()
 	) {
@@ -673,7 +673,7 @@ HRESULT WasapiPlayer::disableCommunicationDucking(IMMDevice* device) {
  */
 class SilencePlayer {
 	public:
-	SilencePlayer(wchar_t* deviceName);
+	SilencePlayer(wchar_t* endpointId);
 	HRESULT init();
 	// Play silence for the specified duration.
 	void playFor(DWORD ms, float volume);
@@ -698,8 +698,8 @@ class SilencePlayer {
 	std::vector<INT16> whiteNoiseData;
 };
 
-SilencePlayer::SilencePlayer(wchar_t* deviceName):
-player(deviceName, getFormat(), nullptr),
+SilencePlayer::SilencePlayer(wchar_t* endpointId):
+player(endpointId, getFormat(), nullptr),
 whiteNoiseData(
 	SILENCE_BYTES  / (
 		sizeof(INT16) / sizeof(unsigned char)
@@ -791,10 +791,10 @@ void SilencePlayer::terminate() {
  * WasapiPlayer or SilencePlayer, with the exception of wasPlay_startup.
  */
 
-WasapiPlayer* wasPlay_create(wchar_t* deviceName, WAVEFORMATEX format,
+WasapiPlayer* wasPlay_create(wchar_t* endpointId, WAVEFORMATEX format,
 	WasapiPlayer::ChunkCompletedCallback callback
 ) {
-	return new WasapiPlayer(deviceName, format, callback);
+	return new WasapiPlayer(endpointId, format, callback);
 }
 
 void wasPlay_destroy(WasapiPlayer* player) {
@@ -855,9 +855,9 @@ HRESULT wasPlay_startup() {
 
 SilencePlayer* silence = nullptr;
 
-HRESULT wasSilence_init(wchar_t* deviceName) {
+HRESULT wasSilence_init(wchar_t* endpointId) {
 	assert(!silence);
-	silence = new SilencePlayer(deviceName);
+	silence = new SilencePlayer(endpointId);
 	return silence->init();
 }
 
