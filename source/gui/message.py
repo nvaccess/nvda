@@ -266,8 +266,8 @@ class Button(NamedTuple):
 	defaultFocus: bool = False
 	"""Whether this button should explicitly be the default focused button.
 
-	..note: This only overrides the default focus.
-	If no buttons have this property, the first button will be the default focus.
+	.. note:: This only overrides the default focus.
+		If no buttons have this property, the first button will be the default focus.
 	"""
 
 	fallbackAction: bool = False
@@ -276,21 +276,21 @@ class Button(NamedTuple):
 	The fallback action is called when the user presses escape, the title bar close button, or the system menu close item.
 	It is also called when programatically closing the dialog, such as when shutting down NVDA.
 
-	..note: This only sets whether to override the fallback action.
-		`EscapeCode.DEFAULT` may still result in this button being the fallback action, even if `fallbackAction=False`.
+	.. note:: This only sets whether to override the fallback action.
+			`EscapeCode.DEFAULT` may still result in this button being the fallback action, even if `fallbackAction=False`.
 	"""
 
 	closesDialog: bool = True
 	"""Whether this button should close the dialog when clicked.
 
-	..note: Buttons with fallbackAction=True and closesDialog=False are not supported.
-		See the documentation of :class:`MessageDialog` for information on how these buttons are handled.
+	.. note:: Buttons with fallbackAction=True and closesDialog=False are not supported.
+			See the documentation of :class:`MessageDialog` for information on how these buttons are handled.
 	"""
 
 	returnCode: ReturnCode | None = None
 	"""Override for the default return code, which is the button's ID.
 
-	..note: If None, the button's ID will be used as the return code when closing a modal dialog with this button.
+	.. note:: If None, the button's ID will be used as the return code when closing a modal dialog with this button.
 	"""
 
 
@@ -1167,7 +1167,7 @@ def _messageDialogReturnCodeToMessageBoxReturnCode(returnCode: ReturnCode) -> in
 	:param returnCode: Return from :class:`MessageDialog`.
 	:raises ValueError: If the return code is not supported by :fun:`wx.MessageBox`.
 	:return: Integer as would be returned by :fun:`wx.MessageBox`.
-	..note: Only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.
+	.. note:: Only YES, NO, OK, CANCEL and HELP returns are supported by :fun:`wx.MessageBox`, and thus by this function.
 	"""
 	match returnCode:
 		case ReturnCode.YES:
@@ -1189,7 +1189,7 @@ def _messageBoxIconStylesToMessageDialogType(flags: int) -> DialogType:
 
 	:param flags: Style flags.
 	:return: Corresponding dialog type.
-	..note: This may not be a one-to-one correspondance, as not all icon styles supported by :fun:`wx.MessageBox` are associated with a :class:`DialogType`.
+	.. note:: This may not be a one-to-one correspondance, as not all icon styles supported by :fun:`wx.MessageBox` are associated with a :class:`DialogType`.
 	"""
 	# Order of precedence seems to be none, then error, then warning.
 	if flags & wx.ICON_NONE:
@@ -1209,9 +1209,9 @@ def _messageBoxButtonStylesToMessageDialogButtons(flags: int) -> tuple[Button, .
 
 	:param flags: Style flags.
 	:return: Tuple of :class:`Button` instances.
-	..note: :fun:`wx.MessageBox` only supports YES, NO, OK, CANCEL and HELP buttons, so this function only supports those buttons too.
+	.. note:: :fun:`wx.MessageBox` only supports YES, NO, OK, CANCEL and HELP buttons, so this function only supports those buttons too.
 		Providing other buttons will fail silently.
-	..note: Providing `wx.CANCEL_DEFAULT` without `wx.CANCEL`, or `wx.NO_DEFAULT` without `wx.NO` is invalid.
+	.. note:: Providing `wx.CANCEL_DEFAULT` without `wx.CANCEL`, or `wx.NO_DEFAULT` without `wx.NO` is invalid.
 		Wx will raise an assertion error about this, but wxPython will still create the dialog.
 		Providing these invalid combinations to this function fails silently.
 	"""
