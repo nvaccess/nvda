@@ -3044,8 +3044,8 @@ class AudioPanel(SettingsPanel):
 		self._deviceIds, deviceNames = zip(*nvwave._getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		selectedOutputDevice = config.conf["speech"]["outputDevice"]
-		if selectedOutputDevice == config.conf.getConfigValidation(("speech", "outputDevice")).default:
+		selectedOutputDevice = config.conf["audio"]["outputDevice"]
+		if selectedOutputDevice == config.conf.getConfigValidation(("audio", "outputDevice")).default:
 			selection = 0
 		else:
 			try:
@@ -3176,9 +3176,9 @@ class AudioPanel(SettingsPanel):
 	def onSave(self):
 		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
 		log.info(f"{selectedOutputDevice=}")
-		if config.conf["speech"]["outputDevice"] != selectedOutputDevice:
+		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
-			config.conf["speech"]["outputDevice"] = selectedOutputDevice
+			config.conf["audio"]["outputDevice"] = selectedOutputDevice
 			currentSynth = getSynth()
 			if not setSynth(currentSynth.name):
 				_synthWarningDialog(currentSynth.name)

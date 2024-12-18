@@ -233,7 +233,7 @@ class SynthDriver(SynthDriver):
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
-		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
+		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsAttrs = self._ttsCentral.QueryInterface(ITTSAttributes)

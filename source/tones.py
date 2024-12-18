@@ -24,7 +24,7 @@ def initialize():
 			channels=2,
 			samplesPerSec=int(SAMPLE_RATE),
 			bitsPerSample=16,
-			outputDevice=config.conf["speech"]["outputDevice"],
+			outputDevice=config.conf["audio"]["outputDevice"],
 			wantDucking=False,
 			purpose=nvwave.AudioPurpose.SOUNDS,
 		)

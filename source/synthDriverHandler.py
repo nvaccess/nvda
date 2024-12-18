@@ -485,7 +485,7 @@ def setSynth(name: Optional[str], isFallback: bool = False):
 		log.error(f"setSynth failed for {name}", exc_info=True)
 
 	if _curSynth is not None:
-		_audioOutputDevice = config.conf["speech"]["outputDevice"]
+		_audioOutputDevice = config.conf["audio"]["outputDevice"]
 		if not isFallback:
 			config.conf["speech"]["synth"] = name
 		log.info(f"Loaded synthDriver {_curSynth.name}")
@@ -530,7 +530,7 @@ def handlePostConfigProfileSwitch(resetSpeechIfNeeded=True):
 	@type resetSpeechIfNeeded: bool
 	"""
 	conf = config.conf["speech"]
-	if conf["synth"] != _curSynth.name or conf["outputDevice"] != _audioOutputDevice:
+	if conf["synth"] != _curSynth.name or config.conf["audio"]["outputDevice"] != _audioOutputDevice:
 		if resetSpeechIfNeeded:
 			# Reset the speech queues as we are now going to be using a new synthesizer with entirely separate state.
 			import speech

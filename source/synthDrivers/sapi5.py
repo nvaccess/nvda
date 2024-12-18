@@ -205,7 +205,7 @@ class SynthDriver(SynthDriver):
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
 		for audioOutput in self.tts.GetAudioOutputs():
-			if audioOutput.GetDescription() == config.conf["speech"]["outputDevice"]:
+			if audioOutput.GetDescription() == config.conf["audio"]["outputDevice"]:
 				self.tts.audioOutput = audioOutput
 				break
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))

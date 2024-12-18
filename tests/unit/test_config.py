@@ -910,3 +910,17 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		self.testSection["someBool"] = False
 		# Since we set someBool to a different value, update the profile.
 		self.assertEqual(self.profile, {"someBool": False})
+
+
+class TestFriendlyNameToEndpointId(unittest.TestCase):
+	def test_friendlyNameToEndpointId(
+		self,
+		_,
+		friendlyName: str,
+		activeDevices,
+		unpluggedDevices,
+		disabledDevices,
+		notpresentDevices,
+		expectedEndpointId: str | None,
+	):
+		raise NotImplementedError

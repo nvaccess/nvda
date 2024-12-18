@@ -110,7 +110,7 @@ def _getOutputDevices(
 	"""
 	if includeDefault:
 		yield _AudioOutputDevice(
-			id=typing.cast(str, config.conf.getConfigValidation(("speech", "outputDevice")).default),
+			id=typing.cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default),
 			# Translators: Value to show when choosing to use the default audio output device.
 			friendlyName=_("Default output device"),
 		)
@@ -215,7 +215,7 @@ def playWaveFile(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
 		bitsPerSample=f.getsampwidth() * 8,
-		outputDevice=config.conf["speech"]["outputDevice"],
+		outputDevice=config.conf["audio"]["outputDevice"],
 		wantDucking=False,
 		purpose=AudioPurpose.SOUNDS,
 	)
@@ -268,7 +268,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
-	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("speech", "outputDevice")).default)
+	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
 	_silenceDevice: typing.Optional[str] = None
 

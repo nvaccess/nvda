@@ -382,7 +382,7 @@ def initialize(indexCallback=None):
 		channels=1,
 		samplesPerSec=sampleRate,
 		bitsPerSample=16,
-		outputDevice=config.conf["speech"]["outputDevice"],
+		outputDevice=config.conf["audio"]["outputDevice"],
 	)
 	onIndexReached = indexCallback
 	espeakDLL.espeak_SetSynthCallback(callback)
