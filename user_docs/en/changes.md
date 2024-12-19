@@ -2,7 +2,7 @@
 
 ## 2024.4.2
 
-This is a patch release to release bugs with reading math in Chromium, and braille devices.
+This is a patch release to fix bugs with braille devices and reading math in Chromium.
 
 ### Bug fixes
 
