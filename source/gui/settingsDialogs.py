@@ -30,6 +30,7 @@ from synthDriverHandler import changeVoice, getSynth, getSynthList, setSynth, Sy
 import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
+	ColorTheme,
 	NVDAKey,
 	ShowMessages,
 	TetherTo,
@@ -44,6 +45,7 @@ import speech
 import systemUtils
 import gui
 import gui.contextHelp
+import gui.darkMode
 import globalVars
 from logHandler import log
 import nvwave
@@ -394,7 +396,7 @@ class SettingsPanel(
 		raise NotImplementedError
 
 	def onPanelActivated(self):
-		"""Called after the panel has been activated (i.e. de corresponding category is selected in the list of categories).
+		"""Called after the panel has been activated (i.e. the corresponding category is selected in the list of categories).
 		For example, this might be used for resource intensive tasks.
 		Sub-classes should extend this method.
 		"""
@@ -4953,10 +4955,14 @@ class VisionSettingsPanel(SettingsPanel):
 			return None
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer):
-		self.initialProviders = vision.handler.getActiveProviderInfos()
-		self.providerPanelInstances = []
 		self.settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		self.settingsSizerHelper.addItem(wx.StaticText(self, label=self.panelDescription))
+		self.makeDarkModeSettings(settingsSizer)
+		self.makeVisionProviderSettings(settingsSizer)
+
+	def makeVisionProviderSettings(self, settingsSizer: wx.BoxSizer):
+		self.initialProviders = vision.handler.getActiveProviderInfos()
+		self.providerPanelInstances = []
 
 		for providerInfo in vision.handler.getProviderList(reloadFromSystem=True):
 			providerSizer = self.settingsSizerHelper.addItem(
@@ -4972,6 +4978,35 @@ class VisionSettingsPanel(SettingsPanel):
 
 			providerSizer.Add(settingsPanel, flag=wx.EXPAND)
 			self.providerPanelInstances.append(settingsPanel)
+
+	def makeDarkModeSettings(self, settingsSizer: wx.BoxSizer):
+		sizer = self.settingsSizerHelper.addItem(
+			# Translators: this is a label for a group of controls appearing on
+			# the vision settings panel.
+			wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Dark Mode")),
+			flag=wx.EXPAND,
+		)
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self.colorThemeList = sHelper.addLabeledControl(
+			# Translators: label for a choice in the vision settings category panel
+			_("&Color theme"),
+			wx.Choice,
+			choices=[theme.displayString for theme in ColorTheme],
+		)
+		self.darkModeCanUseUnsupportedAPIs = wx.CheckBox(
+			sizer.GetStaticBox(),
+			# Translators: label for a checkbox in the vision settings category panel
+			label=_("Allow use of undocumented windows APIs (unsafe)"),
+		)
+		self.darkModeCanUseUnsupportedAPIs.Value = config.conf["general"]["darkModeCanUseUndocumentedAPIs"]
+		sHelper.addItem(self.darkModeCanUseUnsupportedAPIs)
+		self.bindHelpEvent("VisionSettingsColorTheme", self.colorThemeList)
+		curTheme = config.conf["general"]["colorTheme"]
+		for i, theme in enumerate(ColorTheme):
+			if theme == curTheme:
+				self.colorThemeList.SetSelection(i)
+		else:
+			log.debugWarning("Could not set color theme list to current theme")
 
 	def safeInitProviders(
 		self,
@@ -5046,6 +5081,10 @@ class VisionSettingsPanel(SettingsPanel):
 			except Exception:
 				log.debug(f"Error saving providerPanel: {panel.__class__!r}", exc_info=True)
 		self.initialProviders = vision.handler.getActiveProviderInfos()
+		colorTheme = list(ColorTheme)[self.colorThemeList.GetSelection()]
+		config.conf["general"]["colorTheme"] = colorTheme.value
+		config.conf["general"]["darkModeCanUseUndocumentedAPIs"] = self.darkModeCanUseUnsupportedAPIs.Value
+		gui.darkMode.handleEvent(self.TopLevelParent, wx.wxEVT_SHOW)
 
 
 class VisionProviderSubPanel_Settings(
