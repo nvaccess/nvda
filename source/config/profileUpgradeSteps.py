@@ -441,7 +441,7 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 
 
 def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
-	"""_summary_
+	"""Convert a device friendly name to an endpoint ID string.
 
 	Since friendly names are not unique, there may be many devices on one system with the same friendly name.
 	As the order of devices in an IMMEndpointEnumerator is arbitrary, we cannot assume that the first device with a matching friendly name is the device the user wants.

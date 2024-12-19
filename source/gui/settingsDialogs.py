@@ -3175,7 +3175,6 @@ class AudioPanel(SettingsPanel):
 
 	def onSave(self):
 		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
-		log.info(f"{selectedOutputDevice=}")
 		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
 			config.conf["audio"]["outputDevice"] = selectedOutputDevice
