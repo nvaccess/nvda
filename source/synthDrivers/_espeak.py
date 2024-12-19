@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2020 NV Access Limited, Peter Vágner
+# Copyright (C) 2007-2024 NV Access Limited, Peter Vágner
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
