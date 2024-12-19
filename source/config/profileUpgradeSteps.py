@@ -429,6 +429,8 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 		log.debug(
 			f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config.",
 		)
+		if "audio" not in profile:
+			profile["audio"] = {}
 		profile["audio"]["outputDevice"] = endpointId
 	else:
 		log.debug(
