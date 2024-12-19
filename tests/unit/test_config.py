@@ -31,6 +31,7 @@ from config.profileUpgradeSteps import (
 	_upgradeConfigFrom_8_to_9_cellBorders,
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
+	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
 )
@@ -919,7 +920,18 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 _DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[_AudioOutputDevice]]
 
 
-class TestFriendlyNameToEndpointId(unittest.TestCase):
+def getOutputDevicesFactory(
+	devices: _DevicesT,
+) -> Callable[[DEVICE_STATE], Generator[_AudioOutputDevice]]:
+	"""Create a callable that can be used to patch nvwave._getOutputDevices."""
+
+	def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[_AudioOutputDevice]:
+		yield from devices.get(stateMask, [])
+
+	return getOutputDevices
+
+
+class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 	DEFAULT_DEVICES: _DevicesT = {
 		DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id1", "Device 1")],
 		DEVICE_STATE.UNPLUGGED: [_AudioOutputDevice("id2", "Device 2")],
@@ -974,17 +986,59 @@ class TestFriendlyNameToEndpointId(unittest.TestCase):
 		with patch(
 			"nvwave._getOutputDevices",
 			autospec=True,
-			side_effect=self.getOutputDevicesFactory(devices),
+			side_effect=getOutputDevicesFactory(devices),
 		):
 			self.assertEqual(_friendlyNameToEndpointId(friendlyName), expectedId)
 
-	@staticmethod
-	def getOutputDevicesFactory(
-		devices: _DevicesT,
-	) -> Callable[[DEVICE_STATE], Generator[_AudioOutputDevice]]:
-		"""Create a callable that can be used to patch nvwave._getOutputDevices."""
 
-		def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[_AudioOutputDevice]:
-			yield from devices.get(stateMask, [])
+class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
+	def setUp(self):
+		devices: _DevicesT = {
+			DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id", "Friendly name")],
+		}
+		self._getOutputDevicesPatcher = patch(
+			"nvwave._getOutputDevices",
+			autospec=True,
+			side_effect=getOutputDevicesFactory(devices),
+		)
+		self._getOutputDevicesPatcher.start()
+		super().setUp()
 
-		return getOutputDevices
+	def tearDown(self):
+		self._getOutputDevicesPatcher.stop()
+		super().tearDown()
+
+	def test_outputDeviceNotSet(self):
+		"""Test that upgrading with no output device set works."""
+		configString = ""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+		with self.assertRaises(KeyError):
+			profile["audio"]["outputDevice"]
+
+	def test_outputDeviceFound(self):
+		"""Test that upgrading the profile correctly creates the new key and value."""
+		configString = """
+		[speech]
+			outputDevice=Friendly name
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		self.assertEqual(profile["audio"]["outputDevice"], "id")
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+
+	def test_outputDeviceNotFound(self):
+		"""Test that upgrading the profile with an unidentifiable device doesn't create a new entry."""
+		configString = """
+		[speech]
+			outputDevice=Nonexistant device
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+		with self.assertRaises(KeyError):
+			profile["audio"]["outputDevice"]
