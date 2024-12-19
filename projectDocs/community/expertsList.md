@@ -15,7 +15,6 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @SaschaCowley | <sascha@nvaccess.org> | Issue triage, technical decisions |
 | @michaelDCurran | <mick@nvaccess.org> | Advanced technical consulting |
 | @Qchristensen | <quentin@nvaccess.org> | User documentation, user support |
-| @jcsteh | <jamie@nvaccess.org> | Firefox bugs |
 
 ## Community
 
@@ -24,3 +23,4 @@ General enquiries should be directed to <info@nvaccess.org>.
 | @codeofdusk | <codeofdusk@gmail.com> | Windows Terminal and console, Microsoft UI Automation |
 | @nvdaes | <nrm1977@gmail.com> | Add-on store, braille |
 | @michaelweghorn | <m.weghorn@posteo.de> | LibreOffice |
+| @jcsteh | <jamie@nvaccess.org> | Mozilla Firefox |
