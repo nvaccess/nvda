@@ -2,11 +2,12 @@
 
 ## 2024.4.2
 
-This is a patch release to fix a bug with reading math in Chromium Browsers (Chrome, Edge).
+This is a patch release to release bugs with reading math in Chromium, and braille devices.
 
 ### Bug fixes
 
 * Fixed bug with with reading math in Chromium Browsers (Chrome, Edge). (#17421, @NSoiffer)
+* Humanware Brailliant BI 40X devices running firmware version 2.4 now work as expected. (#17518, @bramd)
 
 ## 2024.4.1
 
