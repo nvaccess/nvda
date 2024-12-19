@@ -9,6 +9,9 @@ This is a patch release to fix bugs with braille devices and reading math in Chr
 * Fixed bug with with reading math in Chromium Browsers (Chrome, Edge). (#17421, @NSoiffer)
 * Humanware Brailliant BI 40X devices running firmware version 2.4 now work as expected. (#17518, @bramd)
 
+* When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17522, @LeonarddeR)
+* The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17522, @LeonarddeR)
+
 ## 2024.4.1
 
 This is a patch release to fix a bug when saving speech symbol dictionaries.

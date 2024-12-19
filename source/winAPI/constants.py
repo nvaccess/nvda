@@ -28,6 +28,8 @@ class SystemErrorCodes(enum.IntEnum):
 	ACCESS_DENIED = 0x5
 	INVALID_DATA = 0xD
 	NOT_READY = 0x15
+	SHARING_VIOLATION = 0x20
+	"""The process cannot access the file because it is being used by another process."""
 	INVALID_PARAMETER = 0x57
 	MOD_NOT_FOUND = 0x7E
 	CANCELLED = 0x4C7

@@ -35,6 +35,7 @@ HR_CAPS = b"\x01"
 HR_KEYS = b"\x04"
 HR_BRAILLE = b"\x05"
 HR_POWEROFF = b"\x07"
+HID_USAGE_PAGE = 0x93
 
 KEY_NAMES = {
 	1: "power",  # Brailliant BI 32, 40 and 80.
@@ -147,6 +148,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Try talking to the display.
 			try:
 				if self.isHid:
+					if (usasePage := portInfo.get("HIDUsagePage")) != HID_USAGE_PAGE:
+						log.debugWarning(f"Ignoring device {port!r} with usage page {usasePage!r}")
+						continue
 					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 				else:
 					self._dev = hwIo.Serial(
