@@ -2,16 +2,16 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
-from collections.abc import Iterable
+from collections.abc import Callable, Generator
 import enum
 import typing
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import io
 
 import configobj
 import configobj.validate
-from parameterized import parameterized
+from pycaw.constants import DEVICE_STATE
 
 from config import (
 	AggregatedSection,
@@ -26,6 +26,7 @@ from config.featureFlagEnums import (
 	BoolFlag,
 )
 from config.profileUpgradeSteps import (
+	_friendlyNameToEndpointId,
 	_upgradeConfigFrom_8_to_9_lineIndent,
 	_upgradeConfigFrom_8_to_9_cellBorders,
 	_upgradeConfigFrom_8_to_9_showMessages,
@@ -44,6 +45,7 @@ from config.configFlags import (
 from utils.displayString import (
 	DisplayStringEnum,
 )
+from nvwave import _AudioOutputDevice
 
 
 class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
@@ -914,19 +916,75 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		self.assertEqual(self.profile, {"someBool": False})
 
 
+_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[_AudioOutputDevice]]
+
+
 class TestFriendlyNameToEndpointId(unittest.TestCase):
-	@parameterized.expand(
-		(("", "", (), (), (), (), ""),),
-	)
-	@unittest.expectedFailure
-	def test_friendlyNameToEndpointId(
-		self,
-		_,
-		friendlyName: str,
-		activeDevices: Iterable[typing.Any],
-		unpluggedDevices: Iterable[typing.Any],
-		disabledDevices: Iterable[typing.Any],
-		notpresentDevices: Iterable[typing.Any],
-		expectedEndpointId: str | None,
-	):
-		raise NotImplementedError
+	DEFAULT_DEVICES: _DevicesT = {
+		DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id1", "Device 1")],
+		DEVICE_STATE.UNPLUGGED: [_AudioOutputDevice("id2", "Device 2")],
+		DEVICE_STATE.DISABLED: [_AudioOutputDevice("id3", "Device 3")],
+		DEVICE_STATE.NOTPRESENT: [_AudioOutputDevice("id4", "Device 4")],
+	}
+
+	def test_noDuplicates(self):
+		"""Test that mapping from a friendly name to an endpoint ID works as expected when there are no duplicate friendly names."""
+		devices = self.DEFAULT_DEVICES
+		for devicesState, devicesInState in devices.items():
+			for device in devicesInState:
+				with self.subTest(id=device.id, FriendlyName=device.friendlyName, state=devicesState):
+					self.performTest(*device, devices)
+
+	def test_orderOfPrecedence(self):
+		"""Test that, when there are devices with duplicate names in different states, the one with the preferred state is returned."""
+		FRIENDLY_NAME = "Device friendly name"
+		devices: _DevicesT = {
+			DEVICE_STATE.ACTIVE: [_AudioOutputDevice("idA", FRIENDLY_NAME)],
+			DEVICE_STATE.DISABLED: [_AudioOutputDevice("idD", FRIENDLY_NAME)],
+			DEVICE_STATE.NOTPRESENT: [_AudioOutputDevice("idN", FRIENDLY_NAME)],
+			DEVICE_STATE.UNPLUGGED: [_AudioOutputDevice("idU", FRIENDLY_NAME)],
+		}
+		with self.subTest("Friendly name is active"):
+			self.performTest(*devices[DEVICE_STATE.ACTIVE][0], devices)
+		devices[DEVICE_STATE.ACTIVE].pop()
+		with self.subTest("Friendly name is unplugged"):
+			self.performTest(*devices[DEVICE_STATE.UNPLUGGED][0], devices)
+		devices[DEVICE_STATE.UNPLUGGED].pop()
+		with self.subTest("Friendly name is disabled"):
+			self.performTest(*devices[DEVICE_STATE.DISABLED][0], devices)
+		devices[DEVICE_STATE.DISABLED].pop()
+		with self.subTest("Friendly name is notpresent"):
+			self.performTest(*devices[DEVICE_STATE.NOTPRESENT][0], devices)
+		devices[DEVICE_STATE.NOTPRESENT].pop()
+
+	def test_nonexistant(self):
+		"""Test that attempting a match for a friendly name that no device has returns None."""
+		devices = self.DEFAULT_DEVICES
+		self.performTest(friendlyName="Nonexistant", expectedId=None, devices=devices)
+
+	def test_noDevices(self):
+		"""Test that attempting a match for a friendly name that no device has returns None."""
+		devices: _DevicesT = {}
+		self.performTest(friendlyName="Anything", expectedId=None, devices=devices)
+
+	def performTest(self, expectedId: str | None, friendlyName: str, devices: _DevicesT):
+		"""Patch nvwave._getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
+		The odd order of arguments is so you can directly unpack an AudioOutputDevice.
+		"""
+		with patch(
+			"nvwave._getOutputDevices",
+			autospec=True,
+			side_effect=self.getOutputDevicesFactory(devices),
+		):
+			self.assertEqual(_friendlyNameToEndpointId(friendlyName), expectedId)
+
+	@staticmethod
+	def getOutputDevicesFactory(
+		devices: _DevicesT,
+	) -> Callable[[DEVICE_STATE], Generator[_AudioOutputDevice]]:
+		"""Create a callable that can be used to patch nvwave._getOutputDevices."""
+
+		def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[_AudioOutputDevice]:
+			yield from devices.get(stateMask, [])
+
+		return getOutputDevices
