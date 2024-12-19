@@ -307,9 +307,7 @@ int generateHeadingXML(IDispatch* pDispatchParagraph, IDispatch* pDispatchParagr
 	// Expose the collapsed state of the heading
 	BOOL isCollapsed=false;
 	_com_dispatch_raw_propget(pDispatchParagraph, wdDISPID_PARAGRAPH_COLLAPSED_STATE, VT_BOOL, &isCollapsed);
-	if(isCollapsed) {
-		XMLStream<<L"collapsedState=\"true\" ";
-	}
+	XMLStream<<L"collapsedState=\""<<(isCollapsed ? L"true" : L"false")<<L"\" ";
 	if(pDispatchParagraphRange) {
 		long iVal=0;
 		if(_com_dispatch_raw_propget(pDispatchParagraphRange,wdDISPID_RANGE_START,VT_I4,&iVal)==S_OK&&iVal>=startOffset) {
