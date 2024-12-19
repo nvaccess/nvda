@@ -81,6 +81,7 @@ Specifically, MathML inside of span and other elements that have the attribute `
 In any document, if the cursor is on the last line, it will be moved to the end when using this command.
 (#17251, #17430, @nvdaes)
 * In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)
+* Fixed an issue where continuous reading (say all) stopped at the end of the first sentence when using some SAPI5 synthesizers. (#16691, @gexgd0419)
 
 ### Changes for Developers
 
