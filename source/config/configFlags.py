@@ -54,7 +54,7 @@ class TypingEcho(DisplayStringIntEnum):
 	"""
 
 	OFF = 0
-	ON = 1
+	EVERYWHERE = 1
 	EDIT_CONTROLS = 2
 
 	@property
@@ -63,7 +63,7 @@ class TypingEcho(DisplayStringIntEnum):
 			# Translators: One of the choices for typing echo in keyboard settings
 			TypingEcho.OFF: _("Off"),
 			# Translators: One of the choices for typing echo in keyboard settings
-			TypingEcho.ON: _("On"),
+			TypingEcho.EVERYWHERE: _("Everywhere"),
 			# Translators: One of the choices for typing echo in keyboard settings
 			TypingEcho.EDIT_CONTROLS: _("Only in edit controls"),
 		}

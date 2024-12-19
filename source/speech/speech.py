@@ -1388,7 +1388,7 @@ def speakTypedCharacters(ch: str):
 			if (
 				typingEchoMode == TypingEcho.EDIT_CONTROLS.value
 				and is_editableControl()
-				or typingEchoMode == TypingEcho.ON.value
+				or typingEchoMode == TypingEcho.EVERYWHERE.value
 			):
 				speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
@@ -1408,7 +1408,7 @@ def speakTypedCharacters(ch: str):
 		if (
 			typingEchoMode == TypingEcho.EDIT_CONTROLS.value
 			and is_editableControl()
-			or typingEchoMode == TypingEcho.ON.value
+			or typingEchoMode == TypingEcho.EVERYWHERE.value
 		):
 			speakSpelling(realChar)
 
