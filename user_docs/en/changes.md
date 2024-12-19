@@ -50,7 +50,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
-* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, On, and Only in edit controls, replacing the previous On/Off toggles. (#17505, @Cary-rowen)
+* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Everywhere, and Only in edit controls, replacing the previous On/Off toggles. (#17505, @Cary-rowen)
 
 ### Bug Fixes
 
@@ -153,14 +153,12 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
   * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
-<<<<<<< HEAD
-* Changed keyboard typing echo configuration from boolean to integer values:
-  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=On, 2=Only in edit controls).
-  * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
-=======
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
->>>>>>> master
+* Changed keyboard typing echo configuration from boolean to integer values:
+  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=Everywhere, 2=Only in edit controls).
+  * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
+
 
 #### Deprecations
 
