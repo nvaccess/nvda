@@ -46,6 +46,30 @@ class NVDAKey(DisplayStringIntFlag):
 
 
 @unique
+class TypingEcho(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values for typing echo (characters and words).
+
+	Use TypingEcho.MEMBER.value to compare with the config;
+	use TypingEcho.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = 0
+	EVERYWHERE = 1
+	EDIT_CONTROLS = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.OFF: _("Off"),
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.EVERYWHERE: _("Everywhere"),
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.EDIT_CONTROLS: _("Only in edit controls"),
+		}
+
+
+@unique
 class ShowMessages(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values for "Show messages" option in braille settings.
 

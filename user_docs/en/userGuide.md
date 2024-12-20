@@ -247,8 +247,8 @@ The actual commands will not execute while in input help mode.
 
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
-|Speak typed characters |`NVDA+2` |`NVDA+2` |When enabled, NVDA will announce all characters you type on the keyboard.|
-|Speak typed words |`NVDA+3` |`NVDA+3` |When enabled, NVDA will announce word you type on the keyboard.|
+|Speak typed characters |`NVDA+2` |`NVDA+2` |Controls how NVDA announces characters you type. Options: Off, Everywhere, Only in edit controls.|keyboard.|
+|Speak typed words |`NVDA+3` |`NVDA+3` |Controls how NVDA announces words you type. Options: Off, Everywhere, Only in edit controls.|
 |Speak command keys |`NVDA+4` |`NVDA+4` |When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.|
 |Enable mouse tracking |`NVDA+m` |`NVDA+m` |When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.|
 
@@ -2590,7 +2590,7 @@ If no key is chosen as the NVDA key it may be impossible to access many NVDA com
 
 Key: NVDA+2
 
-When enabled, NVDA will announce all characters you type on the keyboard.
+This option controls how NVDA announces characters you type on the keyboard. Options are: Off: NVDA will not announce any characters you type. Everywhere: NVDA will announce all characters you type. Only in edit controls: NVDA will only announce characters typed in edit controls and other areas where text can be typed.
 
 <!-- KC:setting -->
 
@@ -2598,7 +2598,7 @@ When enabled, NVDA will announce all characters you type on the keyboard.
 
 Key: NVDA+3
 
-When enabled, NVDA will announce all words you type on the keyboard.
+This option controls how NVDA announces words you type. Options are: Off: NVDA will not announce any words you type. Everywhere: NVDA will announce all words you type. Only in edit controls: NVDA will only announce words typed in edit controls and other areas where text can be typed.
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
