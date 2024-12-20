@@ -60,6 +60,7 @@ from .constants import (
 	BOTH_BYTES,
 	KC_INTERVAL,
 	BUS_DEVICE_DESC,
+	VID_AND_PID,
 )
 from .gestures import _gestureMap
 
@@ -85,7 +86,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
 		driverRegistrar.addUsbDevice(
 			DeviceType.SERIAL,
-			"VID_0403&PID_6001",  # Caiku Albatross 46/80
+			VID_AND_PID,  # Caiku Albatross 46/80
 			# Filter for bus reported device description, which should be "Albatross Braille Display".
 			matchFunc=lambda match: match.deviceInfo.get("busReportedDeviceDescription") == BUS_DEVICE_DESC,
 		)
