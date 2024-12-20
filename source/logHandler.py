@@ -393,10 +393,7 @@ class RemoteHandler(logging.Handler):
 class FileHandler(logging.FileHandler):
 	def handle(self, record):
 		if record.levelno >= logging.CRITICAL:
-			try:
-				winsound.PlaySound("SystemHand", winsound.SND_ALIAS | winsound.SND_ASYNC)
-			except:  # noqa: E722
-				pass
+			winsound.MessageBeep(winsound.MB_ICONHAND)
 		elif record.levelno >= logging.ERROR and shouldPlayErrorSound():
 			getOnErrorSoundRequested().notify()
 		return super().handle(record)
