@@ -191,7 +191,7 @@ def getDriversForConnectedUsbDevices(
 							(
 								t
 								for t in typeDefs
-								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id
+								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.id
 							),
 							None,
 						)
@@ -547,7 +547,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 							(
 								t
 								for t in typeDefs
-								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.Id
+								if isinstance(t, _UsbDeviceRegistryEntry) and t.id == match.id
 							),
 							None,
 						)
@@ -647,7 +647,7 @@ def getBrailleDisplayDriversEnabledForDetection() -> Generator[str, Any, Any]:
 
 def initialize():
 	"""Initializes bdDetect, such as detection data.
-	Calls to addUsbDevices, and addBluetoothDevices.
+	Calls to addUsbDevice, addUsbDevices, and addBluetoothDevices.
 	Specify the requirements for a detected device to be considered a
 	match for a specific driver.
 	"""
@@ -753,7 +753,7 @@ class DriverRegistrar:
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[type]
-		driverUsb.update(_UsbDeviceRegistryEntry(id, useAsFallback, matchFunc) for id in ids)
+		driverUsb.update((_UsbDeviceRegistryEntry(id, useAsFallback, matchFunc) for id in ids))
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
