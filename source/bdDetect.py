@@ -201,7 +201,7 @@ def getDriversForConnectedUsbDevices(
 					if typeDef.useAsFallback:
 						fallbackDriversAndMatches.append({driver, match})
 					else:
-						yield (driver, match)
+						yield (zdriver, match)
 
 	hidName = _getStandardHidDriverName()
 	if limitToDevices and hidName not in limitToDevices:
@@ -211,10 +211,10 @@ def getDriversForConnectedUsbDevices(
 		# This ensures that a vendor specific driver is preferred over the braille HID protocol.
 		# This preference may change in the future.
 		if _isHIDBrailleMatch(match):
-			yield hidName, match
+			yield (hidName, match)
 
 	for driver, match in fallbackDriversAndMatches:
-		yield driver, match
+		yield (driver, match)
 
 
 def _getStandardHidDriverName() -> str:
@@ -271,7 +271,7 @@ def getDriversForPossibleBluetoothDevices(
 			if not callable(matchFunc):
 				continue
 			if matchFunc(match):
-				yield driver, match
+				yield (driver, match)
 
 	hidName = _getStandardHidDriverName()
 	if limitToDevices and hidName not in limitToDevices:
