@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -24,7 +24,7 @@ def initialize():
 			channels=2,
 			samplesPerSec=int(SAMPLE_RATE),
 			bitsPerSample=16,
-			outputDevice=config.conf["speech"]["outputDevice"],
+			outputDevice=config.conf["audio"]["outputDevice"],
 			wantDucking=False,
 			purpose=nvwave.AudioPurpose.SOUNDS,
 		)
