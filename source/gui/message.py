@@ -18,6 +18,7 @@ from typing import Any, Literal, NamedTuple, Optional, Self, TypeAlias
 import core
 import extensionPoints
 import wx
+from .contextHelp import ContextHelpMixin
 from logHandler import log
 
 import gui
@@ -351,7 +352,7 @@ class _Command(NamedTuple):
 	returnCode: ReturnCode
 
 
-class MessageDialog(DpiScalingHelperMixinWithoutInit, wx.Dialog, metaclass=SIPABCMeta):
+class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialog, metaclass=SIPABCMeta):
 	"""Provides a more flexible message dialog.
 
 	Creating dialogs with this class is extremely flexible. You can create a dialog, passing almost all parameters to the initialiser, and only call `Show` or `ShowModal` on the instance.
