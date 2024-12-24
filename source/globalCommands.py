@@ -121,6 +121,9 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 #: Script category for audio streaming commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_AUDIO = _("Audio")
+#: Script category for Remote commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_REMOTE = _("Remote")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -4890,6 +4893,66 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeMute()
+
+	@script(
+		# Translators: Describes a command.
+		description=_("""Mute or unmute the speech coming from the remote computer"""),
+		category=SCRCAT_REMOTE,
+	)
+	def script_toggle_remote_mute(self, gesture):
+		globalVars.remoteClient.toggleMute()
+
+	@script(
+		gesture="kb:control+shift+NVDA+c",
+		category=SCRCAT_REMOTE,
+		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
+		description=_("Sends the contents of the clipboard to the remote machine"),
+	)
+	def script_push_clipboard(self, gesture):
+		globalVars.remoteClient.pushClipboard()
+
+	@script(
+		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
+		description=_("""Copies a link to the remote session to the clipboard"""),
+		category=SCRCAT_REMOTE,
+	)
+	def script_copy_link(self, gesture):
+		globalVars.remoteClient.copyLink()
+		# Translators: A message indicating that a link has been copied to the clipboard.
+		ui.message(_("Copied link"))
+
+	@script(
+		gesture="kb:alt+NVDA+pageDown",
+		category=SCRCAT_REMOTE,
+		# Translators: Documentation string for the script that disconnects a remote session.
+		description=_("""Disconnect a remote session"""),
+	)
+	def script_disconnect(self, gesture):
+		if not globalVars.remoteClient.isConnected:
+			# Translators: A message indicating that the remote client is not connected.
+			ui.message(_("Not connected."))
+			return
+		globalVars.remoteClient.disconnect()
+
+	@script(
+		gesture="kb:alt+NVDA+pageUp",
+		# Translators: Documentation string for the script that invokes the remote session.
+		description=_("""Connect to a remote computer"""),
+		category=SCRCAT_REMOTE,
+	)
+	def script_connect(self, gesture):
+		if globalVars.remoteClient.isConnected() or globalVars.remoteClient.connecting:
+			return
+		globalVars.remoteClient.doConnect()
+
+	@script(
+		# Translators: Documentation string for the script that toggles the control between guest and host machine.
+		description=_("Toggles the control between guest and host machine"),
+		category=SCRCAT_REMOTE,
+		gesture="kb:f11",
+	)
+	def script_sendKeys(self, gesture):
+		globalVars.remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.
