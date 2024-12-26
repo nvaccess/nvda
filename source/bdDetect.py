@@ -201,7 +201,7 @@ def getDriversForConnectedUsbDevices(
 					if typeDef.useAsFallback:
 						fallbackDriversAndMatches.append({driver, match})
 					else:
-						yield (zdriver, match)
+						yield (driver, match)
 
 	hidName = _getStandardHidDriverName()
 	if limitToDevices and hidName not in limitToDevices:
