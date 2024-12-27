@@ -223,10 +223,10 @@ def getDriversForConnectedUsbDevices(
 		for driver, devs in _driverDevices.items():
 			if limitToDevices and driver not in limitToDevices:
 				continue
-			typeDefs = devs[CommunicationType.USB]
-			for typeDef in typeDefs:
-				if typeDef.matches(match):
-					if typeDef.useAsFallback:
+			usbDefinitions = devs[CommunicationType.USB]
+			for definition in usbDefinitions:
+				if definition.matches(match):
+					if definition.useAsFallback:
 						fallbackDriversAndMatches.append({driver, match})
 					else:
 						yield (driver, match)
@@ -566,10 +566,10 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 			if _isHIDBrailleMatch(match):
 				yield match
 		else:
-			devs = _driverDevices[driver][CommunicationType.USB]
-			for dev in devs:
-				if dev.matches(match):
-					if dev.useAsFallback:
+			usbDefinitions = _driverDevices[driver][CommunicationType.USB]
+			for definition in usbDefinitions:
+				if definition.matches(match):
+					if definition.useAsFallback:
 						fallbackMatches.append(match)
 					else:
 						yield match
