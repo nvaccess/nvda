@@ -90,7 +90,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_1C71&PID_C111",  # Mantis Q 40
 				"VID_1C71&PID_C101",  # Chameleon 20
@@ -100,7 +100,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			matchFunc=bdDetect.HIDUsagePageMatchFuncFactory(HID_USAGE_PAGE),
 		)
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
 				"VID_1C71&PID_CE01",  # NLS eReader 20 HID
@@ -111,7 +111,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			},
 		)
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.SERIAL,
+			bdDetect.ProtocolType.SERIAL,
 			{
 				"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
 				"VID_1C71&PID_C021",  # Brailliant BI 14
@@ -119,13 +119,13 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)
 		driverRegistrar.addBluetoothDevices(
 			lambda m: (
-				m.type == bdDetect.DeviceType.SERIAL
+				m.type == bdDetect.ProtocolType.SERIAL
 				and (
 					m.id.startswith("Brailliant B") or m.id == "Brailliant 80" or "BrailleNote Touch" in m.id
 				)
 			)
 			or (
-				m.type == bdDetect.DeviceType.HID
+				m.type == bdDetect.ProtocolType.HID
 				and m.deviceInfo.get("manufacturer") == "Humanware"
 				and (
 					(
@@ -158,7 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isHid = portType == bdDetect.DeviceType.HID
+			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
 				if self.isHid:

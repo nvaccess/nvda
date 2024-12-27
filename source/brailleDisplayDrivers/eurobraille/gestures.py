@@ -162,7 +162,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 
 	def __init__(self, display: "BrailleDisplayDriver"):
 		super().__init__()
-		self.model = display.deviceType.lower().split(" ")[0]
+		self.model = display.ProtocolType.lower().split(" ")[0]
 		keysDown = dict(display.keysDown)
 
 		self.keyNames = names = []

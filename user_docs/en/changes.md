@@ -165,6 +165,7 @@ Please use `braille.filter_displayDimensions` instead. (#17011)
 * The following symbols are deprecated (#17486, @CyrilleB79):
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.
+* `bdDetect.DeviceType` is deprecated in favour of `bdDetect.ProtocolType` and `bdDetect.CommunicationType` to take into account the fact that both HID and Serial communication can take place over USB and Bluetooth. (#17537 , @LeonarddeR)
 
 ## 2024.4.1
 

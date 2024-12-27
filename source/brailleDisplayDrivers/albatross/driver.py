@@ -12,7 +12,7 @@ import serial
 import time
 
 from collections import deque
-from bdDetect import DeviceType, DriverRegistrar
+from bdDetect import DriverRegistrar, ProtocolType
 from logHandler import log
 from serial.win32 import (
 	PURGE_RXABORT,
@@ -85,7 +85,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
 		driverRegistrar.addUsbDevice(
-			DeviceType.SERIAL,
+			ProtocolType.SERIAL,
 			VID_AND_PID,  # Caiku Albatross 46/80
 			# Filter for bus reported device description, which should be "Albatross Braille Display".
 			matchFunc=lambda match: match.deviceInfo.get("busReportedDeviceDescription") == BUS_DEVICE_DESC,

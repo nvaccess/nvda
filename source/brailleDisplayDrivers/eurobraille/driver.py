@@ -45,7 +45,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_C251&PID_1122",  # Esys (version < 3.0, no SD card
 				"VID_C251&PID_1123",  # Esys (version >= 3.0, with HID keyboard, no SD card
@@ -67,7 +67,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			},
 		)
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.SERIAL,
+			bdDetect.ProtocolType.SERIAL,
 			{
 				"VID_28AC&PID_0012",  # b.note
 				"VID_28AC&PID_0013",  # b.note 2
@@ -97,7 +97,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.DeviceType.HID
+			self.isHid = portType == bdDetect.ProtocolType.HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(
@@ -141,7 +141,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						port=port,
 					),
 				)
-				if self.deviceType.startswith(("bnote", "bbook")):
+				if self.ProtocolType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
 					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
 					identifier = f"NVDA/{comportNumber}".encode()
@@ -158,7 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 
 	def terminate(self):
 		try:
-			if self.deviceType.startswith(("bnote", "bbook")):
+			if self.ProtocolType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
 				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b"")
 			super().terminate()
@@ -287,7 +287,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 			log.debug("Ignoring key repetition")
 			return
 		self.keysDown[group] |= arg
-		isIris = self.deviceType.startswith("Iris")
+		isIris = self.ProtocolType.startswith("Iris")
 		if not isIris and group == constants.EB_KEY_COMMAND and arg >= self.keysDown[group]:
 			# Started a gesture including command keys
 			self._ignoreCommandKeyReleases = False
