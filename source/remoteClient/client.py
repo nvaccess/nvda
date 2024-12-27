@@ -312,7 +312,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onMasterCertificateFailed(self):
-		if self.handleCertificateFailure(self.masterSession.Transport):
+		if self.handleCertificateFailure(self.masterSession.transport):
 			connectionInfo = ConnectionInfo(
 				mode=ConnectionMode.MASTER,
 				hostname=self.lastFailAddress[0],
