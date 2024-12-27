@@ -214,7 +214,7 @@ def getDriversForConnectedUsbDevices(
 		(
 			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == "usb"
+			if port["provider"] == CommunicationType.USB
 		)
 	)
 
@@ -288,7 +288,7 @@ def getDriversForPossibleBluetoothDevices(
 		(
 			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == "bluetooth"
+			if port["provider"] == CommunicationType.BLUETOOTH
 		)
 	)
 	for match in itertools.chain(btSerialMatchesForCustom, btHidDevMatchesForCustom):
@@ -551,7 +551,7 @@ def getConnectedUsbDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		(
 			DeviceMatch(ProtocolType.HID, port["usbID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == "usb"
+			if port["provider"] == CommunicationType.USB
 		),
 		(
 			DeviceMatch(ProtocolType.SERIAL, port["usbID"], port["port"], port)
@@ -599,7 +599,7 @@ def getPossibleBluetoothDevicesForDriver(driver: str) -> Iterator[DeviceMatch]:
 		(
 			DeviceMatch(ProtocolType.HID, port["hardwareID"], port["devicePath"], port)
 			for port in deviceInfoFetcher.hidDevices
-			if port["provider"] == "bluetooth"
+			if port["provider"] == CommunicationType.BLUETOOTH
 		),
 	)
 	for match in btDevs:
