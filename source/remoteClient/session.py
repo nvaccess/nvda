@@ -294,6 +294,8 @@ class SlaveSession(RemoteSession):
 		)
 
 	def registerCallbacks(self) -> None:
+		if self.callbacksAdded:
+			return
 		self.transport.registerOutbound(
 			tones.decide_beep,
 			RemoteMessageType.tone,
@@ -308,8 +310,11 @@ class SlaveSession(RemoteSession):
 		braille.displayChanged.register(self.setDisplaySize)
 		braille.displaySizeChanged.register(self.setDisplaySize)
 		pre_speechQueued.register(self.sendSpeech)
+		self.callbacksAdded = True
 
 	def unregisterCallbacks(self) -> None:
+		if not self.callbacksAdded:
+			return
 		self.transport.unregisterOutbound(RemoteMessageType.tone)
 		self.transport.unregisterOutbound(RemoteMessageType.cancel)
 		self.transport.unregisterOutbound(RemoteMessageType.wave)
@@ -318,11 +323,14 @@ class SlaveSession(RemoteSession):
 		braille.displayChanged.unregister(self.setDisplaySize)
 		braille.displaySizeChanged.unregister(self.setDisplaySize)
 		pre_speechQueued.unregister(self.sendSpeech)
+		self.callbacksAdded = False
 
 	def handleClientConnected(self, client: Dict[str, Any]) -> None:
 		super().handleClientConnected(client)
 		if client["connection_type"] == "master":
 			self.masters[client["id"]]["active"] = True
+		if self.masters:
+			self.registerCallbacks()
 
 	def handleChannelJoined(
 		self,
@@ -341,8 +349,7 @@ class SlaveSession(RemoteSession):
 		Removes any registered callbacks
 		to ensure clean shutdown of remote features.
 		"""
-		if self.callbacksAdded:
-			self.unregisterCallbacks()
+		self.unregisterCallbacks()
 
 	def handleTransportDisconnected(self) -> None:
 		"""Handle disconnection from the transport layer.
@@ -359,6 +366,8 @@ class SlaveSession(RemoteSession):
 		if client["connection_type"] == "master":
 			log.info("Master client disconnected: %r", client)
 			del self.masters[client["id"]]
+		if not self.masters:
+			self.unregisterCallbacks()
 
 	def setDisplaySize(self, sizes=None):
 		self.masterDisplaySizes = (
