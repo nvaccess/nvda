@@ -487,12 +487,12 @@ class TCPTransport(Transport):
 		"""
 		obj = self.serializer.deserialize(line)
 		if "type" not in obj:
-			log.error("Received message without type: %r" % obj)
+			log.warn("Received message without type: %r" % obj)
 			return
 		try:
 			messageType = RemoteMessageType(obj["type"])
 		except ValueError:
-			log.error("Received message with invalid type: %r" % obj)
+			log.warn("Received message with invalid type: %r" % obj)
 			return
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)
