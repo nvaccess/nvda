@@ -407,10 +407,10 @@ class RemoteClient:
 
 	def setReceivingBraille(self, state):
 		if state and self.masterSession.callbacksAdded and braille.handler.enabled:
-			self.masterSession.patcher.registerBrailleInput()
+			self.masterSession.registerBrailleInput()
 			self.localMachine.receivingBraille = True
 		elif not state:
-			self.masterSession.patcher.unregisterBrailleInput()
+			self.masterSession.unregisterBrailleInput()
 			self.localMachine.receivingBraille = False
 
 	@alwaysCallAfter
