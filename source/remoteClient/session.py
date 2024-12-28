@@ -197,20 +197,12 @@ Please either use a different server or upgrade your version of the addon."""),
 		return True
 
 	def handleClientConnected(self, client: Optional[Dict[str, Any]] = None) -> None:
-		"""Handle new client connection.
-
+		"""Handle new client connection."""
 		log.info("Client connected: %r", client)
-
-		Registers the callbacks if needed, then plays connection sound.
-		Called when a new remote client establishes connection.
-		"""
-		if not self.callbacksAdded:
-			self.registerCallbacks()
 		cues.client_connected()
 
 	def handleClientDisconnected(self, client=None):
 		"""Handle client disconnection.
-
 		Plays disconnection sound when remote client disconnects.
 		"""
 		cues.client_disconnected()
@@ -302,7 +294,6 @@ class SlaveSession(RemoteSession):
 		)
 
 	def registerCallbacks(self) -> None:
-		super().registerCallbacks()
 		self.transport.registerOutbound(
 			tones.decide_beep,
 			RemoteMessageType.tone,
@@ -319,7 +310,6 @@ class SlaveSession(RemoteSession):
 		pre_speechQueued.register(self.sendSpeech)
 
 	def unregisterCallbacks(self) -> None:
-		super().unregisterCallbacks()
 		self.transport.unregisterOutbound(RemoteMessageType.tone)
 		self.transport.unregisterOutbound(RemoteMessageType.cancel)
 		self.transport.unregisterOutbound(RemoteMessageType.wave)
@@ -500,12 +490,10 @@ class MasterSession(RemoteSession):
 		)
 
 	def registerCallbacks(self) -> None:
-		super().registerCallbacks()
 		braille.displayChanged.register(self.sendBrailleInfo)
 		braille.displaySizeChanged.register(self.sendBrailleInfo)
 
 	def unregisterCallbacks(self) -> None:
-		super().unregisterCallbacks()
 		braille.displayChanged.unregister(self.sendBrailleInfo)
 		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
 
@@ -529,17 +517,18 @@ class MasterSession(RemoteSession):
 			self.handleClientConnected(client)
 
 	def handleClientConnected(self, client=None):
+		hasSlaves = bool(self.slaves)
 		super().handleClientConnected(client)
 		self.sendBrailleInfo()
+		if not hasSlaves:
+			self.registerCallbacks()
 
 	def handleClientDisconnected(self, client=None):
 		"""Handle client disconnection.
-
-		Unregisters the patcher and removes any registered callbacks.
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
-		if self.callbacksAdded:
+		if self.callbacksAdded and not self.slaves:
 			self.unregisterCallbacks()
 
 	def sendBrailleInfo(
