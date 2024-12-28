@@ -1,10 +1,9 @@
-from typing import Any, Optional, Union
+from typing import Any, Union
 
 import braille
 import brailleInput
 import inputCore
 import scriptHandler
-import speech
 
 from . import callback_manager
 
@@ -31,36 +30,6 @@ class NVDAPatcher(callback_manager.CallbackManager):
 
 	def handle_displaySizeChanged(self, displaySize: Any) -> None:
 		self.callCallbacks("set_display", displaySize=displaySize)
-
-
-class NVDASlavePatcher(NVDAPatcher):
-	"""Class to manage patching of synth and braille."""
-
-	def __init__(self) -> None:
-		super().__init__()
-		self.origSpeak: Optional[Any] = None
-
-	def registerSpeech(self) -> None:
-		if self.origSpeak is not None:
-			return
-		self.origSpeak = speech._manager.speak
-		speech._manager.speak = self.speak
-
-	def unregisterSpeech(self):
-		if self.origSpeak is None:
-			return
-		speech._manager.speak = self.origSpeak
-		self.origSpeak = None
-
-	def register(self):
-		self.registerSpeech()
-
-	def unregister(self):
-		self.unregisterSpeech()
-
-	def speak(self, speechSequence: Any, priority: Any) -> None:
-		self.callCallbacks("speak", speechSequence=speechSequence, priority=priority)
-		self.origSpeak(speechSequence, priority)
 
 
 class NVDAMasterPatcher(NVDAPatcher):
