@@ -55,25 +55,27 @@ to ensure thread-safe NVDA operations.
 See Also:
 	transport.py: Network communication
 	local_machine.py: NVDA interface
-	nvda_patcher.py: Feature patches
 """
 
 import hashlib
 from collections import defaultdict
-from typing import Dict, List, Optional, Tuple, Any, Callable
+from typing import Dict, List, Optional, Any, Union
 
+import brailleInput
+import inputCore
 from logHandler import log
 
 
 import braille
 import gui
-import nvwave
+from nvwave import decide_playWaveFile
+import scriptHandler
 import speech
 import tones
 import ui
 from speech.extensions import speechCanceled, post_speechPaused, pre_speechQueued
 
-from . import configuration, connection_info, cues, nvda_patcher
+from . import configuration, connection_info, cues
 
 from .localMachine import LocalMachine
 from .protocol import RemoteMessageType
@@ -104,8 +106,6 @@ class RemoteSession:
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
 	# Session mode - either 'master' or 'slave'
 	mode: Optional[connection_info.ConnectionMode] = None
-	# Patcher instance for NVDA modifications
-	patcher: Optional[nvda_patcher.NVDAPatcher]
 	callbacksAdded: bool  # Whether callbacks are currently registered
 
 	def __init__(
@@ -115,7 +115,6 @@ class RemoteSession:
 	) -> None:
 		log.info("Initializing Remote Session")
 		self.localMachine = localMachine
-		self.patcher = None
 		self.callbacksAdded = False
 		self.transport = transport
 		self.transport.registerInbound(
@@ -135,28 +134,6 @@ class RemoteSession:
 			RemoteMessageType.client_left,
 			self.handleClientDisconnected,
 		)
-
-	def registerCallbacks(self) -> None:
-		"""Register all callback handlers for this session.
-
-		Registers the callbacks returned by _getPatcherCallbacks() with the patcher.
-		Sets patchCallbacksAdded flag when complete.
-		"""
-		patcher_callbacks = self._getPatcherCallbacks()
-		for event, callback in patcher_callbacks:
-			self.patcher.registerCallback(event, callback)
-		self.callbacksAdded = True
-
-	def unregisterCallbacks(self):
-		"""Unregister all callback handlers for this session.
-
-		Unregisters the callbacks returned by _getPatcherCallbacks() from the patcher.
-		Clears patchCallbacksAdded flag when complete.
-		"""
-		patcher_callbacks = self._getPatcherCallbacks()
-		for event, callback in patcher_callbacks:
-			self.patcher.unregisterCallback(event, callback)
-		self.callbacksAdded = False
 
 	def handleVersionMismatch(self) -> None:
 		"""Handle protocol version mismatch between client and server.
@@ -334,12 +311,11 @@ class SlaveSession(RemoteSession):
 			speechCanceled,
 			RemoteMessageType.cancel,
 		)
-		self.transport.registerOutbound(
-			nvwave.decide_playWaveFile,
-			RemoteMessageType.wave,
-		)
+		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.wave)
+		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.pause_speech)
 		braille.pre_writeCells.register(self.display)
-		post_speechPaused.register(self.pauseSpeech)
+		braille.displayChanged.register(self.setDisplaySize)
+		braille.displaySizeChanged.register(self.setDisplaySize)
 		pre_speechQueued.register(self.sendSpeech)
 
 	def unregisterCallbacks(self) -> None:
@@ -347,8 +323,10 @@ class SlaveSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.tone)
 		self.transport.unregisterOutbound(RemoteMessageType.cancel)
 		self.transport.unregisterOutbound(RemoteMessageType.wave)
+		self.transport.unregisterOutbound(RemoteMessageType.pause_speech)
 		braille.pre_writeCells.unregister(self.display)
-		post_speechPaused.unregister(self.pauseSpeech)
+		braille.displayChanged.unregister(self.setDisplaySize)
+		braille.displaySizeChanged.unregister(self.setDisplaySize)
 		pre_speechQueued.unregister(self.sendSpeech)
 
 	def handleClientConnected(self, client: Dict[str, Any]) -> None:
@@ -373,7 +351,6 @@ class SlaveSession(RemoteSession):
 		Removes any registered callbacks
 		to ensure clean shutdown of remote features.
 		"""
-		log.info("Transport closing, unregistering slave session patcher")
 		if self.callbacksAdded:
 			self.unregisterCallbacks()
 
@@ -411,15 +388,6 @@ class SlaveSession(RemoteSession):
 		self.masters[origin]["braille_name"] = name
 		self.masters[origin]["braille_numCells"] = numCells
 		self.setDisplaySize()
-
-	def _getPatcherCallbacks(self) -> List[Tuple[str, Callable[..., Any]]]:
-		"""Get callbacks to register with the patcher.
-
-		Returns:
-				Sequence of (event_name, callback_function) pairs for:
-				- Display size updates
-		"""
-		return (("set_display", self.setDisplaySize),)
 
 	def _filterUnsupportedSpeechCommands(self, speechSequence: List[Any]) -> List[Any]:
 		"""Remove unsupported speech commands from a sequence.
@@ -485,7 +453,6 @@ class MasterSession(RemoteSession):
 	"""
 
 	mode: connection_info.ConnectionMode = connection_info.ConnectionMode.MASTER
-	patcher: nvda_patcher.NVDAMasterPatcher
 	slaves: Dict[int, Dict[str, Any]]  # Information about connected slave
 
 	def __init__(
@@ -495,7 +462,6 @@ class MasterSession(RemoteSession):
 	) -> None:
 		super().__init__(localMachine, transport)
 		self.slaves = defaultdict(dict)
-		self.patcher = nvda_patcher.NVDAMasterPatcher()
 		self.transport.registerInbound(
 			RemoteMessageType.speak,
 			self.localMachine.speak,
@@ -533,6 +499,16 @@ class MasterSession(RemoteSession):
 			self.sendBrailleInfo,
 		)
 
+	def registerCallbacks(self) -> None:
+		super().registerCallbacks()
+		braille.displayChanged.register(self.sendBrailleInfo)
+		braille.displaySizeChanged.register(self.sendBrailleInfo)
+
+	def unregisterCallbacks(self) -> None:
+		super().unregisterCallbacks()
+		braille.displayChanged.unregister(self.sendBrailleInfo)
+		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
+
 	def handleNVDANotConnected(self) -> None:
 		log.warning("Attempted to connect to remote NVDA that is not available")
 		speech.cancelSpeech()
@@ -563,7 +539,6 @@ class MasterSession(RemoteSession):
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
-		self.patcher.unregister()
 		if self.callbacksAdded:
 			self.unregisterCallbacks()
 
@@ -587,18 +562,58 @@ class MasterSession(RemoteSession):
 			numCells=displaySize,
 		)
 
-	def brailleInput(self) -> None:
-		self.transport.send(type=RemoteMessageType.braille_input)
+	def handle_decide_executeGesture(
+		self,
+		gesture: Union[braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture, Any],
+	) -> bool:
+		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
+			dict = {
+				key: gesture.__dict__[key]
+				for key in gesture.__dict__
+				if isinstance(gesture.__dict__[key], (int, str, bool))
+			}
+			if gesture.script:
+				name = scriptHandler.getScriptName(gesture.script)
+				if name.startswith("kb"):
+					location = ["globalCommands", "GlobalCommands"]
+				else:
+					location = scriptHandler.getScriptLocation(gesture.script).rsplit(".", 1)
+				dict["scriptPath"] = location + [name]
+			else:
+				scriptData = None
+				maps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
+				if braille.handler.display.gestureMap:
+					maps.append(braille.handler.display.gestureMap)
+				for map in maps:
+					for identifier in gesture.identifiers:
+						try:
+							scriptData = next(map.getScriptsForGesture(identifier))
+							break
+						except StopIteration:
+							continue
+				if scriptData:
+					dict["scriptPath"] = [scriptData[0].__module__, scriptData[0].__name__, scriptData[1]]
+			if hasattr(gesture, "source") and "source" not in dict:
+				dict["source"] = gesture.source
+			if hasattr(gesture, "model") and "model" not in dict:
+				dict["model"] = gesture.model
+			if hasattr(gesture, "id") and "id" not in dict:
+				dict["id"] = gesture.id
+			elif hasattr(gesture, "identifiers") and "identifiers" not in dict:
+				dict["identifiers"] = gesture.identifiers
+			if hasattr(gesture, "dots") and "dots" not in dict:
+				dict["dots"] = gesture.dots
+			if hasattr(gesture, "space") and "space" not in dict:
+				dict["space"] = gesture.space
+			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
+				dict["routingIndex"] = gesture.routingIndex
+			self.transport.send(type=RemoteMessageType.braille_input, **dict)
+			return False
+		else:
+			return True
 
-	def _getPatcherCallbacks(self) -> List[Tuple[str, Callable[..., Any]]]:
-		"""Get callbacks to register with the patcher.
+	def registerBrailleInput(self) -> None:
+		inputCore.decide_executeGesture.register(self.handle_decide_executeGesture)
 
-		Returns:
-				Sequence of (event_name, callback_function) pairs for:
-				- Braille input handling
-				- Display info updates
-		"""
-		return (
-			("braille_input", self.brailleInput),
-			("set_display", self.sendBrailleInfo),
-		)
+	def unregisterBrailleInput(self) -> None:
+		inputCore.decide_executeGesture.unregister(self.handle_decide_executeGesture)
