@@ -497,7 +497,7 @@ class TCPTransport(Transport):
 		del obj["type"]
 		extensionPoint = self.inboundHandlers.get(messageType)
 		if not extensionPoint:
-			log.error("Received message with unhandled type: %r" % obj)
+			log.warn("Received message with unhandled type: %r %r", messageType, obj)
 			return
 		wx.CallAfter(extensionPoint.notify, **obj)
 
