@@ -230,6 +230,7 @@ class RemoteClient:
 		self.masterTransport = transport
 		self.menu.handleConnecting(connectionInfo.mode)
 
+	@alwaysCallAfter
 	def onConnectedAsMaster(self):
 		log.info("Successfully connected as master")
 		configuration.write_connection_to_config(self.masterSession.getConnectionInfo())
@@ -240,6 +241,7 @@ class RemoteClient:
 		)
 		cues.connected()
 
+	@alwaysCallAfter
 	def onDisconnectingAsMaster(self):
 		log.info("Master session disconnecting")
 		if self.menu:
@@ -249,6 +251,7 @@ class RemoteClient:
 		self.sendingKeys = False
 		self.keyModifiers = set()
 
+	@alwaysCallAfter
 	def onDisconnectedAsMaster(self):
 		log.info("Master session disconnected")
 		# Translators: Presented when connection to a remote computer was interupted.
