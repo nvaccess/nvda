@@ -71,7 +71,7 @@ import nvwave
 import speech
 import tones
 import ui
-from speech.extensions import speechCanceled, post_speechPaused
+from speech.extensions import speechCanceled, post_speechPaused, pre_speechQueued
 
 from . import configuration, connection_info, cues, nvda_patcher
 
@@ -106,7 +106,7 @@ class RemoteSession:
 	mode: Optional[connection_info.ConnectionMode] = None
 	# Patcher instance for NVDA modifications
 	patcher: Optional[nvda_patcher.NVDAPatcher]
-	patchCallbacksAdded: bool  # Whether callbacks are currently registered
+	callbacksAdded: bool  # Whether callbacks are currently registered
 
 	def __init__(
 		self,
@@ -116,7 +116,7 @@ class RemoteSession:
 		log.info("Initializing Remote Session")
 		self.localMachine = localMachine
 		self.patcher = None
-		self.patchCallbacksAdded = False
+		self.callbacksAdded = False
 		self.transport = transport
 		self.transport.registerInbound(
 			RemoteMessageType.version_mismatch,
@@ -145,7 +145,7 @@ class RemoteSession:
 		patcher_callbacks = self._getPatcherCallbacks()
 		for event, callback in patcher_callbacks:
 			self.patcher.registerCallback(event, callback)
-		self.patchCallbacksAdded = True
+		self.callbacksAdded = True
 
 	def unregisterCallbacks(self):
 		"""Unregister all callback handlers for this session.
@@ -156,7 +156,7 @@ class RemoteSession:
 		patcher_callbacks = self._getPatcherCallbacks()
 		for event, callback in patcher_callbacks:
 			self.patcher.unregisterCallback(event, callback)
-		self.patchCallbacksAdded = False
+		self.callbacksAdded = False
 
 	def handleVersionMismatch(self) -> None:
 		"""Handle protocol version mismatch between client and server.
@@ -224,11 +224,10 @@ Please either use a different server or upgrade your version of the addon."""),
 
 		log.info("Client connected: %r", client)
 
-		Registers the patcher and callbacks if needed, then plays connection sound.
+		Registers the callbacks if needed, then plays connection sound.
 		Called when a new remote client establishes connection.
 		"""
-		self.patcher.register()
-		if not self.patchCallbacksAdded:
+		if not self.callbacksAdded:
 			self.registerCallbacks()
 		cues.client_connected()
 
@@ -284,8 +283,6 @@ class SlaveSession(RemoteSession):
 
 	# Connection mode - always 'slave'
 	mode: connection_info.ConnectionMode = connection_info.ConnectionMode.SLAVE
-	# Patcher instance for NVDA modifications
-	patcher: nvda_patcher.NVDASlavePatcher
 	# Information about connected master clients
 	masters: Dict[int, Dict[str, Any]]
 	masterDisplaySizes: List[int]  # Braille display sizes of connected masters
@@ -303,7 +300,6 @@ class SlaveSession(RemoteSession):
 		self.masters = defaultdict(dict)
 		self.masterDisplaySizes = []
 		self.transport.transportClosing.register(self.handleTransportClosing)
-		self.patcher = nvda_patcher.NVDASlavePatcher()
 		self.transport.registerInbound(
 			RemoteMessageType.channel_joined,
 			self.handleChannelJoined,
@@ -344,6 +340,7 @@ class SlaveSession(RemoteSession):
 		)
 		braille.pre_writeCells.register(self.display)
 		post_speechPaused.register(self.pauseSpeech)
+		pre_speechQueued.register(self.sendSpeech)
 
 	def unregisterCallbacks(self) -> None:
 		super().unregisterCallbacks()
@@ -352,6 +349,7 @@ class SlaveSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.wave)
 		braille.pre_writeCells.unregister(self.display)
 		post_speechPaused.unregister(self.pauseSpeech)
+		pre_speechQueued.unregister(self.sendSpeech)
 
 	def handleClientConnected(self, client: Dict[str, Any]) -> None:
 		super().handleClientConnected(client)
@@ -372,12 +370,11 @@ class SlaveSession(RemoteSession):
 	def handleTransportClosing(self) -> None:
 		"""Handle cleanup when transport connection is closing.
 
-		Unregisters the patcher and removes any registered callbacks
+		Removes any registered callbacks
 		to ensure clean shutdown of remote features.
 		"""
 		log.info("Transport closing, unregistering slave session patcher")
-		self.patcher.unregister()
-		if self.patchCallbacksAdded:
+		if self.callbacksAdded:
 			self.unregisterCallbacks()
 
 	def handleTransportDisconnected(self) -> None:
@@ -389,15 +386,12 @@ class SlaveSession(RemoteSession):
 		"""
 		log.info("Transport disconnected from slave session")
 		cues.client_connected()
-		self.patcher.unregister()
 
 	def handleClientDisconnected(self, client: Optional[Dict[str, Any]] = None) -> None:
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == "master":
 			log.info("Master client disconnected: %r", client)
 			del self.masters[client["id"]]
-		if not self.masters:
-			self.patcher.unregister()
 
 	def setDisplaySize(self, sizes=None):
 		self.masterDisplaySizes = (
@@ -423,13 +417,9 @@ class SlaveSession(RemoteSession):
 
 		Returns:
 				Sequence of (event_name, callback_function) pairs for:
-				- Speech output
 				- Display size updates
 		"""
-		return (
-			("speak", self.speak),
-			("set_display", self.setDisplaySize),
-		)
+		return (("set_display", self.setDisplaySize),)
 
 	def _filterUnsupportedSpeechCommands(self, speechSequence: List[Any]) -> List[Any]:
 		"""Remove unsupported speech commands from a sequence.
@@ -442,7 +432,7 @@ class SlaveSession(RemoteSession):
 		"""
 		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])
 
-	def speak(self, speechSequence: List[Any], priority: Optional[str]) -> None:
+	def sendSpeech(self, speechSequence: List[Any], priority: Optional[str]) -> None:
 		"""Forward speech output to connected master instances.
 
 		Filters the speech sequence for supported commands and sends it
@@ -574,7 +564,7 @@ class MasterSession(RemoteSession):
 		"""
 		super().handleClientDisconnected(client)
 		self.patcher.unregister()
-		if self.patchCallbacksAdded:
+		if self.callbacksAdded:
 			self.unregisterCallbacks()
 
 	def sendBrailleInfo(

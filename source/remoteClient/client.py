@@ -406,7 +406,7 @@ class RemoteClient:
 		self.keyModifiers = set()
 
 	def setReceivingBraille(self, state):
-		if state and self.masterSession.patchCallbacksAdded and braille.handler.enabled:
+		if state and self.masterSession.callbacksAdded and braille.handler.enabled:
 			self.masterSession.patcher.registerBrailleInput()
 			self.localMachine.receivingBraille = True
 		elif not state:
