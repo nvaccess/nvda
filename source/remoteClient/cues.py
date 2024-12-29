@@ -1,17 +1,14 @@
 import os
-from typing import Dict, Optional, Tuple, List, TypedDict
+from typing import Dict, Optional, TypedDict
 
 import nvwave
 import tones
 import ui
-from . import beep_sequence, configuration
+from . import configuration
+from .beepSequence import beepSequenceAsync, BeepSequence
 
 local_beep = tones.beep
 local_playWaveFile = nvwave.playWaveFile
-
-# Define types for clarity
-BeepTone = Tuple[Optional[int], int]  # (frequency, duration)
-BeepSequence = List[BeepTone]
 
 
 class Cue(TypedDict, total=False):
@@ -58,7 +55,7 @@ def _play_cue(cue_name: str) -> None:
 		# Play beep sequence
 		if beeps := CUES[cue_name].get("beeps"):
 			filtered_beeps = [(freq, dur) for freq, dur in beeps if freq is not None]
-			beep_sequence.beep_sequence_async(*filtered_beeps)
+			beepSequenceAsync(*filtered_beeps)
 		return
 
 	# Play wave file
