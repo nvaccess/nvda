@@ -1,6 +1,7 @@
 import os
 from io import StringIO
 
+import config
 import configobj
 import globalVars
 from configobj import validate
@@ -8,6 +9,7 @@ from configobj import validate
 from .connection_info import ConnectionInfo
 
 CONFIG_FILE_NAME = "remote.ini"
+configRoot = "Remote"
 
 _config = None
 configspec = StringIO("""
@@ -36,9 +38,17 @@ def get_config():
 	global _config
 	if not _config:
 		path = os.path.abspath(os.path.join(globalVars.appArgs.configPath, CONFIG_FILE_NAME))
-		_config = configobj.ConfigObj(infile=path, configspec=configspec, create_empty=True)
-		val = validate.Validator()
-		_config.validate(val, copy=True)
+		if os.path.isfile(path):
+			_config = configobj.ConfigObj(infile=path, configspec=configspec)
+			validator = validate.Validator()
+			_config.validate(validator)
+			config.conf[configRoot] = _config.dict()
+			config.post_configSave.register(onSave)
+			config.post_configReset.register(onReset)
+		else:
+			_config = configobj.ConfigObj(configspec=configspec)
+			config.conf.spec[configRoot] = _config.configspec.dict()
+	_config = config.conf[configRoot]
 	return _config
 
 
@@ -55,4 +65,18 @@ def write_connection_to_config(connection_info: ConnectionInfo):
 	if address in last_cons:
 		conf["connections"]["last_connected"].remove(address)
 	conf["connections"]["last_connected"].append(address)
-	conf.write()
+
+
+def onSave():
+	path = os.path.abspath(os.path.join(globalVars.appArgs.configPath, CONFIG_FILE_NAME))
+	if os.path.isfile(path):  # We have already merged the config, so we can just delete the file
+		os.remove(path)
+	config.post_configSave.unregister(onSave)
+	config.post_configReset.unregister(onReset)
+
+
+def onReset():
+	config.post_configSave.unregister(
+		onSave,
+	)  # We don't want to delete the file if we reset the config after merging
+	config.post_configReset.unregister(onReset)

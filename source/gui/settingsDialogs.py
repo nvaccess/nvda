@@ -3453,7 +3453,6 @@ class RemoteSettingsPanel(SettingsPanel):
 			== wx.YES
 		):
 			self.config["trusted_certs"].clear()
-			self.config.write()
 		evt.Skip()
 
 	def isValid(self) -> bool:

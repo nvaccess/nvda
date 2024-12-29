@@ -306,7 +306,6 @@ class RemoteClient:
 			if a == wx.ID_YES:
 				config = configuration.get_config()
 				config["trusted_certs"][hostPortToAddress(self.lastFailAddress)] = certHash
-				config.write()
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True
 		except Exception as ex:
