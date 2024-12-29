@@ -499,12 +499,18 @@ class MasterSession(RemoteSession):
 		)
 
 	def registerCallbacks(self) -> None:
+		if self.callbacksAdded:
+			return
 		braille.displayChanged.register(self.sendBrailleInfo)
 		braille.displaySizeChanged.register(self.sendBrailleInfo)
+		self.callbacksAdded = True
 
 	def unregisterCallbacks(self) -> None:
+		if not self.callbacksAdded:
+			return
 		braille.displayChanged.unregister(self.sendBrailleInfo)
 		braille.displaySizeChanged.unregister(self.sendBrailleInfo)
+		self.callbacksAdded = False
 
 	def handleNVDANotConnected(self) -> None:
 		log.warning("Attempted to connect to remote NVDA that is not available")
