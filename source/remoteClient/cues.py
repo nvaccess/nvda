@@ -1,4 +1,3 @@
-import os
 from typing import Dict, Optional, TypedDict
 
 import nvwave
@@ -8,7 +7,6 @@ from . import configuration
 from .beepSequence import beepSequenceAsync, BeepSequence
 
 local_beep = tones.beep
-local_playWaveFile = nvwave.playWaveFile
 
 
 class Cue(TypedDict, total=False):
@@ -60,7 +58,7 @@ def _play_cue(cue_name: str) -> None:
 
 	# Play wave file
 	if wave := CUES[cue_name].get("wave"):
-		playSound(wave)
+		nvwave.playWaveFile(wave)
 
 	# Show message if specified
 	if message := CUES[cue_name].get("message"):
@@ -97,8 +95,3 @@ def clipboard_received():
 
 def should_play_sounds():
 	return configuration.get_config()["ui"]["play_sounds"]
-
-
-def playSound(filename):
-	path = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "waves", filename))
-	return local_playWaveFile(path + ".wav")
