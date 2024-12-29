@@ -1,5 +1,7 @@
+import os
 from typing import Dict, Optional, TypedDict
 
+import globalVars
 import nvwave
 import tones
 import ui
@@ -58,7 +60,7 @@ def _play_cue(cue_name: str) -> None:
 
 	# Play wave file
 	if wave := CUES[cue_name].get("wave"):
-		nvwave.playWaveFile(wave + ".wav")
+		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
 
 	# Show message if specified
 	if message := CUES[cue_name].get("message"):
