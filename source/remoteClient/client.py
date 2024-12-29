@@ -53,7 +53,7 @@ class RemoteClient:
 		self.slaveSession = None
 		self.masterSession = None
 		self.menu: Optional[RemoteMenu] = None
-		if not isRunningOnSecureDesktop:
+		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
 		self.URLHandlerWindow = url_handler.URLHandlerWindow(
