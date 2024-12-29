@@ -42,7 +42,7 @@ class ClientPanel(wx.Panel):
 			gui.messageBox(
 				# Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 				_("Host must be set."),
-				# Trans			rs: A title of a message box displayed when the host field is empty and the user tries to generate a key.
+				# Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
