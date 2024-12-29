@@ -1,61 +1,101 @@
 import os
+from typing import Dict, Optional, Tuple, List, TypedDict
 
 import nvwave
 import tones
-
+import ui
 from . import beep_sequence, configuration
 
 local_beep = tones.beep
 local_playWaveFile = nvwave.playWaveFile
 
+# Define types for clarity
+BeepTone = Tuple[Optional[int], int]  # (frequency, duration)
+BeepSequence = List[BeepTone]
+
+
+class Cue(TypedDict, total=False):
+	wave: Optional[str]
+	beeps: Optional[BeepSequence]
+	message: Optional[str]
+
+
+# Declarative dictionary of all possible cues
+CUES: Dict[str, Cue] = {
+	"connected": {"wave": "connected", "beeps": [(440, 60), (660, 60)]},
+	"disconnected": {
+		"wave": "disconnected",
+		"beeps": [(660, 60), (440, 60)],
+		# Translators: Message shown when the connection to the remote computer is lost.
+		"message": _("Disconnected"),
+	},
+	"control_server_connected": {
+		"wave": "controlled",
+		"beeps": [(720, 100), (None, 50), (720, 100), (None, 50), (720, 100)],
+		# Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
+		"message": _("Connected to control server"),
+	},
+	"client_connected": {"wave": "controlling", "beeps": [(1000, 300)]},
+	"client_disconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
+	"clipboard_pushed": {
+		"wave": "push_clipboard",
+		"beeps": [(500, 100), (600, 100)],
+		# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
+		"message": _("Clipboard pushed"),
+	},
+	"clipboard_received": {
+		"wave": "receive_clipboard",
+		"beeps": [(600, 100), (500, 100)],
+		# Translators: Message shown when the clipboard is successfully received from the remote computer.
+		"message": _("Clipboard received"),
+	},
+}
+
+
+def _play_cue(cue_name: str) -> None:
+	"""Helper function to play a cue by name"""
+	if not should_play_sounds():
+		# Play beep sequence
+		if beeps := CUES[cue_name].get("beeps"):
+			filtered_beeps = [(freq, dur) for freq, dur in beeps if freq is not None]
+			beep_sequence.beep_sequence_async(*filtered_beeps)
+		return
+
+	# Play wave file
+	if wave := CUES[cue_name].get("wave"):
+		playSound(wave)
+
+	# Show message if specified
+	if message := CUES[cue_name].get("message"):
+		ui.message(message)
+
 
 def connected():
-	if should_play_sounds():
-		playSound("connected")
-	else:
-		beep_sequence.beep_sequence_async((440, 60), (660, 60))
+	_play_cue("connected")
 
 
 def disconnected():
-	if should_play_sounds():
-		playSound("disconnected")
-	else:
-		beep_sequence.beep_sequence_async((660, 60), (440, 60))
+	_play_cue("disconnected")
 
 
 def control_server_connected():
-	if should_play_sounds():
-		playSound("controlled")
-	else:
-		beep_sequence.beep_sequence_async((720, 100), 50, (720, 100), 50, (720, 100))
+	_play_cue("control_server_connected")
 
 
 def client_connected():
-	if should_play_sounds():
-		playSound("controlling")
-	else:
-		local_beep(1000, 300)
+	_play_cue("client_connected")
 
 
 def client_disconnected():
-	if should_play_sounds():
-		playSound("disconnected")
-	else:
-		local_beep(108, 300)
+	_play_cue("client_disconnected")
 
 
 def clipboard_pushed():
-	if should_play_sounds():
-		playSound("push_clipboard")
-	else:
-		beep_sequence.beep_sequence_async((500, 100), (600, 100))
+	_play_cue("clipboard_pushed")
 
 
 def clipboard_received():
-	if should_play_sounds():
-		playSound("receive_clipboard")
-	else:
-		beep_sequence.beep_sequence_async((600, 100), (500, 100))
+	_play_cue("clipboard_received")
 
 
 def should_play_sounds():

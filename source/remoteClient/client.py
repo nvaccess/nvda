@@ -6,7 +6,6 @@ import braille
 import core
 import gui
 import inputCore
-import speech
 import ui
 import wx
 from config import isInstalledCopy
@@ -124,8 +123,6 @@ class RemoteClient:
 		try:
 			connector.send(RemoteMessageType.set_clipboard_text, text=api.getClipData())
 			cues.clipboard_pushed()
-			# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
-			ui.message(_("Clipboard pushed"))
 		except TypeError:
 			log.exception("Unable to push clipboard")
 
@@ -280,8 +277,6 @@ class RemoteClient:
 	def onConnectedAsSlave(self):
 		log.info("Control connector connected")
 		cues.control_server_connected()
-		# Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
-		speech.speakMessage(_("Connected to control server"))
 		self.menu.handleConnected(ConnectionMode.SLAVE, True)
 		configuration.write_connection_to_config(self.slaveSession.getConnectionInfo())
 
