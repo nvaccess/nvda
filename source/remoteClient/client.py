@@ -52,7 +52,9 @@ class RemoteClient:
 		self.localMachine = LocalMachine()
 		self.slaveSession = None
 		self.masterSession = None
-		self.menu: RemoteMenu = RemoteMenu(self)
+		self.menu: Optional[RemoteMenu] = None
+		if not isRunningOnSecureDesktop:
+			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
 		self.URLHandlerWindow = url_handler.URLHandlerWindow(
 			callback=self.verifyAndConnect,
@@ -225,13 +227,15 @@ class RemoteClient:
 		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
 		transport.reconnectorThread.start()
 		self.masterTransport = transport
-		self.menu.handleConnecting(connectionInfo.mode)
+		if self.menu:
+			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
 	def onConnectedAsMaster(self):
 		log.info("Successfully connected as master")
 		configuration.write_connection_to_config(self.masterSession.getConnectionInfo())
-		self.menu.handleConnected(ConnectionMode.MASTER, True)
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.MASTER, True)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected!"),
@@ -271,20 +275,23 @@ class RemoteClient:
 		transport.transportConnected.register(self.onConnectedAsSlave)
 		transport.transportDisconnected.register(self.onDisconnectedAsSlave)
 		transport.reconnectorThread.start()
-		self.menu.handleConnecting(connectionInfo.mode)
+		if self.menu:
+			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
 	def onConnectedAsSlave(self):
 		log.info("Control connector connected")
 		cues.control_server_connected()
-		self.menu.handleConnected(ConnectionMode.SLAVE, True)
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.SLAVE, True)
 		configuration.write_connection_to_config(self.slaveSession.getConnectionInfo())
 
 	@alwaysCallAfter
 	def onDisconnectedAsSlave(self):
 		log.info("Control connector disconnected")
 		# cues.control_server_disconnected()
-		self.menu.handleConnected(ConnectionMode.SLAVE, False)
+		if self.menu:
+			self.menu.handleConnected(ConnectionMode.SLAVE, False)
 
 	### certificate handling
 
