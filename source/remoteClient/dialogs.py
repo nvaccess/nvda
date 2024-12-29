@@ -1,7 +1,7 @@
 import json
 import random
 import threading
-from typing import Any, Dict, List, Optional, Union
+from typing import List, Optional, TypedDict, Union
 from urllib import request
 
 import gui
@@ -42,7 +42,7 @@ class ClientPanel(wx.Panel):
 			gui.messageBox(
 				# Translators: A message box displayed when the host field is empty and the user tries to generate a key.
 				_("Host must be set."),
-				# Translators: A title of a message box displayed when the host field is empty and the user tries to generate a key.
+				# Trans			rs: A title of a message box displayed when the host field is empty and the user tries to generate a key.
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
@@ -89,6 +89,12 @@ class ClientPanel(wx.Panel):
 		self.keyConnector.close()
 		self.keyConnector = None
 		self.generate_key_command(True)
+
+
+class PortCheckResponse(TypedDict):
+	host: str
+	port: int
+	open: bool
 
 
 class ServerPanel(wx.Panel):
@@ -150,7 +156,7 @@ class ServerPanel(wx.Panel):
 			temp_server.close()
 			wx.CallAfter(self.get_IP.Enable, True)
 
-	def onGetIPSucceeded(self, data: Dict[str, Any]) -> None:
+	def onGetIPSucceeded(self, data: PortCheckResponse) -> None:
 		ip = data["host"]
 		port = data["port"]
 		is_open = data["open"]
