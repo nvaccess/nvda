@@ -158,7 +158,7 @@ if self.deviceType.startswith(("bnote", "bbook")):
 
 	def terminate(self):
 		try:
-			if self.ProtocolType.startswith(("bnote", "bbook")):
+if self.deviceType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
 				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b"")
 			super().terminate()
