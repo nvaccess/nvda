@@ -182,12 +182,13 @@ Use `gui.message.MessageDialog` instead. (#17582)
 
 ## 2024.4.2
 
-This is a patch release to fix bugs with braille devices and reading math in Chromium.
+This is a patch release to fix bugs with braille devices and reading math in Chromium, as well as an issue with NVDA reading certain editable text fields in Visual Studio Code.
 
 ### Bug fixes
 
 * Fixed bug with with reading math in Chromium Browsers (Chrome, Edge). (#17421, @NSoiffer)
 * Humanware Brailliant BI 40X devices running firmware version 2.4 now work as expected. (#17518, @bramd)
+* Fix issue with certain SECTION elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
 
 ## 2024.4.1
 
