@@ -208,11 +208,27 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _initAttempt(self):
 		if self.isHid:
+			# Ensure to set self.numCells only at the end of this method to prevent display writes before the capabilities/numCells request
+			numCells = 0
+			# First try to get cell count from _writeSize
+			try:
+				# _writeSize includes 4 bytes of overhead, so subtract 4
+				numCells = self._dev._writeSize - 4
+			except AttributeError:
+				log.debugWarning("Could not get _writeSize from HID device")
+
+			# Adjust numCells based on reported number of cells
 			try:
 				data: bytes = self._dev.getFeature(HR_CAPS)
+				reportedNumCells = data[24]
+				if reportedNumCells > 0:
+					# Update numCells based on reported cell count from the device
+					numCells = reportedNumCells
+				else:
+					log.debugWarning("Could not get number of cells from HID device using HR_CAPS")
 			except WindowsError:
 				return  # Fail!
-			self.numCells = data[24]
+			self.numCells = numCells
 		else:
 			# This will cause the display to return the number of cells.
 			# The _serOnReceive callback will see this and set self.numCells.

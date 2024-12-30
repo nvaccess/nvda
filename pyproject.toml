@@ -81,6 +81,9 @@ logger-objects = ["logHandler.log"]
 "sconstruct" = ["F821"]
 "*sconscript" = ["F821"]
 
+[tool.ruff.lint.flake8-tidy-imports.banned-api]
+"winsound.PlaySound".msg= "PlaySound uses winmm, which is deprecated in favor of the Windows core audio APIs."
+
 [tool.licensecheck]
 using = "requirements:requirements.txt"
 only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]

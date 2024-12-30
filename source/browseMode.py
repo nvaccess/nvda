@@ -444,7 +444,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return config.conf["virtualBuffers"]["trapNonCommandGestures"]
 
 	def script_trapNonCommandGesture(self, gesture):
-		winsound.PlaySound("default", 1)
+		winsound.MessageBeep()
 
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
