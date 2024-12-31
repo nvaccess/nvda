@@ -9,6 +9,7 @@ multiple clients. It provides:
 - Protocol version recording (clients declare their version)
 - Connection monitoring with periodic one-way pings
 - Separate IPv4 and IPv6 socket handling
+- Dynamic certificate generation and management
 
 The server creates separate IPv4 and IPv6 sockets but routes messages between all
 connected clients regardless of IP version. Messages use JSON format and must be
@@ -16,14 +17,6 @@ newline-delimited. Invalid messages will cause client disconnection.
 
 When clients disconnect or lose connection, the server automatically removes them and
 notifies other connected clients of the departure.
-
-Key Classes:
-    LocalRelayServer: The main relay server that accepts connections and routes messages
-    Client: Represents a connected remote client and handles its message processing
-
-Example:
-    server = LocalRelayServer(port=6837, password="secret")
-    server.run()
 """
 
 import logging
@@ -31,14 +24,152 @@ import os
 import socket
 import ssl
 import time
+from cryptography import x509
+from cryptography.x509.oid import NameOID
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives import serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from datetime import datetime, timedelta
 from enum import Enum
+from pathlib import Path
 from select import select
 from typing import Any, Dict, List, Optional, Tuple
 
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
+from .secureDesktop import getProgramDataTempPath
 
 logger = logging.getLogger(__name__)
+
+
+class RemoteCertificateManager:
+	"""Manages SSL certificates for the NVDA Remote relay server."""
+
+	CERT_FILE = "NvdaRemoteRelay.pem"
+	KEY_FILE = "NvdaRemoteRelay.key"
+	CERT_DURATION_DAYS = 365
+	CERT_RENEWAL_THRESHOLD_DAYS = 30
+
+	def __init__(self, cert_dir: Optional[Path] = None):
+		self.cert_dir = cert_dir or getProgramDataTempPath()
+		self.cert_path = self.cert_dir / self.CERT_FILE
+		self.key_path = self.cert_dir / self.KEY_FILE
+
+	def ensureValidCertExists(self) -> None:
+		"""Ensures a valid certificate and key exist, regenerating if needed."""
+		os.makedirs(self.cert_dir, exist_ok=True)
+
+		should_generate = False
+		if not self._filesExist():
+			should_generate = True
+		else:
+			try:
+				self._validateCertificate()
+			except Exception as e:
+				logging.warning(f"Certificate validation failed: {e}")
+				should_generate = True
+
+		if should_generate:
+			self._generateSelfSignedCert()
+
+	def _filesExist(self) -> bool:
+		"""Check if both certificate and key files exist."""
+		return self.cert_path.exists() and self.key_path.exists()
+
+	def _validateCertificate(self) -> None:
+		"""Validates the existing certificate and key."""
+		# Load and validate certificate
+		with open(self.cert_path, "rb") as f:
+			cert_data = f.read()
+			cert = x509.load_pem_x509_certificate(cert_data)
+
+		# Check validity period
+		now = datetime.utcnow()
+		if now >= cert.not_valid_after or now < cert.not_valid_before:
+			raise ValueError("Certificate is not within its validity period")
+
+		# Check renewal threshold
+		time_remaining = cert.not_valid_after - now
+		if time_remaining.days <= self.CERT_RENEWAL_THRESHOLD_DAYS:
+			raise ValueError("Certificate is approaching expiration")
+
+		# Verify private key can be loaded
+		with open(self.key_path, "rb") as f:
+			serialization.load_pem_private_key(f.read(), password=None)
+
+	def _generateSelfSignedCert(self) -> None:
+		"""Generates a self-signed certificate and private key."""
+		private_key = rsa.generate_private_key(
+			public_exponent=65537,
+			key_size=2048,
+		)
+
+		subject = issuer = x509.Name(
+			[
+				x509.NameAttribute(NameOID.COMMON_NAME, "NVDARemote Relay"),
+				x509.NameAttribute(NameOID.ORGANIZATION_NAME, "NVDARemote"),
+			]
+		)
+
+		cert = (
+			x509.CertificateBuilder()
+			.subject_name(
+				subject,
+			)
+			.issuer_name(
+				issuer,
+			)
+			.public_key(
+				private_key.public_key(),
+			)
+			.serial_number(
+				x509.random_serial_number(),
+			)
+			.not_valid_before(
+				datetime.utcnow(),
+			)
+			.not_valid_after(
+				datetime.utcnow() + timedelta(days=self.CERT_DURATION_DAYS),
+			)
+			.add_extension(
+				x509.BasicConstraints(ca=True, path_length=None),
+				critical=True,
+			)
+			.add_extension(
+				x509.SubjectAlternativeName(
+					[
+						x509.DNSName("localhost"),
+					]
+				),
+				critical=False,
+			)
+			.sign(private_key, hashes.SHA256())
+		)
+
+		# Write private key
+		with open(self.key_path, "wb") as f:
+			f.write(
+				private_key.private_bytes(
+					encoding=serialization.Encoding.PEM,
+					format=serialization.PrivateFormat.PKCS8,
+					encryption_algorithm=serialization.NoEncryption(),
+				),
+			)
+
+		# Write certificate
+		with open(self.cert_path, "wb") as f:
+			f.write(cert.public_bytes(serialization.Encoding.PEM))
+
+		logging.info("Generated new self-signed certificate for NVDA Remote")
+
+	def createSSLContext(self) -> ssl.SSLContext:
+		"""Creates an SSL context using the certificate and key."""
+		context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+		context.load_cert_chain(
+			certfile=str(self.cert_path),
+			keyfile=str(self.key_path),
+		)
+		return context
 
 
 class LocalRelayServer:
@@ -55,23 +186,28 @@ class LocalRelayServer:
 	"""
 
 	PING_TIME: int = 300
-	_running: bool = False
-	port: int
-	password: str
-	clients: Dict[socket.socket, "Client"]
-	clientSockets: List[socket.socket]
-	serverSocket: ssl.SSLSocket
-	serverSocket6: ssl.SSLSocket
-	lastPingTime: float
 
-	def __init__(self, port: int, password: str, bind_host: str = "", bind_host6: str = "[::]:"):
+	def __init__(
+		self,
+		port: int,
+		password: str,
+		bind_host: str = "",
+		bind_host6: str = "[::]:",
+		cert_dir: Optional[Path] = None,
+	):
 		self.port = port
 		self.password = password
+		self.cert_manager = RemoteCertificateManager(cert_dir)
+		self.cert_manager.ensureValidCertExists()
+
+		# Initialize other server components
 		self.serializer = JSONSerializer()
-		# Maps client sockets to clients
-		self.clients = {}
-		self.clientSockets = []
+		self.clients: Dict[socket.socket, Client] = {}
+		self.clientSockets: List[socket.socket] = []
 		self._running = False
+		self.lastPingTime = 0
+
+		# Create server sockets
 		self.serverSocket = self.createServerSocket(
 			socket.AF_INET,
 			socket.SOCK_STREAM,
@@ -84,19 +220,16 @@ class LocalRelayServer:
 		)
 
 	def createServerSocket(self, family: int, type: int, bind_addr: Tuple[str, int]) -> ssl.SSLSocket:
+		"""Creates an SSL wrapped socket using the certificate."""
 		serverSocket = socket.socket(family, type)
-		certfile = os.path.join(
-			os.path.abspath(
-				os.path.dirname(__file__),
-			),
-			"server.pem",
-		)
-		serverSocket = ssl.wrap_socket(serverSocket, certfile=certfile)
+		ssl_context = self.cert_manager.createSSLContext()
+		serverSocket = ssl_context.wrap_socket(serverSocket)
 		serverSocket.bind(bind_addr)
 		serverSocket.listen(5)
 		return serverSocket
 
 	def run(self) -> None:
+		"""Main server loop that handles client connections and message routing."""
 		self._running = True
 		self.lastPingTime = time.time()
 		while self._running:
@@ -120,6 +253,7 @@ class LocalRelayServer:
 				self.lastPingTime = time.time()
 
 	def acceptNewConnection(self, sock: ssl.SSLSocket) -> None:
+		"""Accept and set up a new client connection."""
 		try:
 			clientSock, addr = sock.accept()
 		except (ssl.SSLError, socket.error, OSError):
@@ -130,14 +264,17 @@ class LocalRelayServer:
 		self.addClient(client)
 
 	def addClient(self, client: "Client") -> None:
+		"""Add a new client to the server."""
 		self.clients[client.socket] = client
 		self.clientSockets.append(client.socket)
 
 	def removeClient(self, client: "Client") -> None:
+		"""Remove a client from the server."""
 		del self.clients[client.socket]
 		self.clientSockets.remove(client.socket)
 
 	def clientDisconnected(self, client: "Client") -> None:
+		"""Handle client disconnection and notify other clients."""
 		self.removeClient(client)
 		if client.authenticated:
 			client.send_to_others(
@@ -147,6 +284,7 @@ class LocalRelayServer:
 			)
 
 	def close(self) -> None:
+		"""Shut down the server and close all connections."""
 		self._running = False
 		self.serverSocket.close()
 		self.serverSocket6.close()
@@ -158,21 +296,10 @@ class Client:
 	Processes incoming messages, handles authentication via channel password,
 	records client protocol version, and routes messages to other connected clients.
 	Maintains a buffer of received data and processes complete messages delimited
-	by newlines. Invalid or unparseable messages will cause client disconnection.
-
-	Unauthenticated clients can only send join and protocol_version messages.
-	The join message must include the correct channel password in its 'channel' field.
-	Once authenticated, all valid messages are forwarded to other connected clients.
-	When this client disconnects, all other clients are notified via client_left message.
+	by newlines.
 	"""
 
 	id: int = 0
-	server: LocalRelayServer
-	socket: ssl.SSLSocket
-	buffer: bytes
-	authenticated: bool
-	connectionType: Optional[str]
-	protocolVersion: int
 
 	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket):
 		self.server = server
@@ -186,27 +313,17 @@ class Client:
 		Client.id += 1
 
 	def handleData(self) -> None:
-		sock_Data: bytes = b""
+		"""Process incoming data from the client socket."""
+		sock_data = b""
 		try:
-			# 16384 is 2^14 self.socket is a ssl wrapped socket.
-			# Perhaps this value was chosen as the largest value that could be received [1] to avoid having to loop
-			# until a new line is reached.
-			# However, the Python docs [2] say:
-			# "For best match with hardware and network realities, the value of bufsize should be a relatively
-			# small power of 2, for example, 4096."
-			# This should probably be changed in the future.
-			# See also transport.py handle_server_data in class TCPTransport.
-			# [1] https://stackoverflow.com/a/24870153/
-			# [2] https://docs.python.org/3.7/library/socket.html#socket.socket.recv
-			buffSize = 16384
-			sock_Data = self.socket.recv(buffSize)
+			sock_data = self.socket.recv(16384)
 		except Exception:
 			self.close()
 			return
-		if not sock_Data:  # Disconnect
+		if not sock_data:  # Disconnect
 			self.close()
 			return
-		data = self.buffer + sock_Data
+		data = self.buffer + sock_data
 		if b"\n" not in data:
 			self.buffer = data
 			return
@@ -222,6 +339,7 @@ class Client:
 		self.buffer += data
 
 	def parse(self, line: bytes) -> None:
+		"""Parse and handle an incoming message line."""
 		parsed = self.serializer.deserialize(line)
 		if "type" not in parsed:
 			return
@@ -233,9 +351,11 @@ class Client:
 			getattr(self, fn)(parsed)
 
 	def asDict(self) -> Dict[str, Any]:
+		"""Get client information as a dictionary."""
 		return dict(id=self.id, connection_type=self.connectionType)
 
 	def do_join(self, obj: Dict[str, Any]) -> None:
+		"""Handle client join request and authentication."""
 		password = obj.get("channel", None)
 		if password != self.server.password:
 			self.send(
@@ -266,12 +386,14 @@ class Client:
 		)
 
 	def do_protocol_version(self, obj: Dict[str, Any]) -> None:
+		"""Record client's protocol version."""
 		version = obj.get("version")
 		if not version:
 			return
 		self.protocolVersion = version
 
 	def close(self) -> None:
+		"""Close the client connection."""
 		self.socket.close()
 		self.server.clientDisconnected(self)
 
@@ -283,6 +405,7 @@ class Client:
 		client: Optional[Dict[str, Any]] = None,
 		**kwargs: Any,
 	) -> None:
+		"""Send a message to this client."""
 		msg = kwargs
 		if self.protocolVersion > 1:
 			if origin:
@@ -298,6 +421,7 @@ class Client:
 			self.close()
 
 	def send_to_others(self, origin: Optional[int] = None, **obj: Any) -> None:
+		"""Send a message to all other authenticated clients."""
 		if origin is None:
 			origin = self.id
 		for c in self.server.clients.values():
