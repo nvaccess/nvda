@@ -24,6 +24,7 @@ import os
 import socket
 import ssl
 import time
+import cffi  # noqa # required for cryptography
 from cryptography import x509
 from cryptography.x509.oid import NameOID
 from cryptography.hazmat.primitives import hashes
@@ -108,7 +109,7 @@ class RemoteCertificateManager:
 			[
 				x509.NameAttribute(NameOID.COMMON_NAME, "NVDARemote Relay"),
 				x509.NameAttribute(NameOID.ORGANIZATION_NAME, "NVDARemote"),
-			]
+			],
 		)
 
 		cert = (
@@ -139,7 +140,7 @@ class RemoteCertificateManager:
 				x509.SubjectAlternativeName(
 					[
 						x509.DNSName("localhost"),
-					]
+					],
 				),
 				critical=False,
 			)
