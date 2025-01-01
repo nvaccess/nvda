@@ -82,6 +82,7 @@ Specifically, MathML inside of span and other elements that have the attribute `
 In any document, if the cursor is on the last line, it will be moved to the end when using this command.
 (#17251, #17430, @nvdaes)
 * In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)
+* Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
 
 ### Changes for Developers
 
@@ -117,9 +118,6 @@ Add-ons will need to be re-tested and have their manifest updated.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
-* A new function, `gui.guiHelper.wxCallOnMain`, has been added, which allows safely and synchronously calling wx functions from non-GUI threads, and getting their return value. (#17304)
-* A new message dialog API has been added to `gui.message`. (#13007)
-  * Added classes: `ReturnCode`, `EscapeCode`, `DialogType`, `Button`, `DefaultButton`, `DefaultButtonSet`, `MessageDialog`.
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 * Retrieving the `labeledBy` property now works for:
   * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
@@ -164,8 +162,6 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
-* The `gui.message.messageBox` and `gui.runScriptModalDialog` functions, and `gui.nvdaControls.MessageDialog` class are deprecated.
-Use `gui.message.MessageDialog` instead. (#17304)
 * The following symbols are deprecated (#17486, @CyrilleB79):
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.

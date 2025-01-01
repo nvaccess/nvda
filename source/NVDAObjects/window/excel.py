@@ -1804,7 +1804,7 @@ class ExcelCell(ExcelBase):
 			and controlTypes.State.UNLOCKED not in self.states
 			and controlTypes.State.PROTECTED in self.parent.states
 		):
-			winsound.PlaySound("Default", winsound.SND_ALIAS | winsound.SND_NOWAIT | winsound.SND_ASYNC)
+			winsound.MessageBeep()
 			return
 		super(ExcelCell, self).event_typedCharacter(ch)
 
