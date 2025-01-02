@@ -17,7 +17,7 @@ from functools import partial
 import itertools
 import threading
 from concurrent.futures import ThreadPoolExecutor, Future
-from enum import Enum
+from enum import StrEnum
 from typing import (
 	Any,
 	Callable,
@@ -53,7 +53,7 @@ DBT_DEVNODES_CHANGED = 7
 USB_ID_REGEX = re.compile(r"^VID_[0-9A-F]{4}&PID_[0-9A-F]{4}$", re.U)
 
 
-class ProtocolType(str, Enum):
+class ProtocolType(StrEnum):
 	HID = "hid"
 	"""HID devices"""
 	SERIAL = "serial"
@@ -62,7 +62,7 @@ class ProtocolType(str, Enum):
 	"""Devices with a manufacturer specific protocol"""
 
 
-class CommunicationType(str, Enum):
+class CommunicationType(StrEnum):
 	BLUETOOTH = "bluetooth"
 	"""Bluetooth devices"""
 	USB = "usb"
@@ -82,7 +82,7 @@ class _DeviceTypeMeta(type):
 		repl = cls._mapping.get(name)
 		if repl is not None and NVDAState._allowDeprecatedAPI():
 			log.warning(
-				f"{cls.__name__}.{name} is deprecated. Use {repl} instead.",
+				f"{cls.__name__}.{name} is deprecated. Use {repl.__class__.__name__}.{repl} instead.",
 			)
 			return repl
 		raise AttributeError(f"'{cls.__name__}' object has no attribute '{name}'")
@@ -112,7 +112,7 @@ def __getattr__(attrName: str) -> Any:
 	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
-			f"{attrName} is deprecated. " f"Use bdDetect.{replacementSymbol} instead. ",
+			f"{attrName} is deprecated. " f"Use bdDetect.{replacementSymbol.__class__.__name__}.{replacementSymbol.value} instead. ",
 		)
 		return replacementSymbol.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
