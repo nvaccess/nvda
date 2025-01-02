@@ -287,7 +287,7 @@ if self.deviceType.startswith(("bnote", "bbook")):
 			log.debug("Ignoring key repetition")
 			return
 		self.keysDown[group] |= arg
-		isIris = self.ProtocolType.startswith("Iris")
+		isIris = self.deviceType.startswith("Iris")
 		if not isIris and group == constants.EB_KEY_COMMAND and arg >= self.keysDown[group]:
 			# Started a gesture including command keys
 			self._ignoreCommandKeyReleases = False
