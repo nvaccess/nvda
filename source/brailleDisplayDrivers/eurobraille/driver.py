@@ -141,7 +141,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 						port=port,
 					),
 				)
-if self.deviceType.startswith(("bnote", "bbook")):
+				if self.deviceType.startswith(("bnote", "bbook")):
 					# send identifier to bnote / bbook with current COM port
 					comportNumber = f'{int(re.match(".*?([0-9]+)$", port).group(1)):02d}'
 					identifier = f"NVDA/{comportNumber}".encode()
@@ -158,7 +158,7 @@ if self.deviceType.startswith(("bnote", "bbook")):
 
 	def terminate(self):
 		try:
-if self.deviceType.startswith(("bnote", "bbook")):
+			if self.deviceType.startswith(("bnote", "bbook")):
 				# reset identifier to bnote / bbook with current COM port
 				self._sendPacket(constants.EB_SYSTEM, constants.EB_CONNECTION_NAME, b"")
 			super().terminate()
@@ -173,7 +173,7 @@ if self.deviceType.startswith(("bnote", "bbook")):
 	def _prepFirstByteStreamAndData(
 		self,
 		data: bytes,
-	) -> (bytes, Union[BytesIO, hwIo.IoBase], bytes):
+	) -> tuple[bytes, Union[BytesIO, hwIo.IoBase], bytes]:
 		if self.isHid:
 			# data contains the entire packet.
 			# HID Packets start with 0x00.
