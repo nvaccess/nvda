@@ -112,7 +112,8 @@ def __getattr__(attrName: str) -> Any:
 	if attrName in _deprecatedConstantsMap and NVDAState._allowDeprecatedAPI():
 		replacementSymbol = _deprecatedConstantsMap[attrName]
 		log.warning(
-			f"{attrName} is deprecated. " f"Use bdDetect.{replacementSymbol.__class__.__name__}.{replacementSymbol.value} instead. ",
+			f"{attrName} is deprecated. "
+			f"Use bdDetect.{replacementSymbol.__class__.__name__}.{replacementSymbol.value} instead. ",
 		)
 		return replacementSymbol.value
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
@@ -261,6 +262,11 @@ def _isHIDBrailleMatch(match: DeviceMatch) -> bool:
 
 
 def HIDUsagePageMatchFuncFactory(usagePage: int) -> MatchFuncT:
+	"""
+	Creates a match function that checks if a given HID usage page matches the specified usage page.
+	:param usagePage: The HID usage page to match against.
+	:returns: A partial function that takes an HID usage page and returns True if it matches the specified usage page, False otherwise.
+	"""
 	return partial(_isHIDUsagePageMatch, usagePage=usagePage)
 
 
