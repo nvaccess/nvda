@@ -162,9 +162,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# Try talking to the display.
 			try:
 				if self.isHid:
-					if (usasePage := portInfo.get("HIDUsagePage")) != HID_USAGE_PAGE:
-						log.debugWarning(f"Ignoring device {port!r} with usage page {usasePage!r}")
-						continue
 					self._dev = hwIo.Hid(port, onReceive=self._hidOnReceive)
 				else:
 					self._dev = hwIo.Serial(
