@@ -81,15 +81,17 @@ class RemoteClient:
 			log.debug("Autoconnect disabled or already connected")
 			return
 		key = controlServerConfig["key"]
+		insecure = False
 		if controlServerConfig["self_hosted"]:
 			port = controlServerConfig["port"]
 			hostname = "localhost"
+			insecure = True
 			self.startControlServer(port, key)
 		else:
 			address = addressToHostPort(controlServerConfig["host"])
 			hostname, port = address
 		mode = ConnectionMode.SLAVE if controlServerConfig["connection_type"] == 0 else ConnectionMode.MASTER
-		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key)
+		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
 	def terminate(self):
