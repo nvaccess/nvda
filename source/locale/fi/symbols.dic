@@ -50,9 +50,9 @@ degrees-fahrenheit	astetta faarenhaittia	none	norep
 # Whitespace
 \0	tyhjä	char	# nollamerkki
 \t	sisennys
-\n	rivinvaihto	char
+\n	rivinvaihto	char	always
 \f	sivunvaihto	none
-\r	rivinvaihto	char
+\r	uusi rivi	char	always
  	väli	char
  	väli	char	# non-breaking space
 
