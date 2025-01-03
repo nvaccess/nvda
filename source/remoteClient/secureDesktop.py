@@ -191,7 +191,7 @@ class SecureDesktopHandler:
 			testSocket.close()
 
 			return ConnectionInfo(
-				hostname="127.0.0.1",
+				hostname="localhost",
 				mode=ConnectionMode.SLAVE,
 				key=channel,
 				port=port,
