@@ -35,6 +35,7 @@ HR_CAPS = b"\x01"
 HR_KEYS = b"\x04"
 HR_BRAILLE = b"\x05"
 HR_POWEROFF = b"\x07"
+HID_USAGE_PAGE = 0x93
 
 KEY_NAMES = {
 	1: "power",  # Brailliant BI 32, 40 and 80.
@@ -89,22 +90,28 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_1C71&PID_C111",  # Mantis Q 40
 				"VID_1C71&PID_C101",  # Chameleon 20
+				"VID_1C71&PID_C131",  # Brailliant BI 40X
+				"VID_1C71&PID_C141",  # Brailliant BI 20X
+			},
+			matchFunc=bdDetect.HIDUsagePageMatchFuncFactory(HID_USAGE_PAGE),
+		)
+		driverRegistrar.addUsbDevices(
+			bdDetect.ProtocolType.HID,
+			{
 				"VID_1C71&PID_C121",  # Humanware BrailleOne 20 HID
 				"VID_1C71&PID_CE01",  # NLS eReader 20 HID
 				"VID_1C71&PID_C006",  # Brailliant BI 32, 40 and 80
 				"VID_1C71&PID_C022",  # Brailliant BI 14
-				"VID_1C71&PID_C131",  # Brailliant BI 40X
-				"VID_1C71&PID_C141",  # Brailliant BI 20X
 				"VID_1C71&PID_C00A",  # BrailleNote Touch
 				"VID_1C71&PID_C00E",  # BrailleNote Touch v2
 			},
 		)
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.SERIAL,
+			bdDetect.ProtocolType.SERIAL,
 			{
 				"VID_1C71&PID_C005",  # Brailliant BI 32, 40 and 80
 				"VID_1C71&PID_C021",  # Brailliant BI 14
@@ -112,24 +119,32 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)
 		driverRegistrar.addBluetoothDevices(
 			lambda m: (
-				m.type == bdDetect.DeviceType.SERIAL
+				m.type == bdDetect.ProtocolType.SERIAL
 				and (
 					m.id.startswith("Brailliant B") or m.id == "Brailliant 80" or "BrailleNote Touch" in m.id
 				)
 			)
 			or (
-				m.type == bdDetect.DeviceType.HID
+				m.type == bdDetect.ProtocolType.HID
 				and m.deviceInfo.get("manufacturer") == "Humanware"
-				and m.deviceInfo.get("product")
-				in (
-					"Brailliant HID",
-					"APH Chameleon 20",
-					"APH Mantis Q40",
-					"Humanware BrailleOne",
-					"NLS eReader",
-					"NLS eReader Humanware",
-					"Brailliant BI 40X",
-					"Brailliant BI 20X",
+				and (
+					(
+						m.deviceInfo.get("product")
+						in (
+							"APH Chameleon 20",
+							"APH Mantis Q40",
+							"Brailliant BI 40X",
+							"Brailliant BI 20X",
+						)
+						and bdDetect._isHIDUsagePageMatch(m, HID_USAGE_PAGE)
+					)
+					or m.deviceInfo.get("product")
+					in (
+						"Brailliant HID",
+						"Humanware BrailleOne",
+						"NLS eReader",
+						"NLS eReader Humanware",
+					)
 				)
 			),
 		)
@@ -143,7 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		self.numCells = 0
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isHid = portType == bdDetect.DeviceType.HID
+			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
 				if self.isHid:

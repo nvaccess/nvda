@@ -84,7 +84,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_0904&PID_3001",  # RefreshaBraille 18
 				"VID_0904&PID_6101",  # VarioUltra 20
@@ -111,7 +111,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		)
 
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.SERIAL,
+			bdDetect.ProtocolType.SERIAL,
 			{
 				"VID_0403&PID_FE70",  # Vario 40
 				"VID_0403&PID_FE71",  # PocketVario
@@ -164,7 +164,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		for portType, portId, port, portInfo in self._getTryPorts(port):
 			# At this point, a port bound to this display has been found.
 			# Try talking to the display.
-			self.isHid = portType == bdDetect.DeviceType.HID
+			self.isHid = portType == bdDetect.ProtocolType.HID
 			try:
 				if self.isHid:
 					self._dev = hwIo.Hid(port, onReceive=self._onReceive)
