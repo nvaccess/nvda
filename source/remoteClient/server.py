@@ -39,6 +39,7 @@ from typing import Any, Dict, List, Optional, Tuple
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
 from .secureDesktop import getProgramDataTempPath
+from . import configuration
 
 logger = logging.getLogger(__name__)
 
@@ -48,6 +49,7 @@ class RemoteCertificateManager:
 
 	CERT_FILE = "NvdaRemoteRelay.pem"
 	KEY_FILE = "NvdaRemoteRelay.key"
+	FINGERPRINT_FILE = "NvdaRemoteRelay.fingerprint"
 	CERT_DURATION_DAYS = 365
 	CERT_RENEWAL_THRESHOLD_DAYS = 30
 
@@ -55,6 +57,7 @@ class RemoteCertificateManager:
 		self.cert_dir = cert_dir or getProgramDataTempPath()
 		self.cert_path = self.cert_dir / self.CERT_FILE
 		self.key_path = self.cert_dir / self.KEY_FILE
+		self.fingerprint_path = self.cert_dir / self.FINGERPRINT_FILE
 
 	def ensureValidCertExists(self) -> None:
 		"""Ensures a valid certificate and key exist, regenerating if needed."""
@@ -147,6 +150,8 @@ class RemoteCertificateManager:
 			.sign(private_key, hashes.SHA256())
 		)
 
+		# Calculate fingerprint
+		fingerprint = cert.fingerprint(hashes.SHA256()).hex()
 		# Write private key
 		with open(self.key_path, "wb") as f:
 			f.write(
@@ -161,15 +166,42 @@ class RemoteCertificateManager:
 		with open(self.cert_path, "wb") as f:
 			f.write(cert.public_bytes(serialization.Encoding.PEM))
 
+		# Save fingerprint
+		with open(self.fingerprint_path, "w") as f:
+			f.write(fingerprint)
+
+		# Add to trusted certificates in config
+		config = configuration.get_config()
+		if "trusted_certs" not in config:
+			config["trusted_certs"] = {}
+		config["trusted_certs"]["localhost"] = fingerprint
+		config["trusted_certs"]["127.0.0.1"] = fingerprint
+
 		logging.info("Generated new self-signed certificate for NVDA Remote")
+
+	def get_current_fingerprint(self) -> Optional[str]:
+		"""Get the fingerprint of the current certificate."""
+		try:
+			if self.fingerprint_path.exists():
+				with open(self.fingerprint_path, "r") as f:
+					return f.read().strip()
+		except Exception as e:
+			logging.warning(f"Error reading fingerprint: {e}")
+		return None
 
 	def createSSLContext(self) -> ssl.SSLContext:
 		"""Creates an SSL context using the certificate and key."""
 		context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
+		# Load our certificate and private key
 		context.load_cert_chain(
 			certfile=str(self.cert_path),
 			keyfile=str(self.key_path),
 		)
+		# Trust our own CA for server verification
+		context.load_verify_locations(cafile=str(self.cert_path))
+		# Require client cert verification
+		context.verify_mode = ssl.CERT_NONE  # Don't require client certificates
+		context.check_hostname = False  # Don't verify hostname since we're using self-signed certs
 		return context
 
 
