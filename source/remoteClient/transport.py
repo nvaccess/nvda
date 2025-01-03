@@ -403,9 +403,9 @@ class TCPTransport(Transport):
 			ctx.verify_mode = ssl.CERT_NONE
 		ctx.check_hostname = not insecure
 		ctx.load_default_certs()
-		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
 		if insecure:
 			log.warn("Skipping certificate verification for %s:%d", host, port)
+		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
 		return serverSock
 
 	def getpeercert(

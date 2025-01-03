@@ -256,7 +256,7 @@ class LocalRelayServer:
 		"""Creates an SSL wrapped socket using the certificate."""
 		serverSocket = socket.socket(family, type)
 		ssl_context = self.cert_manager.createSSLContext()
-		serverSocket = ssl_context.wrap_socket(serverSocket)
+		serverSocket = ssl_context.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bind_addr)
 		serverSocket.listen(5)
 		return serverSocket
