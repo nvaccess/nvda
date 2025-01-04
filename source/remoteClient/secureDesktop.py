@@ -124,7 +124,7 @@ class SecureDesktopHandler:
 		serverThread.start()
 
 		self.sdRelay = RelayTransport(
-			address=("127.0.0.1", port),
+			address=("localhost", port),
 			serializer=JSONSerializer(),
 			channel=channel,
 			insecure=True,
