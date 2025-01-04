@@ -204,7 +204,9 @@ class Transport:
 				Handlers are called asynchronously on the wx main thread via wx.CallAfter
 		"""
 		if type not in self.inboundHandlers:
+			log.debug("Creating new handler for %s", type)
 			self.inboundHandlers[type] = Action()
+		log.debug("Registering handler for %s", type)
 		self.inboundHandlers[type].register(handler)
 
 	def unregisterInbound(self, type: RemoteMessageType, handler: Callable) -> None:
@@ -218,6 +220,7 @@ class Transport:
 				handler (Callable): The handler function to remove
 		"""
 		self.inboundHandlers[type].unregister(handler)
+		log.debug("Unregistered handler for %s", type)
 
 	def registerOutbound(
 		self,

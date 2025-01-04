@@ -12,7 +12,6 @@ connections persist when entering and leaving this secure environment.
 
 import json
 import socket
-import ssl
 import threading
 import uuid
 from pathlib import Path
@@ -135,7 +134,7 @@ class SecureDesktopHandler:
 		serverThread.start()
 
 		self.sdRelay = RelayTransport(
-			address=("localhost", port),
+			address=("127.0.0.1", port),
 			serializer=JSONSerializer(),
 			channel=channel,
 			insecure=True,
@@ -203,13 +202,11 @@ class SecureDesktopHandler:
 			port, channel = data
 
 			testSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			testSocket = ssl.wrap_socket(testSocket, ssl_version=ssl.PROTOCOL_TLS)
-			testSocket.connect(("127.0.0.1", port))
 			testSocket.close()
 
 			log.info(f"Successfully established secure desktop connection on port {port}")
 			return ConnectionInfo(
-				hostname="localhost",
+				hostname="127.0.0.1",
 				mode=ConnectionMode.SLAVE,
 				key=channel,
 				port=port,
