@@ -99,6 +99,10 @@ class SecureDesktopHandler:
 			transport = self._slaveSession.transport
 			transport.unregisterInbound(RemoteMessageType.set_braille_info, self._onMasterDisplayChange)
 		self._slaveSession = session
+		self.slaveSession.transport.registerInbound(
+			RemoteMessageType.set_braille_info,
+			self._onMasterDisplayChange,
+		)
 
 	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
 		"""
