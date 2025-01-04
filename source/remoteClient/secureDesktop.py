@@ -138,7 +138,7 @@ class SecureDesktopHandler:
 			serializer=JSONSerializer(),
 			channel=channel,
 			insecure=True,
-			connectionType=ConnectionMode.MASTER,
+			connectionType=ConnectionMode.MASTER.value,
 		)
 		self.sdRelay.registerInbound(RemoteMessageType.client_joined, self._onMasterDisplayChange)
 		self.slaveSession.transport.registerInbound(
