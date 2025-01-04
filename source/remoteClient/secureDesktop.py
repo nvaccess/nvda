@@ -55,6 +55,7 @@ class SecureDesktopHandler:
 		"""
 		self.tempPath = temp_path
 		self.IPCFile = temp_path / "remote.ipc"
+		log.debug(f"Initialized SecureDesktopHandler with IPC file: {self.IPCFile}")
 
 		self._slaveSession: Optional[SlaveSession] = None
 		self.sdServer: Optional[server.LocalRelayServer] = None
@@ -65,12 +66,15 @@ class SecureDesktopHandler:
 
 	def terminate(self) -> None:
 		"""Clean up handler resources."""
+		log.debug("Terminating SecureDesktopHandler")
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self.leaveSecureDesktop()
 		try:
+			log.debug(f"Removing IPC file: {self.IPCFile}")
 			self.IPCFile.unlink()
 		except FileNotFoundError:
-			pass
+			log.debug("IPC file already removed")
+		log.info("Secure desktop cleanup completed")
 
 	@property
 	def slaveSession(self) -> Optional[SlaveSession]:
@@ -85,8 +89,10 @@ class SecureDesktopHandler:
 			session: New SlaveSession instance or None to clear
 		"""
 		if self._slaveSession == session:
+			log.debug("Slave session unchanged, skipping update")
 			return
 
+		log.info("Updating slave session reference")
 		if self.sdServer is not None:
 			self.leaveSecureDesktop()
 
@@ -102,6 +108,7 @@ class SecureDesktopHandler:
 		Args:
 			isSecureDesktop: True if transitioning to secure desktop, False otherwise
 		"""
+		log.info(f"Secure desktop state changed: {'entering' if isSecureDesktop else 'leaving'}")
 		if isSecureDesktop:
 			self.enterSecureDesktop()
 		else:
@@ -109,15 +116,19 @@ class SecureDesktopHandler:
 
 	def enterSecureDesktop(self) -> None:
 		"""Set up necessary components when entering secure desktop."""
+		log.debug("Attempting to enter secure desktop")
 		if self.slaveSession is None or self.slaveSession.transport is None:
 			log.warning("No slave session connected, not entering secure desktop.")
 			return
 		if not self.tempPath.exists():
+			log.debug(f"Creating temp directory: {self.tempPath}")
 			self.tempPath.mkdir(parents=True, exist_ok=True)
 
 		channel = str(uuid.uuid4())
+		log.debug("Starting local relay server")
 		self.sdServer = server.LocalRelayServer(port=0, password=channel, bind_host="127.0.0.1")
 		port = self.sdServer.serverSocket.getsockname()[1]
+		log.info(f"Local relay server started on port {port}")
 
 		serverThread = threading.Thread(target=self.sdServer.run)
 		serverThread.daemon = True
@@ -142,11 +153,15 @@ class SecureDesktopHandler:
 		relayThread.start()
 
 		data = [port, channel]
+		log.debug(f"Writing connection data to IPC file: {self.IPCFile}")
 		self.IPCFile.write_text(json.dumps(data))
+		log.info("Secure desktop setup completed successfully")
 
 	def leaveSecureDesktop(self) -> None:
 		"""Clean up when leaving secure desktop."""
+		log.debug("Attempting to leave secure desktop")
 		if self.sdServer is None:
+			log.debug("No secure desktop server running, nothing to clean up")
 			return
 
 		if self.sdBridge is not None:
@@ -180,7 +195,9 @@ class SecureDesktopHandler:
 		Returns:
 			ConnectionInfo instance if successful, None otherwise
 		"""
+		log.info("Initializing secure desktop connection")
 		try:
+			log.debug(f"Reading connection data from IPC file: {self.IPCFile}")
 			data = json.loads(self.IPCFile.read_text())
 			self.IPCFile.unlink()
 			port, channel = data
@@ -190,6 +207,7 @@ class SecureDesktopHandler:
 			testSocket.connect(("127.0.0.1", port))
 			testSocket.close()
 
+			log.info(f"Successfully established secure desktop connection on port {port}")
 			return ConnectionInfo(
 				hostname="localhost",
 				mode=ConnectionMode.SLAVE,
@@ -204,7 +222,9 @@ class SecureDesktopHandler:
 
 	def _onMasterDisplayChange(self, **kwargs: Any) -> None:
 		"""Handle display size changes."""
+		log.debug("Master display change detected")
 		if self.sdRelay is not None and self.slaveSession is not None:
+			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(
 				type=RemoteMessageType.set_display_size,
 				sizes=self.slaveSession.masterDisplaySizes,
