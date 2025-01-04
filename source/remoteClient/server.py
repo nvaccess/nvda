@@ -178,10 +178,7 @@ class RemoteCertificateManager:
 		config["trusted_certs"]["localhost"] = fingerprint
 		config["trusted_certs"]["127.0.0.1"] = fingerprint
 
-		logger.info(
-			"Generated new self-signed certificate for NVDA Remote. "
-			f"Fingerprint: {fingerprint}"
-		)
+		logger.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
 
 	def get_current_fingerprint(self) -> Optional[str]:
 		"""Get the fingerprint of the current certificate."""
@@ -268,8 +265,7 @@ class LocalRelayServer:
 	def run(self) -> None:
 		"""Main server loop that handles client connections and message routing."""
 		logger.info(
-			f"Starting NVDA Remote relay server on ports {self.port} (IPv4) "
-			f"and {self.port} (IPv6)"
+			f"Starting NVDA Remote relay server on ports {self.port} (IPv4) " f"and {self.port} (IPv6)"
 		)
 		self._running = True
 		self.lastPingTime = time.time()
@@ -413,8 +409,7 @@ class Client:
 		self.connectionType = obj.get("connection_type")
 		self.authenticated = True
 		logger.info(
-			f"Client {self.id} authenticated successfully "
-			f"(connection type: {self.connectionType})"
+			f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})"
 		)
 		clients = []
 		client_ids = []
