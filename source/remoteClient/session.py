@@ -306,8 +306,6 @@ class SlaveSession(RemoteSession):
 		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.wave)
 		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.pause_speech)
 		braille.pre_writeCells.register(self.display)
-		braille.displayChanged.register(self.setDisplaySize)
-		braille.displaySizeChanged.register(self.setDisplaySize)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
 
@@ -319,8 +317,6 @@ class SlaveSession(RemoteSession):
 		self.transport.unregisterOutbound(RemoteMessageType.wave)
 		self.transport.unregisterOutbound(RemoteMessageType.pause_speech)
 		braille.pre_writeCells.unregister(self.display)
-		braille.displayChanged.unregister(self.setDisplaySize)
-		braille.displaySizeChanged.unregister(self.setDisplaySize)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
