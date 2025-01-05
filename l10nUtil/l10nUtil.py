@@ -8,8 +8,8 @@ import tempfile
 import lxml.etree
 import os
 import argparse
-import markdownTranslate
-import md2html
+from ..user_docs import markdownTranslate
+from ..user_docs import md2html
 
 
 def fetchLanguageFromXliff(xliffPath: str, source: bool = False) -> str:
