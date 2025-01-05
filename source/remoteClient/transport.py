@@ -401,12 +401,12 @@ class TCPTransport(Transport):
 			serverSock.settimeout(self.timeout)
 		serverSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 		serverSock.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 60000, 2000))
-		ctx = ssl.SSLContext()
+		ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 		if insecure:
 			ctx.verify_mode = ssl.CERT_NONE
 		ctx.check_hostname = not insecure
 		ctx.load_default_certs()
-		ctx.minimum_version = ssl.PROTOCOL_TLSv1_2
+
 		if insecure:
 			log.warn("Skipping certificate verification for %s:%d", host, port)
 		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
