@@ -560,7 +560,7 @@ class MasterSession(RemoteSession):
 			displaySize if displaySize else 0,
 		)
 		self.transport.send(
-			type="set_braille_info",
+			type=RemoteMessageType.set_braille_info,
 			name=display.name,
 			numCells=displaySize,
 		)
