@@ -19,7 +19,7 @@ When clients disconnect or lose connection, the server automatically removes the
 notifies other connected clients of the departure.
 """
 
-import logging
+from logHandler import log
 import os
 import socket
 import ssl
@@ -41,8 +41,6 @@ from .serializer import JSONSerializer
 from .secureDesktop import getProgramDataTempPath
 from . import configuration
 
-logger = logging.getLogger(__name__)
-
 
 class RemoteCertificateManager:
 	"""Manages SSL certificates for the NVDA Remote relay server."""
@@ -61,7 +59,7 @@ class RemoteCertificateManager:
 
 	def ensureValidCertExists(self) -> None:
 		"""Ensures a valid certificate and key exist, regenerating if needed."""
-		logger.info("Checking certificate validity")
+		log.info("Checking certificate validity")
 		os.makedirs(self.cert_dir, exist_ok=True)
 
 		should_generate = False
@@ -71,7 +69,7 @@ class RemoteCertificateManager:
 			try:
 				self._validateCertificate()
 			except Exception as e:
-				logger.warning(f"Certificate validation failed: {e}", exc_info=True)
+				log.warning(f"Certificate validation failed: {e}", exc_info=True)
 				should_generate = True
 
 		if should_generate:
@@ -178,7 +176,7 @@ class RemoteCertificateManager:
 		config["trusted_certs"]["localhost"] = fingerprint
 		config["trusted_certs"]["127.0.0.1"] = fingerprint
 
-		logger.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
+		log.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
 
 	def get_current_fingerprint(self) -> Optional[str]:
 		"""Get the fingerprint of the current certificate."""
@@ -187,7 +185,7 @@ class RemoteCertificateManager:
 				with open(self.fingerprint_path, "r") as f:
 					return f.read().strip()
 		except Exception as e:
-			logger.warning(f"Error reading fingerprint: {e}", exc_info=True)
+			log.warning(f"Error reading fingerprint: {e}", exc_info=True)
 		return None
 
 	def createSSLContext(self) -> ssl.SSLContext:
@@ -264,9 +262,7 @@ class LocalRelayServer:
 
 	def run(self) -> None:
 		"""Main server loop that handles client connections and message routing."""
-		logger.info(
-			f"Starting NVDA Remote relay server on ports {self.port} (IPv4) " f"and {self.port} (IPv6)"
-		)
+		log.info(f"Starting NVDA Remote relay server on ports {self.port} (IPv4) " f"and {self.port} (IPv6)")
 		self._running = True
 		self.lastPingTime = time.time()
 		while self._running:
@@ -293,9 +289,9 @@ class LocalRelayServer:
 		"""Accept and set up a new client connection."""
 		try:
 			clientSock, addr = sock.accept()
-			logger.info(f"New client connection from {addr}")
+			log.info(f"New client connection from {addr}")
 		except (ssl.SSLError, socket.error, OSError):
-			logger.error("Error accepting connection", exc_info=True)
+			log.error("Error accepting connection", exc_info=True)
 			return
 		clientSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 		client = Client(server=self, socket=clientSock)
@@ -313,7 +309,7 @@ class LocalRelayServer:
 
 	def clientDisconnected(self, client: "Client") -> None:
 		"""Handle client disconnection and notify other clients."""
-		logger.info(f"Client {client.id} disconnected")
+		log.info(f"Client {client.id} disconnected")
 		self.removeClient(client)
 		if client.authenticated:
 			client.send_to_others(
@@ -324,11 +320,11 @@ class LocalRelayServer:
 
 	def close(self) -> None:
 		"""Shut down the server and close all connections."""
-		logger.info("Shutting down NVDA Remote relay server")
+		log.info("Shutting down NVDA Remote relay server")
 		self._running = False
 		self.serverSocket.close()
 		self.serverSocket6.close()
-		logger.info("Server shutdown complete")
+		log.info("Server shutdown complete")
 
 
 class Client:
@@ -374,7 +370,7 @@ class Client:
 			try:
 				self.parse(line)
 			except ValueError:
-				logger.error(f"Error parsing message from client {self.id}", exc_info=True)
+				log.error(f"Error parsing message from client {self.id}", exc_info=True)
 				self.close()
 				return
 		self.buffer += data
@@ -399,7 +395,7 @@ class Client:
 		"""Handle client join request and authentication."""
 		password = obj.get("channel", None)
 		if password != self.server.password:
-			logger.warning(f"Failed authentication attempt from client {self.id}")
+			log.warning(f"Failed authentication attempt from client {self.id}")
 			self.send(
 				type=RemoteMessageType.error,
 				message="incorrect_password",
@@ -408,9 +404,7 @@ class Client:
 			return
 		self.connectionType = obj.get("connection_type")
 		self.authenticated = True
-		logger.info(
-			f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})"
-		)
+		log.info(f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})")
 		clients = []
 		client_ids = []
 		for c in list(self.server.clients.values()):
@@ -463,7 +457,7 @@ class Client:
 			data = self.serializer.serialize(type=type, **msg)
 			self.socket.sendall(data)
 		except Exception:
-			logger.error(f"Error sending message to client {self.id}", exc_info=True)
+			log.error(f"Error sending message to client {self.id}", exc_info=True)
 			self.close()
 
 	def send_to_others(self, origin: Optional[int] = None, **obj: Any) -> None:
