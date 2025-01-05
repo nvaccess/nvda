@@ -99,7 +99,7 @@ class SecureDesktopHandler:
 			transport = self._slaveSession.transport
 			transport.unregisterInbound(RemoteMessageType.set_braille_info, self._onMasterDisplayChange)
 		self._slaveSession = session
-		self.slaveSession.transport.registerInbound(
+		session.transport.registerInbound(
 			RemoteMessageType.set_braille_info,
 			self._onMasterDisplayChange,
 		)
@@ -231,3 +231,5 @@ class SecureDesktopHandler:
 				type=RemoteMessageType.set_display_size,
 				sizes=self.slaveSession.masterDisplaySizes,
 			)
+		else:
+			log.warning("No secure desktop relay or slave session available, skipping display change")
