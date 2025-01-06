@@ -29,7 +29,8 @@ import speech
 import braille
 from config.configFlags import TetherTo
 import globalVars
-from typing import Callable, Optional
+from typing import Optional
+from collections.abc import Callable
 
 from utils.security import isRunningOnSecureDesktop
 
@@ -188,7 +189,7 @@ def browseableMessage(
 	if not isHtml:
 		messageSanitized = f"<pre>{escape(message)}</pre>"
 	else:
-		log.warning("Sanitizing raw HTML before passing to ui.browseableMessage!")
+		log.debug("Sanitizing raw HTML before passing to ui.browseableMessage")
 		messageSanitized = sanitizeHtmlFunc(message)
 	d.add("message", messageSanitized)
 

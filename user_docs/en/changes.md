@@ -160,7 +160,6 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
-* In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True`. (#17431, @nvdaes)
 * `ui.browseableMessage` now takes a parameter `sanitizeHtmlFunc`.
 This defaults to `nh3.clean` with default arguments.
 This means any HTML passed into `ui.browseableMessage` using `isHtml=True` is now sanitized by default.
