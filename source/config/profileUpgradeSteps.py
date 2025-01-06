@@ -414,3 +414,60 @@ def upgradeConfigFrom_12_to_13(profile: ConfigObj) -> None:
 	log.debug(
 		f"Handled cldr value of {setting!r}. List is now: {profile['speech']['symbolDictionaries']}",
 	)
+
+
+def upgradeConfigFrom_13_to_14(profile: ConfigObj):
+	"""Set [audio][outputDevice] to the endpointID of [speech][outputDevice], and delete the latter."""
+	try:
+		friendlyName = profile["speech"]["outputDevice"]
+	except KeyError:
+		log.debug("Output device not present in config. Taking no action.")
+		return
+	if friendlyName == "default":
+		log.debug("Output device is set to default. Not writing a new value to config.")
+	elif endpointId := _friendlyNameToEndpointId(friendlyName):
+		log.debug(
+			f"Best match for device with {friendlyName=} has {endpointId=}. Writing new value to config.",
+		)
+		if "audio" not in profile:
+			profile["audio"] = {}
+		profile["audio"]["outputDevice"] = endpointId
+	else:
+		log.debug(
+			f"Could not find an audio output device with {friendlyName=}. Not writing a new value to config.",
+		)
+	log.debug("Deleting old config value.")
+	del profile["speech"]["outputDevice"]
+
+
+def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
+	"""Convert a device friendly name to an endpoint ID string.
+
+	Since friendly names are not unique, there may be many devices on one system with the same friendly name.
+	As the order of devices in an IMMEndpointEnumerator is arbitrary, we cannot assume that the first device with a matching friendly name is the device the user wants.
+	We also can't guarantee that the device the user has selected is active, so we need to retrieve devices by state, in order from most to least preferable.
+	It is probably a safe bet that the device the user wants to use is either active or unplugged.
+	Thus, the preference order for states is:
+	1. ACTIVE- The audio adapter that connects to the endpoint device is present and enabled.
+	   In addition, if the endpoint device plugs into a jack on the adapter, then the endpoint device is plugged in.
+	2. UNPLUGGED - The audio adapter that contains the jack for the endpoint device is present and enabled, but the endpoint device is not plugged into the jack.
+	3. DISABLED - The user has disabled the device in the Windows multimedia control panel.
+	4. NOTPRESENT - The audio adapter that connects to the endpoint device has been removed from the system, or the user has disabled the adapter device in Device Manager.
+	Within a state, if there is more than one device with the selected friendly name, we use the first one.
+
+	:param friendlyName: Friendly name of the device to search for.
+	:return: Endpoint ID string of the best match device, or `None` if no device with a matching friendly name is available.
+	"""
+	from nvwave import _getOutputDevices
+	from pycaw.constants import DEVICE_STATE
+
+	states = (DEVICE_STATE.ACTIVE, DEVICE_STATE.UNPLUGGED, DEVICE_STATE.DISABLED, DEVICE_STATE.NOTPRESENT)
+	for state in states:
+		try:
+			return next(
+				device for device in _getOutputDevices(stateMask=state) if device.friendlyName == friendlyName
+			).id
+		except StopIteration:
+			# Proceed to the next device state.
+			continue
+	return None
