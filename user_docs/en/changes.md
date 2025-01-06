@@ -163,13 +163,16 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
+* `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
+Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
+* Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
 
 #### Deprecations
 
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
 * The `gui.message.messageBox` and `gui.runScriptModalDialog` functions, and `gui.nvdaControls.MessageDialog` class are deprecated.
-Use `gui.message.MessageDialog` instead. (#17304)
+Use `gui.message.MessageDialog` instead. (#17582)
 * The following symbols are deprecated (#17486, @CyrilleB79):
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.
