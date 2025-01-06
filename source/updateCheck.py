@@ -634,6 +634,7 @@ class UpdateAskInstallDialog(
 
 	@property
 	def callback(self) -> Callable[[int], None]:
+		"""A callback method which either performs or postpones the update, based on the passed return code."""
 		return self._callbackFactory(
 			destPath=self.destPath,
 			version=self.version,
@@ -648,6 +649,13 @@ class UpdateAskInstallDialog(
 		apiVersion: addonAPIVersion.AddonApiVersionT,
 		backCompatTo: addonAPIVersion.AddonApiVersionT,
 	) -> Callable[[int], None]:
+		"""Create a callback method suitable for passing to :meth:`gui.runScriptModalDialog`.
+
+		See class initialisation documentation for the meaning of parameters.
+
+		:return: A callable which performs the appropriate update action based on the return code passed to it.
+		"""
+
 		def callback(res: int):
 			match res:
 				case wx.ID_OK:
