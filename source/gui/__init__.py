@@ -289,7 +289,7 @@ class MainFrame(wx.Frame):
 					apiVersion=apiVersion,
 					backCompatTo=backCompatToAPIVersion,
 				)
-				runScriptModalDialog(confirmUpdateDialog)
+				runScriptModalDialog(confirmUpdateDialog, confirmUpdateDialog.callback)
 			else:
 				updateCheck.executePendingUpdate()
 
