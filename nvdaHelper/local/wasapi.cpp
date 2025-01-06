@@ -517,7 +517,7 @@ HRESULT WasapiPlayer::getPreferredDevice(CComPtr<IMMDevice>& preferredDevice) {
 	hr = endpoint->GetDataFlow(&dataFlow);
 	if (FAILED(hr)) {
 		return hr;
-	} else if(dataFlow != eRender) {
+	} else if (dataFlow != eRender) {
 		return E_NOTFOUND;
 	}
 	preferredDevice = std::move(device);
