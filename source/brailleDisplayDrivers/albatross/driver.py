@@ -12,7 +12,7 @@ import serial
 import time
 
 from collections import deque
-from bdDetect import DeviceType, DriverRegistrar
+from bdDetect import DriverRegistrar, ProtocolType
 from logHandler import log
 from serial.win32 import (
 	PURGE_RXABORT,
@@ -84,11 +84,11 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
-		driverRegistrar.addUsbDevices(
-			DeviceType.SERIAL,
-			{
-				"VID_0403&PID_6001",  # Caiku Albatross 46/80
-			},
+		driverRegistrar.addUsbDevice(
+			ProtocolType.SERIAL,
+			VID_AND_PID,  # Caiku Albatross 46/80
+			# Filter for bus reported device description, which should be "Albatross Braille Display".
+			matchFunc=lambda match: match.deviceInfo.get("busReportedDeviceDescription") == BUS_DEVICE_DESC,
 		)
 
 	@classmethod
@@ -168,11 +168,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		"""
 		for self._baudRate in BAUD_RATE:
 			for portType, portId, port, portInfo in self._getTryPorts(originalPort):
-				# Block port if its vid and pid are correct but bus reported
-				# device description is not "Albatross Braille Display".
-				if portId == VID_AND_PID and portInfo.get("busReportedDeviceDescription") != BUS_DEVICE_DESC:
-					log.debug(f"port {port} blocked; port information: {portInfo}")
-					continue
 				# For reconnection
 				self._currentPort = port
 				self._tryToConnect = True
