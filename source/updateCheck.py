@@ -672,7 +672,7 @@ class UpdateAskInstallDialog(
 						winKernel.moveFileEx(destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
 					except:  # noqa: E722
 						log.debugWarning(
-							"Unable to rename the file from {} to {}".format(destPath, finalDest),
+							f"Unable to rename the file from {destPath} to {finalDest}",
 							exc_info=True,
 						)
 						gui.messageBox(
