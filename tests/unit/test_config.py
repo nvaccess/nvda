@@ -924,7 +924,7 @@ _DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[_AudioOutputDevice]]
 def getOutputDevicesFactory(
 	devices: _DevicesT,
 ) -> Callable[[DEVICE_STATE], Generator[_AudioOutputDevice]]:
-	"""Create a callable that can be used to patch nvwave._getOutputDevices."""
+	"""Create a callable that can be used to patch utils.mmdevice._getOutputDevices."""
 
 	def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[_AudioOutputDevice]:
 		yield from devices.get(stateMask, [])
@@ -981,11 +981,11 @@ class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 		self.performTest(friendlyName="Anything", expectedId=None, devices=devices)
 
 	def performTest(self, expectedId: str | None, friendlyName: str, devices: _DevicesT):
-		"""Patch nvwave._getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
+		"""Patch utils.mmdevice._getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
 		The odd order of arguments is so you can directly unpack an AudioOutputDevice.
 		"""
 		with patch(
-			"nvwave._getOutputDevices",
+			"utils.mmdevice._getOutputDevices",
 			autospec=True,
 			side_effect=getOutputDevicesFactory(devices),
 		):
@@ -998,7 +998,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id", "Friendly name")],
 		}
 		self._getOutputDevicesPatcher = patch(
-			"nvwave._getOutputDevices",
+			"utils.mmdevice._getOutputDevices",
 			autospec=True,
 			side_effect=getOutputDevicesFactory(devices),
 		)
@@ -1026,7 +1026,9 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			outputDevice=Friendly name
 		"""
 		profile = _loadProfile(configString)
+		print(profile)
 		upgradeConfigFrom_13_to_14(profile)
+		print(profile)
 		self.assertEqual(profile["audio"]["outputDevice"], "id")
 		with self.assertRaises(KeyError):
 			profile["speech"]["outputDevice"]
