@@ -9,6 +9,7 @@ from .sapi5 import SynthDriver
 
 class SynthDriver(SynthDriver):
 	COM_CLASS = "speech.SPVoice"
+	CUSTOMSTREAM_COM_CLASS = "speech.SpCustomStream"
 
 	name = "mssp"
 	description = "Microsoft Speech Platform"
