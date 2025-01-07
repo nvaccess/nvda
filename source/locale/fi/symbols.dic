@@ -41,7 +41,6 @@ in-word '	heitto	all	norep
 negative number	miinus	none	norep
 percent	prosenttia	none	norep
 dates	 	all	always
-euro	euroa	all	norep
 thousand separators	 	all	always
 between-words -	viiva	all	norep
 degrees	astetta	none	norep
@@ -51,9 +50,9 @@ degrees-fahrenheit	astetta faarenhaittia	none	norep
 # Whitespace
 \0	tyhjä	char	# nollamerkki
 \t	sisennys
-\n	rivinvaihto	char
+\n	rivinvaihto	char	always
 \f	sivunvaihto	none
-\r	rivinvaihto	char
+\r	uusi rivi	char	always
  	väli	char
  	väli	char	# non-breaking space
 
@@ -64,7 +63,7 @@ degrees-fahrenheit	astetta faarenhaittia	none	norep
 \#	risu	some
 $	dollari	all	norep
 £	punta	all	norep
-€	euro	all	norep
+€	euroa	all	norep
 ¢	sentti	all	norep
 ¥	jeni	all	norep
 ₹	rupia	some	norep
