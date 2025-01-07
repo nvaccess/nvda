@@ -47,7 +47,7 @@ from config.configFlags import (
 from utils.displayString import (
 	DisplayStringEnum,
 )
-from nvwave import _AudioOutputDevice
+from utils.mmdevice import _AudioOutputDevice
 
 
 class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
