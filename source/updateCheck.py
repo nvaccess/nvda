@@ -138,6 +138,32 @@ def parseUpdateCheckResponse(data: str) -> dict[str, str] | None:
 
 	return metadata
 
+def isValidUpdateMirrorResponse(responseData: str) -> bool:
+	"""
+	Validates the response from an update mirror by ensuring it contains the required keys.
+
+	:param responseData: The raw server response as a UTF-8 decoded string.
+	:return: True if the response is valid, False otherwise.
+	"""
+	required_keys = {"version", "launcherUrl", "apiVersion"}
+
+	parsedResponse = parseUpdateCheckResponse(responseData)
+	if not parsedResponse:
+		log.warning(
+			"The response data could not be parsed. Ensure the update mirror returns data in the expected format."
+		)
+		return False
+
+	missing_keys = required_keys - parsedResponse.keys()
+	if missing_keys:
+		log.warning(
+			f"The response from the update server is missing the following required keys: {', '.join(missing_keys)}. "
+			"Ensure the update mirror provides these keys."
+		)
+		return False
+
+	return True
+
 
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
@@ -145,9 +171,10 @@ UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
-	@param auto: Whether this is an automatic check for updates.
-	@return: Information about the update or C{None} if there is no update.
-	@raise RuntimeError: If there is an error checking for an update.
+
+	:param auto: Whether this is an automatic check for updates.
+	:return: Information about the update or None if there is no update.
+	:raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats = config.conf["update"]["allowUsageStats"]
 	# #11837: build version string, service pack, and product type manually
@@ -159,6 +186,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		if winVersion.service_pack_minor != 0:
 			winVersionText += ".%d" % winVersion.service_pack_minor
 	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
+
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
@@ -171,6 +199,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
+
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
 		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
@@ -189,6 +218,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			"outputBrailleTable": config.conf["braille"]["translationTable"] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
+
 	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
 	try:
 		log.debug(f"Fetching update data from {url}")
@@ -201,20 +231,22 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
-			# and then retry the update check.
-			log.debug(f"Fetching update data from {url}")
+			# Retry the update check
+			log.debug(f"Retrying update data fetch from {url}")
 			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
+
 	if res.code != 200:
-		raise RuntimeError("Checking for update failed with code %d" % res.code)
+		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
 
-	data = res.text
-	info = parseUpdateCheckResponse(data)
+	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
+	if not isValidUpdateMirrorResponse(data):
+		raise RuntimeError(
+			"The response from the update server is invalid. Please ensure the URL is correct and points to a valid NVDA update mirror."
+		)
 
-	if not info:
-		return None
-	return info
+	return parseUpdateCheckResponse(data)
 
 
 def _setStateToNone(_state):

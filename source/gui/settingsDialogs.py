@@ -5599,15 +5599,7 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 
 
 def _isResponseUpdateMirrorValid(response: requests.Response) -> bool:
-	if not response.ok:
-		return False
+    if not response.ok:
+        return False
 
-	responseContent = response.text
-
-	try:
-		parsedResponse = updateCheck.parseUpdateCheckResponse(responseContent)
-	except Exception as e:
-		log.error(f"Error parsing update mirror response: {e}")
-		return False
-
-	return parsedResponse is not None
+	return updateCheck	.isValidUpdateMirrorResponse(response.text)
