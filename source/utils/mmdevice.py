@@ -2,6 +2,7 @@
 # Copyright (C) 2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 from collections.abc import Generator
 from typing import NamedTuple, cast
 
