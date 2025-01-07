@@ -74,7 +74,7 @@ It is assumed that characters will have the same description regardless of their
 
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 
-Translation of `characterDescriptions.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `characterDescriptions.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
 
 For a full example and reference, please look at [the English `characterDescriptions.dic` file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
 
@@ -93,7 +93,8 @@ The file contains two sections, [complex symbols](#complexSymbols) and [symbols]
 
 #### Translating this file {#TranslatingSymbolsFile}
 
-Translation of `symbols.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+
 See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 #### Defining Complex Symbols {#complexSymbols}
@@ -321,7 +322,7 @@ In this case, you will have to explore NVDA's source code to find this parent cl
 
 #### Translating this file {#TranslatingGesturesFile}
 
-Translations for `gestures.ini` happen on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
 
 1. In your local copy of the screenReaderTranslations repository, check if the `gestures.ini` file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
    * If this file does not exist, create it by copying it from the last version of NVDA.
