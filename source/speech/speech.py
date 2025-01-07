@@ -1388,7 +1388,7 @@ def speakTypedCharacters(ch: str):
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s" % typedWord)
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
-		if typingEchoMode > TypingEcho.OFF.value and not typingIsProtected:
+		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:
 			if (
 				typingEchoMode == TypingEcho.EVERYWHERE.value
 				or (

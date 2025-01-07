@@ -2606,9 +2606,9 @@ Key: NVDA+3
 This option controls when NVDA announces words you type on the keyboard.
 The available options are:
 
-* Off: NVDA will not announce typed characters.
-* Everywhere: NVDA will announce all typed characters.
-* Only in edit controls: NVDA will only announce characters typed in edit controls and other areas where text can be typed.
+* Off: NVDA will not announce typed words.
+* Everywhere: NVDA will announce all typed words.
+* Only in edit controls: NVDA will only announce words typed in edit controls and other areas where text can be typed.
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 

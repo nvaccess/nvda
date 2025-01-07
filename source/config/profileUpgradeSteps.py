@@ -423,7 +423,7 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj) -> None:
 		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
 		if configobj.validate.is_boolean(speakTypedCharacters):
 			old_value = speakTypedCharacters
-			new_value = TypingEcho.EVERYWHERE.value if speakTypedCharacters else TypingEcho.OFF.value
+			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedCharacters else TypingEcho.OFF.value
 			profile["keyboard"]["speakTypedCharacters"] = new_value
 			log.debug(f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
 	except KeyError:
@@ -433,7 +433,7 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj) -> None:
 		speakTypedWords = profile["keyboard"]["speakTypedWords"]
 		if configobj.validate.is_boolean(speakTypedWords):
 			old_value = speakTypedWords
-			new_value = TypingEcho.EVERYWHERE.value if speakTypedWords else TypingEcho.OFF.value
+			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedWords else TypingEcho.OFF.value
 			profile["keyboard"]["speakTypedWords"] = new_value
 			log.debug(f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
 	except KeyError:
