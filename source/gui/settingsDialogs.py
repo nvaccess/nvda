@@ -1980,14 +1980,18 @@ class KeyboardSettingsPanel(SettingsPanel):
 		# Translators: This is the label for a combobox in the keyboard settings panel.
 		speakTypedCharsLabelText = _("Speak typed &characters:")
 		speakTypedCharsChoices = [mode.displayString for mode in TypingEcho]
-		self.speakTypedCharsList = sHelper.addLabeledControl(speakTypedCharsLabelText, wx.Choice, choices=speakTypedCharsChoices)
+		self.speakTypedCharsList = sHelper.addLabeledControl(
+			speakTypedCharsLabelText, wx.Choice, choices=speakTypedCharsChoices
+		)
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.speakTypedCharsList)
 		self.speakTypedCharsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
 
 		# Translators: This is the label for a combobox in the keyboard settings panel.
 		speakTypedWordsLabelText = _("Speak typed &words:")
 		speakTypedWordsChoices = [mode.displayString for mode in TypingEcho]
-		self.speakTypedWordsList = sHelper.addLabeledControl(speakTypedWordsLabelText, wx.Choice, choices=speakTypedWordsChoices)
+		self.speakTypedWordsList = sHelper.addLabeledControl(
+			speakTypedWordsLabelText, wx.Choice, choices=speakTypedWordsChoices
+		)
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.speakTypedWordsList)
 		self.speakTypedWordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
 
