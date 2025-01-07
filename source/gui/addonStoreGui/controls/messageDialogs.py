@@ -355,7 +355,7 @@ class _SafetyWarningDialog(
 		self.CentreOnScreen()
 
 	def onOkButton(self, evt: wx.CommandEvent):
-		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
+		addonDataManager.storeSettings.showWarning = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)
 
 

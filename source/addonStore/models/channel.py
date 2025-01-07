@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -9,7 +9,8 @@ from typing import (
 	Set,
 )
 
-from utils.displayString import DisplayStringStrEnum
+import config
+from utils.displayString import DisplayStringIntEnum, DisplayStringStrEnum
 
 
 class Channel(DisplayStringStrEnum):
@@ -52,3 +53,93 @@ _channelFilters: OrderedDict[Channel, Set[Channel]] = OrderedDict(
 """A dictionary where the keys are channel groups to filter by,
 and the values are which channels should be shown for a given filter.
 """
+
+
+class UpdateChannel(DisplayStringIntEnum):
+	"""Update channel for an addon used for automatic updates."""
+
+	DEFAULT = 0
+	"""Default channel.
+	(specified in [addonStore][defaultUpdateChannel] section of config)
+	"""
+
+	SAME = 1
+	"""Keep the same channel as the current version"""
+
+	ANY = 2
+	"""Use any channel, keep to the latest version"""
+
+	NO_UPDATE = 3
+	"""Do not update the addon"""
+
+	STABLE = 4
+	"""Use the stable channel"""
+
+	BETA_DEV = 5
+	"""Use the beta or development channel, keep to the latest version"""
+
+	BETA = 6
+	"""Use the beta channel"""
+
+	DEV = 7
+	"""Use the development channel"""
+
+	@property
+	def displayString(self) -> str:
+		# Handle the default channel separately to avoid recursive dependency
+		# on _displayStringLabels.
+		if self is UpdateChannel.DEFAULT:
+			channel = UpdateChannel(config.conf["addonStore"]["defaultUpdateChannel"])
+			assert channel is not UpdateChannel.DEFAULT
+			# Translators: Update channel for an addon
+			return _("Default ({defaultChannel})").format(
+				defaultChannel=self._displayStringLabels[channel],
+			)
+		return super().displayString
+
+	@property
+	def _displayStringLabels(self) -> dict["UpdateChannel", str]:
+		return {
+			# Translators: Update channel for an addon.
+			# Same means an add-on only updates to a newer version in the same channel.
+			# e.g. an installed beta version only updates to beta versions.
+			UpdateChannel.SAME: _("Same"),
+			# Translators: Update channel for an addon.
+			# Any means an add-on updates to the latest version regardless of the channel.
+			UpdateChannel.ANY: _("Any"),
+			# Translators: Update channel for an addon
+			UpdateChannel.NO_UPDATE: _("Do not update"),
+			# Translators: Update channel for an addon
+			UpdateChannel.STABLE: _("Stable"),
+			# Translators: Update channel for an addon
+			UpdateChannel.BETA_DEV: _("Beta/Dev"),
+			# Translators: Update channel for an addon
+			UpdateChannel.BETA: _("Beta"),
+			# Translators: Update channel for an addon
+			UpdateChannel.DEV: _("Dev"),
+		}
+
+	def _availableChannelsForAddonWithChannel(self, addonChannel: Channel) -> set[Channel]:
+		"""Return the available update channels for an addon with the given channel and the update channel set."""
+		if self == UpdateChannel.DEFAULT:
+			channel = UpdateChannel(config.conf["addonStore"]["defaultUpdateChannel"])
+			assert channel is not UpdateChannel.DEFAULT
+		else:
+			channel = self
+		match channel:
+			case UpdateChannel.SAME:
+				return {addonChannel}
+			case UpdateChannel.ANY:
+				return _channelFilters[Channel.ALL]
+			case UpdateChannel.NO_UPDATE:
+				return {}
+			case UpdateChannel.STABLE:
+				return {Channel.STABLE}
+			case UpdateChannel.BETA_DEV:
+				return {Channel.BETA, Channel.DEV}
+			case UpdateChannel.BETA:
+				return {Channel.BETA}
+			case UpdateChannel.DEV:
+				return {Channel.DEV}
+			case _:
+				raise ValueError(f"Invalid update channel: {self}")

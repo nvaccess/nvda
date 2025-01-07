@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
 from collections.abc import Callable, Generator
 import enum
@@ -35,6 +35,7 @@ from config.profileUpgradeSteps import (
 	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
+	upgradeConfigFrom_14_to_15,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -1043,3 +1044,38 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			profile["speech"]["outputDevice"]
 		with self.assertRaises(KeyError):
 			profile["audio"]["outputDevice"]
+
+
+class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
+	@patch("addonStore.dataManager.addonDataManager", create=True)
+	def test_defaultProfile(self, mock_dataManager: MagicMock):
+		"""Test that the default profile is correctly upgraded."""
+		configString = ""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_14_to_15(profile)
+		# Ensure showWarning has not been set
+		self.assertNotIsInstance(mock_dataManager.storeSettings.showWarning, bool)
+
+	@patch("addonStore.dataManager.addonDataManager", create=True)
+	def test_profileWithShowWarningSetFalse(self, mock_dataManager: MagicMock):
+		"""Test that a profile with showWarning set is correctly upgraded."""
+		configString = """
+		[addonStore]
+			showWarning=False
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_14_to_15(profile)
+		self.assertIsInstance(mock_dataManager.storeSettings.showWarning, bool)
+		self.assertEqual(mock_dataManager.storeSettings.showWarning, False)
+
+	@patch("addonStore.dataManager.addonDataManager", create=True)
+	def test_profileWithShowWarningSetTrue(self, mock_dataManager: MagicMock):
+		"""Test that a profile with showWarning not set is correctly upgraded."""
+		configString = """
+		[addonStore]
+			showWarning=True
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_14_to_15(profile)
+		self.assertIsInstance(mock_dataManager.storeSettings.showWarning, bool)
+		self.assertEqual(mock_dataManager.storeSettings.showWarning, True)

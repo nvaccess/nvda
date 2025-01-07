@@ -13,6 +13,9 @@ from typing import (
 	TYPE_CHECKING,
 )
 
+from addonStore.dataManager import addonDataManager
+from addonStore.models.addon import _AddonGUIModel
+from addonStore.models.channel import UpdateChannel
 import extensionPoints
 from logHandler import log
 
@@ -166,3 +169,20 @@ class BatchAddonActionVM(_AddonAction[Iterable["AddonListItemVM"]]):
 
 		self._actionTarget = newActionTarget
 		self._notify()
+
+
+class AddonUpdateChannelActionVM(AddonActionVM):
+	"""Action for updating the channel of an addon"""
+
+	def __init__(self, actionTarget: "AddonListItemVM[_AddonGUIModel]", channel: UpdateChannel):
+		super().__init__(
+			displayName=channel.displayString,
+			actionHandler=self._updateChannel,
+			# Always valid, as the channel can always be changed from the installed/update tabs.
+			validCheck=lambda aVM: True,
+			actionTarget=actionTarget,
+		)
+		self.channel = channel
+
+	def _updateChannel(self, listItemVM: "AddonListItemVM[_AddonGUIModel]"):
+		addonDataManager.storeSettings.setAddonSettings(listItemVM.model.addonId, updateChannel=self.channel)

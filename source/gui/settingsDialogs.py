@@ -3262,6 +3262,23 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
+		from addonStore.models.channel import UpdateChannel
+
+		self.defaultUpdateChannelComboBox = sHelper.addLabeledControl(
+			# Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
+			_("Default update &channel:"),
+			wx.Choice,
+			# The default update channel for a specific add-on (UpdateChannel.DEFAULT) refers to this channel,
+			# so it should be skipped.
+			choices=[
+				channel.displayString for channel in UpdateChannel if channel is not UpdateChannel.DEFAULT
+			],
+		)
+		self.bindHelpEvent("AutomaticAddonUpdateChannels", self.defaultUpdateChannelComboBox)
+		# Subtract 1 from the index because the default update channel is 1-based, but the list is 0-based.
+		index = config.conf["addonStore"]["defaultUpdateChannel"] - 1
+		self.defaultUpdateChannelComboBox.SetSelection(index)
+
 		# Translators: The label for the mirror server on the Add-on Store Settings panel.
 		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Mirror server"))
 		mirrorBox = mirrorBoxSizer.GetStaticBox()
@@ -3338,6 +3355,10 @@ class AddonStorePanel(SettingsPanel):
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+		# Add 1 to the index because the default update channel is 1-based, but the list is 0-based.
+		config.conf["addonStore"]["defaultUpdateChannel"] = (
+			self.defaultUpdateChannelComboBox.GetSelection() + 1
+		)
 
 
 class TouchInteractionPanel(SettingsPanel):

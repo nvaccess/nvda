@@ -20,7 +20,6 @@ from addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
-import config
 from core import callLater
 import globalVars
 import gui
@@ -53,7 +52,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
 		self.openToTab = openToTab
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
-		if config.conf["addonStore"]["showWarning"]:
+		if addonDataManager.storeSettings.showWarning:
 			displayDialogAsModal(_SafetyWarningDialog(parent))
 		self.Maximize()
 

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
 # Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka
 # This file is covered by the GNU General Public License.
@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 14
+latestSchemaVersion = 15
 
 #: The configuration specification string
 #: @type: String
@@ -335,9 +335,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	playErrorSound = integer(0, 1, default=0)
 
 [addonStore]
-	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
 	baseServerURL = string(default="")
+	# UpdateChannel values:
+	# same channel (default), any channel, do not update, stable, beta & dev, beta, dev
+	# Not 0 based as other usages of UpdateChannel's 0-value is used to refer to this default fallback value.
+	defaultUpdateChannel = integer(1, 7, default=1)
 """
 
 #: The configuration specification
