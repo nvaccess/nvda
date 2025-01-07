@@ -1026,9 +1026,7 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			outputDevice=Friendly name
 		"""
 		profile = _loadProfile(configString)
-		print(profile)
 		upgradeConfigFrom_13_to_14(profile)
-		print(profile)
 		self.assertEqual(profile["audio"]["outputDevice"], "id")
 		with self.assertRaises(KeyError):
 			profile["speech"]["outputDevice"]
