@@ -45,7 +45,7 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar = bdDetect.DriverRegistrar(albatross.BrailleDisplayDriver.name)
 
-		def matchFunc(match):
+		def matchFunc(match: bdDetect.DeviceMatch) -> bool:
 			return match.deviceInfo.get("busReportedDeviceDescription") == albatross.driver.BUS_DEVICE_DESC
 
 		registrar.addUsbDevice(
@@ -66,7 +66,7 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar = bdDetect.DriverRegistrar(albatross.BrailleDisplayDriver.name)
 
-		def matchFunc(match):
+		def matchFunc(match: bdDetect.DeviceMatch) -> bool:
 			return match.deviceInfo.get("busReportedDeviceDescription") == albatross.driver.BUS_DEVICE_DESC
 
 		fakeVidAndPid = "VID_0403&PID_6002"
@@ -94,7 +94,7 @@ class TestDriverRegistration(unittest.TestCase):
 
 		registrar = bdDetect.DriverRegistrar(albatross.BrailleDisplayDriver.name)
 
-		def matchFunc(match):
+		def matchFunc(match: bdDetect.DeviceMatch) -> bool:
 			return True
 
 		registrar.addBluetoothDevices(matchFunc)
