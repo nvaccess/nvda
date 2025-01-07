@@ -75,8 +75,8 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 
 	def reportNewText(self, oldString, newString):
 		if (
-			config.conf["keyboard"]["speakTypedCharacters"] > TypingEcho.OFF.value
-			or config.conf["keyboard"]["speakTypedWords"] > TypingEcho.OFF.value
+			config.conf["keyboard"]["speakTypedCharacters"] != TypingEcho.OFF.value
+			or config.conf["keyboard"]["speakTypedWords"] != TypingEcho.OFF.value
 		):
 			newText = calculateInsertedChars(oldString.strip("\u3000"), newString.strip("\u3000"))
 			if newText:

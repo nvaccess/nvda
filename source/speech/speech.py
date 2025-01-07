@@ -783,8 +783,8 @@ def _getPlaceholderSpeechIfTextEmpty(
 	"""Attempt to get speech for placeholder attribute if text for 'obj' is empty. Don't report the placeholder
 	 value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
 	 user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
-	@return: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
-		placeholder value. (False, []) if text for obj was not considered empty.
+	:return: `(True, SpeechSequence)` if text for obj was considered empty and we attempted to get speech for the
+		placeholder value. `(False, [])` if text for obj was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
@@ -1356,7 +1356,11 @@ PROTECTED_CHAR = "*"
 FIRST_NONCONTROL_CHAR = " "
 
 
-def is_editableControl() -> bool:
+def isFocusEditable() -> bool:
+	"""Check if the currently focused object is editable.
+	@return: C{True} if the focused object is editable, C{False} otherwise.
+	@rtype: bool
+	"""
 	obj = api.getFocusObject()
 	controls = {controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_TERMINAL}
 	return (
@@ -1386,9 +1390,11 @@ def speakTypedCharacters(ch: str):
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
 		if typingEchoMode > TypingEcho.OFF.value and not typingIsProtected:
 			if (
-				typingEchoMode == TypingEcho.EDIT_CONTROLS.value
-				and is_editableControl()
-				or typingEchoMode == TypingEcho.EVERYWHERE.value
+				typingEchoMode == TypingEcho.EVERYWHERE.value
+				or (
+					typingEchoMode == TypingEcho.EDIT_CONTROLS.value
+					and is_editableControl()
+				)
 			):
 				speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
@@ -1404,11 +1410,13 @@ def speakTypedCharacters(ch: str):
 		suppress = False
 
 	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
-	if not suppress and typingEchoMode > TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
+	if not suppress and typingEchoMode != TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
 		if (
-			typingEchoMode == TypingEcho.EDIT_CONTROLS.value
-			and is_editableControl()
-			or typingEchoMode == TypingEcho.EVERYWHERE.value
+			typingEchoMode == TypingEcho.EVERYWHERE.value
+			or (
+				typingEchoMode == TypingEcho.EDIT_CONTROLS.value
+				and is_editableControl()
+			)
 		):
 			speakSpelling(realChar)
 

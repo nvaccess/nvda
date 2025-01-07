@@ -538,7 +538,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle speaked typed characters command.
-		description=_("Toggles on and off the speaking of typed characters"),
+		description=_("Cycle the reporting of typed characters: Off, Everywhere, and Only in edit controls."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+2",
 	)
@@ -552,7 +552,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle speak typed words command.
-		description=_("Toggles on and off the speaking of typed words"),
+		description=_("Cycle the reporting of typed words: Off, Everywhere, and Only in edit controls."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+3",
 	)

@@ -1978,22 +1978,22 @@ class KeyboardSettingsPanel(SettingsPanel):
 		self.bindHelpEvent("KeyboardSettingsModifiers", self.modifierList)
 
 		# Translators: This is the label for a combobox in the keyboard settings panel.
-		charsLabelText = _("Speak typed &characters:")
-		charsChoices = [mode.displayString for mode in TypingEcho]
-		self.charsList = sHelper.addLabeledControl(charsLabelText, wx.Choice, choices=charsChoices)
-		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.charsList)
+		speakTypedCharsLabelText = _("Speak typed &characters:")
+		speakTypedCharsChoices = [mode.displayString for mode in TypingEcho]
+		self.speakTypedCharsList = sHelper.addLabeledControl(speakTypedCharsLabelText, wx.Choice, choices=speakTypedCharsChoices)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.speakTypedCharsList)
 		try:
-			self.charsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
+			self.speakTypedCharsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
 		except:  # noqa: E722
 			log.debugWarning("Could not set characters echo list to current setting", exc_info=True)
 
 		# Translators: This is the label for a combobox in the keyboard settings panel.
-		wordsLabelText = _("Speak typed &words:")
-		wordsChoices = [mode.displayString for mode in TypingEcho]
-		self.wordsList = sHelper.addLabeledControl(wordsLabelText, wx.Choice, choices=wordsChoices)
-		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.wordsList)
+		speakTypedWordsLabelText = _("Speak typed &words:")
+		speakTypedWordsChoices = [mode.displayString for mode in TypingEcho]
+		self.speakTypedWordsList = sHelper.addLabeledControl(speakTypedWordsLabelText, wx.Choice, choices=speakTypedWordsChoices)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.speakTypedWordsList)
 		try:
-			self.wordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
+			self.speakTypedWordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
 		except:  # noqa: E722
 			log.debugWarning("Could not set words echo list to current setting", exc_info=True)
 
@@ -2095,8 +2095,8 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["NVDAModifierKeys"] = sum(
 			key.value for (n, key) in enumerate(NVDAKey) if self.modifierList.IsChecked(n)
 		)
-		config.conf["keyboard"]["speakTypedCharacters"] = self.charsList.GetSelection()
-		config.conf["keyboard"]["speakTypedWords"] = self.wordsList.GetSelection()
+		config.conf["keyboard"]["speakTypedCharacters"] = self.speakTypedCharsList.GetSelection()
+		config.conf["keyboard"]["speakTypedWords"] = self.speakTypedWordsList.GetSelection()
 		config.conf["keyboard"]["speechInterruptForCharacters"] = (
 			self.speechInterruptForCharsCheckBox.IsChecked()
 		)

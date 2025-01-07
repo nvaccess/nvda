@@ -50,7 +50,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
-* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Everywhere, and Only in edit controls, replacing the previous On/Off toggles. (#17505, @Cary-rowen)
+* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Everywhere, and Only in edit controls. (#17505, @Cary-rowen)
 
 ### Bug Fixes
 
@@ -156,7 +156,6 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * Changed keyboard typing echo configuration from boolean to integer values:
   * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=Everywhere, 2=Only in edit controls).
   * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
-
 
 #### Deprecations
 

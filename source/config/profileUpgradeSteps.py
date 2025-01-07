@@ -22,6 +22,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import configobj.validate
 from configobj import ConfigObj
@@ -421,15 +422,19 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj) -> None:
 	try:
 		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
 		if configobj.validate.is_boolean(speakTypedCharacters):
-			profile["keyboard"]["speakTypedCharacters"] = 1 if speakTypedCharacters else 0
-			log.debug("Converted speakTypedCharacters from boolean to integer")
+			old_value = speakTypedCharacters
+			new_value = TypingEcho.EVERYWHERE.value if speakTypedCharacters else TypingEcho.OFF.value
+			profile["keyboard"]["speakTypedCharacters"] = new_value
+			log.debug(f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
 	except KeyError:
 		log.debug("speakTypedCharacters not present in config, no action taken.")
 
 	try:
 		speakTypedWords = profile["keyboard"]["speakTypedWords"]
 		if configobj.validate.is_boolean(speakTypedWords):
-			profile["keyboard"]["speakTypedWords"] = 1 if speakTypedWords else 0
-			log.debug("Converted speakTypedWords from boolean to integer")
+			old_value = speakTypedWords
+			new_value = TypingEcho.EVERYWHERE.value if speakTypedWords else TypingEcho.OFF.value
+			profile["keyboard"]["speakTypedWords"] = new_value
+			log.debug(f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
 	except KeyError:
 		log.debug("speakTypedWords not present in config, no action taken.")

@@ -573,8 +573,8 @@ class EnhancedTermTypedCharSupport(Terminal):
 			self._hasTab = False
 		if (
 			(
-				config.conf["keyboard"]["speakTypedCharacters"] > TypingEcho.OFF.value
-				or config.conf["keyboard"]["speakTypedWords"] > TypingEcho.OFF.value
+				config.conf["keyboard"]["speakTypedCharacters"] != TypingEcho.OFF.value
+				or config.conf["keyboard"]["speakTypedWords"] != TypingEcho.OFF.value
 			)
 			and not config.conf["terminals"]["speakPasswords"]
 			and self._supportsTextChange
