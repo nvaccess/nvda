@@ -1393,7 +1393,7 @@ def speakTypedCharacters(ch: str):
 				typingEchoMode == TypingEcho.EVERYWHERE.value
 				or (
 					typingEchoMode == TypingEcho.EDIT_CONTROLS.value
-					and is_editableControl()
+					and isFocusEditable()
 				)
 			):
 				speakText(typedWord)
@@ -1415,7 +1415,7 @@ def speakTypedCharacters(ch: str):
 			typingEchoMode == TypingEcho.EVERYWHERE.value
 			or (
 				typingEchoMode == TypingEcho.EDIT_CONTROLS.value
-				and is_editableControl()
+				and isFocusEditable()
 			)
 		):
 			speakSpelling(realChar)
