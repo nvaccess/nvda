@@ -5,7 +5,6 @@
 # See the file COPYING for more details.
 
 from ctypes import POINTER, c_wchar_p, cast, windll
-from typing import Optional
 from enum import IntEnum
 import locale
 from collections import OrderedDict
