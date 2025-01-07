@@ -138,6 +138,7 @@ def parseUpdateCheckResponse(data: str) -> dict[str, str] | None:
 
 	return metadata
 
+
 def isValidUpdateMirrorResponse(responseData: str) -> bool:
 	"""
 	Validates the response from an update mirror by ensuring it contains the required keys.
@@ -150,7 +151,7 @@ def isValidUpdateMirrorResponse(responseData: str) -> bool:
 	parsedResponse = parseUpdateCheckResponse(responseData)
 	if not parsedResponse:
 		log.warning(
-			"The response data could not be parsed. Ensure the update mirror returns data in the expected format."
+			"The response data could not be parsed. Ensure the update mirror returns data in the expected format.",
 		)
 		return False
 
@@ -158,7 +159,7 @@ def isValidUpdateMirrorResponse(responseData: str) -> bool:
 	if missing_keys:
 		log.warning(
 			f"The response from the update server is missing the following required keys: {', '.join(missing_keys)}. "
-			"Ensure the update mirror provides these keys."
+			"Ensure the update mirror provides these keys.",
 		)
 		return False
 
@@ -243,7 +244,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
 	if not isValidUpdateMirrorResponse(data):
 		raise RuntimeError(
-			"The response from the update server is invalid. Please ensure the URL is correct and points to a valid NVDA update mirror."
+			"The response from the update server is invalid. Please ensure the URL is correct and points to a valid NVDA update mirror.",
 		)
 
 	return parseUpdateCheckResponse(data)
