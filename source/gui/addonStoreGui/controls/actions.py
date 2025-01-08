@@ -160,8 +160,7 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 				_updateChannelSubMenu._contextMenu,
 				# Translators: Label for a submenu that allows the user to change the default update
 				# channel of the selected add-on
-				_("&Update channel"),
-				"AddonStoreUpdateChannel",
+				_("Upd&ate channel"),
 			)
 
 

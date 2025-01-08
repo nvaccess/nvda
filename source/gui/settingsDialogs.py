@@ -3274,7 +3274,7 @@ class AddonStorePanel(SettingsPanel):
 				channel.displayString for channel in UpdateChannel if channel is not UpdateChannel.DEFAULT
 			],
 		)
-		self.bindHelpEvent("AutomaticAddonUpdateChannels", self.defaultUpdateChannelComboBox)
+		self.bindHelpEvent("DefaultAddonUpdateChannel", self.defaultUpdateChannelComboBox)
 		# Subtract 1 from the index because the default update channel is 1-based, but the list is 0-based.
 		index = config.conf["addonStore"]["defaultUpdateChannel"] - 1
 		self.defaultUpdateChannelComboBox.SetSelection(index)
