@@ -10,10 +10,10 @@ import locale
 from collections import OrderedDict
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
-from comtypes import COMError, COMObject, IUnknown, hresult
+from comtypes import COMError, COMObject, IUnknown, hresult, ReturnHRESULT
 import winreg
 import nvwave
-from objidl import IStream
+from objidl import _ULARGE_INTEGER, IStream
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 from logHandler import log
@@ -69,32 +69,31 @@ class SynthDriverAudioStream(COMObject):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
 
-	def ISequentialStream_RemoteWrite(self, this, pv, cb, pcbWritten):
+	def ISequentialStream_RemoteWrite(self, pv, cb):
+		# out: pcbWritten
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called Write method on AudioStream while driver is dead")
-			return
+			return 0
 		if not synth.isSpeaking:
-			return
+			return 0
 		synth.player.feed(pv, cb)
 		self._writtenBytes += cb
-		if pcbWritten:
-			pcbWritten[0] = cb
-		return 0
+		return cb
 
-	def IStream_RemoteSeek(self, this, dlibMove, dwOrigin, plibNewPosition):
+	def IStream_RemoteSeek(self, dlibMove, dwOrigin):
+		# out: plibNewPosition
 		if dwOrigin == 1 and dlibMove.QuadPart == 0:
 			# SAPI is querying the current position.
-			if plibNewPosition:
-				plibNewPosition[0].QuadPart = self._writtenBytes
-				return 0
-		return hresult.E_NOTIMPL
+			return _ULARGE_INTEGER(self._writtenBytes)
+		# Return E_NOTIMPL without logging an error.
+		raise ReturnHRESULT(hresult.E_NOTIMPL, None)
 
-	def IStream_Commit(self, this, grfCommitFlags):
+	def IStream_Commit(self, grfCommitFlags):
 		# SAPI5 voices don't need this method, but MSSP voices do,
 		# which use this method to "flush" written data.
 		# Here we do nothing.
-		return 0
+		pass
 
 
 class SapiSink(COMObject):
@@ -110,7 +109,7 @@ class SapiSink(COMObject):
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
 
-	def ISpNotifySink_Notify(self, this):
+	def ISpNotifySink_Notify(self):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called Notify method on SapiSink while driver is dead")
