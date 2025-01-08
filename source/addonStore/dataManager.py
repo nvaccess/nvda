@@ -353,7 +353,6 @@ class _DataManager:
 		return _createInstalledStoreModelFromData(cacheData)
 
 	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
-		# TODO: Add AvailableAddonStatus.REPLACE_SIDE_LOAD to allow updates from external sources
 		# TODO: Add AvailableAddonStatus.UPDATE_INCOMPATIBLE,
 		# to allow updates that are incompatible with the current NVDA version,
 		# only if a config setting is enabled
