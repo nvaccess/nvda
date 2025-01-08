@@ -7,11 +7,12 @@
 from typing import Set
 import weakref
 import wx
+import wx.html2
 
 import config
 from config.configFlags import NVDAKey
 import core
-from documentationUtils import displayLicense
+from documentationUtils import _getSanitizedHtmlLicense
 import globalVars
 import gui
 from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit
@@ -174,7 +175,7 @@ class LauncherDialog(
 
 	helpId = "InstallingNVDA"
 
-	def __init__(self, parent):
+	def __init__(self, parent: wx.Window | None):
 		super().__init__(
 			parent,
 			title=f"{versionInfo.name} {_('Launcher')}",
@@ -216,15 +217,17 @@ class LauncherDialog(
 		mainSizer.Fit(self)
 		self.CentreOnScreen()
 
-	def _createLicenseAgreementGroup(self) -> wx.StaticBoxSizer:
+	def _createLicenseAgreementGroup(self) -> wx.BoxSizer:
+		sizer = wx.BoxSizer(wx.VERTICAL)
+
 		# Translators: The label of the license text which will be shown when NVDA installation program starts.
 		groupLabel = _("License Agreement")
-		sizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=groupLabel)
+		groupText = wx.StaticText(self, label=groupLabel)
+		sizer.Add(groupText, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
-		# Translators: The label of a button in NVDA installation process to view the license agreement.
-		viewLicenseButton = wx.Button(self, label=_("&View License"))
-		viewLicenseButton.Bind(wx.EVT_BUTTON, lambda evt: displayLicense())
-		sizer.Add(viewLicenseButton, border=gui.guiHelper.SPACE_BETWEEN_BUTTONS_VERTICAL)
+		licenseView: wx.html2.WebView = wx.html2.WebView.New(self, size=self.scaleSize((500, 400)))
+		sizer.Add(licenseView, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+		licenseView.SetPage(_getSanitizedHtmlLicense(), "")
 
 		# Translators: The label for a checkbox in NVDA installation process to agree to the license agreement.
 		agreeText = _("I have read and &agree to the license agreement")
