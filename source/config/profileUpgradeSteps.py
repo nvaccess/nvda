@@ -440,31 +440,6 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 	log.debug("Deleting old config value.")
 	del profile["speech"]["outputDevice"]
 
-	# """Convert keyboard typing echo configuration from boolean to integer values."""
-	try:
-		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
-		if configobj.validate.is_boolean(speakTypedCharacters):
-			old_value = speakTypedCharacters
-			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedCharacters else TypingEcho.OFF.value
-			profile["keyboard"]["speakTypedCharacters"] = new_value
-			log.debug(
-				f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
-			)
-	except KeyError:
-		log.debug("speakTypedCharacters not present in config, no action taken.")
-
-	try:
-		speakTypedWords = profile["keyboard"]["speakTypedWords"]
-		if configobj.validate.is_boolean(speakTypedWords):
-			old_value = speakTypedWords
-			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedWords else TypingEcho.OFF.value
-			profile["keyboard"]["speakTypedWords"] = new_value
-			log.debug(
-				f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
-			)
-	except KeyError:
-		log.debug("speakTypedWords not present in config, no action taken.")
-
 
 def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	"""Convert a device friendly name to an endpoint ID string.
@@ -497,3 +472,29 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 			# Proceed to the next device state.
 			continue
 	return None
+
+def upgradeConfigFrom_14_to_15(profile: ConfigObj):
+	"""Convert keyboard typing echo configuration from boolean to integer values."""
+	try:
+		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
+		if configobj.validate.is_boolean(speakTypedCharacters):
+			old_value = speakTypedCharacters
+			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedCharacters else TypingEcho.OFF.value
+			profile["keyboard"]["speakTypedCharacters"] = new_value
+			log.debug(
+				f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
+			)
+	except KeyError:
+		log.debug("speakTypedCharacters not present in config, no action taken.")
+
+	try:
+		speakTypedWords = profile["keyboard"]["speakTypedWords"]
+		if configobj.validate.is_boolean(speakTypedWords):
+			old_value = speakTypedWords
+			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedWords else TypingEcho.OFF.value
+			profile["keyboard"]["speakTypedWords"] = new_value
+			log.debug(
+				f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
+			)
+	except KeyError:
+		log.debug("speakTypedWords not present in config, no action taken.")
