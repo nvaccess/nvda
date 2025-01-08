@@ -537,8 +537,8 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
 
 	@script(
-		# Translators: Input help mode message for toggle speaked typed characters command.
-		description=_("Cycle the reporting of typed characters: Off, Everywhere, and Only in edit controls."),
+		# Translators: Input help mode message for cycling the reporting of typed words.
+		description=_("Cycle the reporting of typed characters: Off, Always, and Only in edit controls."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+2",
 	)
@@ -552,7 +552,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Input help mode message for toggle speak typed words command.
-		description=_("Cycle the reporting of typed words: Off, Everywhere, and Only in edit controls."),
+		description=_("Cycle the reporting of typed words: Off, Always, and Only in edit controls."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+3",
 	)
