@@ -177,7 +177,7 @@ class ExitDialog(wx.Dialog):
 						apiVersion=apiVersion,
 						backCompatTo=backCompatTo,
 					)
-					displayDialogAsModal(confirmUpdateDialog)
+					confirmUpdateDialog.callback(displayDialogAsModal(confirmUpdateDialog))
 				else:
 					updateCheck.executePendingUpdate()
 		wx.CallAfter(self.Destroy)
