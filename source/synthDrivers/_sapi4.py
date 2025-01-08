@@ -16,7 +16,6 @@ from ctypes import (
 	POINTER,
 	sizeof,
 	Structure,
-	windll,
 )
 from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
 from enum import IntEnum
@@ -229,6 +228,10 @@ CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
 
 
+# Defined in mmsyscom.h
+MMSYSERR_NOERROR = 0
+
+
 class DriverMessage(IntEnum):
 	"""WaveOutMessage message codes
 	Defined in mmddk.h
@@ -239,17 +242,3 @@ class DriverMessage(IntEnum):
 
 	QUERY_INSTANCE_ID_SIZE = 2066
 	"""DRV_QUERYFUNCTIONINSTANCEIDSIZE """
-
-
-# Defined in mmsyscom.h
-MMSYSERR_NOERROR = 0
-
-# Function prototypes
-# Defined in mmeapi.h
-winmm = windll.winmm
-waveOutMessage = winmm.waveOutMessage
-waveOutMessage.restype = c_uint
-
-waveOutGetNumDevs = winmm.waveOutGetNumDevs
-waveOutGetNumDevs.argtypes = []
-waveOutGetNumDevs.restype = c_int

@@ -7,7 +7,7 @@ import locale
 from collections import OrderedDict
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
-from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof
+from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
 from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
@@ -34,8 +34,6 @@ from ._sapi4 import (
 	TTSFEATURE_VOLUME,
 	TTSMODEINFO,
 	VOICECHARSET,
-	waveOutGetNumDevs,
-	waveOutMessage,
 	DriverMessage,
 )
 import config
@@ -375,6 +373,11 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
 		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
 		currEndpointIdByteCount = DWORD()
+		# Function prototypes
+		# Defined in mmeapi.h
+		winmm = windll.winmm
+		waveOutMessage = winmm.waveOutMessage
+		waveOutGetNumDevs = winmm.waveOutGetNumDevs
 		for devID in range(waveOutGetNumDevs()):
 			# Get the length of this device's endpoint ID string.
 			mmr = waveOutMessage(
