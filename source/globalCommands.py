@@ -3223,25 +3223,6 @@ class GlobalCommands(ScriptableObject):
 			config.conf["reviewCursor"]["followFocus"] = True
 		ui.message(state)
 
-	@script(
-		description=_(
-			# Translators: Input help mode message for toggle auto focus focusable elements command.
-			"Toggles on and off automatic movement of the system focus due to browse mode commands",
-		),
-		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="kb:NVDA+8",
-	)
-	def script_toggleAutoFocusFocusableElements(self, gesture):
-		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			# Translators: presented when toggled.
-			state = _("Automatically set system focus to focusable elements off")
-			config.conf["virtualBuffers"]["autoFocusFocusableElements"] = False
-		else:
-			# Translators: presented when toggled.
-			state = _("Automatically set system focus to focusable elements on")
-			config.conf["virtualBuffers"]["autoFocusFocusableElements"] = True
-		ui.message(state)
-
 	# added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	@script(
 		# Translators: Input help mode message for report battery status command.
