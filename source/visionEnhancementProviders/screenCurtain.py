@@ -192,19 +192,19 @@ class WarnOnLoadDialog(MessageDialog):
 			settingsStorage._saveSpecificSettings(settingsStorage, settingsStorage.supportedSettings)
 		self.EndModal(result)
 
-	def _onDialogActivated(self, evt):
+	def _onActivateEvent(self, evt: wx.ActivateEvent):
 		# focus is normally set to the first child, however, we want people to easily be able to cancel this
 		# dialog
-		super()._onDialogActivated(evt)
+		super()._onActivateEvent(evt)
 		self.noButton.SetFocus()
 
-	def _onShowEvt(self, evt):
+	def _onShowEvent(self, evt: wx.ShowEvent):
 		"""When no other dialogs have been opened first, focus lands in the wrong place (on the checkbox),
 		so we correct it after the dialog is opened.
 		"""
 		if evt.IsShown():
 			self.noButton.SetFocus()
-		super()._onShowEvt(evt)
+		super()._onShowEvent(evt)
 
 
 class ScreenCurtainGuiPanel(
