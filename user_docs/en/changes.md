@@ -51,7 +51,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The "Contributors" file was removed from the NVDA menu. (#16922)
-* The NVDA license is now formatted as an HTML browseable message. (#17600)
+* The NVDA license is now formatted as an HTML browseable message to improve readability. (#17600)
 
 ### Bug Fixes
 
