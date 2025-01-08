@@ -50,6 +50,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
+* The Browse Mode setting "Automatically set system focus to focusable elements" has been removed, the behaviour is now disabled. (#17598)
 
 ### Bug Fixes
 
@@ -168,6 +169,10 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
 Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
 * Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
+* The following API symbols related to the setting "Automatically set system focus to focusable elements" have been removed with no replacement: (#17598)
+  * `globalCommands.GlobalCommands.script_toggleAutoFocusFocusableElements`
+  * `config.conf["virtualBuffers"]["autoFocusFocusableElements"]`
+  * `gui.settingsDialogs.BrowseModePanel.autoFocusFocusableElementsCheckBox`
 
 #### Deprecations
 
