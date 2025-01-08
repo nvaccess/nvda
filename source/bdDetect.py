@@ -741,7 +741,9 @@ class DriverRegistrar:
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]
-		driverUsb.add(_UsbDeviceRegistryEntry(type, id, useAsFallback, matchFunc))
+		driverUsb.add(
+			_UsbDeviceRegistryEntry(id=id, type=type, useAsFallback=useAsFallback, matchFunc=matchFunc),
+		)
 
 	def addUsbDevices(
 		self,
@@ -774,7 +776,12 @@ class DriverRegistrar:
 			)
 		devs = self._getDriverDict()
 		driverUsb = devs[CommunicationType.USB]
-		driverUsb.update((_UsbDeviceRegistryEntry(id, type, useAsFallback, matchFunc) for id in ids))
+		driverUsb.update(
+			(
+				_UsbDeviceRegistryEntry(id=id, type=type, useAsFallback=useAsFallback, matchFunc=matchFunc)
+				for id in ids
+			)
+		)
 
 	def addBluetoothDevices(self, matchFunc: MatchFuncT):
 		"""Associate Bluetooth HID or COM ports with the driver on this instance.
