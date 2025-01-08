@@ -1,18 +1,19 @@
 # A part of NonVisual Desktop Access (NVDA)
 # Copyright (C) 2006-2024 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
-# See the file COPYING for more details.
+# See the file COPYING for  Not e details.
 
 import locale
 from collections import OrderedDict
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
-from ctypes import byref, c_ulong, POINTER
-from ctypes.wintypes import DWORD, WORD
+from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof
+from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 from ._sapi4 import (
+	MMSYSERR_NOERROR,
 	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
 	IAudioMultiMediaDevice,
@@ -33,9 +34,12 @@ from ._sapi4 import (
 	TTSFEATURE_VOLUME,
 	TTSMODEINFO,
 	VOICECHARSET,
+	waveOutGetNumDevs,
+	waveOutMessage,
+	DRV_QUERYFUNCTIONINSTANCEID,
+	DRV_QUERYFUNCTIONINSTANCEIDSIZE,
 )
 import config
-import nvwave
 import weakref
 
 from speech.commands import (
@@ -233,7 +237,7 @@ class SynthDriver(SynthDriver):
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
-		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
+		self._ttsAudio.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["speech"]["outputDevice"]))
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsAttrs = self._ttsCentral.QueryInterface(ITTSAttributes)
@@ -365,3 +369,37 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+
+def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
+		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
+		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
+		currEndpointIdByteCount = DWORD()
+		for devID in range(waveOutGetNumDevs()):
+			# Get the length of this device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DRV_QUERYFUNCTIONINSTANCEIDSIZE,
+				byref(currEndpointIdByteCount),
+				None,
+			)
+			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
+				# ID lengths don't match, so this device can't be a match.
+				continue
+			# Get the device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DRV_QUERYFUNCTIONINSTANCEID,
+				byref(currEndpointId),
+				currEndpointIdByteCount,
+			)
+			if mmr != MMSYSERR_NOERROR:
+				continue
+			# Decode the endpoint ID string to a python string, and strip the null terminator.
+			if (
+				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
+				== targetEndpointId
+			):
+				return devID
+	return -1

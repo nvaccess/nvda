@@ -1,7 +1,5 @@
-# _sapi4.py
-# Contributed by Serotek Corporation under the GPL
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2025 NV Access Limited, Serotek Corporation
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -18,6 +16,7 @@ from ctypes import (
 	POINTER,
 	sizeof,
 	Structure,
+	windll,
 )
 from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
 from comtypes import GUID, IUnknown, STDMETHOD
@@ -227,3 +226,21 @@ ITTSNotifySink = ITTSNotifySinkW
 
 CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
+
+
+# WaveOutMessage message codes
+# Defined in mmddk.h
+DRV_QUERYFUNCTIONINSTANCEID = 2065
+DRV_QUERYFUNCTIONINSTANCEIDSIZE = 2066
+# Defined in mmsyscom.h
+MMSYSERR_NOERROR = 0
+
+
+winmm = windll.winmm
+waveOutMessage = winmm.waveOutMessage
+# waveOutMessage.argtypes = [HANDLE, c_ulong, DWORD, DWORD]
+# waveOutMessage.restype = c_uint
+
+waveOutGetNumDevs = winmm.waveOutGetNumDevs
+# waveOutGetNumDevs.argtypes = []
+# waveOutGetNumDevs.restype = c_int
