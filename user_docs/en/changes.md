@@ -82,6 +82,8 @@ Specifically, MathML inside of span and other elements that have the attribute `
 In any document, if the cursor is on the last line, it will be moved to the end when using this command.
 (#17251, #17430, @nvdaes)
 * In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)
+* When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)
+* The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17537, @LeonarddeR)
 * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
 
 ### Changes for Developers
@@ -126,6 +128,11 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Added the following extension points (#17428, @ctoth):
   * `inputCore.decide_handleRawKey`: called on each keypress
   * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
+* Changes to braille display auto detection registration in `bdDetect.DriverRegistrar`: (#17521, @LeonarddeR)
+  * Added the `addUsbDevice` method to register one USB device at a time.
+  * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
+    * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
+    * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 
 #### API Breaking Changes
 
@@ -148,6 +155,8 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
   * The `WASAPI` key has been removed from the `audio` section of the config spec.
   * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
+  * The configuration key `config.conf["speech"]["outputDevice"]` has been removed.
+    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)
   * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
   * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
@@ -156,6 +165,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * Changed keyboard typing echo configuration from boolean to integer values:
   * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=Everywhere, 2=Only in edit controls).
   * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
+* The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
 
 #### Deprecations
 
@@ -164,6 +174,7 @@ Please use `braille.filter_displayDimensions` instead. (#17011)
 * The following symbols are deprecated (#17486, @CyrilleB79):
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.
+* `bdDetect.DeviceType` is deprecated in favour of `bdDetect.ProtocolType` and `bdDetect.CommunicationType` to take into account the fact that both HID and Serial communication can take place over USB and Bluetooth. (#17537 , @LeonarddeR)
 
 ## 2024.4.2
 

@@ -16,7 +16,7 @@ from typing import Dict, List, Optional, Set
 import serial
 
 import braille
-from bdDetect import DeviceType, DeviceMatch, DriverRegistrar
+from bdDetect import DeviceMatch, DriverRegistrar
 import brailleInput
 import inputCore
 import bdDetect
@@ -107,7 +107,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				vidpid,  # Seika Notetaker
 			},
@@ -134,8 +134,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.debug(f"Seika Notetaker braille driver: ({port!r})")
 		dev: typing.Optional[typing.Union[hwIo.Hid, hwIo.Serial]] = None
 		for match in self._getTryPorts(port):
-			self.isHid = match.type == bdDetect.DeviceType.HID
-			self.isSerial = match.type == bdDetect.DeviceType.SERIAL
+			self.isHid = match.type == bdDetect.ProtocolType.HID
+			self.isSerial = match.type == bdDetect.ProtocolType.SERIAL
 			try:
 				if self.isHid:
 					log.info("Trying Seika notetaker on USB-HID")
