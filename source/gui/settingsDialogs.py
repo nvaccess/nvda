@@ -1981,7 +1981,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 		speakTypedCharsLabelText = _("Speak typed &characters:")
 		speakTypedCharsChoices = [mode.displayString for mode in TypingEcho]
 		self.speakTypedCharsList = sHelper.addLabeledControl(
-			speakTypedCharsLabelText, wx.Choice, choices=speakTypedCharsChoices
+			speakTypedCharsLabelText,
+			wx.Choice,
+			choices=speakTypedCharsChoices,
 		)
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.speakTypedCharsList)
 		self.speakTypedCharsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
@@ -1990,7 +1992,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 		speakTypedWordsLabelText = _("Speak typed &words:")
 		speakTypedWordsChoices = [mode.displayString for mode in TypingEcho]
 		self.speakTypedWordsList = sHelper.addLabeledControl(
-			speakTypedWordsLabelText, wx.Choice, choices=speakTypedWordsChoices
+			speakTypedWordsLabelText,
+			wx.Choice,
+			choices=speakTypedWordsChoices,
 		)
 		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.speakTypedWordsList)
 		self.speakTypedWordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])

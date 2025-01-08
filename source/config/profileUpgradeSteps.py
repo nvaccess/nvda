@@ -448,7 +448,7 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedCharacters else TypingEcho.OFF.value
 			profile["keyboard"]["speakTypedCharacters"] = new_value
 			log.debug(
-				f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name})."
+				f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
 			)
 	except KeyError:
 		log.debug("speakTypedCharacters not present in config, no action taken.")
@@ -460,7 +460,7 @@ def upgradeConfigFrom_13_to_14(profile: ConfigObj):
 			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedWords else TypingEcho.OFF.value
 			profile["keyboard"]["speakTypedWords"] = new_value
 			log.debug(
-				f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name})."
+				f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
 			)
 	except KeyError:
 		log.debug("speakTypedWords not present in config, no action taken.")
