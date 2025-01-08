@@ -11,14 +11,17 @@ import typing
 import weakref
 import unicodedata
 import time
+
 import colors
 import api
 from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 from controlTypes.state import State
+from gui.message import MessageDialog
+import queueHandler
 import tones
-from synthDriverHandler import getSynth
+from synthDriverHandler import SynthDriver, getSynth, synthChanged
 import re
 import textInfos
 import speechDictHandler
@@ -3059,3 +3062,34 @@ def clearTypedWordBuffer() -> None:
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()
+
+
+def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):
+	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
+
+	def setShown():
+		config.conf["speech"]["hasSapi4WarningBeenShown"] = True
+
+	def impl():
+		MessageDialog(
+			parent=None,
+			message="Microsoft Speech API version 4 is obsolete. "
+			"Using this speech synthesizer may pose a security risk. "
+			"This synthesizer driver will be removed in NVDA 2026.1. "
+			"You are strongly encouraged to choose a more modern speech synthesizer.",
+			title="Warning",
+			buttons=None,
+		).addOkButton(
+			callback=setShown,
+		).Show()
+
+	if (
+		(not isFallback)
+		and (synth.name == "sapi4")
+		and (not config.conf["speech"]["hasSapi4WarningBeenShown"])
+	):
+		# We need to queue the dialog to appear, as wx may not have been initialised the first time this is called.
+		queueHandler.queueFunction(queueHandler.eventQueue, impl)
+
+
+synthChanged.register(_sapi4DeprecationWarning)
