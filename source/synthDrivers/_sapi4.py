@@ -19,6 +19,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
+from enum import IntEnum
 from comtypes import GUID, IUnknown, STDMETHOD
 
 import winKernel
@@ -228,10 +229,18 @@ CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
 
 
-# WaveOutMessage message codes
-# Defined in mmddk.h
-DRV_QUERYFUNCTIONINSTANCEID = 2065
-DRV_QUERYFUNCTIONINSTANCEIDSIZE = 2066
+class DriverMessage(IntEnum):
+	"""WaveOutMessage message codes
+	Defined in mmddk.h
+	"""
+
+	QUERY__INSTANCE_ID = 2065
+	"""DRV_QUERYFUNCTIONINSTANCEID """
+
+	QUERY_INSTANCE_ID_SIZE = 2066
+	"""DRV_QUERYFUNCTIONINSTANCEIDSIZE """
+
+
 # Defined in mmsyscom.h
 MMSYSERR_NOERROR = 0
 

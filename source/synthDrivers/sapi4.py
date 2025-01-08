@@ -36,8 +36,7 @@ from ._sapi4 import (
 	VOICECHARSET,
 	waveOutGetNumDevs,
 	waveOutMessage,
-	DRV_QUERYFUNCTIONINSTANCEID,
-	DRV_QUERYFUNCTIONINSTANCEIDSIZE,
+	DriverMessage,
 )
 import config
 import weakref
@@ -380,7 +379,7 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 			# Get the length of this device's endpoint ID string.
 			mmr = waveOutMessage(
 				HANDLE(devID),
-				DRV_QUERYFUNCTIONINSTANCEIDSIZE,
+				DriverMessage.QUERY_INSTANCE_ID_SIZE,
 				byref(currEndpointIdByteCount),
 				None,
 			)
@@ -390,7 +389,7 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 			# Get the device's endpoint ID string.
 			mmr = waveOutMessage(
 				HANDLE(devID),
-				DRV_QUERYFUNCTIONINSTANCEID,
+				DriverMessage.QUERY__INSTANCE_ID,
 				byref(currEndpointId),
 				currEndpointIdByteCount,
 			)
