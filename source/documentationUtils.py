@@ -50,8 +50,8 @@ def getDocFilePath(fileName: str, localized: bool = True) -> str | None:
 		return None
 	else:
 		# Not localized.
-		if NVDAState.isRunningAsSource() and fileName in ("copying.txt"):
-			# If running from source, these two files are in the root dir.
+		if NVDAState.isRunningAsSource() and fileName == "copying.txt":
+			# If running from source, this file is in the root dir.
 			return os.path.join(globalVars.appDir, "..", fileName)
 		else:
 			return os.path.join(getDocFilePath.rootPath, fileName)
