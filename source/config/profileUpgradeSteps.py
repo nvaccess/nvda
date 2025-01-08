@@ -473,6 +473,7 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 			continue
 	return None
 
+
 def upgradeConfigFrom_14_to_15(profile: ConfigObj):
 	"""Convert keyboard typing echo configuration from boolean to integer values."""
 	try:
