@@ -235,12 +235,12 @@ DRV_QUERYFUNCTIONINSTANCEIDSIZE = 2066
 # Defined in mmsyscom.h
 MMSYSERR_NOERROR = 0
 
-
+# Function prototypes
+# Defined in mmeapi.h
 winmm = windll.winmm
 waveOutMessage = winmm.waveOutMessage
-# waveOutMessage.argtypes = [HANDLE, c_ulong, DWORD, DWORD]
-# waveOutMessage.restype = c_uint
+waveOutMessage.restype = c_uint
 
 waveOutGetNumDevs = winmm.waveOutGetNumDevs
-# waveOutGetNumDevs.argtypes = []
-# waveOutGetNumDevs.restype = c_int
+waveOutGetNumDevs.argtypes = []
+waveOutGetNumDevs.restype = c_int
