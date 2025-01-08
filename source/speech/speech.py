@@ -1389,7 +1389,7 @@ def speakTypedCharacters(ch: str):
 			log.io("typed word: %s" % typedWord)
 		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
 		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:
-			if typingEchoMode == TypingEcho.EVERYWHERE.value or (
+			if typingEchoMode == TypingEcho.ALWAYS.value or (
 				typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 			):
 				speakText(typedWord)
@@ -1407,7 +1407,7 @@ def speakTypedCharacters(ch: str):
 
 	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
 	if not suppress and typingEchoMode != TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
-		if typingEchoMode == TypingEcho.EVERYWHERE.value or (
+		if typingEchoMode == TypingEcho.ALWAYS.value or (
 			typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
 		):
 			speakSpelling(realChar)
