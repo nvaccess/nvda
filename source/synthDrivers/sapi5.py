@@ -4,10 +4,11 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import POINTER, c_wchar_p, cast, windll
+from ctypes import POINTER, c_ubyte, c_wchar_p, cast, windll, _Pointer
 from enum import IntEnum
 import locale
 from collections import OrderedDict
+from typing import TYPE_CHECKING
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult, ReturnHRESULT
@@ -47,6 +48,12 @@ class SpeechVoiceEvents(IntEnum):
 	Bookmark = 16
 
 
+if TYPE_CHECKING:
+	LP_c_ubyte = _Pointer[c_ubyte]
+else:
+	LP_c_ubyte = POINTER(c_ubyte)
+
+
 class SynthDriverAudioStream(COMObject):
 	"""
 	Implements IStream to receive streamed-in audio data.
@@ -61,10 +68,9 @@ class SynthDriverAudioStream(COMObject):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
 
-	def ISequentialStream_RemoteWrite(self, pv, cb: int) -> int:
+	def ISequentialStream_RemoteWrite(self, pv: LP_c_ubyte, cb: int) -> int:
 		"""This is called when SAPI wants to write (output) a wave data chunk.
 		@param pv: A pointer to the first wave data byte.
-		@type pv: POINTER(c_ubyte)
 		@param cb: The number of bytes to write.
 		@returns: The number of bytes written.
 		"""
