@@ -3074,11 +3074,15 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 	def impl():
 		MessageDialog(
 			parent=None,
-			message="Microsoft Speech API version 4 is obsolete. "
-			"Using this speech synthesizer may pose a security risk. "
-			"This synthesizer driver will be removed in NVDA 2026.1. "
-			"You are strongly encouraged to choose a more modern speech synthesizer.",
-			title="Warning",
+			message=_(
+				# Translators: Message warning users that SAPI4 is deprecated.
+				"Microsoft Speech API version 4 is obsolete. "
+				"Using this speech synthesizer may pose a security risk. "
+				"This synthesizer driver will be removed in NVDA 2026.1. "
+				"You are strongly encouraged to choose a more modern speech synthesizer.",
+			),
+			# Translators: Title of a message dialog.
+			title=_("Warning"),
 			buttons=None,
 		).addOkButton(
 			callback=setShown,
