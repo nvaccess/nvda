@@ -2,6 +2,7 @@
 # Copyright (C) 2006-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+# This module is deprecated, pending removal in NVDA 2026.1.
 
 import locale
 from collections import OrderedDict
@@ -12,6 +13,7 @@ from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
+import warnings
 from ._sapi4 import (
 	MMSYSERR_NOERROR,
 	CLSID_MMAudioDest,
@@ -50,6 +52,9 @@ from speech.commands import (
 	BaseProsodyCommand,
 )
 from speech.types import SpeechSequence
+
+
+warnings.warn("synthDrivers.sapi4 is deprecated, pending removal in NVDA 2026.1.", DeprecationWarning)
 
 
 class SynthDriverBufSink(COMObject):
