@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 14
+latestSchemaVersion = 15
 
 #: The configuration specification string
 #: @type: String
@@ -178,10 +178,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Default = 6: NumpadInsert + ExtendedInsert
 	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
-	# 0: Off, 1: Always, 2: Only in edit controls
+	# 0: Off, 1: Only in edit controls, 2: Always
 	speakTypedCharacters = integer(default=2,min=0,max=2)
-	# 0: Off, 1: Always, 2: Only in edit controls
-	speakTypedWords = integer(default=2,min=0,max=2)
+	# 0: Off, 1: Only in edit controls, 2: Always
+	speakTypedWords = integer(default=0,min=0,max=2)
 	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
 	speechInterruptForCharacters = boolean(default=true)

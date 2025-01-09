@@ -2588,7 +2588,7 @@ If no key is chosen as the NVDA key it may be impossible to access many NVDA com
 
 ##### Speak Typed Characters {#KeyboardSettingsSpeakTypedCharacters}
 
-Key: NVDA+2
+Key: `NVDA+2`
 
 This option controls when NVDA announces characters you type on the keyboard.
 The available options are:
@@ -2601,7 +2601,7 @@ The available options are:
 
 ##### Speak Typed Words {#KeyboardSettingsSpeakTypedWords}
 
-Key: NVDA+3
+Key: `NVDA+3`
 
 This option controls when NVDA announces words you type on the keyboard.
 The available options are:

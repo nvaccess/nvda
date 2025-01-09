@@ -1358,8 +1358,7 @@ FIRST_NONCONTROL_CHAR = " "
 
 def isFocusEditable() -> bool:
 	"""Check if the currently focused object is editable.
-	@return: C{True} if the focused object is editable, C{False} otherwise.
-	@rtype: bool
+	:return: ``True`` if the focused object is editable, ``False`` otherwise.
 	"""
 	obj = api.getFocusObject()
 	controls = {controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_TERMINAL}

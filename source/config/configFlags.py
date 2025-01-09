@@ -54,8 +54,8 @@ class TypingEcho(DisplayStringIntEnum):
 	"""
 
 	OFF = 0
-	ALWAYS = 1
-	EDIT_CONTROLS = 2
+	EDIT_CONTROLS = 1
+	ALWAYS = 2
 
 	@property
 	def _displayStringLabels(self):
@@ -63,9 +63,9 @@ class TypingEcho(DisplayStringIntEnum):
 			# Translators: One of the choices for typing echo in keyboard settings
 			TypingEcho.OFF: _("Off"),
 			# Translators: One of the choices for typing echo in keyboard settings
-			TypingEcho.ALWAYS: _("Always"),
-			# Translators: One of the choices for typing echo in keyboard settings
 			TypingEcho.EDIT_CONTROLS: _("Only in edit controls"),
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.ALWAYS: _("Always"),
 		}
 
 

@@ -475,30 +475,27 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 
 
 def upgradeConfigFrom_14_to_15(profile: ConfigObj):
-	"""Convert keyboard typing echo configuration from boolean to integer values."""
-	_convertTypingEcho(profile, "speakTypedCharacters")
-	_convertTypingEcho(profile, "speakTypedWords")
+	"""Convert keyboard typing echo configurations from boolean to integer values."""
+	convertTypingEcho(profile, "speakTypedCharacters")
+	convertTypingEcho(profile, "speakTypedWords")
 
 
-def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
+def convertTypingEcho(profile: ConfigObj, key: str) -> None:
 	"""
 	Convert a keyboard typing echo configuration from boolean to integer values.
 
-	This function updates the specified key in the keyboard configuration by converting its boolean value
-	to the corresponding TypingEcho enum value.
-
-	:param profile: The user profile containing keyboard settings.
+	:param profile: The `ConfigObj` instance representing the user's NVDA configuration file.
 	:param key: The configuration key to convert.
 	"""
 	try:
-		value = profile["keyboard"][key]
+		oldValue: bool = profile["keyboard"].as_bool(key)
 	except KeyError:
 		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, no action taken.")
+		return
 	else:
-		if configobj.validate.is_boolean(value):
-			old_value = value
-			new_value = TypingEcho.EDIT_CONTROLS.value if value else TypingEcho.OFF.value
-			profile["keyboard"][key] = new_value
-			log.debug(f"Converted '{key}' from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
-		else:
-			log.debug(f"'{key}' is not a boolean, no conversion performed.")
+		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
+		profile["keyboard"][key] = newValue
+		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
