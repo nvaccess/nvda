@@ -225,7 +225,7 @@ class LauncherDialog(
 		groupText = wx.StaticText(self, label=groupLabel)
 		sizer.Add(groupText, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
-		licenseView: wx.html2.WebView = wx.html2.WebView.New(self, size=self.scaleSize((500, 400)))
+		licenseView: wx.html2.WebView = wx.html2.WebView.New(self, size=self.scaleSize((550, 400)))
 		sizer.Add(licenseView, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 		licenseView.SetPage(_getSanitizedHtmlLicense(), "")
 

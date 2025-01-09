@@ -239,6 +239,8 @@ freeze(
 			"brailleDisplayDrivers.dotPad",
 			"synthDrivers",
 			"visionEnhancementProviders",
+			# Required for markdown, markdown implicitly imports this so it isn't picked up
+			"html.parser",
 		],
 		"includes": [
 			"nvdaBuiltin",
