@@ -33,14 +33,6 @@ from speech.commands import (
 )
 
 
-class SPAudioState(IntEnum):
-	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720596(v=vs.85)
-	CLOSED = 0
-	STOP = 1
-	PAUSE = 2
-	RUN = 3
-
-
 class SpeechVoiceSpeakFlags(IntEnum):
 	# https://docs.microsoft.com/en-us/previous-versions/windows/desktop/ms720892(v=vs.85)
 	Async = 1
