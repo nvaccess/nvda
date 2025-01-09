@@ -369,11 +369,16 @@ class SynthDriver(SynthDriver):
 
 
 def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
+
+	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
+	:return: An integer WaveOut device ID for use with SAPI4.
+		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
+	"""
 	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
 		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
 		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
 		currEndpointIdByteCount = DWORD()
-		# Function prototypes
 		# Defined in mmeapi.h
 		winmm = windll.winmm
 		waveOutMessage = winmm.waveOutMessage
@@ -404,4 +409,6 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 				== targetEndpointId
 			):
 				return devID
+	# No matching device found, or default requested explicitly.
+	# Return the ID of Microsoft Sound Mapper
 	return -1
