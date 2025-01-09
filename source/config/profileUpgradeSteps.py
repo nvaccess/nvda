@@ -476,26 +476,29 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 
 def upgradeConfigFrom_14_to_15(profile: ConfigObj):
 	"""Convert keyboard typing echo configuration from boolean to integer values."""
-	try:
-		speakTypedCharacters = profile["keyboard"]["speakTypedCharacters"]
-		if configobj.validate.is_boolean(speakTypedCharacters):
-			old_value = speakTypedCharacters
-			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedCharacters else TypingEcho.OFF.value
-			profile["keyboard"]["speakTypedCharacters"] = new_value
-			log.debug(
-				f"Converted speakTypedCharacters from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
-			)
-	except KeyError:
-		log.debug("speakTypedCharacters not present in config, no action taken.")
+	_convertTypingEcho(profile, "speakTypedCharacters")
+	_convertTypingEcho(profile, "speakTypedWords")
 
+
+def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
+	"""
+	Convert a keyboard typing echo configuration from boolean to integer values.
+
+	This function updates the specified key in the keyboard configuration by converting its boolean value
+	to the corresponding TypingEcho enum value.
+
+	:param profile: The user profile containing keyboard settings.
+	:param key: The configuration key to convert.
+	"""
 	try:
-		speakTypedWords = profile["keyboard"]["speakTypedWords"]
-		if configobj.validate.is_boolean(speakTypedWords):
-			old_value = speakTypedWords
-			new_value = TypingEcho.EDIT_CONTROLS.value if speakTypedWords else TypingEcho.OFF.value
-			profile["keyboard"]["speakTypedWords"] = new_value
-			log.debug(
-				f"Converted speakTypedWords from {old_value} to {new_value} ({TypingEcho(new_value).name}).",
-			)
+		value = profile["keyboard"][key]
 	except KeyError:
-		log.debug("speakTypedWords not present in config, no action taken.")
+		log.debug(f"'{key}' not present in config, no action taken.")
+	else:
+		if configobj.validate.is_boolean(value):
+			old_value = value
+			new_value = TypingEcho.EDIT_CONTROLS.value if value else TypingEcho.OFF.value
+			profile["keyboard"][key] = new_value
+			log.debug(f"Converted '{key}' from {old_value} to {new_value} ({TypingEcho(new_value).name}).")
+		else:
+			log.debug(f"'{key}' is not a boolean, no conversion performed.")
