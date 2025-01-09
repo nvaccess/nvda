@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2021 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -222,10 +222,16 @@ class SynthDriver(SynthDriver):
 			# Therefore, set the voice before setting the audio output.
 			# Otherwise, we will get poor speech quality in some cases.
 			self.tts.voice = voice
-		for audioOutput in self.tts.GetAudioOutputs():
-			if audioOutput.GetDescription() == config.conf["speech"]["outputDevice"]:
-				self.tts.audioOutput = audioOutput
-				break
+		# SAPI5 automatically selects the system default audio device, so there's no use doing work if the user has selected to use the system default.
+		# Besides, our default value is not a valid endpoint ID.
+		if (outputDevice := config.conf["audio"]["outputDevice"]) != config.conf.getConfigValidation(
+			("audio", "outputDevice"),
+		).default:
+			for audioOutput in self.tts.GetAudioOutputs():
+				# SAPI's audio output IDs are registry keys. It seems that the final path segment is the endpoint ID.
+				if audioOutput.Id.endswith(outputDevice):
+					self.tts.audioOutput = audioOutput
+					break
 		self._eventsConnection = comtypes.client.GetEvents(self.tts, SapiSink(weakref.ref(self)))
 		self.tts.EventInterests = (
 			SpeechVoiceEvents.StartInputStream | SpeechVoiceEvents.Bookmark | SpeechVoiceEvents.EndInputStream

@@ -20,6 +20,7 @@ import requests
 import wx
 from NVDAState import WritePaths
 
+from utils import mmdevice
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -46,7 +47,6 @@ import gui
 import gui.contextHelp
 import globalVars
 from logHandler import log
-import nvwave
 import audio
 import audioDucking
 import queueHandler
@@ -3041,17 +3041,15 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		# The Windows Core Audio device enumeration does not have the concept of an ID for the default output device, so we have to insert something ourselves instead.
-		# Translators: Value to show when choosing to use the default audio output device.
-		deviceNames = (_("Default output device"), *nvwave.getOutputDeviceNames())
+		self._deviceIds, deviceNames = zip(*mmdevice._getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		selectedOutputDevice = config.conf["speech"]["outputDevice"]
-		if selectedOutputDevice == "default":
+		selectedOutputDevice = config.conf["audio"]["outputDevice"]
+		if selectedOutputDevice == config.conf.getConfigValidation(("audio", "outputDevice")).default:
 			selection = 0
 		else:
 			try:
-				selection = deviceNames.index(selectedOutputDevice)
+				selection = self._deviceIds.index(selectedOutputDevice)
 			except ValueError:
 				selection = 0
 		self.deviceList.SetSelection(selection)
@@ -3176,13 +3174,10 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Select(0)
 
 	def onSave(self):
-		# We already use "default" as the key in the config spec, so use it here as an alternative to Microsoft Sound Mapper.
-		selectedOutputDevice = (
-			"default" if self.deviceList.GetSelection() == 0 else self.deviceList.GetStringSelection()
-		)
-		if config.conf["speech"]["outputDevice"] != selectedOutputDevice:
+		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
+		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
-			config.conf["speech"]["outputDevice"] = selectedOutputDevice
+			config.conf["audio"]["outputDevice"] = selectedOutputDevice
 			currentSynth = getSynth()
 			if not setSynth(currentSynth.name):
 				_synthWarningDialog(currentSynth.name)

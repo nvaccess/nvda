@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2006-2024 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -286,9 +286,10 @@ class SynthDriver(SynthDriver):
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
-		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["speech"]["outputDevice"], True))
+		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
 		if self._ttsCentral:
 			self._ttsCentral.UnRegister(self._sinkRegKey)
+
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
