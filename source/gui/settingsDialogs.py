@@ -999,7 +999,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			configPath=("update", "serverURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
-			responseValidator=_isResponseUpdateMirrorValid,
+			responseValidator=_isResponseUpdateMetadata,
 		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
@@ -5598,8 +5598,5 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 	return isinstance(data, str) and bool(data)
 
 
-def _isResponseUpdateMirrorValid(response: requests.Response) -> bool:
-    if not response.ok:
-        return False
-
+def _isResponseUpdateMetadata(response: requests.Response) -> bool:
 	return updateCheck	.isValidUpdateMirrorResponse(response.text)

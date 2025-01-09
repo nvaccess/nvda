@@ -233,7 +233,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
 			# Retry the update check
-			log.debug(f"Retrying update data fetch from {url}")
+			log.debug(f"Retrying update check from {url}")
 			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
