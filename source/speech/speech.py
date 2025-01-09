@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 
 """High-level functions to speak information."""
 

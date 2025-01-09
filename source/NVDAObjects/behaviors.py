@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd.
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.

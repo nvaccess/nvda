@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2020-2025 NV Access Limited, Cary-Rowen
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import eventHandler
 import queueHandler
 import controlTypes

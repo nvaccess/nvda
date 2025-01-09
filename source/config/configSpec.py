@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
