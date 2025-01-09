@@ -647,7 +647,7 @@ class JABContext(object):
 		bridgeDll.getAccessibleTextSelectionInfo(self.vmID, self.accContext, byref(textSelectionInfo))
 		return textSelectionInfo
 
-	def getAccessibleTextRange(self, start, end):
+	def _javaGetAccessibleTextRange(self, start, end):
 		length = (end + 1) - start
 		if length <= 0:
 			return ""
@@ -655,6 +655,24 @@ class JABContext(object):
 		buf = create_string_buffer((length + 1) * 2)
 		bridgeDll.getAccessibleTextRange(self.vmID, self.accContext, start, end, buf, length)
 		return textUtils.getTextFromRawBytes(buf.raw, numChars=length, encoding=textUtils.WCHAR_ENCODING)
+
+	# Constant gotten from AccessBridgePackages.h,
+	# minus one to accommodate the null character
+	MAX_BUFFER_SIZE = 10239
+
+	def getAccessibleTextRange(self, start, end):
+		length = (end + 1) - start
+		if length <= 0:
+			return ""
+
+		text = []
+		while start <= end:
+			bufferSize = min(self.MAX_BUFFER_SIZE, length)
+			text.append(self._javaGetAccessibleTextRange(start, start + bufferSize - 1))
+			start += bufferSize
+			length = (end + 1) - start
+
+		return "".join(text)
 
 	def getAccessibleTextLineBounds(self, index):
 		index = max(index, 0)
