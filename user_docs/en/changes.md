@@ -51,6 +51,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Always, and Only in edit controls. (#17505, @Cary-rowen)
+  * By default, "Speak typed characters" is now set to "Only in edit controls".
 
 ### Bug Fixes
 
@@ -137,6 +138,9 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
+* Changed keyboard typing echo configuration from boolean to integer values. (#17505, @Cary-rowen)
+  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
+  * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
 
 #### API Breaking Changes
 
@@ -166,13 +170,11 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
-* Changed keyboard typing echo configuration from boolean to integer values:
-  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values (0=Off, 1=Always, 2=Only in edit controls).
-  * Added `TypingEcho` enum in `config.configFlags` to represent these modes.
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
 * `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
 Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
 * Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
+* `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed. (#17505, @Cary-rowen)
 
 #### Deprecations
 
