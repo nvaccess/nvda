@@ -135,8 +135,8 @@ The year and version changes between updates to reflect the current release.
 1. Run the downloaded file.
 You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
-1. The NVDA Launcher window appears with the license agreement button.
-Press the "View license" button and `downArrow` to read the license agreement.
+1. The NVDA Launcher window appears with the license agreement.
+Press the `downArrow` to read the license agreement.
 1. Press `tab` to move to the "I agree" checkbox, then press the `spacebar` to check it.
 1. Press `tab` to move through the options, then press `enter` on the desired option.
 
