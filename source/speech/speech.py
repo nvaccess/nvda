@@ -18,6 +18,7 @@ from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 from controlTypes.state import State
+import globalVars
 from gui.message import MessageDialog
 import queueHandler
 import tones
@@ -3092,4 +3093,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 		queueHandler.queueFunction(queueHandler.eventQueue, impl)
 
 
-synthChanged.register(_sapi4DeprecationWarning)
+if not globalVars.appArgs.minimal:
+	# Don't warn users about SAPI4 deprecation in minimal mode.
+	# This stops the dialog appearing on secure screens or in the launcher.
+	synthChanged.register(_sapi4DeprecationWarning)
