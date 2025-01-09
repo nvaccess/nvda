@@ -60,7 +60,7 @@ class SynthDriverBufSink(COMObject):
 		self._allowDelete = True
 		super(SynthDriverBufSink, self).__init__()
 
-	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
+	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp: int, dwMarkNum: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -90,7 +90,7 @@ class SynthDriverSink(COMObject):
 		self.synthRef = synthRef
 		super(SynthDriverSink, self).__init__()
 
-	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp):
+	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -101,7 +101,7 @@ class SynthDriverSink(COMObject):
 			# take the first bookmark list
 			synth._bookmarks = synth._bookmarkLists.popleft()
 
-	def ITTSNotifySinkW_AudioStop(self, this, qTimeStamp):
+	def ITTSNotifySinkW_AudioStop(self, this, qTimeStamp: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -289,7 +289,6 @@ class SynthDriver(SynthDriver):
 		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
 		if self._ttsCentral:
 			self._ttsCentral.UnRegister(self._sinkRegKey)
-
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
