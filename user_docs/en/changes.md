@@ -84,6 +84,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)
 * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17537, @LeonarddeR)
 * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
+* Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
 
 ### Changes for Developers
 
