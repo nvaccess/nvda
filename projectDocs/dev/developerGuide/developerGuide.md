@@ -91,12 +91,6 @@ All locales implicitly inherit the symbol information for English, though any of
 
 The file contains two sections, [complex symbols](#complexSymbols) and [symbols](#symbolInformation).
 
-#### Translating this file {#TranslatingSymbolsFile}
-
-Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
-
-See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
-
 #### Defining Complex Symbols {#complexSymbols}
 
 The first section is optional and defines regular expression patterns for complex symbols.
@@ -207,6 +201,12 @@ You would also include something like the following in the main symbols section:
 ```
 thousands separator	comma	all	norep
 ```
+
+#### Translating this file {#TranslatingSymbolsFile}
+
+Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+
+See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 ### Gestures {#TranslatingGestures}
 
@@ -346,7 +346,8 @@ If the class your looking for does not exist, create this section.
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
 
 5. Save your file in UTF-8 format.
-6. Commit your changes to the screenReaderTranslations repo.
+6. Commit your changes.
+7. Open a Pull Request.
 
 ## Plugins {#plugins}
 ### Overview {#pluginsOverview}
