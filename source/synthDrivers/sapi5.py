@@ -13,7 +13,7 @@ import comtypes.client
 from comtypes import COMError, COMObject, IUnknown, hresult, ReturnHRESULT
 import winreg
 import nvwave
-from objidl import _ULARGE_INTEGER, IStream
+from objidl import _LARGE_INTEGER, _ULARGE_INTEGER, IStream
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 import config
 from logHandler import log
@@ -69,30 +69,41 @@ class SynthDriverAudioStream(COMObject):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
 
-	def ISequentialStream_RemoteWrite(self, pv, cb):
-		# out: pcbWritten
+	def ISequentialStream_RemoteWrite(self, data, numBytes: int) -> int:
+		"""This is called when SAPI wants to write (output) a wave data chunk.
+		@param data: A pointer to the first wave data byte.
+		@type data: POINTER(c_ubyte)
+		@param numBytes: The number of bytes to write.
+		@returns: The number of bytes written.
+		"""
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called Write method on AudioStream while driver is dead")
 			return 0
 		if not synth.isSpeaking:
 			return 0
-		synth.player.feed(pv, cb)
-		self._writtenBytes += cb
-		return cb
+		synth.player.feed(data, numBytes)
+		self._writtenBytes += numBytes
+		return numBytes
 
-	def IStream_RemoteSeek(self, dlibMove, dwOrigin):
-		# out: plibNewPosition
+	def IStream_RemoteSeek(self, dlibMove: _LARGE_INTEGER, dwOrigin: int) -> _ULARGE_INTEGER:
+		"""This is called when SAPI wants to get the current stream position.
+		Seeking to another position is not supported.
+		@param dlibMove: The displacement to be added to the location indicated by the dwOrigin parameter.
+			Only 0 is supported.
+		@param dwOrigin: The origin for the displacement specified in dlibMove.
+			Only 1 (STREAM_SEEK_CUR) is supported.
+		@returns: The current stream position.
+		"""
 		if dwOrigin == 1 and dlibMove.QuadPart == 0:
 			# SAPI is querying the current position.
 			return _ULARGE_INTEGER(self._writtenBytes)
 		# Return E_NOTIMPL without logging an error.
 		raise ReturnHRESULT(hresult.E_NOTIMPL, None)
 
-	def IStream_Commit(self, grfCommitFlags):
-		# SAPI5 voices don't need this method, but MSSP voices do,
-		# which use this method to "flush" written data.
-		# Here we do nothing.
+	def IStream_Commit(self, grfCommitFlags: int):
+		"""This is called when MSSP wants to flush the written data.
+		Does nothing."""
 		pass
 
 
@@ -110,6 +121,8 @@ class SapiSink(COMObject):
 		self.synthRef = synthRef
 
 	def ISpNotifySink_Notify(self):
+		"""This is called when there's a new event notification.
+		Queued events will be retrieved."""
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called Notify method on SapiSink while driver is dead")
@@ -140,11 +153,11 @@ class SapiSink(COMObject):
 			elif event.elParamType == 3 or event.elParamType == 4:  # pointer or string
 				windll.ole32.CoTaskMemFree(event.lParam)
 
-	def StartStream(self, streamNum, pos):
+	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
 		synth.isSpeaking = True
 
-	def Bookmark(self, streamNum, pos, bookmark, bookmarkId):
+	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
 		synth = self.synthRef()
 		if not synth.isSpeaking:
 			return
@@ -152,13 +165,13 @@ class SapiSink(COMObject):
 		# Queue an IndexReached event at this point.
 		synth.player.feed(None, 0, lambda: self.onIndexReached(bookmarkId))
 
-	def EndStream(self, streamNum, pos):
+	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
 		synth.isSpeaking = False
 		synth.player.idle()
 		synthDoneSpeaking.notify(synth=synth)
 
-	def onIndexReached(self, index):
+	def onIndexReached(self, index: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called onIndexReached method on SapiSink while driver is dead")
