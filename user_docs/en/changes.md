@@ -163,6 +163,9 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
+* Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
+  * `synthDrivers.sapi5.SPAudioState` has been removed.
+  * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
 
 #### Deprecations
 
