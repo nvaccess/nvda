@@ -324,8 +324,8 @@ In this case, you will have to explore NVDA's source code to find this parent cl
 
 Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
 
-1. In your local copy of the screenReaderTranslations repository, check if the `gestures.ini` file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
-   * If this file does not exist, create it by copying it from the last version of NVDA.
+1. In your local copy of the NVDA repository, check if the `gestures.ini` file exists, e.g. `nvda\source\locale\fr\gestures.ini`
+   * If this file does not exist, create it by copying and adapting it from another language.
    * If it already exists, all is fine.
 2. In this file the sections correspond to the class to which the script belongs.
 If the class your looking for does not exist, create this section.
