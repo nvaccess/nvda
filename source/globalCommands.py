@@ -70,6 +70,7 @@ import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 from audio import appsVolume
+from utils.displayString import DisplayStringEnum
 
 
 #: Script category for text review commands.
@@ -148,6 +149,28 @@ def toggleBooleanValue(
 	config.conf[configSection][configKey] = newValue
 
 	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
+
+
+def toggleIntegerValue(
+	configSection: str, configKey: str, enumClass: "DisplayStringEnum", messageTemplate: str
+) -> None:
+	"""
+	Cycles through integer configuration values and displays the corresponding message.
+
+	:param configSection: The configuration section containing the integer key.
+	:param configKey: The configuration key associated with the integer value.
+	:param enumClass: The enumeration class representing possible states.
+	:param messageTemplate: The message template with a placeholder for the state.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	numVals = len(enumClass)
+	newValue = (currentValue + 1) % numVals
+	config.conf[configSection][configKey] = newValue
+
+	state = enumClass(newValue)
+	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
 
 
@@ -543,12 +566,14 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+2",
 	)
 	def script_toggleSpeakTypedCharacters(self, gesture):
-		numVals = len(TypingEcho)
-		state = TypingEcho((config.conf["keyboard"]["speakTypedCharacters"] + 1) % numVals)
-		config.conf["keyboard"]["speakTypedCharacters"] = state.value
-		# Translators: Reported when the user cycles through speak typed characters modes.
-		# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-		ui.message(_("Speak typed characters {mode}").format(mode=state.displayString))
+		toggleIntegerValue(
+			configSection="keyboard",
+			configKey="speakTypedCharacters",
+			enumClass=TypingEcho,
+			# Translators: Reported when the user cycles through speak typed characters modes.
+			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+			messageTemplate=_("Speak typed characters: {mode}"),
+		)
 
 	@script(
 		# Translators: Input help mode message for toggle speak typed words command.
@@ -557,12 +582,14 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+3",
 	)
 	def script_toggleSpeakTypedWords(self, gesture):
-		numVals = len(TypingEcho)
-		state = TypingEcho((config.conf["keyboard"]["speakTypedWords"] + 1) % numVals)
-		config.conf["keyboard"]["speakTypedWords"] = state.value
-		# Translators: Reported when the user cycles through speak typed words modes.
-		# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-		ui.message(_("Speak typed words {mode}").format(mode=state.displayString))
+		toggleIntegerValue(
+			configSection="keyboard",
+			configKey="speakTypedWords",
+			enumClass=TypingEcho,
+			# Translators: Reported when the user cycles through speak typed words modes.
+			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+			messageTemplate=_("Speak typed words: {mode}"),
+		)
 
 	@script(
 		# Translators: Input help mode message for toggle speak command keys command.
