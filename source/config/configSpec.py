@@ -179,7 +179,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
 	# 0: Off, 1: Only in edit controls, 2: Always
-	speakTypedCharacters = integer(default=2,min=0,max=2)
+	speakTypedCharacters = integer(default=1,min=0,max=2)
 	# 0: Off, 1: Only in edit controls, 2: Always
 	speakTypedWords = integer(default=0,min=0,max=2)
 	beepForLowercaseWithCapslock = boolean(default=true)

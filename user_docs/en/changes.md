@@ -138,9 +138,6 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
-* Changed keyboard typing echo configuration from boolean to integer values. (#17505, @Cary-rowen)
-  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
-  * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
 
 #### API Breaking Changes
 
@@ -174,7 +171,10 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
 Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
 * Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
-* `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed. (#17505, @Cary-rowen)
+* Changed keyboard typing echo configuration from boolean to integer values. (#17505, @Cary-rowen)
+  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
+  * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
+  * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
 
 #### Deprecations
 
