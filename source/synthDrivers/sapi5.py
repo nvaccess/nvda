@@ -70,9 +70,9 @@ class SynthDriverAudioStream(COMObject):
 
 	def ISequentialStream_RemoteWrite(self, pv: LP_c_ubyte, cb: int) -> int:
 		"""This is called when SAPI wants to write (output) a wave data chunk.
-		@param pv: A pointer to the first wave data byte.
-		@param cb: The number of bytes to write.
-		@returns: The number of bytes written.
+		:param pv: A pointer to the first wave data byte.
+		:param cb: The number of bytes to write.
+		:returns: The number of bytes written.
 		"""
 		synth = self.synthRef()
 		if synth is None:
@@ -87,11 +87,11 @@ class SynthDriverAudioStream(COMObject):
 	def IStream_RemoteSeek(self, dlibMove: _LARGE_INTEGER, dwOrigin: int) -> _ULARGE_INTEGER:
 		"""This is called when SAPI wants to get the current stream position.
 		Seeking to another position is not supported.
-		@param dlibMove: The displacement to be added to the location indicated by the dwOrigin parameter.
+		:param dlibMove: The displacement to be added to the location indicated by the dwOrigin parameter.
 			Only 0 is supported.
-		@param dwOrigin: The origin for the displacement specified in dlibMove.
+		:param dwOrigin: The origin for the displacement specified in dlibMove.
 			Only 1 (STREAM_SEEK_CUR) is supported.
-		@returns: The current stream position.
+		:returns: The current stream position.
 		"""
 		if dwOrigin == 1 and dlibMove.QuadPart == 0:
 			# SAPI is querying the current position.
