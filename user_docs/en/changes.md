@@ -52,6 +52,8 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Always, and Only in edit controls. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
+* Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
+
 
 ### Bug Fixes
 
@@ -171,6 +173,9 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
 Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
 * Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
+* Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
+  * `synthDrivers.sapi5.SPAudioState` has been removed.
+  * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
 * Changed keyboard typing echo configuration from boolean to integer values. (#17505, @Cary-rowen)
   * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
   * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
