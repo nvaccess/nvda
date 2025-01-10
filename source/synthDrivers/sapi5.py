@@ -11,7 +11,7 @@ from collections import OrderedDict
 from typing import TYPE_CHECKING
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
-from comtypes import COMError, COMObject, IUnknown, hresult, ReturnHRESULT
+from comtypes import COMError, COMObject, IUnknown, hresult
 import winreg
 import nvwave
 from objidl import _LARGE_INTEGER, _ULARGE_INTEGER, IStream
@@ -95,7 +95,11 @@ class SynthDriverAudioStream(COMObject):
 		return hresult.S_OK
 
 	def IStream_RemoteSeek(
-		self, this, dlibMove: _LARGE_INTEGER, dwOrigin: int, plibNewPosition: LP__ULARGE_INTEGER
+		self,
+		this,
+		dlibMove: _LARGE_INTEGER,
+		dwOrigin: int,
+		plibNewPosition: LP__ULARGE_INTEGER,
 	):
 		"""This is called when SAPI wants to get the current stream position.
 		Seeking to another position is not supported.
