@@ -174,7 +174,6 @@ Instead, a `callback` property has been added, which returns a function that per
 * Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
   * `synthDrivers.sapi5.SPAudioState` has been removed.
   * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
-* `synthDrivers.sapi5.SapiSink.onIndexReached` now expects two arguments: stream number and index. (#17523, @gexgd0419)
 
 #### Deprecations
 
