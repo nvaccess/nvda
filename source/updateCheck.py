@@ -94,7 +94,6 @@ state: Optional[Dict[str, Any]] = None
 autoChecker: Optional["AutoUpdateChecker"] = None
 
 
-
 """
 Data class representing update information for NVDA.
 
@@ -107,15 +106,17 @@ Attributes:
 	changes_url (Optional[str]): The URL to the changelog, if available. Default is None.
 	launcher_interactive_url (Optional[str]): The URL for the interactive launcher, if available. Default is None.
 """
+
+
 @dataclass
 class UpdateInfo:
-    version: str
-    launcher_url: str
-    api_version: str
-    launcher_hash: Optional[str] = None
-    api_compat_to: Optional[str] = None
-    changes_url: Optional[str] = None
-    launcher_interactive_url: Optional[str] = None
+	version: str
+	launcher_url: str
+	api_version: str
+	launcher_hash: Optional[str] = None
+	api_compat_to: Optional[str] = None
+	changes_url: Optional[str] = None
+	launcher_interactive_url: Optional[str] = None
 
 
 def _getCheckURL() -> str:
@@ -143,6 +144,7 @@ def getQualifiedDriverClassNameForStats(cls):
 	if isPathExternalToNVDA(path):
 		return "%s (external)" % name
 	return "%s (core)" % name
+
 
 def parseUpdateCheckResponse(data: str) -> Optional[UpdateInfo]:
 	"""
@@ -174,10 +176,8 @@ def parseUpdateCheckResponse(data: str) -> Optional[UpdateInfo]:
 		launcher_hash=metadata.get("launcherHash", None),
 		api_compat_to=metadata.get("apiCompatTo", None),
 		changes_url=metadata.get("changesUrl", None),
-		launcher_interactive_url=metadata.get("launcherInteractiveUrl", None)
+		launcher_interactive_url=metadata.get("launcherInteractiveUrl", None),
 	)
-
-
 
 
 def isValidUpdateMirrorResponse(responseData: str) -> bool:
@@ -290,7 +290,9 @@ def checkForUpdate(auto: bool = False) -> Optional[UpdateInfo]:
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
 
 	if not isValidUpdateMirrorResponse(data):
-		raise RuntimeError("The update response is invalid. Ensure the update mirror returns a properly formatted response.")
+		raise RuntimeError(
+			"The update response is invalid. Ensure the update mirror returns a properly formatted response."
+		)
 
 	parsed_response = parseUpdateCheckResponse(data)
 	if not parsed_response:
@@ -576,7 +578,7 @@ class UpdateResultDialog(
 				self,
 				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Update to NVDA {version}").format(version=updateInfo.version)
+				label=_("&Update to NVDA {version}").format(version=updateInfo.version),
 			)
 			self.updateButton.Bind(
 				wx.EVT_BUTTON,
