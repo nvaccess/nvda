@@ -58,7 +58,7 @@ class SynthDriverBufSink(COMObject):
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
 		self._allowDelete = True
-		super(SynthDriverBufSink, self).__init__()
+		super().__init__()
 
 	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp: int, dwMarkNum: int):
 		synth = self.synthRef()
@@ -88,7 +88,7 @@ class SynthDriverSink(COMObject):
 
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
-		super(SynthDriverSink, self).__init__()
+		super().__init__()
 
 	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
 		synth = self.synthRef()
