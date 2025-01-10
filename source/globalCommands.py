@@ -153,7 +153,10 @@ def toggleBooleanValue(
 
 
 def toggleIntegerValue(
-	configSection: str, configKey: str, enumClass: "DisplayStringEnum", messageTemplate: str
+	configSection: str,
+	configKey: str,
+	enumClass: "DisplayStringEnum",
+	messageTemplate: str,
 ) -> None:
 	"""
 	Cycles through integer configuration values and displays the corresponding message.
