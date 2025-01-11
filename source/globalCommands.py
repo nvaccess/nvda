@@ -563,12 +563,12 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
 
 	@script(
-		# Translators: Input help mode message for cycling the reporting of typed words.
+		# Translators: Input help mode message for cycling the reporting of typed characters.
 		description=_("Cycles through options for when to speak typed characters."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+2",
 	)
-	def script_toggleSpeakTypedCharacters(self, gesture):
+	def script_toggleSpeakTypedCharacters(self, gesture: "inputCore.InputGesture") -> None:
 		toggleIntegerValue(
 			configSection="keyboard",
 			configKey="speakTypedCharacters",
@@ -579,12 +579,12 @@ class GlobalCommands(ScriptableObject):
 		)
 
 	@script(
-		# Translators: Input help mode message for toggle speak typed words command.
+# Translators: Input help mode message for cycling the reporting of typed words.
 		description=_("Cycles through options for when to speak typed words."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+3",
 	)
-	def script_toggleSpeakTypedWords(self, gesture):
+	def script_toggleSpeakTypedWords(self, gesture: "inputCore.InputGesture") -> None:
 		toggleIntegerValue(
 			configSection="keyboard",
 			configKey="speakTypedWords",
