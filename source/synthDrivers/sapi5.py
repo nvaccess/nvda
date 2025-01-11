@@ -32,6 +32,7 @@ from speech.commands import (
 	PhonemeCommand,
 	SpeechCommand,
 )
+from ._sonic import SonicStream
 
 
 class SpeechVoiceSpeakFlags(IntEnum):
@@ -80,7 +81,9 @@ class SynthDriverAudioStream(COMObject):
 			return 0
 		if not synth.isSpeaking:
 			return 0
-		synth.player.feed(pv, cb)
+		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
+		audioData = synth.sonicStream.readShort()
+		synth.player.feed(audioData, len(audioData) * 2)
 		self._writtenBytes += cb
 		return cb
 
@@ -165,6 +168,10 @@ class SapiSink(COMObject):
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# Flush the stream and get the remaining data.
+		synth.sonicStream.flush()
+		audioData = synth.sonicStream.readShort()
+		synth.player.feed(audioData, len(audioData) * 2)
 		synth.isSpeaking = False
 		synth.player.idle()
 		synthDoneSpeaking.notify(synth=synth)
@@ -181,6 +188,7 @@ class SynthDriver(SynthDriver):
 	supportedSettings = (
 		SynthDriver.VoiceSetting(),
 		SynthDriver.RateSetting(),
+		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.VolumeSetting(),
 	)
@@ -217,8 +225,10 @@ class SynthDriver(SynthDriver):
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
 		self._pitch = 50
+		self._rate = 50
 		self.player = None
 		self.isSpeaking = False
+		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 
 	def terminate(self):
@@ -250,7 +260,10 @@ class SynthDriver(SynthDriver):
 		return self.tts.getVoices()
 
 	def _get_rate(self):
-		return (self.tts.rate * 5) + 50
+		return self._rate
+
+	def _get_rateBoost(self):
+		return self._rateBoost
 
 	def _get_pitch(self):
 		return self._pitch
@@ -268,11 +281,32 @@ class SynthDriver(SynthDriver):
 		else:
 			return None
 
+	@classmethod
+	def _percentToParam(self, percent, min, max):
+		"""Overrides SynthDriver._percentToParam to return floating point parameter values."""
+		return float(percent) / 100 * (max - min) + min
+
 	def _percentToRate(self, percent):
 		return (percent - 50) // 5
 
 	def _set_rate(self, rate):
-		self.tts.Rate = self._percentToRate(rate)
+		self._rate = rate
+		if self._rateBoost:
+			# When rate boost is enabled, use sonicStream to change the speed.
+			# Supports 0.5x~6x speed.
+			self.tts.Rate = 0
+			self.sonicStream.speed = self._percentToParam(rate, 0.5, 6.0)
+		else:
+			# When rate boost is disabled, let the voice itself change the speed.
+			self.tts.Rate = self._percentToRate(rate)
+			self.sonicStream.speed = 1
+
+	def _set_rateBoost(self, enable):
+		if enable == self._rateBoost:
+			return
+		rate = self._rate
+		self._rateBoost = enable
+		self.rate = rate
 
 	def _set_pitch(self, value):
 		# pitch is really controled with xml around speak commands
@@ -293,6 +327,11 @@ class SynthDriver(SynthDriver):
 		self.tts.AudioOutput = self.tts.AudioOutput  # Reset the audio and its format parameters
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
+		# Force the wave format to be 16-bit integer (which Sonic uses internally).
+		# SAPI will convert the format for us if it isn't supported by the voice.
+		wfx.FormatTag = nvwave.WAVE_FORMAT_PCM
+		wfx.BitsPerSample = 16
+		fmt.SetWaveFormatEx(wfx)
 		if self.player:
 			self.player.close()
 		self.player = nvwave.WavePlayer(
@@ -307,6 +346,7 @@ class SynthDriver(SynthDriver):
 		customStream.BaseStream = audioStream
 		customStream.Format = fmt
 		self.tts.AudioOutputStream = customStream
+		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
 
 		# Set event notify sink
 		self.tts.EventInterests = (
