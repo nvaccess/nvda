@@ -579,7 +579,7 @@ class GlobalCommands(ScriptableObject):
 		)
 
 	@script(
-# Translators: Input help mode message for cycling the reporting of typed words.
+		# Translators: Input help mode message for cycling the reporting of typed words.
 		description=_("Cycles through options for when to speak typed words."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+3",
