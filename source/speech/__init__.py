@@ -149,6 +149,7 @@ import synthDriverHandler
 import config
 from .speech import initialize as speechInitialize
 from .sayAll import initialize as sayAllInitialize
+from synthDrivers._sonic import initialize as sonicInitialize
 
 
 def initialize():
@@ -156,6 +157,7 @@ def initialize():
 	Initializes the state of speech and initializes the sayAllHandler
 	"""
 	synthDriverHandler.initialize()
+	sonicInitialize()
 	synthDriverHandler.setSynth(config.conf["speech"]["synth"])
 	speechInitialize()
 	sayAllInitialize(
