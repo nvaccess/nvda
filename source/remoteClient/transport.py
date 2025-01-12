@@ -395,8 +395,11 @@ class TCPTransport(Transport):
 		Note:
 				The socket is created but not yet connected. Call connect() separately.
 		"""
-		address = socket.getaddrinfo(host, port)[0]
-		serverSock = socket.socket(*address[:3])
+		if host.lower().endswith(".onion"):
+			serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		else:
+			address = socket.getaddrinfo(host, port)[0]
+			serverSock = socket.socket(*address[:3])
 		if self.timeout:
 			serverSock.settimeout(self.timeout)
 		serverSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
@@ -404,11 +407,10 @@ class TCPTransport(Transport):
 		ctx = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
 		if insecure:
 			ctx.verify_mode = ssl.CERT_NONE
+			log.warn("Skipping certificate verification for %s:%d", host, port)
 		ctx.check_hostname = not insecure
 		ctx.load_default_certs()
 
-		if insecure:
-			log.warn("Skipping certificate verification for %s:%d", host, port)
 		serverSock = ctx.wrap_socket(sock=serverSock, server_hostname=host)
 		return serverSock
 
