@@ -1673,5 +1673,5 @@ The following convenience class methods are provided (keyword arguments for over
 | Method | Buttons | Return values |
 |---|---|---|
 | `alert` | OK (`okLabel`) | `None` |
-| `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.Cancel` |
+| `confirm` | OK (`okLabel`) and Cancel (`cancelLabel`) | `ReturnCode.OK` or `ReturnCode.CANCEL` |
 | `ask` | Yes (`yesLabel`), No (`noLabel`) and Cancel (`cancelLabel`) | `ReturnCode.YES`, `ReturnCode.NO` or `ReturnCode.CANCEL` |
