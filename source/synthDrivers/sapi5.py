@@ -7,7 +7,7 @@
 from ctypes import POINTER, c_ubyte, c_wchar_p, cast, windll, _Pointer
 from enum import IntEnum
 import locale
-from collections import OrderedDict
+from collections import OrderedDict, deque
 from typing import TYPE_CHECKING
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
@@ -153,6 +153,10 @@ class SapiSink(COMObject):
 
 	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# The stream has been started. Move the bookmark list to _streamBookmarks.
+		if streamNum in synth._streamBookmarksNew:
+			synth._streamBookmarks[streamNum] = synth._streamBookmarksNew[streamNum]
+			del synth._streamBookmarksNew[streamNum]
 		synth.isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
@@ -161,20 +165,31 @@ class SapiSink(COMObject):
 			return
 		# Bookmark event is raised before the audio after that point.
 		# Queue an IndexReached event at this point.
-		synth.player.feed(None, 0, lambda: self.onIndexReached(bookmarkId))
+		synth.player.feed(None, 0, lambda: self.onIndexReached(streamNum, bookmarkId))
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# trigger all untriggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			for bookmark in synth._streamBookmarks[streamNum]:
+				synthIndexReached.notify(synth=synth, index=bookmark)
+			del synth._streamBookmarks[streamNum]
 		synth.isSpeaking = False
 		synth.player.idle()
 		synthDoneSpeaking.notify(synth=synth)
 
-	def onIndexReached(self, index: int):
+	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called onIndexReached method on SapiSink while driver is dead")
 			return
 		synthIndexReached.notify(synth=synth, index=index)
+		# remove already triggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			bookmarks = synth._streamBookmarks[streamNum]
+			while bookmarks:
+				if bookmarks.popleft() == index:
+					break
 
 
 class SynthDriver(SynthDriver):
@@ -220,6 +235,9 @@ class SynthDriver(SynthDriver):
 		self.player = None
 		self.isSpeaking = False
 		self._initTts(_defaultVoiceToken)
+		# key = stream num, value = deque of bookmarks
+		self._streamBookmarks = dict()  # bookmarks in currently speaking streams
+		self._streamBookmarksNew = dict()  # bookmarks for streams that haven't been started
 
 	def terminate(self):
 		self.tts = None
@@ -358,6 +376,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self, speechSequence):
 		textList = []
+		bookmarks = deque()
 
 		# NVDA SpeechCommands are linear, but XML is hierarchical.
 		# Therefore, we track values for non-empty tags.
@@ -393,6 +412,7 @@ class SynthDriver(SynthDriver):
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, IndexCommand):
 				textList.append('<Bookmark Mark="%d" />' % item.index)
+				bookmarks.append(item.index)
 			elif isinstance(item, CharacterModeCommand):
 				if item.state:
 					tags["spell"] = {}
@@ -459,7 +479,10 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		self.tts.Speak(text, flags)
+		streamNum = self.tts.Speak(text, flags)
+		# When Speak returns, the previous stream may not have been ended.
+		# So the bookmark list is stored in another dict until this stream starts.
+		self._streamBookmarksNew[streamNum] = bookmarks
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
