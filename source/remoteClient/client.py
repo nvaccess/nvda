@@ -205,7 +205,7 @@ class RemoteClient:
 			if dlgResult != wx.ID_OK:
 				return
 			connectionInfo = dlg.getConnectionInfo()
-			if dlg.client_or_server.GetSelection() == 1:  # server
+			if dlg.clientOrServer.GetSelection() == 1:  # server
 				self.startControlServer(connectionInfo.port, connectionInfo.key)
 			self.connect(connectionInfo=connectionInfo)
 
