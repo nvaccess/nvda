@@ -18,10 +18,10 @@ from . import configuration, cues, dialogs, serializer, server, url_handler
 from .connection_info import ConnectionInfo, ConnectionMode
 from .localMachine import LocalMachine
 from .menu import RemoteMenu
-from .protocol import RemoteMessageType
+from .protocol import RemoteMessageType, addressToHostPort
 from .secureDesktop import SecureDesktopHandler
 from .session import MasterSession, SlaveSession
-from .socket_utils import addressToHostPort, hostPortToAddress
+from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
 # Type aliases

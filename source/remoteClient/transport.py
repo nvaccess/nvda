@@ -38,7 +38,7 @@ from . import configuration
 from .connection_info import ConnectionInfo
 from .protocol import PROTOCOL_VERSION, RemoteMessageType
 from .serializer import Serializer
-from .socket_utils import hostPortToAddress
+from .protocol import hostPortToAddress
 
 log = getLogger("transport")
 
