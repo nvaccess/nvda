@@ -1041,7 +1041,7 @@ sonicLib = env.SharedLibrary(
 	source=[
 		"sonic.c",
 		Dir(".").File("sonic.def"),
-	]
+	],
 )
 
 espeakLib = env.SharedLibrary(
@@ -1104,7 +1104,7 @@ espeakLib = env.SharedLibrary(
 		# We do not use the ASYNC compile option in espeak.
 	],
 	LIBS=["advapi32", "sonic"],
-	LIBPATH='.',
+	LIBPATH=".",
 )
 
 
