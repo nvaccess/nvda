@@ -4,14 +4,14 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from ctypes import POINTER, c_ubyte, c_wchar_p, cast, windll, _Pointer
+from ctypes import POINTER, c_ubyte, c_ulong, c_wchar_p, cast, windll, _Pointer
 from enum import IntEnum
 import locale
-from collections import OrderedDict
+from collections import OrderedDict, deque
 from typing import TYPE_CHECKING
 from comInterfaces.SpeechLib import ISpEventSource, ISpNotifySource, ISpNotifySink
 import comtypes.client
-from comtypes import COMError, COMObject, IUnknown, hresult, ReturnHRESULT
+from comtypes import COMError, COMObject, IUnknown, hresult
 import winreg
 import nvwave
 from objidl import _LARGE_INTEGER, _ULARGE_INTEGER, IStream
@@ -50,8 +50,12 @@ class SpeechVoiceEvents(IntEnum):
 
 if TYPE_CHECKING:
 	LP_c_ubyte = _Pointer[c_ubyte]
+	LP_c_ulong = _Pointer[c_ulong]
+	LP__ULARGE_INTEGER = _Pointer[_ULARGE_INTEGER]
 else:
 	LP_c_ubyte = POINTER(c_ubyte)
+	LP_c_ulong = POINTER(c_ulong)
+	LP__ULARGE_INTEGER = POINTER(_ULARGE_INTEGER)
 
 
 class SynthDriverAudioStream(COMObject):
@@ -68,36 +72,57 @@ class SynthDriverAudioStream(COMObject):
 		self.synthRef = synthRef
 		self._writtenBytes = 0
 
-	def ISequentialStream_RemoteWrite(self, pv: LP_c_ubyte, cb: int) -> int:
+	def ISequentialStream_RemoteWrite(
+		self,
+		this: int,
+		pv: LP_c_ubyte,
+		cb: int,
+		pcbWritten: LP_c_ulong,
+	) -> int:
 		"""This is called when SAPI wants to write (output) a wave data chunk.
 		:param pv: A pointer to the first wave data byte.
 		:param cb: The number of bytes to write.
-		:returns: The number of bytes written.
+		:param pcbWritten: A pointer to a variable where the actual number of bytes written will be stored.
+			Can be null.
+		:returns: HRESULT code.
 		"""
 		synth = self.synthRef()
+		if pcbWritten:
+			pcbWritten[0] = 0
 		if synth is None:
 			log.debugWarning("Called Write method on AudioStream while driver is dead")
-			return 0
+			return hresult.E_UNEXPECTED
 		if not synth.isSpeaking:
-			return 0
+			return hresult.E_FAIL
 		synth.player.feed(pv, cb)
+		if pcbWritten:
+			pcbWritten[0] = cb
 		self._writtenBytes += cb
-		return cb
+		return hresult.S_OK
 
-	def IStream_RemoteSeek(self, dlibMove: _LARGE_INTEGER, dwOrigin: int) -> _ULARGE_INTEGER:
+	def IStream_RemoteSeek(
+		self,
+		this: int,
+		dlibMove: _LARGE_INTEGER,
+		dwOrigin: int,
+		plibNewPosition: LP__ULARGE_INTEGER,
+	) -> int:
 		"""This is called when SAPI wants to get the current stream position.
 		Seeking to another position is not supported.
 		:param dlibMove: The displacement to be added to the location indicated by the dwOrigin parameter.
 			Only 0 is supported.
 		:param dwOrigin: The origin for the displacement specified in dlibMove.
 			Only 1 (STREAM_SEEK_CUR) is supported.
-		:returns: The current stream position.
+		:param plibNewPosition: A pointer to a ULARGE_INTEGER where the current stream position will be stored.
+			Can be null.
+		:returns: HRESULT code.
 		"""
 		if dwOrigin == 1 and dlibMove.QuadPart == 0:
 			# SAPI is querying the current position.
-			return _ULARGE_INTEGER(self._writtenBytes)
-		# Return E_NOTIMPL without logging an error.
-		raise ReturnHRESULT(hresult.E_NOTIMPL, None)
+			if plibNewPosition:
+				plibNewPosition.QuadPart = self._writtenBytes
+			return hresult.S_OK
+		return hresult.E_NOTIMPL
 
 	def IStream_Commit(self, grfCommitFlags: int):
 		"""This is called when MSSP wants to flush the written data.
@@ -153,6 +178,10 @@ class SapiSink(COMObject):
 
 	def StartStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# The stream has been started. Move the bookmark list to _streamBookmarks.
+		if streamNum in synth._streamBookmarksNew:
+			synth._streamBookmarks[streamNum] = synth._streamBookmarksNew[streamNum]
+			del synth._streamBookmarksNew[streamNum]
 		synth.isSpeaking = True
 
 	def Bookmark(self, streamNum: int, pos: int, bookmark: str, bookmarkId: int):
@@ -161,20 +190,31 @@ class SapiSink(COMObject):
 			return
 		# Bookmark event is raised before the audio after that point.
 		# Queue an IndexReached event at this point.
-		synth.player.feed(None, 0, lambda: self.onIndexReached(bookmarkId))
+		synth.player.feed(None, 0, lambda: self.onIndexReached(streamNum, bookmarkId))
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# trigger all untriggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			for bookmark in synth._streamBookmarks[streamNum]:
+				synthIndexReached.notify(synth=synth, index=bookmark)
+			del synth._streamBookmarks[streamNum]
 		synth.isSpeaking = False
 		synth.player.idle()
 		synthDoneSpeaking.notify(synth=synth)
 
-	def onIndexReached(self, index: int):
+	def onIndexReached(self, streamNum: int, index: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning("Called onIndexReached method on SapiSink while driver is dead")
 			return
 		synthIndexReached.notify(synth=synth, index=index)
+		# remove already triggered bookmarks
+		if streamNum in synth._streamBookmarks:
+			bookmarks = synth._streamBookmarks[streamNum]
+			while bookmarks:
+				if bookmarks.popleft() == index:
+					break
 
 
 class SynthDriver(SynthDriver):
@@ -220,6 +260,9 @@ class SynthDriver(SynthDriver):
 		self.player = None
 		self.isSpeaking = False
 		self._initTts(_defaultVoiceToken)
+		# key = stream num, value = deque of bookmarks
+		self._streamBookmarks = dict()  # bookmarks in currently speaking streams
+		self._streamBookmarksNew = dict()  # bookmarks for streams that haven't been started
 
 	def terminate(self):
 		self.tts = None
@@ -358,6 +401,7 @@ class SynthDriver(SynthDriver):
 
 	def speak(self, speechSequence):
 		textList = []
+		bookmarks = deque()
 
 		# NVDA SpeechCommands are linear, but XML is hierarchical.
 		# Therefore, we track values for non-empty tags.
@@ -393,6 +437,7 @@ class SynthDriver(SynthDriver):
 				textList.append(item.replace("<", "&lt;"))
 			elif isinstance(item, IndexCommand):
 				textList.append('<Bookmark Mark="%d" />' % item.index)
+				bookmarks.append(item.index)
 			elif isinstance(item, CharacterModeCommand):
 				if item.state:
 					tags["spell"] = {}
@@ -459,7 +504,10 @@ class SynthDriver(SynthDriver):
 
 		text = "".join(textList)
 		flags = SpeechVoiceSpeakFlags.IsXML | SpeechVoiceSpeakFlags.Async
-		self.tts.Speak(text, flags)
+		streamNum = self.tts.Speak(text, flags)
+		# When Speak returns, the previous stream may not have been ended.
+		# So the bookmark list is stored in another dict until this stream starts.
+		self._streamBookmarksNew[streamNum] = bookmarks
 
 	def cancel(self):
 		# SAPI5's default means of stopping speech can sometimes lag at end of speech, especially with Win8 / Win 10 Microsoft Voices.
