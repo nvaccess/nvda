@@ -647,7 +647,11 @@ class JABContext(object):
 		bridgeDll.getAccessibleTextSelectionInfo(self.vmID, self.accContext, byref(textSelectionInfo))
 		return textSelectionInfo
 
-	def _javaGetAccessibleTextRange(self, start, end):
+	def _javaGetAccessibleTextRange(self, start: int, end: int):
+		"""Helper method that performs the Java Access Bridge call to obtain the text of this object based on a (start, end) range
+		@param start: the starting position to get
+		@param end: the end position to get
+		@returns: the text as a string"""
 		length = (end + 1) - start
 		if length <= 0:
 			return ""
@@ -660,10 +664,16 @@ class JABContext(object):
 	# minus one to accommodate the null character
 	MAX_BUFFER_SIZE = 10239
 
-	def getAccessibleTextRange(self, start, end):
+	def getAccessibleTextRange(self, start: int, end: int):
+		"""Obtains the text of this object based on a (start, end) range.
+		If the text is too large to fit in the buffer, this method will split the Java Access Bridge calls in chunks to get the whole text.
+		@param start: the text's starting position to get
+		@param end: the text's end position to get
+		@returns: the text as a string"""
 		length = (end + 1) - start
-		if length <= 0:
-			return ""
+		if length < self.MAX_BUFFER_SIZE:
+			# Fast path: perform the Java Access Bridge call directly
+			return self._javaGetAccessibleTextRange(start, end)
 
 		text = []
 		while start <= end:
