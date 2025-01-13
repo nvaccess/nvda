@@ -1029,7 +1029,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		buttons: list[wx.Button] = []
 		for id in ids:
 			if id not in self._commands:
-				raise KeyError("No button with {id=} registered.")
+				raise KeyError(f"No button with {id=} registered.")
 			elif isinstance((button := self.FindWindow(id)), wx.Button):
 				buttons.append(button)
 			else:
@@ -1099,7 +1099,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		self.Hide()
 		if self.IsModal():
 			self.EndModal(self.GetReturnCode())
-		log.debug("Queueing {self!r} for destruction")
+		log.debug(f"Queueing {self!r} for destruction")
 		self.DestroyLater()
 		log.debug(f"Removing {self!r} from instances.")
 		self._instances.remove(self)
