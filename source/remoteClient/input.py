@@ -132,7 +132,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		return None
 
 
-def send_key(vk=None, scan=None, extended=False, pressed=True):
+def sendKey(vk=None, scan=None, extended=False, pressed=True):
 	i = INPUT()
 	i.union.ki.wVk = vk
 	if scan:
