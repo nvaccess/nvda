@@ -164,7 +164,7 @@ def toggleIntegerValue(
 	:param configSection: The configuration section containing the integer key.
 	:param configKey: The configuration key associated with the integer value.
 	:param enumClass: The enumeration class representing possible states.
-	:param messageTemplate: The message template with a placeholder for the state.
+	:param messageTemplate: The message template with a placeholder, `{mode}`, for the state.
 	:return: None.
 	"""
 	currentValue = config.conf[configSection][configKey]
@@ -575,7 +575,7 @@ class GlobalCommands(ScriptableObject):
 			enumClass=TypingEcho,
 			# Translators: Reported when the user cycles through speak typed characters modes.
 			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-			messageTemplate=_("Speak typed characters: {mode}"),
+			messageTemplate=_("Speak typed characters {mode}"),
 		)
 
 	@script(
@@ -591,7 +591,7 @@ class GlobalCommands(ScriptableObject):
 			enumClass=TypingEcho,
 			# Translators: Reported when the user cycles through speak typed words modes.
 			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
-			messageTemplate=_("Speak typed words: {mode}"),
+			messageTemplate=_("Speak typed words {mode}"),
 		)
 
 	@script(
