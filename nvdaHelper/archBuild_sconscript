@@ -240,4 +240,3 @@ if TARGET_ARCH in ("x86_64", "arm64"):
 if TARGET_ARCH == "x86":
 	thirdPartyEnv.SConscript("espeak/sconscript")
 	thirdPartyEnv.SConscript("liblouis/sconscript")
-	thirdPartyEnv.SConscript("sonic/sconscript")  # build the Sonic library as a DLL

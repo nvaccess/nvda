@@ -13,7 +13,7 @@ def initialize():
 	"""Initialize the Sonic DLL.
 	The sonic.dll file should be in the installation directory."""
 	global sonicLib
-	sonicLib = cdll.LoadLibrary(os.path.join(globalVars.appDir, "sonic.dll"))
+	sonicLib = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "sonic.dll"))
 	sonicLib.sonicCreateStream.restype = SonicStreamP
 	sonicLib.sonicCreateStream.argtypes = [c_int, c_int]
 	sonicLib.sonicDestroyStream.restype = None
