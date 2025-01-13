@@ -283,7 +283,7 @@ class LocalMachine:
 			extended: Whether this is an extended key
 			pressed: True for key press, False for key release
 		"""
-		wx.CallAfter(input.send_key, vk_code, None, extended, pressed)
+		wx.CallAfter(input.sendKey, vk_code, None, extended, pressed)
 
 	def setClipboardText(self, text: str) -> None:
 		"""Set the local clipboard text from a remote machine.
