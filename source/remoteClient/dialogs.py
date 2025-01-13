@@ -9,7 +9,7 @@ import wx
 from logHandler import log
 from utils.alwaysCallAfter import alwaysCallAfter
 
-from . import configuration, serializer, server, socket_utils, transport
+from . import configuration, serializer, server, protocol, transport
 from .connection_info import ConnectionInfo, ConnectionMode
 from .protocol import SERVER_PORT, RemoteMessageType
 
@@ -52,7 +52,7 @@ class ClientPanel(wx.Panel):
 			self.generateKeyCommand()
 
 	def generateKeyCommand(self, insecure: bool = False) -> None:
-		address = socket_utils.addressToHostPort(self.host.GetValue())
+		address = protocol.addressToHostPort(self.host.GetValue())
 		self.keyConnector = transport.RelayTransport(
 			address=address,
 			serializer=serializer.JSONSerializer(),
@@ -288,7 +288,7 @@ class DirectConnectDialog(wx.Dialog):
 	def getConnectionInfo(self) -> ConnectionInfo:
 		if self.clientOrServer.GetSelection() == 0:  # client
 			host = self.panel.host.GetValue()
-			serverAddr, port = socket_utils.addressToHostPort(host)
+			serverAddr, port = protocol.addressToHostPort(host)
 			mode = ConnectionMode.MASTER if self.connectionType.GetSelection() == 0 else ConnectionMode.SLAVE
 			return ConnectionInfo(
 				hostname=serverAddr,

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
-from . import socket_utils
+from . import protocol
 from .protocol import SERVER_PORT, URL_PREFIX
 
 
@@ -62,7 +62,7 @@ class ConnectionInfo:
 
 	def _build_url(self, mode: ConnectionMode):
 		# Build URL components
-		netloc = socket_utils.hostPortToAddress((self.hostname, self.port))
+		netloc = protocol.hostPortToAddress((self.hostname, self.port))
 		params = {
 			"key": self.key,
 			"mode": mode if isinstance(mode, str) else mode.value,
