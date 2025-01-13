@@ -30,7 +30,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 
 ### Changes
 
-* eSpeak NG has been updated to 1.52.0 release. (#17056)
+* eSpeak NG has been updated to 1.52.0. (#17056)
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
