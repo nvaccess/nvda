@@ -670,7 +670,7 @@ class JABContext(object):
 			bufferSize = min(self.MAX_BUFFER_SIZE, length)
 			text.append(self._javaGetAccessibleTextRange(start, start + bufferSize - 1))
 			start += bufferSize
-			length = (end + 1) - start
+			length -= bufferSize
 
 		return "".join(text)
 

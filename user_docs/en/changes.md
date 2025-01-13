@@ -53,7 +53,7 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 
 ### Bug Fixes
 
-* NVDA will no longer crash when selecting whole text in specific source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)
+* NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
