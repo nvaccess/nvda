@@ -17,16 +17,6 @@ The main class :class:`LocalMachine` implements all the local control operations
 that can be triggered by remote NVDA instances. It includes safety features like
 muting and uses wxPython's CallAfter for most (but not all) thread synchronization.
 
-Example:
-    A typical usage from the remote connection handler::
-
-        local = LocalMachine()
-        # Handle incoming remote speech
-        local.speak(["Hello from remote"], priority=Spri.NORMAL)
-        # Share braille display
-        local.receivingBraille = True
-        local.display([0x28, 0x28]) # Show dots 1,2,3,4 in cell
-
 Note:
     This module is part of the NVDA Remote protocol implementation and should
     not be used directly outside of the remote connection infrastructure.
