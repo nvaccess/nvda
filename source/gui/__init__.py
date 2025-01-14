@@ -804,6 +804,10 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			self.helpMenu.AppendSeparator()
 
+			# Translators: The label for the menu item to view the NVDA License.
+			item = self.helpMenu.Append(wx.ID_ANY, _("L&icense"))
+			self.Bind(wx.EVT_MENU, lambda evt: displayLicense(), item)
+
 			# Translators: The label for the menu item to open NVDA Welcome Dialog.
 			item = self.helpMenu.Append(wx.ID_ANY, _("We&lcome dialog..."))
 			self.Bind(wx.EVT_MENU, lambda evt: WelcomeDialog.run(), item)
@@ -816,10 +820,6 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 		# Translators: The label for the menu item to open About dialog to get information about NVDA.
 		item = self.helpMenu.Append(wx.ID_ABOUT, _("&About..."), _("About NVDA"))
 		self.Bind(wx.EVT_MENU, frame.onAboutCommand, item)
-
-		# Translators: The label for the menu item to view the NVDA License.
-		item = self.helpMenu.Append(wx.ID_ANY, _("L&icense"))
-		self.Bind(wx.EVT_MENU, lambda evt: displayLicense(), item)
 
 		# Translators: The label for the Help submenu in NVDA menu.
 		self.menu.AppendSubMenu(self.helpMenu, _("&Help"))
