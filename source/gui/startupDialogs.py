@@ -225,6 +225,9 @@ class LauncherDialog(
 		groupText = wx.StaticText(self, label=groupLabel)
 		sizer.Add(groupText, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 
+		# Arbitrary size which fills the dialog and is readable.
+		# Note that a webview doesn't expand with wx.EXPAND and being added to the sizer,
+		# a minimum size is needed to make it readable.
 		licenseView: wx.html2.WebView = wx.html2.WebView.New(self, size=self.scaleSize((550, 400)))
 		sizer.Add(licenseView, border=gui.guiHelper.SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
 		licenseView.SetPage(_getSanitizedHtmlLicense(), "")
