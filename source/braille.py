@@ -1160,6 +1160,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s") % headingLevel)
+		collapsed = field.get("collapsed")
+		if collapsed:
+			textList.append(positiveStateLabels[controlTypes.State.COLLAPSED])
 	if formatConfig["reportLinks"]:
 		link = field.get("link")
 		oldLink = fieldCache.get("link")
