@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -15,7 +15,7 @@ import wx.adv
 import globalVars
 import tones
 import ui
-from documentationUtils import getDocFilePath, reportNoDocumentation
+from documentationUtils import getDocFilePath, displayLicense, reportNoDocumentation
 from logHandler import log
 import config
 import versionInfo
@@ -804,22 +804,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			self.helpMenu.AppendSeparator()
 
-			# Translators: The label for the menu item to view NVDA License document.
+			# Translators: The label for the menu item to view the NVDA License.
 			item = self.helpMenu.Append(wx.ID_ANY, _("L&icense"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
-				item,
-			)
-			# Translators: The label for the menu item to view NVDA Contributors list document.
-			item = self.helpMenu.Append(wx.ID_ANY, _("C&ontributors"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
-				item,
-			)
-
-			self.helpMenu.AppendSeparator()
+			self.Bind(wx.EVT_MENU, lambda evt: displayLicense(), item)
 
 			# Translators: The label for the menu item to open NVDA Welcome Dialog.
 			item = self.helpMenu.Append(wx.ID_ANY, _("We&lcome dialog..."))
