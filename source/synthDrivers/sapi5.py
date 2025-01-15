@@ -123,7 +123,7 @@ class SynthDriverAudioStream(COMObject):
 		if dwOrigin == 1 and dlibMove.QuadPart == 0:
 			# SAPI is querying the current position.
 			if plibNewPosition:
-				plibNewPosition.QuadPart = self._writtenBytes
+				plibNewPosition[0].QuadPart = self._writtenBytes
 			return hresult.S_OK
 		return hresult.E_NOTIMPL
 
@@ -201,13 +201,13 @@ class SapiSink(COMObject):
 		synth.sonicStream.flush()
 		audioData = synth.sonicStream.readShort()
 		synth.player.feed(audioData, len(audioData) * 2)
+		synth.player.idle()
 		# trigger all untriggered bookmarks
 		if streamNum in synth._streamBookmarks:
 			for bookmark in synth._streamBookmarks[streamNum]:
 				synthIndexReached.notify(synth=synth, index=bookmark)
 			del synth._streamBookmarks[streamNum]
 		synth.isSpeaking = False
-		synth.player.idle()
 		synthDoneSpeaking.notify(synth=synth)
 
 	def onIndexReached(self, streamNum: int, index: int):
