@@ -647,7 +647,7 @@ class JABContext(object):
 		bridgeDll.getAccessibleTextSelectionInfo(self.vmID, self.accContext, byref(textSelectionInfo))
 		return textSelectionInfo
 
-	def _javaGetAccessibleTextRange(self, start: int, end: int):
+	def _javaGetAccessibleTextRange(self, start: int, end: int) -> str:
 		"""Helper method that performs the Java Access Bridge call to obtain the text of this object based on a (start, end) range.
 
 				:param start: The start index to get from, inclusive.
