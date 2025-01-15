@@ -74,7 +74,7 @@ It is assumed that characters will have the same description regardless of their
 
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 
-Translation of `characterDescriptions.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `characterDescriptions.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
 
 For a full example and reference, please look at [the English `characterDescriptions.dic` file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
 
@@ -90,11 +90,6 @@ Blank lines and lines beginning with a "`#`" character are ignored.
 All locales implicitly inherit the symbol information for English, though any of this information can be overridden.
 
 The file contains two sections, [complex symbols](#complexSymbols) and [symbols](#symbolInformation).
-
-#### Translating this file {#TranslatingSymbolsFile}
-
-Translation of `symbols.dic` happens on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
-See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 #### Defining Complex Symbols {#complexSymbols}
 
@@ -206,6 +201,12 @@ You would also include something like the following in the main symbols section:
 ```
 thousands separator	comma	all	norep
 ```
+
+#### Translating this file {#TranslatingSymbolsFile}
+
+Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+
+See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
 ### Gestures {#TranslatingGestures}
 
@@ -321,10 +322,10 @@ In this case, you will have to explore NVDA's source code to find this parent cl
 
 #### Translating this file {#TranslatingGesturesFile}
 
-Translations for `gestures.ini` happen on SVN following [the automatic workflow process](https://github.com/nvaccess/nvda/wiki/TranslatingUsingAutomaticProcess).
+Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
 
-1. In your local copy of the screenReaderTranslations repository, check if the `gestures.ini` file exists, e.g. `d:\SVN\SRT\fr\gestures.ini`
-   * If this file does not exist, create it by copying it from the last version of NVDA.
+1. In your local copy of the NVDA repository, check if the `gestures.ini` file exists, e.g. `nvda\source\locale\fr\gestures.ini`
+   * If this file does not exist, create it by copying and adapting it from another language.
    * If it already exists, all is fine.
 2. In this file the sections correspond to the class to which the script belongs.
 If the class your looking for does not exist, create this section.
@@ -345,7 +346,8 @@ If the class your looking for does not exist, create this section.
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
 
 5. Save your file in UTF-8 format.
-6. Commit your changes to the screenReaderTranslations repo.
+6. Commit your changes.
+7. Open a Pull Request.
 
 ## Plugins {#plugins}
 ### Overview {#pluginsOverview}
