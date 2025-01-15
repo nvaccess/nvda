@@ -1,12 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
+# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Cyrille Bougot, Peter Vágner, Babbage B.V.,
 # Leonard de Ruijter, James Teh
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""Provides a simple Python interface to playing audio using the Windows multimedia waveOut functions, as well as other useful utilities."""
+"""Provides a simple Python interface to playing audio using the Windows Audio Session API (WASAPI), as well as other useful utilities."""
 
-from collections.abc import Generator
 import threading
 import typing
 from typing import (
@@ -40,7 +39,8 @@ import NVDAHelper
 import core
 import globalVars
 from pycaw.utils import AudioUtilities
-from pycaw.constants import EDataFlow, DEVICE_STATE
+
+from utils.mmdevice import _getOutputDevices
 
 
 __all__ = (
@@ -87,23 +87,6 @@ class AudioPurpose(Enum):
 
 	SPEECH = auto()
 	SOUNDS = auto()
-
-
-def _getOutputDevices() -> Generator[tuple[str, str]]:
-	"""Generator, yielding device ID and device Name in device ID order.
-	..note: Depending on number of devices being fetched, this may take some time (~3ms)
-	"""
-	endpointCollection = AudioUtilities.GetDeviceEnumerator().EnumAudioEndpoints(
-		EDataFlow.eRender.value,
-		DEVICE_STATE.ACTIVE.value,
-	)
-	for i in range(endpointCollection.GetCount()):
-		device = AudioUtilities.CreateDevice(endpointCollection.Item(i))
-		# This should never be None, but just to be sure
-		if device is not None:
-			yield device.id, device.FriendlyName
-		else:
-			continue
 
 
 def getOutputDeviceNames() -> list[str]:
@@ -194,7 +177,7 @@ def playWaveFile(
 		channels=f.getnchannels(),
 		samplesPerSec=f.getframerate(),
 		bitsPerSample=f.getsampwidth() * 8,
-		outputDevice=config.conf["speech"]["outputDevice"],
+		outputDevice=config.conf["audio"]["outputDevice"],
 		wantDucking=False,
 		purpose=AudioPurpose.SOUNDS,
 	)
@@ -247,7 +230,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	#: Whether there is a pending stream idle check.
 	_isIdleCheckPending: bool = False
 	#: Use the default device, this is the configSpec default value.
-	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("speech", "outputDevice")).default)
+	DEFAULT_DEVICE_KEY = typing.cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default)
 	#: The silence output device, None if not initialized.
 	_silenceDevice: typing.Optional[str] = None
 
