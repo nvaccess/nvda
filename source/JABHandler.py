@@ -650,9 +650,9 @@ class JABContext(object):
 	def _javaGetAccessibleTextRange(self, start: int, end: int) -> str:
 		"""Helper method that performs the Java Access Bridge call to obtain the text of this object based on a (start, end) range.
 
-				:param start: The start index to get from, inclusive.
-				:param end: The end index to fetch to, exclusive.
-				:return: the text within the given indices as a string.
+		:param start: The start index to get from, inclusive.
+		:param end: The end index to fetch to, exclusive.
+		:return: the text within the given indices as a string.
 		"""
 		length = (end + 1) - start
 		if length <= 0:
@@ -668,11 +668,11 @@ class JABContext(object):
 
 	def getAccessibleTextRange(self, start: int, end: int) -> str:
 		"""Obtains the text of this object based on a (start, end) range.
-				If the text is too large to fit in the buffer, this method will split the Java Access Bridge calls in chunks to get the whole text.
+		If the text is too large to fit in the buffer, this method will split the Java Access Bridge calls in chunks to get the whole text.
 
-				:param start: The start index to get from, inclusive.
-				:param end: The end index to fetch to, exclusive.
-				:return: the text within the given indices as a string.
+		:param start: The start index to get from, inclusive.
+		:param end: The end index to fetch to, exclusive.
+		:return: the text within the given indices as a string.
 		"""
 		length = (end + 1) - start
 		if length < self.MAX_BUFFER_SIZE:
