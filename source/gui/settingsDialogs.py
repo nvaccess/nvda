@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
 #  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
@@ -8,6 +8,7 @@
 # Burman's Computer and Education Ltd, hwf1324.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -53,6 +54,7 @@ import queueHandler
 import braille
 import brailleTables
 import brailleInput
+from addonStore.models.channel import UpdateChannel
 import vision
 import vision.providerInfo
 import vision.providerBase
@@ -3261,8 +3263,6 @@ class AddonStorePanel(SettingsPanel):
 		self.bindHelpEvent("AutomaticAddonUpdates", self.automaticUpdatesComboBox)
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
-
-		from addonStore.models.channel import UpdateChannel
 
 		self.defaultUpdateChannelComboBox = sHelper.addLabeledControl(
 			# Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.

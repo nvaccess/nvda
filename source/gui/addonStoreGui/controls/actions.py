@@ -53,7 +53,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 		# Overridable to use checkable items or radio items
 		self._actionMenuItemMap[action] = self._contextMenu.Insert(
 			prevActionIndex,
-			id=-1,
+			id=wx.ID_ANY,
 			item=action.displayName,
 		)
 
@@ -113,13 +113,13 @@ class _UpdateChannelSubMenu(_ActionsContextMenuP[AddonUpdateChannelActionVM]):
 
 	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonUpdateChannelActionVM):
 		selectedAddon = actionVM.actionTarget
-		log.debug(f"update channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}")
 		actionVM.actionHandler(selectedAddon)
+		log.debug(f"update channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}")
 
 	def _insertToContextMenu(self, action: AddonUpdateChannelActionVM, prevActionIndex: int):
 		self._actionMenuItemMap[action] = self._contextMenu.InsertRadioItem(
 			prevActionIndex,
-			id=-1,
+			id=wx.ID_ANY,
 			item=action.displayName,
 		)
 		addonModel = cast(_AddonGUIModel, action.actionTarget.model)

@@ -37,7 +37,7 @@ class _AddonSettings:
 class _AddonStoreSettings:
 	"""Settings for the Add-on Store."""
 
-	_storeSettingsFilename: str = "_cachedSettings.json"
+	_CACHE_FILENAME: str = "_cachedSettings.json"
 
 	_showWarning: bool
 	"""Show warning when opening Add-on Store."""
@@ -48,7 +48,7 @@ class _AddonStoreSettings:
 	def __init__(self):
 		self._storeSettingsFile = os.path.join(
 			NVDAState.WritePaths.addonStoreDir,
-			self._storeSettingsFilename,
+			self._CACHE_FILENAME,
 		)
 		self._showWarning = True
 		self._addonSettings = {}
@@ -69,13 +69,12 @@ class _AddonStoreSettings:
 			if NVDAState.shouldWriteToDisk():
 				os.remove(self._storeSettingsFile)
 		try:
-			settingsDict["addonSettings"]
 			if not isinstance(settingsDict["addonSettings"], dict):
 				raise ValueError("addonSettings must be a dict")
 
-			settingsDict["showWarning"]
 			if not isinstance(settingsDict["showWarning"], bool):
 				raise ValueError("showWarning must be a bool")
+
 		except (KeyError, ValueError):
 			log.exception(f"Invalid add-on store cache:\n{settingsDict}")
 			if NVDAState.shouldWriteToDisk():
@@ -83,12 +82,19 @@ class _AddonStoreSettings:
 
 		self._showWarning = settingsDict["showWarning"]
 		for addonId, settings in settingsDict["addonSettings"].items():
-			self._addonSettings[addonId] = _AddonSettings(
-				updateChannel=UpdateChannel(settings["updateChannel"]),
-			)
+			try:
+				updateChannel = UpdateChannel(settings["updateChannel"])
+			except ValueError:
+				log.exception(f"Invalid add-on settings for {addonId}:\n{settings}. Ignoring settings")
+				continue
+			else:
+				self._addonSettings[addonId] = _AddonSettings(
+					updateChannel=updateChannel,
+				)
 
 	def save(self):
 		if not NVDAState.shouldWriteToDisk():
+			log.error("Shouldn't write to disk, not saving add-on store settings")
 			return
 		settingsDict = {
 			"showWarning": self._showWarning,
