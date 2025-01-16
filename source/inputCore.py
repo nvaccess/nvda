@@ -665,6 +665,28 @@ class InputManager(baseObject.AutoPropertyObject):
 			return
 
 		import braille
+		from keyboardHandler import KeyboardInputGesture
+
+		if isinstance(gesture, KeyboardInputGesture) and (not script or not script.__doc__):
+			charList = gesture.character
+			if charList and not any(not i.isprintable() or i.isspace() for i in charList):
+				text = ''.join(charList)
+				if len(charList) == 1:
+					speech.speech.speakSpelling(text)
+				else:
+					speech.speakText(
+						text,
+						reason=controlTypes.OutputReason.MESSAGE,
+						symbolLevel=characterProcessing.SymbolLevel.ALL,
+					)
+
+				if gesture.mainKeyName.lower() not in text.lower() or gesture.modifiers:
+					speech.speech.speak(textList, symbolLevel=characterProcessing.SymbolLevel.ALL)
+					textList.insert(0, text)
+					text = ' '.join(textList)
+
+				braille.handler.message(text)
+				return
 
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
