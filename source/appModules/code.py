@@ -26,10 +26,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, VSCodeDocument)
 
 	def event_NVDAObject_init(self, obj: NVDAObject):
-		# This is a specific fix for Visual Studio Code,
-		# However, the root cause of the issue is issue #15159.
-		# Once issue #15159 is fixed,
-		# The PR #16248 that introduced this code can be immediately reverted.
-		# (see issue #15159 for full description)
-		if obj.role != controlTypes.Role.EDITABLETEXT:
+		# TODO: This is a specific fix for Visual Studio Code.
+		# Once the underlying issue is resolved, this workaround can be removed.
+		# See issue #15159 for more details.
+		if obj.role != controlTypes.Role.EDITABLETEXT and controlTypes.State.EDITABLE not in obj.states:
 			obj.TextInfo = NVDAObjectTextInfo
