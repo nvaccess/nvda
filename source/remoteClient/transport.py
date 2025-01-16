@@ -40,7 +40,7 @@ import wx
 from extensionPoints import Action, HandlerRegistrar
 
 from . import configuration
-from .connection_info import ConnectionInfo
+from .connectionInfo import ConnectionInfo
 from .protocol import PROTOCOL_VERSION, RemoteMessageType
 from .serializer import Serializer
 from .protocol import hostPortToAddress

@@ -12,7 +12,7 @@ if TYPE_CHECKING:
 
 import gui
 
-from .connection_info import ConnectionMode
+from .connectionInfo import ConnectionMode
 
 
 class RemoteMenu(wx.Menu):

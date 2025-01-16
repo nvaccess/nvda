@@ -36,7 +36,7 @@ import windowUtils
 import wx
 from winUser import WM_COPYDATA  # provided by NVDA
 
-from . import connection_info
+from . import connectionInfo
 
 
 class COPYDATASTRUCT(ctypes.Structure):
@@ -119,8 +119,8 @@ class URLHandlerWindow(windowUtils.CustomWindow):
 		url = ctypes.wstring_at(message_data.contents.lpData)
 		log.info("Received url: %s" % url)
 		try:
-			con_info = connection_info.ConnectionInfo.fromURL(url)
-		except connection_info.URLParsingError:
+			con_info = connectionInfo.ConnectionInfo.fromURL(url)
+		except connectionInfo.URLParsingError:
 			wx.CallLater(
 				50,
 				gui.messageBox,
