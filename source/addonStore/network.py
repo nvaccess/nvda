@@ -210,6 +210,7 @@ class AddonFileDownloader:
 		False if the download is cancelled
 		"""
 		if not NVDAState.shouldWriteToDisk():
+			log.error("Should not write to disk, cancelling download")
 			return False
 
 		# Some add-ons are quite large, so we need to allow for a long download time.

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -44,6 +44,8 @@ from .network import (
 	_getCacheHashURL,
 	_LATEST_API_VER,
 )
+from .settings import _AddonStoreSettings
+
 
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
@@ -98,6 +100,7 @@ class _DataManager:
 			pathlib.Path(WritePaths.addonStoreDir).mkdir(parents=True, exist_ok=True)
 			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
+		self.storeSettings = _AddonStoreSettings()
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
@@ -110,6 +113,7 @@ class _DataManager:
 		self._initialiseAvailableAddonsThread.start()
 
 	def terminate(self):
+		self.storeSettings.save()
 		if self._initialiseAvailableAddonsThread.is_alive():
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
@@ -349,17 +353,27 @@ class _DataManager:
 		return _createInstalledStoreModelFromData(cacheData)
 
 	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
+		# TODO: Add AvailableAddonStatus.UPDATE_INCOMPATIBLE,
+		# to allow updates that are incompatible with the current NVDA version,
+		# only if a config setting is enabled
+		updatableAddonStatuses = {AvailableAddonStatus.UPDATE}
 		addonsPendingUpdate: list["_AddonGUIModel"] = []
 		compatibleAddons = self.getLatestCompatibleAddons()
 		for channel in compatibleAddons:
 			for addon in compatibleAddons[channel].values():
-				if (
-					getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE
-					# Only consider add-ons that have been installed through the Add-on Store
-					and addon._addonHandlerModel._addonStoreData is not None
-				):
-					# Only consider add-on updates for the same channel
-					if addon.channel == addon._addonHandlerModel._addonStoreData.channel:
+				if getStatus(addon, _StatusFilterKey.UPDATE) in updatableAddonStatuses:
+					# Ensure add-on update channel is within the preferred update channels
+					if (installedStoreData := addon._addonHandlerModel._addonStoreData) is not None:
+						installedChannel = installedStoreData.channel
+					else:
+						installedChannel = Channel.EXTERNAL
+					selectedUpdateChannel = addonDataManager.storeSettings.getAddonSettings(
+						addon.addonId,
+					).updateChannel
+					availableUpdateChannels = selectedUpdateChannel._availableChannelsForAddonWithChannel(
+						installedChannel,
+					)
+					if addon.channel in availableUpdateChannels:
 						addonsPendingUpdate.append(addon)
 		return addonsPendingUpdate
 
