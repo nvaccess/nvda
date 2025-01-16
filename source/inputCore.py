@@ -670,7 +670,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		if isinstance(gesture, KeyboardInputGesture) and (not script or not script.__doc__):
 			charList = gesture.character
 			if charList and not any(not i.isprintable() or i.isspace() for i in charList):
-				text = ''.join(charList)
+				text = "".join(charList)
 				if len(charList) == 1:
 					speech.speech.speakSpelling(text)
 				else:
@@ -683,7 +683,7 @@ class InputManager(baseObject.AutoPropertyObject):
 				if gesture.mainKeyName.lower() not in text.lower() or gesture.modifiers:
 					speech.speech.speak(textList, symbolLevel=characterProcessing.SymbolLevel.ALL)
 					textList.insert(0, text)
-					text = ' '.join(textList)
+					text = " ".join(textList)
 
 				braille.handler.message(text)
 				return

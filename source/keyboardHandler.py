@@ -502,7 +502,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		modifierList = []
 		valid = True
 		for i in self.modifiers:
-			if not i[0] in self.NORMAL_MODIFIER_KEYS.values():
+			if i[0] not in self.NORMAL_MODIFIER_KEYS.values():
 				modifier = self.NORMAL_MODIFIER_KEYS.get(i[0])
 			else:
 				modifier = i[0]
@@ -510,7 +510,11 @@ class KeyboardInputGesture(inputCore.InputGesture):
 				modifierList.append(modifier)
 		for i in range(256):
 			if i in modifierList:
-				states[i] = -128  # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
+				states[
+					i
+				] = (
+					-128
+				)  # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
 			else:
 				states[i] = ctypes.windll.user32.GetKeyState(i)
 		res = ctypes.windll.user32.ToUnicodeEx(
@@ -520,15 +524,15 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			buffer,
 			ctypes.sizeof(buffer),
 			0x0,
-			keyboardLayout
+			keyboardLayout,
 		)
 		if res < 0:
-			return('')
+			return ""
 		charList = []
 		if res > 0:
 			if winUser.VK_MENU in modifierList:
 				# When alt is the only modifier that is down,
-				#ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
+				# ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
 				# So remove alt and try again
 				newBuffer = ctypes.create_unicode_buffer(5)
 				states[winUser.VK_MENU] = 0
@@ -539,16 +543,16 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					newBuffer,
 					ctypes.sizeof(newBuffer),
 					0x0,
-					keyboardLayout
+					keyboardLayout,
 				)
 				# Check if newBuffer.value == buffer.value.
-				#If they do, treat the key as invalid as it wouldn't have bin written to the focused window
+				# If they do, treat the key as invalid as it wouldn't have bin written to the focused window
 				valid = False if buffer.value == newBuffer.value else True
 			for i in buffer[:res]:
 				charList.append(i)
-		if not valid or 'windows' in modifierList:
+		if not valid or "windows" in modifierList:
 			charList.clear()
-		return(''.join(charList))
+		return "".join(charList)
 
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
