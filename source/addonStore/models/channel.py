@@ -58,30 +58,30 @@ and the values are which channels should be shown for a given filter.
 class UpdateChannel(DisplayStringIntEnum):
 	"""Update channel for an addon used for automatic updates."""
 
-	DEFAULT = 0
+	DEFAULT = -1
 	"""Default channel.
 	Specified in [addonStore][defaultUpdateChannel] section of config.
 	"""
 
-	SAME = 1
+	SAME = 0
 	"""Keep the same channel as the current version"""
 
-	ANY = 2
+	ANY = 1
 	"""Use any channel, keep to the latest version"""
 
-	NO_UPDATE = 3
+	NO_UPDATE = 2
 	"""Do not update the addon"""
 
-	STABLE = 4
+	STABLE = 3
 	"""Use the stable channel"""
 
-	BETA_DEV = 5
+	BETA_DEV = 4
 	"""Use the beta or development channel, keep to the latest version"""
 
-	BETA = 6
+	BETA = 5
 	"""Use the beta channel"""
 
-	DEV = 7
+	DEV = 6
 	"""Use the development channel"""
 
 	@property

@@ -3108,10 +3108,10 @@ You can also change the update channel for a [specific add-on individually from 
 | Same | Add-ons will remain on their channel |
 | Any | Add-ons will always automatically update to the latest version, regardless of channel |
 | Do not update | Add-ons will not automatically update by default, you must enable them individually |
-| Stable | Add-ons will only automatically update to stable versions |
-| Beta or dev | Add-ons will only automatically update to beta or dev versions |
-| Beta | Add-ons will only automatically update to beta versions |
-| Dev | Add-ons will only automatically update to dev versions |
+| Stable | Add-ons will automatically update to stable versions |
+| Beta or dev | Add-ons will automatically update to beta or dev versions |
+| Beta | Add-ons will automatically update to beta versions |
+| Dev | Add-ons will automatically update to dev versions |
 
 ##### Mirror server {#AddonStoreMetadataMirror}
 
@@ -3758,7 +3758,7 @@ Instead, the purpose of this feature is to share feedback to help users decide i
 #### Changing the automatic update channel (#AddonStoreUpdateChannel)
 
 You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
-When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons only update to the same [channel](#AddonStoreFilterChannel) by default.
+When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
 From an add-on's actions menu, using the submenu "Update channel", you can modify the channels an add-on will automatically update to.
 
 | Option | Behaviour |
@@ -3767,10 +3767,10 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 | Same | Add-on will remain on the same channel |
 | Any | Add-on will always automatically update to the latest version, regardless of channel |
 | Do not update | Add-on will not automatically update |
-| Stable | Add-on will only automatically update to stable versions |
-| Beta or dev | Add-on will only automatically update to beta or dev versions |
-| Beta | Add-on will only automatically update to beta versions |
-| Dev | Add-on will only automatically update to dev versions |
+| Stable | Add-on will automatically update to stable versions |
+| Beta or dev | Add-on will automatically update to beta or dev versions |
+| Beta | Add-on will automatically update to beta versions |
+| Dev | Add-on will automatically update to dev versions |
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 

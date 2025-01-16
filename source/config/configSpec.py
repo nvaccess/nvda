@@ -339,8 +339,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	baseServerURL = string(default="")
 	# UpdateChannel values:
 	# same channel (default), any channel, do not update, stable, beta & dev, beta, dev
-	# Not 0 based as other usages of UpdateChannel's 0-value is used to refer to this default fallback value.
-	defaultUpdateChannel = integer(1, 7, default=1)
+	defaultUpdateChannel = integer(0, 6, default=0)
 """
 
 #: The configuration specification

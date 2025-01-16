@@ -3275,8 +3275,7 @@ class AddonStorePanel(SettingsPanel):
 			],
 		)
 		self.bindHelpEvent("DefaultAddonUpdateChannel", self.defaultUpdateChannelComboBox)
-		# Subtract 1 from the index because the default update channel is 1-based, but the list is 0-based.
-		index = config.conf["addonStore"]["defaultUpdateChannel"] - 1
+		index = config.conf["addonStore"]["defaultUpdateChannel"]
 		self.defaultUpdateChannelComboBox.SetSelection(index)
 
 		# Translators: The label for the mirror server on the Add-on Store Settings panel.
@@ -3355,10 +3354,7 @@ class AddonStorePanel(SettingsPanel):
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
-		# Add 1 to the index because the default update channel is 1-based, but the list is 0-based.
-		config.conf["addonStore"]["defaultUpdateChannel"] = (
-			self.defaultUpdateChannelComboBox.GetSelection() + 1
-		)
+		config.conf["addonStore"]["defaultUpdateChannel"] = self.defaultUpdateChannelComboBox.GetSelection()
 
 
 class TouchInteractionPanel(SettingsPanel):
