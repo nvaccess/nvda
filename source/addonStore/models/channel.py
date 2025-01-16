@@ -60,7 +60,7 @@ class UpdateChannel(DisplayStringIntEnum):
 
 	DEFAULT = 0
 	"""Default channel.
-	(specified in [addonStore][defaultUpdateChannel] section of config)
+	Specified in [addonStore][defaultUpdateChannel] section of config.
 	"""
 
 	SAME = 1
@@ -91,7 +91,8 @@ class UpdateChannel(DisplayStringIntEnum):
 		if self is UpdateChannel.DEFAULT:
 			channel = UpdateChannel(config.conf["addonStore"]["defaultUpdateChannel"])
 			assert channel is not UpdateChannel.DEFAULT
-			# Translators: Update channel for an addon
+			# Translators: Update channel for an addon.
+			# {defaultChannel} will be replaced with the name of the channel the user has selected as default
 			return _("Default ({defaultChannel})").format(
 				defaultChannel=self._displayStringLabels[channel],
 			)
@@ -112,7 +113,7 @@ class UpdateChannel(DisplayStringIntEnum):
 			# Translators: Update channel for an addon
 			UpdateChannel.STABLE: _("Stable"),
 			# Translators: Update channel for an addon
-			UpdateChannel.BETA_DEV: _("Beta/Dev"),
+			UpdateChannel.BETA_DEV: _("Beta or dev"),
 			# Translators: Update channel for an addon
 			UpdateChannel.BETA: _("Beta"),
 			# Translators: Update channel for an addon
