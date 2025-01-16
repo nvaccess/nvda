@@ -1,18 +1,22 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+# This module is deprecated, pending removal in NVDA 2026.1.
 
 import locale
 from collections import OrderedDict, deque
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
-from ctypes import byref, c_ulong, POINTER
-from ctypes.wintypes import DWORD, WORD
+from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
+from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
+import warnings
 from ._sapi4 import (
+	MMSYSERR_NOERROR,
 	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
 	IAudioMultiMediaDevice,
@@ -34,9 +38,9 @@ from ._sapi4 import (
 	TTSFEATURE_VOLUME,
 	TTSMODEINFO,
 	VOICECHARSET,
+	DriverMessage,
 )
 import config
-import nvwave
 import weakref
 
 from speech.commands import (
@@ -50,6 +54,9 @@ from speech.commands import (
 	BaseProsodyCommand,
 )
 from speech.types import SpeechSequence
+
+
+warnings.warn("synthDrivers.sapi4 is deprecated, pending removal in NVDA 2026.1.", DeprecationWarning)
 
 
 class SynthDriverBufSink(COMObject):
@@ -122,7 +129,10 @@ class SynthDriverSink(COMObject):
 class SynthDriver(SynthDriver):
 	name = "sapi4"
 	description = "Microsoft Speech API version 4"
-	supportedSettings = [SynthDriver.VoiceSetting()]
+	supportedSettings = [
+		SynthDriver.VoiceSetting(),
+		BooleanDriverSetting("_hasWarningBeenShown", ""),
+	]
 	supportedCommands = {
 		IndexCommand,
 		CharacterModeCommand,
@@ -286,7 +296,7 @@ class SynthDriver(SynthDriver):
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
-		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
+		self._ttsAudio.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		if self._ttsCentral:
 			self._ttsCentral.UnRegister(self._sinkRegKey)
 		self._ttsCentral = POINTER(ITTSCentralW)()
@@ -421,3 +431,49 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+
+def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
+
+	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
+	:return: An integer WaveOut device ID for use with SAPI4.
+		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
+	"""
+	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
+		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
+		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
+		currEndpointIdByteCount = DWORD()
+		# Defined in mmeapi.h
+		winmm = windll.winmm
+		waveOutMessage = winmm.waveOutMessage
+		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		for devID in range(waveOutGetNumDevs()):
+			# Get the length of this device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID_SIZE,
+				byref(currEndpointIdByteCount),
+				None,
+			)
+			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
+				# ID lengths don't match, so this device can't be a match.
+				continue
+			# Get the device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID,
+				byref(currEndpointId),
+				currEndpointIdByteCount,
+			)
+			if mmr != MMSYSERR_NOERROR:
+				continue
+			# Decode the endpoint ID string to a python string, and strip the null terminator.
+			if (
+				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
+				== targetEndpointId
+			):
+				return devID
+	# No matching device found, or default requested explicitly.
+	# Return the ID of Microsoft Sound Mapper
+	return -1

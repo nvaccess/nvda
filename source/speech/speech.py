@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
 
 """High-level functions to speak information."""
@@ -11,14 +11,18 @@ import typing
 import weakref
 import unicodedata
 import time
+
 import colors
 import api
 from annotation import _AnnotationRolesT
 import controlTypes
 from controlTypes import OutputReason, TextPosition
 from controlTypes.state import State
+import globalVars
+from gui.message import MessageDialog
+import queueHandler
 import tones
-from synthDriverHandler import getSynth
+from synthDriverHandler import SynthDriver, getSynth, synthChanged
 import re
 import textInfos
 import speechDictHandler
@@ -3059,3 +3063,38 @@ def clearTypedWordBuffer() -> None:
 	complete the word (such as a focus change or choosing to move the caret).
 	"""
 	_curWordChars.clear()
+
+
+def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):
+	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
+
+	def setShown():
+		setattr(synth, "_hasWarningBeenShown", True)
+		synth.saveSettings()
+
+	def impl():
+		MessageDialog(
+			parent=None,
+			message=_(
+				# Translators: Message warning users that SAPI4 is deprecated.
+				"Microsoft Speech API version 4 is obsolete. "
+				"Using this speech synthesizer may pose a security risk. "
+				"This synthesizer driver will be removed in NVDA 2026.1. "
+				"You are strongly encouraged to choose a more modern speech synthesizer.",
+			),
+			# Translators: Title of a message dialog.
+			title=_("Warning"),
+			buttons=None,
+		).addOkButton(
+			callback=setShown,
+		).Show()
+
+	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
+		# We need to queue the dialog to appear, as wx may not have been initialised the first time this is called.
+		queueHandler.queueFunction(queueHandler.eventQueue, impl)
+
+
+if not globalVars.appArgs.secure:
+	# Don't warn users about SAPI4 deprecation in secure mode.
+	# This stops the dialog appearing on secure screens and when secure mode has been forced.
+	synthChanged.register(_sapi4DeprecationWarning)

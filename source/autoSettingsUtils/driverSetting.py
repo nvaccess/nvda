@@ -49,6 +49,7 @@ class DriverSetting(AutoPropertyObject):
 	):
 		"""
 		@param id: internal identifier of the setting
+			If this starts with a `_`, it will not be shown in the settings GUI.
 		@param displayNameWithAccelerator: the localized string shown in voice or braille settings dialog
 		@param availableInSettingsRing: Will this option be available in a settings ring?
 		@param defaultVal: Specifies the default value for a driver setting.
