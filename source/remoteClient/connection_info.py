@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 from dataclasses import dataclass
 from enum import Enum
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse

@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 """NVDA Remote session management and message routing.
 
 Implements the session layer for NVDA Remote, handling message routing,
