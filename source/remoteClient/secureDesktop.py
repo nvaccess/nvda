@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 """Secure desktop support for NVDA Remote.
 
 This module handles the transition between regular and secure desktop sessions in Windows,

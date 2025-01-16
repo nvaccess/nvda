@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2015-2025 NV Access Limited, Christopher Toth, Tyler Spivey, Babbage B.V., David Sexton and others.
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 """Server implementation for NVDA Remote relay functionality.
 
 This module implements a relay server that enables NVDA Remote connections between
