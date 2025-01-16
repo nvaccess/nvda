@@ -16,7 +16,7 @@ The serialization format supports:
 - Custom message types via the 'type' field
 """
 
-from abc import abstractmethod
+from abc import ABCMeta, abstractmethod
 from enum import Enum
 from logging import getLogger
 from typing import Any, Dict, Optional, Type, Union, TypeVar
@@ -30,7 +30,7 @@ T = TypeVar("T")
 JSONDict = Dict[str, Any]
 
 
-class Serializer:
+class Serializer(metaclass=ABCMeta):
 	"""Base class for message serialization.
 
 	Defines the interface for serializing messages between NVDA instances.
