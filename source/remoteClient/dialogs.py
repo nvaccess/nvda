@@ -15,7 +15,7 @@ from logHandler import log
 from utils.alwaysCallAfter import alwaysCallAfter
 
 from . import configuration, serializer, server, protocol, transport
-from .connection_info import ConnectionInfo, ConnectionMode
+from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import SERVER_PORT, RemoteMessageType
 
 

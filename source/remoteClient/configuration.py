@@ -11,7 +11,7 @@ import configobj
 import globalVars
 from configobj import validate
 
-from .connection_info import ConnectionInfo
+from .connectionInfo import ConnectionInfo
 
 CONFIG_FILE_NAME = "remote.ini"
 configRoot = "Remote"

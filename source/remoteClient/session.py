@@ -80,7 +80,7 @@ import tones
 import ui
 from speech.extensions import speechCanceled, post_speechPaused, pre_speechQueued
 
-from . import configuration, connection_info, cues
+from . import configuration, connectionInfo, cues
 
 from .localMachine import LocalMachine
 from .protocol import RemoteMessageType
@@ -110,7 +110,7 @@ class RemoteSession:
 	transport: RelayTransport  # The transport layer handling network communication
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
 	# Session mode - either 'master' or 'slave'
-	mode: Optional[connection_info.ConnectionMode] = None
+	mode: Optional[connectionInfo.ConnectionMode] = None
 	callbacksAdded: bool  # Whether callbacks are currently registered
 
 	def __init__(
@@ -211,7 +211,7 @@ Please either use a different server or upgrade your version of the addon."""),
 		"""
 		cues.client_disconnected()
 
-	def getConnectionInfo(self) -> connection_info.ConnectionInfo:
+	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
 
 		Returns a ConnectionInfo object containing:
@@ -221,7 +221,7 @@ Please either use a different server or upgrade your version of the addon."""),
 		"""
 		hostname, port = self.transport.address
 		key = self.transport.channel
-		return connection_info.ConnectionInfo(
+		return connectionInfo.ConnectionInfo(
 			hostname=hostname,
 			port=port,
 			key=key,
@@ -255,7 +255,7 @@ class SlaveSession(RemoteSession):
 	"""
 
 	# Connection mode - always 'slave'
-	mode: connection_info.ConnectionMode = connection_info.ConnectionMode.SLAVE
+	mode: connectionInfo.ConnectionMode = connectionInfo.ConnectionMode.SLAVE
 	# Information about connected master clients
 	masters: Dict[int, Dict[str, Any]]
 	masterDisplaySizes: List[int]  # Braille display sizes of connected masters
@@ -451,7 +451,7 @@ class MasterSession(RemoteSession):
 	appropriate commands to control the remote slave instance.
 	"""
 
-	mode: connection_info.ConnectionMode = connection_info.ConnectionMode.MASTER
+	mode: connectionInfo.ConnectionMode = connectionInfo.ConnectionMode.MASTER
 	slaves: Dict[int, Dict[str, Any]]  # Information about connected slave
 
 	def __init__(

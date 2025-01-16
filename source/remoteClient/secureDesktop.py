@@ -27,7 +27,7 @@ from logHandler import log
 from winAPI.secureDesktop import post_secureDesktopStateChange
 
 from . import bridge, server
-from .connection_info import ConnectionInfo, ConnectionMode
+from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
 from .session import SlaveSession

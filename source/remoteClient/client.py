@@ -20,7 +20,7 @@ from utils.alwaysCallAfter import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
 
 from . import configuration, cues, dialogs, serializer, server, url_handler
-from .connection_info import ConnectionInfo, ConnectionMode
+from .connectionInfo import ConnectionInfo, ConnectionMode
 from .localMachine import LocalMachine
 from .menu import RemoteMenu
 from .protocol import RemoteMessageType, addressToHostPort
