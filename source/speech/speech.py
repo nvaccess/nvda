@@ -3094,7 +3094,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 		queueHandler.queueFunction(queueHandler.eventQueue, impl)
 
 
-if not globalVars.appArgs.minimal:
-	# Don't warn users about SAPI4 deprecation in minimal mode.
-	# This stops the dialog appearing on secure screens or in the launcher.
+if not globalVars.appArgs.secure:
+	# Don't warn users about SAPI4 deprecation in secure mode.
+	# This stops the dialog appearing on secure screens and when secure mode has been forced.
 	synthChanged.register(_sapi4DeprecationWarning)
