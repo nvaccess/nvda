@@ -1046,8 +1046,8 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			profile["audio"]["outputDevice"]
 
 
+@patch("addonStore.dataManager.addonDataManager", create=True)
 class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
-	@patch("addonStore.dataManager.addonDataManager", create=True)
 	def test_defaultProfile(self, mock_dataManager: MagicMock):
 		"""Test that the default profile is correctly upgraded."""
 		configString = ""
@@ -1056,7 +1056,6 @@ class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
 		# Ensure showWarning has not been set
 		self.assertNotIsInstance(mock_dataManager.storeSettings.showWarning, bool)
 
-	@patch("addonStore.dataManager.addonDataManager", create=True)
 	def test_profileWithShowWarningSetFalse(self, mock_dataManager: MagicMock):
 		"""Test that a profile with showWarning set is correctly upgraded."""
 		configString = """
@@ -1068,7 +1067,6 @@ class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
 		self.assertIsInstance(mock_dataManager.storeSettings.showWarning, bool)
 		self.assertEqual(mock_dataManager.storeSettings.showWarning, False)
 
-	@patch("addonStore.dataManager.addonDataManager", create=True)
 	def test_profileWithShowWarningSetTrue(self, mock_dataManager: MagicMock):
 		"""Test that a profile with showWarning not set is correctly upgraded."""
 		configString = """
