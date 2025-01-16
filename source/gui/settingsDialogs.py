@@ -1552,6 +1552,9 @@ class AutoSettingsMixin(metaclass=ABCMeta):
 				continue
 			if setting.id in self.sizerDict:  # update a value
 				self._updateValueForControl(setting, settingsStorage)
+			elif setting.id.startswith("_"):
+				# Skip private settings.
+				continue
 			else:  # create a new control
 				self._createNewControl(setting, settingsStorage)
 		# Update graphical layout of the dialog

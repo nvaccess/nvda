@@ -182,6 +182,7 @@ Instead, a `callback` property has been added, which returns a function that per
 * Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
   * `synthDrivers.sapi5.SPAudioState` has been removed.
   * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
+* Instances of `autoSettingsUtils.driverSetting.DriverSetting` with an `id` that starts with an underscore (_) are no longer shown in NVDA's settings. (#17599)
 
 #### Deprecations
 
