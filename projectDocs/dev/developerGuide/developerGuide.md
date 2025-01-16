@@ -1384,6 +1384,7 @@ For examples of how to define and use new extension points, please see the code 
 |`Action` |`pre_speechCanceled` |Triggered before speech is canceled.|
 |`Action` |`pre_speech` |Triggered before NVDA handles prepared speech.|
 |`Action` |`post_speechPaused` |Triggered when speech is paused or resumed.|
+|`Action` |`pre_speechQueued` |Triggered after speech is processed and normalized and directly before it is enqueued.|
 |`Filter` |`filter_speechSequence` |Allows components or add-ons to filter speech sequence before it passes to the synth driver.|
 
 ### synthDriverHandler {#synthDriverHandlerExtPts}
