@@ -11,6 +11,7 @@ from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
 from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
+from autoSettingsUtils.driverSetting import BooleanDriverSetting
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
 import warnings
@@ -128,7 +129,10 @@ class SynthDriverSink(COMObject):
 class SynthDriver(SynthDriver):
 	name = "sapi4"
 	description = "Microsoft Speech API version 4"
-	supportedSettings = [SynthDriver.VoiceSetting()]
+	supportedSettings = [
+		SynthDriver.VoiceSetting(),
+		BooleanDriverSetting("_hasWarningBeenShown", ""),
+	]
 	supportedCommands = {
 		IndexCommand,
 		CharacterModeCommand,

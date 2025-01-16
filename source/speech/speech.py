@@ -3069,7 +3069,8 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
 
 	def setShown():
-		config.conf["speech"]["_hasSapi4WarningBeenShown"] = True
+		setattr(synth, "_hasWarningBeenShown", True)
+		synth.saveSettings()
 
 	def impl():
 		MessageDialog(
@@ -3088,11 +3089,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 			callback=setShown,
 		).Show()
 
-	if (
-		(not isFallback)
-		and (synth.name == "sapi4")
-		and (not config.conf["speech"]["_hasSapi4WarningBeenShown"])
-	):
+	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
 		# We need to queue the dialog to appear, as wx may not have been initialised the first time this is called.
 		queueHandler.queueFunction(queueHandler.eventQueue, impl)
 
