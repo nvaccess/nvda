@@ -237,7 +237,7 @@ class DriverMessage(IntEnum):
 	Defined in mmddk.h
 	"""
 
-	QUERY__INSTANCE_ID = 2065
+	QUERY_INSTANCE_ID = 2065
 	"""DRV_QUERYFUNCTIONINSTANCEID """
 
 	QUERY_INSTANCE_ID_SIZE = 2066

@@ -462,7 +462,7 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 			# Get the device's endpoint ID string.
 			mmr = waveOutMessage(
 				HANDLE(devID),
-				DriverMessage.QUERY__INSTANCE_ID,
+				DriverMessage.QUERY_INSTANCE_ID,
 				byref(currEndpointId),
 				currEndpointIdByteCount,
 			)
