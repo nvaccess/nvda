@@ -13,6 +13,7 @@ from typing import (
 	Any,
 	Dict,
 	Optional,
+	Self,
 	Tuple,
 )
 from uuid import uuid4
@@ -94,35 +95,56 @@ state: Optional[Dict[str, Any]] = None
 autoChecker: Optional["AutoUpdateChecker"] = None
 
 
-"""
-Data class representing update information for NVDA.
-
-Attributes:
-	version (str): The version of the update.
-	launcher_url (str): The URL to download the launcher.
-	api_version (str): The version of the API.
-	launcher_hash (Optional[str]): The hash of the launcher, if available. Default is None.
-	api_compat_to (Optional[str]): The API compatibility version, if available. Default is None.
-	changes_url (Optional[str]): The URL to the changelog, if available. Default is None.
-	launcher_interactive_url (Optional[str]): The URL for the interactive launcher, if available. Default is None.
-"""
-
-
 @dataclass
 class UpdateInfo:
-	version: str
-	launcher_url: str
-	api_version: str
-	launcher_hash: Optional[str] = None
-	api_compat_to: Optional[str] = None
-	changes_url: Optional[str] = None
-	launcher_interactive_url: Optional[str] = None
+	"""Data class representing update information for NVDA."""
 
+	version: str
+	"""The version of the update."""
+
+	launcherUrl: str
+	"""The URL to download the launcher."""
+
+	apiVersion: str
+	"""The API version of the update."""
+
+	launcherHash: str | None = None
+	"""The SHA1 hash of the launcher, if available."""
+
+	apiCompatTo: str | None = None
+	"""The API version that the update is backward-compatible with, if available."""
+
+	changesUrl: str | None = None
+	"""The URL to the changelog, if available."""
+
+	launcherInteractiveUrl: str | None = None
+	"""URL to download the update from the NV Access website, if available."""
+	def parseUpdateCheckResponse(cls, data: str) -> Self:
+		"""Parses the update response and returns an UpdateInfo object.
+
+		:param data: The raw server response as a UTF-8 decoded string.
+		:return: An UpdateInfo object containing the update metadata, or None if the format is invalid.
+		:raises ValueError: If the response format is invalid.
+		"""
+		requiredKeys = {key for key, value in inspect.signature(cls).parameters.items() if value.default is value.empty}
+		metadata = {}
+		for line in data.splitlines():
+			try:
+				key, val = line.split(": ", 1)
+			except ValueError:
+				raise ValueError(f"Invalid line format in update response: {line}")
+				if key in requiredKeys:
+					metadata[key] = val
+					requiredKeys.difference_update(key)
+				else:
+					log.debug(f"Dropping unknown key {key} = {val}.")
+		return cls(**metadata)
 
 def _getCheckURL() -> str:
 	if url := config.conf["update"]["serverURL"]:
 		return url
 	return _DEFAULT_CHECK_URL
+
 
 
 def getQualifiedDriverClassNameForStats(cls):
@@ -146,76 +168,25 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
-def parseUpdateCheckResponse(data: str) -> Optional[UpdateInfo]:
-	"""
-	Parses the update response and returns an UpdateInfo object.
-
-	:param data: The raw server response as a UTF-8 decoded string.
-	:return: An UpdateInfo object containing the update metadata, or None if the format is invalid.
-	"""
-	# Ensure the data is valid using isValidUpdateMirrorResponse
-	if not isValidUpdateMirrorResponse(data):
-		return None
-
-	metadata = {}
-	for line in data.splitlines():
-		try:
-			key, val = line.split(": ", 1)
-			metadata[key] = val
-		except ValueError:
-			log.warning("Invalid line in update response: %s", line)
-			return None
-
-	# Create and return UpdateInfo
-	return UpdateInfo(
-		# Required keys
-		version=metadata["version"],
-		launcher_url=metadata["launcherUrl"],
-		api_version=metadata["apiVersion"],
-		# Optional keys
-		launcher_hash=metadata.get("launcherHash", None),
-		api_compat_to=metadata.get("apiCompatTo", None),
-		changes_url=metadata.get("changesUrl", None),
-		launcher_interactive_url=metadata.get("launcherInteractiveUrl", None),
-	)
-
-
 def isValidUpdateMirrorResponse(responseData: str) -> bool:
 	"""
-	Validates the response string from an update mirror by ensuring it contains the required keys.
+	Validates the response string from an update mirror by ensuring it can be parsed into an UpdateInfo object.
 
 	:param responseData: The raw server response as a UTF-8 decoded string.
-	:return: True if the response contains all required keys, False otherwise.
+	:return: True if the response can be parsed into an UpdateInfo object, False otherwise.
 	"""
-	required_keys = {"version", "launcherUrl", "apiVersion"}
-	if not responseData.strip():
-		log.warning("The response is empty or whitespace only.")
+	try:
+		UpdateInfo.parseUpdateCheckResponse(responseData)
+		return True
+	except ValueError as e:
+		log.warning("Invalid update response: %s", e)
 		return False
-
-	metadata = {}
-	for line in responseData.splitlines():
-		try:
-			key, val = line.split(": ", 1)
-			metadata[key] = val
-		except ValueError:
-			log.warning("Invalid line format in update response: %s", line)
-			return False
-
-	missing_keys = required_keys - metadata.keys()
-	if missing_keys:
-		log.warning(
-			"The response is missing required keys: %s.",
-			", ".join(missing_keys),
-		)
-		return False
-
-	return True
 
 
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
-def checkForUpdate(auto: bool = False) -> Optional[UpdateInfo]:
+def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
 
@@ -288,15 +259,12 @@ def checkForUpdate(auto: bool = False) -> Optional[UpdateInfo]:
 		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
 
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
-
-	if not isValidUpdateMirrorResponse(data):
+	try:
+		parsed_response = UpdateInfo.parseUpdateCheckResponse(data)
+	except ValueError:
 		raise RuntimeError(
 			"The update response is invalid. Ensure the update mirror returns a properly formatted response."
 		)
-
-	parsed_response = parseUpdateCheckResponse(data)
-	if not parsed_response:
-		raise RuntimeError("Failed to parse the update response.")
 
 	return parsed_response
 
@@ -509,7 +477,7 @@ class AutoUpdateChecker(UpdateChecker):
 	def _error(self):
 		self.setNextCheck(isRetry=True)
 
-	def _result(self, info: UpdateInfo):
+	def _result(self, info: UpdateInfo | None) -> None:
 		if not info:
 			return
 		if info.version == state["dontRemindVersion"]:
@@ -524,7 +492,7 @@ class UpdateResultDialog(
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
-	def __init__(self, parent, updateInfo: Optional[UpdateInfo], auto: bool) -> None:
+	def __init__(self, parent, updateInfo: UpdateInfo | None, auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 
