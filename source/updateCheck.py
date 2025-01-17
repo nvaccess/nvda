@@ -111,12 +111,12 @@ Attributes:
 @dataclass
 class UpdateInfo:
 	version: str
-	launcher_url: str
-	api_version: str
-	launcher_hash: Optional[str] = None
-	api_compat_to: Optional[str] = None
-	changes_url: Optional[str] = None
-	launcher_interactive_url: Optional[str] = None
+	launcherUrl: str
+	apiVersion: str
+	launcherHash: str | None = None
+	apiCompatTo: str | None = None
+	changesUrl: str | None = None
+	launcherInteractiveUrl: str | None = None
 
 
 def _getCheckURL() -> str:
@@ -215,11 +215,11 @@ def isValidUpdateMirrorResponse(responseData: str) -> bool:
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
-def checkForUpdate(auto: bool = False) -> Optional[UpdateInfo]:
+def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
 
-	:param auto: Whether this is an automatic check for updates.
+	:param auto: Whether this is an automatic check for updates, defaults to False.
 	:return: An UpdateInfo object containing the update metadata, or None if there is no update.
 	:raise RuntimeError: If there is an error checking for an update.
 	"""
@@ -288,11 +288,6 @@ def checkForUpdate(auto: bool = False) -> Optional[UpdateInfo]:
 		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
 
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
-
-	if not isValidUpdateMirrorResponse(data):
-		raise RuntimeError(
-			"The update response is invalid. Ensure the update mirror returns a properly formatted response."
-		)
 
 	parsed_response = parseUpdateCheckResponse(data)
 	if not parsed_response:
@@ -467,7 +462,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			wx.OK | wx.ICON_ERROR,
 		)
 
-	def _result(self, info: Optional[UpdateInfo]) -> None:
+	def _result(self, info: UpdateInfo | None) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -524,7 +519,7 @@ class UpdateResultDialog(
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
-	def __init__(self, parent, updateInfo: Optional[UpdateInfo], auto: bool) -> None:
+	def __init__(self, parent, updateInfo: UpdateInfo | None, auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 
@@ -776,7 +771,6 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		Constructor for the update downloader.
 		:param updateInfo: An UpdateInfo object containing the metadata of the update,
 		including version, URLs, and compatibility information.
-		:type updateInfo: UpdateInfo
 		"""
 		from addonAPIVersion import getAPIVersionTupleFromString
 
