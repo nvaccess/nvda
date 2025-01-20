@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2023 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
+# Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
 	Optional,
@@ -51,6 +51,13 @@ class UIACustomAttributeID(enum.IntEnum):
 	COLUMN_NUMBER = 2
 	SECTION_NUMBER = 3
 	BOOKMARK_NAME = 4
+	COLUMNS_IN_SECTION = 5
+	EXPAND_COLLAPSE_STATE = 6
+
+
+class EXPAND_COLLAPSE_STATE(enum.IntEnum):
+	COLLAPSED = 0
+	EXPANDED = 1
 
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
@@ -483,6 +490,15 @@ class WordDocumentTextInfo(UIATextInfo):
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field["text-column-number"] = textColumnNumber
+			expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
+				docElement,
+				textRange,
+				UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
+			)
+			if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
+				formatField.field["collapsed"] = True
+			elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
+				formatField.field["collapsed"] = False
 		return formatField
 
 	def _getIndentValueDisplayString(self, val: float) -> str:
