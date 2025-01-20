@@ -94,9 +94,6 @@ class espeak_AUDIO_OUTPUT(enum.IntEnum):
 env: SCons.Environment.Environment = thirdPartyEnv.Clone()
 env.Append(
 	CCFLAGS=[
-		# Whole-program optimization causes eSpeak to distort and warble with its Klatt4 voice
-		# Therefore specifically force it off
-		"/GL-",
 		# Ignore all warnings as the code is not ours.
 		"/W0",
 		# Preprocessor definitions. Migrated from 'nvdaHelper/espeak/config.h'
