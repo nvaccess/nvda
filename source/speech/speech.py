@@ -20,6 +20,7 @@ from controlTypes import OutputReason, TextPosition
 from controlTypes.state import State
 import globalVars
 from gui.message import MessageDialog
+import gui.contextHelp
 import queueHandler
 import tones
 from synthDriverHandler import SynthDriver, getSynth, synthChanged
@@ -3080,13 +3081,18 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 				"Microsoft Speech API version 4 is obsolete. "
 				"Using this speech synthesizer may pose a security risk. "
 				"This synthesizer driver will be removed in NVDA 2026.1. "
-				"You are strongly encouraged to choose a more modern speech synthesizer.",
+				"You are strongly encouraged to choose a more modern speech synthesizer. "
+				"Consult the Supported Speech Synthesizers section in the user guide for suggestions.",
 			),
 			# Translators: Title of a message dialog.
 			title=_("Warning"),
 			buttons=None,
 		).addOkButton(
 			callback=setShown,
+		).addHelpButton(
+			# Translators: A button in a dialog.
+			label=_("Open user guide"),
+			callback=lambda: gui.contextHelp.showHelp("SupportedSpeechSynths"),
 		).Show()
 
 	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
