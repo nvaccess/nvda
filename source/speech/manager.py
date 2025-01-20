@@ -19,7 +19,7 @@ from .commands import (
 	IndexCommand,
 	_CancellableSpeechCommand,
 )
-
+from .extensions import pre_speechQueued
 from .priorities import Spri, SPEECH_PRIORITIES
 from logHandler import log
 from synthDriverHandler import getSynth
@@ -243,6 +243,7 @@ class SpeechManager(object):
 
 	def speak(self, speechSequence: SpeechSequence, priority: Spri):
 		log._speechManagerUnitTest("speak (priority %r): %r", priority, speechSequence)
+		pre_speechQueued.notify(speechSequence=speechSequence, priority=priority)
 		interrupt = self._queueSpeechSequence(speechSequence, priority)
 		self._doRemoveCancelledSpeechCommands()
 		# If speech isn't already in progress, we need to push the first speech.

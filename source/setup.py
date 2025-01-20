@@ -221,6 +221,8 @@ freeze(
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
+			# Tomli is part of Python 3.11 as Tomlib and causes an infinite loop now.
+			"tomli",
 		],
 		"packages": [
 			"NVDAObjects",
