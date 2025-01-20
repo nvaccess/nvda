@@ -12,7 +12,11 @@ from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeo
 from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
-from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
+import globalVars
+import gui.contextHelp
+import gui.message
+import queueHandler
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking, synthChanged
 from logHandler import log
 import warnings
 from ._sapi4 import (
@@ -477,3 +481,43 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 	# No matching device found, or default requested explicitly.
 	# Return the ID of Microsoft Sound Mapper
 	return -1
+
+
+def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):
+	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
+
+	def setShown():
+		synth._hasWarningBeenShown = True
+		synth.saveSettings()
+
+	def impl():
+		gui.message.MessageDialog(
+			parent=None,
+			message=_(
+				# Translators: Message warning users that SAPI4 is deprecated.
+				"Microsoft Speech API version 4 is obsolete. "
+				"Using this speech synthesizer may pose a security risk. "
+				"This synthesizer driver will be removed in NVDA 2026.1. "
+				"You are strongly encouraged to choose a more modern speech synthesizer. "
+				"Consult the Supported Speech Synthesizers section in the user guide for suggestions.",
+			),
+			# Translators: Title of a message dialog.
+			title=_("Warning"),
+			buttons=None,
+		).addOkButton(
+			callback=setShown,
+		).addHelpButton(
+			# Translators: A button in a dialog.
+			label=_("Open user guide"),
+			callback=lambda: gui.contextHelp.showHelp("SupportedSpeechSynths"),
+		).Show()
+
+	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
+		# We need to queue the dialog to appear, as wx may not have been initialised the first time this is called.
+		queueHandler.queueFunction(queueHandler.eventQueue, impl)
+
+
+if not globalVars.appArgs.secure:
+	# Don't warn users about SAPI4 deprecation in secure mode.
+	# This stops the dialog appearing on secure screens and when secure mode has been forced.
+	synthChanged.register(_sapi4DeprecationWarning)
