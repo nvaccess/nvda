@@ -3069,7 +3069,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
 
 	def setShown():
-		setattr(synth, "_hasWarningBeenShown", True)
+		synth._hasWarningBeenShown = True
 		synth.saveSettings()
 
 	def impl():
