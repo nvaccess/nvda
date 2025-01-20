@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2024 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2016-2025 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -471,3 +471,15 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 			# Proceed to the next device state.
 			continue
 	return None
+
+
+def upgradeConfigFrom_14_to_15(profile: ConfigObj) -> None:
+	"""
+	Remove the addonStore.showWarning setting.
+	"""
+	if "addonStore" in profile and "showWarning" in profile["addonStore"]:
+		from addonStore.dataManager import addonDataManager
+
+		addonDataManager.storeSettings.showWarning = profile["addonStore"].as_bool("showWarning")
+		del profile["addonStore"]["showWarning"]
+	log.debug("Removed addonStore.showWarning setting.")

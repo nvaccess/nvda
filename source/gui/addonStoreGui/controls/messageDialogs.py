@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2023-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -355,7 +355,7 @@ class _SafetyWarningDialog(
 		self.CentreOnScreen()
 
 	def onOkButton(self, evt: wx.CommandEvent):
-		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
+		addonDataManager.storeSettings.showWarning = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)
 
 
