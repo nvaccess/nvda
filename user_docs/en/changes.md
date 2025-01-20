@@ -31,6 +31,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 
 ### Changes
 
+* eSpeak NG has been updated to 1.52.0. (#17056)
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
@@ -42,14 +43,20 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
-* NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071)
+* NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
+* The ability to opt out of using WASAPI for audio output has been removed. (#16080)
+* The NVDA installer no longer plays a sound when launched. (#14068)
 * Component updates:
   * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
+* Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
+Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
+* Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
 
 ### Bug Fixes
 
+* NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
@@ -69,7 +76,7 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * When spelling, unicode normalization now works more appropriately:
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
   * Composite characters (such as é) are now reported correctly. (#17295, @LeonarddeR)
-* The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook and Excel. (#17292, #17362, @CyrilleB79)
+* The command to Report the destination URL of a link now works as expected when using the legacy object model in Microsoft Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)
 * NVDA will no longer announce Windows 11 clipboard history entries when closing the window while items are present. (#17308, @josephsl)
 * If the plugins are reloaded while a browseable message is opened, NVDA will no longer fail to report subsequent focus moves. (#17323, @CyrilleB79)
 * When using applications such as Skype, Discord, Signal and Phone Link for audio communication, NVDA speech and sounds no longer decrease in volume. (#17349, @jcsteh)
@@ -77,6 +84,12 @@ Specifically, MathML inside of span and other elements that have the attribute `
 * In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
 In any document, if the cursor is on the last line, it will be moved to the end when using this command.
 (#17251, #17430, @nvdaes)
+* In web browsers, changes to text selection no longer sometimes fail to be reported in editable text controls. (#17501, @jcsteh)
+* When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)
+* The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17537, @LeonarddeR)
+* Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
+* Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
+* Fixed an issue where continuous reading (say all) stopped at the end of the first sentence when using some SAPI5 synthesizers. (#16691, @gexgd0419)
 
 ### Changes for Developers
 
@@ -112,13 +125,22 @@ Add-ons will need to be re-tested and have their manifest updated.
   It can be used in scripts to report the result when a boolean is toggled in `config.conf`
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
+* A new function, `gui.guiHelper.wxCallOnMain`, has been added, which allows safely and synchronously calling wx functions from non-GUI threads, and getting their return value. (#17304)
+* A new message dialog API has been added to `gui.message`. (#13007)
+  * Added classes: `ReturnCode`, `EscapeCode`, `DialogType`, `Button`, `DefaultButton`, `DefaultButtonSet`, `MessageDialog`.
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
 * Retrieving the `labeledBy` property now works for:
   * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
   * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
+* Added the ability to associate `wx.ComboBox` and a label `wx.StaticText` using `gui.guiHelper.associateElements`. (#17476)
 * Added the following extension points (#17428, @ctoth):
   * `inputCore.decide_handleRawKey`: called on each keypress
   * `speech.extensions.post_speechPaused`: called when speech is paused or unpaused
+* Changes to braille display auto detection registration in `bdDetect.DriverRegistrar`: (#17521, @LeonarddeR)
+  * Added the `addUsbDevice` method to register one USB device at a time.
+  * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
+    * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
+    * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 
 #### API Breaking Changes
 
@@ -136,12 +158,49 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
+* Due to the retirement of NVDA's winmm support (#17496, #17532):
+  * The following symbols have been removed from `nvwave`: `CALLBACK_EVENT`, `CALLBACK_FUNCTION`, `CALLBACK_NULL`, `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEFORMATEX`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `waveOutProc`, `WAVE_MAPPER`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+  * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
+  * The `WASAPI` key has been removed from the `audio` section of the config spec.
+  * The output from `nvwave.outputDeviceNameToID`, and input to `nvwave.outputDeviceIDToName` are now string identifiers.
+  * The configuration key `config.conf["speech"]["outputDevice"]` has been removed.
+    It has been replaced by `config.conf["audio"]["outputDevice"]`, which stores a Windows core audio endpoint device ID. (#17547)
+  * The `outputDevice` parameter to `WasapiWavePlayer.__init__` should now only be passed string arguments.
+  * The deprecated `closeWhenIdle` and `buffered` parameters to `WasapiWavePlayer.__init__` have been removed.
 * In `NVDAObjects.window.scintilla.ScintillaTextInfo`, if no text is selected, the `collapse` method is overriden to expand to line if the `end` parameter is set to `True` (#17431, @nvdaes)
+* The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
+* Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
+* The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
+* `ui.browseableMessage` now takes a parameter `sanitizeHtmlFunc`.
+This defaults to `nh3.clean` with default arguments.
+This means any HTML passed into `ui.browseableMessage` using `isHtml=True` is now sanitized by default.
+To change sanitization rules, such as whitelisting tags or attributes, create a function that calls `nh3.clean` with the desired parameters. (#16985)
+* `updateCheck.UpdateAskInstallDialog` no longer automatically performs an action when the update or postpone buttons are pressed.
+Instead, a `callback` property has been added, which returns a function that performs the appropriate action when called with the return value from the dialog. (#17582)
+* Dialogs opened with `gui.runScriptModalDialog` are now recognised as modal by NVDA. (#17582)
+* Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
+  * `synthDrivers.sapi5.SPAudioState` has been removed.
+  * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
 
 #### Deprecations
 
 * The `braille.filter_displaySize` extension point is deprecated.
 Please use `braille.filter_displayDimensions` instead. (#17011)
+* The `gui.message.messageBox` and `gui.runScriptModalDialog` functions, and `gui.nvdaControls.MessageDialog` class are deprecated.
+Use `gui.message.MessageDialog` instead. (#17582)
+* The following symbols are deprecated (#17486, @CyrilleB79):
+  * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
+  * `__main__.parser`; use `argsParsing.getParser()` instead.
+* `bdDetect.DeviceType` is deprecated in favour of `bdDetect.ProtocolType` and `bdDetect.CommunicationType` to take into account the fact that both HID and Serial communication can take place over USB and Bluetooth. (#17537 , @LeonarddeR)
+
+## 2024.4.2
+
+This is a patch release to fix bugs with braille devices and reading math in Chromium.
+
+### Bug fixes
+
+* Fixed bug with with reading math in Chromium Browsers (Chrome, Edge). (#17421, @NSoiffer)
+* Humanware Brailliant BI 40X devices running firmware version 2.4 now work as expected. (#17518, @bramd)
 
 ## 2024.4.1
 

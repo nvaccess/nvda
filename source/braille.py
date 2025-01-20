@@ -3520,7 +3520,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					pass
 				else:
 					yield bdDetect.DeviceMatch(
-						bdDetect.DeviceType.SERIAL,
+						bdDetect.ProtocolType.SERIAL,
 						portInfo["bluetoothName" if "bluetoothName" in portInfo else "friendlyName"],
 						portInfo["port"],
 						portInfo,

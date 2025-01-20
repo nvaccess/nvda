@@ -154,10 +154,11 @@ Community members should apply the `triaged` label where an issue is a well form
 * Can clearly be reproduced
 * Can clearly be prioritised
 * Doesn't require a controversial solution
+* They have not submitted the issue themselves
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
-You can do this by tagging `@nvaccess/developers` or emailing <info@nvaccess.org>.
+You can do this by tagging [relevant NV Access employees](../community/expertsList.md#nv-access) or emailing <info@nvaccess.org>.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
 
@@ -211,7 +212,7 @@ If you come across one of these missing attachments, please upload if you think 
 The NVDA project greatly appreciates the involvement and contributions of its vibrant community, and we strongly encourage community members to actively engage with the project's issues and pull requests.
 
 However, it's important to maintain a clear distinction between community contributions and the internal workflow of NV Access staff.
-To that end, we kindly request that community members refrain from closing or consolidating tickets (issues, pull requests, etc.) that are created by NV Access staff.
+To that end, we kindly request that community members refrain from closing or consolidating tickets (issues, pull requests, etc.) that are created by NV Access staff, or are pending response from NV Access.
 
 Community members are welcome and encouraged to interact with staff tickets in the following ways:
 

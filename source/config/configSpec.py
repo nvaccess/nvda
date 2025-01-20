@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 13
+latestSchemaVersion = 14
 
 #: The configuration specification string
 #: @type: String
@@ -41,7 +41,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	includeCLDR = boolean(default=True)
 	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
 	delayedCharacterDescriptions = boolean(default=false)
@@ -55,8 +54,8 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Audio settings
 [audio]
+	outputDevice = string(default=default)
 	audioDuckingMode = integer(default=0)
-	WASAPI = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
 	audioAwakeTime = integer(default=30, min=0, max=3600)

@@ -7,6 +7,7 @@
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
 """
 
+from collections.abc import Callable
 from datetime import datetime
 from typing import (
 	Any,
@@ -15,6 +16,7 @@ from typing import (
 	Tuple,
 )
 from uuid import uuid4
+
 import garbageHandler
 import globalVars
 import config
@@ -571,7 +573,7 @@ class UpdateAskInstallDialog(
 		# Translators: A message indicating that an update to NVDA is ready to be applied.
 		message = _("Update to NVDA version {version} is ready to be applied.\n").format(version=version)
 
-		showAddonCompat = any(
+		showAddonCompat = (self.backCompatTo[0] > addonAPIVersion.BACK_COMPAT_TO[0]) and any(
 			getIncompatibleAddons(
 				currentAPIVersion=self.apiVersion,
 				backCompatToAPIVersion=self.backCompatTo,
@@ -630,40 +632,72 @@ class UpdateAskInstallDialog(
 		)
 		displayDialogAsModal(incompatibleAddons)
 
+	@property
+	def callback(self) -> Callable[[int], None]:
+		"""A callback method which either performs or postpones the update, based on the passed return code."""
+		return self._callbackFactory(
+			destPath=self.destPath,
+			version=self.version,
+			apiVersion=self.apiVersion,
+			backCompatTo=self.backCompatTo,
+		)
+
+	@staticmethod
+	def _callbackFactory(
+		destPath: str,
+		version: str,
+		apiVersion: addonAPIVersion.AddonApiVersionT,
+		backCompatTo: addonAPIVersion.AddonApiVersionT,
+	) -> Callable[[int], None]:
+		"""Create a callback method suitable for passing to :meth:`gui.runScriptModalDialog`.
+
+		See class initialisation documentation for the meaning of parameters.
+
+		:return: A callable which performs the appropriate update action based on the return code passed to it.
+		"""
+
+		def callback(res: int):
+			match res:
+				case wx.ID_OK:
+					_executeUpdate(destPath)
+
+				case wx.ID_CLOSE:
+					finalDest = os.path.join(storeUpdatesDir, os.path.basename(destPath))
+					try:
+						# #9825: behavior of os.rename(s) has changed (see https://bugs.python.org/issue28356).
+						# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
+						# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
+						# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
+						# TODO: consider moving to shutil.move, which supports moves across filesystems.
+						winKernel.moveFileEx(destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
+					except:  # noqa: E722
+						log.debugWarning(
+							f"Unable to rename the file from {destPath} to {finalDest}",
+							exc_info=True,
+						)
+						gui.messageBox(
+							# Translators: The message when a downloaded update file could not be preserved.
+							_("Unable to postpone update."),
+							# Translators: The title of the message when a downloaded update file could not be preserved.
+							_("Error"),
+							wx.OK | wx.ICON_ERROR,
+						)
+						finalDest = destPath
+					state["pendingUpdateFile"] = finalDest
+					state["pendingUpdateVersion"] = version
+					state["pendingUpdateAPIVersion"] = apiVersion
+					state["pendingUpdateBackCompatToAPIVersion"] = backCompatTo
+					# Postponing an update indicates that the user is likely interested in getting a reminder.
+					# Therefore, clear the dontRemindVersion.
+					state["dontRemindVersion"] = None
+					saveState()
+
+		return callback
+
 	def onUpdateButton(self, evt):
-		_executeUpdate(self.destPath)
 		self.EndModal(wx.ID_OK)
 
 	def onPostponeButton(self, evt):
-		finalDest = os.path.join(storeUpdatesDir, os.path.basename(self.destPath))
-		try:
-			# #9825: behavior of os.rename(s) has changed (see https://bugs.python.org/issue28356).
-			# In Python 2, os.renames did rename files across drives, no longer allowed in Python 3 (error 17 (cannot move files across drives) is raised).
-			# This is prominent when trying to postpone an update for portable copy of NVDA if this runs from a USB flash drive or another internal storage device.
-			# Therefore use kernel32::MoveFileEx with copy allowed (0x2) flag set.
-			# TODO: consider moving to shutil.move, which supports moves across filesystems.
-			winKernel.moveFileEx(self.destPath, finalDest, winKernel.MOVEFILE_COPY_ALLOWED)
-		except:  # noqa: E722
-			log.debugWarning(
-				"Unable to rename the file from {} to {}".format(self.destPath, finalDest),
-				exc_info=True,
-			)
-			gui.messageBox(
-				# Translators: The message when a downloaded update file could not be preserved.
-				_("Unable to postpone update."),
-				# Translators: The title of the message when a downloaded update file could not be preserved.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-			)
-			finalDest = self.destPath
-		state["pendingUpdateFile"] = finalDest
-		state["pendingUpdateVersion"] = self.version
-		state["pendingUpdateAPIVersion"] = self.apiVersion
-		state["pendingUpdateBackCompatToAPIVersion"] = self.backCompatTo
-		# Postponing an update indicates that the user is likely interested in getting a reminder.
-		# Therefore, clear the dontRemindVersion.
-		state["dontRemindVersion"] = None
-		saveState()
 		self.EndModal(wx.ID_CLOSE)
 
 
@@ -817,14 +851,16 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 
 	def _downloadSuccess(self):
 		self._stopped()
+		askInstallDialog = UpdateAskInstallDialog(
+			parent=gui.mainFrame,
+			destPath=self.destPath,
+			version=self.version,
+			apiVersion=self.apiVersion,
+			backCompatTo=self.backCompatToAPIVersion,
+		)
 		gui.runScriptModalDialog(
-			UpdateAskInstallDialog(
-				parent=gui.mainFrame,
-				destPath=self.destPath,
-				version=self.version,
-				apiVersion=self.apiVersion,
-				backCompatTo=self.backCompatToAPIVersion,
-			),
+			askInstallDialog,
+			callback=askInstallDialog.callback,
 		)
 
 

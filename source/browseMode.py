@@ -444,7 +444,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return config.conf["virtualBuffers"]["trapNonCommandGestures"]
 
 	def script_trapNonCommandGesture(self, gesture):
-		winsound.PlaySound("default", 1)
+		winsound.MessageBeep()
 
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
@@ -1999,6 +1999,12 @@ class BrowseModeDocumentTreeInterceptor(
 			# and this was the last non-root node with focus, so ignore this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
+			# #17501: Even though we're ignoring this event, we still need to call
+			# _postGainFocus. This does things such as initialize auto select detection
+			# for editable text controls. Without this, the focus object might not
+			# behave correctly (e.g. text selection changes might not be reported) if the
+			# user switches to focus mode with this object still focused.
+			self._postGainFocus(obj)
 			return
 		if obj == self.rootNVDAObject:
 			if self.passThrough:
