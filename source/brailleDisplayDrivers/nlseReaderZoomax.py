@@ -1,13 +1,11 @@
-# -*- coding: UTF-8 -*-
-# brailleDisplayDrivers/nlseReaderZoomax.py
-# Description:
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025 NV Access Limited, Zoomax
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
 # NLS eReader Zoomax driver for NVDA.
 
 import time
-from typing import Union, List, Optional
-
 import braille
-from hwIo import intToByte, boolToByte
 import inputCore
 from logHandler import log
 import brailleInput
@@ -15,10 +13,10 @@ import hwIo
 import bdDetect
 import serial
 
-TIMEOUT = 0.2
+TIMEOUT_SEC = 0.2
 BAUD_RATE = 19200
 CONNECT_RETRIES = 5
-TIMEOUT_BETWEEN_RETRIES = 2
+TIMEOUT_BETWEEN_RETRIES_SEC = 2
 
 ESCAPE = b"\x1b"
 
@@ -65,8 +63,8 @@ KEY_NAMES = {
 		"b5",
 		"b6",
 		"b7",
-		"b8",
-	),  # byte 2
+		"b8",  # byte 2
+	),  
 	LOC_JOYSTICK_KEYS: ("up", "left", "down", "right", "select"),
 }
 
@@ -103,8 +101,8 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					bytesize=serial.EIGHTBITS,
 					parity=serial.PARITY_NONE,
 					stopbits=serial.STOPBITS_ONE,
-					timeout=TIMEOUT,
-					writeTimeout=TIMEOUT,
+					timeout=TIMEOUT_SEC,
+					writeTimeout=TIMEOUT_SEC,
 					onReceive=self._onReceive,
 				)
 			except EnvironmentError:
@@ -120,7 +118,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._sendRequest(LOC_REPEAT_ALL)
 
 			for i in range(5):
-				self._dev.waitForRead(TIMEOUT)
+				self._dev.waitForRead(TIMEOUT_SEC)
 				if self.numCells:
 					break
 
@@ -140,14 +138,14 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		log.info("nlseReaderZoomax Init")
 		super(BrailleDisplayDriver, self).__init__()
 		self.numCells = 0
-		self._deviceID: Optional[str] = None
+		self._deviceID: str | None = None
 		self._dev = None
 
 		for i in range(CONNECT_RETRIES):
 			if self._connect(port):
 				break
 			else:
-				time.sleep(TIMEOUT_BETWEEN_RETRIES)
+				time.sleep(TIMEOUT_BETWEEN_RETRIES_SEC)
 
 		self._keysDown = {}
 		self._ignoreKeyReleases = False
@@ -162,7 +160,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		finally:
 			self._dev.close()
 
-	def _sendRequest(self, command: bytes, arg: Union[bytes, bool, int] = b""):
+	def _sendRequest(self, command: bytes, arg: bytes | bool | int = b""):
 		"""
 		:type command: bytes
 		:type arg: bytes | bool | int
@@ -170,16 +168,19 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		typeErrorString = "Expected param '{}' to be of type '{}', got '{}'"
 		if not isinstance(arg, bytes):
 			if isinstance(arg, bool):
-				arg = boolToByte(arg)
+				arg = hwIo.boolToByte(arg)
 			elif isinstance(arg, int):
-				arg = intToByte(arg)
+				arg = hwIo.intToByte(arg)
 			else:
 				raise TypeError(typeErrorString.format("arg", "bytes, bool, or int", type(arg).__name__))
 
 		if not isinstance(command, bytes):
 			raise TypeError(typeErrorString.format("command", "bytes", type(command).__name__))
 
+		# doubling the escape characters in the data (arg) part
+		# as requried by the device communication protocol
 		arg = arg.replace(ESCAPE, ESCAPE * 2)
+
 		data = b"".join(
 			[
 				ESCAPE,
@@ -191,7 +192,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 
 	def _onReceive(self, data: bytes):
 		if data != ESCAPE:
-			log.debugWarning("Ignoring byte before escape: %r" % data)
+			log.debugWarning(f"Ignoring byte before escape: {data!r}")
 			return
 		# data only contained the escape. Read the rest from the device.
 		stream = self._dev
@@ -212,7 +213,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			# If not, we wish to know about it, allow decode to raise.
 			self._deviceID = arg.decode("latin-1", errors="strict")
 		elif command in KEY_NAMES:
-			arg = sum(byte << offset * 8 for offset, byte in enumerate(arg))
+			arg = int.from_bytes(reversed(arg))
 			if arg < self._keysDown.get(command, 0):
 				# Release.
 				if not self._ignoreKeyReleases:
@@ -237,7 +238,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		else:
 			log.debugWarning("Unknown command {command!r}, arg {arg!r}".format(command=command, arg=arg))
 
-	def display(self, cells: List[int]):
+	def display(self, cells: list[int]):
 		# cells will already be padded up to numCells.
 		arg = bytes(cells)
 		self._sendRequest(LOC_DISPLAY_DATA, arg)
@@ -275,7 +276,7 @@ class InputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInputGestu
 		for group, groupKeysDown in keysDown.items():
 			if group == LOC_BRAILLE_KEYS and len(keysDown) == 1 and not groupKeysDown & 0xF8:
 				# This is braille input.
-				# 0xfc covers command keys. The space bars are covered by 0x7.
+				# 0xF8 covers command keys. The space bars are covered by 0x7.
 				self.dots = groupKeysDown >> 8
 				self.space = groupKeysDown & 0x7
 			if group == LOC_ROUTING_KEYS:
