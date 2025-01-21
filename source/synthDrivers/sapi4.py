@@ -12,13 +12,13 @@ from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeo
 from ctypes.wintypes import DWORD, HANDLE, WORD
 from typing import Optional
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
-import globalVars
 import gui.contextHelp
 import gui.message
 import queueHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking, synthChanged
 from logHandler import log
 import warnings
+from utils.security import isRunningOnSecureDesktop
 from ._sapi4 import (
 	MMSYSERR_NOERROR,
 	CLSID_MMAudioDest,
@@ -517,7 +517,6 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 		queueHandler.queueFunction(queueHandler.eventQueue, impl)
 
 
-if not globalVars.appArgs.secure:
-	# Don't warn users about SAPI4 deprecation in secure mode.
-	# This stops the dialog appearing on secure screens and when secure mode has been forced.
+if not isRunningOnSecureDesktop():
+	# Don't warn users about SAPI4 deprecation when running on a secure desktop.
 	synthChanged.register(_sapi4DeprecationWarning)
