@@ -35,7 +35,7 @@ def _modalDialogOpenCallback():
 	from gui.message import MessageDialog
 
 	if MessageDialog.blockingInstancesExist():
-		MessageDialog.FocusBlockingInstances()
+		MessageDialog.focusBlockingInstances()
 
 
 @dataclass
