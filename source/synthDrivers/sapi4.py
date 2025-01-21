@@ -499,7 +499,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 				"Using this speech synthesizer may pose a security risk. "
 				"This synthesizer driver will be removed in NVDA 2026.1. "
 				"You are strongly encouraged to choose a more modern speech synthesizer. "
-				"Consult the Supported Speech Synthesizers section in the user guide for suggestions.",
+				"Consult the Supported Speech Synthesizers section in the User Guide for suggestions. ",
 			),
 			# Translators: Title of a message dialog.
 			title=_("Warning"),
