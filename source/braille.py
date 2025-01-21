@@ -1769,7 +1769,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
 		"""
 		A list representing the rows in the braille window,
 		each item being a tuple of start and end braille buffer offsets.
@@ -1879,6 +1879,8 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		Converts a position relative to the braille window to a position relative to the braille buffer.
 		"""
+		if self.handler.displaySize == 0:
+			return 0
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
 		if row < len(self._windowRowBufferOffsets):
@@ -1905,7 +1907,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self._windowRowBufferOffsets.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [(0, 1)]
+			self._windowRowBufferOffsets = [(0, 0)]
 			return
 		doWordWrap = config.conf["braille"]["wordWrap"]
 		bufferEnd = len(self.brailleCells)
@@ -3284,7 +3286,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	containing a BrailleDisplayDriver class which inherits from this base class.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
-	To display braille, L{numCells} and L{display} must be implemented.
+	To display braille, L{numCols} and L{display} must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
 		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
