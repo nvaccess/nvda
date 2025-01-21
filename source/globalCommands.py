@@ -4851,7 +4851,6 @@ class GlobalCommands(ScriptableObject):
 			"Increases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageUp",
 	)
 	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._adjustAppsVolume(5)
@@ -4862,7 +4861,6 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageDown",
 	)
 	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._adjustAppsVolume(-5)
@@ -4883,7 +4881,6 @@ class GlobalCommands(ScriptableObject):
 			"Mutes or unmutes other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeMute()
