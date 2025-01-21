@@ -27,6 +27,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
 * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
+* In Microsoft Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
 
 ### Changes
 
@@ -57,6 +58,7 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 
 ### Bug Fixes
 
+* NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)
 * Math reading has been fixed for some web elements.
 Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
 * Native support for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display. (#17007)
