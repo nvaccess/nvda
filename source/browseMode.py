@@ -742,9 +742,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	def _set_disableAutoPassThrough(self, state: bool):
 		# If the user manually switches to focus mode with NVDA+space, that enables
-		# pass-through and disables auto pass-through. If auto focusing of focusable
-		# elements is disabled, NVDA won't have synced the focus to the browse mode
-		# cursor. However, since the user is switching to focus mode, they probably
+		# pass-through and disables auto pass-through.
+		# NVDA doesn't automatically sync the focus to the browse mode
+		# cursor, however, since the user is switching to focus mode, they probably
 		# want to interact with the focus, so sync the focus here.
 		if state and self.passThrough:
 			self._focusLastFocusableObject()
