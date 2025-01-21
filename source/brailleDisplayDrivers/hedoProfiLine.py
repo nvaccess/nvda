@@ -55,7 +55,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "hedoProfiLine"
 	description = "hedo ProfiLine USB"
 
-	numCols = HEDO_CELL_COUNT
+	numCells = HEDO_CELL_COUNT
 
 	@classmethod
 	def check(cls):

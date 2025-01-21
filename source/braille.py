@@ -2541,9 +2541,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	_cache_displayDimensions = True
 
 	def _get_displayDimensions(self) -> DisplayDimensions:
+		if not self.display:
+			numRows = numCols = 0
+		else:
+			numRows = self.display.numRows
+			numCols = self.display.numCols if numRows > 1 else self.display.numCells
 		rawDisplayDimensions = DisplayDimensions(
-			numRows=self.display.numRows if self.display else 0,
-			numCols=self.display.numCols if self.display else 0,
+			numRows=numRows,
+			numCols=numCols,
 		)
 		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
 		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
@@ -3286,7 +3291,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	containing a BrailleDisplayDriver class which inherits from this base class.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
-	To display braille, L{numCols} and L{display} must be implemented.
+	To display braille, L{display} must be implemented.
+	For a single line display, L{numCells} must be implemented.
+	For a multi line display, L{numRows} and L{numCols} must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
 		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}

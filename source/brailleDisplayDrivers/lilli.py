@@ -110,7 +110,6 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	name = "lilli"
 	# Translators: Name of a braille display.
 	description = _("MDV Lilli")
-	numRows: int = 40
 
 	@classmethod
 	def check(cls):
@@ -134,6 +133,9 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except:  # noqa: E722
 			pass
 		lilliDll.Close408USB()
+
+	def _get_numCells(self) -> int:
+		return 40
 
 	def _handleKeyPresses(self):
 		while True:
