@@ -432,7 +432,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 			self._dev.close()
 			self._dev = None
 
-	def _get_numCells(self):
+	def _get_numCols(self):
 		return self._ecoType
 
 	def display(self, cells: List[int]):
