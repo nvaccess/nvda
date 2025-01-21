@@ -5351,7 +5351,7 @@ Please see the display's documentation for descriptions of where these keys can 
 
 The NLS eReader Zoomax device supports USB or bluetooth connections.
 The Windows 10 and Windows 11 operating systems will automatically detect and install the necessary drivers for this display.
-For computers where the Internet connection is disabled or not available, for the USB connection, a driver can be download from the USB to serial CH340 chip manufacturer  (https://www.wch-ic.com/downloads/CH341SER_EXE.html)
+For computers where the Internet connection is disabled or not available, you can manually [download and install the USB to serial CH340 chip driver](https://www.wch-ic.com/downloads/CH341SER_EXE.html) to support this display over USB.
 
 By default, NVDA can automatically detect and connect to this display via USB or bluetooth.
 However, when configuring the display, you can also explicitly select "USB" or "Bluetooth" ports to restrict the connection type to be used.
