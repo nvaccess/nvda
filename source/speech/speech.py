@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
 
 """High-level functions to speak information."""
@@ -2620,6 +2620,19 @@ def getFormatFieldSpeech(  # noqa: C901
 			# Translators: Speaks the heading level (example output: heading level 2).
 			text = _("heading level %d") % headingLevel
 			textList.append(text)
+	collapsed = attrs.get("collapsed")
+	oldCollapsed = attrsCache.get("collapsed") if attrsCache is not None else None
+	# collapsed state should be spoken when beginning to speak lines or paragraphs
+	# Ensuring a similar experience to if  it was a state on  a controlField
+	if collapsed and (
+		initialFormat
+		and (
+			reason in [OutputReason.FOCUS, OutputReason.QUICKNAV]
+			or unit in (textInfos.UNIT_LINE, textInfos.UNIT_PARAGRAPH)
+		)
+		or collapsed != oldCollapsed
+	):
+		textList.append(State.COLLAPSED.displayString)
 	if formatConfig["reportStyle"]:
 		style = attrs.get("style")
 		oldStyle = attrsCache.get("style") if attrsCache is not None else None
