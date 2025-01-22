@@ -3291,9 +3291,9 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	containing a BrailleDisplayDriver class which inherits from this base class.
 
 	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
-	To display braille, L{display} must be implemented.
-	For a single line display, L{numCells} must be implemented.
-	For a multi line display, L{numRows} and L{numCols} must be implemented.
+	To display braille, :meth:`display` must be implemented.
+	For a single line display, :attr:`numCells` must be implemented.
+	For a multi line display, :attr:`numRows` and :attr:`numCols` must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
 		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
