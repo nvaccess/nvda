@@ -52,6 +52,8 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The Browse Mode setting "Automatically set system focus to focusable elements" has been removed, the behaviour is now disabled. (#17598)
 * Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
+* The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
+  * By default, "Speak typed characters" is now set to "Only in edit controls".
 
 ### Bug Fixes
 
@@ -184,6 +186,10 @@ Instead, a `callback` property has been added, which returns a function that per
 * Because SAPI5 voices now use `nvwave.WavePlayer` to output audio: (#17592, @gexgd0419)
   * `synthDrivers.sapi5.SPAudioState` has been removed.
   * `synthDrivers.sapi5.SynthDriver.ttsAudioStream` has been removed.
+* Changed keyboard typing echo configuration from boolean to integer values. (#17505, @Cary-rowen)
+  * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
+  * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
+  * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
 
 #### Deprecations
 
