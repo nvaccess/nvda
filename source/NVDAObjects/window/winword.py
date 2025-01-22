@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1113,6 +1113,10 @@ class WordDocumentTextInfo(textInfos.TextInfo):
 				field["name"] = name
 				field["alwaysReportName"] = True
 				field["role"] = controlTypes.Role.FRAME
+		if field.pop("collapsedState", None) == "true":
+			if "states" not in field:
+				field["states"] = set()
+			field["states"].add(controlTypes.State.COLLAPSED)
 		newField = LazyControlField_RowAndColumnHeaderText(self)
 		newField.update(field)
 		return newField

@@ -133,7 +133,7 @@ The setup file is named "nvda_2022.1.exe" or similar.
 The year and version changes between updates to reflect the current release.
 
 1. Run the downloaded file.
-Music plays while a temporary copy of NVDA loads.
+You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 1. The NVDA Launcher window appears with the license agreement.
 Press `downArrow` to read the license agreement if desired.
@@ -247,8 +247,8 @@ The actual commands will not execute while in input help mode.
 
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
-|Speak typed characters |`NVDA+2` |`NVDA+2` |When enabled, NVDA will announce all characters you type on the keyboard.|
-|Speak typed words |`NVDA+3` |`NVDA+3` |When enabled, NVDA will announce word you type on the keyboard.|
+|Speak typed characters |`NVDA+2` |`NVDA+2` |Controls when NVDA announces characters you type. |
+|Speak typed words |`NVDA+3` |`NVDA+3` |Controls when NVDA announces words you type. |
 |Speak command keys |`NVDA+4` |`NVDA+4` |When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.|
 |Enable mouse tracking |`NVDA+m` |`NVDA+m` |When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.|
 
@@ -2489,24 +2489,16 @@ While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of o
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume can also be controlled via the following keyboard commands from anywhere:
 
-| Name | Key | Description |
-|---|---|---|
-| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
-| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
+To increase or decrease the volume of all currently running applications from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
 
 ##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
 
-The following keyboard command can also be used from anywhere:
+To mute or unmute all other applications from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-| Name | Key | Description |
-|---|---|---|
-| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
-
-Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
+Please note that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
@@ -2588,17 +2580,27 @@ If no key is chosen as the NVDA key it may be impossible to access many NVDA com
 
 ##### Speak Typed Characters {#KeyboardSettingsSpeakTypedCharacters}
 
-Key: NVDA+2
+Key: `NVDA+2`
 
-When enabled, NVDA will announce all characters you type on the keyboard.
+This option controls when NVDA announces characters you type on the keyboard.
+The available options are:
+
+* Off: NVDA will not announce typed characters.
+* Only in edit controls: NVDA will only announce characters typed in edit controls and other areas where text can be typed.
+* Always: NVDA will announce all typed characters.
 
 <!-- KC:setting -->
 
 ##### Speak Typed Words {#KeyboardSettingsSpeakTypedWords}
 
-Key: NVDA+3
+Key: `NVDA+3`
 
-When enabled, NVDA will announce all words you type on the keyboard.
+This option controls when NVDA announces words you type on the keyboard.
+The available options are:
+
+* Off: NVDA will not announce typed words.
+* Only in edit controls: NVDA will only announce words typed in edit controls and other areas where text can be typed.
+* Always: NVDA will announce all typed words.
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
@@ -2943,18 +2945,6 @@ If this option is enabled, NVDA will play special sounds when it switches betwee
 Enabled by default, this option allows you to choose if gestures (such as key presses) that  do not result in an NVDA command and are not considered to be a command key in general, should be trapped from going through to the document you are currently focused on.
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
-
-<!-- KC:setting -->
-
-##### Automatically set system focus to focusable elements {#BrowseModeSettingsAutoFocusFocusableElements}
-
-Key: NVDA+8
-
-Disabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
-Leaving this option disabled will not automatically focus focusable elements when they are selected with the browse mode caret.
-This might result in faster browsing experience and better responsiveness in browse mode.
-The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
-Enabling this option may improve support for some websites at the cost of performance and stability.
 
 #### Document Formatting {#DocumentFormattingSettings}
 

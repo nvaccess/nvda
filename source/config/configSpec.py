@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
+# Copyright (C) 2006-2025 NV Access Limited, Babbage B.V., Davy Kager, Bill Dengler, Julien Cochuyt,
 # Joseph Lee, Dawid Pieper, mltony, Bram Duvigneau, Cyrille Bougot, Rob Meredith,
-# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka
+# Burman's Computer and Education Ltd., Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 13
+latestSchemaVersion = 15
 
 #: The configuration specification string
 #: @type: String
@@ -41,7 +41,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	includeCLDR = boolean(default=True)
 	symbolDictionaries = string_list(default=list("cldr"))
 	beepSpeechModePitch = integer(default=10000,min=50,max=11025)
-	outputDevice = string(default=default)
 	autoLanguageSwitching = boolean(default=true)
 	autoDialectSwitching = boolean(default=false)
 	delayedCharacterDescriptions = boolean(default=false)
@@ -55,6 +54,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Audio settings
 [audio]
+	outputDevice = string(default=default)
 	audioDuckingMode = integer(default=0)
 	soundVolumeFollowsVoice = boolean(default=false)
 	soundVolume = integer(default=100, min=0, max=100)
@@ -178,8 +178,10 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	# Default = 6: NumpadInsert + ExtendedInsert
 	NVDAModifierKeys = integer(1, 7, default=6)
 	keyboardLayout = string(default="desktop")
-	speakTypedCharacters = boolean(default=true)
-	speakTypedWords = boolean(default=false)
+	# 0: Off, 1: Only in edit controls, 2: Always
+	speakTypedCharacters = integer(default=1,min=0,max=2)
+	# 0: Off, 1: Only in edit controls, 2: Always
+	speakTypedWords = integer(default=0,min=0,max=2)
 	beepForLowercaseWithCapslock = boolean(default=true)
 	speakCommandKeys = boolean(default=false)
 	speechInterruptForCharacters = boolean(default=true)
@@ -199,7 +201,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoSayAllOnPageLoad = boolean(default=true)
 	trapNonCommandGestures = boolean(default=true)
 	enableOnPageLoad = boolean(default=true)
-	autoFocusFocusableElements = boolean(default=False)
 	loadChromiumVBufOnBusyState = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 	textParagraphRegex = string(default="{configDefaults.DEFAULT_TEXT_PARAGRAPH_REGEX}")
 

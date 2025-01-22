@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2016-2023 NVDA contributors.
+Copyright 2016-2025 NVDA contributors.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -79,6 +79,7 @@ constexpr int wdDISPID_PAGESETUP_PAGEWIDTH = 105;
 constexpr int wdDISPID_PAGESETUP_SECTIONSTART = 114;
 constexpr int wdDISPID_PAGESETUP_TEXTCOLUMNS = 119;
 constexpr int wdDISPID_PARAGRAPH_OUTLINELEVEL = 202;
+constexpr int wdDISPID_PARAGRAPH_COLLAPSED_STATE = 1203;
 constexpr int wdDISPID_PARAGRAPH_RANGE = 0;
 constexpr int wdDISPID_PARAGRAPH_STYLE = 100;
 constexpr int wdDISPID_PARAGRAPHFORMAT_ALIGNMENT = 101;

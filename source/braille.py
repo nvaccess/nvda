@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2008-2024 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
+# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Davy Kager, Bram Duvigneau,
 # Leonard de Ruijter, Burman's Computer and Education Ltd., Julien Cochuyt
 
 from enum import StrEnum
@@ -1160,6 +1160,9 @@ def getFormatFieldBraille(field, fieldCache, isAtStart, formatConfig):
 				# Translators: Displayed in braille for a heading with a level.
 				# %s is replaced with the level.
 				textList.append(_("h%s") % headingLevel)
+		collapsed = field.get("collapsed")
+		if collapsed:
+			textList.append(positiveStateLabels[controlTypes.State.COLLAPSED])
 	if formatConfig["reportLinks"]:
 		link = field.get("link")
 		oldLink = fieldCache.get("link")
@@ -3517,7 +3520,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 					pass
 				else:
 					yield bdDetect.DeviceMatch(
-						bdDetect.DeviceType.SERIAL,
+						bdDetect.ProtocolType.SERIAL,
 						portInfo["bluetoothName" if "bluetoothName" in portInfo else "friendlyName"],
 						portInfo["port"],
 						portInfo,

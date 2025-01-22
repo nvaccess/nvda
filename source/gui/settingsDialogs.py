@@ -1,11 +1,11 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
 #  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import logging
@@ -20,6 +20,7 @@ import requests
 import wx
 from NVDAState import WritePaths
 
+from utils import mmdevice
 from vision.providerBase import VisionEnhancementProviderSettings
 from wx.lib.expando import ExpandoTextCtrl
 import wx.lib.newevent
@@ -38,6 +39,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import languageHandler
 import speech
@@ -46,7 +48,6 @@ import gui
 import gui.contextHelp
 import globalVars
 from logHandler import log
-import nvwave
 import audio
 import audioDucking
 import queueHandler
@@ -1974,24 +1975,29 @@ class KeyboardSettingsPanel(SettingsPanel):
 				checkedItems.append(n)
 		self.modifierList.CheckedItems = checkedItems
 		self.modifierList.Select(0)
-
 		self.bindHelpEvent("KeyboardSettingsModifiers", self.modifierList)
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		charsText = _("Speak typed &characters")
-		self.charsCheckBox = sHelper.addItem(wx.CheckBox(self, label=charsText))
-		self.bindHelpEvent(
-			"KeyboardSettingsSpeakTypedCharacters",
-			self.charsCheckBox,
-		)
-		self.charsCheckBox.SetValue(config.conf["keyboard"]["speakTypedCharacters"])
 
-		# Translators: This is the label for a checkbox in the
-		# keyboard settings panel.
-		speakTypedWordsText = _("Speak typed &words")
-		self.wordsCheckBox = sHelper.addItem(wx.CheckBox(self, label=speakTypedWordsText))
-		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.wordsCheckBox)
-		self.wordsCheckBox.SetValue(config.conf["keyboard"]["speakTypedWords"])
+		# Translators: This is the label for a combobox in the keyboard settings panel.
+		speakTypedCharsLabelText = _("Speak typed &characters:")
+		speakTypedCharsChoices = [mode.displayString for mode in TypingEcho]
+		self.speakTypedCharsList = sHelper.addLabeledControl(
+			speakTypedCharsLabelText,
+			wx.Choice,
+			choices=speakTypedCharsChoices,
+		)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedCharacters", self.speakTypedCharsList)
+		self.speakTypedCharsList.SetSelection(config.conf["keyboard"]["speakTypedCharacters"])
+
+		# Translators: This is the label for a combobox in the keyboard settings panel.
+		speakTypedWordsLabelText = _("Speak typed &words:")
+		speakTypedWordsChoices = [mode.displayString for mode in TypingEcho]
+		self.speakTypedWordsList = sHelper.addLabeledControl(
+			speakTypedWordsLabelText,
+			wx.Choice,
+			choices=speakTypedWordsChoices,
+		)
+		self.bindHelpEvent("KeyboardSettingsSpeakTypedWords", self.speakTypedWordsList)
+		self.speakTypedWordsList.SetSelection(config.conf["keyboard"]["speakTypedWords"])
 
 		# Translators: This is the label for a checkbox in the
 		# keyboard settings panel.
@@ -2091,8 +2097,8 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["NVDAModifierKeys"] = sum(
 			key.value for (n, key) in enumerate(NVDAKey) if self.modifierList.IsChecked(n)
 		)
-		config.conf["keyboard"]["speakTypedCharacters"] = self.charsCheckBox.IsChecked()
-		config.conf["keyboard"]["speakTypedWords"] = self.wordsCheckBox.IsChecked()
+		config.conf["keyboard"]["speakTypedCharacters"] = self.speakTypedCharsList.GetSelection()
+		config.conf["keyboard"]["speakTypedWords"] = self.speakTypedWordsList.GetSelection()
 		config.conf["keyboard"]["speechInterruptForCharacters"] = (
 			self.speechInterruptForCharsCheckBox.IsChecked()
 		)
@@ -2594,20 +2600,6 @@ class BrowseModePanel(SettingsPanel):
 		)
 		self.trapNonCommandGesturesCheckBox.SetValue(config.conf["virtualBuffers"]["trapNonCommandGestures"])
 
-		# Translators: This is the label for a checkbox in the
-		# browse mode settings panel.
-		autoFocusFocusableElementsText = _("Automatically set system &focus to focusable elements")
-		self.autoFocusFocusableElementsCheckBox = sHelper.addItem(
-			wx.CheckBox(self, label=autoFocusFocusableElementsText),
-		)
-		self.bindHelpEvent(
-			"BrowseModeSettingsAutoFocusFocusableElements",
-			self.autoFocusFocusableElementsCheckBox,
-		)
-		self.autoFocusFocusableElementsCheckBox.SetValue(
-			config.conf["virtualBuffers"]["autoFocusFocusableElements"],
-		)
-
 	def onSave(self):
 		config.conf["virtualBuffers"]["maxLineLength"] = self.maxLengthEdit.GetValue()
 		config.conf["virtualBuffers"]["linesPerPage"] = self.pageLinesEdit.GetValue()
@@ -2626,9 +2618,6 @@ class BrowseModePanel(SettingsPanel):
 		)
 		config.conf["virtualBuffers"]["trapNonCommandGestures"] = (
 			self.trapNonCommandGesturesCheckBox.IsChecked()
-		)
-		config.conf["virtualBuffers"]["autoFocusFocusableElements"] = (
-			self.autoFocusFocusableElementsCheckBox.IsChecked()
 		)
 
 
@@ -3041,17 +3030,15 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		# The Windows Core Audio device enumeration does not have the concept of an ID for the default output device, so we have to insert something ourselves instead.
-		# Translators: Value to show when choosing to use the default audio output device.
-		deviceNames = (_("Default output device"), *nvwave.getOutputDeviceNames())
+		self._deviceIds, deviceNames = zip(*mmdevice._getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
-		selectedOutputDevice = config.conf["speech"]["outputDevice"]
-		if selectedOutputDevice == "default":
+		selectedOutputDevice = config.conf["audio"]["outputDevice"]
+		if selectedOutputDevice == config.conf.getConfigValidation(("audio", "outputDevice")).default:
 			selection = 0
 		else:
 			try:
-				selection = deviceNames.index(selectedOutputDevice)
+				selection = self._deviceIds.index(selectedOutputDevice)
 			except ValueError:
 				selection = 0
 		self.deviceList.SetSelection(selection)
@@ -3176,13 +3163,10 @@ class AudioPanel(SettingsPanel):
 		self.soundSplitModesList.Select(0)
 
 	def onSave(self):
-		# We already use "default" as the key in the config spec, so use it here as an alternative to Microsoft Sound Mapper.
-		selectedOutputDevice = (
-			"default" if self.deviceList.GetSelection() == 0 else self.deviceList.GetStringSelection()
-		)
-		if config.conf["speech"]["outputDevice"] != selectedOutputDevice:
+		selectedOutputDevice = self._deviceIds[self.deviceList.GetSelection()]
+		if config.conf["audio"]["outputDevice"] != selectedOutputDevice:
 			# Synthesizer must be reload if output device changes
-			config.conf["speech"]["outputDevice"] = selectedOutputDevice
+			config.conf["audio"]["outputDevice"] = selectedOutputDevice
 			currentSynth = getSynth()
 			if not setSynth(currentSynth.name):
 				_synthWarningDialog(currentSynth.name)
