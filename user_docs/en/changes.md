@@ -22,6 +22,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
 * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
 * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
+* NVDA supports the "text-indent" IAccessible2 object attribute. As a consequence, announcement of first line indent is now supported for LibreOffice 25.8 and later. (#13052, @michaelweghorn)
 * Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
 * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
