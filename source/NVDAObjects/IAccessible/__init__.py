@@ -100,7 +100,7 @@ def getNVDAObjectFromPoint(x, y):
 FORMAT_OBJECT_ATTRIBS = frozenset({"text-align", "text-indent"})
 
 
-def convertCssLengthToText(cssLength: str) -> str:
+def _convertCssLengthToText(cssLength: str) -> str:
 	"""Returns a text representation of the distance described by the given CSS length
 	string (see https://www.w3.org/TR/CSS2/syndata.html#value-def-length), converted to
 	the local measurement unit.
@@ -153,7 +153,7 @@ def normalizeIA2TextFormatField(formatField):
 	try:
 		val = formatField.pop("text-indent")
 		if val:
-			formatField["first-line-indent"] = convertCssLengthToText(val)
+			formatField["first-line-indent"] = _convertCssLengthToText(val)
 	except KeyError:
 		pass
 
