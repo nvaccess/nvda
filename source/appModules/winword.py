@@ -89,7 +89,7 @@ class WinwordWordDocument(WordDocument):
 			# Translators: a message when toggling change tracking in Microsoft word
 			ui.message(_("Change tracking off"))
 
-	@script(gestures=["kb:alt+shift+-", "kb:alt+shift+="])
+	@script(gestures=["kb:alt+shift+-", "kb:alt+shift+=", "kb:alt+shift+numpadPlus", "kb:alt+shift+numpadMinus"])
 	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture"):
 		if not self.WinwordSelectionObject:
 			# We cannot fetch the Word object model, so we therefore cannot report the format change.
