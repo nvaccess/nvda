@@ -504,9 +504,17 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 	"""
 	Remove the addonStore.showWarning setting.
 	"""
-	if "addonStore" in profile and "showWarning" in profile["addonStore"]:
-		from addonStore.dataManager import addonDataManager
+	from addonStore.dataManager import addonDataManager
 
-		addonDataManager.storeSettings.showWarning = profile["addonStore"].as_bool("showWarning")
-		del profile["addonStore"]["showWarning"]
+	try:
+		showWarning: bool = profile["addonStore"].as_bool("showWarning")
+	except KeyError:
+		log.debug("showWarning not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error("showWarning is not a boolean, no action taken.")
+		return
+
+	addonDataManager.storeSettings.showWarning = showWarning
+	del profile["addonStore"]["showWarning"]
 	log.debug("Removed addonStore.showWarning setting.")

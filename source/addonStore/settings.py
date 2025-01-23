@@ -6,6 +6,7 @@
 from dataclasses import dataclass, replace
 import json
 import os
+from typing import Any
 
 from logHandler import log
 import NVDAState
@@ -55,19 +56,20 @@ class _AddonStoreSettings:
 		self.load()
 
 	def load(self):
-		settingsDict = {
-			"showWarning": True,
-			"addonSettings": {},
-		}
 		try:
 			with open(self._storeSettingsFile, "r", encoding="utf-8") as storeSettingsFile:
-				settingsDict = json.load(storeSettingsFile)
+				settingsDict: dict[str, Any] = json.load(storeSettingsFile)
 		except FileNotFoundError:
-			pass
+			return
 		except Exception:
 			log.exception("Invalid add-on store settings")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(self._storeSettingsFile)
+			return
+		else:
+			self._loadFromSettingsDict(settingsDict)
+
+	def _loadFromSettingsDict(self, settingsDict: dict[str, Any]):
 		try:
 			if not isinstance(settingsDict["addonSettings"], dict):
 				raise ValueError("addonSettings must be a dict")
