@@ -500,6 +500,7 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		profile["keyboard"][key] = newValue
 		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
 
+
 def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 	"""
 	Remove the addonStore.showWarning setting.
