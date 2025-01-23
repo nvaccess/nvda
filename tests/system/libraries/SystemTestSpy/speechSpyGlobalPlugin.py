@@ -266,7 +266,7 @@ class NVDASpyLib:
 	def setBrailleCellCount(self, brailleCellCount: int):
 		self._brailleCellCount = brailleCellCount
 
-	def getBrailleDisplayDimensions(self, value: DisplayDimensions):
+	def getBrailleDisplayDimensions(self, value: DisplayDimensions) -> DisplayDimensions:
 		return DisplayDimensions(1, self._brailleCellCount)
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
