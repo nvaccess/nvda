@@ -88,7 +88,7 @@ class JSONSerializer(Serializer):
 			UTF-8 encoded JSON with newline separator
 		"""
 		if type is not None:
-			if isinstance(type, Enum):
+			if isinstance(type, Enum) and not isinstance(type, str):
 				type = type.value
 		obj["type"] = type
 		data = json.dumps(obj, cls=CustomEncoder).encode("UTF-8") + self.SEP

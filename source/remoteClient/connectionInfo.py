@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 from dataclasses import dataclass
-from enum import Enum
+from enum import StrEnum
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from . import protocol
@@ -15,12 +15,12 @@ class URLParsingError(Exception):
 	"""Raised if it's impossible to parse out the URL"""
 
 
-class ConnectionMode(Enum):
+class ConnectionMode(StrEnum):
 	MASTER = "master"
 	SLAVE = "slave"
 
 
-class ConnectionState(Enum):
+class ConnectionState(StrEnum):
 	CONNECTED = "connected"
 	DISCONNECTED = "disconnected"
 	CONNECTING = "connecting"
@@ -70,7 +70,7 @@ class ConnectionInfo:
 		netloc = protocol.hostPortToAddress((self.hostname, self.port))
 		params = {
 			"key": self.key,
-			"mode": mode if isinstance(mode, str) else mode.value,
+			"mode": mode,
 		}
 		if self.insecure:
 			params["insecure"] = "true"
@@ -91,7 +91,7 @@ class ConnectionInfo:
 	def getURLToConnect(self):
 		# Flip master/slave for connection URL
 		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.MASTER else ConnectionMode.MASTER
-		return self._build_url(connect_mode.value)
+		return self._build_url(connect_mode)
 
 	def getURL(self):
 		return self._build_url(self.mode)

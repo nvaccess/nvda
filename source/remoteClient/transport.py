@@ -656,7 +656,7 @@ class RelayTransport(TCPTransport):
 			serializer=serializer,
 			address=(connection_info.hostname, connection_info.port),
 			channel=connection_info.key,
-			connectionType=connection_info.mode.value,
+			connectionType=connection_info.mode,
 			insecure=connection_info.insecure,
 		)
 
