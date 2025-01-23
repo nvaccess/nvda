@@ -89,10 +89,12 @@ def _getSanitizedHtmlLicense() -> str:
 	return nh3.clean(htmlLicense)
 
 
-@blockAction.when(blockAction.Context.SECURE_MODE)
-def displayLicense():
+@blockAction.when(
 	# HTML includes links which shouldn't be accessible
 	# in secure contexts as it opens a browser.
+	blockAction.Context.SECURE_MODE
+)
+def displayLicense():
 	ui.browseableMessage(
 		_getSanitizedHtmlLicense(),
 		# Translators: The title of the dialog to show the NVDA License.
