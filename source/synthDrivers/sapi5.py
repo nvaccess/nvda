@@ -344,7 +344,7 @@ class SynthDriver(SynthDriver):
 			self.tts.Rate = self._percentToRate(rate)
 			self.sonicStream.speed = 1
 
-	def _set_rateBoost(self, enable):
+	def _set_rateBoost(self, enable: bool):
 		if enable == self._rateBoost:
 			return
 		rate = self._rate

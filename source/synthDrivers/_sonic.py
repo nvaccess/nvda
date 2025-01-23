@@ -3,11 +3,22 @@
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from ctypes import Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
+from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
 import os
+from typing import TYPE_CHECKING
 import globalVars
 
-sonicLib = None
+if TYPE_CHECKING:
+	from ctypes import _Pointer
+	c_float_p = _Pointer[c_float]
+	c_short_p = _Pointer[c_short]
+	c_ubyte_p = _Pointer[c_ubyte]
+else:
+	c_float_p = POINTER(c_float)
+	c_short_p = POINTER(c_short)
+	c_ubyte_p = POINTER(c_ubyte)
+
+sonicLib: CDLL | None = None
 
 
 class SonicStreamP(c_void_p):
@@ -84,7 +95,7 @@ class SonicStream:
 	def __del__(self):
 		sonicLib.sonicDestroyStream(self.stream)
 
-	def writeFloat(self, data: c_void_p, numSamples: int) -> None:
+	def writeFloat(self, data: c_float_p, numSamples: int) -> None:
 		"""Write 32-bit floating point data to be processed into the stream,
 		where each sample must be between -1 and 1.
 		:param data: A pointer to 32-bit floating point wave data.
@@ -94,7 +105,7 @@ class SonicStream:
 		if not sonicLib.sonicWriteFloatToStream(self.stream, data, numSamples):
 			raise MemoryError()
 
-	def writeShort(self, data: c_void_p, numSamples: int) -> None:
+	def writeShort(self, data: c_short_p, numSamples: int) -> None:
 		"""Write 16-bit integer data to be processed into the stream.
 		:param data: A pointer to 16-bit integer wave data.
 		:param numSamples: The number of samples.
@@ -103,7 +114,7 @@ class SonicStream:
 		if not sonicLib.sonicWriteShortToStream(self.stream, data, numSamples):
 			raise MemoryError()
 
-	def writeUnsignedChar(self, data: c_void_p, numSamples: int) -> None:
+	def writeUnsignedChar(self, data: c_ubyte_p, numSamples: int) -> None:
 		"""Write 8-bit unsigned integer data to be processed into the stream.
 		:param data: A pointer to 8-bit integer wave data.
 		:param numSamples: The number of samples.
