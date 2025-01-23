@@ -2,12 +2,16 @@
 # Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-from typing import Optional
+import typing
 
 import gui
 import extensionPoints
 import config
+
 from .brailleViewerGui import BrailleViewerFrame
+
+if typing.TYPE_CHECKING:
+	from braille import DisplayDimensions
 
 """
 ### Overview
@@ -48,7 +52,7 @@ is not supported.
 """
 
 # global braille viewer driver:
-_brailleGui: Optional[BrailleViewerFrame] = None
+_brailleGui: BrailleViewerFrame | None = None
 
 # Extension points action:
 # Triggered every time the Braille Viewer is created / shown or hidden / destroyed.
@@ -64,7 +68,7 @@ def isBrailleViewerActive() -> bool:
 
 def destroyBrailleViewer():
 	global _brailleGui
-	d: Optional[BrailleViewerFrame] = _brailleGui
+	d: BrailleViewerFrame | None = _brailleGui
 	_brailleGui = None  # protect against re-entrance
 	if d is not None:
 		import braille  # imported late to avoid a circular import.
@@ -73,7 +77,7 @@ def destroyBrailleViewer():
 			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
 			assert updateBrailleDisplayedUnregistered
 			d.saveInfoAndDestroy()
-		getDisplaySizeUnregistered = braille.filter_displaySize.unregister(_getDisplaySize)
+		getDisplaySizeUnregistered = braille.filter_displayDimensions.unregister(_getDisplayDimensions)
 		assert getDisplaySizeUnregistered
 
 
@@ -87,8 +91,14 @@ def _onGuiDestroyed():
 	postBrailleViewerToolToggledAction.notify(created=False)
 
 
-def _getDisplaySize(numCells: int):
-	return numCells if numCells > 0 else DEFAULT_NUM_CELLS
+def _getDisplayDimensions(dimensions: "DisplayDimensions") -> "DisplayDimensions":
+	"""Called by the :attr:`braille.filter_displayDimensions` extension point to get the display dimensions."""
+	from braille import DisplayDimensions  # imported late to avoid a circular import.
+
+	return DisplayDimensions(
+		numRows=1,
+		numCols=dimensions.displaySize if dimensions.displaySize > 0 else DEFAULT_NUM_CELLS,
+	)
 
 
 @gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
@@ -101,7 +111,7 @@ def createBrailleViewerTool():
 	if not braille.handler:
 		raise RuntimeError("Can not initialise the BrailleViewerGui: braille.handler not yet initialised")
 
-	braille.filter_displaySize.register(_getDisplaySize)
+	braille.filter_displayDimensions.register(_getDisplayDimensions)
 
 	global _brailleGui
 	if _brailleGui:

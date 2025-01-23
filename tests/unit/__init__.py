@@ -100,13 +100,13 @@ config.conf["braille"]["display"] = "noBraille"
 braille.initialize()
 
 
-# For braille unit tests, we need to enable the braille handler by providing it a cell count
-# Give the display 40 cells
-def getFakeCellCount(numCells: int) -> int:
-	return 40
+# For braille unit tests, we need to enable the braille handler by providing it display dimensions
+# Give the display one row with 40 cells
+def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> int:
+	return braille.DisplayDimensions(numRows=1, numCols=40)
 
 
-braille.filter_displaySize.register(getFakeCellCount)
+braille.filter_displayDimensions.register(getFakeDisplayDimensions)
 _original_handleReviewMove = braille.handler.handleReviewMove
 
 

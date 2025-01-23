@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Babbage B.V., Leonard de Ruijter
+# Copyright (C) 2023, 2025 NV Access Limited, Babbage B.V., Leonard de Ruijter
 
 """Helper functions to test extension points."""
 
@@ -45,7 +45,8 @@ def actionTester(
 	try:
 		yield
 	finally:
-		action.unregister(handler)
+		unregistered = action.unregister(handler)
+		testCase.assertTrue(unregistered)
 		testFunc = (
 			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		)
@@ -83,7 +84,8 @@ def deciderTester(
 	try:
 		yield expectedDecision
 	finally:
-		decider.unregister(handler)
+		unregistered = decider.unregister(handler)
+		testCase.assertTrue(unregistered)
 		testFunc = (
 			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		)
@@ -125,7 +127,8 @@ def filterTester(
 	try:
 		yield expectedOutput
 	finally:
-		filter.unregister(handler)
+		unregistered = filter.unregister(handler)
+		testCase.assertTrue(unregistered)
 		testFunc = (
 			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		)
@@ -163,7 +166,8 @@ def chainTester(
 	try:
 		yield expectedOutput
 	finally:
-		chain.unregister(handler)
+		unregistered = chain.unregister(handler)
+		testCase.assertTrue(unregistered)
 		testFunc = (
 			testCase.assertDictContainsSubset if useAssertDictContainsSubset else testCase.assertDictEqual
 		)
