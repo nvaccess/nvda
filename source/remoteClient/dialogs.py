@@ -12,7 +12,7 @@ from urllib import request
 import gui
 import wx
 from logHandler import log
-from utils.alwaysCallAfter import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter
 
 from . import configuration, serializer, server, protocol, transport
 from .connectionInfo import ConnectionInfo, ConnectionMode

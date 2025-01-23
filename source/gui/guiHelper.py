@@ -45,6 +45,7 @@ class myDialog(wx.Dialog):
 
 from collections.abc import Callable
 from contextlib import contextmanager
+from functools import wraps
 import sys
 import threading
 import weakref
@@ -529,3 +530,19 @@ def wxCallOnMain(
 		raise exception
 	else:
 		return result
+
+
+def alwaysCallAfter(func: Callable[..., None]) -> Callable[..., None]:
+	"""Makes GUI updates thread-safe by running in the main thread.
+
+	Example:
+		@alwaysCallAfter
+		def update_label(text):
+			label.SetLabel(text)  # Safe GUI update from any thread
+	"""
+
+	@wraps(func)
+	def wrapper(*args, **kwargs):
+		wx.CallAfter(func, *args, **kwargs)
+
+	return wrapper

@@ -16,7 +16,7 @@ import wx
 from config import isInstalledCopy
 from keyboardHandler import KeyboardInputGesture
 from logHandler import log
-from utils.alwaysCallAfter import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
 
 from . import configuration, cues, dialogs, serializer, server, url_handler
