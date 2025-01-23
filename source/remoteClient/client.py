@@ -137,15 +137,22 @@ class RemoteClient:
 
 	def copyLink(self):
 		session = self.masterSession or self.slaveSession
+		if session is None:
+			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
+			ui.message(_("Not connected."))
+			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
 
 	def sendSAS(self):
+		if self.masterTransport is None:
+			log.error("No master transport to send SAS")
+			return
 		self.masterTransport.send(RemoteMessageType.send_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
 		log.info(
-			f"Initiating connection as {connectionInfo.mode.name} to {connectionInfo.hostname}:{connectionInfo.port}",
+			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
 		if connectionInfo.mode == ConnectionMode.MASTER:
 			self.connectAsMaster(connectionInfo)
