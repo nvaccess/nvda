@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import locale
-from collections import OrderedDict
+from collections import OrderedDict, deque
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER
@@ -20,6 +20,7 @@ from ._sapi4 import (
 	ITTSBufNotifySink,
 	ITTSCentralW,
 	ITTSEnumW,
+	ITTSNotifySinkW,
 	TextSDATA,
 	TTSATTR_MAXPITCH,
 	TTSATTR_MAXSPEED,
@@ -57,9 +58,9 @@ class SynthDriverBufSink(COMObject):
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
 		self._allowDelete = True
-		super(SynthDriverBufSink, self).__init__()
+		super().__init__()
 
-	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp, dwMarkNum):
+	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp: int, dwMarkNum: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -70,12 +71,52 @@ class SynthDriverBufSink(COMObject):
 		if synth._finalIndex == dwMarkNum:
 			synth._finalIndex = None
 			synthDoneSpeaking.notify(synth=synth)
+		# remove already triggered bookmarks
+		while synth._bookmarks:
+			if synth._bookmarks.popleft() == dwMarkNum:
+				break
 
 	def IUnknown_Release(self, this, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
 			return 1
 		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
+
+
+class SynthDriverSink(COMObject):
+	_com_interfaces_ = [ITTSNotifySinkW]
+
+	def __init__(self, synthRef: weakref.ReferenceType):
+		self.synthRef = synthRef
+		super().__init__()
+
+	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning(
+				"Called ITTSNotifySinkW_AudioStart method on ITTSNotifySinkW while driver is dead",
+			)
+			return
+		if synth._bookmarkLists:
+			# take the first bookmark list
+			synth._bookmarks = synth._bookmarkLists.popleft()
+
+	def ITTSNotifySinkW_AudioStop(self, this, qTimeStamp: int):
+		synth = self.synthRef()
+		if synth is None:
+			log.debugWarning(
+				"Called ITTSNotifySinkW_AudioStop method on ITTSNotifySinkW while driver is dead",
+			)
+			return
+		# trigger all untriggered bookmarks
+		if synth._bookmarks:
+			while synth._bookmarks:
+				synthIndexReached.notify(synth=synth, index=synth._bookmarks.popleft())
+			# if there are untriggered bookmarks, synthDoneSpeaking hasn't been triggered yet.
+			# Trigger synthDoneSpeaking after triggering all bookmarks
+			synth._finalIndex = None
+			synthDoneSpeaking.notify(synth=synth)
+		synth._bookmarks = None
 
 
 class SynthDriver(SynthDriver):
@@ -115,6 +156,12 @@ class SynthDriver(SynthDriver):
 
 	def __init__(self):
 		self._finalIndex: Optional[int] = None
+		self._ttsCentral = None
+		self._sinkRegKey = DWORD()
+		self._bookmarks = None
+		self._bookmarkLists = deque()
+		self._sink = SynthDriverSink(weakref.ref(self))
+		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
@@ -133,6 +180,7 @@ class SynthDriver(SynthDriver):
 		textList = []
 		charMode = False
 		unprocessedSequence = speechSequence
+		bookmarks = deque()
 		# #15500: Some SAPI4 voices reset all prosody when they receive any prosody command,
 		# whereas other voices never undo prosody changes when a sequence is interrupted.
 		# Add all default values to the start and end of the sequence,
@@ -153,6 +201,7 @@ class SynthDriver(SynthDriver):
 				textList.append(item.replace("\\", "\\\\"))
 			elif isinstance(item, IndexCommand):
 				textList.append("\\mrk=%d\\" % item.index)
+				bookmarks.append(item.index)
 				lastHandledIndexInSequence = item.index
 			elif isinstance(item, CharacterModeCommand):
 				textList.append("\\RmS=1\\" if item.state else "\\RmS=0\\")
@@ -187,6 +236,7 @@ class SynthDriver(SynthDriver):
 		# Therefore we add the pause of 1ms at the end
 		textList.append("\\PAU=1\\")
 		text = "".join(textList)
+		self._bookmarkLists.append(bookmarks)
 		flags = TTSDATAFLAG_TAGGED
 		self._ttsCentral.TextData(
 			VOICECHARSET.CHARSET_TEXT,
@@ -198,6 +248,9 @@ class SynthDriver(SynthDriver):
 
 	def cancel(self):
 		try:
+			# cancel all pending bookmarks
+			self._bookmarkLists.clear()
+			self._bookmarks = None
 			self._ttsCentral.AudioReset()
 		except COMError:
 			log.error("Error cancelling speech", exc_info=True)
@@ -234,8 +287,11 @@ class SynthDriver(SynthDriver):
 		self._currentMode = mode
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
 		self._ttsAudio.DeviceNumSet(nvwave.outputDeviceNameToID(config.conf["audio"]["outputDevice"], True))
+		if self._ttsCentral:
+			self._ttsCentral.UnRegister(self._sinkRegKey)
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
+		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
 		self._ttsAttrs = self._ttsCentral.QueryInterface(ITTSAttributes)
 		# Find out rate limits
 		hasRate = bool(mode.dwFeatures & TTSFEATURE_SPEED)
