@@ -2289,7 +2289,9 @@ the remote system should know what cells to show on its display.
 @type currentCellCount: bool
 """
 
-filter_displaySize = extensionPoints.Filter[int]()
+filter_displaySize = extensionPoints.Filter[int](
+	_deprecationMessage="braille.filter_displaySize is deprecated. Use braille.filter_displayDimensions instead.",
+)
 """
 Filter that allows components or add-ons to change the display size used for braille output.
 For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
