@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -42,6 +42,30 @@ class NVDAKey(DisplayStringIntFlag):
 			NVDAKey.CAPS_LOCK: localizedKeyLabels["capslock"],
 			NVDAKey.NUMPAD_INSERT: localizedKeyLabels["numpadinsert"],
 			NVDAKey.EXTENDED_INSERT: localizedKeyLabels["insert"],
+		}
+
+
+@unique
+class TypingEcho(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values for typing echo (characters and words).
+
+	Use TypingEcho.MEMBER.value to compare with the config;
+	use TypingEcho.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = 0
+	EDIT_CONTROLS = 1
+	ALWAYS = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.OFF: _("Off"),
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.EDIT_CONTROLS: _("Only in edit controls"),
+			# Translators: One of the choices for typing echo in keyboard settings
+			TypingEcho.ALWAYS: _("Always"),
 		}
 
 
