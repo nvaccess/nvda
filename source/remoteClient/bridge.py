@@ -40,7 +40,7 @@ class BridgeTransport:
 	their lifecycle.
 
 	Attributes:
-		excluded (Set[str]): Message types that should not be forwarded between transports.
+		excluded (Set[RemoteMessageType]): Message types that should not be forwarded between transports.
 			By default includes connection management messages that should remain local.
 		t1 (Transport): First transport instance to bridge
 		t2 (Transport): Second transport instance to bridge
@@ -48,7 +48,12 @@ class BridgeTransport:
 		t2_callbacks (Dict[RemoteMessageType, callable]): Storage for t2's message handlers
 	"""
 
-	excluded: Set[str] = {"client_joined", "client_left", "channel_joined", "set_braille_info"}
+	excluded: Set[RemoteMessageType] = {
+		RemoteMessageType.client_joined,
+		RemoteMessageType.client_left,
+		RemoteMessageType.channel_joined,
+		RemoteMessageType.set_braille_info,
+	}
 
 	def __init__(self, t1: Transport, t2: Transport) -> None:
 		"""Initialize the bridge between two transports.
@@ -89,7 +94,7 @@ class BridgeTransport:
 		"""
 
 		def callback(*args, **kwargs):
-			if messageType.value not in self.excluded:
+			if messageType not in self.excluded:
 				targetTransport.send(messageType, *args, **kwargs)
 
 		return callback
