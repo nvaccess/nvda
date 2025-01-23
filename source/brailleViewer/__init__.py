@@ -77,8 +77,8 @@ def destroyBrailleViewer():
 			updateBrailleDisplayedUnregistered = braille.pre_writeCells.unregister(d.updateBrailleDisplayed)
 			assert updateBrailleDisplayedUnregistered
 			d.saveInfoAndDestroy()
-		getDisplaySizeUnregistered = braille.filter_displayDimensions.unregister(_getDisplayDimensions)
-		assert getDisplaySizeUnregistered
+		getDisplayDimensionsUnregistered = braille.filter_displayDimensions.unregister(_getDisplayDimensions)
+		assert getDisplayDimensionsUnregistered
 
 
 def _onGuiDestroyed():
