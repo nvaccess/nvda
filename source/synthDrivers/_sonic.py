@@ -10,6 +10,7 @@ import globalVars
 
 if TYPE_CHECKING:
 	from ctypes import _Pointer
+
 	c_float_p = _Pointer[c_float]
 	c_short_p = _Pointer[c_short]
 	c_ubyte_p = _Pointer[c_ubyte]
