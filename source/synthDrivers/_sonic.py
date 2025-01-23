@@ -7,6 +7,7 @@ from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_voi
 import os
 from typing import TYPE_CHECKING
 import globalVars
+from logHandler import log
 
 if TYPE_CHECKING:
 	from ctypes import _Pointer
@@ -28,8 +29,12 @@ class SonicStreamP(c_void_p):
 
 def initialize():
 	"""Initialize the Sonic DLL.
-	The sonic.dll file should be in the installation directory."""
+	The sonic.dll file should be in the synthDrivers directory.
+	This can be called more than once."""
 	global sonicLib
+	if sonicLib:
+		return
+	log.debug("Initializing Sonic library")
 	sonicLib = cdll.LoadLibrary(os.path.join(globalVars.appDir, "synthDrivers", "sonic.dll"))
 	sonicLib.sonicCreateStream.restype = SonicStreamP
 	sonicLib.sonicCreateStream.argtypes = [c_int, c_int]

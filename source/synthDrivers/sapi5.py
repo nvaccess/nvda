@@ -32,7 +32,7 @@ from speech.commands import (
 	PhonemeCommand,
 	SpeechCommand,
 )
-from ._sonic import SonicStream
+from ._sonic import SonicStream, initialize as sonicInitialize
 
 
 class SpeechVoiceSpeakFlags(IntEnum):
@@ -389,6 +389,7 @@ class SynthDriver(SynthDriver):
 		customStream.BaseStream = audioStream
 		customStream.Format = fmt
 		self.tts.AudioOutputStream = customStream
+		sonicInitialize()
 		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
 
 		# Set event notify sink
