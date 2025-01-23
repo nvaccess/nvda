@@ -92,7 +92,7 @@ def _getSanitizedHtmlLicense() -> str:
 @blockAction.when(
 	# HTML includes links which shouldn't be accessible
 	# in secure contexts as it opens a browser.
-	blockAction.Context.SECURE_MODE
+	blockAction.Context.SECURE_MODE,
 )
 def displayLicense():
 	ui.browseableMessage(
