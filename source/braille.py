@@ -3289,8 +3289,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	"""
 	Abstract base braille display driver.
 
-	Each braille display driver should be a separate Python module in the root `brailleDisplayDrivers` directory,
-	containing a `BrailleDisplayDriver` class that inherits from this base class.
+	Each braille display driver should be a separate Python module in the root ``brailleDisplayDrivers`` directory,
+	containing a ``BrailleDisplayDriver`` class that inherits from this base class.
 
 	At a minimum, drivers must:
 		- Set :attr:`name` and :attr:`description`.
@@ -3302,8 +3302,8 @@ class BrailleDisplayDriver(driverHandler.Driver):
 		- For a multi-line display, :attr:`numRows` and :attr:`numCols` must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
-		* The driver must be thread-safe, and :attr:`isThreadSafe` should be set to :const:`True`.
-		* :attr:`supportsAutomaticDetection` must be set to :const:`True`.
+		* The driver must be thread-safe, and :attr:`isThreadSafe` should be set to ``True``.
+		* :attr:`supportsAutomaticDetection` must be set to ``True``.
 		* :meth:`registerAutomaticDetection` must be implemented.
 
 	Drivers should dispatch input (e.g., button presses or controls) using the :mod:`inputCore` framework.
@@ -3311,7 +3311,7 @@ class BrailleDisplayDriver(driverHandler.Driver):
 	using :meth:`inputCore.manager.executeGesture`. These gestures can be mapped in :attr:`gestureMap`.
 	A driver can also inherit from :class:`baseObject.ScriptableObject` to provide display-specific scripts.
 
-	See Also:
+	.. seealso::
 		:mod:`hwIo` for raw serial and HID I/O.
 
 	There are factory functions to create :class:`autoSettingsUtils.driverSetting.DriverSetting` instances
