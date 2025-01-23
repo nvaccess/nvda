@@ -3584,7 +3584,7 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings](#NVDASettings) dialog.
 
-## Remote Access {#NvdaRemote}
+## Remote Access {#remoteAccess}
 
 With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
 
