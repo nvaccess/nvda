@@ -61,7 +61,7 @@ class _AddonStoreSettings:
 				settingsDict: dict[str, Any] = json.load(storeSettingsFile)
 		except FileNotFoundError:
 			return
-		except Exception:
+		except (json.JSONDecodeError, UnicodeDecodeError):
 			log.exception("Invalid add-on store settings")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(self._storeSettingsFile)
