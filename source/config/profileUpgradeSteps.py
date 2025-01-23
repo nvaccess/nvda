@@ -499,23 +499,3 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
 		profile["keyboard"][key] = newValue
 		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
-
-
-def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
-	"""
-	Remove the addonStore.showWarning setting.
-	"""
-	from addonStore.dataManager import addonDataManager
-
-	try:
-		showWarning: bool = profile["addonStore"].as_bool("showWarning")
-	except KeyError:
-		log.debug("showWarning not present in config, no action taken.")
-		return
-	except ValueError:
-		log.error("showWarning is not a boolean, no action taken.")
-		return
-
-	addonDataManager.storeSettings.showWarning = showWarning
-	del profile["addonStore"]["showWarning"]
-	log.debug("Removed addonStore.showWarning setting.")
