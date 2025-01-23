@@ -1885,7 +1885,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
 		if row < len(self._windowRowBufferOffsets):
 			start, end = self._windowRowBufferOffsets[row]
-			return min(start + col, end - 1)
+			return max(min(start + col, end - 1), 0)
 		raise ValueError("Position outside window")
 
 	windowStartPos: int
