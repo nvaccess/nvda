@@ -324,12 +324,9 @@ In this case, you will have to explore NVDA's source code to find this parent cl
 
 Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md).
 
-1. In your local copy of the NVDA repository, check if the `gestures.ini` file exists, e.g. `nvda\source\locale\fr\gestures.ini`
-   * If this file does not exist, create it by copying and adapting it from another language.
-   * If it already exists, all is fine.
-2. In this file the sections correspond to the class to which the script belongs.
+1. In this file the sections correspond to the class to which the script belongs.
 If the class your looking for does not exist, create this section.
-3. Under the targeted section, add a line corresponding to the new shortcut. e.g.:
+1. Under the targeted section, add a line corresponding to the new shortcut. e.g.:
 
    ```
    toggleBold = kb:control+g, kb:control+shift+b
@@ -337,17 +334,13 @@ If the class your looking for does not exist, create this section.
 
    If a line already exists for the script name, but you want to modify the shortcut, add the new shortcut on the same line, separating each shortcut with a comma ("`,`").
 
-4. If you want to unmap the original shortcut, just map it to `None`, e.g.:
+1. If you want to unmap the original shortcut, just map it to `None`, e.g.:
 
    ```
    None = kb:control+b
    ```
 
    Unmapping the original shortcut is only required if this shortcut does not match any other remapped locale shortcut.
-
-5. Save your file in UTF-8 format.
-6. Commit your changes.
-7. [Open a Pull Request.](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md)
 
 ## Plugins {#plugins}
 ### Overview {#pluginsOverview}
