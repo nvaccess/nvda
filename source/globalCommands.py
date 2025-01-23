@@ -4900,7 +4900,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_toggle_remote_mute(self, gesture):
-		remoteClient.client.toggleMute()
+		remoteClient.remoteClient.toggleMute()
 
 	@script(
 		gesture="kb:control+shift+NVDA+c",
@@ -4909,7 +4909,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
 	def script_push_clipboard(self, gesture):
-		remoteClient.client.pushClipboard()
+		remoteClient.remoteClient.pushClipboard()
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
@@ -4917,7 +4917,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_copy_link(self, gesture):
-		remoteClient.client.copyLink()
+		remoteClient.remoteClient.copyLink()
 		# Translators: A message indicating that a link has been copied to the clipboard.
 		ui.message(_("Copied link"))
 
@@ -4929,11 +4929,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_disconnectFromRemote(self, gesture):
-		if not remoteClient.client.isConnected:
+		if not remoteClient.remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(_("Not connected."))
 			return
-		remoteClient.client.disconnect()
+		remoteClient.remoteClient.disconnect()
 
 	@script(
 		gesture="kb:alt+NVDA+pageUp",
@@ -4944,9 +4944,9 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_connectToRemote(self, gesture):
-		if remoteClient.client.isConnected() or remoteClient.client.connecting:
+		if remoteClient.remoteClient.isConnected() or remoteClient.remoteClient.connecting:
 			return
-		remoteClient.client.doConnect()
+		remoteClient.remoteClient.doConnect()
 
 	@script(
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
@@ -4955,7 +4955,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:f11",
 	)
 	def script_sendKeys(self, gesture):
-		remoteClient.client.toggleRemoteKeyControl(gesture)
+		remoteClient.remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.
