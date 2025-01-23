@@ -2,7 +2,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka
+# Julien Cochuyt, Derek Riemer, Cyrille Bougot, Leonard de Ruijter, Łukasz Golonka, Cary-rowen
 
 """High-level functions to speak information."""
 
@@ -68,6 +68,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import aria
 from .priorities import Spri
@@ -780,10 +781,10 @@ def _getPlaceholderSpeechIfTextEmpty(
 	reason: OutputReason,
 ) -> Tuple[bool, SpeechSequence]:
 	"""Attempt to get speech for placeholder attribute if text for 'obj' is empty. Don't report the placeholder
-		value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
-		user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
-	@return: (True, SpeechSequence) if text for obj was considered empty and we attempted to get speech for the
-		placeholder value. (False, []) if text for obj was not considered empty.
+	 value unless the text is empty, because it is confusing to hear the current value (presumably typed by the
+	 user) *and* the placeholder. The placeholder should "disappear" once the user types a value.
+	:return: `(True, SpeechSequence)` if text for obj was considered empty and we attempted to get speech for the
+		placeholder value. `(False, [])` if text for obj was not considered empty.
 	"""
 	textEmpty = obj._isTextEmpty
 	if textEmpty:
@@ -1355,6 +1356,17 @@ PROTECTED_CHAR = "*"
 FIRST_NONCONTROL_CHAR = " "
 
 
+def isFocusEditable() -> bool:
+	"""Check if the currently focused object is editable.
+	:return: ``True`` if the focused object is editable, ``False`` otherwise.
+	"""
+	obj = api.getFocusObject()
+	controls = {controlTypes.ROLE_EDITABLETEXT, controlTypes.ROLE_DOCUMENT, controlTypes.ROLE_TERMINAL}
+	return (
+		obj.role in controls or controlTypes.STATE_EDITABLE in obj.states
+	) and controlTypes.STATE_READONLY not in obj.states
+
+
 def speakTypedCharacters(ch: str):
 	typingIsProtected = api.isTypingProtected()
 	if typingIsProtected:
@@ -1374,8 +1386,12 @@ def speakTypedCharacters(ch: str):
 		clearTypedWordBuffer()
 		if log.isEnabledFor(log.IO):
 			log.io("typed word: %s" % typedWord)
-		if config.conf["keyboard"]["speakTypedWords"] and not typingIsProtected:
-			speakText(typedWord)
+		typingEchoMode = config.conf["keyboard"]["speakTypedWords"]
+		if typingEchoMode != TypingEcho.OFF.value and not typingIsProtected:
+			if typingEchoMode == TypingEcho.ALWAYS.value or (
+				typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
+			):
+				speakText(typedWord)
 	if _speechState._suppressSpeakTypedCharactersNumber > 0:
 		# We primarily suppress based on character count and still have characters to suppress.
 		# However, we time out after a short while just in case.
@@ -1387,8 +1403,13 @@ def speakTypedCharacters(ch: str):
 			_speechState._suppressSpeakTypedCharactersTime = None
 	else:
 		suppress = False
-	if not suppress and config.conf["keyboard"]["speakTypedCharacters"] and ch >= FIRST_NONCONTROL_CHAR:
-		speakSpelling(realChar)
+
+	typingEchoMode = config.conf["keyboard"]["speakTypedCharacters"]
+	if not suppress and typingEchoMode != TypingEcho.OFF.value and ch >= FIRST_NONCONTROL_CHAR:
+		if typingEchoMode == TypingEcho.ALWAYS.value or (
+			typingEchoMode == TypingEcho.EDIT_CONTROLS.value and isFocusEditable()
+		):
+			speakSpelling(realChar)
 
 
 class SpeakTextInfoState(object):
