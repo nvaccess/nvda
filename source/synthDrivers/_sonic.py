@@ -112,7 +112,7 @@ class SonicStream:
 		samples = self.samplesAvailable
 		arrayLength = samples * self.channels
 		buffer = (c_float * arrayLength)()
-		sonicLib.sonicReadShortFromStream(self.stream, buffer, samples)
+		sonicLib.sonicReadFloatFromStream(self.stream, buffer, samples)
 		return buffer
 
 	def readShort(self) -> Array[c_short]:
@@ -128,7 +128,7 @@ class SonicStream:
 		samples = self.samplesAvailable
 		arrayLength = samples * self.channels
 		buffer = (c_ubyte * arrayLength)()
-		sonicLib.sonicReadShortFromStream(self.stream, buffer, samples)
+		sonicLib.sonicReadUnsignedCharFromStream(self.stream, buffer, samples)
 		return buffer
 
 	def flush(self) -> None:
