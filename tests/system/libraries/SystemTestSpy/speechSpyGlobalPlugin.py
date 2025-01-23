@@ -15,7 +15,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
-from braille import DisplayDimensions
+
 import core
 import globalPluginHandler
 import threading
@@ -189,7 +189,7 @@ class NVDASpyLib:
 		self._isNvdaStartupComplete = True
 		import braille
 
-		braille.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
+		braille.filter_displaySize.register(self.getBrailleCellCount)
 		braille.pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
@@ -266,8 +266,8 @@ class NVDASpyLib:
 	def setBrailleCellCount(self, brailleCellCount: int):
 		self._brailleCellCount = brailleCellCount
 
-	def getBrailleDisplayDimensions(self, value: DisplayDimensions) -> DisplayDimensions:
-		return DisplayDimensions(1, self._brailleCellCount)
+	def getBrailleCellCount(self, value: int):
+		return self._brailleCellCount
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
 		with self._brailleLock:
