@@ -3096,7 +3096,7 @@ You can also change the update channel for a [specific add-on individually from 
 | Option | Behaviour |
 |---|---|
 | Same | Add-ons will remain on their channel |
-| Any | Add-ons will always automatically update to the latest version, regardless of channel |
+| Any | Add-ons will automatically update to the latest version, regardless of channel |
 | Do not update | Add-ons will not automatically update by default, you must enable them individually |
 | Stable | Add-ons will automatically update to stable versions |
 | Beta or dev | Add-ons will automatically update to beta or dev versions |
@@ -3755,7 +3755,7 @@ From an add-on's actions menu, using the submenu "Update channel", you can modif
 |---|---|
 | Default | Add-on will follow the [default update channel](#DefaultAddonUpdateChannel) |
 | Same | Add-on will remain on the same channel |
-| Any | Add-on will always automatically update to the latest version, regardless of channel |
+| Any | Add-on will automatically update to the latest version, regardless of channel |
 | Do not update | Add-on will not automatically update |
 | Stable | Add-on will automatically update to stable versions |
 | Beta or dev | Add-on will automatically update to beta or dev versions |

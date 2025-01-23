@@ -81,6 +81,7 @@ class _AddonStoreSettings:
 			log.exception(f"Invalid add-on store cache:\n{settingsDict}")
 			if NVDAState.shouldWriteToDisk():
 				os.remove(self._storeSettingsFile)
+			return
 
 		self._showWarning = settingsDict["showWarning"]
 		for addonId, settings in settingsDict["addonSettings"].items():
