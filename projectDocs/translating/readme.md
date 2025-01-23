@@ -6,7 +6,8 @@ There are several tasks to be done, and this document hopes to give you an overv
 
 ## Translation Mailing List
 
-Translators should subscribe to the [NVDA translations mailing list](https://groups.io/g/nvda-translations) hosted at Groups.IO.
+To monitor changes to symbols and character description files, translators should subscribe to the [nvda-l10n](https://groups.google.com/a/nvaccess.org/g/nvda-l10n/about) mailing list.
+Translators should subscribe to the [NVDA translations mailing list](https://groups.io/g/nvda-translations) for general conversations regarding translations.
 
 It is an English low traffic list devoted to the discussion of translation.
 Important messages that relate to translators will also be sent here, e.g. before official NVDA releases, to remind translators to make sure their localization is up to date.
@@ -29,8 +30,8 @@ Start by subscribing to the translation list above so that you can get help and 
 
 The current process for translation is split between multiple processes:
 
-- Crowdin for the NVDA interface and user documentation
-- Github for Character Descriptions, Symbols and Gestures.
+- [Crowdin](./crowdin.md) for the NVDA interface and user documentation
+- [Github](./github.md) for Character Descriptions, Symbols and Gestures.
 
 Read [Files to be Localized](#files-to-be-localized) to learn the translation for process for these.
 

@@ -74,7 +74,7 @@ It is assumed that characters will have the same description regardless of their
 
 #### Translating this file {#TranslatingCharacterDescriptionsFile}
 
-Translation of `characterDescriptions.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+Translation of `characterDescriptions.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md).
 
 For a full example and reference, please look at [the English `characterDescriptions.dic` file](https://github.com/nvaccess/nvda/blob/master/source/locale/en/characterDescriptions.dic).
 
@@ -204,7 +204,7 @@ thousands separator	comma	all	norep
 
 #### Translating this file {#TranslatingSymbolsFile}
 
-Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+Translation of `symbols.dic` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md).
 
 See the file [locale\en\symbols.dic](https://github.com/nvaccess/nvda/blob/master/source/locale/en/symbols.dic) for the English definitions which are inherited for all locales.
 
@@ -322,7 +322,7 @@ In this case, you will have to explore NVDA's source code to find this parent cl
 
 #### Translating this file {#TranslatingGesturesFile}
 
-Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/dev/contributing.md).
+Translation of `gestures.ini` happens via [Pull Request to NVDA](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md).
 
 1. In your local copy of the NVDA repository, check if the `gestures.ini` file exists, e.g. `nvda\source\locale\fr\gestures.ini`
    * If this file does not exist, create it by copying and adapting it from another language.
@@ -347,7 +347,7 @@ If the class your looking for does not exist, create this section.
 
 5. Save your file in UTF-8 format.
 6. Commit your changes.
-7. Open a Pull Request.
+7. [Open a Pull Request.](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md)
 
 ## Plugins {#plugins}
 ### Overview {#pluginsOverview}
