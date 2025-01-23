@@ -40,13 +40,13 @@ CUES: Dict[str, Cue] = {
 	"client_connected": {"wave": "controlling", "beeps": [(1000, 300)]},
 	"client_disconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
 	"clipboard_pushed": {
-		"wave": "push_clipboard",
+		"wave": "clipboardPush",
 		"beeps": [(500, 100), (600, 100)],
 		# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 		"message": _("Clipboard pushed"),
 	},
 	"clipboard_received": {
-		"wave": "receive_clipboard",
+		"wave": "clipboardReceive",
 		"beeps": [(600, 100), (500, 100)],
 		# Translators: Message shown when the clipboard is successfully received from the remote computer.
 		"message": _("Clipboard received"),
