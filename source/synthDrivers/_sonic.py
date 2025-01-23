@@ -1,3 +1,8 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2025-2025 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later.
+# For more details see: https://www.gnu.org/licenses/gpl-2.0.html
+
 from ctypes import Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
 import os
 import globalVars
