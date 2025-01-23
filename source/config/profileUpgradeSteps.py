@@ -474,17 +474,6 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	return None
 
 
-def upgradeConfigFrom_14_to_15(profile: ConfigObj) -> None:
-	"""
-	Remove the addonStore.showWarning setting.
-	"""
-	if "addonStore" in profile and "showWarning" in profile["addonStore"]:
-		from addonStore.dataManager import addonDataManager
-
-		addonDataManager.storeSettings.showWarning = profile["addonStore"].as_bool("showWarning")
-		del profile["addonStore"]["showWarning"]
-	log.debug("Removed addonStore.showWarning setting.")
-
 def upgradeConfigFrom_14_to_15(profile: ConfigObj):
 	"""Convert keyboard typing echo configurations from boolean to integer values."""
 	_convertTypingEcho(profile, "speakTypedCharacters")
@@ -510,3 +499,14 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
 		profile["keyboard"][key] = newValue
 		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
+
+def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
+	"""
+	Remove the addonStore.showWarning setting.
+	"""
+	if "addonStore" in profile and "showWarning" in profile["addonStore"]:
+		from addonStore.dataManager import addonDataManager
+
+		addonDataManager.storeSettings.showWarning = profile["addonStore"].as_bool("showWarning")
+		del profile["addonStore"]["showWarning"]
+	log.debug("Removed addonStore.showWarning setting.")

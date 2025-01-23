@@ -35,7 +35,7 @@ from config.profileUpgradeSteps import (
 	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
-	upgradeConfigFrom_14_to_15,
+	upgradeConfigFrom_15_to_16,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -1047,12 +1047,12 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 
 
 @patch("addonStore.dataManager.addonDataManager", create=True)
-class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
+class Config_upgradeProfileSteps_upgradeConfigFrom_15_to_16(unittest.TestCase):
 	def test_defaultProfile(self, mock_dataManager: MagicMock):
 		"""Test that the default profile is correctly upgraded."""
 		configString = ""
 		profile = _loadProfile(configString)
-		upgradeConfigFrom_14_to_15(profile)
+		upgradeConfigFrom_15_to_16(profile)
 		# Ensure showWarning has not been set
 		self.assertNotIsInstance(mock_dataManager.storeSettings.showWarning, bool)
 
@@ -1063,7 +1063,7 @@ class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
 			showWarning=False
 		"""
 		profile = _loadProfile(configString)
-		upgradeConfigFrom_14_to_15(profile)
+		upgradeConfigFrom_15_to_16(profile)
 		self.assertIsInstance(mock_dataManager.storeSettings.showWarning, bool)
 		self.assertEqual(mock_dataManager.storeSettings.showWarning, False)
 
@@ -1074,6 +1074,6 @@ class Config_upgradeProfileSteps_upgradeConfigFrom_14_to_15(unittest.TestCase):
 			showWarning=True
 		"""
 		profile = _loadProfile(configString)
-		upgradeConfigFrom_14_to_15(profile)
+		upgradeConfigFrom_15_to_16(profile)
 		self.assertIsInstance(mock_dataManager.storeSettings.showWarning, bool)
 		self.assertEqual(mock_dataManager.storeSettings.showWarning, True)
