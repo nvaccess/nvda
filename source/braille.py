@@ -3286,31 +3286,36 @@ def terminate():
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
-	"""Abstract base braille display driver.
-	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory
-	containing a BrailleDisplayDriver class which inherits from this base class.
+	"""
+	Abstract base braille display driver.
 
-	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
-	To display braille, :meth:`display` must be implemented.
-	For a single line display, :attr:`numCells` must be implemented.
-	For a multi line display, :attr:`numRows` and :attr:`numCols` must be implemented.
+	Each braille display driver should be a separate Python module in the root `brailleDisplayDrivers` directory,
+	containing a `BrailleDisplayDriver` class that inherits from this base class.
+
+	At a minimum, drivers must:
+		- Set :attr:`name` and :attr:`description`.
+		- Override :meth:`check`.
+
+	To display braille:
+		- :meth:`display` must be implemented.
+		- For a single-line display, :attr:`numCells` must be implemented.
+		- For a multi-line display, :attr:`numRows` and :attr:`numCols` must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
-		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
-		* L{supportsAutomaticDetection} must be set to C{True}.
-		* L{registerAutomaticDetection} must be implemented.
+		* The driver must be thread-safe, and :attr:`isThreadSafe` should be set to :const:`True`.
+		* :attr:`supportsAutomaticDetection` must be set to :const:`True`.
+		* :meth:`registerAutomaticDetection` must be implemented.
 
-	Drivers should dispatch input such as presses of buttons, wheels or other controls
-	using the L{inputCore} framework.
-	They should subclass L{BrailleDisplayGesture}
-	and execute instances of those gestures using L{inputCore.manager.executeGesture}.
-	These gestures can be mapped in L{gestureMap}.
-	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
+	Drivers should dispatch input (e.g., button presses or controls) using the :mod:`inputCore` framework.
+	They should subclass :class:`BrailleDisplayGesture` and execute instances of those gestures
+	using :meth:`inputCore.manager.executeGesture`. These gestures can be mapped in :attr:`gestureMap`.
+	A driver can also inherit from :class:`baseObject.ScriptableObject` to provide display-specific scripts.
 
-	@see: L{hwIo} for raw serial and HID I/O.
+	See Also:
+		:mod:`hwIo` for raw serial and HID I/O.
 
-	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
-	for common display specific settings; e.g. L{DotFirmnessSetting}.
+	There are factory functions to create :class:`autoSettingsUtils.driverSetting.DriverSetting` instances
+	for common display-specific settings, such as :meth:`DotFirmnessSetting`.
 	"""
 
 	_configSection = "braille"
