@@ -31,6 +31,7 @@ As a consequence, announcement of first line indent is now supported for LibreOf
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
 * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
 * In Microsoft Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
+* NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio. (#17082, @LeonarddeR)
 
 ### Changes
 
@@ -96,7 +97,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
 * Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
 * Fixed an issue where continuous reading (say all) stopped at the end of the first sentence when using some SAPI5 synthesizers. (#16691, @gexgd0419)
-* In Visual Studio Code, NVDA no longer hijacks the `alt+up` and `alt+down` gestures for sentence navigation. (#17082, @LeonarddeR)
+* In Visual Studio Code, NVDA no longer hijacks the `alt+upArrow` and `alt+downArrow` gestures for sentence navigation. (#17082, @LeonarddeR)
 
 ### Changes for Developers
 
