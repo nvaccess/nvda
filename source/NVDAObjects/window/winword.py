@@ -40,7 +40,7 @@ from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 from . import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextBase, EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 from ._msOffice import MsoHyperlink
 import locationHelper
@@ -1573,7 +1573,9 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	}
 
 
-class WordDocument(Window):
+class WordDocument(Window, EditableTextBase):
+	_supportsSentenceNavigation = True
+
 	def winwordColorToNVDAColor(self, val):
 		if val >= 0:
 			# normal RGB value

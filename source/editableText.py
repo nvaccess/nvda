@@ -40,21 +40,24 @@ class EditableText(TextContainerObject, ScriptableObject):
 	@type hasContentChangedSinceLastSelection: bool
 	"""
 
-	#: Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key.
-	shouldFireCaretMovementFailedEvents = False
-
-	#: Whether or not to announce text found before the caret on a new line (e.g. auto numbering)
-	announceNewLineText = True
-	#: When announcing new line text: should the entire line be announced, or just text after the caret?
-	announceEntireNewLine = False
-
-	#: The minimum amount of time that should elapse before checking if the word under the caret has changed
-	_hasCaretMoved_minWordTimeoutSec = 0.03
-
-	#: The maximum amount of time that may elapse before we no longer rely on caret events to detect movement.
-	_useEvents_maxTimeoutSec = 0.06
-
+	shouldFireCaretMovementFailedEvents: bool = False
+	"""Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key."""
+	announceNewLineText: bool = True
+	"""Whether or not to announce text found before the caret on a new line (e.g. auto numbering)"""
+	announceEntireNewLine: bool = False
+	"""When announcing new line text: should the entire line be announced, or just text after the caret?"""
+	_hasCaretMoved_minWordTimeoutSec: float = 0.03
+	"""The minimum amount of time that should elapse before checking if the word under the caret has changed"""
+	_useEvents_maxTimeoutSec: float = 0.06
+	"""The maximum amount of time that may elapse before we no longer rely on caret events to detect movement."""
 	_caretMovementTimeoutMultiplier = 1
+	"""A multiplier to apply to the caret movement timeout to increase or decrease it in a subclass."""
+	_supportsSentenceNavigation: bool | None = None
+	"""Whether the editable text supports sentence navigation.
+	When `None` (default), the state is undetermined, e.g. sentence navigation will be attempted, when it fails, the gesture will be send to the OS.
+	When `True`, sentence navigation is explicitly supported and will be performed. When it fails, the gesture is discarded.
+	When `False`, sentence navigation is explicitly not supported and the gesture is sent to the OS.
+	"""
 
 	def _hasCaretMoved(self, bookmark, retryInterval=0.01, timeout=None, origWord=None):
 		"""
@@ -226,17 +229,29 @@ class EditableText(TextContainerObject, ScriptableObject):
 			suppressBlanks=True,
 		)
 
-	def _caretMoveBySentenceHelper(self, gesture, direction):
+	def _caretMoveBySentenceHelper(self, gesture: InputGesture, direction: int) -> None:
 		if isScriptWaiting():
+			if not self._supportsSentenceNavigation:  # either None or False
+				gesture.send()
 			return
 		try:
 			info = self.makeTextInfo(textInfos.POSITION_CARET)
-			info.move(textInfos.UNIT_SENTENCE, direction)
-			info.updateCaret()
-			self._caretScriptPostMovedHelper(textInfos.UNIT_SENTENCE, gesture, info)
-		except:  # noqa: E722
-			gesture.send()
-			return
+			caretMoved = False
+			if not self._supportsSentenceNavigation:
+				bookmark = info.bookmark
+				gesture.send()
+				caretMoved, newInfo = self._hasCaretMoved(bookmark)
+			if not caretMoved and self._supportsSentenceNavigation is not False:
+				info.move(textInfos.UNIT_SENTENCE, direction)
+				info.updateCaret()
+			self._caretScriptPostMovedHelper(
+				textInfos.UNIT_SENTENCE if not caretMoved else textInfos.UNIT_LINE,
+				gesture,
+				info,
+			)
+		except Exception:
+			if self._supportsSentenceNavigation is True:
+				log.exception("Error in _caretMoveBySentenceHelper")
 
 	def script_caret_moveByLine(self, gesture):
 		self._caretMovementScriptHelper(gesture, textInfos.UNIT_LINE)

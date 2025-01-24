@@ -7,6 +7,7 @@
 
 import appModuleHandler
 import controlTypes
+from NVDAObjects.behaviors import EditableTextBase
 from NVDAObjects.IAccessible.chromium import Document
 from NVDAObjects import NVDAObject, NVDAObjectTextInfo
 
@@ -26,6 +27,8 @@ class AppModule(appModuleHandler.AppModule):
 			clsList.insert(0, VSCodeDocument)
 
 	def event_NVDAObject_init(self, obj: NVDAObject):
+		if isinstance(obj, EditableTextBase):
+			obj._supportsSentenceNavigation = False
 		# TODO: This is a specific fix for Visual Studio Code.
 		# Once the underlying issue is resolved, this workaround can be removed.
 		# See issue #15159 for more details.
