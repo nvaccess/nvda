@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
-# Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
+# Julien Cochuyt, Cyrille Bougot, Leonard de Ruijter
 
 from abc import ABCMeta, abstractmethod
 from enum import IntEnum
@@ -13,9 +13,9 @@ from logHandler import log
 import config
 import controlTypes
 import api
+import systemUtils
 import textInfos
 import queueHandler
-import winKernel
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 
 from .commands import CallbackCommand, EndUtteranceCommand
@@ -137,12 +137,36 @@ class _SayAllHandler:
 			log.debugWarning("Unable to make reader", exc_info=True)
 			return
 		self._getActiveSayAll = weakref.ref(reader)
-		reader.nextLine()
+		reader.next()
 
 
-class _ObjectsReader(garbageHandler.TrackedObject):
-	def __init__(self, handler: _SayAllHandler, root: "NVDAObjects.NVDAObject"):
+class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
+	"""Base class for readers in say all."""
+
+	def __init__(self, handler: _SayAllHandler):
 		self.handler = handler
+		systemUtils.preventSystemIdle(
+			keepDisplayAwake=bool(config.conf["general"]["preventSystemLock"]),
+			persistent=True,
+		)
+
+	@abstractmethod
+	def next(self): ...
+
+	@abstractmethod
+	def stop(self):
+		"""Stops the reader."""
+		systemUtils.resetThreadExecutionState()
+
+	def __del__(self):
+		self.stop()
+
+
+class _ObjectsReader(_Reader):
+	"""Manages continuous reading of objects."""
+
+	def __init__(self, handler: _SayAllHandler, root: "NVDAObjects.NVDAObject"):
+		super().__init__(handler)
 		self.walker = self.walk(root)
 		self.prevObj = None
 
@@ -165,7 +189,6 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 				isFocus=self.handler.lastSayAllMode == CURSOR.CARET,
 			):
 				return
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		# Move onto the next object.
 		self.prevObj = obj = next(self.walker, None)
 		if not obj:
@@ -179,10 +202,13 @@ class _ObjectsReader(garbageHandler.TrackedObject):
 		)
 
 	def stop(self):
+		if not self.walker:
+			return
 		self.walker = None
+		super().stop()
 
 
-class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
+class _TextReader(_Reader):
 	"""Manages continuous reading of text.
 	This is intended for internal use only.
 
@@ -207,7 +233,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 	def __init__(self, handler: _SayAllHandler):
 		self.reader = None
-		self.handler = handler
+		super().__init__(handler)
 		self.trigger = SayAllProfileTrigger()
 		self.reader = self.getInitialTextInfo()
 		# #10899: SayAll profile can't be activated earlier because they may not be anything to read
@@ -262,6 +288,9 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 			# say all could enter an infinite loop.
 			self.finish()
 			return False
+
+	def next(self):
+		self.nextLine()
 
 	def nextLine(self):
 		if not self.reader:
@@ -339,7 +368,6 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		state.updateObj()
 		updater = obj.makeTextInfo(bookmark)
 		self.updateCaret(updater)
-		winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
 		if self.numBufferedLines == 0:
 			# This was the last line spoken, so move on.
 			self.nextLine()
@@ -378,9 +406,7 @@ class _TextReader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 		self.reader = None
 		self.trigger.exit()
 		self.trigger = None
-
-	def __del__(self):
-		self.stop()
+		super().stop()
 
 
 class _CaretTextReader(_TextReader):
