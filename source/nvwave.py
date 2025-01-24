@@ -403,6 +403,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
+		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
 		self._lastActiveTime = None
 		self._isPaused = False
 		self._doneCallbacks = {}
@@ -510,6 +511,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if player._lastActiveTime <= threshold:
 				try:
 					NVDAHelper.localLib.wasPlay_idle(player._player)
+					NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(player._player, True)
 				except OSError:
 					# #16125: IAudioClock::GetPosition sometimes fails with an access
 					# violation on a device which has been invalidated. This shouldn't happen
