@@ -497,6 +497,6 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		del profile["keyboard"][key]
 		return
 	else:
-		newValue = TypingEcho.ALWAYS.value if oldValue else TypingEcho.OFF.value
+		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
 		profile["keyboard"][key] = newValue
 		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
