@@ -9,6 +9,7 @@
 """
 
 import time
+from numbers import Number
 from speech import sayAll
 import api
 import review
@@ -50,7 +51,7 @@ class EditableText(TextContainerObject, ScriptableObject):
 	"""The minimum amount of time that should elapse before checking if the word under the caret has changed"""
 	_useEvents_maxTimeoutSec: float = 0.06
 	"""The maximum amount of time that may elapse before we no longer rely on caret events to detect movement."""
-	_caretMovementTimeoutMultiplier = 1
+	_caretMovementTimeoutMultiplier: Number = 1
 	"""A multiplier to apply to the caret movement timeout to increase or decrease it in a subclass."""
 	_supportsSentenceNavigation: bool | None = None
 	"""Whether the editable text supports sentence navigation.
