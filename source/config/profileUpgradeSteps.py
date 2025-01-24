@@ -493,7 +493,8 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		log.debug(f"'{key}' not present in config, no action taken.")
 		return
 	except ValueError:
-		log.error(f"'{key}' is not a boolean, no action taken.")
+		log.error(f"'{key}' is not a boolean, got {profile['keyboard'][key]!r}. Deleting.")
+		del profile["keyboard"][key]
 		return
 	else:
 		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
