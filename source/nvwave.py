@@ -289,6 +289,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
+		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -393,6 +394,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete."""
 		self.sync()
+		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
 		if self._audioDucker:
 			self._audioDucker.disable()
 
