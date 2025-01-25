@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include <type_traits>
 #include <limits>
+#include <vector>
 
 namespace SilenceDetect {
 
@@ -288,6 +289,33 @@ inline size_t getTrailingSilenceSize(
 	len += align - 1;
 	len -= len % align;  // round up to block (channel) boundaries
 	return len;
+}
+
+inline std::vector<unsigned char> generateSilenceBytes(const WAVEFORMATEX* wfx, size_t size) {
+	std::vector<unsigned char> wave;
+	size -= size % wfx->nBlockAlign;
+	callByWaveFormat(wfx, [=, &wave](auto fmtTag) {
+		using Fmt = decltype(fmtTag);
+		constexpr auto bytesPerSample = Fmt::bytesPerSample;
+		constexpr auto zeroPoint = Fmt::zeroPoint();
+		if constexpr (zeroPoint == 0) {
+			wave.assign(size, 0);
+		} else if constexpr (bytesPerSample == 1) {
+			wave.assign(size, zeroPoint);
+		} else {
+			wave.assign(size, 0);
+			unsigned char *p = wave.data();
+			unsigned char *pEnd = p + size;
+			for (; p != pEnd; p += bytesPerSample) {
+				memcpy(p, &zeroPoint, bytesPerSample);
+			}
+		}
+	});
+	return wave;
+}
+
+inline std::vector<unsigned char> generateSilenceMs(const WAVEFORMATEX* wfx, unsigned int milliseconds) {
+	return generateSilenceBytes(wfx, (size_t)wfx->nAvgBytesPerSec * milliseconds / 1000);
 }
 
 }  // namespace SilenceDetect
