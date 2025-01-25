@@ -154,7 +154,7 @@ class RemoteSession:
 		ui.message(
 			# Translators: Message for version mismatch
 			_("""The version of the relay server which you have connected to is not compatible with this version of the Remote Client.
-Please either use a different server or upgrade your version of the addon."""),
+Please use a different server."""),
 		)
 		self.transport.close()
 
