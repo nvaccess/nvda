@@ -16,7 +16,7 @@ from .connectionInfo import ConnectionMode
 
 
 class RemoteMenu(wx.Menu):
-	"""Menu for the NVDA Remote addon that appears in the NVDA Tools menu"""
+	"""Menu for the NVDA Remote functionality that appears in the NVDA Tools menu"""
 
 	connectItem: wx.MenuItem
 	disconnectItem: wx.MenuItem
