@@ -102,4 +102,10 @@ interface NvdaControllerInternal {
  * Asks NVDA to open currently used configuration directory.
  */
 	error_status_t __stdcall openConfigDirectory();
+
+/**
+ * Handles a remote URL request from the slave process.
+ * @param url The nvdaremote:// URL to process.
+ */
+	error_status_t __stdcall handleRemoteURL([in,string] const wchar_t* url);
 };

@@ -118,6 +118,15 @@ def main():
 					0,
 					winUser.MB_ICONERROR,
 				)
+		elif action == "handleRemoteURL":
+			try:
+				url = args[0]
+				ret = getNvdaHelperRemote().nvdaControllerInternal_handleRemoteURL(url)
+				if ret != 0:
+					raise RuntimeError(f"URL handling failed with code {ret}")
+			except Exception:
+				logHandler.log.error("Error handling remote URL", exc_info=True)
+				sys.exit(1)
 		elif action == "comGetActiveObject":
 			import comHelper
 

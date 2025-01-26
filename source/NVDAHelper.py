@@ -687,6 +687,31 @@ def nvdaControllerInternal_openConfigDirectory():
 	return 0
 
 
+@WINFUNCTYPE(c_long, c_wchar_p)
+def nvdaControllerInternal_handleRemoteURL(url):
+	"""Handles a remote URL request from the slave process.
+	@param url: The nvdaremote:// URL to process
+	@return: 0 on success, -1 on failure
+	"""
+	import queueHandler
+	from remoteClient import connectionInfo, remoteClient as client
+
+	try:
+		if not client:
+			log.error("No RemoteClient instance available")
+			return -1
+		# Queue the URL handling on the main thread
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			client.verifyAndConnect,
+			connectionInfo.ConnectionInfo.fromURL(url),
+		)
+		return 0
+	except Exception:
+		log.error("Error handling remote URL", exc_info=True)
+		return -1
+
+
 class _RemoteLoader:
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
@@ -776,6 +801,7 @@ def initialize() -> None:
 		),
 		("nvdaControllerInternal_drawFocusRectNotify", nvdaControllerInternal_drawFocusRectNotify),
 		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
+		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
 	]:
 		try:
 			_setDllFuncPointer(localLib, "_%s" % name, func)

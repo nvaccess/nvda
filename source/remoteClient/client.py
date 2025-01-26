@@ -61,9 +61,6 @@ class RemoteClient:
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
-		self.URLHandlerWindow = url_handler.URLHandlerWindow(
-			callback=self.verifyAndConnect,
-		)
 		url_handler.register_url_handler()
 		self.masterTransport = None
 		self.slaveTransport = None
@@ -110,8 +107,6 @@ class RemoteClient:
 		inputCore.decide_handleRawKey.unregister(self.process_key_input)
 		if not isInstalledCopy():
 			url_handler.unregister_url_handler()
-		self.URLHandlerWindow.destroy()
-		self.URLHandlerWindow = None
 
 	def toggleMute(self):
 		self.localMachine.isMuted = not self.localMachine.isMuted
