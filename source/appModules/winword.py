@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2019-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2019-2025 NV Access Limited, Cyrille Bougot
 
 """App module for Microsoft Word.
 Word and Outlook share a lot of code and components. This app module gathers the code that is relevant for
@@ -92,13 +92,20 @@ class WinwordWordDocument(WordDocument):
 	@script(
 		gestures=["kb:alt+shift+-", "kb:alt+shift+=", "kb:alt+shift+numpadPlus", "kb:alt+shift+numpadMinus"]
 	)
-	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture"):
+	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture") -> None:
 		if not self.WinwordSelectionObject:
-			# We cannot fetch the Word object model, so we therefore cannot report the format change.
+			# We cannot fetch the Word object model, so we therefore cannot report the collapsed state change.
 			# The object model may be unavailable because this is a pure UIA implementation such as Windows 10 Mail,
 			# or it's within Windows Defender Application Guard.
 			# In this case, just let the gesture through and don't report anything.
-			return gesture.send()
+			gesture.send()
+			return
+		if self.WinwordWindowObject.view.Type in [ViewType.OUTLINE, ViewType.DRAFT]:
+			# In draft mode, collapsing headings is not available.
+			# In Outline view, paragraph.CollapsedState does not report the correct value.
+			# So do not report anything in these modes
+			gesture.send()
+			return
 		maxParagraphs = 50
 		for nParagraph, paragraph in enumerate(self.WinwordSelectionObject.paragraphs):
 			if paragraph.outlineLevel != wdOutlineLevelBodyText:
