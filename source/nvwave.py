@@ -39,6 +39,9 @@ import NVDAHelper
 import core
 import globalVars
 from pycaw.utils import AudioUtilities
+from speech import SpeechSequence
+from speech.commands import BreakCommand
+from synthDriverHandler import pre_synthSpeak
 
 from utils.mmdevice import _getOutputDevices
 
@@ -206,6 +209,7 @@ def isInError() -> bool:
 
 
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
+_isLeadingSilenceInserted: bool = False
 
 
 class WasapiWavePlayer(garbageHandler.TrackedObject):
@@ -289,7 +293,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
-		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
+		self.startTrimmingLeadingSilence()
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -324,7 +328,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_open(self._player)
 		except WindowsError:
 			log.warning(
-				"Couldn't open specified or default audio device. " "There may be no audio devices.",
+				"Couldn't open specified or default audio device. There may be no audio devices.",
 			)
 			WavePlayer.audioDeviceError_static = True
 			raise
@@ -352,12 +356,15 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error initially opening the device.
 		"""
+		global _isLeadingSilenceInserted
 		self.open()
 		if self._audioDucker:
 			self._audioDucker.enable()
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
+		if _isLeadingSilenceInserted:
+			self.startTrimmingLeadingSilence(False)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,
@@ -394,7 +401,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete."""
 		self.sync()
-		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
+		self.startTrimmingLeadingSilence()
 		if self._audioDucker:
 			self._audioDucker.disable()
 
@@ -403,7 +410,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
-		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, True)
+		self.startTrimmingLeadingSilence()
 		self._lastActiveTime = None
 		self._isPaused = False
 		self._doneCallbacks = {}
@@ -458,6 +465,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if not (all and e.winerror == E_INVALIDARG):
 				raise
 
+	def startTrimmingLeadingSilence(self, start: bool = True) -> None:
+		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, start)
+
 	def _setVolumeFromConfig(self):
 		if self._purpose is not AudioPurpose.SOUNDS:
 			return
@@ -511,7 +521,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if player._lastActiveTime <= threshold:
 				try:
 					NVDAHelper.localLib.wasPlay_idle(player._player)
-					NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(player._player, True)
+					player.startTrimmingLeadingSilence()
 				except OSError:
 					# #16125: IAudioClock::GetPosition sometimes fails with an access
 					# violation on a device which has been invalidated. This shouldn't happen
@@ -534,6 +544,18 @@ fileWavePlayer: Optional[WavePlayer] = None
 fileWavePlayerThread: threading.Thread | None = None
 
 
+def _onPreSpeak(speechSequence: SpeechSequence):
+	global _isLeadingSilenceInserted
+	_isLeadingSilenceInserted = False
+	# Check if leading silence of the current utterance is inserted by a BreakCommand.
+	for item in speechSequence:
+		if isinstance(item, BreakCommand):
+			_isLeadingSilenceInserted = True
+			break
+		elif isinstance(item, str):
+			break
+
+
 def initialize():
 	NVDAHelper.localLib.wasPlay_create.restype = c_void_p
 	for func in (
@@ -551,12 +573,14 @@ def initialize():
 		func.restype = HRESULT
 	NVDAHelper.localLib.wasPlay_startup()
 	getOnErrorSoundRequested().register(playErrorSound)
+	pre_synthSpeak.register(_onPreSpeak)
 
 
 def terminate() -> None:
 	if WasapiWavePlayer._silenceDevice is not None:
 		NVDAHelper.localLib.wasSilence_terminate()
 	getOnErrorSoundRequested().unregister(playErrorSound)
+	pre_synthSpeak.unregister(_onPreSpeak)
 
 
 def playErrorSound() -> None:
