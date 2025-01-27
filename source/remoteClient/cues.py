@@ -8,12 +8,14 @@ from typing import Dict, Optional, TypedDict
 
 import globalVars
 import nvwave
-import tones
+
+
+from tones import beep, BeepSequence, beepSequenceAsync
 import ui
 from . import configuration
-from .beepSequence import beepSequenceAsync, BeepSequence
 
-local_beep = tones.beep
+
+local_beep = beep
 
 
 class Cue(TypedDict, total=False):
