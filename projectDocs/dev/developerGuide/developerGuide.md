@@ -1393,6 +1393,7 @@ For examples of how to define and use new extension points, please see the code 
 |`Action` |`synthIndexReached` |Notifies when a synthesizer reaches an index during speech.|
 |`Action` |`synthDoneSpeaking` |Notifies when a synthesizer finishes speaking.|
 |`Action` |`synthChanged` |Notifies of synthesizer changes.|
+|`Action` |`pre_synthSpeak` |Notifies when the current synthesizer is about to speak something.|
 
 ### tones {#tonesExtPts}
 
