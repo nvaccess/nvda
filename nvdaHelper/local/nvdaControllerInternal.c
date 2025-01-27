@@ -70,6 +70,11 @@ error_status_t __stdcall nvdaControllerInternal_installAddonPackageFromPath(cons
 	return _nvdaControllerInternal_installAddonPackageFromPath(addonPath);
 }
 
+error_status_t(__stdcall *_nvdaControllerInternal_handleRemoteURL)(const wchar_t*);
+error_status_t __stdcall nvdaControllerInternal_handleRemoteURL(const wchar_t* url) {
+	return _nvdaControllerInternal_handleRemoteURL(url);
+}
+
 error_status_t(__stdcall *_nvdaControllerInternal_drawFocusRectNotify)(const long, const long, const long, const long, const long);
 error_status_t __stdcall nvdaControllerInternal_drawFocusRectNotify(const long hwnd, const long left, const long top, const long right, const long bottom) {
 	return _nvdaControllerInternal_drawFocusRectNotify(hwnd,left,top,right,bottom);
