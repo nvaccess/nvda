@@ -274,6 +274,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
+		# Enable trimming by default for speech only
+		self.enableTrimmingLeadingSilence(purpose is AudioPurpose.SPEECH)
 		if outputDevice == self.DEFAULT_DEVICE_KEY:
 			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
@@ -293,7 +295,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
-		self.startTrimmingLeadingSilence()
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -363,7 +366,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
-		if _isLeadingSilenceInserted:
+		# If a BreakCommand is used to insert leading silence in this utterance,
+		# turn off trimming temporarily.
+		if self._purpose is AudioPurpose.SPEECH and _isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
@@ -401,7 +406,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete."""
 		self.sync()
-		self.startTrimmingLeadingSilence()
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
 		if self._audioDucker:
 			self._audioDucker.disable()
 
@@ -410,7 +416,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
-		self.startTrimmingLeadingSilence()
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
 		self._lastActiveTime = None
 		self._isPaused = False
 		self._doneCallbacks = {}
@@ -465,7 +472,15 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if not (all and e.winerror == E_INVALIDARG):
 				raise
 
+	def enableTrimmingLeadingSilence(self, enable: bool) -> None:
+		"""Enable or disable automatic leading silence removal.
+		This is by default enabled for speech audio, and disabled for non-speech audio."""
+		self._enableTrimmingLeadingSilence = enable
+		if not enable:
+			self.startTrimmingLeadingSilence(False)
+
 	def startTrimmingLeadingSilence(self, start: bool = True) -> None:
+		"""Start or stop trimming the leading silence from the next audio chunk."""
 		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, start)
 
 	def _setVolumeFromConfig(self):
