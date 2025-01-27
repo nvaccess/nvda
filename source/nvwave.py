@@ -274,8 +274,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if audioDucking.isAudioDuckingSupported():
 				self._audioDucker = audioDucking.AudioDucker()
 		self._purpose = purpose
-		# Enable trimming by default for speech only
-		self.enableTrimmingLeadingSilence(purpose is AudioPurpose.SPEECH)
 		if outputDevice == self.DEFAULT_DEVICE_KEY:
 			outputDevice = ""
 		self._player = NVDAHelper.localLib.wasPlay_create(
@@ -295,6 +293,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
+		# Enable trimming by default for speech only
+		self.enableTrimmingLeadingSilence(purpose is AudioPurpose.SPEECH)
 		if self._enableTrimmingLeadingSilence:
 			self.startTrimmingLeadingSilence()
 
