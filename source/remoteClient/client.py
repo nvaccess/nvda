@@ -19,7 +19,7 @@ from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
 
-from . import configuration, cues, dialogs, serializer, server, url_handler
+from . import configuration, cues, dialogs, serializer, server, urlHandler
 from .connectionInfo import ConnectionInfo, ConnectionMode
 from .localMachine import LocalMachine
 from .menu import RemoteMenu
@@ -61,7 +61,7 @@ class RemoteClient:
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
-		url_handler.register_url_handler()
+		urlHandler.register_url_handler()
 		self.masterTransport = None
 		self.slaveTransport = None
 		self.localControlServer = None
@@ -106,7 +106,7 @@ class RemoteClient:
 		core.postNvdaStartup.unregister(self.performAutoconnect)
 		inputCore.decide_handleRawKey.unregister(self.process_key_input)
 		if not isInstalledCopy():
-			url_handler.unregister_url_handler()
+			urlHandler.unregister_url_handler()
 
 	def toggleMute(self):
 		self.localMachine.isMuted = not self.localMachine.isMuted
