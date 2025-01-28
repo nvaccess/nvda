@@ -486,7 +486,7 @@ def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
 def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):
 	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
 
-	def setShown():
+	def setShown(payload: gui.message.Payload):
 		synth._hasWarningBeenShown = True
 		synth.saveSettings()
 
@@ -509,7 +509,7 @@ def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallb
 		).addHelpButton(
 			# Translators: A button in a dialog.
 			label=_("Open user guide"),
-			callback=lambda: gui.contextHelp.showHelp("SupportedSpeechSynths"),
+			callback=lambda payload: gui.contextHelp.showHelp("SupportedSpeechSynths"),
 		).Show()
 
 	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
