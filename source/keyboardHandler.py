@@ -523,7 +523,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			states,
 			buffer,
 			ctypes.sizeof(buffer),
-			0x0,
+			0x04,
 			keyboardLayout,
 		)
 		if res < 0:
@@ -542,7 +542,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					states,
 					newBuffer,
 					ctypes.sizeof(newBuffer),
-					0x0,
+					0x04,
 					keyboardLayout,
 				)
 				# Check if newBuffer.value == buffer.value.
@@ -612,6 +612,27 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else localizedKeyLabels.get(key.lower(), key)
 			for key in self._keyNamesInDisplayOrder
 		)
+
+	def _get__nameForInputHelp(self):
+		"""Returns the name of this gesture for input help mode.
+		If this gesture is not a command and produces a printable character,
+		the character will be prepended to the display name.
+
+		@return: The name to be displayed in input help mode
+		@rtype: str
+		"""
+		if self.script:
+			return super()._get__nameForInputHelp()
+
+		displayName = super()._get__nameForInputHelp()
+		if not self.character:
+			return displayName
+
+		char = ''.join(self.character)
+		if not char.isprintable():
+			return displayName
+
+		return displayName if char.lower() == displayName.lower() else f"{char} {displayName}"
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)

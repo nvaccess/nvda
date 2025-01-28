@@ -150,6 +150,15 @@ class InputGesture(baseObject.AutoPropertyObject):
 		"""
 		return self.getDisplayTextForIdentifier(self.normalizedIdentifiers[0])[1]
 
+	def _get__nameForInputHelp(self):
+		"""The name of this gesture as presented to the user in input help mode.
+		The base implementation returns self.displayName.
+		Subclasses can override this to provide a more specific implementation.
+		@return: The name to be displayed in input help mode.
+		@rtype: str
+		"""
+		return self.displayName
+
 	#: Whether this gesture should be reported when reporting of command gestures is enabled.
 	#: @type: bool
 	shouldReportAsCommand = True
@@ -643,7 +652,7 @@ class InputManager(baseObject.AutoPropertyObject):
 		return bypass
 
 	def _handleInputHelp(self, gesture, onlyLog=False):
-		textList = [gesture.displayName]
+		textList = [gesture._nameForInputHelp]
 		script = gesture.script
 		runScript = False
 		logMsg = "Input help: gesture %s" % gesture.identifiers[0]
@@ -665,28 +674,6 @@ class InputManager(baseObject.AutoPropertyObject):
 			return
 
 		import braille
-		from keyboardHandler import KeyboardInputGesture
-
-		if isinstance(gesture, KeyboardInputGesture) and (not script or not script.__doc__):
-			charList = gesture.character
-			if charList and not any(not i.isprintable() or i.isspace() for i in charList):
-				text = "".join(charList)
-				if len(charList) == 1:
-					speech.speech.speakSpelling(text)
-				else:
-					speech.speakText(
-						text,
-						reason=controlTypes.OutputReason.MESSAGE,
-						symbolLevel=characterProcessing.SymbolLevel.ALL,
-					)
-
-				if gesture.mainKeyName.lower() not in text.lower() or gesture.modifiers:
-					speech.speech.speak(textList, symbolLevel=characterProcessing.SymbolLevel.ALL)
-					textList.insert(0, text)
-					text = " ".join(textList)
-
-				braille.handler.message(text)
-				return
 
 		braille.handler.message("\t\t".join(textList))
 		# Punctuation must be spoken for the gesture name (the first chunk) so that punctuation keys are spoken.
