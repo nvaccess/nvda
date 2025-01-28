@@ -4952,7 +4952,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
 		description=_("Toggles the control between guest and host machine"),
 		category=SCRCAT_REMOTE,
-		gesture="kb:f11",
+		gesture="kb:NVDA+f11",
 	)
 	def script_sendKeys(self, gesture):
 		remoteClient.remoteClient.toggleRemoteKeyControl(gesture)
