@@ -628,7 +628,7 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		if not self.character:
 			return displayName
 
-		char = ''.join(self.character)
+		char = "".join(self.character)
 		if not char.isprintable():
 			return displayName
 
