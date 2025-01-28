@@ -2,10 +2,10 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Rui Batista, Joseph Lee,
 # Leonard de Ruijter, Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Łukasz Golonka, Accessolutions,
 # Julien Cochuyt, Jakub Lukowicz, Bill Dengler, Cyrille Bougot, Rob Meredith, Luke Davis,
-# Burman's Computer and Education Ltd.
+# Burman's Computer and Education Ltd, Cary-rowen.
 
 import itertools
 from typing import (
@@ -44,6 +44,7 @@ from config.configFlags import (
 	ShowMessages,
 	BrailleMode,
 	OutputMode,
+	TypingEcho,
 )
 from config.featureFlag import FeatureFlag
 from config.featureFlagEnums import BoolFlag
@@ -69,6 +70,7 @@ import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 from audio import appsVolume
+from utils.displayString import DisplayStringEnum
 
 
 #: Script category for text review commands.
@@ -147,6 +149,31 @@ def toggleBooleanValue(
 	config.conf[configSection][configKey] = newValue
 
 	msg = enabledMsg if newValue else disabledMsg
+	ui.message(msg)
+
+
+def toggleIntegerValue(
+	configSection: str,
+	configKey: str,
+	enumClass: "DisplayStringEnum",
+	messageTemplate: str,
+) -> None:
+	"""
+	Cycles through integer configuration values and displays the corresponding message.
+
+	:param configSection: The configuration section containing the integer key.
+	:param configKey: The configuration key associated with the integer value.
+	:param enumClass: The enumeration class representing possible states.
+	:param messageTemplate: The message template with a placeholder, `{mode}`, for the state.
+	:return: None.
+	"""
+	currentValue = config.conf[configSection][configKey]
+	numVals = len(enumClass)
+	newValue = (currentValue + 1) % numVals
+	config.conf[configSection][configKey] = newValue
+
+	state = enumClass(newValue)
+	msg = messageTemplate.format(mode=state.displayString)
 	ui.message(msg)
 
 
@@ -536,38 +563,36 @@ class GlobalCommands(ScriptableObject):
 		ui.message("%s %s" % (previousSettingName, previousSettingValue))
 
 	@script(
-		# Translators: Input help mode message for toggle speaked typed characters command.
-		description=_("Toggles on and off the speaking of typed characters"),
+		# Translators: Input help mode message for cycling the reporting of typed characters.
+		description=_("Cycles through options for when to speak typed characters."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+2",
 	)
-	def script_toggleSpeakTypedCharacters(self, gesture):
-		if config.conf["keyboard"]["speakTypedCharacters"]:
-			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters off")
-			config.conf["keyboard"]["speakTypedCharacters"] = False
-		else:
-			# Translators: The message announced when toggling the speak typed characters keyboard setting.
-			state = _("speak typed characters on")
-			config.conf["keyboard"]["speakTypedCharacters"] = True
-		ui.message(state)
+	def script_toggleSpeakTypedCharacters(self, gesture: "inputCore.InputGesture") -> None:
+		toggleIntegerValue(
+			configSection="keyboard",
+			configKey="speakTypedCharacters",
+			enumClass=TypingEcho,
+			# Translators: Reported when the user cycles through speak typed characters modes.
+			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+			messageTemplate=_("Speak typed characters {mode}"),
+		)
 
 	@script(
-		# Translators: Input help mode message for toggle speak typed words command.
-		description=_("Toggles on and off the speaking of typed words"),
+		# Translators: Input help mode message for cycling the reporting of typed words.
+		description=_("Cycles through options for when to speak typed words."),
 		category=SCRCAT_SPEECH,
 		gesture="kb:NVDA+3",
 	)
-	def script_toggleSpeakTypedWords(self, gesture):
-		if config.conf["keyboard"]["speakTypedWords"]:
-			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words off")
-			config.conf["keyboard"]["speakTypedWords"] = False
-		else:
-			# Translators: The message announced when toggling the speak typed words keyboard setting.
-			state = _("speak typed words on")
-			config.conf["keyboard"]["speakTypedWords"] = True
-		ui.message(state)
+	def script_toggleSpeakTypedWords(self, gesture: "inputCore.InputGesture") -> None:
+		toggleIntegerValue(
+			configSection="keyboard",
+			configKey="speakTypedWords",
+			enumClass=TypingEcho,
+			# Translators: Reported when the user cycles through speak typed words modes.
+			# {mode} will be replaced with the mode; e.g. Off, On, Only in edit controls.
+			messageTemplate=_("Speak typed words {mode}"),
+		)
 
 	@script(
 		# Translators: Input help mode message for toggle speak command keys command.
@@ -3223,25 +3248,6 @@ class GlobalCommands(ScriptableObject):
 			config.conf["reviewCursor"]["followFocus"] = True
 		ui.message(state)
 
-	@script(
-		description=_(
-			# Translators: Input help mode message for toggle auto focus focusable elements command.
-			"Toggles on and off automatic movement of the system focus due to browse mode commands",
-		),
-		category=inputCore.SCRCAT_BROWSEMODE,
-		gesture="kb:NVDA+8",
-	)
-	def script_toggleAutoFocusFocusableElements(self, gesture):
-		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			# Translators: presented when toggled.
-			state = _("Automatically set system focus to focusable elements off")
-			config.conf["virtualBuffers"]["autoFocusFocusableElements"] = False
-		else:
-			# Translators: presented when toggled.
-			state = _("Automatically set system focus to focusable elements on")
-			config.conf["virtualBuffers"]["autoFocusFocusableElements"] = True
-		ui.message(state)
-
 	# added by Rui Batista<ruiandrebatista@gmail.com> to implement a battery status script
 	@script(
 		# Translators: Input help mode message for report battery status command.
@@ -4851,7 +4857,6 @@ class GlobalCommands(ScriptableObject):
 			"Increases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageUp",
 	)
 	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._adjustAppsVolume(5)
@@ -4862,7 +4867,6 @@ class GlobalCommands(ScriptableObject):
 			"Decreases the volume of other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+pageDown",
 	)
 	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._adjustAppsVolume(-5)
@@ -4883,7 +4887,6 @@ class GlobalCommands(ScriptableObject):
 			"Mutes or unmutes other applications",
 		),
 		category=SCRCAT_AUDIO,
-		gesture="kb:NVDA+alt+delete",
 	)
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeMute()
