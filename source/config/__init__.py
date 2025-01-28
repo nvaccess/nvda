@@ -526,6 +526,7 @@ class ConfigManager(object):
 		"update",
 		"development",
 		"addonStore",
+		"remote",
 	}
 	"""
 	Sections that only apply to the base configuration;
