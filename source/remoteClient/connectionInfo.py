@@ -12,15 +12,33 @@ from .protocol import SERVER_PORT, URL_PREFIX
 
 
 class URLParsingError(Exception):
-	"""Raised if it's impossible to parse out the URL"""
+	"""Exception raised when URL parsing fails.
+
+	This exception is raised when the URL cannot be parsed due to missing or invalid components
+	such as hostname, key, or mode.
+	"""
 
 
 class ConnectionMode(StrEnum):
+	"""Enum defining the connection mode for remote connections.
+
+	:cvar MASTER: Controller/master mode
+	:cvar SLAVE: Controlled/slave mode
+	"""
+
 	MASTER = "master"
 	SLAVE = "slave"
 
 
 class ConnectionState(StrEnum):
+	"""Enum defining possible states of a remote connection.
+
+	:cvar CONNECTED: Connection is established
+	:cvar DISCONNECTED: No connection is active
+	:cvar CONNECTING: Connection attempt in progress
+	:cvar DISCONNECTING: Disconnection in progress
+	"""
+
 	CONNECTED = "connected"
 	DISCONNECTED = "disconnected"
 	CONNECTING = "connecting"
@@ -29,18 +47,36 @@ class ConnectionState(StrEnum):
 
 @dataclass
 class ConnectionInfo:
+	"""Stores and manages remote connection information.
+
+	This class handles connection details including hostname, mode, authentication key,
+	port number and security settings. It provides methods for URL generation and parsing.
+
+	:param hostname: The remote host to connect to
+	:param mode: The connection mode (master/slave)
+	:param key: Authentication key for the connection
+	:param port: Port number to use, defaults to SERVER_PORT
+	:param insecure: Whether to allow insecure connections, defaults to False
+	"""
+
 	hostname: str
 	mode: ConnectionMode
 	key: str
 	port: int = SERVER_PORT
 	insecure: bool = False
 
-	def __post_init__(self):
+	def __post_init__(self) -> None:
 		self.port = self.port or SERVER_PORT
 		self.mode = ConnectionMode(self.mode)
 
 	@classmethod
-	def fromURL(cls, url):
+	def fromURL(cls, url: str) -> "ConnectionInfo":
+		"""Creates a ConnectionInfo instance from a URL string.
+
+		:param url: The URL to parse
+		:raises URLParsingError: If URL cannot be parsed or contains invalid data
+		:return: A new ConnectionInfo instance
+		"""
 		parsedUrl = urlparse(url)
 		parsedQuery = parse_qs(parsedUrl.query)
 		hostname = parsedUrl.hostname
@@ -60,12 +96,21 @@ class ConnectionInfo:
 			raise URLParsingError("Invalid mode provided: %r" % mode)
 		return cls(hostname=hostname, mode=mode, key=key, port=port, insecure=insecure)
 
-	def getAddress(self):
+	def getAddress(self) -> str:
+		"""Gets the formatted address string.
+
+		:return: Address string in format hostname:port, with IPv6 brackets if needed
+		"""
 		# Handle IPv6 addresses by adding brackets if needed
 		hostname = f"[{self.hostname}]" if ":" in self.hostname else self.hostname
 		return f"{hostname}:{self.port}"
 
-	def _build_url(self, mode: ConnectionMode):
+	def _build_url(self, mode: ConnectionMode) -> str:
+		"""Builds a URL string for the given mode.
+
+		:param mode: The connection mode to use in the URL
+		:return: Complete URL string
+		"""
 		# Build URL components
 		netloc = protocol.hostPortToAddress((self.hostname, self.port))
 		params = {
@@ -88,10 +133,18 @@ class ConnectionInfo:
 			),
 		)
 
-	def getURLToConnect(self):
+	def getURLToConnect(self) -> str:
+		"""Gets a URL for connecting with reversed mode.
+
+		:return: URL string with opposite connection mode
+		"""
 		# Flip master/slave for connection URL
 		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.MASTER else ConnectionMode.MASTER
 		return self._build_url(connect_mode)
 
-	def getURL(self):
+	def getURL(self) -> str:
+		"""Gets the URL representation of the current connection info.
+
+		:return: URL string with current connection mode
+		"""
 		return self._build_url(self.mode)
