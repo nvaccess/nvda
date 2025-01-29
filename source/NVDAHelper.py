@@ -694,7 +694,6 @@ def nvdaControllerInternal_handleRemoteURL(url):
 	:param url: The nvdaremote:// URL to process
 	:return: 0 on success, -1 on failure
 	"""
-	import queueHandler
 	from remoteClient import connectionInfo, remoteClient as client
 
 	try:
