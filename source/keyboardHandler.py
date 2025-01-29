@@ -615,24 +615,27 @@ class KeyboardInputGesture(inputCore.InputGesture):
 
 	def _get__nameForInputHelp(self):
 		"""Returns the name of this gesture for input help mode.
-		If this gesture is not a command and produces a printable character,
-		the character will be prepended to the display name.
-
+		For keyboard gestures that produce printable characters,
+		the character will be prepended to the display name,
+		unless it contains NVDA modifier.
 		@return: The name to be displayed in input help mode
 		@rtype: str
 		"""
-		if self.script:
-			return super()._get__nameForInputHelp()
-
 		displayName = super()._get__nameForInputHelp()
+		# NVDA commands keep original behavior
+		if any(isNVDAModifierKey(mod[0], mod[1]) for mod in self.modifiers):
+			return displayName
+		# Get character if available
 		if not self.character:
 			return displayName
-
-		char = "".join(self.character)
+		char = ''.join(self.character)
 		if not char.isprintable():
 			return displayName
-
-		return displayName if char.lower() == displayName.lower() else f"{char} {displayName}"
+		# Avoid duplicating if displayName is the same as character (case insensitive)
+		if displayName.lower() == char.lower():
+			return displayName
+		# Add character before display name
+		return f"{char} {displayName}"
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
