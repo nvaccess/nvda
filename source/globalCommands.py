@@ -4931,7 +4931,7 @@ class GlobalCommands(ScriptableObject):
 	def script_disconnectFromRemote(self, gesture):
 		if not remoteClient.remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
-			ui.message(_("Not connected."))
+			ui.message(_("Not connected"))
 			return
 		remoteClient.remoteClient.disconnect()
 
