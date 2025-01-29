@@ -347,7 +347,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	[[controlserver]]
 		autoconnect = boolean(default=False)
 		self_hosted = boolean(default=False)
-		connection_type = integer(default=0)
+		connection_type = integer(default=0) # 0: slave, 1: master
 		host = string(default="")
 		port = integer(default=6837)
 		key = string(default="")
