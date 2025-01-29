@@ -690,7 +690,7 @@ def nvdaControllerInternal_openConfigDirectory():
 @WINFUNCTYPE(c_long, c_wchar_p)
 def nvdaControllerInternal_handleRemoteURL(url):
 	"""Handles a remote URL request from the slave process.
-	
+
 	:param url: The nvdaremote:// URL to process
 	:return: 0 on success, -1 on failure
 	"""
