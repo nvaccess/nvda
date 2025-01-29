@@ -11,38 +11,38 @@ PROTOCOL_VERSION: int = 2
 
 class RemoteMessageType(Enum):
 	# Connection and Protocol Messages
-	protocol_version = "protocol_version"
-	join = "join"
-	channel_joined = "channel_joined"
-	client_joined = "client_joined"
-	client_left = "client_left"
-	generate_key = "generate_key"
+	PROTOCOL_VERSION = "protocol_version"
+	JOIN = "join"
+	CHANNEL_JOINED = "channel_joined"
+	CLIENT_JOINED = "client_joined"
+	CLIENT_LEFT = "client_left"
+	GENERATE_KEY = "generate_key"
 
 	# Control Messages
-	key = "key"
-	speak = "speak"
-	cancel = "cancel"
-	pause_speech = "pause_speech"
-	tone = "tone"
-	wave = "wave"
-	send_SAS = "send_SAS"  # Send Secure Attention Sequence
-	index = "index"
+	KEY = "key"
+	SPEAK = "speak"
+	CANCEL = "cancel"
+	PAUSE_SPEECH = "pause_speech"
+	TONE = "tone"
+	WAVE = "wave"
+	SEND_SAS = "send_SAS"  # Send Secure Attention Sequence
+	INDEX = "index"
 
 	# Display and Braille Messages
-	display = "display"
-	braille_input = "braille_input"
-	set_braille_info = "set_braille_info"
-	set_display_size = "set_display_size"
+	DISPLAY = "display"
+	BRAILLE_INPUT = "braille_input"
+	SET_BRAILLE_INFO = "set_braille_info"
+	SET_DISPLAY_SIZE = "set_display_size"
 
 	# Clipboard Operations
-	set_clipboard_text = "set_clipboard_text"
+	SET_CLIPBOARD_TEXT = "set_clipboard_text"
 
 	# System Messages
-	motd = "motd"
-	version_mismatch = "version_mismatch"
-	ping = "ping"
-	error = "error"
-	nvda_not_connected = (
+	MOTD = "motd"
+	VERSION_MISMATCH = "version_mismatch"
+	PINGping = "ping"
+	ERROR = "error"
+	NVDA_NOT_CONNECTED = (
 		"nvda_not_connected"  # This was added in version 2 but never implemented on the server
 	)
 
@@ -51,7 +51,7 @@ SERVER_PORT = 6837
 URL_PREFIX = "nvdaremote://"
 
 
-def addressToHostPort(addr):
+def addressToHostPort(addr) -> tuple:
 	"""Converts an address such as google.com:80 into a tuple of (address, port).
 	If no port is given, use SERVER_PORT."""
 	addr = urllib.parse.urlparse("//" + addr)
@@ -59,7 +59,10 @@ def addressToHostPort(addr):
 	return (addr.hostname, port)
 
 
-def hostPortToAddress(hostPort):
+def hostPortToAddress(hostPort: tuple) -> str:
+	"""Converts a tuple of (address, port) into a string such as google.com:80.
+	If the port is SERVER_PORT, it is omitted
+	"""
 	host, port = hostPort
 	if ":" in host:
 		host = "[" + host + "]"

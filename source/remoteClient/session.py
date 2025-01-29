@@ -123,20 +123,20 @@ class RemoteSession:
 		self.callbacksAdded = False
 		self.transport = transport
 		self.transport.registerInbound(
-			RemoteMessageType.version_mismatch,
+			RemoteMessageType.VERSION_MISMATCH,
 			self.handleVersionMismatch,
 		)
-		self.transport.registerInbound(RemoteMessageType.motd, self.handleMOTD)
+		self.transport.registerInbound(RemoteMessageType.MOTD, self.handleMOTD)
 		self.transport.registerInbound(
-			RemoteMessageType.set_clipboard_text,
+			RemoteMessageType.SET_CLIPBOARD_TEXT,
 			self.localMachine.setClipboardText,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.client_joined,
+			RemoteMessageType.CLIENT_JOINED,
 			self.handleClientConnected,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.client_left,
+			RemoteMessageType.CLIENT_LEFT,
 			self.handleClientDisconnected,
 		)
 
@@ -267,33 +267,33 @@ class SlaveSession(RemoteSession):
 	) -> None:
 		super().__init__(localMachine, transport)
 		self.transport.registerInbound(
-			RemoteMessageType.key,
+			RemoteMessageType.KEY,
 			self.localMachine.sendKey,
 		)
 		self.masters = defaultdict(dict)
 		self.masterDisplaySizes = []
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
-			RemoteMessageType.channel_joined,
+			RemoteMessageType.CHANNEL_JOINED,
 			self.handleChannelJoined,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.set_braille_info,
+			RemoteMessageType.SET_BRAILLE_INFO,
 			self.handleBrailleInfo,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.set_display_size,
+			RemoteMessageType.SET_DISPLAY_SIZE,
 			self.setDisplaySize,
 		)
 		braille.filter_displaySize.register(
 			self.localMachine.handleFilterDisplaySize,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.braille_input,
+			RemoteMessageType.BRAILLE_INPUT,
 			self.localMachine.brailleInput,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.send_SAS,
+			RemoteMessageType.SEND_SAS,
 			self.localMachine.sendSAS,
 		)
 
@@ -302,14 +302,14 @@ class SlaveSession(RemoteSession):
 			return
 		self.transport.registerOutbound(
 			tones.decide_beep,
-			RemoteMessageType.tone,
+			RemoteMessageType.TONE,
 		)
 		self.transport.registerOutbound(
 			speechCanceled,
-			RemoteMessageType.cancel,
+			RemoteMessageType.CANCEL,
 		)
-		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.wave)
-		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.pause_speech)
+		self.transport.registerOutbound(decide_playWaveFile, RemoteMessageType.WAVE)
+		self.transport.registerOutbound(post_speechPaused, RemoteMessageType.PAUSE_SPEECH)
 		braille.pre_writeCells.register(self.display)
 		pre_speechQueued.register(self.sendSpeech)
 		self.callbacksAdded = True
@@ -317,10 +317,10 @@ class SlaveSession(RemoteSession):
 	def unregisterCallbacks(self) -> None:
 		if not self.callbacksAdded:
 			return
-		self.transport.unregisterOutbound(RemoteMessageType.tone)
-		self.transport.unregisterOutbound(RemoteMessageType.cancel)
-		self.transport.unregisterOutbound(RemoteMessageType.wave)
-		self.transport.unregisterOutbound(RemoteMessageType.pause_speech)
+		self.transport.unregisterOutbound(RemoteMessageType.TONE)
+		self.transport.unregisterOutbound(RemoteMessageType.CANCEL)
+		self.transport.unregisterOutbound(RemoteMessageType.WAVE)
+		self.transport.unregisterOutbound(RemoteMessageType.PAUSE_SPEECH)
 		braille.pre_writeCells.unregister(self.display)
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
@@ -406,7 +406,7 @@ class SlaveSession(RemoteSession):
 		to master instances for speaking.
 		"""
 		self.transport.send(
-			RemoteMessageType.speak,
+			RemoteMessageType.SPEAK,
 			sequence=self._filterUnsupportedSpeechCommands(
 				speechSequence,
 			),
@@ -415,7 +415,7 @@ class SlaveSession(RemoteSession):
 
 	def pauseSpeech(self, switch: bool) -> None:
 		"""Toggle speech pause state on master instances."""
-		self.transport.send(type=RemoteMessageType.pause_speech, switch=switch)
+		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
 
 	def display(self, cells: List[int]) -> None:
 		"""Forward braille display content to master instances.
@@ -424,7 +424,7 @@ class SlaveSession(RemoteSession):
 		"""
 		# Only send braille data when there are controlling machines with a braille display
 		if self.hasBrailleMasters():
-			self.transport.send(type=RemoteMessageType.display, cells=cells)
+			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
 
 	def hasBrailleMasters(self) -> bool:
 		"""Check if any connected masters have braille displays.
@@ -462,39 +462,39 @@ class MasterSession(RemoteSession):
 		super().__init__(localMachine, transport)
 		self.slaves = defaultdict(dict)
 		self.transport.registerInbound(
-			RemoteMessageType.speak,
+			RemoteMessageType.SPEAK,
 			self.localMachine.speak,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.cancel,
+			RemoteMessageType.CANCEL,
 			self.localMachine.cancelSpeech,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.pause_speech,
+			RemoteMessageType.PAUSE_SPEECH,
 			self.localMachine.pauseSpeech,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.tone,
+			RemoteMessageType.TONE,
 			self.localMachine.beep,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.wave,
+			RemoteMessageType.WAVE,
 			self.localMachine.playWave,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.display,
+			RemoteMessageType.DISPLAY,
 			self.localMachine.display,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.nvda_not_connected,
+			RemoteMessageType.NVDA_NOT_CONNECTED,
 			self.handleNVDANotConnected,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.channel_joined,
+			RemoteMessageType.CHANNEL_JOINED,
 			self.handleChannel_joined,
 		)
 		self.transport.registerInbound(
-			RemoteMessageType.set_braille_info,
+			RemoteMessageType.SET_BRAILLE_INFO,
 			self.sendBrailleInfo,
 		)
 
@@ -561,7 +561,7 @@ class MasterSession(RemoteSession):
 			displaySize if displaySize else 0,
 		)
 		self.transport.send(
-			type=RemoteMessageType.set_braille_info,
+			type=RemoteMessageType.SET_BRAILLE_INFO,
 			name=display.name,
 			numCells=displaySize,
 		)
@@ -611,7 +611,7 @@ class MasterSession(RemoteSession):
 				dict["space"] = gesture.space
 			if hasattr(gesture, "routingIndex") and "routingIndex" not in dict:
 				dict["routingIndex"] = gesture.routingIndex
-			self.transport.send(type=RemoteMessageType.braille_input, **dict)
+			self.transport.send(type=RemoteMessageType.BRAILLE_INPUT, **dict)
 			return False
 		else:
 			return True

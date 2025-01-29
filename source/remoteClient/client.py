@@ -125,7 +125,7 @@ class RemoteClient:
 			ui.message(_("Not connected."))
 			return
 		try:
-			connector.send(RemoteMessageType.set_clipboard_text, text=api.getClipData())
+			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
 			cues.clipboard_pushed()
 		except TypeError:
 			log.exception("Unable to push clipboard")
@@ -143,7 +143,7 @@ class RemoteClient:
 		if self.masterTransport is None:
 			log.error("No master transport to send SAS")
 			return
-		self.masterTransport.send(RemoteMessageType.send_SAS)
+		self.masterTransport.send(RemoteMessageType.SEND_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
 		log.info(
@@ -383,7 +383,7 @@ class RemoteClient:
 				wx.CallAfter(script, gesture)
 				return False
 		self.masterTransport.send(
-			RemoteMessageType.key,
+			RemoteMessageType.KEY,
 			vk_code=vkCode,
 			extended=extended,
 			pressed=pressed,
@@ -413,7 +413,7 @@ class RemoteClient:
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
 			self.masterTransport.send(
-				RemoteMessageType.key,
+				RemoteMessageType.KEY,
 				vk_code=k[0],
 				extended=k[1],
 				pressed=False,

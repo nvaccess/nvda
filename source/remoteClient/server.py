@@ -287,7 +287,7 @@ class LocalRelayServer:
 			if time.time() - self.lastPingTime >= self.PING_TIME:
 				for client in self.clients.values():
 					if client.authenticated:
-						client.send(type=RemoteMessageType.ping)
+						client.send(type=RemoteMessageType.PINGping)
 				self.lastPingTime = time.time()
 
 	def acceptNewConnection(self, sock: ssl.SSLSocket) -> None:
@@ -402,7 +402,7 @@ class Client:
 		if password != self.server.password:
 			log.warning(f"Failed authentication attempt from client {self.id}")
 			self.send(
-				type=RemoteMessageType.error,
+				type=RemoteMessageType.ERROR,
 				message="incorrect_password",
 			)
 			self.close()
@@ -418,7 +418,7 @@ class Client:
 			clients.append(c.asDict())
 			client_ids.append(c.id)
 		self.send(
-			type=RemoteMessageType.channel_joined,
+			type=RemoteMessageType.CHANNEL_JOINED,
 			channel=self.server.password,
 			user_ids=client_ids,
 			clients=clients,

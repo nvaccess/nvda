@@ -661,15 +661,15 @@ class RelayTransport(TCPTransport):
 		)
 
 	def onConnected(self) -> None:
-		self.send(RemoteMessageType.protocol_version, version=self.protocol_version)
+		self.send(RemoteMessageType.PROTOCOL_VERSION, version=self.protocol_version)
 		if self.channel is not None:
 			self.send(
-				RemoteMessageType.join,
+				RemoteMessageType.JOIN,
 				channel=self.channel,
 				connection_type=self.connectionType,
 			)
 		else:
-			self.send(RemoteMessageType.generate_key)
+			self.send(RemoteMessageType.GENERATE_KEY)
 
 
 class ConnectorThread(threading.Thread):

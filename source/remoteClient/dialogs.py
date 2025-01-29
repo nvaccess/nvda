@@ -63,7 +63,7 @@ class ClientPanel(wx.Panel):
 			serializer=serializer.JSONSerializer(),
 			insecure=insecure,
 		)
-		self.keyConnector.registerInbound(RemoteMessageType.generate_key, self.handleKeyGenerated)
+		self.keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self.handleKeyGenerated)
 		self.keyConnector.transportCertificateAuthenticationFailed.register(self.handleCertificateFailed)
 		t = threading.Thread(target=self.keyConnector.run)
 		t.start()

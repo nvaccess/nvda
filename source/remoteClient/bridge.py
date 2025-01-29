@@ -49,10 +49,10 @@ class BridgeTransport:
 	"""
 
 	excluded: Set[RemoteMessageType] = {
-		RemoteMessageType.client_joined,
-		RemoteMessageType.client_left,
-		RemoteMessageType.channel_joined,
-		RemoteMessageType.set_braille_info,
+		RemoteMessageType.CLIENT_JOINED,
+		RemoteMessageType.CLIENT_LEFT,
+		RemoteMessageType.CHANNEL_JOINED,
+		RemoteMessageType.SET_BRAILLE_INFO,
 	}
 
 	def __init__(self, t1: Transport, t2: Transport) -> None:

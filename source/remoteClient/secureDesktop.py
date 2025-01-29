@@ -102,10 +102,10 @@ class SecureDesktopHandler:
 
 		if self._slaveSession is not None and self._slaveSession.transport is not None:
 			transport = self._slaveSession.transport
-			transport.unregisterInbound(RemoteMessageType.set_braille_info, self._onMasterDisplayChange)
+			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onMasterDisplayChange)
 		self._slaveSession = session
 		session.transport.registerInbound(
-			RemoteMessageType.set_braille_info,
+			RemoteMessageType.SET_BRAILLE_INFO,
 			self._onMasterDisplayChange,
 		)
 
@@ -149,9 +149,9 @@ class SecureDesktopHandler:
 			insecure=True,
 			connectionType=ConnectionMode.MASTER,
 		)
-		self.sdRelay.registerInbound(RemoteMessageType.client_joined, self._onMasterDisplayChange)
+		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onMasterDisplayChange)
 		self.slaveSession.transport.registerInbound(
-			RemoteMessageType.set_braille_info,
+			RemoteMessageType.SET_BRAILLE_INFO,
 			self._onMasterDisplayChange,
 		)
 
@@ -187,7 +187,7 @@ class SecureDesktopHandler:
 
 		if self.slaveSession is not None and self.slaveSession.transport is not None:
 			self.slaveSession.transport.unregisterInbound(
-				RemoteMessageType.set_braille_info,
+				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onMasterDisplayChange,
 			)
 			self.slaveSession.setDisplaySize()
@@ -233,7 +233,7 @@ class SecureDesktopHandler:
 		if self.sdRelay is not None and self.slaveSession is not None:
 			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(
-				type=RemoteMessageType.set_display_size,
+				type=RemoteMessageType.SET_DISPLAY_SIZE,
 				sizes=self.slaveSession.masterDisplaySizes,
 			)
 		else:
