@@ -30,6 +30,10 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 		
 		# Send to the new API endpoint
 		try {
+			# Debug: Print the JSON payload
+			Write-Host "Sending JSON payload to NV Access server:"
+			Write-Host (Get-Content deploy.json -Raw)
+			
 			$response = Invoke-RestMethod -Uri "https://api.nvaccess.org/appveyor-hook" `
 				-Method Post `
 				-Headers @{
