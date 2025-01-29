@@ -509,6 +509,7 @@ def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
 	"""Migrate remote.ini settings into the main config."""
 	remoteIniPath = os.path.join(os.path.dirname(profile.filename), "remote.ini")
 	if not os.path.isfile(remoteIniPath):
+		log.debug(f"No remote.ini found, no action taken. Checked {remoteIniPath}")
 		return
 
 	try:
