@@ -245,11 +245,11 @@ class EditableText(TextContainerObject, ScriptableObject):
 			if not caretMoved and self._supportsSentenceNavigation is not False:
 				info.move(textInfos.UNIT_SENTENCE, direction)
 				info.updateCaret()
-			self._caretScriptPostMovedHelper(
-				textInfos.UNIT_SENTENCE if not caretMoved else textInfos.UNIT_LINE,
-				gesture,
-				info,
-			)
+				self._caretScriptPostMovedHelper(
+					textInfos.UNIT_SENTENCE,
+					gesture,
+					info,
+				)
 		except Exception:
 			if self._supportsSentenceNavigation is True:
 				log.exception("Error in _caretMoveBySentenceHelper")
