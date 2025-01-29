@@ -4945,6 +4945,8 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_connectToRemote(self, gesture):
 		if remoteClient.remoteClient.isConnected() or remoteClient.remoteClient.connecting:
+			# Translators: A message indicating that the remote client is already connected.
+			ui.message(_("Already connected"))
 			return
 		remoteClient.remoteClient.doConnect()
 
