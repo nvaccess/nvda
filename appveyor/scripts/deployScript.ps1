@@ -14,6 +14,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 		echo apiversion: $apiVersion
 		$apiCompatTo = (py -c "import sys; sys.path.append('source'); from addonAPIVersion import BACK_COMPAT_TO; print('{}.{}.{}'.format(*BACK_COMPAT_TO))")
 		echo apiBackCompatTo: $apiCompatTo
+
 		$data = @{
 			jobId=$env:APPVEYOR_JOB_ID;
 			commit=$env:APPVEYOR_REPO_COMMIT;
@@ -22,15 +23,26 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 			avVersion=$env:APPVEYOR_BUILD_VERSION;
 			branch=$env:APPVEYOR_REPO_BRANCH;
 			exe=$exe; hash=$hash;
-			artifacts=$artifacts
+			feature_buildSymbols=$env:feature_buildSymbols
 		}
 		ConvertTo-Json -InputObject $data -Compress | Out-File -FilePath deploy.json
 		Push-AppveyorArtifact deploy.json
-		# Execute the deploy script on the NV Access server via ssh.
-		# Warning: if the server address is changed, 
-		# The new address must be also included in appveyor\ssh_known_hosts in this repo
-		# Otherwise ssh will freeze on input!
-		cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
+		
+		# Send to the new API endpoint
+		try {
+			$response = Invoke-RestMethod -Uri "https://api.nvaccess.org/appveyor-hook" `
+				-Method Post `
+				-Headers @{
+					"Authorization" = "Bearer $env:APPVEYOR_WEBHOOK_TOKEN"
+					"Content-Type" = "application/json"
+				} `
+				-Body (Get-Content deploy.json -Raw)
+			Write-Host "Successfully notified NV Access server"
+		}
+		catch {
+			Write-Host "Failed to notify NV Access server: $_"
+			throw
+		}
 	}
 
 	# Upload symbols to Mozilla if feature enabled.
