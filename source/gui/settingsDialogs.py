@@ -3342,8 +3342,8 @@ class RemoteSettingsPanel(SettingsPanel):
 	host: wx.TextCtrl
 	port: wx.SpinCtrl
 	key: wx.TextCtrl
-	play_sounds: wx.CheckBox
-	delete_fingerprints: wx.Button
+	playSounds: wx.CheckBox
+	deleteFingerprints: wx.Button
 
 	def makeSettings(self, settingsSizer):
 		self.config = configuration.get_config()
@@ -3356,7 +3356,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self.on_autoconnect)
 		sHelper.addItem(self.autoconnect)
-		# Translators: Whether or not to use a relay server when autoconnecting
 		self.client_or_server = wx.RadioBox(
 			self,
 			wx.ID_ANY,
@@ -3395,12 +3394,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.key.Enable(False)
 		sHelper.addItem(self.key)
 		# Translators: A checkbox in add-on options dialog to set whether sounds play instead of beeps.
-		self.play_sounds = wx.CheckBox(self, wx.ID_ANY, label=_("Play sounds instead of beeps"))
-		sHelper.addItem(self.play_sounds)
+		self.playSounds = wx.CheckBox(self, wx.ID_ANY, label=_("Play sounds instead of beeps"))
+		sHelper.addItem(self.playSounds)
 		# Translators: A button in add-on options dialog to delete all fingerprints of unauthorized certificates.
-		self.delete_fingerprints = wx.Button(self, wx.ID_ANY, label=_("Delete all trusted fingerprints"))
-		self.delete_fingerprints.Bind(wx.EVT_BUTTON, self.on_delete_fingerprints)
-		sHelper.addItem(self.delete_fingerprints)
+		self.deleteFingerprints = wx.Button(self, wx.ID_ANY, label=_("Delete all trusted fingerprints"))
+		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.on_delete_fingerprints)
+		sHelper.addItem(self.deleteFingerprints)
 		self.set_from_config()
 
 	def on_autoconnect(self, evt: wx.CommandEvent) -> None:
@@ -3429,7 +3428,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(cs["port"]))
 		self.key.SetValue(cs["key"])
 		self.set_controls()
-		self.play_sounds.SetValue(self.config["ui"]["play_sounds"])
+		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
 
 	def on_delete_fingerprints(self, evt: wx.CommandEvent) -> None:
 		if (
@@ -3483,7 +3482,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		else:
 			cs["port"] = int(self.port.GetValue())
 		cs["key"] = self.key.GetValue()
-		self.config["ui"]["play_sounds"] = self.play_sounds.GetValue()
+		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
 
 
 class TouchInteractionPanel(SettingsPanel):
