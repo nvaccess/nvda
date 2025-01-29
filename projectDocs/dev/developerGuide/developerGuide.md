@@ -1670,7 +1670,7 @@ A convenient way of responding to button presses, especially for non-modal messa
 This is achieved by passing a `callback` function to `addButton`, `addButtons`, or any of the add button helpers.
 
 A callback should be a function which accepts exactly one positional argument.
-When called, a `Payload` datastructure will be passed in.
+When called, a `Payload` data structure will be passed in.
 This data structure currently contains no information, though in future it may be augmented to contain information about the dialog's state and the context from which the callback was called.
 
 #### Convenience methods
