@@ -67,5 +67,5 @@ def hostPortToAddress(hostPort: tuple) -> str:
 	if ":" in host:
 		host = f"[{host}]"
 	if port != SERVER_PORT:
-		return host + ":" + str(port)
+		return f"{host}:{port}"
 	return host
