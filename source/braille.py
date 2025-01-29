@@ -1769,7 +1769,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		#: The translated braille representation of the entire buffer.
 		#: @type: [int, ...]
 		self.brailleCells = []
-		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 1)]
+		self._windowRowBufferOffsets: list[tuple[int, int]] = [(0, 0)]
 		"""
 		A list representing the rows in the braille window,
 		each item being a tuple of start and end braille buffer offsets.
@@ -1879,11 +1879,13 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		"""
 		Converts a position relative to the braille window to a position relative to the braille buffer.
 		"""
+		if self.handler.displaySize == 0:
+			return 0
 		windowPos = max(min(windowPos, self.handler.displaySize), 0)
 		row, col = divmod(windowPos, self.handler.displayDimensions.numCols)
 		if row < len(self._windowRowBufferOffsets):
 			start, end = self._windowRowBufferOffsets[row]
-			return min(start + col, end - 1)
+			return max(min(start + col, end - 1), 0)
 		raise ValueError("Position outside window")
 
 	windowStartPos: int
@@ -1905,7 +1907,7 @@ class BrailleBuffer(baseObject.AutoPropertyObject):
 		self._windowRowBufferOffsets.clear()
 		if len(self.brailleCells) == 0:
 			# Initialising with no actual braille content.
-			self._windowRowBufferOffsets = [(0, 1)]
+			self._windowRowBufferOffsets = [(0, 0)]
 			return
 		doWordWrap = config.conf["braille"]["wordWrap"]
 		bufferEnd = len(self.brailleCells)
@@ -2539,9 +2541,14 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 	_cache_displayDimensions = True
 
 	def _get_displayDimensions(self) -> DisplayDimensions:
+		if not self.display:
+			numRows = numCols = 0
+		else:
+			numRows = self.display.numRows
+			numCols = self.display.numCols if numRows > 1 else self.display.numCells
 		rawDisplayDimensions = DisplayDimensions(
-			numRows=self.display.numRows if self.display else 0,
-			numCols=self.display.numCols if self.display else 0,
+			numRows=numRows,
+			numCols=numCols,
 		)
 		filteredDisplayDimensions = filter_displayDimensions.apply(rawDisplayDimensions)
 		# Would be nice if there were a more official way to find out if the displaySize filter is currently registered by at least 1 handler.
@@ -3279,29 +3286,36 @@ def terminate():
 
 
 class BrailleDisplayDriver(driverHandler.Driver):
-	"""Abstract base braille display driver.
-	Each braille display driver should be a separate Python module in the root brailleDisplayDrivers directory
-	containing a BrailleDisplayDriver class which inherits from this base class.
+	"""
+	Abstract base braille display driver.
 
-	At a minimum, drivers must set L{name} and L{description} and override the L{check} method.
-	To display braille, L{numCells} and L{display} must be implemented.
+	Each braille display driver should be a separate Python module in the root ``brailleDisplayDrivers`` directory,
+	containing a ``BrailleDisplayDriver`` class that inherits from this base class.
+
+	At a minimum, drivers must:
+		- Set :attr:`name` and :attr:`description`.
+		- Override :meth:`check`.
+
+	To display braille:
+		- :meth:`display` must be implemented.
+		- For a single-line display, :attr:`numCells` must be implemented.
+		- For a multi-line display, :attr:`numRows` and :attr:`numCols` must be implemented.
 
 	To support automatic detection of braille displays belonging to this driver:
-		* The driver must be thread safe and L{isThreadSafe} should be set to C{True}
-		* L{supportsAutomaticDetection} must be set to C{True}.
-		* L{registerAutomaticDetection} must be implemented.
+		* The driver must be thread-safe, and :attr:`isThreadSafe` should be set to ``True``.
+		* :attr:`supportsAutomaticDetection` must be set to ``True``.
+		* :meth:`registerAutomaticDetection` must be implemented.
 
-	Drivers should dispatch input such as presses of buttons, wheels or other controls
-	using the L{inputCore} framework.
-	They should subclass L{BrailleDisplayGesture}
-	and execute instances of those gestures using L{inputCore.manager.executeGesture}.
-	These gestures can be mapped in L{gestureMap}.
-	A driver can also inherit L{baseObject.ScriptableObject} to provide display specific scripts.
+	Drivers should dispatch input (e.g., button presses or controls) using the :mod:`inputCore` framework.
+	They should subclass :class:`BrailleDisplayGesture` and execute instances of those gestures
+	using :meth:`inputCore.manager.executeGesture`. These gestures can be mapped in :attr:`gestureMap`.
+	A driver can also inherit from :class:`baseObject.ScriptableObject` to provide display-specific scripts.
 
-	@see: L{hwIo} for raw serial and HID I/O.
+	.. seealso::
+		:mod:`hwIo` for raw serial and HID I/O.
 
-	There are factory functions to create L{autoSettingsUtils.driverSetting.DriverSetting} instances
-	for common display specific settings; e.g. L{DotFirmnessSetting}.
+	There are factory functions to create :class:`autoSettingsUtils.driverSetting.DriverSetting` instances
+	for common display-specific settings, such as :meth:`DotFirmnessSetting`.
 	"""
 
 	_configSection = "braille"
