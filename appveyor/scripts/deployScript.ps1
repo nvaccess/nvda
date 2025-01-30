@@ -30,12 +30,11 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 		# Warning: if the server address is changed, 
 		# The new address must be also included in appveyor\ssh_known_hosts in this repo
 		# Otherwise ssh will freeze on input!
-		#cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
-		# Disable the old hook for now
+		cat deploy.json | ssh nvaccess@deploy.nvaccess.org nvdaAppveyorHook
 
-		# Send to the new API endpoint
+		# Send to the new API endpoint (non-blocking)
+		Write-Host "Attempting to send data to NV Access server..."
 		try {
-			Write-Host "Attempting to send data to NV Access server..."
 			$jsonContent = Get-Content deploy.json -Raw
 			Write-Host "JSON payload:"
 			Write-Host $jsonContent
@@ -52,15 +51,14 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 			Write-Host "Successfully notified NV Access server"
 		}
 		catch {
-			Write-Host "Failed to notify NV Access server"
+			Write-Host "Failed to notify NV Access server (API endpoint)"
 			Write-Host "Error details:"
 			Write-Host $_.Exception.Message
 			Write-Host $_.Exception.Response.StatusCode.value__
 			Write-Host $_.Exception.Response.StatusDescription
-			throw
+			# throw
+			# Don't throw the error - we want this to be non-blocking
 		}
-
-
 	}
 
 	# Upload symbols to Mozilla if feature enabled.
