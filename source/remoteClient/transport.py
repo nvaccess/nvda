@@ -79,7 +79,7 @@ class RemoteExtensionPoint:
 		if self.filter:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
 			kwargs = self.filter(*args, **kwargs)
-		if self.transport:
+		if self.transport is not None:
 			self.transport.send(self.messageType, **kwargs)
 		return True
 
