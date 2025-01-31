@@ -3,26 +3,27 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-"""
-Bridge Transport Module
-======================
+"""Bridge Transport Module.
 
 This module provides functionality to bridge two NVDA Remote transports together,
 enabling bidirectional message passing between two transport instances while
 handling message filtering and routing.
 
 The bridge acts as an intermediary layer that:
-- Connects two transport instances
-- Routes messages between them
-- Filters out specific message types that shouldn't be forwarded
-- Manages the lifecycle of message handlers
+
+* Connects two transport instances
+* Routes messages between them  
+* Filters out specific message types that shouldn't be forwarded
+* Manages the lifecycle of message handlers
 
 Example:
-	>>> transport1 = TCPTransport(serializer, addr1)
-	>>> transport2 = TCPTransport(serializer, addr2)
-	>>> bridge = BridgeTransport(transport1, transport2)
-	# Messages will now flow between transport1 and transport2
-	>>> bridge.disconnect()  # Clean up when done
+    Create and use a bridge between two transports::
+
+        transport1 = TCPTransport(serializer, addr1)
+        transport2 = TCPTransport(serializer, addr2) 
+        bridge = BridgeTransport(transport1, transport2)
+        # Messages will now flow between transport1 and transport2
+        bridge.disconnect()  # Clean up when done
 """
 
 from typing import Dict, Set
@@ -34,18 +35,22 @@ from .transport import Transport
 class BridgeTransport:
 	"""A bridge between two NVDA Remote transport instances.
 
-	This class creates a bidirectional bridge between two Transport instances,
+	Creates a bidirectional bridge between two Transport instances,
 	allowing them to exchange messages while providing message filtering capabilities.
-	It automatically sets up message handlers for all RemoteMessageTypes and manages
+	Automatically sets up message handlers for all RemoteMessageTypes and manages
 	their lifecycle.
 
-	Attributes:
-		excluded (Set[RemoteMessageType]): Message types that should not be forwarded between transports.
-			By default includes connection management messages that should remain local.
-		t1 (Transport): First transport instance to bridge
-		t2 (Transport): Second transport instance to bridge
-		t1_callbacks (Dict[RemoteMessageType, callable]): Storage for t1's message handlers
-		t2_callbacks (Dict[RemoteMessageType, callable]): Storage for t2's message handlers
+	:ivar excluded: Message types that should not be forwarded between transports.
+	    By default includes connection management messages that should remain local.
+	:type excluded: Set[RemoteMessageType]
+	:ivar t1: First transport instance to bridge
+	:type t1: Transport  
+	:ivar t2: Second transport instance to bridge
+	:type t2: Transport
+	:ivar t1_callbacks: Storage for t1's message handlers
+	:type t1_callbacks: Dict[RemoteMessageType, callable]
+	:ivar t2_callbacks: Storage for t2's message handlers
+	:type t2_callbacks: Dict[RemoteMessageType, callable]
 	"""
 
 	excluded: Set[RemoteMessageType] = {
@@ -61,9 +66,10 @@ class BridgeTransport:
 		Sets up message routing between the two provided transport instances
 		by registering handlers for all possible message types.
 
-		Args:
-			t1 (Transport): First transport instance to bridge
-			t2 (Transport): Second transport instance to bridge
+		:param t1: First transport instance to bridge
+		:type t1: Transport
+		:param t2: Second transport instance to bridge 
+		:type t2: Transport
 		"""
 		self.t1 = t1
 		self.t2 = t2
@@ -85,12 +91,12 @@ class BridgeTransport:
 		Creates a closure that will forward messages of the specified type
 		to the target transport, unless the message type is in the excluded set.
 
-		Args:
-			targetTransport (Transport): Transport instance to forward messages to
-			messageType (RemoteMessageType): Type of message this callback will handle
-
-		Returns:
-			callable: A callback function that forwards messages to the target transport
+		:param targetTransport: Transport instance to forward messages to
+		:type targetTransport: Transport
+		:param messageType: Type of message this callback will handle
+		:type messageType: RemoteMessageType
+		:return: A callback function that forwards messages to the target transport
+		:rtype: callable
 		"""
 
 		def callback(*args, **kwargs):
@@ -105,6 +111,8 @@ class BridgeTransport:
 		Unregisters all message handlers from both transports that were set up
 		during bridge initialization. This should be called before disposing of
 		the bridge to prevent memory leaks and ensure proper cleanup.
+
+		:return: None
 		"""
 		for messageType in RemoteMessageType:
 			self.t1.unregisterInbound(messageType, self.t2Callbacks[messageType])
