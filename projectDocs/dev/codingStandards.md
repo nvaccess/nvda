@@ -121,3 +121,20 @@ Document class attributes in a docstring immediately below the attribute being d
 
 NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
 [#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
+
+### Language choices
+
+The NVDA community is large and diverse, and we have a responsibility to make everyone feel welcome in it.
+As our [contributor code of conduct](../../CODE_OF_CONDUCT.md) says:
+
+> Communities mirror the societies in which they exist and positive action is essential to counteract the many forms of inequality and abuses of power that exist in society.
+
+The wording choices we make have power, and as a part of our responsibility to be welcoming and inclusive, it is up to us to make sure the way we communicate, including in code, does not negatively impact others.
+Consequently, authors should avoid metaphors, euphemisms or other language with layers of meaning or negative history; avoid generalisations about people, cultures or countries; avoid ableist language; and use gender-inclusive terminology.
+For example:
+
+* Instead of master/slave, prefer leader/follower, primary/replica, or other terms as appropriate.
+* Instead of blacklist and whitelist, prefer blocklist and allowlist.
+* Instead of sanity check, prefer confidence check.
+* Instead of dummy (value), prefer placeholder.
+* When referring to a person of unknown gender (such as in docstrings), use they/them/theirs pronouns.
