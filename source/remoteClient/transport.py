@@ -76,7 +76,7 @@ class RemoteExtensionPoint:
 		Handles calling the filter if present and sending the message.
 		Always returns True to allow other handlers to process the event.
 		"""
-		if self.filter:
+		if self.filter is not None:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
 			kwargs = self.filter(*args, **kwargs)
 		if self.transport is not None:
