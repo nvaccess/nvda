@@ -12,7 +12,7 @@ handling message filtering and routing.
 The bridge acts as an intermediary layer that:
 
 * Connects two transport instances
-* Routes messages between them  
+* Routes messages between them
 * Filters out specific message types that shouldn't be forwarded
 * Manages the lifecycle of message handlers
 
@@ -20,13 +20,11 @@ Example:
     Create and use a bridge between two transports::
 
         transport1 = TCPTransport(serializer, addr1)
-        transport2 = TCPTransport(serializer, addr2) 
+        transport2 = TCPTransport(serializer, addr2)
         bridge = BridgeTransport(transport1, transport2)
         # Messages will now flow between transport1 and transport2
         bridge.disconnect()  # Clean up when done
 """
-
-from typing import Dict, Set
 
 from .protocol import RemoteMessageType
 from .transport import Transport
@@ -44,7 +42,7 @@ class BridgeTransport:
 	    By default includes connection management messages that should remain local.
 	:type excluded: Set[RemoteMessageType]
 	:ivar t1: First transport instance to bridge
-	:type t1: Transport  
+	:type t1: Transport
 	:ivar t2: Second transport instance to bridge
 	:type t2: Transport
 	:ivar t1_callbacks: Storage for t1's message handlers
@@ -53,7 +51,7 @@ class BridgeTransport:
 	:type t2_callbacks: Dict[RemoteMessageType, callable]
 	"""
 
-	excluded: Set[RemoteMessageType] = {
+	excluded: set[RemoteMessageType] = {
 		RemoteMessageType.CLIENT_JOINED,
 		RemoteMessageType.CLIENT_LEFT,
 		RemoteMessageType.CHANNEL_JOINED,
@@ -68,14 +66,14 @@ class BridgeTransport:
 
 		:param t1: First transport instance to bridge
 		:type t1: Transport
-		:param t2: Second transport instance to bridge 
+		:param t2: Second transport instance to bridge
 		:type t2: Transport
 		"""
 		self.t1 = t1
 		self.t2 = t2
 		# Store callbacks for each message type
-		self.t1Callbacks: Dict[RemoteMessageType, callable] = {}
-		self.t2Callbacks: Dict[RemoteMessageType, callable] = {}
+		self.t1Callbacks: dict[RemoteMessageType, callable] = {}
+		self.t2Callbacks: dict[RemoteMessageType, callable] = {}
 
 		for messageType in RemoteMessageType:
 			# Create and store callbacks
