@@ -115,5 +115,9 @@ Instead use initializer functions.
 Docstrings should use [Sphinx format](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html).
 Providing type information in docstrings is discouraged, instead use python's type annotations.
 
+Class-level and module-level docstrings should contain a high-level overview of the class/module, optionally with usage examples and references to commonly used methods/functions and attributes.
+Document class constructors in `__init__`, not at the top of the class.
+Document class attributes in a docstring immediately below the attribute being described.
+
 NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
 [#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
