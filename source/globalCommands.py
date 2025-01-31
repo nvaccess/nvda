@@ -4916,7 +4916,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("""Copies a link to the remote session to the clipboard"""),
 		category=SCRCAT_REMOTE,
 	)
-	def script_copy_link(self, gesture):
+	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
 		remoteClient.remoteClient.copyLink()
 		# Translators: A message indicating that a link has been copied to the clipboard.
 		ui.message(_("Copied link"))
