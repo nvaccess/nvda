@@ -94,7 +94,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		if cls == "GlobalPlugin":
 			for plugin in globalPluginHandler.runningPlugins:
 				if module == plugin.__module__:
-					func = getattr(plugin, "script_%s" % scriptName, None)
+					func = getattr(plugin, f"script_{scriptName}", None)
 					if func:
 						return func
 
