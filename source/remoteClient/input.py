@@ -109,7 +109,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		for provider in vision.handler.getActiveProviderInstances():
 			if isinstance(provider, baseObject.ScriptableObject):
 				if cls == "VisionEnhancementProvider" and module == provider.__module__:
-					func = getattr(app, "script_%s" % scriptName, None)
+					func = getattr(app, "script_{scriptName}", None)
 					if func:
 						return func
 
