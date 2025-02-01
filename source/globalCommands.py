@@ -4899,7 +4899,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("""Mute or unmute the speech coming from the remote computer"""),
 		category=SCRCAT_REMOTE,
 	)
-	def script_toggle_remote_mute(self, gesture):
+	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
 		remoteClient.remoteClient.toggleMute()
 
 	@script(
