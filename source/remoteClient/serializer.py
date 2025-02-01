@@ -8,21 +8,23 @@
 This module handles serializing and deserializing messages between NVDA instances.
 It provides special handling for speech commands and other NVDA-specific data types.
 
-The module provides:
-    * A generic :class:`Serializer` interface
-    * A concrete :class:`JSONSerializer` implementation for NVDA Remote messages
+Module Features
+-------------
+* A generic :class:`.Serializer` interface
+* A concrete :class:`.JSONSerializer` implementation for NVDA Remote messages
 
-The serialization format supports:
-    * Basic JSON data types
-    * Speech command objects
-    * Custom message types via the 'type' field
+Supported Data Types
+------------------
+* Basic JSON data types
+* Speech command objects
+* Custom message types via the 'type' field
 """
 
+import json
 from abc import ABCMeta, abstractmethod
 from enum import Enum
 from logging import getLogger
-from typing import Any, Dict, Optional, Type, Union, TypeVar
-import json
+from typing import Any, Dict, Optional, Type, TypeVar, Union
 
 import speech.commands
 
@@ -39,24 +41,22 @@ class Serializer(metaclass=ABCMeta):
 	Concrete implementations should handle converting Python objects to/from
 	a wire format suitable for network transmission.
 
-	Note:
-	    This is an abstract base class. Subclasses must implement
-	    :meth:`serialize` and :meth:`deserialize`.
+	Note
+	----
+	This is an abstract base class. Subclasses must implement
+	:meth:`serialize` and :meth:`deserialize`.
 	"""
 
 	@abstractmethod
 	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
 		"""Convert a message to bytes for transmission.
 
-		Args:
-		    type (str, optional): Message type identifier, used for routing
-		    **obj: Message payload as keyword arguments
-
-		Returns:
-		    bytes: Serialized message as bytes
-
-		Raises:
-		    NotImplementedError: Must be implemented by subclasses
+		:param type: Message type identifier, used for routing
+		:type type: str, optional
+		:param obj: Message payload as keyword arguments
+		:return: Serialized message as bytes
+		:rtype: bytes
+		:raises NotImplementedError: Must be implemented by subclasses
 		"""
 		raise NotImplementedError
 
@@ -64,14 +64,11 @@ class Serializer(metaclass=ABCMeta):
 	def deserialize(self, data: bytes) -> JSONDict:
 		"""Convert received bytes back into a message dict.
 
-		Args:
-		    data (bytes): Raw message bytes to deserialize
-
-		Returns:
-		    Dict[str, Any]: Dict containing the deserialized message
-
-		Raises:
-		    NotImplementedError: Must be implemented by subclasses
+		:param data: Raw message bytes to deserialize
+		:type data: bytes
+		:return: Dict containing the deserialized message
+		:rtype: Dict[str, Any]
+		:raises NotImplementedError: Must be implemented by subclasses
 		"""
 		raise NotImplementedError
 
@@ -83,8 +80,8 @@ class JSONSerializer(Serializer):
 	NVDA speech commands and other custom types. Messages are encoded as UTF-8
 	with newline separation.
 
-	Attributes:
-	    SEP (bytes): Message separator for streaming protocols
+	:cvar SEP: Message separator for streaming protocols
+	:type SEP: bytes
 	"""
 
 	SEP: bytes = b"\n"  # Message separator for streaming protocols
@@ -95,12 +92,10 @@ class JSONSerializer(Serializer):
 		Converts message type and payload to JSON format, handling Enum types
 		and using CustomEncoder for NVDA-specific objects.
 
-		Args:
-			type: Message type identifier (string or Enum)
-			**obj: Message payload to serialize
-
-		Returns:
-			UTF-8 encoded JSON with newline separator
+		:param type: Message type identifier (string or Enum)
+		:param obj: Message payload to serialize
+		:return: UTF-8 encoded JSON with newline separator
+		:rtype: bytes
 		"""
 		if type is not None:
 			if isinstance(type, Enum) and not isinstance(type, str):
@@ -115,11 +110,10 @@ class JSONSerializer(Serializer):
 		Converts JSON bytes back to a dict, using as_sequence hook to
 		reconstruct NVDA speech commands.
 
-		Args:
-			data: UTF-8 encoded JSON bytes
-
-		Returns:
-			Dict containing the deserialized message
+		:param data: UTF-8 encoded JSON bytes
+		:type data: bytes
+		:return: Dict containing the deserialized message
+		:rtype: Dict[str, Any]
 		"""
 		obj = json.loads(data, object_hook=as_sequence)
 		return obj
@@ -136,17 +130,18 @@ class CustomEncoder(json.JSONEncoder):
 
 	Handles serialization of speech command objects by converting them
 	to a list containing their class name and instance variables.
+
+	:note: Inherits from :class:`json.JSONEncoder`
 	"""
 
 	def default(self, obj: Any) -> Any:
 		"""Convert speech commands to serializable format.
 
-		Args:
-		    obj (Any): Object to serialize
-
-		Returns:
-		    Any: For speech commands, returns a list containing [class_name, instance_vars].
+		:param obj: Object to serialize
+		:type obj: Any
+		:return: For speech commands, returns a list containing [class_name, instance_vars].
 		        For other types, returns the default JSON encoding.
+		:rtype: Any
 		"""
 		if is_subclass_or_instance(obj, SEQUENCE_CLASSES):
 			return [obj.__class__.__name__, obj.__dict__]
@@ -159,14 +154,15 @@ def is_subclass_or_instance(unknown: Any, possible: Union[Type[T], tuple[Type[T]
 	Safely handles both types and instances, useful for type checking
 	during serialization.
 
-	Args:
-	    unknown (Any): Object or type to check
-	    possible (Union[Type[T], tuple[Type[T], ...]]): Type or tuple of types to check against
+	:param unknown: Object or type to check
+	:type unknown: Any
+	:param possible: Type or tuple of types to check against
+	:type possible: Union[Type[T], tuple[Type[T], ...]]
+	:return: True if unknown is a subclass or instance of possible
+	:rtype: bool
 
-	Returns:
-	    bool: True if unknown is a subclass or instance of possible
+	Example::
 
-	Example:
 	    >>> is_subclass_or_instance(str, (int, str))
 	    True
 	    >>> is_subclass_or_instance("hello", (int, str))
@@ -184,15 +180,12 @@ def as_sequence(dct: JSONDict) -> JSONDict:
 	Handles the 'speak' message type by converting serialized speech
 	commands back into their original object form.
 
-	Args:
-	    dct (JSONDict): Dict containing potentially serialized speech commands
-
-	Returns:
-	    JSONDict: Dict with reconstructed speech command objects if applicable,
+	:param dct: Dict containing potentially serialized speech commands
+	:type dct: JSONDict
+	:return: Dict with reconstructed speech command objects if applicable,
 	        otherwise returns the input unchanged
-
-	Warning:
-	    Logs a warning if an unknown sequence type is encountered
+	:rtype: JSONDict
+	:warning: Logs a warning if an unknown sequence type is encountered
 	"""
 	if not ("type" in dct and dct["type"] == "speak" and "sequence" in dct):
 		return dct
