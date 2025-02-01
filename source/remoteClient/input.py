@@ -130,7 +130,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 				return func
 
 		# Global commands.
-		func = getattr(globalCommands.commands, "script_%s" % scriptName, None)
+		func = getattr(globalCommands.commands, f"script_{scriptName}", None)
 		if func:
 			return func
 
