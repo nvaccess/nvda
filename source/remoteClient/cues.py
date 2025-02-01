@@ -8,12 +8,10 @@ from typing import Dict, Optional, TypedDict
 
 import globalVars
 import nvwave
-
-
-from tones import beep, BeepSequence, beepSequenceAsync
 import ui
-from . import configuration
+from tones import BeepSequence, beep, beepSequenceAsync
 
+from . import configuration
 
 local_beep = beep
 
@@ -33,21 +31,21 @@ CUES: Dict[str, Cue] = {
 		# Translators: Message shown when the connection to the remote computer is lost.
 		"message": _("Disconnected"),
 	},
-	"control_server_connected": {
+	"controlServerConnected": {
 		"wave": "controlled",
 		"beeps": [(720, 100), (None, 50), (720, 100), (None, 50), (720, 100)],
 		# Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
 		"message": _("Connected to control server"),
 	},
-	"client_connected": {"wave": "controlling", "beeps": [(1000, 300)]},
-	"client_disconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
-	"clipboard_pushed": {
+	"clientConnected": {"wave": "controlling", "beeps": [(1000, 300)]},
+	"clientDisconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
+	"clipboardPushed": {
 		"wave": "clipboardPush",
 		"beeps": [(500, 100), (600, 100)],
 		# Translators: Message shown when the clipboard is successfully pushed to the remote computer.
 		"message": _("Clipboard pushed"),
 	},
-	"clipboard_received": {
+	"clipboardReceived": {
 		"wave": "clipboardReceive",
 		"beeps": [(600, 100), (500, 100)],
 		# Translators: Message shown when the clipboard is successfully received from the remote computer.
@@ -56,51 +54,51 @@ CUES: Dict[str, Cue] = {
 }
 
 
-def _play_cue(cue_name: str) -> None:
+def _playCue(cueName: str) -> None:
 	"""Helper function to play a cue by name"""
-	if not should_play_sounds():
+	if not shouldPlaySounds():
 		# Play beep sequence
-		if beeps := CUES[cue_name].get("beeps"):
+		if beeps := CUES[cueName].get("beeps"):
 			filtered_beeps = [(freq, dur) for freq, dur in beeps if freq is not None]
 			beepSequenceAsync(*filtered_beeps)
 		return
 
 	# Play wave file
-	if wave := CUES[cue_name].get("wave"):
+	if wave := CUES[cueName].get("wave"):
 		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
 
 	# Show message if specified
-	if message := CUES[cue_name].get("message"):
+	if message := CUES[cueName].get("message"):
 		ui.message(message)
 
 
 def connected():
-	_play_cue("connected")
+	_playCue("connected")
 
 
 def disconnected():
-	_play_cue("disconnected")
+	_playCue("disconnected")
 
 
-def control_server_connected():
-	_play_cue("control_server_connected")
+def controlServerConnected():
+	_playCue("controlServerConnected")
 
 
-def client_connected():
-	_play_cue("client_connected")
+def clientConnected():
+	_playCue("clientConnected")
 
 
-def client_disconnected():
-	_play_cue("client_disconnected")
+def clientDisconnected():
+	_playCue("clientDisconnected")
 
 
-def clipboard_pushed():
-	_play_cue("clipboard_pushed")
+def clipboardPushed():
+	_playCue("clipboardPushed")
 
 
-def clipboard_received():
-	_play_cue("clipboard_received")
+def clipboardReceived():
+	_playCue("clipboardReceived")
 
 
-def should_play_sounds():
+def shouldPlaySounds():
 	return configuration.get_config()["ui"]["play_sounds"]

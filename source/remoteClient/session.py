@@ -203,13 +203,13 @@ Please use a different server."""),
 	def handleClientConnected(self, client: Optional[Dict[str, Any]] = None) -> None:
 		"""Handle new client connection."""
 		log.info("Client connected: %r", client)
-		cues.client_connected()
+		cues.clientConnected()
 
 	def handleClientDisconnected(self, client=None):
 		"""Handle client disconnection.
 		Plays disconnection sound when remote client disconnects.
 		"""
-		cues.client_disconnected()
+		cues.clientDisconnected()
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
@@ -359,7 +359,7 @@ class SlaveSession(RemoteSession):
 		2. Removes any NVDA patches
 		"""
 		log.info("Transport disconnected from slave session")
-		cues.client_connected()
+		cues.clientConnected()
 
 	def handleClientDisconnected(self, client: Optional[Dict[str, Any]] = None) -> None:
 		super().handleClientDisconnected(client)

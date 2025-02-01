@@ -314,7 +314,7 @@ class LocalMachine:
 		:param text: Text to copy to the clipboard
 		:type text: str
 		"""
-		cues.clipboard_received()
+		cues.clipboardReceived()
 		api.copyToClip(text=text)
 
 	def sendSAS(self) -> None:

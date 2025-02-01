@@ -126,7 +126,7 @@ class RemoteClient:
 			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
-			cues.clipboard_pushed()
+			cues.clipboardPushed()
 		except TypeError:
 			log.exception("Unable to push clipboard")
 
@@ -290,7 +290,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsSlave(self):
 		log.info("Control connector connected")
-		cues.control_server_connected()
+		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.SLAVE, True)
 		configuration.write_connection_to_config(self.slaveSession.getConnectionInfo())
