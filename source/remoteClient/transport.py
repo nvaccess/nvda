@@ -30,20 +30,20 @@ import socket
 import ssl
 import threading
 import time
+from collections.abc import Callable
+from dataclasses import dataclass
 from enum import Enum
 from logging import getLogger
-from collections.abc import Callable
 from queue import Queue
-from typing import Any, Type, TypeVar, Generic
-from dataclasses import dataclass
+from typing import Any, Optional
+
 import wx
 from extensionPoints import Action, HandlerRegistrar
 
 from . import configuration
 from .connectionInfo import ConnectionInfo
-from .protocol import PROTOCOL_VERSION, RemoteMessageType
+from .protocol import PROTOCOL_VERSION, RemoteMessageType, hostPortToAddress
 from .serializer import Serializer
-from .protocol import hostPortToAddress
 
 log = getLogger("transport")
 
@@ -67,7 +67,7 @@ class RemoteExtensionPoint:
 
 	extensionPoint: HandlerRegistrar
 	messageType: RemoteMessageType
-	filter: Optional[Callable[..., Dict[str, Any]]] = None
+	filter: Optional[Callable[..., dict[str, Any]]] = None
 	transport: Optional["Transport"] = None
 
 	def remoteBridge(self, *args: Any, **kwargs: Any) -> bool:
@@ -149,8 +149,8 @@ class Transport:
 		self.connected = False
 		self.successfulConnects = 0
 		self.connectedEvent = threading.Event()
-		self.inboundHandlers: Dict[RemoteMessageType, Action] = {}
-		self.outboundHandlers: Dict[RemoteMessageType, RemoteExtensionPoint] = {}
+		self.inboundHandlers: dict[RemoteMessageType, Action] = {}
+		self.outboundHandlers: dict[RemoteMessageType, RemoteExtensionPoint] = {}
 		self.transportConnected = Action()
 		"""
 		Notifies when the transport is connected
@@ -289,7 +289,7 @@ class TCPTransport(Transport):
 	queue: Queue[Optional[bytes]]
 	insecure: bool
 	serverSockLock: threading.Lock
-	address: Tuple[str, int]
+	address: tuple[str, int]
 	serverSock: Optional[ssl.SSLSocket]
 	queueThread: Optional[threading.Thread]
 	timeout: int
@@ -604,14 +604,14 @@ class RelayTransport(TCPTransport):
 		protocol_version (int): Protocol version to use
 	"""
 
-	channel: str | None 
+	channel: str | None
 	connectionType: str | None
 	protocol_version: int
 
 	def __init__(
 		self,
 		serializer: Serializer,
-		address: Tuple[str, int],
+		address: tuple[str, int],
 		timeout: int = 0,
 		channel: str | None = None,
 		connectionType: str | None = None,

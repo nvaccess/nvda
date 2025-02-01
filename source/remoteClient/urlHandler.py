@@ -29,7 +29,7 @@ except ImportError:
 	log = getLogger("url_handler")
 
 
-def _create_registry_structure(key_handle, data):
+def _createRegistryStructure(key_handle, data: dict):
 	"""Creates a nested registry structure from a dictionary.
 
 	Args:
@@ -42,7 +42,7 @@ def _create_registry_structure(key_handle, data):
 			try:
 				subkey = winreg.CreateKey(key_handle, name)
 				try:
-					_create_registry_structure(subkey, value)
+					_createRegistryStructure(subkey, value)
 				finally:
 					winreg.CloseKey(subkey)
 			except WindowsError as e:
@@ -55,7 +55,7 @@ def _create_registry_structure(key_handle, data):
 				raise OSError(f"Failed to set registry value {name}: {e}")
 
 
-def _delete_registry_key_recursive(base_key, subkey_path):
+def _deleteRegistryKeyRecursive(base_key, subkey_path: str):
 	"""Recursively deletes a registry key and all its subkeys.
 
 	Args:
@@ -74,7 +74,7 @@ def _delete_registry_key_recursive(base_key, subkey_path):
 					try:
 						subkey_name = winreg.EnumKey(key, 0)
 						full_path = f"{subkey_path}\\{subkey_name}"
-						_delete_registry_key_recursive(base_key, full_path)
+						_deleteRegistryKeyRecursive(base_key, full_path)
 					except WindowsError:
 						break
 			# Now delete the key itself
@@ -87,9 +87,9 @@ def _delete_registry_key_recursive(base_key, subkey_path):
 def registerURLHandler():
 	"""Registers the URL handler in the Windows Registry."""
 	try:
-		key_path = r"SOFTWARE\Classes\nvdaremote"
-		with winreg.CreateKey(winreg.HKEY_CURRENT_USER, key_path) as key:
-			_create_registry_structure(key, URL_HANDLER_REGISTRY)
+		keyPath = r"SOFTWARE\Classes\nvdaremote"
+		with winreg.CreateKey(winreg.HKEY_CURRENT_USER, keyPath) as key:
+			_createRegistryStructure(key, URL_HANDLER_REGISTRY)
 	except OSError as e:
 		raise OSError(f"Failed to register URL handler: {e}")
 
@@ -97,7 +97,7 @@ def registerURLHandler():
 def unregisterURLHandler():
 	"""Unregisters the URL handler from the Windows Registry."""
 	try:
-		_delete_registry_key_recursive(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\nvdaremote")
+		_deleteRegistryKeyRecursive(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\nvdaremote")
 	except OSError as e:
 		raise OSError(f"Failed to unregister URL handler: {e}")
 
