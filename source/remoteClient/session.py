@@ -64,28 +64,25 @@ See Also:
 
 import hashlib
 from collections import defaultdict
-from typing import Dict, List, Optional, Any, Union
-
-import brailleInput
-import inputCore
-from logHandler import log
-
+from typing import Any, Dict, List, Optional, Union
 
 import braille
+import brailleInput
 import gui
-from nvwave import decide_playWaveFile
+import inputCore
 import scriptHandler
 import speech
+import speech.commands
 import tones
 import ui
-from speech.extensions import speechCanceled, post_speechPaused, pre_speechQueued
+from logHandler import log
+from nvwave import decide_playWaveFile
+from speech.extensions import post_speechPaused, pre_speechQueued, speechCanceled
 
 from . import configuration, connectionInfo, cues
-
 from .localMachine import LocalMachine
 from .protocol import RemoteMessageType
 from .transport import RelayTransport
-
 
 EXCLUDED_SPEECH_COMMANDS = (
 	speech.commands.BaseCallbackCommand,
