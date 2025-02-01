@@ -140,14 +140,13 @@ class RemoteSession:
 	def handleVersionMismatch(self) -> None:
 		"""Handle protocol version mismatch between client and server.
 
-		log.error("Protocol version mismatch detected with relay server")
-
 		This method is called when the transport layer detects that the client's
 		protocol version is not compatible. It:
 		1. Displays a localized error message to the user
 		2. Closes the transport connection
 		3. Prevents further communication attempts
 		"""
+		log.error("Protocol version mismatch detected with relay server")
 		ui.message(
 			# Translators: Message for version mismatch
 			_("""The version of the relay server which you have connected to is not compatible with this version of the Remote Client.
