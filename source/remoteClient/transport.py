@@ -32,9 +32,9 @@ import threading
 import time
 from enum import Enum
 from logging import getLogger
+from collections.abc import Callable
 from queue import Queue
-from typing import Any, Callable, Dict, Optional, Tuple, Union
-
+from typing import Any, Type, TypeVar, Generic
 from dataclasses import dataclass
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -604,8 +604,8 @@ class RelayTransport(TCPTransport):
 		protocol_version (int): Protocol version to use
 	"""
 
-	channel: Optional[str]
-	connectionType: Optional[str]
+	channel: str | None 
+	connectionType: str | None
 	protocol_version: int
 
 	def __init__(
@@ -613,8 +613,8 @@ class RelayTransport(TCPTransport):
 		serializer: Serializer,
 		address: Tuple[str, int],
 		timeout: int = 0,
-		channel: Optional[str] = None,
-		connectionType: Optional[str] = None,
+		channel: str | None = None,
+		connectionType: str | None = None,
 		protocol_version: int = PROTOCOL_VERSION,
 		insecure: bool = False,
 	) -> None:
@@ -712,7 +712,7 @@ class ConnectorThread(threading.Thread):
 		log.info("Ending control connector thread %s" % self.name)
 
 
-def clearQueue(queue: Queue[Optional[bytes]]) -> None:
+def clearQueue(queue: Queue[bytes | None]) -> None:
 	"""Empty all items from a queue without blocking.
 
 	Removes all items from the queue in a non-blocking way,
