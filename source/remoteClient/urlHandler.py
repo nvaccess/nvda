@@ -84,7 +84,7 @@ def _delete_registry_key_recursive(base_key, subkey_path):
 				raise OSError(f"Failed to delete registry key {subkey_path}: {e}")
 
 
-def register_url_handler():
+def registerURLHandler():
 	"""Registers the URL handler in the Windows Registry."""
 	try:
 		key_path = r"SOFTWARE\Classes\nvdaremote"
@@ -94,7 +94,7 @@ def register_url_handler():
 		raise OSError(f"Failed to register URL handler: {e}")
 
 
-def unregister_url_handler():
+def unregisterURLHandler():
 	"""Unregisters the URL handler from the Windows Registry."""
 	try:
 		_delete_registry_key_recursive(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\nvdaremote")
@@ -102,7 +102,7 @@ def unregister_url_handler():
 		raise OSError(f"Failed to unregister URL handler: {e}")
 
 
-def url_handler_path():
+def URLHandlerPath():
 	"""Returns the path to the URL handler executable."""
 	return os.path.join(os.path.split(os.path.abspath(__file__))[0], "url_handler.exe")
 

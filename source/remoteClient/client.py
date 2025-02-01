@@ -61,7 +61,7 @@ class RemoteClient:
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
-		urlHandler.register_url_handler()
+		urlHandler.registerURLHandler()
 		self.masterTransport = None
 		self.slaveTransport = None
 		self.localControlServer = None
@@ -106,7 +106,7 @@ class RemoteClient:
 		core.postNvdaStartup.unregister(self.performAutoconnect)
 		inputCore.decide_handleRawKey.unregister(self.process_key_input)
 		if not isInstalledCopy():
-			urlHandler.unregister_url_handler()
+			urlHandler.unregisterURLHandler()
 
 	def toggleMute(self):
 		self.localMachine.isMuted = not self.localMachine.isMuted
