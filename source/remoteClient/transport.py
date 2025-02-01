@@ -299,7 +299,7 @@ class TCPTransport(Transport):
 	def __init__(
 		self,
 		serializer: Serializer,
-		address: Tuple[str, int],
+		address: tuple[str, int],
 		timeout: int = 0,
 		insecure: bool = False,
 	) -> None:
@@ -383,7 +383,7 @@ class TCPTransport(Transport):
 		host: str,
 		port: int,
 		insecure: bool = False,
-	) -> ssl.SSLSocket:
+	) -> ssl.SSLSocket | None:
 		"""Create and configure an SSL socket for outbound connections.
 
 		Creates a TCP socket with appropriate timeout and keep-alive settings,
@@ -422,7 +422,7 @@ class TCPTransport(Transport):
 	def getpeercert(
 		self,
 		binary_form: bool = False,
-	) -> Optional[Union[Dict[str, Any], bytes]]:
+	) -> dict[str, Any] | bytes | None:
 		"""Get the certificate from the peer.
 
 		Retrieves the certificate presented by the remote peer during SSL handshake.
