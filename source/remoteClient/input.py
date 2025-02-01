@@ -101,7 +101,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		# App module level.
 		app = focus.appModule
 		if app and cls == "AppModule" and module == app.__module__:
-			func = getattr(app, "script_%s" % scriptName, None)
+			func = getattr(app, f"script_{scriptName}", None)
 			if func:
 				return func
 
