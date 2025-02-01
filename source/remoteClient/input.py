@@ -116,7 +116,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		# Tree interceptor level.
 		treeInterceptor = focus.treeInterceptor
 		if treeInterceptor and treeInterceptor.isReady:
-			func = getattr(treeInterceptor, "script_%s" % scriptName, None)
+			func = getattr(treeInterceptor, f"script_{scriptName}", None)
 			if func:
 				return func
 
