@@ -9,7 +9,7 @@
 """
 
 import time
-from numbers import Number
+from numbers import Real
 from speech import sayAll
 import api
 import review
@@ -37,22 +37,29 @@ class EditableText(TextContainerObject, ScriptableObject):
 		* When the object gains focus, L{initAutoSelectDetection} must be called.
 		* When the object notifies of a possible selection change, L{detectPossibleSelectionChange} must be called.
 		* Optionally, if the object notifies of changes to its content, L{hasContentChangedSinceLastSelection} should be set to C{True}.
-	@ivar hasContentChangedSinceLastSelection: Whether the content has changed since the last selection occurred.
-	@type hasContentChangedSinceLastSelection: bool
 	"""
+
+	hasContentChangedSinceLastSelection: bool
+	"""Whether the content has changed since the last selection occurred."""
 
 	shouldFireCaretMovementFailedEvents: bool = False
 	"""Whether to fire caretMovementFailed events when the caret doesn't move in response to a caret movement key."""
+
 	announceNewLineText: bool = True
 	"""Whether or not to announce text found before the caret on a new line (e.g. auto numbering)"""
+
 	announceEntireNewLine: bool = False
 	"""When announcing new line text: should the entire line be announced, or just text after the caret?"""
+
 	_hasCaretMoved_minWordTimeoutSec: float = 0.03
 	"""The minimum amount of time that should elapse before checking if the word under the caret has changed"""
+
 	_useEvents_maxTimeoutSec: float = 0.06
 	"""The maximum amount of time that may elapse before we no longer rely on caret events to detect movement."""
-	_caretMovementTimeoutMultiplier: Number = 1
+
+	_caretMovementTimeoutMultiplier: Real = 1
 	"""A multiplier to apply to the caret movement timeout to increase or decrease it in a subclass."""
+
 	_supportsSentenceNavigation: bool | None = None
 	"""Whether the editable text supports sentence navigation.
 	When `None` (default), the state is undetermined, e.g. sentence navigation will be attempted, when it fails, the gesture will be send to the OS.
