@@ -4908,7 +4908,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
-	def script_push_clipboard(self, gesture):
+	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
 		remoteClient.remoteClient.pushClipboard()
 
 	@script(
