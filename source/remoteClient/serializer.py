@@ -84,7 +84,8 @@ class JSONSerializer(Serializer):
 	:type SEP: bytes
 	"""
 
-	SEP: bytes = b"\n"  # Message separator for streaming protocols
+	SEP: bytes = b"\n"
+	"""Message separator for streaming protocols"""
 
 	def serialize(self, type: Optional[str] = None, **obj: Any) -> bytes:
 		"""Serialize a message to JSON bytes.
