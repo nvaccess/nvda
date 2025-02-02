@@ -580,19 +580,27 @@ class RelayTransport(TCPTransport):
 	Extends TCPTransport with relay-specific protocol handling for channels
 	and connection types. Manages protocol versioning and channel joining.
 
-	Args:
-		serializer (Serializer): Message serializer instance
-		address (Tuple[str, int]): Relay server address
-		timeout (int, optional): Connection timeout. Defaults to 0.
-		channel (Optional[str], optional): Channel to join. Defaults to None.
-		connectionType (Optional[str], optional): Connection type. Defaults to None.
-		protocol_version (int, optional): Protocol version. Defaults to PROTOCOL_VERSION.
-		insecure (bool, optional): Skip certificate verification. Defaults to False.
+	:param serializer: Message serializer instance
+	:type serializer: Serializer
+	:param address: Relay server address as (host, port) tuple
+	:type address: tuple[str, int]
+	:param timeout: Connection timeout in seconds, defaults to 0
+	:type timeout: int, optional
+	:param channel: Channel name to join, defaults to None
+	:type channel: str, optional
+	:param connectionType: Type of relay connection, defaults to None
+	:type connectionType: str, optional
+	:param protocol_version: Protocol version to use, defaults to PROTOCOL_VERSION
+	:type protocol_version: int, optional
+	:param insecure: Skip certificate verification, defaults to False
+	:type insecure: bool, optional
 
-	Attributes:
-		channel (Optional[str]): Relay channel name
-		connectionType (Optional[str]): Type of relay connection
-		protocol_version (int): Protocol version to use
+	:ivar channel: Relay channel name
+	:vartype channel: str or None
+	:ivar connectionType: Type of relay connection
+	:vartype connectionType: str or None
+	:ivar protocol_version: Protocol version in use
+	:vartype protocol_version: int
 	"""
 
 	channel: str | None
@@ -611,14 +619,20 @@ class RelayTransport(TCPTransport):
 	) -> None:
 		"""Initialize a new RelayTransport instance.
 
-		Args:
-			serializer: Serializer for encoding/decoding messages
-			address: Tuple of (host, port) to connect to
-			timeout: Connection timeout in seconds
-			channel: Optional channel name to join
-			connectionType: Optional connection type identifier
-			protocol_version: Protocol version to use
-			insecure: Whether to skip certificate verification
+		:param serializer: Serializer for encoding/decoding messages
+		:type serializer: Serializer
+		:param address: Tuple of (host, port) to connect to
+		:type address: tuple[str, int]
+		:param timeout: Connection timeout in seconds, defaults to 0
+		:type timeout: int, optional
+		:param channel: Channel name to join, defaults to None
+		:type channel: str, optional
+		:param connectionType: Connection type identifier, defaults to None
+		:type connectionType: str, optional
+		:param protocol_version: Protocol version to use, defaults to PROTOCOL_VERSION
+		:type protocol_version: int, optional
+		:param insecure: Whether to skip certificate verification, defaults to False
+		:type insecure: bool, optional
 		"""
 		super().__init__(
 			address=address,
@@ -637,8 +651,11 @@ class RelayTransport(TCPTransport):
 		"""Create a RelayTransport from a ConnectionInfo object.
 
 		:param connection_info: ConnectionInfo instance containing connection details
+		:type connection_info: ConnectionInfo
 		:param serializer: Serializer instance for message encoding/decoding
+		:type serializer: Serializer
 		:return: Configured RelayTransport instance ready for connection
+		:rtype: RelayTransport
 		"""
 		return cls(
 			serializer=serializer,
@@ -651,8 +668,9 @@ class RelayTransport(TCPTransport):
 	def onConnected(self) -> None:
 		"""Handle successful connection to relay server.
 
-		:note: Called automatically when transport connects
-		:note: Sends protocol version and either joins channel or requests key generation
+		Called automatically when transport connects. Sends protocol version and
+		either joins channel or requests key generation.
+
 		:raises ValueError: If protocol version is invalid
 		"""
 		self.send(RemoteMessageType.PROTOCOL_VERSION, version=self.protocol_version)
