@@ -78,6 +78,27 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		self.script = self.findScript() if self.scriptPath else None
 
 	def findScript(self):
+		"""Find and return a script function based on the script path.
+
+		The script path must be a list containing three elements:
+		module name, class name, and script name. Searches through multiple levels
+		for the script.
+
+		Search order:
+		    * Global plugins
+		    * App modules
+		    * Vision enhancement providers
+		    * Tree interceptors
+		    * NVDA objects
+		    * Global commands
+
+		Returns:
+		    Callable: The script function if found
+		    None: If no matching script is found
+
+		Note:
+		    If scriptName starts with "kb:", returns a keyboard emulation script
+		"""
 		if not (isinstance(self.scriptPath, list) and len(self.scriptPath) == 3):
 			return None
 		module, cls, scriptName = self.scriptPath

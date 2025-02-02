@@ -64,7 +64,7 @@ See Also:
 
 import hashlib
 from collections import defaultdict
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Final
 
 import braille
 import brailleInput
@@ -107,7 +107,7 @@ class RemoteSession:
 	transport: RelayTransport  # The transport layer handling network communication
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
 	# Session mode - either 'master' or 'slave'
-	mode: Optional[connectionInfo.ConnectionMode] = None
+	mode: connectionInfo.ConnectionMode | None = None
 	callbacksAdded: bool  # Whether callbacks are currently registered
 
 	def __init__(
@@ -196,7 +196,7 @@ Please use a different server."""),
 		conf["seen_motds"][address] = hashed
 		return True
 
-	def handleClientConnected(self, client: Optional[Dict[str, Any]] = None) -> None:
+	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		"""Handle new client connection."""
 		log.info("Client connected: %r", client)
 		cues.clientConnected()
@@ -251,10 +251,10 @@ class SlaveSession(RemoteSession):
 	"""
 
 	# Connection mode - always 'slave'
-	mode: connectionInfo.ConnectionMode = connectionInfo.ConnectionMode.SLAVE
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.SLAVE
 	# Information about connected master clients
-	masters: Dict[int, Dict[str, Any]]
-	masterDisplaySizes: List[int]  # Braille display sizes of connected masters
+	masters: dict[int, dict[str, Any]]
+	masterDisplaySizes: list[int]  # Braille display sizes of connected masters
 
 	def __init__(
 		self,
@@ -321,7 +321,7 @@ class SlaveSession(RemoteSession):
 		pre_speechQueued.unregister(self.sendSpeech)
 		self.callbacksAdded = False
 
-	def handleClientConnected(self, client: Dict[str, Any]) -> None:
+	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		super().handleClientConnected(client)
 		if client["connection_type"] == "master":
 			self.masters[client["id"]]["active"] = True
@@ -330,9 +330,9 @@ class SlaveSession(RemoteSession):
 
 	def handleChannelJoined(
 		self,
-		channel: Optional[str] = None,
-		clients: Optional[List[Dict[str, Any]]] = None,
-		origin: Optional[int] = None,
+		channel: str,
+		clients: list[dict[str, Any]],
+		origin: int | None = None,
 	) -> None:
 		if clients is None:
 			clients = []
@@ -355,9 +355,9 @@ class SlaveSession(RemoteSession):
 		2. Removes any NVDA patches
 		"""
 		log.info("Transport disconnected from slave session")
-		cues.clientConnected()
+		cues.clientDisconnected()
 
-	def handleClientDisconnected(self, client: Optional[Dict[str, Any]] = None) -> None:
+	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == "master":
 			log.info("Master client disconnected: %r", client)
@@ -374,9 +374,9 @@ class SlaveSession(RemoteSession):
 
 	def handleBrailleInfo(
 		self,
-		name: Optional[str] = None,
-		numCells: int = 0,
-		origin: Optional[int] = None,
+		name: str | None = None,
+		numCells: int | None = 0,
+		origin: int | None = None,
 	) -> None:
 		if not self.masters.get(origin):
 			return
@@ -384,7 +384,7 @@ class SlaveSession(RemoteSession):
 		self.masters[origin]["braille_numCells"] = numCells
 		self.setDisplaySize()
 
-	def _filterUnsupportedSpeechCommands(self, speechSequence: List[Any]) -> List[Any]:
+	def _filterUnsupportedSpeechCommands(self, speechSequence: list[Any]) -> list[Any]:
 		"""Remove unsupported speech commands from a sequence.
 
 		Filters out commands that cannot be properly serialized or executed remotely,
@@ -395,7 +395,7 @@ class SlaveSession(RemoteSession):
 		"""
 		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])
 
-	def sendSpeech(self, speechSequence: List[Any], priority: Optional[str]) -> None:
+	def sendSpeech(self, speechSequence: list[Any], priority: str | None) -> None:
 		"""Forward speech output to connected master instances.
 
 		Filters the speech sequence for supported commands and sends it
@@ -413,7 +413,7 @@ class SlaveSession(RemoteSession):
 		"""Toggle speech pause state on master instances."""
 		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
 
-	def display(self, cells: List[int]) -> None:
+	def display(self, cells: list[int]) -> None:
 		"""Forward braille display content to master instances.
 
 		Only sends braille data if there are connected masters with braille displays.
@@ -447,8 +447,8 @@ class MasterSession(RemoteSession):
 	appropriate commands to control the remote slave instance.
 	"""
 
-	mode: connectionInfo.ConnectionMode = connectionInfo.ConnectionMode.MASTER
-	slaves: Dict[int, Dict[str, Any]]  # Information about connected slave
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.MASTER
+	slaves: dict[int, dict[str, Any]]  # Information about connected slave
 
 	def __init__(
 		self,
@@ -518,9 +518,9 @@ class MasterSession(RemoteSession):
 
 	def handleChannel_joined(
 		self,
-		channel: Optional[str] = None,
-		clients: Optional[List[Dict[str, Any]]] = None,
-		origin: Optional[int] = None,
+		channel: str,
+		clients: list[dict[str, Any]] | None = None,
+		origin: int | None = None,
 	) -> None:
 		if clients is None:
 			clients = []
@@ -544,8 +544,8 @@ class MasterSession(RemoteSession):
 
 	def sendBrailleInfo(
 		self,
-		display: Optional[Any] = None,
-		displaySize: Optional[int] = None,
+		display: Any = None,
+		displaySize: int | None = None,
 	) -> None:
 		if display is None:
 			display = braille.handler.display
@@ -562,10 +562,23 @@ class MasterSession(RemoteSession):
 			numCells=displaySize,
 		)
 
-	def handle_decide_executeGesture(
+	def handleDecideExecuteGesture(
 		self,
-		gesture: Union[braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture, Any],
+		gesture: braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
 	) -> bool:
+		"""
+		Handles the decision to execute a gesture by processing the given gesture and sending
+		the relevant data to the remote client.
+
+		Args:
+			gesture (braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture):
+				The gesture to be processed, which can be either a Braille display gesture
+				or a Braille input gesture.
+
+		Returns:
+			bool: Returns False if the gesture is successfully processed and sent to the
+			remote client, otherwise returns True.
+		"""
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
 			dict = {
 				key: gesture.__dict__[key]
@@ -613,7 +626,7 @@ class MasterSession(RemoteSession):
 			return True
 
 	def registerBrailleInput(self) -> None:
-		inputCore.decide_executeGesture.register(self.handle_decide_executeGesture)
+		inputCore.decide_executeGesture.register(self.handleDecideExecuteGesture)
 
 	def unregisterBrailleInput(self) -> None:
-		inputCore.decide_executeGesture.unregister(self.handle_decide_executeGesture)
+		inputCore.decide_executeGesture.unregister(self.handleDecideExecuteGesture)
