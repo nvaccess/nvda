@@ -487,7 +487,7 @@ class MasterSession(RemoteSession):
 		)
 		self.transport.registerInbound(
 			RemoteMessageType.CHANNEL_JOINED,
-			self.handleChannel_joined,
+			self.handleChannelJoined,
 		)
 		self.transport.registerInbound(
 			RemoteMessageType.SET_BRAILLE_INFO,
@@ -516,7 +516,7 @@ class MasterSession(RemoteSession):
 			_("Remote NVDA not connected."),
 		)
 
-	def handleChannel_joined(
+	def handleChannelJoined(
 		self,
 		channel: str,
 		clients: list[dict[str, Any]] | None = None,
