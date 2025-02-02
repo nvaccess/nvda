@@ -107,7 +107,7 @@ class RemoteSession:
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
 	# Session mode - either 'master' or 'slave'
 	mode: connectionInfo.ConnectionMode | None = None
-	callbacksAdded: bool  # Whether callbacks are currently registered
+	callbacksAdded: bool = False  # Whether callbacks are currently registered
 
 	def __init__(
 		self,
@@ -152,7 +152,7 @@ Please use a different server."""),
 		)
 		self.transport.close()
 
-	def handleMOTD(self, motd: str, force_display=False):
+	def handleMOTD(self, motd: str, force_display: bool = False) -> None:
 		"""Handle Message of the Day from relay server.
 
 		:param motd: Message text to display
@@ -193,7 +193,7 @@ Please use a different server."""),
 		conf["seen_motds"][address] = hashed
 		return True
 
-	def handleClientConnected(self, client: dict[str, Any]) -> None:
+	def handleClientConnected(self, client: dict[str, Any] | None) -> None:
 		"""Handle new client connection.
 
 		:param client: Dictionary containing client connection details
@@ -202,7 +202,7 @@ Please use a different server."""),
 		log.info("Client connected: %r", client)
 		cues.clientConnected()
 
-	def handleClientDisconnected(self, client=None):
+	def handleClientDisconnected(self, client: dict[str, Any] | None = None) -> None:
 		"""Handle client disconnection.
 
 		:param client: Optional client info dictionary
@@ -364,7 +364,7 @@ class SlaveSession(RemoteSession):
 		if not self.masters:
 			self.unregisterCallbacks()
 
-	def setDisplaySize(self, sizes=None):
+	def setDisplaySize(self, sizes: list[int] | None = None) -> None:
 		self.masterDisplaySizes = (
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.masters.values()]
 		)
@@ -374,7 +374,7 @@ class SlaveSession(RemoteSession):
 	def handleBrailleInfo(
 		self,
 		name: str | None = None,
-		numCells: int | None = 0,
+		numCells: int = 0,
 		origin: int | None = None,
 	) -> None:
 		if not self.masters.get(origin):
@@ -540,7 +540,7 @@ class MasterSession(RemoteSession):
 
 	def sendBrailleInfo(
 		self,
-		display: Any = None,
+		display: braille.BrailleDisplayDriver | None = None,
 		displaySize: int | None = None,
 	) -> None:
 		if display is None:

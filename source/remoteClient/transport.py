@@ -32,7 +32,6 @@ import threading
 import time
 from collections.abc import Callable
 from dataclasses import dataclass
-from enum import Enum
 from logging import getLogger
 from queue import Queue
 from typing import Any, Optional
@@ -203,7 +202,7 @@ class Transport:
 		self.connectedEvent.set()
 		self.transportConnected.notify()
 
-	def registerInbound(self, type: RemoteMessageType, handler: Callable) -> None:
+	def registerInbound(self, type: RemoteMessageType, handler: Callable[..., None]) -> None:
 		"""Register a handler for incoming messages of a specific type.
 
 		:param type: The message type to handle
@@ -236,8 +235,8 @@ class Transport:
 		self,
 		extensionPoint: HandlerRegistrar,
 		messageType: RemoteMessageType,
-		filter: Optional[Callable] = None,
-	):
+		filter: Optional[Callable[..., dict[str, Any]]] = None,
+	) -> None:
 		"""Register an extension point to a message type.
 
 		:param extensionPoint: The extension point to register
@@ -253,7 +252,7 @@ class Transport:
 		remoteExtension.register(self)
 		self.outboundHandlers[messageType] = remoteExtension
 
-	def unregisterOutbound(self, messageType: RemoteMessageType):
+	def unregisterOutbound(self, messageType: RemoteMessageType) -> None:
 		"""Unregister an extension point from a message type.
 
 		Args:
@@ -400,21 +399,19 @@ class TCPTransport(Transport):
 		host: str,
 		port: int,
 		insecure: bool = False,
-	) -> ssl.SSLSocket | None:
+	) -> ssl.SSLSocket:
 		"""Create and configure an SSL socket for outbound connections.
 
 		Creates a TCP socket with appropriate timeout and keep-alive settings,
 		then wraps it with SSL/TLS encryption.
 
 		:param host: Remote hostname to connect to
-		:type host: str
 		:param port: Remote port number
-		:type port: int
 		:param insecure: Skip certificate verification, defaults to False
-		:type insecure: bool, optional
 		:return: Configured SSL socket ready for connection
-		:rtype: ssl.SSLSocket | None
 		:note: The socket is created but not yet connected. Call connect() separately.
+		:raises socket.error: If socket creation fails
+		:raises ssl.SSLError: If SSL/TLS setup fails
 		"""
 		if host.lower().endswith(".onion"):
 			serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -443,13 +440,9 @@ class TCPTransport(Transport):
 
 		Retrieves the certificate presented by the remote peer during SSL handshake.
 
-		Args:
-				binary_form (bool, optional): If True, return the raw certificate bytes.
-						If False, return a parsed dictionary. Defaults to False.
-
-		Returns:
-				Optional[Union[Dict[str, Any], bytes]]: The peer's certificate, or None if not connected.
-						Format depends on binary_form parameter.
+		:param binary_form: If True, return the raw certificate bytes, if False return a parsed dictionary, defaults to False
+		:return: The peer's certificate, or None if not connected
+		:raises ssl.SSLError: If certificate retrieval fails
 		"""
 		if self.serverSock is None:
 			return None
@@ -458,16 +451,12 @@ class TCPTransport(Transport):
 	def processIncomingSocketData(self) -> None:
 		"""Process incoming data from the server socket.
 
-		Reads available data from the socket, buffers partial messages,
-		and processes complete messages by passing them to parse().
+		Reads data from the socket in chunks, handling partial messages and SSL behavior.
+		Complete messages are passed to parse() for processing.
 
-		Messages are expected to be newline-delimited.
-		Partial messages are stored in self.buffer until complete.
-
-		Note:
-				This method handles SSL-specific socket behavior and non-blocking reads.
-				It is called when select() indicates data is available.
-				Uses a fixed 16384 byte buffer which may need tuning for performance.
+		:note: Uses non-blocking reads with SSL and 16KB buffer size
+		:raises socket.error: If socket read fails
+		:raises ssl.SSLWantReadError: If no SSL data is available
 		"""
 		# This approach may be problematic:
 		# See also server.py handle_data in class Client.
@@ -504,15 +493,12 @@ class TCPTransport(Transport):
 	def parse(self, line: bytes) -> None:
 		"""Parse and handle a complete message line.
 
-		Deserializes a message and routes it to the appropriate handler based on type.
+		Deserializes message and routes to appropriate handler based on type.
 
-		Args:
-				line (bytes): Complete message line to parse
-
-		Note:
-				Messages must include a 'type' field matching a RemoteMessageType enum value.
-				Handler callbacks are executed asynchronously on the wx main thread.
-				Invalid or unhandled message types are logged as errors.
+		:param line: Complete message line to parse
+		:raises ValueError: If message type is invalid
+		:note: Messages require 'type' field matching RemoteMessageType
+		:note: Handlers execute asynchronously on wx main thread
 		"""
 		obj = self.serializer.deserialize(line)
 		if "type" not in obj:
@@ -533,12 +519,9 @@ class TCPTransport(Transport):
 	def sendQueue(self) -> None:
 		"""Background thread that processes the outbound message queue.
 
-		Continuously pulls messages from the queue and sends them over the socket.
-		Thread exits when None is received from the queue or a socket error occurs.
-
-		Note:
-				This method runs in a separate thread and handles thread-safe socket access
-				using the serverSockLock.
+		:note: Runs in separate thread with thread-safe socket access via serverSockLock
+		:note: Exits on receiving None or socket error
+		:raises socket.error: If sending data fails
 		"""
 		while True:
 			item = self.queue.get()
@@ -550,19 +533,13 @@ class TCPTransport(Transport):
 			except socket.error:
 				return
 
-	def send(self, type: str | Enum, **kwargs: Any) -> None:
+	def send(self, type: RemoteMessageType | str, **kwargs: Any) -> None:
 		"""Send a message through the transport.
 
-		Serializes and queues a message for transmission. Messages are sent
-		asynchronously by the queue thread.
-
-		Args:
-				type (str|Enum): Message type, typically a RemoteMessageType enum value
-				**kwargs: Message payload data to serialize
-
-		Note:
-				This method is thread-safe and can be called from any thread.
-				If the transport is not connected, the message will be silently dropped.
+		:param type: Message type, typically a RemoteMessageType enum value
+		:param kwargs: Message payload data to serialize
+		:note: Thread-safe and can be called from any thread
+		:note: Messages are dropped if transport is not connected
 		"""
 		if self.connected:
 			obj = self.serializer.serialize(type=type, **kwargs)
@@ -573,14 +550,9 @@ class TCPTransport(Transport):
 	def _disconnect(self) -> None:
 		"""Internal method to disconnect the transport.
 
-		Cleans up the send queue thread, empties queued messages,
-		and closes the socket connection.
-
-		Note:
-				This is called internally on errors, unlike close() which is called
-				explicitly to shut down the transport.
+		:note: Called internally on errors, unlike close() which is called explicitly
+		:note: Cleans up queue thread and socket without stopping connector thread
 		"""
-		"""Disconnect the transport due to an error, without closing the connector thread."""
 		if self.queueThread is not None:
 			self.queue.put(None)
 			self.queueThread.join()
@@ -591,7 +563,10 @@ class TCPTransport(Transport):
 			self.serverSock = None
 
 	def close(self):
-		"""Close the transport."""
+		"""Close the transport and stop all threads.
+
+		:note: Stops reconnector thread and cleans up all resources
+		"""
 		self.transportClosing.notify()
 		self.reconnectorThread.running = False
 		self._disconnect()
@@ -662,11 +637,8 @@ class RelayTransport(TCPTransport):
 		"""Create a RelayTransport from a ConnectionInfo object.
 
 		:param connection_info: ConnectionInfo instance containing connection details
-		:type connection_info: ConnectionInfo
 		:param serializer: Serializer instance for message encoding/decoding
-		:type serializer: Serializer
 		:return: Configured RelayTransport instance ready for connection
-		:rtype: RelayTransport
 		"""
 		return cls(
 			serializer=serializer,
@@ -679,10 +651,9 @@ class RelayTransport(TCPTransport):
 	def onConnected(self) -> None:
 		"""Handle successful connection to relay server.
 
-		:note: Called automatically when transport connects:
-		       - Sends protocol version
-		       - Joins channel if specified
-		       - Otherwise requests key generation
+		:note: Called automatically when transport connects
+		:note: Sends protocol version and either joins channel or requests key generation
+		:raises ValueError: If protocol version is invalid
 		"""
 		self.send(RemoteMessageType.PROTOCOL_VERSION, version=self.protocol_version)
 		if self.channel is not None:
