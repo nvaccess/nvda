@@ -32,9 +32,9 @@ except ImportError:
 def _createRegistryStructure(key_handle, data: dict):
 	"""Creates a nested registry structure from a dictionary.
 
-	Args:
-	    key_handle: A handle to an open registry key
-	    data: Dictionary containing the registry structure to create
+	:param key_handle: A handle to an open registry key
+	:param data: Dictionary containing the registry structure to create
+	:raises OSError: If creating registry keys or setting values fails
 	"""
 	for name, value in data.items():
 		if isinstance(value, dict):
@@ -58,9 +58,9 @@ def _createRegistryStructure(key_handle, data: dict):
 def _deleteRegistryKeyRecursive(base_key, subkey_path: str):
 	"""Recursively deletes a registry key and all its subkeys.
 
-	Args:
-	    base_key: One of the HKEY_* constants
-	    subkey_path: Path to the key to delete
+	:param base_key: One of the HKEY_* constants from winreg
+	:param subkey_path: Full registry path to the key to delete
+	:raises OSError: If deletion fails for reasons other than key not found
 	"""
 	try:
 		# Try to delete directly first
@@ -85,7 +85,10 @@ def _deleteRegistryKeyRecursive(base_key, subkey_path: str):
 
 
 def registerURLHandler():
-	"""Registers the URL handler in the Windows Registry."""
+	"""Registers the nvdaremote:// URL protocol handler in the Windows Registry.
+
+	:raises OSError: If registration in the registry fails
+	"""
 	try:
 		keyPath = r"SOFTWARE\Classes\nvdaremote"
 		with winreg.CreateKey(winreg.HKEY_CURRENT_USER, keyPath) as key:
@@ -95,7 +98,10 @@ def registerURLHandler():
 
 
 def unregisterURLHandler():
-	"""Unregisters the URL handler from the Windows Registry."""
+	"""Unregisters the nvdaremote:// URL protocol handler from the Windows Registry.
+
+	:raises OSError: If unregistration from the registry fails
+	"""
 	try:
 		_deleteRegistryKeyRecursive(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\nvdaremote")
 	except OSError as e:
@@ -103,7 +109,11 @@ def unregisterURLHandler():
 
 
 def URLHandlerPath():
-	"""Returns the path to the URL handler executable."""
+	"""Returns the absolute path to the URL handler executable.
+
+	:return: Full path to url_handler.exe
+	:rtype: str
+	"""
 	return os.path.join(os.path.split(os.path.abspath(__file__))[0], "url_handler.exe")
 
 

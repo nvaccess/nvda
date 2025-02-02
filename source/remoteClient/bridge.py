@@ -5,25 +5,25 @@
 
 """Bridge Transport Module.
 
-This module provides functionality to bridge two NVDA Remote transports together,
-enabling bidirectional message passing between two transport instances while
-handling message filtering and routing.
+Provides functionality to bridge two NVDA Remote transports together,
+enabling bidirectional message passing with filtering and routing.
+
+:param transport1: First transport instance to bridge
+:param transport2: Second transport instance to bridge
 
 The bridge acts as an intermediary layer that:
-
 * Connects two transport instances
 * Routes messages between them
-* Filters out specific message types that shouldn't be forwarded
-* Manages the lifecycle of message handlers
+* Filters out specific message types
+* Manages message handler lifecycle
 
-Example:
-    Create and use a bridge between two transports::
+Example::
 
-        transport1 = TCPTransport(serializer, addr1)
-        transport2 = TCPTransport(serializer, addr2)
-        bridge = BridgeTransport(transport1, transport2)
-        # Messages will now flow between transport1 and transport2
-        bridge.disconnect()  # Clean up when done
+    transport1 = TCPTransport(serializer, addr1)
+    transport2 = TCPTransport(serializer, addr2)
+    bridge = BridgeTransport(transport1, transport2)
+    # Messages will now flow between transport1 and transport2
+    bridge.disconnect()  # Clean up when done
 """
 
 from .protocol import RemoteMessageType
@@ -86,15 +86,10 @@ class BridgeTransport:
 	def makeCallback(self, targetTransport: Transport, messageType: RemoteMessageType):
 		"""Create a callback function for handling a specific message type.
 
-		Creates a closure that will forward messages of the specified type
-		to the target transport, unless the message type is in the excluded set.
-
 		:param targetTransport: Transport instance to forward messages to
-		:type targetTransport: Transport
 		:param messageType: Type of message this callback will handle
-		:type messageType: RemoteMessageType
 		:return: A callback function that forwards messages to the target transport
-		:rtype: callable
+		:note: Creates a closure that forwards messages unless the type is excluded
 		"""
 
 		def callback(*args, **kwargs):
@@ -106,11 +101,8 @@ class BridgeTransport:
 	def disconnect(self):
 		"""Disconnect the bridge and clean up all message handlers.
 
-		Unregisters all message handlers from both transports that were set up
-		during bridge initialization. This should be called before disposing of
-		the bridge to prevent memory leaks and ensure proper cleanup.
-
-		:return: None
+		:note: Unregisters all message handlers from both transports.
+		    Should be called before disposal to prevent memory leaks.
 		"""
 		for messageType in RemoteMessageType:
 			self.t1.unregisterInbound(messageType, self.t2Callbacks[messageType])

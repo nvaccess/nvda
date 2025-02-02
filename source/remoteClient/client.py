@@ -109,6 +109,10 @@ class RemoteClient:
 			urlHandler.unregisterURLHandler()
 
 	def toggleMute(self):
+		"""Toggle muting of speech and sounds from the remote computer.
+
+		:note: Updates menu item state and announces new mute status
+		"""
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
 		# Translators: Displayed when muting speech and sounds from the remote computer
@@ -119,6 +123,11 @@ class RemoteClient:
 		ui.message(status)
 
 	def pushClipboard(self):
+		"""Send local clipboard content to the remote computer.
+
+		:note: Requires an active connection
+		:raises TypeError: If clipboard content cannot be serialized
+		"""
 		connector = self.slaveTransport or self.masterTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
@@ -131,6 +140,10 @@ class RemoteClient:
 			log.exception("Unable to push clipboard")
 
 	def copyLink(self):
+		"""Copy connection URL to clipboard.
+
+		:note: Requires an active session
+		"""
 		session = self.masterSession or self.slaveSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
@@ -140,12 +153,21 @@ class RemoteClient:
 		api.copyToClip(str(url))
 
 	def sendSAS(self):
+		"""Send Secure Attention Sequence to remote computer.
+
+		:note: Requires an active master transport connection
+		"""
 		if self.masterTransport is None:
 			log.error("No master transport to send SAS")
 			return
 		self.masterTransport.send(RemoteMessageType.SEND_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
+		"""Establish connection based on connection info.
+
+		:param connectionInfo: Connection details including mode, host, port etc.
+		:note: Initiates either master or slave connection based on mode
+		"""
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
@@ -155,6 +177,10 @@ class RemoteClient:
 			self.connectAsSlave(connectionInfo)
 
 	def disconnect(self):
+		"""Close all active connections and clean up resources.
+
+		:note: Closes local control server and both master/slave sessions if active
+		"""
 		if self.masterSession is None and self.slaveSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
@@ -169,11 +195,13 @@ class RemoteClient:
 		cues.disconnected()
 
 	def disconnectAsMaster(self):
+		"""Close master session and clean up related resources."""
 		self.masterSession.close()
 		self.masterSession = None
 		self.masterTransport = None
 
 	def disconnectAsSlave(self):
+		"""Close slave session and clean up related resources."""
 		self.slaveSession.close()
 		self.slaveSession = None
 		self.slaveTransport = None
@@ -195,6 +223,11 @@ class RemoteClient:
 			)
 
 	def doConnect(self, evt=None):
+		"""Show connection dialog and handle connection initiation.
+
+		:param evt: Optional wx event object
+		:note: Displays dialog with previous connections list
+		"""
 		if evt is not None:
 			evt.Skip()
 		previousConnections = configuration.get_config()["connections"]["last_connected"]
@@ -348,12 +381,27 @@ class RemoteClient:
 			self.connectAsSlave(connectionInfo=connectionInfo)
 
 	def startControlServer(self, serverPort, channel):
+		"""Start local relay server for handling connections.
+
+		:param serverPort: Port number to listen on
+		:param channel: Channel key for authentication
+		:note: Creates daemon thread to run server
+		"""
 		self.localControlServer = server.LocalRelayServer(serverPort, channel)
 		serverThread = threading.Thread(target=self.localControlServer.run)
 		serverThread.daemon = True
 		serverThread.start()
 
 	def process_key_input(self, vkCode=None, scanCode=None, extended=None, pressed=None):
+		"""Process keyboard input and forward to remote if sending keys.
+
+		:param vkCode: Virtual key code
+		:param scanCode: Scan code
+		:param extended: Whether this is an extended key
+		:param pressed: True if key pressed, False if released
+		:return: True to allow local processing, False to block
+		:rtype: bool
+		"""
 		if not self.sendingKeys:
 			return True
 		keyCode = (vkCode, extended)
@@ -392,6 +440,11 @@ class RemoteClient:
 		return False  # Don't pass it on
 
 	def toggleRemoteKeyControl(self, gesture: KeyboardInputGesture):
+		"""Toggle sending keyboard input to remote machine.
+
+		:param gesture: The keyboard gesture that triggered this
+		:note: Also toggles braille input and mute state
+		"""
 		if not self.masterTransport:
 			gesture.send()
 			return
@@ -410,6 +463,10 @@ class RemoteClient:
 			ui.message(_("Controlling local machine."))
 
 	def releaseKeys(self):
+		"""Release all pressed keys on the remote machine.
+
+		:note: Sends key-up events for all held modifiers
+		"""
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
 			self.masterTransport.send(
@@ -421,6 +478,11 @@ class RemoteClient:
 		self.keyModifiers = set()
 
 	def setReceivingBraille(self, state):
+		"""Enable or disable receiving braille from remote.
+
+		:param state: True to enable remote braille, False to disable
+		:note: Only enables if master session and braille handler are ready
+		"""
 		if state and self.masterSession.callbacksAdded and braille.handler.enabled:
 			self.masterSession.registerBrailleInput()
 			self.localMachine.receivingBraille = True
@@ -430,7 +492,12 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def verifyAndConnect(self, conInfo: ConnectionInfo):
-		"""Verify connection details and establish connection if approved by user."""
+		"""Verify connection details and establish connection if approved by user.
+
+		:param conInfo: Connection information to verify and use
+		:note: Shows confirmation dialog before connecting
+		:raises: Displays error if already connected
+		"""
 		if self.isConnected() or self.connecting:
 			# Translators: Message shown when trying to connect while already connected.
 			error_msg = _("NVDA Remote is already connected. Disconnect before opening a new connection.")
@@ -473,13 +540,26 @@ class RemoteClient:
 			self.connecting = False
 
 	def isConnected(self):
+		"""Check if there is an active connection.
+
+		:return: True if either slave or master transport is connected
+		:rtype: bool
+		"""
 		connector = self.slaveTransport or self.masterTransport
 		if connector is not None:
 			return connector.connected
 		return False
 
 	def registerLocalScript(self, script):
+		"""Add a script to be handled locally instead of sent to remote.
+
+		:param script: Script function to register
+		"""
 		self.localScripts.add(script)
 
 	def unregisterLocalScript(self, script):
+		"""Remove a script from local handling.
+
+		:param script: Script function to unregister
+		"""
 		self.localScripts.discard(script)

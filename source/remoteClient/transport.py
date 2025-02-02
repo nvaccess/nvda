@@ -55,14 +55,17 @@ class RemoteExtensionPoint:
 	This class connects local NVDA extension points to the remote transport layer,
 	allowing local events to trigger remote messages with optional argument transformation.
 
-	Args:
-		extensionPoint: The NVDA extension point to bridge
-		messageType: The remote message type to send
-		filter: Optional function to transform arguments before sending
-		transport: The transport instance (set on registration)
+	:param extensionPoint: The NVDA extension point to bridge
+	:type extensionPoint: HandlerRegistrar
+	:param messageType: The remote message type to send
+	:type messageType: RemoteMessageType
+	:param filter: Optional function to transform arguments before sending
+	:type filter: Optional[Callable[..., dict[str, Any]]]
+	:param transport: The transport instance (set on registration)
+	:type transport: Optional[Transport]
 
-	The filter function, if provided, should take (*args, **kwargs) and return
-	a new kwargs dict to be sent in the message.
+	:note: The filter function, if provided, should take (*args, **kwargs) and return
+	       a new kwargs dict to be sent in the message.
 	"""
 
 	extensionPoint: HandlerRegistrar
@@ -74,7 +77,13 @@ class RemoteExtensionPoint:
 		"""Bridge function that gets registered to the extension point.
 
 		Handles calling the filter if present and sending the message.
-		Always returns True to allow other handlers to process the event.
+
+		:param args: Positional arguments from the extension point
+		:type args: Any
+		:param kwargs: Keyword arguments from the extension point
+		:type kwargs: Any
+		:return: Always returns True to allow other handlers to process the event
+		:rtype: bool
 		"""
 		if self.filter is not None:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
@@ -121,22 +130,30 @@ class Transport:
 		>>> transport.registerInbound(RemoteMessageType.key, handle_key)
 		>>> transport.run()
 
-	Args:
-		serializer: The serializer instance to use for message encoding/decoding
+	:param serializer: The serializer instance to use for message encoding/decoding
+	:type serializer: Serializer
 
-	Attributes:
-		connected (bool): True if transport has an active connection
-		successful_connects (int): Counter of successful connection attempts
-		connected_event (threading.Event): Event that is set when connected
-		serializer (Serializer): The message serializer instance
-		inboundHandlers (Dict[RemoteMessageType, Callable]): Registered message handlers
+	:ivar connected: True if transport has an active connection
+	:vartype connected: bool
+	:ivar successfulConnects: Counter of successful connection attempts
+	:vartype successfulConnects: int
+	:ivar connectedEvent: Event that is set when connected
+	:vartype connectedEvent: threading.Event
+	:ivar serializer: The message serializer instance
+	:vartype serializer: Serializer
+	:ivar inboundHandlers: Registered message handlers
+	:vartype inboundHandlers: Dict[RemoteMessageType, Callable]
 
-	Events:
-		transportConnected: Fired after connection is established and ready
-		transportDisconnected: Fired when existing connection is lost
-		transportCertificateAuthenticationFailed: Fired when SSL certificate validation fails
-		transportConnectionFailed: Fired when a connection attempt fails
-		transportClosing: Fired before transport is shut down
+	:cvar transportConnected: Fired after connection is established and ready
+	:vartype transportConnected: Action
+	:cvar transportDisconnected: Fired when existing connection is lost
+	:vartype transportDisconnected: Action
+	:cvar transportCertificateAuthenticationFailed: Fired when SSL certificate validation fails
+	:vartype transportCertificateAuthenticationFailed: Action
+	:cvar transportConnectionFailed: Fired when a connection attempt fails
+	:vartype transportConnectionFailed: Action
+	:cvar transportClosing: Fired before transport is shut down
+	:vartype transportClosing: Action
 	"""
 
 	connected: bool
@@ -175,14 +192,11 @@ class Transport:
 	def onTransportConnected(self) -> None:
 		"""Handle successful transport connection.
 
-		Called internally when a connection is established. Updates connection state,
-		increments successful connection counter, and notifies listeners.
-
-		This method:
-		1. Increments successful connection counter
-		2. Sets connected flag to True
-		3. Sets the connected event
-		4. Notifies transportConnected listeners
+		:note: Called internally when connection established:
+		    - Increments successful connection counter
+		    - Sets connected flag to True
+		    - Sets connected event
+		    - Notifies transportConnected listeners
 		"""
 		self.successfulConnects += 1
 		self.connected = True
@@ -192,21 +206,15 @@ class Transport:
 	def registerInbound(self, type: RemoteMessageType, handler: Callable) -> None:
 		"""Register a handler for incoming messages of a specific type.
 
-		Adds a callback function to handle messages of the specified RemoteMessageType.
-		Multiple handlers can be registered for the same message type.
-
-		Args:
-				type (RemoteMessageType): The message type to handle
-				handler (Callable): Callback function to process messages of this type.
-						Will be called with the message payload as kwargs.
-
-		Example:
-				>>> def handle_keypress(key_code, pressed):
-				...     print(f"Key {key_code} {'pressed' if pressed else 'released'}")
-				>>> transport.registerInbound(RemoteMessageType.key_press, handle_keypress)
-
-		Note:
-				Handlers are called asynchronously on the wx main thread via wx.CallAfter
+		:param type: The message type to handle
+		:param handler: Callback function to process messages of this type
+		:note: Multiple handlers can be registered for the same type.
+		    Handlers are called asynchronously on wx main thread via CallAfter.
+		    Handler will receive message payload as kwargs.
+		:example:
+		    >>> def handle_keypress(key_code, pressed):
+		    ...     print(f"Key {key_code} {'pressed' if pressed else 'released'}")
+		    >>> transport.registerInbound(RemoteMessageType.key_press, handle_keypress)
 		"""
 		if type not in self.inboundHandlers:
 			log.debug("Creating new handler for %s", type)
@@ -217,12 +225,9 @@ class Transport:
 	def unregisterInbound(self, type: RemoteMessageType, handler: Callable) -> None:
 		"""Remove a previously registered message handler.
 
-		Removes a specific handler function from the list of handlers for a message type.
-		If the handler was not previously registered, this is a no-op.
-
-		Args:
-				type (RemoteMessageType): The message type to unregister from
-				handler (Callable): The handler function to remove
+		:param type: The message type to unregister from
+		:param handler: The handler function to remove
+		:note: If handler was not registered, this is a no-op
 		"""
 		self.inboundHandlers[type].unregister(handler)
 		log.debug("Unregistered handler for %s", type)
@@ -235,10 +240,10 @@ class Transport:
 	):
 		"""Register an extension point to a message type.
 
-		Args:
-			extensionPoint (HandlerRegistrar): The extension point to register
-			messageType (RemoteMessageType): The message type to register the extension point to
-			filter (Optional[Callable], optional): A filter function to apply to the message before sending. Defaults to None.
+		:param extensionPoint: The extension point to register
+		:param messageType: The message type to register the extension point to
+		:param filter: Optional function to transform message before sending
+		:note: Filter function should take (*args, **kwargs) and return new kwargs dict
 		"""
 		remoteExtension = RemoteExtensionPoint(
 			extensionPoint=extensionPoint,
@@ -265,23 +270,35 @@ class TCPTransport(Transport):
 	encryption. It handles connection establishment, data transfer, and connection
 	lifecycle management.
 
-	Args:
-		serializer (Serializer): Message serializer instance
-		address (Tuple[str, int]): Remote address to connect to
-		timeout (int, optional): Connection timeout in seconds. Defaults to 0.
-		insecure (bool, optional): Skip certificate verification. Defaults to False.
+	:param serializer: Message serializer instance
+	:type serializer: Serializer
+	:param address: Remote address to connect to as (host, port) tuple
+	:type address: tuple[str, int]
+	:param timeout: Connection timeout in seconds, defaults to 0
+	:type timeout: int, optional
+	:param insecure: Skip certificate verification, defaults to False
+	:type insecure: bool, optional
 
-	Attributes:
-		buffer (bytes): Buffer for incomplete received data
-		closed (bool): Whether transport is closed
-		queue (Queue[Optional[bytes]]): Queue of outbound messages
-		insecure (bool): Whether to skip certificate verification
-		address (Tuple[str, int]): Remote address to connect to
-		timeout (int): Connection timeout in seconds
-		serverSock (Optional[ssl.SSLSocket]): The SSL socket connection
-		serverSockLock (threading.Lock): Lock for thread-safe socket access
-		queueThread (Optional[threading.Thread]): Thread handling outbound messages
-		reconnectorThread (ConnectorThread): Thread managing reconnection
+	:ivar buffer: Buffer for incomplete received data
+	:vartype buffer: bytes
+	:ivar closed: Whether transport is closed
+	:vartype closed: bool
+	:ivar queue: Queue of outbound messages
+	:vartype queue: Queue[Optional[bytes]]
+	:ivar insecure: Whether to skip certificate verification
+	:vartype insecure: bool
+	:ivar address: Remote address to connect to
+	:vartype address: tuple[str, int]
+	:ivar timeout: Connection timeout in seconds
+	:vartype timeout: int
+	:ivar serverSock: The SSL socket connection
+	:vartype serverSock: Optional[ssl.SSLSocket]
+	:ivar serverSockLock: Lock for thread-safe socket access
+	:vartype serverSockLock: threading.Lock
+	:ivar queueThread: Thread handling outbound messages
+	:vartype queueThread: Optional[threading.Thread]
+	:ivar reconnectorThread: Thread managing reconnection
+	:vartype reconnectorThread: ConnectorThread
 	"""
 
 	buffer: bytes
@@ -389,16 +406,15 @@ class TCPTransport(Transport):
 		Creates a TCP socket with appropriate timeout and keep-alive settings,
 		then wraps it with SSL/TLS encryption.
 
-		Args:
-				host (str): Remote hostname to connect to
-				port (int): Remote port number
-				insecure (bool, optional): Skip certificate verification. Defaults to False.
-
-		Returns:
-				ssl.SSLSocket: Configured SSL socket ready for connection
-
-		Note:
-				The socket is created but not yet connected. Call connect() separately.
+		:param host: Remote hostname to connect to
+		:type host: str
+		:param port: Remote port number
+		:type port: int
+		:param insecure: Skip certificate verification, defaults to False
+		:type insecure: bool, optional
+		:return: Configured SSL socket ready for connection
+		:rtype: ssl.SSLSocket | None
+		:note: The socket is created but not yet connected. Call connect() separately.
 		"""
 		if host.lower().endswith(".onion"):
 			serverSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -645,12 +661,12 @@ class RelayTransport(TCPTransport):
 	def create(cls, connection_info: ConnectionInfo, serializer: Serializer) -> "RelayTransport":
 		"""Create a RelayTransport from a ConnectionInfo object.
 
-		Args:
-			connection_info: ConnectionInfo instance containing connection details
-			serializer: Serializer instance for message encoding/decoding
-
-		Returns:
-			Configured RelayTransport instance ready for connection
+		:param connection_info: ConnectionInfo instance containing connection details
+		:type connection_info: ConnectionInfo
+		:param serializer: Serializer instance for message encoding/decoding
+		:type serializer: Serializer
+		:return: Configured RelayTransport instance ready for connection
+		:rtype: RelayTransport
 		"""
 		return cls(
 			serializer=serializer,
@@ -661,6 +677,13 @@ class RelayTransport(TCPTransport):
 		)
 
 	def onConnected(self) -> None:
+		"""Handle successful connection to relay server.
+
+		:note: Called automatically when transport connects:
+		       - Sends protocol version
+		       - Joins channel if specified
+		       - Otherwise requests key generation
+		"""
 		self.send(RemoteMessageType.PROTOCOL_VERSION, version=self.protocol_version)
 		if self.channel is not None:
 			self.send(
@@ -678,14 +701,17 @@ class ConnectorThread(threading.Thread):
 	Handles automatic reconnection with configurable delay between attempts.
 	Runs until explicitly stopped.
 
-	Args:
-		connector (Transport): Transport instance to manage connections for
-		reconnectDelay (int, optional): Seconds between attempts. Defaults to 5.
+	:param connector: Transport instance to manage connections for
+	:type connector: Transport
+	:param reconnectDelay: Seconds between attempts, defaults to 5
+	:type reconnectDelay: int, optional
 
-	Attributes:
-		running (bool): Whether thread should continue running
-		connector (Transport): Transport to manage connections for
-		reconnectDelay (int): Seconds to wait between connection attempts
+	:ivar running: Whether thread should continue running
+	:vartype running: bool
+	:ivar connector: Transport to manage connections for
+	:vartype connector: Transport
+	:ivar reconnectDelay: Seconds to wait between connection attempts
+	:vartype reconnectDelay: int
 	"""
 
 	running: bool
@@ -718,12 +744,10 @@ def clearQueue(queue: Queue[bytes | None]) -> None:
 	Removes all items from the queue in a non-blocking way,
 	useful for cleaning up before disconnection.
 
-	Args:
-		queue (Queue[Optional[bytes]]): Queue instance to clear
-
-	Note:
-		This function catches and ignores any exceptions that occur
-		while trying to get items from an empty queue.
+	:param queue: Queue instance to clear
+	:type queue: Queue[Optional[bytes]]
+	:note: This function catches and ignores any exceptions that occur
+	       while trying to get items from an empty queue.
 	"""
 	try:
 		while True:

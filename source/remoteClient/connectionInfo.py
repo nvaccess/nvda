@@ -14,16 +14,18 @@ from .protocol import SERVER_PORT, URL_PREFIX
 class URLParsingError(Exception):
 	"""Exception raised when URL parsing fails.
 
-	This exception is raised when the URL cannot be parsed due to missing or invalid components
+	Raised when the URL cannot be parsed due to missing or invalid components
 	such as hostname, key, or mode.
+
+	:raises URLParsingError: When URL components are missing or invalid
 	"""
 
 
 class ConnectionMode(StrEnum):
-	"""Enum defining the connection mode for remote connections.
+	"""Defines the connection mode for remote connections.
 
-	:cvar MASTER: Controller/master mode
-	:cvar SLAVE: Controlled/slave mode
+	:cvar MASTER: Controller mode for controlling the remote system
+	:cvar SLAVE: Controlled mode for being controlled by remote system
 	"""
 
 	MASTER = "master"
@@ -31,12 +33,12 @@ class ConnectionMode(StrEnum):
 
 
 class ConnectionState(StrEnum):
-	"""Enum defining possible states of a remote connection.
+	"""Defines possible states of a remote connection.
 
-	:cvar CONNECTED: Connection is established
-	:cvar DISCONNECTED: No connection is active
-	:cvar CONNECTING: Connection attempt in progress
-	:cvar DISCONNECTING: Disconnection in progress
+	:cvar CONNECTED: Connection is established and active
+	:cvar DISCONNECTED: No active connection exists
+	:cvar CONNECTING: Connection attempt is currently in progress
+	:cvar DISCONNECTING: Connection termination is in progress
 	"""
 
 	CONNECTED = "connected"
@@ -49,14 +51,17 @@ class ConnectionState(StrEnum):
 class ConnectionInfo:
 	"""Stores and manages remote connection information.
 
-	This class handles connection details including hostname, mode, authentication key,
-	port number and security settings. It provides methods for URL generation and parsing.
+	Handles connection details including hostname, mode, authentication key,
+	port number and security settings. Provides methods for URL generation and parsing.
 
-	:param hostname: The remote host to connect to
-	:param mode: The connection mode (master/slave)
-	:param key: Authentication key for the connection
-	:param port: Port number to use, defaults to SERVER_PORT
-	:param insecure: Whether to allow insecure connections, defaults to False
+	:param hostname: Remote host address to connect to
+	:param mode: Connection mode (master/slave)
+	:param key: Authentication key for securing the connection
+	:param port: Port number to use for connection, defaults to SERVER_PORT
+	:param insecure: Allow insecure connections without SSL/TLS, defaults to False
+	:raises URLParsingError: When URL components are missing or invalid
+	:return: A ConnectionInfo instance with the specified connection details
+	:rtype: ConnectionInfo
 	"""
 
 	hostname: str
@@ -73,9 +78,10 @@ class ConnectionInfo:
 	def fromURL(cls, url: str) -> "ConnectionInfo":
 		"""Creates a ConnectionInfo instance from a URL string.
 
-		:param url: The URL to parse
+		:param url: The URL to parse in nvdaremote:// format
 		:raises URLParsingError: If URL cannot be parsed or contains invalid data
-		:return: A new ConnectionInfo instance
+		:return: A new ConnectionInfo instance configured from the URL
+		:rtype: ConnectionInfo
 		"""
 		parsedUrl = urlparse(url)
 		parsedQuery = parse_qs(parsedUrl.query)
@@ -100,6 +106,7 @@ class ConnectionInfo:
 		"""Gets the formatted address string.
 
 		:return: Address string in format hostname:port, with IPv6 brackets if needed
+		:rtype: str
 		"""
 		# Handle IPv6 addresses by adding brackets if needed
 		hostname = f"[{self.hostname}]" if ":" in self.hostname else self.hostname

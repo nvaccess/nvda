@@ -94,14 +94,13 @@ EXCLUDED_SPEECH_COMMANDS = (
 class RemoteSession:
 	"""Base class for a session that runs on either the master or slave machine.
 
-	This abstract base class defines the core functionality shared between master and slave
-	sessions. It handles basic session management tasks like:
-
-	- Handling version mismatch notifications
-	- Message of the day handling
-	- Connection info management
-	- Transport registration
-
+	:param localMachine: Interface to control local NVDA instance
+	:param transport: Network transport layer instance
+	:note: Handles core session tasks:
+	    - Version compatibility checks
+	    - Message of the day handling
+	    - Connection management
+	    - Transport registration
 	"""
 
 	transport: RelayTransport  # The transport layer handling network communication
@@ -140,11 +139,10 @@ class RemoteSession:
 	def handleVersionMismatch(self) -> None:
 		"""Handle protocol version mismatch between client and server.
 
-		This method is called when the transport layer detects that the client's
-		protocol version is not compatible. It:
-		1. Displays a localized error message to the user
-		2. Closes the transport connection
-		3. Prevents further communication attempts
+		:note: Called when transport detects incompatible protocol versions.
+		    - Displays localized error message
+		    - Closes transport connection
+		    - Prevents further communication
 		"""
 		log.error("Protocol version mismatch detected with relay server")
 		ui.message(
@@ -157,21 +155,13 @@ Please use a different server."""),
 	def handleMOTD(self, motd: str, force_display=False):
 		"""Handle Message of the Day from relay server.
 
-		log.info("Received MOTD from server (force_display=%s)", force_display)
-
-		Displays server MOTD to user if:
-		1. It hasn't been shown before (tracked by message hash), or
-		2. force_display is True (for important announcements)
-
-		The MOTD system allows server operators to communicate important
-		information to users like:
-		- Service announcements
-		- Maintenance windows
-		- Version update notifications
-		- Security advisories
-		Note:
-				Message hashes are stored per-server in the config file to track
-				which messages have already been shown to the user.
+		:param motd: Message text to display
+		:param force_display: If True, always show message even if seen before
+		:note: Shows message if:
+		    - Not shown before (tracked by hash)
+		    - force_display is True
+		    Used for service announcements, maintenance notices, etc.
+		    Message hashes stored per-server in config.
 		"""
 		if force_display or self.shouldDisplayMotd(motd):
 			gui.messageBox(
@@ -182,6 +172,13 @@ Please use a different server."""),
 			)
 
 	def shouldDisplayMotd(self, motd: str) -> bool:
+		"""Check if MOTD should be displayed.
+
+		:param motd: Message to check
+		:return: True if message should be shown
+		:note: Compares message hash against previously shown messages
+		    stored in config file per server
+		"""
 		conf = configuration.get_config()
 		connection = self.getConnectionInfo()
 		address = "{host}:{port}".format(
@@ -197,23 +194,27 @@ Please use a different server."""),
 		return True
 
 	def handleClientConnected(self, client: dict[str, Any]) -> None:
-		"""Handle new client connection."""
+		"""Handle new client connection.
+
+		:param client: Dictionary containing client connection details
+		:note: Logs connection info and plays connection sound
+		"""
 		log.info("Client connected: %r", client)
 		cues.clientConnected()
 
 	def handleClientDisconnected(self, client=None):
 		"""Handle client disconnection.
-		Plays disconnection sound when remote client disconnects.
+
+		:param client: Optional client info dictionary
+		:note: Plays disconnection sound when remote client disconnects
 		"""
 		cues.clientDisconnected()
 
 	def getConnectionInfo(self) -> connectionInfo.ConnectionInfo:
 		"""Get information about the current connection.
 
-		Returns a ConnectionInfo object containing:
-		- Hostname and port of the relay server
-		- Channel key for the connection
-		- Session mode (master/slave)
+		:return: ConnectionInfo object with server details and session mode
+		:note: Contains hostname, port, channel key and session mode
 		"""
 		hostname, port = self.transport.address
 		key = self.transport.channel
@@ -239,15 +240,13 @@ Please use a different server."""),
 class SlaveSession(RemoteSession):
 	"""Session that runs on the controlled (slave) NVDA instance.
 
-	This class implements the slave side of an NVDA Remote connection. It handles:
-
-	- Receiving and executing commands from master(s)
-	- Forwarding speech/braille/tones/NVWave output to master(s)
-	- Managing connected master clients and their braille display sizes
-	- Coordinating braille display functionality
-
-	The slave session allows multiple master connections simultaneously and manages
-	state for each connected master separately.
+	:ivar masters: Information about connected master clients
+	:ivar masterDisplaySizes: Braille display sizes of connected masters
+	:note: Handles:
+	    - Command execution from masters
+	    - Output forwarding to masters
+	    - Multi-master connections
+	    - Braille display coordination
 	"""
 
 	# Connection mode - always 'slave'
@@ -434,17 +433,14 @@ class SlaveSession(RemoteSession):
 class MasterSession(RemoteSession):
 	"""Session that runs on the controlling (master) NVDA instance.
 
-	This class implements the master side of an NVDA Remote connection. It handles:
-
-	- Sending control commands to slaves
-	- Receiving and playing speech/braille from slaves
-	- Playing basic notification sounds from slaves
-	- Managing connected slave clients
-	- Synchronizing braille display information
-	- Patching NVDA for remote input handling
-
-	The master session takes input from the local NVDA instance and forwards
-	appropriate commands to control the remote slave instance.
+	:ivar slaves: Information about connected slave clients
+	:note: Handles:
+	    - Control command sending
+	    - Remote output reception
+	    - Sound notification playback
+	    - Client connection management
+	    - Braille display sync
+	    - Input handling patches
 	"""
 
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.MASTER
@@ -566,18 +562,11 @@ class MasterSession(RemoteSession):
 		self,
 		gesture: braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture,
 	) -> bool:
-		"""
-		Handles the decision to execute a gesture by processing the given gesture and sending
-		the relevant data to the remote client.
+		"""Handle and forward braille gestures to remote client.
 
-		Args:
-			gesture (braille.BrailleDisplayGesture | brailleInput.BrailleInputGesture):
-				The gesture to be processed, which can be either a Braille display gesture
-				or a Braille input gesture.
-
-		Returns:
-			bool: Returns False if the gesture is successfully processed and sent to the
-			remote client, otherwise returns True.
+		:param gesture: Braille display or input gesture to process
+		:return: False if gesture was processed and sent, True otherwise
+		:note: Extracts gesture details and script info before sending
 		"""
 		if isinstance(gesture, (braille.BrailleDisplayGesture, brailleInput.BrailleInputGesture)):
 			dict = {
@@ -626,7 +615,15 @@ class MasterSession(RemoteSession):
 			return True
 
 	def registerBrailleInput(self) -> None:
+		"""Register handler for braille input gestures.
+
+		:note: Connects to inputCore's gesture execution decision point
+		"""
 		inputCore.decide_executeGesture.register(self.handleDecideExecuteGesture)
 
 	def unregisterBrailleInput(self) -> None:
+		"""Unregister handler for braille input gestures.
+
+		:note: Disconnects from inputCore's gesture execution decision point
+		"""
 		inputCore.decide_executeGesture.unregister(self.handleDecideExecuteGesture)
