@@ -39,7 +39,7 @@ if (!$env:APPVEYOR_PULL_REQUEST_NUMBER -and $env:versionType) {
 			Write-Host "JSON payload:"
 			Write-Host $jsonContent
 
-			$response = Invoke-RestMethod -Uri "https://api.nvaccess.org/appveyor-hook" `
+			$response = Invoke-RestMethod -Uri "https://api.nvaccess.org/appveyor/hook" `
 				-Method Post `
 				-Headers @{
 					"Authorization" = "Bearer $env:APPVEYOR_WEBHOOK_TOKEN"
