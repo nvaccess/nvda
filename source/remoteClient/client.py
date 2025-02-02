@@ -75,7 +75,7 @@ class RemoteClient:
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				)
 		core.postNvdaStartup.register(self.performAutoconnect)
-		inputCore.decide_handleRawKey.register(self.process_key_input)
+		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
 	def performAutoconnect(self):
 		controlServerConfig = configuration.get_config()["controlserver"]
@@ -104,7 +104,7 @@ class RemoteClient:
 		self.menu = None
 		self.localScripts.clear()
 		core.postNvdaStartup.unregister(self.performAutoconnect)
-		inputCore.decide_handleRawKey.unregister(self.process_key_input)
+		inputCore.decide_handleRawKey.unregister(self.processKeyInput)
 		if not isInstalledCopy():
 			urlHandler.unregisterURLHandler()
 
@@ -392,7 +392,7 @@ class RemoteClient:
 		serverThread.daemon = True
 		serverThread.start()
 
-	def process_key_input(self, vkCode=None, scanCode=None, extended=None, pressed=None):
+	def processKeyInput(self, vkCode=None, scanCode=None, extended=None, pressed=None):
 		"""Process keyboard input and forward to remote if sending keys.
 
 		:param vkCode: Virtual key code
