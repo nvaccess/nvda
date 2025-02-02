@@ -4928,7 +4928,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("""Disconnect a remote session"""),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
-	def script_disconnectFromRemote(self, gesture):
+	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
 		if not remoteClient.remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(_("Not connected"))
