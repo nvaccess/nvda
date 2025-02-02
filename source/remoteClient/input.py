@@ -121,7 +121,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 				return func
 
 		# NVDAObject level.
-		func = getattr(focus, "script_%s" % scriptName, None)
+		func = getattr(focus, f"script_{scriptName}", None)
 		if func:
 			return func
 		for obj in reversed(api.getFocusAncestors()):
