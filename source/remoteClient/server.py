@@ -48,7 +48,13 @@ from . import configuration
 
 
 class RemoteCertificateManager:
-	"""Manages SSL certificates for the NVDA Remote relay server."""
+	"""Manages SSL certificates for the NVDA Remote relay server.
+
+	:ivar certDir: Directory where certificates and keys are stored
+	:ivar certPath: Path to the certificate file
+	:ivar keyPath: Path to the private key file
+	:ivar fingerprintPath: Path to the fingerprint file
+	"""
 
 	CERT_FILE = "NvdaRemoteRelay.pem"
 	KEY_FILE = "NvdaRemoteRelay.key"
@@ -214,12 +220,17 @@ class LocalRelayServer:
 
 	Accepts encrypted connections from NVDA Remote clients and routes messages between them.
 	Creates IPv4 and IPv6 listening sockets using SSL/TLS encryption.
-	Uses select() for non-blocking I/O and monitors connection health with periodic pings
-	(sent every PING_TIME seconds, no response expected).
+	Uses select() for non-blocking I/O and monitors connection health with periodic pings.
 
 	Clients must authenticate by providing the correct channel password in their join message
 	before they can exchange messages. Both IPv4 and IPv6 clients share the same channel
 	and can interact with each other transparently.
+
+	:ivar port: Port number to listen on
+	:ivar password: Channel password for client authentication
+	:ivar clients: Dictionary mapping sockets to Client objects
+	:ivar clientSockets: List of client sockets
+	:ivar PING_TIME: Seconds between ping messages
 	"""
 
 	PING_TIME: int = 300
@@ -257,7 +268,14 @@ class LocalRelayServer:
 		)
 
 	def createServerSocket(self, family: int, type: int, bind_addr: Tuple[str, int]) -> ssl.SSLSocket:
-		"""Creates an SSL wrapped socket using the certificate."""
+		"""Creates an SSL wrapped socket using the certificate.
+
+		:param family: Socket address family (AF_INET or AF_INET6)
+		:param type: Socket type (typically SOCK_STREAM)
+		:param bind_addr: Tuple of (host, port) to bind to
+		:return: SSL wrapped server socket
+		:raises socket.error: If socket creation or binding fails
+		"""
 		serverSocket = socket.socket(family, type)
 		sslContext = self.certManager.createSSLContext()
 		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
@@ -266,7 +284,13 @@ class LocalRelayServer:
 		return serverSocket
 
 	def run(self) -> None:
-		"""Main server loop that handles client connections and message routing."""
+		"""Main server loop that handles client connections and message routing.
+
+		Continuously accepts new connections and processes messages from connected clients.
+		Sends periodic ping messages to maintain connection health.
+
+		:raises socket.error: If there are socket communication errors
+		"""
 		log.info(f"Starting NVDA Remote relay server on ports {self.port} (IPv4) " f"and {self.port} (IPv6)")
 		self._running = True
 		self.lastPingTime = time.time()
@@ -339,6 +363,13 @@ class Client:
 	records client protocol version, and routes messages to other connected clients.
 	Maintains a buffer of received data and processes complete messages delimited
 	by newlines.
+
+	:ivar id: Unique client identifier
+	:ivar socket: SSL socket for this client connection
+	:ivar buffer: Buffer for incomplete received data
+	:ivar authenticated: Whether client has authenticated successfully
+	:ivar connectionType: Type of client connection
+	:ivar protocolVersion: Client protocol version number
 	"""
 
 	id: int = 0
