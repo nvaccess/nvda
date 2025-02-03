@@ -102,7 +102,7 @@ deploy_script:
  - ps: appveyor\scripts\deployScript.ps1
 
 # Prepare environment with additional variables for webhook
-webhook_setup:
+before_deploy:
  - ps: appveyor\scripts\webhookSetup.ps1
 
 deploy:
