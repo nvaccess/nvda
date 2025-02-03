@@ -57,15 +57,15 @@ class RemoteCertificateManager:
 	CERT_RENEWAL_THRESHOLD_DAYS = 30
 
 	def __init__(self, cert_dir: Optional[Path] = None):
-		self.cert_dir = cert_dir or getProgramDataTempPath()
-		self.cert_path = self.cert_dir / self.CERT_FILE
-		self.key_path = self.cert_dir / self.KEY_FILE
-		self.fingerprint_path = self.cert_dir / self.FINGERPRINT_FILE
+		self.certDir = cert_dir or getProgramDataTempPath()
+		self.certPath = self.certDir / self.CERT_FILE
+		self.keyPath = self.certDir / self.KEY_FILE
+		self.fingerprintPath = self.certDir / self.FINGERPRINT_FILE
 
 	def ensureValidCertExists(self) -> None:
 		"""Ensures a valid certificate and key exist, regenerating if needed."""
 		log.info("Checking certificate validity")
-		os.makedirs(self.cert_dir, exist_ok=True)
+		os.makedirs(self.certDir, exist_ok=True)
 
 		should_generate = False
 		if not self._filesExist():
@@ -82,14 +82,14 @@ class RemoteCertificateManager:
 
 	def _filesExist(self) -> bool:
 		"""Check if both certificate and key files exist."""
-		return self.cert_path.exists() and self.key_path.exists()
+		return self.certPath.is_file() and self.keyPath.is_file()
 
 	def _validateCertificate(self) -> None:
 		"""Validates the existing certificate and key."""
 		# Load and validate certificate
-		with open(self.cert_path, "rb") as f:
-			cert_data = f.read()
-			cert = x509.load_pem_x509_certificate(cert_data)
+		with open(self.certPath, "rb") as f:
+			certData = f.read()
+			cert = x509.load_pem_x509_certificate(certData)
 
 		# Check validity period
 		now = datetime.utcnow()
@@ -97,17 +97,17 @@ class RemoteCertificateManager:
 			raise ValueError("Certificate is not within its validity period")
 
 		# Check renewal threshold
-		time_remaining = cert.not_valid_after - now
-		if time_remaining.days <= self.CERT_RENEWAL_THRESHOLD_DAYS:
+		timeRemaining = cert.not_valid_after - now
+		if timeRemaining.days <= self.CERT_RENEWAL_THRESHOLD_DAYS:
 			raise ValueError("Certificate is approaching expiration")
 
 		# Verify private key can be loaded
-		with open(self.key_path, "rb") as f:
+		with open(self.keyPath, "rb") as f:
 			serialization.load_pem_private_key(f.read(), password=None)
 
 	def _generateSelfSignedCert(self) -> None:
 		"""Generates a self-signed certificate and private key."""
-		private_key = rsa.generate_private_key(
+		privateKey = rsa.generate_private_key(
 			public_exponent=65537,
 			key_size=2048,
 		)
@@ -128,7 +128,7 @@ class RemoteCertificateManager:
 				issuer,
 			)
 			.public_key(
-				private_key.public_key(),
+				privateKey.public_key(),
 			)
 			.serial_number(
 				x509.random_serial_number(),
@@ -151,15 +151,15 @@ class RemoteCertificateManager:
 				),
 				critical=False,
 			)
-			.sign(private_key, hashes.SHA256())
+			.sign(privateKey, hashes.SHA256())
 		)
 
 		# Calculate fingerprint
 		fingerprint = cert.fingerprint(hashes.SHA256()).hex()
 		# Write private key
-		with open(self.key_path, "wb") as f:
+		with open(self.keyPath, "wb") as f:
 			f.write(
-				private_key.private_bytes(
+				privateKey.private_bytes(
 					encoding=serialization.Encoding.PEM,
 					format=serialization.PrivateFormat.PKCS8,
 					encryption_algorithm=serialization.NoEncryption(),
@@ -167,11 +167,11 @@ class RemoteCertificateManager:
 			)
 
 		# Write certificate
-		with open(self.cert_path, "wb") as f:
+		with open(self.certPath, "wb") as f:
 			f.write(cert.public_bytes(serialization.Encoding.PEM))
 
 		# Save fingerprint
-		with open(self.fingerprint_path, "w") as f:
+		with open(self.fingerprintPath, "w") as f:
 			f.write(fingerprint)
 
 		# Add to trusted certificates in config
@@ -183,11 +183,11 @@ class RemoteCertificateManager:
 
 		log.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
 
-	def get_current_fingerprint(self) -> Optional[str]:
+	def getCurrentFingerprint(self) -> Optional[str]:
 		"""Get the fingerprint of the current certificate."""
 		try:
-			if self.fingerprint_path.exists():
-				with open(self.fingerprint_path, "r") as f:
+			if self.fingerprintPath.exists():
+				with open(self.fingerprintPath, "r") as f:
 					return f.read().strip()
 		except Exception as e:
 			log.warning(f"Error reading fingerprint: {e}", exc_info=True)
@@ -198,11 +198,11 @@ class RemoteCertificateManager:
 		context = ssl.SSLContext(ssl.PROTOCOL_TLS_SERVER)
 		# Load our certificate and private key
 		context.load_cert_chain(
-			certfile=str(self.cert_path),
-			keyfile=str(self.key_path),
+			certfile=str(self.certPath),
+			keyfile=str(self.keyPath),
 		)
 		# Trust our own CA for server verification
-		context.load_verify_locations(cafile=str(self.cert_path))
+		context.load_verify_locations(cafile=str(self.certPath))
 		# Require client cert verification
 		context.verify_mode = ssl.CERT_NONE  # Don't require client certificates
 		context.check_hostname = False  # Don't verify hostname since we're using self-signed certs
@@ -234,13 +234,13 @@ class LocalRelayServer:
 	):
 		self.port = port
 		self.password = password
-		self.cert_manager = RemoteCertificateManager(cert_dir)
-		self.cert_manager.ensureValidCertExists()
+		self.certManager = RemoteCertificateManager(cert_dir)
+		self.certManager.ensureValidCertExists()
 
 		# Initialize other server components
 		self.serializer = JSONSerializer()
-		self.clients: Dict[socket.socket, Client] = {}
-		self.clientSockets: List[socket.socket] = []
+		self.clients: dict[socket.socket, Client] = {}
+		self.clientSockets: list[socket.socket] = []
 		self._running = False
 		self.lastPingTime = 0
 
@@ -259,8 +259,8 @@ class LocalRelayServer:
 	def createServerSocket(self, family: int, type: int, bind_addr: Tuple[str, int]) -> ssl.SSLSocket:
 		"""Creates an SSL wrapped socket using the certificate."""
 		serverSocket = socket.socket(family, type)
-		ssl_context = self.cert_manager.createSSLContext()
-		serverSocket = ssl_context.wrap_socket(serverSocket, server_side=True)
+		sslContext = self.certManager.createSSLContext()
+		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bind_addr)
 		serverSocket.listen(5)
 		return serverSocket
@@ -317,7 +317,7 @@ class LocalRelayServer:
 		log.info(f"Client {client.id} disconnected")
 		self.removeClient(client)
 		if client.authenticated:
-			client.send_to_others(
+			client.sendToOthers(
 				type="client_left",
 				user_id=client.id,
 				client=client.asDict(),
@@ -356,16 +356,16 @@ class Client:
 
 	def handleData(self) -> None:
 		"""Process incoming data from the client socket."""
-		sock_data = b""
+		sockData = b""
 		try:
-			sock_data = self.socket.recv(16384)
+			sockData = self.socket.recv(16384)
 		except Exception:
 			self.close()
 			return
-		if not sock_data:  # Disconnect
+		if not sockData:  # Disconnect
 			self.close()
 			return
-		data = self.buffer + sock_data
+		data = self.buffer + sockData
 		if b"\n" not in data:
 			self.buffer = data
 			return
@@ -386,7 +386,7 @@ class Client:
 		if "type" not in parsed:
 			return
 		if self.authenticated:
-			self.send_to_others(**parsed)
+			self.sendToOthers(**parsed)
 			return
 		fn = "do_" + parsed["type"]
 		if hasattr(self, fn):
@@ -423,7 +423,7 @@ class Client:
 			user_ids=client_ids,
 			clients=clients,
 		)
-		self.send_to_others(
+		self.sendToOthers(
 			type="client_joined",
 			user_id=self.id,
 			client=self.asDict(),
@@ -465,7 +465,7 @@ class Client:
 			log.error(f"Error sending message to client {self.id}", exc_info=True)
 			self.close()
 
-	def send_to_others(self, origin: Optional[int] = None, **obj: Any) -> None:
+	def sendToOthers(self, origin: Optional[int] = None, **obj: Any) -> None:
 		"""Send a message to all other authenticated clients."""
 		if origin is None:
 			origin = self.id
