@@ -322,6 +322,7 @@ class LocalRelayServer:
 		except (ssl.SSLError, socket.error, OSError):
 			log.error("Error accepting connection", exc_info=True)
 			return
+		# Disable Nagle's algorithm so that packets are always sent immediately.
 		clientSock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
 		client = Client(server=self, socket=clientSock)
 		self.addClient(client)
