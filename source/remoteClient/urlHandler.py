@@ -29,7 +29,7 @@ except ImportError:
 	log = getLogger("url_handler")
 
 
-def _createRegistryStructure(key_handle, data: dict):
+def _createRegistryStructure(keyHandle: HKEYType, data: dict):
 	"""Creates a nested registry structure from a dictionary.
 
 	:param key_handle: A handle to an open registry key
