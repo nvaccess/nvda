@@ -31,7 +31,8 @@ import time
 from datetime import datetime, timedelta
 from pathlib import Path
 from select import select
-from typing import Any, Dict, List, Optional, Tuple
+from itertools import count
+from typing import Any, Dict
 
 import cffi  # noqa # required for cryptography
 from cryptography import x509
@@ -61,8 +62,8 @@ class RemoteCertificateManager:
 	CERT_DURATION_DAYS = 365
 	CERT_RENEWAL_THRESHOLD_DAYS = 30
 
-	def __init__(self, cert_dir: Optional[Path] = None):
-		self.certDir = cert_dir or getProgramDataTempPath()
+	def __init__(self, certDir: Path | None = None):
+		self.certDir = certDir or getProgramDataTempPath()
 		self.certPath = self.certDir / self.CERT_FILE
 		self.keyPath = self.certDir / self.KEY_FILE
 		self.fingerprintPath = self.certDir / self.FINGERPRINT_FILE
@@ -188,7 +189,7 @@ class RemoteCertificateManager:
 
 		log.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
 
-	def getCurrentFingerprint(self) -> Optional[str]:
+	def getCurrentFingerprint(self) -> str | None:
 		"""Get the fingerprint of the current certificate."""
 		try:
 			if self.fingerprintPath.exists():
@@ -240,7 +241,7 @@ class LocalRelayServer:
 		password: str,
 		bind_host: str = "",
 		bind_host6: str = "[::]:",
-		cert_dir: Optional[Path] = None,
+		cert_dir: Path | None = None,
 	):
 		self.port = port
 		self.password = password
@@ -266,7 +267,7 @@ class LocalRelayServer:
 			bind_addr=(bind_host6, self.port),
 		)
 
-	def createServerSocket(self, family: int, type: int, bind_addr: Tuple[str, int]) -> ssl.SSLSocket:
+	def createServerSocket(self, family: int, type: int, bind_addr: tuple[str, int]) -> ssl.SSLSocket:
 		"""Creates an SSL wrapped socket using the certificate.
 
 		:param family: Socket address family (AF_INET or AF_INET6)
@@ -371,18 +372,17 @@ class Client:
 	:ivar protocolVersion: Client protocol version number
 	"""
 
-	id: int = 0
+	_id_counter = count(1)
 
-	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket):
-		self.server = server
-		self.socket = socket
-		self.buffer = b""
-		self.serializer = server.serializer
-		self.authenticated = False
-		self.id = Client.id + 1
-		self.connectionType = None
-		self.protocolVersion = 1
-		Client.id += 1
+	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket) -> None:
+		self.server: LocalRelayServer = server
+		self.socket: ssl.SSLSocket = socket
+		self.buffer: bytes = b""
+		self.serializer: JSONSerializer = server.serializer
+		self.authenticated: bool = False
+		self.id: int = next(self._id_counter)
+		self.connectionType: str | None = None
+		self.protocolVersion: int = 1
 
 	def handleData(self) -> None:
 		"""Process incoming data from the client socket."""
@@ -475,7 +475,7 @@ class Client:
 		self,
 		type: str | RemoteMessageType,
 		origin: int | None = None,
-		clients: List[Dict[str, Any]] | None = None,
+		clients: list[dict[str, Any]] | None = None,
 		client: dict[str, Any] | None = None,
 		**kwargs: Any,
 	) -> None:
