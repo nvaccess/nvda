@@ -110,6 +110,12 @@ deploy:
     url: https://api.nvaccess.org/appveyor/hook
     authorization: Bearer %APPVEYOR_WEBHOOK_TOKEN%
     request_timeout: 5  # minutes
+    # Deploy on all branches including PRs (https://www.appveyor.com/docs/deployment/#pull-requests)
+    on:
+      # Deploy on all branches including PRs
+      all_branches: true
+      # Include PR builds
+      APPVEYOR_PULL_REQUEST_NUMBER: true
 
 on_failure:
  - ps: appveyor\scripts\uploadArtifacts.ps1
