@@ -100,6 +100,12 @@ artifacts:
 deploy_script:
  - ps: appveyor\scripts\deployScript.ps1
 
+deploy:
+  - provider: Webhook
+    url: https://api.nvaccess.org/appveyor/hook
+    authorization: Bearer %APPVEYOR_WEBHOOK_TOKEN%
+    request_timeout: 5  # minutes
+
 on_failure:
  - ps: appveyor\scripts\uploadArtifacts.ps1
 
