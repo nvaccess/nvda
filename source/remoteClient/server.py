@@ -32,7 +32,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from select import select
 from itertools import count
-from typing import Any, Dict
+from typing import Any
 
 import cffi  # noqa # required for cryptography
 from cryptography import x509
@@ -63,10 +63,10 @@ class RemoteCertificateManager:
 	CERT_RENEWAL_THRESHOLD_DAYS = 30
 
 	def __init__(self, certDir: Path | None = None):
-		self.certDir = certDir or getProgramDataTempPath()
-		self.certPath = self.certDir / self.CERT_FILE
-		self.keyPath = self.certDir / self.KEY_FILE
-		self.fingerprintPath = self.certDir / self.FINGERPRINT_FILE
+		self.certDir: Path = certDir or getProgramDataTempPath()
+		self.certPath: Path = self.certDir / self.CERT_FILE
+		self.keyPath: Path = self.certDir / self.KEY_FILE
+		self.fingerprintPath: Path = self.certDir / self.FINGERPRINT_FILE
 
 	def ensureValidCertExists(self) -> None:
 		"""Ensures a valid certificate and key exist, regenerating if needed."""
@@ -423,11 +423,11 @@ class Client:
 		if hasattr(self, fn):
 			getattr(self, fn)(parsed)
 
-	def asDict(self) -> Dict[str, Any]:
+	def asDict(self) -> dict[str, Any]:
 		"""Get client information as a dictionary."""
 		return dict(id=self.id, connection_type=self.connectionType)
 
-	def do_join(self, obj: Dict[str, Any]) -> None:
+	def do_join(self, obj: dict[str, Any]) -> None:
 		"""Handle client join request and authentication."""
 		password = obj.get("channel", None)
 		if password != self.server.password:
@@ -460,7 +460,7 @@ class Client:
 			client=self.asDict(),
 		)
 
-	def do_protocol_version(self, obj: Dict[str, Any]) -> None:
+	def do_protocol_version(self, obj: dict[str, Any]) -> None:
 		"""Record client's protocol version."""
 		version = obj.get("version")
 		if not version:
