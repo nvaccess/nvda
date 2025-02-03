@@ -4925,7 +4925,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:alt+NVDA+pageDown",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that disconnects a remote session.
-		description=_("""Disconnect a remote session"""),
+		description=_("Disconnect a remote session"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
