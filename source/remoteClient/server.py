@@ -24,27 +24,26 @@ When clients disconnect or lose connection, the server automatically removes the
 notifies other connected clients of the departure.
 """
 
-from logHandler import log
 import os
 import socket
 import ssl
 import time
-import cffi  # noqa # required for cryptography
-from cryptography import x509
-from cryptography.x509.oid import NameOID
-from cryptography.hazmat.primitives import hashes
-from cryptography.hazmat.primitives import serialization
-from cryptography.hazmat.primitives.asymmetric import rsa
 from datetime import datetime, timedelta
-from enum import Enum
 from pathlib import Path
 from select import select
 from typing import Any, Dict, List, Optional, Tuple
 
-from .protocol import RemoteMessageType
-from .serializer import JSONSerializer
-from .secureDesktop import getProgramDataTempPath
+import cffi  # noqa # required for cryptography
+from cryptography import x509
+from cryptography.hazmat.primitives import hashes, serialization
+from cryptography.hazmat.primitives.asymmetric import rsa
+from cryptography.x509.oid import NameOID
+from logHandler import log
+
 from . import configuration
+from .protocol import RemoteMessageType
+from .secureDesktop import getProgramDataTempPath
+from .serializer import JSONSerializer
 
 
 class RemoteCertificateManager:
@@ -342,7 +341,7 @@ class LocalRelayServer:
 		self.removeClient(client)
 		if client.authenticated:
 			client.sendToOthers(
-				type="client_left",
+				type=RemoteMessageType.CLIENT_LEFT,
 				user_id=client.id,
 				client=client.asDict(),
 			)
@@ -431,7 +430,7 @@ class Client:
 		"""Handle client join request and authentication."""
 		password = obj.get("channel", None)
 		if password != self.server.password:
-			log.warning(f"Failed authentication attempt from client {self.id}")
+			log.warning("Client %s sent incorrect password", self.id)
 			self.send(
 				type=RemoteMessageType.ERROR,
 				message="incorrect_password",
@@ -443,11 +442,11 @@ class Client:
 		log.info(f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})")
 		clients = []
 		client_ids = []
-		for c in list(self.server.clients.values()):
-			if c is self or not c.authenticated:
+		for client in list(self.server.clients.values()):
+			if client is self or not client.authenticated:
 				continue
-			clients.append(c.asDict())
-			client_ids.append(c.id)
+			clients.append(client.asDict())
+			client_ids.append(client.id)
 		self.send(
 			type=RemoteMessageType.CHANNEL_JOINED,
 			channel=self.server.password,
@@ -455,7 +454,7 @@ class Client:
 			clients=clients,
 		)
 		self.sendToOthers(
-			type="client_joined",
+			type=RemoteMessageType.CLIENT_JOINED,
 			user_id=self.id,
 			client=self.asDict(),
 		)
@@ -474,13 +473,21 @@ class Client:
 
 	def send(
 		self,
-		type: str | Enum,
-		origin: Optional[int] = None,
-		clients: Optional[List[Dict[str, Any]]] = None,
-		client: Optional[Dict[str, Any]] = None,
+		type: str | RemoteMessageType,
+		origin: int | None = None,
+		clients: List[Dict[str, Any]] | None = None,
+		client: dict[str, Any] | None = None,
 		**kwargs: Any,
 	) -> None:
-		"""Send a message to this client."""
+		"""Send a message to this client.
+
+		:param type: Message type
+		:param origin: Originating client ID
+		:param clients: List of connected clients
+		:param client: Client information
+
+		:note: Additional keyword arguments are included in the message data.
+		"""
 		msg = kwargs
 		if self.protocolVersion > 1:
 			if origin:
@@ -496,10 +503,15 @@ class Client:
 			log.error(f"Error sending message to client {self.id}", exc_info=True)
 			self.close()
 
-	def sendToOthers(self, origin: Optional[int] = None, **obj: Any) -> None:
-		"""Send a message to all other authenticated clients."""
+	def sendToOthers(self, origin: int | None = None, **payload: Any) -> None:
+		"""Send a message to all other authenticated clients.
+
+		:param origin: Originating client ID
+		:param payload: Message data
+		"""
+
 		if origin is None:
 			origin = self.id
 		for c in self.server.clients.values():
 			if c is not self and c.authenticated:
-				c.send(origin=origin, **obj)
+				c.send(origin=origin, **payload)
