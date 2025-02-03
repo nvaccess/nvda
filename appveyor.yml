@@ -97,8 +97,13 @@ artifacts:
  - path: output\*
  - path: output\*\*
 
+# Legacy deployment over ssh
 deploy_script:
  - ps: appveyor\scripts\deployScript.ps1
+
+# Prepare environment with additional variables for webhook
+webhook_setup:
+ - ps: appveyor\scripts\webhookSetup.ps1
 
 deploy:
   - provider: Webhook
