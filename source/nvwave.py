@@ -323,7 +323,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_open(self._player)
 		except WindowsError:
 			log.warning(
-				"Couldn't open specified or default audio device. " "There may be no audio devices.",
+				"Couldn't open specified or default audio device. There may be no audio devices.",
 			)
 			WavePlayer.audioDeviceError_static = True
 			raise

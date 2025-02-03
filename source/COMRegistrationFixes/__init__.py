@@ -117,7 +117,7 @@ def fixCOMRegistrations() -> None:
 	OSMajorMinor = (winVer.major, winVer.minor)
 	is64bit = winVer.processorArchitecture.endswith("64")
 	log.debug(
-		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, " "{} bit.".format(
+		f"Fixing COM registrations for Windows {OSMajorMinor[0]}.{OSMajorMinor[1]}, {{}} bit.".format(
 			"64" if is64bit else "32",
 		),
 	)

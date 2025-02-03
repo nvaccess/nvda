@@ -329,7 +329,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 		except (IOError, AttributeError):
 			self._disableConnection()
 			log.debug(
-				f"INIT_START_BYTE {INIT_START_BYTE} read failed, " "trying to reconnect",
+				f"INIT_START_BYTE {INIT_START_BYTE} read failed, trying to reconnect",
 				exc_info=True,
 			)
 			return False
@@ -661,7 +661,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 					self._waitingCtrlPacket = True
 					self._partialCtrlPacket = data
 					log.debug(
-						f"Read: Ctrl key packet {data} dequeued partially, " "_readQueue is empty",
+						f"Read: Ctrl key packet {data} dequeued partially, _readQueue is empty",
 						exc_info=True,
 					)
 					return

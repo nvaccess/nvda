@@ -2777,7 +2777,7 @@ class GlobalCommands(ScriptableObject):
 		else:
 			if _isDebugLogCatEnabled:
 				log.debug(
-					"No prior target summary reported:" f" lastReported: {self._annotationNav.lastReported}",
+					f"No prior target summary reported: lastReported: {self._annotationNav.lastReported}",
 				)
 			if self._annotationNav.lastReported and _isDebugLogCatEnabled:
 				log.debug(
@@ -4186,8 +4186,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the control and shift keys to emulate a "
-			"keyboard shortcut with braille input",
+			"Virtually toggles the control and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4198,7 +4197,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the alt and shift keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the alt and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4221,7 +4220,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the NVDA and shift keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the NVDA and shift keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4232,7 +4231,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a braille command.
-			"Virtually toggles the control and alt keys to emulate a " "keyboard shortcut with braille input",
+			"Virtually toggles the control and alt keys to emulate a keyboard shortcut with braille input",
 		),
 		category=inputCore.SCRCAT_KBEMU,
 		bypassInputHelp=True,
@@ -4470,8 +4469,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for a touchscreen gesture.
-			"Reports the new object or content under your finger "
-			"if different to where your finger was last",
+			"Reports the new object or content under your finger if different to where your finger was last",
 		),
 		category=SCRCAT_TOUCH,
 		gesture="ts:hover",
