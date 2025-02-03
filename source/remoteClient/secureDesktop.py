@@ -50,16 +50,18 @@ class SecureDesktopHandler:
 
 	SD_CONNECT_BLOCK_TIMEOUT: int = 1
 
-	def __init__(self, temp_path: Path = getProgramDataTempPath()) -> None:
+	def __init__(self, tempPath: Path = getProgramDataTempPath()) -> None:
 		"""
 		Initialize secure desktop handler.
 
 		Args:
-			temp_path: Path to temporary directory for IPC file. Defaults to program data temp path.
+			tempPath: Path to temporary directory for IPC file. Defaults to program data temp path.
 		"""
-		self.tempPath = temp_path
-		self.IPCFile = temp_path / "remote.ipc"
-		log.debug(f"Initialized SecureDesktopHandler with IPC file: {self.IPCFile}")
+		self.tempPath = tempPath
+		self.IPCPath: Path = self.tempPath / "NVDA"
+		self.IPCPath.mkdir(parents=True, exist_ok=True)
+		self.IPCFile = self.IPCPath / "remote.ipc"
+		log.debug("Initialized SecureDesktopHandler with IPC file: %s", self.IPCFile)
 
 		self._slaveSession: Optional[SlaveSession] = None
 		self.sdServer: Optional[server.LocalRelayServer] = None
@@ -74,7 +76,7 @@ class SecureDesktopHandler:
 		post_secureDesktopStateChange.unregister(self._onSecureDesktopChange)
 		self.leaveSecureDesktop()
 		try:
-			log.debug(f"Removing IPC file: {self.IPCFile}")
+			log.debug("Removing IPC file: %s", self.IPCFile)
 			self.IPCFile.unlink()
 		except FileNotFoundError:
 			log.debug("IPC file already removed")
@@ -136,7 +138,7 @@ class SecureDesktopHandler:
 		log.debug("Starting local relay server")
 		self.sdServer = server.LocalRelayServer(port=0, password=channel, bind_host="127.0.0.1")
 		port = self.sdServer.serverSocket.getsockname()[1]
-		log.info(f"Local relay server started on port {port}")
+		log.info("Local relay server started on port %d", port)
 
 		serverThread = threading.Thread(target=self.sdServer.run)
 		serverThread.daemon = True
