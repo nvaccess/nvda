@@ -29,7 +29,7 @@ except ImportError:
 	log = getLogger("url_handler")
 
 
-def _createRegistryStructure(keyHandle: HKEYType, data: dict):
+def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 	"""Creates a nested registry structure from a dictionary.
 
 	:param key_handle: A handle to an open registry key
@@ -40,7 +40,7 @@ def _createRegistryStructure(keyHandle: HKEYType, data: dict):
 		if isinstance(value, dict):
 			# Create and recursively populate subkey
 			try:
-				subkey = winreg.CreateKey(key_handle, name)
+				subkey = winreg.CreateKey(keyHandle, name)
 				try:
 					_createRegistryStructure(subkey, value)
 				finally:
@@ -50,7 +50,7 @@ def _createRegistryStructure(keyHandle: HKEYType, data: dict):
 		else:
 			# Set value
 			try:
-				winreg.SetValueEx(key_handle, name, 0, winreg.REG_SZ, str(value))
+				winreg.SetValueEx(keyHandle, name, 0, winreg.REG_SZ, str(value))
 			except WindowsError as e:
 				raise OSError(f"Failed to set registry value {name}: {e}")
 
