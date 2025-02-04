@@ -97,8 +97,29 @@ artifacts:
  - path: output\*
  - path: output\*\*
 
+# Legacy deployment over ssh
 deploy_script:
  - ps: appveyor\scripts\deployScript.ps1
+
+# Prepare environment with additional variables for webhook
+before_deploy:
+ - ps: appveyor\scripts\webhookSetup.ps1
+
+deploy:
+  - provider: Webhook
+    url: https://api.nvaccess.org/appveyor/hook
+    authorization: Bearer %APPVEYOR_WEBHOOK_TOKEN%
+    request_timeout: 5  # minutes
+    on:
+      # Only deploy specific branches
+      branch: 
+        - master
+        - beta
+        - rc
+        - /try-.*/
+        - /release-.*/
+      # Exclude PR builds
+      APPVEYOR_PULL_REQUEST_NUMBER: false
 
 on_failure:
  - ps: appveyor\scripts\uploadArtifacts.ps1
