@@ -36,9 +36,7 @@ from .transport import RelayTransport
 
 def getProgramDataTempPath() -> Path:
 	"""Get the system's program data temp directory path."""
-	if hasattr(shlobj, "SHGetKnownFolderPath"):
-		return Path(shlobj.SHGetKnownFolderPath(shlobj.FolderId.PROGRAM_DATA)) / "temp"
-	return Path(shlobj.SHGetFolderPath(0, shlobj.CSIDL_COMMON_APPDATA)) / "temp"
+	return Path(shlobj.SHGetKnownFolderPath(shlobj.FolderId.PROGRAM_DATA)) / "temp"
 
 
 class SecureDesktopHandler:
