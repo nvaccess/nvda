@@ -5,14 +5,18 @@
 
 """Secure desktop support for NVDA Remote.
 
-This module handles the transition between regular and secure desktop sessions in Windows,
-maintaining remote connections across these transitions. It manages the creation of local
+Handles the transition between regular and secure desktop sessions in Windows,
+maintaining remote connections across these transitions. Manages the creation of local
 relay servers, connection bridging, and IPC (Inter-Process Communication) between the
 regular and secure desktop instances of NVDA.
 
 The secure desktop is a special Windows session used for UAC prompts and login screens
 that runs in an isolated environment for security. This module ensures NVDA Remote
 connections persist when entering and leaving this secure environment.
+
+Note:
+    All IPC operations use a temporary file in the system's ProgramData directory
+    to exchange connection information between sessions.
 """
 
 import json
@@ -35,7 +39,10 @@ from .transport import RelayTransport
 
 
 def getProgramDataTempPath() -> Path:
-	"""Get the system's program data temp directory path."""
+	"""Get the system's program data temp directory path.
+
+	:return: Path to the ProgramData temp directory
+	"""
 	return Path(shlobj.SHGetKnownFolderPath(shlobj.FolderId.PROGRAM_DATA)) / "temp"
 
 
@@ -44,16 +51,16 @@ class SecureDesktopHandler:
 
 	Handles relay servers, IPC, and connection bridging between
 	regular and secure desktop sessions.
+
+	:cvar SD_CONNECT_BLOCK_TIMEOUT: Timeout in seconds for secure desktop connection attempts
 	"""
 
 	SD_CONNECT_BLOCK_TIMEOUT: int = 1
 
 	def __init__(self, tempPath: Path = getProgramDataTempPath()) -> None:
-		"""
-		Initialize secure desktop handler.
+		"""Initialize secure desktop handler.
 
-		Args:
-			tempPath: Path to temporary directory for IPC file. Defaults to program data temp path.
+		:param tempPath: Directory for IPC file storage
 		"""
 		self.tempPath = tempPath
 		self.IPCPath: Path = self.tempPath / "NVDA"
@@ -86,12 +93,7 @@ class SecureDesktopHandler:
 
 	@slaveSession.setter
 	def slaveSession(self, session: Optional[SlaveSession]) -> None:
-		"""
-		Update slave session reference and handle necessary cleanup/setup.
-
-		Args:
-			session: New SlaveSession instance or None to clear
-		"""
+		"""Update slave session reference and handle necessary cleanup/setup."""
 		if self._slaveSession == session:
 			log.debug("Slave session unchanged, skipping update")
 			return
@@ -110,11 +112,9 @@ class SecureDesktopHandler:
 		)
 
 	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
-		"""
-		Internal callback for secure desktop state changes.
+		"""Internal callback for secure desktop state changes.
 
-		Args:
-			isSecureDesktop: True if transitioning to secure desktop, False otherwise
+		:param isSecureDesktop: True if transitioning to secure desktop, False otherwise
 		"""
 		log.info(f"Secure desktop state changed: {'entering' if isSecureDesktop else 'leaving'}")
 		if isSecureDesktop:
@@ -198,11 +198,9 @@ class SecureDesktopHandler:
 			pass
 
 	def initializeSecureDesktop(self) -> Optional[ConnectionInfo]:
-		"""
-		Initialize connection when starting in secure desktop.
+		"""Initialize connection when starting in secure desktop.
 
-		Returns:
-			ConnectionInfo instance if successful, None otherwise
+		:return: Connection information if successful, None on failure
 		"""
 		log.info("Initializing secure desktop connection")
 		try:
