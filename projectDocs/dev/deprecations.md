@@ -28,7 +28,7 @@ def __getattr__(attrName: str) -> Any:
 
 ## Deprecating extension points
 
-Support for deprecations is included in the several extensionPoint classes.
+Support for deprecations is included in the various extensionPoint classes.
 
 For example:
 

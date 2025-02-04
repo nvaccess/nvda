@@ -102,6 +102,7 @@ class HandlerRegistrar(Generic[HandlerT]):
 
 	def __init__(self, *, _deprecationMessage: str | None = None):
 		"""Initialise the handler registrar.
+		
 		:param _deprecationMessage: Optional deprecation message to be logged when :method:`register` is called on the handler.
 		"""
 		self._deprecationMessage = _deprecationMessage

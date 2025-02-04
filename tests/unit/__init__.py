@@ -102,7 +102,7 @@ braille.initialize()
 
 # For braille unit tests, we need to enable the braille handler by providing it display dimensions
 # Give the display one row with 40 cells
-def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> int:
+def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
 	return braille.DisplayDimensions(numRows=1, numCols=40)
 
 
