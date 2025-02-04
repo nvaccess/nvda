@@ -5,6 +5,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from dataclasses import dataclass
 import threading
 import time
 import warnings
@@ -154,8 +155,13 @@ class DisplayableError(Exception):
 		)
 
 
+@dataclass(frozen=True)
+class Payload:
+	"""Payload of information to pass to message dialog callbacks."""
+
+
 # TODO: Change to type statement when Python 3.12 or later is in use.
-_Callback_T: TypeAlias = Callable[[], Any]
+_Callback_T: TypeAlias = Callable[[Payload], Any]
 
 
 class _Missing_Type:
@@ -1139,7 +1145,8 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 		if callback is not None:
 			if close:
 				self.Hide()
-			callback()
+			payload = Payload()
+			callback(payload)
 		if close:
 			self.SetReturnCode(returnCode)
 			self.Close()
