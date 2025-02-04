@@ -138,6 +138,8 @@ class RemoteClient:
 			cues.clipboardPushed()
 		except TypeError:
 			log.exception("Unable to push clipboard")
+			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
+			ui.message(_("Unable to push clipboard"))
 
 	def copyLink(self):
 		"""Copy connection URL to clipboard.
