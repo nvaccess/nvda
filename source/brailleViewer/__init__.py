@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2014-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2014-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 import typing
