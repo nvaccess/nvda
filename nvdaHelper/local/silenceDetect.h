@@ -161,9 +161,8 @@ size_t getLeadingSilenceSizeMono(
 
 	// Check each sample
 	SampleType smp = SampleType();
-	const unsigned char* p = waveData;
-	const unsigned char* pEnd = waveData + (size - (size % bytesPerSample));
-	for (; p < pEnd; p += bytesPerSample) {
+	const unsigned char* const pEnd = waveData + (size - (size % bytesPerSample));
+	for (const unsigned char* p = waveData; p < pEnd; p += bytesPerSample) {
 		memcpy(&smp, p, bytesPerSample);
 		smp = Fmt::signExtend(smp);
 		// this sample is out of range, so the previous sample is the final sample of leading silence.
