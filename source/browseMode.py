@@ -2108,8 +2108,8 @@ class BrowseModeDocumentTreeInterceptor(
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
 		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
-		@param obj: The object to which the document should scroll.
-		@return: C{True} if the document was scrolled, C{False} if not.
+		:param obj: The object to which the document should scroll.
+		:return: C{True} if the document was scrolled, C{False} if not.
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
 		if (
