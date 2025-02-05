@@ -3720,6 +3720,7 @@ class AdvancedPanelControls(
 		#  Advanced settings panel
 		label = _("Speech")
 		speechSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
+		speechBox = speechSizer.GetStaticBox()
 		speechGroup = guiHelper.BoxSizerHelper(speechSizer, sizer=speechSizer)
 		sHelper.addItem(speechGroup)
 
@@ -3749,6 +3750,14 @@ class AdvancedPanelControls(
 		self.cancelExpiredFocusSpeechCombo.defaultValue = self._getDefaultValue(
 			["featureFlag", "cancelExpiredFocusSpeech"],
 		)
+
+		# Translators: This is the label for a checkbox control in the
+		#  Advanced settings panel.
+		label = _("Trim leading silence in speech audio")
+		self.trimLeadingSilenceCheckBox = speechGroup.addItem(wx.CheckBox(speechBox, label=label))
+		self.bindHelpEvent("AdvancedSettingsTrimLeadingSilence", self.trimLeadingSilenceCheckBox)
+		self.trimLeadingSilenceCheckBox.SetValue(config.conf["speech"]["trimLeadingSilence"])
+		self.trimLeadingSilenceCheckBox.defaultValue = self._getDefaultValue(["speech", "trimLeadingSilence"])
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -3934,6 +3943,7 @@ class AdvancedPanelControls(
 			and self.wtStrategyCombo.isValueConfigSpecDefault()
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
 			== self.cancelExpiredFocusSpeechCombo.defaultValue
+			and self.trimLeadingSilenceCheckBox.IsChecked() == self.trimLeadingSilenceCheckBox.defaultValue
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
@@ -3963,6 +3973,7 @@ class AdvancedPanelControls(
 		self.diffAlgoCombo.SetSelection(self.diffAlgoCombo.defaultValue)
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
+		self.trimLeadingSilenceCheckBox.SetValue(self.trimLeadingSilenceCheckBox.defaultValue)
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
@@ -3986,6 +3997,7 @@ class AdvancedPanelControls(
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = (
 			self.cancelExpiredFocusSpeechCombo.GetSelection()
 		)
+		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()

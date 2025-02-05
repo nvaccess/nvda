@@ -45,6 +45,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoDialectSwitching = boolean(default=false)
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
+	trimLeadingSilence = boolean(default=true)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
