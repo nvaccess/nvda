@@ -136,7 +136,7 @@ The year and version changes between updates to reflect the current release.
 You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 1. The NVDA Launcher window appears with the license agreement.
-Press `downArrow` to read the license agreement if desired.
+Press the `downArrow` to read the license agreement.
 1. Press `tab` to move to the "I agree" checkbox, then press the `spacebar` to check it.
 1. Press `tab` to move through the options, then press `enter` on the desired option.
 
@@ -5193,7 +5193,7 @@ Secure mode disables:
 * The [NVDA Python console](#PythonConsole)
 * The [Log Viewer](#LogViewer) and logging
 * The [Braille Viewer](#BrailleViewer) and [Speech Viewer](#SpeechViewer)
-* Opening external documents from the NVDA menu, such as the user guide or contributors file.
+* Opening external documents from the NVDA menu, such as the user guide file.
 
 Installed copies of NVDA store their configuration including add-ons in `%APPDATA%\nvda`.
 To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.

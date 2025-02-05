@@ -56,6 +56,8 @@ As a consequence, announcement of first line indent is now supported for LibreOf
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
+* The "Contributors" file has been removed from the NVDA menu. (#16922)
+* The NVDA license is now formatted in HTML to improve readability. (#17600)
 * The Browse Mode setting "Automatically set system focus to focusable elements" has been removed, the behaviour is now disabled. (#17598)
 * Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
