@@ -102,7 +102,7 @@ def outputDeviceIDToName(ID: str) -> str:
 	:param ID: The device ID.
 	:return: The device name.
 	"""
-	device = AudioUtilities.GetDeviceEnumerator().GetDevice(id)
+	device = AudioUtilities.GetDeviceEnumerator().GetDevice(ID)
 	return AudioUtilities.CreateDevice(device).FriendlyName
 
 
