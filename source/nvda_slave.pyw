@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2009-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2009-2025 NV Access Limited, Cyrille Bougot, Christopher Toth
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -118,6 +118,15 @@ def main():
 					0,
 					winUser.MB_ICONERROR,
 				)
+		elif action == "handleRemoteURL":
+			try:
+				url = args[0]
+				ret = getNvdaHelperRemote().nvdaControllerInternal_handleRemoteURL(url)
+				if ret != 0:
+					raise RuntimeError(f"URL handling failed with code {ret}")
+			except Exception:
+				logHandler.log.error("Error handling remote URL", exc_info=True)
+				sys.exit(1)
 		elif action == "comGetActiveObject":
 			import comHelper
 
