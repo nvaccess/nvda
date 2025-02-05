@@ -2132,13 +2132,14 @@ class BrowseModeDocumentTreeInterceptor(
 		else:
 			raise ValueError(f"{obj} is not a supported type")
 
-		# We only want to update the caret and speak the field if we're not in the same one as before
+		# We only want to update the caret and speak the field if we're not in the first line of the same object as before.
+		# See https://github.com/nvaccess/nvda/issues/17669
+		scrollInfo.collapse()
+		scrollInfo.expand(textInfos.UNIT_LINE)
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
-			if scrollInfo.isCollapsed:
-				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo, reason=OutputReason.CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
