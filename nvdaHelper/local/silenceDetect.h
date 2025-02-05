@@ -40,17 +40,23 @@ struct WaveFormat {
 	}
 
 	static constexpr SampleType (max)() {
-		if constexpr (std::is_floating_point_v<SampleType>)
+		if constexpr (std::is_floating_point_v<SampleType>) {
+			// For floating-point samples, maximum value is 1.0
 			return SampleType(1);
-		else
+		} else {
+			// Trim the maximum value to `bytesPerSample` bytes
 			return (std::numeric_limits<SampleType>::max)() >> ((sizeof(SampleType) - bytesPerSample) * 8);
+		}
 	}
 
 	static constexpr SampleType (min)() {
-		if constexpr (std::is_floating_point_v<SampleType>)
+		if constexpr (std::is_floating_point_v<SampleType>) {
+			// For floating-point samples, minimum value is -1.0
 			return SampleType(-1);
-		else
+		} else {
+			// Trim the minimum value to `bytesPerSample` bytes
 			return (std::numeric_limits<SampleType>::min)() >> ((sizeof(SampleType) - bytesPerSample) * 8);
+		}
 	}
 
 	static constexpr SampleType defaultThreshold() {
