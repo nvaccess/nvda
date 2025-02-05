@@ -98,6 +98,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
 * Fixed an issue where continuous reading (say all) stopped at the end of the first sentence when using some SAPI5 synthesizers. (#16691, @gexgd0419)
 * In Visual Studio Code, NVDA no longer hijacks the `alt+upArrow` and `alt+downArrow` gestures for sentence navigation. (#17082, @LeonarddeR)
+* When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination (#17669, @nvdaes)
 
 ### Changes for Developers
 
