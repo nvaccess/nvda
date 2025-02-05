@@ -148,6 +148,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
+* Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer.
 
 #### API Breaking Changes
 
