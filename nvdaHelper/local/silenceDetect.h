@@ -163,10 +163,10 @@ size_t getLeadingSilenceSizeMono(
 	SampleType smp = SampleType();
 	const unsigned char* p = waveData;
 	const unsigned char* pEnd = waveData + (size - (size % bytesPerSample));
-	for (; p != pEnd; p += bytesPerSample) {
+	for (; p < pEnd; p += bytesPerSample) {
 		memcpy(&smp, p, bytesPerSample);
 		smp = Fmt::signExtend(smp);
-		// this sample is out of range, so the leading silence starts at the previous sample
+		// this sample is out of range, so the previous sample is the final sample of leading silence.
 		if (smp < minValue || smp > maxValue)
 			return p - waveData;
 	}
@@ -205,7 +205,7 @@ size_t getTrailingSilenceSizeMono(
 		// this sample is out of range, so the trailing silence starts at the next sample
 		if (smp < minValue || smp > maxValue)
 			return size - (p - waveData) - bytesPerSample;
-	} while (p != waveData);
+	} while (p > waveData);
 
 	// The whole data block is silence
 	return size;
