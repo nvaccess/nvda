@@ -336,9 +336,11 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	playErrorSound = integer(0, 1, default=0)
 
 [addonStore]
-	showWarning = boolean(default=true)
 	automaticUpdates = option("notify", "disabled", default="notify")
 	baseServerURL = string(default="")
+	# UpdateChannel values:
+	# same channel (default), any channel, do not update, stable, beta & dev, beta, dev
+	defaultUpdateChannel = integer(0, 6, default=0)
 """
 
 #: The configuration specification
