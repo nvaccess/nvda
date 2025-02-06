@@ -4900,7 +4900,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
-		remoteClient.remoteClient.toggleMute()
+		remoteClient._remoteClient.toggleMute()
 
 	@script(
 		gesture="kb:control+shift+NVDA+c",
@@ -4909,7 +4909,7 @@ class GlobalCommands(ScriptableObject):
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
-		remoteClient.remoteClient.pushClipboard()
+		remoteClient._remoteClient.pushClipboard()
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
@@ -4917,7 +4917,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
-		remoteClient.remoteClient.copyLink()
+		remoteClient._remoteClient.copyLink()
 		# Translators: A message indicating that a link has been copied to the clipboard.
 		ui.message(_("Copied link"))
 
@@ -4929,11 +4929,11 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
-		if not remoteClient.remoteClient.isConnected:
+		if not remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(_("Not connected"))
 			return
-		remoteClient.remoteClient.disconnect()
+		remoteClient._remoteClient.disconnect()
 
 	@script(
 		gesture="kb:alt+NVDA+pageUp",
@@ -4944,11 +4944,11 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_connectToRemote(self, gesture):
-		if remoteClient.remoteClient.isConnected() or remoteClient.remoteClient.connecting:
+		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
 			# Translators: A message indicating that the remote client is already connected.
 			ui.message(_("Already connected"))
 			return
-		remoteClient.remoteClient.doConnect()
+		remoteClient._remoteClient.doConnect()
 
 	@script(
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
@@ -4957,7 +4957,7 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+f11",
 	)
 	def script_sendKeys(self, gesture):
-		remoteClient.remoteClient.toggleRemoteKeyControl(gesture)
+		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.

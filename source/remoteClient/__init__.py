@@ -5,20 +5,20 @@
 
 from .client import RemoteClient
 
-remoteClient: RemoteClient = None
+_remoteClient: RemoteClient = None
 
 
 def initialize():
 	"""Initialise the remote client."""
-	global remoteClient
+	global _remoteClient
 	import globalCommands
 
-	remoteClient = RemoteClient()
-	remoteClient.registerLocalScript(globalCommands.commands.script_sendKeys)
+	_remoteClient = RemoteClient()
+	_remoteClient.registerLocalScript(globalCommands.commands.script_sendKeys)
 
 
 def terminate():
 	"""Terminate the remote client."""
-	global remoteClient
-	remoteClient.terminate()
-	remoteClient = None
+	global _remoteClient
+	_remoteClient.terminate()
+	_remoteClient = None

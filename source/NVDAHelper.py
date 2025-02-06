@@ -694,7 +694,7 @@ def nvdaControllerInternal_handleRemoteURL(url):
 	:param url: The nvdaremote:// URL to process
 	:return: 0 on success, -1 on failure
 	"""
-	from remoteClient import connectionInfo, remoteClient as client
+	from remoteClient import connectionInfo, _remoteClient as client
 
 	try:
 		if not client:
