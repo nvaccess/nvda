@@ -3323,8 +3323,9 @@ This functionality is enabled by default as of NVDA 2021.1.
 
 ##### Trim leading silence in speech audio {#TrimLeadingSilence}
 
-This option enables NVDA to trim the silence at the beginning of the speech audio, making the voices respond faster.
-This option is enabled by default, and should only affect the silence at the beginning. But if you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may try turning off this feature.
+When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
+This option is enabled by default, and should only affect the silence at the beginning of speech.
+If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
