@@ -1,3 +1,8 @@
+// A part of NonVisual Desktop Access (NVDA)
+// This file is covered by the GNU General Public License.
+// See the file COPYING for more details.
+// Copyright (C) 2025 NV Access Limited, gexgd0419
+
 #ifndef SILENCEDETECT_H
 #define SILENCEDETECT_H
 
