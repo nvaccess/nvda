@@ -23,8 +23,9 @@ if TYPE_CHECKING:
 
 
 # From WdOutlineLevel enumeration
-# See https://learn.microsoft.com/fr-fr/office/vba/api/word.wdoutlinelevel
-wdOutlineLevelBodyText = 10
+# See https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel
+class WdOutlineLevel(IntEnum):
+	BODY_TEXT = 10
 
 
 class ViewType(DisplayStringIntEnum):
