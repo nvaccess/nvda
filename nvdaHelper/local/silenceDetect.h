@@ -174,42 +174,6 @@ size_t getLeadingSilenceSizeMono(
 }
 
 /**
- * Return the trailing silence wave data length, in bytes.
- * Assumes the wave data to be of one channel (mono).
- * Uses a `WaveFormat` type (`Fmt`) to determine the wave format.
- */
-template <class Fmt>
-size_t getTrailingSilenceSizeMono(
-	const unsigned char* waveData,
-	size_t size,
-	typename Fmt::SampleType threshold
-) {
-	using SampleType = Fmt::SampleType;
-	constexpr size_t bytesPerSample = Fmt::bytesPerSample;
-
-	if (size < bytesPerSample)
-		return 0;
-
-	constexpr SampleType zeroPoint = Fmt::zeroPoint();
-	const SampleType minValue = zeroPoint - threshold, maxValue = zeroPoint + threshold;
-
-	// Check each sample in reverse order
-	const unsigned char* p = waveData + (size - (size % bytesPerSample));
-	SampleType smp = SampleType();
-	do {
-		p -= bytesPerSample;
-		memcpy(&smp, p, bytesPerSample);
-		smp = Fmt::signExtend(smp);
-		// this sample is out of range, so the trailing silence starts at the next sample
-		if (smp < minValue || smp > maxValue)
-			return size - (p - waveData) - bytesPerSample;
-	} while (p > waveData);
-
-	// The whole data block is silence
-	return size;
-}
-
-/**
  * Invoke a functor with an argument of a WaveFormat type that corresponds to the specified WAVEFORMATEX.
  * Return false if the WAVEFORMATEX is unknown.
  */
@@ -270,29 +234,6 @@ inline size_t getLeadingSilenceSize(
 		return 0;
 
 	return len - len % wfx->nBlockAlign;  // round down to block (channel) boundaries
-}
-
-/**
- * Return the trailing silence wave data length, in bytes.
- * Uses a `WAVEFORMATEX` to determine the wave format.
- */
-inline size_t getTrailingSilenceSize(
-	const WAVEFORMATEX* wfx,
-	const unsigned char* waveData,
-	size_t size
-) {
-	size_t len;
-	if (!callByWaveFormat(wfx, [=, &len](auto fmtTag) {
-			using Fmt = decltype(fmtTag);
-			len = getTrailingSilenceSizeMono<Fmt>(
-				waveData, size, Fmt::defaultThreshold());
-		}))
-		return 0;
-
-	size_t align = wfx->nBlockAlign;
-	len += align - 1;
-	len -= len % align;  // round up to block (channel) boundaries
-	return len;
 }
 
 }  // namespace SilenceDetect
