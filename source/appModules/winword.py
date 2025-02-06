@@ -14,18 +14,15 @@ import ui
 from logHandler import log
 from NVDAObjects.IAccessible.winword import WordDocument as IAccessibleWordDocument
 from NVDAObjects.UIA.wordDocument import WordDocument as UIAWordDocument
-from NVDAObjects.window.winword import WordDocument
+from NVDAObjects.window.winword import (
+	WordDocument,
+	WdOutlineLevel,
+)
 from utils.displayString import DisplayStringIntEnum
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
 	import inputCore
-
-
-# From WdOutlineLevel enumeration
-# See https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel
-class WdOutlineLevel(IntEnum):
-	BODY_TEXT = 10
 
 
 class ViewType(DisplayStringIntEnum):
@@ -109,7 +106,7 @@ class WinwordWordDocument(WordDocument):
 			return
 		maxParagraphs = 50
 		for nParagraph, paragraph in enumerate(self.WinwordSelectionObject.paragraphs):
-			if paragraph.outlineLevel != wdOutlineLevelBodyText:
+			if paragraph.outlineLevel != WdOutlineLevel.BODY_TEXT:
 				break
 			if nParagraph >= maxParagraphs:
 				log.debugWarning("Too many paragraphs selected")
