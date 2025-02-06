@@ -208,7 +208,7 @@ def isInError() -> bool:
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
 
 
-class WasapiWavePlayer(garbageHandler.TrackedObject):
+class WavePlayer(garbageHandler.TrackedObject):
 	"""Synchronously play a stream of audio using WASAPI.
 	To use, construct an instance and feed it waveform audio using L{feed}.
 	Keeps device open until it is either not available, or WavePlayer is explicitly closed / deleted.
@@ -275,24 +275,24 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self._player = NVDAHelper.localLib.wasPlay_create(
 			outputDevice,
 			format,
-			WasapiWavePlayer._callback,
+			WavePlayer._callback,
 		)
 		self._doneCallbacks = {}
 		self._instances[self._player] = self
 		self.open()
 		self._lastActiveTime: typing.Optional[float] = None
 		self._isPaused: bool = False
-		if config.conf["audio"]["audioAwakeTime"] > 0 and WasapiWavePlayer._silenceDevice != outputDevice:
+		if config.conf["audio"]["audioAwakeTime"] > 0 and WavePlayer._silenceDevice != outputDevice:
 			# The output device has changed. (Re)initialize silence.
 			if self._silenceDevice is not None:
 				NVDAHelper.localLib.wasSilence_terminate()
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
-				WasapiWavePlayer._silenceDevice = outputDevice
+				WavePlayer._silenceDevice = outputDevice
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
-		pyPlayer = WasapiWavePlayer._instances[cppPlayer]
+		pyPlayer = WavePlayer._instances[cppPlayer]
 		onDone = pyPlayer._doneCallbacks.pop(feedId, None)
 		if onDone:
 			onDone()
@@ -327,7 +327,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			)
 			WavePlayer.audioDeviceError_static = True
 			raise
-		WasapiWavePlayer.audioDeviceError_static = False
+		WavePlayer.audioDeviceError_static = False
 		self._setVolumeFromConfig()
 
 	def close(self):
@@ -525,7 +525,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			cls._scheduleIdleCheck()
 
 
-WavePlayer = WasapiWavePlayer
 fileWavePlayer: Optional[WavePlayer] = None
 fileWavePlayerThread: threading.Thread | None = None
 
@@ -550,7 +549,7 @@ def initialize():
 
 
 def terminate() -> None:
-	if WasapiWavePlayer._silenceDevice is not None:
+	if WavePlayer._silenceDevice is not None:
 		NVDAHelper.localLib.wasSilence_terminate()
 	getOnErrorSoundRequested().unregister(playErrorSound)
 
