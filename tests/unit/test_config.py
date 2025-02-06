@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
 
 from collections.abc import Callable, Generator
 import enum

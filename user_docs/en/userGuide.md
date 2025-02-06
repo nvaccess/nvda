@@ -3068,8 +3068,8 @@ This category allows you to adjust the behaviour of the Add-on Store.
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
-Notifications will only occur for add-ons with updates available within the same channel.
-For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+By default, notifications will only occur for add-ons with updates available within the same [channel](#AddonStoreFilterChannel) (e.g. stable, beta or dev).
+You can configure add-on update channels [individually for each add-on](#AddonStoreUpdateChannel) or for [all add-ons](#DefaultAddonUpdateChannel).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3080,6 +3080,28 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |---|---|
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
+
+##### Default Update Channel {#DefaultAddonUpdateChannel}
+
+When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, by default, add-ons only update to the same [channel](#AddonStoreFilterChannel).
+For example, an installed beta version will only update to a newer beta version.
+This option sets the default update channel for all add-ons.
+You can also change the update channel for a [specific add-on individually from the Add-on Store](#AddonStoreUpdateChannel).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Same (Default), Any, Do not update, Stable, Beta or dev, Beta, Dev |
+| Default | Same |
+
+| Option | Behaviour |
+|---|---|
+| Same | Add-ons will remain on their channel |
+| Any | Add-ons will automatically update to the latest version, regardless of channel |
+| Do not update | Add-ons will not automatically update by default, you must enable them individually |
+| Stable | Add-ons will automatically update to stable versions |
+| Beta or dev | Add-ons will automatically update to beta or dev versions |
+| Beta | Add-ons will automatically update to beta versions |
+| Dev | Add-ons will automatically update to dev versions |
 
 ##### Mirror server {#AddonStoreMetadataMirror}
 
@@ -3722,6 +3744,23 @@ To read reviews for an add-on, select it, and use the "Community reviews" action
 This links to a GitHub Discussion webpage, where you will be able to read and write reviews for the add-on.
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
+
+#### Changing the automatic update channel (#AddonStoreUpdateChannel)
+
+You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
+When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
+From an add-on's actions menu, using the submenu "Update channel", you can modify the channels an add-on will automatically update to.
+
+| Option | Behaviour |
+|---|---|
+| Default | Add-on will follow the [default update channel](#DefaultAddonUpdateChannel) |
+| Same | Add-on will remain on the same channel |
+| Any | Add-on will automatically update to the latest version, regardless of channel |
+| Do not update | Add-on will not automatically update |
+| Stable | Add-on will automatically update to stable versions |
+| Beta or dev | Add-on will automatically update to beta or dev versions |
+| Beta | Add-on will automatically update to beta versions |
+| Dev | Add-on will automatically update to dev versions |
 
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
