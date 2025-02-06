@@ -1450,7 +1450,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		while True:
 			if not isFirst or includeCurrent:
 				level = rangeObj.paragraphs[1].outlineLevel
-				if level and 0 < level < WdOutlineLevel.BODY_TEXT and (not neededLevel or neededLevel == level):
+				if (
+					level
+					and 0 < level < WdOutlineLevel.BODY_TEXT
+					and (not neededLevel or neededLevel == level)
+				):
 					rangeObj.expand(wdParagraph)
 					yield WordDocumentHeadingQuickNavItem(
 						nodeType,
