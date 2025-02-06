@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
+# Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -40,7 +41,7 @@ from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 from . import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextBase, EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 from ._msOffice import MsoHyperlink
 import locationHelper
@@ -1573,7 +1574,9 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	}
 
 
-class WordDocument(Window):
+class WordDocument(Window, EditableTextBase):
+	_supportsSentenceNavigation = True
+
 	def winwordColorToNVDAColor(self, val):
 		if val >= 0:
 			# normal RGB value

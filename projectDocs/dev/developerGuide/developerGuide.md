@@ -1504,13 +1504,15 @@ match saveDialog.ShowModal():
 For non-modal dialogs, the easiest way to respond to the user pressing a button is via callback methods.
 
 ```py
-def readChangelog():
+from gui.message import Payload
+
+def readChangelog(payload: Payload):
 	...  # Do something
 
-def downloadUpdate():
+def downloadUpdate(payload: Payload):
 	...  # Do something
 
-def remindLater():
+def remindLater(payload: Payload):
 	...  # Do something
 
 updateDialog = MessageDialog(
@@ -1661,6 +1663,15 @@ The following default button sets are available:
 | `SAVE_NO_CANCEL` | `DefaultButton.SAVE`, `DefaultButton.NO`, `DefaultButton.CANCEL` | `addSaveNoCancelButtons` | The label of the no button is overridden to be "Do&n't save". |
 
 If none of the standard `ReturnCode` values are suitable for your button, you may also use `ReturnCode.CUSTOM_1` through `ReturnCode.CUSTOM_5`, which will not conflict with any built-in identifiers.
+
+#### Callbacks
+
+A convenient way of responding to button presses, especially for non-modal message dialogs, is to attach callbacks to the buttons.
+This is achieved by passing a `callback` function to `addButton`, `addButtons`, or any of the add button helpers.
+
+A callback should be a function which accepts exactly one positional argument.
+When called, a `Payload` data structure will be passed in.
+This data structure currently contains no information, though in future it may be augmented to contain information about the dialog's state and the context from which the callback was called.
 
 #### Convenience methods
 
