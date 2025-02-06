@@ -295,7 +295,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				WasapiWavePlayer._silenceDevice = outputDevice
 		# Enable trimming by default for speech only
 		self.enableTrimmingLeadingSilence(
-			purpose is AudioPurpose.SPEECH and config.conf["speech"]["trimLeadingSilence"]
+			purpose is AudioPurpose.SPEECH and config.conf["speech"]["trimLeadingSilence"],
 		)
 		if self._enableTrimmingLeadingSilence:
 			self.startTrimmingLeadingSilence()
