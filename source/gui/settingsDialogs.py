@@ -3755,7 +3755,7 @@ class AdvancedPanelControls(
 		#  Advanced settings panel.
 		label = _("Trim leading silence in speech audio")
 		self.trimLeadingSilenceCheckBox = speechGroup.addItem(wx.CheckBox(speechBox, label=label))
-		self.bindHelpEvent("AdvancedSettingsTrimLeadingSilence", self.trimLeadingSilenceCheckBox)
+		self.bindHelpEvent("TrimLeadingSilence", self.trimLeadingSilenceCheckBox)
 		self.trimLeadingSilenceCheckBox.SetValue(config.conf["speech"]["trimLeadingSilence"])
 		self.trimLeadingSilenceCheckBox.defaultValue = self._getDefaultValue(["speech", "trimLeadingSilence"])
 
