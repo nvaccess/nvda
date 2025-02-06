@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2024 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter
+# Copyright (C) 2016-2025 NV Access Limited, Bill Dengler, Cyrille Bougot, Łukasz Golonka, Leonard de Ruijter, Cary-rowen
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -22,6 +22,7 @@ from config.configFlags import (
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
+	TypingEcho,
 )
 import configobj.validate
 from configobj import ConfigObj
@@ -471,3 +472,31 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 			# Proceed to the next device state.
 			continue
 	return None
+
+
+def upgradeConfigFrom_14_to_15(profile: ConfigObj):
+	"""Convert keyboard typing echo configurations from boolean to integer values."""
+	_convertTypingEcho(profile, "speakTypedCharacters")
+	_convertTypingEcho(profile, "speakTypedWords")
+
+
+def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
+	"""
+	Convert a keyboard typing echo configuration from boolean to integer values.
+
+	:param profile: The `ConfigObj` instance representing the user's NVDA configuration file.
+	:param key: The configuration key to convert.
+	"""
+	try:
+		oldValue: bool = profile["keyboard"].as_bool(key)
+	except KeyError:
+		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, got {profile['keyboard'][key]!r}. Deleting.")
+		del profile["keyboard"][key]
+		return
+	else:
+		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
+		profile["keyboard"][key] = newValue
+		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")

@@ -1,7 +1,5 @@
-# _sapi4.py
-# Contributed by Serotek Corporation under the GPL
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2008 NVDA Contributors <http://www.nvda-project.org/>
+# Copyright (C) 2006-2025 NV Access Limited, Serotek Corporation
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -20,6 +18,7 @@ from ctypes import (
 	Structure,
 )
 from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
+from enum import IntEnum
 from comtypes import GUID, IUnknown, STDMETHOD
 
 import winKernel
@@ -227,3 +226,19 @@ ITTSNotifySink = ITTSNotifySinkW
 
 CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
+
+
+# Defined in mmsyscom.h
+MMSYSERR_NOERROR = 0
+
+
+class DriverMessage(IntEnum):
+	"""WaveOutMessage message codes
+	Defined in mmddk.h
+	"""
+
+	QUERY_INSTANCE_ID = 2065
+	"""DRV_QUERYFUNCTIONINSTANCEID """
+
+	QUERY_INSTANCE_ID_SIZE = 2066
+	"""DRV_QUERYFUNCTIONINSTANCEIDSIZE """
