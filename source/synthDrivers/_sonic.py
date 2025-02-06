@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2025 NV Access Limited
+# Copyright (C) 2025 NV Access Limited, gexgd0419
 
 from ctypes import CDLL, POINTER, Array, c_float, c_int, c_short, c_ubyte, c_void_p, cdll
 import os
