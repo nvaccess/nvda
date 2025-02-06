@@ -38,16 +38,10 @@ import extensionPoints
 import NVDAHelper
 import core
 import globalVars
-from pycaw.utils import AudioUtilities
-
-from utils.mmdevice import _getOutputDevices
 
 
 __all__ = (
 	"WavePlayer",
-	"getOutputDeviceNames",
-	"outputDeviceIDToName",
-	"outputDeviceNameToID",
 	"decide_playWaveFile",
 )
 
@@ -87,42 +81,6 @@ class AudioPurpose(Enum):
 
 	SPEECH = auto()
 	SOUNDS = auto()
-
-
-def getOutputDeviceNames() -> list[str]:
-	"""Obtain the names of all audio output devices on the system.
-	:return: The names of all output devices on the system.
-	..note: Depending on number of devices being fetched, this may take some time (~3ms)
-	"""
-	return [name for ID, name in _getOutputDevices()]
-
-
-def outputDeviceIDToName(ID: str) -> str:
-	"""Obtain the name of an output device given its device ID.
-	:param ID: The device ID.
-	:return: The device name.
-	"""
-	device = AudioUtilities.GetDeviceEnumerator().GetDevice(id)
-	return AudioUtilities.CreateDevice(device).FriendlyName
-
-
-def outputDeviceNameToID(name: str, useDefaultIfInvalid: bool = False) -> str:
-	"""Obtain the device ID of an output device given its name.
-	:param name: The device name.
-	:param useDefaultIfInvalid: `True` to use the default device if there is no such device, `False` to raise an exception.
-	:return: The device ID.
-	:raise LookupError: If there is no such device and `useDefaultIfInvalid` is `False`.
-	..note: Depending on number of devices, and the position of the device in the list, this may take some time (~3ms)
-	"""
-	for curID, curName in _getOutputDevices():
-		if curName == name:
-			return curID
-
-	# No such ID.
-	if useDefaultIfInvalid:
-		return AudioUtilities.GetSpeakers().GetId()
-	else:
-		raise LookupError("No such device name")
 
 
 def playWaveFile(
