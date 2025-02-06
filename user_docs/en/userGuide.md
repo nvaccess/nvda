@@ -3321,7 +3321,7 @@ This option enables behaviour which attempts to cancel speech for expired focus 
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is enabled by default as of NVDA 2021.1.
 
-##### Trim leading silence in speech audio {#TrimLeadingSilence}
+##### Trim leading silence in speech audio {#TrimLeadingSilenceSpeech}
 
 When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
 This option is enabled by default, and should only affect the silence at the beginning of speech.
