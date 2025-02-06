@@ -3985,6 +3985,14 @@ class AdvancedPanelControls(
 
 	def onSave(self):
 		log.debug("Saving advanced config")
+
+		if config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked():
+			# Reload the synthesizer if "trimLeadingSilence" changes
+			config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
+			currentSynth = getSynth()
+			if not setSynth(currentSynth.name):
+				_synthWarningDialog(currentSynth.name)
+
 		config.conf["development"]["enableScratchpadDir"] = self.scratchpadCheckBox.IsChecked()
 		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
 		config.conf["UIA"]["eventRegistration"] = self.selectiveUIAEventRegistrationVals[
@@ -3997,7 +4005,6 @@ class AdvancedPanelControls(
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = (
 			self.cancelExpiredFocusSpeechCombo.GetSelection()
 		)
-		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()

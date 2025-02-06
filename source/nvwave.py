@@ -294,7 +294,9 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WasapiWavePlayer._silenceDevice = outputDevice
 		# Enable trimming by default for speech only
-		self.enableTrimmingLeadingSilence(purpose is AudioPurpose.SPEECH)
+		self.enableTrimmingLeadingSilence(
+			purpose is AudioPurpose.SPEECH and config.conf["speech"]["trimLeadingSilence"]
+		)
 		if self._enableTrimmingLeadingSilence:
 			self.startTrimmingLeadingSilence()
 
@@ -481,8 +483,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 
 	def startTrimmingLeadingSilence(self, start: bool = True) -> None:
 		"""Start or stop trimming the leading silence from the next audio chunk."""
-		if not config.conf["speech"]["trimLeadingSilence"]:
-			return  ## disabled by user
 		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, start)
 
 	def _setVolumeFromConfig(self):
