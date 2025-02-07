@@ -364,9 +364,10 @@ class _DataManager:
 		else:
 			compatibleAddons = self.getLatestCompatibleAddons(onDisplayableError)
 		for channel in compatibleAddons:
+			# Ensure add-on update channel is within the preferred update channels
 			for addon in compatibleAddons[channel].values():
+				# Ensure add-on is updatable
 				if getStatus(addon, _StatusFilterKey.UPDATE) in updatableAddonStatuses:
-					# Ensure add-on update channel is within the preferred update channels
 					if (installedStoreData := addon._addonHandlerModel._addonStoreData) is not None:
 						installedChannel = installedStoreData.channel
 					else:
@@ -377,8 +378,8 @@ class _DataManager:
 					availableUpdateChannels = selectedUpdateChannel._availableChannelsForAddonWithChannel(
 						installedChannel,
 					)
+					# Ensure add-on channel is valid to update to given update preferences
 					if addon.channel in availableUpdateChannels:
-						# get latest add-on from channel
 						if addon.name in addonsPendingUpdate:
 							# See if this version is newer than the currently tracked versions
 							if _canUpdateAddon(addon, addonsPendingUpdate[addon.name]):
