@@ -34,7 +34,6 @@ import shellapi
 import winUser
 import functools
 import shlobj
-from os import startfile
 from logHandler import log
 from NVDAState import WritePaths
 
@@ -185,15 +184,6 @@ def _getDesktopName() -> str:
 		None,
 	)
 	return name.value
-
-
-def _displayTextFileWorkaround(file: str) -> None:
-	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
-	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
-	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
-	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
-	# possible to deprecate this workaround after a Python upgrade.
-	startfile(file, operation="edit")
 
 
 def _isSystemClockSecondsVisible() -> bool:

@@ -8,6 +8,7 @@
 # Burman's Computer and Education Ltd, hwf1324, Cary-rowen.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import logging
 from abc import ABCMeta, abstractmethod
 import copy
@@ -54,6 +55,7 @@ import queueHandler
 import braille
 import brailleTables
 import brailleInput
+from addonStore.models.channel import UpdateChannel
 import vision
 import vision.providerInfo
 import vision.providerBase
@@ -3267,6 +3269,20 @@ class AddonStorePanel(SettingsPanel):
 		index = [x.value for x in AddonsAutomaticUpdate].index(config.conf["addonStore"]["automaticUpdates"])
 		self.automaticUpdatesComboBox.SetSelection(index)
 
+		self.defaultUpdateChannelComboBox = sHelper.addLabeledControl(
+			# Translators: This is the label for the default update channel combo box in the Add-on Store Settings dialog.
+			_("Default update &channel:"),
+			wx.Choice,
+			# The default update channel for a specific add-on (UpdateChannel.DEFAULT) refers to this channel,
+			# so it should be skipped.
+			choices=[
+				channel.displayString for channel in UpdateChannel if channel is not UpdateChannel.DEFAULT
+			],
+		)
+		self.bindHelpEvent("DefaultAddonUpdateChannel", self.defaultUpdateChannelComboBox)
+		index = config.conf["addonStore"]["defaultUpdateChannel"]
+		self.defaultUpdateChannelComboBox.SetSelection(index)
+
 		# Translators: The label for the mirror server on the Add-on Store Settings panel.
 		mirrorBoxSizer = wx.StaticBoxSizer(wx.HORIZONTAL, self, label=_("Mirror server"))
 		mirrorBox = mirrorBoxSizer.GetStaticBox()
@@ -3343,6 +3359,7 @@ class AddonStorePanel(SettingsPanel):
 	def onSave(self):
 		index = self.automaticUpdatesComboBox.GetSelection()
 		config.conf["addonStore"]["automaticUpdates"] = [x.value for x in AddonsAutomaticUpdate][index]
+		config.conf["addonStore"]["defaultUpdateChannel"] = self.defaultUpdateChannelComboBox.GetSelection()
 
 
 class TouchInteractionPanel(SettingsPanel):
