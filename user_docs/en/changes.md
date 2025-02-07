@@ -59,7 +59,7 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
-* The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some of the third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
+* The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
 
 ### Bug Fixes
 
