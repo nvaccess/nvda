@@ -105,33 +105,6 @@ struct WaveFormat {
 			return SampleType(UnsignedType(smp) << shift) >> shift;
 		}
 	}
-
-	template <class SrcFmt>
-	static constexpr SampleType convertFrom(SrcFmt::SampleType smp) {
-		using SrcType = SrcFmt::SampleType;
-		if constexpr (std::is_floating_point_v<SrcType> && std::is_floating_point_v<SampleType>) {
-			// both floating points, convert directly
-			return SampleType(smp);
-		} else if constexpr (std::is_integral_v<SrcType> && std::is_integral_v<SampleType>) {
-			// both integers, do bit shifting
-			const auto dstsmp = SrcFmt::toSigned(smp);
-			if constexpr (bytesPerSample >= SrcFmt::bytesPerSample) {
-				constexpr auto shift = (bytesPerSample - SrcFmt::bytesPerSample) * 8;
-				// Convert to unsigned target type first to prevent overflows and left-shifting negative numbers
-				using UnsignedType = std::make_unsigned_t<SampleType>;
-				return fromSigned(UnsignedType(dstsmp) << shift);
-			} else {
-				constexpr auto shift = (SrcFmt::bytesPerSample - bytesPerSample) * 8;
-				return fromSigned(dstsmp >> shift);
-			}
-		} else if constexpr (std::is_floating_point_v<SrcType> && std::is_integral_v<SampleType>) {
-			// floating point to integer, e.g. [-1.0f, 1.0f] -> [-32767, 32767]
-			return fromSigned(smp * ((max)() - zeroPoint()));
-		} else {
-			// integer to floating point, e.g. [-32768, 32767] -> [-1.0f, 1.0f)
-			return SampleType(SrcFmt::toSigned(smp) / (SrcFmt::zeroPoint() - (SrcFmt::min)()));
-		}
-	}
 };
 
 inline WORD getFormatTag(const WAVEFORMATEX* wfx) {
