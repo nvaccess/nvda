@@ -156,6 +156,7 @@ Add-ons will need to be re-tested and have their manifest updated.
   * Added the `matchFunc` parameter to `addUsbDevices` which is also available on `addUsbDevice`.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
+* Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
 
 #### API Breaking Changes
 
@@ -173,8 +174,10 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
-* Due to the retirement of NVDA's winmm support (#17496, #17532):
-  * The following symbols have been removed from `nvwave` without replacements: `CALLBACK_EVENT`, `CALLBACK_FUNCTION`, `CALLBACK_NULL`, `getOutputDeviceNames`, `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEFORMATEX`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `outputDeviceIDToName`, `outputDeviceNameToID`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `waveOutProc`, `WAVE_MAPPER`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+* Due to the retirement of NVDA's winmm support (#17496, #17532, #17678):
+  * The following symbols have been removed from `nvwave` without replacements: `CALLBACK_EVENT`, `CALLBACK_FUNCTION`, `CALLBACK_NULL`, `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEFORMATEX`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `waveOutProc`, `WAVE_MAPPER`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
+  * The following symbols have been removed from `nvwave`: `getOutputDeviceNames`, `outputDeviceIDToName`, `outputDeviceNameToID`.
+  Use `utils.mmdevice.getOutputDevices` instead.
   * `nvwave.WasapiWavePlayer` has been renamed to `WavePlayer`.
   * `gui.settingsDialogs.AdvancedPanelControls.wasapiComboBox` has been removed.
   * The `WASAPI` key has been removed from the `audio` section of the config spec.
