@@ -8,6 +8,7 @@ from time import sleep
 from typing import (
 	TYPE_CHECKING,
 )
+import winsound
 
 import wx
 
@@ -582,6 +583,7 @@ class UpdatableAddonsDialog(
 			case AddonsAutomaticUpdate.NOTIFY:
 
 				def delayCreateDialog():
+					winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 					displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
 
 				wx.CallAfter(delayCreateDialog)
@@ -606,6 +608,7 @@ def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
 	"""
 	from ..viewModels.store import AddonStoreVM
 
+	winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 	# Translators: Message shown when updating add-ons automatically
 	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NOW)
 	listVMs = {AddonListItemVM(a, status=AvailableAddonStatus.UPDATE) for a in addonsPendingUpdate}
