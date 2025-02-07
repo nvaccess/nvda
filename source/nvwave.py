@@ -209,7 +209,6 @@ def isInError() -> bool:
 
 
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
-_isLeadingSilenceInserted: bool = False
 
 
 class WasapiWavePlayer(garbageHandler.TrackedObject):
@@ -299,6 +298,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		)
 		if self._enableTrimmingLeadingSilence:
 			self.startTrimmingLeadingSilence()
+		self._isLeadingSilenceInserted: bool = False
+		pre_synthSpeak.register(self._onPreSpeak)
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -323,6 +324,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# a weakref callback can run before __del__ in some cases, which would mean
 			# it has already been removed from _instances.
 			self._player = None
+		pre_synthSpeak.unregister(self._onPreSpeak)
 
 	def open(self):
 		"""Open the output device.
@@ -361,7 +363,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		@param onDone: Function to call when this chunk has finished playing.
 		@raise WindowsError: If there was an error initially opening the device.
 		"""
-		global _isLeadingSilenceInserted
 		self.open()
 		if self._audioDucker:
 			self._audioDucker.enable()
@@ -370,7 +371,7 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		self._lastActiveTime = None
 		# If a BreakCommand is used to insert leading silence in this utterance,
 		# turn off trimming temporarily.
-		if self._purpose is AudioPurpose.SPEECH and _isLeadingSilenceInserted:
+		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
@@ -555,22 +556,21 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
 
+	def _onPreSpeak(self, speechSequence: SpeechSequence):
+		self._isLeadingSilenceInserted = False
+		# Check if leading silence of the current utterance is inserted by a BreakCommand.
+		for item in speechSequence:
+			if isinstance(item, BreakCommand):
+				self._isLeadingSilenceInserted = True
+				break
+			elif isinstance(item, str):
+				break
+
+
 
 WavePlayer = WasapiWavePlayer
 fileWavePlayer: Optional[WavePlayer] = None
 fileWavePlayerThread: threading.Thread | None = None
-
-
-def _onPreSpeak(speechSequence: SpeechSequence):
-	global _isLeadingSilenceInserted
-	_isLeadingSilenceInserted = False
-	# Check if leading silence of the current utterance is inserted by a BreakCommand.
-	for item in speechSequence:
-		if isinstance(item, BreakCommand):
-			_isLeadingSilenceInserted = True
-			break
-		elif isinstance(item, str):
-			break
 
 
 def initialize():
@@ -590,14 +590,12 @@ def initialize():
 		func.restype = HRESULT
 	NVDAHelper.localLib.wasPlay_startup()
 	getOnErrorSoundRequested().register(playErrorSound)
-	pre_synthSpeak.register(_onPreSpeak)
 
 
 def terminate() -> None:
 	if WasapiWavePlayer._silenceDevice is not None:
 		NVDAHelper.localLib.wasSilence_terminate()
 	getOnErrorSoundRequested().unregister(playErrorSound)
-	pre_synthSpeak.unregister(_onPreSpeak)
 
 
 def playErrorSound() -> None:
