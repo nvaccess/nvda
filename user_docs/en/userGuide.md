@@ -3071,14 +3071,18 @@ This check is performed every 24 hours.
 By default, notifications will only occur for add-ons with updates available within the same [channel](#AddonStoreFilterChannel) (e.g. stable, beta or dev).
 You can configure add-on update channels [individually for each add-on](#AddonStoreUpdateChannel) or for [all add-ons](#DefaultAddonUpdateChannel).
 
+When set to "Update Automatically", add-ons will automatically update in the background.
+You will be prompted to restart NVDA when the updates are finished.
+
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |Notify (Default), Disabled |
+|Options |Notify (Default), Update Automatically, Disabled |
 |Default |Notify |
 
 |Option |Behaviour |
 |---|---|
-|Notify |Notify when updates are available to add-ons within the same channel |
+|Notify |Notify when updates are available to add-ons |
+|Update Automatically |Automatically update add-ons |
 |Disabled |Do not automatically check for updates to add-ons |
 
 ##### Default Update Channel {#DefaultAddonUpdateChannel}
@@ -3102,6 +3106,14 @@ You can also change the update channel for a [specific add-on individually from 
 | Beta or dev | Add-ons will automatically update to beta or dev versions |
 | Beta | Add-ons will automatically update to beta versions |
 | Dev | Add-ons will automatically update to dev versions |
+
+##### Allow automatic updates to install incompatible add-ons {#AllowIncompatibleAddonUpdates}
+
+This setting enables automatic updates to add-ons that may not be fully compatible with the current version of NVDA.
+By default, this is disabled, meaning automatic updates will only upgrade to add-on versions marked as compatible with the current version of NVDA.
+Automatic updates will still update an incompatible add-on version to a compatible version when it is released.
+Enabling this may be useful for switching over to using add-on breaking releases (the first release of the year).
+This is particularly useful for alpha and beta testers, who are testing compatibility of add-ons during the early stages of an add-on breaking release.
 
 ##### Mirror server {#AddonStoreMetadataMirror}
 

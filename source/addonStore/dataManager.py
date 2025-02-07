@@ -37,7 +37,7 @@ from .models.addon import (
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
-from .models.status import AvailableAddonStatus, getStatus, _StatusFilterKey
+from .models.status import AvailableAddonStatus, _canUpdateAddon, getStatus, _StatusFilterKey
 from .network import (
 	_getCurrentApiVersionForURL,
 	_getAddonStoreURL,
@@ -352,13 +352,17 @@ class _DataManager:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)
 
-	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
-		# TODO: Add AvailableAddonStatus.UPDATE_INCOMPATIBLE,
-		# to allow updates that are incompatible with the current NVDA version,
-		# only if a config setting is enabled
+	def _addonsPendingUpdate(
+		self,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
+	) -> list["_AddonGUIModel"]:
 		updatableAddonStatuses = {AvailableAddonStatus.UPDATE}
-		addonsPendingUpdate: list["_AddonGUIModel"] = []
-		compatibleAddons = self.getLatestCompatibleAddons()
+		addonsPendingUpdate: dict["str", "_AddonGUIModel"] = {}
+		if config.conf["addonStore"]["allowIncompatibleUpdates"]:
+			updatableAddonStatuses.add(AvailableAddonStatus.UPDATE_INCOMPATIBLE)
+			compatibleAddons = self.getLatestAddons(onDisplayableError)
+		else:
+			compatibleAddons = self.getLatestCompatibleAddons(onDisplayableError)
 		for channel in compatibleAddons:
 			for addon in compatibleAddons[channel].values():
 				if getStatus(addon, _StatusFilterKey.UPDATE) in updatableAddonStatuses:
@@ -374,8 +378,14 @@ class _DataManager:
 						installedChannel,
 					)
 					if addon.channel in availableUpdateChannels:
-						addonsPendingUpdate.append(addon)
-		return addonsPendingUpdate
+						# get latest add-on from channel
+						if addon.name in addonsPendingUpdate:
+							# See if this version is newer than the currently tracked versions
+							if _canUpdateAddon(addon, addonsPendingUpdate[addon.name]):
+								addonsPendingUpdate[addon.name] = addon
+						else:
+							addonsPendingUpdate[addon.name] = addon
+		return list(addonsPendingUpdate.values())
 
 
 class _InstalledAddonsCache(AutoPropertyObject):

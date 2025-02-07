@@ -3,6 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import threading
+from time import sleep
 from typing import (
 	TYPE_CHECKING,
 )
@@ -30,9 +32,10 @@ from gui.guiHelper import (
 	ButtonHelper,
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
-from gui.message import DisplayableError, displayDialogAsModal, messageBox
+from gui.message import DisplayableError, displayDialogAsModal, messageBox, _countAsMessageBox
 from logHandler import log
 import NVDAState
+from speech.priorities import SpeechPriority
 import ui
 import windowUtils
 
@@ -366,12 +369,12 @@ class UpdatableAddonsDialog(
 	"""A dialog notifying users that updatable add-ons are available"""
 
 	helpId = "AutomaticAddonUpdates"
+	onDisplayableError = DisplayableError.OnDisplayableErrorT()
 
 	def __init__(self, parent: wx.Window, addonsPendingUpdate: list[_AddonGUIModel]):
 		# Translators: The warning of a dialog
 		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
 		self.addonsPendingUpdate = addonsPendingUpdate
-		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		self._setupUI()
 		self.Raise()
 		self.SetFocus()
@@ -552,6 +555,10 @@ class UpdatableAddonsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CLOSE)
 
+	@staticmethod
+	def handleDisplayableError(displayableError: DisplayableError):
+		displayableError.displayError(gui.mainFrame)
+
 	@classmethod
 	def _checkForUpdatableAddons(cls):
 		if not NVDAState.shouldWriteToDisk() or (
@@ -560,11 +567,57 @@ class UpdatableAddonsDialog(
 			log.debug("automatic add-on updates are disabled")
 			return
 		log.debug("checking for updatable add-ons")
-		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
-		if addonsPendingUpdate:
-			log.debug("updatable add-ons found")
 
-			def delayCreateDialog():
-				displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+		UpdatableAddonsDialog.onDisplayableError.register(UpdatableAddonsDialog.handleDisplayableError)
+		addonsPendingUpdate = addonDataManager._addonsPendingUpdate(UpdatableAddonsDialog.onDisplayableError)
+		UpdatableAddonsDialog.onDisplayableError.unregister(UpdatableAddonsDialog.handleDisplayableError)
 
-			wx.CallAfter(delayCreateDialog)
+		if not addonsPendingUpdate:
+			log.debug("no updatable add-ons found")
+			return
+
+		log.debug("updatable add-ons found")
+
+		match config.conf["addonStore"]["automaticUpdates"]:
+			case AddonsAutomaticUpdate.NOTIFY:
+
+				def delayCreateDialog():
+					displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+
+				wx.CallAfter(delayCreateDialog)
+
+			case AddonsAutomaticUpdate.UPDATE:
+				threading.Thread(
+					name="AutomaticAddonUpdate",
+					target=_updateAddons,
+					args=(addonsPendingUpdate,),
+					daemon=True,
+				).start()
+
+			case _:
+				raise NotImplementedError("Unknown automatic update setting")
+
+
+@_countAsMessageBox()
+def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
+	"""Update the add-ons in the background.
+	Blocks while downloading occurs.
+	This function is treated as message box to prevent NVDA from exiting while the download/install is in progress.
+	"""
+	from ..viewModels.store import AddonStoreVM
+
+	# Translators: Message shown when updating add-ons automatically
+	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NOW)
+	listVMs = {AddonListItemVM(a, status=AvailableAddonStatus.UPDATE) for a in addonsPendingUpdate}
+	AddonStoreVM.getAddons(listVMs)
+
+	while AddonStoreVM._downloader.progress:
+		log.debug("Waiting for add-ons to be downloaded {}".format(AddonStoreVM._downloader.progress))
+		sleep(0.1)
+
+	def mainThreadCallback():
+		# Add-on installations must happen on main thread
+		AddonStoreVM.installPending()
+		promptUserForRestart()
+
+	wx.CallAfter(mainThreadCallback)
