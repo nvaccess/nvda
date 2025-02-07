@@ -567,7 +567,6 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 				break
 
 
-
 WavePlayer = WasapiWavePlayer
 fileWavePlayer: Optional[WavePlayer] = None
 fileWavePlayerThread: threading.Thread | None = None
