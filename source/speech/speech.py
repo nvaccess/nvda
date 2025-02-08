@@ -1175,7 +1175,7 @@ def speak(  # noqa: C901
 					speechSequence.insert(1, languageHandler.getLanguageDescription(curLanguage))
 					SpeechState.lastReportedLanguage = curLanguage
 					if not languageIsSupported(curLanguage):
-						log.warn(f"{curLanguage} not supported in {getSynth().name}")
+						log.debugWarning(f"{curLanguage} not supported in {getSynth().name}")
 	_manager.speak(speechSequence, priority)
 
 

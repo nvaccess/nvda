@@ -4905,15 +4905,18 @@ class GlobalCommands(ScriptableObject):
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
 		text = info.text
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if languageDescription is None:
+			languageDescription = curLanguage
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
-			ui.message(languageHandler.getLanguageDescription(curLanguage))
+			ui.message(languageDescription)
 		else:
 			# Translators: Character and its language.
-			message = _("{} ({})").format(text, curLanguage)
+			message = _("{} ({})").format(text, languageDescription)
 			# Translators: title for report caret language dialog.
 			title = _("Language at caret position")
-			ui.browseableMessage(message, title)
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
 
 
 #: The single global commands instance.
