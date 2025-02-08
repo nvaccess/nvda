@@ -145,10 +145,7 @@ class _Reader(garbageHandler.TrackedObject, metaclass=ABCMeta):
 
 	def __init__(self, handler: _SayAllHandler):
 		self.handler = handler
-		systemUtils.preventSystemIdle(
-			keepDisplayAwake=bool(config.conf["general"]["preventSystemLock"]),
-			persistent=True,
-		)
+		systemUtils.preventSystemIdle(persistent=True)
 
 	@abstractmethod
 	def next(self): ...

@@ -577,9 +577,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			)
 
 		if gesture.shouldPreventSystemIdle:
-			systemUtils.preventSystemIdle(
-				keepDisplayAwake=bool(config.conf["general"]["preventSystemLock"]),
-			)
+			systemUtils.preventSystemIdle()
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			self._lastInputTime = time.time()

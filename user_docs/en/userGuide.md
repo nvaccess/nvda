@@ -1846,14 +1846,14 @@ If you wish to change the update mirror, press the "Change..." button to open th
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
 
-##### Prevent system lock during say all or reading with braille {#preventSystemLock}
+##### Prevent display from turning off during say all or reading with braille {#preventDisplayTurnOff}
 
 | . {.hideHeaderRow} |.|
 |---|---|
 |Options |Default (Enabled), Disabled, Enabled|
 |Default |Enabled|
 
-This option ensures that the screen stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
+This option ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
 This avoids the situation where the screen unexpectedly locks during a say all.
 This option is enabled by default.
 Consider disabling this option if you are suffering from a shorter battery life.

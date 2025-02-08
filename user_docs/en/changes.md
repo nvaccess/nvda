@@ -36,7 +36,7 @@ As a consequence, announcement of first line indent is now supported for LibreOf
 * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
 * In Microsoft Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
 * NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio. (#17652, @LeonarddeR)
-* Added a general setting to prevent system lock during say all or reading with braille.
+* Added a general setting to prevent the display to turn off during say all or reading with braille.
 This option is enabled by default, but can possibly result in shorter battery life.
 If you suspect this option to negatively impact your battery life, you're advised to disable it. (#17649, @LeonarddeR)
 * Rate boost is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices, which supports up to 6X speed. (#17606, @gexgd0419)
