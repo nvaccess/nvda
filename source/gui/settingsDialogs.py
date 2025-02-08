@@ -3845,13 +3845,6 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a group of advanced options in the
 		# Advanced settings panel
-		label = _("System")
-		systemSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
-		systemGroup = guiHelper.BoxSizerHelper(self, sizer=systemSizer)
-		sHelper.addItem(systemGroup)
-
-		# Translators: This is the label for a group of advanced options in the
-		# Advanced settings panel
 		label = _("Debug logging")
 		debugLogSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=label)
 		debugLogGroup = guiHelper.BoxSizerHelper(self, sizer=debugLogSizer)
