@@ -494,6 +494,66 @@ class KeyboardInputGesture(inputCore.InputGesture):
 		self.isExtended = isExtended
 		super(KeyboardInputGesture, self).__init__()
 
+	def _get_character(self):
+		threadID = api.getFocusObject().windowThreadID
+		keyboardLayout = ctypes.windll.user32.GetKeyboardLayout(threadID)
+		buffer = ctypes.create_unicode_buffer(5)
+		states = (ctypes.c_byte * 256)()
+		modifierList = []
+		valid = True
+		for i in self.modifiers:
+			if i[0] not in self.NORMAL_MODIFIER_KEYS.values():
+				modifier = self.NORMAL_MODIFIER_KEYS.get(i[0])
+			else:
+				modifier = i[0]
+			if modifier:
+				modifierList.append(modifier)
+		for i in range(256):
+			if i in modifierList:
+				states[
+					i
+				] = (
+					-128
+				)  # We tell ToUnicodeEx that the modifier is down, even tho it isn't according to Windows
+			else:
+				states[i] = ctypes.windll.user32.GetKeyState(i)
+		res = ctypes.windll.user32.ToUnicodeEx(
+			self.vkCode,
+			self.scanCode,
+			states,
+			buffer,
+			ctypes.sizeof(buffer),
+			0x04,
+			keyboardLayout,
+		)
+		if res < 0:
+			return ""
+		charList = []
+		if res > 0:
+			if winUser.VK_MENU in modifierList:
+				# When alt is the only modifier that is down,
+				# ToUnicodeEx still writes the character to the provided buffer as tho alt wasn't down
+				# So remove alt and try again
+				newBuffer = ctypes.create_unicode_buffer(5)
+				states[winUser.VK_MENU] = 0
+				ctypes.windll.user32.ToUnicodeEx(
+					self.vkCode,
+					self.scanCode,
+					states,
+					newBuffer,
+					ctypes.sizeof(newBuffer),
+					0x04,
+					keyboardLayout,
+				)
+				# Check if newBuffer.value == buffer.value.
+				# If they do, treat the key as invalid as it wouldn't have bin written to the focused window
+				valid = False if buffer.value == newBuffer.value else True
+			for i in buffer[:res]:
+				charList.append(i)
+		if not valid or "windows" in modifierList:
+			charList.clear()
+		return "".join(charList)
+
 	def _get_bypassInputHelp(self):
 		# #4226: Numlock must always be handled normally otherwise the Keyboard controller and Windows can get out of synk wih each other in regard to this key state.
 		return self.vkCode == winUser.VK_NUMLOCK
@@ -552,6 +612,30 @@ class KeyboardInputGesture(inputCore.InputGesture):
 			else localizedKeyLabels.get(key.lower(), key)
 			for key in self._keyNamesInDisplayOrder
 		)
+
+	def _get__nameForInputHelp(self):
+		"""Returns the name of this gesture for input help mode.
+		For keyboard gestures that produce printable characters,
+		the character will be prepended to the display name,
+		unless it contains NVDA modifier.
+		@return: The name to be displayed in input help mode
+		@rtype: str
+		"""
+		displayName = super()._get__nameForInputHelp()
+		# NVDA commands keep original behavior
+		if any(isNVDAModifierKey(mod[0], mod[1]) for mod in self.modifiers):
+			return displayName
+		# Get character if available
+		if not self.character:
+			return displayName
+		char = "".join(self.character)
+		if not char.isprintable():
+			return displayName
+		# Avoid duplicating if displayName is the same as character (case insensitive)
+		if displayName.lower() == char.lower():
+			return displayName
+		# Add character before display name
+		return f"{char} {displayName}"
 
 	def _get_identifiers(self):
 		keyName = "+".join(self._keyNamesInDisplayOrder)
