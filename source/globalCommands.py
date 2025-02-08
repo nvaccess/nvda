@@ -4912,7 +4912,7 @@ class GlobalCommands(ScriptableObject):
 			# Translators: Character and its language.
 			message = _("{} ({})").format(text, curLanguage)
 			# Translators: title for report caret language dialog.
-			title = _("Caret language")
+			title = _("Language at caret position")
 			ui.browseableMessage(message, title)
 
 
