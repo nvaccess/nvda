@@ -125,6 +125,7 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
+	lastReportedLanguage = None
 
 
 def getState():
@@ -1169,7 +1170,26 @@ def speak(  # noqa: C901
 			)
 			if not inCharacterMode:
 				speechSequence[index] += CHUNK_SEPARATOR
+				if curLanguage not in (defaultLanguage, SpeechState.lastReportedLanguage):
+					speechSequence.insert(0, LangChangeCommand(defaultLanguage))
+					speechSequence.insert(1, languageHandler.getLanguageDescription(curLanguage))
+					SpeechState.lastReportedLanguage = curLanguage
+					if not languageIsSupported(curLanguage):
+						log.warn(f"{curLanguage} not supported in {getSynth().name}")
 	_manager.speak(speechSequence, priority)
+
+
+def languageIsSupported(language: str | None) -> bool:
+	"""Determines if the specified language is supported.
+	:param language: A language code or None.
+	:return: True if the language is supported, False otherwise.
+	"""
+	if language is None:
+		return True
+	for lang in getSynth().availableLanguages:
+		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
+			return True
+	return False
 
 
 def speakPreselectedText(
