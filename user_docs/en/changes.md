@@ -96,6 +96,18 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
+* **The return type of `updateCheck.checkForUpdate` has changed.**  
+  It now returns an `UpdateInfo` object (or `None` if no update is available) instead of a dictionary containing update metadata. Code relying on this API must now access update information via attributes (e.g. `updateInfo.version`) rather than dictionary keys (e.g. `updateInfo["version"]`). (#17310)
+* **The constructor `updateCheck.UpdateResultDialog.__init__` has been updated.**  
+  It now expects an `UpdateInfo` object (or `None`) instead of a dictionary. Accordingly, any references to update metadata must use attribute access. (#17310)
+* **The constructor `updateCheck.UpdateDownloader.__init__` has been modified.**  
+  It now accepts an `UpdateInfo` object rather than a dictionary. Additionally, update metadata fields have been renamed from camelCase to snake_case:
+  - `launcherUrl` is now `launcher_url`
+  - `apiVersion` is now `api_version`
+  - `apiCompatTo` is now `api_compat_to`
+  - `launcherHash` is now `launcher_hash`  
+  Internal NVDA components have already been updated accordingly. (#17310)
+
 
 #### Deprecations
 
