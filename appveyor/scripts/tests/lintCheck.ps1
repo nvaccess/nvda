@@ -12,7 +12,6 @@ $wc = New-Object 'System.Net.WebClient'
 $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", "$lintOutput/PR-lint.xml")
 
 $cppcheckOutput = "$lintOutput\cppcheck.xml"
-choco install cppcheck
 cppcheck --xml --enable=portability --check-level=exhaustive nvdaHelper 2> "$cppcheckOutput"
 if ($LastExitCode -ne 0) {
 	Set-AppveyorBuildVariable "testFailExitCode" $LastExitCode

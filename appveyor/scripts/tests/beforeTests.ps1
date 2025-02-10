@@ -4,6 +4,8 @@ New-Item -ItemType directory -Path testOutput\system
 New-Item -ItemType directory -Path testOutput\lint
 New-Item -ItemType directory -Path testOutput\license
 
+choco install cppcheck -y
+
 # The first Chrome system test to run occasionally fails.
 # This has been observed on developer machines after chrome updates, but is difficult to reproduce.
 # When this occurs the NVDA logs indicate that no virtual buffer is created.
