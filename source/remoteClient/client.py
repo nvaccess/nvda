@@ -193,7 +193,7 @@ class RemoteClient:
 		if self.leaderSession is not None:
 			self.disconnectAsLeader()
 		if self.followerSession is not None:
-			self.disconnectAsSlave()
+			self.disconnectAsFollower()
 		cues.disconnected()
 
 	def disconnectAsLeader(self):
@@ -202,7 +202,7 @@ class RemoteClient:
 		self.leaderSession = None
 		self.leaderTransport = None
 
-	def disconnectAsSlave(self):
+	def disconnectAsFollower(self):
 		"""Close slave session and clean up related resources."""
 		self.followerSession.close()
 		self.followerSession = None
