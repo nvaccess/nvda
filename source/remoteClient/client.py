@@ -316,14 +316,14 @@ class RemoteClient:
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onSlaveCertificateFailed,
 		)
-		transport.transportConnected.register(self.onConnectedAsSlave)
+		transport.transportConnected.register(self.onConnectedAsFollower)
 		transport.transportDisconnected.register(self.onDisconnectedAsSlave)
 		transport.reconnectorThread.start()
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
-	def onConnectedAsSlave(self):
+	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
 		cues.controlServerConnected()
 		if self.menu:
