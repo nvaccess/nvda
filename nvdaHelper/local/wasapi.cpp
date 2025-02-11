@@ -354,7 +354,8 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		} else {
 			// Silence ends in this chunk. Skip the silence and continue.
 			data += silenceSize;
-			remainingFrames = (size - silenceSize) / format.nBlockAlign;
+			size -= silenceSize;
+			remainingFrames = size / format.nBlockAlign;
 			isTrimmingLeadingSilence = false;  // Stop checking for silence
 		}
 	}
