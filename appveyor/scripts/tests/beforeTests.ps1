@@ -5,6 +5,7 @@ New-Item -ItemType directory -Path testOutput\lint
 New-Item -ItemType directory -Path testOutput\license
 
 choco install cppcheck -y
+cmd C:\ProgramData\chocolatey\bin\RefreshEnv
 
 # The first Chrome system test to run occasionally fails.
 # This has been observed on developer machines after chrome updates, but is difficult to reproduce.
