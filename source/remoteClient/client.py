@@ -314,7 +314,7 @@ class RemoteClient:
 		self.sdHandler.followerSession = self.followerSession
 		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
-			self.onSlaveCertificateFailed,
+			self.onFollowerCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
 		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
@@ -371,7 +371,7 @@ class RemoteClient:
 			self.connectAsLeader(connectionInfo=connectionInfo)
 
 	@alwaysCallAfter
-	def onSlaveCertificateFailed(self):
+	def onFollowerCertificateFailed(self):
 		if self.handleCertificateFailure(self.followerSession.transport):
 			connectionInfo = ConnectionInfo(
 				mode=ConnectionMode.SLAVE,
