@@ -524,10 +524,10 @@ class LeaderSession(RemoteSession):
 			self.handleClientConnected(client)
 
 	def handleClientConnected(self, client=None):
-		hasSlaves = bool(self.followers)
+		hasFollowers = bool(self.followers)
 		super().handleClientConnected(client)
 		self.sendBrailleInfo()
-		if not hasSlaves:
+		if not hasFollowers:
 			self.registerCallbacks()
 
 	def handleClientDisconnected(self, client=None):
