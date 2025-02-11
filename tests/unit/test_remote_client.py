@@ -169,7 +169,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.connectAsFollower = fake_connect_as_slave
 		conn_info_master = ConnectionInfo(
 			hostname="localhost",
-			mode=ConnectionMode.MASTER,
+			mode=ConnectionMode.LEADER,
 			key="abc",
 			port=1000,
 			insecure=False,

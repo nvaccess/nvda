@@ -24,11 +24,11 @@ class URLParsingError(Exception):
 class ConnectionMode(StrEnum):
 	"""Defines the connection mode for remote connections.
 
-	:cvar MASTER: Controller mode for controlling the remote system
+	:cvar LEADER: Controller mode for controlling the remote system
 	:cvar SLAVE: Controlled mode for being controlled by remote system
 	"""
 
-	MASTER = "master"
+	LEADER = "master"
 	SLAVE = "slave"
 
 
@@ -146,7 +146,7 @@ class ConnectionInfo:
 		:return: URL string with opposite connection mode
 		"""
 		# Flip master/slave for connection URL
-		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.MASTER else ConnectionMode.MASTER
+		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
 		return self._build_url(connect_mode)
 
 	def getURL(self) -> str:

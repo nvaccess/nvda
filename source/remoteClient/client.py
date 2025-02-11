@@ -92,7 +92,7 @@ class RemoteClient:
 		else:
 			address = addressToHostPort(controlServerConfig["host"])
 			hostname, port = address
-		mode = ConnectionMode.SLAVE if controlServerConfig["connection_type"] == 0 else ConnectionMode.MASTER
+		mode = ConnectionMode.SLAVE if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -173,7 +173,7 @@ class RemoteClient:
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
-		if connectionInfo.mode == ConnectionMode.MASTER:
+		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.SLAVE:
 			self.connectAsFollower(connectionInfo)
@@ -279,7 +279,7 @@ class RemoteClient:
 		log.info("Successfully connected as master")
 		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.MASTER, True)
+			self.menu.handleConnected(ConnectionMode.LEADER, True)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected!"),
@@ -290,7 +290,7 @@ class RemoteClient:
 	def onDisconnectingAsLeader(self):
 		log.info("Master session disconnecting")
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.MASTER, False)
+			self.menu.handleConnected(ConnectionMode.LEADER, False)
 		if self.localMachine:
 			self.localMachine.isMuted = False
 		self.sendingKeys = False
@@ -362,7 +362,7 @@ class RemoteClient:
 	def onLeaderCertificateFailed(self):
 		if self.handleCertificateFailure(self.leaderSession.transport):
 			connectionInfo = ConnectionInfo(
-				mode=ConnectionMode.MASTER,
+				mode=ConnectionMode.LEADER,
 				hostname=self.lastFailAddress[0],
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,
@@ -514,7 +514,7 @@ class RemoteClient:
 			key = conInfo.key
 
 			# Prepare connection request message based on mode
-			if conInfo.mode == ConnectionMode.MASTER:
+			if conInfo.mode == ConnectionMode.LEADER:
 				# Translators: Ask the user if they want to control the remote computer.
 				question = _("Do you wish to control the machine on server {server} with key {key}?")
 			else:

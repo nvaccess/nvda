@@ -443,7 +443,7 @@ class LeaderSession(RemoteSession):
 	    - Input handling patches
 	"""
 
-	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.MASTER
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.LEADER
 	slaves: dict[int, dict[str, Any]]  # Information about connected slave
 
 	def __init__(
