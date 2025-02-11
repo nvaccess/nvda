@@ -38,7 +38,7 @@ class RemoteClient:
 	localScripts: Set[Callable]
 	localMachine: LocalMachine
 	masterSession: Optional[MasterSession]
-	slaveSession: Optional[FollowerSession]
+	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
@@ -55,7 +55,7 @@ class RemoteClient:
 		self.hostPendingModifiers = set()
 		self.localScripts = set()
 		self.localMachine = LocalMachine()
-		self.slaveSession = None
+		self.followerSession = None
 		self.masterSession = None
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
@@ -71,7 +71,7 @@ class RemoteClient:
 			connection = self.sdHandler.initializeSecureDesktop()
 			if connection:
 				self.connectAsSlave(connection)
-				self.slaveSession.transport.connectedEvent.wait(
+				self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				)
 		core.postNvdaStartup.register(self.performAutoconnect)
@@ -79,7 +79,7 @@ class RemoteClient:
 
 	def performAutoconnect(self):
 		controlServerConfig = configuration.get_config()["controlserver"]
-		if not controlServerConfig["autoconnect"] or self.masterSession or self.slaveSession:
+		if not controlServerConfig["autoconnect"] or self.masterSession or self.followerSession:
 			log.debug("Autoconnect disabled or already connected")
 			return
 		key = controlServerConfig["key"]
@@ -146,7 +146,7 @@ class RemoteClient:
 
 		:note: Requires an active session
 		"""
-		session = self.masterSession or self.slaveSession
+		session = self.masterSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -183,7 +183,7 @@ class RemoteClient:
 
 		:note: Closes local control server and both master/slave sessions if active
 		"""
-		if self.masterSession is None and self.slaveSession is None:
+		if self.masterSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
@@ -192,7 +192,7 @@ class RemoteClient:
 			self.localControlServer = None
 		if self.masterSession is not None:
 			self.disconnectAsMaster()
-		if self.slaveSession is not None:
+		if self.followerSession is not None:
 			self.disconnectAsSlave()
 		cues.disconnected()
 
@@ -204,10 +204,10 @@ class RemoteClient:
 
 	def disconnectAsSlave(self):
 		"""Close slave session and clean up related resources."""
-		self.slaveSession.close()
-		self.slaveSession = None
+		self.followerSession.close()
+		self.followerSession = None
 		self.slaveTransport = None
-		self.sdHandler.slaveSession = None
+		self.sdHandler.followerSession = None
 
 	@alwaysCallAfter
 	def onConnectAsMasterFailed(self):
@@ -307,11 +307,11 @@ class RemoteClient:
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
-		self.slaveSession = FollowerSession(
+		self.followerSession = FollowerSession(
 			transport=transport,
 			localMachine=self.localMachine,
 		)
-		self.sdHandler.slaveSession = self.slaveSession
+		self.sdHandler.followerSession = self.followerSession
 		self.slaveTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onSlaveCertificateFailed,
@@ -328,7 +328,7 @@ class RemoteClient:
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.SLAVE, True)
-		configuration.write_connection_to_config(self.slaveSession.getConnectionInfo())
+		configuration.write_connection_to_config(self.followerSession.getConnectionInfo())
 
 	@alwaysCallAfter
 	def onDisconnectedAsSlave(self):
@@ -372,7 +372,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onSlaveCertificateFailed(self):
-		if self.handleCertificateFailure(self.slaveSession.transport):
+		if self.handleCertificateFailure(self.followerSession.transport):
 			connectionInfo = ConnectionInfo(
 				mode=ConnectionMode.SLAVE,
 				hostname=self.lastFailAddress[0],

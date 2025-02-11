@@ -132,7 +132,7 @@ class TestRemoteClient(unittest.TestCase):
 	def test_copy_link_no_session(self):
 		# If there is no session, copyLink should warn the user.
 		self.client.masterSession = None
-		self.client.slaveSession = None
+		self.client.followerSession = None
 		self.ui_message.reset_mock()
 		self.client.copyLink()
 		self.ui_message.assert_called_with("Not connected.")
@@ -190,7 +190,7 @@ class TestRemoteClient(unittest.TestCase):
 	def test_disconnect(self):
 		# Test disconnect with no active sessions.
 		self.client.masterSession = None
-		self.client.slaveSession = None
+		self.client.followerSession = None
 		with patch("remoteClient.client.log.debug") as mock_log_debug:
 			self.client.disconnect()
 			mock_log_debug.assert_called()
@@ -198,7 +198,7 @@ class TestRemoteClient(unittest.TestCase):
 		fake_control = MagicMock()
 		self.client.localControlServer = fake_control
 		self.client.masterSession = MagicMock()
-		self.client.slaveSession = MagicMock()
+		self.client.followerSession = MagicMock()
 		self.client.disconnect()
 		fake_control.close.assert_called_once()
 

@@ -68,7 +68,7 @@ class SecureDesktopHandler:
 		self.IPCFile = self.IPCPath / "remote.ipc"
 		log.debug("Initialized SecureDesktopHandler with IPC file: %s", self.IPCFile)
 
-		self._slaveSession: Optional[FollowerSession] = None
+		self._followerSession: Optional[FollowerSession] = None
 		self.sdServer: Optional[server.LocalRelayServer] = None
 		self.sdRelay: Optional[RelayTransport] = None
 		self.sdBridge: Optional[bridge.BridgeTransport] = None
@@ -88,13 +88,13 @@ class SecureDesktopHandler:
 		log.info("Secure desktop cleanup completed")
 
 	@property
-	def slaveSession(self) -> Optional[FollowerSession]:
-		return self._slaveSession
+	def followerSession(self) -> Optional[FollowerSession]:
+		return self._followerSession
 
-	@slaveSession.setter
-	def slaveSession(self, session: Optional[FollowerSession]) -> None:
+	@followerSession.setter
+	def followerSession(self, session: Optional[FollowerSession]) -> None:
 		"""Update slave session reference and handle necessary cleanup/setup."""
-		if self._slaveSession == session:
+		if self._followerSession == session:
 			log.debug("Slave session unchanged, skipping update")
 			return
 
@@ -102,10 +102,10 @@ class SecureDesktopHandler:
 		if self.sdServer is not None:
 			self.leaveSecureDesktop()
 
-		if self._slaveSession is not None and self._slaveSession.transport is not None:
-			transport = self._slaveSession.transport
+		if self._followerSession is not None and self._followerSession.transport is not None:
+			transport = self._followerSession.transport
 			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onMasterDisplayChange)
-		self._slaveSession = session
+		self._followerSession = session
 		session.transport.registerInbound(
 			RemoteMessageType.SET_BRAILLE_INFO,
 			self._onMasterDisplayChange,
@@ -125,7 +125,7 @@ class SecureDesktopHandler:
 	def enterSecureDesktop(self) -> None:
 		"""Set up necessary components when entering secure desktop."""
 		log.debug("Attempting to enter secure desktop")
-		if self.slaveSession is None or self.slaveSession.transport is None:
+		if self.followerSession is None or self.followerSession.transport is None:
 			log.warning("No slave session connected, not entering secure desktop.")
 			return
 		if not self.tempPath.exists():
@@ -150,12 +150,12 @@ class SecureDesktopHandler:
 			connectionType=ConnectionMode.MASTER,
 		)
 		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onMasterDisplayChange)
-		self.slaveSession.transport.registerInbound(
+		self.followerSession.transport.registerInbound(
 			RemoteMessageType.SET_BRAILLE_INFO,
 			self._onMasterDisplayChange,
 		)
 
-		self.sdBridge = bridge.BridgeTransport(self.slaveSession.transport, self.sdRelay)
+		self.sdBridge = bridge.BridgeTransport(self.followerSession.transport, self.sdRelay)
 
 		relayThread = threading.Thread(target=self.sdRelay.run)
 		relayThread.daemon = True
@@ -185,12 +185,12 @@ class SecureDesktopHandler:
 			self.sdRelay.close()
 			self.sdRelay = None
 
-		if self.slaveSession is not None and self.slaveSession.transport is not None:
-			self.slaveSession.transport.unregisterInbound(
+		if self.followerSession is not None and self.followerSession.transport is not None:
+			self.followerSession.transport.unregisterInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
 				self._onMasterDisplayChange,
 			)
-			self.slaveSession.setDisplaySize()
+			self.followerSession.setDisplaySize()
 
 		try:
 			self.IPCFile.unlink()
@@ -228,11 +228,11 @@ class SecureDesktopHandler:
 	def _onMasterDisplayChange(self, **kwargs: Any) -> None:
 		"""Handle display size changes."""
 		log.debug("Master display change detected")
-		if self.sdRelay is not None and self.slaveSession is not None:
+		if self.sdRelay is not None and self.followerSession is not None:
 			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(
 				type=RemoteMessageType.SET_DISPLAY_SIZE,
-				sizes=self.slaveSession.masterDisplaySizes,
+				sizes=self.followerSession.masterDisplaySizes,
 			)
 		else:
 			log.warning("No secure desktop relay or slave session available, skipping display change")
