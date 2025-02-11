@@ -240,7 +240,7 @@ Please use a different server."""),
 class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (slave) NVDA instance.
 
-	:ivar masters: Information about connected master clients
+	:ivar leaders: Information about connected master clients
 	:ivar masterDisplaySizes: Braille display sizes of connected masters
 	:note: Handles:
 	    - Command execution from masters
@@ -252,7 +252,7 @@ class FollowerSession(RemoteSession):
 	# Connection mode - always 'slave'
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
 	# Information about connected master clients
-	masters: dict[int, dict[str, Any]]
+	leaders: dict[int, dict[str, Any]]
 	masterDisplaySizes: list[int]  # Braille display sizes of connected masters
 
 	def __init__(
@@ -265,7 +265,7 @@ class FollowerSession(RemoteSession):
 			RemoteMessageType.KEY,
 			self.localMachine.sendKey,
 		)
-		self.masters = defaultdict(dict)
+		self.leaders = defaultdict(dict)
 		self.masterDisplaySizes = []
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
@@ -323,8 +323,8 @@ class FollowerSession(RemoteSession):
 	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		super().handleClientConnected(client)
 		if client["connection_type"] == "master":
-			self.masters[client["id"]]["active"] = True
-		if self.masters:
+			self.leaders[client["id"]]["active"] = True
+		if self.leaders:
 			self.registerCallbacks()
 
 	def handleChannelJoined(
@@ -360,13 +360,13 @@ class FollowerSession(RemoteSession):
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == "master":
 			log.info("Master client disconnected: %r", client)
-			del self.masters[client["id"]]
-		if not self.masters:
+			del self.leaders[client["id"]]
+		if not self.leaders:
 			self.unregisterCallbacks()
 
 	def setDisplaySize(self, sizes: list[int] | None = None) -> None:
 		self.masterDisplaySizes = (
-			sizes if sizes else [info.get("braille_numCells", 0) for info in self.masters.values()]
+			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
 		log.debug("Setting slave display size to: %r", self.masterDisplaySizes)
 		self.localMachine.setBrailleDisplay_size(self.masterDisplaySizes)
@@ -377,10 +377,10 @@ class FollowerSession(RemoteSession):
 		numCells: int = 0,
 		origin: int | None = None,
 	) -> None:
-		if not self.masters.get(origin):
+		if not self.leaders.get(origin):
 			return
-		self.masters[origin]["braille_name"] = name
-		self.masters[origin]["braille_numCells"] = numCells
+		self.leaders[origin]["braille_name"] = name
+		self.leaders[origin]["braille_numCells"] = numCells
 		self.setDisplaySize()
 
 	def _filterUnsupportedSpeechCommands(self, speechSequence: list[Any]) -> list[Any]:
