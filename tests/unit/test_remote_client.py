@@ -112,7 +112,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.ui_message.assert_called_once()
 
 	def test_push_clipboard_no_connection(self):
-		# Without any transport (neither slave nor master), pushClipboard should warn.
+		# Without any transport (neither follower nor leader), pushClipboard should warn.
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
 		self.client.pushClipboard()
@@ -145,14 +145,14 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.copyLink()
 		self.assertEqual(FakeAPI.copied, "http://fake.url/connect")
 
-	def test_send_sas_no_master_transport(self):
+	def test_send_sas_no_leader_transport(self):
 		# Without a leaderTransport, sendSAS should log an error.
 		self.client.leaderTransport = None
 		with patch("remoteClient.client.log.error") as mock_log_error:
 			self.client.sendSAS()
 			mock_log_error.assert_called_once_with("No leader transport to send SAS")
 
-	def test_send_sas_with_master_transport(self):
+	def test_send_sas_with_leader_transport(self):
 		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.
 		fake_transport = FakeTransport()
 		self.client.leaderTransport = fake_transport
@@ -163,29 +163,29 @@ class TestRemoteClient(unittest.TestCase):
 
 	def test_connect_dispatch(self):
 		# Ensure that connect() dispatches to connectAsLeader or connectAsFollower based on connection mode.
-		fake_connect_as_master = MagicMock()
-		fake_connect_as_slave = MagicMock()
-		self.client.connectAsLeader = fake_connect_as_master
-		self.client.connectAsFollower = fake_connect_as_slave
-		conn_info_master = ConnectionInfo(
+		fake_connect_as_leader = MagicMock()
+		fake_connect_as_follower = MagicMock()
+		self.client.connectAsLeader = fake_connect_as_leader
+		self.client.connectAsFollower = fake_connect_as_follower
+		conn_info_leader = ConnectionInfo(
 			hostname="localhost",
 			mode=ConnectionMode.LEADER,
 			key="abc",
 			port=1000,
 			insecure=False,
 		)
-		self.client.connect(conn_info_master)
-		fake_connect_as_master.assert_called_once_with(conn_info_master)
-		fake_connect_as_master.reset_mock()
-		conn_info_slave = ConnectionInfo(
+		self.client.connect(conn_info_leader)
+		fake_connect_as_leader.assert_called_once_with(conn_info_leader)
+		fake_connect_as_leader.reset_mock()
+		conn_info_follower = ConnectionInfo(
 			hostname="localhost",
 			mode=ConnectionMode.FOLLOWER,
 			key="abc",
 			port=1000,
 			insecure=False,
 		)
-		self.client.connect(conn_info_slave)
-		fake_connect_as_slave.assert_called_once_with(conn_info_slave)
+		self.client.connect(conn_info_follower)
+		fake_connect_as_follower.assert_called_once_with(conn_info_follower)
 
 	def test_disconnect(self):
 		# Test disconnect with no active sessions.
