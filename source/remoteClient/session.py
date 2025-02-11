@@ -322,7 +322,7 @@ class FollowerSession(RemoteSession):
 
 	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		super().handleClientConnected(client)
-		if client["connection_type"] == "master":
+		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
 			self.leaders[client["id"]]["active"] = True
 		if self.leaders:
 			self.registerCallbacks()
@@ -358,7 +358,7 @@ class FollowerSession(RemoteSession):
 
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
-		if client["connection_type"] == "master":
+		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
 			log.info("Leader client disconnected: %r", client)
 			del self.leaders[client["id"]]
 		if not self.leaders:
