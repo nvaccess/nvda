@@ -306,7 +306,9 @@ class DirectConnectDialog(wx.Dialog):
 			)
 		else:  # server
 			port = int(self.panel.port.GetValue())
-			mode = "master" if self.connectionType.GetSelection() == 0 else "slave"
+			mode = (
+				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
+			)
 			return ConnectionInfo(
 				hostname="127.0.0.1",
 				mode=mode,
