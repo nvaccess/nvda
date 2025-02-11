@@ -2107,10 +2107,10 @@ class BrowseModeDocumentTreeInterceptor(
 	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
-		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
+		- postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
 		:param obj: The object to which the document should scroll.
 		:return: True if the document was scrolled, False if not.
-		@note: If C{False} is returned, calling events should probably call their nextHandler.
+		- note: If False is returned, calling events should probably call their nextHandler.
 		"""
 		if (
 			self.programmaticScrollMayFireEvent
