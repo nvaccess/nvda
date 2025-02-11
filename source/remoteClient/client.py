@@ -263,7 +263,7 @@ class RemoteClient:
 			localMachine=self.localMachine,
 		)
 		transport.transportCertificateAuthenticationFailed.register(
-			self.onMasterCertificateFailed,
+			self.onLeaderCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsLeader)
 		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
@@ -359,7 +359,7 @@ class RemoteClient:
 		return False
 
 	@alwaysCallAfter
-	def onMasterCertificateFailed(self):
+	def onLeaderCertificateFailed(self):
 		if self.handleCertificateFailure(self.leaderSession.transport):
 			connectionInfo = ConnectionInfo(
 				mode=ConnectionMode.MASTER,
