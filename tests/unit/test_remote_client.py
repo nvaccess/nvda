@@ -113,7 +113,7 @@ class TestRemoteClient(unittest.TestCase):
 
 	def test_push_clipboard_no_connection(self):
 		# Without any transport (neither slave nor master), pushClipboard should warn.
-		self.client.slaveTransport = None
+		self.client.followerTransport = None
 		self.client.masterTransport = None
 		self.client.pushClipboard()
 		self.ui_message.assert_called_with("Not connected.")
@@ -131,7 +131,7 @@ class TestRemoteClient(unittest.TestCase):
 
 	def test_copy_link_no_session(self):
 		# If there is no session, copyLink should warn the user.
-		self.client.masterSession = None
+		self.client.leaderSession = None
 		self.client.followerSession = None
 		self.ui_message.reset_mock()
 		self.client.copyLink()
@@ -140,7 +140,7 @@ class TestRemoteClient(unittest.TestCase):
 	def test_copy_link_with_session(self):
 		# With a fake session, copyLink should call api.copyToClip with the proper URL.
 		fake_session = FakeSession("http://fake.url/connect")
-		self.client.masterSession = fake_session
+		self.client.leaderSession = fake_session
 		FakeAPI.copied = None
 		self.client.copyLink()
 		self.assertEqual(FakeAPI.copied, "http://fake.url/connect")
@@ -189,7 +189,7 @@ class TestRemoteClient(unittest.TestCase):
 
 	def test_disconnect(self):
 		# Test disconnect with no active sessions.
-		self.client.masterSession = None
+		self.client.leaderSession = None
 		self.client.followerSession = None
 		with patch("remoteClient.client.log.debug") as mock_log_debug:
 			self.client.disconnect()
@@ -197,7 +197,7 @@ class TestRemoteClient(unittest.TestCase):
 		# Test disconnect with an active localControlServer.
 		fake_control = MagicMock()
 		self.client.localControlServer = fake_control
-		self.client.masterSession = MagicMock()
+		self.client.leaderSession = MagicMock()
 		self.client.followerSession = MagicMock()
 		self.client.disconnect()
 		fake_control.close.assert_called_once()

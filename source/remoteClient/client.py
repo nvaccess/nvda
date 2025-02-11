@@ -37,13 +37,13 @@ Address = Tuple[str, int]  # (hostname, port)
 class RemoteClient:
 	localScripts: Set[Callable]
 	localMachine: LocalMachine
-	masterSession: Optional[LeaderSession]
+	leaderSession: Optional[LeaderSession]
 	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
 	masterTransport: Optional[RelayTransport]
-	slaveTransport: Optional[RelayTransport]
+	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
 
@@ -56,14 +56,14 @@ class RemoteClient:
 		self.localScripts = set()
 		self.localMachine = LocalMachine()
 		self.followerSession = None
-		self.masterSession = None
+		self.leaderSession = None
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
 		urlHandler.registerURLHandler()
 		self.masterTransport = None
-		self.slaveTransport = None
+		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
 		self.sdHandler = SecureDesktopHandler()
@@ -79,7 +79,7 @@ class RemoteClient:
 
 	def performAutoconnect(self):
 		controlServerConfig = configuration.get_config()["controlserver"]
-		if not controlServerConfig["autoconnect"] or self.masterSession or self.followerSession:
+		if not controlServerConfig["autoconnect"] or self.leaderSession or self.followerSession:
 			log.debug("Autoconnect disabled or already connected")
 			return
 		key = controlServerConfig["key"]
@@ -128,7 +128,7 @@ class RemoteClient:
 		:note: Requires an active connection
 		:raises TypeError: If clipboard content cannot be serialized
 		"""
-		connector = self.slaveTransport or self.masterTransport
+		connector = self.followerTransport or self.masterTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -146,7 +146,7 @@ class RemoteClient:
 
 		:note: Requires an active session
 		"""
-		session = self.masterSession or self.followerSession
+		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -183,14 +183,14 @@ class RemoteClient:
 
 		:note: Closes local control server and both master/slave sessions if active
 		"""
-		if self.masterSession is None and self.followerSession is None:
+		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
-		if self.masterSession is not None:
+		if self.leaderSession is not None:
 			self.disconnectAsMaster()
 		if self.followerSession is not None:
 			self.disconnectAsSlave()
@@ -198,15 +198,15 @@ class RemoteClient:
 
 	def disconnectAsMaster(self):
 		"""Close master session and clean up related resources."""
-		self.masterSession.close()
-		self.masterSession = None
+		self.leaderSession.close()
+		self.leaderSession = None
 		self.masterTransport = None
 
 	def disconnectAsSlave(self):
 		"""Close slave session and clean up related resources."""
 		self.followerSession.close()
 		self.followerSession = None
-		self.slaveTransport = None
+		self.followerTransport = None
 		self.sdHandler.followerSession = None
 
 	@alwaysCallAfter
@@ -258,7 +258,7 @@ class RemoteClient:
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
-		self.masterSession = LeaderSession(
+		self.leaderSession = LeaderSession(
 			transport=transport,
 			localMachine=self.localMachine,
 		)
@@ -277,7 +277,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsMaster(self):
 		log.info("Successfully connected as master")
-		configuration.write_connection_to_config(self.masterSession.getConnectionInfo())
+		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.MASTER, True)
 		ui.message(
@@ -312,7 +312,7 @@ class RemoteClient:
 			localMachine=self.localMachine,
 		)
 		self.sdHandler.followerSession = self.followerSession
-		self.slaveTransport = transport
+		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onSlaveCertificateFailed,
 		)
@@ -360,7 +360,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onMasterCertificateFailed(self):
-		if self.handleCertificateFailure(self.masterSession.transport):
+		if self.handleCertificateFailure(self.leaderSession.transport):
 			connectionInfo = ConnectionInfo(
 				mode=ConnectionMode.MASTER,
 				hostname=self.lastFailAddress[0],
@@ -485,11 +485,11 @@ class RemoteClient:
 		:param state: True to enable remote braille, False to disable
 		:note: Only enables if master session and braille handler are ready
 		"""
-		if state and self.masterSession.callbacksAdded and braille.handler.enabled:
-			self.masterSession.registerBrailleInput()
+		if state and self.leaderSession.callbacksAdded and braille.handler.enabled:
+			self.leaderSession.registerBrailleInput()
 			self.localMachine.receivingBraille = True
 		elif not state:
-			self.masterSession.unregisterBrailleInput()
+			self.leaderSession.unregisterBrailleInput()
 			self.localMachine.receivingBraille = False
 
 	@alwaysCallAfter
@@ -547,7 +547,7 @@ class RemoteClient:
 		:return: True if either slave or master transport is connected
 		:rtype: bool
 		"""
-		connector = self.slaveTransport or self.masterTransport
+		connector = self.followerTransport or self.masterTransport
 		if connector is not None:
 			return connector.connected
 		return False
