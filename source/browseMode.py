@@ -2109,7 +2109,7 @@ class BrowseModeDocumentTreeInterceptor(
 		Subclasses should call this from an event which indicates that the document has scrolled.
 		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
 		:param obj: The object to which the document should scroll.
-		:return: C{True} if the document was scrolled, C{False} if not.
+		:return: True if the document was scrolled, False if not.
 		@note: If C{False} is returned, calling events should probably call their nextHandler.
 		"""
 		if (
@@ -2133,7 +2133,7 @@ class BrowseModeDocumentTreeInterceptor(
 			raise ValueError(f"{obj} is not a supported type")
 
 		# We only want to update the caret and speak the field if we're not in the first line of the same object as before.
-		# See https://github.com/nvaccess/nvda/issues/17669
+		# See #17669
 		scrollInfo.collapse()
 		scrollInfo.expand(textInfos.UNIT_LINE)
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
