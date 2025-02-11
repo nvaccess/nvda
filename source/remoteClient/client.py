@@ -317,7 +317,7 @@ class RemoteClient:
 			self.onSlaveCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsFollower)
-		transport.transportDisconnected.register(self.onDisconnectedAsSlave)
+		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
@@ -331,7 +331,7 @@ class RemoteClient:
 		configuration.write_connection_to_config(self.followerSession.getConnectionInfo())
 
 	@alwaysCallAfter
-	def onDisconnectedAsSlave(self):
+	def onDisconnectedAsFollower(self):
 		log.info("Control connector disconnected")
 		# cues.control_server_disconnected()
 		if self.menu:
