@@ -267,7 +267,7 @@ class RemoteClient:
 		)
 		transport.transportConnected.register(self.onConnectedAsLeader)
 		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
-		transport.transportClosing.register(self.onDisconnectingAsMaster)
+		transport.transportClosing.register(self.onDisconnectingAsLeader)
 		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
 		transport.reconnectorThread.start()
 		self.leaderTransport = transport
@@ -287,7 +287,7 @@ class RemoteClient:
 		cues.connected()
 
 	@alwaysCallAfter
-	def onDisconnectingAsMaster(self):
+	def onDisconnectingAsLeader(self):
 		log.info("Master session disconnecting")
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.MASTER, False)
