@@ -191,12 +191,12 @@ class RemoteClient:
 			self.localControlServer.close()
 			self.localControlServer = None
 		if self.leaderSession is not None:
-			self.disconnectAsMaster()
+			self.disconnectAsLeader()
 		if self.followerSession is not None:
 			self.disconnectAsSlave()
 		cues.disconnected()
 
-	def disconnectAsMaster(self):
+	def disconnectAsLeader(self):
 		"""Close master session and clean up related resources."""
 		self.leaderSession.close()
 		self.leaderSession = None
@@ -213,7 +213,7 @@ class RemoteClient:
 	def onConnectAsMasterFailed(self):
 		if self.leaderTransport.successfulConnects == 0:
 			log.error(f"Failed to connect to {self.leaderTransport.address}")
-			self.disconnectAsMaster()
+			self.disconnectAsLeader()
 			# Translators: Title of the connection error dialog.
 			gui.messageBox(
 				parent=gui.mainFrame,
