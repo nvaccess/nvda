@@ -433,7 +433,7 @@ class FollowerSession(RemoteSession):
 class LeaderSession(RemoteSession):
 	"""Session that runs on the controlling (master) NVDA instance.
 
-	:ivar slaves: Information about connected slave clients
+	:ivar followers: Information about connected slave clients
 	:note: Handles:
 	    - Control command sending
 	    - Remote output reception
@@ -444,7 +444,7 @@ class LeaderSession(RemoteSession):
 	"""
 
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.LEADER
-	slaves: dict[int, dict[str, Any]]  # Information about connected slave
+	followers: dict[int, dict[str, Any]]  # Information about connected slave
 
 	def __init__(
 		self,
@@ -452,7 +452,7 @@ class LeaderSession(RemoteSession):
 		transport: RelayTransport,
 	) -> None:
 		super().__init__(localMachine, transport)
-		self.slaves = defaultdict(dict)
+		self.followers = defaultdict(dict)
 		self.transport.registerInbound(
 			RemoteMessageType.SPEAK,
 			self.localMachine.speak,
@@ -524,7 +524,7 @@ class LeaderSession(RemoteSession):
 			self.handleClientConnected(client)
 
 	def handleClientConnected(self, client=None):
-		hasSlaves = bool(self.slaves)
+		hasSlaves = bool(self.followers)
 		super().handleClientConnected(client)
 		self.sendBrailleInfo()
 		if not hasSlaves:
@@ -535,7 +535,7 @@ class LeaderSession(RemoteSession):
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
-		if self.callbacksAdded and not self.slaves:
+		if self.callbacksAdded and not self.followers:
 			self.unregisterCallbacks()
 
 	def sendBrailleInfo(
