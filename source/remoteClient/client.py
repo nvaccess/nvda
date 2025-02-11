@@ -70,7 +70,7 @@ class RemoteClient:
 		if isRunningOnSecureDesktop():
 			connection = self.sdHandler.initializeSecureDesktop()
 			if connection:
-				self.connectAsSlave(connection)
+				self.connectAsFollower(connection)
 				self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				)
@@ -176,7 +176,7 @@ class RemoteClient:
 		if connectionInfo.mode == ConnectionMode.MASTER:
 			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.SLAVE:
-			self.connectAsSlave(connectionInfo)
+			self.connectAsFollower(connectionInfo)
 
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
@@ -302,7 +302,7 @@ class RemoteClient:
 		# Translators: Presented when connection to a remote computer was interupted.
 		ui.message(_("Connection interrupted"))
 
-	def connectAsSlave(self, connectionInfo: ConnectionInfo):
+	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -380,7 +380,7 @@ class RemoteClient:
 				key=self.lastFailKey,
 				insecure=True,
 			)
-			self.connectAsSlave(connectionInfo=connectionInfo)
+			self.connectAsFollower(connectionInfo=connectionInfo)
 
 	def startControlServer(self, serverPort, channel):
 		"""Start local relay server for handling connections.

@@ -162,11 +162,11 @@ class TestRemoteClient(unittest.TestCase):
 		self.assertEqual(messageType, RemoteMessageType.SEND_SAS)
 
 	def test_connect_dispatch(self):
-		# Ensure that connect() dispatches to connectAsLeader or connectAsSlave based on connection mode.
+		# Ensure that connect() dispatches to connectAsLeader or connectAsFollower based on connection mode.
 		fake_connect_as_master = MagicMock()
 		fake_connect_as_slave = MagicMock()
 		self.client.connectAsLeader = fake_connect_as_master
-		self.client.connectAsSlave = fake_connect_as_slave
+		self.client.connectAsFollower = fake_connect_as_slave
 		conn_info_master = ConnectionInfo(
 			hostname="localhost",
 			mode=ConnectionMode.MASTER,
