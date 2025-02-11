@@ -104,11 +104,11 @@ class SecureDesktopHandler:
 
 		if self._followerSession is not None and self._followerSession.transport is not None:
 			transport = self._followerSession.transport
-			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onMasterDisplayChange)
+			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
 		self._followerSession = session
 		session.transport.registerInbound(
 			RemoteMessageType.SET_BRAILLE_INFO,
-			self._onMasterDisplayChange,
+			self._onLeaderDisplayChange,
 		)
 
 	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
@@ -149,10 +149,10 @@ class SecureDesktopHandler:
 			insecure=True,
 			connectionType=ConnectionMode.LEADER,
 		)
-		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onMasterDisplayChange)
+		self.sdRelay.registerInbound(RemoteMessageType.CLIENT_JOINED, self._onLeaderDisplayChange)
 		self.followerSession.transport.registerInbound(
 			RemoteMessageType.SET_BRAILLE_INFO,
-			self._onMasterDisplayChange,
+			self._onLeaderDisplayChange,
 		)
 
 		self.sdBridge = bridge.BridgeTransport(self.followerSession.transport, self.sdRelay)
@@ -188,7 +188,7 @@ class SecureDesktopHandler:
 		if self.followerSession is not None and self.followerSession.transport is not None:
 			self.followerSession.transport.unregisterInbound(
 				RemoteMessageType.SET_BRAILLE_INFO,
-				self._onMasterDisplayChange,
+				self._onLeaderDisplayChange,
 			)
 			self.followerSession.setDisplaySize()
 
@@ -225,7 +225,7 @@ class SecureDesktopHandler:
 			log.exception("Failed to initialize secure desktop connection.")
 			return None
 
-	def _onMasterDisplayChange(self, **kwargs: Any) -> None:
+	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:
 		"""Handle display size changes."""
 		log.debug("Master display change detected")
 		if self.sdRelay is not None and self.followerSession is not None:
