@@ -265,7 +265,7 @@ class RemoteClient:
 		transport.transportCertificateAuthenticationFailed.register(
 			self.onMasterCertificateFailed,
 		)
-		transport.transportConnected.register(self.onConnectedAsMaster)
+		transport.transportConnected.register(self.onConnectedAsLeader)
 		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
 		transport.transportClosing.register(self.onDisconnectingAsMaster)
 		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
@@ -275,7 +275,7 @@ class RemoteClient:
 			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
-	def onConnectedAsMaster(self):
+	def onConnectedAsLeader(self):
 		log.info("Successfully connected as master")
 		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
 		if self.menu:
