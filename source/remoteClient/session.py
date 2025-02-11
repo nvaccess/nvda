@@ -105,7 +105,7 @@ class RemoteSession:
 
 	transport: RelayTransport  # The transport layer handling network communication
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
-	# Session mode - either 'master' or 'slave'
+	# Session mode - either 'leader' or 'follower'
 	mode: connectionInfo.ConnectionMode | None = None
 	callbacksAdded: bool = False  # Whether callbacks are currently registered
 
@@ -249,7 +249,7 @@ class FollowerSession(RemoteSession):
 	    - Braille display coordination
 	"""
 
-	# Connection mode - always 'slave'
+	# Connection mode - always follower
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
 	# Information about connected leader clients
 	leaders: dict[int, dict[str, Any]]
