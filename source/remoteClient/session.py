@@ -17,7 +17,7 @@ Core Operation:
 
 Connection Roles:
 --------------
-Master (Controlling)
+Leader (Controlling)
 	- Captures and forwards input
 	- Receives remote output (speech/braille)
 	- Manages connection state
@@ -25,8 +25,8 @@ Master (Controlling)
 
 Slave (Controlled)
 	- Executes received commands
-	- Forwards output to master(s)
-	- Tracks connected masters
+	- Forwards output to leader(s)
+	- Tracks connected leaders
 	- Patches output handling
 
 Key Components:
@@ -43,13 +43,13 @@ Key Components:
 	- Input capture/forwarding
 	- Remote output reception
 	- Connection management
-	- Master-specific patches
+	- Leader-specific patches
 
 :class:`FollowerSession`
 	Controlled by remote instance:
 	- Command execution
 	- Output forwarding
-	- Multi-master support
+	- Multi-leader support
 	- Slave-specific patches
 
 Thread Safety:
@@ -92,7 +92,7 @@ EXCLUDED_SPEECH_COMMANDS = (
 
 
 class RemoteSession:
-	"""Base class for a session that runs on either the master or slave machine.
+	"""Base class for a session that runs on either the leader or slave machine.
 
 	:param localMachine: Interface to control local NVDA instance
 	:param transport: Network transport layer instance
@@ -240,20 +240,20 @@ Please use a different server."""),
 class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (slave) NVDA instance.
 
-	:ivar leaders: Information about connected master clients
-	:ivar leaderDisplaySizes: Braille display sizes of connected masters
+	:ivar leaders: Information about connected leader clients
+	:ivar leaderDisplaySizes: Braille display sizes of connected leaders
 	:note: Handles:
-	    - Command execution from masters
-	    - Output forwarding to masters
-	    - Multi-master connections
+	    - Command execution from leaders
+	    - Output forwarding to leaders
+	    - Multi-leader connections
 	    - Braille display coordination
 	"""
 
 	# Connection mode - always 'slave'
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
-	# Information about connected master clients
+	# Information about connected leader clients
 	leaders: dict[int, dict[str, Any]]
-	leaderDisplaySizes: list[int]  # Braille display sizes of connected masters
+	leaderDisplaySizes: list[int]  # Braille display sizes of connected leaders
 
 	def __init__(
 		self,
@@ -359,7 +359,7 @@ class FollowerSession(RemoteSession):
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
 		if client["connection_type"] == "master":
-			log.info("Master client disconnected: %r", client)
+			log.info("Leader client disconnected: %r", client)
 			del self.leaders[client["id"]]
 		if not self.leaders:
 			self.unregisterCallbacks()
@@ -395,10 +395,10 @@ class FollowerSession(RemoteSession):
 		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])
 
 	def sendSpeech(self, speechSequence: list[Any], priority: str | None) -> None:
-		"""Forward speech output to connected master instances.
+		"""Forward speech output to connected leader instances.
 
 		Filters the speech sequence for supported commands and sends it
-		to master instances for speaking.
+		to leader instances for speaking.
 		"""
 		self.transport.send(
 			RemoteMessageType.SPEAK,
@@ -409,29 +409,29 @@ class FollowerSession(RemoteSession):
 		)
 
 	def pauseSpeech(self, switch: bool) -> None:
-		"""Toggle speech pause state on master instances."""
+		"""Toggle speech pause state on leader instances."""
 		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
 
 	def display(self, cells: list[int]) -> None:
-		"""Forward braille display content to master instances.
+		"""Forward braille display content to leader instances.
 
-		Only sends braille data if there are connected masters with braille displays.
+		Only sends braille data if there are connected leaders with braille displays.
 		"""
 		# Only send braille data when there are controlling machines with a braille display
 		if self.hasBrailleLeaders():
 			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
 
 	def hasBrailleLeaders(self) -> bool:
-		"""Check if any connected masters have braille displays.
+		"""Check if any connected leaders have braille displays.
 
 		Returns:
-				True if at least one master has a braille display with cells > 0
+				True if at least one leader has a braille display with cells > 0
 		"""
 		return bool([i for i in self.leaderDisplaySizes if i > 0])
 
 
 class LeaderSession(RemoteSession):
-	"""Session that runs on the controlling (master) NVDA instance.
+	"""Session that runs on the controlling (leader) NVDA instance.
 
 	:ivar followers: Information about connected slave clients
 	:note: Handles:

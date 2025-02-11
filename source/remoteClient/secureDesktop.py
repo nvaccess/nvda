@@ -227,7 +227,7 @@ class SecureDesktopHandler:
 
 	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:
 		"""Handle display size changes."""
-		log.debug("Master display change detected")
+		log.debug("Leader display change detected")
 		if self.sdRelay is not None and self.followerSession is not None:
 			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(

@@ -150,7 +150,7 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.leaderTransport = None
 		with patch("remoteClient.client.log.error") as mock_log_error:
 			self.client.sendSAS()
-			mock_log_error.assert_called_once_with("No master transport to send SAS")
+			mock_log_error.assert_called_once_with("No leader transport to send SAS")
 
 	def test_send_sas_with_master_transport(self):
 		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.

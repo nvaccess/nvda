@@ -159,10 +159,10 @@ class RemoteClient:
 	def sendSAS(self):
 		"""Send Secure Attention Sequence to remote computer.
 
-		:note: Requires an active master transport connection
+		:note: Requires an active leader transport connection
 		"""
 		if self.leaderTransport is None:
-			log.error("No master transport to send SAS")
+			log.error("No leader transport to send SAS")
 			return
 		self.leaderTransport.send(RemoteMessageType.SEND_SAS)
 
@@ -170,7 +170,7 @@ class RemoteClient:
 		"""Establish connection based on connection info.
 
 		:param connectionInfo: Connection details including mode, host, port etc.
-		:note: Initiates either master or slave connection based on mode
+		:note: Initiates either leader or slave connection based on mode
 		"""
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
@@ -183,7 +183,7 @@ class RemoteClient:
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
 
-		:note: Closes local control server and both master/slave sessions if active
+		:note: Closes local control server and both leader/slave sessions if active
 		"""
 		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
@@ -199,7 +199,7 @@ class RemoteClient:
 		cues.disconnected()
 
 	def disconnectAsLeader(self):
-		"""Close master session and clean up related resources."""
+		"""Close leader session and clean up related resources."""
 		self.leaderSession.close()
 		self.leaderSession = None
 		self.leaderTransport = None
@@ -278,7 +278,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
-		log.info("Successfully connected as master")
+		log.info("Successfully connected as leader")
 		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
@@ -290,7 +290,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onDisconnectingAsLeader(self):
-		log.info("Master session disconnecting")
+		log.info("Leader session disconnecting")
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, False)
 		if self.localMachine:
@@ -300,7 +300,7 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onDisconnectedAsLeader(self):
-		log.info("Master session disconnected")
+		log.info("Leader session disconnected")
 		# Translators: Presented when connection to a remote computer was interupted.
 		ui.message(_("Connection interrupted"))
 
@@ -485,7 +485,7 @@ class RemoteClient:
 		"""Enable or disable receiving braille from remote.
 
 		:param state: True to enable remote braille, False to disable
-		:note: Only enables if master session and braille handler are ready
+		:note: Only enables if leader session and braille handler are ready
 		"""
 		if state and self.leaderSession.callbacksAdded and braille.handler.enabled:
 			self.leaderSession.registerBrailleInput()
@@ -546,7 +546,7 @@ class RemoteClient:
 	def isConnected(self):
 		"""Check if there is an active connection.
 
-		:return: True if either slave or master transport is connected
+		:return: True if either slave or leader transport is connected
 		:rtype: bool
 		"""
 		connector = self.followerTransport or self.leaderTransport
