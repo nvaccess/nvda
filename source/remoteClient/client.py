@@ -42,7 +42,7 @@ class RemoteClient:
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
-	masterTransport: Optional[RelayTransport]
+	leaderTransport: Optional[RelayTransport]
 	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
@@ -62,7 +62,7 @@ class RemoteClient:
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
 		urlHandler.registerURLHandler()
-		self.masterTransport = None
+		self.leaderTransport = None
 		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
@@ -128,7 +128,7 @@ class RemoteClient:
 		:note: Requires an active connection
 		:raises TypeError: If clipboard content cannot be serialized
 		"""
-		connector = self.followerTransport or self.masterTransport
+		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -159,10 +159,10 @@ class RemoteClient:
 
 		:note: Requires an active master transport connection
 		"""
-		if self.masterTransport is None:
+		if self.leaderTransport is None:
 			log.error("No master transport to send SAS")
 			return
-		self.masterTransport.send(RemoteMessageType.SEND_SAS)
+		self.leaderTransport.send(RemoteMessageType.SEND_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
 		"""Establish connection based on connection info.
@@ -200,7 +200,7 @@ class RemoteClient:
 		"""Close master session and clean up related resources."""
 		self.leaderSession.close()
 		self.leaderSession = None
-		self.masterTransport = None
+		self.leaderTransport = None
 
 	def disconnectAsSlave(self):
 		"""Close slave session and clean up related resources."""
@@ -211,8 +211,8 @@ class RemoteClient:
 
 	@alwaysCallAfter
 	def onConnectAsMasterFailed(self):
-		if self.masterTransport.successfulConnects == 0:
-			log.error(f"Failed to connect to {self.masterTransport.address}")
+		if self.leaderTransport.successfulConnects == 0:
+			log.error(f"Failed to connect to {self.leaderTransport.address}")
 			self.disconnectAsMaster()
 			# Translators: Title of the connection error dialog.
 			gui.messageBox(
@@ -270,7 +270,7 @@ class RemoteClient:
 		transport.transportClosing.register(self.onDisconnectingAsMaster)
 		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
 		transport.reconnectorThread.start()
-		self.masterTransport = transport
+		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
 
@@ -432,7 +432,7 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
-		self.masterTransport.send(
+		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
 			extended=extended,
@@ -447,7 +447,7 @@ class RemoteClient:
 		:param gesture: The keyboard gesture that triggered this
 		:note: Also toggles braille input and mute state
 		"""
-		if not self.masterTransport:
+		if not self.leaderTransport:
 			gesture.send()
 			return
 		self.sendingKeys = not self.sendingKeys
@@ -471,7 +471,7 @@ class RemoteClient:
 		"""
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
-			self.masterTransport.send(
+			self.leaderTransport.send(
 				RemoteMessageType.KEY,
 				vk_code=k[0],
 				extended=k[1],
@@ -547,7 +547,7 @@ class RemoteClient:
 		:return: True if either slave or master transport is connected
 		:rtype: bool
 		"""
-		connector = self.followerTransport or self.masterTransport
+		connector = self.followerTransport or self.leaderTransport
 		if connector is not None:
 			return connector.connected
 		return False

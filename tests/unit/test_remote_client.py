@@ -114,14 +114,14 @@ class TestRemoteClient(unittest.TestCase):
 	def test_push_clipboard_no_connection(self):
 		# Without any transport (neither slave nor master), pushClipboard should warn.
 		self.client.followerTransport = None
-		self.client.masterTransport = None
+		self.client.leaderTransport = None
 		self.client.pushClipboard()
 		self.ui_message.assert_called_with("Not connected.")
 
 	def test_push_clipboard_with_transport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
 		fake_transport = FakeTransport()
-		self.client.masterTransport = fake_transport
+		self.client.leaderTransport = fake_transport
 		FakeAPI.clip_data = "TestClipboard"
 		self.client.pushClipboard()
 		self.assertTrue(len(fake_transport.sent) > 0)
@@ -146,16 +146,16 @@ class TestRemoteClient(unittest.TestCase):
 		self.assertEqual(FakeAPI.copied, "http://fake.url/connect")
 
 	def test_send_sas_no_master_transport(self):
-		# Without a masterTransport, sendSAS should log an error.
-		self.client.masterTransport = None
+		# Without a leaderTransport, sendSAS should log an error.
+		self.client.leaderTransport = None
 		with patch("remoteClient.client.log.error") as mock_log_error:
 			self.client.sendSAS()
 			mock_log_error.assert_called_once_with("No master transport to send SAS")
 
 	def test_send_sas_with_master_transport(self):
-		# With a fake masterTransport, sendSAS should forward the SEND_SAS message.
+		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.
 		fake_transport = FakeTransport()
-		self.client.masterTransport = fake_transport
+		self.client.leaderTransport = fake_transport
 		self.client.sendSAS()
 		self.assertTrue(len(fake_transport.sent) > 0)
 		messageType, _ = fake_transport.sent[0]
