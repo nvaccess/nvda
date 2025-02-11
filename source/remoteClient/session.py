@@ -418,10 +418,10 @@ class FollowerSession(RemoteSession):
 		Only sends braille data if there are connected masters with braille displays.
 		"""
 		# Only send braille data when there are controlling machines with a braille display
-		if self.hasBrailleMasters():
+		if self.hasBrailleLeaders():
 			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
 
-	def hasBrailleMasters(self) -> bool:
+	def hasBrailleLeaders(self) -> bool:
 		"""Check if any connected masters have braille displays.
 
 		Returns:
