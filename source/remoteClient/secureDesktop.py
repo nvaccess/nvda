@@ -93,12 +93,12 @@ class SecureDesktopHandler:
 
 	@followerSession.setter
 	def followerSession(self, session: Optional[FollowerSession]) -> None:
-		"""Update slave session reference and handle necessary cleanup/setup."""
+		"""Update follower session reference and handle necessary cleanup/setup."""
 		if self._followerSession == session:
-			log.debug("Slave session unchanged, skipping update")
+			log.debug("Follower session unchanged, skipping update")
 			return
 
-		log.info("Updating slave session reference")
+		log.info("Updating follower session reference")
 		if self.sdServer is not None:
 			self.leaveSecureDesktop()
 
@@ -126,7 +126,7 @@ class SecureDesktopHandler:
 		"""Set up necessary components when entering secure desktop."""
 		log.debug("Attempting to enter secure desktop")
 		if self.followerSession is None or self.followerSession.transport is None:
-			log.warning("No slave session connected, not entering secure desktop.")
+			log.warning("No follower session connected, not entering secure desktop.")
 			return
 		if not self.tempPath.exists():
 			log.debug(f"Creating temp directory: {self.tempPath}")
@@ -235,4 +235,4 @@ class SecureDesktopHandler:
 				sizes=self.followerSession.leaderDisplaySizes,
 			)
 		else:
-			log.warning("No secure desktop relay or slave session available, skipping display change")
+			log.warning("No secure desktop relay or follower session available, skipping display change")

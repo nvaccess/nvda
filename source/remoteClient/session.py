@@ -23,7 +23,7 @@ Leader (Controlling)
 	- Manages connection state
 	- Patches input handling
 
-Slave (Controlled)
+Follower (Controlled)
 	- Executes received commands
 	- Forwards output to leader(s)
 	- Tracks connected leaders
@@ -50,7 +50,7 @@ Key Components:
 	- Command execution
 	- Output forwarding
 	- Multi-leader support
-	- Slave-specific patches
+	- Follower-specific patches
 
 Thread Safety:
 ------------
@@ -92,7 +92,7 @@ EXCLUDED_SPEECH_COMMANDS = (
 
 
 class RemoteSession:
-	"""Base class for a session that runs on either the leader or slave machine.
+	"""Base class for a session that runs on either the leader or follower machine.
 
 	:param localMachine: Interface to control local NVDA instance
 	:param transport: Network transport layer instance
@@ -238,7 +238,7 @@ Please use a different server."""),
 
 
 class FollowerSession(RemoteSession):
-	"""Session that runs on the controlled (slave) NVDA instance.
+	"""Session that runs on the controlled (follower) NVDA instance.
 
 	:ivar leaders: Information about connected leader clients
 	:ivar leaderDisplaySizes: Braille display sizes of connected leaders
@@ -353,7 +353,7 @@ class FollowerSession(RemoteSession):
 		1. Plays a connection sound cue
 		2. Removes any NVDA patches
 		"""
-		log.info("Transport disconnected from slave session")
+		log.info("Transport disconnected from follower session")
 		cues.clientDisconnected()
 
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
@@ -368,7 +368,7 @@ class FollowerSession(RemoteSession):
 		self.leaderDisplaySizes = (
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
-		log.debug("Setting slave display size to: %r", self.leaderDisplaySizes)
+		log.debug("Setting follower display size to: %r", self.leaderDisplaySizes)
 		self.localMachine.setBrailleDisplay_size(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
@@ -433,7 +433,7 @@ class FollowerSession(RemoteSession):
 class LeaderSession(RemoteSession):
 	"""Session that runs on the controlling (leader) NVDA instance.
 
-	:ivar followers: Information about connected slave clients
+	:ivar followers: Information about connected follower clients
 	:note: Handles:
 	    - Control command sending
 	    - Remote output reception
@@ -444,7 +444,7 @@ class LeaderSession(RemoteSession):
 	"""
 
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.LEADER
-	followers: dict[int, dict[str, Any]]  # Information about connected slave
+	followers: dict[int, dict[str, Any]]  # Information about connected follower
 
 	def __init__(
 		self,
@@ -548,7 +548,7 @@ class LeaderSession(RemoteSession):
 		if displaySize is None:
 			displaySize = braille.handler.displaySize
 		log.debug(
-			"Sending braille info to slave - display: %s, size: %d",
+			"Sending braille info to follower - display: %s, size: %d",
 			display.name if display else "None",
 			displaySize if displaySize else 0,
 		)

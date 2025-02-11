@@ -170,7 +170,7 @@ class RemoteClient:
 		"""Establish connection based on connection info.
 
 		:param connectionInfo: Connection details including mode, host, port etc.
-		:note: Initiates either leader or slave connection based on mode
+		:note: Initiates either leader or follower connection based on mode
 		"""
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
@@ -183,7 +183,7 @@ class RemoteClient:
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
 
-		:note: Closes local control server and both leader/slave sessions if active
+		:note: Closes local control server and both leader/follower sessions if active
 		"""
 		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
@@ -205,7 +205,7 @@ class RemoteClient:
 		self.leaderTransport = None
 
 	def disconnectAsFollower(self):
-		"""Close slave session and clean up related resources."""
+		"""Close follower session and clean up related resources."""
 		self.followerSession.close()
 		self.followerSession = None
 		self.followerTransport = None
@@ -546,7 +546,7 @@ class RemoteClient:
 	def isConnected(self):
 		"""Check if there is an active connection.
 
-		:return: True if either slave or leader transport is connected
+		:return: True if either follower or leader transport is connected
 		:rtype: bool
 		"""
 		connector = self.followerTransport or self.leaderTransport
