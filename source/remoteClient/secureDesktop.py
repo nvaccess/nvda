@@ -34,7 +34,7 @@ from . import bridge, server
 from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import RemoteMessageType
 from .serializer import JSONSerializer
-from .session import SlaveSession
+from .session import FollowerSession
 from .transport import RelayTransport
 
 
@@ -68,7 +68,7 @@ class SecureDesktopHandler:
 		self.IPCFile = self.IPCPath / "remote.ipc"
 		log.debug("Initialized SecureDesktopHandler with IPC file: %s", self.IPCFile)
 
-		self._slaveSession: Optional[SlaveSession] = None
+		self._slaveSession: Optional[FollowerSession] = None
 		self.sdServer: Optional[server.LocalRelayServer] = None
 		self.sdRelay: Optional[RelayTransport] = None
 		self.sdBridge: Optional[bridge.BridgeTransport] = None
@@ -88,11 +88,11 @@ class SecureDesktopHandler:
 		log.info("Secure desktop cleanup completed")
 
 	@property
-	def slaveSession(self) -> Optional[SlaveSession]:
+	def slaveSession(self) -> Optional[FollowerSession]:
 		return self._slaveSession
 
 	@slaveSession.setter
-	def slaveSession(self, session: Optional[SlaveSession]) -> None:
+	def slaveSession(self, session: Optional[FollowerSession]) -> None:
 		"""Update slave session reference and handle necessary cleanup/setup."""
 		if self._slaveSession == session:
 			log.debug("Slave session unchanged, skipping update")

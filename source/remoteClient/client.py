@@ -25,7 +25,7 @@ from .localMachine import LocalMachine
 from .menu import RemoteMenu
 from .protocol import RemoteMessageType, addressToHostPort
 from .secureDesktop import SecureDesktopHandler
-from .session import MasterSession, SlaveSession
+from .session import MasterSession, FollowerSession
 from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
@@ -38,7 +38,7 @@ class RemoteClient:
 	localScripts: Set[Callable]
 	localMachine: LocalMachine
 	masterSession: Optional[MasterSession]
-	slaveSession: Optional[SlaveSession]
+	slaveSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
@@ -307,7 +307,7 @@ class RemoteClient:
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
-		self.slaveSession = SlaveSession(
+		self.slaveSession = FollowerSession(
 			transport=transport,
 			localMachine=self.localMachine,
 		)

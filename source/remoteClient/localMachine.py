@@ -81,7 +81,7 @@ class LocalMachine:
 	    be created directly. All methods are called in response to remote messages.
 
 	:seealso:
-	    - :class:`session.SlaveSession` - Manages remote connections
+	    - :class:`session.FollowerSession` - Manages remote connections
 	    - :mod:`transport` - Network transport layer
 	"""
 

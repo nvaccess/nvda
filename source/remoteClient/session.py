@@ -45,7 +45,7 @@ MasterSession
 	- Connection management
 	- Master-specific patches
 
-SlaveSession
+:class:`FollowerSession`
 	Controlled by remote instance:
 	- Command execution
 	- Output forwarding
@@ -237,7 +237,7 @@ Please use a different server."""),
 		self.close()
 
 
-class SlaveSession(RemoteSession):
+class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (slave) NVDA instance.
 
 	:ivar masters: Information about connected master clients
