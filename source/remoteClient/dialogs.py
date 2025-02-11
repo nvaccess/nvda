@@ -294,7 +294,9 @@ class DirectConnectDialog(wx.Dialog):
 		if self.clientOrServer.GetSelection() == 0:  # client
 			host = self.panel.host.GetValue()
 			serverAddr, port = protocol.addressToHostPort(host)
-			mode = ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.SLAVE
+			mode = (
+				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
+			)
 			return ConnectionInfo(
 				hostname=serverAddr,
 				mode=mode,

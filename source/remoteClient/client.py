@@ -92,7 +92,9 @@ class RemoteClient:
 		else:
 			address = addressToHostPort(controlServerConfig["host"])
 			hostname, port = address
-		mode = ConnectionMode.SLAVE if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
+		mode = (
+			ConnectionMode.FOLLOWER if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
+		)
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -175,7 +177,7 @@ class RemoteClient:
 		)
 		if connectionInfo.mode == ConnectionMode.LEADER:
 			self.connectAsLeader(connectionInfo)
-		elif connectionInfo.mode == ConnectionMode.SLAVE:
+		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
 			self.connectAsFollower(connectionInfo)
 
 	def disconnect(self):
@@ -327,7 +329,7 @@ class RemoteClient:
 		log.info("Control connector connected")
 		cues.controlServerConnected()
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.SLAVE, True)
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
 		configuration.write_connection_to_config(self.followerSession.getConnectionInfo())
 
 	@alwaysCallAfter
@@ -335,7 +337,7 @@ class RemoteClient:
 		log.info("Control connector disconnected")
 		# cues.control_server_disconnected()
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.SLAVE, False)
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 
 	### certificate handling
 
@@ -374,7 +376,7 @@ class RemoteClient:
 	def onFollowerCertificateFailed(self):
 		if self.handleCertificateFailure(self.followerSession.transport):
 			connectionInfo = ConnectionInfo(
-				mode=ConnectionMode.SLAVE,
+				mode=ConnectionMode.FOLLOWER,
 				hostname=self.lastFailAddress[0],
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,

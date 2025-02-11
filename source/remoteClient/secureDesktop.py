@@ -215,7 +215,7 @@ class SecureDesktopHandler:
 			log.info(f"Successfully established secure desktop connection on port {port}")
 			return ConnectionInfo(
 				hostname="127.0.0.1",
-				mode=ConnectionMode.SLAVE,
+				mode=ConnectionMode.FOLLOWER,
 				key=channel,
 				port=port,
 				insecure=True,

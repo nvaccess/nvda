@@ -179,7 +179,7 @@ class TestRemoteClient(unittest.TestCase):
 		fake_connect_as_master.reset_mock()
 		conn_info_slave = ConnectionInfo(
 			hostname="localhost",
-			mode=ConnectionMode.SLAVE,
+			mode=ConnectionMode.FOLLOWER,
 			key="abc",
 			port=1000,
 			insecure=False,

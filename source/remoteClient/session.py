@@ -250,7 +250,7 @@ class FollowerSession(RemoteSession):
 	"""
 
 	# Connection mode - always 'slave'
-	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.SLAVE
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
 	# Information about connected master clients
 	masters: dict[int, dict[str, Any]]
 	masterDisplaySizes: list[int]  # Braille display sizes of connected masters

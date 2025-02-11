@@ -25,11 +25,11 @@ class ConnectionMode(StrEnum):
 	"""Defines the connection mode for remote connections.
 
 	:cvar LEADER: Controller mode for controlling the remote system
-	:cvar SLAVE: Controlled mode for being controlled by remote system
+	:cvar FOLLOWER: Controlled mode for being controlled by remote system
 	"""
 
 	LEADER = "master"
-	SLAVE = "slave"
+	FOLLOWER = "slave"
 
 
 class ConnectionState(StrEnum):
@@ -146,7 +146,9 @@ class ConnectionInfo:
 		:return: URL string with opposite connection mode
 		"""
 		# Flip master/slave for connection URL
-		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
+		connect_mode = (
+			ConnectionMode.FOLLOWER if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
+		)
 		return self._build_url(connect_mode)
 
 	def getURL(self) -> str:
