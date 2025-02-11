@@ -31,14 +31,14 @@ Slave (Controlled)
 
 Key Components:
 ------------
-RemoteSession
+:class:`RemoteSession`
 	Base session managing shared functionality:
 	- Message handler registration
 	- Connection validation
 	- Version compatibility
 	- MOTD handling
 
-MasterSession
+:class:`LeaderSession`
 	Controls remote instance:
 	- Input capture/forwarding
 	- Remote output reception
@@ -430,7 +430,7 @@ class FollowerSession(RemoteSession):
 		return bool([i for i in self.masterDisplaySizes if i > 0])
 
 
-class MasterSession(RemoteSession):
+class LeaderSession(RemoteSession):
 	"""Session that runs on the controlling (master) NVDA instance.
 
 	:ivar slaves: Information about connected slave clients
