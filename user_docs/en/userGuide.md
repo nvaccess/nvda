@@ -3343,6 +3343,12 @@ This option enables behaviour which attempts to cancel speech for expired focus 
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is enabled by default as of NVDA 2021.1.
 
+##### Trim leading silence in speech audio {#TrimLeadingSilenceSpeech}
+
+When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
+This option is enabled by default, and should only affect the silence at the beginning of speech.
+If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
