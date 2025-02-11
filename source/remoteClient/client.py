@@ -210,7 +210,7 @@ class RemoteClient:
 		self.sdHandler.followerSession = None
 
 	@alwaysCallAfter
-	def onConnectAsMasterFailed(self):
+	def onConnectAsLeaderFailed(self):
 		if self.leaderTransport.successfulConnects == 0:
 			log.error(f"Failed to connect to {self.leaderTransport.address}")
 			self.disconnectAsLeader()
@@ -266,7 +266,7 @@ class RemoteClient:
 			self.onMasterCertificateFailed,
 		)
 		transport.transportConnected.register(self.onConnectedAsMaster)
-		transport.transportConnectionFailed.register(self.onConnectAsMasterFailed)
+		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
 		transport.transportClosing.register(self.onDisconnectingAsMaster)
 		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
 		transport.reconnectorThread.start()
