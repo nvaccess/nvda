@@ -174,7 +174,7 @@ class RemoteClient:
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
 		if connectionInfo.mode == ConnectionMode.MASTER:
-			self.connectAsMaster(connectionInfo)
+			self.connectAsLeader(connectionInfo)
 		elif connectionInfo.mode == ConnectionMode.SLAVE:
 			self.connectAsSlave(connectionInfo)
 
@@ -253,7 +253,7 @@ class RemoteClient:
 
 		gui.runScriptModalDialog(dlg, callback=handleDialogCompletion)
 
-	def connectAsMaster(self, connectionInfo: ConnectionInfo):
+	def connectAsLeader(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
@@ -368,7 +368,7 @@ class RemoteClient:
 				key=self.lastFailKey,
 				insecure=True,
 			)
-			self.connectAsMaster(connectionInfo=connectionInfo)
+			self.connectAsLeader(connectionInfo=connectionInfo)
 
 	@alwaysCallAfter
 	def onSlaveCertificateFailed(self):
