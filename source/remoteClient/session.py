@@ -241,7 +241,7 @@ class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (slave) NVDA instance.
 
 	:ivar leaders: Information about connected master clients
-	:ivar masterDisplaySizes: Braille display sizes of connected masters
+	:ivar leaderDisplaySizes: Braille display sizes of connected masters
 	:note: Handles:
 	    - Command execution from masters
 	    - Output forwarding to masters
@@ -253,7 +253,7 @@ class FollowerSession(RemoteSession):
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
 	# Information about connected master clients
 	leaders: dict[int, dict[str, Any]]
-	masterDisplaySizes: list[int]  # Braille display sizes of connected masters
+	leaderDisplaySizes: list[int]  # Braille display sizes of connected masters
 
 	def __init__(
 		self,
@@ -266,7 +266,7 @@ class FollowerSession(RemoteSession):
 			self.localMachine.sendKey,
 		)
 		self.leaders = defaultdict(dict)
-		self.masterDisplaySizes = []
+		self.leaderDisplaySizes = []
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
 			RemoteMessageType.CHANNEL_JOINED,
@@ -365,11 +365,11 @@ class FollowerSession(RemoteSession):
 			self.unregisterCallbacks()
 
 	def setDisplaySize(self, sizes: list[int] | None = None) -> None:
-		self.masterDisplaySizes = (
+		self.leaderDisplaySizes = (
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
-		log.debug("Setting slave display size to: %r", self.masterDisplaySizes)
-		self.localMachine.setBrailleDisplay_size(self.masterDisplaySizes)
+		log.debug("Setting slave display size to: %r", self.leaderDisplaySizes)
+		self.localMachine.setBrailleDisplay_size(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
 		self,
@@ -427,7 +427,7 @@ class FollowerSession(RemoteSession):
 		Returns:
 				True if at least one master has a braille display with cells > 0
 		"""
-		return bool([i for i in self.masterDisplaySizes if i > 0])
+		return bool([i for i in self.leaderDisplaySizes if i > 0])
 
 
 class LeaderSession(RemoteSession):

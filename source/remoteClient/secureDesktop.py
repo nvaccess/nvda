@@ -232,7 +232,7 @@ class SecureDesktopHandler:
 			log.debug("Propagating display size change to secure desktop relay")
 			self.sdRelay.send(
 				type=RemoteMessageType.SET_DISPLAY_SIZE,
-				sizes=self.followerSession.masterDisplaySizes,
+				sizes=self.followerSession.leaderDisplaySizes,
 			)
 		else:
 			log.warning("No secure desktop relay or slave session available, skipping display change")
