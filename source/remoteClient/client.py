@@ -268,7 +268,7 @@ class RemoteClient:
 		transport.transportConnected.register(self.onConnectedAsLeader)
 		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
 		transport.transportClosing.register(self.onDisconnectingAsLeader)
-		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
+		transport.transportDisconnected.register(self.onDisconnectedAsLeader)
 		transport.reconnectorThread.start()
 		self.leaderTransport = transport
 		if self.menu:
@@ -297,7 +297,7 @@ class RemoteClient:
 		self.keyModifiers = set()
 
 	@alwaysCallAfter
-	def onDisconnectedAsMaster(self):
+	def onDisconnectedAsLeader(self):
 		log.info("Master session disconnected")
 		# Translators: Presented when connection to a remote computer was interupted.
 		ui.message(_("Connection interrupted"))
