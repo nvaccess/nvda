@@ -108,7 +108,7 @@ vars.Add(
 # Base environment for this and sub sconscripts
 env = Environment(
 	variables=vars,
-	HOST_ARCH="x86",
+	HOST_ARCH="x86_64",
 	tools=[
 		"textfile",
 		"gettextTool",
@@ -236,7 +236,7 @@ env32["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 env64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 envArm64["STATIC_AND_SHARED_OBJECTS_ARE_THE_SAME"] = 1
 
-env = env32
+env = env64
 
 projectRCSubstDict = {
 	"%version_year%": env["version_year"],
