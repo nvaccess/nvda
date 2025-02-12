@@ -347,7 +347,8 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 	};
 
 	if (isTrimmingLeadingSilence) {
-		size_t silenceSize = SilenceDetect::getLeadingSilenceSize(&format, data, size);
+		// If data is null, treat the whole chunk as silence.
+		size_t silenceSize = data ? SilenceDetect::getLeadingSilenceSize(&format, data, size) : size;
 		if (silenceSize >= size) {
 			// The whole chunk is silence. Continue checking for silence in the next chunk.
 			remainingFrames = 0;
