@@ -44,7 +44,7 @@ def preprocessXliff(xliffPath: str, outputPath: str):
 	:param xliffPath: Path to the xliff file to be processed
 	:param outputPath: Path to the resulting xliff file
 	"""
-	print(f"Creating corrected xliff at {outputPath} from {xliffPath}")
+	print(f"Preprocessing xliff file at {xliffPath}")
 	namespace = {"xliff": "urn:oasis:names:tc:xliff:document:2.0"}
 	xliff = lxml.etree.parse(xliffPath)
 	xliffRoot = xliff.getroot()
@@ -91,10 +91,10 @@ def preprocessXliff(xliffPath: str, outputPath: str):
 	)
 
 
-def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None):
+def stripXliff(xliffPath: str, outputPath: str):
 	"""
-	Removes translations that already exist in an old xliff file,
-	and removes notes and skeleton elements from an xliff file before upload to Crowdin.
+	Removes notes and skeleton elements from an xliff file before upload to Crowdin.
+	Also removes empty and corrupt translations.
 	This function also prints a message to the console stating the number of segments processed and the numbers of empty, corrupt, source and existing translations removed.
 	:param xliffPath: Path to the xliff file to be stripped
 	:param outputPath: Path to the resulting xliff file
@@ -109,17 +109,11 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 	skeletonNode = xliffRoot.find("./xliff:file/xliff:skeleton", namespaces=namespace)
 	if skeletonNode is not None:
 		skeletonNode.getparent().remove(skeletonNode)
-	if oldXliffPath:
-		oldXliff = lxml.etree.parse(oldXliffPath)
-		oldXliffRoot = oldXliff.getroot()
-		if oldXliffRoot.tag != "{urn:oasis:names:tc:xliff:document:2.0}xliff":
-			raise ValueError(f"Not an xliff file: {oldXliffPath}")
-	else:
-		oldXliffRoot = None
 	file = xliffRoot.find("./xliff:file", namespaces=namespace)
 	units = file.findall("./xliff:unit", namespaces=namespace)
 	segmentCount = 0
-	existingTranslationCount = 0
+	emptyCount = 0
+	corruptCount = 0
 	for unit in units:
 		notes = unit.find("./xliff:notes", namespaces=namespace)
 		if notes is not None:
@@ -139,78 +133,24 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 		if target is None:
 			continue
 		targetText = target.text
-		# remove translations that already exist in the old xliff file
-		if oldXliffRoot is not None:
-			unitId = unit.get("id")
-			oldTarget = oldXliffRoot.find(
-				f'./xliff:file/xliff:unit[@id="{unitId}"]/xliff:segment/xliff:target',
-				namespaces=namespace,
-			)
-			if oldTarget is not None and oldTarget.text == targetText:
-				existingTranslationCount += 1
-				file.remove(unit)
+		if not targetText:
+			emptyCount += 1
+			file.remove(unit)
+		elif targetText in (
+			"<target/>",
+			"&lt;target/&gt;",
+			"<target></target>",
+			"&lt;target&gt;&lt;/target&gt;",
+		):
+			corruptCount += 1
+			file.remove(unit)
 	xliff.write(outputPath, encoding="utf-8")
 	keptTranslations = (
-		segmentCount - existingTranslationCount
+		# segmentCount - (emptyCount + corruptCount)
 	)
 	print(
-		f"Processed {segmentCount} segments, removing {existingTranslationCount} existing translations, resulting in {keptTranslations} translations kept",
+		f"Processed {segmentCount} segments, removing {emptyCount} empty translations, {corruptCount} corrupt translations, keeping {keptTranslations} translations"
 	)
-
-
-def translateFile(crowdinFilePath: str, language: str):
-	backupFilePath = f"{crowdinFilePath}.bak"
-	poedit_path = os.path.join(os.environ.get("PROGRAMFILES", "c:\\program files"), "Poedit", "poedit.exe")
-	if not os.path.exists(poedit_path):
-		raise FileNotFoundError("Poedit not found at expected location")
-	print(f"Starting translation process for {crowdinFilePath} in {language}")
-	temp_dir = tempfile.mkdtemp()
-	try:
-		# Download the translated file
-		print("Downloading the translated file...")
-		downloaded_file = os.path.join(temp_dir, "downloaded.xliff")
-		downloadTranslationFile(crowdinFilePath, downloaded_file, language)
-		print(f"Downloaded file to {downloaded_file}")
-
-		# Preprocess the file, correcting empty / corrupt targets.
-		print("Preprocessing the downloaded file...")
-		preprocessXliff(downloaded_file, downloaded_file)
-
-		# copy the file for translation
-		translated_file = os.path.join(temp_dir, "translated.xliff")
-		shutil.copy(downloaded_file, translated_file)
-		# Open the file in Poedit for translation
-		print("Opening the file in Poedit for translation...")
-		subprocess.run([poedit_path, translated_file])
-		print("Translation completed in Poedit")
-
-		# Preprocess the file again in case Poedit created any empty or corrupt targets.
-		print("Preprocessing the file again after translation...")
-		preprocessXliff(translated_file, translated_file)
-
-		# Strip the file, leaving only the newly translated segments for upload.
-		print("Stripping the file to remove existing translations...")
-		upload_file = os.path.join(temp_dir, "upload.xliff")
-		stripXliff(translated_file, upload_file, downloaded_file)
-
-		# Upload the translated file
-		print("Uploading the translated file...")
-		try:
-			uploadTranslationFile(crowdinFilePath, upload_file, language)
-		except Exception as e:
-			print(f"Error uploading file: {e}")
-			print(f"Saving translated file to {backupFilePath} for manual upload.")
-			os.rename(upload_file, backupFilePath)
-		else:
-			print("Successfully uploaded translated file.")
-	finally:
-		# Clean up temporary files
-		print("Cleaning up temporary files...")
-		if os.path.exists(temp_dir):
-			for file in os.listdir(temp_dir):
-				os.remove(os.path.join(temp_dir, file))
-			os.rmdir(temp_dir)
-		print("Translation process completed.")
 
 
 if __name__ == "__main__":
@@ -255,26 +195,45 @@ if __name__ == "__main__":
 	)
 	command_xliff2html.add_argument("xliffPath", help="Path to the xliff file")
 	command_xliff2html.add_argument("htmlPath", help="Path to the resulting html file")
-	command_download = commands.add_parser(
-		"downloadTranslationFile", help="Download a translation file from Crowdin."
+	downloadTranslationFileCommand = commands.add_parser(
+		"downloadTranslationFile",
+		help="Download a translation file from Crowdin.",
 	)
-	command_download.add_argument(
+	downloadTranslationFileCommand.add_argument(
+		"language",
+		help="The language code to download the translation for."
+	)
+	downloadTranslationFileCommand.add_argument(
 		"crowdinFilePath",
 		choices=crowdinFileIDs.keys(),
 		help="The Crowdin file path"
 	)
-	command_download.add_argument("localFilePath", help="The path to save the local file.")
-	command_download.add_argument("language", help="The language code to download the translation for.")
-	command_upload = commands.add_parser(
-		"uploadTranslationFile", help="Upload a translation file to Crowdin."
+	downloadTranslationFileCommand.add_argument(
+		"localFilePath",
+		nargs="?",
+		default=None,
+		help="The path to save the local file. If not provided, the Crowdin file path will be used."
 	)
-	command_upload.add_argument(
+
+	uploadTranslationFileCommand = commands.add_parser(
+		"uploadTranslationFile",
+		help="Upload a translation file to Crowdin.",
+	)
+	uploadTranslationFileCommand.add_argument(
+		"language",
+		help="The language code to upload the translation for."
+	)
+	uploadTranslationFileCommand.add_argument(
 		"crowdinFilePath",
 		choices=crowdinFileIDs.keys(),
 		help="The Crowdin file path"
 	)
-	command_upload.add_argument("localFilePath", help="The path to the local file.")
-	command_upload.add_argument("language", help="The language code to upload the translation for.")
+	uploadTranslationFileCommand.add_argument(
+		   "localFilePath",
+		   nargs="?",
+		default=None,
+		help="The path to the local file to be uploaded. If not provided, the Crowdin file path will be used."
+	   )
 	args = args.parse_args()
 	match args.command:
 		case "xliff2md":
@@ -298,15 +257,24 @@ if __name__ == "__main__":
 				md2html.main(source=temp_mdFile.name, dest=args.htmlPath, lang=lang, docType=args.docType)
 			finally:
 				os.remove(temp_mdFile.name)
-		case "stripXliff":
-			stripXliff(args.xliffPath, args.outputPath, args.oldXliffPath)
 		case "downloadTranslationFile":
-			downloadTranslationFile(args.crowdinFilePath, args.localFilePath, args.language)
+			localFilePath = args.localFilePath or args.crowdinFilePath
+			downloadTranslationFile(args.crowdinFilePath, localFilePath, args.language)
 			if args.crowdinFilePath.endswith(".xliff"):
-				preprocessXliff(args.localFilePath, args.localFilePath)
+				preprocessXliff(localFilePath, localFilePath)
 		case "uploadTranslationFile":
+			localFilePath = args.localFilePath or args.crowdinFilePath
+			needsDelete = False
 			if args.crowdinFilePath.endswith(".xliff"):
-				preprocessXliff(args.localFilePath, args.localFilePath)
-			uploadTranslationFile(args.crowdinFilePath, args.localFilePath, args.language)
+				tmp = tempfile.NamedTemporaryFile(suffix=".xliff", delete=False, mode="w")
+				tmp.close()
+				shutil.copyfile(localFilePath, tmp.name)
+				preprocessXliff(localFilePath, tmp.name)
+				stripXliff(tmp.name, tmp.name)
+				localFilePath = tmp.name
+				needsDelete = True
+			uploadTranslationFile(args.crowdinFilePath, localFilePath, args.language)
+			if needsDelete:
+				os.remove(localFilePath)
 		case _:
 			raise ValueError(f"Unknown command {args.command}")
