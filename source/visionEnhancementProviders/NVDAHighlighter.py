@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Takuya Nishimoto
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Takuya Nishimoto, Cyrille Bougot
 
 """Default highlighter based on GDI Plus."""
 
@@ -479,6 +479,9 @@ class NVDAHighlighter(providerBase.VisionEnhancementProvider):
 		if rect is None:
 			try:
 				rect = getContextRect(context, obj=obj)
+			except ValueError:
+				log.debugWarning(f"Invalid object location: {obj.location}", exc_info=True)
+				rect = None
 			except (LookupError, NotImplementedError, RuntimeError, TypeError):
 				rect = None
 		self.contextToRectMap[context] = rect
