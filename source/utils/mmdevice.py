@@ -3,6 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+"""Tools for interacting with Windows' MMDevice API."""
+
 from collections.abc import Generator
 from typing import NamedTuple, cast
 
@@ -11,16 +13,21 @@ from pycaw.constants import DEVICE_STATE, EDataFlow
 from pycaw.utils import AudioUtilities
 
 
-class _AudioOutputDevice(NamedTuple):
+class AudioOutputDevice(NamedTuple):
+	"""An MMDevice audio render endpoint."""
+
 	id: str
+	"""The unique identifier of the audio endpoint."""
+
 	friendlyName: str
+	"""The user-friendly name of the audio endpoint."""
 
 
-def _getOutputDevices(
+def getOutputDevices(
 	*,
 	includeDefault: bool = False,
 	stateMask: DEVICE_STATE = DEVICE_STATE.ACTIVE,
-) -> Generator[_AudioOutputDevice]:
+) -> Generator[AudioOutputDevice]:
 	"""Generator, yielding device ID and device Name.
 	.. note:: Depending on number of devices being fetched, this may take some time (~3ms)
 
@@ -31,7 +38,7 @@ def _getOutputDevices(
 	:return: Generator of :class:`_AudioOutputDevices` containing all enabled and present audio output devices on the system.
 	"""
 	if includeDefault:
-		yield _AudioOutputDevice(
+		yield AudioOutputDevice(
 			id=cast(str, config.conf.getConfigValidation(("audio", "outputDevice")).default),
 			# Translators: Value to show when choosing to use the default audio output device.
 			friendlyName=_("Default output device"),
@@ -44,6 +51,6 @@ def _getOutputDevices(
 		device = AudioUtilities.CreateDevice(endpointCollection.Item(i))
 		# This should never be None, but just to be sure
 		if device is not None:
-			yield _AudioOutputDevice(device.id, device.FriendlyName)
+			yield AudioOutputDevice(device.id, device.FriendlyName)
 		else:
 			continue
