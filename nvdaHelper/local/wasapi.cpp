@@ -346,6 +346,7 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		return true;
 	};
 
+	bool shouldInsertSilentFrame = false;
 	if (isTrimmingLeadingSilence) {
 		// If data is null, treat the whole chunk as silence.
 		size_t silenceSize = data ? SilenceDetect::getLeadingSilenceSize(&format, data, size) : size;
@@ -358,6 +359,11 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 			size -= silenceSize;
 			remainingFrames = size / format.nBlockAlign;
 			isTrimmingLeadingSilence = false;  // Stop checking for silence
+
+			// Signals to insert one silent frame before the trimmed audio in this chunk.
+			// Not doing so may cause the beginning of the audio to be chopped off.
+			// See: https://github.com/nvaccess/nvda/discussions/17697
+			shouldInsertSilentFrame = true;
 		}
 	}
 
@@ -409,13 +415,25 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 			}
 		}
 		// We might have more frames than will fit in the buffer. Send what we can.
+		// If we need to insert a silent frame, the frame counts towards the total frame count,
+		// but does not count towards the total byte count, as it's not in the provided data buffer.
+		if (shouldInsertSilentFrame) {
+			remainingFrames++;
+		}
 		const UINT32 sendFrames = std::min(remainingFrames,
 			bufferFrames - paddingFrames);
-		const UINT32 sendBytes = sendFrames * format.nBlockAlign;
+		const UINT32 sendBytes = (sendFrames - (shouldInsertSilentFrame ? 1 : 0))
+			* format.nBlockAlign;
 		BYTE* buffer;
 		hr = render->GetBuffer(sendFrames, &buffer);
 		if (FAILED(hr)) {
 			return hr;
+		}
+		if (shouldInsertSilentFrame) {
+			// If needed, insert one frame of silence at the beginning
+			memset(buffer, 0, format.nBlockAlign);
+			buffer += format.nBlockAlign;
+			shouldInsertSilentFrame = false;
 		}
 		if (data) {
 			memcpy(buffer, data, sendBytes);
