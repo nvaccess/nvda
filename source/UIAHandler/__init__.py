@@ -107,6 +107,12 @@ badUIAWindowClassNames = (
 	"Button",
 	# #8944: The Foxit UIA implementation is incomplete and should not be used for now.
 	"FoxitDocWnd",
+	# Mozilla Gecko (Firefox, etc.) has a native UIA implementation. However, IA2
+	# is still better for web content in screen readers for now.
+	"MozillaWindowClass",
+	"MozillaDropShadowWindowClass",
+	"MozillaDialogClass",
+	"MozillaContentWindowClass",
 )
 
 # #8405: used to detect UIA dialogs prior to Windows 10 RS5.
