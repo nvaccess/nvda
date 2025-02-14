@@ -431,7 +431,11 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		}
 		if (shouldInsertSilentFrame) {
 			// If needed, insert one frame of silence at the beginning
-			memset(buffer, 0, format.nBlockAlign);
+			if (format.wFormatTag == WAVE_FORMAT_PCM && format.wBitsPerSample == 8) {
+				memset(buffer, 0x80, format.nBlockAlign);
+			} else {
+				memset(buffer, 0, format.nBlockAlign);
+			}
 			buffer += format.nBlockAlign;
 			shouldInsertSilentFrame = false;
 		}
