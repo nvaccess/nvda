@@ -38,6 +38,9 @@ import extensionPoints
 import NVDAHelper
 import core
 import globalVars
+from speech import SpeechSequence
+from speech.commands import BreakCommand
+from synthDriverHandler import pre_synthSpeak
 
 
 __all__ = (
@@ -247,6 +250,14 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if config.conf["audio"]["audioAwakeTime"] > 0:
 				NVDAHelper.localLib.wasSilence_init(outputDevice)
 				WavePlayer._silenceDevice = outputDevice
+		# Enable trimming by default for speech only
+		self.enableTrimmingLeadingSilence(
+			purpose is AudioPurpose.SPEECH and config.conf["speech"]["trimLeadingSilence"],
+		)
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
+		self._isLeadingSilenceInserted: bool = False
+		pre_synthSpeak.register(self._onPreSpeak)
 
 	@wasPlay_callback
 	def _callback(cppPlayer, feedId):
@@ -271,6 +282,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			# a weakref callback can run before __del__ in some cases, which would mean
 			# it has already been removed from _instances.
 			self._player = None
+		pre_synthSpeak.unregister(self._onPreSpeak)
 
 	def open(self):
 		"""Open the output device.
@@ -281,7 +293,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			NVDAHelper.localLib.wasPlay_open(self._player)
 		except WindowsError:
 			log.warning(
-				"Couldn't open specified or default audio device. " "There may be no audio devices.",
+				"Couldn't open specified or default audio device. There may be no audio devices.",
 			)
 			WavePlayer.audioDeviceError_static = True
 			raise
@@ -315,6 +327,10 @@ class WavePlayer(garbageHandler.TrackedObject):
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
+		# If a BreakCommand is used to insert leading silence in this utterance,
+		# turn off trimming temporarily.
+		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
+			self.startTrimmingLeadingSilence(False)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,
@@ -351,6 +367,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 	def idle(self):
 		"""Indicate that this player is now idle; i.e. the current continuous segment  of audio is complete."""
 		self.sync()
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
 		if self._audioDucker:
 			self._audioDucker.disable()
 
@@ -359,6 +377,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 		if self._audioDucker:
 			self._audioDucker.disable()
 		NVDAHelper.localLib.wasPlay_stop(self._player)
+		if self._enableTrimmingLeadingSilence:
+			self.startTrimmingLeadingSilence()
 		self._lastActiveTime = None
 		self._isPaused = False
 		self._doneCallbacks = {}
@@ -413,6 +433,17 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if not (all and e.winerror == E_INVALIDARG):
 				raise
 
+	def enableTrimmingLeadingSilence(self, enable: bool) -> None:
+		"""Enable or disable automatic leading silence removal.
+		This is by default enabled for speech audio, and disabled for non-speech audio."""
+		self._enableTrimmingLeadingSilence = enable
+		if not enable:
+			self.startTrimmingLeadingSilence(False)
+
+	def startTrimmingLeadingSilence(self, start: bool = True) -> None:
+		"""Start or stop trimming the leading silence from the next audio chunk."""
+		NVDAHelper.localLib.wasPlay_startTrimmingLeadingSilence(self._player, start)
+
 	def _setVolumeFromConfig(self):
 		if self._purpose is not AudioPurpose.SOUNDS:
 			return
@@ -466,6 +497,7 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if player._lastActiveTime <= threshold:
 				try:
 					NVDAHelper.localLib.wasPlay_idle(player._player)
+					player.startTrimmingLeadingSilence()
 				except OSError:
 					# #16125: IAudioClock::GetPosition sometimes fails with an access
 					# violation on a device which has been invalidated. This shouldn't happen
@@ -481,6 +513,16 @@ class WavePlayer(garbageHandler.TrackedObject):
 			# There's still at least one active stream that wasn't idle.
 			# Schedule another check here in case feed isn't called for a while.
 			cls._scheduleIdleCheck()
+
+	def _onPreSpeak(self, speechSequence: SpeechSequence):
+		self._isLeadingSilenceInserted = False
+		# Check if leading silence of the current utterance is inserted by a BreakCommand.
+		for item in speechSequence:
+			if isinstance(item, BreakCommand):
+				self._isLeadingSilenceInserted = True
+				break
+			elif isinstance(item, str):
+				break
 
 
 fileWavePlayer: Optional[WavePlayer] = None

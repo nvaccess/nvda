@@ -24,6 +24,7 @@ http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
 #include <mmdeviceapi.h>
 #include <common/log.h>
 #include <random>
+#include "silenceDetect.h"
 
 /**
  * Support for audio playback using WASAPI.
@@ -194,6 +195,8 @@ class WasapiPlayer {
 	HRESULT resume();
 	HRESULT setChannelVolume(unsigned int channel, float level);
 
+	void startTrimmingLeadingSilence(bool start);
+
 	private:
 	void maybeFireCallback();
 
@@ -245,6 +248,7 @@ class WasapiPlayer {
 	unsigned int defaultDeviceChangeCount;
 	unsigned int deviceStateChangeCount;
 	bool isUsingPreferredDevice = false;
+	bool isTrimmingLeadingSilence = false;
 };
 
 WasapiPlayer::WasapiPlayer(wchar_t* endpointId, WAVEFORMATEX format,
@@ -341,6 +345,19 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		sentFrames = 0;
 		return true;
 	};
+
+	if (isTrimmingLeadingSilence) {
+		size_t silenceSize = SilenceDetect::getLeadingSilenceSize(&format, data, size);
+		if (silenceSize >= size) {
+			// The whole chunk is silence. Continue checking for silence in the next chunk.
+			remainingFrames = 0;
+		} else {
+			// Silence ends in this chunk. Skip the silence and continue.
+			data += silenceSize;
+			remainingFrames = (size - silenceSize) / format.nBlockAlign;
+			isTrimmingLeadingSilence = false;  // Stop checking for silence
+		}
+	}
 
 	while (remainingFrames > 0) {
 		UINT32 paddingFrames;
@@ -643,6 +660,10 @@ HRESULT WasapiPlayer::setChannelVolume(unsigned int channel, float level) {
 	return volume->SetChannelVolume(channel, level);
 }
 
+void WasapiPlayer::startTrimmingLeadingSilence(bool start) {
+	isTrimmingLeadingSilence = start;
+}
+
 HRESULT WasapiPlayer::disableCommunicationDucking(IMMDevice* device) {
 	// Disable the default ducking experience used when a communication audio
 	// session is active, as we never want NVDA's audio to be ducked.
@@ -837,6 +858,10 @@ HRESULT wasPlay_setChannelVolume(
 	float level
 ) {
 	return player->setChannelVolume(channel, level);
+}
+
+void wasPlay_startTrimmingLeadingSilence(WasapiPlayer* player, bool start) {
+	player->startTrimmingLeadingSilence(start);
 }
 
 /**

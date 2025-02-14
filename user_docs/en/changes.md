@@ -67,6 +67,14 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
+* The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
+
+### Security Fixes
+
+Please responsibly disclose security issues following NVDA's [security policy](https://github.com/nvaccess/nvda/blob/master/security.md).
+
+* Prevents showing potentially sensitive information on braille displays when the device is locked.
+([GHSA-8f8q-2jc3-6rf4](https://github.com/nvaccess/nvda/security/advisories/GHSA-8f8q-2jc3-6rf4))
 
 ### Bug Fixes
 
@@ -105,6 +113,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
 * Fixed an issue where continuous reading (say all) stopped at the end of the first sentence when using some SAPI5 synthesizers. (#16691, @gexgd0419)
 * In Visual Studio Code, NVDA no longer hijacks the `alt+upArrow` and `alt+downArrow` gestures for sentence navigation. (#17082, @LeonarddeR)
+* When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)
 
 ### Changes for Developers
 
@@ -157,6 +166,7 @@ Add-ons will need to be re-tested and have their manifest updated.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 * Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
+* Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer.
 
 #### API Breaking Changes
 

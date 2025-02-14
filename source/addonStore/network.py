@@ -42,7 +42,7 @@ if TYPE_CHECKING:
 	from gui.addonStoreGui.viewModels.addonList import AddonListItemVM
 
 
-_DEFAULT_BASE_URL = "https://nvaccess.org/addonStore"
+_DEFAULT_BASE_URL = "https://addonStore.nvaccess.org"
 _LATEST_API_VER = "latest"
 """
 A string value used in the add-on store to fetch the latest version of all add-ons,
