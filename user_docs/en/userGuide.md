@@ -1848,15 +1848,15 @@ Contact the operator of the update mirror for details of their data handling pol
 
 ##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurnOff}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
-
 This option ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
 This avoids the situation where the screen unexpectedly locks during a say all.
 This option is enabled by default.
 Consider disabling this option if you are suffering from a shorter battery life.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
 
 #### Speech Settings {#SpeechSettings}
 
