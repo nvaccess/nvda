@@ -1846,7 +1846,7 @@ If you wish to change the update mirror, press the "Change..." button to open th
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
 
-##### Prevent display from turning off during say all or reading with braille {#preventDisplayTurnOff}
+##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurnOff}
 
 | . {.hideHeaderRow} |.|
 |---|---|

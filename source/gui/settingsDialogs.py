@@ -994,7 +994,7 @@ class GeneralSettingsPanel(SettingsPanel):
 				conf=config.conf,
 			)
 		)
-		self.bindHelpEvent("preventDisplayTurnOff", self.preventDisplayTurnOffCombo)
+		self.bindHelpEvent("PreventDisplayTurnOff", self.preventDisplayTurnOffCombo)
 
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
