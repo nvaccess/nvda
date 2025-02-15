@@ -25,7 +25,7 @@ from .localMachine import LocalMachine
 from .menu import RemoteMenu
 from .protocol import RemoteMessageType, addressToHostPort
 from .secureDesktop import SecureDesktopHandler
-from .session import MasterSession, SlaveSession
+from .session import LeaderSession, FollowerSession
 from .protocol import hostPortToAddress
 from .transport import RelayTransport
 
@@ -37,13 +37,13 @@ Address = Tuple[str, int]  # (hostname, port)
 class RemoteClient:
 	localScripts: Set[Callable]
 	localMachine: LocalMachine
-	masterSession: Optional[MasterSession]
-	slaveSession: Optional[SlaveSession]
+	leaderSession: Optional[LeaderSession]
+	followerSession: Optional[FollowerSession]
 	keyModifiers: Set[KeyModifier]
 	hostPendingModifiers: Set[KeyModifier]
 	connecting: bool
-	masterTransport: Optional[RelayTransport]
-	slaveTransport: Optional[RelayTransport]
+	leaderTransport: Optional[RelayTransport]
+	followerTransport: Optional[RelayTransport]
 	localControlServer: Optional[server.LocalRelayServer]
 	sendingKeys: bool
 
@@ -55,23 +55,23 @@ class RemoteClient:
 		self.hostPendingModifiers = set()
 		self.localScripts = set()
 		self.localMachine = LocalMachine()
-		self.slaveSession = None
-		self.masterSession = None
+		self.followerSession = None
+		self.leaderSession = None
 		self.menu: Optional[RemoteMenu] = None
 		if not isRunningOnSecureDesktop():
 			self.menu: Optional[RemoteMenu] = RemoteMenu(self)
 		self.connecting = False
 		urlHandler.registerURLHandler()
-		self.masterTransport = None
-		self.slaveTransport = None
+		self.leaderTransport = None
+		self.followerTransport = None
 		self.localControlServer = None
 		self.sendingKeys = False
 		self.sdHandler = SecureDesktopHandler()
 		if isRunningOnSecureDesktop():
 			connection = self.sdHandler.initializeSecureDesktop()
 			if connection:
-				self.connectAsSlave(connection)
-				self.slaveSession.transport.connectedEvent.wait(
+				self.connectAsFollower(connection)
+				self.followerSession.transport.connectedEvent.wait(
 					self.sdHandler.SD_CONNECT_BLOCK_TIMEOUT,
 				)
 		core.postNvdaStartup.register(self.performAutoconnect)
@@ -79,7 +79,7 @@ class RemoteClient:
 
 	def performAutoconnect(self):
 		controlServerConfig = configuration.get_config()["controlserver"]
-		if not controlServerConfig["autoconnect"] or self.masterSession or self.slaveSession:
+		if not controlServerConfig["autoconnect"] or self.leaderSession or self.followerSession:
 			log.debug("Autoconnect disabled or already connected")
 			return
 		key = controlServerConfig["key"]
@@ -92,7 +92,9 @@ class RemoteClient:
 		else:
 			address = addressToHostPort(controlServerConfig["host"])
 			hostname, port = address
-		mode = ConnectionMode.SLAVE if controlServerConfig["connection_type"] == 0 else ConnectionMode.MASTER
+		mode = (
+			ConnectionMode.FOLLOWER if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
+		)
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -128,7 +130,7 @@ class RemoteClient:
 		:note: Requires an active connection
 		:raises TypeError: If clipboard content cannot be serialized
 		"""
-		connector = self.slaveTransport or self.masterTransport
+		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -146,7 +148,7 @@ class RemoteClient:
 
 		:note: Requires an active session
 		"""
-		session = self.masterSession or self.slaveSession
+		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
 			ui.message(_("Not connected."))
@@ -157,63 +159,63 @@ class RemoteClient:
 	def sendSAS(self):
 		"""Send Secure Attention Sequence to remote computer.
 
-		:note: Requires an active master transport connection
+		:note: Requires an active leader transport connection
 		"""
-		if self.masterTransport is None:
-			log.error("No master transport to send SAS")
+		if self.leaderTransport is None:
+			log.error("No leader transport to send SAS")
 			return
-		self.masterTransport.send(RemoteMessageType.SEND_SAS)
+		self.leaderTransport.send(RemoteMessageType.SEND_SAS)
 
 	def connect(self, connectionInfo: ConnectionInfo):
 		"""Establish connection based on connection info.
 
 		:param connectionInfo: Connection details including mode, host, port etc.
-		:note: Initiates either master or slave connection based on mode
+		:note: Initiates either leader or follower connection based on mode
 		"""
 		log.info(
 			f"Initiating connection as {connectionInfo.mode} to {connectionInfo.hostname}:{connectionInfo.port}",
 		)
-		if connectionInfo.mode == ConnectionMode.MASTER:
-			self.connectAsMaster(connectionInfo)
-		elif connectionInfo.mode == ConnectionMode.SLAVE:
-			self.connectAsSlave(connectionInfo)
+		if connectionInfo.mode == ConnectionMode.LEADER:
+			self.connectAsLeader(connectionInfo)
+		elif connectionInfo.mode == ConnectionMode.FOLLOWER:
+			self.connectAsFollower(connectionInfo)
 
 	def disconnect(self):
 		"""Close all active connections and clean up resources.
 
-		:note: Closes local control server and both master/slave sessions if active
+		:note: Closes local control server and both leader/follower sessions if active
 		"""
-		if self.masterSession is None and self.slaveSession is None:
+		if self.leaderSession is None and self.followerSession is None:
 			log.debug("Disconnect called but no active sessions")
 			return
 		log.info("Disconnecting from remote session")
 		if self.localControlServer is not None:
 			self.localControlServer.close()
 			self.localControlServer = None
-		if self.masterSession is not None:
-			self.disconnectAsMaster()
-		if self.slaveSession is not None:
-			self.disconnectAsSlave()
+		if self.leaderSession is not None:
+			self.disconnectAsLeader()
+		if self.followerSession is not None:
+			self.disconnectAsFollower()
 		cues.disconnected()
 
-	def disconnectAsMaster(self):
-		"""Close master session and clean up related resources."""
-		self.masterSession.close()
-		self.masterSession = None
-		self.masterTransport = None
+	def disconnectAsLeader(self):
+		"""Close leader session and clean up related resources."""
+		self.leaderSession.close()
+		self.leaderSession = None
+		self.leaderTransport = None
 
-	def disconnectAsSlave(self):
-		"""Close slave session and clean up related resources."""
-		self.slaveSession.close()
-		self.slaveSession = None
-		self.slaveTransport = None
-		self.sdHandler.slaveSession = None
+	def disconnectAsFollower(self):
+		"""Close follower session and clean up related resources."""
+		self.followerSession.close()
+		self.followerSession = None
+		self.followerTransport = None
+		self.sdHandler.followerSession = None
 
 	@alwaysCallAfter
-	def onConnectAsMasterFailed(self):
-		if self.masterTransport.successfulConnects == 0:
-			log.error(f"Failed to connect to {self.masterTransport.address}")
-			self.disconnectAsMaster()
+	def onConnectAsLeaderFailed(self):
+		if self.leaderTransport.successfulConnects == 0:
+			log.error(f"Failed to connect to {self.leaderTransport.address}")
+			self.disconnectAsLeader()
 			# Translators: Title of the connection error dialog.
 			gui.messageBox(
 				parent=gui.mainFrame,
@@ -253,33 +255,33 @@ class RemoteClient:
 
 		gui.runScriptModalDialog(dlg, callback=handleDialogCompletion)
 
-	def connectAsMaster(self, connectionInfo: ConnectionInfo):
+	def connectAsLeader(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
-		self.masterSession = MasterSession(
+		self.leaderSession = LeaderSession(
 			transport=transport,
 			localMachine=self.localMachine,
 		)
 		transport.transportCertificateAuthenticationFailed.register(
-			self.onMasterCertificateFailed,
+			self.onLeaderCertificateFailed,
 		)
-		transport.transportConnected.register(self.onConnectedAsMaster)
-		transport.transportConnectionFailed.register(self.onConnectAsMasterFailed)
-		transport.transportClosing.register(self.onDisconnectingAsMaster)
-		transport.transportDisconnected.register(self.onDisconnectedAsMaster)
+		transport.transportConnected.register(self.onConnectedAsLeader)
+		transport.transportConnectionFailed.register(self.onConnectAsLeaderFailed)
+		transport.transportClosing.register(self.onDisconnectingAsLeader)
+		transport.transportDisconnected.register(self.onDisconnectedAsLeader)
 		transport.reconnectorThread.start()
-		self.masterTransport = transport
+		self.leaderTransport = transport
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
-	def onConnectedAsMaster(self):
-		log.info("Successfully connected as master")
-		configuration.write_connection_to_config(self.masterSession.getConnectionInfo())
+	def onConnectedAsLeader(self):
+		log.info("Successfully connected as leader")
+		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.MASTER, True)
+			self.menu.handleConnected(ConnectionMode.LEADER, True)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
 			_("Connected!"),
@@ -287,55 +289,55 @@ class RemoteClient:
 		cues.connected()
 
 	@alwaysCallAfter
-	def onDisconnectingAsMaster(self):
-		log.info("Master session disconnecting")
+	def onDisconnectingAsLeader(self):
+		log.info("Leader session disconnecting")
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.MASTER, False)
+			self.menu.handleConnected(ConnectionMode.LEADER, False)
 		if self.localMachine:
 			self.localMachine.isMuted = False
 		self.sendingKeys = False
 		self.keyModifiers = set()
 
 	@alwaysCallAfter
-	def onDisconnectedAsMaster(self):
-		log.info("Master session disconnected")
+	def onDisconnectedAsLeader(self):
+		log.info("Leader session disconnected")
 		# Translators: Presented when connection to a remote computer was interupted.
 		ui.message(_("Connection interrupted"))
 
-	def connectAsSlave(self, connectionInfo: ConnectionInfo):
+	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
 			connection_info=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
-		self.slaveSession = SlaveSession(
+		self.followerSession = FollowerSession(
 			transport=transport,
 			localMachine=self.localMachine,
 		)
-		self.sdHandler.slaveSession = self.slaveSession
-		self.slaveTransport = transport
+		self.sdHandler.followerSession = self.followerSession
+		self.followerTransport = transport
 		transport.transportCertificateAuthenticationFailed.register(
-			self.onSlaveCertificateFailed,
+			self.onFollowerCertificateFailed,
 		)
-		transport.transportConnected.register(self.onConnectedAsSlave)
-		transport.transportDisconnected.register(self.onDisconnectedAsSlave)
+		transport.transportConnected.register(self.onConnectedAsFollower)
+		transport.transportDisconnected.register(self.onDisconnectedAsFollower)
 		transport.reconnectorThread.start()
 		if self.menu:
 			self.menu.handleConnecting(connectionInfo.mode)
 
 	@alwaysCallAfter
-	def onConnectedAsSlave(self):
+	def onConnectedAsFollower(self):
 		log.info("Control connector connected")
 		cues.controlServerConnected()
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.SLAVE, True)
-		configuration.write_connection_to_config(self.slaveSession.getConnectionInfo())
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
+		configuration.write_connection_to_config(self.followerSession.getConnectionInfo())
 
 	@alwaysCallAfter
-	def onDisconnectedAsSlave(self):
+	def onDisconnectedAsFollower(self):
 		log.info("Control connector disconnected")
 		# cues.control_server_disconnected()
 		if self.menu:
-			self.menu.handleConnected(ConnectionMode.SLAVE, False)
+			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 
 	### certificate handling
 
@@ -359,28 +361,28 @@ class RemoteClient:
 		return False
 
 	@alwaysCallAfter
-	def onMasterCertificateFailed(self):
-		if self.handleCertificateFailure(self.masterSession.transport):
+	def onLeaderCertificateFailed(self):
+		if self.handleCertificateFailure(self.leaderSession.transport):
 			connectionInfo = ConnectionInfo(
-				mode=ConnectionMode.MASTER,
+				mode=ConnectionMode.LEADER,
 				hostname=self.lastFailAddress[0],
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,
 				insecure=True,
 			)
-			self.connectAsMaster(connectionInfo=connectionInfo)
+			self.connectAsLeader(connectionInfo=connectionInfo)
 
 	@alwaysCallAfter
-	def onSlaveCertificateFailed(self):
-		if self.handleCertificateFailure(self.slaveSession.transport):
+	def onFollowerCertificateFailed(self):
+		if self.handleCertificateFailure(self.followerSession.transport):
 			connectionInfo = ConnectionInfo(
-				mode=ConnectionMode.SLAVE,
+				mode=ConnectionMode.FOLLOWER,
 				hostname=self.lastFailAddress[0],
 				port=self.lastFailAddress[1],
 				key=self.lastFailKey,
 				insecure=True,
 			)
-			self.connectAsSlave(connectionInfo=connectionInfo)
+			self.connectAsFollower(connectionInfo=connectionInfo)
 
 	def startControlServer(self, serverPort, channel):
 		"""Start local relay server for handling connections.
@@ -432,7 +434,7 @@ class RemoteClient:
 			if script in self.localScripts:
 				wx.CallAfter(script, gesture)
 				return False
-		self.masterTransport.send(
+		self.leaderTransport.send(
 			RemoteMessageType.KEY,
 			vk_code=vkCode,
 			extended=extended,
@@ -447,7 +449,7 @@ class RemoteClient:
 		:param gesture: The keyboard gesture that triggered this
 		:note: Also toggles braille input and mute state
 		"""
-		if not self.masterTransport:
+		if not self.leaderTransport:
 			gesture.send()
 			return
 		self.sendingKeys = not self.sendingKeys
@@ -471,7 +473,7 @@ class RemoteClient:
 		"""
 		# release all pressed keys in the guest.
 		for k in self.keyModifiers:
-			self.masterTransport.send(
+			self.leaderTransport.send(
 				RemoteMessageType.KEY,
 				vk_code=k[0],
 				extended=k[1],
@@ -483,13 +485,13 @@ class RemoteClient:
 		"""Enable or disable receiving braille from remote.
 
 		:param state: True to enable remote braille, False to disable
-		:note: Only enables if master session and braille handler are ready
+		:note: Only enables if leader session and braille handler are ready
 		"""
-		if state and self.masterSession.callbacksAdded and braille.handler.enabled:
-			self.masterSession.registerBrailleInput()
+		if state and self.leaderSession.callbacksAdded and braille.handler.enabled:
+			self.leaderSession.registerBrailleInput()
 			self.localMachine.receivingBraille = True
 		elif not state:
-			self.masterSession.unregisterBrailleInput()
+			self.leaderSession.unregisterBrailleInput()
 			self.localMachine.receivingBraille = False
 
 	@alwaysCallAfter
@@ -514,7 +516,7 @@ class RemoteClient:
 			key = conInfo.key
 
 			# Prepare connection request message based on mode
-			if conInfo.mode == ConnectionMode.MASTER:
+			if conInfo.mode == ConnectionMode.LEADER:
 				# Translators: Ask the user if they want to control the remote computer.
 				question = _("Do you wish to control the machine on server {server} with key {key}?")
 			else:
@@ -544,10 +546,10 @@ class RemoteClient:
 	def isConnected(self):
 		"""Check if there is an active connection.
 
-		:return: True if either slave or master transport is connected
+		:return: True if either follower or leader transport is connected
 		:rtype: bool
 		"""
-		connector = self.slaveTransport or self.masterTransport
+		connector = self.followerTransport or self.leaderTransport
 		if connector is not None:
 			return connector.connected
 		return False

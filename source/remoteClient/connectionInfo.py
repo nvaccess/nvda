@@ -24,12 +24,12 @@ class URLParsingError(Exception):
 class ConnectionMode(StrEnum):
 	"""Defines the connection mode for remote connections.
 
-	:cvar MASTER: Controller mode for controlling the remote system
-	:cvar SLAVE: Controlled mode for being controlled by remote system
+	:cvar LEADER: Controller mode for controlling the remote system
+	:cvar FOLLOWER: Controlled mode for being controlled by remote system
 	"""
 
-	MASTER = "master"
-	SLAVE = "slave"
+	LEADER = "master"
+	FOLLOWER = "slave"
 
 
 class ConnectionState(StrEnum):
@@ -55,7 +55,7 @@ class ConnectionInfo:
 	port number and security settings. Provides methods for URL generation and parsing.
 
 	:param hostname: Remote host address to connect to
-	:param mode: Connection mode (master/slave)
+	:param mode: Connection mode (leader/follower)
 	:param key: Authentication key for securing the connection
 	:param port: Port number to use for connection, defaults to SERVER_PORT
 	:param insecure: Allow insecure connections without SSL/TLS, defaults to False
@@ -145,8 +145,10 @@ class ConnectionInfo:
 
 		:return: URL string with opposite connection mode
 		"""
-		# Flip master/slave for connection URL
-		connect_mode = ConnectionMode.SLAVE if self.mode == ConnectionMode.MASTER else ConnectionMode.MASTER
+		# Flip leader/follower for connection URL
+		connect_mode = (
+			ConnectionMode.FOLLOWER if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
+		)
 		return self._build_url(connect_mode)
 
 	def getURL(self) -> str:

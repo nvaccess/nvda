@@ -17,40 +17,40 @@ Core Operation:
 
 Connection Roles:
 --------------
-Master (Controlling)
+Leader (Controlling)
 	- Captures and forwards input
 	- Receives remote output (speech/braille)
 	- Manages connection state
 	- Patches input handling
 
-Slave (Controlled)
+Follower (Controlled)
 	- Executes received commands
-	- Forwards output to master(s)
-	- Tracks connected masters
+	- Forwards output to leader(s)
+	- Tracks connected leaders
 	- Patches output handling
 
 Key Components:
 ------------
-RemoteSession
+:class:`RemoteSession`
 	Base session managing shared functionality:
 	- Message handler registration
 	- Connection validation
 	- Version compatibility
 	- MOTD handling
 
-MasterSession
+:class:`LeaderSession`
 	Controls remote instance:
 	- Input capture/forwarding
 	- Remote output reception
 	- Connection management
-	- Master-specific patches
+	- Leader-specific patches
 
-SlaveSession
+:class:`FollowerSession`
 	Controlled by remote instance:
 	- Command execution
 	- Output forwarding
-	- Multi-master support
-	- Slave-specific patches
+	- Multi-leader support
+	- Follower-specific patches
 
 Thread Safety:
 ------------
@@ -92,7 +92,7 @@ EXCLUDED_SPEECH_COMMANDS = (
 
 
 class RemoteSession:
-	"""Base class for a session that runs on either the master or slave machine.
+	"""Base class for a session that runs on either the leader or follower machine.
 
 	:param localMachine: Interface to control local NVDA instance
 	:param transport: Network transport layer instance
@@ -105,7 +105,7 @@ class RemoteSession:
 
 	transport: RelayTransport  # The transport layer handling network communication
 	localMachine: LocalMachine  # Interface to control the local NVDA instance
-	# Session mode - either 'master' or 'slave'
+	# Session mode - either 'leader' or 'follower'
 	mode: connectionInfo.ConnectionMode | None = None
 	callbacksAdded: bool = False  # Whether callbacks are currently registered
 
@@ -237,23 +237,23 @@ Please use a different server."""),
 		self.close()
 
 
-class SlaveSession(RemoteSession):
-	"""Session that runs on the controlled (slave) NVDA instance.
+class FollowerSession(RemoteSession):
+	"""Session that runs on the controlled (follower) NVDA instance.
 
-	:ivar masters: Information about connected master clients
-	:ivar masterDisplaySizes: Braille display sizes of connected masters
+	:ivar leaders: Information about connected leader clients
+	:ivar leaderDisplaySizes: Braille display sizes of connected leaders
 	:note: Handles:
-	    - Command execution from masters
-	    - Output forwarding to masters
-	    - Multi-master connections
+	    - Command execution from leaders
+	    - Output forwarding to leaders
+	    - Multi-leader connections
 	    - Braille display coordination
 	"""
 
-	# Connection mode - always 'slave'
-	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.SLAVE
-	# Information about connected master clients
-	masters: dict[int, dict[str, Any]]
-	masterDisplaySizes: list[int]  # Braille display sizes of connected masters
+	# Connection mode - always follower
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.FOLLOWER
+	# Information about connected leader clients
+	leaders: dict[int, dict[str, Any]]
+	leaderDisplaySizes: list[int]  # Braille display sizes of connected leaders
 
 	def __init__(
 		self,
@@ -265,8 +265,8 @@ class SlaveSession(RemoteSession):
 			RemoteMessageType.KEY,
 			self.localMachine.sendKey,
 		)
-		self.masters = defaultdict(dict)
-		self.masterDisplaySizes = []
+		self.leaders = defaultdict(dict)
+		self.leaderDisplaySizes = []
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
 			RemoteMessageType.CHANNEL_JOINED,
@@ -322,9 +322,9 @@ class SlaveSession(RemoteSession):
 
 	def handleClientConnected(self, client: dict[str, Any]) -> None:
 		super().handleClientConnected(client)
-		if client["connection_type"] == "master":
-			self.masters[client["id"]]["active"] = True
-		if self.masters:
+		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
+			self.leaders[client["id"]]["active"] = True
+		if self.leaders:
 			self.registerCallbacks()
 
 	def handleChannelJoined(
@@ -353,23 +353,23 @@ class SlaveSession(RemoteSession):
 		1. Plays a connection sound cue
 		2. Removes any NVDA patches
 		"""
-		log.info("Transport disconnected from slave session")
+		log.info("Transport disconnected from follower session")
 		cues.clientDisconnected()
 
 	def handleClientDisconnected(self, client: dict[str, Any]) -> None:
 		super().handleClientDisconnected(client)
-		if client["connection_type"] == "master":
-			log.info("Master client disconnected: %r", client)
-			del self.masters[client["id"]]
-		if not self.masters:
+		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
+			log.info("Leader client disconnected: %r", client)
+			del self.leaders[client["id"]]
+		if not self.leaders:
 			self.unregisterCallbacks()
 
 	def setDisplaySize(self, sizes: list[int] | None = None) -> None:
-		self.masterDisplaySizes = (
-			sizes if sizes else [info.get("braille_numCells", 0) for info in self.masters.values()]
+		self.leaderDisplaySizes = (
+			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
-		log.debug("Setting slave display size to: %r", self.masterDisplaySizes)
-		self.localMachine.setBrailleDisplay_size(self.masterDisplaySizes)
+		log.debug("Setting follower display size to: %r", self.leaderDisplaySizes)
+		self.localMachine.setBrailleDisplay_size(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
 		self,
@@ -377,10 +377,10 @@ class SlaveSession(RemoteSession):
 		numCells: int = 0,
 		origin: int | None = None,
 	) -> None:
-		if not self.masters.get(origin):
+		if not self.leaders.get(origin):
 			return
-		self.masters[origin]["braille_name"] = name
-		self.masters[origin]["braille_numCells"] = numCells
+		self.leaders[origin]["braille_name"] = name
+		self.leaders[origin]["braille_numCells"] = numCells
 		self.setDisplaySize()
 
 	def _filterUnsupportedSpeechCommands(self, speechSequence: list[Any]) -> list[Any]:
@@ -395,10 +395,10 @@ class SlaveSession(RemoteSession):
 		return list([item for item in speechSequence if not isinstance(item, EXCLUDED_SPEECH_COMMANDS)])
 
 	def sendSpeech(self, speechSequence: list[Any], priority: str | None) -> None:
-		"""Forward speech output to connected master instances.
+		"""Forward speech output to connected leader instances.
 
 		Filters the speech sequence for supported commands and sends it
-		to master instances for speaking.
+		to leader instances for speaking.
 		"""
 		self.transport.send(
 			RemoteMessageType.SPEAK,
@@ -409,31 +409,31 @@ class SlaveSession(RemoteSession):
 		)
 
 	def pauseSpeech(self, switch: bool) -> None:
-		"""Toggle speech pause state on master instances."""
+		"""Toggle speech pause state on leader instances."""
 		self.transport.send(type=RemoteMessageType.PAUSE_SPEECH, switch=switch)
 
 	def display(self, cells: list[int]) -> None:
-		"""Forward braille display content to master instances.
+		"""Forward braille display content to leader instances.
 
-		Only sends braille data if there are connected masters with braille displays.
+		Only sends braille data if there are connected leaders with braille displays.
 		"""
 		# Only send braille data when there are controlling machines with a braille display
-		if self.hasBrailleMasters():
+		if self.hasBrailleLeaders():
 			self.transport.send(type=RemoteMessageType.DISPLAY, cells=cells)
 
-	def hasBrailleMasters(self) -> bool:
-		"""Check if any connected masters have braille displays.
+	def hasBrailleLeaders(self) -> bool:
+		"""Check if any connected leaders have braille displays.
 
 		Returns:
-				True if at least one master has a braille display with cells > 0
+				True if at least one leader has a braille display with cells > 0
 		"""
-		return bool([i for i in self.masterDisplaySizes if i > 0])
+		return bool([i for i in self.leaderDisplaySizes if i > 0])
 
 
-class MasterSession(RemoteSession):
-	"""Session that runs on the controlling (master) NVDA instance.
+class LeaderSession(RemoteSession):
+	"""Session that runs on the controlling (leader) NVDA instance.
 
-	:ivar slaves: Information about connected slave clients
+	:ivar followers: Information about connected follower clients
 	:note: Handles:
 	    - Control command sending
 	    - Remote output reception
@@ -443,8 +443,8 @@ class MasterSession(RemoteSession):
 	    - Input handling patches
 	"""
 
-	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.MASTER
-	slaves: dict[int, dict[str, Any]]  # Information about connected slave
+	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.LEADER
+	followers: dict[int, dict[str, Any]]  # Information about connected follower
 
 	def __init__(
 		self,
@@ -452,7 +452,7 @@ class MasterSession(RemoteSession):
 		transport: RelayTransport,
 	) -> None:
 		super().__init__(localMachine, transport)
-		self.slaves = defaultdict(dict)
+		self.followers = defaultdict(dict)
 		self.transport.registerInbound(
 			RemoteMessageType.SPEAK,
 			self.localMachine.speak,
@@ -524,10 +524,10 @@ class MasterSession(RemoteSession):
 			self.handleClientConnected(client)
 
 	def handleClientConnected(self, client=None):
-		hasSlaves = bool(self.slaves)
+		hasFollowers = bool(self.followers)
 		super().handleClientConnected(client)
 		self.sendBrailleInfo()
-		if not hasSlaves:
+		if not hasFollowers:
 			self.registerCallbacks()
 
 	def handleClientDisconnected(self, client=None):
@@ -535,7 +535,7 @@ class MasterSession(RemoteSession):
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
-		if self.callbacksAdded and not self.slaves:
+		if self.callbacksAdded and not self.followers:
 			self.unregisterCallbacks()
 
 	def sendBrailleInfo(
@@ -548,7 +548,7 @@ class MasterSession(RemoteSession):
 		if displaySize is None:
 			displaySize = braille.handler.displaySize
 		log.debug(
-			"Sending braille info to slave - display: %s, size: %d",
+			"Sending braille info to follower - display: %s, size: %d",
 			display.name if display else "None",
 			displaySize if displaySize else 0,
 		)
