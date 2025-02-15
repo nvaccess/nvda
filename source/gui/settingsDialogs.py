@@ -1661,6 +1661,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		# Translators: This is a label appearing on the voice settings panel.
 		"Configures the voice settings for the selected speech synthesizer.",
 	)
+
 	@property
 	def driver(self):
 		synth: SynthDriver = getSynth()
@@ -3036,8 +3037,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 	panelDescription = _(
 		# Translators: This is a label appearing on the document navigation settings panel.
-		"Configures options for document navigation."
-		"You can control how paragraphs are detected.",
+		"Configures options for document navigation." "You can control how paragraphs are detected.",
 	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
