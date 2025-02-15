@@ -1170,14 +1170,16 @@ def speak(  # noqa: C901
 			)
 			if not inCharacterMode:
 				speechSequence[index] += CHUNK_SEPARATOR
-				if curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage) and languageHandler.getLanguageDescription(curLanguage) not in speechSequence:
+				if (
+					curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
+					and languageHandler.getLanguageDescription(curLanguage) not in speechSequence
+				):
 					speechSequence.insert(0, LangChangeCommand(defaultLanguage))
 					speechSequence.insert(1, languageHandler.getLanguageDescription(curLanguage))
 					if not languageIsSupported(curLanguage):
 						log.debugWarning(f"{curLanguage} not supported in {getSynth().name}")
 	_speechState.lastReportedLanguage = curLanguage
 	_manager.speak(speechSequence, priority)
-
 
 
 def languageIsSupported(language: str | None) -> bool:
