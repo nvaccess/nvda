@@ -277,6 +277,27 @@ class OutputMode(DisplayStringIntFlag):
 		}
 
 
+@unique
+class ColorTheme(DisplayStringStrEnum):
+	"""Enumeration for what foreground and background colors to use."""
+
+	AUTO = "auto"
+	DARK = "dark"
+	LIGHT = "light"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: One of the color theme choices in the visual settings category panel (this choice uses the system's Dark Mode setting).
+			self.AUTO: _("Auto"),
+			# Translators: One of the color theme choices in the visual settings category panel (this choice uses light background with dark text).
+			self.LIGHT: _("Light"),
+			# Translators: One of the color theme choices in the visual settings category panel (this choice uses dark background with light text).
+			self.DARK: _("Dark"),
+		}
+
+
+@unique
 class ParagraphStartMarker(DisplayStringStrEnum):
 	NONE = ""
 	SPACE = " "
