@@ -725,12 +725,12 @@ void SilencePlayer::generateWhiteNoise(float volume) {
 	if (volume == 0) {
 		return;
 	}
-	UINT32 n = whiteNoiseData.size();
+	size_t n = whiteNoiseData.size();
 	const double mean = 0.0;
 	const double stddev = volume * 256;
 	std::default_random_engine generator;
 	std::normal_distribution<double> dist(mean, stddev);
-	for (UINT32 i = 0; i < n; i++) {
+	for (size_t i = 0; i < n; i++) {
 		whiteNoiseData[i] = (INT16)dist(generator);
 	}
 }
