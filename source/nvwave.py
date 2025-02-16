@@ -497,7 +497,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 			if player._lastActiveTime <= threshold:
 				try:
 					NVDAHelper.localLib.wasPlay_idle(player._player)
-					player.startTrimmingLeadingSilence()
+					if player._enableTrimmingLeadingSilence:
+						player.startTrimmingLeadingSilence()
 				except OSError:
 					# #16125: IAudioClock::GetPosition sometimes fails with an access
 					# violation on a device which has been invalidated. This shouldn't happen
