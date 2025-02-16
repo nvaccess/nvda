@@ -266,6 +266,7 @@ class SynthDriver(SynthDriver):
 		"""
 		self._pitch = 50
 		self._rate = 50
+		self._volume = 100
 		self.player = None
 		self.isSpeaking = False
 		self._rateBoost = False
@@ -312,7 +313,7 @@ class SynthDriver(SynthDriver):
 		return self._pitch
 
 	def _get_volume(self) -> int:
-		return self.tts.volume
+		return self._volume
 
 	def _get_voice(self):
 		return self.tts.voice.Id
@@ -356,6 +357,7 @@ class SynthDriver(SynthDriver):
 		self._pitch = value
 
 	def _set_volume(self, value):
+		self._volume = value
 		self.tts.Volume = value
 
 	def _initTts(self, voice=None):
@@ -411,6 +413,9 @@ class SynthDriver(SynthDriver):
 			# Voice not found.
 			return
 		self._initTts(voice=voice)
+		# As _initTts resets the voice parameters on the tts object, set them back to current values.
+		self._set_rate(self._rate)
+		self._set_volume(self._volume)
 
 	def _percentToPitch(self, percent):
 		return percent // 2 - 25
