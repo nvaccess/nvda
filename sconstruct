@@ -108,7 +108,7 @@ vars.Add(
 # Base environment for this and sub sconscripts
 env = Environment(
 	variables=vars,
-	HOST_ARCH="x86_64",
+	HOST_ARCH="x86",
 	tools=[
 		"textfile",
 		"gettextTool",
