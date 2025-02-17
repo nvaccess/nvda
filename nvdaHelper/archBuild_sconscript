@@ -239,4 +239,4 @@ if TARGET_ARCH in ("x86_64", "arm64"):
 
 if TARGET_ARCH == "x86_64":
 	thirdPartyEnv.SConscript("espeak/sconscript")
-	# thirdPartyEnv.SConscript("liblouis/sconscript")
+	thirdPartyEnv.SConscript("liblouis/sconscript")
