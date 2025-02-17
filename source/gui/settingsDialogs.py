@@ -352,7 +352,7 @@ class SettingsPanel(
 
 	To use this panel:
 		* Set L{title} to the title of the category.
-		* Set l{panelDescription} describe the purpose of the category.
+		* Set :attr:`panelDescription` describe the purpose of the category.
 		* Override L{makeSettings} to populate a given sizer with the settings controls.
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
@@ -360,8 +360,8 @@ class SettingsPanel(
 		* Optionally, extend one or both of L{isValid} or L{postSave} to perform validation before or steps after saving, respectively.
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
-	@ivar panelDescription: The description NVDA reads when the user is selecting the category.
 	@type title: str
+	.. attribute: `panelDescription`: The description NVDA reads when the user is selecting the category.
 	"""
 
 	title = ""
@@ -790,7 +790,7 @@ class GeneralSettingsPanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is a label appearing on the general settings panel.
 		"Configures general settings like the log level and options for starting and terminating NVDA."
-		" You will also find the settings about the updater here.",
+		" You will also find the settings related to updating NVDA here.",
 	)
 
 	LOG_LEVELS = (
@@ -1179,8 +1179,8 @@ class SpeechSettingsPanel(SettingsPanel):
 	helpId = "SpeechSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the speech settings panel.
-		"Configures the synthesizer, the voice, variant and other aspects of speech output."
-		" You can also tune how to read text in other languages and other options.",
+		"Configures the synthesizer, the voice, variant and other aspects of speech output. "
+		"This includes settings for how NVDA reads symbols and text in other languages. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -1967,8 +1967,8 @@ class KeyboardSettingsPanel(SettingsPanel):
 	helpId = "KeyboardSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the keyboard settings panel.
-		"Configures the various settings that influence keyboard behaviour."
-		" These settings also control how speech output is treated when typing.",
+		"Configures the various settings that influence keyboard behaviour. "
+		"These settings also control how speech output is treated when typing. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -2236,7 +2236,7 @@ class ReviewCursorPanel(SettingsPanel):
 	helpId = "ReviewCursorSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the cursor settings panel.
-		"Configures tracking of focus, cursor and mouse with the NVDA cursor.",
+		"Configures tracking of focus, cursor and mouse with the NVDA cursors. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -3037,7 +3037,7 @@ class DocumentNavigationPanel(SettingsPanel):
 	helpId = "DocumentNavigation"
 	panelDescription = _(
 		# Translators: This is a label appearing on the document navigation settings panel.
-		"Configures options for document navigation." "You can control how paragraphs are detected.",
+		"Configures options impacting how you navigate in a document with the cursor. ",
 	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
@@ -3290,7 +3290,7 @@ class AddonStorePanel(SettingsPanel):
 	helpId = "AddonStoreSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the addon store settings panel.
-		"Configures how to handle updates in the addon store.",
+		"Configures the Add-on Store, including how to handle updates. ",
 	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
@@ -3407,8 +3407,8 @@ class TouchInteractionPanel(SettingsPanel):
 	helpId = "TouchInteraction"
 	panelDescription = _(
 		# Translators: This is a label appearing on the touch interaction settings panel.
-		"Configures touch interaction."
-		" If this category is visible then your system supports touch interaction.",
+		"Configures touch interaction (where available)."
+		"Includes enabling touch interaction support and setting the touch typing mode. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -3437,8 +3437,8 @@ class UwpOcrPanel(SettingsPanel):
 	helpId = "Win10OcrSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the windows OCR settings panel.
-		"Configures text recognition from images."
-		" You can set your prefered language for recognized text here.",
+		"Configures text recognition from images. "
+		"You can set your preferred language for recognized text here. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -4199,7 +4199,7 @@ class BrailleSettingsPanel(SettingsPanel):
 	helpId = "BrailleSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the braille settings panel.
-		"Configures various settings for braille in and output."
+		"Configures various settings for braille input and output."
 		" You can set which braille table to be used and other options.",
 	)
 
