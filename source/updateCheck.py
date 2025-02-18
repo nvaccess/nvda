@@ -119,6 +119,8 @@ class UpdateInfo:
 
 	launcherInteractiveUrl: str | None = None
 	"""URL to download the update from the NV Access website, if available."""
+
+	@classmethod
 	def parseUpdateCheckResponse(cls, data: str) -> Self:
 		"""Parses the update response and returns an UpdateInfo object.
 
