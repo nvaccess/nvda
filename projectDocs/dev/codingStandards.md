@@ -1,5 +1,7 @@
 ## Code Style
 
+In general, Python contributions to NVDA should follow the [PEP8 style guide](https://peps.python.org/pep-0008/), except where it contradicts the specific guidance below.
+
 Python code style is enforced with the Ruff linter, see [linting](../testing/automated.md#linting-your-changes) for more information.
 
 ### Encoding
