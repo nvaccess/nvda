@@ -64,9 +64,27 @@ Some comments provide an example output message to help you understand what NVDA
 
 ## Translating NVDA's interface
 
-* Download nvda.po from the Files section of your language on Crowdin.
-* Open the po file in Poedit, translate, and save the file.
-* Upload the po file back to Crowdin.
+* Download the po file for your language from  Crowdin using NVA's l10nUtil.exe:
+```
+l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
+```
+E.g.
+```
+l10nUtil.exe downloadTranslationFile fr nvda.po
+```
+The first time you will be asked for an authorization token.
+Please visit https://crowdin.com/settings#api-key
+And create a personal access token and paste this into the user prompt.
+this will be saved in ~/.nvda_crowdin for future use.
+* Open the xliff file in Poedit, translate, and save the file.
+* Upload the translated file using l10nUtil
+```
+l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
+```
+E.g.
+```
+l10nUtil.exe uploadTranslationFile fr nvda.po
+```
 
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
@@ -163,15 +181,29 @@ Documentation available for translation includes:
 
 To translate any of these files:
 
-* Download the xliff file from the Files section of your language on Crowdin.
-    * Make sure to choose "Download" not "Export xliff".
-* Make a copy of this file.
+* Download the xliff file for your language from  Crowdin using NVA's l10nUtil.exe:
+```
+l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
+```
+E.g.
+```
+l10nUtil.exe downloadTranslationFile fr userGuide.xliff
+```
+The first time you will be asked for an authorization token.
+Please visit https://crowdin.com/settings#api-key
+And create a personal access token and paste this into the user prompt.
+this will be saved in ~/.nvda_crowdin for future use.
+* Make a copy of the downloaded file.
 * Open the xliff file in Poedit, translate, and save the file.
-* Use the NVDA l10nUtil program to strip the xliff so that it only contains translations that were added / changed. E.g.
+* Upload the translated file using l10nUtil
 ```
-l10nUtil.exe stripXliff -o <old xliff file> <translated xliff file> <output stripped xliff file>
+l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>] [--old <oldLocalFilepath>]
 ```
-* Upload the xliff file back to Crowdin. If it is a stripped xliff file, it is safe to check the `allow target to match source` checkbox.
+E.g.
+```
+l10nUtil.exe uploadTranslationFile fr userGuide.xliff --old userGuide_backup.xliff
+```
+This will only upload added / changed translations since you downloaded the file. 
 
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
