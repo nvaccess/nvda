@@ -855,6 +855,8 @@ def _loadTablesFromManifestSection(source: str, directory: str, tablesDict: dict
 
 
 def initialize():
+	if config.isAppX or globalVars.appArgs.disableAddons:
+		return
 	# The builtin tables were added at import time to the parent map.
 	# Now, add the custom tables to the first map.
 	import addonHandler
@@ -890,15 +892,13 @@ def initialize():
 						return
 					if (res := manifest.validate(Validator(), preserve_errors=True)) is not True:
 						raise ValueError(f"Errors in scratchpad manifest: {flatten_errors(manifest, res)}")
-					log.debug(f"Found {len(tablesDict)} braille table entries in manifest for scratchpad")
+					log.debug(f"Found {len(section)} braille table entries in manifest for scratchpad")
 					_loadTablesFromManifestSection(TableSource.SCRATCHPAD, directory, section)
 			except Exception:
 				log.exception(
 					"Error while applying custom braille tables config from scratchpad manifest: "
 					f"{manifestPath}",
 				)
-	if config.conf["braille"]["translationTable"] == "auto":
-		config.conf["braille"]["translationTable"] = getDefaultTableForCurLang(TableType.OUTPUT)
 
 
 def terminate():

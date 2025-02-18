@@ -133,10 +133,10 @@ The setup file is named "nvda_2022.1.exe" or similar.
 The year and version changes between updates to reflect the current release.
 
 1. Run the downloaded file.
-Music plays while a temporary copy of NVDA loads.
+You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
 1. The NVDA Launcher window appears with the license agreement.
-Press `downArrow` to read the license agreement if desired.
+Press the `downArrow` to read the license agreement.
 1. Press `tab` to move to the "I agree" checkbox, then press the `spacebar` to check it.
 1. Press `tab` to move through the options, then press `enter` on the desired option.
 
@@ -247,8 +247,8 @@ The actual commands will not execute while in input help mode.
 
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
-|Speak typed characters |`NVDA+2` |`NVDA+2` |When enabled, NVDA will announce all characters you type on the keyboard.|
-|Speak typed words |`NVDA+3` |`NVDA+3` |When enabled, NVDA will announce word you type on the keyboard.|
+|Speak typed characters |`NVDA+2` |`NVDA+2` |Controls when NVDA announces characters you type. |
+|Speak typed words |`NVDA+3` |`NVDA+3` |Controls when NVDA announces words you type. |
 |Speak command keys |`NVDA+4` |`NVDA+4` |When enabled, NVDA will announce all non-character keys you type on the keyboard. This includes key combinations such as control plus another letter.|
 |Enable mouse tracking |`NVDA+m` |`NVDA+m` |When enabled, NVDA will announce the text currently under the mouse pointer, as you move it around the screen. This allows you to find things on the screen, by physically moving the mouse, rather than trying to find them through object navigation.|
 
@@ -843,6 +843,8 @@ The following commands are available for reviewing text:
 |Move to end of line in review |shift+numpad3 |NVDA+end |none |Moves the review cursor to the end of the current line of text|
 |Move to previous page in review |`NVDA+pageUp` |`NVDA+shift+pageUp` |none |Moves the review cursor to the previous page of text if supported by the application|
 |Move to next page in review |`NVDA+pageDown` |`NVDA+shift+pageDown` |none |Moves the review cursor to the next page of text if supported by the application|
+|Move to start of selection in review |NVDA+alt+home |NVDA+alt+home |none |Moves the review cursor to the first character of the selected text|
+|Move to end of selection in review |NVDA+alt+end |NVDA+alt+end |none |Moves the review cursor to the last character of the selected text|
 |Say all with review |numpadPlus |NVDA+shift+a |3-finger flick down (text mode) |Reads from the current position of the review cursor, moving it as it goes|
 |Select then Copy from review cursor |NVDA+f9 |NVDA+f9 |none |Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is|
 |Select then Copy to review cursor |NVDA+f10 |NVDA+f10 |none |On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system caret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard|
@@ -1844,6 +1846,18 @@ If you wish to change the update mirror, press the "Change..." button to open th
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
 
+##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurnOff}
+
+This option ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
+This avoids the situation where the screen unexpectedly locks during a say all.
+This option is enabled by default.
+Consider disabling this option if you are suffering from a shorter battery life.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->
@@ -2076,6 +2090,7 @@ The next option you will come to in this category is the braille output table co
 In this combo box, you will find braille tables for different languages, braille standards and grades.
 The chosen table will be used to translate text into braille to be presented on your braille display.
 You can move from braille table to braille table in the list by using the arrow keys.
+If you select "Automatic", the table will be selected according with NVDA's current language.
 
 ##### Input Table {#BrailleSettingsInputTable}
 
@@ -2278,6 +2293,12 @@ If this is enabled, NVDA will automatically speak the character at the cursor wh
 
 To toggle this option from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
+##### Speak when navigating by line or paragraph {#BrailleSpeakOnNavigating}
+
+Enabling this option will cause NVDA to speak lines or paragraphs reached using the braille display's navigation controls.
+
+To toggle this option from anywhere, please assign a custom gesture to "speakOnNavigatingByUnit" in the "Braille" section of the [Input Gestures dialog](#InputGestures).
+
 ##### Avoid splitting words when possible {#BrailleSettingsWordWrap}
 
 If this is enabled, a word which is too large to fit at the end of the braille display will not be split.
@@ -2410,13 +2431,11 @@ It is not possible to support audio ducking for portable and temporary copies of
 When this option is enabled, the volume of NVDA sounds and beeps will follow the volume setting of the voice you are using.
 If you decrease the volume of the voice, the volume of sounds will decrease.
 Similarly, if you increase the volume of the voice, the volume of sounds will increase.
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Volume of NVDA sounds {#SoundVolume}
 
 This slider allows you to set the volume of NVDA sounds and beeps.
 This setting only takes effect when "Volume of NVDA sounds follows voice volume" is disabled.
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Sound split {#SelectSoundSplitMode}
 
@@ -2447,8 +2466,6 @@ For example, if an application is playing a stereo sound track while sound split
 
 If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
 
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
-
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
 In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
@@ -2463,13 +2480,12 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 
 ##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
 
 | . {.hideHeaderRow} |.|
 |---|---|
-|Options |No, Yes|
+|Options |Default (No), No, Yes|
 |Default |No|
 
 This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
@@ -2480,34 +2496,21 @@ Possible values are:
 * Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
 Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
 
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
 While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
 
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
-This volume can also be controlled via the following keyboard commands from anywhere:
 
-| Name | Key | Description |
-|---|---|---|
-| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
-| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+To increase or decrease the volume of all currently running applications from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
 
 ##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
 
-The following keyboard command can also be used from anywhere:
+To mute or unmute all other applications from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
 
-| Name | Key | Description |
-|---|---|---|
-| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
-
-Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
-
-This option is not available if you have started NVDA with [WASAPI disabled for audio output](#WASAPI) in Advanced Settings.
+Please note that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
@@ -2589,17 +2592,27 @@ If no key is chosen as the NVDA key it may be impossible to access many NVDA com
 
 ##### Speak Typed Characters {#KeyboardSettingsSpeakTypedCharacters}
 
-Key: NVDA+2
+Key: `NVDA+2`
 
-When enabled, NVDA will announce all characters you type on the keyboard.
+This option controls when NVDA announces characters you type on the keyboard.
+The available options are:
+
+* Off: NVDA will not announce typed characters.
+* Only in edit controls: NVDA will only announce characters typed in edit controls and other areas where text can be typed.
+* Always: NVDA will announce all typed characters.
 
 <!-- KC:setting -->
 
 ##### Speak Typed Words {#KeyboardSettingsSpeakTypedWords}
 
-Key: NVDA+3
+Key: `NVDA+3`
 
-When enabled, NVDA will announce all words you type on the keyboard.
+This option controls when NVDA announces words you type on the keyboard.
+The available options are:
+
+* Off: NVDA will not announce typed words.
+* Only in edit controls: NVDA will only announce words typed in edit controls and other areas where text can be typed.
+* Always: NVDA will announce all typed words.
 
 ##### Speech interrupt for typed characters {#KeyboardSettingsSpeechInteruptForCharacters}
 
@@ -2945,18 +2958,6 @@ Enabled by default, this option allows you to choose if gestures (such as key pr
 As an example, if enabled and the letter j was pressed, it would be trapped from reaching the document, even though it is not a quick navigation command nor is it likely to be a command in the application itself.
 In this case NVDA will tell Windows to play a default sound whenever a key which gets trapped is pressed.
 
-<!-- KC:setting -->
-
-##### Automatically set system focus to focusable elements {#BrowseModeSettingsAutoFocusFocusableElements}
-
-Key: NVDA+8
-
-Disabled by default, this option allows you to choose if the system focus should automatically be set to elements that can take the system focus (links, form fields, etc.) when navigating content with the browse mode caret.
-Leaving this option disabled will not automatically focus focusable elements when they are selected with the browse mode caret.
-This might result in faster browsing experience and better responsiveness in browse mode.
-The focus will yet be updated to the particular element when interacting with it (e.g. pressing a button, checking a check box).
-Enabling this option may improve support for some websites at the cost of performance and stability.
-
 #### Document Formatting {#DocumentFormattingSettings}
 
 <!-- KC:setting -->
@@ -3079,8 +3080,8 @@ This category allows you to adjust the behaviour of the Add-on Store.
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
-Notifications will only occur for add-ons with updates available within the same channel.
-For example, for installed beta add-ons, you will only be notified of updates within the beta channel.
+By default, notifications will only occur for add-ons with updates available within the same [channel](#AddonStoreFilterChannel) (e.g. stable, beta or dev).
+You can configure add-on update channels [individually for each add-on](#AddonStoreUpdateChannel) or for [all add-ons](#DefaultAddonUpdateChannel).
 
 | . {.hideHeaderRow} |.|
 |---|---|
@@ -3091,6 +3092,28 @@ For example, for installed beta add-ons, you will only be notified of updates wi
 |---|---|
 |Notify |Notify when updates are available to add-ons within the same channel |
 |Disabled |Do not automatically check for updates to add-ons |
+
+##### Default Update Channel {#DefaultAddonUpdateChannel}
+
+When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, by default, add-ons only update to the same [channel](#AddonStoreFilterChannel).
+For example, an installed beta version will only update to a newer beta version.
+This option sets the default update channel for all add-ons.
+You can also change the update channel for a [specific add-on individually from the Add-on Store](#AddonStoreUpdateChannel).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+| Options | Same (Default), Any, Do not update, Stable, Beta or dev, Beta, Dev |
+| Default | Same |
+
+| Option | Behaviour |
+|---|---|
+| Same | Add-ons will remain on their channel |
+| Any | Add-ons will automatically update to the latest version, regardless of channel |
+| Do not update | Add-ons will not automatically update by default, you must enable them individually |
+| Stable | Add-ons will automatically update to stable versions |
+| Beta or dev | Add-ons will automatically update to beta or dev versions |
+| Beta | Add-ons will automatically update to beta versions |
+| Dev | Add-ons will automatically update to dev versions |
 
 ##### Mirror server {#AddonStoreMetadataMirror}
 
@@ -3332,6 +3355,12 @@ This option enables behaviour which attempts to cancel speech for expired focus 
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is enabled by default as of NVDA 2021.1.
 
+##### Trim leading silence in speech audio {#TrimLeadingSilenceSpeech}
+
+When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
+This option is enabled by default, and should only affect the silence at the beginning of speech.
+If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -3343,21 +3372,6 @@ This option enables reporting when colors are transparent, useful for addon/appM
 Some GDI applications will highlight text with a background color, NVDA (via display model) attempts to report this color.
 In some situations, the text background may be entirely transparent, with the text layered on some other GUI element.
 With several historically popular GUI APIs, the text may be rendered with a transparent background, but visually the background color is accurate.
-
-##### Use WASAPI for audio output {#WASAPI}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
-
-This option enables audio output via the Windows Audio Session API (WASAPI).
-WASAPI is a more modern audio framework which may improve the responsiveness, performance and stability of NVDA audio output, including both speech and sounds.
-After changing this option, you will need to restart NVDA for the change to take effect.
-Disabling WASAPI will disable the following options:
-
-* [Volume of NVDA sounds follows voice volume](#SoundVolumeFollowsVoice)
-* [Volume of NVDA sounds](#SoundVolume)
 
 ##### Debug logging categories {#AdvancedSettingsDebugLoggingCategories}
 
@@ -3450,7 +3464,7 @@ You can remove a symbol you previously added by pressing the Remove button.
 When you are finished, press the OK button to save your changes or the Cancel button to discard them.
 
 In the case of complex symbols, the Replacement field may have to include some group references of the matched text. For instance, for a pattern matching a whole date, \1, \2, and \3 would need to appear in the field, to be replaced by the corresponding parts of the date.
-Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\b" should be typed in order to get the "a\b" replacement.
+Normal backslashes in the Replacement field should thus be doubled, e.g. "a\\\\b" should be typed in order to get the "a\\b" replacement.
 
 #### Input Gestures {#InputGestures}
 
@@ -3749,6 +3763,23 @@ This links to a GitHub Discussion webpage, where you will be able to read and wr
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
+#### Changing the automatic update channel (#AddonStoreUpdateChannel)
+
+You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
+When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
+From an add-on's actions menu, using the submenu "Update channel", you can modify the channels an add-on will automatically update to.
+
+| Option | Behaviour |
+|---|---|
+| Default | Add-on will follow the [default update channel](#DefaultAddonUpdateChannel) |
+| Same | Add-on will remain on the same channel |
+| Any | Add-on will automatically update to the latest version, regardless of channel |
+| Do not update | Add-on will not automatically update |
+| Stable | Add-on will automatically update to stable versions |
+| Beta or dev | Add-on will automatically update to beta or dev versions |
+| Beta | Add-on will automatically update to beta versions |
+| Dev | Add-on will automatically update to dev versions |
+
 ### Incompatible Add-ons {#incompatibleAddonsManager}
 
 Some older add-ons may no longer be compatible with the version of NVDA that you have.
@@ -3899,6 +3930,7 @@ There are also many variants which can be chosen to alter the sound of the voice
 SAPI 4 is an older Microsoft standard for software speech synthesizers.
 NVDA still supports this for users who already have SAPI 4 synthesizers installed.
 However, Microsoft no longer support this and needed components are no longer available from Microsoft.
+Support for SAPI4 will be removed in NVDA 2026.1.
 
 When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.
 
@@ -5218,7 +5250,7 @@ Secure mode disables:
 * The [NVDA Python console](#PythonConsole)
 * The [Log Viewer](#LogViewer) and logging
 * The [Braille Viewer](#BrailleViewer) and [Speech Viewer](#SpeechViewer)
-* Opening external documents from the NVDA menu, such as the user guide or contributors file.
+* Opening external documents from the NVDA menu, such as the user guide file.
 
 Installed copies of NVDA store their configuration including add-ons in `%APPDATA%\nvda`.
 To prevent NVDA users from modifying their configuration or add-ons directly, user access to this folder must also be restricted.

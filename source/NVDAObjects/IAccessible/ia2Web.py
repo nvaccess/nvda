@@ -12,6 +12,7 @@ from typing import (
 )
 from ctypes import c_short
 from comtypes import COMError, BSTR
+from comtypes.hresult import E_NOTIMPL
 
 import oleacc
 from annotation import (
@@ -336,7 +337,13 @@ class Math(Ia2Web):
 			# Try the data-mathml attribute.
 			attrNames = (BSTR * 1)("data-mathml")
 			namespaceIds = (c_short * 1)(0)
-			attr = node.attributesForNames(1, attrNames, namespaceIds)
+			try:
+				attr = node.attributesForNames(1, attrNames, namespaceIds)
+			except COMError as e:
+				if e.hresult != E_NOTIMPL:
+					log.debugWarning(f"MathML getting attr error: {e}")
+					raise
+				attr = None
 			if attr:
 				import mathPres
 
@@ -344,7 +351,14 @@ class Math(Ia2Web):
 					attr = mathPres.insertLanguageIntoMath(attr, self.language)
 				return attr
 			if self.IA2Attributes.get("tag") != "math":
-				# This isn't MathML.
+				# Could be a <span> (etc) that has role = math -- check the child
+				# If there is a single <math> child, recurse on the assumption that is what was the intended math
+				mathObjs: list["NVDAObjects.NVDAObject"] = [
+					child for child in self.children if child.IA2Attributes.get("tag") == "math"
+				]
+				if len(mathObjs) == 1:
+					return mathObjs[0].mathMl
+				# This isn't MathML
 				raise LookupError
 			if self.language:
 				attrs = ' xml:lang="%s"' % self.language

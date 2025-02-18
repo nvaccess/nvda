@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2010-2023 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
+# Copyright (C) 2010-2025 NV Access Limited, Babbage B.V., Mozilla Corporation, Cyrille Bougot,
 # Leonard de Ruijter
 
 """Core framework for handling input from the user.
@@ -36,12 +36,12 @@ import speech
 import characterProcessing
 import config
 from fileUtils import FaultTolerantFile
+import systemUtils
 import watchdog
 from logHandler import log
 import globalVars
 import languageHandler
 import controlTypes
-import winKernel
 import extensionPoints
 from NVDAState import WritePaths
 
@@ -452,6 +452,22 @@ class GlobalGestureMap:
 		return NotImplemented
 
 
+decide_handleRawKey = extensionPoints.Decider()
+"""
+Notifies when a raw keyboard event is received, before any NVDA processing.
+Handlers can decide whether the key should be processed by NVDA and/or passed to the OS.
+:param vkCode: The virtual key code
+:type vkCode: int
+:param scanCode: The scan code
+:type scanCode: int
+:param extended: Whether this is an extended key
+:type extended: bool
+:param pressed: Whether this is a key press or release
+:type pressed: bool
+:return: True to allow normal processing, False to block the key
+:rtype: bool
+"""
+
 decide_executeGesture = extensionPoints.Decider()
 """
 Notifies when a gesture is about to be executed,
@@ -561,7 +577,7 @@ class InputManager(baseObject.AutoPropertyObject):
 			)
 
 		if gesture.shouldPreventSystemIdle:
-			winKernel.SetThreadExecutionState(winKernel.ES_SYSTEM_REQUIRED)
+			systemUtils.preventSystemIdle()
 
 		if log.isEnabledFor(log.IO) and not gesture.isModifier:
 			self._lastInputTime = time.time()

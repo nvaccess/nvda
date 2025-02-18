@@ -1,15 +1,18 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, Leonard de Ruijter
+
+from collections.abc import Callable, Generator
 import enum
 import typing
 import unittest
-from unittest.mock import MagicMock
+from unittest.mock import MagicMock, patch
 import io
 
 import configobj
 import configobj.validate
+from pycaw.constants import DEVICE_STATE
 
 from config import (
 	AggregatedSection,
@@ -24,10 +27,12 @@ from config.featureFlagEnums import (
 	BoolFlag,
 )
 from config.profileUpgradeSteps import (
+	_friendlyNameToEndpointId,
 	_upgradeConfigFrom_8_to_9_lineIndent,
 	_upgradeConfigFrom_8_to_9_cellBorders,
 	_upgradeConfigFrom_8_to_9_showMessages,
 	_upgradeConfigFrom_8_to_9_tetherTo,
+	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
 )
@@ -42,6 +47,7 @@ from config.configFlags import (
 from utils.displayString import (
 	DisplayStringEnum,
 )
+from utils.mmdevice import AudioOutputDevice
 
 
 class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
@@ -910,3 +916,130 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		self.testSection["someBool"] = False
 		# Since we set someBool to a different value, update the profile.
 		self.assertEqual(self.profile, {"someBool": False})
+
+
+_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[AudioOutputDevice]]
+
+
+def getOutputDevicesFactory(
+	devices: _DevicesT,
+) -> Callable[[DEVICE_STATE], Generator[AudioOutputDevice]]:
+	"""Create a callable that can be used to patch utils.mmdevice.getOutputDevices."""
+
+	def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[AudioOutputDevice]:
+		yield from devices.get(stateMask, [])
+
+	return getOutputDevices
+
+
+class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
+	DEFAULT_DEVICES: _DevicesT = {
+		DEVICE_STATE.ACTIVE: [AudioOutputDevice("id1", "Device 1")],
+		DEVICE_STATE.UNPLUGGED: [AudioOutputDevice("id2", "Device 2")],
+		DEVICE_STATE.DISABLED: [AudioOutputDevice("id3", "Device 3")],
+		DEVICE_STATE.NOTPRESENT: [AudioOutputDevice("id4", "Device 4")],
+	}
+
+	def test_noDuplicates(self):
+		"""Test that mapping from a friendly name to an endpoint ID works as expected when there are no duplicate friendly names."""
+		devices = self.DEFAULT_DEVICES
+		for devicesState, devicesInState in devices.items():
+			for device in devicesInState:
+				with self.subTest(id=device.id, FriendlyName=device.friendlyName, state=devicesState):
+					self.performTest(*device, devices)
+
+	def test_orderOfPrecedence(self):
+		"""Test that, when there are devices with duplicate names in different states, the one with the preferred state is returned."""
+		FRIENDLY_NAME = "Device friendly name"
+		devices: _DevicesT = {
+			DEVICE_STATE.ACTIVE: [AudioOutputDevice("idA", FRIENDLY_NAME)],
+			DEVICE_STATE.DISABLED: [AudioOutputDevice("idD", FRIENDLY_NAME)],
+			DEVICE_STATE.NOTPRESENT: [AudioOutputDevice("idN", FRIENDLY_NAME)],
+			DEVICE_STATE.UNPLUGGED: [AudioOutputDevice("idU", FRIENDLY_NAME)],
+		}
+		with self.subTest("Friendly name is active"):
+			self.performTest(*devices[DEVICE_STATE.ACTIVE][0], devices)
+		devices[DEVICE_STATE.ACTIVE].pop()
+		with self.subTest("Friendly name is unplugged"):
+			self.performTest(*devices[DEVICE_STATE.UNPLUGGED][0], devices)
+		devices[DEVICE_STATE.UNPLUGGED].pop()
+		with self.subTest("Friendly name is disabled"):
+			self.performTest(*devices[DEVICE_STATE.DISABLED][0], devices)
+		devices[DEVICE_STATE.DISABLED].pop()
+		with self.subTest("Friendly name is notpresent"):
+			self.performTest(*devices[DEVICE_STATE.NOTPRESENT][0], devices)
+		devices[DEVICE_STATE.NOTPRESENT].pop()
+
+	def test_nonexistant(self):
+		"""Test that attempting a match for a friendly name that no device has returns None."""
+		devices = self.DEFAULT_DEVICES
+		self.performTest(friendlyName="Nonexistant", expectedId=None, devices=devices)
+
+	def test_noDevices(self):
+		"""Test that attempting a match for a friendly name that no device has returns None."""
+		devices: _DevicesT = {}
+		self.performTest(friendlyName="Anything", expectedId=None, devices=devices)
+
+	def performTest(self, expectedId: str | None, friendlyName: str, devices: _DevicesT):
+		"""Patch utils.mmdevice.getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
+		The odd order of arguments is so you can directly unpack an AudioOutputDevice.
+		"""
+		with patch(
+			"utils.mmdevice.getOutputDevices",
+			autospec=True,
+			side_effect=getOutputDevicesFactory(devices),
+		):
+			self.assertEqual(_friendlyNameToEndpointId(friendlyName), expectedId)
+
+
+class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
+	def setUp(self):
+		devices: _DevicesT = {
+			DEVICE_STATE.ACTIVE: [AudioOutputDevice("id", "Friendly name")],
+		}
+		self._getOutputDevicesPatcher = patch(
+			"utils.mmdevice.getOutputDevices",
+			autospec=True,
+			side_effect=getOutputDevicesFactory(devices),
+		)
+		self._getOutputDevicesPatcher.start()
+		super().setUp()
+
+	def tearDown(self):
+		self._getOutputDevicesPatcher.stop()
+		super().tearDown()
+
+	def test_outputDeviceNotSet(self):
+		"""Test that upgrading with no output device set works."""
+		configString = ""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+		with self.assertRaises(KeyError):
+			profile["audio"]["outputDevice"]
+
+	def test_outputDeviceFound(self):
+		"""Test that upgrading the profile correctly creates the new key and value."""
+		configString = """
+		[speech]
+			outputDevice=Friendly name
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		self.assertEqual(profile["audio"]["outputDevice"], "id")
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+
+	def test_outputDeviceNotFound(self):
+		"""Test that upgrading the profile with an unidentifiable device doesn't create a new entry."""
+		configString = """
+		[speech]
+			outputDevice=Nonexistant device
+		"""
+		profile = _loadProfile(configString)
+		upgradeConfigFrom_13_to_14(profile)
+		with self.assertRaises(KeyError):
+			profile["speech"]["outputDevice"]
+		with self.assertRaises(KeyError):
+			profile["audio"]["outputDevice"]

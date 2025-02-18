@@ -1,19 +1,21 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot, Luke Davis
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Callable
 import os
 import ctypes
+import warnings
 import wx
 import wx.adv
 
 import globalVars
 import tones
 import ui
-from documentationUtils import getDocFilePath, reportNoDocumentation
+from documentationUtils import getDocFilePath, displayLicense, reportNoDocumentation
 from logHandler import log
 import config
 import versionInfo
@@ -30,6 +32,8 @@ from .message import (
 	# messageBox is accessed through `gui.messageBox` as opposed to `gui.message.messageBox` throughout NVDA,
 	# be cautious when removing
 	messageBox,
+	MessageDialog,
+	displayDialogAsModal,
 )
 from . import blockAction
 from .speechDict import (
@@ -285,7 +289,7 @@ class MainFrame(wx.Frame):
 					apiVersion=apiVersion,
 					backCompatTo=backCompatToAPIVersion,
 				)
-				runScriptModalDialog(confirmUpdateDialog)
+				runScriptModalDialog(confirmUpdateDialog, confirmUpdateDialog.callback)
 			else:
 				updateCheck.executePendingUpdate()
 
@@ -367,7 +371,7 @@ class MainFrame(wx.Frame):
 
 	def onAboutCommand(self, evt):
 		# Translators: The title of the dialog to show about info for NVDA.
-		messageBox(versionInfo.aboutMessage, _("About NVDA"), wx.OK)
+		MessageDialog(None, versionInfo.aboutMessage, _("About NVDA")).Show()
 
 	@blockAction.when(blockAction.Context.SECURE_MODE)
 	def onCheckForUpdateCommand(self, evt):
@@ -800,22 +804,9 @@ class SysTrayIcon(wx.adv.TaskBarIcon):
 
 			self.helpMenu.AppendSeparator()
 
-			# Translators: The label for the menu item to view NVDA License document.
+			# Translators: The label for the menu item to view the NVDA License.
 			item = self.helpMenu.Append(wx.ID_ANY, _("L&icense"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("copying.txt", False)),
-				item,
-			)
-			# Translators: The label for the menu item to view NVDA Contributors list document.
-			item = self.helpMenu.Append(wx.ID_ANY, _("C&ontributors"))
-			self.Bind(
-				wx.EVT_MENU,
-				lambda evt: systemUtils._displayTextFileWorkaround(getDocFilePath("contributors.txt", False)),
-				item,
-			)
-
-			self.helpMenu.AppendSeparator()
+			self.Bind(wx.EVT_MENU, lambda evt: displayLicense(), item)
 
 			# Translators: The label for the menu item to open NVDA Welcome Dialog.
 			item = self.helpMenu.Append(wx.ID_ANY, _("We&lcome dialog..."))
@@ -878,21 +869,24 @@ def showGui():
 	wx.CallAfter(mainFrame.showGui)
 
 
-def runScriptModalDialog(dialog, callback=None):
+def runScriptModalDialog(dialog: wx.Dialog, callback: Callable[[int], Any] | None = None):
 	"""Run a modal dialog from a script.
-	This will not block the caller,
-	but will instead call C{callback} (if provided) with the result from the dialog.
+	This will not block the caller, but will instead call callback (if provided) with the result from the dialog.
 	The dialog will be destroyed once the callback has returned.
-	@param dialog: The dialog to show.
-	@type dialog: C{wx.Dialog}
-	@param callback: The optional callable to call with the result from the dialog.
-	@type callback: callable
+
+	This function is deprecated.
+	Use :class:`message.MessageDialog` instead.
+
+	:param dialog: The dialog to show.
+	:param callback: The optional callable to call with the result from the dialog.
 	"""
+	warnings.warn(
+		"showScriptModalDialog is deprecated. Use an instance of message.MessageDialog and wx.CallAfter instead.",
+		DeprecationWarning,
+	)
 
 	def run():
-		mainFrame.prePopup()
-		res = dialog.ShowModal()
-		mainFrame.postPopup()
+		res = displayDialogAsModal(dialog)
 		if callback:
 			callback(res)
 		dialog.Destroy()

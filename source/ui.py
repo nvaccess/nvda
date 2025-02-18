@@ -21,6 +21,8 @@ from comtypes import IUnknown
 from comtypes import automation
 from comtypes import COMError
 from html import escape
+
+import nh3
 from logHandler import log
 import gui
 import speech
@@ -28,6 +30,7 @@ import braille
 from config.configFlags import TetherTo
 import globalVars
 from typing import Optional
+from collections.abc import Callable
 
 from utils.security import isRunningOnSecureDesktop
 
@@ -135,6 +138,7 @@ def browseableMessage(
 	isHtml: bool = False,
 	closeButton: bool = False,
 	copyButton: bool = False,
+	sanitizeHtmlFunc: Callable[[str], str] = nh3.clean,
 ) -> None:
 	"""Present a message to the user that can be read in browse mode.
 	The message will be presented in an HTML document.
@@ -144,6 +148,10 @@ def browseableMessage(
 	:param isHtml: Whether the message is html, defaults to False.
 	:param closeButton: Whether to include a "close" button, defaults to False.
 	:param copyButton: Whether to include a "copy" (to clipboard) button, defaults to False.
+	:param sanitizeHtmlFunc: How to sanitize the html message, if isHtml is True.
+	Defaults to `nh3.clean` with default arguments.
+	Ensure to sanitize the html message if the source of it could be untrusted.
+	Any translatable string, or user generated content should be sanitized.
 	"""
 	if isRunningOnSecureDesktop():
 		_warnBrowsableMessageNotAvailableOnSecureScreens(title)
@@ -179,10 +187,11 @@ def browseableMessage(
 	d.add("title", title)
 
 	if not isHtml:
-		message = f"<pre>{escape(message)}</pre>"
+		messageSanitized = f"<pre>{escape(message)}</pre>"
 	else:
-		log.warning("Passing raw HTML to ui.browseableMessage!")
-	d.add("message", message)
+		log.debug("Sanitizing raw HTML before passing to ui.browseableMessage")
+		messageSanitized = sanitizeHtmlFunc(message)
+	d.add("message", messageSanitized)
 
 	# Translators: A notice to the user that a copy operation succeeded.
 	d.add("copySuccessfulAlertText", _("Text copied."))

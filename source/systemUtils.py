@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2023 NV Access Limited, Łukasz Golonka, Luke Davis
+# Copyright (C) 2020-2025 NV Access Limited, Łukasz Golonka, Luke Davis, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -35,7 +34,6 @@ import shellapi
 import winUser
 import functools
 import shlobj
-from os import startfile
 from logHandler import log
 from NVDAState import WritePaths
 
@@ -188,15 +186,6 @@ def _getDesktopName() -> str:
 	return name.value
 
 
-def _displayTextFileWorkaround(file: str) -> None:
-	# os.startfile does not currently (NVDA 2023.1, Python 3.7) work reliably to open .txt files in Notepad under
-	# Windows 11, if relying on the default behavior (i.e. `operation="open"`). (#14725)
-	# Using `operation="edit"`, however, has the desired effect--opening the text file in Notepad. (#14816)
-	# Since this may be a bug in Python 3.7's os.startfile, or the underlying Win32 function, it may be
-	# possible to deprecate this workaround after a Python upgrade.
-	startfile(file, operation="edit")
-
-
 def _isSystemClockSecondsVisible() -> bool:
 	"""
 	Query the value of 'ShowSecondsInSystemClock' DWORD32 value in the Windows registry under
@@ -256,3 +245,27 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		except Exception as e:
 			self.threadExc = e
 			log.debugWarning("task had errors", exc_info=True)
+
+
+def preventSystemIdle(preventDisplayTurnOff: bool | None = None, persistent: bool = False) -> None:
+	"""
+	Prevent the system from locking the screen or going to sleep.
+	:param preventDisplayTurnOff: If `True`, keep the display awake as well.
+		if `False`, only avoid system sleep.
+		if `None`, the general setting "prevent display turn off" will be used.
+	:param persistent: If `True`, the state will be maintained until calling :func:`resetThreadExecutionState` is called.
+	"""
+	if preventDisplayTurnOff is None:
+		import config
+
+		preventDisplayTurnOff = bool(config.conf["general"]["preventDisplayTurnOff"])
+	windll.kernel32.SetThreadExecutionState(
+		winKernel.ES_SYSTEM_REQUIRED
+		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurnOff else 0)
+		| (winKernel.ES_CONTINUOUS if persistent else 0),
+	)
+
+
+def resetThreadExecutionState() -> None:
+	"""Reset the thread execution state to the default."""
+	windll.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)

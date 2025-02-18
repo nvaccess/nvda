@@ -9,7 +9,6 @@ from typing import (
 	Optional,
 	Tuple,
 	Union,
-	List,
 )
 
 from comtypes.automation import IEnumVARIANT, VARIANT
@@ -98,7 +97,37 @@ def getNVDAObjectFromPoint(x, y):
 	return obj
 
 
-FORMAT_OBJECT_ATTRIBS = frozenset({"text-align"})
+FORMAT_OBJECT_ATTRIBS = frozenset({"text-align", "text-indent"})
+
+
+def _convertCssLengthToText(cssLength: str) -> str:
+	"""Returns a text representation of the distance described by the given CSS length
+	string (see https://www.w3.org/TR/CSS2/syndata.html#value-def-length), converted to
+	the local measurement unit.
+	Currently, only conversion from mm (e.g. "4mm") is supported, but this
+	could be further extended as needed."""
+	match = re.search(r"([0-9]+(\.[0-9]*)?)mm", cssLength)
+	if not match:
+		# return unmodified string if length is not given in mm
+		return cssLength
+	lengthMm = float(match.group(1))
+	if languageHandler.useImperialMeasurements():
+		val = lengthMm / 25.4
+		valText = ngettext(
+			# Translators: a measurement in inches
+			"{val:.2f} inch",
+			"{val:.2f} inches",
+			val,
+		).format(val=val)
+	else:
+		val = lengthMm / 10.0
+		valText = ngettext(
+			# Translators: a measurement in centimetres
+			"{val:.2f} centimetre",
+			"{val:.2f} centimetres",
+			val,
+		).format(val=val)
+	return valText
 
 
 def normalizeIA2TextFormatField(formatField):
@@ -120,6 +149,14 @@ def normalizeIA2TextFormatField(formatField):
 			textAlign = None
 	if textAlign:
 		formatField["text-align"] = textAlign
+
+	try:
+		val = formatField.pop("text-indent")
+		if val:
+			formatField["first-line-indent"] = _convertCssLengthToText(val)
+	except KeyError:
+		pass
+
 	try:
 		fontWeight = formatField.pop("font-weight")
 	except KeyError:
@@ -1162,13 +1199,20 @@ class IAccessible(Window):
 			return False
 		return True
 
-	def _get_labeledBy(self):
+	def _get_labeledBy(self) -> "IAccessible | None":
+		label = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.LABELLED_BY)
+		if label:
+			return label
+
 		try:
-			(pacc, accChild) = IAccessibleHandler.accNavigate(
+			ret = IAccessibleHandler.accNavigate(
 				self.IAccessibleObject,
 				self.IAccessibleChildID,
 				IAccessibleHandler.NAVRELATION_LABELLED_BY,
 			)
+			if not ret:
+				return None
+			(pacc, accChild) = ret
 			obj = IAccessible(IAccessibleObject=pacc, IAccessibleChildID=accChild)
 			return obj
 		except COMError:
@@ -1940,7 +1984,7 @@ class IAccessible(Window):
 		# due to caching of baseObject.AutoPropertyObject, do not attempt to return a generator.
 		return tuple(detailsRelsGen)
 
-	def _get_controllerFor(self) -> List[NVDAObject]:
+	def _get_controllerFor(self) -> list[NVDAObject]:
 		control = self._getIA2RelationFirstTarget(IAccessibleHandler.RelationType.CONTROLLER_FOR)
 		if control:
 			return [control]
