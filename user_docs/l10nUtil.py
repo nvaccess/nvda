@@ -25,7 +25,7 @@ def fetchCrowdinAuthToken():
 	"""
 	token_path = os.path.expanduser("~/.nvda_crowdin")
 	if os.path.exists(token_path):
-		with open(token_path, 'r') as f:
+		with open(token_path, "r") as f:
 			token = f.read().strip()
 			print("Using auth token from ~/.nvda_crowdin")
 			return token
@@ -33,12 +33,14 @@ def fetchCrowdinAuthToken():
 	print("Please visit https://crowdin.com/settings#api-key")
 	print("Create a personal access token with translations permissions, and enter it below.")
 	token = input("Enter Crowdin auth token: ").strip()
-	with open(token_path, 'w') as f:
+	with open(token_path, "w") as f:
 		f.write(token)
 	return token
 
 
 _crowdinClient = None
+
+
 def getCrowdinClient() -> crowdin.CrowdinClient:
 	"""
 	Create or fetch the Crowdin client instance.
@@ -122,7 +124,7 @@ def preprocessXliff(xliffPath: str, outputPath: str):
 			segment.set("state", "initial")
 			xliff.write(outputPath, encoding="utf-8")
 	print(
-		f"Processed {segmentCount} segments, removing {emptyTargetCount} empty targets, {corruptTargetcount} corrupt targets"
+		f"Processed {segmentCount} segments, removing {emptyTargetCount} empty targets, {corruptTargetcount} corrupt targets",
 	)
 
 
@@ -195,11 +197,13 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 			continue
 		if oldXliffRoot:
 			# Remove existing translations
-			oldTarget = oldXliffRoot.find(f"./xliff:file/xliff:unit[@id='{unitID}']/xliff:segment/xliff:target", namespaces=namespace)
+			oldTarget = oldXliffRoot.find(
+				f"./xliff:file/xliff:unit[@id='{unitID}']/xliff:segment/xliff:target", namespaces=namespace
+			)
 			if oldTarget is not None and oldTarget.getparent().get("state") != "initial":
 				if oldTarget.text == targetText:
-						file.remove(unit)
-						existingTranslationCount += 1
+					file.remove(unit)
+					existingTranslationCount += 1
 	xliff.write(outputPath, encoding="utf-8")
 	if corruptCount > 0:
 		print(f"Removed {corruptCount} corrupt translations.")
@@ -233,11 +237,11 @@ def downloadTranslationFile(crowdinFilePath: str, localFilePath: str, language: 
 	print(f"Requesting export of {crowdinFilePath} for {language} from Crowdin")
 	res = getCrowdinClient().translations.export_project_translation(
 		fileIds=[fileId],
-		targetLanguageId=language
+		targetLanguageId=language,
 	)
 	if res is None:
 		raise ValueError("Crowdin export failed")
-	download_url = res['data']['url']
+	download_url = res["data"]["url"]
 	print(f"Downloading from {download_url}")
 	with open(localFilePath, "wb") as f:
 		r = requests.get(download_url)
@@ -255,11 +259,11 @@ def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: st
 	fileId = crowdinFileIDs[crowdinFilePath]
 	print(f"Uploading {localFilePath} to Crowdin")
 	res = getCrowdinClient().storages.add_storage(
-		open(localFilePath, "rb")
+		open(localFilePath, "rb"),
 	)
 	if res is None:
 		raise ValueError("Crowdin storage upload failed")
-	storageId = res['data']['id']
+	storageId = res["data"]["id"]
 	print(f"Stored with ID {storageId}")
 	print(f"Importing translation for {crowdinFilePath} in {language} from storage with ID {storageId}")
 	res = getCrowdinClient().translations.upload_translation(
@@ -267,7 +271,7 @@ def uploadTranslationFile(crowdinFilePath: str, localFilePath: str, language: st
 		languageId=language,
 		storageId=storageId,
 		autoApproveImported=True,
-		importEqSuggestions=True
+		importEqSuggestions=True,
 	)
 	print("Done")
 
@@ -320,18 +324,18 @@ def main():
 	)
 	downloadTranslationFileCommand.add_argument(
 		"language",
-		help="The language code to download the translation for."
+		help="The language code to download the translation for.",
 	)
 	downloadTranslationFileCommand.add_argument(
 		"crowdinFilePath",
 		choices=crowdinFileIDs.keys(),
-		help="The Crowdin file path"
+		help="The Crowdin file path",
 	)
 	downloadTranslationFileCommand.add_argument(
 		"localFilePath",
 		nargs="?",
 		default=None,
-		help="The path to save the local file. If not provided, the Crowdin file path will be used."
+		help="The path to save the local file. If not provided, the Crowdin file path will be used.",
 	)
 
 	uploadTranslationFileCommand = commands.add_parser(
@@ -339,25 +343,26 @@ def main():
 		help="Upload a translation file to Crowdin.",
 	)
 	uploadTranslationFileCommand.add_argument(
-		"-o", "--old",
+		"-o",
+		"--old",
 		help="Path to the old unchanged xliff file. If provided, only new or changed translations will be uploaded.",
 		default=None,
 	)
 	uploadTranslationFileCommand.add_argument(
 		"language",
-		help="The language code to upload the translation for."
+		help="The language code to upload the translation for.",
 	)
 	uploadTranslationFileCommand.add_argument(
 		"crowdinFilePath",
 		choices=crowdinFileIDs.keys(),
-		help="The Crowdin file path"
+		help="The Crowdin file path",
 	)
 	uploadTranslationFileCommand.add_argument(
-		   "localFilePath",
-		   nargs="?",
+		"localFilePath",
+		nargs="?",
 		default=None,
-		help="The path to the local file to be uploaded. If not provided, the Crowdin file path will be used."
-	   )
+		help="The path to the local file to be uploaded. If not provided, the Crowdin file path will be used.",
+	)
 	args = args.parse_args()
 	match args.command:
 		case "xliff2md":

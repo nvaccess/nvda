@@ -203,7 +203,7 @@ E.g.
 ```
 l10nUtil.exe uploadTranslationFile fr userGuide.xliff --old userGuide_backup.xliff
 ```
-This will only upload added / changed translations since you downloaded the file. 
+This will only upload added / changed translations since you downloaded the file.
 
 Alternatively, you can use the [Crowdin interface directly](https://support.crowdin.com/online-editor/).
 
