@@ -1624,7 +1624,6 @@ def getTextInfoSpeech(  # noqa: C901
 				endingBlock = bool(int(controlFieldStackCache[count].get("isBlock", 0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
-			_speechState.suppressLanguageDescription = True
 	else:
 		_speechState.suppressLanguageDescription = True
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't
