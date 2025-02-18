@@ -128,7 +128,7 @@ class UpdateInfo:
 		:return: An UpdateInfo object containing the update metadata.
 		:raises ValueError: If the response format is invalid.
 		"""
-		parameters= inspect.signature(cls).parameters
+		parameters = inspect.signature(cls).parameters
 		knownKeys: set[str] = set(parameters)
 		requiredKeys: set[str] = {key for key, value in parameters.items() if value.default is value.empty}
 		metadata: dict[str, str] = {}
@@ -146,11 +146,11 @@ class UpdateInfo:
 			raise ValueError(f"Missing required key(s): {', '.join(requiredKeys)}")
 		return cls(**metadata)
 
+
 def _getCheckURL() -> str:
 	if url := config.conf["update"]["serverURL"]:
 		return url
 	return _DEFAULT_CHECK_URL
-
 
 
 def getQualifiedDriverClassNameForStats(cls):
@@ -254,7 +254,7 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		parsed_response = UpdateInfo.parseUpdateCheckResponse(data)
 	except ValueError:
 		raise RuntimeError(
-			"The update response is invalid. Ensure the update mirror returns a properly formatted response."
+			"The update response is invalid. Ensure the update mirror returns a properly formatted response.",
 		)
 
 	return parsed_response
