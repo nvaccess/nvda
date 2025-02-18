@@ -125,7 +125,7 @@ class UpdateInfo:
 		"""Parses the update response and returns an UpdateInfo object.
 
 		:param data: The raw server response as a UTF-8 decoded string.
-		:return: An UpdateInfo object containing the update metadata, or None if the format is invalid.
+		:return: An UpdateInfo object containing the update metadata.
 		:raises ValueError: If the response format is invalid.
 		"""
 		requiredKeys = {key for key, value in inspect.signature(cls).parameters.items() if value.default is value.empty}
@@ -746,7 +746,6 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		Constructor for the update downloader.
 		:param updateInfo: An UpdateInfo object containing the metadata of the update,
 		including version, URLs, and compatibility information.
-		:type updateInfo: UpdateInfo
 		"""
 		from addonAPIVersion import getAPIVersionTupleFromString
 
