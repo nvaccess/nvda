@@ -198,7 +198,8 @@ def stripXliff(xliffPath: str, outputPath: str, oldXliffPath: str | None = None)
 		if oldXliffRoot:
 			# Remove existing translations
 			oldTarget = oldXliffRoot.find(
-				f"./xliff:file/xliff:unit[@id='{unitID}']/xliff:segment/xliff:target", namespaces=namespace
+				f"./xliff:file/xliff:unit[@id='{unitID}']/xliff:segment/xliff:target",
+				namespaces=namespace,
 			)
 			if oldTarget is not None and oldTarget.getparent().get("state") != "initial":
 				if oldTarget.text == targetText:
