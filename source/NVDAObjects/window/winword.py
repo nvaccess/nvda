@@ -154,9 +154,12 @@ wdAlignParagraphRight = 2
 wdAlignParagraphJustify = 3
 
 
-# From WdOutlineLevel enumeration
-# See https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel
 class WdOutlineLevel(IntEnum):
+	"""Outline level of a paragraph.
+
+	.. seealso:: ```WdOutlineLevel`` enumeration <https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel>`_
+	"""
+	
 	BODY_TEXT = 10
 
 
