@@ -159,7 +159,7 @@ class WdOutlineLevel(IntEnum):
 
 	.. seealso:: ```WdOutlineLevel`` enumeration <https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel>`_
 	"""
-	
+
 	BODY_TEXT = 10
 
 
