@@ -128,18 +128,22 @@ class UpdateInfo:
 		:return: An UpdateInfo object containing the update metadata.
 		:raises ValueError: If the response format is invalid.
 		"""
-		requiredKeys = {key for key, value in inspect.signature(cls).parameters.items() if value.default is value.empty}
-		metadata = {}
+		parameters= inspect.signature(cls).parameters
+		knownKeys: set[str] = set(parameters)
+		requiredKeys: set[str] = {key for key, value in parameters.items() if value.default is value.empty}
+		metadata: dict[str, str] = {}
 		for line in data.splitlines():
 			try:
 				key, val = line.split(": ", 1)
 			except ValueError:
 				raise ValueError(f"Invalid line format in update response: {line}")
-				if key in requiredKeys:
-					metadata[key] = val
-					requiredKeys.difference_update(key)
-				else:
-					log.debug(f"Dropping unknown key {key} = {val}.")
+			if key in knownKeys:
+				metadata[key] = val
+			else:
+				log.debug(f"Dropping unknown key {key} = {val}.")
+		requiredKeys.difference_update(metadata)
+		if len(requiredKeys) > 0:
+			raise ValueError(f"Missing required key(s): {', '.join(requiredKeys)}")
 		return cls(**metadata)
 
 def _getCheckURL() -> str:
