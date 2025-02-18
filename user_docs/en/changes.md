@@ -79,6 +79,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Removed the requirement to indent function parameter lists by two tabs from NVDA's Coding Standards, to be compatible with modern automatic linting. (#17126, @XLTechie)
 * Added the [VS Code workspace configuration for NVDA](https://nvaccess.org/nvaccess/vscode-nvda) as a git submodule. (#17003)
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Added a `updateCheck.UpdateInfo` data class, which encapsulates metadata about NVDA updates. (#17310, @christopherpross)
 
 #### API Breaking Changes
 
@@ -96,18 +97,8 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
-* **The return type of `updateCheck.checkForUpdate` has changed.**  
-  It now returns an `UpdateInfo` object (or `None` if no update is available) instead of a dictionary containing update metadata. Code relying on this API must now access update information via attributes (e.g. `updateInfo.version`) rather than dictionary keys (e.g. `updateInfo["version"]`). (#17310)
-* **The constructor `updateCheck.UpdateResultDialog.__init__` has been updated.**  
-  It now expects an `UpdateInfo` object (or `None`) instead of a dictionary. Accordingly, any references to update metadata must use attribute access. (#17310)
-* **The constructor `updateCheck.UpdateDownloader.__init__` has been modified.**  
-  It now accepts an `UpdateInfo` object rather than a dictionary. Additionally, update metadata fields have been renamed from camelCase to snake_case:
-  - `launcherUrl` is now `launcher_url`
-  - `apiVersion` is now `api_version`
-  - `apiCompatTo` is now `api_compat_to`
-  - `launcherHash` is now `launcher_hash`  
-  Internal NVDA components have already been updated accordingly. (#17310)
-
+* `updateCheck.checkForUpdate` now returns an `UpdateInfo` object instead of a dictionary. (#17310, @christopherpross)
+* The constructors of `updateCheck.UpdateResultDialog` and `updateCheck.UpdateDownloader` have been updated to take `UpdateInfo` objects instead of dictionaries of metadata. (#17310, @christopherpross)
 
 #### Deprecations
 
