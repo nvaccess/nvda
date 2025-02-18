@@ -1,6 +1,6 @@
 ## Code Style
 
-In general, Python contributions to NVDA should follow the [PEP8 style guide](https://peps.python.org/pep-0008/), except where it contradicts the specific guidance below.
+In general, Python contributions to NVDA should follow the [PEP 8 style guide](https://peps.python.org/pep-0008/), except where it contradicts the specific guidance below.
 
 Python code style is enforced with the Ruff linter, see [linting](../testing/automated.md#linting-your-changes) for more information.
 
@@ -125,12 +125,15 @@ Instead use initializer functions.
 
 ### Docstrings
 
-Docstrings should use [Sphinx format](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html).
-Providing type information in docstrings is discouraged, instead use python's type annotations.
+Docstrings should use [Sphinx format without types](https://sphinx-rtd-tutorial.readthedocs.io/en/latest/docstrings.html), and follow [PEP 257 conventions](https://peps.python.org/pep-0257/).
 
-Class-level and module-level docstrings should contain a high-level overview of the class/module, optionally with usage examples and references to commonly used methods/functions and attributes.
-Document class constructors in `__init__`, not at the top of the class.
-Document class attributes in a docstring immediately below the attribute being described.
+* All public functions, classes, and methods should have docstrings.
+  Most internal functions, classes and methods should have docstrings, except where their purpose is clear from their name or code.
+  * A function of more than a few lines of code is most likely not self-explanatory.
+* Providing type information in docstrings is discouraged, instead use python's type annotations.
+* Class-level and module-level docstrings should contain a high-level overview of the class/module, optionally with usage examples and references to commonly used methods/functions and attributes.
+* Document class constructors in `__init__`, not at the top of the class.
+* Document class attributes and non-obvious public variables in a docstring immediately below the attribute being described.
 
 NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
 [#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
