@@ -5599,4 +5599,8 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 
 
 def _isResponseUpdateMetadata(response: requests.Response) -> bool:
-	return updateCheck.isValidUpdateMirrorResponse(response.text)
+	try:
+		updateCheck.UpdateInfo.parseUpdateCheckResponse(response.text)
+	except Exception:
+		return False
+	return True

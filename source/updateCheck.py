@@ -174,21 +174,6 @@ def getQualifiedDriverClassNameForStats(cls):
 	return "%s (core)" % name
 
 
-def isValidUpdateMirrorResponse(responseData: str) -> bool:
-	"""
-	Validates the response string from an update mirror by ensuring it can be parsed into an UpdateInfo object.
-
-	:param responseData: The raw server response as a UTF-8 decoded string.
-	:return: True if the response can be parsed into an UpdateInfo object, False otherwise.
-	"""
-	try:
-		UpdateInfo.parseUpdateCheckResponse(responseData)
-		return True
-	except ValueError as e:
-		log.warning("Invalid update response: %s", e)
-		return False
-
-
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
