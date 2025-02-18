@@ -1,4 +1,4 @@
-# A part of NonVisual Desktop Access (NVDA)
+# part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
@@ -126,6 +126,7 @@ class SpeechState:
 	oldColumnNumber = None
 	oldColumnSpan = None
 	lastReportedLanguage = None
+	suppressLanguageDescription = False
 
 
 def getState():
@@ -1173,6 +1174,7 @@ def speak(  # noqa: C901
 				if (
 					curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
 					and languageHandler.getLanguageDescription(curLanguage) not in speechSequence
+					and not _speechState.suppressLanguageDescription
 				):
 					speechSequence.insert(0, LangChangeCommand(defaultLanguage))
 					speechSequence.insert(1, languageHandler.getLanguageDescription(curLanguage))
@@ -1537,7 +1539,7 @@ def getTextInfoSpeech(  # noqa: C901
 	reportIndentation = (
 		unit == textInfos.UNIT_LINE and formatConfig["reportLineIndentation"] != ReportLineIndentation.OFF
 	)
-	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
+	# For performance reasons, when navigating by paragraph or table cell, spelling errors and language description will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig["reportSpellingErrors"] = False
 
@@ -1605,6 +1607,7 @@ def getTextInfoSpeech(  # noqa: C901
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason not in [OutputReason.FOCUS, OutputReason.QUICKNAV]:
+		_speechState.suppressLanguageDescription = False
 		endingBlock = False
 		for count in reversed(range(commonFieldCount, len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1621,6 +1624,8 @@ def getTextInfoSpeech(  # noqa: C901
 				endingBlock = bool(int(controlFieldStackCache[count].get("isBlock", 0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
+	else:
+		_speechState.suppressLanguageDescription = True
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't
 	# entering any new fields and there is no text).
 	shouldConsiderTextInfoBlank = True
