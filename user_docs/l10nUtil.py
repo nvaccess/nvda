@@ -29,6 +29,9 @@ def fetchCrowdinAuthToken():
 			token = f.read().strip()
 			print("Using auth token from ~/.nvda_crowdin")
 			return token
+	print("A Crowdin auth token is required to proceed.")
+	print("Please visit https://crowdin.com/settings#api-key")
+	print("Create a personal access token with translations permissions, and enter it below.")
 	token = input("Enter Crowdin auth token: ").strip()
 	with open(token_path, 'w') as f:
 		f.write(token)

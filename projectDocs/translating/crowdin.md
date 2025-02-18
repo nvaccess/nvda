@@ -74,7 +74,7 @@ l10nUtil.exe downloadTranslationFile fr nvda.po
 ```
 The first time you will be asked for an authorization token.
 Please visit https://crowdin.com/settings#api-key
-And create a personal access token and paste this into the user prompt.
+And create a personal access token, Ensuring that it has at least the translations scope.  Then paste this into the user prompt.
 this will be saved in ~/.nvda_crowdin for future use.
 * Open the xliff file in Poedit, translate, and save the file.
 * Upload the translated file using l10nUtil
