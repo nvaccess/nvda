@@ -73,9 +73,10 @@ E.g.
 l10nUtil.exe downloadTranslationFile fr nvda.po
 ```
 The first time you will be asked for an authorization token.
-Please visit https://crowdin.com/settings#api-key
-And create a personal access token, Ensuring that it has at least the translations scope.  Then paste this into the user prompt.
-this will be saved in ~/.nvda_crowdin for future use.
+Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
+Ensure that it has at least the translations scope.
+Then paste this into the user prompt.
+This will be saved in ~/.nvda_crowdin for future use.
 * Open the xliff file in Poedit, translate, and save the file.
 * Upload the translated file using l10nUtil
 ```
@@ -190,9 +191,10 @@ E.g.
 l10nUtil.exe downloadTranslationFile fr userGuide.xliff
 ```
 The first time you will be asked for an authorization token.
-Please visit https://crowdin.com/settings#api-key
-And create a personal access token and paste this into the user prompt.
-this will be saved in ~/.nvda_crowdin for future use.
+Please visit [your Crowdin settings API page](https://crowdin.com/settings#api-key) and create a Personal Access Token.
+Ensure that it has at least the translations scope.
+Then paste this into the user prompt.
+This will be saved in ~/.nvda_crowdin for future use.
 * Make a copy of the downloaded file.
 * Open the xliff file in Poedit, translate, and save the file.
 * Upload the translated file using l10nUtil
