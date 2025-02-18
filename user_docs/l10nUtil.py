@@ -17,7 +17,7 @@ import requests
 CROWDIN_PROJECT_ID = 598017
 
 
-def fetchCrowdinAuthToken():
+def fetchCrowdinAuthToken() -> str:
 	"""
 	Fetch the Crowdin auth token from the ~/.nvda_crowdin file or prompt the user for it.
 	If provided by the user, the token will be saved to the ~/.nvda_crowdin file.
