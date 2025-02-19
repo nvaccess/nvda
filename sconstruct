@@ -9,7 +9,7 @@ import multiprocessing
 import os
 import platform
 import sys
-
+import sysconfig
 
 # Ensure we are inside the Python virtual environment.
 nvdaVenv = os.getenv("NVDA_VENV")
@@ -26,13 +26,13 @@ if nvdaVenv != virtualEnv:
 # Variables for storing required version of Python, and the version which is used to run this script.
 requiredPythonMajor = "3"
 requiredPythonMinor = "11"
-requiredPythonArchitecture = "64bit"
+requiredPythonArchitectures = {"win32", "win-amd64"}
 installedPythonMajor = str(sys.version_info.major)
 installedPythonMinor = str(sys.version_info.minor)
-installedPythonArchitecture = platform.architecture()[0]
+installedPythonArchitecture = sysconfig.get_platform()
 # Ensure that we are running with required version of Python, otherwise inform the user and exit.
 if (
-	installedPythonArchitecture != requiredPythonArchitecture
+	installedPythonArchitecture not in requiredPythonArchitectures
 	or installedPythonMajor != requiredPythonMajor
 	or installedPythonMinor != requiredPythonMinor
 ):
@@ -49,7 +49,7 @@ if (
 			installedPythonArchitecture,
 			requiredPythonMajor,
 			requiredPythonMinor,
-			requiredPythonArchitecture,
+			requiredPythonArchitectures,
 		)
 	)
 sourceEnvPath = os.path.abspath(os.path.join(Dir(".").srcnode().path, "source"))
