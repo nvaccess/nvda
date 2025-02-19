@@ -1174,6 +1174,7 @@ def speak(  # noqa: C901
 				if (
 					curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
 					and languageHandler.getLanguageDescription(curLanguage) not in speechSequence
+					and languageHandler.getLanguageDescription(curLanguage) is not None
 					and not _speechState.suppressLanguageDescription
 				):
 					speechSequence.insert(0, LangChangeCommand(defaultLanguage))
@@ -1624,6 +1625,7 @@ def getTextInfoSpeech(  # noqa: C901
 				endingBlock = bool(int(controlFieldStackCache[count].get("isBlock", 0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
+			_speechState.suppressLanguageDescription = True
 	else:
 		_speechState.suppressLanguageDescription = True
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't
