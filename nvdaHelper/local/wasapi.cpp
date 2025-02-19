@@ -346,16 +346,29 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 		return true;
 	};
 
-	if (isTrimmingLeadingSilence) {
+	bool shouldInsertSilentFrame = false;
+	if (isTrimmingLeadingSilence && data && size > 0) {
 		size_t silenceSize = SilenceDetect::getLeadingSilenceSize(&format, data, size);
 		if (silenceSize >= size) {
 			// The whole chunk is silence. Continue checking for silence in the next chunk.
-			remainingFrames = 0;
+			// We cannot just skip the whole chunk, however,
+			// because then the rest of this function will not perform some tasks,
+			// such as opening the device or checking for callbacks.
+			// Add one silent frame to be played, so those things work as usual.
+			shouldInsertSilentFrame = true;
+			remainingFrames = 1;
 		} else {
 			// Silence ends in this chunk. Skip the silence and continue.
 			data += silenceSize;
-			remainingFrames = (size - silenceSize) / format.nBlockAlign;
+			size -= silenceSize;
+			remainingFrames = size / format.nBlockAlign;
 			isTrimmingLeadingSilence = false;  // Stop checking for silence
+
+			// Insert one silent frame before the trimmed audio in this chunk.
+			// Not doing so may cause the beginning of the audio to be chopped off.
+			// See: https://github.com/nvaccess/nvda/discussions/17697
+			shouldInsertSilentFrame = true;
+			remainingFrames++;
 		}
 	}
 
@@ -407,13 +420,26 @@ HRESULT WasapiPlayer::feed(unsigned char* data, unsigned int size,
 			}
 		}
 		// We might have more frames than will fit in the buffer. Send what we can.
+		// If we need to insert a silent frame, the frame counts towards the total frame count,
+		// but does not count towards the total byte count, as it's not in the provided data buffer.
 		const UINT32 sendFrames = std::min(remainingFrames,
 			bufferFrames - paddingFrames);
-		const UINT32 sendBytes = sendFrames * format.nBlockAlign;
+		const UINT32 sendBytes = (sendFrames - (shouldInsertSilentFrame ? 1 : 0))
+			* format.nBlockAlign;
 		BYTE* buffer;
 		hr = render->GetBuffer(sendFrames, &buffer);
 		if (FAILED(hr)) {
 			return hr;
+		}
+		if (shouldInsertSilentFrame) {
+			// If needed, insert one frame of silence at the beginning
+			if (format.wFormatTag == WAVE_FORMAT_PCM && format.wBitsPerSample == 8) {
+				memset(buffer, 0x80, format.nBlockAlign);
+			} else {
+				memset(buffer, 0, format.nBlockAlign);
+			}
+			buffer += format.nBlockAlign;
+			shouldInsertSilentFrame = false;
 		}
 		if (data) {
 			memcpy(buffer, data, sendBytes);

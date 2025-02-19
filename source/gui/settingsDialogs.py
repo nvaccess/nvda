@@ -983,6 +983,19 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				mirrorBox.Disable()
 
+		self.preventDisplayTurnOffCombo: nvdaControls.FeatureFlagCombo = (
+			settingsSizerHelper.addLabeledControl(
+				labelText=_(
+					# Translators: This is a label for a combo-box in the general settings panel.
+					"Prevent &display from turning off during say all or reading with braille",
+				),
+				wxCtrlClass=nvdaControls.FeatureFlagCombo,
+				keyPath=["general", "preventDisplayTurnOff"],
+				conf=config.conf,
+			)
+		)
+		self.bindHelpEvent("PreventDisplayTurnOff", self.preventDisplayTurnOffCombo)
+
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
 		# Import late to avoid circular dependency.
@@ -1103,6 +1116,8 @@ class GeneralSettingsPanel(SettingsPanel):
 			config.conf["update"]["startupNotification"] = self.notifyForPendingUpdateCheckBox.IsChecked()
 			updateCheck.terminate()
 			updateCheck.initialize()
+
+		self.preventDisplayTurnOffCombo.saveCurrentValueToConf()
 
 	def onPanelActivated(self):
 		if updateCheck:
@@ -3035,7 +3050,7 @@ class AudioPanel(SettingsPanel):
 		# Translators: This is the label for the select output device combo in NVDA audio settings.
 		# Examples of an output device are default soundcard, usb headphones, etc.
 		deviceListLabelText = _("Audio output &device:")
-		self._deviceIds, deviceNames = zip(*mmdevice._getOutputDevices(includeDefault=True))
+		self._deviceIds, deviceNames = zip(*mmdevice.getOutputDevices(includeDefault=True))
 		self.deviceList = sHelper.addLabeledControl(deviceListLabelText, wx.Choice, choices=deviceNames)
 		self.bindHelpEvent("SelectSynthesizerOutputDevice", self.deviceList)
 		selectedOutputDevice = config.conf["audio"]["outputDevice"]

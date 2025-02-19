@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2024 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt
+# Copyright (C) 2012-2025 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
+# Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -262,6 +262,11 @@ def getIncompatibleAddons(
 
 def removeFailedDeletion(path: os.PathLike):
 	shutil.rmtree(path, ignore_errors=True)
+	if os.path.exists(path):
+		try:
+			os.remove(path)
+		except Exception:
+			pass
 	if os.path.exists(path):
 		log.error(f"Failed to delete path {path}, try removing manually")
 

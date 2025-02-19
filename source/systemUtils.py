@@ -1,6 +1,5 @@
-# -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2020-2025 NV Access Limited, Łukasz Golonka, Luke Davis
+# Copyright (C) 2020-2025 NV Access Limited, Łukasz Golonka, Luke Davis, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -246,3 +245,27 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 		except Exception as e:
 			self.threadExc = e
 			log.debugWarning("task had errors", exc_info=True)
+
+
+def preventSystemIdle(preventDisplayTurnOff: bool | None = None, persistent: bool = False) -> None:
+	"""
+	Prevent the system from locking the screen or going to sleep.
+	:param preventDisplayTurnOff: If `True`, keep the display awake as well.
+		if `False`, only avoid system sleep.
+		if `None`, the general setting "prevent display turn off" will be used.
+	:param persistent: If `True`, the state will be maintained until calling :func:`resetThreadExecutionState` is called.
+	"""
+	if preventDisplayTurnOff is None:
+		import config
+
+		preventDisplayTurnOff = bool(config.conf["general"]["preventDisplayTurnOff"])
+	windll.kernel32.SetThreadExecutionState(
+		winKernel.ES_SYSTEM_REQUIRED
+		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurnOff else 0)
+		| (winKernel.ES_CONTINUOUS if persistent else 0),
+	)
+
+
+def resetThreadExecutionState() -> None:
+	"""Reset the thread execution state to the default."""
+	windll.kernel32.SetThreadExecutionState(winKernel.ES_CONTINUOUS)
