@@ -1180,7 +1180,7 @@ class SpeechSettingsPanel(SettingsPanel):
 	panelDescription = _(
 		# Translators: This is a label appearing on the speech settings panel.
 		"Configures the synthesizer, the voice, variant and other aspects of speech output. "
-		"This includes settings for how NVDA reads symbols and text in other languages. ",
+		"This includes settings for how NVDA reads symbols, capitals and text in other languages. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -2235,8 +2235,8 @@ class ReviewCursorPanel(SettingsPanel):
 	title = _("Review Cursor")
 	helpId = "ReviewCursorSettings"
 	panelDescription = _(
-		# Translators: This is a label appearing on the cursor settings panel.
-		"Configures tracking of focus, cursor and mouse with the NVDA cursors. ",
+		# Translators: This is a label appearing on the review cursor settings panel.
+		"Configure the review cursor, which allows reading the contents of the screen, current document or current object without moving the caret",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -2278,7 +2278,8 @@ class InputCompositionPanel(SettingsPanel):
 	helpId = "InputCompositionSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the input composition settings panel.
-		"Configures settings for input methods for complex characters.",
+		"Configure how NVDA reports the input of Asian characters, "
+		"such as when using IME or Text Service input methods.",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -2531,8 +2532,7 @@ class BrowseModePanel(SettingsPanel):
 	helpId = "BrowseModeSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the browse mode settings panel.
-		"Configures the settings when interacting with web pages and other content using the browse mode."
-		" You can control whether a page is read automatically when being loaded and how to handle focus changes.",
+		"Configure how NVDA behaves when reading complex documents, such as web pages and emails.",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -3437,8 +3437,7 @@ class UwpOcrPanel(SettingsPanel):
 	helpId = "Win10OcrSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the windows OCR settings panel.
-		"Configures text recognition from images. "
-		"You can set your preferred language for recognized text here. ",
+		"Configures options for text recognition from images. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -4109,10 +4108,6 @@ class AdvancedPanel(SettingsPanel):
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 	helpId = "AdvancedSettings"
-	panelDescription = _(
-		# Translators: This is a label appearing on the advanced settings panel.
-		"Configures the advanced settings for NVDA.",
-	)
 
 	# Translators: This is the label to warn users about the Advanced options in the
 	# Advanced settings panel
