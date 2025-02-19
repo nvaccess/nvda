@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2018-2023 NV Access Limited, Babbage B.V., Takuya Nishimoto
+# Copyright (C) 2018-2025 NV Access Limited, Babbage B.V., Takuya Nishimoto, hwf1324
 
 """Default highlighter based on GDI Plus."""
 
@@ -83,6 +83,9 @@ class HighlightWindow(CustomWindow):
 		# Make this a transparent window,
 		# primarily for accessibility APIs to ignore this window when getting a window from a screen point
 		| winUser.WS_EX_TRANSPARENT
+		# Ensure that the window is treated as a tool window,
+		# so that it will not be shown in the task bar
+		| winUser.WS_EX_TOOLWINDOW
 	)
 	transparentColor = 0  # Black
 
