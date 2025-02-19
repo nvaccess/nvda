@@ -4,6 +4,10 @@ In general, Python contributions to NVDA should follow the [PEP 8 style guide](h
 
 Python code style is enforced with the Ruff linter, see [linting](../testing/automated.md#linting-your-changes) for more information.
 
+Authors should do their best to adhere to these standards in order to have the best chance of their contribution being accepted into NVDA.
+In limited circumstances, NV Access may accept contributions that do not follow these coding standards.
+If there is a reason you are unable to follow these standards in a contribution to NVDA, please make note of this when opening your PR.
+
 ### Encoding
 
 * Where Python files contain non-ASCII characters, they should be encoded in UTF-8.
