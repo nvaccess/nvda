@@ -130,13 +130,23 @@ Docstrings should use [Sphinx format without types](https://sphinx-rtd-tutorial.
 * All public functions, classes, and methods should have docstrings.
   Most internal functions, classes and methods should have docstrings, except where their purpose is clear from their name or code.
   * A function of more than a few lines of code is most likely not self-explanatory.
-* Providing type information in docstrings is discouraged, instead use python's type annotations.
+* Providing type information in docstrings is discouraged, instead use python's [type annotations](#type-hints).
 * Class-level and module-level docstrings should contain a high-level overview of the class/module, optionally with usage examples and references to commonly used methods/functions and attributes.
 * Document class constructors in `__init__`, not at the top of the class.
 * Document class attributes and non-obvious public variables in a docstring immediately below the attribute being described.
 
 NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
 [#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
+
+### Type hints
+
+All new code contributions to NVDA should use [PEP 484-style type hints](https://peps.python.org/pep-0484/).
+Type hints make reasoning about code much easier, and allow static analysis tools to catch common errors.
+
+* All variables, attributes, properties, and function/method arguments and returns should have type hints.
+  * There is no need to provide type hints for the `self` or `cls` arguments to object/class methods.
+* Prefer union shorthand (`X | Y`) over explicitly using `typing.Union`.
+  * Corollary: prefer `T | None` over `typing.Optional[T]`.
 
 ### Language choices
 
