@@ -352,7 +352,7 @@ class SettingsPanel(
 
 	To use this panel:
 		* Set L{title} to the title of the category.
-		* Set :attr:`panelDescription` describe the purpose of the category.
+		* Set :attr:`panelDescription` to describe the purpose of the category.
 		* Override L{makeSettings} to populate a given sizer with the settings controls.
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
@@ -789,8 +789,8 @@ class GeneralSettingsPanel(SettingsPanel):
 	helpId = "GeneralSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the general settings panel.
-		"Configures general settings like the log level and options for starting and terminating NVDA."
-		" You will also find the settings related to updating NVDA here.",
+		"Configures general settings like the log level and options for starting and terminating NVDA. "
+		"You will also find the settings related to updating NVDA here. ",
 	)
 
 	LOG_LEVELS = (
@@ -2144,8 +2144,8 @@ class MouseSettingsPanel(SettingsPanel):
 	helpId = "MouseSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the mouse settings panel.
-		"Configures settings for mouse tracking and feedback such as reading the object under the mouse."
-		" Here you will also configure the audio feedback for the mouse position.",
+		"Configures settings for mouse tracking and feedback such as reading the object under the mouse. "
+		"Here you will also configure the audio feedback for the mouse position. ",
 	)
 
 	def makeSettings(self, settingsSizer):
@@ -3407,7 +3407,7 @@ class TouchInteractionPanel(SettingsPanel):
 	helpId = "TouchInteraction"
 	panelDescription = _(
 		# Translators: This is a label appearing on the touch interaction settings panel.
-		"Configures touch interaction (where available)."
+		"Configures touch interaction (where available). "
 		"Includes enabling touch interaction support and setting the touch typing mode. ",
 	)
 
@@ -4194,8 +4194,8 @@ class BrailleSettingsPanel(SettingsPanel):
 	helpId = "BrailleSettings"
 	panelDescription = _(
 		# Translators: This is a label appearing on the braille settings panel.
-		"Configures various settings for braille input and output."
-		" You can set which braille table to be used and other options.",
+		"Configures various settings for braille input and output. "
+		"You can set which braille table to be used and other options. ",
 	)
 
 	def makeSettings(self, settingsSizer):
