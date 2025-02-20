@@ -3178,8 +3178,7 @@ class BrailleHandler(baseObject.AutoPropertyObject):
 				self._table = brailleTables.getTable(table)
 			except LookupError:
 				log.error(
-					f"Invalid translation table ({tableName}), "
-					f"falling back to default ({FALLBACK_TABLE}).",
+					f"Invalid translation table ({tableName}), falling back to default ({FALLBACK_TABLE}).",
 				)
 				self._table = brailleTables.getTable(FALLBACK_TABLE)
 

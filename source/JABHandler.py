@@ -48,7 +48,7 @@ from utils.security import isRunningOnSecureDesktop
 A11Y_PROPS_PATH = os.path.expanduser(r"~\.accessibility.properties")
 #: The content of ".accessibility.properties" when JAB is enabled.
 A11Y_PROPS_CONTENT = (
-	"assistive_technologies=com.sun.java.accessibility.AccessBridge\n" "screen_magnifier_present=true\n"
+	"assistive_technologies=com.sun.java.accessibility.AccessBridge\nscreen_magnifier_present=true\n"
 )
 
 # Some utility functions to help with function defines

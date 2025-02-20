@@ -826,13 +826,12 @@ class UIAHandler(COMObject):
 		):
 			if _isDebug():
 				log.debug(
-					"HandleAutomationEvent: "
-					f"Ignoring event {NVDAEventName} because ignored by object itself",
+					f"HandleAutomationEvent: Ignoring event {NVDAEventName} because ignored by object itself",
 				)
 			return
 		if _isDebug():
 			log.debug(
-				f"handleAutomationEvent: queuing NVDA event {NVDAEventName} " f"for NVDAObject {obj} ",
+				f"handleAutomationEvent: queuing NVDA event {NVDAEventName} for NVDAObject {obj} ",
 			)
 		eventHandler.queueEvent(NVDAEventName, obj)
 
@@ -918,7 +917,7 @@ class UIAHandler(COMObject):
 			return
 		if _isDebug():
 			log.debug(
-				"handleFocusChangedEvent: Queuing NVDA gainFocus event " f"for obj {obj} ",
+				f"handleFocusChangedEvent: Queuing NVDA gainFocus event for obj {obj} ",
 			)
 		eventHandler.queueEvent("gainFocus", obj)
 
@@ -972,7 +971,7 @@ class UIAHandler(COMObject):
 		):
 			if _isDebug():
 				log.debug(
-					"propertyChange event is for focus. " f"Redirecting event to focus NVDAObject {focus}",
+					f"propertyChange event is for focus. Redirecting event to focus NVDAObject {focus}",
 				)
 			obj = focus
 		elif not self.isNativeUIAElement(sender):
@@ -1014,7 +1013,7 @@ class UIAHandler(COMObject):
 				)
 		if _isDebug():
 			log.debug(
-				f"handlePropertyChangeEvent: queuing NVDA {NVDAEventName} event " f"for NVDAObject {obj} ",
+				f"handlePropertyChangeEvent: queuing NVDA {NVDAEventName} event for NVDAObject {obj} ",
 			)
 		eventHandler.queueEvent(NVDAEventName, obj)
 
@@ -1067,7 +1066,7 @@ class UIAHandler(COMObject):
 			return
 		if _isDebug():
 			log.debug(
-				"Queuing UIA_notification NVDA event " f"for NVDAObject {obj}",
+				f"Queuing UIA_notification NVDA event for NVDAObject {obj}",
 			)
 		eventHandler.queueEvent(
 			"UIA_notification",
@@ -1358,8 +1357,7 @@ class UIAHandler(COMObject):
 			return None
 		if _isDebug():
 			log.debug(
-				"Found ancestor element "
-				f"with valid windowHandle {self.getWindowHandleDebugString(window)}",
+				f"Found ancestor element with valid windowHandle {self.getWindowHandleDebugString(window)}",
 			)
 		# Cache for future use to improve performance.
 		UIAElement._nearestWindowHandle = window
@@ -1434,7 +1432,7 @@ class UIAHandler(COMObject):
 		if processID == globalVars.appPid:
 			if _isDebug():
 				log.debug(
-					"element is local to NVDA, " "treating as non-native.",
+					"element is local to NVDA, treating as non-native.",
 				)
 			return False
 		# Whether this is a native element depends on whether its window natively supports UIA.
