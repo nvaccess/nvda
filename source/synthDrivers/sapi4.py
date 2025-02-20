@@ -4,26 +4,37 @@
 # See the file COPYING for more details.
 # This module is deprecated, pending removal in NVDA 2026.1.
 
+from datetime import datetime
+from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
+import threading
 import winreg
-from comtypes import CoCreateInstance, COMObject, COMError, GUID
-from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
-from ctypes.wintypes import DWORD, HANDLE, WORD
+from comtypes import CoCreateInstance, COMObject, COMError, GUID, hresult, ReturnHRESULT
+from ctypes import addressof, byref, c_ulong, POINTER, c_void_p, cast, memmove, string_at, sizeof, windll
+from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
 from typing import Optional
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import gui.contextHelp
 import gui.message
+import nvwave
 import queueHandler
 from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking, synthChanged
 from logHandler import log
 import warnings
 from utils.security import isRunningOnSecureDesktop
 from ._sapi4 import (
-	MMSYSERR_NOERROR,
-	CLSID_MMAudioDest,
+	AUDERR_ALREADYCLAIMED,
+	AUDERR_ALREADYSTARTED,
+	AUDERR_INVALIDNOTIFYSINK,
+	AUDERR_NEEDWAVEFORMAT,
+	AUDERR_NOTCLAIMED,
+	AUDERR_WAVEFORMATNOTSUPPORTED,
+	SDATA,
 	CLSID_TTSEnumerator,
-	IAudioMultiMediaDevice,
+	IAudio,
+	IAudioDest,
+	IAudioDestNotifySink,
 	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
@@ -42,7 +53,6 @@ from ._sapi4 import (
 	TTSFEATURE_VOLUME,
 	TTSMODEINFO,
 	VOICECHARSET,
-	DriverMessage,
 )
 import config
 import weakref
@@ -92,6 +102,292 @@ class SynthDriverBufSink(COMObject):
 			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
 			return 1
 		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
+
+
+class _DeviceState(IntEnum):
+	CLOSED = 0  # Not claimed
+	OPENED = 1  # Claimed
+	RUNNING = 2  # Started
+	CLOSING = 3  # Unclaiming
+
+
+class SynthDriverAudio(COMObject):
+	"""
+	Implements IAudio and IAudioDest to receive streamed in audio data.
+	An instance of this class will be passed to,
+	and be used by the TTS engine.
+	"""
+
+	_com_interfaces_ = [IAudio, IAudioDest]
+
+	def __init__(self):
+		self._notifySink = None
+		self._deviceState = _DeviceState.CLOSED
+		self._waveFormat: Optional[nvwave.WAVEFORMATEX] = None
+		self._player: Optional[nvwave.WavePlayer] = None
+		self._writtenBytes = 0
+		self._playedBytes = 0
+		self._startTime = datetime.now()
+		self._audioQueue: deque[bytes | int] = deque()  # bytes: audio, int: bookmark
+		self._audioCond = threading.Condition()
+		self._audioStopped = False
+		self._audioThread: Optional[threading.Thread] = None
+
+	def terminate(self):
+		self._shutdownAudioThread()
+
+	def __del__(self):
+		self.terminate()
+
+	def _maybeInitPlayer(self) -> None:
+		"""Initialize audio playback based on the wave format provided by the engine.
+		If the format has not changed, the existing player is used.
+		Otherwise, a new one is created with the appropriate parameters."""
+		if self._player:
+			# Reuse the previous player if possible (using the same format)
+			if (
+				self._player.channels == self._waveFormat.nChannels
+				and self._player.samplesPerSec == self._waveFormat.nSamplesPerSec
+				and self._player.bitsPerSample == self._waveFormat.wBitsPerSample
+			):
+				return  # same format, use the previous player
+			# different format, close and recreate a new player
+			self._player.stop()
+		self._player = nvwave.WavePlayer(
+			channels=self._waveFormat.nChannels,
+			samplesPerSec=self._waveFormat.nSamplesPerSec,
+			bitsPerSample=self._waveFormat.wBitsPerSample,
+			outputDevice=config.conf["audio"]["outputDevice"],
+		)
+		self._player.open()
+
+	def IAudio_Flush(self) -> None:
+		"""Clears the object's internal buffer and resets the audio device,
+		but does not stop playing the audio data afterwards."""
+		if self._player:
+			self._player.stop()
+		with self._audioCond:
+			if self._notifySink:
+				while self._audioQueue:
+					item = self._audioQueue.popleft()
+					if isinstance(item, int):
+						# Flush all untriggered bookmarks.
+						# 1 (TRUE) means that the bookmark is sent because of flushing.
+						self._notifySink.BookMark(item, 1)
+			self._audioQueue.clear()
+
+	def IAudio_LevelGet(self) -> int:
+		"""Returns the volume level, ranging from 0x0000 to 0xFFFF.
+		Low word is for the left (or mono) channel, and high word is for the right channel."""
+		# TODO: Not implemented yet.
+		return 0xFFFF
+
+	def IAudio_LevelSet(self, dwLevel: int) -> None:
+		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
+		Low word is for the left (or mono) channel, and high word is for the right channel."""
+		# TODO: Not implemented yet.
+		pass
+
+	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
+		"""Passes in an implementation of IAudioDestNotifySink to receive notifications.
+		The previous sink, if exists, will be released and replaced.
+		Allows specifying NULL for no sink."""
+		if IIDNotifyInterface != IAudioDestNotifySink._iid_:
+			log.debugWarning("Only IAudioDestNotifySink is allowed")
+			raise ReturnHRESULT(AUDERR_INVALIDNOTIFYSINK, None)
+		if self._notifySink:
+			self._notifySink = None
+		if pNotifyInterface:
+			self._notifySink = cast(pNotifyInterface, POINTER(IAudioDestNotifySink))
+
+	def IAudio_PosnGet(self) -> int:
+		"""Returns the byte position currently being played,
+		which should increase monotonically and never reset."""
+		return self._playedBytes
+
+	def IAudio_Claim(self):
+		"""Acquires (opens) the multimedia device.
+		`IAudioDestNotifySink::AudioStart()` will be called to notify the engine."""
+		if not self._waveFormat:
+			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+		if self._deviceState == _DeviceState.CLOSING:
+			# Close immediately
+			self.IAudio_Flush()
+			self._finishClose()
+		if self._deviceState != _DeviceState.CLOSED:
+			raise ReturnHRESULT(AUDERR_ALREADYCLAIMED, None)
+		self._maybeInitPlayer()
+		self._startAudioThread()
+		self._deviceState = _DeviceState.OPENED
+		if self._notifySink:
+			self._notifySink.AudioStart()
+
+	def IAudio_UnClaim(self):
+		"""Releases the multimedia device asynchronously.
+		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
+		if self._deviceState == _DeviceState.CLOSED:
+			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+		self._deviceState = _DeviceState.CLOSING
+		with self._audioCond:
+			self._audioCond.notify()
+
+	def IAudio_Start(self) -> None:
+		"""Starts (or resumes) playing."""
+		if self._deviceState == _DeviceState.RUNNING:
+			raise ReturnHRESULT(AUDERR_ALREADYSTARTED, None)
+		if self._deviceState != _DeviceState.OPENED:
+			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+		try:
+			self._player.pause(False)
+		except OSError:
+			pass
+		self._deviceState = _DeviceState.RUNNING
+
+	def IAudio_Stop(self) -> None:
+		"""Stops (or pauses) playing, without clearing the buffer."""
+		if self._deviceState != _DeviceState.RUNNING:
+			return  # no error returned
+		try:
+			self._player.pause(True)
+		except OSError:
+			pass
+		self._deviceState = _DeviceState.OPENED
+
+	def IAudio_TotalGet(self) -> int:
+		"""Returns the total number of bytes written,
+		including the unplayed bytes in the buffer,
+		which should increase monotonically and never reset."""
+		return self._writtenBytes
+
+	def IAudio_ToFileTime(self, pqWord):
+		# TODO: Add type hint
+		"""Converts a byte position to UTC FILETIME."""
+		if not self._waveFormat:
+			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+		filetime_ticks = int((self._startTime.timestamp() + 11644473600) * 10_000_000)
+		filetime_ticks += pqWord[0] * 10_000_000 // self._waveFormat.nAvgBytesPerSec
+		return FILETIME(filetime_ticks & 0xFFFFFFFF, filetime_ticks >> 32)
+
+	def IAudio_WaveFormatGet(self) -> SDATA:
+		"""Gets a copy of the current wave format.
+		:returns: A pointer to the WAVEFORMATEX structure.
+			Should be freed by the caller using CoTaskMemFree."""
+		if not self._waveFormat:
+			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+		size = sizeof(nvwave.WAVEFORMATEX)
+		ptr = windll.ole32.CoTaskMemAlloc(size)
+		if not ptr:
+			raise COMError(hresult.E_OUTOFMEMORY, "CoTaskMemAlloc failed", (None, None, None, None, None))
+		memmove(ptr, addressof(self._waveFormat), size)
+		return SDATA(ptr, size)
+
+	def IAudio_WaveFormatSet(self, dWFEX: SDATA) -> None:
+		"""Sets the current wave format. Only integer PCM formats are supported."""
+		size = 18  # SAPI4 uses 18 bytes without the final padding
+		if dWFEX.dwSize < size:
+			log.debugWarning("Invalid wave format size")
+			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
+		pWfx = cast(dWFEX.pData, POINTER(nvwave.WAVEFORMATEX))
+		if pWfx[0].wFormatTag != nvwave.WAVE_FORMAT_PCM:
+			log.debugWarning("Wave format not supported. Only integer PCM formats are supported.")
+			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
+		if self._deviceState != _DeviceState.CLOSED:
+			log.debugWarning("Cannot change wave format during playback.")
+			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
+		self._waveFormat = nvwave.WAVEFORMATEX()
+		memmove(addressof(self._waveFormat), pWfx, size)
+
+	def _getFreeSpace(self) -> int:
+		if not self._waveFormat:
+			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+		return self._waveFormat.nAvgBytesPerSec // 5  # always 200ms
+
+	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
+		# TODO: Docstring about return value
+		"""Returns the number of bytes that are free in the object's internal buffer."""
+		return (self._getFreeSpace(), 0)
+
+	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int):
+		"""Writes audio data to the end of the object's internal buffer.
+		This should not block.
+		When data cannot fit in the buffer, this should return AUDERR_NOTENOUGHDATA immediately."""
+		if self._deviceState != _DeviceState.RUNNING and self._deviceState != _DeviceState.OPENED:
+			log.debugWarning("Audio data written when device is not claimed")
+			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+		with self._audioCond:
+			self._audioQueue.append(string_at(pBuffer, dwSize))
+			self._writtenBytes += dwSize
+			self._audioCond.notify()
+
+	def IAudioDest_BookMark(self, dwMarkID: int):
+		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
+		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
+		When Flush is called, untriggered bookmarks should also be triggered."""
+		with self._audioCond:
+			self._audioQueue.append(dwMarkID)
+
+	def _audioThreadFunc(self):
+		while True:
+			with self._audioCond:
+				while not self._audioQueue and not self._audioStopped:
+					# Since WavePlayer.feed returns before the audio finishes,
+					# in order not to lose the final callbacks
+					# when there's no more audio to feed,
+					# wait with a timeout to give WavePlayer a chance
+					# to check the callbacks periodically.
+					self._audioCond.wait(0.1)
+					if self._audioQueue:
+						break
+					if self._deviceState == _DeviceState.CLOSING:
+						# Closing in progress, wait for the audio to finish
+						self._player.feed(None, 0, lambda: self._finishClose())
+					else:
+						# Call feed to let WavePlayer check the callbacks
+						self._player.feed(None, 0, None)
+				if self._audioStopped:
+					return
+				item = self._audioQueue.popleft()
+			if isinstance(item, bytes):  # audio
+				self._player.feed(item, len(item), lambda item=item: self._onChunkFinished(item))
+			elif isinstance(item, int):  # bookmark
+				if self._playedBytes == self._writtenBytes:
+					self._onBookmark(item)  # trigger immediately
+				else:
+					self._player.feed(None, 0, lambda item=item: self._onBookmark(item))
+
+	def _startAudioThread(self):
+		if self._audioThread:
+			return
+		self._audioStopped = False
+		self._audioThread = threading.Thread(target=self._audioThreadFunc)
+		self._audioThread.start()
+
+	def _shutdownAudioThread(self):
+		if not self._audioThread:
+			return
+		with self._audioCond:
+			self._audioStopped = True
+			self._audioCond.notify()
+		if self._audioThread is not threading.current_thread():
+			self._audioThread.join()
+		self._audioThread = None
+
+	def _onChunkFinished(self, chunk: bytes):
+		self._playedBytes += len(chunk)
+		if self._notifySink:
+			self._notifySink.FreeSpace(self._getFreeSpace(), 0)
+
+	def _onBookmark(self, dwMarkID: int):
+		if self._notifySink:
+			self._notifySink.BookMark(dwMarkID, 0)
+
+	def _finishClose(self):
+		if self._deviceState == _DeviceState.CLOSING:
+			self._player.stop()
+			self._shutdownAudioThread()
+			if self._notifySink:
+				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+			self._deviceState = _DeviceState.CLOSED
 
 
 class SynthDriverSink(COMObject):
@@ -192,6 +488,7 @@ class SynthDriver(SynthDriver):
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
+		self._ttsAudio.terminate()
 
 	def speak(self, speechSequence: SpeechSequence):
 		textList = []
@@ -302,8 +599,7 @@ class SynthDriver(SynthDriver):
 		if mode is None:
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
-		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
-		self._ttsAudio.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
+		self._ttsAudio = SynthDriverAudio()
 		if self._ttsCentral:
 			self._ttsCentral.UnRegister(self._sinkRegKey)
 		self._ttsCentral = POINTER(ITTSCentralW)()
@@ -445,52 +741,6 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
-
-
-def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
-	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
-
-	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
-	:return: An integer WaveOut device ID for use with SAPI4.
-		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
-	"""
-	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
-		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
-		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
-		currEndpointIdByteCount = DWORD()
-		# Defined in mmeapi.h
-		winmm = windll.winmm
-		waveOutMessage = winmm.waveOutMessage
-		waveOutGetNumDevs = winmm.waveOutGetNumDevs
-		for devID in range(waveOutGetNumDevs()):
-			# Get the length of this device's endpoint ID string.
-			mmr = waveOutMessage(
-				HANDLE(devID),
-				DriverMessage.QUERY_INSTANCE_ID_SIZE,
-				byref(currEndpointIdByteCount),
-				None,
-			)
-			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
-				# ID lengths don't match, so this device can't be a match.
-				continue
-			# Get the device's endpoint ID string.
-			mmr = waveOutMessage(
-				HANDLE(devID),
-				DriverMessage.QUERY_INSTANCE_ID,
-				byref(currEndpointId),
-				currEndpointIdByteCount,
-			)
-			if mmr != MMSYSERR_NOERROR:
-				continue
-			# Decode the endpoint ID string to a python string, and strip the null terminator.
-			if (
-				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
-				== targetEndpointId
-			):
-				return devID
-	# No matching device found, or default requested explicitly.
-	# Return the ID of Microsoft Sound Mapper
-	return -1
 
 
 def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):

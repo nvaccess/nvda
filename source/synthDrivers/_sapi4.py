@@ -17,9 +17,9 @@ from ctypes import (
 	sizeof,
 	Structure,
 )
-from ctypes.wintypes import BYTE, DWORD, LPCWSTR, WORD
+from ctypes.wintypes import BOOL, BYTE, DWORD, FILETIME, LPCWSTR, WORD
 from enum import IntEnum
-from comtypes import GUID, IUnknown, STDMETHOD
+from comtypes import GUID, IUnknown, STDMETHOD, COMMETHOD
 
 import winKernel
 
@@ -42,6 +42,27 @@ TTSFEATURE_VOLUME = 2
 TTSFEATURE_SPEED = 4
 TTSFEATURE_PITCH = 8
 TTSFEATURE_FIXEDAUDIO = 1024
+
+# Audio related error codes
+AUDERR_BADDEVICEID = -2147220735
+AUDERR_NEEDWAVEFORMAT = -2147220734
+AUDERR_NOTSUPPORTED = -2147467263  # E_NOTIMPL
+AUDERR_NOTENOUGHDATA = -2147220991
+AUDERR_NOTPLAYING = -2147220730
+AUDERR_WAVEFORMATNOTSUPPORTED = -2147220990
+AUDERR_WAVEDEVICEBUSY = -2147220989
+AUDERR_WAVEDEVNOTSUPPORTED = -2147220718
+AUDERR_NOTRECORDING = -2147220717
+AUDERR_INVALIDFLAG = -2147220988
+AUDERR_NODRIVER = -2147220713
+AUDERR_HANDLEBUSY = -2147220712
+AUDERR_INVALIDNOTIFYSINK = -2147220711
+AUDERR_WAVENOTENABLED = -2147220710
+AUDERR_ALREADYCLAIMED = -2147220707
+AUDERR_NOTCLAIMED = -2147220706
+AUDERR_STILLPLAYING = -2147220705
+AUDERR_ALREADYSTARTED = -2147220704
+AUDERR_SYNCNOTALLOWED = -2147220703
 
 LANGID = WORD
 QWORD = c_ulonglong
@@ -223,6 +244,61 @@ ITTSNotifySinkW._methods_ = [
 ]
 
 ITTSNotifySink = ITTSNotifySinkW
+
+
+class IAudio(IUnknown):
+	_iid_ = GUID("{F546B340-C743-11cd-80E5-00AA003E4B50}")
+
+
+IAudio._methods_ = [
+	COMMETHOD([], HRESULT, "Flush"),
+	COMMETHOD([], HRESULT, "LevelGet", (["out"], POINTER(DWORD), "pdwLevel")),
+	COMMETHOD([], HRESULT, "LevelSet", (["in"], DWORD, "dwLevel")),
+	COMMETHOD(
+		[],
+		HRESULT,
+		"PassNotify",
+		(["in"], c_void_p, "pNotifyInterface"),
+		(["in"], GUID, "IIDNotifyInterface"),
+	),
+	COMMETHOD([], HRESULT, "PosnGet", (["out"], POINTER(QWORD), "pqwTimeStamp")),
+	COMMETHOD([], HRESULT, "Claim"),
+	COMMETHOD([], HRESULT, "UnClaim"),
+	COMMETHOD([], HRESULT, "Start"),
+	COMMETHOD([], HRESULT, "Stop"),
+	COMMETHOD([], HRESULT, "TotalGet", (["out"], POINTER(QWORD), "pqWord")),
+	COMMETHOD(
+		[], HRESULT, "ToFileTime", (["in"], POINTER(QWORD), "pqWord"), (["out"], POINTER(FILETIME), "pFT")
+	),
+	COMMETHOD([], HRESULT, "WaveFormatGet", (["out"], POINTER(SDATA), "pdWFEX")),
+	COMMETHOD([], HRESULT, "WaveFormatSet", (["in"], SDATA, "dWFEX")),
+]
+
+
+class IAudioDest(IUnknown):
+	_iid_ = GUID("{2EC34DA0-C743-11cd-80E5-00AA003E4B50}")
+
+
+IAudioDest._methods_ = [
+	COMMETHOD(
+		[], HRESULT, "FreeSpace", (["out"], POINTER(DWORD), "pdwBytes"), (["out"], POINTER(BOOL), "pfEOF")
+	),
+	COMMETHOD([], HRESULT, "DataSet", (["in"], c_void_p, "pBuffer"), (["in"], DWORD, "dwSize")),
+	COMMETHOD([], HRESULT, "BookMark", (["in"], DWORD, "dwMarkID")),
+]
+
+
+class IAudioDestNotifySink(IUnknown):
+	_iid_ = GUID("{ACB08C00-C743-11cd-80E5-00AA003E4B50}")
+
+
+IAudioDestNotifySink._methods_ = [
+	STDMETHOD(HRESULT, "AudioStop", [WORD]),
+	STDMETHOD(HRESULT, "AudioStart"),
+	STDMETHOD(HRESULT, "FreeSpace", [DWORD, BOOL]),
+	STDMETHOD(HRESULT, "BookMark", [DWORD, BOOL]),
+]
+
 
 CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
