@@ -52,7 +52,9 @@ If you suspect this option is negatively impacting your battery life, you're adv
   * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
-* In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
+* In Word and Outlook the result of more shortcuts is reported:
+  * font formatting shortcuts (#10271, @CyrilleB79)
+  * Collapse or expand heading (#17545, @CyrilleB79)
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
