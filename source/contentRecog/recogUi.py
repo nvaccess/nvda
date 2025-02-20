@@ -169,9 +169,9 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 	@script(
 		# Translators: Describes a command.
 		description=_("Refresh the recognition result"),
-		gesture="kb:f5",
+		# gesture="kb:NVDA+f5",
 	)
-	def script_refreshRecogContent(self, gesture: "inputCore.InputGesture") -> None:
+	def script_refreshBuffer(self, gesture: "inputCore.InputGesture") -> None:
 		if self.recognizer.allowAutoRefresh:
 			# Translators: Reported when a manual update of a content recognition result (e.g. OCR result) is
 			# requested, but the content is already updated automatically.
