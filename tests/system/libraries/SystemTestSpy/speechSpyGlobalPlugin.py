@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2022 NV Access Limited
+# Copyright (C) 2018-2025 NV Access Limited, Leonard de Ruijter
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -15,7 +15,7 @@ from typing import (
 	Optional,
 	Tuple,
 )
-
+from braille import DisplayDimensions
 import core
 import globalPluginHandler
 import threading
@@ -189,7 +189,7 @@ class NVDASpyLib:
 		self._isNvdaStartupComplete = True
 		import braille
 
-		braille.filter_displaySize.register(self.getBrailleCellCount)
+		braille.filter_displayDimensions.register(self.getBrailleDisplayDimensions)
 		braille.pre_writeCells.register(self._onNvdaBraille)
 
 	def _onNvdaBraille(self, rawText: str):
@@ -266,8 +266,8 @@ class NVDASpyLib:
 	def setBrailleCellCount(self, brailleCellCount: int):
 		self._brailleCellCount = brailleCellCount
 
-	def getBrailleCellCount(self, value: int):
-		return self._brailleCellCount
+	def getBrailleDisplayDimensions(self, value: DisplayDimensions) -> DisplayDimensions:
+		return DisplayDimensions(1, self._brailleCellCount)
 
 	def _getBrailleAtIndex(self, brailleIndex: int) -> str:
 		with self._brailleLock:
