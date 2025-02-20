@@ -459,14 +459,14 @@ def _friendlyNameToEndpointId(friendlyName: str) -> str | None:
 	:param friendlyName: Friendly name of the device to search for.
 	:return: Endpoint ID string of the best match device, or `None` if no device with a matching friendly name is available.
 	"""
-	from utils.mmdevice import _getOutputDevices
+	from utils.mmdevice import getOutputDevices
 	from pycaw.constants import DEVICE_STATE
 
 	states = (DEVICE_STATE.ACTIVE, DEVICE_STATE.UNPLUGGED, DEVICE_STATE.DISABLED, DEVICE_STATE.NOTPRESENT)
 	for state in states:
 		try:
 			return next(
-				device for device in _getOutputDevices(stateMask=state) if device.friendlyName == friendlyName
+				device for device in getOutputDevices(stateMask=state) if device.friendlyName == friendlyName
 			).id
 		except StopIteration:
 			# Proceed to the next device state.

@@ -47,7 +47,7 @@ from config.configFlags import (
 from utils.displayString import (
 	DisplayStringEnum,
 )
-from utils.mmdevice import _AudioOutputDevice
+from utils.mmdevice import AudioOutputDevice
 
 
 class Config_FeatureFlagEnums_getAvailableEnums(unittest.TestCase):
@@ -918,15 +918,15 @@ class Config_AggregatedSection_pollution(unittest.TestCase):
 		self.assertEqual(self.profile, {"someBool": False})
 
 
-_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[_AudioOutputDevice]]
+_DevicesT: typing.TypeAlias = dict[DEVICE_STATE, list[AudioOutputDevice]]
 
 
 def getOutputDevicesFactory(
 	devices: _DevicesT,
-) -> Callable[[DEVICE_STATE], Generator[_AudioOutputDevice]]:
-	"""Create a callable that can be used to patch utils.mmdevice._getOutputDevices."""
+) -> Callable[[DEVICE_STATE], Generator[AudioOutputDevice]]:
+	"""Create a callable that can be used to patch utils.mmdevice.getOutputDevices."""
 
-	def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[_AudioOutputDevice]:
+	def getOutputDevices(stateMask: DEVICE_STATE, **kw) -> Generator[AudioOutputDevice]:
 		yield from devices.get(stateMask, [])
 
 	return getOutputDevices
@@ -934,10 +934,10 @@ def getOutputDevicesFactory(
 
 class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 	DEFAULT_DEVICES: _DevicesT = {
-		DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id1", "Device 1")],
-		DEVICE_STATE.UNPLUGGED: [_AudioOutputDevice("id2", "Device 2")],
-		DEVICE_STATE.DISABLED: [_AudioOutputDevice("id3", "Device 3")],
-		DEVICE_STATE.NOTPRESENT: [_AudioOutputDevice("id4", "Device 4")],
+		DEVICE_STATE.ACTIVE: [AudioOutputDevice("id1", "Device 1")],
+		DEVICE_STATE.UNPLUGGED: [AudioOutputDevice("id2", "Device 2")],
+		DEVICE_STATE.DISABLED: [AudioOutputDevice("id3", "Device 3")],
+		DEVICE_STATE.NOTPRESENT: [AudioOutputDevice("id4", "Device 4")],
 	}
 
 	def test_noDuplicates(self):
@@ -952,10 +952,10 @@ class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 		"""Test that, when there are devices with duplicate names in different states, the one with the preferred state is returned."""
 		FRIENDLY_NAME = "Device friendly name"
 		devices: _DevicesT = {
-			DEVICE_STATE.ACTIVE: [_AudioOutputDevice("idA", FRIENDLY_NAME)],
-			DEVICE_STATE.DISABLED: [_AudioOutputDevice("idD", FRIENDLY_NAME)],
-			DEVICE_STATE.NOTPRESENT: [_AudioOutputDevice("idN", FRIENDLY_NAME)],
-			DEVICE_STATE.UNPLUGGED: [_AudioOutputDevice("idU", FRIENDLY_NAME)],
+			DEVICE_STATE.ACTIVE: [AudioOutputDevice("idA", FRIENDLY_NAME)],
+			DEVICE_STATE.DISABLED: [AudioOutputDevice("idD", FRIENDLY_NAME)],
+			DEVICE_STATE.NOTPRESENT: [AudioOutputDevice("idN", FRIENDLY_NAME)],
+			DEVICE_STATE.UNPLUGGED: [AudioOutputDevice("idU", FRIENDLY_NAME)],
 		}
 		with self.subTest("Friendly name is active"):
 			self.performTest(*devices[DEVICE_STATE.ACTIVE][0], devices)
@@ -981,11 +981,11 @@ class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 		self.performTest(friendlyName="Anything", expectedId=None, devices=devices)
 
 	def performTest(self, expectedId: str | None, friendlyName: str, devices: _DevicesT):
-		"""Patch utils.mmdevice._getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
+		"""Patch utils.mmdevice.getOutputDevices to return what we tell it, then test that friendlyNameToEndpointId returns the correct ID given a friendly name.
 		The odd order of arguments is so you can directly unpack an AudioOutputDevice.
 		"""
 		with patch(
-			"utils.mmdevice._getOutputDevices",
+			"utils.mmdevice.getOutputDevices",
 			autospec=True,
 			side_effect=getOutputDevicesFactory(devices),
 		):
@@ -995,10 +995,10 @@ class Config_ProfileUpgradeSteps_FriendlyNameToEndpointId(unittest.TestCase):
 class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 	def setUp(self):
 		devices: _DevicesT = {
-			DEVICE_STATE.ACTIVE: [_AudioOutputDevice("id", "Friendly name")],
+			DEVICE_STATE.ACTIVE: [AudioOutputDevice("id", "Friendly name")],
 		}
 		self._getOutputDevicesPatcher = patch(
-			"utils.mmdevice._getOutputDevices",
+			"utils.mmdevice.getOutputDevices",
 			autospec=True,
 			side_effect=getOutputDevicesFactory(devices),
 		)

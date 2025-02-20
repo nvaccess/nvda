@@ -27,6 +27,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	preventDisplayTurnOff = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 # Speech settings
 [speech]
@@ -45,6 +46,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoDialectSwitching = boolean(default=false)
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
+	trimLeadingSilence = boolean(default=true)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)

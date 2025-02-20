@@ -1846,6 +1846,18 @@ If you wish to change the update mirror, press the "Change..." button to open th
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
 
+##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurnOff}
+
+This option ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
+This avoids the situation where the screen unexpectedly locks during a say all.
+This option is enabled by default.
+Consider disabling this option if you are suffering from a shorter battery life.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
+
 #### Speech Settings {#SpeechSettings}
 
 <!-- KC:setting -->
@@ -3354,6 +3366,12 @@ Additionally, contiguous spans of output of over 1,000 characters may not be rep
 This option enables behaviour which attempts to cancel speech for expired focus events.
 In particular moving quickly through messages in Gmail with Chrome can cause NVDA to speak outdated information.
 This functionality is enabled by default as of NVDA 2021.1.
+
+##### Trim leading silence in speech audio {#TrimLeadingSilenceSpeech}
+
+When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
+This option is enabled by default, and should only affect the silence at the beginning of speech.
+If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
