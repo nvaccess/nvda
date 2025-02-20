@@ -341,7 +341,7 @@ for xliffFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.xliff")):
 	env.Command(
 		mdFile,
 		xliffFile,
-		[f'@{sys.executable} user_docs/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
+		[f'@{sys.executable} source/markdownTranslate.py generateMarkdown -x "{xliffFile}" -o "{mdFile}"'],
 	)
 # Allow all markdown files to be converted to html in user_docs
 for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
@@ -360,7 +360,7 @@ for mdFile in env.Glob(os.path.join(userDocsDir.path, "*", "*.md")):
 	htmlFile = env.Command(
 		target=mdFile.abspath.replace(".md", ".html"),
 		source=mdFileSub,
-		action=[f'@{sys.executable} user_docs/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
+		action=[f'@{sys.executable} source/md2html.py -l {lang} -t {docType} "$SOURCE" "$TARGET"'],
 	)
 	styleInstallPath = os.path.dirname(mdFile.abspath)
 	installedStyle = env.Install(styleInstallPath, styles)
@@ -382,7 +382,7 @@ for userGuideFileSub in env.Glob(os.path.join(userDocsDir.path, "*", "userGuide.
 	keyCommandsHtmlFile = env.Command(
 		target=userGuideFileSub.abspath.replace("userGuide.md.sub", "keyCommands.html"),
 		source=userGuideFileSub,
-		action=[f'@{sys.executable} user_docs/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
+		action=[f'@{sys.executable} source/md2html.py -l {lang} -t keyCommands "$SOURCE" "$TARGET"'],
 	)
 	env.Depends(keyCommandsHtmlFile, userGuideFileSub)
 
@@ -454,7 +454,7 @@ def NVDADistGenerator(target, source, env, for_signature):
 				action.append(Copy(target[0], file.path))
 
 	if certFile or apiSigningToken:
-		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe":
+		for prog in "nvda_noUIAccess.exe", "nvda_uiAccess.exe", "nvda_slave.exe", "l10nUtil.exe":
 			action.append(
 				lambda target, source, env, progByVal=prog: env["signExec"](
 					[target[0].File(progByVal)], source, env
@@ -731,11 +731,3 @@ source = env.Dir(os.path.join(os.getcwd(), "dist"))
 # Putting the target in the output dir automatically causes AppVeyor to package it as an artefact
 target = env.File(os.path.join(outputDir.abspath, "library_modules.txt"))
 env.Alias("moduleList", env.GenerateModuleList(target, source))
-
-nvdaL10nUtil = env.Command(
-	target=outputDir.File("l10nUtil.exe"),
-	source="user_docs\l10nUtil.py",
-	ENV=os.environ,
-	action=f"nuitka --assume-yes-for-downloads --remove-output --standalone --onefile --output-dir={outputDir.abspath} --include-module=mdx_truly_sane_lists --include-module=markdown_link_attr_modifier --include-module=mdx_gh_links $SOURCE",
-)
-env.Alias("nvdaL10nUtil", nvdaL10nUtil)
