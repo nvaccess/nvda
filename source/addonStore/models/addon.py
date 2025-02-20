@@ -222,6 +222,10 @@ class _AddonManifestModel(_AddonGUIModel):
 		return description
 
 	@property
+	def installDate(self) -> datetime:
+		return datetime.fromtimestamp(os.path.getctime(self.installPath))
+
+	@property
 	def author(self) -> str:
 		return self.manifest["author"]
 

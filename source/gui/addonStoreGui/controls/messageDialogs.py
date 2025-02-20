@@ -19,7 +19,7 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
-from addonStore.models.status import AvailableAddonStatus
+from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
@@ -479,7 +479,7 @@ class UpdatableAddonsDialog(
 
 		self.listItemVMs: list[AddonListItemVM] = []
 		for addon in self.addonsPendingUpdate:
-			listItemVM = AddonListItemVM(addon, status=AvailableAddonStatus.UPDATE)
+			listItemVM = AddonListItemVM(addon, status=getStatus(addon, _StatusFilterKey.UPDATE))
 			listItemVM.updated.register(self._statusUpdate)
 			self.listItemVMs.append(listItemVM)
 		AddonStoreVM.getAddons(self.listItemVMs)
@@ -558,7 +558,8 @@ class UpdatableAddonsDialog(
 
 	@staticmethod
 	def handleDisplayableError(displayableError: DisplayableError):
-		displayableError.displayError(gui.mainFrame)
+		# Fail silently as we don't care if we can't fetch an update.
+		log.exception("Error occurred while checking for updatable add-ons", exc_info=displayableError)
 
 	@classmethod
 	def _checkForUpdatableAddons(cls):
@@ -608,19 +609,28 @@ def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
 	"""
 	from ..viewModels.store import AddonStoreVM
 
-	winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
 	# Translators: Message shown when updating add-ons automatically
-	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NOW)
-	listVMs = {AddonListItemVM(a, status=AvailableAddonStatus.UPDATE) for a in addonsPendingUpdate}
-	AddonStoreVM.getAddons(listVMs)
+	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
+	listVMs = {AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate}
+	AddonStoreVM.getAddons(
+		listVMs,
+		shouldReplace=True,
+		shouldInstallIncompatible=True,
+		shouldRememberReplaceChoice=True,
+		shouldRememberInstallChoice=True,
+	)
 
 	while AddonStoreVM._downloader.progress:
-		log.debug("Waiting for add-ons to be downloaded {}".format(AddonStoreVM._downloader.progress))
+		log.debug(f"Waiting for add-ons to be downloaded {AddonStoreVM._downloader.progress}")
 		sleep(0.1)
 
 	def mainThreadCallback():
 		# Add-on installations must happen on main thread
 		AddonStoreVM.installPending()
-		promptUserForRestart()
+		ui.message(
+			# Translators: Message shown when updating add-ons automatically
+			pgettext("addonStore", "Add-ons updated, restart NVDA to activate changes"),
+			SpeechPriority.NEXT,
+		)
 
 	wx.CallAfter(mainThreadCallback)

@@ -3094,7 +3094,7 @@ You will be prompted to restart NVDA when the updates are finished.
 |Option |Behaviour |
 |---|---|
 |Notify |Notify when updates are available to add-ons |
-|Update Automatically |Automatically update add-ons |
+|Update Automatically |Automatically update add-ons in the background |
 |Disabled |Do not automatically check for updates to add-ons |
 
 ##### Default Update Channel {#DefaultAddonUpdateChannel}

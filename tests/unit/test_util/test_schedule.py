@@ -145,7 +145,7 @@ class ScheduleThreadTests(unittest.TestCase):
 		expectedMinOffset = (ScheduleThread.START_MINUTE_OFFSET + 59) % 60
 		self.assertEqual(offset, f"12:{expectedMinOffset:02d}")
 
-	def test_calculateDailyTimeOffset_dayOverflow(self):
+	def test_calculateDailyTimeOffset_hourOverflow(self):
 		"""Test the case where the start time is 23:59 to ensure the day and hour offset is calculated correctly"""
 		NVDAState.getStartTime = MagicMock(
 			return_value=ScheduleThreadTests.TODAY_AT_MIDNIGHT.replace(hour=23, minute=59).timestamp(),
