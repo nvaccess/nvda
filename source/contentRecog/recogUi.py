@@ -30,6 +30,7 @@ from . import RecogImageInfo, ContentRecognizer, RecognitionResult, onRecognizeR
 if TYPE_CHECKING:
 	import inputCore
 
+
 class RecogResultNVDAObject(cursorManager.CursorManager, NVDAObjects.window.Window):
 	"""Fake NVDAObject used to present a recognition result in a cursor manager.
 	This allows the user to read the result with cursor keys, etc.
