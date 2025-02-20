@@ -4,6 +4,7 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import sysconfig
 from typing import Optional
 import typing
 import os
@@ -42,9 +43,14 @@ if typing.TYPE_CHECKING:
 	from speech.priorities import SpeechPriority
 	from characterProcessing import SymbolLevel
 
-versionedLibPath = os.path.join(globalVars.appDir, "lib")
-versionedLibARM64Path = os.path.join(globalVars.appDir, "libArm64")
-versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib64")
+
+# Ensure ctypes knows that LoadLibraryX returns a handle
+# this is necessary on 64-bit.
+windll.kernel32.LoadLibraryExW.restype = HMODULE
+
+versionedLibPath = os.path.join(globalVars.appDir, "lib", "x86")
+versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
+versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
 
 
 if not NVDAState.isRunningAsSource():
@@ -53,6 +59,16 @@ if not NVDAState.isRunningAsSource():
 	versionedLibAMD64Path = os.path.join(versionedLibAMD64Path, buildVersion.version)
 	versionedLibARM64Path = os.path.join(versionedLibARM64Path, buildVersion.version)
 
+match(sysconfig.get_platform()):
+	case "win-amd64":
+		coreArchLibPath = versionedLibAMD64Path
+	case "win-arm64":
+		coreArchLibPath = versionedLibARM64Path
+	case "win32":
+		coreArchLibPath = versionedLibPath
+	case _:
+		raise RuntimeError("Unsupported platform")
+log.info(f"Using core architecture library path: {coreArchLibPath}")
 
 _remoteLib = None
 _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
@@ -772,7 +788,7 @@ def initialize() -> None:
 	res = windll.User32.GetKeyboardLayoutNameW(buf)
 	if res:
 		lastLayoutString = buf.value
-	localLib = cdll.LoadLibrary(os.path.join(versionedLibPath, "nvdaHelperLocal.dll"))  # noqa: F405
+	localLib = cdll.LoadLibrary(os.path.join(coreArchLibPath , "nvdaHelperLocal.dll"))  # noqa: F405
 	for name, func in [
 		("nvdaController_speakText", nvdaController_speakText),
 		("nvdaController_speakSsml", nvdaController_speakSsml),
@@ -830,7 +846,7 @@ def initialize() -> None:
 		return
 	# Load nvdaHelperRemote.dll
 	h = windll.kernel32.LoadLibraryExW(
-		os.path.join(versionedLibPath, "nvdaHelperRemote.dll"),
+		os.path.join(coreArchLibPath, "nvdaHelperRemote.dll"),
 		0,
 		# Using an altered search path is necessary here
 		# As NVDAHelperRemote needs to locate dependent dlls in the same directory
@@ -848,9 +864,9 @@ def initialize() -> None:
 	# Manually start the in-process manager thread for this NVDA main thread now, as a slow system can cause this action to confuse WX
 	_remoteLib.initInprocManagerThreadIfNeeded()
 	arch = winVersion.getWinVer().processorArchitecture
-	if arch == "AMD64":
+	if arch == "AMD64" and coreArchLibPath != versionedLibAMD64Path:
 		_remoteLoaderAMD64 = _RemoteLoader(versionedLibAMD64Path)
-	elif arch == "ARM64":
+	elif arch == "ARM64" and coreArchLibPath != versionedLibARM64Path:
 		_remoteLoaderARM64 = _RemoteLoader(versionedLibARM64Path)
 		# Windows on ARM from Windows 11 supports running AMD64 apps.
 		# Thus we also need to be able to inject into these.
