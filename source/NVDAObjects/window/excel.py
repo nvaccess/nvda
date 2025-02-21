@@ -1518,7 +1518,7 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 			area = areasObject(iArea + 1)
 			count = area.count
 			cellInfos = (ExcelCellInfo * count)()
-			numCellsFetched=ctypes.c_long()
+			numCellsFetched = ctypes.c_long()
 			address = area.address(True, True, xlA1, True)
 			NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 				self.document.appModule.helperLocalBindingHandle,
@@ -1532,7 +1532,7 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 			for index in range(numCellsFetched.value):
 				ci = cellInfos[index]
 				if not ci.address:
-					log.debugWarning("cellInfo at index %s has no address"%index)
+					log.debugWarning("cellInfo at index %s has no address" % index)
 					break
 				yield self.QuickNavItemClass(self, ci)
 
