@@ -591,7 +591,7 @@ class SynthDriver(SynthDriver):
 			self._bookmarks = None
 			self._ttsCentral.AudioReset()
 		except COMError:
-			log.error("Error cancelling speech", exc_info=True)
+			log.debugWarning("Error cancelling speech", exc_info=True)
 		finally:
 			self._finalIndex = None
 
