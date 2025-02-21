@@ -142,6 +142,13 @@ Docstrings should use [Sphinx format without types](https://sphinx-rtd-tutorial.
 NVDA formerly used [epytext](https://epydoc.sourceforge.net/manual-epytext.html) syntax for docstrings, which means there is inconsistent syntax used in the NVDA code base.
 [#12971](https://github.com/nvaccess/nvda/issues/12971) exists to track converting epytext docstrings to Sphinx.
 
+To learn more about reStructuredText, Sphinx and Python, check out the following links:
+
+* [reStructuredText Primer from the Sphinx docs](https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html)
+* [reStructuredText markup from the Python Developer's Guide](https://devguide.python.org/documentation/markup/)
+* [Sphynx' custom reStructuredText Directives](https://www.sphinx-doc.org/en/master/usage/restructuredtext/directives.html)
+* [Sphynx' Python Domain](https://www.sphinx-doc.org/en/master/usage/domains/python.html)
+
 ### Type hints
 
 All new code contributions to NVDA should use [PEP 484-style type hints](https://peps.python.org/pep-0484/).
