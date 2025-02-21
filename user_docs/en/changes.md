@@ -126,6 +126,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)
 * Voice parameters, such as rate and volume, will no longer be reset to default when using the synth settings ring to change between voices in the SAPI5 and SAPI4 synthesizer. (#17693, #2320, @gexgd0419)
 * The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)
+* In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas in the event that non-contiguous cells contain them. (#11366, @CyrilleB79)
 
 ### Changes for Developers
 
@@ -263,7 +264,7 @@ This is a patch release to fix a bug when saving speech symbol dictionaries.
 
 * Fixed bug where speech symbols dictionaries were not saved and the dialog would not be closed. (#17344)
 
-## 2024.4
+e## 2024.4
 
 This release includes a number of improvements in Microsoft Office, braille, and document formatting.
 
