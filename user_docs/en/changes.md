@@ -10,9 +10,14 @@ Any remaining users of SAPI4 speech synthesizers are encouraged to choose a more
 ### New Features
 
 * Add-on Store:
-  * Automatic update channels for add-ons can now be modified. (#3208)
-    * Automatic update channels can be selected for installed add-ons via an "Update channel" submenu.
-    * The default automatic update channel can be set from the Add-on Store panel in NVDA's settings.
+  * Automatic updates:
+    * Automatic update channels for add-ons can now be modified. (#3208)
+      * Automatic update channels can be selected for installed add-ons via an "Update channel" submenu.
+      * The default automatic update channel can be set from the Add-on Store panel in NVDA's settings.
+    * Automatic updates can now happen in the background.
+      * This can be enabled in the Add-on Store panel in NVDA's settings by changing "Automatic updates" to "Update Automatically". (#3208)
+    * Automatic updates can now update incompatible add-ons to another, newer, incompatible version.
+      * This can be enabled in the Add-on Store panel in NVDA's settings. (#3208)
   * Added an action to cancel the install of add-ons. (#15578, @hwf1324)
   * Added an action to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
   * The add-ons lists can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
@@ -52,7 +57,9 @@ If you suspect this option is negatively impacting your battery life, you're adv
   * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
   * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
   * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
-* In Word and Outlook the result of more font formatting shortcuts is now reported. (#10271, @CyrilleB79)
+* In Word and Outlook the result of more shortcuts is reported:
+  * font formatting shortcuts (#10271, @CyrilleB79)
+  * Collapse or expand heading (#17545, @CyrilleB79)
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
 * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
 * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
