@@ -1061,9 +1061,10 @@ docFileName = string(default=None)
 	)
 
 	def __init__(self, input: IO[bytes], translatedInput: IO[bytes] | None = None):
-		"""Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest information
-		@param translatedInput: translated manifest input
+		"""Constructs an :class:`AddonManifest` instance from manifest string data
+		
+		:param input: data to read the manifest information
+		:param translatedInput: Optional translated manifest input, defaults to ``None``
 		"""
 		super().__init__(input, configspec=self.configspec, encoding="utf-8", default_encoding="utf-8")
 		self._errors = None
