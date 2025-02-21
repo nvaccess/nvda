@@ -247,21 +247,21 @@ class ExecAndPump(threading.Thread, Generic[_execAndPumpResT]):
 			log.debugWarning("task had errors", exc_info=True)
 
 
-def preventSystemIdle(preventDisplayTurnOff: bool | None = None, persistent: bool = False) -> None:
+def preventSystemIdle(preventDisplayTurningOff: bool | None = None, persistent: bool = False) -> None:
 	"""
 	Prevent the system from locking the screen or going to sleep.
-	:param preventDisplayTurnOff: If `True`, keep the display awake as well.
+	:param preventDisplayTurningOff: If `True`, keep the display awake as well.
 		if `False`, only avoid system sleep.
 		if `None`, the general setting "prevent display turn off" will be used.
 	:param persistent: If `True`, the state will be maintained until calling :func:`resetThreadExecutionState` is called.
 	"""
-	if preventDisplayTurnOff is None:
+	if preventDisplayTurningOff is None:
 		import config
 
-		preventDisplayTurnOff = bool(config.conf["general"]["preventDisplayTurnOff"])
+		preventDisplayTurningOff = config.conf["general"]["preventDisplayTurningOff"]
 	windll.kernel32.SetThreadExecutionState(
 		winKernel.ES_SYSTEM_REQUIRED
-		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurnOff else 0)
+		| (winKernel.ES_DISPLAY_REQUIRED if preventDisplayTurningOff else 0)
 		| (winKernel.ES_CONTINUOUS if persistent else 0),
 	)
 
