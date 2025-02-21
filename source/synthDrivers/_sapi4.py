@@ -268,7 +268,11 @@ IAudio._methods_ = [
 	COMMETHOD([], HRESULT, "Stop"),
 	COMMETHOD([], HRESULT, "TotalGet", (["out"], POINTER(QWORD), "pqWord")),
 	COMMETHOD(
-		[], HRESULT, "ToFileTime", (["in"], POINTER(QWORD), "pqWord"), (["out"], POINTER(FILETIME), "pFT")
+		[],
+		HRESULT,
+		"ToFileTime",
+		(["in"], POINTER(QWORD), "pqWord"),
+		(["out"], POINTER(FILETIME), "pFT"),
 	),
 	COMMETHOD([], HRESULT, "WaveFormatGet", (["out"], POINTER(SDATA), "pdWFEX")),
 	COMMETHOD([], HRESULT, "WaveFormatSet", (["in"], SDATA, "dWFEX")),
@@ -281,7 +285,11 @@ class IAudioDest(IUnknown):
 
 IAudioDest._methods_ = [
 	COMMETHOD(
-		[], HRESULT, "FreeSpace", (["out"], POINTER(DWORD), "pdwBytes"), (["out"], POINTER(BOOL), "pfEOF")
+		[],
+		HRESULT,
+		"FreeSpace",
+		(["out"], POINTER(DWORD), "pdwBytes"),
+		(["out"], POINTER(BOOL), "pfEOF"),
 	),
 	COMMETHOD([], HRESULT, "DataSet", (["in"], c_void_p, "pBuffer"), (["in"], DWORD, "dwSize")),
 	COMMETHOD([], HRESULT, "BookMark", (["in"], DWORD, "dwMarkID")),
