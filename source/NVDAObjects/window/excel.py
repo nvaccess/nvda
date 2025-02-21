@@ -43,6 +43,7 @@ import mouseHandler
 from displayModel import DisplayModelTextInfo
 import controlTypes
 from controlTypes import TextPosition, TextAlign, VerticalTextAlign
+from NVDAHelper.localLib import EXCEL_CELLINFO
 from . import Window
 from .. import NVDAObjectTextInfo
 import scriptHandler
@@ -1409,23 +1410,6 @@ _nvCellStatesToStates: Dict[NvCellState, controlTypes.State] = {
 }
 
 
-class ExcelCellInfo(ctypes.Structure):
-	_fields_ = [
-		("text", comtypes.BSTR),
-		("address", comtypes.BSTR),
-		("inputTitle", comtypes.BSTR),
-		("inputMessage", comtypes.BSTR),
-		("nvCellStates", ctypes.c_longlong),  # bitwise OR of the NvCellState enum values.
-		("rowNumber", ctypes.c_long),
-		("rowSpan", ctypes.c_long),
-		("columnNumber", ctypes.c_long),
-		("columnSpan", ctypes.c_long),
-		("outlineLevel", ctypes.c_long),
-		("comments", comtypes.BSTR),
-		("formula", comtypes.BSTR),
-	]
-
-
 class ExcelCellInfoQuickNavItem(browseMode.QuickNavItem):
 	def __init__(self, parentIterator, cellInfo):
 		self.excelCellInfo = cellInfo
@@ -1514,7 +1498,7 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 		if not collectionObject:
 			return
 		count = collectionObject.count
-		cellInfos = (ExcelCellInfo * count)()
+		cellInfos = (EXCEL_CELLINFO * count)()
 		numCellsFetched = ctypes.c_long()
 		address = collectionObject.address(True, True, xlA1, True)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
@@ -1551,13 +1535,13 @@ class FormulaExcelCellInfoQuicknavIterator(ExcelCellInfoQuicknavIterator):
 
 
 class ExcelCell(ExcelBase):
-	excelCellInfo: Optional[ExcelCellInfo]
+	excelCellInfo: Optional[EXCEL_CELLINFO]
 	"""Type info for auto property: _get_excelCellInfo"""
 
-	def _get_excelCellInfo(self) -> Optional[ExcelCellInfo]:
+	def _get_excelCellInfo(self) -> Optional[EXCEL_CELLINFO]:
 		if not self.appModule.helperLocalBindingHandle:
 			return None
-		ci = ExcelCellInfo()
+		ci = EXCEL_CELLINFO()
 		numCellsFetched = ctypes.c_long()
 		address = self.excelCellObject.address(True, True, xlA1, True)
 		res = NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
