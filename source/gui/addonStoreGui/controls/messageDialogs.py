@@ -473,6 +473,9 @@ class UpdatableAddonsDialog(
 	def onUpdateAllButton(self, evt: wx.CommandEvent):
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
 
+		self.updateAllButton.Disable()
+		self.openStoreButton.Disable()
+
 		self.listItemVMs: list[AddonListItemVM] = []
 		for addon in self.addonsPendingUpdate:
 			listItemVM = AddonListItemVM(addon, status=AvailableAddonStatus.UPDATE)
@@ -482,8 +485,6 @@ class UpdatableAddonsDialog(
 		self.addonsList.Refresh()
 		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
 		ui.message(pgettext("addonStore", "Updating add-ons..."))
-		self.updateAllButton.Disable()
-		self.openStoreButton.Disable()
 		self.addonsList.SetFocus()
 		self.addonsList.Focus(0)
 
