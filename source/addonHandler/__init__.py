@@ -1062,7 +1062,7 @@ docFileName = string(default=None)
 
 	def __init__(self, input: IO[bytes], translatedInput: IO[bytes] | None = None):
 		"""Constructs an :class:`AddonManifest` instance from manifest string data
-		
+
 		:param input: data to read the manifest information
 		:param translatedInput: Optional translated manifest input, defaults to ``None``
 		"""
