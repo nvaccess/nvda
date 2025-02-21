@@ -56,7 +56,7 @@ class RelativeOffset(c_long):
 		return f"RelativeOffset {self.value}"
 
 
-_dll = oledll[os.path.join(NVDAHelper.versionedLibPath, "UIARemote.dll")]
+_dll = oledll[os.path.join(NVDAHelper.coreArchLibPath, "UIARemote.dll")]
 
 
 class RemoteOperationResultSet:

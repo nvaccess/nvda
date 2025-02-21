@@ -42,6 +42,7 @@ class MSLLHOOKSTRUCT(Structure):  # noqa: F405
 		("dwExtraInfo", DWORD),  # noqa: F405
 	]
 
+windll.user32.SetWindowsHookExW.restype = HANDLE
 
 keyDownCallback = None
 keyUpCallback = None

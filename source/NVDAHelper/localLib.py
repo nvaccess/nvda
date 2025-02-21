@@ -12,7 +12,6 @@ from ctypes import (
 	Structure,
 	c_voidp,
 	c_bool,
-	c_ubyte,
 	c_int,
 	c_long,
 	c_ulong,
@@ -509,7 +508,7 @@ wasPlay_feed = dll.wasPlay_feed
 wasPlay_feed.restype = HRESULT
 wasPlay_feed.argtypes = (
 	HWasapiPlayer,  # player
-	POINTER(c_ubyte),  # data
+	c_char_p,  # data
 	c_uint,  # size
 	POINTER(c_uint),  # id
 )

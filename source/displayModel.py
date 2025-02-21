@@ -223,7 +223,7 @@ def initialize():
 		POINTER(BSTR),  # noqa: F405
 		POINTER(BSTR),  # noqa: F405
 	)(
-		("displayModel_getWindowTextInRect", NVDAHelper.localLib),
+		("displayModel_getWindowTextInRect", NVDAHelper.localLib.dll),
 		((1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (2,), (2,)),
 	)  # noqa: F405
 	_requestTextChangeNotificationsForWindow = (

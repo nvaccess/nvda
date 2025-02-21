@@ -19,6 +19,7 @@ from ctypes import (
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
+	string_at,
 )
 from ctypes.wintypes import (
 	WORD,
@@ -347,6 +348,8 @@ class WasapiWavePlayer(garbageHandler.TrackedObject):
 		feedId = c_uint() if onDone else None
 		# Never treat this instance as idle while we're feeding.
 		self._lastActiveTime = None
+		if not isinstance(data, bytes):
+			data = string_at(data, size)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,
