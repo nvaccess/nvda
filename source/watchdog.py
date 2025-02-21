@@ -311,12 +311,12 @@ def initialize():
 	oledll.ole32.CoEnableCallCancellation(None)
 	# Cache cancelCallEvent.
 	_cancelCallEvent = ctypes.wintypes.HANDLE.in_dll(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"cancelCallEvent",
 	)
 	# Handle cancelled SendMessage calls.
 	NVDAHelper._setDllFuncPointer(
-		NVDAHelper.localLib,
+		NVDAHelper.localLib.dll,
 		"_notifySendMessageCancelled",
 		_notifySendMessageCancelled,
 	)

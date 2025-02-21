@@ -19,6 +19,7 @@ from ctypes import (
 	c_void_p,
 	CFUNCTYPE,
 	c_float,
+	string_at,
 )
 from ctypes.wintypes import (
 	WORD,
@@ -323,6 +324,8 @@ class WavePlayer(garbageHandler.TrackedObject):
 		# turn off trimming temporarily.
 		if self._purpose is AudioPurpose.SPEECH and self._isLeadingSilenceInserted:
 			self.startTrimmingLeadingSilence(False)
+		if not isinstance(data, bytes):
+			data = string_at(data, size)
 		try:
 			NVDAHelper.localLib.wasPlay_feed(
 				self._player,

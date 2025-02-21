@@ -10,6 +10,12 @@ When working on this file, consider moving to winAPI.
 """
 
 import ctypes
+from ctypes.wintypes import (
+	HWND,
+	UINT,
+	WPARAM,
+	LPARAM,
+)
 import weakref
 import winUser
 from winUser import WNDCLASSEXW, WNDPROC
@@ -17,6 +23,14 @@ from logHandler import log
 from abc import abstractmethod
 from baseObject import AutoPropertyObject
 from typing import Optional
+
+ctypes.windll.user32.DefWindowProcW.argtypes = (
+	HWND,
+	UINT,  # msg
+	WPARAM,
+	LPARAM,
+)
+
 
 WNDENUMPROC = ctypes.WINFUNCTYPE(ctypes.wintypes.BOOL, ctypes.wintypes.HWND, ctypes.wintypes.LPARAM)
 

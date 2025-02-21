@@ -18,6 +18,8 @@ from typing import (
 )
 from collections import OrderedDict
 import ctypes
+from ctypes.wintypes import HANDLE
+import comtypes
 import winreg
 import wave
 from synthDriverHandler import (
@@ -218,6 +220,7 @@ class OneCoreSynthDriver(SynthDriver):
 	def __init__(self):
 		super().__init__()
 		self._dll = NVDAHelper.getHelperLocalWin10Dll()
+		self._dll.ocSpeech_initialize.restype = HANDLE
 		self._dll.ocSpeech_getCurrentVoiceLanguage.restype = ctypes.c_wchar_p
 		# Set initial values for parameters that can't be queried when prosody is not supported.
 		# This initialises our cache for the value.
@@ -235,8 +238,9 @@ class OneCoreSynthDriver(SynthDriver):
 
 		self._earlyExitCB = False
 		self._callbackInst = ocSpeech_Callback(self._callback)
-		self._ocSpeechToken: Optional[ctypes.POINTER] = self._dll.ocSpeech_initialize(self._callbackInst)
-		self._dll.ocSpeech_getVoices.restype = NVDAHelper.bstrReturn
+		self._ocSpeechToken = HANDLE()
+		self._ocSpeechToken.value = self._dll.ocSpeech_initialize(self._callbackInst)
+		self._dll.ocSpeech_getVoices.restype = comtypes.BSTR
 		self._dll.ocSpeech_getCurrentVoiceId.restype = ctypes.c_wchar_p
 		self._player = None
 		# Initialize state.
@@ -517,6 +521,7 @@ class OneCoreSynthDriver(SynthDriver):
 		Checks that the given voice actually exists and is valid.
 		It checks the Registry, and also ensures that its data files actually exist on this machine.
 		@param ID: the ID of the requested voice.
+		
 		@returns: True if the voice is valid, False otherwise.
 
 		OneCore keeps specific registry caches of OneCore for AT applications.

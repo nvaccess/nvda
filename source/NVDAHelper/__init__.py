@@ -10,10 +10,6 @@ import typing
 import os
 import winreg
 import msvcrt
-import winVersion
-import buildVersion
-import winKernel
-import config
 
 from ctypes import *  # noqa: F403
 from ctypes import (
@@ -29,30 +25,15 @@ from ctypes import (
 )
 from ctypes.wintypes import *  # noqa: F403
 from comtypes import BSTR
-import winUser
-import eventHandler
-import queueHandler
-import api
+
+import buildVersion
 import globalVars
-from logHandler import log
-import NVDAState
-from utils.security import isLockScreenModeActive
-from winAPI.constants import SystemErrorCodes
-
-if typing.TYPE_CHECKING:
-	from speech.priorities import SpeechPriority
-	from characterProcessing import SymbolLevel
-
-
-# Ensure ctypes knows that LoadLibraryX returns a handle
-# this is necessary on 64-bit.
-windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 versionedLibPath = os.path.join(globalVars.appDir, "lib", "x86")
 versionedLibARM64Path = os.path.join(globalVars.appDir, "lib", "arm64")
 versionedLibAMD64Path = os.path.join(globalVars.appDir, "lib", "x64")
 
-
+import NVDAState
 if not NVDAState.isRunningAsSource():
 	# When running as a py2exe build, libraries are in a version-specific directory
 	versionedLibPath = os.path.join(versionedLibPath, buildVersion.version)
@@ -68,12 +49,31 @@ match(sysconfig.get_platform()):
 		coreArchLibPath = versionedLibPath
 	case _:
 		raise RuntimeError("Unsupported platform")
-log.info(f"Using core architecture library path: {coreArchLibPath}")
+
+from . import localLib
+import winVersion
+import winKernel
+import config
+import winUser
+import eventHandler
+import queueHandler
+import api
+from logHandler import log
+from utils.security import isLockScreenModeActive
+from winAPI.constants import SystemErrorCodes
+
+if typing.TYPE_CHECKING:
+	from speech.priorities import SpeechPriority
+	from characterProcessing import SymbolLevel
+
+
+# Ensure ctypes knows that LoadLibraryX returns a handle
+# this is necessary on 64-bit.
+windll.kernel32.LoadLibraryExW.restype = HMODULE
 
 _remoteLib = None
 _remoteLoaderAMD64: "Optional[_RemoteLoader]" = None
 _remoteLoaderARM64: "Optional[_RemoteLoader]" = None
-localLib = None
 generateBeep = None
 onSsmlMarkReached = None
 VBuf_getTextInRange = None
@@ -243,12 +243,11 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	if not pid:
 		log.error("Could not get process ID for RPC call")
 		return -1
-	bindingHandle = c_long()
-	bindingHandle.value = localLib.createRemoteBindingHandle(uuidString)
+	bindingHandle = localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle:
 		log.error("Could not bind to inproc rpc server for pid %d" % pid)
 		return -1
-	registrationHandle = c_long()
+	registrationHandle = HANDLE()
 	res = localLib.nvdaInProcUtils_registerNVDAProcess(bindingHandle, byref(registrationHandle))  # noqa: F405
 	if res != 0 or not registrationHandle:
 		log.error(
@@ -779,7 +778,7 @@ class _RemoteLoader:
 
 def initialize() -> None:
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global localLib, generateBeep, onSsmlMarkReached, VBuf_getTextInRange
+	global generateBeep, onSsmlMarkReached, VBuf_getTextInRange
 	global lastLanguageID, lastLayoutString
 	hkl = c_ulong(windll.User32.GetKeyboardLayout(0)).value
 	lastLanguageID = winUser.LOWORD(hkl)
@@ -788,7 +787,6 @@ def initialize() -> None:
 	res = windll.User32.GetKeyboardLayoutNameW(buf)
 	if res:
 		lastLayoutString = buf.value
-	localLib = cdll.LoadLibrary(os.path.join(coreArchLibPath , "nvdaHelperLocal.dll"))  # noqa: F405
 	for name, func in [
 		("nvdaController_speakText", nvdaController_speakText),
 		("nvdaController_speakSsml", nvdaController_speakSsml),
@@ -820,7 +818,7 @@ def initialize() -> None:
 		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
 	]:
 		try:
-			_setDllFuncPointer(localLib, "_%s" % name, func)
+			_setDllFuncPointer(localLib.dll, "_%s" % name, func)
 		except AttributeError as e:
 			log.error(
 				"nvdaHelperLocal function pointer for %s could not be found, possibly old nvdaHelperLocal dll"
@@ -829,18 +827,7 @@ def initialize() -> None:
 			)
 			raise e
 	localLib.nvdaHelperLocal_initialize(globalVars.appArgs.secure)
-	generateBeep = localLib.generateBeep
-	generateBeep.argtypes = [c_char_p, c_float, c_int, c_int, c_int]  # noqa: F405
-	generateBeep.restype = c_int
-	onSsmlMarkReached = localLib.nvdaController_onSsmlMarkReached
-	onSsmlMarkReached.argtypes = [c_wchar_p]
-	onSsmlMarkReached.restype = c_ulong
 	# The rest of this function (to do with injection) only applies if NVDA is not running as a Windows store application
-	# Handle VBuf_getTextInRange's BSTR out parameter so that the BSTR will be freed automatically.
-	VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(  # noqa: F405
-		("VBuf_getTextInRange", localLib),
-		((1,), (1,), (1,), (2,), (1,)),
-	)
 	if config.isAppX:
 		log.info("Remote injection disabled due to running as a Windows Store Application")
 		return
@@ -876,7 +863,7 @@ def initialize() -> None:
 
 def terminate():
 	global _remoteLib, _remoteLoaderAMD64, _remoteLoaderARM64
-	global localLib, generateBeep, VBuf_getTextInRange
+	global generateBeep, VBuf_getTextInRange
 	if not config.isAppX:
 		if not _remoteLib.uninstallIA2Support():
 			log.debugWarning("Error uninstalling IA2 support")
@@ -892,10 +879,8 @@ def terminate():
 	generateBeep = None
 	VBuf_getTextInRange = None
 	localLib.nvdaHelperLocal_terminate()
-	localLib = None
 
-
-LOCAL_WIN10_DLL_PATH = os.path.join(versionedLibPath, "nvdaHelperLocalWin10.dll")
+LOCAL_WIN10_DLL_PATH = os.path.join(coreArchLibPath, "nvdaHelperLocalWin10.dll")
 
 
 def getHelperLocalWin10Dll():
