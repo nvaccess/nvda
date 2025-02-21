@@ -192,6 +192,17 @@ freeze(
 				"company_name": f"Bill Dengler, {publisher}",
 			},
 		},
+		{
+			"script": "l10nUtil.py",
+			"version_info": {
+				"version": formatBuildVersionString(),
+				"description": "NVDA Localization Utility",
+				"product_name": name,
+				"product_version": version,
+				"copyright": NVDAcopyright,
+				"company_name": publisher,
+			},
+		},
 	],
 	options={
 		"verbose": 2,
@@ -241,6 +252,11 @@ freeze(
 			"visionEnhancementProviders",
 			# Required for markdown, markdown implicitly imports this so it isn't picked up
 			"html.parser",
+			"lxml._elementpath",
+			"markdown.extensions",
+			"markdown_link_attr_modifier",
+			"mdx_truly_sane_lists",
+			"mdx_gh_links",
 		],
 		"includes": [
 			"nvdaBuiltin",

@@ -17,7 +17,7 @@ class TestMarkdownTranslate(unittest.TestCase):
 		os.path.dirname(__file__),
 		"..",
 		"..",
-		"user_docs",
+		"source",
 		"markdownTranslate.py",
 	)
 	testDir = os.path.join(os.path.dirname(__file__), "..", "markdownTranslate")
