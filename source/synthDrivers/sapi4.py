@@ -11,9 +11,21 @@ from collections import OrderedDict, deque
 import threading
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID, hresult, ReturnHRESULT
-from ctypes import addressof, byref, c_ulong, POINTER, c_void_p, cast, memmove, string_at, sizeof, windll
+from ctypes import (
+	addressof,
+	byref,
+	c_ulong,
+	c_ulonglong,
+	POINTER,
+	c_void_p,
+	cast,
+	memmove,
+	string_at,
+	sizeof,
+	windll,
+)
 from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
-from typing import Optional
+from typing import TYPE_CHECKING, Optional
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import gui.contextHelp
 import gui.message
@@ -111,6 +123,14 @@ class _DeviceState(IntEnum):
 	CLOSING = 3  # Unclaiming
 
 
+if TYPE_CHECKING:
+	from ctypes import _Pointer
+
+	c_ulonglong_p = _Pointer[c_ulonglong]
+else:
+	c_ulonglong_p = POINTER(c_ulonglong)
+
+
 class SynthDriverAudio(COMObject):
 	"""
 	Implements IAudio and IAudioDest to receive streamed in audio data.
@@ -205,7 +225,7 @@ class SynthDriverAudio(COMObject):
 		which should increase monotonically and never reset."""
 		return self._playedBytes
 
-	def IAudio_Claim(self):
+	def IAudio_Claim(self) -> None:
 		"""Acquires (opens) the multimedia device.
 		`IAudioDestNotifySink::AudioStart()` will be called to notify the engine."""
 		if not self._waveFormat:
@@ -222,7 +242,7 @@ class SynthDriverAudio(COMObject):
 		if self._notifySink:
 			self._notifySink.AudioStart()
 
-	def IAudio_UnClaim(self):
+	def IAudio_UnClaim(self) -> None:
 		"""Releases the multimedia device asynchronously.
 		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
 		if self._deviceState == _DeviceState.CLOSED:
@@ -259,8 +279,7 @@ class SynthDriverAudio(COMObject):
 		which should increase monotonically and never reset."""
 		return self._writtenBytes
 
-	def IAudio_ToFileTime(self, pqWord):
-		# TODO: Add type hint
+	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> None:
 		"""Converts a byte position to UTC FILETIME."""
 		if not self._waveFormat:
 			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
@@ -303,11 +322,13 @@ class SynthDriverAudio(COMObject):
 		return self._waveFormat.nAvgBytesPerSec // 5  # always 200ms
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
-		# TODO: Docstring about return value
-		"""Returns the number of bytes that are free in the object's internal buffer."""
+		"""Returns the number of bytes that are free in the object's internal buffer.
+		:returns: Tuple (dwBytes, fEOF).
+			dwBytes: number of bytes available.
+			fEOF: TRUE if end-of-file is reached and no more data can be sent."""
 		return (self._getFreeSpace(), 0)
 
-	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int):
+	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
 		"""Writes audio data to the end of the object's internal buffer.
 		This should not block.
 		When data cannot fit in the buffer, this should return AUDERR_NOTENOUGHDATA immediately."""
@@ -319,7 +340,7 @@ class SynthDriverAudio(COMObject):
 			self._writtenBytes += dwSize
 			self._audioCond.notify()
 
-	def IAudioDest_BookMark(self, dwMarkID: int):
+	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
 		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
 		When Flush is called, untriggered bookmarks should also be triggered."""
@@ -327,6 +348,7 @@ class SynthDriverAudio(COMObject):
 			self._audioQueue.append(dwMarkID)
 
 	def _audioThreadFunc(self):
+		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
 		while True:
 			with self._audioCond:
 				while not self._audioQueue and not self._audioStopped:
@@ -382,12 +404,14 @@ class SynthDriverAudio(COMObject):
 			self._notifySink.BookMark(dwMarkID, 0)
 
 	def _finishClose(self):
+		"""Finishes the asynchronous UnClaim call."""
 		if self._deviceState == _DeviceState.CLOSING:
 			self._player.stop()
 			self._shutdownAudioThread()
-			if self._notifySink:
-				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
 			self._deviceState = _DeviceState.CLOSED
+			if self._notifySink:
+				# Notify when the device is finally closed
+				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
 
 
 class SynthDriverSink(COMObject):
