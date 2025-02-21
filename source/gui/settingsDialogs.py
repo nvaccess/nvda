@@ -361,7 +361,7 @@ class SettingsPanel(
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
-	.. attribute: `panelDescription`: The description NVDA reads when the user is selecting the category.
+	:ivar panelDescription: The description shown in the settings dialog when the category is selected.
 	"""
 
 	title = ""
