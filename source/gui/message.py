@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Mesar Hameed, Joseph Lee,
 # Thomas Stivers, Babbage B.V., Accessolutions, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -13,7 +13,7 @@ import winsound
 from collections import deque
 from collections.abc import Callable, Collection
 from enum import Enum, IntEnum, auto
-from functools import partialmethod, singledispatchmethod
+from functools import partialmethod, singledispatchmethod, wraps
 from typing import Any, Literal, NamedTuple, Optional, Self, TypeAlias
 
 import core
@@ -52,6 +52,29 @@ def isModalMessageBoxActive() -> bool:
 		return _messageBoxCounter != 0
 
 
+def _countAsMessageBox():
+	"""Wrapper to increment and decrement the message box counter around the wrapped function."""
+
+	def _wrap(func):
+		@wraps(func)
+		def funcWrapper(*args, **kwargs):
+			global _messageBoxCounter
+			with _messageBoxCounterLock:
+				_messageBoxCounter += 1
+			try:
+				return func(*args, **kwargs)
+			except Exception:
+				raise
+			finally:
+				with _messageBoxCounterLock:
+					_messageBoxCounter -= 1
+
+		return funcWrapper
+
+	return _wrap
+
+
+@_countAsMessageBox()
 def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	"""Display a dialog as modal.
 	@return: Same as for wx.MessageBox.
@@ -67,10 +90,6 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	Because an answer is required to continue after a modal messageBox is opened,
 	some actions such as shutting down are prevented while NVDA is in a possibly uncertain state.
 	"""
-	global _messageBoxCounter
-	with _messageBoxCounterLock:
-		_messageBoxCounter += 1
-
 	try:
 		if not dialog.GetParent():
 			gui.mainFrame.prePopup()
@@ -78,8 +97,6 @@ def displayDialogAsModal(dialog: wx.Dialog) -> int:
 	finally:
 		if not dialog.GetParent():
 			gui.mainFrame.postPopup()
-		with _messageBoxCounterLock:
-			_messageBoxCounter -= 1
 
 	return res
 

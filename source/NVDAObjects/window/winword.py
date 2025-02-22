@@ -152,6 +152,17 @@ wdAlignParagraphLeft = 0
 wdAlignParagraphCenter = 1
 wdAlignParagraphRight = 2
 wdAlignParagraphJustify = 3
+
+
+class WdOutlineLevel(IntEnum):
+	"""Outline level of a paragraph.
+
+	.. seealso:: ```WdOutlineLevel`` enumeration <https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel>`_
+	"""
+
+	BODY_TEXT = 10
+
+
 # Units
 wdCharacter = 1
 wdWord = 2
@@ -1442,7 +1453,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		while True:
 			if not isFirst or includeCurrent:
 				level = rangeObj.paragraphs[1].outlineLevel
-				if level and 0 < level < 10 and (not neededLevel or neededLevel == level):
+				if (
+					level
+					and 0 < level < WdOutlineLevel.BODY_TEXT
+					and (not neededLevel or neededLevel == level)
+				):
 					rangeObj.expand(wdParagraph)
 					yield WordDocumentHeadingQuickNavItem(
 						nodeType,

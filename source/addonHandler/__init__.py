@@ -20,6 +20,7 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
+	IO,
 	Literal,
 	Optional,
 	Set,
@@ -1059,12 +1060,11 @@ docFileName = string(default=None)
 		),
 	)
 
-	def __init__(self, input, translatedInput=None):
-		"""Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest information
-		@type input: a fie-like object.
-		@param translatedInput: translated manifest input
-		@type translatedInput: file-like object
+	def __init__(self, input: IO[bytes], translatedInput: IO[bytes] | None = None):
+		"""Constructs an :class:`AddonManifest` instance from manifest string data
+
+		:param input: data to read the manifest information
+		:param translatedInput: Optional translated manifest input, defaults to ``None``
 		"""
 		super().__init__(input, configspec=self.configspec, encoding="utf-8", default_encoding="utf-8")
 		self._errors = None
