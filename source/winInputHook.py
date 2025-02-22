@@ -8,10 +8,52 @@ When working on this file, consider moving to winAPI.
 """
 
 import threading
-from ctypes import *  # noqa: F403
-from ctypes.wintypes import *  # noqa: F403
+from ctypes import (
+	Structure,
+	byref,
+	windll,
+	WINFUNCTYPE,
+	c_int,
+	c_long,
+	c_wchar_p,
+)
+from ctypes.wintypes import (
+	UINT,
+	HANDLE,
+	HINSTANCE,
+	HHOOK,
+	HWND,
+	HMODULE,
+	MSG,
+	LPMSG,
+	WPARAM,
+	LPARAM,
+	DWORD,
+	POINT,
+)
+
 import watchdog
 import winUser
+from logHandler import log
+
+windll.user32.CallNextHookEx.argtypes = (
+	HHOOK,   # hook
+	c_int,  # code
+	WPARAM,
+	LPARAM,
+)
+
+windll.user32.GetMessageW.argtypes = (
+	LPMSG,  # lpMsg
+	HWND,  # hWnd
+	UINT,  # wMsgFilterMin
+	UINT,  # wMsgFilterMax
+)
+
+windll.kernel32.GetModuleHandleW.restyp = HMODULE
+windll.kernel32.GetModuleHandleW.argtypes = (
+	c_wchar_p,
+)
 
 # Some Windows constants
 HC_ACTION = 0
@@ -42,7 +84,16 @@ class MSLLHOOKSTRUCT(Structure):  # noqa: F405
 		("dwExtraInfo", DWORD),  # noqa: F405
 	]
 
-windll.user32.SetWindowsHookExW.restype = HANDLE
+WNDPROC = WINFUNCTYPE(c_long, c_int, WPARAM, LPARAM)  # noqa: F405
+
+windll.user32.SetWindowsHookExW.restype = HHOOK
+windll.user32.SetWindowsHookExW.argtypes = (
+	c_int,  # idHook
+	WNDPROC,  # lpfn
+	HINSTANCE,  # hMod
+	DWORD,  # dwThreadId
+)
+
 
 keyDownCallback = None
 keyUpCallback = None
@@ -51,6 +102,7 @@ mouseCallback = None
 
 @WINFUNCTYPE(c_long, c_int, WPARAM, LPARAM)  # noqa: F405
 def keyboardHook(code, wParam, lParam):
+	log.info("hook")
 	if code != HC_ACTION:
 		return windll.user32.CallNextHookEx(0, code, wParam, lParam)  # noqa: F405
 	kbd = KBDLLHOOKSTRUCT.from_address(lParam)
@@ -106,7 +158,9 @@ def hookThreadFunc():
 	if mouseHookID == 0:
 		raise OSError("Could not register mouse hook")
 	msg = MSG()  # noqa: F405
+	log.info("getMessage")
 	while windll.user32.GetMessageW(byref(msg), None, 0, 0):  # noqa: F405
+		log.info("getting message")
 		pass
 	if windll.user32.UnhookWindowsHookEx(keyHookID) == 0:  # noqa: F405
 		raise OSError("could not unregister key hook %s" % keyHookID)

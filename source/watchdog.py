@@ -467,7 +467,7 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	The call will still be cancelled if appropriate even if the specified timeout has not yet been reached.
 	@raise CallCancelled: If the call was cancelled.
 	"""
-	result = ctypes.wintypes.DWORD()
+	result = NVDAHelper.localLib.DWORD_PTR()
 	NVDAHelper.localLib.cancellableSendMessageTimeout(
 		hwnd,
 		msg,
