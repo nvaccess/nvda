@@ -153,6 +153,7 @@ class SynthDriverAudio(COMObject):
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
 		self._audioThread: Optional[threading.Thread] = None
+		self._level = 0xFFFFFFFF
 
 	def terminate(self):
 		self._shutdownAudioThread()
@@ -181,6 +182,7 @@ class SynthDriverAudio(COMObject):
 			outputDevice=config.conf["audio"]["outputDevice"],
 		)
 		self._player.open()
+		self.IAudio_LevelSet(self._level)
 
 	def IAudio_Flush(self) -> None:
 		"""Clears the object's internal buffer and resets the audio device,
@@ -200,14 +202,16 @@ class SynthDriverAudio(COMObject):
 	def IAudio_LevelGet(self) -> int:
 		"""Returns the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
-		# TODO: Not implemented yet.
-		return 0xFFFF
+		return self._level
 
 	def IAudio_LevelSet(self, dwLevel: int) -> None:
 		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
-		# TODO: Not implemented yet.
-		pass
+		self._level = dwLevel
+		if dwLevel & 0xFFFF0000:
+			self._player.setVolume(left=float(dwLevel & 0xFFFF) / 0xFFFF, right=float(dwLevel >> 16) / 0xFFFF)
+		else:
+			self._player.setVolume(all=float(dwLevel) / 0xFFFF)
 
 	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
 		"""Passes in an implementation of IAudioDestNotifySink to receive notifications.
