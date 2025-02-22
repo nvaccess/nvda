@@ -188,6 +188,7 @@ class SynthDriver(SynthDriver):
 		self._rateDelta = 0
 		self._pitchDelta = 0
 		self._volume = 100
+		self._paused = False
 		self.voice = str(self._enginesList[0].gModeID)
 
 	def terminate(self):
@@ -268,6 +269,12 @@ class SynthDriver(SynthDriver):
 			# cancel all pending bookmarks
 			self._bookmarkLists.clear()
 			self._bookmarks = None
+			if self._paused:
+				# Unpause the voice before resetting,
+				# because some voices keep the pausing state
+				# even after resetting.
+				self._ttsCentral.AudioResume()
+				self._paused = False
 			self._ttsCentral.AudioReset()
 		except COMError:
 			log.error("Error cancelling speech", exc_info=True)
@@ -282,6 +289,7 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Error pausing speech", exc_info=True)
 		else:
 			self._ttsCentral.AudioResume()
+		self._paused = switch
 
 	def removeSetting(self, name):
 		# Putting it here because currently no other synths make use of it. OrderedDict, where you are?
