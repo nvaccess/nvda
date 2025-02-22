@@ -332,6 +332,14 @@ VBuf_getSelectionOffsets.argtypes = (
 	POINTER(c_int),  # endOffset
 )
 
+VBuf_setSelectionOffsets = dll.VBuf_setSelectionOffsets
+VBuf_setSelectionOffsets.restype = c_int
+VBuf_setSelectionOffsets.argtypes = (
+	VBufRemote_bufferHandle_t,  # buffer
+	c_int,  # startOffset
+	c_int,  # endOffset
+)
+
 VBuf_getTextInRange = dll.VBuf_getTextInRange
 VBuf_getTextInRange.restype = c_int
 VBuf_getTextInRange.argtypes = (
@@ -343,7 +351,7 @@ VBuf_getTextInRange.argtypes = (
 )
 
 # special handling to ensure that the bstr is freed correctly.
-VBuf_getTextInRange = CFUNCTYPE(c_int, c_int, c_int, c_int, POINTER(BSTR), c_int)(  # noqa: F405
+VBuf_getTextInRange = CFUNCTYPE(c_int, VBufRemote_bufferHandle_t, c_int, c_int, POINTER(BSTR), c_int)(  # noqa: F405
 	("VBuf_getTextInRange", dll),
 	((1,), (1,), (1,), (2,), (1,)),
 )
@@ -576,4 +584,13 @@ nvdaController_onSsmlMarkReached = dll.nvdaController_onSsmlMarkReached
 nvdaController_onSsmlMarkReached.restype = c_ulong
 nvdaController_onSsmlMarkReached.argtypes = (
 	c_wchar_p,
+)
+
+calculateCharacterBoundaries = dll.calculateCharacterBoundaries
+calculateCharacterBoundaries.restype = c_bool
+calculateCharacterBoundaries.argtypes = (
+	c_wchar_p,  # text
+	c_int,  # textLength
+	POINTER(c_int),  #  offsets
+	POINTER(c_int),  #  offsetsCount
 )

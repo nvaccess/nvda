@@ -336,7 +336,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 		return command
 
 	def _getFieldsInRange(self, start: int, end: int) -> textInfos.TextInfo.TextWithFieldsT:
-		text = NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle, start, end, True)
+		text = NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle, start, end, True)
 		if not text:
 			return [""]
 		commandList = XMLFormatting.XMLTextParser().parse(text)
