@@ -148,6 +148,7 @@ class SynthDriverAudio(COMObject):
 		self._writtenBytes = 0
 		self._playedBytes = 0
 		self._startTime = datetime.now()
+		self._startBytes = 0
 		self._audioQueue: deque[bytes | int] = deque()  # bytes: audio, int: bookmark
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
@@ -257,6 +258,8 @@ class SynthDriverAudio(COMObject):
 			raise ReturnHRESULT(AUDERR_ALREADYSTARTED, None)
 		if self._deviceState != _DeviceState.OPENED:
 			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+		self._startTime = datetime.now()
+		self._startBytes = self._playedBytes
 		try:
 			self._player.pause(False)
 		except OSError:
@@ -284,7 +287,7 @@ class SynthDriverAudio(COMObject):
 		if not self._waveFormat:
 			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
 		filetime_ticks = int((self._startTime.timestamp() + 11644473600) * 10_000_000)
-		filetime_ticks += pqWord[0] * 10_000_000 // self._waveFormat.nAvgBytesPerSec
+		filetime_ticks += (pqWord[0] - self._startBytes) * 10_000_000 // self._waveFormat.nAvgBytesPerSec
 		return FILETIME(filetime_ticks & 0xFFFFFFFF, filetime_ticks >> 32)
 
 	def IAudio_WaveFormatGet(self) -> SDATA:
