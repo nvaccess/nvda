@@ -286,7 +286,7 @@ class SynthDriver(SynthDriver):
 	def removeSetting(self, name):
 		# Putting it here because currently no other synths make use of it. OrderedDict, where you are?
 		for i, s in enumerate(self.supportedSettings):
-			if s.name == name:
+			if s.id == name:
 				del self.supportedSettings[i]
 				return
 
@@ -305,7 +305,18 @@ class SynthDriver(SynthDriver):
 		self._ttsAudio = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
 		self._ttsAudio.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		if self._ttsCentral:
-			self._ttsCentral.UnRegister(self._sinkRegKey)
+			try:
+				# Some SAPI4 synthesizers may fail this call.
+				# Ignore, as _ttsCentral will be destroyed afterwards.
+				self._ttsCentral.UnRegister(self._sinkRegKey)
+			except COMError:
+				pass
+			# Some SAPI4 synthesizers assume that only one instance of ITTSCentral
+			# will be created by the client, and will stop working if more are created.
+			# Here we make sure that the previous _ttsCentral is released
+			# before the next _ttsCentral is created.
+			self._ttsCentral = None
+			self._ttsAttrs = None
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
