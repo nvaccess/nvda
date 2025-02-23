@@ -6,6 +6,7 @@
 
 import locale
 from collections import OrderedDict, deque
+from sys import exc_info
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
@@ -315,10 +316,9 @@ class SynthDriver(SynthDriver):
 		if self._ttsCentral:
 			try:
 				# Some SAPI4 synthesizers may fail this call.
-				# Ignore, as _ttsCentral will be destroyed afterwards.
 				self._ttsCentral.UnRegister(self._sinkRegKey)
 			except COMError:
-				pass
+				log.debugWarning("Error unregistering ITTSCentral sink", exc_info=True)
 			# Some SAPI4 synthesizers assume that only one instance of ITTSCentral
 			# will be created by the client, and will stop working if more are created.
 			# Here we make sure that the previous _ttsCentral is released
