@@ -116,13 +116,6 @@ class SynthDriverBufSink(COMObject):
 		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
 
 
-class _DeviceState(IntEnum):
-	CLOSED = 0  # Not claimed
-	OPENED = 1  # Claimed
-	RUNNING = 2  # Started
-	CLOSING = 3  # Unclaiming
-
-
 if TYPE_CHECKING:
 	from ctypes import _Pointer
 
@@ -136,13 +129,31 @@ class SynthDriverAudio(COMObject):
 	Implements IAudio and IAudioDest to receive streamed in audio data.
 	An instance of this class will be passed to,
 	and be used by the TTS engine.
+
+	Typically, an engine does the following things to output audio.
+	(Note that different engines may have different implementations)
+
+	- Initialize, such as setting wave format with `WaveFormatSet`, setting notify sink with `PassNotify`, etc.
+	- Call `Claim` to prepare the audio output.
+	- Call `DataSet` to prepare some initial audio data.
+	- Call `Start` to start playing.
+	- Call `DataSet` to provide more audio data,
+	  and call `BookMark` when the engine want to know when audio reaches a specific point.
+	- Call `UnClaim` when all the audio has been written. The audio will still be played to the end.
+	- When pausing the audio, it calls `Stop` and `UnClaim`.
+	- When unpausing the audio, it calls `Claim` and `Start`.
+	- When resetting the audio, it calls `Stop`, `Flush`, and `UnClaim`.
+	  `Stop` and `UnClaim` will not clear the buffer, but `Flush` will.
 	"""
 
 	_com_interfaces_ = [IAudio, IAudioDest]
 
 	def __init__(self):
 		self._notifySink = None
-		self._deviceState = _DeviceState.CLOSED
+		self._deviceClaimed = False
+		self._deviceStarted = False
+		self._deviceUnClaiming = False
+		self._deviceUnClaimingBytePos: Optional[int] = None
 		self._waveFormat: Optional[nvwave.WAVEFORMATEX] = None
 		self._player: Optional[nvwave.WavePlayer] = None
 		self._writtenBytes = 0
@@ -152,11 +163,16 @@ class SynthDriverAudio(COMObject):
 		self._audioQueue: deque[bytes | int] = deque()  # bytes: audio, int: bookmark
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
-		self._audioThread: Optional[threading.Thread] = None
+		self._audioThread = threading.Thread(target=self._audioThreadFunc)
+		self._audioThread.start()
 		self._level = 0xFFFFFFFF
 
 	def terminate(self):
-		self._shutdownAudioThread()
+		with self._audioCond:
+			self._audioStopped = True
+			self._audioCond.notify()
+		if self._audioThread is not threading.current_thread():
+			self._audioThread.join()
 
 	def __del__(self):
 		self.terminate()
@@ -232,53 +248,74 @@ class SynthDriverAudio(COMObject):
 
 	def IAudio_Claim(self) -> None:
 		"""Acquires (opens) the multimedia device.
-		`IAudioDestNotifySink::AudioStart()` will be called to notify the engine."""
+		Called before the engine wants to write audio data.
+		`IAudioDestNotifySink::AudioStart()` will be called to notify the engine.
+		Previous buffer should not be cleared.
+		If Claim is called before unclaiming completes, unclaiming is canceled,
+		and neither AudioStop nor AudioStart is notified."""
 		if not self._waveFormat:
 			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
-		if self._deviceState == _DeviceState.CLOSING:
-			# Close immediately
-			self.IAudio_Flush()
-			self._finishClose()
-		if self._deviceState != _DeviceState.CLOSED:
+		with self._audioCond:
+			if self._deviceUnClaiming:
+				# Unclaiming is cancelled, but nothing else is touched.
+				self._deviceUnClaiming = False
+				self._deviceUnClaimingBytePos = None
+				return
+		if self._deviceClaimed:
 			raise ReturnHRESULT(AUDERR_ALREADYCLAIMED, None)
 		self._maybeInitPlayer()
-		self._startAudioThread()
-		self._deviceState = _DeviceState.OPENED
+		self._deviceClaimed = True
 		if self._notifySink:
 			self._notifySink.AudioStart()
 
 	def IAudio_UnClaim(self) -> None:
 		"""Releases the multimedia device asynchronously.
+		Called after the engine completes writing all audio data.
+		If there is audio in the buffer, it should still be played till the end.
 		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
-		if self._deviceState == _DeviceState.CLOSED:
+		if not self._deviceClaimed:
 			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
-		self._deviceState = _DeviceState.CLOSING
+		if not self._deviceStarted:
+			# When not playing, this can finish immediately.
+			self._deviceClaimed = False
+			if self._notifySink:
+				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+			return
+		# When playing, wait for the playback to finish.
 		with self._audioCond:
+			self._deviceUnClaiming = True
+			self._deviceUnClaimingBytePos = self._writtenBytes
 			self._audioCond.notify()
 
 	def IAudio_Start(self) -> None:
-		"""Starts (or resumes) playing."""
-		if self._deviceState == _DeviceState.RUNNING:
+		"""Starts (or resumes) playing the audio in the buffer."""
+		if self._deviceStarted:
 			raise ReturnHRESULT(AUDERR_ALREADYSTARTED, None)
-		if self._deviceState != _DeviceState.OPENED:
+		if not self._deviceClaimed:
 			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
 		self._startTime = datetime.now()
 		self._startBytes = self._playedBytes
 		try:
 			self._player.pause(False)
 		except OSError:
-			pass
-		self._deviceState = _DeviceState.RUNNING
+			log.debugWarning("Error starting audio", exc_info=True)
+		with self._audioCond:
+			self._deviceStarted = True
+			self._audioCond.notify()
 
 	def IAudio_Stop(self) -> None:
-		"""Stops (or pauses) playing, without clearing the buffer."""
-		if self._deviceState != _DeviceState.RUNNING:
+		"""Stops (or pauses) playing, without clearing the buffer.
+		If there is audio in the buffer, calling Stop and UnClaim should keep the buffer
+		and only pause the playback."""
+		if not self._deviceStarted:
 			return  # no error returned
 		try:
 			self._player.pause(True)
 		except OSError:
-			pass
-		self._deviceState = _DeviceState.OPENED
+			log.debugWarning("Error stopping audio", exc_info=True)
+		with self._audioCond:
+			self._deviceStarted = False
+			self._audioCond.notify()
 
 	def IAudio_TotalGet(self) -> int:
 		"""Returns the total number of bytes written,
@@ -317,7 +354,7 @@ class SynthDriverAudio(COMObject):
 		if pWfx[0].wFormatTag != nvwave.WAVE_FORMAT_PCM:
 			log.debugWarning("Wave format not supported. Only integer PCM formats are supported.")
 			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
-		if self._deviceState != _DeviceState.CLOSED:
+		if self._deviceStarted or self._audioQueue:
 			log.debugWarning("Cannot change wave format during playback.")
 			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
 		self._waveFormat = nvwave.WAVEFORMATEX()
@@ -339,7 +376,7 @@ class SynthDriverAudio(COMObject):
 		"""Writes audio data to the end of the object's internal buffer.
 		This should not block.
 		When data cannot fit in the buffer, this should return AUDERR_NOTENOUGHDATA immediately."""
-		if self._deviceState != _DeviceState.RUNNING and self._deviceState != _DeviceState.OPENED:
+		if not self._deviceClaimed or self._deviceUnClaiming:
 			log.debugWarning("Audio data written when device is not claimed")
 			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
 		with self._audioCond:
@@ -358,18 +395,28 @@ class SynthDriverAudio(COMObject):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
 		while True:
 			with self._audioCond:
-				while not self._audioQueue and not self._audioStopped:
-					# Since WavePlayer.feed returns before the audio finishes,
-					# in order not to lose the final callbacks
-					# when there's no more audio to feed,
-					# wait with a timeout to give WavePlayer a chance
-					# to check the callbacks periodically.
-					self._audioCond.wait(0.1)
-					if self._audioQueue:
+				while not self._audioStopped and not (self._deviceStarted and self._audioQueue):
+					if self._deviceStarted:
+						# Since WavePlayer.feed returns before the audio finishes,
+						# in order not to lose the final callbacks
+						# when there's no more audio to feed,
+						# wait with a timeout to give WavePlayer a chance
+						# to check the callbacks periodically.
+						self._audioCond.wait(0.1)
+					else:
+						self._audioCond.wait()
+					if self._deviceStarted and self._audioQueue:
 						break
-					if self._deviceState == _DeviceState.CLOSING:
+					if not self._player:
+						continue
+					if self._deviceUnClaimingBytePos is not None:
 						# Closing in progress, wait for the audio to finish
-						self._player.feed(None, 0, lambda: self._finishClose())
+						self._player.feed(
+							None,
+							0,
+							lambda bytePos=self._deviceUnClaimingBytePos: self._finishUnClaim(bytePos),
+						)
+						self._deviceUnClaimingBytePos = None
 					else:
 						# Call feed to let WavePlayer check the callbacks
 						self._player.feed(None, 0, None)
@@ -384,23 +431,6 @@ class SynthDriverAudio(COMObject):
 				else:
 					self._player.feed(None, 0, lambda item=item: self._onBookmark(item))
 
-	def _startAudioThread(self):
-		if self._audioThread:
-			return
-		self._audioStopped = False
-		self._audioThread = threading.Thread(target=self._audioThreadFunc)
-		self._audioThread.start()
-
-	def _shutdownAudioThread(self):
-		if not self._audioThread:
-			return
-		with self._audioCond:
-			self._audioStopped = True
-			self._audioCond.notify()
-		if self._audioThread is not threading.current_thread():
-			self._audioThread.join()
-		self._audioThread = None
-
 	def _onChunkFinished(self, chunk: bytes):
 		self._playedBytes += len(chunk)
 		if self._notifySink:
@@ -410,15 +440,20 @@ class SynthDriverAudio(COMObject):
 		if self._notifySink:
 			self._notifySink.BookMark(dwMarkID, 0)
 
-	def _finishClose(self):
-		"""Finishes the asynchronous UnClaim call."""
-		if self._deviceState == _DeviceState.CLOSING:
-			self._player.stop()
-			self._shutdownAudioThread()
-			self._deviceState = _DeviceState.CLOSED
-			if self._notifySink:
-				# Notify when the device is finally closed
-				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+	def _finishUnClaim(self, bytePos: int):
+		"""Finishes the asynchronous UnClaim call.
+
+		:param bytePos: The written byte count when this UnClaim request is made.
+			This is checked to prevent triggering on outdated UnClaim requests."""
+		if not self._deviceUnClaiming or self._writtenBytes != bytePos:
+			return
+		self._player.stop()
+		self._deviceStarted = False
+		self._deviceUnClaiming = False
+		self._deviceClaimed = False
+		if self._notifySink:
+			# Notify when the device is finally closed
+			self._notifySink.AudioStop(0)  # IANSRSN_NODATA
 
 
 class SynthDriverSink(COMObject):
@@ -505,6 +540,7 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
+		self._ttsAudio: Optional[SynthDriverAudio] = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
@@ -630,6 +666,8 @@ class SynthDriver(SynthDriver):
 		if mode is None:
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
+		if self._ttsAudio:
+			self._ttsAudio.terminate()
 		self._ttsAudio = SynthDriverAudio()
 		if self._ttsCentral:
 			self._ttsCentral.UnRegister(self._sinkRegKey)
