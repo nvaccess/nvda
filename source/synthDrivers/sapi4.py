@@ -6,7 +6,6 @@
 
 import locale
 from collections import OrderedDict, deque
-from sys import exc_info
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID
 from ctypes import byref, c_ulong, POINTER, c_wchar, create_string_buffer, sizeof, windll
