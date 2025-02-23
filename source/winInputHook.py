@@ -33,7 +33,6 @@ from ctypes.wintypes import (
 
 import watchdog
 import winUser
-from logHandler import log
 
 windll.user32.CallNextHookEx.argtypes = (
 	HHOOK,   # hook
@@ -103,7 +102,6 @@ mouseCallback = None
 
 @HOOKPROC
 def keyboardHook(code, wParam, lParam):
-	log.info("hook")
 	if code != HC_ACTION:
 		return windll.user32.CallNextHookEx(0, code, wParam, lParam)  # noqa: F405
 	kbd = KBDLLHOOKSTRUCT.from_address(lParam)
@@ -159,9 +157,7 @@ def hookThreadFunc():
 	if mouseHookID == 0:
 		raise OSError("Could not register mouse hook")
 	msg = MSG()  # noqa: F405
-	log.info("getMessage")
 	while windll.user32.GetMessageW(byref(msg), None, 0, 0):  # noqa: F405
-		log.info("getting message")
 		pass
 	if windll.user32.UnhookWindowsHookEx(keyHookID) == 0:  # noqa: F405
 		raise OSError("could not unregister key hook %s" % keyHookID)

@@ -7,6 +7,7 @@
 import os
 from ctypes import (
 	c_void_p,
+	c_size_t,
 	cdll,
 	CFUNCTYPE,
 	Structure,
@@ -42,7 +43,7 @@ from comtypes.automation import VARIANT
 from . import coreArchLibPath
 
 
-DWORD_PTR = c_void_p
+DWORD_PTR = c_size_t
 
 
 dll = cdll.LoadLibrary(os.path.join(coreArchLibPath, "nvdaHelperLocal.dll"))
@@ -360,6 +361,36 @@ VBuf_getTextLength = dll.VBuf_getTextLength
 VBuf_getTextLength.restype = c_int
 VBuf_getTextLength.argtypes = (
 	VBufRemote_bufferHandle_t,  # buffer
+)
+
+VBuf_isFieldNodeAtOffset = dll.VBuf_isFieldNodeAtOffset
+VBuf_isFieldNodeAtOffset.restype = c_int
+VBuf_isFieldNodeAtOffset.argtypes = (
+	VBufRemote_bufferHandle_t,  # buffer
+	VBufRemote_nodeHandle_t,  # node
+	c_int,  # offset
+)
+
+VBuf_locateTextFieldNodeAtOffset = dll.VBuf_locateTextFieldNodeAtOffset
+VBuf_locateTextFieldNodeAtOffset.restype = c_int
+VBuf_locateTextFieldNodeAtOffset.argtypes = (
+	VBufRemote_bufferHandle_t,  # buffer
+	c_int,  # offset
+	POINTER(c_int),  # nodeStartOffset,
+	POINTER(c_int),  # nodeEndOffset,
+	POINTER(VBufRemote_nodeHandle_t),  # foundNode
+)
+
+VBuf_locateControlFieldNodeAtOffset = dll.VBuf_locateControlFieldNodeAtOffset
+VBuf_locateControlFieldNodeAtOffset.restype = c_int
+VBuf_locateControlFieldNodeAtOffset.argtypes = (
+	VBufRemote_bufferHandle_t,  # buffer
+	c_int,  # offset
+	POINTER(c_int),  # nodeStartOffset,
+	POINTER(c_int),  # nodeEndOffset,
+	POINTER(c_int),  # docHandle,
+	POINTER(c_int),  # ID,
+	POINTER(VBufRemote_nodeHandle_t),  # foundNode
 )
 
 getOleClipboardText = dll.getOleClipboardText
