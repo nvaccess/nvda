@@ -5,6 +5,9 @@
 
 import ctypes
 from ctypes import *  # noqa: F403
+from ctypes.wintypes import (
+	HANDLE,
+)
 from comtypes import BSTR
 import unicodedata
 import math
@@ -209,8 +212,8 @@ _textChangeNotificationObjs = []
 def initialize():
 	global _getWindowTextInRect, _requestTextChangeNotificationsForWindow, _getFocusRect
 	_getWindowTextInRect = CFUNCTYPE(  # noqa: F405
-		c_long,  # noqa: F405
-		c_long,  # noqa: F405
+		c_int,  # noqa: F405
+		HANDLE,  # noqa: F405
 		c_long,  # noqa: F405
 		c_bool,  # noqa: F405
 		c_int,  # noqa: F405

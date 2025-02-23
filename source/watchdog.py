@@ -471,8 +471,8 @@ def cancellableSendMessage(hwnd, msg, wParam, lParam, flags=0, timeout=60000):
 	NVDAHelper.localLib.cancellableSendMessageTimeout(
 		hwnd,
 		msg,
-		wParam,
-		lParam,
+		wParam or 0,
+		lParam or 0,
 		flags,
 		timeout,
 		ctypes.byref(result),
