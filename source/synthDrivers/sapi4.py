@@ -5,7 +5,6 @@
 # This module is deprecated, pending removal in NVDA 2026.1.
 
 from datetime import datetime
-from enum import IntEnum
 import locale
 from collections import OrderedDict, deque
 import threading
