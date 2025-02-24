@@ -6,7 +6,7 @@
 from dataclasses import dataclass
 from enum import StrEnum
 from typing import Self
-from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
+from urllib.parse import ParseResult, parse_qs, urlencode, urlparse
 
 from . import protocol
 from .protocol import SERVER_PORT, URL_PREFIX
@@ -17,8 +17,6 @@ class URLParsingError(Exception):
 
 	Raised when the URL cannot be parsed due to missing or invalid components
 	such as hostname, key, or mode.
-
-	:raises URLParsingError: When URL components are missing or invalid
 	"""
 
 
@@ -55,21 +53,23 @@ class ConnectionInfo:
 	Handles connection details including hostname, mode, authentication key,
 	port number and security settings. Provides methods for URL generation and parsing.
 
-	:param hostname: Remote host address to connect to
-	:param mode: Connection mode (leader/follower)
-	:param key: Authentication key for securing the connection
-	:param port: Port number to use for connection, defaults to SERVER_PORT
-	:param insecure: Allow insecure connections without SSL/TLS, defaults to False
 	:raises URLParsingError: When URL components are missing or invalid
-	:return: A ConnectionInfo instance with the specified connection details
-	:rtype: ConnectionInfo
 	"""
 
 	hostname: str
+	"""Remote host address to connect to"""
+
 	mode: ConnectionMode
+	"""Connection mode (leader/follower)"""
+
 	key: str
+	"""Authentication key for securing the connection"""
+
 	port: int = SERVER_PORT
+	"""Port number to use for connection, defaults to :const:`SERVER_PORT`"""
+
 	insecure: bool = False
+	"""Allow insecure connections without SSL/TLS, defaults to False"""
 
 	def __post_init__(self) -> None:
 		self.port = self.port or SERVER_PORT
@@ -82,7 +82,6 @@ class ConnectionInfo:
 		:param url: The URL to parse in nvdaremote:// format
 		:raises URLParsingError: If URL cannot be parsed or contains invalid data
 		:return: A new ConnectionInfo instance configured from the URL
-		:rtype: ConnectionInfo
 		"""
 		parsedUrl = urlparse(url)
 		parsedQuery = parse_qs(parsedUrl.query)
@@ -107,7 +106,6 @@ class ConnectionInfo:
 		"""Gets the formatted address string.
 
 		:return: Address string in format hostname:port, with IPv6 brackets if needed
-		:rtype: str
 		"""
 		# Handle IPv6 addresses by adding brackets if needed
 		hostname = f"[{self.hostname}]" if ":" in self.hostname else self.hostname
@@ -129,17 +127,15 @@ class ConnectionInfo:
 			params["insecure"] = "true"
 		query = urlencode(params)
 
-		# Use urlunparse for proper URL construction
-		return urlunparse(
-			(
-				URL_PREFIX.split("://")[0],  # scheme from URL_PREFIX
-				netloc,  # network location
-				"",  # path
-				"",  # params
-				query,  # query string
-				"",  # fragment
-			),
-		)
+		# Create our own ParseResult then get it to build the URL for us to make sure it's done properly
+		return ParseResult(
+			scheme=URL_PREFIX.removesuffix("://"),
+			netloc=netloc,
+			path="",
+			params="",
+			query=query,
+			fragment="",
+		).geturl()
 
 	def getURLToConnect(self) -> str:
 		"""Gets a URL for connecting with reversed mode.
