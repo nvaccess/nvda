@@ -100,5 +100,5 @@ def clipboardReceived():
 	_playCue("clipboardReceived")
 
 
-def shouldPlaySounds():
+def shouldPlaySounds() -> bool:
 	return configuration.get_config()["ui"]["play_sounds"]

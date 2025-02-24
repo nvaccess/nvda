@@ -4943,7 +4943,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
-	def script_connectToRemote(self, gesture):
+	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
 		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
 			# Translators: A message indicating that the remote client is already connected.
 			ui.message(_("Already connected"))
@@ -4956,7 +4956,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+f11",
 	)
-	def script_sendKeys(self, gesture):
+	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
 

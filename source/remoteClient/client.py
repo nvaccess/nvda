@@ -4,7 +4,7 @@
 # See the file COPYING for more details.
 
 import threading
-from typing import Callable, Optional, Set, Tuple
+from typing import Optional, Set, Tuple
 
 import api
 import braille
@@ -18,6 +18,7 @@ from keyboardHandler import KeyboardInputGesture
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter
 from utils.security import isRunningOnSecureDesktop
+import scriptHandler
 
 from . import configuration, cues, dialogs, serializer, server, urlHandler
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -35,7 +36,7 @@ Address = Tuple[str, int]  # (hostname, port)
 
 
 class RemoteClient:
-	localScripts: Set[Callable]
+	localScripts: Set[scriptHandler._ScriptFunctionT]
 	localMachine: LocalMachine
 	leaderSession: Optional[LeaderSession]
 	followerSession: Optional[FollowerSession]

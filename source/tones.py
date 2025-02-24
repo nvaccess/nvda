@@ -10,7 +10,8 @@ import collections
 import threading
 import time
 from ctypes import create_string_buffer
-from typing import Tuple, Union
+from typing import TypeAlias
+import collections.abc
 
 import config
 import extensionPoints
@@ -94,8 +95,8 @@ def beep(
 	player.feed(buf.raw)
 
 
-BeepSequenceElement = Union[int, Tuple[int, int]]  # Either delay_ms or (frequency_hz, duration_ms)
-BeepSequence = collections.abc.Iterable[BeepSequenceElement]
+BeepSequenceElement: TypeAlias = int | tuple[int, int]  # Either delay_ms or (frequency_hz, duration_ms)
+BeepSequence: TypeAlias = collections.abc.Iterable[BeepSequenceElement]
 
 
 def beepSequence(*sequence: BeepSequenceElement) -> None:

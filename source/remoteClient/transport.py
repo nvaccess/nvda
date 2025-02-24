@@ -34,7 +34,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logging import getLogger
 from queue import Queue
-from typing import Any, Optional
+from typing import Any, Optional, Self
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -647,7 +647,7 @@ class RelayTransport(TCPTransport):
 		self.transportConnected.register(self.onConnected)
 
 	@classmethod
-	def create(cls, connection_info: ConnectionInfo, serializer: Serializer) -> "RelayTransport":
+	def create(cls, connection_info: ConnectionInfo, serializer: Serializer) -> Self:
 		"""Create a RelayTransport from a ConnectionInfo object.
 
 		:param connection_info: ConnectionInfo instance containing connection details

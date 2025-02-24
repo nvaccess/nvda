@@ -5,6 +5,7 @@
 
 from dataclasses import dataclass
 from enum import StrEnum
+from typing import Self
 from urllib.parse import parse_qs, urlencode, urlparse, urlunparse
 
 from . import protocol
@@ -75,7 +76,7 @@ class ConnectionInfo:
 		self.mode = ConnectionMode(self.mode)
 
 	@classmethod
-	def fromURL(cls, url: str) -> "ConnectionInfo":
+	def fromURL(cls, url: str) -> Self:
 		"""Creates a ConnectionInfo instance from a URL string.
 
 		:param url: The URL to parse in nvdaremote:// format
