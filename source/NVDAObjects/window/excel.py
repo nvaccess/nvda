@@ -1159,7 +1159,6 @@ class ExcelWorksheet(ExcelBase):
 			"kb:control+y",
 			"kb:control+z",
 			"kb:alt+backspace",
-			
 		),
 		canPropagate=True,
 	)
