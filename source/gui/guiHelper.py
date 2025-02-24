@@ -532,17 +532,24 @@ def wxCallOnMain(
 		return result
 
 
-def alwaysCallAfter(func: Callable[..., None]) -> Callable[..., None]:
+# TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
+_AlwaysCallAfterP = ParamSpec("_AlwaysCallAfterP")
+
+
+def alwaysCallAfter(func: Callable[_AlwaysCallAfterP, Any]) -> Callable[_AlwaysCallAfterP, None]:
 	"""Makes GUI updates thread-safe by running in the main thread.
 
 	Example:
 		@alwaysCallAfter
 		def update_label(text):
 			label.SetLabel(text)  # Safe GUI update from any thread
+
+	.. note::
+		The value returned by the decorated function will be discarded.
 	"""
 
 	@wraps(func)
-	def wrapper(*args, **kwargs):
+	def wrapper(*args: _AlwaysCallAfterP.args, **kwargs: _AlwaysCallAfterP.kwargs) -> None:
 		wx.CallAfter(func, *args, **kwargs)
 
 	return wrapper
