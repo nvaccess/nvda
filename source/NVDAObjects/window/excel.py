@@ -1,9 +1,10 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Copyright (C) 2006-2025 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from __future__ import annotations
 import abc
 import ctypes
 import enum
@@ -11,6 +12,7 @@ from typing import (
 	Any,
 	Dict,
 	Optional,
+	Callable,
 )
 
 from comtypes import COMError, BSTR
@@ -795,6 +797,15 @@ class ExcelBase(Window):
 			obj.parent = selection
 		return obj
 
+	def _getActiveCell(self) -> "ExcelCell":
+		cell = self.excelWindowObject.ActiveCell
+		obj = ExcelCell(
+			windowHandle=self.windowHandle,
+			excelWindowObject=self.excelWindowObject,
+			excelCellObject=cell,
+		)
+		return obj
+
 	def _getSelection(self):
 		selection = self.excelWindowObject.Selection
 		try:
@@ -1094,6 +1105,17 @@ class ExcelWorksheet(ExcelBase):
 			"kb:numpadEnter",
 			"kb:shift+enter",
 			"kb:shift+numpadEnter",
+		),
+		canPropagate=True,
+	)
+	def script_changeActiveCell(self, gesture: inputCore.InputGesture) -> None:
+		self.changeSelectionOrActiveCell(
+			gesture=gesture,
+			objGetter=self._getActiveCell,
+		)
+
+	@scriptHandler.script(
+		gestures=(
 			"kb:upArrow",
 			"kb:downArrow",
 			"kb:leftArrow",
@@ -1137,11 +1159,22 @@ class ExcelWorksheet(ExcelBase):
 			"kb:control+y",
 			"kb:control+z",
 			"kb:alt+backspace",
+			
 		),
 		canPropagate=True,
 	)
-	def script_changeSelection(self, gesture):
-		oldSelection = self._getSelection()
+	def script_changeSelection(self, gesture: inputCore.InputGesture) -> None:
+		self.changeSelectionOrActiveCell(
+			gesture=gesture,
+			objGetter=self._getSelection,
+		)
+
+	def changeSelectionOrActiveCell(
+		self,
+		gesture: inputCore.InputGesture,
+		objGetter: Callable[[], ExcelCell | ExcelSelection | _msOfficeChart.OfficeChart],
+	):
+		oldSelection = objGetter()
 		gesture.send()
 		newSelection = None
 		start = time.time()
@@ -1157,7 +1190,7 @@ class ExcelWorksheet(ExcelBase):
 			if eventHandler.isPendingEvents("gainFocus"):
 				# This object is no longer focused.
 				return
-			newSelection = self._getSelection()
+			newSelection = objGetter()
 			if newSelection and newSelection != oldSelection:
 				log.debug(f"Detected new selection after {elapsed} sec")
 				break
