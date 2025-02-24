@@ -91,8 +91,7 @@ class RemoteClient:
 			insecure = True
 			self.startControlServer(port, key)
 		else:
-			address = addressToHostPort(controlServerConfig["host"])
-			hostname, port = address
+			hostname, port = addressToHostPort(controlServerConfig["host"])
 		mode = (
 			ConnectionMode.FOLLOWER if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
 		)
@@ -119,10 +118,10 @@ class RemoteClient:
 		self.localMachine.isMuted = not self.localMachine.isMuted
 		self.menu.muteItem.Check(self.localMachine.isMuted)
 		# Translators: Displayed when muting speech and sounds from the remote computer
-		mute_msg = _("Mute speech and sounds from the remote computer")
+		MUTE_MESSAGE = _("Muted remote")
 		# Translators: Displayed when unmuting speech and sounds from the remote computer
-		unmute_msg = _("Unmute speech and sounds from the remote computer")
-		status = mute_msg if self.localMachine.isMuted else unmute_msg
+		UNMUTE_MESSAGE = _("Unmuted remote")
+		status = MUTE_MESSAGE if self.localMachine.isMuted else UNMUTE_MESSAGE
 		ui.message(status)
 
 	def pushClipboard(self):
@@ -397,15 +396,20 @@ class RemoteClient:
 		serverThread.daemon = True
 		serverThread.start()
 
-	def processKeyInput(self, vkCode=None, scanCode=None, extended=None, pressed=None):
+	def processKeyInput(
+		self,
+		vkCode: int | None = None,
+		scanCode: int | None = None,
+		extended: bool | None = None,
+		pressed: bool | None = None,
+	) -> bool:
 		"""Process keyboard input and forward to remote if sending keys.
 
 		:param vkCode: Virtual key code
 		:param scanCode: Scan code
 		:param extended: Whether this is an extended key
 		:param pressed: True if key pressed, False if released
-		:return: True to allow local processing, False to block
-		:rtype: bool
+		:return: ``True`` to allow local processing, ``False`` to block
 		"""
 		if not self.sendingKeys:
 			return True
@@ -544,25 +548,24 @@ class RemoteClient:
 		finally:
 			self.connecting = False
 
-	def isConnected(self):
+	def isConnected(self) -> bool:
 		"""Check if there is an active connection.
 
 		:return: True if either follower or leader transport is connected
-		:rtype: bool
 		"""
 		connector = self.followerTransport or self.leaderTransport
 		if connector is not None:
 			return connector.connected
 		return False
 
-	def registerLocalScript(self, script):
+	def registerLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Add a script to be handled locally instead of sent to remote.
 
 		:param script: Script function to register
 		"""
 		self.localScripts.add(script)
 
-	def unregisterLocalScript(self, script):
+	def unregisterLocalScript(self, script: scriptHandler._ScriptFunctionT):
 		"""Remove a script from local handling.
 
 		:param script: Script function to unregister
