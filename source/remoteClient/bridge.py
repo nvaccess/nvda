@@ -26,8 +26,11 @@ Example::
     bridge.disconnect()  # Clean up when done
 """
 
+from collections.abc import Callable
 from .protocol import RemoteMessageType
 from .transport import Transport
+
+_CallbackT = Callable[..., None]
 
 
 class BridgeTransport:
@@ -37,18 +40,6 @@ class BridgeTransport:
 	allowing them to exchange messages while providing message filtering capabilities.
 	Automatically sets up message handlers for all RemoteMessageTypes and manages
 	their lifecycle.
-
-	:ivar excluded: Message types that should not be forwarded between transports.
-	    By default includes connection management messages that should remain local.
-	:type excluded: Set[RemoteMessageType]
-	:ivar t1: First transport instance to bridge
-	:type t1: Transport
-	:ivar t2: Second transport instance to bridge
-	:type t2: Transport
-	:ivar t1_callbacks: Storage for t1's message handlers
-	:type t1_callbacks: Dict[RemoteMessageType, callable]
-	:ivar t2_callbacks: Storage for t2's message handlers
-	:type t2_callbacks: Dict[RemoteMessageType, callable]
 	"""
 
 	excluded: set[RemoteMessageType] = {
@@ -57,6 +48,21 @@ class BridgeTransport:
 		RemoteMessageType.CHANNEL_JOINED,
 		RemoteMessageType.SET_BRAILLE_INFO,
 	}
+	"""Message types that should not be forwarded between transports
+	By default includes connection management messages that should remain local.
+	"""
+
+	t1: Transport
+	"""First transport instance to bridge"""
+
+	t2: Transport
+	"""Second transport instance to bridge"""
+
+	t1Callbacks: dict[RemoteMessageType, _CallbackT]
+	"""Storage for t1's message handlers"""
+
+	t2Callbacks: dict[RemoteMessageType, _CallbackT]
+	"""Storage for t2's message handlers"""
 
 	def __init__(self, t1: Transport, t2: Transport) -> None:
 		"""Initialize the bridge between two transports.
@@ -65,15 +71,13 @@ class BridgeTransport:
 		by registering handlers for all possible message types.
 
 		:param t1: First transport instance to bridge
-		:type t1: Transport
 		:param t2: Second transport instance to bridge
-		:type t2: Transport
 		"""
 		self.t1 = t1
 		self.t2 = t2
 		# Store callbacks for each message type
-		self.t1Callbacks: dict[RemoteMessageType, callable] = {}
-		self.t2Callbacks: dict[RemoteMessageType, callable] = {}
+		self.t1Callbacks = {}
+		self.t2Callbacks = {}
 
 		for messageType in RemoteMessageType:
 			# Create and store callbacks
@@ -83,7 +87,7 @@ class BridgeTransport:
 			t1.registerInbound(messageType, self.t2Callbacks[messageType])
 			t2.registerInbound(messageType, self.t1Callbacks[messageType])
 
-	def makeCallback(self, targetTransport: Transport, messageType: RemoteMessageType):
+	def makeCallback(self, targetTransport: Transport, messageType: RemoteMessageType) -> _CallbackT:
 		"""Create a callback function for handling a specific message type.
 
 		:param targetTransport: Transport instance to forward messages to
@@ -92,7 +96,7 @@ class BridgeTransport:
 		:note: Creates a closure that forwards messages unless the type is excluded
 		"""
 
-		def callback(*args, **kwargs):
+		def callback(*args, **kwargs) -> None:
 			if messageType not in self.excluded:
 				targetTransport.send(messageType, *args, **kwargs)
 
