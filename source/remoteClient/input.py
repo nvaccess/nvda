@@ -77,7 +77,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		self.scriptPath = getattr(self, "scriptPath", None)
 		self.script = self.findScript() if self.scriptPath else None
 
-	def findScript(self):
+	def findScript(self) -> scriptHandler._ScriptFunctionT | None:
 		"""Find and return a script function based on the script path.
 
 		The script path must be a list containing three elements:
@@ -158,7 +158,14 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		return None
 
 
-def sendKey(vk=None, scan=None, extended=False, pressed=True):
+def sendKey(vk: int | None = None, scan: int | None = None, extended: bool = False, pressed: bool = True):
+	"""Execute remote keyboard input locally.
+
+	:param vk: Virtual key code, defaults to None
+	:param scan: Scan code, defaults to None
+	:param extended: Whether this is an extended key, defaults to False
+	:param pressed: ``True`` if key pressed; ``False`` if released, defaults to True
+	"""
 	i = INPUT()
 	i.union.ki.wVk = vk
 	if scan:
