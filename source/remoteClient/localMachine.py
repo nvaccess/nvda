@@ -8,19 +8,14 @@
 This module provides functionality for controlling the local NVDA instance
 in response to commands received from remote connections.
 
-:param speech: Controls speech output and cancellation
-:param braille: Handles braille display sharing and input routing
-:param audio: Provides feedback through wave files and tones
-:param input: Simulates keyboard and system input
-:param clipboard: Enables one-way text transfer from remote
-:param system: Provides functions like Secure Attention Sequence (SAS)
-
 The main class :class:`LocalMachine` implements all local control operations
 that can be triggered by remote NVDA instances. It includes safety features like
 muting and uses wxPython's CallAfter for thread synchronization.
 
-:note: This module is part of the NVDA Remote protocol implementation and should
-    not be used directly outside of the remote connection infrastructure.
+.. note::
+
+	This module is part of the NVDA Remote protocol implementation and should
+	not be used directly outside of the remote connection infrastructure.
 """
 
 import ctypes
@@ -37,15 +32,10 @@ import tones
 import wx
 from speech.priorities import Spri
 from speech.types import SpeechSequence
+from systemUtils import hasUiAccess
+import ui
 
 from . import cues, input
-
-try:
-	from systemUtils import hasUiAccess
-except ModuleNotFoundError:
-	from config import hasUiAccess
-
-import ui
 
 logger = logging.getLogger("local_machine")
 
@@ -70,13 +60,6 @@ class LocalMachine:
 	serving as the bridge between network commands and local NVDA operations.
 	It ensures thread-safe execution and proper state management.
 
-	:ivar isMuted: When True, most remote commands will be ignored
-	:type isMuted: bool
-	:ivar receivingBraille: When True, braille output comes from remote
-	:type receivingBraille: bool
-	:ivar _cachedSizes: Cached braille display sizes from remote machines
-	:type _cachedSizes: Optional[List[int]]
-
 	:note: This class is instantiated by the remote session manager and should not
 	    be created directly. All methods are called in response to remote messages.
 
@@ -91,8 +74,14 @@ class LocalMachine:
 		:note: The local machine starts unmuted with local braille enabled.
 		"""
 		self.isMuted: bool = False
+		"""When True, most remote commands will be ignored"""
+
 		self.receivingBraille: bool = False
+		"""When True, braille output comes from remote"""
+
 		self._cachedSizes: Optional[List[int]] = None
+		"""Cached braille display sizes from remote machines"""
+
 		braille.decide_enabled.register(self.handleDecideEnabled)
 
 	def terminate(self) -> None:
@@ -268,5 +257,5 @@ class LocalMachine:
 			ctypes.windll.sas.SendSAS(0)
 		else:
 			# Translators: Message displayed when a remote machine tries to send a SAS but UI Access is disabled.
-			ui.message(_("No permission on device to trigger CTRL+ALT+DEL from remote"))
+			ui.message(_("Unable to trigger Alt Control Delete from remote"))
 			logger.warning("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")
