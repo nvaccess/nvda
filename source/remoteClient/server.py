@@ -73,18 +73,14 @@ class RemoteCertificateManager:
 		log.info("Checking certificate validity")
 		os.makedirs(self.certDir, exist_ok=True)
 
-		should_generate = False
-		if not self._filesExist():
-			should_generate = True
-		else:
+		if self._filesExist():
 			try:
 				self._validateCertificate()
+				return
 			except Exception as e:
 				log.warning(f"Certificate validation failed: {e}", exc_info=True)
-				should_generate = True
 
-		if should_generate:
-			self._generateSelfSignedCert()
+		self._generateSelfSignedCert()
 
 	def _filesExist(self) -> bool:
 		"""Check if both certificate and key files exist."""
@@ -233,7 +229,7 @@ class LocalRelayServer:
 	:ivar PING_TIME: Seconds between ping messages
 	"""
 
-	PING_TIME: int = 300
+	PING_TIME_SECONDS: int = 300
 
 	def __init__(
 		self,
@@ -295,7 +291,7 @@ class LocalRelayServer:
 		self._running = True
 		self.lastPingTime = time.time()
 		while self._running:
-			r, w, e = select(
+			read, write, error = select(
 				self.clientSockets + [self.serverSocket, self.serverSocket6],
 				[],
 				self.clientSockets,
@@ -303,7 +299,7 @@ class LocalRelayServer:
 			)
 			if not self._running:
 				break
-			for sock in r:
+			for sock in read:
 				if sock is self.serverSocket or sock is self.serverSocket6:
 					self.acceptNewConnection(sock)
 					continue
