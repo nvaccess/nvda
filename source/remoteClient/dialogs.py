@@ -177,7 +177,8 @@ class ServerPanel(wx.Panel):
 			)
 		else:
 			# Translators: Message shown when IP was retrieved but the specified port is not forwarded
-			warningMsg = _("Retrieved external IP, but port {port} is not currently forwarded.")
+			# {port} will be replaced with the actual port number
+			warningMsg = _("Retrieved external IP, but port {port} is most likely not currently forwarded.")
 			# Translators: Title of warning dialog
 			warningTitle = _("Warning")
 			wx.MessageBox(
@@ -187,7 +188,7 @@ class ServerPanel(wx.Panel):
 			)
 
 		self.externalIP.SetValue(ip)
-		self.externalIP.SetSelection(0, len(ip))
+		self.externalIP.SelectAll()
 		self.externalIP.SetFocus()
 
 	def onGetIPFail(self, exc: Exception) -> None:
@@ -324,7 +325,12 @@ class CertificateUnauthorizedDialog(wx.MessageDialog):
 		title = _("NVDA Remote Connection Security Warning")
 		message = _(
 			# Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
-			"Warning! The certificate of this server could not be verified.\nThis connection may not be secure. It is possible that someone is trying to overhear your communication.\nBefore continuing please make sure that the following server certificate fingerprint is a proper one.\nIf you have any questions, please contact the server administrator.\n\nServer SHA256 fingerprint: {fingerprint}\n\nDo you want to continue connecting?",
+			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the remote session..\n"
+			"\n"
+			"Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
+			"Server SHA256 fingerprint: {fingerprint}\n"
+			"\n"
+			"Continue connecting anyway?",
 		).format(fingerprint=fingerprint)
 		super().__init__(
 			parent,
