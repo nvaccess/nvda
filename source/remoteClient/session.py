@@ -94,8 +94,6 @@ EXCLUDED_SPEECH_COMMANDS = (
 class RemoteSession:
 	"""Base class for a session that runs on either the leader or follower machine.
 
-	:param localMachine: Interface to control local NVDA instance
-	:param transport: Network transport layer instance
 	:note: Handles core session tasks:
 	    - Version compatibility checks
 	    - Message of the day handling
@@ -103,17 +101,28 @@ class RemoteSession:
 	    - Transport registration
 	"""
 
-	transport: RelayTransport  # The transport layer handling network communication
-	localMachine: LocalMachine  # Interface to control the local NVDA instance
-	# Session mode - either 'leader' or 'follower'
+	transport: RelayTransport
+	"""The transport layer handling network communication"""
+
+	localMachine: LocalMachine
+	"""Interface to control the local NVDA instance"""
+
 	mode: connectionInfo.ConnectionMode | None = None
-	callbacksAdded: bool = False  # Whether callbacks are currently registered
+	"""Session mode - either 'leader' or 'follower'"""
+
+	callbacksAdded: bool = False
+	"""Whether callbacks are currently registered"""
 
 	def __init__(
 		self,
 		localMachine: LocalMachine,
 		transport: RelayTransport,
 	) -> None:
+		"""Initialise the remote session.
+
+		:param localMachine: Interface to control local NVDA instance
+		:param transport: Network transport layer instance
+		"""
 		log.info("Initializing Remote Session")
 		self.localMachine = localMachine
 		self.callbacksAdded = False
@@ -174,10 +183,13 @@ Please use a different server."""),
 	def shouldDisplayMotd(self, motd: str) -> bool:
 		"""Check if MOTD should be displayed.
 
-		:param motd: Message to check
-		:return: True if message should be shown
-		:note: Compares message hash against previously shown messages
-		    stored in config file per server
+			:param motd: Message to check
+			:return: True if message should be shown
+			:note: Compares message hash against previously shown messages
+			    stored in config file per server
+
+			.. warning::
+		Calling this method will cause the MoTD to be registered as shown if it has not been already.
 		"""
 		conf = configuration.get_config()
 		connection = self.getConnectionInfo()
@@ -199,7 +211,7 @@ Please use a different server."""),
 		:param client: Dictionary containing client connection details
 		:note: Logs connection info and plays connection sound
 		"""
-		log.info("Client connected: %r", client)
+		log.info(f"Client connected: {client!r}")
 		cues.clientConnected()
 
 	def handleClientDisconnected(self, client: dict[str, Any] | None = None) -> None:
@@ -523,14 +535,14 @@ class LeaderSession(RemoteSession):
 		for client in clients:
 			self.handleClientConnected(client)
 
-	def handleClientConnected(self, client=None):
+	def handleClientConnected(self, client: dict[str, Any] | None = None):
 		hasFollowers = bool(self.followers)
 		super().handleClientConnected(client)
 		self.sendBrailleInfo()
 		if not hasFollowers:
 			self.registerCallbacks()
 
-	def handleClientDisconnected(self, client=None):
+	def handleClientDisconnected(self, client: dict[str, Any] | None = None):
 		"""Handle client disconnection.
 		Also calls parent class disconnection handler.
 		"""
