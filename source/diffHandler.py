@@ -3,14 +3,17 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import config
-import fast_diff_match_patch
+import struct
 from abc import abstractmethod
-from baseObject import AutoPropertyObject
 from difflib import ndiff
-from logHandler import log
-from textInfos import TextInfo, UNIT_LINE
+from pathlib import Path
 from typing import List
+
+import config
+from baseObject import AutoPropertyObject
+from logHandler import log
+from processManager import ProcessConfig, SubprocessManager
+from textInfos import UNIT_LINE, TextInfo
 
 
 class DiffAlgo(AutoPropertyObject):
@@ -23,34 +26,62 @@ class DiffAlgo(AutoPropertyObject):
 		raise NotImplementedError
 
 
+DMP_CONFIG = ProcessConfig(
+	name="dmp", sourceScriptPath=Path("nvdaDmp/nvdaDmp.pyw"), builtExeName="nvdaDmp.pyw"
+)
+
+
 class DiffMatchPatch(DiffAlgo):
 	"""
 	A character-based diffing approach, using the Google Diff Match
 	Patch library.
 	"""
 
-	_GOOD_LINE_ENDINGS = ("\n", "\r")
+	def __init__(self):
+		super().__init__()
+		self._process = SubprocessManager(DMP_CONFIG)
 
 	def _getText(self, ti: TextInfo) -> str:
 		return ti.text
 
+	def _readData(self, size: int) -> bytes:
+		"""Reads from stdout, raises exception on EOF."""
+		self._process.ensureProcessRunning()
+		buffer = b""
+		while (remainingLength := size - len(buffer)) > 0:
+			chunk = self._process.subprocess.stdout.read(remainingLength)
+			if chunk:
+				buffer += chunk
+				continue
+			if not self._process.isRunning():
+				raise RuntimeError("Diff-match-patch proxy process died!")
+		return buffer
 	def diff(self, newText: str, oldText: str) -> List[str]:
 		try:
-			outLines: List[str] = []
-			for op, text in fast_diff_match_patch.diff(oldText, newText, counts_only=False):
-				if op != "+":
-					continue
-				# Ensure a trailing newline so .splitlines() keeps the final fragment
-				if not text.endswith(self._GOOD_LINE_ENDINGS):
-					text += "\n"
-				for line in text.splitlines():
-					if line and not line.isspace():
-						outLines.append(line)
-			return outLines
+			if not newText and not oldText:
+				# Return an empty list here to avoid exiting
+				# nvda_dmp uses two zero-length texts as a sentinal value
+				return []
+			self._process.ensureProcessRunning()
+			oldEncodedText = oldText.encode()
+			newEncodedText = newText.encode()
+			# Sizes are packed as 32-bit ints in native byte order.
+			# Since nvda and nvda_dmp are running on the same Python
+			# platform/version, this is okay.
+			packedTextLength = struct.pack("=II", len(oldEncodedText), len(newEncodedText))
+			self._process.subprocess.stdin.write(packedTextLength)
+			self._process.subprocess.stdin.write(oldEncodedText)
+			self._process.subprocess.stdin.write(newEncodedText)
+			self._process.subprocess.stdin.flush()
+			DIFF_LENGTH_BUFFER_SIZE = 4
+			diffLengthBuffer = self._readData(DIFF_LENGTH_BUFFER_SIZE)
+			(diff_length,) = struct.unpack("=I", diffLengthBuffer)
+			diffBuffer = self._readData(diff_length)
+			return [line for line in diffBuffer.decode("utf-8").splitlines() if line and not line.isspace()]
 		except Exception:
 			log.exception("Exception in DMP, falling back to difflib")
-			return _difflib.diff(newText, oldText)
-
+			self._process.terminate()
+			return Difflib().diff(newText, oldText)
 
 class Difflib(DiffAlgo):
 	"A line-based diffing approach in pure Python, using the Python standard library."
