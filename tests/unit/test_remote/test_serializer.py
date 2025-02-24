@@ -6,7 +6,7 @@
 import json
 import unittest
 from enum import Enum
-from remoteClient.serializer import JSONSerializer, CustomEncoder, as_sequence
+from remoteClient.serializer import JSONSerializer, SpeechCommandJSONEncoder, asSequence
 
 
 # Create a dummy Enum for test purposes.
@@ -57,18 +57,18 @@ class TestJSONSerializer(unittest.TestCase):
 		# Set __dict__ to a non-serializable object (set is not serializable by default)
 		dummy.__dict__ = {"data": {1, 2, 3}}
 		with self.assertRaises(TypeError) as cm:
-			json.dumps(dummy, cls=CustomEncoder)
+			json.dumps(dummy, cls=SpeechCommandJSONEncoder)
 		self.assertRegex(str(cm.exception), "not JSON serializable")
 		# Even if __dict__ is set to a serializable value, it should still raise error.
 		dummy.__dict__ = {"data": "testdata"}
 		with self.assertRaises(TypeError) as cm:
-			json.dumps(dummy, cls=CustomEncoder)
+			json.dumps(dummy, cls=SpeechCommandJSONEncoder)
 		self.assertRegex(str(cm.exception), "not JSON serializable")
 
 	def test_as_sequence_no_change(self):
 		# Test that as_sequence returns the dictionary unchanged when no special keys exist.
 		input_dict = {"type": "other", "foo": "bar"}
-		result = as_sequence(input_dict)
+		result = asSequence(input_dict)
 		self.assertEqual(result, input_dict)
 
 

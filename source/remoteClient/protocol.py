@@ -3,13 +3,13 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-import urllib
-from enum import Enum
+import urllib.parse
+from enum import StrEnum
 
 PROTOCOL_VERSION: int = 2
 
 
-class RemoteMessageType(Enum):
+class RemoteMessageType(StrEnum):
 	# Connection and Protocol Messages
 	PROTOCOL_VERSION = "protocol_version"
 	JOIN = "join"
@@ -53,7 +53,8 @@ URL_PREFIX = "nvdaremote://"
 
 def addressToHostPort(addr) -> tuple:
 	"""Converts an address such as google.com:80 into a tuple of (address, port).
-	If no port is given, use SERVER_PORT."""
+	If no port is given, use SERVER_PORT.
+	"""
 	addr = urllib.parse.urlparse("//" + addr)
 	port = addr.port or SERVER_PORT
 	return (addr.hostname, port)

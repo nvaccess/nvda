@@ -52,10 +52,8 @@ class Serializer(metaclass=ABCMeta):
 		"""Convert a message to bytes for transmission.
 
 		:param type: Message type identifier, used for routing
-		:type type: str, optional
 		:param obj: Message payload as keyword arguments
 		:return: Serialized message as bytes
-		:rtype: bytes
 		:raises NotImplementedError: Must be implemented by subclasses
 		"""
 		raise NotImplementedError
@@ -65,9 +63,7 @@ class Serializer(metaclass=ABCMeta):
 		"""Convert received bytes back into a message dict.
 
 		:param data: Raw message bytes to deserialize
-		:type data: bytes
 		:return: Dict containing the deserialized message
-		:rtype: Dict[str, Any]
 		:raises NotImplementedError: Must be implemented by subclasses
 		"""
 		raise NotImplementedError
@@ -79,9 +75,6 @@ class JSONSerializer(Serializer):
 	Implements message serialization using JSON encoding with special handling for
 	NVDA speech commands and other custom types. Messages are encoded as UTF-8
 	with newline separation.
-
-	:cvar SEP: Message separator for streaming protocols
-	:type SEP: bytes
 	"""
 
 	SEP: bytes = b"\n"
@@ -102,7 +95,7 @@ class JSONSerializer(Serializer):
 			if isinstance(type, Enum) and not isinstance(type, str):
 				type = type.value
 		obj["type"] = type
-		data = json.dumps(obj, cls=CustomEncoder).encode("UTF-8") + self.SEP
+		data = json.dumps(obj, cls=SpeechCommandJSONEncoder).encode("UTF-8") + self.SEP
 		return data
 
 	def deserialize(self, data: bytes) -> JSONDict:
@@ -112,11 +105,9 @@ class JSONSerializer(Serializer):
 		reconstruct NVDA speech commands.
 
 		:param data: UTF-8 encoded JSON bytes
-		:type data: bytes
 		:return: Dict containing the deserialized message
-		:rtype: Dict[str, Any]
 		"""
-		obj = json.loads(data, object_hook=as_sequence)
+		obj = json.loads(data, object_hook=asSequence)
 		return obj
 
 
@@ -126,7 +117,7 @@ SEQUENCE_CLASSES = (
 )
 
 
-class CustomEncoder(json.JSONEncoder):
+class SpeechCommandJSONEncoder(json.JSONEncoder):
 	"""Custom JSON encoder for NVDA speech commands.
 
 	Handles serialization of speech command objects by converting them
@@ -139,28 +130,23 @@ class CustomEncoder(json.JSONEncoder):
 		"""Convert speech commands to serializable format.
 
 		:param obj: Object to serialize
-		:type obj: Any
 		:return: For speech commands, returns a list containing [class_name, instance_vars].
 		        For other types, returns the default JSON encoding.
-		:rtype: Any
 		"""
-		if is_subclass_or_instance(obj, SEQUENCE_CLASSES):
+		if isSubclassOrInstance(obj, SEQUENCE_CLASSES):
 			return [obj.__class__.__name__, obj.__dict__]
 		return super().default(obj)
 
 
-def is_subclass_or_instance(unknown: Any, possible: Union[Type[T], tuple[Type[T], ...]]) -> bool:
+def isSubclassOrInstance(unknown: Any, possible: Union[Type[T], tuple[Type[T], ...]]) -> bool:
 	"""Check if an object is a subclass or instance of given type(s).
 
 	Safely handles both types and instances, useful for type checking
 	during serialization.
 
 	:param unknown: Object or type to check
-	:type unknown: Any
 	:param possible: Type or tuple of types to check against
-	:type possible: Union[Type[T], tuple[Type[T], ...]]
 	:return: True if unknown is a subclass or instance of possible
-	:rtype: bool
 
 	Example::
 
@@ -175,18 +161,21 @@ def is_subclass_or_instance(unknown: Any, possible: Union[Type[T], tuple[Type[T]
 		return isinstance(unknown, possible)
 
 
-def as_sequence(dct: JSONDict) -> JSONDict:
+def asSequence(dct: JSONDict) -> JSONDict:
 	"""Reconstruct speech command objects from deserialized JSON.
 
 	Handles the 'speak' message type by converting serialized speech
 	commands back into their original object form.
 
 	:param dct: Dict containing potentially serialized speech commands
-	:type dct: JSONDict
 	:return: Dict with reconstructed speech command objects if applicable,
 	        otherwise returns the input unchanged
-	:rtype: JSONDict
 	:warning: Logs a warning if an unknown sequence type is encountered
+
+	.. warning::
+
+		This function modifies the input dictionary in place.
+		Copy the dictionary first if you need access to the unmodified data.
 	"""
 	if not ("type" in dct and dct["type"] == "speak" and "sequence" in dct):
 		return dct

@@ -18,18 +18,11 @@ from .connectionInfo import ConnectionMode
 class RemoteMenu(wx.Menu):
 	"""Menu for the NVDA Remote functionality that appears in the NVDA Tools menu"""
 
-	connectItem: wx.MenuItem
-	disconnectItem: wx.MenuItem
-	muteItem: wx.MenuItem
-	pushClipboardItem: wx.MenuItem
-	copyLinkItem: wx.MenuItem
-	sendCtrlAltDelItem: wx.MenuItem
-	remoteItem: wx.MenuItem
-
 	def __init__(self, client: "RemoteClient") -> None:
 		super().__init__()
 		self.client = client
-		toolsMenu = gui.mainFrame.sysTrayIcon.toolsMenu
+		sysTrayIcon = gui.mainFrame.sysTrayIcon
+		toolsMenu = sysTrayIcon.toolsMenu
 		self.connectItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Item in NVDA Remote submenu to connect to a remote computer.
@@ -37,7 +30,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 			_("Remotely connect to another computer running NVDA Remote Access"),
 		)
-		gui.mainFrame.sysTrayIcon.Bind(
+		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.client.doConnect,
 			self.connectItem,
@@ -51,7 +44,7 @@ class RemoteMenu(wx.Menu):
 			_("Disconnect from another computer running NVDA Remote Access"),
 		)
 		self.disconnectItem.Enable(False)
-		gui.mainFrame.sysTrayIcon.Bind(
+		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.onDisconnectItem,
 			self.disconnectItem,
@@ -65,7 +58,7 @@ class RemoteMenu(wx.Menu):
 			kind=wx.ITEM_CHECK,
 		)
 		self.muteItem.Enable(False)
-		gui.mainFrame.sysTrayIcon.Bind(wx.EVT_MENU, self.onMuteItem, self.muteItem)
+		sysTrayIcon.Bind(wx.EVT_MENU, self.onMuteItem, self.muteItem)
 		self.pushClipboardItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
@@ -74,7 +67,7 @@ class RemoteMenu(wx.Menu):
 			_("Push the clipboard to the other machine"),
 		)
 		self.pushClipboardItem.Enable(False)
-		gui.mainFrame.sysTrayIcon.Bind(
+		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.onPushClipboardItem,
 			self.pushClipboardItem,
@@ -87,7 +80,7 @@ class RemoteMenu(wx.Menu):
 			_("Copy a link to the remote session"),
 		)
 		self.copyLinkItem.Enable(False)
-		gui.mainFrame.sysTrayIcon.Bind(
+		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.onCopyLinkItem,
 			self.copyLinkItem,
@@ -99,7 +92,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 			_("Send Ctrl+Alt+Del"),
 		)
-		gui.mainFrame.sysTrayIcon.Bind(
+		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.onSendCtrlAltDel,
 			self.sendCtrlAltDelItem,

@@ -209,6 +209,7 @@ class SecureDesktopHandler:
 			self.IPCFile.unlink()
 			port, channel = data
 
+			# Try opening a socket to make sure we have the appropriate permissions
 			testSocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 			testSocket.close()
 
