@@ -55,33 +55,33 @@ def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 				raise OSError(f"Failed to set registry value {name}: {e}")
 
 
-def _deleteRegistryKeyRecursive(base_key, subkey_path: str):
+def _deleteRegistryKeyRecursive(baseKey: int, subkeyPath: str):
 	"""Recursively deletes a registry key and all its subkeys.
 
-	:param base_key: One of the HKEY_* constants from winreg
-	:param subkey_path: Full registry path to the key to delete
+	:param baseKey: One of the HKEY_* constants from winreg
+	:param subkeyPath: Full registry path to the key to delete
 	:raises OSError: If deletion fails for reasons other than key not found
 	"""
 	try:
 		# Try to delete directly first
-		winreg.DeleteKey(base_key, subkey_path)
+		winreg.DeleteKey(baseKey, subkeyPath)
 	except WindowsError:
 		# If that fails, need to do recursive deletion
 		try:
-			with winreg.OpenKey(base_key, subkey_path, 0, winreg.KEY_READ | winreg.KEY_WRITE) as key:
+			with winreg.OpenKey(baseKey, subkeyPath, 0, winreg.KEY_READ | winreg.KEY_WRITE) as key:
 				# Enumerate and delete all subkeys
 				while True:
 					try:
 						subkey_name = winreg.EnumKey(key, 0)
-						full_path = f"{subkey_path}\\{subkey_name}"
-						_deleteRegistryKeyRecursive(base_key, full_path)
+						full_path = f"{subkeyPath}\\{subkey_name}"
+						_deleteRegistryKeyRecursive(baseKey, full_path)
 					except WindowsError:
 						break
 			# Now delete the key itself
-			winreg.DeleteKey(base_key, subkey_path)
+			winreg.DeleteKey(baseKey, subkeyPath)
 		except WindowsError as e:
 			if e.winerror != 2:  # ERROR_FILE_NOT_FOUND
-				raise OSError(f"Failed to delete registry key {subkey_path}: {e}")
+				raise OSError(f"Failed to delete registry key {subkeyPath}: {e}")
 
 
 def registerURLHandler():

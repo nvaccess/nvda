@@ -34,7 +34,7 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from logging import getLogger
 from queue import Queue
-from typing import Any, Optional, Self
+from typing import Any, Literal, Optional, Self
 
 import wx
 from extensionPoints import Action, HandlerRegistrar
@@ -54,35 +54,30 @@ class RemoteExtensionPoint:
 	This class connects local NVDA extension points to the remote transport layer,
 	allowing local events to trigger remote messages with optional argument transformation.
 
-	:param extensionPoint: The NVDA extension point to bridge
-	:type extensionPoint: HandlerRegistrar
-	:param messageType: The remote message type to send
-	:type messageType: RemoteMessageType
-	:param filter: Optional function to transform arguments before sending
-	:type filter: Optional[Callable[..., dict[str, Any]]]
-	:param transport: The transport instance (set on registration)
-	:type transport: Optional[Transport]
-
 	:note: The filter function, if provided, should take (*args, **kwargs) and return
 	       a new kwargs dict to be sent in the message.
 	"""
 
 	extensionPoint: HandlerRegistrar
-	messageType: RemoteMessageType
-	filter: Optional[Callable[..., dict[str, Any]]] = None
-	transport: Optional["Transport"] = None
+	"""The NVDA extension point to bridge"""
 
-	def remoteBridge(self, *args: Any, **kwargs: Any) -> bool:
+	messageType: RemoteMessageType
+	"""The remote message type to send"""
+
+	filter: Optional[Callable[..., dict[str, Any]]] = None
+	"""Optional function to transform arguments before sending"""
+
+	transport: Optional["Transport"] = None
+	"""The transport instance (set on registration)"""
+
+	def remoteBridge(self, *args: Any, **kwargs: Any) -> Literal[True]:
 		"""Bridge function that gets registered to the extension point.
 
 		Handles calling the filter if present and sending the message.
 
 		:param args: Positional arguments from the extension point
-		:type args: Any
 		:param kwargs: Keyword arguments from the extension point
-		:type kwargs: Any
 		:return: Always returns True to allow other handlers to process the event
-		:rtype: bool
 		"""
 		if self.filter is not None:
 			# Filter should transform args/kwargs into just the kwargs needed for the message
