@@ -193,6 +193,8 @@ class SynthDriver(SynthDriver):
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
+		self._ttsCentral = None
+		self._ttsAttrs = None
 
 	def speak(self, speechSequence: SpeechSequence):
 		textList = []
