@@ -272,10 +272,8 @@ class DirectConnectDialog(wx.Dialog):
 				wx.OK | wx.ICON_ERROR,
 			)
 			self.panel.host.SetFocus()
-		elif (
-			self.clientOrServer.GetSelection() == 1
-			and not self.panel.port.GetValue()
-			or not self.panel.key.GetValue()
+		elif self.clientOrServer.GetSelection() == 1 and (
+			not self.panel.port.GetValue() or not self.panel.key.GetValue()
 		):
 			gui.messageBox(
 				# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
