@@ -98,6 +98,12 @@ def hasUiAccess():
 #: If the token resulted from network authentication, then this value will be zero.
 TOKEN_ORIGIN = 17  # TokenOrigin in winnt.h
 
+ctypes.windll.advapi32.OpenProcessToken.argtypes = (
+	ctypes.wintypes.HANDLE,  # ProcessHandle
+	ctypes.wintypes.DWORD,  # DesiredAccess
+	ctypes.POINTER(ctypes.wintypes.HANDLE),  # TokenHandle
+)
+
 
 class TokenOrigin(ctypes.Structure):
 	"""TOKEN_ORIGIN structure: https://docs.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-token_origin
