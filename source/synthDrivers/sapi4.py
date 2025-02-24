@@ -274,17 +274,20 @@ class SynthDriverAudio(COMObject):
 		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
 		if not self._deviceClaimed:
 			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
-		if not self._deviceStarted:
+		if self._deviceStarted:
+			# When playing, wait for the playback to finish.
+			with self._audioCond:
+				self._deviceUnClaiming = True
+				self._deviceUnClaimingBytePos = self._writtenBytes
+				self._audioCond.notify()
+		else:
 			# When not playing, this can finish immediately.
+			if self._writtenBytes == self._playedBytes and not self._audioQueue:
+				# If all audio is done playing, stop the player.
+				self._player.stop()
 			self._deviceClaimed = False
 			if self._notifySink:
 				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
-			return
-		# When playing, wait for the playback to finish.
-		with self._audioCond:
-			self._deviceUnClaiming = True
-			self._deviceUnClaimingBytePos = self._writtenBytes
-			self._audioCond.notify()
 
 	def IAudio_Start(self) -> None:
 		"""Starts (or resumes) playing the audio in the buffer."""
