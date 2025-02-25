@@ -87,7 +87,13 @@ class RemoteCertificateManager:
 		return self.certPath.is_file() and self.keyPath.is_file()
 
 	def _validateCertificate(self) -> None:
-		"""Validates the existing certificate and key."""
+		"""Validates the existing certificate and key.
+
+		:raises ValueError: If the current date/time is outside the certificate's validity period, or if the certificate is approaching expiration.
+		:raises OSError: If the certificate or private key files cannot be opened.
+		:raises ValueError: If the private key data cannot be decoded.
+		:raises TypeError: If the private key is encrypted.
+		"""
 		# Load and validate certificate
 		with open(self.certPath, "rb") as f:
 			certData = f.read()
@@ -95,7 +101,7 @@ class RemoteCertificateManager:
 
 		# Check validity period
 		now = datetime.utcnow()
-		if now >= cert.not_valid_after or now < cert.not_valid_before:
+		if not (cert.not_valid_before_utc < now <= cert.not_valid_after_utc):
 			raise ValueError("Certificate is not within its validity period")
 
 		# Check renewal threshold

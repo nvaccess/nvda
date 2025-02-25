@@ -73,7 +73,7 @@ class BrailleInputGesture(braille.BrailleDisplayGesture, brailleInput.BrailleInp
 		super().__init__()
 		for key, value in kwargs.items():
 			setattr(self, key, value)
-		self.source = "remote{}{}".format(self.source[0].upper(), self.source[1:])
+		self.source = f"remote{self.source.capitalize()}"
 		self.scriptPath = getattr(self, "scriptPath", None)
 		self.script = self.findScript() if self.scriptPath else None
 
