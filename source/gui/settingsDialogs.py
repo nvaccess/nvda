@@ -986,7 +986,7 @@ class GeneralSettingsPanel(SettingsPanel):
 		item = self.preventDisplayTurningOffCheckBox = wx.CheckBox(
 			self,
 			# Translators: The label of a checkbox in general settings.
-			label="Prevent &display from turning off during say all or reading with braille",
+			label=_("Prevent &display from turning off during say all or reading with braille"),
 		)
 		self.bindHelpEvent("PreventDisplayTurningOff", self.preventDisplayTurningOffCheckBox)
 		item.Value = config.conf["general"]["preventDisplayTurningOff"]
