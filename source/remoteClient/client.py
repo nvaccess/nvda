@@ -257,7 +257,7 @@ class RemoteClient:
 
 	def connectAsLeader(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
-			connection_info=connectionInfo,
+			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
 		self.leaderSession = LeaderSession(
@@ -306,7 +306,7 @@ class RemoteClient:
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
-			connection_info=connectionInfo,
+			connectionInfo=connectionInfo,
 			serializer=serializer.JSONSerializer(),
 		)
 		self.followerSession = FollowerSession(

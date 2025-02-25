@@ -42,6 +42,9 @@ class FakeTransport(Transport):
 	def parse(self, line: bytes):
 		pass  # Not used in these tests.
 
+	def run(self):
+		pass
+
 
 # Tests for BridgeTransport.
 class TestBridgeTransport(unittest.TestCase):

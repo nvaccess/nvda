@@ -333,7 +333,7 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 			address=("localhost", 8090),
 			channel="mychannel",
 			connectionType="relayMode",
-			protocol_version=PROTOCOL_VERSION,
+			protocolVersion=PROTOCOL_VERSION,
 			insecure=False,
 		)
 		# Override send() to record calls.
@@ -351,7 +351,7 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 			address=("localhost", 8090),
 			channel=None,
 			connectionType="relayMode",
-			protocol_version=PROTOCOL_VERSION,
+			protocolVersion=PROTOCOL_VERSION,
 			insecure=False,
 		)
 		rt.send = mock.MagicMock()
@@ -372,6 +372,9 @@ class DummyConnectorTransport(Transport):
 		raise socket.error("Simulated socket error")
 
 	def processIncomingSocketData(self):
+		pass
+
+	def send(self, type, **kwargs):
 		pass
 
 
