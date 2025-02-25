@@ -352,6 +352,37 @@ def _initEnglishGesturesConfig():
 	return gestureConfig
 
 
+def _findScriptInGlobalMap(gesture: str) -> list["inputCore.InputGestureScriptT"]:
+	"""Find global scripts for a gesture"""
+	from inputCore import manager, normalizeGestureIdentifier
+
+	normalizedGesture = normalizeGestureIdentifier(gesture)
+	globalScripts = [manager.userGestureMap, manager.localeGestureMap]
+	conflicts: list["inputCore.InputGestureScriptT"] = []
+	for scriptMap in globalScripts:
+		if normalizedGesture in scriptMap._map:
+			conflicts.extend(scriptMap._map[normalizedGesture])
+	return conflicts
+
+
+def _checkForConflicts(script: types.FunctionType, gestures: list[str]):
+	"""
+	Check for conflicts in the global script map for an add-on script registered with the @script decorator.
+	Log an error if found.
+	"""
+	if not script.__qualname__.startswith("GlobalPlugin"):
+		# Only check for conflicts in add-ons.
+		return
+
+	for gesture in gestures:
+		if foundScripts := _findScriptInGlobalMap(gesture):
+			foundScriptNames = [".".join(foundScript) for foundScript in foundScripts]
+			log.error(
+				f"{script.__qualname__}: Gesture {gesture} conflicts with another script {foundScriptNames}. "
+				"Consider using a different gesture.",
+			)
+
+
 def _registerGesture(script: types.FunctionType, gestures: list[str], description: str):
 	"""
 	Register a gesture for a script registered with the @script decorator.
@@ -360,7 +391,7 @@ def _registerGesture(script: types.FunctionType, gestures: list[str], descriptio
 	"""
 	if not NVDAState.isRunningAsSource():
 		return
-	className: str = script.__qualname__.replace(f".{script.__name__}", "")
+	className = script.__qualname__.replace(f".{script.__name__}", "")
 	if className == "GlobalPlugin" or script.__module__.startswith("tests."):
 		# add-ons shouldn't be registered.
 		# In future, check for conflicts when registering an add-on gesture.
@@ -447,6 +478,7 @@ def script(
 		if gestures:
 			decoratedScript.gestures = gestures
 		_registerGesture(decoratedScript, gestures, description)
+		_checkForConflicts(decoratedScript, gestures)
 		decoratedScript.canPropagate = canPropagate
 		decoratedScript.bypassInputHelp = bypassInputHelp
 		if resumeSayAllMode is not None:
