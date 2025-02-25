@@ -335,7 +335,8 @@ class AddonStoreVM:
 			shouldInstall = True
 			shouldRememberChoice = True
 		if shouldInstall:
-			listItemVM.model.enableCompatibilityOverride()
+			if listItemVM.model.overrideIncompatibility:
+				listItemVM.model.enableCompatibilityOverride()
 			cls.getAddon(listItemVM)
 		return shouldInstall, shouldRememberChoice
 
@@ -493,11 +494,14 @@ class AddonStoreVM:
 		cls._downloader.download(listItemVM, cls._downloadComplete, cls.onDisplayableError)
 
 	@classmethod
-	def getAddons(cls, listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]]) -> None:
-		shouldReplace = True
-		shouldInstallIncompatible = True
-		shouldRememberReplaceChoice = False
-		shouldRememberInstallChoice = False
+	def getAddons(
+		cls,
+		listItemVMs: Iterable[AddonListItemVM[_AddonStoreModel]],
+		shouldReplace: bool = True,
+		shouldInstallIncompatible: bool = True,
+		shouldRememberReplaceChoice: bool = False,
+		shouldRememberInstallChoice: bool = False,
+	) -> None:
 		for aVM in listItemVMs:
 			if aVM.canUseInstallAction() or aVM.canUseUpdateAction():
 				cls.getAddon(aVM)

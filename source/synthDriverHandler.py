@@ -567,3 +567,11 @@ The local system should be notified about synth parameters at the remote system.
 @param isFallback: Whether the synth is set as fallback synth due to another synth's failure
 @type isFallback: bool
 """
+
+pre_synthSpeak = extensionPoints.Action()
+"""
+Notifies when speak() of the current synthesizer is about to be called.
+
+:param speechSequence: the speech sequence to pass to speak()
+:type speechSequence: speech.SpeechSequence
+"""

@@ -1,5 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Manish Agrawal, Derek Riemer, Babbage B.V., Cyrille Bougot,
+# Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -40,7 +41,7 @@ from controlTypes.formatFields import TextAlign
 import treeInterceptorHandler
 import browseMode
 from . import Window
-from ..behaviors import EditableTextWithoutAutoSelectDetection
+from ..behaviors import EditableTextBase, EditableTextWithoutAutoSelectDetection
 from . import _msOfficeChart
 from ._msOffice import MsoHyperlink
 import locationHelper
@@ -151,6 +152,17 @@ wdAlignParagraphLeft = 0
 wdAlignParagraphCenter = 1
 wdAlignParagraphRight = 2
 wdAlignParagraphJustify = 3
+
+
+class WdOutlineLevel(IntEnum):
+	"""Outline level of a paragraph.
+
+	.. seealso:: ```WdOutlineLevel`` enumeration <https://learn.microsoft.com/en-us/office/vba/api/word.wdoutlinelevel>`_
+	"""
+
+	BODY_TEXT = 10
+
+
 # Units
 wdCharacter = 1
 wdWord = 2
@@ -1441,7 +1453,11 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 		while True:
 			if not isFirst or includeCurrent:
 				level = rangeObj.paragraphs[1].outlineLevel
-				if level and 0 < level < 10 and (not neededLevel or neededLevel == level):
+				if (
+					level
+					and 0 < level < WdOutlineLevel.BODY_TEXT
+					and (not neededLevel or neededLevel == level)
+				):
 					rangeObj.expand(wdParagraph)
 					yield WordDocumentHeadingQuickNavItem(
 						nodeType,
@@ -1573,7 +1589,9 @@ class WordDocumentTreeInterceptor(browseMode.BrowseModeDocumentTreeInterceptor):
 	}
 
 
-class WordDocument(Window):
+class WordDocument(Window, EditableTextBase):
+	_supportsSentenceNavigation = True
+
 	def winwordColorToNVDAColor(self, val):
 		if val >= 0:
 			# normal RGB value
