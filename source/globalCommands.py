@@ -4649,10 +4649,11 @@ class GlobalCommands(ScriptableObject):
 			disabledMsg=_("Automatic refresh disabled"),
 		)
 		from contentRecog.recogUi import RecogResultNVDAObject
+
 		focus = api.getFocusObject()
 		if isinstance(focus, RecogResultNVDAObject):
 			focus._scheduleRecognize()
-	
+
 	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
