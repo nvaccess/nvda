@@ -35,12 +35,7 @@ from logHandler import log
 import warnings
 from utils.security import isRunningOnSecureDesktop
 from ._sapi4 import (
-	AUDERR_ALREADYCLAIMED,
-	AUDERR_ALREADYSTARTED,
-	AUDERR_INVALIDNOTIFYSINK,
-	AUDERR_NEEDWAVEFORMAT,
-	AUDERR_NOTCLAIMED,
-	AUDERR_WAVEFORMATNOTSUPPORTED,
+	AudioError,
 	SDATA,
 	CLSID_TTSEnumerator,
 	IAudio,
@@ -236,7 +231,7 @@ class SynthDriverAudio(COMObject):
 		Allows specifying NULL for no sink."""
 		if IIDNotifyInterface != IAudioDestNotifySink._iid_:
 			log.debugWarning("Only IAudioDestNotifySink is allowed")
-			raise ReturnHRESULT(AUDERR_INVALIDNOTIFYSINK, None)
+			raise ReturnHRESULT(AudioError.INVALID_NOTIFY_SINK, None)
 		if self._notifySink:
 			self._notifySink = None
 		if pNotifyInterface:
@@ -255,7 +250,7 @@ class SynthDriverAudio(COMObject):
 		If Claim is called before unclaiming completes, unclaiming is canceled,
 		and neither AudioStop nor AudioStart is notified."""
 		if not self._waveFormat:
-			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		with self._audioCond:
 			if self._deviceUnClaiming:
 				# Unclaiming is cancelled, but nothing else is touched.
@@ -263,7 +258,7 @@ class SynthDriverAudio(COMObject):
 				self._deviceUnClaimingBytePos = None
 				return
 		if self._deviceClaimed:
-			raise ReturnHRESULT(AUDERR_ALREADYCLAIMED, None)
+			raise ReturnHRESULT(AudioError.ALREADY_CLAIMED, None)
 		self._maybeInitPlayer()
 		self._deviceClaimed = True
 		if self._notifySink:
@@ -275,7 +270,7 @@ class SynthDriverAudio(COMObject):
 		If there is audio in the buffer, it should still be played till the end.
 		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
 		if not self._deviceClaimed:
-			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		if self._deviceStarted:
 			# When playing, wait for the playback to finish.
 			with self._audioCond:
@@ -294,9 +289,9 @@ class SynthDriverAudio(COMObject):
 	def IAudio_Start(self) -> None:
 		"""Starts (or resumes) playing the audio in the buffer."""
 		if self._deviceStarted:
-			raise ReturnHRESULT(AUDERR_ALREADYSTARTED, None)
+			raise ReturnHRESULT(AudioError.ALREADY_STARTED, None)
 		if not self._deviceClaimed:
-			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		self._startTime = datetime.now()
 		self._startBytes = self._playedBytes
 		try:
@@ -330,7 +325,7 @@ class SynthDriverAudio(COMObject):
 	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> None:
 		"""Converts a byte position to UTC FILETIME."""
 		if not self._waveFormat:
-			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		UNIX_TIME_CONV = 1_1644_473_600
 		filetime_ticks = int((self._startTime.timestamp() + UNIX_TIME_CONV) * 10_000_000)
 		filetime_ticks += (pqWord[0] - self._startBytes) * 10_000_000 // self._waveFormat.nAvgBytesPerSec
@@ -341,7 +336,7 @@ class SynthDriverAudio(COMObject):
 		:returns: A pointer to the WAVEFORMATEX structure.
 			Should be freed by the caller using CoTaskMemFree."""
 		if not self._waveFormat:
-			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		size = sizeof(nvwave.WAVEFORMATEX)
 		ptr = windll.ole32.CoTaskMemAlloc(size)
 		if not ptr:
@@ -358,16 +353,16 @@ class SynthDriverAudio(COMObject):
 		pWfx = cast(dWFEX.pData, POINTER(nvwave.WAVEFORMATEX))
 		if pWfx[0].wFormatTag != nvwave.WAVE_FORMAT_PCM:
 			log.debugWarning("Wave format not supported. Only integer PCM formats are supported.")
-			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
+			raise ReturnHRESULT(AudioError.WAVE_FORMAT_NOT_SUPPORTED, None)
 		if self._deviceStarted or self._audioQueue:
 			log.debugWarning("Cannot change wave format during playback.")
-			raise ReturnHRESULT(AUDERR_WAVEFORMATNOTSUPPORTED, None)
+			raise ReturnHRESULT(AudioError.WAVE_FORMAT_NOT_SUPPORTED, None)
 		self._waveFormat = nvwave.WAVEFORMATEX()
 		memmove(addressof(self._waveFormat), pWfx, size)
 
 	def _getFreeSpace(self) -> int:
 		if not self._waveFormat:
-			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
+			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return self._waveFormat.nAvgBytesPerSec // 5  # always 200ms
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
@@ -380,10 +375,10 @@ class SynthDriverAudio(COMObject):
 	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
 		"""Writes audio data to the end of the object's internal buffer.
 		This should not block.
-		When data cannot fit in the buffer, this should return AUDERR_NOTENOUGHDATA immediately."""
+		When data cannot fit in the buffer, this should return AudioError.NOT_ENOUGH_DATA immediately."""
 		if not self._deviceClaimed or self._deviceUnClaiming:
 			log.debugWarning("Audio data written when device is not claimed")
-			raise ReturnHRESULT(AUDERR_NOTCLAIMED, None)
+			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		with self._audioCond:
 			self._audioQueue.append(string_at(pBuffer, dwSize))
 			self._writtenBytes += dwSize
