@@ -28,6 +28,8 @@ except ImportError:
 
 	log = getLogger("url_handler")
 
+_REGISTRY_KEY_PATH: str = r"SOFTWARE\Classes\nvdaremote"
+
 
 def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 	"""Creates a nested registry structure from a dictionary.
@@ -90,8 +92,7 @@ def registerURLHandler():
 	:raises OSError: If registration in the registry fails
 	"""
 	try:
-		keyPath = r"SOFTWARE\Classes\nvdaremote"
-		with winreg.CreateKey(winreg.HKEY_CURRENT_USER, keyPath) as key:
+		with winreg.CreateKey(winreg.HKEY_CURRENT_USER, _REGISTRY_KEY_PATH) as key:
 			_createRegistryStructure(key, URL_HANDLER_REGISTRY)
 	except OSError as e:
 		raise OSError(f"Failed to register URL handler: {e}")
@@ -103,7 +104,7 @@ def unregisterURLHandler():
 	:raises OSError: If unregistration from the registry fails
 	"""
 	try:
-		_deleteRegistryKeyRecursive(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Classes\nvdaremote")
+		_deleteRegistryKeyRecursive(winreg.HKEY_CURRENT_USER, _REGISTRY_KEY_PATH)
 	except OSError as e:
 		raise OSError(f"Failed to unregister URL handler: {e}")
 
