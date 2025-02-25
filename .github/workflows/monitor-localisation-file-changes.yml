@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - beta
-      - devGuideTranslatingSyms
+      - devGuideTranslatingSyms  # TODO: remove
     paths:
       - 'source/locale/en/*.dic'
 
@@ -25,6 +25,7 @@ jobs:
         # Get the diff from the push
         # Get only the changed lines from the diff
         DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-]')"
+        # Double space the diff for better plain text email formatting
         DOUBLE_SPACED_DIFF=$(echo "$DIFF" | sed G)
         # Store diff in multi-line environment variable
         echo "DIFF<<EOF"$'\n'"$DIFF"$'\n'EOF >> $GITHUB_OUTPUT
