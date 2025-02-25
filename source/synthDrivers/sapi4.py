@@ -25,15 +25,9 @@ from ctypes import (
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
 from typing import TYPE_CHECKING, Optional, TypeAlias
-from autoSettingsUtils.driverSetting import BooleanDriverSetting
-import gui.contextHelp
-import gui.message
 import nvwave
-import queueHandler
-from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking, synthChanged
+from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
 from logHandler import log
-import warnings
-from utils.security import isRunningOnSecureDesktop
 from ._sapi4 import (
 	AudioError,
 	SDATA,
@@ -74,9 +68,6 @@ from speech.commands import (
 	BaseProsodyCommand,
 )
 from speech.types import SpeechSequence
-
-
-warnings.warn("synthDrivers.sapi4 is deprecated, pending removal in NVDA 2026.1.", DeprecationWarning)
 
 
 class SynthDriverBufSink(COMObject):
@@ -498,10 +489,7 @@ class SynthDriverSink(COMObject):
 class SynthDriver(SynthDriver):
 	name = "sapi4"
 	description = "Microsoft Speech API version 4"
-	supportedSettings = [
-		SynthDriver.VoiceSetting(),
-		BooleanDriverSetting("_hasWarningBeenShown", ""),
-	]
+	supportedSettings = [SynthDriver.VoiceSetting()]
 	supportedCommands = {
 		IndexCommand,
 		CharacterModeCommand,
@@ -834,42 +822,3 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
-
-
-def _sapi4DeprecationWarning(synth: SynthDriver, audioOutputDevice: str, isFallback: bool):
-	"""A synthChanged event handler to alert the user about the deprecation of SAPI4."""
-
-	def setShown(payload: gui.message.Payload):
-		synth._hasWarningBeenShown = True
-		synth.saveSettings()
-
-	def impl():
-		gui.message.MessageDialog(
-			parent=None,
-			message=_(
-				# Translators: Message warning users that SAPI4 is deprecated.
-				"Microsoft Speech API version 4 is obsolete. "
-				"Using this speech synthesizer may pose a security risk. "
-				"This synthesizer driver will be removed in NVDA 2026.1. "
-				"You are strongly encouraged to choose a more modern speech synthesizer. "
-				"Consult the Supported Speech Synthesizers section in the User Guide for suggestions. ",
-			),
-			# Translators: Title of a message dialog.
-			title=_("Warning"),
-			buttons=None,
-		).addOkButton(
-			callback=setShown,
-		).addHelpButton(
-			# Translators: A button in a dialog.
-			label=_("Open user guide"),
-			callback=lambda payload: gui.contextHelp.showHelp("SupportedSpeechSynths"),
-		).Show()
-
-	if (not isFallback) and (synth.name == "sapi4") and (not getattr(synth, "_hasWarningBeenShown", False)):
-		# We need to queue the dialog to appear, as wx may not have been initialised the first time this is called.
-		queueHandler.queueFunction(queueHandler.eventQueue, impl)
-
-
-if not isRunningOnSecureDesktop():
-	# Don't warn users about SAPI4 deprecation when running on a secure desktop.
-	synthChanged.register(_sapi4DeprecationWarning)
