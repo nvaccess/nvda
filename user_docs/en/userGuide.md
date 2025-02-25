@@ -3588,57 +3588,58 @@ To change NVDA's configuration during sign-in or on UAC screens, configure NVDA 
 
 With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
 
-### Getting Started
+### Getting Started {#RemoteAccessGettingStarted}
 
 Before you begin, ensure NVDA is installed and running on both computers. The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
 
-### Setting Up a Remote Session
+### Setting Up a Remote Session {#RemoteAccessSetup}
 
-You’ll need to decide which computer will be controlled (the **controlled computer**) and which will be controlling (the **controlling computer**).
+You’ll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
-#### Steps for the Controlled Computer
+#### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
-1. Open the NVDA menu and select **Tools > Remote > Connect**.
-1. Choose **Allow this computer to be controlled**.
+1. Open the NVDA menu and select Tools, then Remote, then Connect.
+1. Choose Allow this computer to be controlled.
 1. Enter the connection details provided by the person controlling your computer:
-   * **Relay Server:** If using a server, enter the hostname (e.g., `nvdaremote.com`).
-   * **Direct Connection:** If connecting directly, share your external IP address and port (default: 6837). Ensure your network is set up for direct connections.
+   * Relay Server: If using a server, enter the hostname (e.g., `nvdaremote.com`).
+   * Direct Connection: If connecting directly, share your external IP address and port (default: 6837). Ensure your network is set up for direct connections.
 1. Press OK. Share the connection key with the other person.
 
-#### Steps for the Controlling Computer
+#### Steps for the Controlling Computer {#RemoteAccessSetupControlling}
 
-1. Open the NVDA menu and select **Tools > Remote > Connect**.
-1. Choose **Control another computer**.
+1. Open the NVDA menu and select Tools, then Remote, then Connect.
+1. Choose Control another computer.
 1. Enter the connection details and key provided by the controlled computer.
 1. Press OK to connect.
 
 Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
 
-### Remote Connection Options
+### Remote Connection Options {#RemoteAccessConnectionOptions}
 
 You can choose between two connection types depending on your setup:
 
-* **Relay Server (easier):** Uses a public or private server to mediate the connection. Only the server hostname and key are needed.
-* **Direct Connection (advanced):** Connects directly without a server. Requires network setup, such as port forwarding.
+* Relay Server (easier): Uses a public or private server to mediate the connection. Only the server hostname and key are needed.
+* Direct Connection (advanced): Connects directly without a server. Requires network setup, such as port forwarding.
 
-### Using Remote Access
+### Using Remote Access {#RemoteAccessUsage}
 
-Once the session is active, you can switch between controlling the remote computer and your own:
+Once the session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
 
-* **Start/Stop Controlling:** Press `F11` (default) to toggle between controlling and returning to your own computer.
-* **Share Clipboard:** Push text from your clipboard to the other computer by selecting **Tools > Remote > Push Clipboard**.
-* **Mute Remote Speech:** Mute the remote computer's speech output by selecting **Tools > Remote > Mute Remote**.
+* Press `NVDA+f11` to toggle between controlling and returning to your own computer.
+* Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then Remote, then Push Clipboard.
+* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then Remote, then Mute Remote.
 
-### Remote Access Key Commands Summary
+### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->
 | Action                   | Key Command          | Description                               |
 |--------------------------|----------------------|-------------------------------------------|
-| Toggle Control           | `F11`               | Switch between controlling and local.     |
-| Push Clipboard           | `NVDA+Alt+C`        | Send clipboard text to the other machine. |
-| Disconnect               | `NVDA+Alt+Page Down`| End the remote session.                   |
-| Mute Remote Speech       | `NVDA+Alt+M`        | Mute speech on the remote computer.       |
+| Toggle Control           | `NVDA+f11`               | Switch between controlling and local.     |
+| Push Clipboard           | `NVDA+ctrl+shift+c`        | Send clipboard text to the other machine. |
+| Disconnect               | `NVDA+alt+pageDown`| End the remote session.                   |
 <!-- KC:endInclude -->
+
+You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
 
 ## Add-ons and the Add-on Store {#AddonsManager}
 
