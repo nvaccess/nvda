@@ -983,18 +983,14 @@ class GeneralSettingsPanel(SettingsPanel):
 			if globalVars.appArgs.secure:
 				mirrorBox.Disable()
 
-		self.preventDisplayTurnOffCombo: nvdaControls.FeatureFlagCombo = (
-			settingsSizerHelper.addLabeledControl(
-				labelText=_(
-					# Translators: This is a label for a combo-box in the general settings panel.
-					"Prevent &display from turning off during say all or reading with braille",
-				),
-				wxCtrlClass=nvdaControls.FeatureFlagCombo,
-				keyPath=["general", "preventDisplayTurnOff"],
-				conf=config.conf,
-			)
+		item = self.preventDisplayTurningOffCheckBox = wx.CheckBox(
+			self,
+			# Translators: The label of a checkbox in general settings.
+			label=_("Prevent &display from turning off during say all or reading with braille"),
 		)
-		self.bindHelpEvent("PreventDisplayTurnOff", self.preventDisplayTurnOffCombo)
+		self.bindHelpEvent("PreventDisplayTurningOff", self.preventDisplayTurningOffCheckBox)
+		item.Value = config.conf["general"]["preventDisplayTurningOff"]
+		settingsSizerHelper.addItem(item)
 
 	def onChangeMirrorURL(self, evt: wx.CommandEvent | wx.KeyEvent):
 		"""Show the dialog to change the update mirror URL, and refresh the dialog in response to the URL being changed."""
@@ -1117,7 +1113,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			updateCheck.terminate()
 			updateCheck.initialize()
 
-		self.preventDisplayTurnOffCombo.saveCurrentValueToConf()
+		config.conf["general"]["preventDisplayTurningOff"] = self.preventDisplayTurningOffCheckBox.IsChecked()
 
 	def onPanelActivated(self):
 		if updateCheck:
