@@ -2,7 +2,6 @@
 # Copyright (C) 2006-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# This module is deprecated, pending removal in NVDA 2026.1.
 
 from datetime import datetime
 import locale
