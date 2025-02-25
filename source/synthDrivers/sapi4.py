@@ -114,8 +114,10 @@ if TYPE_CHECKING:
 	from ctypes import _Pointer
 
 	c_ulonglong_p = _Pointer[c_ulonglong]
+	LP_IAudioDestNotifySink = _Pointer[IAudioDestNotifySink]
 else:
 	c_ulonglong_p = POINTER(c_ulonglong)
+	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
 AudioT: TypeAlias = bytes
 BookmarkT: TypeAlias = int
 
@@ -145,7 +147,7 @@ class SynthDriverAudio(COMObject):
 	_com_interfaces_ = [IAudio, IAudioDest]
 
 	def __init__(self):
-		self._notifySink = None
+		self._notifySink: LP_IAudioDestNotifySink = None
 		self._deviceClaimed = False
 		self._deviceStarted = False
 		self._deviceUnClaiming = False
@@ -161,7 +163,7 @@ class SynthDriverAudio(COMObject):
 		self._audioStopped = False
 		self._audioThread = threading.Thread(target=self._audioThreadFunc)
 		self._audioThread.start()
-		self._level = 0xFFFFFFFF
+		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 
 	def terminate(self):
 		with self._audioCond:
@@ -235,7 +237,7 @@ class SynthDriverAudio(COMObject):
 		if self._notifySink:
 			self._notifySink = None
 		if pNotifyInterface:
-			self._notifySink = cast(pNotifyInterface, POINTER(IAudioDestNotifySink))
+			self._notifySink = cast(pNotifyInterface, LP_IAudioDestNotifySink)
 
 	def IAudio_PosnGet(self) -> int:
 		"""Returns the byte position currently being played,
