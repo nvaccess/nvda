@@ -2594,10 +2594,10 @@ Although these changes do break compatibility with older NVDA add-ons, the upgra
   * See the module documentation and textInfos.offsets module for example implementations.
 * Deprecated functionality now removed. (#9548)
   * AppModules removed:
-   * Windows XP sound recorder.
-   * Klango Player, which is abandoned software.
+    * Windows XP sound recorder.
+    * Klango Player, which is abandoned software.
   * configobj.validate wrapper removed.
-   * New code should use from configobj import validate instead of import validate
+    * New code should use from configobj import validate instead of import validate
   * textInfos.Point and textInfos.Rect replaced by locationHelper.Point and locationHelper.RectLTRB respectively.
   * braille.BrailleHandler._get_tether and braille.BrailleHandler.set_tether have been removed.
   * config.getConfigDirs has been removed.
