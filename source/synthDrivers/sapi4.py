@@ -109,6 +109,7 @@ if TYPE_CHECKING:
 else:
 	c_ulonglong_p = POINTER(c_ulonglong)
 	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
+
 AudioT: TypeAlias = bytes
 BookmarkT: TypeAlias = int
 
@@ -138,7 +139,7 @@ class SynthDriverAudio(COMObject):
 	_com_interfaces_ = [IAudio, IAudioDest]
 
 	def __init__(self):
-		self._notifySink: LP_IAudioDestNotifySink = None
+		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceClaimed = False
 		self._deviceStarted = False
 		self._deviceUnClaiming = False
