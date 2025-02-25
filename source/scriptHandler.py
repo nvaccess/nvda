@@ -96,7 +96,11 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 	the first map in the list should be used to resolve scripts first.
 	"""
 	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
-	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
+	globalMaps = [
+		inputCore.manager.userGestureMap,
+		inputCore.manager.localeGestureMap,
+		inputCore.manager.defaultGestureMap,
+	]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
@@ -352,16 +356,19 @@ def _initEnglishGesturesConfig():
 	return gestureConfig
 
 
-def _findScriptInGlobalMap(gesture: str) -> list["inputCore.InputGestureScriptT"]:
+_FindScriptResultsT = list[tuple["inputCore.GlobalGestureMap", list["inputCore.InputGestureScriptT"]]]
+
+
+def _findScriptInGlobalMap(gesture: str) -> _FindScriptResultsT:
 	"""Find global scripts for a gesture"""
 	from inputCore import manager, normalizeGestureIdentifier
 
 	normalizedGesture = normalizeGestureIdentifier(gesture)
-	globalScripts = [manager.userGestureMap, manager.localeGestureMap]
-	conflicts: list["inputCore.InputGestureScriptT"] = []
+	globalScripts = [manager.userGestureMap, manager.localeGestureMap, manager.defaultGestureMap]
+	conflicts: _FindScriptResultsT = []
 	for scriptMap in globalScripts:
 		if normalizedGesture in scriptMap._map:
-			conflicts.extend(scriptMap._map[normalizedGesture])
+			conflicts.append((scriptMap, scriptMap._map[normalizedGesture]))
 	return conflicts
 
 
@@ -376,10 +383,13 @@ def _checkForConflicts(script: types.FunctionType, gestures: list[str]):
 
 	for gesture in gestures:
 		if foundScripts := _findScriptInGlobalMap(gesture):
-			foundScriptNames = [".".join(foundScript) for foundScript in foundScripts]
+			foundScriptLocations = [
+				f'{", ".join(".".join(name) for name in mapScripts)} ({map.fileName})'
+				for map, mapScripts in foundScripts
+			]
 			log.error(
-				f"{script.__qualname__}: Gesture {gesture} conflicts with another script {foundScriptNames}. "
-				"Consider using a different gesture.",
+				f"{script.__qualname__}: Gesture {gesture} conflicts with another script {foundScriptLocations}. "
+				"Consider using a different gesture. ",
 			)
 
 
