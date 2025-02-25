@@ -561,7 +561,8 @@ class SynthDriver(SynthDriver):
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
-		self._ttsAudio.terminate()
+		if self._ttsAudio:
+			self._ttsAudio.terminate()
 		self._ttsCentral = None
 		self._ttsAttrs = None
 
