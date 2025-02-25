@@ -24,7 +24,8 @@ jobs:
         git fetch origin
         # Get the diff from the push
         # Get only the changed lines from the diff
-        DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-]')"
+        # DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-]')"
+        DIFF="$(git diff -U0 release-2024.1 origin/master -- source/locale/en/*.dic | grep '^[+-]')"
         DOUBLE_SPACED_DIFF=$(echo "$DIFF" | sed G)
         # Store diff in multi-line environment variable
         echo "DIFF<<EOF"$'\n'"$DIFF"$'\n'EOF >> $GITHUB_OUTPUT
@@ -38,7 +39,7 @@ jobs:
         username: ${{ secrets.EMAIL_USERNAME }}
         password: ${{ secrets.EMAIL_PASSWORD }}
         subject: "Changes detected in localisation files"
-        to: sean@nvaccess.org  # nvda-l10n@nvaccess.org
+        to: nvda-l10n@nvaccess.org
         from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
         convert_markdown: true
         body: |
