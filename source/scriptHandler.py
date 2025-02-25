@@ -363,6 +363,7 @@ def _findScriptInGlobalMap(gesture: str) -> _FindScriptResultsT:
 	"""Find global scripts for a gesture"""
 	from inputCore import manager, normalizeGestureIdentifier
 
+	assert manager
 	normalizedGesture = normalizeGestureIdentifier(gesture)
 	globalScripts = [manager.userGestureMap, manager.localeGestureMap, manager.defaultGestureMap]
 	conflicts: _FindScriptResultsT = []
@@ -393,7 +394,7 @@ def _checkForConflicts(script: types.FunctionType, gestures: list[str]):
 			)
 
 
-def _registerGesture(script: types.FunctionType, gestures: list[str], description: str):
+def _registerEnglishGesture(script: types.FunctionType, gestures: list[str], description: str):
 	"""
 	Register a gesture for a script registered with the @script decorator.
 	Creates an entry in the English gestures.ini file.
@@ -487,7 +488,7 @@ def script(
 			gestures.append(gesture)
 		if gestures:
 			decoratedScript.gestures = gestures
-		_registerGesture(decoratedScript, gestures, description)
+		_registerEnglishGesture(decoratedScript, gestures, description)
 		_checkForConflicts(decoratedScript, gestures)
 		decoratedScript.canPropagate = canPropagate
 		decoratedScript.bypassInputHelp = bypassInputHelp

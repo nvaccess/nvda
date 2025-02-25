@@ -40,6 +40,8 @@ CP_ACP = "0"
 #: or because it is not a legal locale name (e.g. "zzzz").
 LCID_NONE = 0  # 0 used instead of None for backwards compatibility.
 
+
+FALLBACK_LOCALE = "en"
 LANGS_WITHOUT_TRANSLATIONS: FrozenSet[str] = frozenset(("en",))
 
 _language: str | None = None
