@@ -20,6 +20,38 @@ New gestures will be announced there, and localisations can be added to `gesture
 
 ## Process
 
+1. Be notified of potential localisation changes:
+    - For `gestures.ini`: Check the latest beta's changes for any new gestures added.
+    - For `symbols.dic` and `characterDescriptions.dic`:
+        - Receive a notification from the [mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n)
+        - This will occur when the first beta is being prepared.
+        There may be subsequent notifications during the beta period.
+        - Changes to these files are relatively infrequent, so the mailing list will be low traffic, many releases may go by without changes.
+        - Sample email:
+            - The lines prefixed with `+` refer to additions.
+            - The lines prefixed with `-` refer to removals.
+            - The lines prefixed with `@@` refer to the location of the changes:
+                - The first number(s) corresponds to the original location of the line.
+                The second number(s) corresponds to the new location in the file.
+                This can be useful for finding where to make the changes when referencing the English file.
+                - e.g. `@@ -2 +2 @@` means the 2nd line has changed, and remained in the same place in both files.
+                - e.g. `@@ -13,0 +14,2 @@ complexSymbols:` means the 13th line has changed, originally there was 0 lines here, and 2 new lines have been inserted.
+                You can find the line in the new English file at line 14.
+                The section header `complexSymbols` is included where possible to help give context.
+
+            ```diff
+            --- b/source/locale/en/symbols.dic
+            +++ a/source/locale/en/symbols.dic
+            @@ -2 +2 @@
+            -# Copyright (c) 2011-2023 NVDA Contributors
+            +# Copyright (c) 2011-2024 NVDA Contributors
+            @@ -13,0 +14,2 @@ complexSymbols:
+            +# Series of dots used for visual presentation, e.g. in table of contents
+            +multiple .     \.{4,}
+            @@ -27,0 +30 @@ symbols:
+            +multiple .     multiple dots   all     always
+            ```
+
 1. Find the relevant file to edit in the GitHub directory
     - Visit [source/locale](https://github.com/nvaccess/nvda/tree/beta/source/locale)
     - Open the directory with your language code

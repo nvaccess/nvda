@@ -23,8 +23,8 @@ jobs:
       run: |
         git fetch origin
         # Get the diff from the push
-        # Get only the changed lines from the diff
-        DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-]')"
+        # Get only the changed lines (+-) and line markers (@@) from the diff, strip the first two lines (diff command metadata)
+        DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-@]')"
         # Double space the diff for better plain text email formatting
         DOUBLE_SPACED_DIFF=$(echo "$DIFF" | sed G)
         # Store diff in multi-line environment variable
