@@ -556,11 +556,14 @@ class SynthDriver(SynthDriver):
 		self._rateDelta = 0
 		self._pitchDelta = 0
 		self._volume = 100
+		self._paused = False
 		self.voice = str(self._enginesList[0].gModeID)
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
 		self._ttsAudio.terminate()
+		self._ttsCentral = None
+		self._ttsAttrs = None
 
 	def speak(self, speechSequence: SpeechSequence):
 		textList = []
@@ -637,6 +640,12 @@ class SynthDriver(SynthDriver):
 			# cancel all pending bookmarks
 			self._bookmarkLists.clear()
 			self._bookmarks = None
+			if self._paused:
+				# Unpause the voice before resetting,
+				# because some voices keep the pausing state
+				# even after resetting.
+				self._ttsCentral.AudioResume()
+				self._paused = False
 			self._ttsCentral.AudioReset()
 		except COMError:
 			log.debugWarning("Error cancelling speech", exc_info=True)
@@ -651,11 +660,12 @@ class SynthDriver(SynthDriver):
 				log.debugWarning("Error pausing speech", exc_info=True)
 		else:
 			self._ttsCentral.AudioResume()
+		self._paused = switch
 
 	def removeSetting(self, name):
 		# Putting it here because currently no other synths make use of it. OrderedDict, where you are?
 		for i, s in enumerate(self.supportedSettings):
-			if s.name == name:
+			if s.id == name:
 				del self.supportedSettings[i]
 				return
 
@@ -675,7 +685,17 @@ class SynthDriver(SynthDriver):
 			self._ttsAudio.terminate()
 		self._ttsAudio = SynthDriverAudio()
 		if self._ttsCentral:
-			self._ttsCentral.UnRegister(self._sinkRegKey)
+			try:
+				# Some SAPI4 synthesizers may fail this call.
+				self._ttsCentral.UnRegister(self._sinkRegKey)
+			except COMError:
+				log.debugWarning("Error unregistering ITTSCentral sink", exc_info=True)
+			# Some SAPI4 synthesizers assume that only one instance of ITTSCentral
+			# will be created by the client, and will stop working if more are created.
+			# Here we make sure that the previous _ttsCentral is released
+			# before the next _ttsCentral is created.
+			self._ttsCentral = None
+			self._ttsAttrs = None
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
