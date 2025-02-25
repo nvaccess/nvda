@@ -169,7 +169,7 @@ class RefreshableRecogResultNVDAObject(RecogResultNVDAObject, LiveText):
 	@script(
 		# Translators: Describes a command.
 		description=_("Refresh the recognition result"),
-		# gesture="kb:NVDA+f5",
+		gesture="kb:NVDA+f5",
 	)
 	def script_refreshBuffer(self, gesture: "inputCore.InputGesture") -> None:
 		if self.recognizer.allowAutoRefresh:
