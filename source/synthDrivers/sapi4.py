@@ -171,6 +171,7 @@ class SynthDriverAudio(COMObject):
 			self._audioCond.notify()
 		if self._audioThread is not threading.current_thread():
 			self._audioThread.join()
+		self._notifySink = None
 
 	def __del__(self):
 		self.terminate()
