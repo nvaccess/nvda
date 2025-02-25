@@ -412,10 +412,8 @@ def _registerEnglishGesture(script: types.FunctionType, gestures: list[str], des
 	if gestures:
 		scriptLogName = f"{scriptLocation}.{script.__name__}"
 		logMsg = f"{scriptLogName}: Setting gesture for via @script is now deprecated. Add the gesture to /en/gestures.ini instead."
-		# Note this appears to not log correctly
-		# import warnings
-		# warnings.warn(logMsg, DeprecationWarning)
-		log.warning(logMsg)
+		import warnings
+		warnings.warn(logMsg, DeprecationWarning)
 	if scriptLocation not in _gestureConfig:
 		_gestureConfig[scriptLocation] = {}
 	gestureStr = ", ".join(sorted(gestures))
