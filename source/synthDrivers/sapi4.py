@@ -24,7 +24,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, TypeAlias
 from autoSettingsUtils.driverSetting import BooleanDriverSetting
 import gui.contextHelp
 import gui.message
@@ -121,6 +121,8 @@ if TYPE_CHECKING:
 	c_ulonglong_p = _Pointer[c_ulonglong]
 else:
 	c_ulonglong_p = POINTER(c_ulonglong)
+AudioT: TypeAlias = bytes
+BookmarkT: TypeAlias = int
 
 
 class SynthDriverAudio(COMObject):
@@ -159,9 +161,6 @@ class SynthDriverAudio(COMObject):
 		self._playedBytes = 0
 		self._startTime = datetime.now()
 		self._startBytes = 0
-AudioT: TypeAlias = bytes
-BookmarkT: TypeAlias = int
-
 		self._audioQueue: deque[AudioT | BookmarkT] = deque()
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
@@ -431,7 +430,7 @@ BookmarkT: TypeAlias = int
 				item = self._audioQueue.popleft()
 			if isinstance(item, AudioT):
 				self._player.feed(item, len(item), lambda item=item: self._onChunkFinished(item))
-			elif isinstance(item, BookmarkT): 
+			elif isinstance(item, BookmarkT):
 				if self._playedBytes == self._writtenBytes:
 					self._onBookmark(item)  # trigger immediately
 				else:
