@@ -4632,6 +4632,28 @@ class GlobalCommands(ScriptableObject):
 		ui.message(languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang)))
 
 	@script(
+		# Translators: Describes a command.
+		description=_("Toggle periodical refresh of a Windows OCR result"),
+	)
+	def script_toggleAutomaticRefreshOfRecogResult(self, gesture: inputCore.InputGesture) -> None:
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
+			return
+		toggleBooleanValue(
+			configSection="uwpOcr",
+			configKey="autoRefresh",
+			# Translators: The message announced when toggling automatic refresh of recognized content
+			enabledMsg=_("Automatic refresh enabled"),
+			# Translators: The message announced when toggling automatic refresh of recognized content
+			disabledMsg=_("Automatic refresh disabled"),
+		)
+		from contentRecog.recogUi import RecogResultNVDAObject
+		focus = api.getFocusObject()
+		if isinstance(focus, RecogResultNVDAObject):
+			focus._scheduleRecognize()
+	
+	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
 		category=SCRCAT_SPEECH,
