@@ -4914,6 +4914,33 @@ class GlobalCommands(ScriptableObject):
 	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
 		appsVolume._toggleAppsVolumeMute()
 
+	@script(
+		description=_(
+			# Translators: Input help mode message for report language for caret command.
+			"Reports the language for the character where the caret is positioned. "
+			"Pressed twice, shows the character and its language in browse mode",
+		),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
+	def script_reeportCaretLanguage(self, gesture):
+		info = self._getTIAtCaret()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		text = info.text
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if languageDescription is None:
+			languageDescription = curLanguage
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(languageDescription)
+		else:
+			# Translators: Character and its language.
+			message = _("{} ({})").format(text, languageDescription)
+			# Translators: title for report caret language dialog.
+			title = _("Language at caret position")
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
+
 
 #: The single global commands instance.
 #: @type: L{GlobalCommands}
