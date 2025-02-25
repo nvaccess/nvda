@@ -35,8 +35,8 @@ New gestures will be announced there, and localisations can be added to `gesture
                 The second number(s) corresponds to the new location in the file.
                 This can be useful for finding where to make the changes when referencing the English file.
                 - e.g. `@@ -2 +2 @@` means the 2nd line has changed, and remained in the same place in both files.
-                - e.g. `@@ -13,0 +14,2 @@ complexSymbols:` means the 13th line has changed, originally there was 0 lines here, and 2 new lines have been inserted.
-                You can find the line in the new English file at line 14.
+                - e.g. `@@ -13,0 +14,2 @@ complexSymbols:` means the 13th line has changed, originally there was 0 lines here, and 2 new lines have been added.
+                You can find the 2 new lines in the new English file starting at line 14.
                 The section header `complexSymbols` is included where possible to help give context.
 
             ```diff
