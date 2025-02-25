@@ -1360,7 +1360,7 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 	def _getStoryText(self):
 		return self.obj.rootNVDAObject.basicText
 
-	def _get_boundingRects(self):
+	def _get_boundingRects(self) -> list[locationHelper.RectLTWH]:
 		if self.obj.rootNVDAObject.hasIrrelevantLocation:
 			raise LookupError("Object is off screen, invisible or has no location")
 		return [self.obj.rootNVDAObject.location]
