@@ -4,9 +4,6 @@
 
 ### Important notes
 
-* The support for Microsoft Speech API version 4 synthesizers is planned for removal in NVDA 2026.1.
-Any remaining users of SAPI4 speech synthesizers are encouraged to choose a more modern speech synthesizer. (#17599)
-
 ### New Features
 
 * Add-on Store:
@@ -78,6 +75,7 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
 * The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
+* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake. (#17718, @gexgd0419)
 
 ### Security Fixes
 
@@ -245,7 +243,6 @@ Use `gui.message.MessageDialog` instead. (#17582)
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.
 * `bdDetect.DeviceType` is deprecated in favour of `bdDetect.ProtocolType` and `bdDetect.CommunicationType` to take into account the fact that both HID and Serial communication can take place over USB and Bluetooth. (#17537 , @LeonarddeR)
-* SAPI4, `synthDrivers.sapi4`, is deprecated and planned for removal in 2026.1. (#17599)
 
 ## 2024.4.2
 
