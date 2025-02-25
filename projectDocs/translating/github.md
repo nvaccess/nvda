@@ -76,7 +76,7 @@ New gestures will be announced there, and localisations can be added to `gesture
     - Format (replace `{lang}` and `{fileName}`): `https://github.com/nvaccess/nvda/edit/beta/source/locale/{lang}/{fileName}`
     - Refer to [background](#background) for more information on the format of the files
 1. Submit your changes
-    - Press the "commit changes" button.
+    - Press `control+s` or the "commit changes" button to open a dialog to save and propose the changes.
     - Update the commit message to add your language to the end: "Update filename for language"
     - Press "Propose changes"
     - A new window should open proposing your changes
