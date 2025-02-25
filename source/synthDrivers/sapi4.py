@@ -152,14 +152,17 @@ class SynthDriverAudio(COMObject):
 		self._deviceClaimed = False
 		self._deviceStarted = False
 		self._deviceUnClaiming = False
-		self._deviceUnClaimingBytePos: Optional[int] = None
-		self._waveFormat: Optional[nvwave.WAVEFORMATEX] = None
-		self._player: Optional[nvwave.WavePlayer] = None
+		self._deviceUnClaimingBytePos: int | None = None
+		self._waveFormat: nvwave.WAVEFORMATEX | None = None
+		self._player: nvwave.WavePlayer | None = None
 		self._writtenBytes = 0
 		self._playedBytes = 0
 		self._startTime = datetime.now()
 		self._startBytes = 0
-		self._audioQueue: deque[bytes | int] = deque()  # bytes: audio, int: bookmark
+AudioT: TypeAlias = bytes
+BookmarkT: TypeAlias = int
+
+		self._audioQueue: deque[AudioT | BookmarkT] = deque()
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
 		self._audioThread = threading.Thread(target=self._audioThreadFunc)
@@ -208,7 +211,7 @@ class SynthDriverAudio(COMObject):
 			if self._notifySink:
 				while self._audioQueue:
 					item = self._audioQueue.popleft()
-					if isinstance(item, int):
+					if isinstance(item, BookmarkT):
 						# Flush all untriggered bookmarks.
 						# 1 (TRUE) means that the bookmark is sent because of flushing.
 						self._notifySink.BookMark(item, 1)
@@ -329,7 +332,8 @@ class SynthDriverAudio(COMObject):
 		"""Converts a byte position to UTC FILETIME."""
 		if not self._waveFormat:
 			raise ReturnHRESULT(AUDERR_NEEDWAVEFORMAT, None)
-		filetime_ticks = int((self._startTime.timestamp() + 11644473600) * 10_000_000)
+		UNIX_TIME_CONV = 1_1644_473_600
+		filetime_ticks = int((self._startTime.timestamp() + UNIX_TIME_CONV) * 10_000_000)
 		filetime_ticks += (pqWord[0] - self._startBytes) * 10_000_000 // self._waveFormat.nAvgBytesPerSec
 		return FILETIME(filetime_ticks & 0xFFFFFFFF, filetime_ticks >> 32)
 
@@ -386,7 +390,7 @@ class SynthDriverAudio(COMObject):
 			self._writtenBytes += dwSize
 			self._audioCond.notify()
 
-	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
+	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
 		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
 		When Flush is called, untriggered bookmarks should also be triggered."""
@@ -425,20 +429,20 @@ class SynthDriverAudio(COMObject):
 				if self._audioStopped:
 					return
 				item = self._audioQueue.popleft()
-			if isinstance(item, bytes):  # audio
+			if isinstance(item, AudioT):
 				self._player.feed(item, len(item), lambda item=item: self._onChunkFinished(item))
-			elif isinstance(item, int):  # bookmark
+			elif isinstance(item, BookmarkT): 
 				if self._playedBytes == self._writtenBytes:
 					self._onBookmark(item)  # trigger immediately
 				else:
 					self._player.feed(None, 0, lambda item=item: self._onBookmark(item))
 
-	def _onChunkFinished(self, chunk: bytes):
+	def _onChunkFinished(self, chunk: AudioT):
 		self._playedBytes += len(chunk)
 		if self._notifySink:
 			self._notifySink.FreeSpace(self._getFreeSpace(), 0)
 
-	def _onBookmark(self, dwMarkID: int):
+	def _onBookmark(self, dwMarkID: BookmarkT):
 		if self._notifySink:
 			self._notifySink.BookMark(dwMarkID, 0)
 
@@ -542,7 +546,7 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
-		self._ttsAudio: Optional[SynthDriverAudio] = None
+		self._ttsAudio: SynthDriverAudio | None = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
