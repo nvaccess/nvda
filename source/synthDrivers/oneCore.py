@@ -320,7 +320,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._processQueue()
 
 	@classmethod
-	def _percentToParam(self, percent, min, max):
+	def _percentToParam(cls, percent, min, max):
 		"""Overrides SynthDriver._percentToParam to return floating point parameter values."""
 		return float(percent) / 100 * (max - min) + min
 

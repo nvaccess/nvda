@@ -222,6 +222,9 @@ class EscapeCode(IntEnum):
 	"""
 
 
+wxArtID: TypeAlias = int
+
+
 class DialogType(Enum):
 	"""Types of message dialogs.
 	These are used to determine the icon and sound to play when the dialog is shown.
@@ -243,7 +246,7 @@ class DialogType(Enum):
 	"""
 
 	@property
-	def _wxIconId(self) -> "wx.ArtID | None":  # type: ignore
+	def _wxIconId(self) -> wxArtID | None:
 		"""The wx icon ID to use for this dialog type.
 		This is used to determine the icon to display in the dialog.
 		This will be None when the default icon should be used.
@@ -854,7 +857,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
 			return dlg.ShowModal()
 
-		return wxCallOnMain(impl)  # type: ignore
+		return wxCallOnMain(impl)
 
 	@classmethod
 	def ask(
@@ -889,7 +892,7 @@ class MessageDialog(DpiScalingHelperMixinWithoutInit, ContextHelpMixin, wx.Dialo
 				dlg.setButtonLabel(ReturnCode.CANCEL, cancelLabel)
 			return dlg.ShowModal()
 
-		return wxCallOnMain(impl)  # type: ignore
+		return wxCallOnMain(impl)
 
 	# endregion
 

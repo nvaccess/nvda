@@ -12,6 +12,8 @@ from typing import (
 	OrderedDict,
 	Set,
 	Tuple,
+	TYPE_CHECKING,
+	Type,
 )
 from locale import strxfrm
 
@@ -29,6 +31,9 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting,
 from autoSettingsUtils.utils import StringParameterInfo
 
 from abc import abstractmethod
+
+if TYPE_CHECKING:
+	from speech.commands import SynthCommand
 
 
 class LanguageInfo(StringParameterInfo):
@@ -96,8 +101,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{SynthCommand} subclasses.
-	supportedCommands = frozenset()
+	supportedCommands: set[Type["SynthCommand"]] = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()

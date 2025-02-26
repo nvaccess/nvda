@@ -65,7 +65,6 @@ from addonStore.models.version import (  # noqa: E402
 )
 import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
-import config
 import winKernel
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
@@ -691,6 +690,9 @@ class UpdateAskInstallDialog(
 					# Therefore, clear the dontRemindVersion.
 					state["dontRemindVersion"] = None
 					saveState()
+
+				case _:
+					log.error(f"Unexpected return code {res} from update dialog")
 
 		return callback
 

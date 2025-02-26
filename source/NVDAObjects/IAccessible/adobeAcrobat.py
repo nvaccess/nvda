@@ -13,7 +13,7 @@ from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
 from NVDAObjects.behaviors import EditableText
 from comtypes import GUID, COMError, IServiceProvider
-from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement
+from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement  # type: ignore[reportMissingImports]
 from logHandler import log
 
 SID_AccID = GUID("{449D454B-1F46-497e-B2B6-3357AED9912B}")

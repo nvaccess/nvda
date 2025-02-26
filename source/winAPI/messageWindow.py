@@ -23,6 +23,7 @@ from .types import HWNDValT
 import extensionPoints
 import windowUtils
 
+__all__ = ["pre_handleWindowMessage", "WindowMessage", "_MessageWindow"]
 
 pre_handleWindowMessage = extensionPoints.Action()
 """

@@ -326,7 +326,7 @@ class SynthDriver(SynthDriver):
 			return None
 
 	@classmethod
-	def _percentToParam(self, percent, min, max) -> float:
+	def _percentToParam(cls, percent, min, max) -> float:
 		"""Overrides SynthDriver._percentToParam to return floating point parameter values."""
 		return float(percent) / 100 * (max - min) + min
 

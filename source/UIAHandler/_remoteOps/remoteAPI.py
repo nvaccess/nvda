@@ -208,7 +208,7 @@ class RemoteAPI(builder._RemoteBase):
 		if not isinstance(scopeInstructionJustExited, instructions.ForkIfFalse):
 			raise RuntimeError("Else block not directly preceded by If block")
 		instructionList = self.rob.getDefaultInstructionList()
-		ifConditionInstruction = cast(instructions.ForkIfFalse, scopeInstructionJustExited)
+		ifConditionInstruction = scopeInstructionJustExited
 		# add a final jump instruction to the previous if block to skip over the else block.
 		if not silent:
 			instructionList.addComment("Jump over else block")
@@ -282,7 +282,7 @@ class RemoteAPI(builder._RemoteBase):
 		remoteStep = cast(RemoteIntBase, RemoteType).ensureRemote(self.rob, cast(RemoteIntBase, step))
 		counter = remoteStart.copy()
 		with self.whileBlock(lambda: counter < remoteStop):
-			yield cast(RemoteIntBase, counter)
+			yield counter
 			counter += remoteStep
 
 	@remoteContextManager
@@ -319,7 +319,7 @@ class RemoteAPI(builder._RemoteBase):
 		if not isinstance(scopeInstructionJustExited, instructions.NewTryBlock):
 			raise RuntimeError("Catch block not directly preceded by Try block")
 		instructionList = self.rob.getDefaultInstructionList()
-		tryBlockInstruction = cast(instructions.NewTryBlock, scopeInstructionJustExited)
+		tryBlockInstruction = scopeInstructionJustExited
 		# add a final jump instruction to the previous try block to skip over the catch block.
 		if not silent:
 			instructionList.addComment("Jump over catch block")

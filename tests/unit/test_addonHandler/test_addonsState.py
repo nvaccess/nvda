@@ -73,7 +73,7 @@ class TestStateConversionForPickling(unittest.TestCase):
 			# Note that we cannot check for types using `isinstance`, since named tuples are tuple subclasses,
 			# yet when trying to unpickle them in versions of NVDA where `MajorMinorPatch` is not defined,
 			#  they are not converted to a plain tuple automatically.
-			backCompatInfo.major, backCompatInfo.minor, backCompatInfo.patch
+			backCompatInfo.major, backCompatInfo.minor, backCompatInfo.patch  # type: ignore[reportUnusedExpression]
 		self.assertEqual(backCompatInfo[0], 2024)
 		self.assertEqual(backCompatInfo[1], 1)
 		self.assertEqual(backCompatInfo[2], 1)

@@ -26,7 +26,7 @@ class FeatureFlagEnumProtocol(Protocol):
 	This definition is provided only for type annotations
 	"""
 
-	DEFAULT: enum.Enum  # Required enum member
+	DEFAULT: "FlagValueEnum"  # Required enum member
 	name: str  # comes from enum.Enum
 	value: str  # comes from enum.Enum
 

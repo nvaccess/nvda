@@ -13,6 +13,8 @@ import NVDAState
 
 from .models.channel import UpdateChannel
 
+__all__ = ["_AddonStoreSettings"]
+
 
 @dataclass
 class _AddonSettings:

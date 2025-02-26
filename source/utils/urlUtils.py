@@ -8,6 +8,8 @@ from urllib.parse import ParseResult, urlparse, urlunparse
 from dataclasses import dataclass
 from logHandler import log
 
+__all__ = ["getLinkType", "isSamePageURL", "_LinkData"]
+
 
 def getLinkType(targetURL: str, rootURL: str) -> controlTypes.State | None:
 	"""Returns the link type corresponding to a given URL.

@@ -14,3 +14,5 @@ call "%scriptsDir%\venvCmd.bat" ruff check --fix %ruffCheckArgs%
 if ERRORLEVEL 1 exit /b %ERRORLEVEL%
 call "%scriptsDir%\venvCmd.bat" ruff format %ruffFormatArgs%
 if ERRORLEVEL 1 exit /b %ERRORLEVEL%
+call "%scriptsDir%\venvCmd.bat" pyright --threads --level warning
+if ERRORLEVEL 1 exit /b %ERRORLEVEL%

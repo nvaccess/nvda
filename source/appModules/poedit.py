@@ -289,3 +289,9 @@ class PoeditListItem(NVDAObject):
 				tones.beep(550, 50)
 			case _WindowControlId.NEEDS_WORK_SWITCH:
 				tones.beep(660, 50)
+			case _WindowControlId.NOTES_FOR_TRANSLATOR:
+				pass
+			case _WindowControlId.TRANSLATOR_COMMENT:
+				pass
+			case None:
+				pass

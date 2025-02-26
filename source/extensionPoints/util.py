@@ -71,7 +71,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		return func.__get__(inst)
 
 
-def _getHandlerKey(handler: HandlerT) -> HandlerKeyT:
+def _getHandlerKey(handler: Callable) -> HandlerKeyT:
 	"""Get a key which identifies a handler function.
 	This is needed because we store weak references, not the actual functions.
 	We store the key on the weak reference.

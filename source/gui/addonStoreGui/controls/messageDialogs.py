@@ -43,6 +43,19 @@ import windowUtils
 if TYPE_CHECKING:
 	from addonStore.models.version import SupportsVersionCheck
 
+__all__ = [
+	"ErrorAddonInstallDialogWithYesNoButtons",
+	"_shouldProceedWhenInstalledAddonVersionUnknown",
+	"_shouldProceedToRemoveAddonDialog",
+	"_shouldInstallWhenAddonTooOldDialog",
+	"_shouldEnableWhenAddonTooOldDialog",
+	"_showAddonRequiresNVDAUpdateDialog",
+	"_showConfirmAddonInstallDialog",
+	"_showAddonInfo",
+	"_SafetyWarningDialog",
+	"UpdatableAddonsDialog",
+]
+
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
 	def __init__(self, *args, useRememberChoiceCheckbox: bool = False, **kwargs):
