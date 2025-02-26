@@ -43,7 +43,6 @@ The tests we perform are:
 
 * check translation comments
 * unit tests
-* lint check
 * system tests
 
 ## Artifacts
