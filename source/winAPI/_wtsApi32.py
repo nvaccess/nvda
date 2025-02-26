@@ -194,24 +194,6 @@ class _WTS_LockState(IntEnum):
 	"""The session is unlocked."""
 
 
-class _WTS_LockState_Win7(IntEnum):
-	"""Provide consistent interface to work around defect in Windows Server 2008 R2 and Windows 7.
-	Due to a code defect in Windows 7/Server 2008 the values are reversed.
-	That is:
-	- _WTS_LockState.WTS_SESSIONSTATE_LOCK (0x0) indicates that the session is unlocked
-	- _WTS_LockState.WTS_SESSIONSTATE_UNLOCK (0x1) indicates the session is locked.
-	"""
-
-	WTS_SESSIONSTATE_UNKNOWN = _WTS_LockState.WTS_SESSIONSTATE_UNKNOWN.value
-	"""The session state is not known."""
-
-	WTS_SESSIONSTATE_LOCK = _WTS_LockState.WTS_SESSIONSTATE_UNLOCK.value
-	"""The session is locked."""
-
-	WTS_SESSIONSTATE_UNLOCK = _WTS_LockState.WTS_SESSIONSTATE_LOCK.value
-	"""The session is unlocked."""
-
-
 def _setWTS_LockState() -> _WTS_LockState:
 	"""Ensure that the correct values for WTS_SESSIONSTATE_LOCK are used based on the platform."""
 	return _WTS_LockState

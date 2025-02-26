@@ -1,13 +1,21 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2006-2025 NV Access Limited
+# This file may be used under the terms of the GNU General Public License, version 2 or later, as modified by the NVDA license.
+# For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
+
 from ctypes import *  # noqa: F403
 from ctypes.wintypes import *  # noqa: F403
 from comtypes import *  # noqa: F403
 from comtypes.automation import *  # noqa: F403
 import comtypes.client
 import winUser
+import typing
 
 # Include functions from oleacc.dll in the module namespace.
 m = comtypes.client.GetModule("oleacc.dll")
 globals().update((key, val) for key, val in m.__dict__.items() if not key.startswith("_"))
+if typing.TYPE_CHECKING:
+	IAccessible = m.IAccessible
 
 NAVDIR_MIN = 0
 NAVDIR_UP = 1

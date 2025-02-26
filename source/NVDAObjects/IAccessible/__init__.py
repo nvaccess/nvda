@@ -1890,8 +1890,6 @@ class IAccessible(Window):
 			else:
 				raise TypeError(f"Bad type for 'relationType' arg, got: {type(relationType)}")
 
-		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
-
 		try:
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons
 			targetsGen = self._getIA2TargetsForRelationsOfType(relationType, maxRelations=1)
@@ -1934,8 +1932,6 @@ class IAccessible(Window):
 				relationType = IAccessibleHandler.RelationType(relationType)
 			else:
 				raise TypeError(f"Bad type for 'relationType' arg, got: {type(relationType)}")
-
-		relationType = typing.cast(IAccessibleHandler.RelationType, relationType)
 
 		try:
 			# rather than fetch all the relations and querying the type, do that in process for performance reasons

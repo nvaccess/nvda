@@ -27,6 +27,17 @@ from ..behaviors import EnhancedTermTypedCharSupport, KeyboardHandlerBasedTypedC
 from ..window import Window
 
 
+__all__ = [
+	"ConsoleUIATextInfo",
+	"ConsoleUIATextInfoWorkaroundEndInclusive",
+	"WinConsoleUIA",
+	"consoleUIAWindow",
+	"findExtraOverlayClasses",
+	"_DiffBasedWinTerminalUIA",
+	"_NotificationsBasedWinTerminalUIA",
+]
+
+
 class ConsoleUIATextInfo(UIATextInfo):
 	"A TextInfo implementation for consoles with an IMPROVED, but not FORMATTED, API level."
 

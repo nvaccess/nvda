@@ -91,7 +91,10 @@ class NVDASpyLib:
 		# This file (`speechSpyGlobalPlugin.py`) is moved to
 		# "scratchpad/globalPlugins/speechSpyGlobalPlugin/__init__.py"
 		# Import path must be valid after `speechSpySynthDriver.py` is moved to "scratchpad/synthDrivers/"
-		from synthDrivers.speechSpySynthDriver import post_speech
+		from synthDrivers.speechSpySynthDriver import post_speech  # type: ignore[reportMissingImports]
+
+		if typing.TYPE_CHECKING:
+			from .speechSpySynthDriver import post_speech
 
 		post_speech.register(self._onNvdaSpeech)
 
