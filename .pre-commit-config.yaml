@@ -112,6 +112,7 @@ repos:
   hooks:
   - id: pyright
     name: Check types with pyright
+    additional_dependencies: ["-rrequirements.txt"]
 
 - repo: local
   hooks:
