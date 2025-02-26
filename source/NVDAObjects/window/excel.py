@@ -149,6 +149,7 @@ xlUp = -4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible = -1
 
+
 class XlApplicationInternational(enum.IntEnum):
 	"""Specifies country/region and international settings.
 
@@ -1527,7 +1528,7 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 		numCellsFetched = ctypes.c_long()
 		address = collectionObject.address(True, True, xlA1, True)
 		sep = worksheet.Application.International(XlApplicationInternational.LIST_SEPARATOR)
-		localeAwareAddress = address.replace(',', sep)
+		localeAwareAddress = address.replace(",", sep)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.document.appModule.helperLocalBindingHandle,
 			self.document.windowHandle,
@@ -1572,7 +1573,7 @@ class ExcelCell(ExcelBase):
 		numCellsFetched = ctypes.c_long()
 		address = self.excelCellObject.address(True, True, xlA1, True)
 		sep = self.excelCellObject.Application.International(XlApplicationInternational.LIST_SEPARATOR)
-		localeAwareAddress = address.replace(',', sep)
+		localeAwareAddress = address.replace(",", sep)
 		res = NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
