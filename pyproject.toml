@@ -162,6 +162,12 @@ extraPaths = [
 analyzeUnannotatedFunctions = true
 deprecateTypingAliases = true
 
+# Stricter typing
+strictParameterNoneValue = true
+strictListInference = true
+strictDictionaryInference = true
+strictSetInference = true
+
 # Compliant rules
 reportAssertAlwaysTrue = true
 reportAssertTypeFailure = true
@@ -198,13 +204,7 @@ reportUnusedCoroutine = true
 reportUnusedExcept = true
 
 # Should switch to true when possible
-
-# Stricter typing
-strictParameterNoneValue = false
-strictListInference = false
-strictDictionaryInference = false
-strictSetInference = false
-reportDeprecated = false # 1834 errors
+reportDeprecated = false  # 1834 errors
 
 # Can be enabled by generating type stubs for modules via pyright CLI
 reportMissingTypeStubs = false
@@ -262,7 +262,7 @@ reportIndexIssue = false  # 2000+ errors, mostly failing to recognize config set
 reportAttributeAccessIssue = false  # 2000+ errors
 reportArgumentType = false  # 2000+ errors
 reportUnknownParameterType = false  # 4000+ errors
-reportMissingParameterType = false # 4000+ errors
+reportMissingParameterType = false  # 4000+ errors
 reportUnknownVariableType = false  # 6000+ errors
 reportUnknownArgumentType = false  # 6000+ errors
 reportUnknownMemberType = false  # 20000+ errors
