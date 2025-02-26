@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2023 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
+# Copyright (C) 2006-2025 NV Access Limited, Dinesh Kaushal, Siddhartha Gupta, Accessolutions, Julien Cochuyt,
 # Cyrille Bougot, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -148,6 +148,16 @@ xlToRight = -4161
 xlUp = -4162
 xlCellWidthUnitToPixels = 7.5919335705812574139976275207592
 xlSheetVisible = -1
+
+
+class XlApplicationInternational(enum.IntEnum):
+	"""Specifies country/region and international settings.
+
+	.. seealso:: ```XlApplicationInternational`` enumeration (Excel) <https://learn.microsoft.com/en-us/office/vba/api/excel.xlapplicationinternational>`_
+	"""
+
+	LIST_SEPARATOR = 5
+
 
 xlA1 = 1
 xlRC = 2
@@ -1517,10 +1527,12 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 		cellInfos = (ExcelCellInfo * count)()
 		numCellsFetched = ctypes.c_long()
 		address = collectionObject.address(True, True, xlA1, True)
+		sep = worksheet.Application.International(XlApplicationInternational.LIST_SEPARATOR)
+		localeAwareAddress = address.replace(",", sep)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.document.appModule.helperLocalBindingHandle,
 			self.document.windowHandle,
-			BSTR(address),
+			BSTR(localeAwareAddress),
 			self.cellInfoFlags,
 			count,
 			cellInfos,
@@ -1560,10 +1572,12 @@ class ExcelCell(ExcelBase):
 		ci = ExcelCellInfo()
 		numCellsFetched = ctypes.c_long()
 		address = self.excelCellObject.address(True, True, xlA1, True)
+		sep = self.excelCellObject.Application.International(XlApplicationInternational.LIST_SEPARATOR)
+		localeAwareAddress = address.replace(",", sep)
 		res = NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
-			BSTR(address),
+			BSTR(localeAwareAddress),
 			NVCELLINFOFLAG_ALL,
 			1,
 			ctypes.byref(ci),
