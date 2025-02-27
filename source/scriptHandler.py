@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
+# Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., Julien Cochuyt, Leonard de Ruijter, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -14,6 +14,7 @@ from typing import (
 import time
 import weakref
 import types
+import NVDAState
 import config
 import NVDAObjects
 from speech import sayAll
@@ -95,7 +96,11 @@ def getGlobalMapScripts(gesture: "inputCore.InputGesture") -> List["inputCore.In
 	the first map in the list should be used to resolve scripts first.
 	"""
 	globalMapScripts: List["inputCore.InputGestureScriptT"] = []
-	globalMaps = [inputCore.manager.userGestureMap, inputCore.manager.localeGestureMap]
+	globalMaps = [
+		inputCore.manager.userGestureMap,
+		inputCore.manager.localeGestureMap,
+		inputCore.manager.defaultGestureMap,
+	]
 	globalMap = braille.handler.display.gestureMap if braille.handler and braille.handler.display else None
 	if globalMap:
 		globalMaps.append(globalMap)
@@ -341,6 +346,90 @@ def isScriptWaiting():
 	return bool(_numScriptsQueued)
 
 
+def _initEnglishGesturesConfig():
+	import os
+	import configobj
+	import globalVars
+
+	filename = os.path.join(globalVars.appDir, "locale", "en", "gestures.ini")
+	gestureConfig = configobj.ConfigObj(infile=filename, encoding="UTF-8", indent_type="\t")
+	return gestureConfig
+
+
+_FindScriptResultsT = list[tuple["inputCore.GlobalGestureMap", list["inputCore.InputGestureScriptT"]]]
+
+
+def _findScriptInGlobalMap(gesture: str) -> _FindScriptResultsT:
+	"""Find global scripts for a gesture"""
+	from inputCore import manager, normalizeGestureIdentifier
+
+	assert manager
+	normalizedGesture = normalizeGestureIdentifier(gesture)
+	globalScripts = [manager.userGestureMap, manager.localeGestureMap, manager.defaultGestureMap]
+	conflicts: _FindScriptResultsT = []
+	for scriptMap in globalScripts:
+		if normalizedGesture in scriptMap._map:
+			conflicts.append((scriptMap, scriptMap._map[normalizedGesture]))
+	return conflicts
+
+
+def _checkForConflicts(script: types.FunctionType, gestures: list[str]):
+	"""
+	Check for conflicts in the global script map for an add-on script registered with the @script decorator.
+	Log an error if found.
+	"""
+	if not script.__qualname__.startswith("GlobalPlugin"):
+		# Only check for conflicts in add-ons.
+		return
+
+	for gesture in gestures:
+		if foundScripts := _findScriptInGlobalMap(gesture):
+			foundScriptLocations = [
+				f'{", ".join(".".join(name) for name in mapScripts)} ({map.fileName})'
+				for map, mapScripts in foundScripts
+			]
+			log.error(
+				f"{script.__qualname__}: Gesture {gesture} conflicts with another script {foundScriptLocations}. "
+				"Consider using a different gesture. ",
+			)
+
+
+def _registerEnglishGesture(script: types.FunctionType, gestures: list[str], description: str):
+	"""
+	Register a gesture for a script registered with the @script decorator.
+	Creates an entry in the English gestures.ini file.
+	This is useful when running from source to migrate gesture definitions from script decorators to the gestures.ini file.
+	"""
+	if not NVDAState.isRunningAsSource():
+		return
+	className = script.__qualname__.replace(f".{script.__name__}", "")
+	if className == "GlobalPlugin" or script.__module__.startswith("tests."):
+		# add-ons shouldn't be registered.
+		# In future, check for conflicts when registering an add-on gesture.
+		return
+	scriptLocation = f"{script.__module__}.{className}"
+	scriptName = script.__name__.replace("script_", "")
+	if gestures:
+		scriptLogName = f"{scriptLocation}.{script.__name__}"
+		logMsg = f"{scriptLogName}: Setting gesture for via @script is now deprecated. Add the gesture to /en/gestures.ini instead."
+		import warnings
+
+		warnings.warn(logMsg, DeprecationWarning)
+	if scriptLocation not in _gestureConfig:
+		_gestureConfig[scriptLocation] = {}
+	gestureStr = ", ".join(sorted(gestures))
+	if _gestureConfig[scriptLocation].get(scriptName, None) != gestureStr:
+		# Only update if dirty
+		_gestureConfig[scriptLocation][scriptName] = gestureStr
+		if description:
+			_gestureConfig[scriptLocation].comments[scriptName] = [description]
+		_gestureConfig.write()
+
+
+if NVDAState.isRunningAsSource():
+	_gestureConfig = _initEnglishGesturesConfig()
+
+
 def script(
 	description: str = "",
 	category: Optional[str] = None,
@@ -358,7 +447,9 @@ def script(
 	:param description: A short translatable description of the script to be used in the gesture editor, etc.
 	:param category: The category of the script displayed in the gesture editor.
 	:param gesture: A gesture associated with this script.
-	:param gestures: A collection of gestures associated with this script
+	Deprecated when used from core, add the gesture to /en/gestures.ini instead.
+	:param gestures: A collection of gestures associated with this script.
+	Deprecated when used from core, add the gesture to /en/gestures.ini instead.
 	:param canPropagate: Whether this script should also apply when it belongs to a  focus ancestor object.
 	:param bypassInputHelp: Whether this script should run when input help is active.
 	:param allowInSleepMode: Whether this script should run when NVDA is in sleep mode.
@@ -396,6 +487,8 @@ def script(
 			gestures.append(gesture)
 		if gestures:
 			decoratedScript.gestures = gestures
+		_registerEnglishGesture(decoratedScript, gestures, description)
+		_checkForConflicts(decoratedScript, gestures)
 		decoratedScript.canPropagate = canPropagate
 		decoratedScript.bypassInputHelp = bypassInputHelp
 		if resumeSayAllMode is not None:
