@@ -152,9 +152,12 @@ exclude = [
 	"./source/userConfig/addons/*",
 ]
 
+# Tell pyright where to load python code from
 extraPaths = [
 	"./source",
+	# Used by system tests
 	"./tests/system/libraries",
+	# Used internally in NVDA
 	"./miscDeps/python",
 ]
 
