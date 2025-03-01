@@ -214,10 +214,11 @@ class SynthDriverAudio(COMObject):
 		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
 		self._level = dwLevel
-		if dwLevel & 0xFFFF0000:
-			self._player.setVolume(left=float(dwLevel & 0xFFFF) / 0xFFFF, right=float(dwLevel >> 16) / 0xFFFF)
-		else:
-			self._player.setVolume(all=float(dwLevel) / 0xFFFF)
+		if self._player:
+			if dwLevel & 0xFFFF0000:
+				self._player.setVolume(left=float(dwLevel & 0xFFFF) / 0xFFFF, right=float(dwLevel >> 16) / 0xFFFF)
+			else:
+				self._player.setVolume(all=float(dwLevel) / 0xFFFF)
 
 	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
 		"""Passes in an implementation of IAudioDestNotifySink to receive notifications.
