@@ -73,8 +73,6 @@ from audio import appsVolume
 from utils.displayString import DisplayStringEnum
 
 
-#: Script category for text review commands.
-# Translators: The name of a category of NVDA commands.
 SCRCAT_TEXTREVIEW = _("Text review")
 #: Script category for Object navigation commands.
 # Translators: The name of a category of NVDA commands.
