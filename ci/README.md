@@ -7,7 +7,8 @@
 Builds will fail if any command has a non-zero exit code. PowerShell scripts continue on non-terminating errors unless the file is prefixed with `$ErrorActionPreference = "Stop";`.
 
 ### Build process
-1. Checkout NVDA repository.
+1. Checkout NVDA repository with submodules.
+1. Install dependencies.
 1. Set version and scons variables.
 1. Prepare source code.
 1. Build launcher.
@@ -26,10 +27,12 @@ Before testing we:
 The tests we perform are:
 
 * check translation comments
+* license checks
 * unit tests
 * system tests
 
 ## Artifacts
-- NVDA launcher.
-* Tests results.
-- If tests fail, the job summary of GitHub Actions.
+
+* NVDA launcher.
+* Test results.
+* If tests fail on a pull request, the job summary of GitHub Actions.
