@@ -9,7 +9,7 @@ import config
 from .connectionInfo import ConnectionInfo
 
 
-def get_config():
+def getRemoteConfig():
 	return config.conf["remote"]
 
 
@@ -20,7 +20,7 @@ def write_connection_to_config(connection_info: ConnectionInfo):
 	Args:
 		connection_info: The ConnectionInfo object containing connection details
 	"""
-	conf = get_config()
+	conf = getRemoteConfig()
 	last_cons = conf["connections"]["last_connected"]
 	address = connection_info.getAddress()
 	if address in last_cons:

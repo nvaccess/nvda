@@ -183,7 +183,7 @@ class RemoteCertificateManager:
 			f.write(fingerprint)
 
 		# Add to trusted certificates in config
-		config = configuration.get_config()
+		config = configuration.getRemoteConfig()
 		if "trusted_certs" not in config:
 			config["trusted_certs"] = {}
 		config["trusted_certs"]["localhost"] = fingerprint

@@ -83,7 +83,7 @@ class ClientPanel(wx.Panel):
 			wnd = CertificateUnauthorizedDialog(None, fingerprint=certHash)
 			a = wnd.ShowModal()
 			if a == wx.ID_YES:
-				config = configuration.get_config()
+				config = configuration.getRemoteConfig()
 				config["trusted_certs"][self.host.GetValue()] = certHash
 			if a != wx.ID_YES and a != wx.ID_NO:
 				return

@@ -363,7 +363,7 @@ class TCPTransport(Transport):
 		:param fingerprint: The fingerprint to check
 		:return: True if the fingerprint is trusted, False otherwise
 		"""
-		config = configuration.get_config()
+		config = configuration.getRemoteConfig()
 		return (
 			hostPortToAddress(self.address) in config["trusted_certs"]
 			and config["trusted_certs"][hostPortToAddress(self.address)] == fingerprint

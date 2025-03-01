@@ -3346,7 +3346,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	deleteFingerprints: wx.Button
 
 	def makeSettings(self, sizer):
-		self.config = configuration.get_config()
+		self.config = configuration.getRemoteConfig()
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
 		self.autoconnect = wx.CheckBox(
 			parent=self,

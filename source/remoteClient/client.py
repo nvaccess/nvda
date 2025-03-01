@@ -79,7 +79,7 @@ class RemoteClient:
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
 	def performAutoconnect(self):
-		controlServerConfig = configuration.get_config()["controlserver"]
+		controlServerConfig = configuration.getRemoteConfig()["controlserver"]
 		if not controlServerConfig["autoconnect"] or self.leaderSession or self.followerSession:
 			log.debug("Autoconnect disabled or already connected")
 			return
@@ -234,7 +234,7 @@ class RemoteClient:
 		"""
 		if evt is not None:
 			evt.Skip()
-		previousConnections = configuration.get_config()["connections"]["last_connected"]
+		previousConnections = configuration.getRemoteConfig()["connections"]["last_connected"]
 		hostnames = list(reversed(previousConnections))
 		# Translators: Title of the connect dialog.
 		dlg = dialogs.DirectConnectDialog(
@@ -352,7 +352,7 @@ class RemoteClient:
 			wnd = dialogs.CertificateUnauthorizedDialog(None, fingerprint=certHash)
 			a = wnd.ShowModal()
 			if a == wx.ID_YES:
-				config = configuration.get_config()
+				config = configuration.getRemoteConfig()
 				config["trusted_certs"][hostPortToAddress(self.lastFailAddress)] = certHash
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True

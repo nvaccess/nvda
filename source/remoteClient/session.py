@@ -191,7 +191,7 @@ Please use a different server."""),
 			.. warning::
 		Calling this method will cause the MoTD to be registered as shown if it has not been already.
 		"""
-		conf = configuration.get_config()
+		conf = configuration.getRemoteConfig()
 		connection = self.getConnectionInfo()
 		address = "{host}:{port}".format(
 			host=connection.hostname,
