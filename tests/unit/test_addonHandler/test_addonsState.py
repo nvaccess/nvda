@@ -9,13 +9,13 @@ import unittest
 
 import addonStore.models.status
 from addonStore.models.version import MajorMinorPatch
-import addonHandler
+import addonHandler.addonState
 import utils.caseInsensitiveCollections
 
 
 class TestDefaultStateContent(unittest.TestCase):
 	def test_expectedDefaultValsInState(self):
-		state = addonHandler.AddonsState()
+		state = addonHandler.addonState.AddonsState()
 		state.setDefaultStateValues()
 		self.assertEqual(state.manualOverridesAPIVersion.major, 2023)
 		self.assertEqual(state.manualOverridesAPIVersion.minor, 1)
@@ -30,7 +30,7 @@ class TestDefaultStateContent(unittest.TestCase):
 
 class TestStatePopulationFromPickledData(unittest.TestCase):
 	def setUp(self) -> None:
-		self.state = addonHandler.AddonsState()
+		self.state = addonHandler.addonState.AddonsState()
 		self.state.setDefaultStateValues()
 
 	def test_addonNamesCaseInsensitive(self):
@@ -62,7 +62,7 @@ class TestStatePopulationFromPickledData(unittest.TestCase):
 
 class TestStateConversionForPickling(unittest.TestCase):
 	def test_stateConvertedToBuiltInTypes(self):
-		state = addonHandler.AddonsState()
+		state = addonHandler.addonState.AddonsState()
 		state.setDefaultStateValues()
 		state.fromPickledDict({"backCompatToAPIVersion": (2024, 1, 1), "pendingRemovesSet": set(("foo",))})
 		dataForPickling = state.toDict()

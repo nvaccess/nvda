@@ -33,7 +33,7 @@ from .version import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import (  # noqa: F401
+	from addonHandler.addon import (  # noqa: F401
 		Addon as AddonHandlerModel,
 	)
 

@@ -21,7 +21,7 @@ from .dataManager import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler.addon import Addon as AddonHandlerModel  # noqa: F401
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
@@ -30,7 +30,7 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 	@return: the addonBundle, if valid
 	@raise DisplayableError if the addon bundle is invalid / incompatible.
 	"""
-	from addonHandler.AddonBase import AddonError
+	from addonHandler import AddonError
 	from gui.message import DisplayableError
 
 	try:
@@ -83,7 +83,10 @@ def installAddon(addonPath: PathLike) -> None:
 	bundle = _getAddonBundleToInstallIfValid(addonPath)
 	prevAddon = _getPreviouslyInstalledAddonById(bundle)
 
-	addonObj = systemUtils.ExecAndPump[addonHandler.Addon](addonHandler.installAddonBundle, bundle).funcRes
+	addonObj = systemUtils.ExecAndPump[addonHandler.addon.Addon](
+		addonHandler.installAddonBundle,
+		bundle,
+	).funcRes
 	if bundle._installExceptions:
 		log.error(f"Error(s) installing addon bundle from {addonPath}")
 		for e in bundle._installExceptions:

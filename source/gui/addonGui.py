@@ -9,11 +9,12 @@ import weakref
 import addonAPIVersion
 import wx
 import addonHandler.AddonBundle
+import addonHandler.addon
 import core
 import config
 from contextlib import contextmanager
 import gui
-from addonHandler import Addon
+from addonHandler.addon import Addon
 from logHandler import log
 import addonHandler
 from . import guiHelper
@@ -223,7 +224,7 @@ def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
 def _performExternalAddonBundleInstall(
 	parentWindow: wx.Window,
 	bundle: addonHandler.AddonBundle.AddonBundle,
-	prevAddon: addonHandler.Addon | None,
+	prevAddon: addonHandler.addon.Addon | None,
 ) -> bool:
 	"""
 	Perform the installation of an add-on bundle.
@@ -243,7 +244,7 @@ def _performExternalAddonBundleInstall(
 
 	# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 	with _doneAndDestroy(progressDialog):
-		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](
+		addonObj = systemUtils.ExecAndPump[addonHandler.addon.Addon](
 			addonHandler.installAddonBundle,
 			bundle,
 		).funcRes

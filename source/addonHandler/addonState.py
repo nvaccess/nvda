@@ -1,14 +1,38 @@
 import collections
+import enum
 import os
 import pickle
 from typing import Dict, Set, Union
 
-import NVDAState
 import addonAPIVersion
-from addonStore.models.status import AddonStateCategory, WritePaths
+import NVDAState
 from addonStore.models.version import MajorMinorPatch
 from logHandler import log
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
+
+
+class AddonStateCategory(str, enum.Enum):
+	"""
+	For backwards compatibility, the enums must remain functionally a string.
+	I.E. the following must be true:
+	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
+	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
+	"""
+
+	PENDING_REMOVE = "pendingRemovesSet"
+	PENDING_INSTALL = "pendingInstallsSet"
+	DISABLED = "disabledAddons"
+	PENDING_ENABLE = "pendingEnableSet"
+	PENDING_DISABLE = "pendingDisableSet"
+	OVERRIDE_COMPATIBILITY = "overrideCompatibility"
+	"""
+	Should be reset when changing to a new breaking release,
+	add-ons should be removed from this list when they are updated, disabled or removed
+	"""
+	BLOCKED = "blocked"
+	"""Add-ons that are blocked from running because they are incompatible"""
+	PENDING_OVERRIDE_COMPATIBILITY = "PENDING_OVERRIDE_COMPATIBILITY"
+	"""Add-ons in this state are incompatible but their compatibility would be overridden on the next restart."""
 
 
 AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
@@ -33,7 +57,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 	@property
 	def statePath(self) -> os.PathLike:
 		"""Returns path to the state file."""
-		return WritePaths.addonStateFile
+		return NVDAState.WritePaths.addonStateFile
 
 	def setDefaultStateValues(self) -> None:
 		self.update(self._generateDefaultStateContent())
@@ -160,3 +184,6 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				log.debug(f"Discarding {blockedAddon} from blocked add-ons as it has become compatible.")
 				self[AddonStateCategory.BLOCKED].discard(blockedAddon)
 				self[AddonStateCategory.OVERRIDE_COMPATIBILITY].discard(blockedAddon)
+
+
+state = AddonsState()

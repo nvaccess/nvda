@@ -7,15 +7,16 @@ import enum
 import os
 from pathlib import Path
 from typing import (
+	TYPE_CHECKING,
 	Dict,
 	Optional,
 	OrderedDict,
 	Protocol,
 	Set,
-	TYPE_CHECKING,
 )
 
 import globalVars
+from addonHandler.addonState import AddonStateCategory
 from logHandler import log
 from NVDAState import WritePaths
 from utils.displayString import DisplayStringEnum
@@ -25,6 +26,7 @@ from .version import MajorMinorPatch, SupportsVersionCheck
 if TYPE_CHECKING:
 	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: F401
 	from addonHandler.addonState import AddonsState  # noqa: F401
+
 
 
 class EnabledStatus(DisplayStringEnum):
@@ -135,30 +137,6 @@ class AvailableAddonStatus(DisplayStringEnum):
 		}
 
 
-class AddonStateCategory(str, enum.Enum):
-	"""
-	For backwards compatibility, the enums must remain functionally a string.
-	I.E. the following must be true:
-	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
-	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
-	"""
-
-	PENDING_REMOVE = "pendingRemovesSet"
-	PENDING_INSTALL = "pendingInstallsSet"
-	DISABLED = "disabledAddons"
-	PENDING_ENABLE = "pendingEnableSet"
-	PENDING_DISABLE = "pendingDisableSet"
-	OVERRIDE_COMPATIBILITY = "overrideCompatibility"
-	"""
-	Should be reset when changing to a new breaking release,
-	add-ons should be removed from this list when they are updated, disabled or removed
-	"""
-	BLOCKED = "blocked"
-	"""Add-ons that are blocked from running because they are incompatible"""
-	PENDING_OVERRIDE_COMPATIBILITY = "PENDING_OVERRIDE_COMPATIBILITY"
-	"""Add-ons in this state are incompatible but their compatibility would be overridden on the next restart."""
-
-
 class _StatusFilterKey(DisplayStringEnum):
 	"""Keys for filtering by status in the NVDA add-on store."""
 
@@ -254,7 +232,7 @@ def _canUpdateAddon(
 	None if it is unknown (e.g. cannot parse current version string).
 	"""
 	from .addon import _AddonStoreModel
-	from addonHandler import Addon as AddonHandlerModel
+	from addonHandler.addon import Addon as AddonHandlerModel
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None
@@ -331,7 +309,8 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
 
 
 def _getInstalledStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
-	from addonHandler import state as addonHandlerState
+	from addonHandler.addonState import state as addonHandlerState
+
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None
@@ -486,7 +465,7 @@ and the values are which statuses should be shown for a given filter.
 class SupportsAddonState(SupportsVersionCheck, Protocol):
 	@property
 	def _stateHandler(self) -> "AddonsState":
-		from addonHandler import state
+		from addonHandler.addonState import state
 
 		return state
 

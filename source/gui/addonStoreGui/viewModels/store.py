@@ -18,6 +18,7 @@ import threading
 
 import addonHandler
 import addonHandler.AddonBase
+import addonHandler.addonState
 from addonStore.dataManager import addonDataManager
 from addonStore.install import installAddon
 from addonStore.models.addon import (
@@ -683,7 +684,9 @@ class AddonStoreVM:
 			self._cancelPendingInstallForAddon(listItemVM)
 
 		log.debug(f"Completed cancelling install of {listItemVM.Id}")
-		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
+		addonHandler.addonState.state[
+			addonHandler.addonState.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY
+		].discard(
 			listItemVM.model.name,
 		)
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)

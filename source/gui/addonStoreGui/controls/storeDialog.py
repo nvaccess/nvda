@@ -13,6 +13,7 @@ from wx.adv import BannerWindow
 from addonHandler import (
 	BUNDLE_EXTENSION,
 )
+from addonHandler.addonState import state
 from addonStore.dataManager import addonDataManager
 from addonStore.models.channel import Channel, _channelFilters
 from addonStore.models.status import (
@@ -286,7 +287,7 @@ class AddonStoreDialog(SettingsDialog):
 
 	@property
 	def _requiresRestart(self) -> bool:
-		from addonHandler import state, AddonStateCategory
+		from addonHandler.addonState import AddonStateCategory
 
 		if addonDataManager._downloadsPendingInstall or state[AddonStateCategory.PENDING_INSTALL]:
 			log.debug(
