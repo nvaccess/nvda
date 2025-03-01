@@ -36,3 +36,4 @@ The tests we perform are:
 * NVDA launcher.
 * Test results.
 * If tests fail on a pull request, the job summary of GitHub Actions.
+    * A comment will be created with the job summary, indicating success or failure for each group of tests and a link to download test results.
