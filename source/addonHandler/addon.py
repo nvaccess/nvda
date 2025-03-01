@@ -28,7 +28,7 @@ class Addon(AddonBase):
 
 	def __init__(self, path: str):
 		"""Constructs an Addon from a directory.
-		
+
 		:param path: The base directory for the addon data.
 		"""
 		self.path = path
@@ -51,7 +51,7 @@ class Addon(AddonBase):
 
 	def completeInstall(self) -> Optional[str]:
 		"""Complete installation of a pending addon.
-		
+
 		:return: The installation path if successful, None otherwise.
 		"""
 		if not os.path.exists(self.pendingInstallPath):
@@ -67,9 +67,9 @@ class Addon(AddonBase):
 			return None
 
 	def requestRemove(self):
-		"""Marks this addon for removal on NVDA restart.
-		"""
+		"""Marks this addon for removal on NVDA restart."""
 		from . import getAvailableAddons
+
 		if self.isPendingInstall and not self.isInstalled:
 			# Handle removal of an add-on not yet installed
 			self.completeRemove()
@@ -89,7 +89,7 @@ class Addon(AddonBase):
 
 	def completeRemove(self, runUninstallTask: bool = True) -> None:
 		"""Complete removal of an addon.
-		
+
 		:param runUninstallTask: Whether to run the addon's uninstall task.
 		"""
 		from . import _availableAddons, DELETEDIR_SUFFIX
@@ -127,15 +127,15 @@ class Addon(AddonBase):
 
 	def addToPackagePath(self, package):
 		"""Adds this Addon extensions to the specific package path if those exist.
-		
+
 		This allows the addon to "run" / be available because the package is able to search its path,
 		looking for particular modules. This is used by the following:
-		
+
 		- ``globalPlugins``
 		- ``appModules``
 		- ``synthDrivers``
 		- ``brailleDisplayDrivers``
-		
+
 		:param package: The python module representing the package.
 		"""
 		from . import _failedPendingRemovals
@@ -167,7 +167,7 @@ class Addon(AddonBase):
 
 	def enable(self, shouldEnable: bool) -> None:
 		"""Sets this add-on to be disabled or enabled when NVDA restarts.
-		
+
 		:param shouldEnable: True to enable, False to disable.
 		:raises AddonError: If the addon cannot be enabled.
 		"""
@@ -205,7 +205,7 @@ class Addon(AddonBase):
 
 	def _getPathForInclusionInPackage(self, package):
 		"""Get the path to be included in the package's search path.
-		
+
 		:param package: The package to get the path for.
 		:return: The path to be included.
 		"""
@@ -214,7 +214,7 @@ class Addon(AddonBase):
 
 	def loadModule(self, name: str) -> ModuleType:
 		"""Loads a python module from the addon directory.
-		
+
 		:param name: The module name.
 		:return: The loaded module.
 		:raises ValueError: When the module name is invalid.
@@ -272,10 +272,10 @@ class Addon(AddonBase):
 
 	def getTranslationsInstance(self, domain="nvda"):
 		"""Gets the gettext translation instance for this add-on.
-		
+
 		<addon-path>\\locale will be used to find .mo files, if exists.
 		If a translation file is not found the default fallback null translation is returned.
-		
+
 		:param domain: The translation domain to retrieve. The 'nvda' default should be used in most cases.
 		:return: The gettext translation class.
 		"""
@@ -294,9 +294,9 @@ class Addon(AddonBase):
 		**kwargs,
 	) -> None:
 		"""Executes the function having the given taskName with the given args and kwargs.
-		
+
 		The function is executed in the add-on's installTasks module if it exists.
-		
+
 		:param taskName: The name of the task to run, either "onInstall" or "onUninstall".
 		:param args: Positional arguments to pass to the task function.
 		:param kwargs: Keyword arguments to pass to the task function.
@@ -314,8 +314,7 @@ class Addon(AddonBase):
 				func(*args, **kwargs)
 
 	def _cleanupAddonImports(self) -> None:
-		"""Remove imported addon modules from sys.modules.
-		"""
+		"""Remove imported addon modules from sys.modules."""
 		for modName in self._importedAddonModules:
 			log.debug(f"removing imported add-on module {modName}")
 			del sys.modules[modName]
@@ -328,15 +327,15 @@ class Addon(AddonBase):
 
 	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
 		r"""Get the path to a documentation file for this add-on.
-		
+
 		The file should be located in ``doc\lang\file`` inside the add-on,
 		where ``lang`` is the language code and ``file`` is the requested file name.
 		Failing that, the language without country is tried.
 		English is tried as a last resort.
-		
+
 		An add-on can specify a default documentation file name
 		via the docFileName parameter in its manifest.
-		
+
 		:param fileName: The requested file name or None for the add-on's default.
 		:return: The path to the requested file or None if it wasn't found.
 		"""

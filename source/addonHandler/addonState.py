@@ -12,11 +12,13 @@ from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
 
 class AddonStateCategory(str, enum.Enum):
-	"""
+	"""Enum for addon state categories.
+	
 	For backwards compatibility, the enums must remain functionally a string.
 	I.E. the following must be true:
-	> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
-	> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
+	
+	>>> assert isinstance(AddonStateCategory.PENDING_REMOVE, str)
+	>>> assert AddonStateCategory.PENDING_REMOVE == "pendingRemovesSet"
 	"""
 
 	PENDING_REMOVE = "pendingRemovesSet"
@@ -39,8 +41,9 @@ AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
 
 class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
-	"""
-	Subclasses `collections.UserDict` to preserve backwards compatibility.
+	"""Manages the state of addons in NVDA.
+	
+	Subclasses ``collections.UserDict`` to preserve backwards compatibility.
 	AddonStateCategory string enums mapped to a set of the add-on "name/id" currently in that state.
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
@@ -49,6 +52,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	@staticmethod
 	def _generateDefaultStateContent() -> AddonStateDictT:
+		"""Generate default state content with empty sets for all categories.
+		
+		:return: Dictionary mapping each AddonStateCategory to an empty CaseInsensitiveSet.
+		"""
 		return {category: CaseInsensitiveSet() for category in AddonStateCategory}
 
 	data: AddonStateDictT
@@ -56,10 +63,17 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	@property
 	def statePath(self) -> os.PathLike:
-		"""Returns path to the state file."""
+		"""Returns path to the state file.
+		
+		:return: Path to the addon state file.
+		"""
 		return NVDAState.WritePaths.addonStateFile
 
 	def setDefaultStateValues(self) -> None:
+		"""Initialize the state with default values.
+		
+		Sets empty sets for all categories and initializes manualOverridesAPIVersion.
+		"""
 		self.update(self._generateDefaultStateContent())
 
 		# Set default value for manualOverridesAPIVersion.
@@ -71,6 +85,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		self,
 		pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
 	) -> None:
+		"""Load state from a pickled dictionary.
+		
+		:param pickledState: Dictionary containing the pickled state.
+		"""
 		# Load from pickledState
 		if "backCompatToAPIVersion" in pickledState:
 			self.manualOverridesAPIVersion = MajorMinorPatch(*pickledState["backCompatToAPIVersion"])
@@ -79,6 +97,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
 
 	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
+		"""Convert state to a picklable dictionary.
+		
+		:return: Dictionary representation of the state suitable for pickling.
+		"""
 		# We cannot pickle instance of `AddonsState` directly
 		# since older versions of NVDA aren't aware about this class and they're expecting
 		# the state to be using inbuilt data types only.
@@ -89,7 +111,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		return picklableState
 
 	def load(self) -> None:
-		"""Populates state with the default content and then loads values from the config."""
+		"""Populate state with default content and then load values from the config.
+		
+		Handles API version changes and resets compatibility overrides when needed.
+		"""
 		self.setDefaultStateValues()
 		try:
 			# #9038: Python 3 requires binary format when working with pickles.
@@ -122,6 +147,10 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 		self.manualOverridesAPIVersion = MajorMinorPatch(*addonAPIVersion.BACK_COMPAT_TO)
 
 	def removeStateFile(self) -> None:
+		"""Remove the state file from disk.
+		
+		Does nothing if NVDA should not write to disk.
+		"""
 		if not NVDAState.shouldWriteToDisk():
 			log.debugWarning("NVDA should not write to disk from secure mode or launcher", stack_info=True)
 			return
@@ -133,7 +162,11 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			log.error(f"Failed to remove state file {self.statePath}", exc_info=True)
 
 	def save(self) -> None:
-		"""Saves content of the state to a file unless state is empty in which case this would be pointless."""
+		"""Save content of the state to a file.
+		
+		If the state is empty, the state file is removed instead.
+		Does nothing if NVDA should not write to disk.
+		"""
 		if not NVDAState.shouldWriteToDisk():
 			log.error("NVDA should not write to disk from secure mode or launcher", stack_info=True)
 			return
@@ -150,10 +183,13 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			self.removeStateFile()
 
 	def cleanupRemovedDisabledAddons(self) -> None:
-		"""Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
+		"""Remove uninstalled add-ons from the disabled add-ons list.
+		
+		Versions of NVDA before #12792 failed to remove add-on from list of disabled add-ons
 		during uninstallation. As a result after reinstalling add-on with the same name it was disabled
 		by default confusing users. Fix this by removing all add-ons no longer present in the config
-		from the list of disabled add-ons in the state."""
+		from the list of disabled add-ons in the state.
+		"""
 		from . import getAvailableAddons
 
 		installedAddonNames = CaseInsensitiveSet(a.name for a in getAvailableAddons())
@@ -164,6 +200,8 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 				self[AddonStateCategory.DISABLED].discard(disabledAddonName)
 
 	def _cleanupCompatibleAddonsFromDowngrade(self) -> None:
+		"""Remove uninstalled or now-compatible add-ons from blocked and override lists.
+		"""
 		from addonStore.dataManager import addonDataManager
 
 		installedAddons = addonDataManager._installedAddonsCache.installedAddons
