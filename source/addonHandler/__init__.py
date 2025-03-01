@@ -12,7 +12,6 @@ import itertools
 import os.path
 import shutil
 import sys
-import zipfile
 from typing import TYPE_CHECKING, Callable, Optional
 
 import addonAPIVersion
@@ -24,9 +23,8 @@ from NVDAState import WritePaths
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 
 from .addon import Addon
-from .addonBase import AddonError
-from .AddonBundle import AddonBundle
-from .AddonManifest import MANIFEST_FILENAME, AddonManifest, _report_manifest_errors
+from .addonBase import AddonError, AddonBase
+from .AddonBundle import AddonBundle, BUNDLE_EXTENSION
 from .addonState import AddonStateCategory, state
 from .addonVersionCheck import isAddonCompatible
 from .packaging import initializeModulePackagePaths
@@ -35,7 +33,6 @@ if TYPE_CHECKING:
 	from addonStore.models.addon import AddonHandlerModelGeneratorT  # noqa: F401
 
 stateFilename = "addonsState.pickle"
-BUNDLE_EXTENSION = "nvda-addon"
 BUNDLE_MIMETYPE = "application/x-nvda-addon"
 NVDA_ADDON_PROG_ID = "NVDA.Addon.1"
 ADDON_PENDINGINSTALL_SUFFIX = ".pendingInstall"
@@ -351,30 +348,23 @@ def initTranslation():
 		del callerFrame  # Avoid reference problems with frames (per python docs)
 
 
-def createAddonBundleFromPath(path, destDir=None):
-	"""Creates a bundle from a directory that contains a a addon manifest file."""
-	basedir = path
-	# If  caller did not provide a destination directory name
-	# Put the bundle at the same level as the add-on's top-level directory,
-	# That is, basedir/..
-	if destDir is None:
-		destDir = os.path.dirname(basedir)
-	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
-	if not os.path.isfile(manifest_path):
-		raise AddonError("Can't find %s manifest file." % manifest_path)
-	with open(manifest_path, "rb") as f:
-		manifest = AddonManifest(f)
-	if manifest.errors is not None:
-		_report_manifest_errors(manifest)
-		raise AddonError("Manifest file has errors.")
-	bundleFilename = "%s-%s.%s" % (manifest["name"], manifest["version"], BUNDLE_EXTENSION)
-	bundleDestination = os.path.join(destDir, bundleFilename)
-	with zipfile.ZipFile(bundleDestination, "w") as z:
-		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
-		for dir, dirnames, filenames in os.walk(basedir):
-			relativePath = os.path.relpath(dir, basedir)
-			for filename in filenames:
-				pathInBundle = os.path.join(relativePath, filename)
-				absPath = os.path.join(dir, filename)
-				z.write(absPath, pathInBundle)
-	return AddonBundle(bundleDestination)
+__all__ = [
+	"state",
+	"Addon",
+	"AddonBase",
+	"AddonError",
+	"AddonStateCategory",
+	"AddonBundle",
+	"BUNDLE_EXTENSION",
+	"createAddonBundleFromPath",
+	"getRunningAddons",
+	"getIncompatibleAddons",
+	"removeFailedDeletion",
+	"disableAddonsIfAny",
+	"initialize",
+	"terminate",
+	"getAvailableAddons",
+	"installAddonBundle",
+	"getCodeAddon",
+	"initTranslation",
+]

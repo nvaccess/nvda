@@ -1,3 +1,4 @@
+import os
 import zipfile
 from typing import Optional
 
@@ -5,6 +6,8 @@ import winKernel
 
 from .addonBase import AddonBase, AddonError
 from .AddonManifest import MANIFEST_FILENAME, AddonManifest, _report_manifest_errors, _translatedManifestPaths
+
+BUNDLE_EXTENSION = "nvda-addon"
 
 
 class AddonBundle(AddonBase):
@@ -69,3 +72,32 @@ class AddonBundle(AddonBase):
 
 	def __repr__(self):
 		return "<AddonBundle at %s>" % self._path
+
+
+def createAddonBundleFromPath(path, destDir=None):
+	"""Creates a bundle from a directory that contains a a addon manifest file."""
+	basedir = path
+	# If  caller did not provide a destination directory name
+	# Put the bundle at the same level as the add-on's top-level directory,
+	# That is, basedir/..
+	if destDir is None:
+		destDir = os.path.dirname(basedir)
+	manifest_path = os.path.join(basedir, MANIFEST_FILENAME)
+	if not os.path.isfile(manifest_path):
+		raise AddonError("Can't find %s manifest file." % manifest_path)
+	with open(manifest_path, "rb") as f:
+		manifest = AddonManifest(f)
+	if manifest.errors is not None:
+		_report_manifest_errors(manifest)
+		raise AddonError("Manifest file has errors.")
+	bundleFilename = "%s-%s.%s" % (manifest["name"], manifest["version"], BUNDLE_EXTENSION)
+	bundleDestination = os.path.join(destDir, bundleFilename)
+	with zipfile.ZipFile(bundleDestination, "w") as z:
+		# FIXME: the include/exclude feature may or may not be useful. Also python files can be pre-compiled.
+		for dir, dirnames, filenames in os.walk(basedir):
+			relativePath = os.path.relpath(dir, basedir)
+			for filename in filenames:
+				pathInBundle = os.path.join(relativePath, filename)
+				absPath = os.path.join(dir, filename)
+				z.write(absPath, pathInBundle)
+	return AddonBundle(bundleDestination)
