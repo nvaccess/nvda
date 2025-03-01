@@ -243,7 +243,7 @@ class Transport(ABC):
 		del self.outboundHandlers[messageType]
 
 	@abstractmethod
-	def send(self, type: RemoteMessageType | str, **kwargs: Any) -> None:
+	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
 		"""Send a message through this transport.
 
 		:param type: Message type, typically a :class:`~remoteClient.protocol.RemoteMessageType` enum value.
@@ -546,7 +546,7 @@ class TCPTransport(Transport):
 			except socket.error:
 				return
 
-	def send(self, type: RemoteMessageType | str, **kwargs: Any) -> None:
+	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
 		"""Send a message through the transport.
 
 		:param type: Message type, typically a RemoteMessageType enum value
