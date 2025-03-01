@@ -308,6 +308,25 @@ class TCPTransport(Transport):
 		"""Whether to skip certificate verification"""
 
 	def run(self) -> None:
+		"""
+		Establishes a connection to the server and manages the transport lifecycle.
+
+		This method attempts to create and connect an outbound socket to the server
+		using the provided address. If SSL certificate verification fails, it checks
+		if the host fingerprint is trusted. If trusted, it retries the connection
+		with insecure mode enabled. If not, it notifies about the certificate
+		authentication failure and raises the exception. For other exceptions, it
+		notifies about the connection failure and raises the exception.
+
+		Once connected, it triggers the transport connected event, starts the queue
+		thread, and enters the read loop. Upon disconnection, it clears the connected
+		event, notifies about the transport disconnection, and performs cleanup.
+
+		Raises:
+			ssl.SSLCertVerificationError: If SSL certificate verification fails and
+										  the fingerprint is not trusted.
+			Exception: For any other exceptions during the connection process.
+		"""
 		self.closed = False
 		try:
 			self.serverSock = self.createOutboundSocket(
@@ -318,18 +337,10 @@ class TCPTransport(Transport):
 		except ssl.SSLCertVerificationError:
 			fingerprint = None
 			try:
-				tempConnection = self.createOutboundSocket(*self.address, insecure=True)
-				tempConnection.connect(self.address)
-				certBin = tempConnection.getpeercert(True)
-				tempConnection.close()
-				fingerprint = hashlib.sha256(certBin).hexdigest().lower()
+				fingerprint = self.getHostFingerprint()
 			except Exception:
 				pass
-			config = configuration.get_config()
-			if (
-				hostPortToAddress(self.address) in config["trusted_certs"]
-				and config["trusted_certs"][hostPortToAddress(self.address)] == fingerprint
-			):
+			if self.isFingerprintTrusted(fingerprint):
 				self.insecure = True
 				return self.run()
 			self.lastFailFingerprint = fingerprint
@@ -339,9 +350,43 @@ class TCPTransport(Transport):
 			self.transportConnectionFailed.notify()
 			raise
 		self.onTransportConnected()
-		self.queueThread = threading.Thread(target=self.sendQueue)
+		self.startQueueThread()
+		self._readLoop()
+		self.connected = False
+		self.connectedEvent.clear()
+		self.transportDisconnected.notify()
+		self._disconnect()
+
+	def isFingerprintTrusted(self, fingerprint: str) -> bool:
+		"""Check if the fingerprint is trusted.
+
+		:param fingerprint: The fingerprint to check
+		:return: True if the fingerprint is trusted, False otherwise
+		"""
+		config = configuration.get_config()
+		return (
+			hostPortToAddress(self.address) in config["trusted_certs"]
+			and config["trusted_certs"][hostPortToAddress(self.address)] == fingerprint
+		)
+
+	def getHostFingerprint(self) -> str:
+		tempConnection = self.createOutboundSocket(*self.address, insecure=True)
+		tempConnection.connect(self.address)
+		certBin = tempConnection.getpeercert(True)
+		tempConnection.close()
+		fingerprint = hashlib.sha256(certBin).hexdigest().lower()
+		return fingerprint
+
+	def startQueueThread(self) -> None:
+		"""Start the outbound message queue thread."""
+		if self.queueThread and self.queueThread.is_alive():
+			return
+		self.queueThread = threading.Thread(target=self.sendQueue, name="queue_thread")
 		self.queueThread.daemon = True
 		self.queueThread.start()
+
+	def _readLoop(self) -> None:
+		"""Main loop for reading data from the server socket."""
 		while self.serverSock is not None:
 			try:
 				readers, writers, error = select.select(
@@ -361,10 +406,6 @@ class TCPTransport(Transport):
 				except socket.error:
 					self.buffer = b""
 					break
-		self.connected = False
-		self.connectedEvent.clear()
-		self.transportDisconnected.notify()
-		self._disconnect()
 
 	def createOutboundSocket(
 		self,
