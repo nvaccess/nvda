@@ -24,7 +24,7 @@ from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
 	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: F401
-	from addonHandler import AddonsState  # noqa: F401
+	from addonHandler.addonState import AddonsState  # noqa: F401
 
 
 class EnabledStatus(DisplayStringEnum):
