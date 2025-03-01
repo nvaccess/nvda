@@ -9,11 +9,9 @@ from typing import Dict, Optional, TypedDict
 import globalVars
 import nvwave
 import ui
-from tones import BeepSequence, beep, beepSequenceAsync
+from tones import BeepSequence, beepSequenceAsync
 
 from . import configuration
-
-local_beep = beep
 
 
 class Cue(TypedDict, total=False):
