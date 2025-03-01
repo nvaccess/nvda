@@ -61,7 +61,6 @@ def _playCue(cueName: str) -> None:
 		if beeps := CUES[cueName].get("beeps"):
 			filtered_beeps = [(freq, dur) for freq, dur in beeps if freq is not None]
 			beepSequenceAsync(*filtered_beeps)
-		return
 
 	# Play wave file
 	if wave := CUES[cueName].get("wave"):
