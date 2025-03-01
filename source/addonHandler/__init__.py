@@ -6,63 +6,48 @@
 
 from __future__ import annotations  # Avoids quoting of forward references
 
-from abc import abstractmethod, ABC
-import sys
-import os.path
+import collections
 import gettext
+import importlib
 import inspect
 import itertools
-import collections
-import shutil
-from io import StringIO
+import os.path
 import pickle
-from six import string_types
+import shutil
+import sys
+import zipfile
+from types import ModuleType
 from typing import (
+	TYPE_CHECKING,
 	Callable,
 	Dict,
-	IO,
 	Literal,
 	Optional,
 	Set,
-	TYPE_CHECKING,
-	Tuple,
 	Union,
 )
-import zipfile
-from configobj import ConfigObj
-from configobj.validate import Validator
-import config
-import languageHandler
-from logHandler import log
-import winKernel
-import addonAPIVersion
-import importlib
-import NVDAState
-from NVDAState import WritePaths
-from types import ModuleType
 
-from addonStore.models.status import AddonStateCategory, SupportsAddonState
-from addonStore.models.version import MajorMinorPatch, SupportsVersionCheck
+import addonAPIVersion
+import config
 import extensionPoints
+import languageHandler
+import NVDAState
+from addonStore.models.status import AddonStateCategory
+from addonStore.models.version import MajorMinorPatch
+from logHandler import log
+from NVDAState import WritePaths
 from utils.caseInsensitiveCollections import CaseInsensitiveSet
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
-from .addonVersionCheck import (
-	isAddonCompatible,
-)
-from .packaging import (
-	initializeModulePackagePaths,
-	isModuleName,
-)
+from .addonBase import AddonBase, AddonError
+from .AddonBundle import AddonBundle
+from .AddonManifest import MANIFEST_FILENAME, AddonManifest, _report_manifest_errors, _translatedManifestPaths
+from .addonVersionCheck import isAddonCompatible
+from .packaging import initializeModulePackagePaths, isModuleName
 
 if TYPE_CHECKING:
-	from addonStore.models.addon import (  # noqa: F401
-		AddonManifestModel,
-		AddonHandlerModelGeneratorT,
-		InstalledAddonStoreModel,
-	)
+	from addonStore.models.addon import AddonHandlerModelGeneratorT  # noqa: F401
 
-MANIFEST_FILENAME = "manifest.ini"
 stateFilename = "addonsState.pickle"
 BUNDLE_EXTENSION = "nvda-addon"
 BUNDLE_MIMETYPE = "application/x-nvda-addon"
@@ -475,51 +460,6 @@ def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 	return addon
 
 
-class AddonError(Exception):
-	"""Represents an exception coming from the addon subsystem."""
-
-
-class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
-	"""The base class for functionality that is available both for add-on bundles and add-ons on the file system.
-	Subclasses should at least implement L{manifest}.
-	"""
-
-	@property
-	def name(self) -> str:
-		"""A unique name, the id of the add-on."""
-		return self.manifest["name"]
-
-	@property
-	def version(self) -> str:
-		"""A display version. Not necessarily semantic"""
-		return self.manifest["version"]
-
-	@property
-	def minimumNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
-		return self.manifest.get("minimumNVDAVersion")
-
-	@property
-	def lastTestedNVDAVersion(self) -> addonAPIVersion.AddonApiVersionT:
-		return self.manifest.get("lastTestedNVDAVersion")
-
-	@property
-	@abstractmethod
-	def manifest(self) -> "AddonManifest": ...
-
-	@property
-	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
-		from addonStore.dataManager import addonDataManager
-
-		assert addonDataManager
-		return addonDataManager._getCachedInstalledAddonData(self.name)
-
-	@property
-	def _addonGuiModel(self) -> "AddonManifestModel":
-		from addonStore.models.addon import _createGUIModelFromManifest
-
-		return _createGUIModelFromManifest(self)
-
-
 class Addon(AddonBase):
 	"""Represents an Add-on available on the file system."""
 
@@ -886,82 +826,6 @@ def initTranslation():
 		del callerFrame  # Avoid reference problems with frames (per python docs)
 
 
-def _translatedManifestPaths(lang=None, forBundle=False):
-	if lang is None:
-		lang = languageHandler.getLanguage()  # can't rely on default keyword arguments here.
-	langs = [lang]
-	if "_" in lang:
-		langs.append(lang.split("_")[0])
-		if lang != "en" and not lang.startswith("en_"):
-			langs.append("en")
-	sep = "/" if forBundle else os.path.sep
-	return [sep.join(("locale", lang, MANIFEST_FILENAME)) for lang in langs]
-
-
-class AddonBundle(AddonBase):
-	"""Represents the contents of an NVDA addon suitable for distribution.
-	The bundle is compressed using the zip file format. Manifest information
-	is available without the need for extraction."""
-
-	def __init__(self, bundlePath: str):
-		"""Constructs an L{AddonBundle} from a filename.
-		@param bundlePath: The path for the bundle file.
-		"""
-		self._installExceptions: list[Exception] = []
-		"""Exceptions thrown during the installation process."""
-
-		self._path = bundlePath
-		# Read manifest:
-		translatedInput = None
-		try:
-			z = zipfile.ZipFile(self._path, "r")
-		except (zipfile.BadZipfile, FileNotFoundError) as e:
-			raise AddonError(f"Invalid bundle file: {self._path}") from e
-		with z:
-			for translationPath in _translatedManifestPaths(forBundle=True):
-				try:
-					# ZipFile.open opens every file in binary mode.
-					# decoding is handled by configobj.
-					translatedInput = z.open(translationPath, "r")
-					break
-				except KeyError:
-					pass
-			self._manifest = AddonManifest(
-				# ZipFile.open opens every file in binary mode.
-				# decoding is handled by configobj.
-				z.open(MANIFEST_FILENAME, "r"),
-				translatedInput=translatedInput,
-			)
-			if self.manifest.errors is not None:
-				_report_manifest_errors(self.manifest)
-				raise AddonError("Manifest file has errors.")
-
-	def extract(self, addonPath: Optional[str] = None):
-		"""Extracts the bundle content to the specified path.
-		The addon will be extracted to L{addonPath}
-		@param addonPath: Path where to extract contents.
-		"""
-		if addonPath is None:
-			addonPath = self.pendingInstallPath
-
-		with zipfile.ZipFile(self._path, "r") as z:
-			for info in z.infolist():
-				if isinstance(info.filename, bytes):
-					# #2505: Handle non-Unicode file names.
-					# Most archivers seem to use the local OEM code page, even though the spec says only cp437.
-					# HACK: Overriding info.filename is a bit ugly, but it avoids a lot of code duplication.
-					info.filename = info.filename.decode("cp%d" % winKernel.kernel32.GetOEMCP())
-				z.extract(info, addonPath)
-
-	@property
-	def manifest(self) -> "AddonManifest":
-		"""Gets the manifest for the represented Addon."""
-		return self._manifest
-
-	def __repr__(self):
-		return "<AddonBundle at %s>" % self._path
-
-
 def createAddonBundleFromPath(path, destDir=None):
 	"""Creates a bundle from a directory that contains a a addon manifest file."""
 	basedir = path
@@ -989,131 +853,3 @@ def createAddonBundleFromPath(path, destDir=None):
 				absPath = os.path.join(dir, filename)
 				z.write(absPath, pathInBundle)
 	return AddonBundle(bundleDestination)
-
-
-def _report_manifest_errors(manifest):
-	log.warning("Error loading manifest:\n%s", manifest.errors)
-
-
-class AddonManifest(ConfigObj):
-	"""Add-on manifest file. It contains metadata about an NVDA add-on package."""
-
-	configspec = ConfigObj(
-		StringIO(
-			"""
-# NVDA Add-on Manifest configuration specification
-# Add-on unique name
-# Suggested convention is lowerCamelCase.
-name = string()
-
-# short summary (label) of the add-on to show to users.
-summary = string()
-
-# Long description with further information and instructions
-description = string(default=None)
-
-# Name of the author or entity that created the add-on
-author = string()
-
-# Version of the add-on.
-# Suggested convention is <major>.<minor>.<patch> format.
-version = string()
-
-# The minimum required NVDA version for this add-on to work correctly.
-# Should be less than or equal to lastTestedNVDAVersion
-minimumNVDAVersion = apiVersion(default="0.0.0")
-
-# Must be greater than or equal to minimumNVDAVersion
-lastTestedNVDAVersion = apiVersion(default="0.0.0")
-
-# URL for more information about the add-on, e.g. a homepage.
-# Should begin with https://
-url = string(default=None)
-
-# Name of default documentation file for the add-on.
-docFileName = string(default=None)
-
-# Custom braille tables
-[brailleTables]
-	# The key is the table file name (not the full path)
-	[[__many__]]
-		displayName = string()
-		contracted = boolean(default=false)
-		input = boolean(default=true)
-		output = boolean(default=true)
-
-# Symbol Pronunciation
-[symbolDictionaries]
-	# The key is the symbol dictionary file name (not the full path)
-	[[__many__]]
-		displayName = string()
-		mandatory = boolean(default=false)
-
-# NOTE: apiVersion:
-# EG: 2019.1.0 or 0.0.0
-# Must have 3 integers separated by dots.
-# The first integer must be a Year (4 characters)
-# "0.0.0" is also valid.
-# The final integer can be left out, and in that case will default to 0. E.g. 2019.1
-
-""",
-		),
-	)
-
-	def __init__(self, input: IO[bytes], translatedInput: IO[bytes] | None = None):
-		"""Constructs an :class:`AddonManifest` instance from manifest string data
-
-		:param input: data to read the manifest information
-		:param translatedInput: Optional translated manifest input, defaults to ``None``
-		"""
-		super().__init__(input, configspec=self.configspec, encoding="utf-8", default_encoding="utf-8")
-		self._errors = None
-		val = Validator({"apiVersion": validate_apiVersionString})
-		result = self.validate(val, copy=True, preserve_errors=True)
-		if result != True:  # noqa: E712
-			self._errors = result
-		elif True != self._validateApiVersionRange():  # noqa: E712
-			self._errors = "Constraint not met: minimumNVDAVersion ({}) <= lastTestedNVDAVersion ({})".format(
-				self.get("minimumNVDAVersion"),
-				self.get("lastTestedNVDAVersion"),
-			)
-		self._translatedConfig = None
-		if translatedInput is not None:
-			self._translatedConfig = ConfigObj(translatedInput, encoding="utf-8", default_encoding="utf-8")
-			for k in ("summary", "description"):
-				val = self._translatedConfig.get(k)
-				if val:
-					self[k] = val
-			for fileName, tableConfig in self._translatedConfig.get("brailleTables", {}).items():
-				value = tableConfig.get("displayName")
-				if value:
-					self["brailleTables"][fileName]["displayName"] = value
-			for fileName, dictConfig in self._translatedConfig.get("symbolDictionaries", {}).items():
-				value = dictConfig.get("displayName")
-				if value:
-					self["symbolDictionaries"][fileName]["displayName"] = value
-
-	@property
-	def errors(self):
-		return self._errors
-
-	def _validateApiVersionRange(self):
-		lastTested = self.get("lastTestedNVDAVersion")
-		minRequiredVersion = self.get("minimumNVDAVersion")
-		return minRequiredVersion <= lastTested
-
-
-def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
-	"""
-	@raises: configobj.validate.ValidateError on validation error
-	"""
-	from configobj.validate import ValidateError
-
-	if not value or value == "None":
-		return (0, 0, 0)
-	if not isinstance(value, string_types):
-		raise ValidateError('Expected an apiVersion in the form of a string. EG "2019.1.0"')
-	try:
-		return addonAPIVersion.getAPIVersionTupleFromString(value)
-	except ValueError as e:
-		raise ValidateError('"{}" is not a valid API Version string: {}'.format(value, e))

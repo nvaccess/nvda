@@ -17,6 +17,7 @@ from typing import (
 import threading
 
 import addonHandler
+import addonHandler.AddonBase
 from addonStore.dataManager import addonDataManager
 from addonStore.install import installAddon
 from addonStore.models.addon import (
@@ -361,7 +362,7 @@ class AddonStoreVM:
 	) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
-		except addonHandler.AddonError:
+		except addonHandler.AddonBase.AddonError:
 			if shouldEnable:
 				errorMessage = self._enableErrorMessage
 			else:

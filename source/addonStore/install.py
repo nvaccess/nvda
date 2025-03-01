@@ -12,6 +12,7 @@ from typing import (
 	Optional,
 )
 
+from addonHandler.AddonBundle import AddonBundle
 import systemUtils
 from logHandler import log
 
@@ -20,7 +21,7 @@ from .dataManager import (
 )
 
 if TYPE_CHECKING:
-	from addonHandler import AddonBundle, Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
@@ -29,7 +30,7 @@ def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":
 	@return: the addonBundle, if valid
 	@raise DisplayableError if the addon bundle is invalid / incompatible.
 	"""
-	from addonHandler import AddonBundle, AddonError
+	from addonHandler.AddonBase import AddonError
 	from gui.message import DisplayableError
 
 	try:

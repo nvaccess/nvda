@@ -9,18 +9,14 @@
 
 from collections.abc import Callable
 from datetime import datetime
-from typing import (
-	Any,
-	Dict,
-	Optional,
-	Tuple,
-)
+from typing import Any, Dict, Optional, Tuple
 from uuid import uuid4
 
-import garbageHandler
-import globalVars
 import config
 import core
+import garbageHandler
+import globalVars
+from addonHandler import AddonError
 from NVDAState import WritePaths
 
 if globalVars.appArgs.secure:
@@ -31,42 +27,44 @@ import versionInfo
 
 if not versionInfo.updateVersionType:
 	raise RuntimeError("No update version type, update checking not supported")
-# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
-import gui.contextHelp  # noqa: E402
-from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
-import sys  # noqa: E402
-import subprocess
-import os
+import ctypes.wintypes
+import hashlib
 import inspect
+import os
+import pickle
+import ssl
+import subprocess
+import sys  # noqa: E402
 import threading
 import time
-import pickle
+import urllib.parse
 
 # #9818: one must import at least urllib.request in Python 3 in order to use full urllib functionality.
 import urllib.request
-import urllib.parse
-import hashlib
-import ctypes.wintypes
-import requests
-import ssl
-import wx
+
+import addonAPIVersion
+import braille
+import config
+import gui
+
+# Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
+import gui.contextHelp  # noqa: E402
 import languageHandler
+import requests
 
 # Avoid a E402 'module level import not at top of file' warning, because several checks are performed above.
 import synthDriverHandler  # noqa: E402
-import braille
-import gui
-from gui import guiHelper
-from gui.message import displayDialogAsModal  # noqa: E402
-from addonHandler import getCodeAddon, AddonError, getIncompatibleAddons
-from addonStore.models.version import (  # noqa: E402
-	getAddonCompatibilityMessage,
-	getAddonCompatibilityConfirmationMessage,
-)
-import addonAPIVersion
-from logHandler import log, isPathExternalToNVDA
-import config
 import winKernel
+import wx
+from addonHandler import getCodeAddon, getIncompatibleAddons
+from addonStore.models.version import (
+	getAddonCompatibilityConfirmationMessage,  # noqa: E402
+	getAddonCompatibilityMessage,
+)
+from gui import guiHelper
+from gui.dpiScalingHelper import DpiScalingHelperMixinWithoutInit  # noqa: E402
+from gui.message import displayDialogAsModal  # noqa: E402
+from logHandler import isPathExternalToNVDA, log
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.

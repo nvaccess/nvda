@@ -888,11 +888,13 @@ def initialize():
 		scratchpad = config.getScratchpadDir()
 		directory = os.path.join(scratchpad, "brailleTables")
 		if os.path.isdir(directory):
-			manifestPath = os.path.join(scratchpad, addonHandler.MANIFEST_FILENAME)
+			manifestPath = os.path.join(scratchpad, addonHandler.AddonManifest.MANIFEST_FILENAME)
 			if not os.path.isfile(manifestPath):
 				return
 			_tablesDirs[TableSource.SCRATCHPAD] = directory
-			configspec = {"brailleTables": addonHandler.AddonManifest.configspec["brailleTables"]}
+			configspec = {
+				"brailleTables": addonHandler.AddonManifest.AddonManifest.configspec["brailleTables"],
+			}
 			try:
 				with open(manifestPath, "rb") as file:
 					manifest = ConfigObj(file, configspec=configspec)

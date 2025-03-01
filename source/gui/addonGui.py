@@ -8,6 +8,7 @@ import weakref
 
 import addonAPIVersion
 import wx
+import addonHandler.AddonBundle
 import core
 import config
 from contextlib import contextmanager
@@ -135,7 +136,7 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	)
 
 	try:
-		bundle = addonHandler.AddonBundle(addonPath)
+		bundle = addonHandler.AddonBundle.AddonBundle(addonPath)
 	except:  # noqa: E722
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
@@ -221,7 +222,7 @@ def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
 
 def _performExternalAddonBundleInstall(
 	parentWindow: wx.Window,
-	bundle: addonHandler.AddonBundle,
+	bundle: addonHandler.AddonBundle.AddonBundle,
 	prevAddon: addonHandler.Addon | None,
 ) -> bool:
 	"""
