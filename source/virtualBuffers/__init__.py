@@ -570,7 +570,8 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 		try:
 			if log.isEnabledFor(log.DEBUG):
 				startTime = time.time()
-			self.VBufHandle = NVDAHelper.localLib.VBuf_createBuffer(
+			self.VBufHandle = NVDAHelper.localLib.VBufRemote_bufferHandle_t()
+			self.VBufHandle.value = NVDAHelper.localLib.VBuf_createBuffer(
 				self.rootNVDAObject.appModule.helperLocalBindingHandle,
 				self.rootDocHandle,
 				self.rootID,
@@ -631,7 +632,7 @@ class VirtualBuffer(browseMode.BrowseModeDocumentTreeInterceptor):
 			try:
 				watchdog.cancellableExecute(
 					NVDAHelper.localLib.VBuf_destroyBuffer,
-					ctypes.byref(ctypes.c_int(self.VBufHandle)),
+					ctypes.byref(self.VBufHandle),
 				)
 			except WindowsError:
 				pass
