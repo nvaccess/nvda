@@ -66,11 +66,13 @@ createRemoteBindingHandle.argtypes = (
 
 cancellableSendMessageTimeout = dll.cancellableSendMessageTimeout
 cancellableSendMessageTimeout.restype = c_int
+# we use c_void_p for WPARAM and LPARAM as this gives us the greatest flexibility
+# of passing in Python native ints, ctypes arrays, pointers etc.
 cancellableSendMessageTimeout.argtypes = (
 	HWND,  # hwnd
 	c_uint,  # msg
-	WPARAM,  # wParam
-	LPARAM,  # lParam
+	c_void_p,  # wParam
+	c_void_p,  # lParam
 	c_uint,  # fuFlags
 	c_uint,  # uTimeout
 	POINTER(DWORD_PTR),  # lpdwResult
