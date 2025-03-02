@@ -625,3 +625,13 @@ calculateCharacterBoundaries.argtypes = (
 	POINTER(c_int),  #  offsets
 	POINTER(c_int),  #  offsetsCount
 )
+
+calculateCharacterOffsets = dll.calculateCharacterOffsets
+calculateCharacterOffsets.restype = c_bool
+calculateCharacterOffsets.argtypes = (
+	c_wchar_p,  # text
+	c_int,  # textLength
+	c_int,  # offset
+	POINTER(c_int),  # startOffset
+	POINTER(c_int),  # endOffset
+)
