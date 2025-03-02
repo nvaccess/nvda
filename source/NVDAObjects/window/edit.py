@@ -12,7 +12,7 @@ from typing import (
 import comtypes.client
 import ctypes
 from comtypes import COMError
-import oleTypes
+#import oleTypes
 import colors
 import NVDAHelper
 import eventHandler
