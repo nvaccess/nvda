@@ -293,7 +293,7 @@ class LocalRelayServer:
 
 		:raises socket.error: If there are socket communication errors
 		"""
-		log.info(f"Starting NVDA Remote relay server on ports {self.port} (IPv4) " f"and {self.port} (IPv6)")
+		log.info(f"Starting NVDA Remote relay server on port {self.port}")
 		self._running = True
 		self.lastPingTime = time.time()
 		while self._running:
