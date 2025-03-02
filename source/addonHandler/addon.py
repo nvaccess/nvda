@@ -11,17 +11,18 @@ import os.path
 import shutil
 import sys
 from types import ModuleType
-from typing import Literal, Optional
+from typing import Literal
 
 import addonAPIVersion
-from .addonState import state
 import languageHandler
-from addonHandler.addonState import AddonStateCategory
 from logHandler import log
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
+from addonHandler.addonState import AddonStateCategory
+
 from .addonBase import AddonBase, AddonError
 from .AddonManifest import MANIFEST_FILENAME, AddonManifest, _report_manifest_errors, _translatedManifestPaths
+from .addonState import state
 from .packaging import isModuleName
 
 
@@ -55,7 +56,7 @@ class Addon(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def completeInstall(self) -> Optional[str]:
+	def completeInstall(self) -> str | None:
 		"""Complete installation of a pending addon.
 
 		:return: The installation path if successful, None otherwise.
@@ -98,7 +99,7 @@ class Addon(AddonBase):
 
 		:param runUninstallTask: Whether to run the addon's uninstall task.
 		"""
-		from . import _availableAddons, DELETEDIR_SUFFIX
+		from . import DELETEDIR_SUFFIX, _availableAddons
 
 		if runUninstallTask:
 			try:
@@ -331,7 +332,7 @@ class Addon(AddonBase):
 				log.debug(f"Removing module {module} from cache of imported modules")
 				del sys.modules[modName]
 
-	def getDocFilePath(self, fileName: Optional[str] = None) -> Optional[str]:
+	def getDocFilePath(self, fileName: str | None = None) -> str | None:
 		r"""Get the path to a documentation file for this add-on.
 
 		The file should be located in ``doc\lang\file`` inside the add-on,
