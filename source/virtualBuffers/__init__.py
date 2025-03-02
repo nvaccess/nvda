@@ -284,7 +284,7 @@ class VirtualBufferTextInfo(browseMode.BrowseModeDocumentTextInfo, textInfos.off
 	def _getTextRange(self, start, end):
 		if start == end:
 			return ""
-		return NVDAHelper.VBuf_getTextInRange(self.obj.VBufHandle, start, end, False) or ""
+		return NVDAHelper.localLib.VBuf_getTextInRange(self.obj.VBufHandle, start, end, False) or ""
 
 	def _getPlaceholderAttribute(self, attrs, placeholderAttrsKey):
 		"""Gets the placeholder attribute to be used.
