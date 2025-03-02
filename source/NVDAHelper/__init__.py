@@ -243,7 +243,8 @@ def nvdaControllerInternal_requestRegistration(uuidString):
 	if not pid:
 		log.error("Could not get process ID for RPC call")
 		return -1
-	bindingHandle = localLib.createRemoteBindingHandle(uuidString)
+	bindingHandle = HANDLE()
+	bindingHandle.value = localLib.createRemoteBindingHandle(uuidString)
 	if not bindingHandle:
 		log.error("Could not bind to inproc rpc server for pid %d" % pid)
 		return -1
