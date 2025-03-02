@@ -51,7 +51,7 @@ _failedPendingInstalls: CaseInsensitiveSet[str] = CaseInsensitiveSet()
 
 def getRunningAddons() -> "AddonHandlerModelGeneratorT":
 	"""Returns currently loaded add-ons.
-	
+
 	:return: Generator of currently loaded add-ons
 	"""
 	return getAvailableAddons(filterFunc=lambda addon: addon.isRunning)
@@ -62,7 +62,7 @@ def getIncompatibleAddons(
 	backCompatToAPIVersion=addonAPIVersion.BACK_COMPAT_TO,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Returns a generator of the add-ons that are not compatible.
-	
+
 	:param currentAPIVersion: The current API version to check compatibility against
 	:param backCompatToAPIVersion: The oldest API version to consider compatible
 	:return: Generator of incompatible add-ons
@@ -85,12 +85,12 @@ def getIncompatibleAddons(
 	)
 
 
-def removeFailedDeletion(path: os.PathLike):
+def removeFailedDeletion(path: os.PathLike) -> None:
 	"""Attempts to remove a path that failed to be deleted.
-	
+
 	First tries to remove the directory tree, then attempts to remove the file directly.
 	Logs an error if removal fails.
-	
+
 	:param path: The path to remove
 	"""
 	shutil.rmtree(path, ignore_errors=True)
@@ -103,9 +103,9 @@ def removeFailedDeletion(path: os.PathLike):
 		log.error(f"Failed to delete path {path}, try removing manually")
 
 
-def disableAddonsIfAny():
+def disableAddonsIfAny() -> None:
 	"""Disables add-ons if told to do so by the user from add-on store.
-	
+
 	This is usually executed before refreshing the list of available add-ons.
 	Updates the state categories for disabled, pending disable/enable, and compatibility override.
 	"""
@@ -119,9 +119,9 @@ def disableAddonsIfAny():
 	state[AddonStateCategory.PENDING_ENABLE].clear()
 
 
-def initialize():
+def initialize() -> None:
 	"""Initializes the add-ons subsystem.
-	
+
 	Loads add-on state, processes pending installations/removals, and initializes module package paths.
 	"""
 	if config.isAppX:
@@ -152,9 +152,9 @@ def initialize():
 	initializeModulePackagePaths()
 
 
-def terminate():
+def terminate() -> None:
 	"""Terminates the add-ons subsystem.
-	
+
 	Currently does nothing, but exists for symmetry with initialize().
 	"""
 	pass
@@ -162,9 +162,9 @@ def terminate():
 
 def _getDefaultAddonPaths() -> list[str]:
 	r"""Returns paths where addons can be found.
-	
+
 	For now, only <userConfig>\addons is supported.
-	
+
 	:return: List of directory paths where add-ons can be found
 	"""
 	addon_paths = []
@@ -178,9 +178,9 @@ def _getAvailableAddonsFromPath(
 	isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Gets available add-ons from path.
-	
+
 	An addon is only considered available if the manifest file is loaded with no errors.
-	
+
 	:param path: Path from where to find addon directories
 	:param isFirstLoad: Whether this is the first load of add-ons during NVDA startup
 	:return: Generator of available add-ons from the specified path
@@ -259,12 +259,12 @@ def getAvailableAddons(
 	isFirstLoad: bool = False,
 ) -> "AddonHandlerModelGeneratorT":
 	"""Gets all available addons on the system.
-	
+
 	:param refresh: Whether or not to query the file system for available add-ons
 	:param filterFunc: A function that allows filtering of add-ons.
-	   It takes an Addon as its only argument and returns a bool indicating 
+	   It takes an Addon as its only argument and returns a bool indicating
 	   whether the add-on matches the provided filter
-	:param isFirstLoad: Should add-ons that are pending installations/removal 
+	:param isFirstLoad: Should add-ons that are pending installations/removal
 	   from the file system be installed/removed
 	:return: Generator of available add-ons that match the filter criteria
 	:raises TypeError: If filterFunc is provided but is not callable
@@ -324,9 +324,9 @@ def installAddonBundle(bundle: AddonBundle) -> Addon | None:
 
 def getCodeAddon(obj=None, frameDist=1):
 	"""Returns the Addon where obj is defined.
-	
+
 	If obj is None the caller code frame is assumed to allow simple retrieval of "current calling addon".
-	
+
 	:param obj: Python object or None for default behavior
 	:param frameDist: How many frames is the caller code. Only change this for functions in this module
 	:return: Addon instance
@@ -356,16 +356,16 @@ def getCodeAddon(obj=None, frameDist=1):
 	raise AddonError("Code does not belong to an addon")
 
 
-def initTranslation():
+def initTranslation() -> None:
 	"""Initializes the translation of an add-on.
-	
-	Sets up Gettext functions (_, ngettext, npgettext and pgettext) to point to 
+
+	Sets up Gettext functions (_, ngettext, npgettext and pgettext) to point to
 	the add-on's translation rather than to NVDA's one.
-	
-	This function should be called at the top of any module containing translatable strings 
-	and belonging to an add-on. It cannot be called in a module that does not belong to 
+
+	This function should be called at the top of any module containing translatable strings
+	and belonging to an add-on. It cannot be called in a module that does not belong to
 	an add-on (e.g. in a subdirectory of the scratchpad).
-	
+
 	:raises AddonError: If called from a module that doesn't belong to an add-on
 	"""
 
