@@ -77,6 +77,22 @@ class ClientPanel(wx.Panel):
 
 	@alwaysCallAfter
 	def handleCertificateFailed(self) -> None:
+		"""
+		Handles the event when a certificate validation fails.
+
+		This method attempts to retrieve the last failed certificate fingerprint
+		and displays a dialog to the user to decide whether to trust the certificate.
+		If the user chooses to trust the certificate, it is added to the trusted certificates
+		configuration. If an exception occurs during this process, it is logged.
+
+		Steps:
+		1. Retrieve the last failed certificate fingerprint.
+		2. Display a dialog to the user with the certificate fingerprint.
+		3. If the user chooses to trust the certificate, add it to the trusted certificates configuration.
+		4. Handle any exceptions by logging the error.
+		5. Close the key connector and reset it.
+		6. Generate a new key from the server.
+		"""
 		try:
 			certHash = self.keyConnector.lastFailFingerprint
 
@@ -87,11 +103,12 @@ class ClientPanel(wx.Panel):
 				config["trusted_certs"][self.host.GetValue()] = certHash
 			if a != wx.ID_YES and a != wx.ID_NO:
 				return
-		except Exception as ex:
-			log.error(ex)
+		except Exception:
+			log.exception("Error handling certificate failure")
 			return
-		self.keyConnector.close()
-		self.keyConnector = None
+		finally:
+			self.keyConnector.close()
+			self.keyConnector = None
 		self.generateKeyCommand(True)
 
 
