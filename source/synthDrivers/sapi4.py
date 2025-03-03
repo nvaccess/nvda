@@ -358,7 +358,7 @@ class SynthDriverAudio(COMObject):
 	def _getFreeSpace(self) -> int:
 		if not self._waveFormat:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		return self._waveFormat.nAvgBytesPerSec // 5  # always 200ms
+		return self._waveFormat.nAvgBytesPerSec * 2  # always 2 seconds
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
 		"""Returns the number of bytes that are free in the object's internal buffer.
