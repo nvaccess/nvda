@@ -67,8 +67,9 @@ env.Append(M4FLAGS="-G")
 if "analyze" in env["nvdaHelperDebugFlags"]:
 	env.Append(CCFLAGS="/analyze-")
 
-# We need to build as 64-bit
-env.Append(CCFLAGS="-m64")
+if env["TARGET_ARCH"] in ("x86_64", "arm64"):
+	# We need to build as 64-bit
+	env.Append(CCFLAGS="-m64")
 
 env.Append(
 	CPPDEFINES=[
