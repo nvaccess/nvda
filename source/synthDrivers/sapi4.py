@@ -220,7 +220,8 @@ class SynthDriverAudio(COMObject):
 		if self._player:
 			if dwLevel & 0xFFFF0000:
 				self._player.setVolume(
-					left=float(dwLevel & 0xFFFF) / 0xFFFF, right=float(dwLevel >> 16) / 0xFFFF
+					left=float(dwLevel & 0xFFFF) / 0xFFFF,
+					right=float(dwLevel >> 16) / 0xFFFF,
 				)
 			else:
 				self._player.setVolume(all=float(dwLevel) / 0xFFFF)
