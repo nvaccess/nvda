@@ -128,6 +128,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)
 * Fixed an issue where some SAPI4 voices (e.g. IBM TTS Chinese) cannot be loaded. (#17726, @gexgd0419)
 * In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
+* NVDA can now restore the audio ducking behavior when speaking a new utterance, when another app such as Magnifier changes the behavior system-wide. (#17747, @gexgd0419)
 
 ### Changes for Developers
 
