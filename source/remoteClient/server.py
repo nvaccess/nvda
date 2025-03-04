@@ -282,7 +282,7 @@ class LocalRelayServer:
 		sslContext = self.certManager.createSSLContext()
 		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bind_addr)
-		serverSocket.listen(5)
+		serverSocket.listen(backlog=5)  # Set the maximum number of queued connections
 		return serverSocket
 
 	def run(self) -> None:
