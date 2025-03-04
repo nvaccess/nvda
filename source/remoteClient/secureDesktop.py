@@ -134,7 +134,7 @@ class SecureDesktopHandler:
 
 		channel = str(uuid.uuid4())
 		log.debug("Starting local relay server")
-		self.sdServer = server.LocalRelayServer(port=0, password=channel, bind_host="127.0.0.1")
+		self.sdServer = server.LocalRelayServer(port=0, password=channel, bindHost="127.0.0.1")
 		port = self.sdServer.serverSocket.getsockname()[1]
 		log.info("Local relay server started on port %d", port)
 

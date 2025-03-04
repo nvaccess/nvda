@@ -63,6 +63,10 @@ class RemoteCertificateManager:
 	CERT_RENEWAL_THRESHOLD_DAYS = 30
 
 	def __init__(self, certDir: Path | None = None):
+		"""Initialize the certificate manager.
+
+		:param certDir: Directory to store certificate files, defaults to program data temp path
+		"""
 		self.certDir: Path = certDir or getProgramDataTempPath()
 		self.certPath: Path = self.certDir / self.CERT_FILE
 		self.keyPath: Path = self.certDir / self.KEY_FILE
@@ -194,7 +198,7 @@ class RemoteCertificateManager:
 	def getCurrentFingerprint(self) -> str | None:
 		"""Get the fingerprint of the current certificate."""
 		try:
-			if self.fingerprintPath.exists():
+			if self.fingerprintPath.is_file():
 				with open(self.fingerprintPath, "r") as f:
 					return f.read().strip()
 		except Exception as e:
@@ -241,13 +245,21 @@ class LocalRelayServer:
 		self,
 		port: int,
 		password: str,
-		bind_host: str = "",
-		bind_host6: str = "[::]:",
-		cert_dir: Path | None = None,
+		bindHost: str = "",
+		bindHost6: str = "[::]:",
+		certDir: Path | None = None,
 	):
+		"""Initialize the relay server.
+
+		:param port: Port number to listen on
+		:param password: Channel password for client authentication
+		:param bindHost: IPv4 address to bind to, defaults to all interfaces
+		:param bindHost6: IPv6 address to bind to, defaults to all interfaces
+		:param certDir: Directory to store certificate files, defaults to None
+		"""
 		self.port = port
 		self.password = password
-		self.certManager = RemoteCertificateManager(cert_dir)
+		self.certManager = RemoteCertificateManager(certDir)
 		self.certManager.ensureValidCertExists()
 
 		# Initialize other server components
@@ -261,12 +273,12 @@ class LocalRelayServer:
 		self.serverSocket = self.createServerSocket(
 			socket.AF_INET,
 			socket.SOCK_STREAM,
-			bind_addr=(bind_host, self.port),
+			bind_addr=(bindHost, self.port),
 		)
 		self.serverSocket6 = self.createServerSocket(
 			socket.AF_INET6,
 			socket.SOCK_STREAM,
-			bind_addr=(bind_host6, self.port),
+			bind_addr=(bindHost6, self.port),
 		)
 
 	def createServerSocket(self, family: int, type: int, bind_addr: tuple[str, int]) -> ssl.SSLSocket:
@@ -378,6 +390,11 @@ class Client:
 	_id_counter = count(1)
 
 	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket) -> None:
+		"""Initialize a client connection.
+
+		:param server: The relay server instance this client belongs to
+		:param socket: The SSL socket for this client connection
+		"""
 		self.server: LocalRelayServer = server
 		self.socket: ssl.SSLSocket = socket
 		self.buffer: bytes = b""
