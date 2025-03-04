@@ -21,12 +21,6 @@ import os
 import sys
 import winreg
 
-try:
-	from logHandler import log
-except ImportError:
-	from logging import getLogger
-
-	log = getLogger("url_handler")
 
 _REGISTRY_KEY_PATH: str = r"SOFTWARE\Classes\nvdaremote"
 
