@@ -66,7 +66,8 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * The ability to opt out of using WASAPI for audio output has been removed. (#16080)
 * The NVDA installer no longer plays a sound when launched. (#14068)
 * Component updates:
-  * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
+  * Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)
+    * Added new Coptic, compact Cuneiform, and Portuguese Computer Braille tables.
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
