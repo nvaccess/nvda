@@ -1484,6 +1484,16 @@ class CommentExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 		return "%s: %s" % (self.excelCellInfo.address.split("!")[-1], self.excelCellInfo.comments)
 
 
+def convertAddressToLocal(application: comtypes.client.lazybind.Dispatch, address: str) -> str:
+	"""Converts a range address string from invariant to local representation.
+	E.g. "'[Filename.xlsx]Sheet1'!$A$2,$A$4" becomes "'[Filename.xlsx]Sheet1'!$A$2;$A$4" on a French system.
+	"""
+
+	fileAndSheet, range = address.rsplit("!", 1)
+	sep = application.International(XlApplicationInternational.LIST_SEPARATOR)
+	return f"{fileAndSheet}!{range.replace(',', sep)}"
+
+
 class FormulaExcelCellInfoQuickNavItem(ExcelCellInfoQuickNavItem):
 	@property
 	def label(self):
@@ -1527,12 +1537,10 @@ class ExcelCellInfoQuicknavIterator(object, metaclass=abc.ABCMeta):
 		cellInfos = (ExcelCellInfo * count)()
 		numCellsFetched = ctypes.c_long()
 		address = collectionObject.address(True, True, xlA1, True)
-		sep = worksheet.Application.International(XlApplicationInternational.LIST_SEPARATOR)
-		localeAwareAddress = address.replace(",", sep)
 		NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.document.appModule.helperLocalBindingHandle,
 			self.document.windowHandle,
-			BSTR(localeAwareAddress),
+			BSTR(convertAddressToLocal(worksheet.Application, address)),
 			self.cellInfoFlags,
 			count,
 			cellInfos,
@@ -1572,12 +1580,10 @@ class ExcelCell(ExcelBase):
 		ci = ExcelCellInfo()
 		numCellsFetched = ctypes.c_long()
 		address = self.excelCellObject.address(True, True, xlA1, True)
-		sep = self.excelCellObject.Application.International(XlApplicationInternational.LIST_SEPARATOR)
-		localeAwareAddress = address.replace(",", sep)
 		res = NVDAHelper.localLib.nvdaInProcUtils_excel_getCellInfos(
 			self.appModule.helperLocalBindingHandle,
 			self.windowHandle,
-			BSTR(localeAwareAddress),
+			BSTR(convertAddressToLocal(self.excelCellObject.Application, address)),
 			NVCELLINFOFLAG_ALL,
 			1,
 			ctypes.byref(ci),

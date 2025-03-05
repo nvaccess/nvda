@@ -202,7 +202,10 @@ class SynthDriverAudio(COMObject):
 					if isinstance(item, BookmarkT):
 						# Flush all untriggered bookmarks.
 						# 1 (TRUE) means that the bookmark is sent because of flushing.
-						self._notifySink.BookMark(item, 1)
+						try:
+							self._notifySink.BookMark(item, 1)
+						except COMError:
+							pass
 			self._audioQueue.clear()
 
 	def IAudio_LevelGet(self) -> int:
@@ -214,10 +217,14 @@ class SynthDriverAudio(COMObject):
 		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
 		self._level = dwLevel
-		if dwLevel & 0xFFFF0000:
-			self._player.setVolume(left=float(dwLevel & 0xFFFF) / 0xFFFF, right=float(dwLevel >> 16) / 0xFFFF)
-		else:
-			self._player.setVolume(all=float(dwLevel) / 0xFFFF)
+		if self._player:
+			if dwLevel & 0xFFFF0000:
+				self._player.setVolume(
+					left=float(dwLevel & 0xFFFF) / 0xFFFF,
+					right=float(dwLevel >> 16) / 0xFFFF,
+				)
+			else:
+				self._player.setVolume(all=float(dwLevel) / 0xFFFF)
 
 	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
 		"""Passes in an implementation of IAudioDestNotifySink to receive notifications.
@@ -256,7 +263,10 @@ class SynthDriverAudio(COMObject):
 		self._maybeInitPlayer()
 		self._deviceClaimed = True
 		if self._notifySink:
-			self._notifySink.AudioStart()
+			try:
+				self._notifySink.AudioStart()
+			except COMError:
+				pass
 
 	def IAudio_UnClaim(self) -> None:
 		"""Releases the multimedia device asynchronously.
@@ -278,7 +288,10 @@ class SynthDriverAudio(COMObject):
 				self._player.stop()
 			self._deviceClaimed = False
 			if self._notifySink:
-				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+				try:
+					self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+				except COMError:
+					pass
 
 	def IAudio_Start(self) -> None:
 		"""Starts (or resumes) playing the audio in the buffer."""
@@ -357,7 +370,7 @@ class SynthDriverAudio(COMObject):
 	def _getFreeSpace(self) -> int:
 		if not self._waveFormat:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		return self._waveFormat.nAvgBytesPerSec // 5  # always 200ms
+		return self._waveFormat.nAvgBytesPerSec * 2  # always 2 seconds
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
 		"""Returns the number of bytes that are free in the object's internal buffer.
@@ -428,11 +441,17 @@ class SynthDriverAudio(COMObject):
 	def _onChunkFinished(self, chunk: AudioT):
 		self._playedBytes += len(chunk)
 		if self._notifySink:
-			self._notifySink.FreeSpace(self._getFreeSpace(), 0)
+			try:
+				self._notifySink.FreeSpace(self._getFreeSpace(), 0)
+			except COMError:
+				pass
 
 	def _onBookmark(self, dwMarkID: BookmarkT):
 		if self._notifySink:
-			self._notifySink.BookMark(dwMarkID, 0)
+			try:
+				self._notifySink.BookMark(dwMarkID, 0)
+			except COMError:
+				pass
 
 	def _finishUnClaim(self, bytePos: int):
 		"""Finishes the asynchronous UnClaim call.
@@ -447,7 +466,10 @@ class SynthDriverAudio(COMObject):
 		self._deviceClaimed = False
 		if self._notifySink:
 			# Notify when the device is finally closed
-			self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+			try:
+				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
+			except COMError:
+				pass
 
 
 class SynthDriverSink(COMObject):
