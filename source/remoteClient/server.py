@@ -32,7 +32,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from select import select
 from itertools import count
-from typing import Any
+from typing import Any, Final
 
 import cffi  # noqa # required for cryptography
 from cryptography import x509
@@ -240,6 +240,7 @@ class LocalRelayServer:
 	"""
 
 	PING_TIME_SECONDS: int = 300
+	SELECT_TIMEOUT_SECONDS: Final[int] = 60
 
 	def __init__(
 		self,
@@ -313,7 +314,7 @@ class LocalRelayServer:
 				self.clientSockets + [self.serverSocket, self.serverSocket6],
 				[],
 				self.clientSockets,
-				60,
+				self.SELECT_TIMEOUT_SECONDS,
 			)
 			if not self._running:
 				break
