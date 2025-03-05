@@ -47,7 +47,11 @@ If you suspect this option is negatively impacting your battery life, you're adv
 
 ### Changes
 
-* eSpeak NG has been updated to 1.52.0. (#17056)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)
+    * Added new Coptic, compact Cuneiform, and Portuguese Computer Braille tables.
+  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
+  * Updated eSpeak NG to 1.52.0. (#17056)
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
@@ -65,10 +69,6 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * The ability to opt out of using WASAPI for audio output has been removed. (#16080)
 * The NVDA installer no longer plays a sound when launched. (#14068)
-* Component updates:
-  * Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)
-    * Added new Coptic, compact Cuneiform, and Portuguese Computer Braille tables.
-  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The "Contributors" file has been removed from the NVDA menu. (#16922)
