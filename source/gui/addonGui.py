@@ -5,25 +5,26 @@
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import weakref
+from contextlib import contextmanager
 
 import addonAPIVersion
-import wx
-import addonHandler.AddonBundle
+import addonHandler
+from addonHandler import AddonBundle
 import addonHandler.addon
-import core
 import config
-from contextlib import contextmanager
-import gui
+import core
+import systemUtils
+import ui
+import wx
 from addonHandler.addon import Addon
 from logHandler import log
-import addonHandler
-from . import guiHelper
-from . import nvdaControls
-from .message import displayDialogAsModal
-from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+
+import gui
 import gui.contextHelp
-import ui
-import systemUtils
+
+from . import guiHelper, nvdaControls
+from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from .message import displayDialogAsModal
 
 
 def promptUserForRestart():
@@ -131,13 +132,13 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	@note See also L{addonStore.install.installAddon}
 	"""
 	from gui.addonStoreGui.controls.messageDialogs import (
+		_shouldInstallWhenAddonTooOldDialog,
 		_showAddonRequiresNVDAUpdateDialog,
 		_showConfirmAddonInstallDialog,
-		_shouldInstallWhenAddonTooOldDialog,
 	)
 
 	try:
-		bundle = addonHandler.AddonBundle.AddonBundle(addonPath)
+		bundle = AddonBundle(addonPath)
 	except:  # noqa: E722
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
@@ -223,7 +224,7 @@ def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
 
 def _performExternalAddonBundleInstall(
 	parentWindow: wx.Window,
-	bundle: addonHandler.AddonBundle.AddonBundle,
+	bundle: AddonBundle,
 	prevAddon: addonHandler.addon.Addon | None,
 ) -> bool:
 	"""
