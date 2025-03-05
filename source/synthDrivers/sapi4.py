@@ -97,7 +97,7 @@ class SynthDriverBufSink(COMObject):
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
 			return 1
-		return super(SynthDriverBufSink, self).IUnknown_Release(this, *args, **kwargs)
+		return super().IUnknown_Release(this, *args, **kwargs)
 
 
 if TYPE_CHECKING:
@@ -155,6 +155,7 @@ class SynthDriverAudio(COMObject):
 		self._audioThread = threading.Thread(target=self._audioThreadFunc)
 		self._audioThread.start()
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
+		self._allowDelete = False  # Must call terminate() before releasing the object
 
 	def terminate(self):
 		with self._audioCond:
@@ -163,9 +164,16 @@ class SynthDriverAudio(COMObject):
 		if self._audioThread is not threading.current_thread():
 			self._audioThread.join()
 		self._notifySink = None
+		self._allowDelete = True
 
 	def __del__(self):
 		self.terminate()
+
+	def IUnknown_Release(self, this, *args, **kwargs):
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("IAudio::Release called too many times by engine")
+			return 1
+		return super().IUnknown_Release(this, *args, **kwargs)
 
 	def _maybeInitPlayer(self) -> None:
 		"""Initialize audio playback based on the wave format provided by the engine.
@@ -477,6 +485,7 @@ class SynthDriverSink(COMObject):
 
 	def __init__(self, synthRef: weakref.ReferenceType):
 		self.synthRef = synthRef
+		self._allowDelete = True
 		super().__init__()
 
 	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
@@ -506,6 +515,12 @@ class SynthDriverSink(COMObject):
 			synth._finalIndex = None
 			synthDoneSpeaking.notify(synth=synth)
 		synth._bookmarks = None
+
+	def IUnknown_Release(self, this, *args, **kwargs):
+		if not self._allowDelete and self._refcnt.value == 1:
+			log.debugWarning("ITTSNotifySinkW::Release called too many times by engine")
+			return 1
+		return super().IUnknown_Release(this, *args, **kwargs)
 
 
 class SynthDriver(SynthDriver):
@@ -569,10 +584,11 @@ class SynthDriver(SynthDriver):
 
 	def terminate(self):
 		self._bufSink._allowDelete = True
-		if self._ttsAudio:
-			self._ttsAudio.terminate()
+		self._sink._allowDelete = True
 		self._ttsCentral = None
 		self._ttsAttrs = None
+		if self._ttsAudio:
+			self._ttsAudio.terminate()
 
 	def speak(self, speechSequence: SpeechSequence):
 		textList = []
@@ -690,9 +706,6 @@ class SynthDriver(SynthDriver):
 		if mode is None:
 			raise ValueError("no such mode: %s" % val)
 		self._currentMode = mode
-		if self._ttsAudio:
-			self._ttsAudio.terminate()
-		self._ttsAudio = SynthDriverAudio()
 		if self._ttsCentral:
 			try:
 				# Some SAPI4 synthesizers may fail this call.
@@ -705,6 +718,9 @@ class SynthDriver(SynthDriver):
 			# before the next _ttsCentral is created.
 			self._ttsCentral = None
 			self._ttsAttrs = None
+		if self._ttsAudio:
+			self._ttsAudio.terminate()
+		self._ttsAudio = SynthDriverAudio()
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
