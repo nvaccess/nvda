@@ -36,8 +36,8 @@ jobs:
       uses: nvdaes/nvda-builder@main
     - name: Run launcher
       run: scons launcher version=%version% --all-cores
-    # - name: Prepare for tests
-      # run: powershell.exe ci/scripts/tests/beforeTests.ps1
+    - name: Prepare for tests
+      run: powershell.exe ci/scripts/tests/beforeTests.ps1
     - name: Install NVDA
       run: powershell.exe ci/scripts/installNVDA.ps1
     - name: Run system tests
