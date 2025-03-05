@@ -284,7 +284,7 @@ class RemoteClient:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
 		ui.message(
 			# Translators: Presented when connected to the remote computer.
-			_("Connected!"),
+			_("Connected"),
 		)
 		cues.connected()
 
@@ -302,7 +302,7 @@ class RemoteClient:
 	def onDisconnectedAsLeader(self):
 		log.info("Leader session disconnected")
 		# Translators: Presented when connection to a remote computer was interupted.
-		ui.message(_("Connection interrupted"))
+		ui.message(_("Disconnected"))
 
 	def connectAsFollower(self, connectionInfo: ConnectionInfo):
 		transport = RelayTransport.create(
