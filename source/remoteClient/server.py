@@ -273,27 +273,27 @@ class LocalRelayServer:
 		self.serverSocket = self.createServerSocket(
 			socket.AF_INET,
 			socket.SOCK_STREAM,
-			bind_addr=(bindHost, self.port),
+			bindAddress=(bindHost, self.port),
 		)
 		self.serverSocket6 = self.createServerSocket(
 			socket.AF_INET6,
 			socket.SOCK_STREAM,
-			bind_addr=(bindHost6, self.port),
+			bindAddress=(bindHost6, self.port),
 		)
 
-	def createServerSocket(self, family: int, type: int, bind_addr: tuple[str, int]) -> ssl.SSLSocket:
+	def createServerSocket(self, family: int, type: int, bindAddress: tuple[str, int]) -> ssl.SSLSocket:
 		"""Creates an SSL wrapped socket using the certificate.
 
 		:param family: Socket address family (AF_INET or AF_INET6)
 		:param type: Socket type (typically SOCK_STREAM)
-		:param bind_addr: Tuple of (host, port) to bind to
+		:param bindAddress: Tuple of (host, port) to bind to
 		:return: SSL wrapped server socket
 		:raises socket.error: If socket creation or binding fails
 		"""
 		serverSocket = socket.socket(family, type)
 		sslContext = self.certManager.createSSLContext()
 		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
-		serverSocket.bind(bind_addr)
+		serverSocket.bind(bindAddress)
 		serverSocket.listen(backlog=5)  # Set the maximum number of queued connections
 		return serverSocket
 
@@ -387,7 +387,7 @@ class Client:
 	:ivar protocolVersion: Client protocol version number
 	"""
 
-	_id_counter = count(1)
+	_idCounter = count(1)
 
 	def __init__(self, server: LocalRelayServer, socket: ssl.SSLSocket) -> None:
 		"""Initialize a client connection.
@@ -400,7 +400,7 @@ class Client:
 		self.buffer: bytes = b""
 		self.serializer: JSONSerializer = server.serializer
 		self.authenticated: bool = False
-		self.id: int = next(self._id_counter)
+		self.id: int = next(self._idCounter)
 		self.connectionType: str | None = None
 		self.protocolVersion: int = 1
 
@@ -461,16 +461,16 @@ class Client:
 		self.authenticated = True
 		log.info(f"Client {self.id} authenticated successfully " f"(connection type: {self.connectionType})")
 		clients = []
-		client_ids = []
+		clientIds = []
 		for client in list(self.server.clients.values()):
 			if client is self or not client.authenticated:
 				continue
 			clients.append(client.asDict())
-			client_ids.append(client.id)
+			clientIds.append(client.id)
 		self.send(
 			type=RemoteMessageType.CHANNEL_JOINED,
 			channel=self.server.password,
-			user_ids=client_ids,
+			user_ids=clientIds,
 			clients=clients,
 		)
 		self.sendToOthers(

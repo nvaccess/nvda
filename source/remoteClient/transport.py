@@ -192,9 +192,9 @@ class Transport(ABC):
 		    Handlers are called asynchronously on wx main thread via CallAfter.
 		    Handler will receive message payload as kwargs.
 		:example:
-		    >>> def handle_keypress(key_code, pressed):
-		    ...     print(f"Key {key_code} {'pressed' if pressed else 'released'}")
-		    >>> transport.registerInbound(RemoteMessageType.key_press, handle_keypress)
+		    >>> def handleKeypress(keyCode, pressed):
+		    ...     print(f"Key {keyCode} {'pressed' if pressed else 'released'}")
+		    >>> transport.registerInbound(RemoteMessageType.KEY, handleKeypress)
 		"""
 		if type not in self.inboundHandlers:
 			log.debug(f"Creating new handler for {type}")

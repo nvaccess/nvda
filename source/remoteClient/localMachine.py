@@ -195,7 +195,7 @@ class LocalMachine:
 		except inputCore.NoInputGestureAction:
 			pass
 
-	def setBrailleDisplay_size(self, sizes: List[int]) -> None:
+	def setBrailleDisplaySize(self, sizes: List[int]) -> None:
 		"""Cache remote braille display sizes for size negotiation.
 
 		:param sizes: List of display sizes (cells) from remote machines

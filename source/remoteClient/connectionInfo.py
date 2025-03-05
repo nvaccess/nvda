@@ -111,7 +111,7 @@ class ConnectionInfo:
 		hostname = f"[{self.hostname}]" if ":" in self.hostname else self.hostname
 		return f"{hostname}:{self.port}"
 
-	def _build_url(self, mode: ConnectionMode) -> str:
+	def _buildURL(self, mode: ConnectionMode) -> str:
 		"""Builds a URL string for the given mode.
 
 		:param mode: The connection mode to use in the URL
@@ -143,14 +143,12 @@ class ConnectionInfo:
 		:return: URL string with opposite connection mode
 		"""
 		# Flip leader/follower for connection URL
-		connect_mode = (
-			ConnectionMode.FOLLOWER if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
-		)
-		return self._build_url(connect_mode)
+		connectMode = ConnectionMode.FOLLOWER if self.mode == ConnectionMode.LEADER else ConnectionMode.LEADER
+		return self._buildURL(connectMode)
 
 	def getURL(self) -> str:
 		"""Gets the URL representation of the current connection info.
 
 		:return: URL string with current connection mode
 		"""
-		return self._build_url(self.mode)
+		return self._buildURL(self.mode)

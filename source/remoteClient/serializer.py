@@ -150,9 +150,9 @@ def isSubclassOrInstance(unknown: Any, possible: Union[Type[T], tuple[Type[T], .
 
 	Example::
 
-	    >>> is_subclass_or_instance(str, (int, str))
+	    >>> isSubclassOrInstance(str, (int, str))
 	    True
-	    >>> is_subclass_or_instance("hello", (int, str))
+	    >>> isSubclassOrInstance("hello", (int, str))
 	    True
 	"""
 	try:

@@ -279,7 +279,7 @@ class RemoteClient:
 	@alwaysCallAfter
 	def onConnectedAsLeader(self):
 		log.info("Successfully connected as leader")
-		configuration.write_connection_to_config(self.leaderSession.getConnectionInfo())
+		configuration.writeConnectionToConfig(self.leaderSession.getConnectionInfo())
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.LEADER, True)
 		ui.message(
@@ -330,12 +330,11 @@ class RemoteClient:
 		cues.controlServerConnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, True)
-		configuration.write_connection_to_config(self.followerSession.getConnectionInfo())
+		configuration.writeConnectionToConfig(self.followerSession.getConnectionInfo())
 
 	@alwaysCallAfter
 	def onDisconnectedAsFollower(self):
 		log.info("Control connector disconnected")
-		# cues.control_server_disconnected()
 		if self.menu:
 			self.menu.handleConnected(ConnectionMode.FOLLOWER, False)
 
@@ -508,11 +507,13 @@ class RemoteClient:
 		:raises: Displays error if already connected
 		"""
 		if self.isConnected() or self.connecting:
-			# Translators: Message shown when trying to connect while already connected.
-			error_msg = _("NVDA Remote is already connected. Disconnect before opening a new connection.")
-			# Translators: Title of the connection error dialog.
-			error_title = _("NVDA Remote Already Connected")
-			gui.messageBox(error_msg, error_title, wx.OK | wx.ICON_WARNING)
+			gui.messageBox(
+				# Translators: Message shown when trying to connect while already connected.
+				_("NVDA Remote is already connected. Disconnect before opening a new connection."),
+				# Translators: Title of the connection error dialog.
+				_("NVDA Remote Already Connected"),
+				wx.OK | wx.ICON_WARNING,
+			)
 			return
 
 		self.connecting = True

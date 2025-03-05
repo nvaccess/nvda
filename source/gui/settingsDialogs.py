@@ -3473,11 +3473,11 @@ class RemoteSettingsPanel(SettingsPanel):
 	def onSave(self):
 		cs = self.config["controlserver"]
 		cs["autoconnect"] = self.autoconnect.GetValue()
-		self_hosted = bool(self.clientOrServer.GetSelection())
-		connection_type = self.connectionType.GetSelection()
-		cs["self_hosted"] = self_hosted
-		cs["connection_type"] = connection_type
-		if not self_hosted:
+		selfHosted = bool(self.clientOrServer.GetSelection())
+		connectionType = self.connectionType.GetSelection()
+		cs["self_hosted"] = selfHosted
+		cs["connection_type"] = connectionType
+		if not selfHosted:
 			cs["host"] = self.host.GetValue()
 		else:
 			cs["port"] = int(self.port.GetValue())

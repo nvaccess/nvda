@@ -541,7 +541,7 @@ def alwaysCallAfter(func: Callable[_AlwaysCallAfterP, Any]) -> Callable[_AlwaysC
 
 	Example:
 		@alwaysCallAfter
-		def update_label(text):
+		def updateLabel(text):
 			label.SetLabel(text)  # Safe GUI update from any thread
 
 	.. note::

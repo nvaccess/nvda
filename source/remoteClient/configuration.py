@@ -13,16 +13,16 @@ def getRemoteConfig():
 	return config.conf["remote"]
 
 
-def write_connection_to_config(connection_info: ConnectionInfo):
-	"""Writes a connection to the last connected section of the config.
+def writeConnectionToConfig(connectionInfo: ConnectionInfo):
+	"""
+	Writes a connection to the last connected section of the config.
 	If the connection is already in the config, move it to the end.
 
-	Args:
-		connection_info: The ConnectionInfo object containing connection details
+		:param connectionInfo: The :class:`ConnectionInfo` object containing connection details
 	"""
 	conf = getRemoteConfig()
-	last_cons = conf["connections"]["last_connected"]
-	address = connection_info.getAddress()
-	if address in last_cons:
+	lastConnections = conf["connections"]["last_connected"]
+	address = connectionInfo.getAddress()
+	if address in lastConnections:
 		conf["connections"]["last_connected"].remove(address)
 	conf["connections"]["last_connected"].append(address)

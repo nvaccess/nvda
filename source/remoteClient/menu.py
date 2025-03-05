@@ -125,8 +125,8 @@ class RemoteMenu(wx.Menu):
 		self.Remove(self.sendCtrlAltDelItem.Id)
 		self.sendCtrlAltDelItem.Destroy()
 		self.sendCtrlAltDelItem = None
-		tools_menu = gui.mainFrame.sysTrayIcon.toolsMenu
-		tools_menu.Remove(self.remoteItem.Id)
+		toolsMenu = gui.mainFrame.sysTrayIcon.toolsMenu
+		toolsMenu.Remove(self.remoteItem.Id)
 		self.remoteItem.Destroy()
 		self.remoteItem = None
 		try:

@@ -381,7 +381,7 @@ class FollowerSession(RemoteSession):
 			sizes if sizes else [info.get("braille_numCells", 0) for info in self.leaders.values()]
 		)
 		log.debug("Setting follower display size to: %r", self.leaderDisplaySizes)
-		self.localMachine.setBrailleDisplay_size(self.leaderDisplaySizes)
+		self.localMachine.setBrailleDisplaySize(self.leaderDisplaySizes)
 
 	def handleBrailleInfo(
 		self,

@@ -12,9 +12,13 @@ Key Components:
 - Parsing and handling of NVDARemote connection URLs
 
 Main Functions:
-- register_url_handler(): Registers the NVDARemote URL protocol in the Windows Registry
-- unregister_url_handler(): Removes the NVDARemote URL protocol registration
-- url_handler_path(): Returns the path to the URL handler executable
+
+-:func:`registerURLHandler`:
+	Registers the NVDARemote URL protocol in the Windows Registry
+:func:`unregisterURLHandler`:
+	Removes the NVDARemote URL protocol registration
+:func:`URLHandlerPath`:
+	Returns the path to the URL handler executable
 """
 
 import os
@@ -28,7 +32,7 @@ _REGISTRY_KEY_PATH: str = r"SOFTWARE\Classes\nvdaremote"
 def _createRegistryStructure(keyHandle: winreg.HKEYType, data: dict):
 	"""Creates a nested registry structure from a dictionary.
 
-	:param key_handle: A handle to an open registry key
+	:param keyHandle: A handle to an open registry key
 	:param data: Dictionary containing the registry structure to create
 	:raises OSError: If creating registry keys or setting values fails
 	"""
@@ -68,9 +72,9 @@ def _deleteRegistryKeyRecursive(baseKey: int, subkeyPath: str):
 				# Enumerate and delete all subkeys
 				while True:
 					try:
-						subkey_name = winreg.EnumKey(key, 0)
-						full_path = f"{subkeyPath}\\{subkey_name}"
-						_deleteRegistryKeyRecursive(baseKey, full_path)
+						subkeyName = winreg.EnumKey(key, 0)
+						fullPath = f"{subkeyPath}\\{subkeyName}"
+						_deleteRegistryKeyRecursive(baseKey, fullPath)
 					except WindowsError:
 						break
 			# Now delete the key itself
