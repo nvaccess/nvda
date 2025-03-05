@@ -1,4 +1,4 @@
-name: Check licenses
+name: Unit tests
 
 on:
   push:
@@ -26,7 +26,7 @@ env:
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
 jobs:
-  licenseCheck:
+  unitTests:
     runs-on: windows-latest
     defaults:
       run:
@@ -34,5 +34,5 @@ jobs:
     steps:
     - name: Build NVDA
       uses: nvdaes/nvda-builder@main
-    - name: License check
-      run: powershell.exe ci/scripts/tests/licenseCheck.ps1
+    - name: Run unit tests
+      run: powershell.exe ci/scripts/tests/unitTests.ps1

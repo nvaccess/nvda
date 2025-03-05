@@ -1,4 +1,4 @@
-name: Check licenses
+name: System tests
 
 on:
   push:
@@ -26,7 +26,7 @@ env:
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
 jobs:
-  licenseCheck:
+  systemTests:
     runs-on: windows-latest
     defaults:
       run:
@@ -34,5 +34,11 @@ jobs:
     steps:
     - name: Build NVDA
       uses: nvdaes/nvda-builder@main
-    - name: License check
-      run: powershell.exe ci/scripts/tests/licenseCheck.ps1
+    - name: Run launcher
+      run: scons launcher version=%version% --all-cores
+    # - name: Prepare for tests
+      # run: powershell.exe ci/scripts/tests/beforeTests.ps1
+    - name: Install NVDA
+      run: powershell.exe ci/scripts/installNVDA.ps1
+    - name: Run system tests
+      run: powershell.exe ci/scripts/tests/systemTests.ps1
