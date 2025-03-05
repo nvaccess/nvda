@@ -1,0 +1,91 @@
+name: Build NVDA
+
+on:
+  push:
+    branches:
+    - master
+    - beta
+    - rc
+    - try-**
+    - release-**
+    - githubActions # To be removed
+
+  pull_request:
+    branches:
+    - master
+    - beta
+    - rc
+    - try-**
+    - release-**
+
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  if: $GITHUB_EVENT_NAME == 'pull_request'
+  pullRequestNumber: ${{ github.event.number }}
+jobs:
+  build:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+    - name: Build NVDA
+      uses: nvdaes/nvda-builder@main
+    - name: Set version variables
+      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+    - name: Set scons args
+      run: powershell.exe ci/scripts/setSconsArgs.ps1
+    - name: Prepare source code
+      run: scons source %sconsArgs% --all-cores
+    - name: Run launcher
+      run: scons launcher version=%version% --all-cores
+    - name: Prepare for tests
+      run: powershell.exe ci/scripts/tests/beforeTests.ps1
+    - name: Install NVDA
+      run: powershell.exe ci/scripts/installNVDA.ps1
+    - name: Check comments for translators
+      run: powershell.exe ci/scripts/tests/translationCheck.ps1
+    - name: License check
+      run: powershell.exe ci/scripts/tests/licenseCheck.ps1
+    - name: Run unit tests
+      run: powershell.exe ci/scripts/tests/unitTests.ps1
+    - name: Run system tests
+      run: powershell.exe ci/scripts/tests/systemTests.ps1
+    - name: Upload NVDA
+      uses: actions/upload-artifact@v4
+      with:
+        name: NVDA
+        path: output/*.exe
+        compression-level: 0
+        overwrite: true
+    - name: Upload test results
+      id: testResults
+      uses: actions/upload-artifact@v4
+      with:
+        name: Test Results
+        path: testOutput
+        overwrite: true
+    - name: Check tests failure
+      run: powershell.exe ci/scripts/tests/checkTestFailure.ps1
+    - name: Get summary
+      id: getSummary
+      if: ${{ failure() && github.event_name == 'pull_request' }}
+      uses: austenstone/job-summary@v2.0
+      with:
+        create-pdf: false
+        create-pdf-artifact: false
+        create-md-artifact: true
+    - name: Comment on failure
+      if: ${{ failure() && github.event_name == 'pull_request' }}
+      uses: peter-evans/create-or-update-comment@v4
+      with:
+        issue-number: ${{ github.event.number }}
+        body: |
+          ${{ steps.getSummary.outputs.job-summary }}
+          [Download test results](${{ steps.testResults.artifact-url }})
