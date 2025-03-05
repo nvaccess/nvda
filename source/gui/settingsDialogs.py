@@ -3877,7 +3877,6 @@ class AdvancedPanelControls(
 			"annotations",
 			"events",
 			"garbageHandler",
-			"SAPI4",
 		]
 		# Translators: This is the label for a list in the
 		#  Advanced settings panel

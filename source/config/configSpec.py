@@ -319,7 +319,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	annotations = boolean(default=false)
 	events = boolean(default=false)
 	garbageHandler = boolean(default=false)
-	SAPI4 = boolean(default=false)
 
 [uwpOcr]
 	language = string(default="")
