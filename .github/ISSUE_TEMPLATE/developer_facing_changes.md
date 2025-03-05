@@ -21,3 +21,7 @@ If this involves a user facing change e.g. a feature or bug, please user other t
 ### Why are changes required?
 
 ### What technical changes are required?
+
+### Are the proposed technical changes API breaking?
+
+### Are there potential risks or issues with the proposed implementation?
