@@ -36,10 +36,10 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    - name: Build NVDA
-      uses: ./nvdaBuilder
     - name: Prepare for system tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
+    - name: Build NVDA
+      run: scons source %sconsArgs% --all-cores
     - name: Run launcher
       run: scons launcher %sconsArgs% --all-cores
     - name: Install NVDA
