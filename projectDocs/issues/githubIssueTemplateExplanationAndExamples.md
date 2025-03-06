@@ -10,13 +10,16 @@ If you are not familiar, please take some time to learn about
 **Warning**: In all but exceptional circumstances we require one of these templates to be completed.
 Your issue will likely be closed if a template has not been followed.
 
-We currently have four templates:
+We currently have the following templates:
 
 - For [feature requests](#feature-request-template)
 - For [bug reports](#bug-report-template)
 - For [special case issues](#special-case-issue-template) that cannot easily be categorised as either a bug report or a feature request
 - For security vulnerabilities (please note that these are reported differently, for more information see https://github.com/nvaccess/nvda/blob/master/security.md)
-
+- For developer facing changes:
+  - This template is intended for developers to document improvements or maintenance to NVDA's code base that do not have user facing changes.
+  - This may include API changes, technical debt removal, refactoring and maintenance tasks.
+  - Note there is no further guide for this - it is expected that developers can use the template appropriately.
 
 ## General information
 The following information applies to all issues and pull requests.
