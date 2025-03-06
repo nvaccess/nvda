@@ -9,9 +9,10 @@ runs:
     - name: Checkout NVDA
       uses: actions/checkout@v4
       with:
-        repository: 'nvdaes/nvda'
-        submodules: true
-        ref: ${{ github.head_ref }}
+        sparse-checkout: |
+          requirements.txt
+          source/locale
+        path: builder
     - name: Install dependencies
       uses: actions/setup-python@v5
       with:
@@ -24,7 +25,7 @@ runs:
         path: |
           .venv
           source
-        key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
+        key: ${{ runner.os }}-${{ hashFiles('builder/requirements.txt', 'builder/source/locale/**/*.po') }}
     - name: Set version variables
       if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
