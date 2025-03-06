@@ -41,6 +41,10 @@ jobs:
       with:
         python-version: '3.11'
         architecture: x86
+    - name: Set version vars
+      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+    - name: Set scons args
+      run: powershell.exe ci/scripts/setSconsArgs.ps1
     - name: Prepare for system tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
     - name: Build NVDA
