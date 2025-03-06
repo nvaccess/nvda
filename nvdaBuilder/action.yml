@@ -20,18 +20,16 @@ runs:
           source
         key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
     - name: Set version variables
-      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      shell: cmd
+    - name: Set scons args
+      run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
     - name: Pull changes
       if: ${{ steps.cacheDependencies.outputs.cache-hit == 'true' }}
       run: |
         git status
         git restore .
-      shell: cmd
-    - name: Set scons args
-      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
-      run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
     - name: Prepare source code
       if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
