@@ -37,8 +37,9 @@ jobs:
     - name: Checkout NVDA
       uses: actions/checkout@v4
       with:
-        submodules: recursive
+        submodules: true
         ref: $checkoutRef
+        fetch-depth: 0
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Check comments for translators
