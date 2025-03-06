@@ -74,7 +74,7 @@ class SupportsVersionCheck(Protocol):
 		from addonHandler import AddonStateCategory, state
 
 		if self.name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
-			raise RuntimeError(f"{self.name} is already pending override compatibility.")
+			return
 		assert self.canOverrideCompatibility
 		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].add(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
