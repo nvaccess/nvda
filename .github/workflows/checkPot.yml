@@ -23,10 +23,8 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 env:
-  checkoutRef: ${{ github.event_name == 'pull_request' && github.event.head.sha || '' }}
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
-  checkoutRef: ${{ github.event.pull_request.head.sha }}
 jobs:
   checkPot:
     runs-on: windows-latest
