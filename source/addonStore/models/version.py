@@ -66,7 +66,7 @@ class SupportsVersionCheck(Protocol):
 
 		return self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY] and self.canOverrideCompatibility
 
-	def enableCompatibilityOverride(self):
+	def enableCompatibilityOverride(self) -> None:
 		"""
 		Should be reset when changing to a new breaking release,
 		and when this add-on is updated, disabled or removed.
