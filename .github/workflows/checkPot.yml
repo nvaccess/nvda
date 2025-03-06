@@ -23,7 +23,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 env:
-  ref: ''
+  checkoutRef: $GITHUB_EVENT_NAME == 'pull_request' && ${{ github.event.pull_request.head.sha }} || ''
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
   ref: ${{ github.event.pull_request.head.sha }}
@@ -38,7 +38,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-        ref: $ref
+        ref: $checkoutRef
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Check comments for translators
