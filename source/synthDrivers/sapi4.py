@@ -229,7 +229,7 @@ class SynthDriverAudio(COMObject):
 		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
 		if isDebugForSynthDriver() and self._level != dwLevel:
-			log.debug("SAPI4: LevelSet, level=%#x", dwLevel)
+			log.debug(f"SAPI4: LevelSet, level={dwLevel:#x}")
 		self._level = dwLevel
 		if self._player:
 			if dwLevel & 0xFFFF0000:
@@ -402,10 +402,10 @@ class SynthDriverAudio(COMObject):
 		memmove(addressof(self._waveFormat), pWfx, size)
 		if isDebugForSynthDriver():
 			log.debug(
-				"SAPI4: WaveFormatSet, %g kHz %d bit %d channel(s)",
-				self._waveFormat.nSamplesPerSec / 1000.0,
-				self._waveFormat.wBitsPerSample,
-				self._waveFormat.nChannels,
+				"SAPI4: WaveFormatSet, "
+				f"{self._waveFormat.nSamplesPerSec / 1000.0:g} kHz "
+				f"{self._waveFormat.wBitsPerSample} bit "
+				f"{self._waveFormat.nChannels} channel(s)"
 			)
 
 	def _getFreeSpace(self) -> int:
@@ -420,7 +420,7 @@ class SynthDriverAudio(COMObject):
 			fEOF: TRUE if end-of-file is reached and no more data can be sent."""
 		freeSpace = self._getFreeSpace()
 		if isDebugForSynthDriver():
-			log.debug("SAPI4: FreeSpace, %d bytes free", freeSpace)
+			log.debug(f"SAPI4: FreeSpace, {freeSpace} bytes free")
 		return (freeSpace, 0)
 
 	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
@@ -435,7 +435,7 @@ class SynthDriverAudio(COMObject):
 			self._writtenBytes += dwSize
 			self._audioCond.notify()
 		if isDebugForSynthDriver():
-			log.debug("SAPI4: DataSet, %d bytes written", dwSize)
+			log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
 
 	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
@@ -444,7 +444,7 @@ class SynthDriverAudio(COMObject):
 		with self._audioCond:
 			self._audioQueue.append(dwMarkID)
 		if isDebugForSynthDriver():
-			log.debug("SAPI4: Bookmark %d queued", dwMarkID)
+			log.debug(f"SAPI4: Bookmark {dwMarkID} queued")
 
 	def _audioThreadFunc(self):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
@@ -496,7 +496,7 @@ class SynthDriverAudio(COMObject):
 
 	def _onBookmark(self, dwMarkID: BookmarkT):
 		if isDebugForSynthDriver():
-			log.debug("SAPI4: Bookmark %d reached", dwMarkID)
+			log.debug(f"SAPI4: Bookmark {dwMarkID} reached")
 		if self._notifySink:
 			try:
 				self._notifySink.BookMark(dwMarkID, 0)
