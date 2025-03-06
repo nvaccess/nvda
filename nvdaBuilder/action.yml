@@ -17,21 +17,13 @@ runs:
       with:
         path: |
           .venv
-          source
-        key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
       shell: cmd
     - name: Set scons args
       run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
-    - name: Pull changes
-      if: ${{ steps.cacheDependencies.outputs.cache-hit == 'true' }}
-      run: |
-        git status
-        git restore .
-      shell: cmd
     - name: Prepare source code
-      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
       run: scons source %sconsArgs% --all-cores
       shell: cmd
