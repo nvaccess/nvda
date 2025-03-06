@@ -38,7 +38,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-        ref: $checkoutRef
+        ref: ${{ github.head_ref }}
         fetch-depth: 0
     - name: Build NVDA
       uses: ./nvdaBuilder
