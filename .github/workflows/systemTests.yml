@@ -36,21 +36,12 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    - name: Install dependencies
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        architecture: x86
-    - name: Set version vars
-      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
-    - name: Set scons args
-      run: powershell.exe ci/scripts/setSconsArgs.ps1
+    - name: Build NVDA
+      uses: ./nvdaBuilder
     - name: Prepare for system tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
-    - name: Build NVDA
-      run: scons source %sconsArgs% --all-cores
     - name: Run launcher
-      run: scons launcher %sconsArgs% --all-cores
+      run: scons launcher version=%version% --all-cores
     - name: Install NVDA
       run: powershell.exe ci/scripts/installNVDA.ps1
     - name: Run system tests
