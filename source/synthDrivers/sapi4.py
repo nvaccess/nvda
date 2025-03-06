@@ -271,6 +271,8 @@ class SynthDriverAudio(COMObject):
 		with self._audioCond:
 			if self._deviceUnClaiming:
 				# Unclaiming is cancelled, but nothing else is touched.
+				if isDebugForSynthDriver():
+					log.debug("SAPI4: Claim, unclaiming cancelled")
 				self._deviceUnClaiming = False
 				self._deviceUnClaimingBytePos = None
 				return
