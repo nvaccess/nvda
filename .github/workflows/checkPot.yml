@@ -23,7 +23,7 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 env:
-  checkoutRef: $GITHUB_EVENT_NAME == 'pull_request' && ${{ github.event.pull_request.head.sha }} || ''
+  checkoutRef: ${{ github.event_name == 'pull_request' && github.event.head.sha || '' }}
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
   ref: ${{ github.event.pull_request.head.sha }}
