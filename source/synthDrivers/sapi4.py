@@ -405,7 +405,7 @@ class SynthDriverAudio(COMObject):
 				"SAPI4: WaveFormatSet, "
 				f"{self._waveFormat.nSamplesPerSec / 1000.0:g} kHz "
 				f"{self._waveFormat.wBitsPerSample} bit "
-				f"{self._waveFormat.nChannels} channel(s)"
+				f"{self._waveFormat.nChannels} channel(s)",
 			)
 
 	def _getFreeSpace(self) -> int:
