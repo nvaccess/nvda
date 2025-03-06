@@ -22,6 +22,7 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 	$commitVersion = $env:GITHUB_SHA.Substring(0, 8)
 	if($env:pullRequestNumber) {
 		$version = "pr$env:pullRequestNumber-$env:GITHUB_RUN_ID," + $commitVersion
+		$versionType = "snapshot:pr"
 	} elseif($env:GITHUB_REF_NAME -eq "master") {
 		$version = "alpha-$env:GITHUB_RUN_ID," + $commitVersion
 	} else {
