@@ -1,6 +1,3 @@
-$testOutput = (Resolve-Path .\testOutput\)
-$systemTestOutput = (Resolve-Path "$testOutput\system")
-
 if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
 	$verboseDebugLogging="True"
 } else {
