@@ -29,6 +29,7 @@ runs:
       if: ${{ steps.cacheDependencies.outputs.cache-hit == 'true' }}
       run: |
         git status
+        git restore .
       shell: cmd
     - name: Prepare source code
       if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
