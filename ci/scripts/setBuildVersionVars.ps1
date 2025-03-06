@@ -33,7 +33,7 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 	# The version is unique even for rebuilds, so we can use it for the AppVeyor version.
 	if($env:GITHUB_REF_NAME -eq "master") {
 		$versionType = "snapshot:alpha"
-	} elseif (!$env:GITHUB_REF_NAME.StartsWith("try-") && !$env:pullRequestNumber) ) {
+	} elseif (!$env:GITHUB_REF_NAME.StartsWith("try-") -and !$env:pullRequestNumber) ) {
 		$versionType = "snapshot:$env:GITHUB_REF_NAME"
 	}
 }
