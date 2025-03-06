@@ -37,7 +37,7 @@ jobs:
       with:
         submodules: true
     - name: Build NVDA
-      run: scons source version=%version% --all-cores
+      uses: ./nvdaBuilder
     - name: Run launcher
       run: scons launcher version=%version% --all-cores
     - name: Install NVDA
