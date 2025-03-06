@@ -32,8 +32,13 @@ jobs:
       run:
         shell: cmd
     steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+        ref: ${{ github.head_ref }}
     - name: Build NVDA
-      uses: nvdaes/nvda-builder@main
+      uses: ./nvdaBuilder
     - name: Run launcher
       run: scons launcher version=%version% --all-cores
     # - name: Prepare for tests
