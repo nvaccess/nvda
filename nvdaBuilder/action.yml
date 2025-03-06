@@ -25,11 +25,9 @@ runs:
       shell: cmd
     - name: Pull changes
       if: ${{ steps.cacheDependencies.outputs.cache-hit == 'true' }}
-      env:
-        branchName: ${{ github.head_ref || github.ref_name }} 
       run: |
-        # git merge origin/%branchName%
         git status
+        git restore .
       shell: cmd
     - name: Set scons args
       if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
