@@ -26,7 +26,7 @@ env:
   checkoutRef: ${{ github.event_name == 'pull_request' && github.event.head.sha || '' }}
   if: $GITHUB_EVENT_NAME == 'pull_request'
   pullRequestNumber: ${{ github.event.number }}
-  ref: ${{ github.event.pull_request.head.sha }}
+  checkoutRef: ${{ github.event.pull_request.head.sha }}
 jobs:
   checkPot:
     runs-on: windows-latest
@@ -38,8 +38,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-        ref: origin/${{ github.head_ref }}
-        fetch-depth: 0
+        ref: ${{ github.head_ref }}
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Check comments for translators
