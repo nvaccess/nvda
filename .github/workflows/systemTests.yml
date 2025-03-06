@@ -36,13 +36,10 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-        ref: ${{ github.head_ref }}
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Run launcher
       run: scons launcher version=%version% --all-cores
-    # - name: Prepare for tests
-      # run: powershell.exe ci/scripts/tests/beforeTests.ps1
     - name: Install NVDA
       run: powershell.exe ci/scripts/installNVDA.ps1
     - name: Run system tests
