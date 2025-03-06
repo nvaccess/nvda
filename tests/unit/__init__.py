@@ -154,7 +154,5 @@ api.setDesktopObject(phObj)
 
 # Stub speech functions to make them no-ops.
 # Eventually, these should keep track of calls so we can make assertions.
-import speech  # noqa: E402
-
 speech.speak = lambda speechSequence, symbolLevel=None, priority=None: None
 speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False, priority=None: None

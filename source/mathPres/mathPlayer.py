@@ -13,7 +13,7 @@ from typing import (
 
 import comtypes.client
 from comtypes import COMError
-from comtypes.gen.MathPlayer import (
+from comtypes.gen.MathPlayer import (  # type: ignore[reportMissingImports]
 	MPInterface,
 	IMathSpeech,
 	IMathSpeechSettings,

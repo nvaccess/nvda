@@ -330,7 +330,7 @@ class EditorChunk(Ia2Web):
 
 class Math(Ia2Web):
 	def _get_mathMl(self):
-		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
