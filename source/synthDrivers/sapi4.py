@@ -39,11 +39,13 @@ from ._sapi4 import (
 	MMSYSERR_NOERROR,
 	AudioError,
 	SDATA,
+	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
 	DriverMessage,
 	IAudio,
 	IAudioDest,
 	IAudioDestNotifySink,
+	IAudioMultiMediaDevice,
 	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
@@ -528,6 +530,173 @@ class SynthDriverAudio(COMObject):
 				pass
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: UnClaimed")
+
+
+class SynthDriverMMAudio(COMObject):
+	"""
+	Wrapper around SAPI4's built-in MMAudioDest,
+	which can log the interactions between MMAudioDest and the TTS engine.
+	"""
+
+	_com_interfaces_ = [IAudio, IAudioDest]
+
+	def __init__(self):
+		self.mmdev = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
+		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
+		self.audio = self.mmdev.QueryInterface(IAudio)
+		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
+
+	def terminate(self):
+		pass # do nothing
+
+	def IAudio_Flush(self) -> None:
+		try:
+			self.audio.Flush()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Flushed")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: Flush failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_LevelGet(self) -> int:
+		try:
+			return self.audio.LevelGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_LevelSet(self, dwLevel: int) -> None:
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: LevelSet, level={dwLevel:#x}")
+		try:
+			return self.audio.LevelSet(dwLevel)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
+		try:
+			return self.audio.PassNotify(pNotifyInterface, IIDNotifyInterface)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_PosnGet(self) -> int:
+		try:
+			return self.audio.PosnGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Claim(self) -> None:
+		try:
+			self.audio.Claim()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Claimed")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NEED_WAVE_FORMAT:
+					log.debug("SAPI4: Claim without wave format")
+				elif e.hresult == AudioError.ALREADY_CLAIMED:
+					log.debug("SAPI4: Claim when already claimed")
+				else:
+					log.debug(f"SAPI4: Claim failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_UnClaim(self) -> None:
+		try:
+			self.audio.UnClaim()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: UnClaim called")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: UnClaim when not claimed")
+				else:
+					log.debug(f"SAPI4: UnClaim failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Start(self) -> None:
+		try:
+			self.audio.Start()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Started")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.ALREADY_STARTED:
+					log.debug("SAPI4: Start when already started")
+				elif e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: Start when not claimed")
+				else:
+					log.debug(f"SAPI4: Start failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Stop(self) -> None:
+		try:
+			self.audio.Stop()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Stopped")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: Stop failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_TotalGet(self) -> int:
+		try:
+			return self.audio.TotalGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> FILETIME:
+		try:
+			return self.audio.ToFileTime(pqWord)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_WaveFormatGet(self) -> SDATA:
+		try:
+			return self.audio.WaveFormatGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_WaveFormatSet(self, dWFEX: SDATA) -> None:
+		try:
+			self.audio.WaveFormatSet(dWFEX)
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: WaveFormatSet")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: WaveFormatSet failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
+		try:
+			ret = self.audiodest.FreeSpace()
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: FreeSpace, {ret[0]} bytes free")
+			return ret
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: FreeSpace failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
+		try:
+			self.audiodest.DataSet(pBuffer, dwSize)
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: Audio data written when device is not claimed")
+				elif e.hresult == AudioError.NOT_ENOUGH_DATA:
+					log.debug("SAPI4: Insufficient buffer space")
+				else:
+					log.debug(f"SAPI4: DataSet failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
+		try:
+			self.audiodest.BookMark(dwMarkID)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
 
 
 class SynthDriverSink(COMObject):
