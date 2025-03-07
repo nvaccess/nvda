@@ -126,8 +126,8 @@ class RemoteCertificateManager:
 
 		subject = issuer = x509.Name(
 			[
-				x509.NameAttribute(NameOID.COMMON_NAME, "NVDARemote Relay"),
-				x509.NameAttribute(NameOID.ORGANIZATION_NAME, "NVDARemote"),
+				x509.NameAttribute(NameOID.COMMON_NAME, "NVDA Remote Access Service"),
+				x509.NameAttribute(NameOID.ORGANIZATION_NAME, "NV Access"),
 			],
 		)
 
