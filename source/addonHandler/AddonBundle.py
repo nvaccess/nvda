@@ -23,7 +23,7 @@ class AddonBundle(AddonBase):
 
 	def __init__(self, bundlePath: str):
 		"""Constructs an AddonBundle from a filename.
-		
+
 		:param bundlePath: The path for the bundle file.
 		"""
 		self._installExceptions: list[Exception] = []
@@ -57,9 +57,9 @@ class AddonBundle(AddonBase):
 
 	def extract(self, addonPath: Optional[str] = None):
 		"""Extracts the bundle content to the specified path.
-		
+
 		The addon will be extracted to the specified addonPath.
-		
+
 		:param addonPath: Path where to extract contents. If None, uses pendingInstallPath.
 		"""
 		if addonPath is None:
@@ -77,7 +77,7 @@ class AddonBundle(AddonBase):
 	@property
 	def manifest(self) -> "AddonManifest":
 		"""Gets the manifest for the represented Addon.
-		
+
 		:return: The addon manifest.
 		"""
 		return self._manifest
@@ -88,7 +88,7 @@ class AddonBundle(AddonBase):
 
 def createAddonBundleFromPath(path, destDir=None):
 	"""Creates a bundle from a directory that contains an addon manifest file.
-	
+
 	:param path: Path to the directory containing the addon.
 	:param destDir: Directory where the bundle should be created. If None, uses the parent directory of path.
 	:return: The created AddonBundle.

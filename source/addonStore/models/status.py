@@ -28,7 +28,6 @@ if TYPE_CHECKING:
 	from addonHandler.addonState import AddonsState  # noqa: F401
 
 
-
 class EnabledStatus(DisplayStringEnum):
 	ALL = enum.auto()
 	ENABLED = enum.auto()
