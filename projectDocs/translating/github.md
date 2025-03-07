@@ -11,7 +11,7 @@ For detailed information on the format of these files, please refer to the follo
 - `gestures.ini`: [Translating Gestures](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#TranslatingGestures)
 
 To keep these files up to date, translators must be concious of changes in NVDA.
-For changes to `symbols.dic` and `characterDescriptions.dic`, please subscribe to the read-only [nvda-l10n](https://groups.google.com/a/nvaccess.org/g/nvda-l10n) mailing list.
+For changes to `symbols.dic` and `characterDescriptions.dic`, please subscribe to the read-only [NVDA localisation mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n).
 When changes to these files in English occur, you will be notified via this mailing list.
 This allows you to consider adding equivalent descriptions to your localised file.
 
@@ -23,7 +23,7 @@ New gestures will be announced there, and localisations can be added to `gesture
 1. Be notified of potential localisation changes:
     - For `gestures.ini`: Check the latest beta's changes for any new gestures added.
     - For `symbols.dic` and `characterDescriptions.dic`:
-        - Receive a notification from the [mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n)
+        - Receive a notification from the [NVDA localisation mailing list](https://groups.google.com/a/nvaccess.org/g/nvda-l10n)
         - This will occur when the first beta is being prepared.
         There may be subsequent notifications during the beta period.
         - Changes to these files are relatively infrequent, so the mailing list will be low traffic, many releases may go by without changes.
