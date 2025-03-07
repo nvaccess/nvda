@@ -71,7 +71,7 @@ from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
 from audio import appsVolume
 from utils.displayString import DisplayStringEnum
-
+import remoteClient
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -121,6 +121,9 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 #: Script category for audio streaming commands.
 # Translators: The name of a category of NVDA commands.
 SCRCAT_AUDIO = _("Audio")
+#: Script category for Remote commands.
+# Translators: The name of a category of NVDA commands.
+SCRCAT_REMOTE = _("Remote")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -4632,6 +4635,29 @@ class GlobalCommands(ScriptableObject):
 		ui.message(languageHandler.getLanguageDescription(languageHandler.normalizeLanguage(lang)))
 
 	@script(
+		# Translators: Describes a command.
+		description=_("Toggle periodical refresh of a Windows OCR result"),
+	)
+	def script_toggleAutomaticRefreshOfRecogResult(self, gesture: inputCore.InputGesture) -> None:
+		if not winVersion.isUwpOcrAvailable():
+			# Translators: Reported when Windows OCR is not available.
+			ui.message(_("Windows OCR not available"))
+			return
+		toggleBooleanValue(
+			configSection="uwpOcr",
+			configKey="autoRefresh",
+			# Translators: The message announced when toggling automatic refresh of recognized content
+			enabledMsg=_("Automatic refresh enabled"),
+			# Translators: The message announced when toggling automatic refresh of recognized content
+			disabledMsg=_("Automatic refresh disabled"),
+		)
+		from contentRecog.recogUi import RecogResultNVDAObject
+
+		focus = api.getFocusObject()
+		if isinstance(focus, RecogResultNVDAObject):
+			focus._scheduleRecognize()
+
+	@script(
 		# Translators: Input help mode message for toggle report CLDR command.
 		description=_("Toggles on and off the reporting of CLDR characters, such as emojis"),
 		category=SCRCAT_SPEECH,
@@ -4917,6 +4943,71 @@ class GlobalCommands(ScriptableObject):
 			# Translators: title for report caret language dialog.
 			title = _("Language at caret position")
 			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
+
+	@script(
+		# Translators: Describes a command.
+		description=_("""Mute or unmute the speech coming from the remote computer"""),
+		category=SCRCAT_REMOTE,
+	)
+	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
+		remoteClient._remoteClient.toggleMute()
+
+	@script(
+		gesture="kb:control+shift+NVDA+c",
+		category=SCRCAT_REMOTE,
+		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
+		description=_("Sends the contents of the clipboard to the remote machine"),
+	)
+	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
+		remoteClient._remoteClient.pushClipboard()
+
+	@script(
+		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
+		description=_("""Copies a link to the remote session to the clipboard"""),
+		category=SCRCAT_REMOTE,
+	)
+	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
+		remoteClient._remoteClient.copyLink()
+		# Translators: A message indicating that a link has been copied to the clipboard.
+		ui.message(_("Copied link"))
+
+	@script(
+		gesture="kb:alt+NVDA+pageDown",
+		category=SCRCAT_REMOTE,
+		# Translators: Documentation string for the script that disconnects a remote session.
+		description=_("Disconnect a remote session"),
+	)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
+		if not remoteClient._remoteClient.isConnected:
+			# Translators: A message indicating that the remote client is not connected.
+			ui.message(_("Not connected"))
+			return
+		remoteClient._remoteClient.disconnect()
+
+	@script(
+		gesture="kb:alt+NVDA+pageUp",
+		# Translators: Documentation string for the script that invokes the remote session.
+		description=_("""Connect to a remote computer"""),
+		category=SCRCAT_REMOTE,
+	)
+	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
+	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
+		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
+			# Translators: A message indicating that the remote client is already connected.
+			ui.message(_("Already connected"))
+			return
+		remoteClient._remoteClient.doConnect()
+
+	@script(
+		# Translators: Documentation string for the script that toggles the control between guest and host machine.
+		description=_("Toggles the control between guest and host machine"),
+		category=SCRCAT_REMOTE,
+		gesture="kb:NVDA+f11",
+	)
+	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
+		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.

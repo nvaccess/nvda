@@ -259,7 +259,13 @@ addTable("ckb-g1.ctb", _("Central Kurdish grade 1"), inputForLangs={"ckb"}, outp
 addTable("cop-eg-comp8.utb", _("Coptic 8 dot computer braille"), input=False)
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
+addTable("cop.utb", _("Coptic grade 1"), input=False)
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
 addTable("cuneiform-transliterated.utb", _("Cuneiform (transliterated) grade 1"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("cuneiform-transliterated-compact.utb", _("Cuneiform (transliterated, compact diacritics) grade 1"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("cy-cy-g1.utb", _("Welsh grade 1"))
@@ -618,6 +624,9 @@ addTable(
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("Pl-Pl-g1.utb", _("Polish literary braille"))
+# Translators: The name of a braille table displayed in the
+# braille settings dialog.
+addTable("pt-comp6.utb", _("Portuguese 6 dot computer braille"))
 # Translators: The name of a braille table displayed in the
 # braille settings dialog.
 addTable("pt-pt-comp8.ctb", _("Portuguese 8 dot computer braille"))

@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 15
+latestSchemaVersion = 16
 
 #: The configuration specification string
 #: @type: String
@@ -27,7 +27,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
-	preventDisplayTurnOff = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
+	preventDisplayTurningOff = boolean(default=true)
 
 # Speech settings
 [speech]
@@ -338,11 +338,30 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	playErrorSound = integer(0, 1, default=0)
 
 [addonStore]
-	automaticUpdates = option("notify", "disabled", default="notify")
+	automaticUpdates = option("notify", "update", "disabled", default="notify")
+	allowIncompatibleUpdates = boolean(default=false)
 	baseServerURL = string(default="")
 	# UpdateChannel values:
 	# same channel (default), any channel, do not update, stable, beta & dev, beta, dev
 	defaultUpdateChannel = integer(0, 6, default=0)
+
+# Remote Settings
+[remote]
+	[[connections]]
+		last_connected = list(default=list())
+	[[controlserver]]
+		autoconnect = boolean(default=False)
+		self_hosted = boolean(default=False)
+		connection_type = integer(default=0, min=0, max=1) # 0: follower, 1: leader
+		host = string(default="")
+		port = integer(default=6837)
+		key = string(default="")
+	[[seen_motds]]
+		__many__ = string(default="")
+	[[trusted_certs]]
+		__many__ = string(default="")
+	[[ui]]
+		play_sounds = boolean(default=True)
 """
 
 #: The configuration specification

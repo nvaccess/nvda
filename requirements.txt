@@ -3,6 +3,7 @@ SCons==4.8.1
 
 # NVDA's runtime dependencies
 comtypes==1.4.6
+cryptography==44.0.0
 pyserial==3.5
 wxPython==4.2.2
 configobj @ git+https://github.com/DiffSK/configobj@8be54629ee7c26acb5c865b74c76284e80f3aa31#egg=configobj
@@ -22,9 +23,7 @@ pycaw==20240210
 
 # Packaging NVDA
 py2exe==0.13.0.2
-# xliff2html is packaged with nuitka 
-nuitka==2.5.4
-# l10nUtil requires Crowdin 
+# l10nUtil requires Crowdin
 crowdin-api-client==1.21.0
 
 # Creating XML unit test reports
@@ -47,6 +46,7 @@ sphinx_rtd_theme==3.0.1
 # Requirements for automated linting
 ruff==0.8.1
 pre-commit==4.0.1
+pyright==1.1.396
 
 # Running automated license checks
 licensecheck==2024.3

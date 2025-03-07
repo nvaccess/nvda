@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
+# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Christopher Toth, Joseph Lee, Peter Vágner,
 # Derek Riemer, Babbage B.V., Zahari Yurukov, Łukasz Golonka, Cyrille Bougot, Julien Cochuyt
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -897,6 +897,12 @@ def main():
 
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
+
+	log.debug("Initializing remote client")
+	import remoteClient
+
+	remoteClient.initialize()
+
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
 
@@ -1049,6 +1055,7 @@ def main():
 			" This likely indicates NVDA is exiting due to WM_QUIT.",
 		)
 		queueHandler.pumpAll()
+	_terminate(remoteClient)
 	_terminate(gui)
 	config.saveOnExit()
 

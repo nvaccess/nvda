@@ -22,6 +22,13 @@ if TYPE_CHECKING:
 	import controlTypes
 	from NVDAObjects import NVDAObject
 
+__all__ = [
+	"AnnotationTarget",
+	"AnnotationOrigin",
+	"_AnnotationNavigation",
+	"_AnnotationNavigationNode",
+	"_AnnotationRolesT",
+]
 
 _AnnotationRolesT = Tuple[Optional["controlTypes.Role"]]
 

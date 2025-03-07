@@ -9,7 +9,6 @@ from typing import (
 	Callable,
 	Generator,
 	Union,
-	cast,
 )
 from collections.abc import Generator  # noqa: F811
 import os
@@ -1341,7 +1340,7 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterEdit = labeledCtrl.control
 		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
