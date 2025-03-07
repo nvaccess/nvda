@@ -5,7 +5,7 @@
 
 import unittest
 from unittest.mock import MagicMock, patch
-import remoteClient.client as rc_client
+import remoteClient.client as rcClient
 from remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
 from remoteClient.protocol import RemoteMessageType
 
@@ -49,19 +49,19 @@ class FakeSession:
 
 	def getConnectionInfo(self):
 		class FakeConnectionInfo:
-			def getURLToConnect(_):
+			def getURLToConnect(_):  # type: ignore
 				return self.url
 
 		return FakeConnectionInfo()
 
 
 class FakeAPI:
-	clip_data = "Fake clipboard text"
+	clipData = "Fake clipboard text"
 	copied = None
 
 	@staticmethod
 	def getClipData():
-		return FakeAPI.clip_data
+		return FakeAPI.clipData
 
 	@staticmethod
 	def copyToClip(text):
@@ -75,137 +75,137 @@ class TestRemoteClient(unittest.TestCase):
 		if not wx.GetApp():
 			self.app = wx.App()
 		# Patch gui.mainFrame to a fake object so RemoteMenu can access sysTrayIcon.toolsMenu.
-		patcher_mainFrame = patch("remoteClient.client.gui.mainFrame")
-		self.addCleanup(patcher_mainFrame.stop)
-		mock_mainFrame = patcher_mainFrame.start()
-		mock_mainFrame.sysTrayIcon = MagicMock()
-		mock_mainFrame.sysTrayIcon.toolsMenu = MagicMock()
-		self.client = rc_client.RemoteClient()
+		patcherMainFrame = patch("remoteClient.client.gui.mainFrame")
+		self.addCleanup(patcherMainFrame.stop)
+		mockMainFrame = patcherMainFrame.start()
+		mockMainFrame.sysTrayIcon = MagicMock()
+		mockMainFrame.sysTrayIcon.toolsMenu = MagicMock()
+		self.client = rcClient.RemoteClient()
 		# Override localMachine and menu with fake implementations.
 		self.client.localMachine = FakeLocalMachine()
 		self.client.menu = FakeMenu()
 		# Patch ui.message to capture calls.
 		patcher = patch("remoteClient.client.ui.message")
 		self.addCleanup(patcher.stop)
-		self.ui_message = patcher.start()
+		self.uiMessage = patcher.start()
 		# Patch the API module to use our fake API.
-		patcher_api = patch("remoteClient.client.api", new=FakeAPI)
-		self.addCleanup(patcher_api.stop)
-		patcher_api.start()
+		patcherAPI = patch("remoteClient.client.api", new=FakeAPI)
+		self.addCleanup(patcherAPI.stop)
+		patcherAPI.start()
 		FakeAPI.copied = None
-		patcher_nvwave = patch("remoteClient.cues.nvwave.playWaveFile", return_value=None)
+		patcherNvwave = patch("remoteClient.cues.nvwave.playWaveFile", return_value=None)
 
-		self.addCleanup(patcher_nvwave.stop)
-		patcher_nvwave.start()
+		self.addCleanup(patcherNvwave.stop)
+		patcherNvwave.start()
 
 	def tearDown(self):
 		self.client = None
 
-	def test_toggle_mute(self):
+	def test_toggleMute(self):
 		# Initially, local machine should not be muted.
 		self.assertFalse(self.client.localMachine.isMuted)
 		# Toggle mute: should mute the local machine.
 		self.client.toggleMute()
 		self.assertTrue(self.client.localMachine.isMuted)
 		self.assertTrue(self.client.menu.muteItem.checked)
-		self.ui_message.assert_called_once()
+		self.uiMessage.assert_called_once()
 		# Now toggle again: should unmute.
-		self.ui_message.reset_mock()
+		self.uiMessage.reset_mock()
 		self.client.toggleMute()
 		self.assertFalse(self.client.localMachine.isMuted)
 		self.assertFalse(self.client.menu.muteItem.checked)
-		self.ui_message.assert_called_once()
+		self.uiMessage.assert_called_once()
 
-	def test_push_clipboard_no_connection(self):
+	def test_pushClipboardNoConnection(self):
 		# Without any transport (neither follower nor leader), pushClipboard should warn.
 		self.client.followerTransport = None
 		self.client.leaderTransport = None
 		self.client.pushClipboard()
-		self.ui_message.assert_called_with("Not connected.")
+		self.uiMessage.assert_called_with("Not connected.")
 
-	def test_push_clipboard_with_transport(self):
+	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
-		fake_transport = FakeTransport()
-		self.client.leaderTransport = fake_transport
-		FakeAPI.clip_data = "TestClipboard"
+		fakeTransport = FakeTransport()
+		self.client.leaderTransport = fakeTransport
+		FakeAPI.clipData = "TestClipboard"
 		self.client.pushClipboard()
-		self.assertTrue(len(fake_transport.sent) > 0)
-		messageType, kwargs = fake_transport.sent[0]
+		self.assertTrue(len(fakeTransport.sent) > 0)
+		messageType, kwargs = fakeTransport.sent[0]
 		self.assertEqual(messageType, RemoteMessageType.SET_CLIPBOARD_TEXT)
 		self.assertEqual(kwargs.get("text"), "TestClipboard")
 
-	def test_copy_link_no_session(self):
+	def test_copyLinkNoSession(self):
 		# If there is no session, copyLink should warn the user.
 		self.client.leaderSession = None
 		self.client.followerSession = None
-		self.ui_message.reset_mock()
+		self.uiMessage.reset_mock()
 		self.client.copyLink()
-		self.ui_message.assert_called_with("Not connected.")
+		self.uiMessage.assert_called_with("Not connected.")
 
-	def test_copy_link_with_session(self):
+	def test_copyLinkWithSession(self):
 		# With a fake session, copyLink should call api.copyToClip with the proper URL.
-		fake_session = FakeSession("http://fake.url/connect")
-		self.client.leaderSession = fake_session
+		fakeSession = FakeSession("http://fake.url/connect")
+		self.client.leaderSession = fakeSession
 		FakeAPI.copied = None
 		self.client.copyLink()
 		self.assertEqual(FakeAPI.copied, "http://fake.url/connect")
 
-	def test_send_sas_no_leader_transport(self):
+	def test_sendSasNoLeaderTransport(self):
 		# Without a leaderTransport, sendSAS should log an error.
 		self.client.leaderTransport = None
-		with patch("remoteClient.client.log.error") as mock_log_error:
+		with patch("remoteClient.client.log.error") as mockLogError:
 			self.client.sendSAS()
-			mock_log_error.assert_called_once_with("No leader transport to send SAS")
+			mockLogError.assert_called_once_with("No leader transport to send SAS")
 
-	def test_send_sas_with_leader_transport(self):
+	def test_sendSasWithLeaderTransport(self):
 		# With a fake leaderTransport, sendSAS should forward the SEND_SAS message.
-		fake_transport = FakeTransport()
-		self.client.leaderTransport = fake_transport
+		fakeTransport = FakeTransport()
+		self.client.leaderTransport = fakeTransport
 		self.client.sendSAS()
-		self.assertTrue(len(fake_transport.sent) > 0)
-		messageType, _ = fake_transport.sent[0]
+		self.assertTrue(len(fakeTransport.sent) > 0)
+		messageType, _ = fakeTransport.sent[0]
 		self.assertEqual(messageType, RemoteMessageType.SEND_SAS)
 
-	def test_connect_dispatch(self):
+	def test_connectDispatch(self):
 		# Ensure that connect() dispatches to connectAsLeader or connectAsFollower based on connection mode.
-		fake_connect_as_leader = MagicMock()
-		fake_connect_as_follower = MagicMock()
-		self.client.connectAsLeader = fake_connect_as_leader
-		self.client.connectAsFollower = fake_connect_as_follower
-		conn_info_leader = ConnectionInfo(
+		fakeConnectAsLeader = MagicMock()
+		fakeConnectAsFollower = MagicMock()
+		self.client.connectAsLeader = fakeConnectAsLeader
+		self.client.connectAsFollower = fakeConnectAsFollower
+		connInfoLeader = ConnectionInfo(
 			hostname="localhost",
 			mode=ConnectionMode.LEADER,
 			key="abc",
 			port=1000,
 			insecure=False,
 		)
-		self.client.connect(conn_info_leader)
-		fake_connect_as_leader.assert_called_once_with(conn_info_leader)
-		fake_connect_as_leader.reset_mock()
-		conn_info_follower = ConnectionInfo(
+		self.client.connect(connInfoLeader)
+		fakeConnectAsLeader.assert_called_once_with(connInfoLeader)
+		fakeConnectAsLeader.reset_mock()
+		connInfoFollower = ConnectionInfo(
 			hostname="localhost",
 			mode=ConnectionMode.FOLLOWER,
 			key="abc",
 			port=1000,
 			insecure=False,
 		)
-		self.client.connect(conn_info_follower)
-		fake_connect_as_follower.assert_called_once_with(conn_info_follower)
+		self.client.connect(connInfoFollower)
+		fakeConnectAsFollower.assert_called_once_with(connInfoFollower)
 
 	def test_disconnect(self):
 		# Test disconnect with no active sessions.
 		self.client.leaderSession = None
 		self.client.followerSession = None
-		with patch("remoteClient.client.log.debug") as mock_log_debug:
+		with patch("remoteClient.client.log.debug") as mockLogDebug:
 			self.client.disconnect()
-			mock_log_debug.assert_called()
+			mockLogDebug.assert_called()
 		# Test disconnect with an active localControlServer.
-		fake_control = MagicMock()
-		self.client.localControlServer = fake_control
+		fakeControl = MagicMock()
+		self.client.localControlServer = fakeControl
 		self.client.leaderSession = MagicMock()
 		self.client.followerSession = MagicMock()
 		self.client.disconnect()
-		fake_control.close.assert_called_once()
+		fakeControl.close.assert_called_once()
 
 
 if __name__ == "__main__":

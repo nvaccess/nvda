@@ -81,14 +81,14 @@ class FakeHandlerRegistrar:
 # ---------------------------------------------------------------------------
 # Tests for RemoteExtensionPoint
 class TestRemoteExtensionPoint(unittest.TestCase):
-	def test_remoteBridge_with_filter(self):
+	def test_remoteBridgeWithFilter(self):
 		# Create a fake extension point and a filter function
 		registrar = FakeHandlerRegistrar()
 
-		def my_filter(*args, **kwargs):
+		def myFilter(*args, **kwargs):
 			return {"filtered": True}
 
-		rep = RemoteExtensionPoint(extensionPoint=registrar, messageType="TEST", filter=my_filter)
+		rep = RemoteExtensionPoint(extensionPoint=registrar, messageType="TEST", filter=myFilter)
 
 		# Create a fake transport that records calls to send
 		class FakeTransport:
@@ -105,7 +105,7 @@ class TestRemoteExtensionPoint(unittest.TestCase):
 		self.assertEqual(fakeTransport.sent, [("TEST", {"filtered": True})])
 		rep.unregister()
 
-	def test_remoteBridge_without_filter(self):
+	def test_remoteBridgeWithoutFilter(self):
 		registrar = FakeHandlerRegistrar()
 		rep = RemoteExtensionPoint(extensionPoint=registrar, messageType="TEST", filter=None)
 
@@ -143,18 +143,18 @@ class TestTransportSendAndQueue(unittest.TestCase):
 		self.transport.connected = True
 		self.transport.queue = Queue()
 
-	def test_send_enqueues_serialized_message(self):
+	def test_sendEnqueuesSerializedMessage(self):
 		self.transport.send("TEST_TYPE", key=123)
 		item = self.transport.queue.get_nowait()
 		result = self.serializer.deserialize(item)
 		self.assertEqual(result["type"], "TEST_TYPE")
 		self.assertEqual(result["key"], 123)
 
-	def test_send_when_not_connected_logs_error(self):
+	def test_sendWhenNotConnectedLogsError(self):
 		self.transport.connected = False
-		with mock.patch("remoteClient.transport.log.error") as mock_error:
+		with mock.patch("remoteClient.transport.log.error") as mockError:
 			self.transport.send("TEST", a=1)
-		mock_error.assert_called_once()
+		mockError.assert_called_once()
 
 
 # ---------------------------------------------------------------------------
@@ -189,27 +189,27 @@ class TestProcessAndParse(unittest.TestCase):
 		self.transport.buffer = b""
 
 	def test_processIncomingSocketData(self):
-		parsed_lines = []
+		parsedLines = []
 
-		def fake_parse(line):
-			parsed_lines.append(line)
+		def fakeParse(line):
+			parsedLines.append(line)
 
-		self.transport.parse = fake_parse
+		self.transport.parse = fakeParse
 		self.transport.processIncomingSocketData()
 		self.assertEqual(self.transport.buffer, b"partial")
-		self.assertEqual(parsed_lines, [b"line1", b"line2"])
+		self.assertEqual(parsedLines, [b"line1", b"line2"])
 
-	def test_parse_calls_inboundHandler(self):
+	def test_parseCallsInboundHandler(self):
 		# Set up an inbound handler for type RemoteMessageType.PROTOCOL_VERSION
-		dummy_inbound = mock.MagicMock()
-		self.transport.inboundHandlers = {RemoteMessageType.PROTOCOL_VERSION: dummy_inbound}
+		dummyInbound = mock.MagicMock()
+		self.transport.inboundHandlers = {RemoteMessageType.PROTOCOL_VERSION: dummyInbound}
 		# Patch wx.CallAfter to simply call immediately
 		original_CallAfter = wx.CallAfter
 		wx.CallAfter = lambda func, *args, **kwargs: func(*args, **kwargs)
 		# Prepare a message
 		message = self.serializer.serialize(type=RemoteMessageType.PROTOCOL_VERSION, a=1)
 		self.transport.parse(message)
-		dummy_inbound.notify.assert_called_once_with(a=1)
+		dummyInbound.notify.assert_called_once_with(a=1)
 		wx.CallAfter = original_CallAfter
 
 
@@ -234,7 +234,7 @@ class TestSendQueue(unittest.TestCase):
 		self.transport.serverSockLock = threading.Lock()
 		self.transport.queue = Queue()
 
-	def test_sendQueue_sends_messages(self):
+	def test_sendQueueSendsMessages(self):
 		item1 = b"msg1"
 		item2 = b"msg2"
 		self.transport.queue.put(item1)
@@ -243,14 +243,14 @@ class TestSendQueue(unittest.TestCase):
 		self.transport.sendQueue()
 		self.assertEqual(self.transport.serverSock.sent, [item1, item2])
 
-	def test_sendQueue_stops_on_socket_error(self):
+	def test_sendQueueStopsOnSocketError(self):
 		item1 = b"msg1"
 		self.transport.queue.put(item1)
 
-		def fake_sendall(data):
+		def fakeSendall(data):
 			raise socket.error("Test error")
 
-		self.transport.serverSock.sendall = fake_sendall
+		self.transport.serverSock.sendall = fakeSendall
 		# Should complete without raising further exception
 		self.transport.sendQueue()
 
@@ -302,21 +302,21 @@ class TestTCPTransportCreateOutboundSocket(unittest.TestCase):
 		self.port = 8090
 
 	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocket_onion(self, mock_socket):
+	def test_createOutboundSocketOnion(self, mockSocket):
 		t = TCPTransport(self.serializer, (self.host + ".onion", self.port))
-		fake_socket = DummyTCPSocket()
-		mock_socket.return_value = fake_socket
+		fakeSocket = DummyTCPSocket()
+		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host + ".onion", self.port, insecure=False)
-		self.assertFalse(fake_socket.connected)
+		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
 
 	@mock.patch("test.mock_socket.socket", autospec=True)
-	def test_createOutboundSocket_regular_insecure(self, mock_socket):
+	def test_createOutboundSocketRegularInsecure(self, mockSocket):
 		t = TCPTransport(self.serializer, (self.host, self.port))
-		fake_socket = DummyTCPSocket()
-		mock_socket.return_value = fake_socket
+		fakeSocket = DummyTCPSocket()
+		mockSocket.return_value = fakeSocket
 		sock = t.createOutboundSocket(self.host, self.port, insecure=True)
-		self.assertFalse(fake_socket.connected)
+		self.assertFalse(fakeSocket.connected)
 		self.assertTrue(isinstance(sock, ssl.SSLSocket))
 
 
@@ -326,7 +326,7 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 	def setUp(self):
 		self.serializer = FakeSerializer()
 
-	def test_onConnected_with_channel(self):
+	def test_onConnectedWithChannel(self):
 		# Create a RelayTransport with a channel set.
 		rt = RelayTransport(
 			serializer=self.serializer,
@@ -344,7 +344,7 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 		# And since channel is set, should send JOIN message.
 		rt.send.assert_any_call(RemoteMessageType.JOIN, channel="mychannel", connection_type="relayMode")
 
-	def test_onConnected_without_channel(self):
+	def test_onConnectedWithoutChannel(self):
 		# Create a RelayTransport with no channel.
 		rt = RelayTransport(
 			serializer=self.serializer,
@@ -365,10 +365,10 @@ class TestRelayTransportOnConnected(unittest.TestCase):
 class DummyConnectorTransport(Transport):
 	def __init__(self, serializer):
 		super().__init__(serializer)
-		self.run_called = 0
+		self.runCalled = 0
 
 	def run(self):
-		self.run_called += 1
+		self.runCalled += 1
 		raise socket.error("Simulated socket error")
 
 	def processIncomingSocketData(self):
@@ -379,20 +379,20 @@ class DummyConnectorTransport(Transport):
 
 
 class TestConnectorThread(unittest.TestCase):
-	def test_connectorThread_runs_and_reconnects(self):
+	def testConnectorThreadRunsAndReconnects(self):
 		serializer = FakeSerializer()
-		fake_transport = DummyConnectorTransport(serializer)
-		connector = ConnectorThread(fake_transport, reconnectDelay=0.01)
+		fakeTransport = DummyConnectorTransport(serializer)
+		connector = ConnectorThread(fakeTransport, reconnectDelay=0.01)
 		connector.running = True
 		# Run connector.run() in a loop for a few iterations manually.
 		iterations = 3
 		for _ in range(iterations):
 			try:
-				fake_transport.run()
+				fakeTransport.run()
 			except socket.error:
 				pass
 		connector.running = False
-		self.assertEqual(fake_transport.run_called, iterations)
+		self.assertEqual(fakeTransport.runCalled, iterations)
 
 
 # ---------------------------------------------------------------------------
@@ -414,7 +414,7 @@ class TestRemoteExtensionPointIntegration(unittest.TestCase):
 		self.transport.queue = Queue()
 		self.fakeRegistrar = FakeHandlerRegistrar()
 
-	def test_registerOutbound_and_trigger(self):
+	def test_registerOutboundAndTrigger(self):
 		self.transport.registerOutbound(self.fakeRegistrar, RemoteMessageType.GENERATE_KEY)
 		for handler in self.fakeRegistrar.handlers:
 			handler(a=42)
@@ -441,13 +441,13 @@ class TestInboundRegistration(unittest.TestCase):
 
 		self.handler = handler
 
-	def test_register_inbound(self):
+	def test_registerInbound(self):
 		self.transport.registerInbound(RemoteMessageType.PROTOCOL_VERSION, self.handler)
 		self.assertIn(RemoteMessageType.PROTOCOL_VERSION, self.transport.inboundHandlers)
 		self.transport.inboundHandlers[RemoteMessageType.PROTOCOL_VERSION].notify(a=123)
 		self.assertTrue(self.called)
 
-	def test_unregister_inbound(self):
+	def test_unregisterInbound(self):
 		self.transport.registerInbound(RemoteMessageType.PROTOCOL_VERSION, self.handler)
 		self.transport.unregisterInbound(RemoteMessageType.PROTOCOL_VERSION, self.handler)
 		self.called = False
@@ -462,18 +462,18 @@ class TestParseErrorHandling(unittest.TestCase):
 		self.transport = DummyTransport(serializer=self.serializer)
 		self.transport.inboundHandlers = {}
 
-	def test_parse_no_type(self):
+	def test_parseNoType(self):
 		with self.assertLogs(level="WARN") as cm:
 			self.transport.parse(b"invalid message\n")
 			self.assertTrue(any("Received message without type" in log for log in cm.output))
 
-	def test_parse_invalid_type(self):
+	def test_parseInvalidType(self):
 		with self.assertLogs(level="WARN") as cm:
 			message = self.serializer.serialize(type="NONEXISTENT", a=10)
 			self.transport.parse(message)
 			self.assertTrue(any("Received message with invalid type" in log for log in cm.output))
 
-	def test_parse_unhandled_type(self):
+	def test_parseUnhandledType(self):
 		with self.assertLogs(level="WARN") as cm:
 			message = self.serializer.serialize(type=RemoteMessageType.GENERATE_KEY, b=10)
 			self.transport.parse(message)

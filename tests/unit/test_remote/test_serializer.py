@@ -25,33 +25,33 @@ class TestJSONSerializer(unittest.TestCase):
 	def setUp(self):
 		self.serializer = JSONSerializer()
 
-	def test_serialize_basic(self):
+	def test_serializeBasic(self):
 		# Test basic serialization with a string type and payload.
-		message_bytes = self.serializer.serialize(type="test_message", key=123)
-		self.assertTrue(message_bytes.endswith(b"\n"))
-		message_str = message_bytes.rstrip(b"\n").decode("UTF-8")
-		data = json.loads(message_str)
+		messageBytes = self.serializer.serialize(type="test_message", key=123)
+		self.assertTrue(messageBytes.endswith(b"\n"))
+		messageStr = messageBytes.rstrip(b"\n").decode("UTF-8")
+		data = json.loads(messageStr)
 		self.assertEqual(data["type"], "test_message")
 		self.assertEqual(data["key"], 123)
 
-	def test_serialize_enum(self):
+	def test_serializeEnum(self):
 		# Test that passing an Enum type is serialized to its value.
-		message_bytes = self.serializer.serialize(type=DummyEnum.VALUE1, key="abc")
-		message_str = message_bytes.rstrip(b"\n").decode("UTF-8")
-		data = json.loads(message_str)
+		messageBytes = self.serializer.serialize(type=DummyEnum.VALUE1, key="abc")
+		messageStr = messageBytes.rstrip(b"\n").decode("UTF-8")
+		data = json.loads(messageStr)
 		self.assertEqual(data["type"], "value1")
 		self.assertEqual(data["key"], "abc")
 
-	def test_round_trip(self):
+	def test_roundTrip(self):
 		# Test that serializing and then deserializing returns the same message data.
 		original = {"type": "round_trip", "value": 999}
-		message_bytes = self.serializer.serialize(**original)
+		messageBytes = self.serializer.serialize(**original)
 		# Remove the separator for deserialization.
-		data = self.serializer.deserialize(message_bytes.rstrip(JSONSerializer.SEP))
+		data = self.serializer.deserialize(messageBytes.rstrip(JSONSerializer.SEP))
 		self.assertEqual(data["type"], "round_trip")
 		self.assertEqual(data["value"], 999)
 
-	def test_custom_encoder(self):
+	def test_customEncoder(self):
 		# Test that CustomEncoder falls back to default behavior for non-special objects.
 		dummy = DummyCommand("test")
 		# Set __dict__ to a non-serializable object (set is not serializable by default)
@@ -65,11 +65,11 @@ class TestJSONSerializer(unittest.TestCase):
 			json.dumps(dummy, cls=SpeechCommandJSONEncoder)
 		self.assertRegex(str(cm.exception), "not JSON serializable")
 
-	def test_as_sequence_no_change(self):
+	def test_asSequenceNoChange(self):
 		# Test that as_sequence returns the dictionary unchanged when no special keys exist.
-		input_dict = {"type": "other", "foo": "bar"}
-		result = asSequence(input_dict)
-		self.assertEqual(result, input_dict)
+		inputDict = {"type": "other", "foo": "bar"}
+		result = asSequence(inputDict)
+		self.assertEqual(result, inputDict)
 
 
 if __name__ == "__main__":
