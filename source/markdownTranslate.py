@@ -274,23 +274,19 @@ def generateXliff(
 					raise ValueError(f'Line {lineNo}: does not end with "{suffix}", {mdLine=}, {skelLine=}')
 				source = mdLine[len(prefix) : len(mdLine) - len(suffix)]
 				outputFile.write(
-					f'<unit id="{ID}">\n' "<notes>\n" f'<note appliesTo="source">line: {lineNo + 1}</note>\n',
+					f'<unit id="{ID}">\n<notes>\n<note appliesTo="source">line: {lineNo + 1}</note>\n',
 				)
 				if prefix:
 					outputFile.write(f'<note appliesTo="source">prefix: {xmlEscape(prefix)}</note>\n')
 				if suffix:
 					outputFile.write(f'<note appliesTo="source">suffix: {xmlEscape(suffix)}</note>\n')
 				outputFile.write(
-					"</notes>\n"
-					f"<segment>\n"
-					f"<source>{xmlEscape(source)}</source>\n"
-					"</segment>\n"
-					"</unit>\n",
+					f"</notes>\n<segment>\n<source>{xmlEscape(source)}</source>\n</segment>\n</unit>\n",
 				)
 			else:
 				if mdLine != skelLine:
 					raise ValueError(f"Line {lineNo}: {mdLine=} does not match {skelLine=}")
-		outputFile.write("</file>\n" "</xliff>")
+		outputFile.write("</file>\n</xliff>")
 		print(f"Generated xliff file with {res.numTranslatableStrings} translatable strings")
 		return res
 

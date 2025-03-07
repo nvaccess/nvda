@@ -103,7 +103,7 @@ class _CancellableSpeechCommand(SpeechCommand):
 	def __repr__(self):
 		return (
 			f"CancellableSpeech ("
-			f"{ 'cancelled' if self._checkIfCancelled() else 'still valid'}"
+			f"{'cancelled' if self._checkIfCancelled() else 'still valid'}"
 			f"{self._getFormattedDevInfo()}"
 			f")"
 		)
