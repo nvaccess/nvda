@@ -36,10 +36,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-        fetch-depth: 0
-    - name: Checkout pr
-      if: ${{ github.event_name == 'pull_request' }}
-      run: gh pr checkout $pullRequestNumber
       shell: cmd
     - name: Build NVDA
       uses: ./nvdaBuilder
