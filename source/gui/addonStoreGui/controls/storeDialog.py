@@ -3,9 +3,6 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
-	cast,
-)
 
 import wx
 from wx.adv import BannerWindow
@@ -155,37 +152,28 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
-		self.columnFilterCtrl = cast(
-			wx.Choice,
-			filterCtrlsLine0.addLabeledControl(
-				# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Sort by colu&mn:"),
-				wxCtrlClass=wx.Choice,
-				choices=self._storeVM.listVM._columnSortChoices,
-			),
+		self.columnFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Sort by colu&mn:"),
+			wxCtrlClass=wx.Choice,
+			choices=self._storeVM.listVM._columnSortChoices,
 		)
 		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
 		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
 
-		self.channelFilterCtrl = cast(
-			wx.Choice,
-			filterCtrlsLine0.addLabeledControl(
-				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Cha&nnel:"),
-				wxCtrlClass=wx.Choice,
-				choices=list(c.displayString for c in _channelFilters),
-			),
+		self.channelFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Cha&nnel:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in _channelFilters),
 		)
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
-		self.includeIncompatibleCtrl = cast(
-			wx.CheckBox,
-			filterCtrlsLine0.addItem(
-				wx.CheckBox(self, label=incompatibleAddonsLabel),
-			),
+		self.includeIncompatibleCtrl = filterCtrlsLine0.addItem(
+			wx.CheckBox(self, label=incompatibleAddonsLabel),
 		)
 		self.includeIncompatibleCtrl.SetValue(0)
 		self.includeIncompatibleCtrl.Bind(
@@ -195,14 +183,11 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
-		self.enabledFilterCtrl = cast(
-			wx.Choice,
-			filterCtrlsLine0.addLabeledControl(
-				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Ena&bled/disabled:"),
-				wxCtrlClass=wx.Choice,
-				choices=list(c.displayString for c in EnabledStatus),
-			),
+		self.enabledFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in EnabledStatus),
 		)
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)

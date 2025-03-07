@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2022-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2022-2025 NV Access Limited, Leonard de Ruijter
 
 """Unit tests for the extension points in the braille module."""
 
@@ -50,15 +50,31 @@ class TestHandlerExtensionPoints(unittest.TestCase):
 			braille.handler.display = None
 			braille.handler.setDisplayByName("noBraille")
 
+	def test_filter_displayDimensions(self):
+		cachedDisplayDimensions = braille.handler.displayDimensions
+		with filterTester(
+			self,
+			braille.filter_displayDimensions,
+			cachedDisplayDimensions,
+			braille.DisplayDimensions(5, 20),
+		) as expectedOutput:
+			self.assertEqual(braille.handler.displayDimensions, expectedOutput)
+			self.assertEqual(
+				braille.handler.displayDimensions.displaySize,
+				expectedOutput.numRows * expectedOutput.numCols,
+			)
+
 	def test_filter_displaySize(self):
-		cachedDisplaySize = braille.handler._displayDimensions.displaySize
+		cachedDisplaySize = braille.handler.displaySize
 		with filterTester(
 			self,
 			braille.filter_displaySize,
 			cachedDisplaySize,  # The currently cached display size
-			20,  # The filter handler should change the display size to 40
+			20,  # The filter handler should change the display size to 20
 		) as expectedOutput:
 			self.assertEqual(braille.handler.displaySize, expectedOutput)
+			self.assertEqual(braille.handler.displayDimensions.numCols, expectedOutput)
+			self.assertEqual(braille.handler.displayDimensions.numRows, 1)
 
 	def test_decide_enabled(self):
 		with deciderTester(

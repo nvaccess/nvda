@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2017-2023 NV Access Limited, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2017-2025 NV Access Limited, Babbage B.V., Cyrille Bougot, Leonard de Ruijter
 
 """NVDA unit testing.
 All unit tests should reside within this package and should be
@@ -100,13 +100,13 @@ config.conf["braille"]["display"] = "noBraille"
 braille.initialize()
 
 
-# For braille unit tests, we need to enable the braille handler by providing it a cell count
-# Give the display 40 cells
-def getFakeCellCount(numCells: int) -> int:
-	return 40
+# For braille unit tests, we need to enable the braille handler by providing it display dimensions
+# Give the display one row with 40 cells
+def getFakeDisplayDimensions(dimensions: braille.DisplayDimensions) -> braille.DisplayDimensions:
+	return braille.DisplayDimensions(numRows=1, numCols=40)
 
 
-braille.filter_displaySize.register(getFakeCellCount)
+braille.filter_displayDimensions.register(getFakeDisplayDimensions)
 _original_handleReviewMove = braille.handler.handleReviewMove
 
 
@@ -154,7 +154,5 @@ api.setDesktopObject(phObj)
 
 # Stub speech functions to make them no-ops.
 # Eventually, these should keep track of calls so we can make assertions.
-import speech  # noqa: E402
-
 speech.speak = lambda speechSequence, symbolLevel=None, priority=None: None
 speech.speakSpelling = lambda text, locale=None, useCharacterDescriptions=False, priority=None: None

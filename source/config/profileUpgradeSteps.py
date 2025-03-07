@@ -13,19 +13,22 @@ is the current schema version. The argument profile will be a configobj.ConfigOb
 that no information is lost, while updating the ConfigObj to meet the requirements of the new schema.
 """
 
-from logHandler import log
-from config.configFlags import (
-	NVDAKey,
-	ShowMessages,
-	TetherTo,
-	ReportLineIndentation,
-	ReportTableHeaders,
-	ReportCellBorders,
-	OutputMode,
-	TypingEcho,
-)
+import os
+
 import configobj.validate
 from configobj import ConfigObj
+from logHandler import log
+
+from config.configFlags import (
+	NVDAKey,
+	OutputMode,
+	ReportCellBorders,
+	ReportLineIndentation,
+	ReportTableHeaders,
+	ShowMessages,
+	TetherTo,
+	TypingEcho,
+)
 
 
 def upgradeConfigFrom_0_to_1(profile: ConfigObj) -> None:
@@ -500,3 +503,38 @@ def _convertTypingEcho(profile: ConfigObj, key: str) -> None:
 		newValue = TypingEcho.EDIT_CONTROLS.value if oldValue else TypingEcho.OFF.value
 		profile["keyboard"][key] = newValue
 		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({TypingEcho(newValue).name}).")
+
+
+def upgradeConfigFrom_15_to_16(profile: ConfigObj) -> None:
+	"""Migrate remote.ini settings into the main config."""
+	remoteIniPath = os.path.join(os.path.dirname(profile.filename), "remote.ini")
+	if not os.path.isfile(remoteIniPath):
+		log.debug(f"No remote.ini found, no action taken. Checked {remoteIniPath}")
+		return
+
+	try:
+		remoteConfig = ConfigObj(remoteIniPath, encoding="UTF-8")
+		log.debug(f"Loading remote config from {remoteIniPath}")
+	except Exception:
+		log.error("Error loading remote.ini", exc_info=True)
+		return
+
+	# Create remote section if it doesn't exist
+	if "remote" not in profile:
+		profile["remote"] = {}
+
+	# Copy all sections from remote.ini
+	for section in remoteConfig:
+		if section not in profile["remote"]:
+			profile["remote"][section] = {}
+		profile["remote"][section].update(remoteConfig[section])
+
+	try:
+		# Backup the old file just in case
+		backupPath = remoteIniPath + ".old"
+		if os.path.exists(backupPath):
+			os.unlink(backupPath)
+		os.rename(remoteIniPath, backupPath)
+		log.debug(f"Backed up remote.ini to {backupPath}")
+	except Exception:
+		log.error("Error backing up remote.ini after migration", exc_info=True)
