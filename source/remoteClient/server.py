@@ -326,7 +326,7 @@ class LocalRelayServer:
 			if time.time() - self.lastPingTime >= self.PING_TIME:
 				for client in self.clients.values():
 					if client.authenticated:
-						client.send(type=RemoteMessageType.PINGping)
+						client.send(type=RemoteMessageType.PING)
 				self.lastPingTime = time.time()
 
 	def acceptNewConnection(self, sock: ssl.SSLSocket) -> None:

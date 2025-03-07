@@ -40,7 +40,7 @@ class RemoteMessageType(StrEnum):
 	# System Messages
 	MOTD = "motd"
 	VERSION_MISMATCH = "version_mismatch"
-	PINGping = "ping"
+	PING = "ping"
 	ERROR = "error"
 	NVDA_NOT_CONNECTED = (
 		"nvda_not_connected"  # This was added in version 2 but never implemented on the server
