@@ -34,5 +34,5 @@ runs:
       run: git restore .
       shell: cmd
     - name: Prepare for tests
-      run: powershell.exe ../ci/scripts/tests/beforeTests.ps1
+      run: powershell.exe ci/scripts/tests/beforeTests.ps1
       shell: cmd
