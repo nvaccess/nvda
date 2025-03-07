@@ -1,11 +1,13 @@
 # NVDA Remote Manual Test Suite
 
 ## Overview
+
 Remote  enables remote assistance functionality between two computers running NVDA. It allows a user to connect to another computer running NVDA and either control the remote system or have their system controlled. This enables remote support, training, and collaboration between screen reader users. The add-on provides features such as speech relay, keyboard control, clipboard sharing, and braille support over remote connections.
 
 ## Environment Setup
 
 ### Host Configuration
+
 - Windows 11 Pro
 - Memory: at least 16GB
 - Processor: at least 4 core
@@ -13,14 +15,16 @@ Remote  enables remote assistance functionality between two computers running NV
 - NVDA Remote Version: 2.6.4 (installed via addon store)
 
 ### Guest Configuration
+
 - Another computer similar to the host or VMware Windows 11 Home running on the host with similar specs to the host computer
 - Storage: 64GB disk
 - Memory: 16GB
 - Processor: 8 core
-- NVDA Version: Custom build from https://github.com/nvda-art/nvda (remote branch)
+- NVDA Version: Custom build from <https://github.com/nvda-art/nvda> (remote branch)
 - Base Position: latest
 
 ## Pre-Test Setup
+
 1. Build signed launcher
 2. Host: Run installed stock NVDA
 3. Guest: Install signed launcher
@@ -28,6 +32,7 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Connection Tests
 
 ### Direct Connection
+
 1. Open NVDA Remote on the host
 2. Press NVDA+alt+page-up to open the "Connect" dialog
 3. Choose "Host" option
@@ -40,6 +45,7 @@ Remote  enables remote assistance functionality between two computers running NV
 10. Test reversing roles (host becomes client, client becomes host)
 
 ### Control Server Connection
+
 1. Open NVDA Remote on both systems
 2. On both systems, press NVDA+alt+page-up to open the "Connect" dialog
 3. Choose "Connect to Control Server" (nvdaremote.com)
@@ -54,8 +60,9 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Version Compatibility Tests
 
 ### New Remote to New Remote
+
 1. Install the new remote implementation on two test machines
-2. Establish connection between the two instances 
+2. Establish connection between the two instances
 3. Test all control modes:
 4. Verify all features work correctly compared to old plugin:
    1. Speech relay
@@ -66,6 +73,7 @@ Remote  enables remote assistance functionality between two computers running NV
 6. Test connection stability during intensive screen reader usage
 
 ### New Remote Controlling Old Plugin
+
 1. Install the new remote implementation on one machine
 2. Install the 2.6.4 plugin on another machine
 3. Test connecting from new remote to old plugin system
@@ -80,6 +88,7 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Remote Control Features
 
 ### Keyboard Input
+
 1. Connect two machines with remote control enabled
 2. Test basic typing in a text editor
 3. Test system shortcuts:
@@ -98,6 +107,7 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Speech and Braille
 
 ### Speech Relay
+
 1. Connect two machines with remote control enabled
 2. Navigate through various UI elements on controlled machine
 3. Verify speech output on controlling machine
@@ -110,6 +120,7 @@ Remote  enables remote assistance functionality between two computers running NV
 7. Verify speech settings respect on host/guest machines
 
 ### Braille Support
+
 1. Connect a braille display to the controlling machine
 2. Establish remote connection between machines
 3. Verify braille output appears correctly
@@ -121,21 +132,23 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Special Features
 
 ### Clipboard Sharing
+
 1. Connect two machines
 2. Copy text on the controlling machine (Ctrl+C)
 3. Push the clipboard text (NVDA+SHIFT+CTRL+C)
 4. Paste text on the controlled machine (Ctrl+V)
 5. Repeat in reverse direction
-5. Test with various content types:
+6. Test with various content types:
    1. Plain text
    2. Formatted text
    3. Large text (multiple paragraphs)
-6. Verify handling of special characters
-7. Test copying and pasting with keyboard shortcuts and context menus
+7. Verify handling of special characters
+8. Test copying and pasting with keyboard shortcuts and context menus
 
 ## Error Handling
 
 ### Connection Issues
+
 1. Establish remote connection between two machines
 2. Temporarily disable network adapter on one machine
 3. Verify appropriate error messages are displayed
@@ -145,6 +158,7 @@ Remote  enables remote assistance functionality between two computers running NV
 7. Test disconnection handling when one machine crashes
 
 ### Resource Usage
+
 1. Establish remote connection between two machines
 2. Monitor CPU usage during an extended session (30+ minutes)
 3. Monitor memory consumption over time
@@ -156,6 +170,7 @@ Remote  enables remote assistance functionality between two computers running NV
 ## Security Tests
 
 ### Authentication
+
 1. Test connection with valid password
 2. Attempt connection with invalid password
 3. Test empty password behavior
