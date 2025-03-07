@@ -16,13 +16,15 @@ from ctypes import (
 	c_ulonglong,
 	POINTER,
 	c_void_p,
+	c_wchar,
 	cast,
+	create_string_buffer,
 	memmove,
 	string_at,
 	sizeof,
 	windll,
 )
-from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
+from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, WORD
 from typing import TYPE_CHECKING, Optional, TypeAlias
 import nvwave
 from synthDriverHandler import (
@@ -34,9 +36,11 @@ from synthDriverHandler import (
 )
 from logHandler import log
 from ._sapi4 import (
+	MMSYSERR_NOERROR,
 	AudioError,
 	SDATA,
 	CLSID_TTSEnumerator,
+	DriverMessage,
 	IAudio,
 	IAudioDest,
 	IAudioDestNotifySink,
@@ -909,3 +913,49 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+
+def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
+
+	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
+	:return: An integer WaveOut device ID for use with SAPI4.
+		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
+	"""
+	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
+		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
+		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
+		currEndpointIdByteCount = DWORD()
+		# Defined in mmeapi.h
+		winmm = windll.winmm
+		waveOutMessage = winmm.waveOutMessage
+		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		for devID in range(waveOutGetNumDevs()):
+			# Get the length of this device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID_SIZE,
+				byref(currEndpointIdByteCount),
+				None,
+			)
+			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
+				# ID lengths don't match, so this device can't be a match.
+				continue
+			# Get the device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID,
+				byref(currEndpointId),
+				currEndpointIdByteCount,
+			)
+			if mmr != MMSYSERR_NOERROR:
+				continue
+			# Decode the endpoint ID string to a python string, and strip the null terminator.
+			if (
+				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
+				== targetEndpointId
+			):
+				return devID
+	# No matching device found, or default requested explicitly.
+	# Return the ID of Microsoft Sound Mapper
+	return -1
