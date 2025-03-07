@@ -1,4 +1,3 @@
-$ErrorActionPreference = "Stop";
 $outDir = (Resolve-Path .\testOutput\unit\)
 $unitTestsXml = "$outDir\unitTests.xml"
 .\rununittests.bat --output-file "$unitTestsXml" -v
@@ -9,3 +8,4 @@ if($LastExitCode -ne 0) {
 	$message = "PASS: Unit tests."
 }
 $message >> $env:GITHUB_STEP_SUMMARY
+exit $LastExitCode

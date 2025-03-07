@@ -1,4 +1,3 @@
-$ErrorActionPreference = "Stop";
 $testOutput = (Resolve-Path .\testOutput\)
 $systemTestOutput = (Resolve-Path "$testOutput\system")
 if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
@@ -41,3 +40,4 @@ if($LastExitCode -ne 0) {
 	$MESSAGE = "PASS: System tests (tags: ${tagsForTest})."
 }
 $MESSAGE >> $env:GITHUB_STEP_SUMMARY
+exit $LastExitCode
