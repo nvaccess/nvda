@@ -17,7 +17,8 @@ runs:
       with:
         path: |
           .venv
-        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+          source
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
       shell: cmd
@@ -25,5 +26,13 @@ runs:
       run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
     - name: Prepare source code
+      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
       run: scons source %sconsArgs% --all-cores
+      shell: cmd
+    - name: Restore modified files
+      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' }}
+      run: git restore .
+      shell: cmd
+    - name: Prepare for tests
+      run: powershell.exe ../ci/scripts/tests/beforeTests.ps1
       shell: cmd

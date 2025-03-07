@@ -38,8 +38,6 @@ jobs:
         submodules: true
     - name: Build NVDA
       uses: ./nvdaBuilder
-    - name: Prepare for system tests
-      run: powershell.exe ci/scripts/tests/beforeTests.ps1
     - name: Run launcher
       run: scons launcher version=%version% --all-cores
     - name: Install NVDA
