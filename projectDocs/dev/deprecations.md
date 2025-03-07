@@ -26,6 +26,21 @@ def __getattr__(attrName: str) -> Any:
 	raise AttributeError(f"module {repr(__name__)} has no attribute {repr(attrName)}")
 ```
 
+## Deprecating extension points
+
+Support for deprecations is included in the various extensionPoint classes.
+
+For example:
+
+```python
+filter_something = extensionPoints.Filter[int](
+	_deprecationMessage="filter_something is deprecated. Use filter_somethingElse instead.",
+)
+```
+
+The deprecation message is logged at the warning level when calling `register` on a `HandlerRegistrar`.
+When `NVDAState._allowDeprecatedAPI()` returns `False`, a `RuntimeError` is raised instead.
+
 ## Required API breaking changes
 
 In order to improve the NVDA API, changes that will break future compatibility may be implemented, as long as they retain backwards compatibility until the `20XX.1` release.

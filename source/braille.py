@@ -2291,14 +2291,17 @@ the remote system should know what cells to show on its display.
 @type currentCellCount: bool
 """
 
-filter_displaySize = extensionPoints.Filter[int]()
+filter_displaySize = extensionPoints.Filter[int](
+	_deprecationMessage="braille.filter_displaySize is deprecated. Use braille.filter_displayDimensions instead.",
+)
 """
+Note: filter_displayDimensions should now be used in place of this filter.
+If this filter is used, NVDA will assume that the display has 1 row of `displaySize` cells.
+
 Filter that allows components or add-ons to change the display size used for braille output.
 For example, when a system has an 80 cell display, but is being controlled by a remote system with a 40 cell
 display, the display size should be lowered to 40 .
-@param value: the number of cells of the current display.
-Note: filter_displayDimensions should now be used in place of this filter.
-If this filter is used, NVDA will assume that the display has 1 row of `displaySize` cells.
+:param value: the number of cells of the current display.
 """
 
 

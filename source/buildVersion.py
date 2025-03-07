@@ -71,7 +71,7 @@ version = _formatDevVersionString()
 publisher = "unknown"
 updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build  # noqa: F401
+	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
 except ImportError:
 	_updateVersionFromVCS()
 
