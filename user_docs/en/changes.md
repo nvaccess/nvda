@@ -24,6 +24,7 @@ Currently this is only supported in Foxit Reader & Foxit Editor. (#9288, @NSoiff
 * The ability to adjust the volume of other applications besides NVDA has been added.
 To use this feature, "allow NVDA to control the volume of other applications" must be enabled in the audio settings panel. (#16052, #17634, @mltony, @codeofdusk)
   * Added new unassigned gestures to increase, decrease and mute the volume of all other applications.
+* Remote access functionality, based on the NVDA Remote add-on, has been integrated into NVDA. (#4390, @ctoth, @tspivey, @daiverd, NVDA Remote Contributors and funders)
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
