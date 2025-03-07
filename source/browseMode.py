@@ -9,7 +9,6 @@ from typing import (
 	Callable,
 	Generator,
 	Union,
-	cast,
 )
 from collections.abc import Generator  # noqa: F811
 import os
@@ -1341,7 +1340,7 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterEdit = labeledCtrl.control
 		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
@@ -2107,10 +2106,10 @@ class BrowseModeDocumentTreeInterceptor(
 	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
-		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
-		@param obj: The object to which the document should scroll.
-		@return: C{True} if the document was scrolled, C{False} if not.
-		@note: If C{False} is returned, calling events should probably call their nextHandler.
+		- postcondition: The virtual caret is moved to *obj* and the buffer content for *obj* is reported.
+		:param obj: The object to which the document should scroll.
+		:return: ``True`` if the document was scrolled, ``False`` if not.
+		- note: If ``False`` is returned, calling events should probably call their ``nextHandler``.
 		"""
 		if (
 			self.programmaticScrollMayFireEvent
@@ -2132,13 +2131,14 @@ class BrowseModeDocumentTreeInterceptor(
 		else:
 			raise ValueError(f"{obj} is not a supported type")
 
-		# We only want to update the caret and speak the field if we're not in the same one as before
+		# We only want to update the caret and speak the field if we're not in the first line of the same object as before.
+		# See #17669
+		scrollInfo.collapse()
+		scrollInfo.expand(textInfos.UNIT_LINE)
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
-			if scrollInfo.isCollapsed:
-				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo, reason=OutputReason.CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo

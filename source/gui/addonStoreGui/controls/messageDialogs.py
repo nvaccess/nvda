@@ -1,11 +1,14 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2023-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2023-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+import threading
+from time import sleep
 from typing import (
 	TYPE_CHECKING,
 )
+import winsound
 
 import wx
 
@@ -16,7 +19,7 @@ from addonStore.models.addon import (
 	_AddonManifestModel,
 )
 from addonStore.dataManager import addonDataManager
-from addonStore.models.status import AvailableAddonStatus
+from addonStore.models.status import _StatusFilterKey, AvailableAddonStatus, getStatus
 import config
 from config.configFlags import AddonsAutomaticUpdate
 import gui
@@ -30,14 +33,28 @@ from gui.guiHelper import (
 	ButtonHelper,
 	SPACE_BETWEEN_VERTICAL_DIALOG_ITEMS,
 )
-from gui.message import DisplayableError, displayDialogAsModal, messageBox
+from gui.message import DisplayableError, displayDialogAsModal, messageBox, _countAsMessageBox
 from logHandler import log
 import NVDAState
+from speech.priorities import SpeechPriority
 import ui
 import windowUtils
 
 if TYPE_CHECKING:
 	from addonStore.models.version import SupportsVersionCheck
+
+__all__ = [
+	"ErrorAddonInstallDialogWithYesNoButtons",
+	"_shouldProceedWhenInstalledAddonVersionUnknown",
+	"_shouldProceedToRemoveAddonDialog",
+	"_shouldInstallWhenAddonTooOldDialog",
+	"_shouldEnableWhenAddonTooOldDialog",
+	"_showAddonRequiresNVDAUpdateDialog",
+	"_showConfirmAddonInstallDialog",
+	"_showAddonInfo",
+	"_SafetyWarningDialog",
+	"UpdatableAddonsDialog",
+]
 
 
 class ErrorAddonInstallDialogWithYesNoButtons(ErrorAddonInstallDialog):
@@ -355,7 +372,7 @@ class _SafetyWarningDialog(
 		self.CentreOnScreen()
 
 	def onOkButton(self, evt: wx.CommandEvent):
-		config.conf["addonStore"]["showWarning"] = not self.dontShowAgainCheckbox.GetValue()
+		addonDataManager.storeSettings.showWarning = not self.dontShowAgainCheckbox.GetValue()
 		self.EndModal(wx.ID_OK)
 
 
@@ -366,12 +383,12 @@ class UpdatableAddonsDialog(
 	"""A dialog notifying users that updatable add-ons are available"""
 
 	helpId = "AutomaticAddonUpdates"
+	onDisplayableError = DisplayableError.OnDisplayableErrorT()
 
 	def __init__(self, parent: wx.Window, addonsPendingUpdate: list[_AddonGUIModel]):
 		# Translators: The warning of a dialog
 		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
 		self.addonsPendingUpdate = addonsPendingUpdate
-		self.onDisplayableError = DisplayableError.OnDisplayableErrorT()
 		self._setupUI()
 		self.Raise()
 		self.SetFocus()
@@ -473,17 +490,18 @@ class UpdatableAddonsDialog(
 	def onUpdateAllButton(self, evt: wx.CommandEvent):
 		from gui.addonStoreGui.viewModels.store import AddonStoreVM
 
+		self.updateAllButton.Disable()
+		self.openStoreButton.Disable()
+
 		self.listItemVMs: list[AddonListItemVM] = []
 		for addon in self.addonsPendingUpdate:
-			listItemVM = AddonListItemVM(addon, status=AvailableAddonStatus.UPDATE)
+			listItemVM = AddonListItemVM(addon, status=getStatus(addon, _StatusFilterKey.UPDATE))
 			listItemVM.updated.register(self._statusUpdate)
 			self.listItemVMs.append(listItemVM)
 		AddonStoreVM.getAddons(self.listItemVMs)
 		self.addonsList.Refresh()
 		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
 		ui.message(pgettext("addonStore", "Updating add-ons..."))
-		self.updateAllButton.Disable()
-		self.openStoreButton.Disable()
 		self.addonsList.SetFocus()
 		self.addonsList.Focus(0)
 
@@ -552,6 +570,11 @@ class UpdatableAddonsDialog(
 		self.DestroyLater()
 		self.SetReturnCode(wx.ID_CLOSE)
 
+	@staticmethod
+	def handleDisplayableError(displayableError: DisplayableError):
+		# Fail silently as we don't care if we can't fetch an update.
+		log.exception("Error occurred while checking for updatable add-ons", exc_info=displayableError)
+
 	@classmethod
 	def _checkForUpdatableAddons(cls):
 		if not NVDAState.shouldWriteToDisk() or (
@@ -560,11 +583,68 @@ class UpdatableAddonsDialog(
 			log.debug("automatic add-on updates are disabled")
 			return
 		log.debug("checking for updatable add-ons")
-		addonsPendingUpdate = addonDataManager._addonsPendingUpdate()
-		if addonsPendingUpdate:
-			log.debug("updatable add-ons found")
 
-			def delayCreateDialog():
-				displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+		UpdatableAddonsDialog.onDisplayableError.register(UpdatableAddonsDialog.handleDisplayableError)
+		addonsPendingUpdate = addonDataManager._addonsPendingUpdate(UpdatableAddonsDialog.onDisplayableError)
+		UpdatableAddonsDialog.onDisplayableError.unregister(UpdatableAddonsDialog.handleDisplayableError)
 
-			wx.CallAfter(delayCreateDialog)
+		if not addonsPendingUpdate:
+			log.debug("no updatable add-ons found")
+			return
+
+		log.debug("updatable add-ons found")
+
+		match config.conf["addonStore"]["automaticUpdates"]:
+			case AddonsAutomaticUpdate.NOTIFY:
+
+				def delayCreateDialog():
+					winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
+					displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+
+				wx.CallAfter(delayCreateDialog)
+
+			case AddonsAutomaticUpdate.UPDATE:
+				threading.Thread(
+					name="AutomaticAddonUpdate",
+					target=_updateAddons,
+					args=(addonsPendingUpdate,),
+					daemon=True,
+				).start()
+
+			case _:
+				raise NotImplementedError("Unknown automatic update setting")
+
+
+@_countAsMessageBox()
+def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
+	"""Update the add-ons in the background.
+	Blocks while downloading occurs.
+	This function is treated as message box to prevent NVDA from exiting while the download/install is in progress.
+	"""
+	from ..viewModels.store import AddonStoreVM
+
+	# Translators: Message shown when updating add-ons automatically
+	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
+	listVMs = {AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate}
+	AddonStoreVM.getAddons(
+		listVMs,
+		shouldReplace=True,
+		shouldInstallIncompatible=True,
+		shouldRememberReplaceChoice=True,
+		shouldRememberInstallChoice=True,
+	)
+
+	while AddonStoreVM._downloader.progress:
+		log.debug(f"Waiting for add-ons to be downloaded {AddonStoreVM._downloader.progress}")
+		sleep(0.1)
+
+	def mainThreadCallback():
+		# Add-on installations must happen on main thread
+		AddonStoreVM.installPending()
+		ui.message(
+			# Translators: Message shown when updating add-ons automatically
+			pgettext("addonStore", "Add-ons updated, restart NVDA to activate changes"),
+			SpeechPriority.NEXT,
+		)
+
+	wx.CallAfter(mainThreadCallback)

@@ -73,6 +73,12 @@ class ScheduleThread(threading.Thread):
 	Daily scheduled jobs occur offset by X minutes to avoid overlapping jobs.
 	"""
 
+	START_MINUTE_OFFSET = 1
+	"""
+	Offset in minutes to start scheduling daily jobs.
+	The first scheduled job occurs X minutes after NVDA starts.
+	"""
+
 	def __init__(self, *args, **kwargs) -> None:
 		super().__init__(*args, **kwargs)
 		self.scheduledDailyJobCount = 0
@@ -88,7 +94,9 @@ class ScheduleThread(threading.Thread):
 		# Schedule jobs so that they occur offset by a regular period to avoid overlapping jobs.
 		# Start with a delay to give time for NVDA to start up.
 		startTimeMinuteOffset = (
-			startTime.minute + (self.scheduledDailyJobCount + 1) * self.DAILY_JOB_MINUTE_OFFSET
+			startTime.minute
+			+ self.START_MINUTE_OFFSET
+			+ self.scheduledDailyJobCount * self.DAILY_JOB_MINUTE_OFFSET
 		)
 		# Handle the case where the minute offset is greater than 60.
 		startTimeHourOffset = startTime.hour + (startTimeMinuteOffset // 60)

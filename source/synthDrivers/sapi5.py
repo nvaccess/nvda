@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, gexgd0419
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -32,6 +32,7 @@ from speech.commands import (
 	PhonemeCommand,
 	SpeechCommand,
 )
+from ._sonic import SonicStream, initialize as sonicInitialize
 
 
 class SpeechVoiceSpeakFlags(IntEnum):
@@ -94,7 +95,9 @@ class SynthDriverAudioStream(COMObject):
 			return hresult.E_UNEXPECTED
 		if not synth.isSpeaking:
 			return hresult.E_FAIL
-		synth.player.feed(pv, cb)
+		synth.sonicStream.writeShort(pv, cb // 2 // synth.sonicStream.channels)
+		audioData = synth.sonicStream.readShort()
+		synth.player.feed(audioData, len(audioData) * 2)
 		if pcbWritten:
 			pcbWritten[0] = cb
 		self._writtenBytes += cb
@@ -194,6 +197,10 @@ class SapiSink(COMObject):
 
 	def EndStream(self, streamNum: int, pos: int):
 		synth = self.synthRef()
+		# Flush the stream and get the remaining data.
+		synth.sonicStream.flush()
+		audioData = synth.sonicStream.readShort()
+		synth.player.feed(audioData, len(audioData) * 2)
 		synth.player.idle()
 		# trigger all untriggered bookmarks
 		if streamNum in synth._streamBookmarks:
@@ -221,6 +228,7 @@ class SynthDriver(SynthDriver):
 	supportedSettings = (
 		SynthDriver.VoiceSetting(),
 		SynthDriver.RateSetting(),
+		SynthDriver.RateBoostSetting(),
 		SynthDriver.PitchSetting(),
 		SynthDriver.VolumeSetting(),
 	)
@@ -257,8 +265,11 @@ class SynthDriver(SynthDriver):
 		@type _defaultVoiceToken: ISpeechObjectToken
 		"""
 		self._pitch = 50
+		self._rate = 50
+		self._volume = 100
 		self.player = None
 		self.isSpeaking = False
+		self._rateBoost = False
 		self._initTts(_defaultVoiceToken)
 		# key = stream num, value = deque of bookmarks
 		self._streamBookmarks = dict()  # bookmarks in currently speaking streams
@@ -293,13 +304,16 @@ class SynthDriver(SynthDriver):
 		return self.tts.getVoices()
 
 	def _get_rate(self):
-		return (self.tts.rate * 5) + 50
+		return self._rate
+
+	def _get_rateBoost(self):
+		return self._rateBoost
 
 	def _get_pitch(self):
 		return self._pitch
 
 	def _get_volume(self) -> int:
-		return self.tts.volume
+		return self._volume
 
 	def _get_voice(self):
 		return self.tts.voice.Id
@@ -311,17 +325,39 @@ class SynthDriver(SynthDriver):
 		else:
 			return None
 
+	@classmethod
+	def _percentToParam(cls, percent, min, max) -> float:
+		"""Overrides SynthDriver._percentToParam to return floating point parameter values."""
+		return float(percent) / 100 * (max - min) + min
+
 	def _percentToRate(self, percent):
 		return (percent - 50) // 5
 
 	def _set_rate(self, rate):
-		self.tts.Rate = self._percentToRate(rate)
+		self._rate = rate
+		if self._rateBoost:
+			# When rate boost is enabled, use sonicStream to change the speed.
+			# Supports 0.5x~6x speed.
+			self.tts.Rate = 0
+			self.sonicStream.speed = self._percentToParam(rate, 0.5, 6.0)
+		else:
+			# When rate boost is disabled, let the voice itself change the speed.
+			self.tts.Rate = self._percentToRate(rate)
+			self.sonicStream.speed = 1
+
+	def _set_rateBoost(self, enable: bool):
+		if enable == self._rateBoost:
+			return
+		rate = self._rate
+		self._rateBoost = enable
+		self.rate = rate
 
 	def _set_pitch(self, value):
 		# pitch is really controled with xml around speak commands
 		self._pitch = value
 
 	def _set_volume(self, value):
+		self._volume = value
 		self.tts.Volume = value
 
 	def _initTts(self, voice=None):
@@ -336,6 +372,11 @@ class SynthDriver(SynthDriver):
 		self.tts.AudioOutput = self.tts.AudioOutput  # Reset the audio and its format parameters
 		fmt = self.tts.AudioOutputStream.Format
 		wfx = fmt.GetWaveFormatEx()
+		# Force the wave format to be 16-bit integer (which Sonic uses internally).
+		# SAPI will convert the format for us if it isn't supported by the voice.
+		wfx.FormatTag = nvwave.WAVE_FORMAT_PCM
+		wfx.BitsPerSample = 16
+		fmt.SetWaveFormatEx(wfx)
 		if self.player:
 			self.player.close()
 		self.player = nvwave.WavePlayer(
@@ -350,6 +391,8 @@ class SynthDriver(SynthDriver):
 		customStream.BaseStream = audioStream
 		customStream.Format = fmt
 		self.tts.AudioOutputStream = customStream
+		sonicInitialize()
+		self.sonicStream = SonicStream(wfx.SamplesPerSec, wfx.Channels)
 
 		# Set event notify sink
 		self.tts.EventInterests = (
@@ -370,6 +413,9 @@ class SynthDriver(SynthDriver):
 			# Voice not found.
 			return
 		self._initTts(voice=voice)
+		# As _initTts resets the voice parameters on the tts object, set them back to current values.
+		self._set_rate(self._rate)
+		self._set_volume(self._volume)
 
 	def _percentToPitch(self, percent):
 		return percent // 2 - 25

@@ -21,6 +21,8 @@ environment:
   secure: Iql/RhSathGacONacsyr6gis+rjL75UFZ/R+nPAJpo3asAzQSQQd8hfxq0iv8+Th
  mozillaSymsAuthToken:
   secure: p37Fxo78fsRdmR8v8TPz978QvVaqvbjdIBzFe8ZOpX0FUprm46rkhd374QM1CqMO
+ APPVEYOR_WEBHOOK_TOKEN:
+  secure: N8GiEsalpVCro2Q7P9QAb1ZMLeYVvm2lk2Ba73OPZ9/TD8b39mc5gOmpXKNdftoA
  symstore: C:\Program Files (x86)\Windows Kits\10\Debuggers\x64\symstore.exe
  crowdinProjectID: 598017
  crowdinAuthToken:
@@ -83,7 +85,6 @@ test_script:
  - ps: appveyor\scripts\tests\translationCheck.ps1
  - ps: appveyor\scripts\tests\licenseCheck.ps1
  - ps: appveyor\scripts\tests\unitTests.ps1
- - ps: appveyor\scripts\tests\lintCheck.ps1
  - ps: appveyor\scripts\tests\systemTests.ps1
  - ps: |
      "TEST_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
@@ -95,8 +96,19 @@ artifacts:
  - path: output\*
  - path: output\*\*
 
+# Legacy deployment over ssh
 deploy_script:
  - ps: appveyor\scripts\deployScript.ps1
+
+# Prepare environment with additional variables for webhook
+before_deploy:
+ - ps: appveyor\scripts\webhookSetup.ps1
+
+deploy:
+  - provider: Webhook
+    url: https://api.nvaccess.org/appveyor/hook
+    authorization: Bearer %APPVEYOR_WEBHOOK_TOKEN%
+    request_timeout: 5  # minutes
 
 on_failure:
  - ps: appveyor\scripts\uploadArtifacts.ps1

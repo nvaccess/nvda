@@ -60,8 +60,8 @@ class CachingGetter(Getter):
 
 
 class AutoPropertyType(ABCMeta):
-	def __init__(self, name, bases, dict):
-		super(AutoPropertyType, self).__init__(name, bases, dict)
+	def __init__(self, name: str, bases: tuple[type, ...], dict: dict[str, Any], /, **kwargs: Any):
+		super().__init__(name, bases, dict, **kwargs)
 
 		cacheByDefault = False
 		try:
@@ -183,12 +183,12 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
-	def __new__(meta, name, bases, dict):
-		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
-		gesturesDictName = "_%s__gestures" % cls.__name__
+	def __new__(cls, name: str, bases: tuple[type, ...], dict: [str, Any], /, **kwargs: Any):
+		newCls = super().__new__(cls, name, bases, dict, **kwargs)
+		gesturesDictName = "_%s__gestures" % newCls.__name__
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
 		try:
-			gestures = getattr(cls, gesturesDictName).copy()
+			gestures = getattr(newCls, gesturesDictName).copy()
 		except AttributeError:
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
@@ -201,8 +201,8 @@ class ScriptableType(AutoPropertyType):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
 		if gestures:
-			setattr(cls, gesturesDictName, gestures)
-		return cls
+			setattr(newCls, gesturesDictName, gestures)
+		return newCls
 
 
 class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):

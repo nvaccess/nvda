@@ -1,13 +1,17 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
-from typing import Optional
+from functools import lru_cache
 import os
 
+import markdown
+import nh3
+
 import globalVars
+from gui import blockAction
 import languageHandler
 import NVDAState
 from logHandler import log
@@ -16,7 +20,7 @@ import queueHandler
 import wx
 
 
-def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
+def getDocFilePath(fileName: str, localized: bool = True) -> str | None:
 	if not getDocFilePath.rootPath:
 		if NVDAState.isRunningAsSource():
 			getDocFilePath.rootPath = os.path.join(globalVars.appDir, "..", "user_docs")
@@ -47,8 +51,8 @@ def getDocFilePath(fileName: str, localized: bool = True) -> Optional[str]:
 		return None
 	else:
 		# Not localized.
-		if NVDAState.isRunningAsSource() and fileName in ("copying.txt", "contributors.txt"):
-			# If running from source, these two files are in the root dir.
+		if NVDAState.isRunningAsSource() and fileName == "copying.txt":
+			# If running from source, this file is in the root dir.
 			return os.path.join(globalVars.appDir, "..", fileName)
 		else:
 			return os.path.join(getDocFilePath.rootPath, fileName)
@@ -75,3 +79,25 @@ def reportNoDocumentation(fileName: str, useMsgBox: bool = False) -> None:
 		)
 	else:
 		queueHandler.queueFunction(queueHandler.eventQueue, ui.message, noDocMessage)
+
+
+@lru_cache(maxsize=1)
+def _getSanitizedHtmlLicense() -> str:
+	licenseFilename: str = getDocFilePath("copying.txt", False)
+	with open(licenseFilename, "r", encoding="utf-8") as licenseFile:
+		htmlLicense = markdown.markdown(licenseFile.read())
+	return nh3.clean(htmlLicense)
+
+
+@blockAction.when(
+	# HTML includes links which shouldn't be accessible
+	# in secure contexts as it opens a browser.
+	blockAction.Context.SECURE_MODE,
+)
+def displayLicense():
+	ui.browseableMessage(
+		_getSanitizedHtmlLicense(),
+		# Translators: The title of the dialog to show the NVDA License.
+		_("NVDA License"),
+		isHtml=True,
+	)

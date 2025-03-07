@@ -65,12 +65,11 @@ from addonStore.models.version import (  # noqa: E402
 )
 import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
-import config
 import winKernel
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
 #: The URL to use for update checks.
-_DEFAULT_CHECK_URL = "https://www.nvaccess.org/nvdaUpdateCheck"
+_DEFAULT_CHECK_URL = "https://api.nvaccess.org/nvdaUpdateCheck"
 #: The time to wait between checks.
 CHECK_INTERVAL = 86400  # 1 day
 #: The time to wait before retrying a failed check.
@@ -691,6 +690,9 @@ class UpdateAskInstallDialog(
 					# Therefore, clear the dontRemindVersion.
 					state["dontRemindVersion"] = None
 					saveState()
+
+				case _:
+					log.error(f"Unexpected return code {res} from update dialog")
 
 		return callback
 

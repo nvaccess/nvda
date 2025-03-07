@@ -22,7 +22,7 @@ from .commands import (
 from .extensions import pre_speechQueued
 from .priorities import Spri, SPEECH_PRIORITIES
 from logHandler import log
-from synthDriverHandler import getSynth
+from synthDriverHandler import getSynth, pre_synthSpeak
 from typing import (
 	Dict,
 	Any,
@@ -432,6 +432,7 @@ class SpeechManager(object):
 					self._indexesSpeaking.append(item.index)
 			self._cancelledLastSpeechWithSynth = False
 			log._speechManagerUnitTest(f"Synth Gets: {seq}")
+			pre_synthSpeak.notify(speechSequence=seq)
 			getSynth().speak(seq)
 
 	def _getNextPriority(self):

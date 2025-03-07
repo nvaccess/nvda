@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2024 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2012-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -41,7 +41,7 @@ import controlTypes
 from controlTypes import TextPosition
 from logHandler import log
 import scriptHandler
-from locationHelper import RectLTRB
+from locationHelper import RectLTRB, RectLTWH
 from NVDAObjects.window._msOfficeChart import OfficeChart
 from utils.urlUtils import _LinkData
 
@@ -1359,6 +1359,11 @@ class SlideShowTreeInterceptorTextInfo(NVDAObjectTextInfo):
 
 	def _getStoryText(self):
 		return self.obj.rootNVDAObject.basicText
+
+	def _get_boundingRects(self) -> list[RectLTWH]:
+		if self.obj.rootNVDAObject.hasIrrelevantLocation:
+			raise LookupError("Object is off screen, invisible or has no location")
+		return [self.obj.rootNVDAObject.location]
 
 	def _getOffsetsFromNVDAObject(self, obj):
 		if obj == self.obj.rootNVDAObject:

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -37,13 +37,15 @@ from .models.addon import (
 	_createStoreCollectionFromJson,
 )
 from .models.channel import Channel
-from .models.status import AvailableAddonStatus, getStatus, _StatusFilterKey
+from .models.status import AvailableAddonStatus, _canUpdateAddon, getStatus, _StatusFilterKey
 from .network import (
 	_getCurrentApiVersionForURL,
 	_getAddonStoreURL,
 	_getCacheHashURL,
 	_LATEST_API_VER,
 )
+from .settings import _AddonStoreSettings
+
 
 if TYPE_CHECKING:
 	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
@@ -98,6 +100,7 @@ class _DataManager:
 			pathlib.Path(WritePaths.addonStoreDir).mkdir(parents=True, exist_ok=True)
 			pathlib.Path(self._installedAddonDataCacheDir).mkdir(parents=True, exist_ok=True)
 
+		self.storeSettings = _AddonStoreSettings()
 		self._latestAddonCache = self._getCachedAddonData(self._cacheLatestFile)
 		self._compatibleAddonCache = self._getCachedAddonData(self._cacheCompatibleFile)
 		self._installedAddonsCache = _InstalledAddonsCache()
@@ -110,6 +113,7 @@ class _DataManager:
 		self._initialiseAvailableAddonsThread.start()
 
 	def terminate(self):
+		self.storeSettings.save()
 		if self._initialiseAvailableAddonsThread.is_alive():
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():
@@ -348,20 +352,41 @@ class _DataManager:
 			return None
 		return _createInstalledStoreModelFromData(cacheData)
 
-	def _addonsPendingUpdate(self) -> list["_AddonGUIModel"]:
-		addonsPendingUpdate: list["_AddonGUIModel"] = []
-		compatibleAddons = self.getLatestCompatibleAddons()
+	def _addonsPendingUpdate(
+		self,
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
+	) -> list["_AddonGUIModel"]:
+		updatableAddonStatuses = {AvailableAddonStatus.UPDATE}
+		addonsPendingUpdate: dict["str", "_AddonGUIModel"] = {}
+		if config.conf["addonStore"]["allowIncompatibleUpdates"]:
+			updatableAddonStatuses.add(AvailableAddonStatus.UPDATE_INCOMPATIBLE)
+			compatibleAddons = self.getLatestAddons(onDisplayableError)
+		else:
+			compatibleAddons = self.getLatestCompatibleAddons(onDisplayableError)
 		for channel in compatibleAddons:
+			# Ensure add-on update channel is within the preferred update channels
 			for addon in compatibleAddons[channel].values():
-				if (
-					getStatus(addon, _StatusFilterKey.UPDATE) == AvailableAddonStatus.UPDATE
-					# Only consider add-ons that have been installed through the Add-on Store
-					and addon._addonHandlerModel._addonStoreData is not None
-				):
-					# Only consider add-on updates for the same channel
-					if addon.channel == addon._addonHandlerModel._addonStoreData.channel:
-						addonsPendingUpdate.append(addon)
-		return addonsPendingUpdate
+				# Ensure add-on is updatable
+				if getStatus(addon, _StatusFilterKey.UPDATE) in updatableAddonStatuses:
+					if (installedStoreData := addon._addonHandlerModel._addonStoreData) is not None:
+						installedChannel = installedStoreData.channel
+					else:
+						installedChannel = Channel.EXTERNAL
+					selectedUpdateChannel = addonDataManager.storeSettings.getAddonSettings(
+						addon.addonId,
+					).updateChannel
+					availableUpdateChannels = selectedUpdateChannel._availableChannelsForAddonWithChannel(
+						installedChannel,
+					)
+					# Ensure add-on channel is valid to update to given update preferences
+					if addon.channel in availableUpdateChannels:
+						if addon.name in addonsPendingUpdate:
+							# See if this version is newer than the currently tracked versions
+							if _canUpdateAddon(addon, addonsPendingUpdate[addon.name]):
+								addonsPendingUpdate[addon.name] = addon
+						else:
+							addonsPendingUpdate[addon.name] = addon
+		return list(addonsPendingUpdate.values())
 
 
 class _InstalledAddonsCache(AutoPropertyObject):

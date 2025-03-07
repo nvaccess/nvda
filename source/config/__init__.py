@@ -1068,18 +1068,17 @@ class ConfigManager(object):
 
 
 class ConfigValidationData(object):
-	validationFuncName = None  # type: str
+	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
 		super(ConfigValidationData, self).__init__()
 
 	# args passed to the convert function
-	args = []  # type: List[Any]
+	args: list[Any] = []
 
 	# kwargs passed to the convert function.
-	kwargs = {}  # type: Dict[str, Any]
-
+	kwargs: dict[str, Any] = {}
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 

@@ -207,6 +207,8 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 			usbIDStart = h.find("VID_")
 			if usbIDStart != -1:
 				info["usbID"] = hwID[usbIDStart : usbIDStart + 17]  # VID_xxxx&PID_xxxx
+		case _:
+			log.debug(f"Unknown hardware ID {hwID!r}")
 	return info
 
 

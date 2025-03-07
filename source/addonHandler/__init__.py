@@ -1,6 +1,6 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2012-2024 Rui Batista, NV Access Limited, Noelia Ruiz Martínez,
-# Joseph Lee, Babbage B.V., Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt
+# Copyright (C) 2012-2025 Rui Batista, NV Access Limited, Noelia Ruiz Martínez, Joseph Lee, Babbage B.V.,
+# Arnold Loubriat, Łukasz Golonka, Leonard de Ruijter, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -20,6 +20,7 @@ from six import string_types
 from typing import (
 	Callable,
 	Dict,
+	IO,
 	Literal,
 	Optional,
 	Set,
@@ -262,6 +263,11 @@ def getIncompatibleAddons(
 
 def removeFailedDeletion(path: os.PathLike):
 	shutil.rmtree(path, ignore_errors=True)
+	if os.path.exists(path):
+		try:
+			os.remove(path)
+		except Exception:
+			pass
 	if os.path.exists(path):
 		log.error(f"Failed to delete path {path}, try removing manually")
 
@@ -1054,12 +1060,11 @@ docFileName = string(default=None)
 		),
 	)
 
-	def __init__(self, input, translatedInput=None):
-		"""Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest information
-		@type input: a fie-like object.
-		@param translatedInput: translated manifest input
-		@type translatedInput: file-like object
+	def __init__(self, input: IO[bytes], translatedInput: IO[bytes] | None = None):
+		"""Constructs an :class:`AddonManifest` instance from manifest string data
+
+		:param input: data to read the manifest information
+		:param translatedInput: Optional translated manifest input, defaults to ``None``
 		"""
 		super().__init__(input, configspec=self.configspec, encoding="utf-8", default_encoding="utf-8")
 		self._errors = None

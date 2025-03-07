@@ -12,6 +12,8 @@ from typing import (
 	OrderedDict,
 	Set,
 	Tuple,
+	TYPE_CHECKING,
+	Type,
 )
 from locale import strxfrm
 
@@ -29,6 +31,9 @@ from autoSettingsUtils.driverSetting import BooleanDriverSetting, DriverSetting,
 from autoSettingsUtils.utils import StringParameterInfo
 
 from abc import abstractmethod
+
+if TYPE_CHECKING:
+	from speech.commands import SynthCommand
 
 
 class LanguageInfo(StringParameterInfo):
@@ -96,8 +101,7 @@ class SynthDriver(driverHandler.Driver):
 	#: @type: str
 	description = ""
 	#: The speech commands supported by the synth.
-	#: @type: set of L{SynthCommand} subclasses.
-	supportedCommands = frozenset()
+	supportedCommands: set[Type["SynthCommand"]] = frozenset()
 	#: The notifications provided by the synth.
 	#: @type: set of L{extensionPoints.Action} instances
 	supportedNotifications = frozenset()
@@ -566,4 +570,12 @@ The local system should be notified about synth parameters at the remote system.
 @type audioOutputDevice: str
 @param isFallback: Whether the synth is set as fallback synth due to another synth's failure
 @type isFallback: bool
+"""
+
+pre_synthSpeak = extensionPoints.Action()
+"""
+Notifies when speak() of the current synthesizer is about to be called.
+
+:param speechSequence: the speech sequence to pass to speak()
+:type speechSequence: speech.SpeechSequence
 """

@@ -27,6 +27,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	#possible log levels are DEBUG, IO, DEBUGWARNING, INFO
 	loggingLevel = string(default="INFO")
 	showWelcomeDialogAtStartup = boolean(default=true)
+	preventDisplayTurningOff = boolean(default=true)
 
 # Speech settings
 [speech]
@@ -45,6 +46,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	autoDialectSwitching = boolean(default=false)
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
+	trimLeadingSilence = boolean(default=true)
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -336,9 +338,12 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	playErrorSound = integer(0, 1, default=0)
 
 [addonStore]
-	showWarning = boolean(default=true)
-	automaticUpdates = option("notify", "disabled", default="notify")
+	automaticUpdates = option("notify", "update", "disabled", default="notify")
+	allowIncompatibleUpdates = boolean(default=false)
 	baseServerURL = string(default="")
+	# UpdateChannel values:
+	# same channel (default), any channel, do not update, stable, beta & dev, beta, dev
+	defaultUpdateChannel = integer(0, 6, default=0)
 
 # Remote Settings
 [remote]
