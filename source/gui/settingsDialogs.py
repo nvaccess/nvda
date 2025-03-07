@@ -5,7 +5,7 @@
 #  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -1003,6 +1003,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			configPath=("update", "serverURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
+			responseValidator=_isResponseUpdateMetadata,
 		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
@@ -5628,3 +5629,11 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
 	# Therefore, we only check if the data is a non-empty string.
 	return isinstance(data, str) and bool(data)
+
+
+def _isResponseUpdateMetadata(response: requests.Response) -> bool:
+	try:
+		updateCheck.UpdateInfo.parseUpdateCheckResponse(response.text)
+	except Exception:
+		return False
+	return True

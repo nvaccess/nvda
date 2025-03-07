@@ -1,7 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2012-2024 NV Access Limited, Zahari Yurukov, Babbage B.V., Joseph Lee
+# Copyright (C) 2012-2025 NV Access Limited, Zahari Yurukov,
+# Babbage B.V., Joseph Lee, Christopher Proß
 
 """Update checking functionality.
 @note: This module may raise C{RuntimeError} on import if update checking for this build is not supported.
@@ -13,6 +14,7 @@ from typing import (
 	Any,
 	Dict,
 	Optional,
+	Self,
 	Tuple,
 )
 from uuid import uuid4
@@ -67,6 +69,8 @@ import addonAPIVersion
 from logHandler import log, isPathExternalToNVDA
 import winKernel
 from utils.tempFile import _createEmptyTempFileForDeletingFile
+from dataclasses import dataclass
+
 
 #: The URL to use for update checks.
 _DEFAULT_CHECK_URL = "https://api.nvaccess.org/nvdaUpdateCheck"
@@ -91,6 +95,58 @@ state: Optional[Dict[str, Any]] = None
 #: The single instance of L{AutoUpdateChecker} if automatic update checking is enabled,
 #: C{None} if it is disabled.
 autoChecker: Optional["AutoUpdateChecker"] = None
+
+
+@dataclass
+class UpdateInfo:
+	"""Data class representing update information for NVDA."""
+
+	version: str
+	"""The version of the update."""
+
+	launcherUrl: str
+	"""The URL to download the launcher."""
+
+	apiVersion: str
+	"""The API version of the update."""
+
+	launcherHash: str | None = None
+	"""The SHA1 hash of the launcher, if available."""
+
+	apiCompatTo: str | None = None
+	"""The API version that the update is backward-compatible with, if available."""
+
+	changesUrl: str | None = None
+	"""The URL to the changelog, if available."""
+
+	launcherInteractiveUrl: str | None = None
+	"""URL to download the update from the NV Access website, if available."""
+
+	@classmethod
+	def parseUpdateCheckResponse(cls, data: str) -> Self:
+		"""Parses the update response and returns an UpdateInfo object.
+
+		:param data: The raw server response as a UTF-8 decoded string.
+		:return: An UpdateInfo object containing the update metadata.
+		:raises ValueError: If the response format is invalid.
+		"""
+		parameters = inspect.signature(cls).parameters
+		knownKeys: set[str] = set(parameters)
+		requiredKeys: set[str] = {key for key, value in parameters.items() if value.default is value.empty}
+		metadata: dict[str, str] = {}
+		for line in data.splitlines():
+			try:
+				key, val = line.split(": ", 1)
+			except ValueError:
+				raise ValueError(f"Invalid line format in update response: {line}")
+			if key in knownKeys:
+				metadata[key] = val
+			else:
+				log.debug(f"Dropping unknown key {key} = {val}.")
+		requiredKeys.difference_update(metadata)
+		if len(requiredKeys) > 0:
+			raise ValueError(f"Missing required key(s): {', '.join(requiredKeys)}")
+		return cls(**metadata)
 
 
 def _getCheckURL() -> str:
@@ -123,12 +179,13 @@ def getQualifiedDriverClassNameForStats(cls):
 UPDATE_FETCH_TIMEOUT_S = 30  # seconds
 
 
-def checkForUpdate(auto: bool = False) -> Optional[Dict]:
+def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 	"""Check for an updated version of NVDA.
 	This will block, so it generally shouldn't be called from the main thread.
-	@param auto: Whether this is an automatic check for updates.
-	@return: Information about the update or C{None} if there is no update.
-	@raise RuntimeError: If there is an error checking for an update.
+
+	:param auto: Whether this is an automatic check for updates.
+	:return: An UpdateInfo object containing the update metadata, or None if there is no update.
+	:raise RuntimeError: If there is an error checking for an update.
 	"""
 	allowUsageStats = config.conf["update"]["allowUsageStats"]
 	# #11837: build version string, service pack, and product type manually
@@ -140,6 +197,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		if winVersion.service_pack_minor != 0:
 			winVersionText += ".%d" % winVersion.service_pack_minor
 	winVersionText += " %s" % ("workstation", "domain controller", "server")[winVersion.product_type - 1]
+
 	params = {
 		"autoCheck": auto,
 		"allowUsageStats": allowUsageStats,
@@ -152,6 +210,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 		"x64": os.environ.get("PROCESSOR_ARCHITEW6432") == "AMD64",
 		"osArchitecture": os.environ.get("PROCESSOR_ARCHITEW6432"),
 	}
+
 	if auto and allowUsageStats:
 		synthDriverClass = synthDriverHandler.getSynth().__class__
 		brailleDisplayClass = braille.handler.display.__class__ if braille.handler else None
@@ -170,6 +229,7 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			"outputBrailleTable": config.conf["braille"]["translationTable"] if brailleDisplayClass else None,
 		}
 		params.update(extraParams)
+
 	url = f"{_getCheckURL()}?{urllib.parse.urlencode(params)}"
 	try:
 		log.debug(f"Fetching update data from {url}")
@@ -182,25 +242,24 @@ def checkForUpdate(auto: bool = False) -> Optional[Dict]:
 			# #4803: Windows fetches trusted root certificates on demand.
 			# Python doesn't trigger this fetch (PythonIssue:20916), so try it ourselves
 			_updateWindowsRootCertificates()
-			# and then retry the update check.
-			log.debug(f"Fetching update data from {url}")
+			# Retry the update check
+			log.debug(f"Retrying update check from {url}")
 			res = urllib.request.urlopen(url, timeout=UPDATE_FETCH_TIMEOUT_S)
 		else:
 			raise
+
 	if res.code != 200:
-		raise RuntimeError("Checking for update failed with code %d" % res.code)
-	info = {}
-	for line in res:
-		# #9819: update description resource returns bytes, so make it Unicode.
-		line = line.decode("utf-8").rstrip()
-		try:
-			key, val = line.split(": ", 1)
-		except ValueError:
-			raise RuntimeError("Error in update check output")
-		info[key] = val
-	if not info:
-		return None
-	return info
+		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
+
+	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
+	try:
+		parsed_response = UpdateInfo.parseUpdateCheckResponse(data)
+	except ValueError:
+		raise RuntimeError(
+			"The update response is invalid. Ensure the update mirror returns a properly formatted response.",
+		)
+
+	return parsed_response
 
 
 def _setStateToNone(_state):
@@ -323,7 +382,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			return
 		self._result(info)
 		if info:
-			state["dontRemindVersion"] = info["version"]
+			state["dontRemindVersion"] = info.version
 		state["lastCheck"] = time.time()
 		saveState()
 		if autoChecker:
@@ -369,7 +428,7 @@ class UpdateChecker(garbageHandler.TrackedObject):
 			wx.OK | wx.ICON_ERROR,
 		)
 
-	def _result(self, info: Optional[Dict]) -> None:
+	def _result(self, info: Optional[UpdateInfo]) -> None:
 		wx.CallAfter(self._progressDialog.done)
 		self._progressDialog = None
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, False)
@@ -411,10 +470,10 @@ class AutoUpdateChecker(UpdateChecker):
 	def _error(self):
 		self.setNextCheck(isRetry=True)
 
-	def _result(self, info):
+	def _result(self, info: UpdateInfo | None) -> None:
 		if not info:
 			return
-		if info["version"] == state["dontRemindVersion"]:
+		if info.version == state["dontRemindVersion"]:
 			return
 		wx.CallAfter(UpdateResultDialog, gui.mainFrame, info, True)
 
@@ -426,7 +485,7 @@ class UpdateResultDialog(
 ):
 	helpId = "GeneralSettingsCheckForUpdates"
 
-	def __init__(self, parent, updateInfo: Optional[Dict], auto: bool) -> None:
+	def __init__(self, parent, updateInfo: UpdateInfo | None, auto: bool) -> None:
 		# Translators: The title of the dialog informing the user about an NVDA update.
 		super().__init__(parent, title=_("NVDA Update"))
 
@@ -437,7 +496,7 @@ class UpdateResultDialog(
 		remoteUpdateExists = updateInfo is not None
 		pendingUpdateDetails = getPendingUpdate()
 		canOfferPendingUpdate = (
-			isPendingUpdate() and remoteUpdateExists and pendingUpdateDetails[1] == updateInfo["version"]
+			isPendingUpdate() and remoteUpdateExists and pendingUpdateDetails[1] == updateInfo.version
 		)
 
 		text = sHelper.addItem(wx.StaticText(self))
@@ -450,7 +509,7 @@ class UpdateResultDialog(
 				# Translators: A message indicating that an update to NVDA has been downloaded and is ready to be
 				# applied.
 				"Update to NVDA version {version} has been downloaded and is ready to be applied.",
-			).format(**updateInfo)
+			).format(version=updateInfo.version)
 
 			self.apiVersion = pendingUpdateDetails[2]
 			self.backCompatTo = pendingUpdateDetails[3]
@@ -480,7 +539,7 @@ class UpdateResultDialog(
 				self,
 				# Translators: The label of a button to apply a pending NVDA update.
 				# {version} will be replaced with the version; e.g. 2011.3.
-				label=_("&Update to NVDA {version}").format(**updateInfo),
+				label=_("&Update to NVDA {version}").format(version=updateInfo.version),
 			)
 			self.updateButton.Bind(
 				wx.EVT_BUTTON,
@@ -495,7 +554,7 @@ class UpdateResultDialog(
 		else:
 			# Translators: A message indicating that an updated version of NVDA is available.
 			# {version} will be replaced with the version; e.g. 2011.3.
-			message = _("NVDA version {version} is available.").format(**updateInfo)
+			message = _("NVDA version {version} is available.").format(version=updateInfo.version)
 			bHelper.addButton(
 				self,
 				# Translators: The label of a button to download an NVDA update.
@@ -708,20 +767,21 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 	To use, call L{start} on an instance.
 	"""
 
-	def __init__(self, updateInfo):
-		"""Constructor.
-		@param updateInfo: update information such as possible URLs, version and the SHA-1 hash of the file as a hex string.
-		@type updateInfo: dict
+	def __init__(self, updateInfo: UpdateInfo):
+		"""
+		Constructor for the update downloader.
+		:param updateInfo: An UpdateInfo object containing the metadata of the update,
+		including version, URLs, and compatibility information.
 		"""
 		from addonAPIVersion import getAPIVersionTupleFromString
 
 		self.updateInfo = updateInfo
-		self.urls = updateInfo["launcherUrl"].split(" ")
-		self.version = updateInfo["version"]
-		self.apiVersion = getAPIVersionTupleFromString(updateInfo["apiVersion"])
-		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo["apiCompatTo"])
+		self.urls = updateInfo.launcher_url.split(" ")
+		self.version = updateInfo.version
+		self.apiVersion = getAPIVersionTupleFromString(updateInfo.api_version)
+		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo.api_compat_to)
 		self.versionTuple = None
-		self.fileHash = updateInfo.get("launcherHash")
+		self.fileHash = updateInfo.launcher_hash
 		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):
