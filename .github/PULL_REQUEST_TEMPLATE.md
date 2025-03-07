@@ -11,9 +11,11 @@ See https://github.com/nvaccess/nvda/blob/master/.github/CONTRIBUTING.md.
 
 ### Summary of the issue:
 
-### Description of user facing changes
+### Description of user facing changes:
 
-### Description of development approach
+### Description of developer facing changes:
+
+### Description of development approach:
 
 ### Testing strategy:
 
