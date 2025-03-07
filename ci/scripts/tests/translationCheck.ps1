@@ -7,3 +7,4 @@ if($LastExitCode -ne 0) {
 	$message = "PASS: Translation comments check."
 }
 $message >> $env:GITHUB_STEP_SUMMARY
+exit $LastExitCode
