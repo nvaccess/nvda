@@ -36,7 +36,6 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-      shell: cmd
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Check comments for translators
