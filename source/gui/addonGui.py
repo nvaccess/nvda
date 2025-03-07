@@ -5,23 +5,26 @@
 # Babbage B.V., Ethan Holliger, Arnold Loubriat, Thomas Stivers
 
 import weakref
+from contextlib import contextmanager
 
 import addonAPIVersion
-import wx
-import core
-import config
-from contextlib import contextmanager
-import gui
-from addonHandler import Addon
-from logHandler import log
 import addonHandler
-from . import guiHelper
-from . import nvdaControls
-from .message import displayDialogAsModal
-from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
-import gui.contextHelp
-import ui
+from addonHandler import AddonBundle
+import addonHandler.addon
+import config
+import core
 import systemUtils
+import ui
+import wx
+from addonHandler.addon import Addon
+from logHandler import log
+
+import gui
+import gui.contextHelp
+
+from . import guiHelper, nvdaControls
+from .dpiScalingHelper import DpiScalingHelperMixinWithoutInit
+from .message import displayDialogAsModal
 
 
 def promptUserForRestart():
@@ -129,13 +132,13 @@ def installAddon(parentWindow: wx.Window, addonPath: str) -> bool:  # noqa: C901
 	@note See also L{addonStore.install.installAddon}
 	"""
 	from gui.addonStoreGui.controls.messageDialogs import (
+		_shouldInstallWhenAddonTooOldDialog,
 		_showAddonRequiresNVDAUpdateDialog,
 		_showConfirmAddonInstallDialog,
-		_shouldInstallWhenAddonTooOldDialog,
 	)
 
 	try:
-		bundle = addonHandler.AddonBundle(addonPath)
+		bundle = AddonBundle(addonPath)
 	except:  # noqa: E722
 		log.error("Error opening addon bundle from %s" % addonPath, exc_info=True)
 		gui.messageBox(
@@ -221,8 +224,8 @@ def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
 
 def _performExternalAddonBundleInstall(
 	parentWindow: wx.Window,
-	bundle: addonHandler.AddonBundle,
-	prevAddon: addonHandler.Addon | None,
+	bundle: AddonBundle,
+	prevAddon: addonHandler.addon.Addon | None,
 ) -> bool:
 	"""
 	Perform the installation of an add-on bundle.
@@ -242,7 +245,7 @@ def _performExternalAddonBundleInstall(
 
 	# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 	with _doneAndDestroy(progressDialog):
-		addonObj = systemUtils.ExecAndPump[addonHandler.Addon](
+		addonObj = systemUtils.ExecAndPump[addonHandler.addon.Addon](
 			addonHandler.installAddonBundle,
 			bundle,
 		).funcRes

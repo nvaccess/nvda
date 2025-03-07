@@ -48,7 +48,7 @@ from .settings import _AddonStoreSettings
 
 
 if TYPE_CHECKING:
-	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler.addon import Addon as AddonHandlerModel  # noqa: F401
 
 	# AddonGUICollectionT must only be imported when TYPE_CHECKING
 	from .models.addon import AddonGUICollectionT, _AddonGUIModel, _AddonStoreModel  # noqa: F401
