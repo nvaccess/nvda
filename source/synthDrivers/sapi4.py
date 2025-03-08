@@ -16,13 +16,15 @@ from ctypes import (
 	c_ulonglong,
 	POINTER,
 	c_void_p,
+	c_wchar,
 	cast,
+	create_string_buffer,
 	memmove,
 	string_at,
 	sizeof,
 	windll,
 )
-from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
+from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, WORD
 from typing import TYPE_CHECKING, Optional, TypeAlias
 import nvwave
 from synthDriverHandler import (
@@ -34,12 +36,16 @@ from synthDriverHandler import (
 )
 from logHandler import log
 from ._sapi4 import (
+	MMSYSERR_NOERROR,
 	AudioError,
 	SDATA,
+	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
+	DriverMessage,
 	IAudio,
 	IAudioDest,
 	IAudioDestNotifySink,
+	IAudioMultiMediaDevice,
 	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
@@ -526,6 +532,173 @@ class SynthDriverAudio(COMObject):
 			log.debug("SAPI4: UnClaimed")
 
 
+class SynthDriverMMAudio(COMObject):
+	"""
+	Wrapper around SAPI4's built-in MMAudioDest,
+	which can log the interactions between MMAudioDest and the TTS engine.
+	"""
+
+	_com_interfaces_ = [IAudio, IAudioDest]
+
+	def __init__(self):
+		self.mmdev = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
+		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
+		self.audio = self.mmdev.QueryInterface(IAudio)
+		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
+
+	def terminate(self):
+		pass  # do nothing
+
+	def IAudio_Flush(self) -> None:
+		try:
+			self.audio.Flush()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Flushed")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: Flush failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_LevelGet(self) -> int:
+		try:
+			return self.audio.LevelGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_LevelSet(self, dwLevel: int) -> None:
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: LevelSet, level={dwLevel:#x}")
+		try:
+			return self.audio.LevelSet(dwLevel)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
+		try:
+			return self.audio.PassNotify(pNotifyInterface, IIDNotifyInterface)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_PosnGet(self) -> int:
+		try:
+			return self.audio.PosnGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Claim(self) -> None:
+		try:
+			self.audio.Claim()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Claimed")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NEED_WAVE_FORMAT:
+					log.debug("SAPI4: Claim without wave format")
+				elif e.hresult == AudioError.ALREADY_CLAIMED:
+					log.debug("SAPI4: Claim when already claimed")
+				else:
+					log.debug(f"SAPI4: Claim failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_UnClaim(self) -> None:
+		try:
+			self.audio.UnClaim()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: UnClaim called")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: UnClaim when not claimed")
+				else:
+					log.debug(f"SAPI4: UnClaim failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Start(self) -> None:
+		try:
+			self.audio.Start()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Started")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.ALREADY_STARTED:
+					log.debug("SAPI4: Start when already started")
+				elif e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: Start when not claimed")
+				else:
+					log.debug(f"SAPI4: Start failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_Stop(self) -> None:
+		try:
+			self.audio.Stop()
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Stopped")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: Stop failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_TotalGet(self) -> int:
+		try:
+			return self.audio.TotalGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> FILETIME:
+		try:
+			return self.audio.ToFileTime(pqWord)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_WaveFormatGet(self) -> SDATA:
+		try:
+			return self.audio.WaveFormatGet()
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudio_WaveFormatSet(self, dWFEX: SDATA) -> None:
+		try:
+			self.audio.WaveFormatSet(dWFEX)
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: WaveFormatSet")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: WaveFormatSet failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
+		try:
+			ret = self.audiodest.FreeSpace()
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: FreeSpace, {ret[0]} bytes free")
+			return ret
+		except COMError as e:
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: FreeSpace failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
+		try:
+			self.audiodest.DataSet(pBuffer, dwSize)
+			if isDebugForSynthDriver():
+				log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
+		except COMError as e:
+			if isDebugForSynthDriver():
+				if e.hresult == AudioError.NOT_CLAIMED:
+					log.debug("SAPI4: Audio data written when device is not claimed")
+				elif e.hresult == AudioError.NOT_ENOUGH_DATA:
+					log.debug("SAPI4: Insufficient buffer space")
+				else:
+					log.debug(f"SAPI4: DataSet failed with {e.hresult:#x}")
+			raise ReturnHRESULT(e.hresult, e.text)
+
+	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
+		try:
+			self.audiodest.BookMark(dwMarkID)
+		except COMError as e:
+			raise ReturnHRESULT(e.hresult, e.text)
+
+
 class SynthDriverSink(COMObject):
 	_com_interfaces_ = [ITTSNotifySinkW]
 
@@ -611,7 +784,7 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
-		self._ttsAudio: SynthDriverAudio | None = None
+		self._ttsAudio: SynthDriverAudio | SynthDriverMMAudio | None = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
@@ -757,7 +930,10 @@ class SynthDriver(SynthDriver):
 		self._currentMode = mode
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
-		self._ttsAudio = SynthDriverAudio()
+		if config.conf["speech"]["useWASAPIForSAPI4"]:
+			self._ttsAudio = SynthDriverAudio()
+		else:
+			self._ttsAudio = SynthDriverMMAudio()
 		if self._ttsCentral:
 			try:
 				# Some SAPI4 synthesizers may fail this call.
@@ -909,3 +1085,49 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+
+def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
+
+	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
+	:return: An integer WaveOut device ID for use with SAPI4.
+		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
+	"""
+	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
+		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
+		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
+		currEndpointIdByteCount = DWORD()
+		# Defined in mmeapi.h
+		winmm = windll.winmm
+		waveOutMessage = winmm.waveOutMessage
+		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		for devID in range(waveOutGetNumDevs()):
+			# Get the length of this device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID_SIZE,
+				byref(currEndpointIdByteCount),
+				None,
+			)
+			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
+				# ID lengths don't match, so this device can't be a match.
+				continue
+			# Get the device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID,
+				byref(currEndpointId),
+				currEndpointIdByteCount,
+			)
+			if mmr != MMSYSERR_NOERROR:
+				continue
+			# Decode the endpoint ID string to a python string, and strip the null terminator.
+			if (
+				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
+				== targetEndpointId
+			):
+				return devID
+	# No matching device found, or default requested explicitly.
+	# Return the ID of Microsoft Sound Mapper
+	return -1
