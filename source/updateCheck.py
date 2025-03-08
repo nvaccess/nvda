@@ -253,6 +253,9 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
 	try:
+		# if data is empty, we return None, because the server returns an empty response if there is no update.
+		if not data:
+			return None
 		parsed_response = UpdateInfo.parseUpdateCheckResponse(data)
 	except ValueError:
 		raise RuntimeError(
