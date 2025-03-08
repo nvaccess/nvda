@@ -39,7 +39,7 @@ class TestStatePopulationFromPickledData(unittest.TestCase):
 
 	def test_noBackCompatInStateBackCompatSetToDefault(self):
 		self.state.fromPickledDict({"pendingRemovesSet": set(("foo", "FOO"))})
-		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2023)
+		self.assertEqual(self.state.manualOverridesAPIVersion.major, 2024)
 		self.assertEqual(self.state.manualOverridesAPIVersion.minor, 1)
 		self.assertEqual(self.state.manualOverridesAPIVersion.patch, 0)
 
