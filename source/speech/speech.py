@@ -1172,7 +1172,8 @@ def speak(  # noqa: C901
 			if not inCharacterMode:
 				speechSequence[index] += CHUNK_SEPARATOR
 				if (
-					curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
+					config.conf["speech"]["reportLanguage"]
+					and curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
 					and languageHandler.getLanguageDescription(curLanguage) not in speechSequence
 					and languageHandler.getLanguageDescription(curLanguage) is not None
 					and not _speechState.suppressLanguageDescription

@@ -1678,8 +1678,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.updateDriverSettings()
 
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, text will be read using the voice for the language of the text).
+		# Translators: This is the label for a checkbox in the		# voice settings panel (if checked, text will be read using the voice for the language of the text).
 		autoLanguageSwitchingText = _("Automatic language switching (when supported)")
 		self.autoLanguageSwitchingCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(
@@ -1702,6 +1701,19 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.bindHelpEvent("SpeechSettingsDialectSwitching", self.autoDialectSwitchingCheckbox)
 		self.autoDialectSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoDialectSwitching"],
+		)
+
+		# voice settings panel (if checked, the non default language switched to will be reported).
+		reportLanguageText = _("Report language when automatic switching is enabled")
+		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
+			wx.CheckBox(
+				self,
+				label=reportLanguageText,
+			),
+		)
+		self.bindHelpEvent("ReportLanguage", self.reportLanguageCheckbox)
+		self.reportLanguageCheckbox.SetValue(
+			config.conf["speech"]["reportLanguage"],
 		)
 
 		# Translators: This is the label for a combobox in the
@@ -1876,6 +1888,8 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
+		config.conf["speech"]["reportLanguage"] = self.reportLanguageCheckbox.IsChecked()
+
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		].value
