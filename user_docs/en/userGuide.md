@@ -733,6 +733,7 @@ NVDA provides the following key commands in relation to the system caret:
 |Read current line |NVDA+upArrow |NVDA+l |Reads the line where the system caret is currently situated. Pressing twice spells the line. Pressing three times spells the line using character descriptions.|
 |Read current text selection |NVDA+Shift+upArrow |NVDA+shift+s |Reads any currently selected text|
 |Report text formatting |NVDA+f |NVDA+f |Reports the formatting of the text where the caret is currently situated. Pressing twice shows the information in browse mode|
+|Report text formatting |NVDA+f |NVDA+f |Reports the language of the text where the caret is currently situated. Pressing twice shows the information in browse mode|
 |Report link destination |`NVDA+k` |`NVDA+k` |Pressing once speaks the destination URL of the link at the current caret or focus position. Pressing twice shows it in a window for more careful review|
 |Report caret location |NVDA+numpadDelete |NVDA+delete |Reports information about the location of the text or object at the position of system caret. For example, this might include the percentage through the document, the distance from the edge of the page or the exact screen position. Pressing twice may provide further detail.|
 |Next sentence |alt+downArrow |alt+downArrow |Moves the caret to the next sentence and announces it. (only supported in Microsoft Word and Outlook)|
@@ -1919,6 +1920,11 @@ This option is enabled by default.
 
 This checkbox allows you to toggle whether or not dialect changes should be made, rather than just actual language changes.
 For example, if reading in an English U.S. voice but a document specifies that some text is in English U.K., then the synthesizer will switch accents if this option is enabled.
+This option is disabled by default.
+
+##### Report language {#ReportLanguage}
+
+This checkbox allows you to toggle whether NVDA should report the detected language of the text been read. The language configured to be used by default won't be reported.
 This option is disabled by default.
 
 <!-- KC:setting -->
