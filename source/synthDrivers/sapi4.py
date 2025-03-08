@@ -784,7 +784,7 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
-		self._ttsAudio: SynthDriverAudio | None = None
+		self._ttsAudio: SynthDriverAudio | SynthDriverMMAudio | None = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
@@ -930,7 +930,10 @@ class SynthDriver(SynthDriver):
 		self._currentMode = mode
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
-		self._ttsAudio = SynthDriverAudio()
+		if config.conf["speech"]["useWASAPIForSAPI4"]:
+			self._ttsAudio = SynthDriverAudio()
+		else:
+			self._ttsAudio = SynthDriverMMAudio()
 		if self._ttsCentral:
 			try:
 				# Some SAPI4 synthesizers may fail this call.
