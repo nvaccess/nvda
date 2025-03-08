@@ -48,7 +48,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * Rate boost is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices, which supports up to 6X speed. (#17606, @gexgd0419)
 * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
 * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
-
+* NVDA can report the language of the text been read when automatic language switching is enabled. An unasigned gesture has been added to report the language of the character under caret (#17664, @nvdaes)
 ### Changes
 
 * Component updates:
