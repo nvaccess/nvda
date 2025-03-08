@@ -4029,7 +4029,8 @@ class AdvancedPanelControls(
 
 		shouldResetSynth = (
 			config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked()
-			or config.conf["speech"]["useWASAPIForSAPI4"] != self.useWASAPIForSAPI4Combo._getControlCurrentFlag()
+			or config.conf["speech"]["useWASAPIForSAPI4"]
+			!= self.useWASAPIForSAPI4Combo._getControlCurrentFlag()
 		)
 
 		config.conf["development"]["enableScratchpadDir"] = self.scratchpadCheckBox.IsChecked()

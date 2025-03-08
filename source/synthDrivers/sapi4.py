@@ -547,7 +547,7 @@ class SynthDriverMMAudio(COMObject):
 		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
 
 	def terminate(self):
-		pass # do nothing
+		pass  # do nothing
 
 	def IAudio_Flush(self) -> None:
 		try:
