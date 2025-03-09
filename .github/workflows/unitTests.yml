@@ -32,10 +32,10 @@ jobs:
       run:
         shell: cmd
     steps:
-    # - name: Checkout NVDA
-      # uses: actions/checkout@v4
-      # with:
-        # submodules: true
+    - name: Checkout NVDA
+      uses: actions/checkout@v4
+      with:
+        submodules: true
     - name: Build NVDA
       uses: ./nvdaBuilder
     - name: Run unit tests
