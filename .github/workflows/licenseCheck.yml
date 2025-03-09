@@ -38,5 +38,7 @@ jobs:
         submodules: true
     - name: Build NVDA
       uses: ./nvdaBuilder
+      with:
+        scons-source: false
     - name: License check
       run: powershell.exe ci/scripts/tests/licenseCheck.ps1

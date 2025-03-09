@@ -38,5 +38,7 @@ jobs:
         submodules: true
     - name: Build NVDA
       uses: ./nvdaBuilder
+      with:
+        scons-source: false
     - name: Check comments for translators
       run: powershell.exe ci/scripts/tests/translationCheck.ps1
