@@ -35,7 +35,6 @@ runs:
       if: ${{ inputs.scons-source == 'true' }}
       run: scons source %sconsArgs% --all-cores
       shell: cmd
-      shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
       shell: cmd
