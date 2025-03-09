@@ -336,7 +336,6 @@ def _testDelayedDescription(expectDescription: bool = True) -> None:
 	Perform delayed character descriptions tests with with the specified parameters:
 	@param expectDescription: whether or not a delayed description should be announced
 	"""
-	raise AssertionError("Nothing spoken after character press")
 	spoken = _NvdaLib.getSpeechAfterKey(Move.CARET_CHAR.value).split("\n")
 	if not spoken:
 		raise AssertionError("Nothing spoken after character press")

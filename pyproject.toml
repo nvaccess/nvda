@@ -89,7 +89,7 @@ logger-objects = ["logHandler.log"]
 
 [tool.licensecheck]
 using = "requirements:requirements.txt"
-only_licenses = ["BSD"]
+only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
 	# Incompatible Apache licenses.
 	# These are current license violations and are bundled with NVDA.
