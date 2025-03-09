@@ -32,7 +32,8 @@ runs:
     - name: Restore modified files
       run: |
         git restore .
-        git submodule update --init
+        git checkout origin/master include
+        git submodule update
       shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
