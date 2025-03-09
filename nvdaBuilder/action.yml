@@ -41,6 +41,7 @@ runs:
       shell: cmd
     - name: Update submodules
       run: git submodule update
+      shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
       shell: cmd
