@@ -28,7 +28,7 @@ runs:
       with:
         path: |
           .venv
-          source
+          source/**
         key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
