@@ -12,10 +12,6 @@ runs:
   using: "composite"
 
   steps:
-    - name: Checkout repo
-      uses: actions/checkout@v4
-      with:
-        submodules: true
     - name: Install dependencies
       uses: actions/setup-python@v5
       with:
@@ -28,8 +24,7 @@ runs:
       with:
         path: |
           .venv
-          source/**
-        key: ${{ runner.os }}-${{ hashFiles('requirements.txt', 'source/locale/**/*.po') }}
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
       shell: cmd
@@ -37,14 +32,9 @@ runs:
       run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
     - name: Prepare source code
-      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true'  && inputs.scons-source == 'true' }}
+      if: ${{ inputs.scons-source == 'true' }}
       run: scons source %sconsArgs% --all-cores
       shell: cmd
-    - name: Restore modified files
-      run: git restore .
-      shell: cmd
-    - name: Update submodules
-      run: git submodule update
       shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
