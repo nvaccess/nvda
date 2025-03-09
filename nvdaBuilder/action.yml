@@ -30,7 +30,6 @@ runs:
       run: scons source %sconsArgs% --all-cores
       shell: cmd
     - name: Restore modified files
-      if: ${{ steps.cacheDependencies.outputs.cache-hit != 'true' && github.job != 'checkPot' && github.job != 'licenseCheck' }}
       run: git restore .
       shell: cmd
     - name: Prepare for tests
