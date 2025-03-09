@@ -236,7 +236,7 @@ class LocalRelayServer:
 	:ivar password: Channel password for client authentication
 	:ivar clients: Dictionary mapping sockets to Client objects
 	:ivar clientSockets: List of client sockets
-	:ivar PING_TIME: Seconds between ping messages
+	:ivar PING_TIME_SECONDS: Seconds between ping messages
 	"""
 
 	PING_TIME_SECONDS: int = 300
@@ -323,7 +323,7 @@ class LocalRelayServer:
 					self.acceptNewConnection(sock)
 					continue
 				self.clients[sock].handleData()
-			if time.time() - self.lastPingTime >= self.PING_TIME:
+			if time.time() - self.lastPingTime >= self.PING_TIME_SECONDS:
 				for client in self.clients.values():
 					if client.authenticated:
 						client.send(type=RemoteMessageType.PING)
