@@ -37,6 +37,6 @@ jobs:
       # with:
         # submodules: true
     - name: Build NVDA
-      uses: ./nvdaBuilder
+      uses: .../nvdaBuilder
     - name: Run unit tests
       run: powershell.exe ci/scripts/tests/unitTests.ps1
