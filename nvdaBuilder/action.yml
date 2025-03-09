@@ -30,10 +30,7 @@ runs:
       run: scons source %sconsArgs% --all-cores
       shell: cmd
     - name: Restore modified files
-      run: |
-        git restore .
-        git checkout origin/master include
-        git submodule update
+      run: git restore .
       shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
