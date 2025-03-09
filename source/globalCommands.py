@@ -1427,6 +1427,7 @@ class GlobalCommands(ScriptableObject):
 			if obj is not None and obj.locationText:
 				ui.message(obj.locationText)
 				return
+		# Translators: message when there is no location information
 		ui.message(_("No location information"))
 
 	@script(
