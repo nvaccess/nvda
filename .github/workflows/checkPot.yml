@@ -36,7 +36,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    # - name: Build NVDA
-      # uses: ./nvdaBuilder
+    - name: Build NVDA
+      uses: ./nvdaBuilder
     - name: Check comments for translators
       run: powershell.exe ci/scripts/tests/translationCheck.ps1
