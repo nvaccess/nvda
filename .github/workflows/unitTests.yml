@@ -41,7 +41,7 @@ jobs:
       run: powershell.exe ci/scripts/tests/unitTests.ps1
     - name: Upload artifact
       id: uploadArtifact
-      if: ${{ always }}
+      if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: Unit tests results
