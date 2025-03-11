@@ -236,7 +236,7 @@ class LocalRelayServer:
 	:ivar password: Channel password for client authentication
 	:ivar clients: Dictionary mapping sockets to Client objects
 	:ivar clientSockets: List of client sockets
-	:ivar PING_TIME: Seconds between ping messages
+	:ivar PING_TIME_SECONDS: Seconds between ping messages
 	"""
 
 	PING_TIME_SECONDS: int = 300
@@ -295,7 +295,7 @@ class LocalRelayServer:
 		sslContext = self.certManager.createSSLContext()
 		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bindAddress)
-		serverSocket.listen(backlog=5)  # Set the maximum number of queued connections
+		serverSocket.listen(5)  # Set the maximum number of queued connections
 		return serverSocket
 
 	def run(self) -> None:
@@ -323,7 +323,7 @@ class LocalRelayServer:
 					self.acceptNewConnection(sock)
 					continue
 				self.clients[sock].handleData()
-			if time.time() - self.lastPingTime >= self.PING_TIME:
+			if time.time() - self.lastPingTime >= self.PING_TIME_SECONDS:
 				for client in self.clients.values():
 					if client.authenticated:
 						client.send(type=RemoteMessageType.PING)
