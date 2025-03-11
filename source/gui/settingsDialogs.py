@@ -33,6 +33,7 @@ import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
 	NVDAKey,
+	RemoteConnectionType,
 	ShowMessages,
 	TetherTo,
 	ParagraphStartMarker,
@@ -49,7 +50,6 @@ import gui
 import gui.contextHelp
 import globalVars
 from logHandler import log
-from remoteClient import configuration
 import audio
 import audioDucking
 import queueHandler
@@ -3370,88 +3370,98 @@ class AddonStorePanel(SettingsPanel):
 class RemoteSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the remote settings category in NVDA Settings screen.
 	title = _("Remote")
-	autoconnect: wx.CheckBox
-	clientOrServer: wx.RadioBox
-	connectionType: wx.RadioBox
-	host: wx.TextCtrl
-	port: wx.SpinCtrl
-	key: wx.TextCtrl
-	playSounds: wx.CheckBox
-	deleteFingerprints: wx.Button
 
 	def makeSettings(self, sizer):
-		self.config = configuration.getRemoteConfig()
-		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
-		self.autoconnect = wx.CheckBox(
-			parent=self,
-			id=wx.ID_ANY,
-			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
-			label=_("Automatically connect to control server on startup"),
+		self.config = config.conf["remote"]
+		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
+
+		self.playSounds: wx.CheckBox = sHelper.addItem(
+			# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
+			wx.CheckBox(self, label=_("&Play sounds instead of beeps")),
 		)
-		self.autoconnect.Bind(wx.EVT_CHECKBOX, self.onAutoconnect)
-		sHelper.addItem(self.autoconnect)
-		self.clientOrServer = wx.RadioBox(
-			self,
-			wx.ID_ANY,
+
+		self.autoconnect: wx.CheckBox = sHelper.addItem(
+			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
+			wx.CheckBox(self, label=_("Automatically &connect to control server on startup")),
+		)
+		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
+
+		# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
+		autoConnectionGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Automatic connection"))
+		self.autoConnectionGroupBox = autoConnectionGroupSizer.GetStaticBox()
+		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectionGroupSizer)
+		sHelper.addItem(autoConnectionGroupHelper)
+
+		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in NVDA's Remote settings,
+			# allowing users to choose whether they want to use an existing Remote relay server, or host their own.
+			_("&Server:"),
+			wx.Choice,
 			choices=(
 				# Translators: Use a remote control server
 				_("Use Remote Control Server"),
 				# Translators: Host a control server
 				_("Host Control Server"),
 			),
-			style=wx.RA_VERTICAL,
 		)
-		self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
-		self.clientOrServer.SetSelection(0)
-		self.clientOrServer.Enable(False)
-		sHelper.addItem(self.clientOrServer)
-		choices = [
-			# Translators: Radio button to allow this machine to be controlled
-			_("Allow this machine to be controlled"),
-			# Translators: Radio button to allow this machine to control another machine
-			_("Control another machine"),
-		]
-		self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
-		self.connectionType.SetSelection(0)
-		self.connectionType.Enable(False)
-		sHelper.addItem(self.connectionType)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
-		self.host = wx.TextCtrl(self, wx.ID_ANY)
-		self.host.Enable(False)
-		sHelper.addItem(self.host)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
-		self.port = wx.SpinCtrl(self, wx.ID_ANY, min=1, max=65535)
-		self.port.Enable(False)
-		sHelper.addItem(self.port)
-		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		self.key.Enable(False)
-		sHelper.addItem(self.key)
-		# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
-		self.playSounds = wx.CheckBox(self, wx.ID_ANY, label=_("Play sounds instead of beeps"))
-		sHelper.addItem(self.playSounds)
-		# Translators: A button in Remote settings to delete all fingerprints of unauthorized certificates.
-		self.deleteFingerprints = wx.Button(self, wx.ID_ANY, label=_("Delete all trusted fingerprints"))
+		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+
+		self.connectionType = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in NVDA's Remote settings,
+			# Allowing the user to select whether their computer is controlling or controlled.
+			_("&Role:"),
+			wx.Choice,
+			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionType),
+		)
+
+		self.host = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for the host field in NVDA's Remote settings.
+			# This is where users should enter the URL of the Remote server they want to use if they are not hosting their own.
+			_("&Host:"),
+			wx.TextCtrl,
+		)
+
+		self.port = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for the port field in NVDA's Remote settings.
+			# This is the port on which the local control server will be accessible,
+			# if the user has chosen to host their own.
+			_("&Port:"),
+			nvdaControls.SelectOnFocusSpinCtrl,
+			min=1,
+			max=65535,
+		)
+
+		self.key = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in NVDA's Remote settings,
+			# Where users set the key for their Remote connection.
+			_("&Key:"),
+			wx.TextCtrl,
+		)
+
+		self.deleteFingerprints = sHelper.addItem(
+			# Translators: A button in NVDA's Remote settings to delete all fingerprints of unauthorized certificates.
+			wx.Button(self, label=_("Delete all trusted fingerprints")),
+		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
-		sHelper.addItem(self.deleteFingerprints)
-		self.setFromConfig()
 
-	def onAutoconnect(self, evt: wx.CommandEvent) -> None:
-		self.setControls()
+		self._setFromConfig()
 
-	def setControls(self) -> None:
+	def _setControls(self) -> None:
+		"""Ensure the state of the GUI is internally consistent, as well as consistent with the state of the config.
+
+		Does not set the value of controls, just which ones are enabled.
+		"""
 		state = bool(self.autoconnect.GetValue())
-		self.clientOrServer.Enable(state)
-		self.connectionType.Enable(state)
-		self.key.Enable(state)
+		self.autoConnectionGroupBox.Enable(state)
 		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and state)
 		self.port.Enable(bool(self.clientOrServer.GetSelection()) and state)
+		self.deleteFingerprints.Enable(len(self.config["trusted_certs"]) > 0)
 
-	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
-		evt.Skip()
-		self.setControls()
+	def _setFromConfig(self) -> None:
+		"""Ensure the state of the GUI matches that of the saved configuration.
 
-	def setFromConfig(self) -> None:
+		Also ensures the state of the GUI is internally consistent.
+		"""
 		controlServer = self.config["controlserver"]
 		selfHosted = controlServer["self_hosted"]
 		connectionType = controlServer["connection_type"]
@@ -3461,43 +3471,54 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.setControls()
 		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+		self._setControls()
+
+	def _onAutoconnect(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the auto-connection checkbox being checked or unchecked."""
+		self._setControls()
+
+	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the selected value of the client/server choice control changing."""
+		self._setControls()
 
 	def onDeleteFingerprints(self, evt: wx.CommandEvent) -> None:
-		if (
-			gui.messageBox(
-				_(
-					# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-					"When connecting to an unauthorized server, you will again be prompted to accepts its certificate.",
-				),
-				# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-				_("Are you sure you want to delete all stored trusted fingerprints?"),
-				wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
-			)
-			== wx.YES
-		):
+		"""Respond to presses of the delete trusted fingerprints button."""
+		deleteFingerprints = gui.messageBox(
+			_(
+				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
+				"This will cause NVDA to forget all previously trusted Remote servers. "
+				"When connecting to a previously trusted unauthorized Remote server, you will again be asked whether to trust its certificate.\n\n"
+				"Are you sure you want to continue? This action cannot be undone.",
+			),
+			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
+			_("Delete all trusted fingerprints"),
+			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+		)
+		if deleteFingerprints == wx.YES:
 			self.config["trusted_certs"].clear()
+			self._setControls()
 		evt.Skip()
 
 	def isValid(self) -> bool:
+		message: str | None = None
 		if self.autoconnect.GetValue():
 			if not self.clientOrServer.GetSelection() and (
 				not self.host.GetValue() or not self.key.GetValue()
 			):
-				gui.messageBox(
+				message = _(
 					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-					_("Both host and key must be set in the Remote section."),
-					# Translators: This is the title of the dialog presented when the user tries to save the settings with the host or key field empty.
-					_("Remote Error"),
-					wx.OK | wx.ICON_ERROR,
+					"Both host and key must be set in the Remote section in order to automatically connect to a remote control server at startup.",
 				)
-				return False
 			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
-				gui.messageBox(
+				message = _(
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					_("Both port and key must be set in the Remote section."),
-					# Translators: This is the title of the dialog presented when the user tries to save the settings with the port or key field empty.
+					"Both port and key must be set in the Remote section in order to automatically connect with a local control server at startup.",
+				)
+			if message is not None:
+				gui.messageBox(
+					message,
+					# Translators: Title of a dialog.
 					_("Remote Error"),
 					wx.OK | wx.ICON_ERROR,
 				)
@@ -3505,18 +3526,18 @@ class RemoteSettingsPanel(SettingsPanel):
 		return True
 
 	def onSave(self):
-		cs = self.config["controlserver"]
-		cs["autoconnect"] = self.autoconnect.GetValue()
+		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+		controlServer = self.config["controlserver"]
+		controlServer["autoconnect"] = self.autoconnect.GetValue()
 		selfHosted = bool(self.clientOrServer.GetSelection())
 		connectionType = self.connectionType.GetSelection()
-		cs["self_hosted"] = selfHosted
-		cs["connection_type"] = connectionType
+		controlServer["self_hosted"] = selfHosted
+		controlServer["connection_type"] = connectionType
 		if not selfHosted:
-			cs["host"] = self.host.GetValue()
+			controlServer["host"] = self.host.GetValue()
 		else:
-			cs["port"] = int(self.port.GetValue())
-		cs["key"] = self.key.GetValue()
-		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+			controlServer["port"] = int(self.port.GetValue())
+		controlServer["key"] = self.key.GetValue()
 
 
 class TouchInteractionPanel(SettingsPanel):

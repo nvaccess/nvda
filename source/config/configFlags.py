@@ -294,3 +294,23 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 			# Ensure this is consistent with other strings with the context "paragraphMarker".
 			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
 		}
+
+
+class RemoteConnectionType(DisplayStringIntEnum):
+	"""Enumeration containing the possible remote connection types (roles for connected clients).
+
+	Use RemoteConnectionType.MEMBER.value to compare with the config;
+	use RemoteConnectionType.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	FOLLOWER = 0
+	LEADER = 1
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Allow this computer to be controlled by the remote computer.
+			RemoteConnectionType.FOLLOWER: pgettext("Remote", "Allow this machine to be controlled"),
+			# Translators: Allow this computer to control the remote computer.
+			RemoteConnectionType.LEADER: pgettext("remote", "Control another machine"),
+		}
