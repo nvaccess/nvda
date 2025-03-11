@@ -4,9 +4,11 @@
 # See the file COPYING for more details.
 
 from datetime import datetime
+from functools import wraps
 import locale
 from collections import OrderedDict, deque
 import threading
+import time
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
@@ -16,14 +18,16 @@ from ctypes import (
 	c_ulonglong,
 	POINTER,
 	c_void_p,
+	c_wchar,
 	cast,
+	create_string_buffer,
 	memmove,
 	string_at,
 	sizeof,
 	windll,
 )
-from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
-from typing import TYPE_CHECKING, Optional, TypeAlias
+from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, WORD
+from typing import TYPE_CHECKING, Callable, Optional, TypeAlias
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -34,12 +38,16 @@ from synthDriverHandler import (
 )
 from logHandler import log
 from ._sapi4 import (
+	MMSYSERR_NOERROR,
 	AudioError,
 	SDATA,
+	CLSID_MMAudioDest,
 	CLSID_TTSEnumerator,
+	DriverMessage,
 	IAudio,
 	IAudioDest,
 	IAudioDestNotifySink,
+	IAudioMultiMediaDevice,
 	ITTSAttributes,
 	ITTSBufNotifySink,
 	ITTSCentralW,
@@ -117,6 +125,53 @@ else:
 
 AudioT: TypeAlias = bytes
 BookmarkT: TypeAlias = int
+
+_lastLoggedTimes: dict[Callable, float] = dict()
+
+
+def _logTrace(logAll: bool = False, format: str = ""):
+	"""
+	Decorator that wraps the COM methods, logs the calls,
+	and converts COMError exceptions to silent ReturnHRESULTs.
+
+	:param logAll: If true, logs every call. If false (default), omits frequent calls to reduce logs. Errors are always logged.
+	:param format: Format specifier for log messages. Provided format arguments are: `args`, `kwargs`, and `result`.
+	"""
+
+	def _decorator(func):
+		@wraps(func)
+		def _wrapper(*args, **kwargs):
+			global _lastLoggedTimes
+			funcname = func.__name__.split("_")[1]
+			try:
+				result = func(*args, **kwargs)
+				if isDebugForSynthDriver():
+					if logAll:
+						_lastLoggedTimes.clear()
+					logTime = time.time()
+					# filter out calls to the same function within 10ms
+					if logAll or func not in _lastLoggedTimes or logTime - _lastLoggedTimes[func] > 0.01:
+						log.debug(
+							f"SAPI4: {funcname} {format.format(args=args, kwargs=kwargs, result=result)}",
+						)
+						_lastLoggedTimes[func] = logTime
+				return result
+			except COMError as e:
+				errcode = e.hresult
+				errtext = e.text
+			except ReturnHRESULT as e:
+				errcode, errtext = e.args
+			if isDebugForSynthDriver():
+				try:
+					err = AudioError(errcode).name
+				except ValueError:
+					err = f"{errcode:#x}"
+				log.debug(f"SAPI4: {funcname} failed with {err}")
+			raise ReturnHRESULT(errcode, errtext)
+
+		return _wrapper
+
+	return _decorator
 
 
 class SynthDriverAudio(COMObject):
@@ -526,6 +581,90 @@ class SynthDriverAudio(COMObject):
 			log.debug("SAPI4: UnClaimed")
 
 
+class SynthDriverMMAudio(COMObject):
+	"""
+	Wrapper around SAPI4's built-in MMAudioDest,
+	which can log the interactions between MMAudioDest and the TTS engine.
+	"""
+
+	_com_interfaces_ = [IAudio, IAudioDest]
+
+	def __init__(self):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Initializing WinMM implementation")
+		self.mmdev = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
+		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
+		self.audio = self.mmdev.QueryInterface(IAudio)
+		self.audiodest = self.mmdev.QueryInterface(IAudioDest)
+
+	def terminate(self):
+		pass  # do nothing
+
+	@_logTrace(logAll=True)
+	def IAudio_Flush(self) -> None:
+		self.audio.Flush()
+
+	@_logTrace()
+	def IAudio_LevelGet(self) -> int:
+		return self.audio.LevelGet()
+
+	@_logTrace(format="{args[1]:#010x}")
+	def IAudio_LevelSet(self, dwLevel: int) -> None:
+		return self.audio.LevelSet(dwLevel)
+
+	@_logTrace()
+	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
+		return self.audio.PassNotify(pNotifyInterface, IIDNotifyInterface)
+
+	@_logTrace()
+	def IAudio_PosnGet(self) -> int:
+		return self.audio.PosnGet()
+
+	@_logTrace(logAll=True)
+	def IAudio_Claim(self) -> None:
+		self.audio.Claim()
+
+	@_logTrace(logAll=True)
+	def IAudio_UnClaim(self) -> None:
+		self.audio.UnClaim()
+
+	@_logTrace(logAll=True)
+	def IAudio_Start(self) -> None:
+		self.audio.Start()
+
+	@_logTrace(logAll=True)
+	def IAudio_Stop(self) -> None:
+		self.audio.Stop()
+
+	@_logTrace()
+	def IAudio_TotalGet(self) -> int:
+		return self.audio.TotalGet()
+
+	@_logTrace()
+	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> FILETIME:
+		return self.audio.ToFileTime(pqWord)
+
+	@_logTrace()
+	def IAudio_WaveFormatGet(self) -> SDATA:
+		return self.audio.WaveFormatGet()
+
+	@_logTrace()
+	def IAudio_WaveFormatSet(self, dWFEX: SDATA) -> None:
+		self.audio.WaveFormatSet(dWFEX)
+
+	@_logTrace(format="{result[0]} bytes free")
+	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
+		return self.audiodest.FreeSpace()
+
+	@_logTrace(format="{args[2]} bytes written")
+	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
+		self.audiodest.DataSet(pBuffer, dwSize)
+
+	@_logTrace()
+	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
+		self.audiodest.BookMark(dwMarkID)
+
+
 class SynthDriverSink(COMObject):
 	_com_interfaces_ = [ITTSNotifySinkW]
 
@@ -611,7 +750,7 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
-		self._ttsAudio: SynthDriverAudio | None = None
+		self._ttsAudio: SynthDriverAudio | SynthDriverMMAudio | None = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
@@ -757,7 +896,10 @@ class SynthDriver(SynthDriver):
 		self._currentMode = mode
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
-		self._ttsAudio = SynthDriverAudio()
+		if config.conf["speech"]["useWASAPIForSAPI4"]:
+			self._ttsAudio = SynthDriverAudio()
+		else:
+			self._ttsAudio = SynthDriverMMAudio()
 		if self._ttsCentral:
 			try:
 				# Some SAPI4 synthesizers may fail this call.
@@ -909,3 +1051,49 @@ class SynthDriver(SynthDriver):
 		# using the low word for the left channel and the high word for the right channel.
 		val |= val << 16
 		self._ttsAttrs.VolumeSet(val)
+
+
+def _mmDeviceEndpointIdToWaveOutId(targetEndpointId: str) -> int:
+	"""Translate from an MMDevice Endpoint ID string to a WaveOut Device ID number.
+
+	:param targetEndpointId: MMDevice endpoint ID string to translate from, or the default value of the `audio.outputDevice` configuration key for the default output device.
+	:return: An integer WaveOut device ID for use with SAPI4.
+		If no matching device is found, or the default output device is requested, `-1` is returned, which means output will be handled by Microsoft Sound Mapper.
+	"""
+	if targetEndpointId != config.conf.getConfigValidation(("audio", "outputDevice")).default:
+		targetEndpointIdByteCount = (len(targetEndpointId) + 1) * sizeof(c_wchar)
+		currEndpointId = create_string_buffer(targetEndpointIdByteCount)
+		currEndpointIdByteCount = DWORD()
+		# Defined in mmeapi.h
+		winmm = windll.winmm
+		waveOutMessage = winmm.waveOutMessage
+		waveOutGetNumDevs = winmm.waveOutGetNumDevs
+		for devID in range(waveOutGetNumDevs()):
+			# Get the length of this device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID_SIZE,
+				byref(currEndpointIdByteCount),
+				None,
+			)
+			if (mmr != MMSYSERR_NOERROR) or (currEndpointIdByteCount.value != targetEndpointIdByteCount):
+				# ID lengths don't match, so this device can't be a match.
+				continue
+			# Get the device's endpoint ID string.
+			mmr = waveOutMessage(
+				HANDLE(devID),
+				DriverMessage.QUERY_INSTANCE_ID,
+				byref(currEndpointId),
+				currEndpointIdByteCount,
+			)
+			if mmr != MMSYSERR_NOERROR:
+				continue
+			# Decode the endpoint ID string to a python string, and strip the null terminator.
+			if (
+				currEndpointId.raw[: targetEndpointIdByteCount - sizeof(c_wchar)].decode("utf-16")
+				== targetEndpointId
+			):
+				return devID
+	# No matching device found, or default requested explicitly.
+	# Return the ID of Microsoft Sound Mapper
+	return -1
