@@ -4,9 +4,11 @@
 # See the file COPYING for more details.
 
 from datetime import datetime
+from functools import wraps
 import locale
 from collections import OrderedDict, deque
 import threading
+import time
 import winreg
 from comtypes import CoCreateInstance, COMObject, COMError, GUID, hresult, ReturnHRESULT
 from ctypes import (
@@ -25,7 +27,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, WORD
-from typing import TYPE_CHECKING, Optional, TypeAlias
+from typing import TYPE_CHECKING, Callable, Optional, TypeAlias
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -123,6 +125,53 @@ else:
 
 AudioT: TypeAlias = bytes
 BookmarkT: TypeAlias = int
+
+_lastLoggedTimes: dict[Callable, float] = dict()
+
+
+def _logTrace(logAll: bool = False, format: str = ""):
+	"""
+	Decorator that wraps the COM methods, logs the calls,
+	and converts COMError exceptions to silent ReturnHRESULTs.
+
+	:param logAll: If true, logs every call. If false (default), omits frequent calls to reduce logs. Errors are always logged.
+	:param format: Format specifier for log messages. Provided format arguments are: `args`, `kwargs`, and `result`.
+	"""
+
+	def _decorator(func):
+		@wraps(func)
+		def _wrapper(*args, **kwargs):
+			global _lastLoggedTimes
+			funcname = func.__name__.split("_")[1]
+			try:
+				result = func(*args, **kwargs)
+				if isDebugForSynthDriver():
+					if logAll:
+						_lastLoggedTimes.clear()
+					logTime = time.time()
+					# filter out calls to the same function within 10ms
+					if logAll or func not in _lastLoggedTimes or logTime - _lastLoggedTimes[func] > 0.01:
+						log.debug(
+							f"SAPI4: {funcname} {format.format(args=args, kwargs=kwargs, result=result)}",
+						)
+						_lastLoggedTimes[func] = logTime
+				return result
+			except COMError as e:
+				errcode = e.hresult
+				errtext = e.text
+			except ReturnHRESULT as e:
+				errcode, errtext = e.args
+			if isDebugForSynthDriver():
+				try:
+					err = AudioError(errcode).name
+				except ValueError:
+					err = f"{errcode:#x}"
+				log.debug(f"SAPI4: {funcname} failed with {err}")
+			raise ReturnHRESULT(errcode, errtext)
+
+		return _wrapper
+
+	return _decorator
 
 
 class SynthDriverAudio(COMObject):
@@ -541,6 +590,8 @@ class SynthDriverMMAudio(COMObject):
 	_com_interfaces_ = [IAudio, IAudioDest]
 
 	def __init__(self):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Initializing WinMM implementation")
 		self.mmdev = CoCreateInstance(CLSID_MMAudioDest, IAudioMultiMediaDevice)
 		self.mmdev.DeviceNumSet(_mmDeviceEndpointIdToWaveOutId(config.conf["audio"]["outputDevice"]))
 		self.audio = self.mmdev.QueryInterface(IAudio)
@@ -549,154 +600,69 @@ class SynthDriverMMAudio(COMObject):
 	def terminate(self):
 		pass  # do nothing
 
+	@_logTrace(logAll=True)
 	def IAudio_Flush(self) -> None:
-		try:
-			self.audio.Flush()
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: Flushed")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: Flush failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.Flush()
 
+	@_logTrace()
 	def IAudio_LevelGet(self) -> int:
-		try:
-			return self.audio.LevelGet()
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.LevelGet()
 
+	@_logTrace(format="{args[1]:#010x}")
 	def IAudio_LevelSet(self, dwLevel: int) -> None:
-		if isDebugForSynthDriver():
-			log.debug(f"SAPI4: LevelSet, level={dwLevel:#x}")
-		try:
-			return self.audio.LevelSet(dwLevel)
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.LevelSet(dwLevel)
 
+	@_logTrace()
 	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
-		try:
-			return self.audio.PassNotify(pNotifyInterface, IIDNotifyInterface)
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.PassNotify(pNotifyInterface, IIDNotifyInterface)
 
+	@_logTrace()
 	def IAudio_PosnGet(self) -> int:
-		try:
-			return self.audio.PosnGet()
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.PosnGet()
 
+	@_logTrace(logAll=True)
 	def IAudio_Claim(self) -> None:
-		try:
-			self.audio.Claim()
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: Claimed")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				if e.hresult == AudioError.NEED_WAVE_FORMAT:
-					log.debug("SAPI4: Claim without wave format")
-				elif e.hresult == AudioError.ALREADY_CLAIMED:
-					log.debug("SAPI4: Claim when already claimed")
-				else:
-					log.debug(f"SAPI4: Claim failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.Claim()
 
+	@_logTrace(logAll=True)
 	def IAudio_UnClaim(self) -> None:
-		try:
-			self.audio.UnClaim()
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: UnClaim called")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				if e.hresult == AudioError.NOT_CLAIMED:
-					log.debug("SAPI4: UnClaim when not claimed")
-				else:
-					log.debug(f"SAPI4: UnClaim failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.UnClaim()
 
+	@_logTrace(logAll=True)
 	def IAudio_Start(self) -> None:
-		try:
-			self.audio.Start()
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: Started")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				if e.hresult == AudioError.ALREADY_STARTED:
-					log.debug("SAPI4: Start when already started")
-				elif e.hresult == AudioError.NOT_CLAIMED:
-					log.debug("SAPI4: Start when not claimed")
-				else:
-					log.debug(f"SAPI4: Start failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.Start()
 
+	@_logTrace(logAll=True)
 	def IAudio_Stop(self) -> None:
-		try:
-			self.audio.Stop()
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: Stopped")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: Stop failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.Stop()
 
+	@_logTrace()
 	def IAudio_TotalGet(self) -> int:
-		try:
-			return self.audio.TotalGet()
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.TotalGet()
 
+	@_logTrace()
 	def IAudio_ToFileTime(self, pqWord: c_ulonglong_p) -> FILETIME:
-		try:
-			return self.audio.ToFileTime(pqWord)
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.ToFileTime(pqWord)
 
+	@_logTrace()
 	def IAudio_WaveFormatGet(self) -> SDATA:
-		try:
-			return self.audio.WaveFormatGet()
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audio.WaveFormatGet()
 
+	@_logTrace()
 	def IAudio_WaveFormatSet(self, dWFEX: SDATA) -> None:
-		try:
-			self.audio.WaveFormatSet(dWFEX)
-			if isDebugForSynthDriver():
-				log.debug("SAPI4: WaveFormatSet")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: WaveFormatSet failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audio.WaveFormatSet(dWFEX)
 
+	@_logTrace(format="{result[0]} bytes free")
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
-		try:
-			ret = self.audiodest.FreeSpace()
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: FreeSpace, {ret[0]} bytes free")
-			return ret
-		except COMError as e:
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: FreeSpace failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		return self.audiodest.FreeSpace()
 
+	@_logTrace(format="{args[2]} bytes written")
 	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
-		try:
-			self.audiodest.DataSet(pBuffer, dwSize)
-			if isDebugForSynthDriver():
-				log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
-		except COMError as e:
-			if isDebugForSynthDriver():
-				if e.hresult == AudioError.NOT_CLAIMED:
-					log.debug("SAPI4: Audio data written when device is not claimed")
-				elif e.hresult == AudioError.NOT_ENOUGH_DATA:
-					log.debug("SAPI4: Insufficient buffer space")
-				else:
-					log.debug(f"SAPI4: DataSet failed with {e.hresult:#x}")
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audiodest.DataSet(pBuffer, dwSize)
 
+	@_logTrace()
 	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
-		try:
-			self.audiodest.BookMark(dwMarkID)
-		except COMError as e:
-			raise ReturnHRESULT(e.hresult, e.text)
+		self.audiodest.BookMark(dwMarkID)
 
 
 class SynthDriverSink(COMObject):
