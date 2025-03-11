@@ -46,3 +46,5 @@ jobs:
       with:
         name: Unit tests results
         path: testOutput/unit/unitTests.xml
+    - name: Add artifact URL to summary
+      run: echo '[- Download unit tests results](${{ steps.uploadArtifact.outputs.artifact-url }})' >> $GITHUB_STEP_SUMMARY
