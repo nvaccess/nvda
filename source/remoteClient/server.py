@@ -28,7 +28,7 @@ import os
 import socket
 import ssl
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from select import select
 from itertools import count
@@ -104,12 +104,12 @@ class RemoteCertificateManager:
 			cert = x509.load_pem_x509_certificate(certData)
 
 		# Check validity period
-		now = datetime.utcnow()
+		now = datetime.now(timezone.utc)
 		if not (cert.not_valid_before_utc < now <= cert.not_valid_after_utc):
 			raise ValueError("Certificate is not within its validity period")
 
 		# Check renewal threshold
-		timeRemaining = cert.not_valid_after - now
+		timeRemaining = cert.not_valid_after_utc - now
 		if timeRemaining.days <= self.CERT_RENEWAL_THRESHOLD_DAYS:
 			raise ValueError("Certificate is approaching expiration")
 
@@ -131,6 +131,7 @@ class RemoteCertificateManager:
 			],
 		)
 
+		now = datetime.now(timezone.utc)
 		cert = (
 			x509.CertificateBuilder()
 			.subject_name(
@@ -146,10 +147,10 @@ class RemoteCertificateManager:
 				x509.random_serial_number(),
 			)
 			.not_valid_before(
-				datetime.utcnow(),
+				now,
 			)
 			.not_valid_after(
-				datetime.utcnow() + timedelta(days=self.CERT_DURATION_DAYS),
+				now + timedelta(days=self.CERT_DURATION_DAYS),
 			)
 			.add_extension(
 				x509.BasicConstraints(ca=True, path_length=None),
