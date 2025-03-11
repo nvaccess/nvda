@@ -312,7 +312,7 @@ class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):
 				continue
 			except AttributeError:
 				log.exception(
-					("Base class may not have been initialized." f"\nMRO={self.__class__.__mro__}")
+					(f"Base class may not have been initialized.\nMRO={self.__class__.__mro__}")
 					if not hasattr(self, "_gestureMap")
 					else None,
 				)
