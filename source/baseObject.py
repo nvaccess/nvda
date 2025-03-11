@@ -183,7 +183,7 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
-	def __new__(cls, name: str, bases: tuple[type, ...], dict: [str, Any], /, **kwargs: Any):
+	def __new__(cls, name: str, bases: tuple[type, ...], dict: dict[str, Any], /, **kwargs: Any):
 		newCls = super().__new__(cls, name, bases, dict, **kwargs)
 		gesturesDictName = "_%s__gestures" % newCls.__name__
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
