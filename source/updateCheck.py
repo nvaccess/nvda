@@ -779,12 +779,12 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		from addonAPIVersion import getAPIVersionTupleFromString
 
 		self.updateInfo = updateInfo
-		self.urls = updateInfo.launcher_url.split(" ")
+		self.urls = updateInfo.launcherUrl.split(" ")
 		self.version = updateInfo.version
-		self.apiVersion = getAPIVersionTupleFromString(updateInfo.api_version)
-		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo.api_compat_to)
+		self.apiVersion = getAPIVersionTupleFromString(updateInfo.apiVersion)
+		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo.apiCompatTo)
 		self.versionTuple = None
-		self.fileHash = updateInfo.launcher_hash
+		self.fileHash = updateInfo.launcherHash
 		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):
