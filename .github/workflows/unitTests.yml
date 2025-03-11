@@ -39,3 +39,10 @@ jobs:
       uses: ./nvdaBuilder
     - name: Run unit tests
       run: powershell.exe ci/scripts/tests/unitTests.ps1
+    - name: Upload artifact
+      id: uploadArtifact
+      if: ${{ always }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Unit tests results
+        path: testOutput/unit/unitTests.xml

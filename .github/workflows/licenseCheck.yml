@@ -42,3 +42,10 @@ jobs:
         scons-source: false
     - name: License check
       run: powershell.exe ci/scripts/tests/licenseCheck.ps1
+    - name: Upload artifact
+      id: uploadArtifact
+      if: ${{ always }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: License check results
+        path: testOutput/license/licenseCheckResults.md
