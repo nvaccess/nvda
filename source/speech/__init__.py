@@ -184,6 +184,7 @@ def reportLanguage(speechSequence: SpeechSequence):
 	for index, item in enumerate(speechSequence):
 		if isinstance(item, LangChangeCommand) and not item.isDefault and index != len(speechSequence) -1 and item.lang != SpeechSequenceState.lastReportedLang:
 			langDesc = languageHandler.getLanguageDescription(item.lang)
+			filteredSpeechSequence.append(LangChangeCommand(None))
 			if langDesc is not None:
 				filteredSpeechSequence.append(langDesc)
 			else:
