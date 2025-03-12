@@ -4926,11 +4926,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reeportCaretLanguage(self, gesture):
+	def script_reportCaretLanguage(self, gesture):
 		info = self._getTIAtCaret()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
-		text = info.text
 		languageDescription = languageHandler.getLanguageDescription(curLanguage)
 		if languageDescription is None:
 			languageDescription = curLanguage
@@ -4938,7 +4937,7 @@ class GlobalCommands(ScriptableObject):
 		if repeats == 0:
 			ui.message(languageDescription)
 		elif repeats == 1:
-			# Translators: Character and its language.
+			# Translators: Language of the text under caret.
 			message = languageDescription
 			# Translators: title for report caret language dialog.
 			title = _("Language at caret position")

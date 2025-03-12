@@ -1702,8 +1702,7 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		self.autoDialectSwitchingCheckbox.SetValue(
 			config.conf["speech"]["autoDialectSwitching"],
 		)
-		# Translators: This is the label for a checkbox in the
-		# voice settings panel (if checked, the language switched to will be reported).
+		# Translators: This is the label for a checkbox in the voice settings panel. If checked, the language switched to will be reported.
 		reportLanguageText = _("Report language when automatic switching is enabled")
 		self.reportLanguageCheckbox = settingsSizerHelper.addItem(
 			wx.CheckBox(
