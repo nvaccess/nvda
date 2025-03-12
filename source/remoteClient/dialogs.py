@@ -6,7 +6,7 @@
 import json
 import random
 import threading
-from typing import List, Optional, TypedDict, Union
+from typing import List, Optional, TypedDict
 from urllib import request
 
 import gui
@@ -261,22 +261,18 @@ class ServerPanel(wx.Panel):
 
 
 class DirectConnectDialog(wx.Dialog):
-	clientOrServer: wx.RadioBox
-	connectionType: wx.RadioBox
-	container: wx.Panel
-	panel: Union[ClientPanel, ServerPanel]
-	mainSizer: wx.BoxSizer
+	_selectedPanel: ClientPanel | ServerPanel
 
 	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: Optional[List[str]] = None):
 		super().__init__(parent, id, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
-		contentsSizerHelper.addLabeledControl(
-			"Mode",
+		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
+			"&Mode",
 			wx.Choice,
 			choices=("Allow this computer to be controlled", "Control another computer"),
 		)
-		self.clientOrServer = contentsSizerHelper.addLabeledControl(
+		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			_("&Server:"),
 			wx.Choice,
 			choices=(
@@ -286,156 +282,88 @@ class DirectConnectDialog(wx.Dialog):
 				"Host control server",
 			),
 		)
-		self.clientOrServer.Bind(wx.EVT_CHOICE, self.onClientOrServer)
-		# self.clientOrServer.SetSelection(0)
-		# self.clientPanel = ClientPanel(self)
-		# self.serverPanel = ServerPanel(self)
-		# self.serverPanel.Hide()
-		# self.container = wx.GridSizer(cols=1, hgap=0, vgap=0)
-		# self.container.Add(self.clientPanel, 1, wx.EXPAND)
-		# self.container.Add(self.serverPanel, 1, wx.EXPAND)
-		# self.container.Hide(self.serverPanel)
-		# self.serverPanel.Hide()
-		# contentsSizerHelper.sizer.Add(self.container)
-		choiceBook = self.choiceBook = wx.Simplebook(self)
-		# choiceBook.GetControlSizer().Insert(0, wx.StaticText(choiceBook, label="&Server"))
-		self.clientPanel = ClientPanel(choiceBook)
-		self.serverPanel = ServerPanel(choiceBook)
-		choiceBook.AddPage(self.clientPanel, "Client")
-		choiceBook.AddPage(self.serverPanel, "Server")
-		# choiceBook.Bind(wx.EVT_BOOKCTRL_PAGE_CHANGED, self.noop)
-		# choiceBook.Bind(wx.EVT_BOOKCTRL_PAGE_CHANGING, self.noop)
-		contentsSizerHelper.addItem(choiceBook)
+		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		simpleBook = self._simpleBook = wx.Simplebook(self)
+		self._clientPanel = ClientPanel(simpleBook)
+		if hostnames:
+			self._clientPanel.host.AppendItems(hostnames)
+			self._clientPanel.host.SetSelection(0)
+		self._serverPanel = ServerPanel(simpleBook)
+		simpleBook.AddPage(self._clientPanel, "Client")
+		simpleBook.AddPage(self._serverPanel, "Server")
+		self._clientOrServerControl.SetSelection(0)
+		self._selectedPanel = self._clientPanel
+		contentsSizerHelper.addItem(simpleBook)
 		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
+		self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
 		mainSizer.Add(contentsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.SetSizer(mainSizer)
 		self.Fit()
 		self.CenterOnScreen()
-		# mainSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
-		# mainSizer = self.mainSizer = mainSizerHelper.sizer
-		# mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		# self.clientOrServer = wx.RadioBox(
-		# self,
-		# wx.ID_ANY,
-		# choices=(
-		# Translators: A choice to connect to another machine.
-		# _("Client"),
-		# Translators: A choice to allow another machine to connect to this machine.
-		# _("Server"),
-		# ),
-		# style=wx.RA_VERTICAL,
-		# )
-		# self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
-		# self.clientOrServer.SetSelection(0)
-		# mainSizer.Add(self.clientOrServer)
-		# choices = [
-		# Translators: A choice to control another machine.
-		# _("Control another machine"),
-		# Translators: A choice to allow this machine to be controlled.
-		# _("Allow this machine to be controlled"),
-		# ]
-		# self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
-		# self.connectionType.SetSelection(0)
-		# mainSizer.Add(self.connectionType)
-		# self.container = wx.Panel(parent=self)
-		# self.panel = ClientPanel(parent=self.container)
-		# mainSizer.Add(self.container)
-		# buttons = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-		# mainSizer.Add(buttons, flag=wx.BOTTOM)
-		# mainSizer.Fit(self)
-		# self.SetSizer(mainSizer)
-		# self.Center(wx.BOTH | wx.CENTER)
-		# ok = wx.FindWindowById(wx.ID_OK, self)
-		# ok.Bind(wx.EVT_BUTTON, self.onOk)
-		# self.clientOrServer.SetFocus()
-		# if hostnames:
-		# self.panel.host.AppendItems(hostnames)
-		# self.panel.host.SetSelection(0)
-		# self.CenterOnScreen()
 
-	def noop(self, evt):
-		return
-
-	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
+	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		selectedIndex = self._clientOrServerControl.GetSelection()
+		self._simpleBook.ChangeSelection(selectedIndex)
+		# Hack: setting or changing the selection of a wx.SimpleBookseems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
+		self._clientOrServerControl.SetFocus()
+		self._selectedPanel = self._simpleBook.GetPage(selectedIndex)
+		gui.messageBox("Changed")
 		evt.Skip()
-		# self.choiceBook.
-		self.choiceBook.ChangeSelection(self.clientOrServer.GetSelection())
-		self.clientOrServer.SetFocus()
-		# state = self.clientOrServer.GetSelection()
-		# self.clientPanel.Show(not state)
-		# self.serverPanel.Show(state)
-		# self.Layout()
-		# self.panel.Destroy()
-		# if self.clientOrServer.GetSelection() == 0:
-		# self.container.Show(self.clientPanel)
-		# self.container.Hide(self.serverPanel)
-		# else:
-		# self.container.Show(self.serverPanel)
-		# self.container.Hide(self.clientPanel)
-		# self.container.Layout()
-		# self.Fit()
-		# if self.clientOrServer.GetSelection() == 0:
-		# self.panel = ClientPanel(parent=self.container)
-		# else:
-		# self.panel = ServerPanel(parent=self.container)
-		# self.mainSizer.Fit(self)
-		# self.CenterOnScreen()
 
-	def onOk(self, evt: wx.CommandEvent) -> None:
-		if self.clientOrServer.GetSelection() == 0 and (
-			not self.panel.host.GetValue() or not self.panel.key.GetValue()
+	def _onOk(self, evt: wx.CommandEvent) -> None:
+		# gui.messageBox(f"{self.panel} is {self.clientPanel} = {self.panel is self.serverPanel}")
+		message: str | None = None
+		focusTarget: wx.Window | None = None
+		if self._selectedPanel is self._clientPanel and (
+			not self._selectedPanel.host.GetValue() or not self._selectedPanel.key.GetValue()
 		):
+			# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
+			message = _("Both host and key must be set.")
+			focusTarget = self._selectedPanel.host
+		elif self._selectedPanel is self._serverPanel and (
+			not self._selectedPanel.port.GetValue() or not self._selectedPanel.key.GetValue()
+		):
+			# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
+			message = _("Both port and key must be set.")
+			focusTarget = self._selectedPanel.port
+		if message is not None:
 			gui.messageBox(
-				# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
-				_("Both host and key must be set."),
-				# Translators: A title of a message box displayed when the host or key field is empty and the user tries to connect.
+				message,
+				# Translators: Title of a dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
-			self.panel.host.SetFocus()
-		elif self.clientOrServer.GetSelection() == 1 and (
-			not self.panel.port.GetValue() or not self.panel.key.GetValue()
-		):
-			gui.messageBox(
-				# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
-				_("Both port and key must be set."),
-				# Translators: A title of a message box displayed when the port or key field is empty and the user tries to connect.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-			)
-			self.panel.port.SetFocus()
+			if focusTarget is not None:
+				focusTarget.SetFocus()
 		else:
 			evt.Skip()
 
-	def getKey(self) -> str:
-		return self.panel.key.GetValue()
+	def _getKey(self) -> str:
+		return self._selectedPanel.key.GetValue()
 
 	def getConnectionInfo(self) -> ConnectionInfo:
-		if self.clientOrServer.GetSelection() == 0:  # client
-			host = self.panel.host.GetValue()
-			serverAddr, port = protocol.addressToHostPort(host)
-			mode = (
-				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
-			)
-			return ConnectionInfo(
-				hostname=serverAddr,
-				mode=mode,
-				key=self.getKey(),
-				port=port,
-				insecure=False,
-			)
-		else:  # server
-			port = int(self.panel.port.GetValue())
-			mode = (
-				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
-			)
-			return ConnectionInfo(
-				hostname="127.0.0.1",
-				mode=mode,
-				key=self.getKey(),
-				port=port,
-				insecure=True,
-			)
+		mode: ConnectionMode = (
+			ConnectionMode.LEADER
+			if self._connectionModeControl.GetSelection() == 0
+			else ConnectionMode.FOLLOWER
+		)
+		serverAddr: str
+		port: int
+		insecure: bool
+		if self._selectedPanel is self._clientPanel:
+			serverAddr, port = protocol.addressToHostPort(self._selectedPanel.host.GetValue())
+			insecure = False
+		elif self._selectedPanel is self._serverPanel:
+			serverAddr = "127.0.0.1"
+			port = int(self._selectedPanel.port.GetValue())
+			insecure = True
+		return ConnectionInfo(
+			hostname=serverAddr,
+			mode=mode,
+			key=self._getKey(),
+			port=port,
+			insecure=insecure,
+		)
 
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
