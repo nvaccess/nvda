@@ -4920,8 +4920,8 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		description=_(
 			# Translators: Input help mode message for report language for caret command.
-			"Reports the language for the character where the caret is positioned. "
-			"Pressed twice, shows the character and its language in browse mode",
+			"Reports the language for the text under the caret. "
+			"If pressed twice, presents the information in browse mode",
 		),
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
@@ -4937,9 +4937,9 @@ class GlobalCommands(ScriptableObject):
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(languageDescription)
-		else:
+		elif repeats == 1:
 			# Translators: Character and its language.
-			message = _("{} ({})").format(text, languageDescription)
+			message = languageDescription
 			# Translators: title for report caret language dialog.
 			title = _("Language at caret position")
 			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
