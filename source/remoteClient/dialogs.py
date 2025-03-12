@@ -14,6 +14,7 @@ import wx
 from wx.lib.expando import ExpandoTextCtrl
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
+from gui import guiHelper
 from gui.nvdaControls import SelectOnFocusSpinCtrl
 
 from . import configuration, serializer, server, protocol, transport
@@ -268,55 +269,117 @@ class DirectConnectDialog(wx.Dialog):
 
 	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: Optional[List[str]] = None):
 		super().__init__(parent, id, title=title)
-		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.clientOrServer = wx.RadioBox(
-			self,
-			wx.ID_ANY,
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
+		contentsSizerHelper.addLabeledControl(
+			"Mode",
+			wx.Choice,
+			choices=("Allow this computer to be controlled", "Control another computer"),
+		)
+		self.clientOrServer = contentsSizerHelper.addLabeledControl(
+			_("&Server:"),
+			wx.Choice,
 			choices=(
 				# Translators: A choice to connect to another machine.
-				_("Client"),
+				"Remote control server",
 				# Translators: A choice to allow another machine to connect to this machine.
-				_("Server"),
+				"Host control server",
 			),
-			style=wx.RA_VERTICAL,
 		)
-		self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
-		self.clientOrServer.SetSelection(0)
-		mainSizer.Add(self.clientOrServer)
-		choices = [
-			# Translators: A choice to control another machine.
-			_("Control another machine"),
-			# Translators: A choice to allow this machine to be controlled.
-			_("Allow this machine to be controlled"),
-		]
-		self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
-		self.connectionType.SetSelection(0)
-		mainSizer.Add(self.connectionType)
-		self.container = wx.Panel(parent=self)
-		self.panel = ClientPanel(parent=self.container)
-		mainSizer.Add(self.container)
-		buttons = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-		mainSizer.Add(buttons, flag=wx.BOTTOM)
-		mainSizer.Fit(self)
+		self.clientOrServer.Bind(wx.EVT_CHOICE, self.onClientOrServer)
+		# self.clientOrServer.SetSelection(0)
+		# self.clientPanel = ClientPanel(self)
+		# self.serverPanel = ServerPanel(self)
+		# self.serverPanel.Hide()
+		# self.container = wx.GridSizer(cols=1, hgap=0, vgap=0)
+		# self.container.Add(self.clientPanel, 1, wx.EXPAND)
+		# self.container.Add(self.serverPanel, 1, wx.EXPAND)
+		# self.container.Hide(self.serverPanel)
+		# self.serverPanel.Hide()
+		# contentsSizerHelper.sizer.Add(self.container)
+		choiceBook = self.choiceBook = wx.Simplebook(self)
+		# choiceBook.GetControlSizer().Insert(0, wx.StaticText(choiceBook, label="&Server"))
+		self.clientPanel = ClientPanel(choiceBook)
+		self.serverPanel = ServerPanel(choiceBook)
+		choiceBook.AddPage(self.clientPanel, "Client")
+		choiceBook.AddPage(self.serverPanel, "Server")
+		# choiceBook.Bind(wx.EVT_BOOKCTRL_PAGE_CHANGED, self.noop)
+		# choiceBook.Bind(wx.EVT_BOOKCTRL_PAGE_CHANGING, self.noop)
+		contentsSizerHelper.addItem(choiceBook)
+		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
+		mainSizer.Add(contentsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
 		self.SetSizer(mainSizer)
-		self.Center(wx.BOTH | wx.CENTER)
-		ok = wx.FindWindowById(wx.ID_OK, self)
-		ok.Bind(wx.EVT_BUTTON, self.onOk)
-		self.clientOrServer.SetFocus()
-		if hostnames:
-			self.panel.host.AppendItems(hostnames)
-			self.panel.host.SetSelection(0)
+		self.Fit()
 		self.CenterOnScreen()
+		# mainSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
+		# mainSizer = self.mainSizer = mainSizerHelper.sizer
+		# mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
+		# self.clientOrServer = wx.RadioBox(
+		# self,
+		# wx.ID_ANY,
+		# choices=(
+		# Translators: A choice to connect to another machine.
+		# _("Client"),
+		# Translators: A choice to allow another machine to connect to this machine.
+		# _("Server"),
+		# ),
+		# style=wx.RA_VERTICAL,
+		# )
+		# self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
+		# self.clientOrServer.SetSelection(0)
+		# mainSizer.Add(self.clientOrServer)
+		# choices = [
+		# Translators: A choice to control another machine.
+		# _("Control another machine"),
+		# Translators: A choice to allow this machine to be controlled.
+		# _("Allow this machine to be controlled"),
+		# ]
+		# self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
+		# self.connectionType.SetSelection(0)
+		# mainSizer.Add(self.connectionType)
+		# self.container = wx.Panel(parent=self)
+		# self.panel = ClientPanel(parent=self.container)
+		# mainSizer.Add(self.container)
+		# buttons = self.CreateButtonSizer(wx.OK | wx.CANCEL)
+		# mainSizer.Add(buttons, flag=wx.BOTTOM)
+		# mainSizer.Fit(self)
+		# self.SetSizer(mainSizer)
+		# self.Center(wx.BOTH | wx.CENTER)
+		# ok = wx.FindWindowById(wx.ID_OK, self)
+		# ok.Bind(wx.EVT_BUTTON, self.onOk)
+		# self.clientOrServer.SetFocus()
+		# if hostnames:
+		# self.panel.host.AppendItems(hostnames)
+		# self.panel.host.SetSelection(0)
+		# self.CenterOnScreen()
+
+	def noop(self, evt):
+		return
 
 	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
-		self.panel.Destroy()
-		if self.clientOrServer.GetSelection() == 0:
-			self.panel = ClientPanel(parent=self.container)
-		else:
-			self.panel = ServerPanel(parent=self.container)
-		self.mainSizer.Fit(self)
-		self.CenterOnScreen()
+		# self.choiceBook.
+		self.choiceBook.ChangeSelection(self.clientOrServer.GetSelection())
+		self.clientOrServer.SetFocus()
+		# state = self.clientOrServer.GetSelection()
+		# self.clientPanel.Show(not state)
+		# self.serverPanel.Show(state)
+		# self.Layout()
+		# self.panel.Destroy()
+		# if self.clientOrServer.GetSelection() == 0:
+		# self.container.Show(self.clientPanel)
+		# self.container.Hide(self.serverPanel)
+		# else:
+		# self.container.Show(self.serverPanel)
+		# self.container.Hide(self.clientPanel)
+		# self.container.Layout()
+		# self.Fit()
+		# if self.clientOrServer.GetSelection() == 0:
+		# self.panel = ClientPanel(parent=self.container)
+		# else:
+		# self.panel = ServerPanel(parent=self.container)
+		# self.mainSizer.Fit(self)
+		# self.CenterOnScreen()
 
 	def onOk(self, evt: wx.CommandEvent) -> None:
 		if self.clientOrServer.GetSelection() == 0 and (
