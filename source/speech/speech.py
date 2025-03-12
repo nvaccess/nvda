@@ -125,6 +125,8 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
+	lastReportedLanguage = None
+	suppressLanguageDescription = False
 
 
 def getState():
@@ -1169,7 +1171,32 @@ def speak(  # noqa: C901
 			)
 			if not inCharacterMode:
 				speechSequence[index] += CHUNK_SEPARATOR
+				if (
+					config.conf["speech"]["reportLanguage"]
+					and curLanguage not in (defaultLanguage, _speechState.lastReportedLanguage)
+					and languageHandler.getLanguageDescription(curLanguage) not in speechSequence
+					and languageHandler.getLanguageDescription(curLanguage) is not None
+					and not _speechState.suppressLanguageDescription
+				):
+					speechSequence.insert(0, LangChangeCommand(defaultLanguage))
+					speechSequence.insert(1, languageHandler.getLanguageDescription(curLanguage))
+					if not languageIsSupported(curLanguage):
+						log.debugWarning(f"{curLanguage} not supported in {getSynth().name}")
+	_speechState.lastReportedLanguage = curLanguage
 	_manager.speak(speechSequence, priority)
+
+
+def languageIsSupported(language: str | None) -> bool:
+	"""Determines if the specified language is supported.
+	:param language: A language code or None.
+	:return: True if the language is supported, False otherwise.
+	"""
+	if language is None:
+		return True
+	for lang in getSynth().availableLanguages:
+		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
+			return True
+	return False
 
 
 def speakPreselectedText(
@@ -1514,7 +1541,7 @@ def getTextInfoSpeech(  # noqa: C901
 	reportIndentation = (
 		unit == textInfos.UNIT_LINE and formatConfig["reportLineIndentation"] != ReportLineIndentation.OFF
 	)
-	# For performance reasons, when navigating by paragraph or table cell, spelling errors will not be announced.
+	# For performance reasons, when navigating by paragraph or table cell, spelling errors and language description will not be announced.
 	if unit in (textInfos.UNIT_PARAGRAPH, textInfos.UNIT_CELL) and reason == OutputReason.CARET:
 		formatConfig["reportSpellingErrors"] = False
 
@@ -1582,6 +1609,7 @@ def getTextInfoSpeech(  # noqa: C901
 	# #2591: Only if the reason is not focus, Speak the exit of any controlFields not in the new stack.
 	# We don't do this for focus because hearing "out of list", etc. isn't useful when tabbing or using quick navigation and makes navigation less efficient.
 	if reason not in [OutputReason.FOCUS, OutputReason.QUICKNAV]:
+		_speechState.suppressLanguageDescription = False
 		endingBlock = False
 		for count in reversed(range(commonFieldCount, len(controlFieldStackCache))):
 			fieldSequence = info.getControlFieldSpeech(
@@ -1598,6 +1626,9 @@ def getTextInfoSpeech(  # noqa: C901
 				endingBlock = bool(int(controlFieldStackCache[count].get("isBlock", 0)))
 		if endingBlock:
 			speechSequence.append(EndUtteranceCommand())
+			_speechState.suppressLanguageDescription = True
+	else:
+		_speechState.suppressLanguageDescription = True
 	# The TextInfo should be considered blank if we are only exiting fields (i.e. we aren't
 	# entering any new fields and there is no text).
 	shouldConsiderTextInfoBlank = True
