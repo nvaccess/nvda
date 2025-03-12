@@ -44,10 +44,17 @@ jobs:
       run: powershell.exe ci/scripts/installNVDA.ps1
     - name: Run system tests
       run: powershell.exe ci/scripts/tests/systemTests.ps1
-    - name: Upload artifact
-      id: uploadArtifact
+    - name: Upload system tests results
+      id: uploadSystemTestsResults
       if: ${{ always() }}
       uses: actions/upload-artifact@v4
       with:
         name: System tests results
         path: testOutput/system
+    - name: Upload NVDA
+      id: uploadLauncher
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: NVDA launcher
+        path: output/nvda*.exe
