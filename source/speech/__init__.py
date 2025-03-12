@@ -168,6 +168,7 @@ def initialize():
 	)
 	filter_speechSequence.register(reportLanguage)
 
+
 def terminate():
 	synthDriverHandler.setSynth(None)
 	filter_speechSequence.unregister(reportLanguage)
