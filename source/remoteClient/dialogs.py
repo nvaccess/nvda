@@ -272,6 +272,7 @@ class DirectConnectDialog(wx.Dialog):
 			wx.Choice,
 			choices=("Allow this computer to be controlled", "Control another computer"),
 		)
+		self._connectionModeControl.SetSelection(0)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			_("&Server:"),
 			wx.Choice,
@@ -300,6 +301,7 @@ class DirectConnectDialog(wx.Dialog):
 		self.SetSizer(mainSizer)
 		self.Fit()
 		self.CenterOnScreen()
+		self._connectionModeControl.SetFocus()
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		selectedIndex = self._clientOrServerControl.GetSelection()
