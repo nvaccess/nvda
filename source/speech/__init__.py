@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Leonard de Ruijter
 
+import languageHandler
 from .commands import LangChangeCommand
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -153,6 +154,10 @@ from .speech import initialize as speechInitialize
 from .sayAll import initialize as sayAllInitialize
 
 
+class SpeechSequenceState:
+	lastReportedLang = None
+
+
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini.
 	Initializes the state of speech and initializes the sayAllHandler
@@ -176,8 +181,13 @@ def terminate():
 
 def reportLanguage(speechSequence: SpeechSequence):
 	filteredSpeechSequence = list()
-	for item in speechSequence:
-		if isinstance(item, LangChangeCommand) and not item.isDefault:
-			filteredSpeechSequence.append(item.lang)
+	for index, item in enumerate(speechSequence):
+		if isinstance(item, LangChangeCommand) and not item.isDefault and index != len(speechSequence) -1 and item.lang != SpeechSequenceState.lastReportedLang:
+			langDesc = languageHandler.getLanguageDescription(item.lang)
+			if langDesc is not None:
+				filteredSpeechSequence.append(langDesc)
+			else:
+				filteredSpeechSequence.append(item.lang)
+			SpeechSequenceState.lastReportedLang = item.lang
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
