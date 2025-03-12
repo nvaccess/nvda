@@ -11,8 +11,10 @@ from urllib import request
 
 import gui
 import wx
+from wx.lib.expando import ExpandoTextCtrl
 from logHandler import log
-from gui.guiHelper import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
+from gui.nvdaControls import SelectOnFocusSpinCtrl
 
 from . import configuration, serializer, server, protocol, transport
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -27,19 +29,32 @@ class ClientPanel(wx.Panel):
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizerHelper = BoxSizerHelper(self, sizer=sizer)
+		self.host = sizerHelper.addLabeledControl(
+			# Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
+			_("&Host:"),
+			wx.ComboBox,
+		)
 		# Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
-		self.host = wx.ComboBox(self, wx.ID_ANY)
-		sizer.Add(self.host)
+		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
+		# self.host = wx.ComboBox(self, wx.ID_ANY)
+		# sizer.Add(self.host)
+		self.key = sizerHelper.addLabeledControl(
+			# Translators: Label of the edit field to enter key (password) to secure the remote connection.
+			_("&Key:"),
+			wx.TextCtrl,
+		)
 		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		sizer.Add(self.key)
+		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
+		# self.key = wx.TextCtrl(self, wx.ID_ANY)
+		# sizer.Add(self.key)
 		# Translators: The button used to generate a random key/password.
 		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
 		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
-		sizer.Add(self.generateKey)
+		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
+		keyControlsSizerHelper.addItem(self.generateKey)
+		# sizer.Add(self.generateKey)
 		self.SetSizerAndFit(sizer)
 
 	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
@@ -127,25 +142,49 @@ class ServerPanel(wx.Panel):
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizerHelper = BoxSizerHelper(self, sizer=sizer)
+		self.externalIP = sizerHelper.addLabeledControl(
+			# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
+			_("`ternal IP:"),
+			ExpandoTextCtrl,
+			style=wx.TE_READONLY,
+		)
 		# Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
 		self.getIP = wx.Button(parent=self, label=_("Get External &IP"))
 		self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
-		sizer.Add(self.getIP)
+		externalIPControlsSizerHelper = BoxSizerHelper(self, sizer=self.externalIP.GetContainingSizer())
+		externalIPControlsSizerHelper.addItem(self.getIP)
+		# Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
+		# self.getIP = wx.Button(parent=self, label=_("Get External &IP"))
+		# self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
+		# sizer.Add(self.getIP)
 		# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&External IP:")))
-		self.externalIP = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_READONLY | wx.TE_MULTILINE)
-		sizer.Add(self.externalIP)
+		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&External IP:")))
+		# self.externalIP = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_READONLY | wx.TE_MULTILINE)
+		# sizer.Add(self.externalIP)
 		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
-		self.port = wx.TextCtrl(self, wx.ID_ANY, value=str(SERVER_PORT))
-		sizer.Add(self.port)
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		sizer.Add(self.key)
+		self.port = sizerHelper.addLabeledControl(
+			_("&Port:"),
+			SelectOnFocusSpinCtrl,
+			min=1,
+			max=65535,
+			initial=SERVER_PORT,
+		)
+		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
+		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
+		# self.port = wx.TextCtrl(self, wx.ID_ANY, value=str(SERVER_PORT))
+		# sizer.Add(self.port)
+		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
+		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
+		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
+		# self.key = wx.TextCtrl(self, wx.ID_ANY)
+		# sizer.Add(self.key)
 		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
 		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
-		sizer.Add(self.generateKey)
+		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
+		keyControlsSizerHelper.addItem(self.generateKey)
+		# sizer.Add(self.generateKey)
 		self.SetSizerAndFit(sizer)
 
 	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
@@ -267,6 +306,7 @@ class DirectConnectDialog(wx.Dialog):
 		if hostnames:
 			self.panel.host.AppendItems(hostnames)
 			self.panel.host.SetSelection(0)
+		self.CenterOnScreen()
 
 	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
@@ -276,6 +316,7 @@ class DirectConnectDialog(wx.Dialog):
 		else:
 			self.panel = ServerPanel(parent=self.container)
 		self.mainSizer.Fit(self)
+		self.CenterOnScreen()
 
 	def onOk(self, evt: wx.CommandEvent) -> None:
 		if self.clientOrServer.GetSelection() == 0 and (
