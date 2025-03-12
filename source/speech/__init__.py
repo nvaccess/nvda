@@ -4,6 +4,7 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Leonard de Ruijter
 
+from .commands import LangChangeCommand
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
 	_getSpellingSpeechAddCharMode,
@@ -63,7 +64,7 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
-from .extensions import speechCanceled, post_speechPaused, pre_speechQueued
+from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence
 from .priorities import Spri
 
 from .types import (
@@ -165,7 +166,17 @@ def initialize():
 		getTextInfoSpeech,
 		SpeakTextInfoState,
 	)
-
+	filter_speechSequence.register(reportLanguage)
 
 def terminate():
 	synthDriverHandler.setSynth(None)
+	filter_speechSequence.unregister(reportLanguage)
+
+
+def reportLanguage(speechSequence: SpeechSequence):
+	filteredSpeechSequence = list()
+	for item in speechSequence:
+		if isinstance(item, LangChangeCommand) and not item.isDefault:
+			filteredSpeechSequence.append(item.lang)
+		filteredSpeechSequence.append(item)
+	return filteredSpeechSequence
