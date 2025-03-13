@@ -71,8 +71,10 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 	def _generateKeyCommand(self, insecure: bool = False) -> None:
 		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
 			self,
-			"Generating key",
-			"Generating key.",
+			# Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
+			pgettext("Remote", "Generating key"),
+			# Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
+			pgettext("Remote", "Generating key..."),
 		)
 		address = protocol.addressToHostPort(self.host.GetValue())
 		self._keyConnector = transport.RelayTransport(
@@ -158,28 +160,31 @@ class PortCheckResponse(TypedDict):
 
 class ServerPanel(ContextHelpMixin, wx.Panel):
 	helpId = "RemoteAccessConnectLocal"
-	getIP: wx.Button
-	externalIP: wx.TextCtrl
+	_getIPButton: wx.Button
+	_externalIPControl: wx.TextCtrl
 	port: wx.TextCtrl
 	key: wx.TextCtrl
-	generateKey: wx.Button
+	_generateKeyButton: wx.Button
 	_progressDialog: gui.IndeterminateProgressDialog | None = None
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizerHelper = BoxSizerHelper(self, sizer=sizer)
-		self.externalIP = sizerHelper.addLabeledControl(
+		self._externalIPControl = sizerHelper.addLabeledControl(
 			# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
 			_("&External IP:"),
 			ExpandoTextCtrl,
 			style=wx.TE_READONLY,
 		)
 		# Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
-		self.getIP = wx.Button(parent=self, label=_("Get External &IP"))
-		self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
-		externalIPControlsSizerHelper = BoxSizerHelper(self, sizer=self.externalIP.GetContainingSizer())
-		externalIPControlsSizerHelper.addItem(self.getIP)
+		self._getIPButton = wx.Button(parent=self, label=_("Get External &IP"))
+		self._getIPButton.Bind(wx.EVT_BUTTON, self.onGetIP)
+		externalIPControlsSizerHelper = BoxSizerHelper(
+			self,
+			sizer=self._externalIPControl.GetContainingSizer(),
+		)
+		externalIPControlsSizerHelper.addItem(self._getIPButton)
 
 		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
 		self.port = sizerHelper.addLabeledControl(
@@ -191,10 +196,10 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 		)
 		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
 		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
-		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
-		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
+		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
+		self._generateKeyButton.Bind(wx.EVT_BUTTON, self.onGenerateKey)
 		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
-		keyControlsSizerHelper.addItem(self.generateKey)
+		keyControlsSizerHelper.addItem(self._generateKeyButton)
 		self.SetSizerAndFit(sizer)
 
 	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
@@ -259,9 +264,9 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 				style=wx.ICON_WARNING | wx.OK,
 			)
 
-		self.externalIP.SetValue(ip)
-		self.externalIP.SelectAll()
-		self.externalIP.SetFocus()
+		self._externalIPControl.SetValue(ip)
+		self._externalIPControl.SelectAll()
+		self._externalIPControl.SetFocus()
 
 	def onGetIPFail(self, exc: Exception) -> None:
 		# Translators: Error message when unable to get IP address from portcheck server
