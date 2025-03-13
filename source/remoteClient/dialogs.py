@@ -28,8 +28,8 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 	helpId = "RemoteAccessConnectExisting"
 	host: wx.ComboBox
 	key: wx.TextCtrl
-	generateKey: wx.Button
-	keyConnector: Optional["transport.RelayTransport"]
+	_generateKeyButton: wx.Button
+	_keyConnector: Optional["transport.RelayTransport"]
 	_keyGenerationProgressDialog: gui.IndeterminateProgressDialog | None = None
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
@@ -47,14 +47,14 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			wx.TextCtrl,
 		)
 		# Translators: The button used to generate a random key/password.
-		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
-		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
+		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
+		self._generateKeyButton.Bind(wx.EVT_BUTTON, self._onGenerateKey)
 		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
-		keyControlsSizerHelper.addItem(self.generateKey)
+		keyControlsSizerHelper.addItem(self._generateKeyButton)
 		# sizer.Add(self.generateKey)
 		self.SetSizerAndFit(sizer)
 
-	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
+	def _onGenerateKey(self, evt: wx.CommandEvent) -> None:
 		if not self.host.GetValue():
 			gui.messageBox(
 				# Translators: A message box displayed when the host field is empty and the user tries to generate a key.
@@ -66,37 +66,37 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			self.host.SetFocus()
 		else:
 			evt.Skip()
-			self.generateKeyCommand()
+			self._generateKeyCommand()
 
-	def generateKeyCommand(self, insecure: bool = False) -> None:
+	def _generateKeyCommand(self, insecure: bool = False) -> None:
 		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
 			self,
 			"Generating key",
 			"Generating key.",
 		)
 		address = protocol.addressToHostPort(self.host.GetValue())
-		self.keyConnector = transport.RelayTransport(
+		self._keyConnector = transport.RelayTransport(
 			address=address,
 			serializer=serializer.JSONSerializer(),
 			insecure=insecure,
 		)
-		self.keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self.handleKeyGenerated)
-		self.keyConnector.transportCertificateAuthenticationFailed.register(self.handleCertificateFailed)
-		self.keyConnector.transportConnectionFailed.register(self.handleConnectionFailed)
-		t = threading.Thread(target=self.keyConnector.run)
+		self._keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self._handleKeyGenerated)
+		self._keyConnector.transportCertificateAuthenticationFailed.register(self._handleCertificateFailed)
+		self._keyConnector.transportConnectionFailed.register(self._handleConnectionFailed)
+		t = threading.Thread(target=self._keyConnector.run)
 		t.start()
 
 	@alwaysCallAfter
-	def handleKeyGenerated(self, key: Optional[str] = None) -> None:
+	def _handleKeyGenerated(self, key: Optional[str] = None) -> None:
 		self._keyGenerationProgressDialog.done()
 		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
 		self.key.SetFocus()
-		self.keyConnector.close()
-		self.keyConnector = None
+		self._keyConnector.close()
+		self._keyConnector = None
 
 	@alwaysCallAfter
-	def handleConnectionFailed(self) -> None:
+	def _handleConnectionFailed(self) -> None:
 		self._keyGenerationProgressDialog.done()
 		self._keyGenerationProgressDialog = None
 		gui.messageBox(
@@ -112,7 +112,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		)
 
 	@alwaysCallAfter
-	def handleCertificateFailed(self) -> None:
+	def _handleCertificateFailed(self) -> None:
 		"""
 		Handles the event when a certificate validation fails.
 
@@ -132,7 +132,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		self._keyGenerationProgressDialog.Done()
 		self._keyGenerationProgressDialog = None
 		try:
-			certHash = self.keyConnector.lastFailFingerprint
+			certHash = self._keyConnector.lastFailFingerprint
 
 			wnd = CertificateUnauthorizedDialog(None, fingerprint=certHash)
 			a = wnd.ShowModal()
@@ -145,9 +145,9 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			log.exception("Error handling certificate failure")
 			return
 		finally:
-			self.keyConnector.close()
-			self.keyConnector = None
-		self.generateKeyCommand(True)
+			self._keyConnector.close()
+			self._keyConnector = None
+		self._generateKeyCommand(True)
 
 
 class PortCheckResponse(TypedDict):
