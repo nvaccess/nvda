@@ -11,12 +11,16 @@ When creating new parameter options, consider using F{FeatureFlag} which explici
 the default value.
 """
 
-from enum import unique
+from typing import TYPE_CHECKING
+from enum import unique, verify, CONTINUOUS
 from utils.displayString import (
 	DisplayStringIntEnum,
 	DisplayStringStrEnum,
 	DisplayStringIntFlag,
 )
+
+if TYPE_CHECKING:
+	import remoteClient
 
 
 @unique
@@ -296,11 +300,12 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 		}
 
 
-class RemoteConnectionType(DisplayStringIntEnum):
-	"""Enumeration containing the possible remote connection types (roles for connected clients).
+@verify(CONTINUOUS)
+class RemoteConnectionMode(DisplayStringIntEnum):
+	"""Enumeration containing the possible remote connection modes (roles for connected clients).
 
-	Use RemoteConnectionType.MEMBER.value to compare with the config;
-	use RemoteConnectionType.MEMBER.displayString in the UI for a translatable description of this member.
+	Use RemoteConnectionMode.MEMBER.value to compare with the config;
+	use RemoteConnectionMode.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 
 	FOLLOWER = 0
@@ -310,7 +315,16 @@ class RemoteConnectionType(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: Allow this computer to be controlled by the remote computer.
-			RemoteConnectionType.FOLLOWER: pgettext("Remote", "Allow this machine to be controlled"),
+			RemoteConnectionMode.FOLLOWER: pgettext("Remote", "Allow this machine to be controlled"),
 			# Translators: Allow this computer to control the remote computer.
-			RemoteConnectionType.LEADER: pgettext("remote", "Control another machine"),
+			RemoteConnectionMode.LEADER: pgettext("remote", "Control another machine"),
 		}
+
+	def toConnectionMode(self) -> "remoteClient.connectionInfo.ConnectionMode":
+		from remoteClient.connectionInfo import ConnectionMode
+
+		match self:
+			case RemoteConnectionMode.LEADER:
+				return ConnectionMode.LEADER
+			case RemoteConnectionMode.FOLLOWER:
+				return ConnectionMode.FOLLOWER

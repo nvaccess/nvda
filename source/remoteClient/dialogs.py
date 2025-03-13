@@ -16,6 +16,7 @@ from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
 from gui import guiHelper
 from gui.nvdaControls import SelectOnFocusSpinCtrl
+from config.configFlags import RemoteConnectionMode
 
 from . import configuration, serializer, server, protocol, transport
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -37,19 +38,11 @@ class ClientPanel(wx.Panel):
 			_("&Host:"),
 			wx.ComboBox,
 		)
-		# Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
-		# self.host = wx.ComboBox(self, wx.ID_ANY)
-		# sizer.Add(self.host)
 		self.key = sizerHelper.addLabeledControl(
 			# Translators: Label of the edit field to enter key (password) to secure the remote connection.
 			_("&Key:"),
 			wx.TextCtrl,
 		)
-		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
-		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		# self.key = wx.TextCtrl(self, wx.ID_ANY)
-		# sizer.Add(self.key)
 		# Translators: The button used to generate a random key/password.
 		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
 		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
@@ -147,7 +140,7 @@ class ServerPanel(wx.Panel):
 		sizerHelper = BoxSizerHelper(self, sizer=sizer)
 		self.externalIP = sizerHelper.addLabeledControl(
 			# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
-			_("`ternal IP:"),
+			_("&External IP:"),
 			ExpandoTextCtrl,
 			style=wx.TE_READONLY,
 		)
@@ -156,14 +149,7 @@ class ServerPanel(wx.Panel):
 		self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
 		externalIPControlsSizerHelper = BoxSizerHelper(self, sizer=self.externalIP.GetContainingSizer())
 		externalIPControlsSizerHelper.addItem(self.getIP)
-		# Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
-		# self.getIP = wx.Button(parent=self, label=_("Get External &IP"))
-		# self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
-		# sizer.Add(self.getIP)
-		# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
-		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&External IP:")))
-		# self.externalIP = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_READONLY | wx.TE_MULTILINE)
-		# sizer.Add(self.externalIP)
+
 		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
 		self.port = sizerHelper.addLabeledControl(
 			_("&Port:"),
@@ -172,20 +158,12 @@ class ServerPanel(wx.Panel):
 			max=65535,
 			initial=SERVER_PORT,
 		)
-		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
-		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
-		# self.port = wx.TextCtrl(self, wx.ID_ANY, value=str(SERVER_PORT))
-		# sizer.Add(self.port)
 		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
 		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
-		# sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		# self.key = wx.TextCtrl(self, wx.ID_ANY)
-		# sizer.Add(self.key)
 		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
 		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
 		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
 		keyControlsSizerHelper.addItem(self.generateKey)
-		# sizer.Add(self.generateKey)
 		self.SetSizerAndFit(sizer)
 
 	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
@@ -270,7 +248,7 @@ class DirectConnectDialog(wx.Dialog):
 		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
 			"&Mode",
 			wx.Choice,
-			choices=("Allow this computer to be controlled", "Control another computer"),
+			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
 		)
 		self._connectionModeControl.SetSelection(0)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
@@ -309,11 +287,9 @@ class DirectConnectDialog(wx.Dialog):
 		# Hack: setting or changing the selection of a wx.SimpleBookseems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
 		self._clientOrServerControl.SetFocus()
 		self._selectedPanel = self._simpleBook.GetPage(selectedIndex)
-		gui.messageBox("Changed")
 		evt.Skip()
 
 	def _onOk(self, evt: wx.CommandEvent) -> None:
-		# gui.messageBox(f"{self.panel} is {self.clientPanel} = {self.panel is self.serverPanel}")
 		message: str | None = None
 		focusTarget: wx.Window | None = None
 		if self._selectedPanel is self._clientPanel and (
@@ -344,11 +320,9 @@ class DirectConnectDialog(wx.Dialog):
 		return self._selectedPanel.key.GetValue()
 
 	def getConnectionInfo(self) -> ConnectionInfo:
-		mode: ConnectionMode = (
-			ConnectionMode.LEADER
-			if self._connectionModeControl.GetSelection() == 0
-			else ConnectionMode.FOLLOWER
-		)
+		mode: ConnectionMode = RemoteConnectionMode(
+			self._connectionModeControl.GetSelection(),
+		).toConnectionMode()
 		serverAddr: str
 		port: int
 		insecure: bool

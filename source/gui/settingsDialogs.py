@@ -33,7 +33,7 @@ import config
 from config.configFlags import (
 	AddonsAutomaticUpdate,
 	NVDAKey,
-	RemoteConnectionType,
+	RemoteConnectionMode,
 	ShowMessages,
 	TetherTo,
 	ParagraphStartMarker,
@@ -3411,7 +3411,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			# Allowing the user to select whether their computer is controlling or controlled.
 			_("&Role:"),
 			wx.Choice,
-			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionType),
+			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
 		)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
