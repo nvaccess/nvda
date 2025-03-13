@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2023 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
+# Copyright (C) 2008-2025 NV Access Limited, Peter Vagner, Davy Kager, Mozilla Corporation, Google LLC,
 # Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -687,6 +687,31 @@ def nvdaControllerInternal_openConfigDirectory():
 	return 0
 
 
+@WINFUNCTYPE(c_long, c_wchar_p)
+def nvdaControllerInternal_handleRemoteURL(url):
+	"""Handles a remote URL request from the slave process.
+
+	:param url: The nvdaremote:// URL to process
+	:return: 0 on success, -1 on failure
+	"""
+	from remoteClient import connectionInfo, _remoteClient as client
+
+	try:
+		if not client:
+			log.error("No RemoteClient instance available")
+			return -1
+		# Queue the URL handling on the main thread
+		queueHandler.queueFunction(
+			queueHandler.eventQueue,
+			client.verifyAndConnect,
+			connectionInfo.ConnectionInfo.fromURL(url),
+		)
+		return 0
+	except Exception:
+		log.error("Error handling remote URL", exc_info=True)
+		return -1
+
+
 class _RemoteLoader:
 	def __init__(self, loaderDir: str):
 		# Create a pipe so we can write to stdin of the loader process.
@@ -776,6 +801,7 @@ def initialize() -> None:
 		),
 		("nvdaControllerInternal_drawFocusRectNotify", nvdaControllerInternal_drawFocusRectNotify),
 		("nvdaControllerInternal_openConfigDirectory", nvdaControllerInternal_openConfigDirectory),
+		("nvdaControllerInternal_handleRemoteURL", nvdaControllerInternal_handleRemoteURL),
 	]:
 		try:
 			_setDllFuncPointer(localLib, "_%s" % name, func)

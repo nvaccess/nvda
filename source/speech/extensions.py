@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2023-2025 NV Access Limited, Leonard de Ruijter
 
 """
 Extension points for speech.
@@ -50,4 +50,15 @@ Filters speech sequence before it passes to synthDriver.
 
 :param value: the speech sequence to be filtered.
 :type value: SpeechSequence
+"""
+
+pre_speechQueued = Action()
+"""
+Notifies when a speech sequence is about to be queued for synthesis.
+
+@param speechSequence: The fully processed sequence of text and speech commands ready for synthesis
+@type speechSequence: SpeechSequence
+
+@param priority: The priority level for this speech sequence
+@type priority: priorities.Spri
 """

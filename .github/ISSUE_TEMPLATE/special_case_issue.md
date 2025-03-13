@@ -1,6 +1,7 @@
 ---
 name: Special Case Issue
 about: A complex or exceptional issue that doesn't fit into the usual templates
+type: Task
 
 ---
 

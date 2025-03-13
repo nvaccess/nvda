@@ -97,7 +97,7 @@ class TextRangeFindAttribute(_TypedInstruction):
 	def localExecute(self, registers: dict[lowLevel.OperandId, object]):
 		textRange = cast(UIA.IUIAutomationTextRange, registers[self.target.operandId])
 		attributeId = cast(int, registers[self.attributeId.operandId])
-		value = cast(object, registers[self.value.operandId])
+		value = registers[self.value.operandId]
 		reverse = cast(bool, registers[self.reverse.operandId])
 		registers[self.result.operandId] = textRange.FindAttribute(attributeId, value, reverse)
 

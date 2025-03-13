@@ -26,7 +26,13 @@ from ctypes import (
 from ctypes.wintypes import BOOL, DWORD, FILETIME, WORD
 from typing import TYPE_CHECKING, Optional, TypeAlias
 import nvwave
-from synthDriverHandler import SynthDriver, VoiceInfo, synthIndexReached, synthDoneSpeaking
+from synthDriverHandler import (
+	SynthDriver,
+	VoiceInfo,
+	synthIndexReached,
+	synthDoneSpeaking,
+	isDebugForSynthDriver,
+)
 from logHandler import log
 from ._sapi4 import (
 	AudioError,
@@ -166,6 +172,8 @@ class SynthDriverAudio(COMObject):
 		self._allowDelete = False  # Must call terminate() before releasing the object
 
 	def terminate(self):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Terminating audio")
 		with self._audioCond:
 			self._audioStopped = True
 			self._audioCond.notify()
@@ -195,6 +203,8 @@ class SynthDriverAudio(COMObject):
 
 	def _initPlayer(self) -> None:
 		"""Initialize audio playback based on the wave format provided by the engine."""
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Creating wave player")
 		self._player = nvwave.WavePlayer(
 			channels=self._waveFormat.nChannels,
 			samplesPerSec=self._waveFormat.nSamplesPerSec,
@@ -221,6 +231,8 @@ class SynthDriverAudio(COMObject):
 						except COMError:
 							pass
 			self._audioQueue.clear()
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Flushed")
 
 	def IAudio_LevelGet(self) -> int:
 		"""Returns the volume level, ranging from 0x0000 to 0xFFFF.
@@ -235,6 +247,8 @@ class SynthDriverAudio(COMObject):
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		self._setLevel(dwLevel)
+		if isDebugForSynthDriver() and self._level != dwLevel:
+			log.debug(f"SAPI4: LevelSet, level={dwLevel:#x}")
 
 	def IAudio_PassNotify(self, pNotifyInterface: c_void_p, IIDNotifyInterface: GUID) -> None:
 		"""Passes in an implementation of IAudioDestNotifySink to receive notifications.
@@ -263,12 +277,18 @@ class SynthDriverAudio(COMObject):
 		If Claim is called before unclaiming completes, unclaiming is canceled,
 		and neither AudioStop nor AudioStart is notified."""
 		if self._deviceState == AudioState.INVALID:
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Claim without wave format")
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		elif self._deviceState == AudioState.UNCLAIMING:
 			# cancels unclaiming
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Claim, unclaiming cancelled")
 			self._deviceState = AudioState.RECLAIMING
 			return
 		elif self._deviceState != AudioState.UNCLAIMED:
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Claim when already claimed")
 			raise ReturnHRESULT(AudioError.ALREADY_CLAIMED, None)
 		self._deviceState = AudioState.CLAIMED
 		if self._notifySink:
@@ -276,6 +296,8 @@ class SynthDriverAudio(COMObject):
 				self._notifySink.AudioStart()
 			except COMError:
 				pass
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Claimed")
 
 	def IAudio_UnClaim(self) -> None:
 		"""Releases the multimedia device asynchronously.
@@ -295,13 +317,19 @@ class SynthDriverAudio(COMObject):
 					self._notifySink.AudioStop(0)  # IANSRSN_NODATA
 				except COMError:
 					pass
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: UnClaimed")
 		elif self._deviceState in (AudioState.STARTED, AudioState.RECLAIMING):
 			# When playing, wait for the playback to finish.
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: UnClaiming")
 			with self._audioCond:
 				self._deviceState = AudioState.UNCLAIMING
 				self._deviceUnClaimingBytePos = self._writtenBytes
 				self._audioCond.notify()
 		else:
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: UnClaim when not claimed")
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 
 	def IAudio_Start(self) -> None:
@@ -309,8 +337,12 @@ class SynthDriverAudio(COMObject):
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		elif self._deviceState == AudioState.STARTED:
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Start when already started")
 			raise ReturnHRESULT(AudioError.ALREADY_STARTED, None)
 		elif self._deviceState not in (AudioState.CLAIMED, AudioState.RECLAIMING):
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: Start when not claimed")
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		self._startTime = datetime.now()
 		self._startBytes = self._playedBytes
@@ -321,6 +353,8 @@ class SynthDriverAudio(COMObject):
 		with self._audioCond:
 			self._deviceState = AudioState.STARTED
 			self._audioCond.notify()
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Started")
 
 	def IAudio_Stop(self) -> None:
 		"""Stops (or pauses) playing, without clearing the buffer.
@@ -338,6 +372,8 @@ class SynthDriverAudio(COMObject):
 			log.debugWarning("Error stopping audio", exc_info=True)
 		with self._audioCond:
 			self._audioCond.notify()
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Stopped")
 
 	def IAudio_TotalGet(self) -> int:
 		"""Returns the total number of bytes written,
@@ -383,10 +419,18 @@ class SynthDriverAudio(COMObject):
 			if bytes(wfx) == bytes(self._waveFormat):
 				return  # Format not changed, do nothing
 			else:
+				log.debugWarning("Cannot change wave format more than once.")
 				raise ReturnHRESULT(AudioError.WAVE_DEVICE_BUSY)
 		if wfx.wFormatTag != nvwave.WAVE_FORMAT_PCM:
 			log.debugWarning("Wave format not supported. Only integer PCM formats are supported.")
 			raise ReturnHRESULT(AudioError.WAVE_FORMAT_NOT_SUPPORTED, None)
+		if isDebugForSynthDriver():
+			log.debug(
+				"SAPI4: WaveFormatSet, "
+				f"{wfx.nSamplesPerSec / 1000.0:g} kHz "
+				f"{wfx.wBitsPerSample} bit "
+				f"{wfx.nChannels} channel(s)",
+			)
 		self._waveFormat = wfx
 		self._initPlayer()
 		self._deviceState = AudioState.UNCLAIMED
@@ -401,7 +445,10 @@ class SynthDriverAudio(COMObject):
 			fEOF: TRUE if end-of-file is reached and no more data can be sent."""
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		return (self._getFreeSpace(), 0)
+		freeSpace = self._getFreeSpace()
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: FreeSpace, {freeSpace} bytes free")
+		return (freeSpace, 0)
 
 	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
 		"""Writes audio data to the end of the object's internal buffer.
@@ -418,6 +465,8 @@ class SynthDriverAudio(COMObject):
 			self._audioQueue.append(string_at(pBuffer, dwSize))
 			self._writtenBytes += dwSize
 			self._audioCond.notify()
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
 
 	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
@@ -427,6 +476,8 @@ class SynthDriverAudio(COMObject):
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		with self._audioCond:
 			self._audioQueue.append(dwMarkID)
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: Bookmark {dwMarkID} queued")
 
 	def _audioThreadFunc(self):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
@@ -482,6 +533,8 @@ class SynthDriverAudio(COMObject):
 				pass
 
 	def _onBookmark(self, dwMarkID: BookmarkT):
+		if isDebugForSynthDriver():
+			log.debug(f"SAPI4: Bookmark {dwMarkID} reached")
 		if self._notifySink:
 			try:
 				self._notifySink.BookMark(dwMarkID, 0)
@@ -509,6 +562,8 @@ class SynthDriverAudio(COMObject):
 				self._notifySink.AudioStop(0)  # IANSRSN_NODATA
 			except COMError:
 				pass
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: UnClaimed")
 
 
 class SynthDriverSink(COMObject):
@@ -520,6 +575,8 @@ class SynthDriverSink(COMObject):
 		super().__init__()
 
 	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: TTSNotifySink AudioStart")
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -531,6 +588,8 @@ class SynthDriverSink(COMObject):
 			synth._bookmarks = synth._bookmarkLists.popleft()
 
 	def ITTSNotifySinkW_AudioStop(self, this, qTimeStamp: int):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: TTSNotifySink AudioStop")
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -692,6 +751,8 @@ class SynthDriver(SynthDriver):
 		)
 
 	def cancel(self):
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Cancelling")
 		try:
 			# cancel all pending bookmarks
 			self._bookmarkLists.clear()
@@ -709,6 +770,11 @@ class SynthDriver(SynthDriver):
 			self._finalIndex = None
 
 	def pause(self, switch: bool):
+		if isDebugForSynthDriver():
+			if switch:
+				log.debug("SAPI4: Pausing")
+			else:
+				log.debug("SAPI4: Unpausing")
 		if switch:
 			try:
 				self._ttsCentral.AudioPause()
