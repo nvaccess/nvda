@@ -197,8 +197,20 @@ def reportLanguage(speechSequence: SpeechSequence):
 			else:
 				filteredSpeechSequence.append(langDesc)
 			SpeechSequenceState.lastReportedLang = item.lang
-			if item.lang not in availableLanguages:
+			if not languageIsSupported(item.lang):
 				filteredSpeechSequence.append("not supported")
-				log.debugWarning(f"{item.lang} not supported in {synthDriverHandler.getSynth().name}")
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
+
+
+def languageIsSupported(language: str | None) -> bool:
+	"""Determines if the specified language is supported.
+	:param language: A language code or None.
+	:return: True if the language is supported, False otherwise.
+	"""
+	if language is None:
+		return True
+	for lang in synthDriverHandler.getSynth().availableLanguages:
+		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
+			return True
+	return False
