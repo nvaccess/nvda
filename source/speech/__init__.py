@@ -5,6 +5,7 @@
 # Julien Cochuyt, Leonard de Ruijter
 
 import languageHandler
+from logHandler import log
 from .commands import LangChangeCommand
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
@@ -181,6 +182,7 @@ def terminate():
 
 def reportLanguage(speechSequence: SpeechSequence):
 	filteredSpeechSequence = list()
+	availableLanguages = synthDriverHandler.getSynth().availableLanguages
 	for index, item in enumerate(speechSequence):
 		if (
 			isinstance(item, LangChangeCommand)
@@ -190,10 +192,13 @@ def reportLanguage(speechSequence: SpeechSequence):
 		):
 			langDesc = languageHandler.getLanguageDescription(item.lang)
 			filteredSpeechSequence.append(LangChangeCommand(None))
-			if langDesc is not None:
-				filteredSpeechSequence.append(langDesc)
-			else:
+			if langDesc is None:
 				filteredSpeechSequence.append(item.lang)
+			else:
+				filteredSpeechSequence.append(langDesc)
 			SpeechSequenceState.lastReportedLang = item.lang
+			if item.lang not in availableLanguages:
+				filteredSpeechSequence.append("not supported")
+				log.debugWarning(f"{item.lang} not supported in {synthDriverHandler.getSynth().name}")
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
