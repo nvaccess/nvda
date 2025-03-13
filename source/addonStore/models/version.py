@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2018-2024 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2018-2025 NV Access Limited, Cyrille Bougot, hwf1324
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -66,7 +66,7 @@ class SupportsVersionCheck(Protocol):
 
 		return self.name in state[AddonStateCategory.OVERRIDE_COMPATIBILITY] and self.canOverrideCompatibility
 
-	def enableCompatibilityOverride(self):
+	def enableCompatibilityOverride(self) -> None:
 		"""
 		Should be reset when changing to a new breaking release,
 		and when this add-on is updated, disabled or removed.
@@ -74,7 +74,7 @@ class SupportsVersionCheck(Protocol):
 		from addonHandler import AddonStateCategory, state
 
 		if self.name in state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY]:
-			raise RuntimeError(f"{self.name} is already pending override compatibility.")
+			return
 		assert self.canOverrideCompatibility
 		state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].add(self.name)
 		state[AddonStateCategory.BLOCKED].discard(self.name)
