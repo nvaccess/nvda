@@ -3134,6 +3134,61 @@ If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "
 
 If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
 
+#### Remote Settings {#RemoteSettings}
+
+This category allows you to configure the behaviour of [Remote](#RemoteAccess).
+
+##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
+
+Use this option to select the type of audio cues played by Remote.
+
+When checked, NVDA will produce natural-sounding audio cues for Remote events.
+When unchecked, NVDA will beep for Remote events.
+
+##### Automatically connect to control server on startup {#RemoteAutoconnect}
+
+This option allows you to automatically establish a connection to a Remote control server when NVDA starts.
+This could be useful, for example, to control your home computer when away from home.
+
+##### Mode {#RemoteAutoconnectMode}
+
+Select the connection mode for automatic connections.
+
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+
+##### Server {#RemoteAutoconnectServer}
+
+Select the server type for automatic connections.
+
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+
+##### Host {#RemoteAutoconnectHost}
+
+Use this field to set the URL of the Remote control server you would like to use for automatic connections.
+
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to Use existing.
+
+##### Port {#RemoteAutoconnectPort}
+
+Use this field to set the TCP port  you would like to use for automatic connections.
+
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to Host locally.
+
+##### Key {#RemoteAutoconnectKey}
+
+Use this field to  set the key (password) you would like to use for automatic connections.
+
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+
+##### Delete all trusted fingerprints {#RemoteDeleteFingerprints}
+
+This button allows you to forget the fingerprints of all previously trusted Remote control servers.
+This means that you will again be asked whether to connect to all unauthorized Remote control servers, even ones that you have previously connected to.
+You will be asked to confirm before all trusted fingerprints are deleted.
+This action cannot be undone.
+
+This option is only available if there are trusted fingerprints stored in your configuration.
+
 #### Windows OCR Settings {#Win10OcrSettings}
 
 The settings in this category allow you to configure [Windows OCR](#Win10Ocr).
@@ -3632,7 +3687,7 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings](#NVDASettings) dialog.
 
-## Remote Access {#remoteAccess}
+## Remote Access {#RemoteAccess}
 
 With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
 
