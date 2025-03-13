@@ -51,7 +51,6 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		self._generateKeyButton.Bind(wx.EVT_BUTTON, self._onGenerateKey)
 		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
 		keyControlsSizerHelper.addItem(self._generateKeyButton)
-		# sizer.Add(self.generateKey)
 		self.SetSizerAndFit(sizer)
 
 	def _onGenerateKey(self, evt: wx.CommandEvent) -> None:
