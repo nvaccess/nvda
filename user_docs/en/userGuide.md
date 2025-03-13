@@ -3717,12 +3717,63 @@ You’ll need to decide which computer will be controlled (the controlled comput
 
 Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
 
-### Remote Connection Options {#RemoteAccessConnectionOptions}
+### The Remote Connection Dialog {#RemoteAccessConnect}
+
+The Remote connection dialog allows you to set up a Remote Access session.
+To get to the Remote Connection dialog, open the NVDA menu, and navigate to Tools, then Remote, then Connect....
+
+The first control in this dialog is the Mode control.
+This allows you to select whether your computer will be controlled remotely, or be remotely controlling another.
+You cannot change the connection mode once a connection is established.
+Choose "Allow this computer to be controlled" if you are going to be getting technical assistance.
+
+Next is the Server control, which lets you choose the type of control server you would like to use.
+Most users should select to use an existing Relay server.
 
 You can choose between two connection types depending on your setup:
 
-* Relay Server (easier): Uses a public or private server to mediate the connection. Only the server hostname and key are needed.
-* Direct Connection (advanced): Connects directly without a server. Requires network setup, such as port forwarding.
+* Use existing (easier): Uses a public or private server to mediate the connection.
+  Only the server hostname (URL) and key are needed.
+* Host locally (advanced): Connect directly without a server.
+  Requires network setup, such as port forwarding.
+
+The next few options configure the network connection, and differ depending on the connection type you have chosen.
+
+#### Remote Control Server Options {#RemoteAccessConnectServer}
+
+The host field is where you should enter the URL of the Remote Control server you will use to mediate the connection.
+
+Optionally, you may include the port to connect on by appending a colon (":") and the port number to the host.
+For example, "example.com:1234".
+If no port is provided, Remote Access will use port 6837.
+
+The key field is where you should enter the key for the remote session you are creating or connecting to.
+The key identifies and controls access to a remote session.
+
+If you are creating a Remote Access session, choose a key that is unique and not easily guessable.
+Alternatively, press "Generate key" to have the Remote Control server generate a key for you.
+
+If you are joining an existing session, enter the key exactly as provided.
+Pay careful attention to capitalisation, spaces and punctuation.
+
+#### Direct connection options {#RemoteAccessConnectDirect}
+
+Warning: Direct connection is an advanced option, and may require network setup that is out of scope for this manual.
+
+The External IP field shows your currently detected external IP address.
+This field is initially blank.
+To detect your external IP address, press Get external IP.
+This will also check whether the selected port is open.
+Note that this test may not be 100% accurate.
+
+The port field is where you should enter the port you want to use for Remote connections.
+This should be a port that is not used by any other services.
+The port should also be open, and forwarded.
+By default, Remote Access uses port 6837.
+
+The key field is where you should enter the key for this Remote session.
+This is essentially the password for this session.
+Alternatively, press Generate key to have NVDA generate a key for you.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
