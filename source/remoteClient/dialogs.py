@@ -30,6 +30,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 	key: wx.TextCtrl
 	generateKey: wx.Button
 	keyConnector: Optional["transport.RelayTransport"]
+	_keyGenerationProgressDialog: gui.IndeterminateProgressDialog | None = None
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
@@ -68,6 +69,11 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			self.generateKeyCommand()
 
 	def generateKeyCommand(self, insecure: bool = False) -> None:
+		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
+			self,
+			"Generating key",
+			"Generating key.",
+		)
 		address = protocol.addressToHostPort(self.host.GetValue())
 		self.keyConnector = transport.RelayTransport(
 			address=address,
@@ -76,15 +82,34 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		)
 		self.keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self.handleKeyGenerated)
 		self.keyConnector.transportCertificateAuthenticationFailed.register(self.handleCertificateFailed)
+		self.keyConnector.transportConnectionFailed.register(self.handleConnectionFailed)
 		t = threading.Thread(target=self.keyConnector.run)
 		t.start()
 
 	@alwaysCallAfter
 	def handleKeyGenerated(self, key: Optional[str] = None) -> None:
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
 		self.key.SetFocus()
 		self.keyConnector.close()
 		self.keyConnector = None
+
+	@alwaysCallAfter
+	def handleConnectionFailed(self) -> None:
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
+		gui.messageBox(
+			pgettext(
+				"remote",
+				# Translators: Message shown to users when requesting that a Remote control server generate a key fails.
+				# {host} will be replaced with the address of the Remote control server.
+				"Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field.",
+			).format(host=self.host.GetValue()),
+			# Translators: Title of a dialog.
+			_("Error"),
+			wx.OK | wx.ICON_ERROR,
+		)
 
 	@alwaysCallAfter
 	def handleCertificateFailed(self) -> None:
@@ -104,6 +129,8 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		5. Close the key connector and reset it.
 		6. Generate a new key from the server.
 		"""
+		self._keyGenerationProgressDialog.Done()
+		self._keyGenerationProgressDialog = None
 		try:
 			certHash = self.keyConnector.lastFailFingerprint
 
