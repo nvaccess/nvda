@@ -3371,6 +3371,7 @@ class AddonStorePanel(SettingsPanel):
 class RemoteSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the remote settings category in NVDA Settings screen.
 	title = _("Remote")
+	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer):
 		self.config = config.conf["remote"]
@@ -3380,12 +3381,14 @@ class RemoteSettingsPanel(SettingsPanel):
 			# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
 			wx.CheckBox(self, label=_("&Play sounds instead of beeps")),
 		)
+		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
 
 		self.autoconnect: wx.CheckBox = sHelper.addItem(
 			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
 			wx.CheckBox(self, label=_("Automatically &connect to control server on startup")),
 		)
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
+		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
 		# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
 		autoConnectionGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Automatic connection"))
@@ -3400,6 +3403,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			wx.Choice,
 			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
 		)
+		self.bindHelpEvent("RemoteAutoconnectMode", self.connectionMode)
 
 		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
@@ -3409,6 +3413,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		self.bindHelpEvent("RemoteAutoconnectServer", self.clientOrServer)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the host field in NVDA's Remote settings.
@@ -3416,6 +3421,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			_("&Host:"),
 			wx.TextCtrl,
 		)
+		self.bindHelpEvent("RemoteAutoconnectHost", self.host)
 
 		self.port = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the port field in NVDA's Remote settings.
@@ -3426,6 +3432,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			min=1,
 			max=65535,
 		)
+		self.bindHelpEvent("RemoteAutoconnectPort", self.port)
 
 		self.key = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
@@ -3433,12 +3440,14 @@ class RemoteSettingsPanel(SettingsPanel):
 			_("&Key:"),
 			wx.TextCtrl,
 		)
+		self.bindHelpEvent("RemoteAutoconnectKey", self.key)
 
 		self.deleteFingerprints = sHelper.addItem(
 			# Translators: A button in NVDA's Remote settings to delete all fingerprints of unauthorized certificates.
 			wx.Button(self, label=_("Delete all trusted fingerprints")),
 		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
+		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
 
