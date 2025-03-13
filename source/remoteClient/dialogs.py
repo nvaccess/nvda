@@ -12,6 +12,7 @@ from urllib import request
 import gui
 import wx
 from wx.lib.expando import ExpandoTextCtrl
+from gui.contextHelp import ContextHelpMixin
 from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
 from gui import guiHelper
@@ -23,7 +24,8 @@ from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import SERVER_PORT, RemoteMessageType
 
 
-class ClientPanel(wx.Panel):
+class ClientPanel(ContextHelpMixin, wx.Panel):
+	helpId = "RemoteAccessConnectServer"
 	host: wx.ComboBox
 	key: wx.TextCtrl
 	generateKey: wx.Button
@@ -127,7 +129,8 @@ class PortCheckResponse(TypedDict):
 	open: bool
 
 
-class ServerPanel(wx.Panel):
+class ServerPanel(ContextHelpMixin, wx.Panel):
+	helpId = "RemoteAccessConnectDirect"
 	getIP: wx.Button
 	externalIP: wx.TextCtrl
 	port: wx.TextCtrl
@@ -238,7 +241,8 @@ class ServerPanel(wx.Panel):
 		)
 
 
-class DirectConnectDialog(wx.Dialog):
+class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
+	helpId = "RemoteAccessConnect"
 	_selectedPanel: ClientPanel | ServerPanel
 
 	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: Optional[List[str]] = None):
