@@ -25,7 +25,7 @@ from .protocol import SERVER_PORT, RemoteMessageType
 
 
 class ClientPanel(ContextHelpMixin, wx.Panel):
-	helpId = "RemoteAccessConnectServer"
+	helpId = "RemoteAccessConnectExisting"
 	host: wx.ComboBox
 	key: wx.TextCtrl
 	generateKey: wx.Button
@@ -130,7 +130,7 @@ class PortCheckResponse(TypedDict):
 
 
 class ServerPanel(ContextHelpMixin, wx.Panel):
-	helpId = "RemoteAccessConnectDirect"
+	helpId = "RemoteAccessConnectLocal"
 	getIP: wx.Button
 	externalIP: wx.TextCtrl
 	port: wx.TextCtrl
@@ -281,6 +281,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self._connectionModeControl.SetFocus()
 
 	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		"""Respond to changing between using a control server or hosting it locally"""
 		selectedIndex = self._clientOrServerControl.GetSelection()
 		self._simpleBook.ChangeSelection(selectedIndex)
 		# Hack: setting or changing the selection of a wx.SimpleBookseems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
@@ -289,6 +290,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		evt.Skip()
 
 	def _onOk(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the OK button being pressed."""
 		message: str | None = None
 		focusTarget: wx.Window | None = None
 		if self._selectedPanel is self._clientPanel and (
@@ -316,9 +318,11 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			evt.Skip()
 
 	def _getKey(self) -> str:
+		"""Get the connection key."""
 		return self._selectedPanel.key.GetValue()
 
 	def getConnectionInfo(self) -> ConnectionInfo:
+		"""Get a :class:`ConnectionInfo` object based on the responses to the dialog."""
 		mode: ConnectionMode = RemoteConnectionMode(
 			self._connectionModeControl.GetSelection(),
 		).toConnectionMode()

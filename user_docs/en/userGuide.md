@@ -3734,12 +3734,14 @@ You can choose between two connection types depending on your setup:
 
 * Use existing (easier): Uses a public or private server to mediate the connection.
   Only the server hostname (URL) and key are needed.
-* Host locally (advanced): Connect directly without a server.
+* Host locally (advanced): Connect directly by running the server inside NVDA.
   Requires network setup, such as port forwarding.
 
 The next few options configure the network connection, and differ depending on the connection type you have chosen.
 
-#### Remote Control Server Options {#RemoteAccessConnectServer}
+#### Existing server options {#RemoteAccessConnectExisting}
+
+These options are shown when the server type is set to Use existing.
 
 The host field is where you should enter the URL of the Remote Control server you will use to mediate the connection.
 
@@ -3756,9 +3758,11 @@ Alternatively, press "Generate key" to have the Remote Control server generate a
 If you are joining an existing session, enter the key exactly as provided.
 Pay careful attention to capitalisation, spaces and punctuation.
 
-#### Direct connection options {#RemoteAccessConnectDirect}
+#### Local server options {#RemoteAccessConnectLocal}
 
-Warning: Direct connection is an advanced option, and may require network setup that is out of scope for this manual.
+These options are shown when the Server is set to Host locally.
+
+Warning: locally hosting the control server in NVDA is an advanced option, and may require network setup that is out of scope for this manual.
 
 The External IP field shows your currently detected external IP address.
 This field is initially blank.
