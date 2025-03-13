@@ -34,6 +34,7 @@ from config.configFlags import (
 	AddonsAutomaticUpdate,
 	NVDAKey,
 	RemoteConnectionMode,
+	RemoteServerType,
 	ShowMessages,
 	TetherTo,
 	ParagraphStartMarker,
@@ -3397,12 +3398,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			# allowing users to choose whether they want to use an existing Remote relay server, or host their own.
 			_("&Server:"),
 			wx.Choice,
-			choices=(
-				# Translators: Use a remote control server
-				_("Use Remote Control Server"),
-				# Translators: Host a control server
-				_("Host Control Server"),
-			),
+			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
 
@@ -3463,10 +3459,10 @@ class RemoteSettingsPanel(SettingsPanel):
 		Also ensures the state of the GUI is internally consistent.
 		"""
 		controlServer = self.config["controlserver"]
-		selfHosted = controlServer["self_hosted"]
+		serverType = controlServer["serverType"]
 		connectionType = controlServer["connection_type"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
-		self.clientOrServer.SetSelection(int(selfHosted))
+		self.clientOrServer.SetSelection(serverType)
 		self.connectionType.SetSelection(connectionType)
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
@@ -3528,14 +3524,13 @@ class RemoteSettingsPanel(SettingsPanel):
 	def onSave(self):
 		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
 		controlServer = self.config["controlserver"]
+		serverType = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
-		selfHosted = bool(self.clientOrServer.GetSelection())
-		connectionType = self.connectionType.GetSelection()
-		controlServer["self_hosted"] = selfHosted
-		controlServer["connection_type"] = connectionType
-		if not selfHosted:
+		controlServer["serverType"] = serverType
+		controlServer["connection_type"] = self.connectionType.GetSelection()
+		if serverType == RemoteServerType.EXISTING:
 			controlServer["host"] = self.host.GetValue()
-		else:
+		elif serverType == RemoteServerType.LOCAL:
 			controlServer["port"] = int(self.port.GetValue())
 		controlServer["key"] = self.key.GetValue()
 

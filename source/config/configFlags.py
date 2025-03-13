@@ -328,3 +328,24 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 				return ConnectionMode.LEADER
 			case RemoteConnectionMode.FOLLOWER:
 				return ConnectionMode.FOLLOWER
+
+
+@verify(CONTINUOUS)
+class RemoteServerType(DisplayStringIntEnum):
+	"""Enumeration containing the possible types of Remote relay server.
+
+	Use RemoteServerType.MEMBER.value to compare with the config;
+	use RemoteServerType.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	EXISTING = 0
+	LOCAL = 1
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Use an existing Remote control server
+			RemoteServerType.EXISTING: pgettext("Remote", "Use existing"),
+			# Translators: Use NVDA as the Remote control server
+			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
+		}

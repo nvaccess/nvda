@@ -16,7 +16,7 @@ from logHandler import log
 from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
 from gui import guiHelper
 from gui.nvdaControls import SelectOnFocusSpinCtrl
-from config.configFlags import RemoteConnectionMode
+from config.configFlags import RemoteConnectionMode, RemoteServerType
 
 from . import configuration, serializer, server, protocol, transport
 from .connectionInfo import ConnectionInfo, ConnectionMode
@@ -254,12 +254,7 @@ class DirectConnectDialog(wx.Dialog):
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			_("&Server:"),
 			wx.Choice,
-			choices=(
-				# Translators: A choice to connect to another machine.
-				"Remote control server",
-				# Translators: A choice to allow another machine to connect to this machine.
-				"Host control server",
-			),
+			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)
 		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
 		simpleBook = self._simpleBook = wx.Simplebook(self)
