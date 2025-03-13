@@ -163,6 +163,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 	port: wx.TextCtrl
 	key: wx.TextCtrl
 	generateKey: wx.Button
+	_progressDialog: gui.IndeterminateProgressDialog | None = None
 
 	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
@@ -206,7 +207,13 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 
 	def onGetIP(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
-		self.getIP.Enable(False)
+		self._progressDialog = gui.IndeterminateProgressDialog(
+			self,
+			# Translators: Title of a dialog shown to users while attempting to detect their external IP address
+			pgettext("Remote", "Getting external IP"),
+			# Translators: Message on a dialog shown to users while attempting to detect their external IP address
+			pgettext("Remote", "Getting external IP..."),
+		)
 		t = threading.Thread(target=self.doPortcheck, args=[int(self.port.GetValue())])
 		t.daemon = True
 		t.start()
@@ -223,7 +230,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			raise
 		finally:
 			tempServer.close()
-			wx.CallAfter(self.getIP.Enable, True)
+			wx.CallAfter(self._progressDialog.done)
 
 	def onGetIPSucceeded(self, data: PortCheckResponse) -> None:
 		ip = data["host"]
