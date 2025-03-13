@@ -3393,6 +3393,14 @@ class RemoteSettingsPanel(SettingsPanel):
 		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectionGroupSizer)
 		sHelper.addItem(autoConnectionGroupHelper)
 
+		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
+			# Translators: Label for a control in NVDA's Remote settings,
+			# Allowing the user to select whether their computer is controlling or controlled.
+			_("&Mode:"),
+			wx.Choice,
+			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
+		)
+
 		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
 			# allowing users to choose whether they want to use an existing Remote relay server, or host their own.
@@ -3401,14 +3409,6 @@ class RemoteSettingsPanel(SettingsPanel):
 			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
-
-		self.connectionType = autoConnectionGroupHelper.addLabeledControl(
-			# Translators: Label for a control in NVDA's Remote settings,
-			# Allowing the user to select whether their computer is controlling or controlled.
-			_("&Role:"),
-			wx.Choice,
-			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
-		)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the host field in NVDA's Remote settings.
@@ -3463,7 +3463,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		connectionType = controlServer["connection_type"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
 		self.clientOrServer.SetSelection(serverType)
-		self.connectionType.SetSelection(connectionType)
+		self.connectionMode.SetSelection(connectionType)
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
@@ -3527,7 +3527,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		serverType = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
 		controlServer["serverType"] = serverType
-		controlServer["connection_type"] = self.connectionType.GetSelection()
+		controlServer["connection_type"] = self.connectionMode.GetSelection()
 		if serverType == RemoteServerType.EXISTING:
 			controlServer["host"] = self.host.GetValue()
 		elif serverType == RemoteServerType.LOCAL:
