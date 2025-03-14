@@ -236,12 +236,11 @@ class RemoteClient:
 			evt.Skip()
 		previousConnections = configuration.getRemoteConfig()["connections"]["last_connected"]
 		hostnames = list(reversed(previousConnections))
-		# Translators: Title of the connect dialog.
 		dlg = dialogs.DirectConnectDialog(
 			parent=gui.mainFrame,
 			id=wx.ID_ANY,
-			# Translators: Title of the connect dialog.
-			title=_("Connect"),
+			# Translators: Title of the Remote Access connection dialog.
+			title=_("Connect to Another Computer"),
 			hostnames=hostnames,
 		)
 
