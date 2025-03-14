@@ -103,7 +103,9 @@ class RemoteClient:
 		self.disconnect()
 		self.localMachine.terminate()
 		self.localMachine = None
-		self.menu = None
+		if self.menu is not None:
+			self.menu.terminate()
+			self.menu = None
 		self.localScripts.clear()
 		core.postNvdaStartup.unregister(self.performAutoconnect)
 		inputCore.decide_handleRawKey.unregister(self.processKeyInput)
