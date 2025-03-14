@@ -17,6 +17,8 @@ from typing import (
 import threading
 
 import addonHandler
+from addonHandler import AddonError
+from addonHandler.addonState import AddonStateCategory
 from addonStore.dataManager import addonDataManager
 from addonStore.install import installAddon
 from addonStore.models.addon import (
@@ -360,7 +362,7 @@ class AddonStoreVM:
 	) -> None:
 		try:
 			listItemVM.model._addonHandlerModel.enable(shouldEnable)
-		except addonHandler.AddonError:
+		except AddonError:
 			if shouldEnable:
 				errorMessage = self._enableErrorMessage
 			else:
@@ -681,7 +683,7 @@ class AddonStoreVM:
 			self._cancelPendingInstallForAddon(listItemVM)
 
 		log.debug(f"Completed cancelling install of {listItemVM.Id}")
-		addonHandler.state[addonHandler.AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
+		addonHandler.addonState.state[AddonStateCategory.PENDING_OVERRIDE_COMPATIBILITY].discard(
 			listItemVM.model.name,
 		)
 		listItemVM.status = getStatus(listItemVM.model, self._filteredStatusKey)
