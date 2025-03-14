@@ -751,6 +751,9 @@ class ConfigManager(object):
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
 			raise e
+		except Exception as e:
+			log.warning("Error saving configuration", exc_info=True)
+			raise e
 		post_configSave.notify()
 
 	def reset(self, factoryDefaults=False):
