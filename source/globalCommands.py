@@ -130,6 +130,8 @@ SCRCAT_REMOTE = _("Remote")
 NO_SETTINGS_MSG = _("No settings")
 # Translators: Reported when there is no selection
 NO_SELECTION_MESSAGE = _("No selection")
+# Translators: Reported when attempting to execute a Remote Access gesture when Remote Access is disabled.
+REMOTE_DISABLED_MESSAGE: str = _("Action unavailable while Remote Access is disabled.")
 
 
 def toggleBooleanValue(
@@ -4923,7 +4925,10 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleMute()
+		if remoteClient.remoteRunning():
+			remoteClient._remoteClient.toggleMute()
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 	@script(
 		gesture="kb:control+shift+NVDA+c",
@@ -4932,7 +4937,10 @@ class GlobalCommands(ScriptableObject):
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.pushClipboard()
+		if remoteClient.remoteRunning():
+			remoteClient._remoteClient.pushClipboard()
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
@@ -4940,9 +4948,12 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_REMOTE,
 	)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.copyLink()
-		# Translators: A message indicating that a link has been copied to the clipboard.
-		ui.message(_("Copied link"))
+		if remoteClient.remoteRunning():
+			remoteClient._remoteClient.copyLink()
+			# Translators: A message indicating that a link has been copied to the clipboard.
+			ui.message(_("Copied link"))
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 	@script(
 		gesture="kb:alt+NVDA+pageDown",
@@ -4952,11 +4963,14 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
-		if not remoteClient._remoteClient.isConnected:
-			# Translators: A message indicating that the remote client is not connected.
-			ui.message(_("Not connected"))
-			return
-		remoteClient._remoteClient.disconnect()
+		if remoteClient.remoteRunning():
+			if not remoteClient._remoteClient.isConnected:
+				# Translators: A message indicating that the remote client is not connected.
+				ui.message(_("Not connected"))
+				return
+			remoteClient._remoteClient.disconnect()
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 	@script(
 		gesture="kb:alt+NVDA+pageUp",
@@ -4967,11 +4981,14 @@ class GlobalCommands(ScriptableObject):
 	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
 	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
-		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
-			# Translators: A message indicating that the remote client is already connected.
-			ui.message(_("Already connected"))
-			return
-		remoteClient._remoteClient.doConnect()
+		if remoteClient.remoteRunning():
+			if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
+				# Translators: A message indicating that the remote client is already connected.
+				ui.message(_("Already connected"))
+				return
+			remoteClient._remoteClient.doConnect()
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 	@script(
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
@@ -4980,7 +4997,10 @@ class GlobalCommands(ScriptableObject):
 		gesture="kb:NVDA+f11",
 	)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
+		if remoteClient.remoteRunning():
+			remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
+		else:
+			ui.message(REMOTE_DISABLED_MESSAGE)
 
 
 #: The single global commands instance.
