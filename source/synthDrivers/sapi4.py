@@ -163,6 +163,7 @@ class SynthDriverAudio(COMObject):
 		self._playedBytes = 0
 		self._startTime = datetime.now()
 		self._startBytes = 0
+		self._freeBytes = 0
 		self._audioQueue: deque[AudioT | BookmarkT] = deque()
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
@@ -231,6 +232,7 @@ class SynthDriverAudio(COMObject):
 						except COMError:
 							pass
 			self._audioQueue.clear()
+			self._freeBytes = self._waveFormat.nAvgBytesPerSec * 2  # 2 seconds
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Flushed")
 
@@ -434,9 +436,7 @@ class SynthDriverAudio(COMObject):
 		self._waveFormat = wfx
 		self._initPlayer()
 		self._deviceState = AudioState.UNCLAIMED
-
-	def _getFreeSpace(self) -> int:
-		return self._waveFormat.nAvgBytesPerSec * 2  # always 2 seconds
+		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
 		"""Returns the number of bytes that are free in the object's internal buffer.
@@ -445,10 +445,9 @@ class SynthDriverAudio(COMObject):
 			fEOF: TRUE if end-of-file is reached and no more data can be sent."""
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		freeSpace = self._getFreeSpace()
 		if isDebugForSynthDriver():
-			log.debug(f"SAPI4: FreeSpace, {freeSpace} bytes free")
-		return (freeSpace, 0)
+			log.debug(f"SAPI4: FreeSpace, {self._freeBytes} bytes free")
+		return (self._freeBytes, 0)
 
 	def IAudioDest_DataSet(self, pBuffer: c_void_p, dwSize: int) -> None:
 		"""Writes audio data to the end of the object's internal buffer.
@@ -461,9 +460,14 @@ class SynthDriverAudio(COMObject):
 		elif self._deviceState in (AudioState.UNCLAIMED, AudioState.UNCLAIMING):
 			log.debugWarning("Audio data written when device is not claimed")
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
+		elif self._freeBytes < dwSize:
+			if isDebugForSynthDriver():
+				log.debug("SAPI4: DataSet, insufficient buffer space")
+			raise ReturnHRESULT(AudioError.NOT_ENOUGH_DATA, None)
 		with self._audioCond:
 			self._audioQueue.append(string_at(pBuffer, dwSize))
 			self._writtenBytes += dwSize
+			self._freeBytes -= dwSize
 			self._audioCond.notify()
 		if isDebugForSynthDriver():
 			log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
@@ -525,10 +529,12 @@ class SynthDriverAudio(COMObject):
 					self._player.feed(None, 0, lambda item=item: self._onBookmark(item))
 
 	def _onChunkFinished(self, chunk: AudioT):
-		self._playedBytes += len(chunk)
+		size = len(chunk)
+		self._playedBytes += size
+		self._freeBytes += size
 		if self._notifySink:
 			try:
-				self._notifySink.FreeSpace(self._getFreeSpace(), 0)
+				self._notifySink.FreeSpace(self._freeBytes, 0)
 			except COMError:
 				pass
 
