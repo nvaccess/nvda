@@ -20,5 +20,10 @@ def initialize():
 def terminate():
 	"""Terminate the remote client."""
 	global _remoteClient
-	_remoteClient.terminate()
-	_remoteClient = None
+	if _remoteClient is not None:
+		_remoteClient.terminate()
+		_remoteClient = None
+
+
+def remoteRunning() -> bool:
+	return _remoteClient is not None

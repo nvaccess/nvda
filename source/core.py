@@ -898,10 +898,11 @@ def main():
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 
-	log.debug("Initializing remote client")
 	import remoteClient
 
-	remoteClient.initialize()
+	if config.conf["remote"]["enabled"]:
+		log.debug("Initializing remote client")
+		remoteClient.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui
@@ -1055,7 +1056,8 @@ def main():
 			" This likely indicates NVDA is exiting due to WM_QUIT.",
 		)
 		queueHandler.pumpAll()
-	_terminate(remoteClient)
+	if remoteClient.remoteRunning():
+		_terminate(remoteClient)
 	_terminate(gui)
 	config.saveOnExit()
 
