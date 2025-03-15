@@ -5,7 +5,6 @@
 # Julien Cochuyt, Leonard de Ruijter
 
 import languageHandler
-from logHandler import log
 from .commands import LangChangeCommand
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
