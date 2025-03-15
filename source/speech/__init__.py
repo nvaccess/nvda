@@ -172,17 +172,21 @@ def initialize():
 		getTextInfoSpeech,
 		SpeakTextInfoState,
 	)
-	filter_speechSequence.register(reportLanguage)
+	filter_speechSequence.register(getSpeechSequenceWithLangs)
 
 
 def terminate():
 	synthDriverHandler.setSynth(None)
-	filter_speechSequence.unregister(reportLanguage)
+	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
 
 
-def reportLanguage(speechSequence: SpeechSequence):
+def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
+	"""Get a speech sequence with the language description for each non default language of the read text.
+
+	:param speechSequence: The original speech sequence.
+	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
+	"""
 	filteredSpeechSequence = list()
-	availableLanguages = synthDriverHandler.getSynth().availableLanguages
 	for index, item in enumerate(speechSequence):
 		if (
 			isinstance(item, LangChangeCommand)
