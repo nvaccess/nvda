@@ -188,20 +188,21 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 	filteredSpeechSequence = list()
 	for index, item in enumerate(speechSequence):
 		if (
-			isinstance(item, LangChangeCommand)
-			and not item.isDefault
-			and index != len(speechSequence) - 1
-			and item.lang != SpeechSequenceState.lastReportedLang
+			not isinstance(item, LangChangeCommand)
+			or item.isDefault
+			or index == len(speechSequence) - 1
+			or item.lang == SpeechSequenceState.lastReportedLang
 		):
-			langDesc = languageHandler.getLanguageDescription(item.lang)
-			filteredSpeechSequence.append(LangChangeCommand(None))
-			if langDesc is None:
-				filteredSpeechSequence.append(item.lang)
-			else:
-				filteredSpeechSequence.append(langDesc)
-			SpeechSequenceState.lastReportedLang = item.lang
-			if not languageIsSupported(item.lang):
-				filteredSpeechSequence.append("not supported")
+			filteredSpeechSequence.append(item)
+			continue
+		langDesc = languageHandler.getLanguageDescription(item.lang)
+		if langDesc is None:
+			langDesc = item.lang
+		filteredSpeechSequence.append(LangChangeCommand(None))
+		filteredSpeechSequence.append(langDesc)
+		SpeechSequenceState.lastReportedLang = item.lang
+		if not languageIsSupported(item.lang):
+			filteredSpeechSequence.append("not supported")
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
 
