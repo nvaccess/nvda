@@ -4,8 +4,6 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Bill Dengler,
 # Julien Cochuyt, Leonard de Ruijter
 
-import languageHandler
-from .commands import LangChangeCommand
 from .speech import (
 	_extendSpeechSequence_addMathForTextInfo,
 	_getSpellingSpeechAddCharMode,
@@ -31,6 +29,7 @@ from .speech import (
 	getObjectSpeech,
 	getPreselectedTextSpeech,
 	getPropertiesSpeech,
+	getSpeechSequenceWithLangs,
 	getSpellingSpeech,
 	getState,
 	getTableInfoSpeech,
@@ -154,10 +153,6 @@ from .speech import initialize as speechInitialize
 from .sayAll import initialize as sayAllInitialize
 
 
-class SpeechSequenceState:
-	lastReportedLang = None
-
-
 def initialize():
 	"""Loads and sets the synth driver configured in nvda.ini.
 	Initializes the state of speech and initializes the sayAllHandler
@@ -178,43 +173,3 @@ def terminate():
 	synthDriverHandler.setSynth(None)
 	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
 
-
-def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
-	"""Get a speech sequence with the language description for each non default language of the read text.
-
-	:param speechSequence: The original speech sequence.
-	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
-	"""
-	filteredSpeechSequence = list()
-	for index, item in enumerate(speechSequence):
-		if (
-			not isinstance(item, LangChangeCommand)
-			or item.isDefault
-			or index == len(speechSequence) - 1
-			or item.lang == SpeechSequenceState.lastReportedLang
-		):
-			filteredSpeechSequence.append(item)
-			continue
-		langDesc = languageHandler.getLanguageDescription(item.lang)
-		if langDesc is None:
-			langDesc = item.lang
-		filteredSpeechSequence.append(LangChangeCommand(None))
-		filteredSpeechSequence.append(langDesc)
-		SpeechSequenceState.lastReportedLang = item.lang
-		if not languageIsSupported(item.lang):
-			filteredSpeechSequence.append("not supported")
-		filteredSpeechSequence.append(item)
-	return filteredSpeechSequence
-
-
-def languageIsSupported(language: str | None) -> bool:
-	"""Determines if the specified language is supported.
-	:param language: A language code or None.
-	:return: True if the language is supported, False otherwise.
-	"""
-	if language is None:
-		return True
-	for lang in synthDriverHandler.getSynth().availableLanguages:
-		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
-			return True
-	return False
