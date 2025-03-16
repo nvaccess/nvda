@@ -3101,6 +3101,8 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 	:param speechSequence: The original speech sequence.
 	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
 	"""
+	if not config.conf["speech"]["reportLanguage"]:
+		return speechSequence
 	filteredSpeechSequence = list()
 	for index, item in enumerate(speechSequence):
 		if (
