@@ -3095,6 +3095,7 @@ def clearTypedWordBuffer() -> None:
 	"""
 	_curWordChars.clear()
 
+
 def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 	"""Get a speech sequence with the language description for each non default language of the read text.
 

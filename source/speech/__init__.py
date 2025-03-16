@@ -172,4 +172,3 @@ def initialize():
 def terminate():
 	synthDriverHandler.setSynth(None)
 	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
-
