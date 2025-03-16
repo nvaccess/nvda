@@ -373,6 +373,18 @@ class Math(Ia2Web):
 			)
 			raise LookupError
 
+	def _get_role(self):
+		if self.IA2Attributes.get('tag') == 'img':
+			try:
+				mathMl = self.mathMl
+			except LookupError:
+				mathMl = None
+			if mathMl is None:
+				# #16007: Many publishers were setting role=math on plain images with alt text.
+				# We want to just treat these as normal images.
+				return controlTypes.Role.GRAPHIC
+		return super().role
+
 
 class Switch(Ia2Web):
 	# role="switch" gets mapped to IA2_ROLE_TOGGLE_BUTTON, but it uses the
