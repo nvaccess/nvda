@@ -385,7 +385,7 @@ From this submenu you can access the User Guide, a quick reference of commands, 
 These first three options open in the default web browser.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
-We recommend starting with the "Basic Training for NVDA module".
+We recommend starting with the "Basic Training for NVDA" module.
 This module covers concepts from getting started up to browsing the web and using object navigation.
 It is available in:
 
