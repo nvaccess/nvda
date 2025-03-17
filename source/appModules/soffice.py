@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2022 NV Access Limited, Bill Dengler, Leonard de Ruijter
+# Copyright (C) 2006-2025 NV Access Limited, Bill Dengler, Leonard de Ruijter, Cyrille Bougot
 
 from typing import (
 	Optional,
@@ -572,14 +572,11 @@ class SymphonyDocument(CompoundDocument):
 
 		# changing paragraph style can imply more related formatting changes (e.g. font size, bold,...);
 		# restrict announcement to the paragraph style combobox via its ID
-		if isinstance(gesture, keyboardHandler.KeyboardInputGesture) and gesture.displayName in [
-			"ctrl+0",
-			"ctrl+1",
-			"ctrl+2",
-			"ctrl+3",
-			"ctrl+4",
-			"ctrl+5",
-		]:
+		if (
+			isinstance(gesture, keyboardHandler.KeyboardInputGesture)
+			and gesture.modifierNames == ['control']
+			and gesture.mainKeyName in ['1', '2', '3', '4', '5', '0']
+		):
 			SymphonyDocument.formattingGestureObjectIds = ["applystyle"]
 		else:
 			SymphonyDocument.formattingGestureObjectIds = []
