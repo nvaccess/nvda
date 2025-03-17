@@ -134,6 +134,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * Fixed an issue where some SAPI4 voices (e.g. IBM TTS Chinese) cannot be loaded. (#17726, @gexgd0419)
 * In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
 * NVDA can now restore the audio ducking behavior when speaking a new utterance, when another app such as Magnifier changes the behavior system-wide. (#17747, @gexgd0419)
+* Math equations only represented by an image and alt text with no mathml for rich navigation, are now treated like normal images, rather than math with no content, allowing the user to jump to them with `g` and to be able to arrow through the alt text by character. (#16007)
 
 ### Changes for Developers
 
