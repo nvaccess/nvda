@@ -574,8 +574,8 @@ class SymphonyDocument(CompoundDocument):
 		# restrict announcement to the paragraph style combobox via its ID
 		if (
 			isinstance(gesture, keyboardHandler.KeyboardInputGesture)
-			and gesture.modifierNames == ['control']
-			and gesture.mainKeyName in ['1', '2', '3', '4', '5', '0']
+			and gesture.modifierNames == ["control"]
+			and gesture.mainKeyName in ["1", "2", "3", "4", "5", "0"]
 		):
 			SymphonyDocument.formattingGestureObjectIds = ["applystyle"]
 		else:
