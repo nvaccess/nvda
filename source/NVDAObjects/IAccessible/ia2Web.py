@@ -374,7 +374,7 @@ class Math(Ia2Web):
 			raise LookupError
 
 	def _get_role(self):
-		if self.IA2Attributes.get('tag') == 'img':
+		if self.IA2Attributes.get("tag") == "img":
 			try:
 				mathMl = self.mathMl
 			except LookupError:
