@@ -167,7 +167,7 @@ class SynthDriverAudio(COMObject):
 		self._audioQueue: deque[AudioT | BookmarkT] = deque()
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
-		self._audioThread = threading.Thread(target=self._audioThreadFunc)
+		self._audioThread = threading.Thread(target=self._audioThreadFunc, name="Sapi4AudioThread")
 		self._audioThread.start()
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._allowDelete = False  # Must call terminate() before releasing the object
