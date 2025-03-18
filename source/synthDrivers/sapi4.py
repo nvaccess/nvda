@@ -222,6 +222,13 @@ class _ComProxy:
 
 		return _wrapper
 
+	def __del__(self):
+		# Release the object on the ComThread as well.
+		def _deleter():
+			self._obj = None
+
+		self._thread.invoke(_deleter)
+
 
 class SynthDriverAudio(COMObject):
 	"""
@@ -774,10 +781,12 @@ class SynthDriver(SynthDriver):
 	def terminate(self):
 		self._bufSink._allowDelete = True
 		self._sink._allowDelete = True
+		# Release all COM objects before stopping the COM thread.
 		self._ttsCentral = None
 		self._ttsAttrs = None
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
+		self._ttsEngines = None
 		self._comThread.stop()
 
 	def speak(self, speechSequence: SpeechSequence):
