@@ -46,7 +46,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
 * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
 * NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome and other applications based on Chromium 134 or newer. (#17838)
- 
+
 ### Changes
 
 * Component updates:
