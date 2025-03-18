@@ -352,6 +352,7 @@ class SettingsPanel(
 
 	To use this panel:
 		* Set L{title} to the title of the category.
+		* Set :attr:`panelDescription` to describe the purpose of the category.
 		* Override L{makeSettings} to populate a given sizer with the settings controls.
 		* Optionally, extend L{onPanelActivated} to perform actions after the category has been selected in the list of categories, such as synthesizer or braille display list population.
 		* Optionally, extend L{onPanelDeactivated} to perform actions after the category has been deselected (i.e. another category is selected) in the list of categories.
@@ -360,6 +361,7 @@ class SettingsPanel(
 
 	@ivar title: The title of the settings panel, also listed in the list of settings categories.
 	@type title: str
+	:ivar panelDescription: The description shown in the settings dialog when the category is selected.
 	"""
 
 	title = ""
@@ -785,6 +787,12 @@ class GeneralSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the general settings panel.
 	title = _("General")
 	helpId = "GeneralSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the general settings panel.
+		"Configures general settings like the log level and options for starting and terminating NVDA. "
+		"You will also find the settings related to updating NVDA here. ",
+	)
+
 	LOG_LEVELS = (
 		# Translators: One of the log levels of NVDA (the disabled mode turns off logging completely).
 		(log.OFF, _("disabled")),
@@ -1181,6 +1189,11 @@ class SpeechSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the speech panel
 	title = _("Speech")
 	helpId = "SpeechSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the speech settings panel.
+		"Configures the synthesizer, the voice, variant and other aspects of speech output. "
+		"This includes settings for how NVDA reads symbols, capitals and text in other languages. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -1656,6 +1669,10 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 	# Translators: This is the label for the voice settings panel.
 	title = _("Voice")
 	helpId = "SpeechSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the voice settings panel.
+		"Configures the voice settings for the selected speech synthesizer.",
+	)
 
 	@property
 	def driver(self):
@@ -1960,6 +1977,11 @@ class KeyboardSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the keyboard settings panel.
 	title = _("Keyboard")
 	helpId = "KeyboardSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the keyboard settings panel.
+		"Configures the various settings that influence keyboard behaviour. "
+		"These settings also control how speech output is treated when typing. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2132,6 +2154,11 @@ class MouseSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the mouse settings panel.
 	title = _("Mouse")
 	helpId = "MouseSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the mouse settings panel.
+		"Configures settings for mouse tracking and feedback such as reading the object under the mouse. "
+		"Here you will also configure the audio feedback for the mouse position. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -2219,6 +2246,10 @@ class ReviewCursorPanel(SettingsPanel):
 	# Translators: This is the label for the review cursor settings panel.
 	title = _("Review Cursor")
 	helpId = "ReviewCursorSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the review cursor settings panel.
+		"Configure the review cursor, which allows reading the contents of the screen, current document or current object without moving the caret",
+	)
 
 	def makeSettings(self, settingsSizer):
 		# Translators: This is the label for a checkbox in the
@@ -2257,6 +2288,11 @@ class InputCompositionPanel(SettingsPanel):
 	# Translators: This is the label for the Input Composition settings panel.
 	title = _("Input Composition")
 	helpId = "InputCompositionSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the input composition settings panel.
+		"Configure how NVDA reports the input of Asian characters, "
+		"such as when using IME or Text Service input methods.",
+	)
 
 	def makeSettings(self, settingsSizer):
 		self.autoReportAllCandidatesCheckBox = wx.CheckBox(
@@ -2506,6 +2542,10 @@ class BrowseModePanel(SettingsPanel):
 	# Translators: This is the label for the browse mode settings panel.
 	title = _("Browse Mode")
 	helpId = "BrowseModeSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the browse mode settings panel.
+		"Configure how NVDA behaves when reading complex documents, such as web pages and emails.",
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3007,6 +3047,10 @@ class DocumentNavigationPanel(SettingsPanel):
 	# Translators: This is the label for the document navigation settings panel.
 	title = _("Document Navigation")
 	helpId = "DocumentNavigation"
+	panelDescription = _(
+		# Translators: This is a label appearing on the document navigation settings panel.
+		"Configures options impacting how you navigate in a document with the cursor. ",
+	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3040,6 +3084,10 @@ class AudioPanel(SettingsPanel):
 	# Translators: This is the label for the audio settings panel.
 	title = _("Audio")
 	helpId = "AudioSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the audio settings panel.
+		"Configures the audio settings like volume and sound splitting.",
+	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3252,6 +3300,10 @@ class AddonStorePanel(SettingsPanel):
 	# Translators: This is the label for the addon navigation settings panel.
 	title = _("Add-on Store")
 	helpId = "AddonStoreSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the addon store settings panel.
+		"Configures the Add-on Store, including how to handle updates. ",
+	)
 
 	def makeSettings(self, settingsSizer: wx.BoxSizer) -> None:
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3523,6 +3575,11 @@ class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
 	helpId = "TouchInteraction"
+	panelDescription = _(
+		# Translators: This is a label appearing on the touch interaction settings panel.
+		"Configures touch interaction (where available). "
+		"Includes enabling touch interaction support and setting the touch typing mode. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -3548,6 +3605,10 @@ class UwpOcrPanel(SettingsPanel):
 	# Translators: The title of the Windows OCR panel.
 	title = _("Windows OCR")
 	helpId = "Win10OcrSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the windows OCR settings panel.
+		"Configures options for text recognition from images. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
@@ -4298,6 +4359,11 @@ class BrailleSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the braille panel
 	title = _("Braille")
 	helpId = "BrailleSettings"
+	panelDescription = _(
+		# Translators: This is a label appearing on the braille settings panel.
+		"Configures various settings for braille input and output. "
+		"You can set which braille table to be used and other options. ",
+	)
 
 	def makeSettings(self, settingsSizer):
 		settingsSizerHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
