@@ -205,9 +205,14 @@ class _ComThread(threading.Thread):
 
 
 class _ComProxy:
-	"""Proxy for SAPI 4 COM object pointers that invokes all COM methods on the specified `_ComThread`."""
+	"""Proxy for SAPI 4 COM object pointers that invokes all COM methods on the specified `_ComThread`.
+	All SAPI 4 COM objects should be wrapped by _ComProxy and run on the same _ComThread."""
 
 	def __init__(self, obj, thread: _ComThread):
+		"""Constructor.
+
+		:param obj: The COM object pointer to wrap.
+		:param thread: The COM thread to run all its COM method calls on. The object should be created on the same thread."""
 		self._obj = obj
 		self._thread = thread
 
@@ -254,7 +259,10 @@ class SynthDriverAudio(COMObject):
 
 	_com_interfaces_ = [IAudio, IAudioDest]
 
-	def __init__(self, thread: _ComThread):
+	def __init__(self, comThread: _ComThread):
+		"""Constructor.
+
+		:param comThread: The COM thread that `IAudioDestNotifySink` methods will be called on."""
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = AudioState.INVALID
 		self._deviceUnClaimingBytePos: int | None = None
@@ -272,7 +280,7 @@ class SynthDriverAudio(COMObject):
 		self._audioThread.start()
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._allowDelete = False  # Must call terminate() before releasing the object
-		self._comThread = thread
+		self._comThread = comThread
 
 	def terminate(self):
 		if isDebugForSynthDriver():
@@ -767,6 +775,8 @@ class SynthDriver(SynthDriver):
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
+		# Create COM objects on the dedicated COM thread,
+		# and wrap them with _ComProxy so that method calls will happen on the same thread.
 		self._ttsEngines = self._comThread.invoke(CoCreateInstance, CLSID_TTSEnumerator, ITTSEnumW)
 		self._ttsEngines = _ComProxy(self._ttsEngines, self._comThread)
 		self._enginesList = self._fetchEnginesList()
