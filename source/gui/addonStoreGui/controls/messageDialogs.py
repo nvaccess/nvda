@@ -148,7 +148,7 @@ def _shouldProceedToRemoveAddonDialog(
 		"addonStore",
 		# Translators: Presented when attempting to remove the selected add-on.
 		# {addon} is replaced with the add-on name.
-		"Are you sure you wish to remove the {addon} add-on from NVDA? " "This cannot be undone.",
+		"Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be undone.",
 	).format(addon=addon.displayName)
 	dlg = ErrorAddonInstallDialogWithYesNoButtons(
 		parent=parent,
@@ -284,7 +284,7 @@ def _showAddonInfo(addon: _AddonGUIModel) -> None:
 		pgettext(
 			"addonStore",
 			# Translators: message shown in the Addon Information dialog.
-			"{summary} ({name})\n" "Version: {version}\n" "Description: {description}\n",
+			"{summary} ({name})\nVersion: {version}\nDescription: {description}\n",
 		).format(
 			summary=addon.displayName,
 			name=addon.addonId,

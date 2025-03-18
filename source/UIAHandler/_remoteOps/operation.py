@@ -296,15 +296,12 @@ class Operation:
 			logOutput = self._remoteLog.localValue
 			if logOutput:
 				log.info(
-					f"Remote log for execution {self._executionCount}\n"
-					"--- Begin ---\n"
-					f"{logOutput}"
-					"--- end ---",
+					f"Remote log for execution {self._executionCount}\n--- Begin ---\n{logOutput}--- end ---",
 				)
 
 	def _dumpCompiletimeLog(self):
 		log.info(
-			"Dumping instructions:\n" "--- Begin ---\n" f"{self._rob.dumpInstructions()}" "--- End ---",
+			f"Dumping instructions:\n--- Begin ---\n{self._rob.dumpInstructions()}--- End ---",
 		)
 
 	def _executeUntilSuccess(self, maxTries: int) -> Generator[ExecutionResult, None, None]:
@@ -330,7 +327,7 @@ class Operation:
 				f"Error occured on execution try {self._executionCount}",
 			)
 			e.add_note(
-				"Dumping instructions:\n" "--- Begin ---\n" f"{self._rob.dumpInstructions()}" "--- End ---",
+				f"Dumping instructions:\n--- Begin ---\n{self._rob.dumpInstructions()}--- End ---",
 			)
 			raise
 
