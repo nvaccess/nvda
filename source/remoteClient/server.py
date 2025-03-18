@@ -28,7 +28,7 @@ import os
 import socket
 import ssl
 import time
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from select import select
 from itertools import count
@@ -104,12 +104,12 @@ class RemoteCertificateManager:
 			cert = x509.load_pem_x509_certificate(certData)
 
 		# Check validity period
-		now = datetime.utcnow()
+		now = datetime.now(timezone.utc)
 		if not (cert.not_valid_before_utc < now <= cert.not_valid_after_utc):
 			raise ValueError("Certificate is not within its validity period")
 
 		# Check renewal threshold
-		timeRemaining = cert.not_valid_after - now
+		timeRemaining = cert.not_valid_after_utc - now
 		if timeRemaining.days <= self.CERT_RENEWAL_THRESHOLD_DAYS:
 			raise ValueError("Certificate is approaching expiration")
 
@@ -131,6 +131,7 @@ class RemoteCertificateManager:
 			],
 		)
 
+		now = datetime.now(timezone.utc)
 		cert = (
 			x509.CertificateBuilder()
 			.subject_name(
@@ -146,10 +147,10 @@ class RemoteCertificateManager:
 				x509.random_serial_number(),
 			)
 			.not_valid_before(
-				datetime.utcnow(),
+				now,
 			)
 			.not_valid_after(
-				datetime.utcnow() + timedelta(days=self.CERT_DURATION_DAYS),
+				now + timedelta(days=self.CERT_DURATION_DAYS),
 			)
 			.add_extension(
 				x509.BasicConstraints(ca=True, path_length=None),
@@ -236,7 +237,7 @@ class LocalRelayServer:
 	:ivar password: Channel password for client authentication
 	:ivar clients: Dictionary mapping sockets to Client objects
 	:ivar clientSockets: List of client sockets
-	:ivar PING_TIME: Seconds between ping messages
+	:ivar PING_TIME_SECONDS: Seconds between ping messages
 	"""
 
 	PING_TIME_SECONDS: int = 300
@@ -295,7 +296,7 @@ class LocalRelayServer:
 		sslContext = self.certManager.createSSLContext()
 		serverSocket = sslContext.wrap_socket(serverSocket, server_side=True)
 		serverSocket.bind(bindAddress)
-		serverSocket.listen(backlog=5)  # Set the maximum number of queued connections
+		serverSocket.listen(5)  # Set the maximum number of queued connections
 		return serverSocket
 
 	def run(self) -> None:
@@ -323,7 +324,7 @@ class LocalRelayServer:
 					self.acceptNewConnection(sock)
 					continue
 				self.clients[sock].handleData()
-			if time.time() - self.lastPingTime >= self.PING_TIME:
+			if time.time() - self.lastPingTime >= self.PING_TIME_SECONDS:
 				for client in self.clients.values():
 					if client.authenticated:
 						client.send(type=RemoteMessageType.PING)
