@@ -80,7 +80,8 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
 * The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
-* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake. (#17718, @gexgd0419)
+* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake.
+If this does not work with your SAPI 4 voice, you can disable WASAPI for SAPI 4 in Advanced settings. (#17718, #17801, @gexgd0419)
 
 ### Security Fixes
 
