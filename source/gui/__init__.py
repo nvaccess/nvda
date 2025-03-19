@@ -234,6 +234,14 @@ class MainFrame(wx.Frame):
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
+		except Exception:
+			messageBox(
+				# Translators: Message shown when current configuration cannot be saved, for an unknown reason.
+				_("Could not save configuration; see the log for more details."),
+				# Translators: the title of an error message dialog
+				_("Error"),
+				wx.OK | wx.ICON_ERROR,
+			)
 
 	@blockAction.when(blockAction.Context.MODAL_DIALOG_OPEN)
 	def popupSettingsDialog(self, dialog: Type[SettingsDialog], *args, **kwargs):

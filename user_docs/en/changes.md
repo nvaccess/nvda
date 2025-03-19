@@ -28,10 +28,7 @@ To use this feature, "allow NVDA to control the volume of other applications" mu
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
-* Added an action in the Add-on Store to cancel the install of add-ons. (#15578, @hwf1324)
-* Added an action in the Add-on Store to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
-* It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, #17804, @christopherpross)
-* The add-ons lists in the Add-on Store can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
+* It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, @christopherpross)
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
 * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
 * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
@@ -49,6 +46,8 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
 * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
 * NVDA can report the language of the text been read when automatic language switching is enabled. An unasigned gesture has been added to report the language of the character under caret (#17664, @nvdaes)
+* NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome and other applications based on Chromium 134 or newer. (#17838)
+
 ### Changes
 
 * Component updates:
@@ -82,7 +81,8 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
 * The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
-* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake. (#17718, @gexgd0419)
+* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake.
+If this does not work with your SAPI 4 voice, you can disable WASAPI for SAPI 4 in Advanced settings. (#17718, #17801, @gexgd0419)
 
 ### Security Fixes
 
@@ -134,6 +134,7 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * Fixed an issue where some SAPI4 voices (e.g. IBM TTS Chinese) cannot be loaded. (#17726, @gexgd0419)
 * In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
 * NVDA can now restore the audio ducking behavior when speaking a new utterance, when another app such as Magnifier changes the behavior system-wide. (#17747, @gexgd0419)
+* Math equations only represented by an image and alt text with no mathml for rich navigation, are now treated like normal images, rather than math with no content, allowing the user to jump to them with `g` and to be able to arrow through the alt text by character. (#16007)
 
 ### Changes for Developers
 
