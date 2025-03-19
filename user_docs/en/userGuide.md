@@ -3378,7 +3378,8 @@ If you find that some necessary silence periods are also missing (e.g. pause bet
 
 This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
 This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
-However, some SAPI 4 voices might not work with the current WASAPI implementation. If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+However, some SAPI 4 voices might not work with the current WASAPI implementation.
+If you find that the SAPI 4 voice you are using stops working, you may disable this option.
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
