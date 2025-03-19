@@ -177,7 +177,7 @@ If desired, press `tab` and `spaceBar` to change any of these options, or leave 
 1. A progress bar fills up as NVDA installs.
 During this process NVDA sounds an increasingly higher pitched beep.
 This process is often fast and may not be noticed.
-1. A dialog box appears confirm that the install of NVDA has been successful.
+1. A dialog box appears to confirm that the install of NVDA has been successful.
 The message advises to "Press OK to start the installed copy".
 Press `enter` to start the installed copy.
 1. The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
@@ -385,7 +385,7 @@ From this submenu you can access the User Guide, a quick reference of commands, 
 These first three options open in the default web browser.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
-We recommend starting with the "Basic Training for NVDA module".
+We recommend starting with the "Basic Training for NVDA" module.
 This module covers concepts from getting started up to browsing the web and using object navigation.
 It is available in:
 
@@ -1131,7 +1131,7 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it (Mozilla Firefox, and any browser based on Chromium 134 or newer) which causes the document's native selection to follow NVDA's Browse Mode selection.
 
 <!-- KC:beginInclude -->
 
@@ -3369,6 +3369,18 @@ This functionality is enabled by default as of NVDA 2021.1.
 When enabled, NVDA will remove silence from the start of speech audio, which may improve the responsiveness of some speech synthesizers.
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
+
+##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
+
+This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
+This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
+However, some SAPI 4 voices might not work with the current WASAPI implementation.
+If you find that the SAPI 4 voice you are using stops working, you may disable this option.
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
