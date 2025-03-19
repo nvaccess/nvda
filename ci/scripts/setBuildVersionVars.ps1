@@ -21,16 +21,15 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 } else {
 	$commitVersion = $env:GITHUB_SHA.Substring(0, 8)
 	if($env:pullRequestNumber) {
-		$version = "pr$env:pullRequestNumber-$env:GITHUB_RUN_ID," + $commitVersion
+		$version = "pr$env:pullRequestNumber-$commitVersion"
 	} elseif($env:GITHUB_REF_NAME -eq "master") {
-		$version = "alpha-$env:GITHUB_RUN_ID," + $commitVersion
+		$version = "alpha-$commitVersion"
 	} else {
-		$version = "$env:GITHUB_REF_NAME-$env:GITHUB_RUN_ID," + $commitVersion
+		$version = "$env:GITHUB_REF_NAME-$commitVersion"
 		if($env:GITHUB_REF_NAME.StartsWith("try-release-")) {
 			echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 		}
 	}
-	# The version is unique even for rebuilds, so we can use it for the AppVeyor version.
 	if($env:GITHUB_REF_NAME -eq "master") {
 		$versionType = "snapshot:alpha"
 	} elseif (!$env:GITHUB_REF_NAME.StartsWith("try-") -and !$env:pullRequestNumber) {
