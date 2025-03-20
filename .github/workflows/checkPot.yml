@@ -42,3 +42,10 @@ jobs:
         scons-source: false
     - name: Check comments for translators
       run: powershell.exe ci/scripts/tests/translationCheck.ps1
+    - name: Upload artifact
+      id: uploadArtifact
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Check pot results
+        path: output//nvda.pot
