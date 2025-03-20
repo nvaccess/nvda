@@ -17,8 +17,6 @@ Builds will fail if any command has a non-zero exit code. PowerShell scripts con
 
 ## Testing
 
-Unlike the rest of the build, tests do not exit early if they fail or raise an error. If any test fails, `testFailExitCode` is set to 1. The `after_test` build phase will exit the build if any tests fail so that all test failures can be recorded where possible.
-
 Before testing we:
 
 * Create directories to store results.
@@ -35,5 +33,3 @@ The tests we perform are:
 
 * NVDA launcher.
 * Test results.
-* If tests fail on a pull request, the job summary of GitHub Actions.
-    * A comment will be created with the job summary, indicating success or failure for each group of tests, and a link to download test results.
