@@ -1075,10 +1075,9 @@ class SynthDriver(SynthDriver):
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
-			self._ttsAudio = SynthDriverAudio()
+			self._ttsAudio = SynthDriverAudio(self._comThread)
 		else:
 			self._ttsAudio = SynthDriverMMAudio()
-		self._ttsAudio = SynthDriverAudio(self._comThread)
 		self._ttsCentral = POINTER(ITTSCentralW)()
 		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
 		self._ttsCentral = _ComProxy(self._ttsCentral, self._comThread)
