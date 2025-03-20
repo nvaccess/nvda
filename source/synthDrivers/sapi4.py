@@ -29,7 +29,7 @@ from ctypes import (
 	windll,
 )
 from ctypes.wintypes import BOOL, DWORD, FILETIME, HANDLE, MSG, WORD
-from typing import TYPE_CHECKING, Callable, Optional, TypeAlias
+from typing import TYPE_CHECKING, Callable, NamedTuple, Optional
 import nvwave
 from synthDriverHandler import (
 	SynthDriver,
@@ -125,8 +125,7 @@ else:
 	c_ulonglong_p = POINTER(c_ulonglong)
 	LP_IAudioDestNotifySink = POINTER(IAudioDestNotifySink)
 
-AudioT: TypeAlias = bytes
-BookmarkT: TypeAlias = int
+_Bookmark = NamedTuple("Bookmark", [("bytePos", int), ("id", int)])
 
 _lastLoggedTimes: dict[Callable, float] = dict()
 
@@ -319,7 +318,6 @@ class SynthDriverAudio(COMObject):
 		:param comThread: The COM thread that `IAudioDestNotifySink` methods will be called on."""
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = AudioState.INVALID
-		self._deviceUnClaimingBytePos: int | None = None
 		self._waveFormat: nvwave.WAVEFORMATEX | None = None
 		self._player: nvwave.WavePlayer | None = None
 		self._writtenBytes = 0
@@ -327,11 +325,11 @@ class SynthDriverAudio(COMObject):
 		self._startTime = datetime.now()
 		self._startBytes = 0
 		self._freeBytes = 0
-		self._audioQueue: deque[AudioT | BookmarkT] = deque()
+		self._audioQueue: deque[bytes] = deque()
+		self._bookmarkQueue: deque[_Bookmark] = deque()
 		self._audioCond = threading.Condition()
 		self._audioStopped = False
 		self._audioThread = threading.Thread(target=self._audioThreadFunc, name="Sapi4AudioThread")
-		self._audioThread.start()
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
 		self._allowDelete = False  # Must call terminate() before releasing the object
 		self._comThread = comThread
@@ -400,14 +398,18 @@ class SynthDriverAudio(COMObject):
 		self._player.stop()
 		with self._audioCond:
 			if self._notifySink:
-				while self._audioQueue:
-					item = self._audioQueue.popleft()
-					if isinstance(item, BookmarkT):
-						# Flush all untriggered bookmarks.
-						# 1 (TRUE) means that the bookmark is sent because of flushing.
-						self._queueNotification(self._notifySink.BookMark, item, 1)
+				while self._bookmarkQueue:
+					bookmark = self._bookmarkQueue.popleft()
+					# Flush all untriggered bookmarks.
+					# 1 (TRUE) means that the bookmark is sent because of flushing.
+					self._queueNotification(self._notifySink.BookMark, bookmark.id, 1)
 			self._audioQueue.clear()
+			self._bookmarkQueue.clear()
 			self._freeBytes = self._waveFormat.nAvgBytesPerSec * 2  # 2 seconds
+			# As byte positions can only increase,
+			# set _playedBytes to the current _writtenBytes
+			# to make sure that bookmarks that use byte positions still work.
+			self._playedBytes = self._writtenBytes
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Flushed")
 
@@ -496,7 +498,6 @@ class SynthDriverAudio(COMObject):
 				log.debug("SAPI4: UnClaiming")
 			with self._audioCond:
 				self._deviceState = AudioState.UNCLAIMING
-				self._deviceUnClaimingBytePos = self._writtenBytes
 				self._audioCond.notify()
 		else:
 			if isDebugForSynthDriver():
@@ -606,6 +607,7 @@ class SynthDriverAudio(COMObject):
 		self._initPlayer()
 		self._deviceState = AudioState.UNCLAIMED
 		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds
+		self._audioThread.start()
 
 	def IAudioDest_FreeSpace(self) -> tuple[DWORD, BOOL]:
 		"""Returns the number of bytes that are free in the object's internal buffer.
@@ -641,82 +643,78 @@ class SynthDriverAudio(COMObject):
 		if isDebugForSynthDriver():
 			log.debug(f"SAPI4: DataSet, {dwSize} bytes written")
 
-	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
+	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
 		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
 		When Flush is called, untriggered bookmarks should also be triggered."""
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		with self._audioCond:
-			self._audioQueue.append(dwMarkID)
+			self._bookmarkQueue.append(_Bookmark(self._writtenBytes, dwMarkID))
+			self._audioCond.notify()
 		if isDebugForSynthDriver():
 			log.debug(f"SAPI4: Bookmark {dwMarkID} queued")
 
 	def _audioThreadFunc(self):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
-		while True:
+		while not self._audioStopped:
 			with self._audioCond:
-				while not self._audioStopped and not (
-					self._deviceState >= AudioState.STARTED and self._audioQueue
+				if self._deviceState not in (
+					AudioState.STARTED,
+					AudioState.UNCLAIMING,
+					AudioState.RECLAIMING,
 				):
-					if (
-						self._deviceState in (AudioState.UNCLAIMING, AudioState.RECLAIMING)
-						and not self._audioQueue
-						and self._deviceUnClaimingBytePos is not None
-					):
-						# All audio and bookmarks are finished.
-						self._player.feed(
-							None,
-							0,
-							lambda bytePos=self._deviceUnClaimingBytePos: self._finishUnClaim(bytePos),
-						)
-						self._deviceUnClaimingBytePos = None
-					if self._deviceState >= AudioState.STARTED:
-						# Since WavePlayer.feed returns before the audio finishes,
-						# in order not to lose the final callbacks
-						# when there's no more audio to feed,
-						# wait with a timeout to give WavePlayer a chance
-						# to check the callbacks periodically.
-						self._audioCond.wait(0.1)
-					else:
-						self._audioCond.wait()
-					if self._deviceState >= AudioState.STARTED and self._audioQueue:
-						break
-					if not self._player:
-						continue
-					# Call feed to let WavePlayer check the callbacks
-					self._player.feed(None, 0, None)
-				if self._audioStopped:
-					return
-				item = self._audioQueue.popleft()
-			if isinstance(item, AudioT):
-				self._player.feed(item, len(item), lambda item=item: self._onChunkFinished(item))
-			elif isinstance(item, BookmarkT):
-				if self._playedBytes == self._writtenBytes:
-					self._onBookmark(item)  # trigger immediately
-				else:
-					self._player.feed(None, 0, lambda item=item: self._onBookmark(item))
+					self._audioCond.wait()
+					continue
+				if not self._audioQueue:
+					# Since WavePlayer.feed returns before the audio finishes,
+					# in order not to lose the final callbacks
+					# when there's no more audio to feed,
+					# wait with a timeout to give WavePlayer a chance
+					# to check the callbacks periodically.
+					self._audioCond.wait(0.01)
+				item = self._audioQueue.popleft() if self._audioQueue else None
+			if item:
+				size = len(item)
+				self._player.feed(item, size, lambda size=size: self._onChunkFinished(size))
+			else:
+				# Call feed to let WavePlayer check the callbacks
+				self._player.feed(None, 0, None)
+			self._checkBookmarksAndState()
 
-	def _onChunkFinished(self, chunk: AudioT):
-		size = len(chunk)
+	def _onChunkFinished(self, size: int):
 		self._playedBytes += size
 		self._freeBytes += size
 		if self._notifySink:
 			self._queueNotification(self._notifySink.FreeSpace, self._freeBytes, 0)
 
-	def _onBookmark(self, dwMarkID: BookmarkT):
+	def _checkBookmarksAndState(self):
+		if self._deviceState not in (
+			AudioState.STARTED,
+			AudioState.UNCLAIMING,
+			AudioState.RECLAIMING,
+		):
+			return
+		while self._bookmarkQueue:
+			bookmark = self._bookmarkQueue[0]
+			if bookmark.bytePos > self._playedBytes:
+				break
+			self._onBookmark(bookmark.id)
+			self._bookmarkQueue.popleft()
+		if self._playedBytes == self._writtenBytes and self._deviceState in (
+			AudioState.UNCLAIMING,
+			AudioState.RECLAIMING,
+		):
+			self._finishUnClaim()
+
+	def _onBookmark(self, dwMarkID: int):
 		if isDebugForSynthDriver():
 			log.debug(f"SAPI4: Bookmark {dwMarkID} reached")
 		if self._notifySink:
 			self._queueNotification(self._notifySink.BookMark, dwMarkID, 0)
 
-	def _finishUnClaim(self, bytePos: int):
-		"""Finishes the asynchronous UnClaim call.
-
-		:param bytePos: The written byte count when this UnClaim request is made.
-			This is checked to prevent triggering on outdated UnClaim requests."""
-		if self._writtenBytes != bytePos:
-			return
+	def _finishUnClaim(self):
+		"""Finishes the asynchronous UnClaim call."""
 		if self._deviceState == AudioState.UNCLAIMING:
 			self._deviceState = AudioState.UNCLAIMED
 		elif self._deviceState == AudioState.RECLAIMING:
@@ -812,7 +810,7 @@ class SynthDriverMMAudio(COMObject):
 		self.audiodest.DataSet(pBuffer, dwSize)
 
 	@_logTrace()
-	def IAudioDest_BookMark(self, dwMarkID: BookmarkT) -> None:
+	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
 		self.audiodest.BookMark(dwMarkID)
 
 
