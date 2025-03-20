@@ -8,6 +8,7 @@ from typing import Optional, Set, Tuple
 
 import api
 import braille
+from config.configFlags import RemoteConnectionMode, RemoteServerType
 import core
 import gui
 import inputCore
@@ -85,16 +86,15 @@ class RemoteClient:
 			return
 		key = controlServerConfig["key"]
 		insecure = False
-		if controlServerConfig["self_hosted"]:
+		serverType = controlServerConfig["serverType"]
+		if serverType == RemoteServerType.LOCAL:
 			port = controlServerConfig["port"]
 			hostname = "localhost"
 			insecure = True
 			self.startControlServer(port, key)
-		else:
+		elif serverType == RemoteServerType.EXISTING:
 			hostname, port = addressToHostPort(controlServerConfig["host"])
-		mode = (
-			ConnectionMode.FOLLOWER if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
-		)
+		mode = RemoteConnectionMode(controlServerConfig["connection_type"]).toConnectionMode()
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -236,12 +236,11 @@ class RemoteClient:
 			evt.Skip()
 		previousConnections = configuration.getRemoteConfig()["connections"]["last_connected"]
 		hostnames = list(reversed(previousConnections))
-		# Translators: Title of the connect dialog.
 		dlg = dialogs.DirectConnectDialog(
 			parent=gui.mainFrame,
 			id=wx.ID_ANY,
-			# Translators: Title of the connect dialog.
-			title=_("Connect"),
+			# Translators: Title of the Remote Access connection dialog.
+			title=_("Connect to Another Computer"),
 			hostnames=hostnames,
 		)
 
@@ -249,7 +248,7 @@ class RemoteClient:
 			if dlgResult != wx.ID_OK:
 				return
 			connectionInfo = dlg.getConnectionInfo()
-			if dlg.clientOrServer.GetSelection() == 1:  # server
+			if dlg._clientOrServerControl.GetSelection() == 1:  # server
 				self.startControlServer(connectionInfo.port, connectionInfo.key)
 			self.connect(connectionInfo=connectionInfo)
 
