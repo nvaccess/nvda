@@ -3381,7 +3381,11 @@ class RemoteSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, sizer):
 		self.config = configuration.getRemoteConfig()
+		import gui.guiHelper
+
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self.enableRemote = sHelper.addItem(wx.CheckBox(self, label="Enable Remote Access"))
+		self.enableRemote.SetValue(self.config["enabled"])
 		self.autoconnect = wx.CheckBox(
 			parent=self,
 			id=wx.ID_ANY,
@@ -3517,6 +3521,18 @@ class RemoteSettingsPanel(SettingsPanel):
 			cs["port"] = int(self.port.GetValue())
 		cs["key"] = self.key.GetValue()
 		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+		enabled = self.enableRemote.GetValue()
+		oldEnabled = self.config["enabled"]
+		self.config["enabled"] = enabled
+		if enabled != oldEnabled:
+			import remoteClient
+
+			if enabled and not remoteClient.remoteRunning():
+				log.debug("Initializing Remote")
+				remoteClient.initialize()
+			elif not enabled and remoteClient.remoteRunning():
+				log.debug("Terminating remote")
+				remoteClient.terminate()
 
 
 class TouchInteractionPanel(SettingsPanel):
