@@ -24,8 +24,9 @@ from utils.displayString import DisplayStringEnum
 from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: F401
 	from addonHandler.addonState import AddonsState  # noqa: F401
+
+	from .addon import AddonHandlerModel, _AddonGUIModel, _AddonStoreModel  # noqa: F401
 
 
 class EnabledStatus(DisplayStringEnum):
@@ -230,9 +231,10 @@ def _canUpdateAddon(
 	:return: True if the add-on can be updated, False if it cannot,
 	None if it is unknown (e.g. cannot parse current version string).
 	"""
-	from .addon import _AddonStoreModel
 	from addonHandler.addon import Addon as AddonHandlerModel
+
 	from ..dataManager import addonDataManager
+	from .addon import _AddonStoreModel
 
 	assert addonDataManager is not None
 

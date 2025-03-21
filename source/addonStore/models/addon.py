@@ -22,8 +22,8 @@ from requests.structures import CaseInsensitiveDict
 
 import addonAPIVersion
 from NVDAState import WritePaths
-from addonHandler.AddonManifest import AddonManifest
-from addonHandler.addonBase import AddonBase as AddonHandlerBaseModel
+from addonHandler import AddonManifest
+from addonHandler import AddonBase as AddonHandlerBaseModel
 
 from .channel import Channel
 from .status import SupportsAddonState

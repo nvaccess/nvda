@@ -18,11 +18,9 @@ import languageHandler
 from logHandler import log
 from utils.tempFile import _createEmptyTempFileForDeletingFile
 
-from addonHandler.addonState import AddonStateCategory
-
 from .addonBase import AddonBase, AddonError
 from .AddonManifest import MANIFEST_FILENAME, AddonManifest, _report_manifest_errors, _translatedManifestPaths
-from .addonState import state
+from .addonState import AddonStateCategory, state
 from .packaging import isModuleName
 
 
