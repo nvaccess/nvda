@@ -239,6 +239,8 @@ class _ComThread(threading.Thread):
 
 	def submit(self, func: Callable, *args, **kwargs) -> _ComThreadTask:
 		"""Queue a function to be executed on this thread."""
+		if not self.is_alive():
+			raise RuntimeError("Thread has been stopped")
 		task = _ComThreadTask(func, *args, **kwargs)
 		self._tasks.put(task)
 		# post a message to wake up the thread
@@ -932,6 +934,7 @@ class SynthDriver(SynthDriver):
 		self._ttsAttrs = None
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
+			self._ttsAudio = None
 		self._ttsEngines = None
 		self._comThread.stop()
 
@@ -1072,6 +1075,7 @@ class SynthDriver(SynthDriver):
 			self._ttsAttrs = None
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
+			self._ttsAudio = None
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
 			self._ttsAudio = SynthDriverAudio(self._comThread)
 		else:
