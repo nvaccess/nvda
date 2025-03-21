@@ -3,25 +3,17 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from os import (
-	PathLike,
-)
-from typing import (
-	TYPE_CHECKING,
-	cast,
-	Optional,
-)
+from os import PathLike
+from typing import TYPE_CHECKING, Optional, cast
 
-from addonHandler.AddonBundle import AddonBundle
 import systemUtils
+from addonHandler import AddonBundle
 from logHandler import log
 
-from .dataManager import (
-	addonDataManager,
-)
+from .dataManager import addonDataManager
 
 if TYPE_CHECKING:
-	from addonHandler.addon import Addon as AddonHandlerModel  # noqa: F401
+	from addonHandler import Addon as AddonHandlerModel  # noqa: F401
 
 
 def _getAddonBundleToInstallIfValid(addonPath: str) -> "AddonBundle":

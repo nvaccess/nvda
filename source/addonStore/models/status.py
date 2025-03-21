@@ -24,7 +24,7 @@ from utils.displayString import DisplayStringEnum
 from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from addonHandler.addonState import AddonsState  # noqa: F401
+	from addonHandler import AddonsState  # noqa: F401
 
 	from .addon import AddonHandlerModel, _AddonGUIModel, _AddonStoreModel  # noqa: F401
 

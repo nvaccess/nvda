@@ -9,14 +9,12 @@ from contextlib import contextmanager
 
 import addonAPIVersion
 import addonHandler
-from addonHandler import AddonBundle
-import addonHandler.addon
 import config
 import core
 import systemUtils
 import ui
 import wx
-from addonHandler.addon import Addon
+from addonHandler import Addon, AddonBundle, getIncompatibleAddons, installAddonBundle
 from logHandler import log
 
 import gui
@@ -225,7 +223,7 @@ def _doneAndDestroy(window: gui.IndeterminateProgressDialog):
 def _performExternalAddonBundleInstall(
 	parentWindow: wx.Window,
 	bundle: AddonBundle,
-	prevAddon: addonHandler.addon.Addon | None,
+	prevAddon: Addon | None,
 ) -> bool:
 	"""
 	Perform the installation of an add-on bundle.
@@ -246,7 +244,7 @@ def _performExternalAddonBundleInstall(
 	# Use context manager to ensure that `done` and `Destroy` are called on the progress dialog afterwards
 	with _doneAndDestroy(progressDialog):
 		addonObj = systemUtils.ExecAndPump[addonHandler.addon.Addon](
-			addonHandler.installAddonBundle,
+			installAddonBundle,
 			bundle,
 		).funcRes
 	if not bundle._installExceptions:
@@ -327,7 +325,7 @@ class IncompatibleAddonsDialog(
 		self._APIBackwardsCompatToVersion = APIBackwardsCompatToVersion
 
 		self.unknownCompatibilityAddonsList = list(
-			addonHandler.getIncompatibleAddons(
+			getIncompatibleAddons(
 				currentAPIVersion=APIVersion,
 				backCompatToAPIVersion=APIBackwardsCompatToVersion,
 			),
