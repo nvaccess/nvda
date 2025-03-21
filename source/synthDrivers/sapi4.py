@@ -661,6 +661,7 @@ class SynthDriverAudio(COMObject):
 		"""Audio thread function that feeds the audio data from queue to WavePlayer."""
 		while not self._audioStopped:
 			with self._audioCond:
+				self._checkBookmarksAndState()
 				if self._deviceState not in (
 					AudioState.STARTED,
 					AudioState.UNCLAIMING,
@@ -682,7 +683,6 @@ class SynthDriverAudio(COMObject):
 			else:
 				# Call feed to let WavePlayer check the callbacks
 				self._player.feed(None, 0, None)
-			self._checkBookmarksAndState()
 
 	def _onChunkFinished(self, size: int):
 		self._playedBytes += size
