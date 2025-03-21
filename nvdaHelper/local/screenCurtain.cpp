@@ -12,8 +12,12 @@ using namespace Gdiplus;
 
 bool captureScreen()
 {
-	int screenWidth = GetSystemMetrics(SM_CXSCREEN),
-		screenHeight = GetSystemMetrics(SM_CYSCREEN);
+	int screenWidth = GetSystemMetrics(SM_CXVIRTUALSCREEN),
+		screenHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN),
+		screenOriginX = GetSystemMetrics(SM_XVIRTUALSCREEN),
+		screenOriginY = GetSystemMetrics(SM_YVIRTUALSCREEN),
+		screenSize = screenWidth * screenHeight;
+	LOG_INFO(L"Screen is " << screenWidth << L"x" << screenHeight << " = " << screenSize << "\n");
 	HWND desktopWnd = GetDesktopWindow();
 	HDC desktopDc = GetDC(desktopWnd),
 		captureDc = CreateCompatibleDC(desktopDc);
@@ -21,9 +25,8 @@ bool captureScreen()
 	BITMAP screenshot;
 	DWORD screenshotSize=0, bytesWritten=0, dibSize=0;
 	SelectObject(captureDc, captureBitmap);
-	bool isBlack = true;
 
-	BitBlt(captureDc, 0, 0, screenWidth, screenHeight, desktopDc, 0, 0, SRCCOPY);
+	BitBlt(captureDc, 0, 0, screenWidth, screenHeight, desktopDc, screenOriginX, screenOriginY, SRCCOPY);
 
 	GetObject(captureBitmap, sizeof(BITMAP), &screenshot);
 	BITMAPFILEHEADER bmpFileHeader;
@@ -66,19 +69,13 @@ bool captureScreen()
 	Bitmap image((BITMAPINFO*)&bmpInfoHeader, buff);
 	UINT hsize;
 	Status s = image.GetHistogramSize(HistogramFormatARGB, &hsize);
-	UINT* ch0 = new UINT[hsize];
-	UINT* ch1 = new UINT[hsize];
-	UINT* ch2 = new UINT[hsize];
+	UINT* histR = new UINT[hsize];
+	UINT* histG = new UINT[hsize];
+	UINT* histB = new UINT[hsize];
 
-	image.GetHistogram(HistogramFormatRGB, hsize, ch0, ch1, ch2, NULL);
-
-// Print the histogram values for the three channels: red, green, blue.
-for(UINT j = 1; j < hsize; ++j)
-{
-// check all channels' values
-}
-
-
+	image.GetHistogram(HistogramFormatRGB, hsize, histR, histG, histB, NULL);
+	bool isBlack;
+	isBlack = (histR[0] == screenSize || histG[0] == screenSize || histB[0] == screenSize);
 
 	HeapFree(GetProcessHeap(), NULL, buff);
 	ReleaseDC(desktopWnd, desktopDc);
