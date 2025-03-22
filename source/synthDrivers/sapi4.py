@@ -625,7 +625,7 @@ class SynthDriverAudio(COMObject):
 			self._freeBytes -= dwSize
 			self._audioCond.notify()
 
-	@_logTrace(format="{args[1]} queued")
+	@_logTrace()
 	def IAudioDest_BookMark(self, dwMarkID: int) -> None:
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
 		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
@@ -680,19 +680,14 @@ class SynthDriverAudio(COMObject):
 			bookmark = self._bookmarkQueue[0]
 			if bookmark.bytePos > self._playedBytes:
 				break
-			self._onBookmark(bookmark.id)
+			if self._notifySink:
+				self._queueNotification(self._notifySink.BookMark, bookmark.id, 0)
 			self._bookmarkQueue.popleft()
 		if self._playedBytes == self._writtenBytes and self._deviceState in (
 			AudioState.UNCLAIMING,
 			AudioState.RECLAIMING,
 		):
 			self._finishUnClaim()
-
-	def _onBookmark(self, dwMarkID: int):
-		if isDebugForSynthDriver():
-			log.debug(f"SAPI4: Bookmark {dwMarkID} reached")
-		if self._notifySink:
-			self._queueNotification(self._notifySink.BookMark, dwMarkID, 0)
 
 	def _finishUnClaim(self):
 		"""Finishes the asynchronous UnClaim call."""
