@@ -4,9 +4,6 @@
 
 ### Important notes
 
-* The support for Microsoft Speech API version 4 synthesizers is planned for removal in NVDA 2026.1.
-Any remaining users of SAPI4 speech synthesizers are encouraged to choose a more modern speech synthesizer. (#17599)
-
 ### New Features
 
 * Add-on Store:
@@ -27,10 +24,11 @@ Currently this is only supported in Foxit Reader & Foxit Editor. (#9288, @NSoiff
 * The ability to adjust the volume of other applications besides NVDA has been added.
 To use this feature, "allow NVDA to control the volume of other applications" must be enabled in the audio settings panel. (#16052, #17634, @mltony, @codeofdusk)
   * Added new unassigned gestures to increase, decrease and mute the volume of all other applications.
+* Remote access functionality, based on the NVDA Remote add-on, has been integrated into NVDA. (#4390, @ctoth, @tspivey, @daiverd, NVDA Remote Contributors and funders)
 * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
 * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
 * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
-* It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151)
+* It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, @christopherpross)
 * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
 * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
 * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
@@ -45,10 +43,17 @@ As a consequence, announcement of first line indent is now supported for LibreOf
 This option is enabled by default, but can possibly result in shorter battery life.
 If you suspect this option is negatively impacting your battery life, you're advised to disable it. (#17649, @LeonarddeR)
 * Rate boost is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices, which supports up to 6X speed. (#17606, @gexgd0419)
+* In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
+* Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
+* NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome and other applications based on Chromium 134 or newer. (#17838)
 
 ### Changes
 
-* eSpeak NG has been updated to 1.52.0. (#17056)
+* Component updates:
+  * Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)
+    * Added new Coptic, compact Cuneiform, and Portuguese Computer Braille tables.
+  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
+  * Updated eSpeak NG to 1.52.0. (#17056)
 * The Report link destination, Character formatting information, and Speak selection dialogs, now include "Close" and "Copy" buttons for user convenience. (#17018, @XLTechie)
 * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
 * Unicode Normalization is now enabled by default for speech output. (#17017, @LeonarddeR).
@@ -66,9 +71,6 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * The ability to opt out of using WASAPI for audio output has been removed. (#16080)
 * The NVDA installer no longer plays a sound when launched. (#14068)
-* Component updates:
-  * Updated LibLouis Braille translator to [3.32.0](https://github.com/liblouis/liblouis/releases/tag/v3.32.0). (#17469, @LeonarddeR)
-  * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
 * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
 Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The "Contributors" file has been removed from the NVDA menu. (#16922)
@@ -78,6 +80,8 @@ Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` 
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
 * The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
+* Microsoft Speech API version 4 voices now use WASAPI for audio output, so that they can work with features such as audio ducking, leading silence trimming, and keeping audio device awake.
+If this does not work with your SAPI 4 voice, you can disable WASAPI for SAPI 4 in Advanced settings. (#17718, #17801, @gexgd0419)
 
 ### Security Fixes
 
@@ -126,6 +130,10 @@ In any document, if the cursor is on the last line, it will be moved to the end 
 * When anchor links point to the same object as the virtual caret is placed, NVDA no longer fails to scroll to the link destination. (#17669, @nvdaes)
 * Voice parameters, such as rate and volume, will no longer be reset to default when using the synth settings ring to change between voices in the SAPI5 and SAPI4 synthesizer. (#17693, #2320, @gexgd0419)
 * The NVDA Highlighter Window icon is no longer fixed in the taskbar after restarting Explorer. (#17696, @hwf1324)
+* Fixed an issue where some SAPI4 voices (e.g. IBM TTS Chinese) cannot be loaded. (#17726, @gexgd0419)
+* In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
+* NVDA can now restore the audio ducking behavior when speaking a new utterance, when another app such as Magnifier changes the behavior system-wide. (#17747, @gexgd0419)
+* Math equations only represented by an image and alt text with no mathml for rich navigation, are now treated like normal images, rather than math with no content, allowing the user to jump to them with `g` and to be able to arrow through the alt text by character. (#16007)
 
 ### Changes for Developers
 
@@ -165,6 +173,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * A new message dialog API has been added to `gui.message`. (#13007)
   * Added classes: `ReturnCode`, `EscapeCode`, `DialogType`, `Button`, `DefaultButton`, `DefaultButtonSet`, `MessageDialog`.
 * In the `brailleTables` module, a `getDefaultTableForCurrentLang` function has been added (#17222, @nvdaes)
+* Added an `updateCheck.UpdateInfo` data class, which encapsulates metadata about NVDA updates. (#17310, @christopherpross)
 * Retrieving the `labeledBy` property now works for:
   * objects in applications implementing the `labelled-by` IAccessible2 relation. (#17436, @michaelweghorn)
   * UIA elements supporting the corresponding `LabeledBy` UIA property. (#17442, @michaelweghorn)
@@ -196,6 +205,8 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
   * `SymphonyDocument.script_toggleTextAttribute` to `SymphonyDocument.script_changeTextFormatting`
 * The `space` keyword argument for `brailleDisplayDrivers.seikantk.InputGesture` now expects an `int` rather than a `bool`. (#17047, @school510587)
 * The `[upgrade]` configuration section including `[upgrade][newLaptopKeyboardLayout]` has been removed. (#17191)
+* `updateCheck.checkForUpdate` now returns an `UpdateInfo` object instead of a dictionary. (#17310, @christopherpross)
+* The constructors of `updateCheck.UpdateResultDialog` and `updateCheck.UpdateDownloader` have been updated to take `UpdateInfo` objects instead of dictionaries of metadata. (#17310, @christopherpross)
 * Due to the retirement of NVDA's winmm support (#17496, #17532, #17678):
   * The following symbols have been removed from `nvwave` without replacements: `CALLBACK_EVENT`, `CALLBACK_FUNCTION`, `CALLBACK_NULL`, `HWAVEOUT`, `LPHWAVEOUT`, `LPWAVEFORMATEX`, `LPWAVEHDR`, `MAXPNAMELEN`, `MMSYSERR_NOERROR`, `usingWasapiWavePlayer`, `WAVEHDR`, `WAVEOUTCAPS`, `waveOutProc`, `WAVE_MAPPER`, `WHDR_DONE`, `WinmmWavePlayer`, and `winmm`.
   * The following symbols have been removed from `nvwave`: `getOutputDeviceNames`, `outputDeviceIDToName`, `outputDeviceNameToID`.
@@ -233,6 +244,7 @@ Instead, a `callback` property has been added, which returns a function that per
   * `config.conf["keyboard"]["speakTypedCharacters"]` and `config.conf["keyboard"]["speakTypedWords"]` now use integer values.
   * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
   * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
+* The `winUser.paint` has been renamed from `painStruct` to `paintStruct`, fixing a bug where passing in a `PAINTSTRUCT` would raise an exception. (#17744)
 
 #### Deprecations
 
@@ -244,7 +256,6 @@ Use `gui.message.MessageDialog` instead. (#17582)
   * `NoConsoleOptionParser`, `stringToBool`, `stringToLang` in `__main__`; use the same symbols in `argsParsing` instead.
   * `__main__.parser`; use `argsParsing.getParser()` instead.
 * `bdDetect.DeviceType` is deprecated in favour of `bdDetect.ProtocolType` and `bdDetect.CommunicationType` to take into account the fact that both HID and Serial communication can take place over USB and Bluetooth. (#17537 , @LeonarddeR)
-* SAPI4, `synthDrivers.sapi4`, is deprecated and planned for removal in 2026.1. (#17599)
 
 ## 2024.4.2
 

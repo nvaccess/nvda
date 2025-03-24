@@ -27,6 +27,7 @@ Major highlights include:
 * Reporting of textual formatting where available such as font name and size, style and spelling errors
 * Automatic announcement of text under the mouse and optional audible indication of the mouse position
 * Support for many refreshable braille displays, including the ability to detect many of them automatically as well as braille input on braille displays with a braille keyboard
+* Remote Access: Connect to and control another computer running NVDA for remote assistance or collaboration.
 * Ability to run entirely from a USB flash drive or other portable media without the need for installation
 * Easy to use talking installer
 * Translated into 54 languages
@@ -176,7 +177,7 @@ If desired, press `tab` and `spaceBar` to change any of these options, or leave 
 1. A progress bar fills up as NVDA installs.
 During this process NVDA sounds an increasingly higher pitched beep.
 This process is often fast and may not be noticed.
-1. A dialog box appears confirm that the install of NVDA has been successful.
+1. A dialog box appears to confirm that the install of NVDA has been successful.
 The message advises to "Press OK to start the installed copy".
 Press `enter` to start the installed copy.
 1. The "Welcome to NVDA" dialog appears, and NVDA reads a welcome message.
@@ -384,7 +385,7 @@ From this submenu you can access the User Guide, a quick reference of commands, 
 These first three options open in the default web browser.
 There is also more comprehensive Training Material available in the [NV Access Shop](https://www.nvaccess.org/shop).
 
-We recommend starting with the "Basic Training for NVDA module".
+We recommend starting with the "Basic Training for NVDA" module.
 This module covers concepts from getting started up to browsing the web and using object navigation.
 It is available in:
 
@@ -1130,7 +1131,7 @@ A key command is provided to return to the original page containing the embedded
 
 By default when selecting text with the `shift+arrow` keys in Browse Mode, a selection is only made within NVDA's Browse Mode representation of the document, and not within the application itself.
 This means that the selection is not visible on screen, and copying text with `control+c` will only copy NVDA's plain text representation of the content. i.e. formatting of tables, or whether something is a link will not be copied.
-However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents (so far only Mozilla Firefox) which causes the document's native selection to follow NVDA's Browse Mode selection.
+However, NVDA has a Native Selection Mode which can be turned on in particular Browse Mode documents which can support it (Mozilla Firefox, and any browser based on Chromium 134 or newer) which causes the document's native selection to follow NVDA's Browse Mode selection.
 
 <!-- KC:beginInclude -->
 
@@ -1430,6 +1431,7 @@ However, you may wish to use object navigation directly to, for example, recogni
 Once recognition is complete, the result will be presented in a document similar to browse mode, allowing you to read the information with cursor keys, etc.
 Pressing enter or space will activate (normally click) the text at the cursor if possible.
 Pressing escape dismisses the recognition result.
+Pressing `NVDA+f5` refreshes the recognition result.
 
 ### Windows OCR {#Win10Ocr}
 
@@ -1846,17 +1848,12 @@ If you wish to change the update mirror, press the "Change..." button to open th
 Please note that when using an update mirror, the operator of the mirror has access to all [information sent with update checks](#GeneralSettingsCheckForUpdates).
 Contact the operator of the update mirror for details of their data handling policies to ensure you are comfortable with the way your information will be handled before setting an update mirror.
 
-##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurnOff}
+##### Prevent display from turning off during say all or reading with braille {#PreventDisplayTurningOff}
 
-This option ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
+This check box, when enabled, ensures that the display stays on when reading with say all or with braille (e.g. when pressing scroll buttons).
 This avoids the situation where the screen unexpectedly locks during a say all.
 This option is enabled by default.
 Consider disabling this option if you are suffering from a shorter battery life.
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
 
 #### Speech Settings {#SpeechSettings}
 
@@ -3373,6 +3370,18 @@ When enabled, NVDA will remove silence from the start of speech audio, which may
 This option is enabled by default, and should only affect the silence at the beginning of speech.
 If you find that some necessary silence periods are also missing (e.g. pause between two sentences) when using a speech synthesizer add-on, you may turn this feature off entirely to resolve the issue.
 
+##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
+
+This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
+This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
+However, some SAPI 4 voices might not work with the current WASAPI implementation.
+If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
 This option allows you to configure the number of milliseconds NVDA will wait for the caret (insertion point) to move in editable text controls.
@@ -3634,6 +3643,63 @@ In addition for an installed version of NVDA, on the start menu you can go to pr
 Settings for NVDA when running during sign-in or on UAC screens are stored in the systemConfig directory in NVDA's installation directory.
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings](#NVDASettings) dialog.
+
+## Remote Access {#remoteAccess}
+
+With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
+
+### Getting Started {#RemoteAccessGettingStarted}
+
+Before you begin, ensure NVDA is installed and running on both computers. The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
+
+### Setting Up a Remote Session {#RemoteAccessSetup}
+
+You’ll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
+
+#### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
+
+1. Open the NVDA menu and select Tools, then Remote, then Connect.
+1. Choose Allow this computer to be controlled.
+1. Enter the connection details provided by the person controlling your computer:
+   * Relay Server: If using a server, enter the hostname (e.g., `nvdaremote.com`).
+   * Direct Connection: If connecting directly, share your external IP address and port (default: 6837). Ensure your network is set up for direct connections.
+1. Press OK. Share the connection key with the other person.
+
+#### Steps for the Controlling Computer {#RemoteAccessSetupControlling}
+
+1. Open the NVDA menu and select Tools, then Remote, then Connect.
+1. Choose Control another computer.
+1. Enter the connection details and key provided by the controlled computer.
+1. Press OK to connect.
+
+Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
+
+### Remote Connection Options {#RemoteAccessConnectionOptions}
+
+You can choose between two connection types depending on your setup:
+
+* Relay Server (easier): Uses a public or private server to mediate the connection. Only the server hostname and key are needed.
+* Direct Connection (advanced): Connects directly without a server. Requires network setup, such as port forwarding.
+
+### Using Remote Access {#RemoteAccessUsage}
+
+Once the session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
+
+* Press `NVDA+f11` to toggle between controlling and returning to your own computer.
+* Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then Remote, then Push Clipboard.
+* Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then Remote, then Mute Remote.
+
+### Remote Access Key Commands Summary {#RemoteAccessGestures}
+
+<!-- KC:beginInclude -->
+| Action                   | Key Command          | Description                               |
+|--------------------------|----------------------|-------------------------------------------|
+| Toggle Control           | `NVDA+f11`               | Switch between controlling and local.     |
+| Push Clipboard           | `NVDA+ctrl+shift+c`        | Send clipboard text to the other machine. |
+| Disconnect               | `NVDA+alt+pageDown`| End the remote session.                   |
+<!-- KC:endInclude -->
+
+You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
 
 ## Add-ons and the Add-on Store {#AddonsManager}
 
@@ -3942,7 +4008,6 @@ There are also many variants which can be chosen to alter the sound of the voice
 SAPI 4 is an older Microsoft standard for software speech synthesizers.
 NVDA still supports this for users who already have SAPI 4 synthesizers installed.
 However, Microsoft no longer support this and needed components are no longer available from Microsoft.
-Support for SAPI4 will be removed in NVDA 2026.1.
 
 When using this synthesizer with NVDA, the available voices (accessed from the [Speech category](#SpeechSettings) of the [NVDA Settings](#NVDASettings) dialog or by the [Synth Settings Ring](#SynthSettingsRing)) will contain all the voices from all the installed SAPI 4 engines found on your system.
 

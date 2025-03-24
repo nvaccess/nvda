@@ -609,6 +609,19 @@ VBufStorage_fieldNode_t* GeckoVBufBackend_t::fillVBuf(
 		}
 	}
 
+	// Force equation role back to graphic role if the underlying tag is img.
+	// #16007: Many publishers were setting role=math on images with alt text.
+	// We want to just treat these as normal images.
+	// We do this very early in the rendering so that all our graphic rules apply.
+	if(role == ROLE_SYSTEM_EQUATION) {
+		if(auto it = IA2AttribsMap.find(L"tag");
+			it != IA2AttribsMap.end()
+			&&it->second==L"img"
+		) {
+			role = ROLE_SYSTEM_GRAPHIC;
+		}
+	}
+
 	if (roleString) {
 		roleAttr = roleString;
 	} else {
