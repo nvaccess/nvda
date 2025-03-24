@@ -43,12 +43,13 @@ class RemoteMenu(wx.Menu):
 			# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 			_("Disconnect from another computer running NVDA Remote Access"),
 		)
-		self.disconnectItem.Enable(False)
+		# self.disconnectItem.Enable(False)
 		sysTrayIcon.Bind(
 			wx.EVT_MENU,
 			self.onDisconnectItem,
 			self.disconnectItem,
 		)
+		self.Remove(self.disconnectItem)
 		self.muteItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
@@ -155,8 +156,12 @@ class RemoteMenu(wx.Menu):
 		self.client.sendSAS()
 
 	def handleConnected(self, mode: ConnectionMode, connected: bool) -> None:
-		self.connectItem.Enable(not connected)
-		self.disconnectItem.Enable(connected)
+		if connected:
+			self._hideItem(self.connectItem)
+			self._showItem(self.disconnectItem)
+		else:
+			self._hideItem(self.disconnectItem)
+			self._showItem(self.connectItem)
 		self.muteItem.Enable(connected)
 		if not connected:
 			self.muteItem.Check(False)
@@ -165,5 +170,30 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem.Enable(connected)
 
 	def handleConnecting(self, mode: ConnectionMode) -> None:
-		self.disconnectItem.Enable(True)
-		self.connectItem.Enable(False)
+		self._hideItem(self.connectItem)
+		self._showItem(self.disconnectItem)
+
+	def _hideItem(self, menuItem: wx.MenuItem):
+		"""Hides a menu item from this menu, if it is present in the menu.
+
+		.. note::
+			Technically removes the item from the menu.
+			Calling :meth:`_showItem` with the menu
+			may result in the item being restored in a different position to before it was hidden.
+
+		:param menuItem: Menu item to hide.
+		"""
+		if menuItem.Menu is self:
+			self.Remove(menuItem)
+
+	def _showItem(self, menuItem: wx.MenuItem):
+		"""Optionally shows a menu item in this menu.
+
+		.. note::
+			The menu item will always be prepended to the start of the menu,
+			not restored to its position before it was hidden with :meth:`_hideItem`.
+
+		:param menuItem: Menu item to show.
+		"""
+		if menuItem.Menu is None:
+			self.Prepend(menuItem)
