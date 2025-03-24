@@ -548,6 +548,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import brailleViewer
 	import globalPluginHandler
 	import watchdog
+	import remoteClient
 
 	try:
 		import updateCheck
@@ -563,6 +564,8 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	_terminate(globalPluginHandler)
 	# the brailleViewer should be destroyed safely before closing the window
 	brailleViewer.destroyBrailleViewer()
+	# Terminating remote causes it to clean up its menus, so do it here while they still exist
+	_terminate(remoteClient)
 
 
 def _initializeObjectCaches():
@@ -900,7 +903,6 @@ def main():
 
 	import remoteClient
 
-	# if config.conf["remote"]["enabled"]:
 	remoteClient.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
@@ -1055,8 +1057,6 @@ def main():
 			" This likely indicates NVDA is exiting due to WM_QUIT.",
 		)
 		queueHandler.pumpAll()
-	# if remoteClient.remoteRunning():
-	_terminate(remoteClient)
 	_terminate(gui)
 	config.saveOnExit()
 
