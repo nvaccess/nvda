@@ -4974,6 +4974,18 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.doConnect()
 
 	@script(
+		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
+		"Toggle Remote connection",
+		category=SCRCAT_REMOTE,
+		gesture="kb:NVDA+alt+t",
+	)
+	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
+		if remoteClient._remoteClient.isConnected():
+			self.script_disconnectFromRemote(gesture)
+		else:
+			self.script_connectToRemote(gesture)
+
+	@script(
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
 		description=_("Toggles the control between guest and host machine"),
 		category=SCRCAT_REMOTE,
