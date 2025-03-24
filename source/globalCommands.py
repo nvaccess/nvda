@@ -4945,7 +4945,6 @@ class GlobalCommands(ScriptableObject):
 		ui.message(_("Copied link"))
 
 	@script(
-		gesture="kb:alt+NVDA+pageDown",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that disconnects a remote session.
 		description=_("Disconnect a remote session"),
@@ -4959,7 +4958,6 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.disconnect()
 
 	@script(
-		gesture="kb:alt+NVDA+pageUp",
 		# Translators: Documentation string for the script that invokes the remote session.
 		description=_("""Connect to a remote computer"""),
 		category=SCRCAT_REMOTE,
@@ -4977,7 +4975,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
 		"Toggle Remote connection",
 		category=SCRCAT_REMOTE,
-		gesture="kb:NVDA+alt+t",
+		gesture="kb:NVDA+alt+r",
 	)
 	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
 		if remoteClient._remoteClient.isConnected():
