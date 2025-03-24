@@ -3696,7 +3696,7 @@ Once the session is active, you can switch between controlling the remote comput
 |--------------------------|----------------------|-------------------------------------------|
 | Toggle Control           | `NVDA+f11`               | Switch between controlling and local.     |
 | Push Clipboard           | `NVDA+ctrl+shift+c`        | Send clipboard text to the other machine. |
-| Disconnect               | `NVDA+alt+pageDown`| End the remote session.                   |
+| Connect or disconnect               | `NVDA+alt+r`| If a remote session is in progress, disconnect from it. Otherwise, start a new Remote session. |
 <!-- KC:endInclude -->
 
 You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
