@@ -54,15 +54,15 @@ CUES: Dict[str, Cue] = {
 
 def _playCue(cueName: str) -> None:
 	"""Helper function to play a cue by name"""
-	if not shouldPlaySounds():
+	if shouldPlaySounds():
+		# Play wave file
+		if wave := CUES[cueName].get("wave"):
+			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
+	else:
 		# Play beep sequence
 		if beeps := CUES[cueName].get("beeps"):
 			filteredBeeps = [(freq, dur) for freq, dur in beeps if freq is not None]
 			beepSequenceAsync(*filteredBeeps)
-
-	# Play wave file
-	if wave := CUES[cueName].get("wave"):
-		nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
 
 	# Show message if specified
 	if message := CUES[cueName].get("message"):
