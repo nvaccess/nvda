@@ -5,7 +5,7 @@
 #  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen.
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -49,6 +49,7 @@ import gui
 import gui.contextHelp
 import globalVars
 from logHandler import log
+from remoteClient import configuration
 import audio
 import audioDucking
 import queueHandler
@@ -65,7 +66,6 @@ from typing import (
 	List,
 	Optional,
 	Set,
-	cast,
 )
 import core
 import keyboardHandler
@@ -1004,6 +1004,7 @@ class GeneralSettingsPanel(SettingsPanel):
 			configPath=("update", "serverURL"),
 			helpId="SetURLDialog",
 			urlTransformer=lambda url: f"{url}?versionType=stable",
+			responseValidator=_isResponseUpdateMetadata,
 		)
 		ret = changeMirror.ShowModal()
 		if ret == wx.ID_OK:
@@ -3366,6 +3367,158 @@ class AddonStorePanel(SettingsPanel):
 		config.conf["addonStore"]["defaultUpdateChannel"] = self.defaultUpdateChannelComboBox.GetSelection()
 
 
+class RemoteSettingsPanel(SettingsPanel):
+	# Translators: This is the label for the remote settings category in NVDA Settings screen.
+	title = _("Remote")
+	autoconnect: wx.CheckBox
+	clientOrServer: wx.RadioBox
+	connectionType: wx.RadioBox
+	host: wx.TextCtrl
+	port: wx.SpinCtrl
+	key: wx.TextCtrl
+	playSounds: wx.CheckBox
+	deleteFingerprints: wx.Button
+
+	def makeSettings(self, sizer):
+		self.config = configuration.getRemoteConfig()
+		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
+		self.autoconnect = wx.CheckBox(
+			parent=self,
+			id=wx.ID_ANY,
+			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
+			label=_("Automatically connect to control server on startup"),
+		)
+		self.autoconnect.Bind(wx.EVT_CHECKBOX, self.onAutoconnect)
+		sHelper.addItem(self.autoconnect)
+		self.clientOrServer = wx.RadioBox(
+			self,
+			wx.ID_ANY,
+			choices=(
+				# Translators: Use a remote control server
+				_("Use Remote Control Server"),
+				# Translators: Host a control server
+				_("Host Control Server"),
+			),
+			style=wx.RA_VERTICAL,
+		)
+		self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
+		self.clientOrServer.SetSelection(0)
+		self.clientOrServer.Enable(False)
+		sHelper.addItem(self.clientOrServer)
+		choices = [
+			# Translators: Radio button to allow this machine to be controlled
+			_("Allow this machine to be controlled"),
+			# Translators: Radio button to allow this machine to control another machine
+			_("Control another machine"),
+		]
+		self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
+		self.connectionType.SetSelection(0)
+		self.connectionType.Enable(False)
+		sHelper.addItem(self.connectionType)
+		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
+		self.host = wx.TextCtrl(self, wx.ID_ANY)
+		self.host.Enable(False)
+		sHelper.addItem(self.host)
+		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
+		self.port = wx.SpinCtrl(self, wx.ID_ANY, min=1, max=65535)
+		self.port.Enable(False)
+		sHelper.addItem(self.port)
+		sHelper.addItem(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
+		self.key = wx.TextCtrl(self, wx.ID_ANY)
+		self.key.Enable(False)
+		sHelper.addItem(self.key)
+		# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
+		self.playSounds = wx.CheckBox(self, wx.ID_ANY, label=_("Play sounds instead of beeps"))
+		sHelper.addItem(self.playSounds)
+		# Translators: A button in Remote settings to delete all fingerprints of unauthorized certificates.
+		self.deleteFingerprints = wx.Button(self, wx.ID_ANY, label=_("Delete all trusted fingerprints"))
+		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
+		sHelper.addItem(self.deleteFingerprints)
+		self.setFromConfig()
+
+	def onAutoconnect(self, evt: wx.CommandEvent) -> None:
+		self.setControls()
+
+	def setControls(self) -> None:
+		state = bool(self.autoconnect.GetValue())
+		self.clientOrServer.Enable(state)
+		self.connectionType.Enable(state)
+		self.key.Enable(state)
+		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and state)
+		self.port.Enable(bool(self.clientOrServer.GetSelection()) and state)
+
+	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		evt.Skip()
+		self.setControls()
+
+	def setFromConfig(self) -> None:
+		controlServer = self.config["controlserver"]
+		selfHosted = controlServer["self_hosted"]
+		connectionType = controlServer["connection_type"]
+		self.autoconnect.SetValue(controlServer["autoconnect"])
+		self.clientOrServer.SetSelection(int(selfHosted))
+		self.connectionType.SetSelection(connectionType)
+		self.host.SetValue(controlServer["host"])
+		self.port.SetValue(str(controlServer["port"]))
+		self.key.SetValue(controlServer["key"])
+		self.setControls()
+		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+
+	def onDeleteFingerprints(self, evt: wx.CommandEvent) -> None:
+		if (
+			gui.messageBox(
+				_(
+					# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
+					"When connecting to an unauthorized server, you will again be prompted to accepts its certificate.",
+				),
+				# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
+				_("Are you sure you want to delete all stored trusted fingerprints?"),
+				wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
+			)
+			== wx.YES
+		):
+			self.config["trusted_certs"].clear()
+		evt.Skip()
+
+	def isValid(self) -> bool:
+		if self.autoconnect.GetValue():
+			if not self.clientOrServer.GetSelection() and (
+				not self.host.GetValue() or not self.key.GetValue()
+			):
+				gui.messageBox(
+					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
+					_("Both host and key must be set in the Remote section."),
+					# Translators: This is the title of the dialog presented when the user tries to save the settings with the host or key field empty.
+					_("Remote Error"),
+					wx.OK | wx.ICON_ERROR,
+				)
+				return False
+			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
+				gui.messageBox(
+					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
+					_("Both port and key must be set in the Remote section."),
+					# Translators: This is the title of the dialog presented when the user tries to save the settings with the port or key field empty.
+					_("Remote Error"),
+					wx.OK | wx.ICON_ERROR,
+				)
+				return False
+		return True
+
+	def onSave(self):
+		cs = self.config["controlserver"]
+		cs["autoconnect"] = self.autoconnect.GetValue()
+		selfHosted = bool(self.clientOrServer.GetSelection())
+		connectionType = self.connectionType.GetSelection()
+		cs["self_hosted"] = selfHosted
+		cs["connection_type"] = connectionType
+		if not selfHosted:
+			cs["host"] = self.host.GetValue()
+		else:
+			cs["port"] = int(self.port.GetValue())
+		cs["key"] = self.key.GetValue()
+		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+
+
 class TouchInteractionPanel(SettingsPanel):
 	# Translators: This is the label for the touch interaction settings panel.
 	title = _("Touch Interaction")
@@ -3620,14 +3773,11 @@ class AdvancedPanelControls(
 
 		# Translators: This is the label for a COMBOBOX in the Advanced settings panel.
 		label = _("Use en&hanced event processing (requires restart)")
-		self.enhancedEventProcessingComboBox = cast(
-			nvdaControls.FeatureFlagCombo,
-			UIAGroup.addLabeledControl(
-				labelText=label,
-				wxCtrlClass=nvdaControls.FeatureFlagCombo,
-				keyPath=["UIA", "enhancedEventProcessing"],
-				conf=config.conf,
-			),
+		self.enhancedEventProcessingComboBox = UIAGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["UIA", "enhancedEventProcessing"],
+			conf=config.conf,
 		)
 		self.bindHelpEvent("UIAEnhancedEventProcessing", self.enhancedEventProcessingComboBox)
 
@@ -3792,6 +3942,17 @@ class AdvancedPanelControls(
 		self.bindHelpEvent("TrimLeadingSilenceSpeech", self.trimLeadingSilenceCheckBox)
 		self.trimLeadingSilenceCheckBox.SetValue(config.conf["speech"]["trimLeadingSilence"])
 		self.trimLeadingSilenceCheckBox.defaultValue = self._getDefaultValue(["speech", "trimLeadingSilence"])
+
+		# Translators: This is the label for a combo-box control in the
+		#  Advanced settings panel.
+		label = _("Use WASAPI for SAPI 4 audio output:")
+		self.useWASAPIForSAPI4Combo = speechGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "useWASAPIForSAPI4"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("UseWASAPIForSAPI4", self.useWASAPIForSAPI4Combo)
 
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
@@ -3978,6 +4139,7 @@ class AdvancedPanelControls(
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
 			== self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.trimLeadingSilenceCheckBox.IsChecked() == self.trimLeadingSilenceCheckBox.defaultValue
+			and self.useWASAPIForSAPI4Combo.isValueConfigSpecDefault()
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
@@ -4007,6 +4169,7 @@ class AdvancedPanelControls(
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.trimLeadingSilenceCheckBox.SetValue(self.trimLeadingSilenceCheckBox.defaultValue)
+		self.useWASAPIForSAPI4Combo.resetToConfigSpecDefault()
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
@@ -4018,12 +4181,11 @@ class AdvancedPanelControls(
 	def onSave(self):
 		log.debug("Saving advanced config")
 
-		if config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked():
-			# Reload the synthesizer if "trimLeadingSilence" changes
-			config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
-			currentSynth = getSynth()
-			if not setSynth(currentSynth.name):
-				_synthWarningDialog(currentSynth.name)
+		shouldResetSynth = (
+			config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked()
+			or config.conf["speech"]["useWASAPIForSAPI4"]
+			!= self.useWASAPIForSAPI4Combo._getControlCurrentFlag()
+		)
 
 		config.conf["development"]["enableScratchpadDir"] = self.scratchpadCheckBox.IsChecked()
 		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
@@ -4037,6 +4199,8 @@ class AdvancedPanelControls(
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = (
 			self.cancelExpiredFocusSpeechCombo.GetSelection()
 		)
+		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
+		self.useWASAPIForSAPI4Combo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -4058,9 +4222,14 @@ class AdvancedPanelControls(
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 		config.conf["virtualBuffers"]["textParagraphRegex"] = self.textParagraphRegexEdit.GetValue()
 
+		if shouldResetSynth:
+			currentSynth = getSynth()
+			if not setSynth(currentSynth.name):
+				_synthWarningDialog(currentSynth.name)
+
 
 class AdvancedPanel(SettingsPanel):
-	enableControlsCheckBox = None  # type: wx.CheckBox
+	enableControlsCheckBox: wx.CheckBox | None = None
 	# Translators: This is the label for the Advanced settings panel.
 	title = _("Advanced")
 	helpId = "AdvancedSettings"
@@ -4086,7 +4255,7 @@ class AdvancedPanel(SettingsPanel):
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=settingsSizer)
 		warningSizer = wx.StaticBoxSizer(wx.VERTICAL, self)
 		warningGroup = guiHelper.BoxSizerHelper(self, sizer=warningSizer)
-		warningBox = warningGroup.sizer.GetStaticBox()  # type: wx.StaticBox
+		warningBox: wx.StaticBox = warningGroup.sizer.GetStaticBox()
 		sHelper.addItem(warningGroup)
 
 		warningText = wx.StaticText(warningBox, label=self.warningHeader)
@@ -5250,6 +5419,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentNavigationPanel,
 		AddonStorePanel,
 	]
+	if not globalVars.appArgs.secure:
+		categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
@@ -5632,3 +5803,11 @@ def _isResponseAddonStoreCacheHash(response: requests.Response) -> bool:
 	# While the NV Access Add-on Store cache hash is a git commit hash as a string, other implementations may use a different format.
 	# Therefore, we only check if the data is a non-empty string.
 	return isinstance(data, str) and bool(data)
+
+
+def _isResponseUpdateMetadata(response: requests.Response) -> bool:
+	try:
+		updateCheck.UpdateInfo.parseUpdateCheckResponse(response.text)
+	except Exception:
+		return False
+	return True

@@ -9,7 +9,6 @@ from typing import (
 	Callable,
 	Generator,
 	Union,
-	cast,
 )
 from collections.abc import Generator  # noqa: F811
 import os
@@ -19,6 +18,7 @@ import winsound
 import time
 import weakref
 import re
+from comtypes import COMError
 
 import wx
 import core
@@ -1341,7 +1341,7 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterEdit = labeledCtrl.control
 		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
@@ -2685,8 +2685,11 @@ class BrowseModeDocumentTreeInterceptor(
 		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
 		if nativeAppSelectionModeOn:
 			try:
+				# We need to clear the app selection before updating it when turning it on,
+				# as the app must be able to support clearing / setting empty selections.
+				self.clearAppSelection()
 				self.updateAppSelection()
-			except NotImplementedError:
+			except (NotImplementedError, COMError):
 				log.debugWarning("updateAppSelection failed", exc_info=True)
 				# Translators: the message when native selection mode is not available in this browse mode document.
 				ui.message(_("Native selection mode unsupported in this document"))

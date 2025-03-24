@@ -30,6 +30,14 @@ from ..viewModels.addonList import AddonListItemVM
 from ..viewModels.store import AddonStoreVM
 
 
+__all__ = [
+	"AddonActionT",
+	"_ActionsContextMenuP",
+	"_MonoActionsContextMenu",
+	"_BatchActionsContextMenu",
+	"AddonListValidator",
+]
+
 AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM, AddonUpdateChannelActionVM)
 
 

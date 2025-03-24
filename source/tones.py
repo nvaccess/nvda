@@ -1,16 +1,22 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2024 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
+# Copyright (C) 2007-2025 NV Access Limited, Aleksey Sadovoy, Leonard de Ruijter, Babbage B.V.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 """Utilities to generate and play tones"""
 
 import atexit
-import nvwave
-import config
-from logHandler import log
+import collections
+import threading
+import time
 from ctypes import create_string_buffer
+from typing import TypeAlias
+import collections.abc
+
+import config
 import extensionPoints
+import nvwave
+from logHandler import log
 
 SAMPLE_RATE = 44100
 
@@ -87,3 +93,31 @@ def beep(
 	generateBeep(buf, hz, length, left, right)
 	player.stop()
 	player.feed(buf.raw)
+
+
+BeepSequenceElement: TypeAlias = int | tuple[int, int]  # Either delay_ms or (frequency_hz, duration_ms)
+BeepSequence: TypeAlias = collections.abc.Iterable[BeepSequenceElement]
+
+
+def beepSequence(*sequence: BeepSequenceElement) -> None:
+	"""Play a simple synchronous monophonic beep sequence
+	A beep sequence is an iterable containing one of two kinds of elements.
+	An element consisting of a tuple of two items is interpreted as a frequency and duration. Note, this function plays beeps synchronously, unlike tones.beep
+	A single integer is assumed to be a delay in ms.
+	"""
+	for element in sequence:
+		if not isinstance(element, collections.abc.Sequence):
+			time.sleep(float(element) / 1000)
+		else:
+			freq, duration = element
+			time.sleep(float(duration) / 1000)
+			beep(freq, duration)
+
+
+def beepSequenceAsync(*sequence: BeepSequenceElement) -> threading.Thread:
+	"""Play an asynchronous beep sequence.
+	This is the same as `beepSequence`, except it runs in a thread."""
+	thread = threading.Thread(target=beepSequence, args=sequence)
+	thread.daemon = True
+	thread.start()
+	return thread

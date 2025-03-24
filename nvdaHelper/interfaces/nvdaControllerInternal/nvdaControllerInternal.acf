@@ -1,7 +1,7 @@
 /*
 This file is a part of the NVDA project.
 URL: http://www.nvda-project.org/
-Copyright 2006-2010 NVDA contributers.
+Copyright 2006-2025 NVDA contributers.
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License version 2.0, as published by
     the Free Software Foundation.
@@ -23,6 +23,7 @@ interface NvdaControllerInternal {
 	[fault_status,comm_status] logMessage();
 	[fault_status,comm_status] vbufChangeNotify();
 	[fault_status,comm_status] installAddonPackageFromPath();
+	[fault_status,comm_status] handleRemoteURL();
 	[fault_status,comm_status] drawFocusRectNotify();
 	[fault_status,comm_status] reportLiveRegion();
 	[fault_status,comm_status] openConfigDirectory();

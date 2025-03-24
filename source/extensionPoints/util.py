@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2017-2023 NV Access Limited, Leonard de Ruijter
+# Copyright (C) 2017-2025 NV Access Limited, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -21,6 +21,10 @@ from typing import (
 	TypeVar,
 	Union,
 )
+
+import NVDAState
+
+from logHandler import log
 
 HandlerT = TypeVar("HandlerT", bound=Callable)
 HandlerKeyT = Union[int, Tuple[int, int]]
@@ -71,7 +75,7 @@ class BoundMethodWeakref(Generic[HandlerT]):
 		return func.__get__(inst)
 
 
-def _getHandlerKey(handler: HandlerT) -> HandlerKeyT:
+def _getHandlerKey(handler: Callable) -> HandlerKeyT:
 	"""Get a key which identifies a handler function.
 	This is needed because we store weak references, not the actual functions.
 	We store the key on the weak reference.
@@ -96,7 +100,12 @@ class HandlerRegistrar(Generic[HandlerT]):
 	you probably want the L{Action} or L{Filter} subclasses instead.
 	"""
 
-	def __init__(self):
+	def __init__(self, *, _deprecationMessage: str | None = None):
+		"""Initialise the handler registrar.
+
+		:param _deprecationMessage: Optional deprecation message to be logged when :method:`register` is called on the handler.
+		"""
+		self._deprecationMessage = _deprecationMessage
 		#: Registered handler functions.
 		#: This is an OrderedDict where the keys are unique identifiers (as returned by _getHandlerKey)
 		#: and the values are weak references.
@@ -115,6 +124,11 @@ class HandlerRegistrar(Generic[HandlerT]):
 			sig = inspect.signature(handler)
 			if sig.parameters and list(sig.parameters)[0] == "self":
 				raise TypeError("Registering unbound instance methods not supported.")
+		if self._deprecationMessage:
+			if NVDAState._allowDeprecatedAPI():
+				log.warning(self._deprecationMessage, stack_info=True)
+			else:
+				raise RuntimeError(self._deprecationMessage)
 		if inspect.ismethod(handler):
 			weak = BoundMethodWeakref(handler, self.unregister)
 		else:

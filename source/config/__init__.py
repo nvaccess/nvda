@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -526,6 +526,7 @@ class ConfigManager(object):
 		"update",
 		"development",
 		"addonStore",
+		"remote",
 	}
 	"""
 	Sections that only apply to the base configuration;
@@ -749,6 +750,9 @@ class ConfigManager(object):
 			self._dirtyProfiles.clear()
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
+			raise e
+		except Exception as e:
+			log.warning("Error saving configuration", exc_info=True)
 			raise e
 		post_configSave.notify()
 
@@ -1067,18 +1071,17 @@ class ConfigManager(object):
 
 
 class ConfigValidationData(object):
-	validationFuncName = None  # type: str
+	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
 		super(ConfigValidationData, self).__init__()
 
 	# args passed to the convert function
-	args = []  # type: List[Any]
+	args: list[Any] = []
 
 	# kwargs passed to the convert function.
-	kwargs = {}  # type: Dict[str, Any]
-
+	kwargs: dict[str, Any] = {}
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 

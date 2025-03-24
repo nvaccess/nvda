@@ -330,7 +330,7 @@ class EditorChunk(Ia2Web):
 
 class Math(Ia2Web):
 	def _get_mathMl(self):
-		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
@@ -372,6 +372,18 @@ class Math(Ia2Web):
 				exc_info=True,
 			)
 			raise LookupError
+
+	def _get_role(self):
+		if self.IA2Attributes.get("tag") == "img":
+			try:
+				mathMl = self.mathMl
+			except LookupError:
+				mathMl = None
+			if mathMl is None:
+				# #16007: Many publishers were setting role=math on plain images with alt text.
+				# We want to just treat these as normal images.
+				return controlTypes.Role.GRAPHIC
+		return super().role
 
 
 class Switch(Ia2Web):
