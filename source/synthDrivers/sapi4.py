@@ -904,8 +904,8 @@ class SynthDriver(SynthDriver):
 		self._bufSink._allowDelete = True
 		self._sink._allowDelete = True
 		# Release all COM objects before stopping the COM thread.
-		self._ttsCentral = None
 		self._ttsAttrs = None
+		self._ttsCentral = None
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
 			self._ttsAudio = None
@@ -1045,8 +1045,8 @@ class SynthDriver(SynthDriver):
 			# will be created by the client, and will stop working if more are created.
 			# Here we make sure that the previous _ttsCentral is released
 			# before the next _ttsCentral is created.
-			self._ttsCentral = None
 			self._ttsAttrs = None
+			self._ttsCentral = None
 		if self._ttsAudio:
 			self._ttsAudio.terminate()
 			self._ttsAudio = None
