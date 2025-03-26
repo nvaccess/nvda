@@ -58,11 +58,10 @@ def _playCue(cueName: str) -> None:
 		# Play wave file
 		if wave := CUES[cueName].get("wave"):
 			nvwave.playWaveFile(os.path.join(globalVars.appDir, "waves", wave + ".wav"))
-	else:
+	elif beeps := CUES[cueName].get("beeps"):
 		# Play beep sequence
-		if beeps := CUES[cueName].get("beeps"):
-			filteredBeeps = [(freq, dur) for freq, dur in beeps if freq is not None]
-			beepSequenceAsync(*filteredBeeps)
+		filteredBeeps = [(freq, dur) for freq, dur in beeps if freq is not None]
+		beepSequenceAsync(*filteredBeeps)
 
 	# Show message if specified
 	if message := CUES[cueName].get("message"):
