@@ -408,7 +408,7 @@ def _registerEnglishGesture(script: types.FunctionType, gestures: list[str], des
 		# In future, check for conflicts when registering an add-on gesture.
 		return
 	scriptLocation = f"{script.__module__}.{className}"
-	scriptName = script.__name__.replace("script_", "")
+	scriptName = script.__name__.removeprefix("script_")
 	if gestures:
 		scriptLogName = f"{scriptLocation}.{script.__name__}"
 		logMsg = f"{scriptLogName}: Setting gesture for via @script is now deprecated. Add the gesture to /en/gestures.ini instead."
