@@ -3381,10 +3381,10 @@ class RemoteSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, sizer):
 		self.config = configuration.getRemoteConfig()
-		import gui.guiHelper
 
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
-		self.enableRemote = sHelper.addItem(wx.CheckBox(self, label="Enable Remote Access"))
+		# Translators: Label of a checkbox in Remote's settings
+		self.enableRemote = sHelper.addItem(wx.CheckBox(self, label=_("Enable Remote Access")))
 		self.enableRemote.SetValue(self.config["enabled"])
 		self.autoconnect = wx.CheckBox(
 			parent=self,
@@ -3528,10 +3528,8 @@ class RemoteSettingsPanel(SettingsPanel):
 			import remoteClient
 
 			if enabled and not remoteClient.remoteRunning():
-				log.debug("Initializing Remote")
 				remoteClient.initialize()
 			elif not enabled and remoteClient.remoteRunning():
-				log.debug("Terminating remote")
 				remoteClient.terminate()
 
 
