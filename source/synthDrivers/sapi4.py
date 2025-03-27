@@ -333,10 +333,9 @@ class SynthDriverAudio(COMObject):
 		self._audioStopped = False
 		self._audioThread = threading.Thread(target=self._audioThreadFunc, name="Sapi4AudioThread")
 		self._level = 0xFFFFFFFF  # defaults to maximum value (0xFFFF) for both channels (low and high word)
-		self._allowDelete = False  # Must call terminate() before releasing the object
 		self._comThread = comThread
 
-	def terminate(self):
+	def _final_release_(self):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Terminating audio")
 		with self._audioCond:
@@ -345,16 +344,6 @@ class SynthDriverAudio(COMObject):
 		if self._audioThread is not threading.current_thread():
 			self._audioThread.join()
 		self._notifySink = None
-		self._allowDelete = True
-
-	def __del__(self):
-		self.terminate()
-
-	def IUnknown_Release(self, this, *args, **kwargs):
-		if not self._allowDelete and self._refcnt.value == 1:
-			log.debugWarning("IAudio::Release called too many times by engine")
-			return 1
-		return super().IUnknown_Release(this, *args, **kwargs)
 
 	def _queueNotification(self, func: Callable, *args, **kwargs) -> None:
 		"""Queue a notification to be sent to the engine via IAudioDestNotifySink.
@@ -883,7 +872,6 @@ class SynthDriver(SynthDriver):
 		self._sinkPtr = self._sink.QueryInterface(ITTSNotifySinkW)
 		self._bufSink = SynthDriverBufSink(weakref.ref(self))
 		self._bufSinkPtr = self._bufSink.QueryInterface(ITTSBufNotifySink)
-		self._ttsAudio: SynthDriverAudio | SynthDriverMMAudio | None = None
 		# HACK: Some buggy engines call Release() too many times on our buf sink.
 		# Therefore, don't let the buf sink be deleted before we release it ourselves.
 		self._bufSink._allowDelete = False
@@ -906,9 +894,6 @@ class SynthDriver(SynthDriver):
 		# Release all COM objects before stopping the COM thread.
 		self._ttsAttrs = None
 		self._ttsCentral = None
-		if self._ttsAudio:
-			self._ttsAudio.terminate()
-			self._ttsAudio = None
 		self._ttsEngines = None
 		self._comThread.stop()
 
@@ -1047,16 +1032,12 @@ class SynthDriver(SynthDriver):
 			# before the next _ttsCentral is created.
 			self._ttsAttrs = None
 			self._ttsCentral = None
-		if self._ttsAudio:
-			self._ttsAudio.terminate()
-			self._ttsAudio = None
 		if config.conf["speech"]["useWASAPIForSAPI4"]:
-			self._ttsAudio = SynthDriverAudio(self._comThread)
+			ttsAudio = SynthDriverAudio(self._comThread)
 		else:
-			self._ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
-			self._ttsAudio = _ComProxy(self._ttsAudio, self._comThread)
+			ttsAudio = self._comThread.invoke(SynthDriverMMAudio)
 		self._ttsCentral = POINTER(ITTSCentralW)()
-		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), self._ttsAudio)
+		self._ttsEngines.Select(self._currentMode.gModeID, byref(self._ttsCentral), ttsAudio)
 		self._ttsCentral = _ComProxy(self._ttsCentral, self._comThread)
 		self._ttsCentral.Register(self._sinkPtr, ITTSNotifySinkW._iid_, byref(self._sinkRegKey))
 		self._ttsAttrs = _ComProxy(self._ttsCentral.QueryInterface(ITTSAttributes), self._comThread)
