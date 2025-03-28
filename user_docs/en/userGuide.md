@@ -3145,16 +3145,16 @@ Use this option to select the type of audio cues played by Remote.
 When checked, NVDA will produce natural-sounding audio cues for Remote events.
 When unchecked, NVDA will beep for Remote events.
 
-##### Automatically connect to control server on startup {#RemoteAutoconnect}
+##### Automatically connect after NVDA starts {#RemoteAutoconnect}
 
-This option allows you to automatically establish a connection to a Remote Access server when NVDA starts.
+This option allows you to automatically establish a Remote Access session when NVDA starts.
 This could be useful, for example, to control your home computer when away from home.
 
 ##### Mode {#RemoteAutoconnectMode}
 
 Select the connection mode for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
 
 |Option |Behaviour |
 |---|---|
@@ -3165,7 +3165,7 @@ This option is only available when [Automatically connect to control server on s
 
 Select the server type for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
 
 |Option |Behaviour |
 |---|---|
@@ -3175,20 +3175,21 @@ This option is only available when [Automatically connect to control server on s
 ##### Host {#RemoteAutoconnectHost}
 
 Use this field to set the URL of the Remote Access server you would like to use for automatic connections.
+If the server uses a port other than 6837, include it after a colon (eg. `example.com:1234`).
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Use existing".
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Use existing".
 
 ##### Port {#RemoteAutoconnectPort}
 
 Use this field to set the TCP port you would like to use for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Host locally".
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Host locally".
 
 ##### Key {#RemoteAutoconnectKey}
 
 Use this field to set the key (password) you would like to use for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
 
 ##### Delete all trusted fingerprints {#RemoteDeleteFingerprints}
 
