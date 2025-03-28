@@ -3377,31 +3377,49 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
-		# Translators: Label of a checkbox in Remote's settings
-		self.enableRemote = sHelper.addItem(wx.CheckBox(self, label=_("Enable Remote Access")))
-		self.enableRemote.SetValue(self.config["enabled"])
-		self.playSounds: wx.CheckBox = sHelper.addItem(
-			# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
-			wx.CheckBox(self, label=pgettext("remote", "&Play sounds instead of beeps")),
+		self.enableRemote = sHelper.addItem(
+			# Translators: Label of a checkbox in Remote's settings
+			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
+		)
+		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
+
+		remoteSettingsGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			"Test",
+		)
+		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
+		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
+		sHelper.addItem(remoteSettingsGroupHelper)
+
+		self.playSounds: wx.CheckBox = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
+				label=pgettext("remote", "&Play sounds instead of beeps"),
+			),
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
 
-		self.autoconnect: wx.CheckBox = sHelper.addItem(
-			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
-			wx.CheckBox(self, label=pgettext("remote", "Automatically &connect after NVDA starts")),
+		self.autoconnect: wx.CheckBox = remoteSettingsGroupHelper.addItem(
+			wx.CheckBox(
+				self.remoteSettingsGroupBox,
+				# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
+				label=pgettext("remote", "Automatically &connect after NVDA starts"),
+			),
 		)
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
 		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
-		autoConnectionGroupSizer = wx.StaticBoxSizer(
+		autoConnectGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
-			self,
+			self.remoteSettingsGroupBox,
 			# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
 			label=pgettext("remote", "Automatic connection"),
 		)
-		self.autoConnectionGroupBox = autoConnectionGroupSizer.GetStaticBox()
-		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectionGroupSizer)
-		sHelper.addItem(autoConnectionGroupHelper)
+		self.autoConnectionGroupBox = autoConnectGroupSizer.GetStaticBox()
+		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectGroupSizer)
+		remoteSettingsGroupHelper.addItem(autoConnectionGroupHelper)
 
 		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
@@ -3463,10 +3481,11 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		Does not set the value of controls, just which ones are enabled.
 		"""
-		state = bool(self.autoconnect.GetValue())
-		self.autoConnectionGroupBox.Enable(state)
-		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and state)
-		self.port.Enable(bool(self.clientOrServer.GetSelection()) and state)
+		self.remoteSettingsGroupBox.Enable(self.enableRemote.GetValue())
+		autoConnect = bool(self.autoconnect.GetValue())
+		self.autoConnectionGroupBox.Enable(autoConnect)
+		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and autoConnect)
+		self.port.Enable(bool(self.clientOrServer.GetSelection()) and autoConnect)
 		self.deleteFingerprints.Enable(len(self.config["trusted_certs"]) > 0)
 
 	def _setFromConfig(self) -> None:
@@ -3474,6 +3493,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		Also ensures the state of the GUI is internally consistent.
 		"""
+		self.enableRemote.SetValue(self.config["enabled"])
 		controlServer = self.config["controlserver"]
 		serverType = controlServer["serverType"]
 		connectionType = controlServer["connection_type"]
@@ -3484,6 +3504,9 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
 		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+		self._setControls()
+
+	def _onEnableRemote(self, evt: wx.CommandEvent):
 		self._setControls()
 
 	def _onAutoconnect(self, evt: wx.CommandEvent) -> None:
