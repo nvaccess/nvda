@@ -4982,10 +4982,11 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
-		"Toggle Remote connection",
+		description=pgettext("Remote Access", "Toggle Remote connection"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
 		if remoteClient._remoteClient.isConnected():
 			self.script_disconnectFromRemote(gesture)
