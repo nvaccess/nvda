@@ -106,10 +106,11 @@ class SecureDesktopHandler:
 			transport = self._followerSession.transport
 			transport.unregisterInbound(RemoteMessageType.SET_BRAILLE_INFO, self._onLeaderDisplayChange)
 		self._followerSession = session
-		session.transport.registerInbound(
-			RemoteMessageType.SET_BRAILLE_INFO,
-			self._onLeaderDisplayChange,
-		)
+		if session is not None:
+			session.transport.registerInbound(
+				RemoteMessageType.SET_BRAILLE_INFO,
+				self._onLeaderDisplayChange,
+			)
 
 	def _onSecureDesktopChange(self, isSecureDesktop: Optional[bool] = None) -> None:
 		"""Internal callback for secure desktop state changes.
