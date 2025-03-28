@@ -3136,7 +3136,7 @@ If you wish to change the Add-on Store mirror, press the "Change..." button to o
 
 #### Remote Settings {#RemoteSettings}
 
-This category allows you to configure the behaviour of [Remote](#RemoteAccess).
+This category allows you to configure the behaviour of [Remote Access](#RemoteAccess).
 
 ##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
 
@@ -3147,7 +3147,7 @@ When unchecked, NVDA will beep for Remote events.
 
 ##### Automatically connect to control server on startup {#RemoteAutoconnect}
 
-This option allows you to automatically establish a connection to a Remote control server when NVDA starts.
+This option allows you to automatically establish a connection to a Remote Access server when NVDA starts.
 This could be useful, for example, to control your home computer when away from home.
 
 ##### Mode {#RemoteAutoconnectMode}
@@ -3164,26 +3164,26 @@ This option is only available when [Automatically connect to control server on s
 
 ##### Host {#RemoteAutoconnectHost}
 
-Use this field to set the URL of the Remote control server you would like to use for automatic connections.
+Use this field to set the URL of the Remote Access server you would like to use for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to Use existing.
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Use existing".
 
 ##### Port {#RemoteAutoconnectPort}
 
-Use this field to set the TCP port  you would like to use for automatic connections.
+Use this field to set the TCP port you would like to use for automatic connections.
 
-This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to Host locally.
+This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Host locally".
 
 ##### Key {#RemoteAutoconnectKey}
 
-Use this field to  set the key (password) you would like to use for automatic connections.
+Use this field to set the key (password) you would like to use for automatic connections.
 
 This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
 
 ##### Delete all trusted fingerprints {#RemoteDeleteFingerprints}
 
-This button allows you to forget the fingerprints of all previously trusted Remote control servers.
-This means that you will again be asked whether to connect to all unauthorized Remote control servers, even ones that you have previously connected to.
+This button allows you to forget the fingerprints of all previously trusted Remote Access servers.
+This means that you will again be asked whether to connect to all unauthorized Remote Access servers, even ones that you have previously connected to.
 You will be asked to confirm before all trusted fingerprints are deleted.
 This action cannot be undone.
 
@@ -3732,7 +3732,7 @@ Most users should select to use an existing Relay server.
 
 You can choose between two connection types depending on your setup:
 
-* Use existing (easier): Uses a public or private server to mediate the connection.
+* Use existing (basic): Uses a public or private server to mediate the connection.
   Only the server hostname (URL) and key are needed.
 * Host locally (advanced): Connect directly by running the server inside NVDA.
   Requires network setup, such as port forwarding.
@@ -3741,32 +3741,32 @@ The next few options configure the network connection, and differ depending on t
 
 #### Existing server options {#RemoteAccessConnectExisting}
 
-These options are shown when the server type is set to Use existing.
+These options are shown when the server type is set to "Use existing".
 
-The host field is where you should enter the URL of the Remote Control server you will use to mediate the connection.
+The host field is where you should enter the URL of the Remote Access server you will use to mediate the connection.
 
 Optionally, you may include the port to connect on by appending a colon (":") and the port number to the host.
-For example, "example.com:1234".
+For example, `example.com:1234`.
 If no port is provided, Remote Access will use port 6837.
 
 The key field is where you should enter the key for the remote session you are creating or connecting to.
 The key identifies and controls access to a remote session.
 
 If you are creating a Remote Access session, choose a key that is unique and not easily guessable.
-Alternatively, press "Generate key" to have the Remote Control server generate a key for you.
+Alternatively, press "Generate key" to have the Remote Access server generate a key for you.
 
 If you are joining an existing session, enter the key exactly as provided.
 Pay careful attention to capitalisation, spaces and punctuation.
 
 #### Local server options {#RemoteAccessConnectLocal}
 
-These options are shown when the Server is set to Host locally.
+These options are shown when the Server is set to "Host locally".
 
 Warning: locally hosting the control server in NVDA is an advanced option, and may require network setup that is out of scope for this manual.
 
 The External IP field shows your currently detected external IP address.
 This field is initially blank.
-To detect your external IP address, press Get external IP.
+To detect your external IP address, press "Get external IP".
 This will also check whether the selected port is open.
 Note that this test may not be 100% accurate.
 
@@ -3777,7 +3777,7 @@ By default, Remote Access uses port 6837.
 
 The key field is where you should enter the key for this Remote session.
 This is essentially the password for this session.
-Alternatively, press Generate key to have NVDA generate a key for you.
+Alternatively, press "Generate key" to have NVDA generate a key for you.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
