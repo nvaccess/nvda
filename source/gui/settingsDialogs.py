@@ -3398,7 +3398,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
-			# Allowing the user to select whether their computer is controlling or controlled.
+			# allowing the user to select whether their computer is controlling or controlled.
 			_("&Mode:"),
 			wx.Choice,
 			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
