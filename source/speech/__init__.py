@@ -29,6 +29,7 @@ from .speech import (
 	getObjectSpeech,
 	getPreselectedTextSpeech,
 	getPropertiesSpeech,
+	getSpeechSequenceWithLangs,
 	getSpellingSpeech,
 	getState,
 	getTableInfoSpeech,
@@ -63,7 +64,7 @@ from .speech import (
 	spellTextInfo,
 	splitTextIndentation,
 )
-from .extensions import speechCanceled, post_speechPaused, pre_speechQueued
+from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence
 from .priorities import Spri
 
 from .types import (
@@ -165,7 +166,9 @@ def initialize():
 		getTextInfoSpeech,
 		SpeakTextInfoState,
 	)
+	filter_speechSequence.register(getSpeechSequenceWithLangs)
 
 
 def terminate():
 	synthDriverHandler.setSynth(None)
+	filter_speechSequence.unregister(getSpeechSequenceWithLangs)
