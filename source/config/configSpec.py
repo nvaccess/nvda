@@ -47,6 +47,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	delayedCharacterDescriptions = boolean(default=false)
 	excludedSpeechModes = int_list(default=list())
 	trimLeadingSilence = boolean(default=true)
+	useWASAPIForSAPI4 = featureFlag(optionsEnum="BoolFlag", behaviorOfDefault="enabled")
 
 	[[__many__]]
 		capPitchChange = integer(default=30,min=-100,max=100)
@@ -347,6 +348,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Remote Settings
 [remote]
+	enabled = boolean(default=False)
 	[[connections]]
 		last_connected = list(default=list())
 	[[controlserver]]

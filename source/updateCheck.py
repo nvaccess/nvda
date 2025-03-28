@@ -252,6 +252,9 @@ def checkForUpdate(auto: bool = False) -> UpdateInfo | None:
 		raise RuntimeError(f"Checking for update failed with HTTP status code {res.code}.")
 
 	data = res.read().decode("utf-8")  # Ensure the response is decoded correctly
+	# if data is empty, we return None, because the server returns an empty response if there is no update.
+	if not data:
+		return None
 	try:
 		parsed_response = UpdateInfo.parseUpdateCheckResponse(data)
 	except ValueError:
@@ -776,12 +779,12 @@ class UpdateDownloader(garbageHandler.TrackedObject):
 		from addonAPIVersion import getAPIVersionTupleFromString
 
 		self.updateInfo = updateInfo
-		self.urls = updateInfo.launcher_url.split(" ")
+		self.urls = updateInfo.launcherUrl.split(" ")
 		self.version = updateInfo.version
-		self.apiVersion = getAPIVersionTupleFromString(updateInfo.api_version)
-		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo.api_compat_to)
+		self.apiVersion = getAPIVersionTupleFromString(updateInfo.apiVersion)
+		self.backCompatToAPIVersion = getAPIVersionTupleFromString(updateInfo.apiCompatTo)
 		self.versionTuple = None
-		self.fileHash = updateInfo.launcher_hash
+		self.fileHash = updateInfo.launcherHash
 		self.destPath = _createEmptyTempFileForDeletingFile(prefix="nvda_update_", suffix=".exe")
 
 	def start(self):

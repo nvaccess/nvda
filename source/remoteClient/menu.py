@@ -23,32 +23,8 @@ class RemoteMenu(wx.Menu):
 		self.client = client
 		sysTrayIcon = gui.mainFrame.sysTrayIcon
 		toolsMenu = sysTrayIcon.toolsMenu
-		self.connectItem: wx.MenuItem = self.Append(
-			wx.ID_ANY,
-			# Translators: Item in NVDA Remote submenu to connect to a remote computer.
-			_("Connect..."),
-			# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
-			_("Remotely connect to another computer running NVDA Remote Access"),
-		)
-		sysTrayIcon.Bind(
-			wx.EVT_MENU,
-			self.client.doConnect,
-			self.connectItem,
-		)
-		# Translators: Item in NVDA Remote submenu to disconnect from a remote computer.
-		self.disconnectItem: wx.MenuItem = self.Append(
-			wx.ID_ANY,
-			# Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
-			_("Disconnect"),
-			# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
-			_("Disconnect from another computer running NVDA Remote Access"),
-		)
-		self.disconnectItem.Enable(False)
-		sysTrayIcon.Bind(
-			wx.EVT_MENU,
-			self.onDisconnectItem,
-			self.disconnectItem,
-		)
+		self.connectionItem: wx.MenuItem = self.Append(wx.ID_ANY, " ")
+		self._switchToConnectItem()
 		self.muteItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
@@ -155,8 +131,10 @@ class RemoteMenu(wx.Menu):
 		self.client.sendSAS()
 
 	def handleConnected(self, mode: ConnectionMode, connected: bool) -> None:
-		self.connectItem.Enable(not connected)
-		self.disconnectItem.Enable(connected)
+		if connected:
+			self._switchToDisconnectItem()
+		else:
+			self._switchToConnectItem()
 		self.muteItem.Enable(connected)
 		if not connected:
 			self.muteItem.Check(False)
@@ -165,5 +143,38 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem.Enable(connected)
 
 	def handleConnecting(self, mode: ConnectionMode) -> None:
-		self.disconnectItem.Enable(True)
-		self.connectItem.Enable(False)
+		self._switchToDisconnectItem()
+
+	def _switchToConnectItem(self):
+		"""Switch to showing the "Connect..." item in the menu.
+
+		Sets the label, help text and event bindings of the connection item
+		to those appropriate for creating a new Remote session.
+		"""
+		# Translators: Item in NVDA Remote submenu to connect to a remote computer.
+		self.connectionItem.SetItemLabel(_("Connect..."))
+		# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
+		self.connectionItem.SetHelp(_("Remotely connect to another computer running NVDA Remote Access"))
+		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
+		gui.mainFrame.sysTrayIcon.Bind(
+			wx.EVT_MENU,
+			self.client.doConnect,
+			self.connectionItem,
+		)
+
+	def _switchToDisconnectItem(self):
+		"""Switch to showing the "Disconnect" item in the menu.
+
+		Sets the label, help text and event bindings of the connection item
+		to those appropriate for disconnecting an existing Remote session.
+		"""
+		# Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
+		self.connectionItem.SetItemLabel(_("Disconnect"))
+		# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
+		self.connectionItem.SetHelp(_("Disconnect from another computer running NVDA Remote Access"))
+		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
+		gui.mainFrame.sysTrayIcon.Bind(
+			wx.EVT_MENU,
+			self.onDisconnectItem,
+			self.connectionItem,
+		)

@@ -4919,9 +4919,10 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("""Mute or unmute the speech coming from the remote computer"""),
+		description=_("Mute or unmute the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
 		remoteClient._remoteClient.toggleMute()
 
@@ -4931,26 +4932,30 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
 		remoteClient._remoteClient.pushClipboard()
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
-		description=_("""Copies a link to the remote session to the clipboard"""),
+		description=_("Copies a link to the remote session to the clipboard"),
 		category=SCRCAT_REMOTE,
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
 		remoteClient._remoteClient.copyLink()
 		# Translators: A message indicating that a link has been copied to the clipboard.
 		ui.message(_("Copied link"))
 
 	@script(
-		gesture="kb:alt+NVDA+pageDown",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that disconnects a remote session.
 		description=_("Disconnect a remote session"),
 	)
-	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	@gui.blockAction.when(
+		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
+		gui.blockAction.Context.SECURE_MODE,
+	)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
 		if not remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
@@ -4959,13 +4964,15 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.disconnect()
 
 	@script(
-		gesture="kb:alt+NVDA+pageUp",
 		# Translators: Documentation string for the script that invokes the remote session.
-		description=_("""Connect to a remote computer"""),
+		description=_("Connect to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
-	@gui.blockAction.when(gui.blockAction.Context.MODAL_DIALOG_OPEN)
-	@gui.blockAction.when(gui.blockAction.Context.SECURE_MODE)
+	@gui.blockAction.when(
+		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
+		gui.blockAction.Context.MODAL_DIALOG_OPEN,
+		gui.blockAction.Context.SECURE_MODE,
+	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
 		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
 			# Translators: A message indicating that the remote client is already connected.
@@ -4974,11 +4981,25 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.doConnect()
 
 	@script(
+		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
+		description=pgettext("remote", "Toggle Remote connection"),
+		category=SCRCAT_REMOTE,
+		gesture="kb:NVDA+alt+r",
+	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
+	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
+		if remoteClient._remoteClient.isConnected():
+			self.script_disconnectFromRemote(gesture)
+		else:
+			self.script_connectToRemote(gesture)
+
+	@script(
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
 		description=_("Toggles the control between guest and host machine"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+f11",
 	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
 		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
