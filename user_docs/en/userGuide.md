@@ -3692,11 +3692,11 @@ Once the session is active, you can switch between controlling the remote comput
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->
-| Action                   | Key Command          | Description                               |
-|--------------------------|----------------------|-------------------------------------------|
-| Toggle Control           | `NVDA+f11`               | Switch between controlling and local.     |
-| Push Clipboard           | `NVDA+ctrl+shift+c`        | Send clipboard text to the other machine. |
-| Connect or disconnect | `NVDA+alt+r`| If a remote session is in progress, disconnect from it. Otherwise, start a new Remote session. |
+| Action | Key Command | Description |
+|---|---|---|
+| Toggle control | `NVDA+f11` | Switch between controlling the local and remote computer. |
+| Push clipboard | `NVDA+ctrl+shift+c` | Send clipboard text to the other computer. |
+| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnect from it. Otherwise, start a new remote session. |
 <!-- KC:endInclude -->
 
 You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
