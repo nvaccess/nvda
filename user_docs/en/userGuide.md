@@ -3138,6 +3138,16 @@ If you wish to change the Add-on Store mirror, press the "Change..." button to o
 
 This category allows you to configure the behaviour of [Remote Access](#RemoteAccess).
 
+##### Enable Remote Access {#RemoteEnable}
+
+Use this checkbox to enable or disable NVDA's Remote Access feature.
+
+When this is unchecked, the Remote Access feature is entirely unavailable.
+
+Please note that in order to continue a Remote Access session on secure screens such as User Account Control prompts, you must enable this setting, save the changes, and then [copy your settings to NVDA's system configuration directory](#GeneralSettingsCopySettings).
+
+The following options are only available if Remote Access is enabled.
+
 ##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
 
 Use this option to select the type of audio cues played by Remote.
@@ -3713,6 +3723,9 @@ To change NVDA's configuration during sign-in or on UAC screens, configure NVDA 
 ## Remote Access {#RemoteAccess}
 
 With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
+
+Remote access is disabled by default for your security.
+You can enable Remote Access [in Remote settings](#RemoteSettings).
 
 ### Getting Started {#RemoteAccessGettingStarted}
 
