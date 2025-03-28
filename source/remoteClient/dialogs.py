@@ -325,7 +325,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		"""Respond to changing between using a control server or hosting it locally"""
 		selectedIndex = self._clientOrServerControl.GetSelection()
 		self._simpleBook.ChangeSelection(selectedIndex)
-		# Hack: setting or changing the selection of a wx.SimpleBookseems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
+		# Hack: setting or changing the selection of a wx.SimpleBook seems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
 		self._clientOrServerControl.SetFocus()
 		self._selectedPanel = self._simpleBook.GetPage(selectedIndex)
 		evt.Skip()
