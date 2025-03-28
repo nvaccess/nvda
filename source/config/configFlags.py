@@ -11,12 +11,16 @@ When creating new parameter options, consider using F{FeatureFlag} which explici
 the default value.
 """
 
-from enum import unique
+from typing import TYPE_CHECKING
+from enum import unique, verify, CONTINUOUS
 from utils.displayString import (
 	DisplayStringIntEnum,
 	DisplayStringStrEnum,
 	DisplayStringIntFlag,
 )
+
+if TYPE_CHECKING:
+	import remoteClient
 
 
 @unique
@@ -293,4 +297,55 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 			# Pilcrow is a symbol also known as "paragraph symbol" or "paragraph marker".
 			# Ensure this is consistent with other strings with the context "paragraphMarker".
 			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
+		}
+
+
+@verify(CONTINUOUS)
+class RemoteConnectionMode(DisplayStringIntEnum):
+	"""Enumeration containing the possible remote connection modes (roles for connected clients).
+
+	Use RemoteConnectionMode.MEMBER.value to compare with the config;
+	use RemoteConnectionMode.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	FOLLOWER = 0
+	LEADER = 1
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Allow this computer to be controlled by the remote computer.
+			RemoteConnectionMode.FOLLOWER: pgettext("remote", "Allow this machine to be controlled"),
+			# Translators: Allow this computer to control the remote computer.
+			RemoteConnectionMode.LEADER: pgettext("remote", "Control another machine"),
+		}
+
+	def toConnectionMode(self) -> "remoteClient.connectionInfo.ConnectionMode":
+		from remoteClient.connectionInfo import ConnectionMode
+
+		match self:
+			case RemoteConnectionMode.LEADER:
+				return ConnectionMode.LEADER
+			case RemoteConnectionMode.FOLLOWER:
+				return ConnectionMode.FOLLOWER
+
+
+@verify(CONTINUOUS)
+class RemoteServerType(DisplayStringIntEnum):
+	"""Enumeration containing the possible types of Remote relay server.
+
+	Use RemoteServerType.MEMBER.value to compare with the config;
+	use RemoteServerType.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	EXISTING = 0
+	LOCAL = 1
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: Use an existing Remote control server
+			RemoteServerType.EXISTING: pgettext("remote", "Use existing"),
+			# Translators: Use NVDA as the Remote control server
+			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
 		}

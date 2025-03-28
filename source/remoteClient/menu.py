@@ -83,12 +83,9 @@ class RemoteMenu(wx.Menu):
 		)
 
 	def terminate(self) -> None:
-		self.Remove(self.connectItem.Id)
-		self.connectItem.Destroy()
-		self.connectItem = None
-		self.Remove(self.disconnectItem.Id)
-		self.disconnectItem.Destroy()
-		self.disconnectItem = None
+		self.Remove(self.connectionItem)
+		self.connectionItem.Destroy()
+		self.connectionItem = None
 		self.Remove(self.muteItem.Id)
 		self.muteItem.Destroy()
 		self.muteItem = None
@@ -110,7 +107,7 @@ class RemoteMenu(wx.Menu):
 		except (RuntimeError, AttributeError):
 			pass
 
-	def onDisconnectItem(self, evt: wx.CommandEvent) -> None:
+	def doDisconnect(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
 		self.client.disconnect()
 
@@ -175,6 +172,6 @@ class RemoteMenu(wx.Menu):
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,
-			self.onDisconnectItem,
+			self.doDisconnect,
 			self.connectionItem,
 		)
