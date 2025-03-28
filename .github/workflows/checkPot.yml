@@ -6,19 +6,19 @@ on:
     - master
     - beta
     - rc
-    - try-**
-    - release-**
+    - 'try-**'
     - githubActions # To be removed
+  tags:
+    - release-**
 
   pull_request:
     branches:
     - master
     - beta
     - rc
-    - try-**
-    - release-**
 
   workflow_dispatch:
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
