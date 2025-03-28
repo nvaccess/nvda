@@ -3156,11 +3156,21 @@ Select the connection mode for automatic connections.
 
 This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
 
+|Option |Behaviour |
+|---|---|
+|Allow this machine to be controlled |Use this computer as the "controlling" computer. This allows you to execute commands on the remote computer. |
+|Control another machine |Use this computer as the "controlled" computer. This allows the operator of the "controlling" computer to use this computer as if they were sitting in front of it. |
+
 ##### Server {#RemoteAutoconnectServer}
 
 Select the server type for automatic connections.
 
 This option is only available when [Automatically connect to control server on startup](#RemoteAutoconnect) is checked.
+
+|Option |Behaviour |
+|---|---|
+|Use existing |Use an existing Remote Access server to mediate the connection (recommended). |
+|Host locally |Use this instance of NVDA as the Remote Access server (advanced). This option may require network configuration that is out of scope for this manual. |
 
 ##### Host {#RemoteAutoconnectHost}
 
