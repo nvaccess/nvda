@@ -190,6 +190,13 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 				)
 		return cell
 
+	def _inTable(self, info):
+		try:
+			self._getTableCellCoords(info)
+			return True
+		except LookupError:
+			return False
+
 	def _getTableDimensions(self, info: textInfos.TextInfo) -> Tuple[int, int]:
 		"""
 		Fetches information about the deepest table dimension.

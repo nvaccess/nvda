@@ -308,6 +308,12 @@ class WordDocumentTextInfo(UIATextInfo):
 		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_CELL:
+			cell = self.obj._getTableCellCoordsCached(self, axis=None)
+			info = self.obj._getTableCellAt(cell.tableID, self, cell.row, cell.col)
+			self.start = info.start
+			self.end = info.end
+			return
 		super(WordDocumentTextInfo, self).expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
