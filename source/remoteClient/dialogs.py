@@ -108,7 +108,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 				"Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field.",
 			).format(host=self.host.GetValue()),
 			# Translators: Title of a dialog.
-			_("Error"),
+			pgettext("remote", "Host connection failed"),
 			wx.OK | wx.ICON_ERROR,
 		)
 
@@ -195,6 +195,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 		)
 		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
 		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
+		# Translators: The button used to generate a random key/password.
 		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
 		self._generateKeyButton.Bind(wx.EVT_BUTTON, self.onGenerateKey)
 		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
@@ -288,12 +289,14 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
 		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
-			"&Mode",
+			# Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
+			pgettext("remote", "&Mode"),
 			wx.Choice,
 			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
 		)
 		self._connectionModeControl.SetSelection(0)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
+			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
 			_("&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType),

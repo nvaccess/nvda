@@ -3373,7 +3373,7 @@ class RemoteSettingsPanel(SettingsPanel):
 	title = _("Remote")
 	helpId = "RemoteSettings"
 
-	def makeSettings(self, sizer):
+	def makeSettings(self, sizer: wx.BoxSizer):
 		self.config = config.conf["remote"]
 		sHelper = guiHelper.BoxSizerHelper(self, sizer=sizer)
 
