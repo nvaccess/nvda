@@ -3382,6 +3382,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			wx.CheckBox(self, label=pgettext("remote", "Enable Remote Access")),
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
+		self.bindHelpEvent("RemoteEnable", self.enableRemote)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
