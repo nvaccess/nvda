@@ -297,7 +297,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		self._connectionModeControl.SetSelection(0)
 		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
-			_("&Server:"),
+			pgettext("remote", "&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)

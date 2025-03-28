@@ -3379,19 +3379,23 @@ class RemoteSettingsPanel(SettingsPanel):
 
 		self.playSounds: wx.CheckBox = sHelper.addItem(
 			# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
-			wx.CheckBox(self, label=_("&Play sounds instead of beeps")),
+			wx.CheckBox(self, label=pgettext("remote", "&Play sounds instead of beeps")),
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
 
 		self.autoconnect: wx.CheckBox = sHelper.addItem(
 			# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
-			wx.CheckBox(self, label=_("Automatically &connect to control server on startup")),
+			wx.CheckBox(self, label=pgettext("remote", "Automatically &connect after NVDA starts")),
 		)
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
 		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
-		# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
-		autoConnectionGroupSizer = wx.StaticBoxSizer(wx.VERTICAL, self, label=_("Automatic connection"))
+		autoConnectionGroupSizer = wx.StaticBoxSizer(
+			wx.VERTICAL,
+			self,
+			# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
+			label=pgettext("remote", "Automatic connection"),
+		)
 		self.autoConnectionGroupBox = autoConnectionGroupSizer.GetStaticBox()
 		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectionGroupSizer)
 		sHelper.addItem(autoConnectionGroupHelper)
@@ -3399,7 +3403,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
 			# allowing the user to select whether their computer is controlling or controlled.
-			_("&Mode:"),
+			pgettext("remote", "&Mode:"),
 			wx.Choice,
 			choices=tuple(connectionType.displayString for connectionType in RemoteConnectionMode),
 		)
@@ -3408,7 +3412,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.clientOrServer = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
 			# allowing users to choose whether they want to use an existing Remote relay server, or host their own.
-			_("&Server:"),
+			pgettext("remote", "&Server:"),
 			wx.Choice,
 			choices=tuple(serverType.displayString for serverType in RemoteServerType),
 		)
@@ -3490,14 +3494,15 @@ class RemoteSettingsPanel(SettingsPanel):
 	def onDeleteFingerprints(self, evt: wx.CommandEvent) -> None:
 		"""Respond to presses of the delete trusted fingerprints button."""
 		deleteFingerprints = gui.messageBox(
-			_(
+			pgettext(
+				"remote",
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 				"This will cause NVDA to forget all previously trusted Remote servers. "
 				"When connecting to a previously trusted unauthorized Remote server, you will again be asked whether to trust its certificate.\n\n"
 				"Are you sure you want to continue? This action cannot be undone.",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-			_("Delete all trusted fingerprints"),
+			pgettext("remote", "Delete all trusted fingerprints"),
 			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
 		)
 		if deleteFingerprints == wx.YES:
@@ -3511,20 +3516,22 @@ class RemoteSettingsPanel(SettingsPanel):
 			if not self.clientOrServer.GetSelection() and (
 				not self.host.GetValue() or not self.key.GetValue()
 			):
-				message = _(
+				message = pgettext(
+					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-					"Both host and key must be set in the Remote section in order to automatically connect to a remote control server at startup.",
+					"Both host and key must be set in the Remote section in order to automatically connect using an existing Remote Access server after NVDA starts.",
 				)
 			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
-				message = _(
+				message = pgettext(
+					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					"Both port and key must be set in the Remote section in order to automatically connect with a local control server at startup.",
+					"Both port and key must be set in the Remote section in order to automatically connect using a locally hosted Remoate Access server after NVDA starts.",
 				)
 			if message is not None:
 				gui.messageBox(
 					message,
 					# Translators: Title of a dialog.
-					_("Remote Error"),
+					pgettext("remote", "Remote Access Error"),
 					wx.OK | wx.ICON_ERROR,
 				)
 				return False

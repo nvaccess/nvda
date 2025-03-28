@@ -240,7 +240,7 @@ class RemoteClient:
 			parent=gui.mainFrame,
 			id=wx.ID_ANY,
 			# Translators: Title of the Remote Access connection dialog.
-			title=_("Connect to Another Computer"),
+			title=pgettext("remote", "Connect to Another Computer"),
 			hostnames=hostnames,
 		)
 
