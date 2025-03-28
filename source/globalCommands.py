@@ -4982,7 +4982,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
-		description=pgettext("Remote Access", "Toggle Remote connection"),
+		description=pgettext("remote", "Toggle Remote connection"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
 	)
