@@ -71,9 +71,9 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
 			self,
 			# Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
-			pgettext("Remote", "Generating key"),
+			pgettext("remote", "Generating key"),
 			# Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
-			pgettext("Remote", "Generating key..."),
+			pgettext("remote", "Generating key..."),
 		)
 		address = protocol.addressToHostPort(self.host.GetValue())
 		self._keyConnector = transport.RelayTransport(
@@ -214,9 +214,9 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 		self._progressDialog = gui.IndeterminateProgressDialog(
 			self,
 			# Translators: Title of a dialog shown to users while attempting to detect their external IP address
-			pgettext("Remote", "Getting external IP"),
+			pgettext("remote", "Getting external IP"),
 			# Translators: Message on a dialog shown to users while attempting to detect their external IP address
-			pgettext("Remote", "Getting external IP..."),
+			pgettext("remote", "Getting external IP..."),
 		)
 		t = threading.Thread(target=self.doPortcheck, args=[int(self.port.GetValue())])
 		t.daemon = True

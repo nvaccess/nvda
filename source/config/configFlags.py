@@ -315,7 +315,7 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: Allow this computer to be controlled by the remote computer.
-			RemoteConnectionMode.FOLLOWER: pgettext("Remote", "Allow this machine to be controlled"),
+			RemoteConnectionMode.FOLLOWER: pgettext("remote", "Allow this machine to be controlled"),
 			# Translators: Allow this computer to control the remote computer.
 			RemoteConnectionMode.LEADER: pgettext("remote", "Control another machine"),
 		}
@@ -345,7 +345,7 @@ class RemoteServerType(DisplayStringIntEnum):
 	def _displayStringLabels(self):
 		return {
 			# Translators: Use an existing Remote control server
-			RemoteServerType.EXISTING: pgettext("Remote", "Use existing"),
+			RemoteServerType.EXISTING: pgettext("remote", "Use existing"),
 			# Translators: Use NVDA as the Remote control server
 			RemoteServerType.LOCAL: pgettext("remote", "Host locally"),
 		}
