@@ -7,11 +7,9 @@ from comtypes import COMError
 import ctypes
 import operator
 import uuid
-import time
 from logHandler import log
 import winUser
 import speech
-import braille
 import controlTypes
 import config
 import tableUtils
