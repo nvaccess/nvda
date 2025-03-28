@@ -6,7 +6,7 @@
 import json
 import random
 import threading
-from typing import List, Optional, TypedDict
+from typing import TypedDict
 from urllib import request
 
 import gui
@@ -29,10 +29,10 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 	host: wx.ComboBox
 	key: wx.TextCtrl
 	_generateKeyButton: wx.Button
-	_keyConnector: Optional["transport.RelayTransport"]
+	_keyConnector: "transport.RelayTransport | None"
 	_keyGenerationProgressDialog: gui.IndeterminateProgressDialog | None = None
 
-	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
+	def __init__(self, parent: wx.Window | None = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizerHelper = BoxSizerHelper(self, sizer=sizer)
@@ -88,7 +88,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 		t.start()
 
 	@alwaysCallAfter
-	def _handleKeyGenerated(self, key: Optional[str] = None) -> None:
+	def _handleKeyGenerated(self, key: str | None = None) -> None:
 		self._keyGenerationProgressDialog.done()
 		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
@@ -166,7 +166,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 	_generateKeyButton: wx.Button
 	_progressDialog: gui.IndeterminateProgressDialog | None = None
 
-	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
+	def __init__(self, parent: wx.Window | None = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
 		sizer = wx.BoxSizer(wx.VERTICAL)
 		sizerHelper = BoxSizerHelper(self, sizer=sizer)
@@ -283,7 +283,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 	helpId = "RemoteAccessConnect"
 	_selectedPanel: ClientPanel | ServerPanel
 
-	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: Optional[List[str]] = None):
+	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: list[str] | None = None):
 		super().__init__(parent, id, title=title)
 		mainSizer = wx.BoxSizer(wx.VERTICAL)
 		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
@@ -384,7 +384,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
-	def __init__(self, parent: Optional[wx.Window], fingerprint: Optional[str] = None):
+	def __init__(self, parent: wx.Window | None, fingerprint: str | None = None):
 		# Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 		title = _("NVDA Remote Connection Security Warning")
 		message = _(
