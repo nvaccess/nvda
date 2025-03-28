@@ -3386,7 +3386,6 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
 			self,
-			"Test",
 		)
 		self.remoteSettingsGroupBox = remoteSettingsGroupSizer.GetStaticBox()
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
@@ -3538,7 +3537,7 @@ class RemoteSettingsPanel(SettingsPanel):
 
 	def isValid(self) -> bool:
 		message: str | None = None
-		if self.autoconnect.GetValue():
+		if self.enableRemote.GetValue() and self.autoconnect.GetValue():
 			if not self.clientOrServer.GetSelection() and (
 				not self.host.GetValue() or not self.key.GetValue()
 			):
@@ -3564,6 +3563,9 @@ class RemoteSettingsPanel(SettingsPanel):
 		return True
 
 	def onSave(self):
+		enabled = self.enableRemote.GetValue()
+		oldEnabled = self.config["enabled"]
+		self.config["enabled"] = enabled
 		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
 		controlServer = self.config["controlserver"]
 		serverType = self.clientOrServer.GetSelection()
@@ -3576,9 +3578,6 @@ class RemoteSettingsPanel(SettingsPanel):
 			controlServer["port"] = int(self.port.GetValue())
 		controlServer["key"] = self.key.GetValue()
 
-		enabled = self.enableRemote.GetValue()
-		oldEnabled = self.config["enabled"]
-		self.config["enabled"] = enabled
 		if enabled != oldEnabled:
 			import remoteClient
 
