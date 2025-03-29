@@ -335,7 +335,18 @@ class AddonStoreVM:
 			shouldInstall = True
 			shouldRememberChoice = True
 		if shouldInstall:
-			listItemVM.model.enableCompatibilityOverride()
+			try:
+				listItemVM.model.enableCompatibilityOverride()
+			except RuntimeError as e:
+				if (
+					listItemVM.canUseInstallOverrideIncompatibilityAction()
+					or listItemVM.canUseUpdateOverrideIncompatibilityAction()
+				):
+					log.debugWarning(
+						f"{listItemVM.model.name}"
+					)
+				else:
+					raise e
 			cls.getAddon(listItemVM)
 		return shouldInstall, shouldRememberChoice
 
