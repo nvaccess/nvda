@@ -126,3 +126,14 @@ jobs:
         name: NVDA launcher
         path: output/nvda*.exe
         overwrite: true
+name: Main
+
+  release:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout NVDA
+      uses: actions/checkout@v4
+    - name: Publish release
+      if: startsWith(github.ref, 'refs/tags/')
+      uses: softprops/action-gh-release@v2
+      
