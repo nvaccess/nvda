@@ -343,7 +343,7 @@ class AddonStoreVM:
 					or listItemVM.canUseUpdateOverrideIncompatibilityAction()
 				):
 					log.debugWarning(
-						f"{listItemVM.model.name}"
+						f"{listItemVM.model.name}",
 					)
 				else:
 					raise e
