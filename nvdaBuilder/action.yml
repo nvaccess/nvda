@@ -1,0 +1,40 @@
+name: Build NVDA
+
+description: 'Builds NVDA'
+inputs:
+  use-cache:
+    description: 'Indicates if cache action should be used: true or false'
+    default: 'true'
+  scons-source:
+    description: 'Indicates if scons source should be run: true or false'
+    default: 'true'
+runs:
+  using: "composite"
+
+  steps:
+    - name: Install dependencies
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        architecture: x86
+    - name: Cache dependencies
+      id: cacheDependencies
+      if: ${{ inputs.use-cache }}
+      uses: actions/cache@v4
+      with:
+        path: |
+          .venv
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+    - name: Set version variables
+      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      shell: cmd
+    - name: Set scons args
+      run: powershell.exe ci/scripts/setSconsArgs.ps1
+      shell: cmd
+    - name: Prepare source code
+      if: ${{ inputs.scons-source == 'true' }}
+      run: scons source %sconsArgs% --all-cores
+      shell: cmd
+    - name: Prepare for tests
+      run: powershell.exe ci/scripts/tests/beforeTests.ps1
+      shell: cmd
