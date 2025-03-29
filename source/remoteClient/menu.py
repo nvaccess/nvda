@@ -28,7 +28,7 @@ class RemoteMenu(wx.Menu):
 		self.muteItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
-			_("Mute remote"),
+			_("&Mute remote"),
 			# Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
 			_("Mute speech and sounds from the remote computer"),
 			kind=wx.ITEM_CHECK,
@@ -64,7 +64,7 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
-			_("Send Ctrl+Alt+Del"),
+			_("&Send Ctrl+Alt+Del"),
 			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
 			_("Send Ctrl+Alt+Del"),
 		)
@@ -152,7 +152,7 @@ class RemoteMenu(wx.Menu):
 		to those appropriate for creating a new Remote session.
 		"""
 		# Translators: Item in NVDA Remote submenu to connect to a remote computer.
-		self.connectionItem.SetItemLabel(_("Connect..."))
+		self.connectionItem.SetItemLabel(_("&Connect..."))
 		# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
 		self.connectionItem.SetHelp(_("Remotely connect to another computer running NVDA Remote Access"))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
@@ -169,7 +169,7 @@ class RemoteMenu(wx.Menu):
 		to those appropriate for disconnecting an existing Remote session.
 		"""
 		# Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
-		self.connectionItem.SetItemLabel(_("Disconnect"))
+		self.connectionItem.SetItemLabel(_("&Disconnect"))
 		# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
 		self.connectionItem.SetHelp(_("Disconnect from another computer running NVDA Remote Access"))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
