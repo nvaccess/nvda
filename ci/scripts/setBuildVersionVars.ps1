@@ -20,12 +20,13 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 	}
 } else {
 	$commitVersion = $env:GITHUB_SHA.Substring(0, 8)
+	$BUILD_NUMBER = [int]$env:GITHUB_RUN_ATTEMPT + 36000
 	if($env:pullRequestNumber) {
-		$version = "pr$env:pullRequestNumber-$commitVersion,$env:github.run_attempt"
+		$version = "pr$env:pullRequestNumber-$BUILD_NUMBER,$commitVersion"
 	} elseif($env:GITHUB_REF_NAME -eq "master") {
-		$version = "alpha-$commitVersion,$env:github.run_attempt"
+		$version = "alpha-$BUILD_NUMBER,$commitVersion"
 	} else {
-		$version = "$env:GITHUB_REF_NAME-$commitVersion,$env:github.run_attempt"
+		$version = "$env:GITHUB_REF_NAME-$BUILD_NUMBER,$commitVersion"
 		if($env:GITHUB_REF_NAME.StartsWith("try-release-")) {
 			echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 		}
