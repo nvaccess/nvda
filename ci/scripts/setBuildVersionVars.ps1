@@ -31,7 +31,7 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 			echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 		}
 	}
-	if($env:GITHUB_REF_NAME -eq "master") {
+	if($env:GITHUB_REF_NAME -eq "master" -and !$release) {
 		$versionType = "snapshot:alpha"
 	} elseif (!$env:GITHUB_REF_NAME.StartsWith("try-") -and !$env:pullRequestNumber) {
 		$versionType = "snapshot:$env:GITHUB_REF_NAME"
