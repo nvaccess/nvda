@@ -30,6 +30,7 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 		if($env:GITHUB_REF_NAME.StartsWith("try-release-")) {
 			echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 		}
+	}
 }
 if (!$release) {
 		if($env:GITHUB_REF_NAME -eq "master") {
