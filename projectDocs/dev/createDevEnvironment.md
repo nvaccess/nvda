@@ -38,6 +38,17 @@ git pull
 
 Although NVDA can run on any Windows version starting from Windows 8.1, building NVDA from source is currently limited to only Windows 10 and above.
 
+## Target architecture
+
+Currently, NVDA is released as a 32-bit binary.
+However, work is in progress to migrate NVDA to 64-bit.
+In order to select between building NVDA for 32bit platforms (also compatible with 64 bit platforms), or 64-bit platforms, you must set the `NVDATargetArch` environment variable.
+Possible values are `32` to build for x86, or `64` to build for x86-64.
+If `NVDATargetArch` is not set, the architecture of the host operating system is used.
+
+You cannot build 32-bit and 64-bit NVDA in the same directory.
+If you wish to test against both, either clone the repo twice (eg. into `nvda-x86` and `nvda-x64` directories), or run a full `git clean` whenever changing the build architecture.
+
 ## Dependencies
 
 The NVDA source depends on several other packages to run correctly.
@@ -48,7 +59,9 @@ The following dependencies need to be installed on your system:
 
 #### Python
 
-[Python](https://www.python.org/), version 3.11, 32 bit.
+[Python](https://www.python.org/), version 3.11.
+The architecture of Python must match the target architecture.
+That is, to build 32-bit NVDA, you must have 32-bit Python installed; and to build for 64-bit, you must have 64-bit Python installed.
 
 To replicate the production build environment, use the 3.11.x minor version of Python that [AppVeyor uses for the Visual Studio 2022 environment](https://www.appveyor.com/docs/windows-images-software/#python).
 
