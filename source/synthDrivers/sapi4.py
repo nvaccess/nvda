@@ -350,7 +350,8 @@ class SynthDriverAudio(COMObject):
 		"""Queue a notification to be sent to the engine via IAudioDestNotifySink.
 
 		:param func: The IAudioDestNotifySink member function to call.
-		:param ...: The arguments required by the member function."""
+		:param ...: The arguments required by the member function.
+		"""
 
 		def _notify(*args, **kwargs):
 			try:
