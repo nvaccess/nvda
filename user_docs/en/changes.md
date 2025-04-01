@@ -46,7 +46,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
 * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
 * NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome and other applications based on Chromium 134 or newer. (#17838)
-* In Word with UIA, when using the native extended table navigation commands alt+home, alt+end, alt+pageUp and alt+pageDown, the landing cell will now be reported. (#17867, @CyrilleB79)
+* In Word with UIA, when using the native extended table navigation commands (`alt+home`, `alt+end`, `alt+pageUp`, and `alt+pageDown`), the caret  movement will now be reported. (#17867, @CyrilleB79)
 
 ### Changes
 
