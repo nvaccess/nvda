@@ -442,7 +442,7 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		newInfo.updateCaret()
 		return True
 
-	def _inTable(self, info):
+	def _inTable(self, info: textInfos.TextInfo):
 		return info._rangeObj.tables.count > 0
 
 	@script(
