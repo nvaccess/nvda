@@ -206,9 +206,8 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: Install gh cli
-        run: sudo apt update && sudo apt-get install gh
       - name: cleanup cache
+        shell: bash
         run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
         env:
           GH_TOKEN: ${{ github.token }}
@@ -223,6 +222,7 @@ jobs:
     steps:
     - name: Get normalized tag names
       id: getReleaseNotes
+      shell: bash
       run: |
         echo RELEASE_NAME=$GITHUB_REF_NAME | sed 's/release-//g' >> $GITHUB_OUTPUT
         echo NORMALIZED_TAG_NAME=$GITHUB_REF_NAME | sed 's/\./-/g' | sed 's/release-//g' >> $GITHUB_OUTPUT
