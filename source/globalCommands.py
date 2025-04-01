@@ -4926,7 +4926,6 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.toggleMute()
 
 	@script(
-		gesture="kb:NVDA+alt+c",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 		description=_("Sends the contents of the clipboard to the remote machine"),
