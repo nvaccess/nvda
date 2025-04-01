@@ -24,8 +24,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  if: $GITHUB_EVENT_NAME == 'pull_request'
-  pullRequestNumber: ${{ github.event.number }}
+  pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number }}
+  scons_publisher: NV Access
 
 defaults:
   run:
@@ -194,16 +194,16 @@ jobs:
         path: testOutput/system
 
   cleanupCache:
+    permissions:
+      actions: write
     needs: [checkPot, licenseCheck, unitTests, systemTests]
     if: always()
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: cleanup cache
-        if: ${{ always() }}
         run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
+          GH_TOKEN: ${{ github.token }}
 
   release:
     permissions:
