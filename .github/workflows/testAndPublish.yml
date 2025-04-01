@@ -210,6 +210,7 @@ jobs:
         run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
         env:
           GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
 
   release:
     name: Release NVDA
