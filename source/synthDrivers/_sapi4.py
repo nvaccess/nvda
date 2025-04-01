@@ -314,3 +314,19 @@ IAudioDestNotifySink._methods_ = [
 
 CLSID_MMAudioDest = GUID("{CB96B400-C743-11cd-80E5-00AA003E4B50}")
 CLSID_TTSEnumerator = GUID("{D67C0280-C743-11cd-80E5-00AA003E4B50}")
+
+
+# Defined in mmsyscom.h
+MMSYSERR_NOERROR = 0
+
+
+class DriverMessage(IntEnum):
+	"""WaveOutMessage message codes
+	Defined in mmddk.h
+	"""
+
+	QUERY_INSTANCE_ID = 2065
+	"""DRV_QUERYFUNCTIONINSTANCEID """
+
+	QUERY_INSTANCE_ID_SIZE = 2066
+	"""DRV_QUERYFUNCTIONINSTANCEIDSIZE """

@@ -1,0 +1,60 @@
+name: Monitor Localisation File Changes
+
+on:
+  push:
+    branches:
+      - beta
+    paths:
+      - 'source/locale/en/*.dic'
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Get the diff
+      id: git_diff
+      run: |
+        git fetch origin
+        # Get the diff from the push
+        # Get only the changed lines (+-) and line markers (@@) from the diff, strip the first two lines (diff command metadata)
+        DIFF="$(git diff -U0 ${{github.event.before}} ${{github.event.after}} -- source/locale/en/*.dic | grep '^[+-@]')"
+        # Double space the diff for better plain text email formatting
+        DOUBLE_SPACED_DIFF=$(echo "$DIFF" | sed G)
+        # Store diff in multi-line environment variable
+        echo "DIFF<<EOF"$'\n'"$DIFF"$'\n'EOF >> $GITHUB_OUTPUT
+        echo "DOUBLE_SPACED_DIFF<<EOF"$'\n'"$DOUBLE_SPACED_DIFF"$'\n'EOF >> $GITHUB_OUTPUT
+
+    - name: Send email
+      uses: dawidd6/action-send-mail@v4
+      with:
+        server_address: email-smtp.us-west-2.amazonaws.com
+        server_port: 465
+        username: ${{ secrets.EMAIL_USERNAME }}
+        password: ${{ secrets.EMAIL_PASSWORD }}
+        subject: "Changes detected in localisation files"
+        to: nvda-l10n@nvaccess.org
+        from: '"NVDA localisations" <nvda-l10n@nvaccess.org>'
+        convert_markdown: true
+        body: |
+          The following changes have been detected in the English symbols or character descriptions dictionaries:
+
+          ${{ steps.git_diff.outputs.DOUBLE_SPACED_DIFF }}
+
+          Please review and update the translated files as necessary.
+          For more information, review the guide on translating these files: https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md.
+
+        html_body: |
+          The following changes have been detected in the English symbols or character descriptions dictionaries:
+
+          ```
+          ${{ steps.git_diff.outputs.DIFF }}
+          ```
+
+          Please review and update the translated files as necessary.
+          For more information, [review the guide on translating these files](https://github.com/nvaccess/nvda/blob/master/projectDocs/translating/github.md).
