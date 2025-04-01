@@ -39,8 +39,32 @@ jobs:
       uses: actions/checkout@v4
       with:
         submodules: true
-    - name: Build NVDA
-      uses: ./ci/nvdaBuilder
+    - name: Install dependencies
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        architecture: x86
+    - name: Cache dependencies
+      id: cacheDependencies
+      uses: actions/cache@v4
+      with:
+        path: .venv
+        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
+    - name: Set version variables
+      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      shell: cmd
+    - name: Set scons args
+      run: powershell.exe ci/scripts/setSconsArgs.ps1
+      shell: cmd
+    - name: Prepare source code
+      run: scons source %sconsArgs% --all-cores
+      shell: cmd
+    - name: Prepare source code
+      run: scons %sconsOutTargets% %sconsArgs% --all-cores
+      shell: cmd
+    - name: Prepare for tests
+      run: powershell.exe ci/scripts/tests/beforeTests.ps1
+      shell: cmd
     - name: Cache scons build
       uses: actions/cache@v4
       with:
@@ -156,11 +180,11 @@ jobs:
     - name: Install NVDA
       run: powershell.exe ci/scripts/installNVDA.ps1
       env:
-        nvdaLauncherFile: ${{ steps.getLauncher.outputs.download-path }}
+        nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Run system tests
       run: powershell.exe ci/scripts/tests/systemTests.ps1
       env:
-        nvdaLauncherFile: ${{ steps.getLauncher.outputs.download-path }}
+        nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Upload system tests results
       id: uploadSystemTestsResults
       if: ${{ always() }}
@@ -172,7 +196,7 @@ jobs:
   cleanupCache:
     needs: [checkPot, licenseCheck, unitTests, systemTests]
     if: always()
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
       - name: cleanup cache
         if: ${{ always() }}

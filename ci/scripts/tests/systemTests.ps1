@@ -25,9 +25,10 @@ $includeTags = $tagsForTestArray | ForEach-Object {
 	"--include", $_
 }
 
+$nvdaLauncherFile=$(Resolve-Path "$env:nvdaLauncherDir\nvda*.exe")
 .\runsystemtests.bat `
 --variable whichNVDA:installed `
---variable installDir:"${env:nvdaLauncherFile}" `
+--variable installDir:"${nvdaLauncherFile}" `
 --variable verboseDebugLogging:"${verboseDebugLogging}" `
 @includeTags `
 # last line intentionally blank, allowing all lines to have line continuations.

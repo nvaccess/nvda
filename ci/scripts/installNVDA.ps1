@@ -1,9 +1,10 @@
 $errorCode=0
-$outputDir=$(resolve-path .\testOutput)
+$outputDir=$(Resolve-Path .\testOutput)
+$nvdaLauncherFile=$(Resolve-Path "$env:nvdaLauncherDir\nvda*.exe")
 $installerLogFilePath="$outputDir\nvda_install.log"
-$installerProcess=start-process -FilePath "$env:nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
+$installerProcess=Start-Process -FilePath "$nvdaLauncherFile" -ArgumentList "--install-silent --debug-logging --log-file $installerLogFilePath" -passthru
 try {
-	$installerProcess | wait-process -Timeout 180 -ErrorAction Stop
+	$installerProcess | Wait-Process -Timeout 180 -ErrorAction Stop
 	$errorCode=$installerProcess.ExitCode
 } catch {
 	Write-Output "NVDA installer process timed out"
