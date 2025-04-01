@@ -1,13 +1,6 @@
 name: Build NVDA
-
 description: 'Builds NVDA'
-inputs:
-  use-cache:
-    description: 'Indicates if cache action should be used: true or false'
-    default: 'true'
-  scons-source:
-    description: 'Indicates if scons source should be run: true or false'
-    default: 'true'
+
 runs:
   using: "composite"
 
@@ -19,7 +12,6 @@ runs:
         architecture: x86
     - name: Cache dependencies
       id: cacheDependencies
-      if: ${{ inputs.use-cache }}
       uses: actions/cache@v4
       with:
         path: |
@@ -32,7 +24,6 @@ runs:
       run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
     - name: Prepare source code
-      if: ${{ inputs.scons-source == 'true' }}
       run: scons source %sconsArgs% --all-cores
       shell: cmd
     - name: Prepare for tests
