@@ -290,7 +290,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
 		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
 			# Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
-			pgettext("remote", "&Mode"),
+			pgettext("remote", "&Mode:"),
 			wx.Choice,
 			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
 		)
