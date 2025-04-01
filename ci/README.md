@@ -7,6 +7,7 @@
 Builds will fail if any command has a non-zero exit code. PowerShell scripts continue on non-terminating errors unless the file is prefixed with `$ErrorActionPreference = "Stop";`.
 
 ### Build process
+
 1. Checkout NVDA repository with submodules.
 1. Install dependencies.
 1. Set version and scons variables.
