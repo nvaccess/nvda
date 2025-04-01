@@ -7,7 +7,6 @@ on:
     - beta
     - rc
     - 'try-**'
-    - githubActions # To be removed
     tags:
     - 'release-**'
 
@@ -24,7 +23,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  START_BUILD_NUMBER: 36000
+  START_BUILD_NUMBER: 100000
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number }}
   scons_publisher: NV Access
   # Comment out any of the feature_* variables to disable the respective build feature.
