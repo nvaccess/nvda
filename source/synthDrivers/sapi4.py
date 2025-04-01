@@ -336,6 +336,7 @@ class SynthDriverAudio(COMObject):
 		self._comThread = comThread
 
 	def _final_release_(self):
+		"""This will be called automatically when this COM object is being destroyed."""
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Terminating audio")
 		with self._audioCond:
@@ -355,7 +356,7 @@ class SynthDriverAudio(COMObject):
 			try:
 				func(*args, **kwargs)
 			except COMError:
-				pass
+				pass  # Ignore returned HRESULT errors
 
 		self._comThread.submit(_notify, *args, **kwargs)
 
@@ -581,7 +582,7 @@ class SynthDriverAudio(COMObject):
 		self._waveFormat = wfx
 		self._initPlayer()
 		self._deviceState = AudioState.UNCLAIMED
-		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds
+		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds, the minimum buffer length allowed by SAPI 4
 		self._audioThread.start()
 
 	@_logTrace(format="{result[0]} bytes free")
@@ -589,7 +590,8 @@ class SynthDriverAudio(COMObject):
 		"""Returns the number of bytes that are free in the object's internal buffer.
 		:returns: Tuple (dwBytes, fEOF).
 			dwBytes: number of bytes available.
-			fEOF: TRUE if end-of-file is reached and no more data can be sent."""
+			fEOF: TRUE if end-of-file is reached and no more data can be sent.
+				  For wave-out devices, this should always be FALSE."""
 		if self._deviceState == AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return (self._freeBytes, 0)
