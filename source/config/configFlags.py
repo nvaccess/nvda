@@ -306,6 +306,9 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 
 	Use RemoteConnectionMode.MEMBER.value to compare with the config;
 	use RemoteConnectionMode.MEMBER.displayString in the UI for a translatable description of this member.
+
+	Note: This datatype has been chosen as it may be desireable to implement further roles in future.
+	For instance, an "observer" role, which is neither controlling or controlled, but which allows the user to listen to the other computers in the channel.
 	"""
 
 	FOLLOWER = 0
