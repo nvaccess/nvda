@@ -26,7 +26,7 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 	}
 }
 if (!$release) {
-		if($env:GITHUB_REF_NAME -eq "master") {
+	if ($env:GITHUB_REF_NAME -eq "master") {
 		$versionType = "snapshot:alpha"
 	} elseif (!$env:GITHUB_REF_NAME.StartsWith("try-") -and !$env:pullRequestNumber) {
 		$versionType = "snapshot:$env:GITHUB_REF_NAME"

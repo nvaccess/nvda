@@ -60,19 +60,14 @@ jobs:
         key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
-      shell: cmd
     - name: Set scons args
       run: powershell.exe ci/scripts/setSconsArgs.ps1
-      shell: cmd
     - name: Prepare source code
       run: scons source %sconsArgs% --all-cores
-      shell: cmd
     - name: Prepare source code for launcher
       run: scons %sconsOutTargets% %sconsArgs% --all-cores
-      shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
-      shell: cmd
     - name: Cache scons build
       uses: actions/cache@v4
       with:
@@ -102,7 +97,7 @@ jobs:
         overwrite: true
 
   licenseCheck:
-    name: Check license
+    name: Check license compatibility of dependencies
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -158,13 +153,10 @@ jobs:
         fail-on-cache-miss: true
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
-      shell: cmd
     - name: Set scons args
       run: powershell.exe ci/scripts/setSconsArgs.ps1
-      shell: cmd
     - name: Build launcher
       run: scons launcher %sconsArgs% --all-cores
-      shell: cmd
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
