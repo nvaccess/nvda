@@ -93,7 +93,7 @@ class SynthDriverBufSink(COMObject):
 		self._allowDelete = True
 		super().__init__()
 
-	def ITTSBufNotifySink_BookMark(self, this, qTimeStamp: int, dwMarkNum: int):
+	def ITTSBufNotifySink_BookMark(self, this: int, qTimeStamp: int, dwMarkNum: int):
 		synth = self.synthRef()
 		if synth is None:
 			log.debugWarning(
@@ -109,7 +109,7 @@ class SynthDriverBufSink(COMObject):
 			if synth._bookmarks.popleft() == dwMarkNum:
 				break
 
-	def IUnknown_Release(self, this, *args, **kwargs):
+	def IUnknown_Release(self, this: int, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("ITTSBufNotifySink::Release called too many times by engine")
 			return 1
@@ -789,7 +789,7 @@ class SynthDriverSink(COMObject):
 		self._allowDelete = True
 		super().__init__()
 
-	def ITTSNotifySinkW_AudioStart(self, this, qTimeStamp: int):
+	def ITTSNotifySinkW_AudioStart(self, this: int, qTimeStamp: int):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: TTSNotifySink AudioStart")
 		synth = self.synthRef()
@@ -802,7 +802,7 @@ class SynthDriverSink(COMObject):
 			# take the first bookmark list
 			synth._bookmarks = synth._bookmarkLists.popleft()
 
-	def ITTSNotifySinkW_AudioStop(self, this, qTimeStamp: int):
+	def ITTSNotifySinkW_AudioStop(self, this: int, qTimeStamp: int):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: TTSNotifySink AudioStop")
 		synth = self.synthRef()
@@ -821,7 +821,7 @@ class SynthDriverSink(COMObject):
 			synthDoneSpeaking.notify(synth=synth)
 		synth._bookmarks = None
 
-	def IUnknown_Release(self, this, *args, **kwargs):
+	def IUnknown_Release(self, this: int, *args, **kwargs):
 		if not self._allowDelete and self._refcnt.value == 1:
 			log.debugWarning("ITTSNotifySinkW::Release called too many times by engine")
 			return 1
