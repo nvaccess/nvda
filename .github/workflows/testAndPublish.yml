@@ -201,6 +201,7 @@ jobs:
     name: Cleanup cache
     permissions:
       actions: write
+      contents: read
     needs: [checkPot, licenseCheck, unitTests, systemTests]
     if: always()
     runs-on: ubuntu-latest
