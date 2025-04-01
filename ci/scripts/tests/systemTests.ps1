@@ -1,5 +1,3 @@
-$testOutput = (Resolve-Path .\testOutput\)
-$systemTestOutput = (Resolve-Path "$testOutput\system")
 if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
 	$verboseDebugLogging="True"
 } else {
@@ -35,7 +33,7 @@ $includeTags = $tagsForTestArray | ForEach-Object {
 # last line intentionally blank, allowing all lines to have line continuations.
 if($LastExitCode -ne 0) {
 	$MESSAGE = "FAIL: System tests (tags: ${tagsForTest}). See test results for more information."
-	echo "testFailExitCode=$LastExitCode" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 } else {
 	$MESSAGE = "PASS: System tests (tags: ${tagsForTest})."
 }

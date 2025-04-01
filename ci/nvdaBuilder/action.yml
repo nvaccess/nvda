@@ -26,6 +26,9 @@ runs:
     - name: Prepare source code
       run: scons source %sconsArgs% --all-cores
       shell: cmd
+    - name: Prepare source code
+      run: scons %sconsOutTargets% %sconsArgs% --all-cores
+      shell: cmd
     - name: Prepare for tests
       run: powershell.exe ci/scripts/tests/beforeTests.ps1
       shell: cmd

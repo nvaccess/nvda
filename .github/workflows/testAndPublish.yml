@@ -117,6 +117,9 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+    - name: Set version variables
+      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      shell: cmd
     - name: Set scons args
       run: powershell.exe ci/scripts/setSconsArgs.ps1
       shell: cmd
