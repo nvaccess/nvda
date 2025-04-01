@@ -1,12 +1,5 @@
 $ErrorActionPreference = "Stop";
 
-# Accessing Windows build worker via Remote Desktop (RDP)
-# To enable:
-# Set an RDP password (before triggering the build), ensure password requirements are met.
-# Remove the password after the RDP connection params are shown in the build output.
-# For passwords requirements and instructions for setting, see the appveyor docs:
-# https://www.appveyor.com/docs/how-to/rdp-to-build-worker/
-
 $pythonVersion = (py --version)
 echo $pythonVersion
 if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release-")) {
@@ -20,10 +13,10 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 	}
 } else {
 	$commitVersion = $env:GITHUB_SHA.Substring(0, 8)
-	$BUILD_NUMBER = [int]$env:GITHUB_RUN_NUMBER + 36000
-	if($env:pullRequestNumber) {
+	$BUILD_NUMBER = [int]$env:GITHUB_RUN_NUMBER + [int]$env:START_BUILD_NUMBER
+	if ($env:pullRequestNumber) {
 		$version = "pr$env:pullRequestNumber-$BUILD_NUMBER,$commitVersion"
-	} elseif($env:GITHUB_REF_NAME -eq "master") {
+	} elseif ($env:GITHUB_REF_NAME -eq "master") {
 		$version = "alpha-$BUILD_NUMBER,$commitVersion"
 	} else {
 		$version = "$env:GITHUB_REF_NAME-$BUILD_NUMBER,$commitVersion"
@@ -39,7 +32,7 @@ if (!$release) {
 		$versionType = "snapshot:$env:GITHUB_REF_NAME"
 	}
 }
-echo "version=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+Write-Output "version=$version" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 if ($versionType) {
-	echo "versionType=$versionType" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+	Write-Output "versionType=$versionType" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 }

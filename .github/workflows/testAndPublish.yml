@@ -24,8 +24,16 @@ concurrency:
   cancel-in-progress: true
 
 env:
+  START_BUILD_NUMBER: 36000
   pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number }}
   scons_publisher: NV Access
+  # Comment out any of the feature_* variables to disable the respective build feature.
+  # They are checked for existence of content, not specific value.
+  # feature_buildSymbols: configured
+  # feature_uploadSymbolsToMozilla: configured
+  # feature_buildAppx: configured
+  # feature_crowdinSync: configured
+  # feature_signing: configured
 
 defaults:
   run:
@@ -33,6 +41,7 @@ defaults:
 
 jobs:
   buildNVDA:
+    name: Build NVDA
     runs-on: windows-latest
     steps:
     - name: Checkout NVDA
@@ -45,7 +54,6 @@ jobs:
         python-version: '3.11'
         architecture: x86
     - name: Cache dependencies
-      id: cacheDependencies
       uses: actions/cache@v4
       with:
         path: .venv
@@ -59,7 +67,7 @@ jobs:
     - name: Prepare source code
       run: scons source %sconsArgs% --all-cores
       shell: cmd
-    - name: Prepare source code
+    - name: Prepare source code for launcher
       run: scons %sconsOutTargets% %sconsArgs% --all-cores
       shell: cmd
     - name: Prepare for tests
@@ -72,6 +80,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
 
   checkPot:
+    name: Check translator comments
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -93,6 +102,7 @@ jobs:
         overwrite: true
 
   licenseCheck:
+    name: Check license
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -114,6 +124,7 @@ jobs:
         overwrite: true
 
   unitTests:
+    name: Run unit tests
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -135,6 +146,7 @@ jobs:
         overwrite: true
 
   createLauncher:
+    name: Create launcher
     runs-on: windows-latest
     needs: buildNVDA
     steps:
@@ -162,6 +174,7 @@ jobs:
         overwrite: true
 
   systemTests:
+    name: Run system tests
     runs-on: windows-latest
     needs: createLauncher
     steps:
@@ -194,6 +207,7 @@ jobs:
         path: testOutput/system
 
   cleanupCache:
+    name: Cleanup cache
     permissions:
       actions: write
     needs: [checkPot, licenseCheck, unitTests, systemTests]
@@ -206,6 +220,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   release:
+    name: Release NVDA
     permissions:
       contents: write
     runs-on: ubuntu-latest
