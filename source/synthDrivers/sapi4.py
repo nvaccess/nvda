@@ -363,13 +363,10 @@ class SynthDriverAudio(COMObject):
 
 	def _setLevel(self, level: int) -> None:
 		self._level = level
-		if level & 0xFFFF0000:
-			self._player.setVolume(
-				left=float(level & 0xFFFF) / 0xFFFF,
-				right=float(level >> 16) / 0xFFFF,
-			)
-		else:
-			self._player.setVolume(all=float(level) / 0xFFFF)
+		self._player.setVolume(
+			left=float(level & 0xFFFF) / 0xFFFF,
+			right=float(level >> 16) / 0xFFFF,
+		)
 
 	def _initPlayer(self) -> None:
 		"""Initialize audio playback based on the wave format provided by the engine."""
