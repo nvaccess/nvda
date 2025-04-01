@@ -56,7 +56,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
-
+        fail-on-cache-miss: true
     - name: Check comments for translators
       run: powershell.exe ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
@@ -77,6 +77,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
     - name: License check
       run: powershell.exe ci/scripts/tests/licenseCheck.ps1
     - name: Upload artifact
@@ -97,6 +98,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
     - name: Run unit tests
       run: powershell.exe ci/scripts/tests/unitTests.ps1
     - name: Upload artifact
@@ -117,6 +119,7 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
     - name: Set version variables
       run: powershell.exe ci/scripts/setBuildVersionVars.ps1
       shell: cmd
@@ -143,15 +146,21 @@ jobs:
       with:
         path: ${{ github.workspace }}
         key: ${{ github.ref }}-${{ github.run_id }}
+        fail-on-cache-miss: true
     - name: Get NVDA launcher
+      id: getLauncher
       uses: actions/download-artifact@v4
       with:
         name: NVDA launcher
         path: output
     - name: Install NVDA
       run: powershell.exe ci/scripts/installNVDA.ps1
+      env:
+        nvdaLauncherFile: ${{ steps.getLauncher.outputs.download-path }}
     - name: Run system tests
       run: powershell.exe ci/scripts/tests/systemTests.ps1
+      env:
+        nvdaLauncherFile: ${{ steps.getLauncher.outputs.download-path }}
     - name: Upload system tests results
       id: uploadSystemTestsResults
       if: ${{ always() }}
@@ -168,6 +177,9 @@ jobs:
       - name: cleanup cache
         if: ${{ always() }}
         run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
 
   release:
     permissions:
