@@ -206,7 +206,7 @@ jobs:
     if: always()
     runs-on: ubuntu-latest
     steps:
-      - name: cleanup cache
+      - name: Cleanup cache
         shell: bash
         run: gh cache delete ${{ github.ref }}-${{ github.run_id }}
         env:
