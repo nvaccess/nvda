@@ -137,6 +137,10 @@ class RemoteClient:
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
 			ui.message(_("Not connected."))
 			return
+		elif self.connectedClientsCount < 1:
+			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
+			ui.message(pgettext("remote", "No-one else is connected."))
+			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
 			cues.clipboardPushed()
@@ -574,3 +578,17 @@ class RemoteClient:
 		:param script: Script function to unregister
 		"""
 		self.localScripts.discard(script)
+
+	@property
+	def connectedClientsCount(self) -> int:
+		if not self.isConnected():
+			return 0
+		elif self.leaderSession is not None:
+			return len(self.leaderSession.followers)
+		elif self.followerSession is not None:
+			return len(self.followerSession.leaders)
+		log.error(
+			"is connected returned true, but neither leaderSession or followerSession is not None.",
+			stack_info=True,
+		)
+		return 0
