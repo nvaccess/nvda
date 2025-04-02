@@ -35,10 +35,6 @@ env:
   # feature_crowdinSync: configured
   # feature_signing: configured
 
-defaults:
-  run:
-    shell: cmd
-
 jobs:
   buildNVDA:
     name: Build NVDA
@@ -59,17 +55,15 @@ jobs:
         path: .venv
         key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
-      # run: powershell.exe ci/scripts/setBuildVersionVars.ps1
       run: ci/scripts/setBuildVersionVars.ps1
-      shell: powershell
     - name: Set scons args
-      run: powershell.exe ci/scripts/setSconsArgs.ps1
+      run: ci/scripts/setSconsArgs.ps1
     - name: Prepare source code
-      run: scons source %sconsArgs% --all-cores
+      run: scons source $env:sconsArgs --all-cores
     - name: Prepare source code for launcher
-      run: scons %sconsOutTargets% %sconsArgs% --all-cores
+      run: scons $env:sconsOutTargets $env:sconsArgs --all-cores
     - name: Prepare for tests
-      run: powershell.exe ci/scripts/tests/beforeTests.ps1
+      run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
       uses: actions/cache@v4
       with:
@@ -88,7 +82,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Check comments for translators
-      run: powershell.exe ci/scripts/tests/translationCheck.ps1
+      run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
       id: uploadArtifact
       if: ${{ always() }}
@@ -111,7 +105,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: License check
-      run: powershell.exe ci/scripts/tests/licenseCheck.ps1
+      run: ci/scripts/tests/licenseCheck.ps1
     - name: Upload artifact
       id: uploadArtifact
       if: ${{ always() }}
@@ -133,7 +127,7 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Run unit tests
-      run: powershell.exe ci/scripts/tests/unitTests.ps1
+      run: ci/scripts/tests/unitTests.ps1
     - name: Upload artifact
       id: uploadArtifact
       if: ${{ always() }}
@@ -155,11 +149,11 @@ jobs:
         key: ${{ github.ref }}-${{ github.run_id }}
         fail-on-cache-miss: true
     - name: Set version variables
-      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
-      run: powershell.exe ci/scripts/setSconsArgs.ps1
+      run: ci/scripts/setSconsArgs.ps1
     - name: Build launcher
-      run: scons launcher %sconsArgs% --all-cores
+      run: scons launcher $env:sconsArgs --all-cores
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
@@ -186,11 +180,11 @@ jobs:
         name: NVDA launcher
         path: output
     - name: Install NVDA
-      run: powershell.exe ci/scripts/installNVDA.ps1
+      run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Run system tests
-      run: powershell.exe ci/scripts/tests/systemTests.ps1
+      run: ci/scripts/tests/systemTests.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Upload system tests results
