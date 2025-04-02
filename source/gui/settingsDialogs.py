@@ -3211,7 +3211,7 @@ class AudioPanel(SettingsPanel):
 		audio.appsVolume._updateAppsVolumeImpl(
 			volume=self.appSoundVolSlider.GetValue() / 100.0,
 			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
+			state=self.appVolAdjusterCombo._getControlCurrentFlag().calculated(),
 		)
 
 		if audioDucking.isAudioDuckingSupported():

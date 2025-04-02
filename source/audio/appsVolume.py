@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited, Tony Malykh, Bill Dengler
+# Copyright (C) 2024 NV Access Limited, Tony Malykh, Bill Dengler, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -27,14 +27,14 @@ _activeCallback: DummyAudioSessionCallback | None = None
 
 
 def initialize() -> None:
-	state = config.conf["audio"]["applicationsVolumeMode"]
+	configState: config.featureFlag.FeatureFlag = config.conf["audio"]["applicationsVolumeMode"]
 	volume = config.conf["audio"]["applicationsSoundVolume"]
 	muted = config.conf["audio"]["applicationsSoundMuted"]
 	if muted:
 		# Muted flag should not be persistent.
 		config.conf["audio"]["applicationsSoundMuted"] = False
 		muted = False
-	_updateAppsVolumeImpl(volume / 100.0, muted, state)
+	_updateAppsVolumeImpl(volume / 100.0, muted, configState.calculated())
 
 
 def terminate():
@@ -87,7 +87,9 @@ def _updateAppsVolumeImpl(
 	state: AppsVolumeAdjusterFlag,
 ):
 	global _activeCallback
-	if state.calculated() == AppsVolumeAdjusterFlag.DISABLED:
+
+	assert state != AppsVolumeAdjusterFlag.DEFAULT
+	if state == AppsVolumeAdjusterFlag.DISABLED:
 		newCallback = DummyAudioSessionCallback()
 		runTerminators = True
 	else:
@@ -115,8 +117,8 @@ def _adjustAppsVolume(
 ):
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
-	state = config.conf["audio"]["applicationsVolumeMode"]
-	if state != AppsVolumeAdjusterFlag.ENABLED:
+	configState: config.featureFlag.FeatureFlag = config.conf["audio"]["applicationsVolumeMode"]
+	if configState.calculated() != AppsVolumeAdjusterFlag.ENABLED:
 		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	volume += volumeAdjustment
@@ -125,7 +127,7 @@ def _adjustAppsVolume(
 	config.conf["audio"]["applicationsSoundVolume"] = volume
 
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
-	_updateAppsVolumeImpl(volume / 100.0, muted, state)
+	_updateAppsVolumeImpl(volume / 100.0, muted, configState.calculated())
 	# Translators: Announcing new applications' volume message
 	msg = _("{} percent application volume").format(volume)
 	ui.message(msg)
@@ -138,15 +140,15 @@ _APPS_VOLUME_STATES_ORDER = [
 
 
 def _toggleAppsVolumeState():
-	state = config.conf["audio"]["applicationsVolumeMode"]
+	configState: config.featureFlag.FeatureFlag = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	try:
-		index = _APPS_VOLUME_STATES_ORDER.index(state)
+		index = _APPS_VOLUME_STATES_ORDER.index(configState.calculated())
 	except ValueError:
 		index = -1
 	index = (index + 1) % len(_APPS_VOLUME_STATES_ORDER)
-	state = _APPS_VOLUME_STATES_ORDER[index]
+	state: AppsVolumeAdjusterFlag = _APPS_VOLUME_STATES_ORDER[index]
 	config.conf["audio"]["applicationsVolumeMode"] = state.name
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	if state == AppsVolumeAdjusterFlag.ENABLED:
@@ -161,15 +163,15 @@ def _toggleAppsVolumeState():
 
 
 def _toggleAppsVolumeMute():
-	state = config.conf["audio"]["applicationsVolumeMode"]
+	configState: config.featureFlag.FeatureFlag = config.conf["audio"]["applicationsVolumeMode"]
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
-	if state != AppsVolumeAdjusterFlag.ENABLED:
+	if configState != AppsVolumeAdjusterFlag.ENABLED:
 		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
 		return
 	muted = not muted
 	config.conf["audio"]["applicationsSoundMuted"] = muted
-	_updateAppsVolumeImpl(volume / 100.0, muted, state)
+	_updateAppsVolumeImpl(volume / 100.0, muted, configState.calculated())
 	if muted:
 		# Translators: Announcing new applications' mute status message
 		msg = _("Muted other applications")
