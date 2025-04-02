@@ -3411,14 +3411,14 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
 		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
-		autoConnectGroupSizer = wx.StaticBoxSizer(
+		self.autoConnectGroupSizer: wx.StaticBoxSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
 			self.remoteSettingsGroupBox,
 			# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
 			label=pgettext("remote", "Automatic connection"),
 		)
-		self.autoConnectionGroupBox = autoConnectGroupSizer.GetStaticBox()
-		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=autoConnectGroupSizer)
+		self.autoConnectionGroupBox: wx.StaticBox = self.autoConnectGroupSizer.GetStaticBox()
+		autoConnectionGroupHelper = guiHelper.BoxSizerHelper(self, sizer=self.autoConnectGroupSizer)
 		remoteSettingsGroupHelper.addItem(autoConnectionGroupHelper)
 
 		self.connectionMode = autoConnectionGroupHelper.addLabeledControl(
@@ -3458,6 +3458,17 @@ class RemoteSettingsPanel(SettingsPanel):
 			max=65535,
 		)
 		self.bindHelpEvent("RemoteAutoconnectPort", self.port)
+		# Since only host or port will ever be shown at once,
+		# there is no need for a vertical spacer between them.
+		# There's no way to override the insertion of such space,
+		# so remove it manually.
+		# BoxSizerHelper.addItem inserts a spacer, then the item,
+		# So the space should be the second-last child of the sizer.
+		# In some cases, BoxSizerHelper.addItem  won't insert a spacer.
+		# While it should here, check that the penultimate child is a spacer,
+		# just to be sure.
+		if (item := self.autoConnectGroupSizer.GetChildren()[-2]).IsSpacer():
+			item.AssignSpacer(0, 0)
 
 		self.key = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for a control in NVDA's Remote settings,
@@ -3484,8 +3495,17 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.remoteSettingsGroupBox.Enable(self.enableRemote.GetValue())
 		autoConnect = bool(self.autoconnect.GetValue())
 		self.autoConnectionGroupBox.Enable(autoConnect)
-		self.host.Enable(not bool(self.clientOrServer.GetSelection()) and autoConnect)
-		self.port.Enable(bool(self.clientOrServer.GetSelection()) and autoConnect)
+		self.autoConnectGroupSizer.Show(
+			self.port.GetContainingSizer(),
+			bool(self.clientOrServer.GetSelection()),
+			True,
+		)
+		self.autoConnectGroupSizer.Show(
+			self.host.GetContainingSizer(),
+			not bool(self.clientOrServer.GetSelection()),
+			True,
+		)
+		self.autoConnectGroupSizer.Layout()
 		self.deleteFingerprints.Enable(len(self.config["trusted_certs"]) > 0)
 
 	def _setFromConfig(self) -> None:
