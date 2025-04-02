@@ -175,7 +175,7 @@ def _logTrace(logAll: bool = False, format: str = ""):
 	return _decorator
 
 
-class AudioState(IntEnum):
+class _AudioState(IntEnum):
 	INVALID = 0
 	UNCLAIMED = 1
 	CLAIMED = 2
@@ -321,7 +321,7 @@ class SynthDriverAudio(COMObject):
 		if isDebugForSynthDriver():
 			log.debug("SAPI4: Initializing WASAPI implementation")
 		self._notifySink: LP_IAudioDestNotifySink | None = None
-		self._deviceState = AudioState.INVALID
+		self._deviceState = _AudioState.INVALID
 		self._waveFormat: nvwave.WAVEFORMATEX | None = None
 		self._player: nvwave.WavePlayer | None = None
 		self._writtenBytes = 0
@@ -386,7 +386,7 @@ class SynthDriverAudio(COMObject):
 	def IAudio_Flush(self) -> None:
 		"""Clears the object's internal buffer and resets the audio device,
 		but does not stop playing the audio data afterwards."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		self._player.stop()
 		with self._audioCond:
@@ -408,7 +408,7 @@ class SynthDriverAudio(COMObject):
 	def IAudio_LevelGet(self) -> int:
 		"""Returns the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return self._level
 
@@ -416,7 +416,7 @@ class SynthDriverAudio(COMObject):
 	def IAudio_LevelSet(self, dwLevel: int) -> None:
 		"""Sets the volume level, ranging from 0x0000 to 0xFFFF.
 		Low word is for the left (or mono) channel, and high word is for the right channel."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		self._setLevel(dwLevel)
 
@@ -436,7 +436,7 @@ class SynthDriverAudio(COMObject):
 	def IAudio_PosnGet(self) -> int:
 		"""Returns the byte position currently being played,
 		which should increase monotonically and never reset."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return self._playedBytes
 
@@ -448,17 +448,17 @@ class SynthDriverAudio(COMObject):
 		Previous buffer should not be cleared.
 		If Claim is called before unclaiming completes, unclaiming is canceled,
 		and neither AudioStop nor AudioStart is notified."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		elif self._deviceState == AudioState.UNCLAIMING:
+		elif self._deviceState == _AudioState.UNCLAIMING:
 			# cancels unclaiming
 			if isDebugForSynthDriver():
 				log.debug("SAPI4: Unclaiming cancelled")
-			self._deviceState = AudioState.RECLAIMING
+			self._deviceState = _AudioState.RECLAIMING
 			return
-		elif self._deviceState != AudioState.UNCLAIMED:
+		elif self._deviceState != _AudioState.UNCLAIMED:
 			raise ReturnHRESULT(AudioError.ALREADY_CLAIMED, None)
-		self._deviceState = AudioState.CLAIMED
+		self._deviceState = _AudioState.CLAIMED
 		if self._notifySink:
 			self._queueNotification(self._notifySink.AudioStart)
 
@@ -468,24 +468,24 @@ class SynthDriverAudio(COMObject):
 		Called after the engine completes writing all audio data.
 		If there is audio in the buffer, it should still be played till the end.
 		`IAudioDestNotifySink::AudioStop()` will be called after the audio completely stops."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		elif self._deviceState == AudioState.CLAIMED:
+		elif self._deviceState == _AudioState.CLAIMED:
 			# When not playing, this can finish immediately.
 			if self._writtenBytes == self._playedBytes and not self._audioQueue:
 				# If all audio is done playing, stop the player.
 				self._player.stop()
-			self._deviceState = AudioState.UNCLAIMED
+			self._deviceState = _AudioState.UNCLAIMED
 			if self._notifySink:
 				self._queueNotification(self._notifySink.AudioStop, 0)  # IANSRSN_NODATA
 			if isDebugForSynthDriver():
 				log.debug("SAPI4: UnClaim finished")
-		elif self._deviceState in (AudioState.STARTED, AudioState.RECLAIMING):
+		elif self._deviceState in (_AudioState.STARTED, _AudioState.RECLAIMING):
 			# When playing, wait for the playback to finish.
 			if isDebugForSynthDriver():
 				log.debug("SAPI4: UnClaiming")
 			with self._audioCond:
-				self._deviceState = AudioState.UNCLAIMING
+				self._deviceState = _AudioState.UNCLAIMING
 				self._audioCond.notify()
 		else:
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
@@ -493,11 +493,11 @@ class SynthDriverAudio(COMObject):
 	@_logTrace(logAll=True)
 	def IAudio_Start(self) -> None:
 		"""Starts (or resumes) playing the audio in the buffer."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		elif self._deviceState == AudioState.STARTED:
+		elif self._deviceState == _AudioState.STARTED:
 			raise ReturnHRESULT(AudioError.ALREADY_STARTED, None)
-		elif self._deviceState not in (AudioState.CLAIMED, AudioState.RECLAIMING):
+		elif self._deviceState not in (_AudioState.CLAIMED, _AudioState.RECLAIMING):
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		self._startTime = datetime.now()
 		self._startBytes = self._playedBytes
@@ -506,7 +506,7 @@ class SynthDriverAudio(COMObject):
 		except OSError:
 			log.debugWarning("Error starting audio", exc_info=True)
 		with self._audioCond:
-			self._deviceState = AudioState.STARTED
+			self._deviceState = _AudioState.STARTED
 			self._audioCond.notify()
 
 	@_logTrace(logAll=True)
@@ -514,11 +514,11 @@ class SynthDriverAudio(COMObject):
 		"""Stops (or pauses) playing, without clearing the buffer.
 		If there is audio in the buffer, calling Stop and UnClaim should keep the buffer
 		and only pause the playback."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		elif self._deviceState == AudioState.STARTED:
-			self._deviceState = AudioState.CLAIMED
-		elif self._deviceState not in (AudioState.UNCLAIMING, AudioState.RECLAIMING):
+		elif self._deviceState == _AudioState.STARTED:
+			self._deviceState = _AudioState.CLAIMED
+		elif self._deviceState not in (_AudioState.UNCLAIMING, _AudioState.RECLAIMING):
 			return
 		try:
 			self._player.pause(True)
@@ -532,7 +532,7 @@ class SynthDriverAudio(COMObject):
 		"""Returns the total number of bytes written,
 		including the unplayed bytes in the buffer,
 		which should increase monotonically and never reset."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return self._writtenBytes
 
@@ -541,7 +541,7 @@ class SynthDriverAudio(COMObject):
 		"""Converts a byte position to UTC FILETIME."""
 		if not pqWord:
 			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		UNIX_TIME_CONV = 1_1644_473_600
 		filetime_ticks = int((self._startTime.timestamp() + UNIX_TIME_CONV) * 10_000_000)
@@ -553,7 +553,7 @@ class SynthDriverAudio(COMObject):
 		"""Gets a copy of the current wave format.
 		:returns: A pointer to the WAVEFORMATEX structure.
 			Should be freed by the caller using CoTaskMemFree."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		size = sizeof(nvwave.WAVEFORMATEX)
 		ptr = windll.ole32.CoTaskMemAlloc(size)
@@ -570,7 +570,7 @@ class SynthDriverAudio(COMObject):
 			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
 		wfx = nvwave.WAVEFORMATEX()
 		memmove(addressof(wfx), dWFEX.pData, size)
-		if self._deviceState != AudioState.INVALID:
+		if self._deviceState != _AudioState.INVALID:
 			# Setting wave format more than once is not allowed.
 			if bytes(wfx) == bytes(self._waveFormat):
 				return  # Format not changed, do nothing
@@ -581,7 +581,7 @@ class SynthDriverAudio(COMObject):
 			raise ReturnHRESULT(AudioError.WAVE_FORMAT_NOT_SUPPORTED, None)
 		self._waveFormat = wfx
 		self._initPlayer()
-		self._deviceState = AudioState.UNCLAIMED
+		self._deviceState = _AudioState.UNCLAIMED
 		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds, the minimum buffer length allowed by SAPI 4
 		self._audioThread.start()
 
@@ -592,7 +592,7 @@ class SynthDriverAudio(COMObject):
 			dwBytes: number of bytes available.
 			fEOF: TRUE if end-of-file is reached and no more data can be sent.
 				  For wave-out devices, this should always be FALSE."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		return (self._freeBytes, 0)
 
@@ -603,9 +603,9 @@ class SynthDriverAudio(COMObject):
 		When data cannot fit in the buffer, this should return AudioError.NOT_ENOUGH_DATA immediately."""
 		if not pBuffer:
 			raise ReturnHRESULT(hresult.E_INVALIDARG, None)
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
-		elif self._deviceState in (AudioState.UNCLAIMED, AudioState.UNCLAIMING):
+		elif self._deviceState in (_AudioState.UNCLAIMED, _AudioState.UNCLAIMING):
 			log.debugWarning("Audio data written when device is not claimed")
 			raise ReturnHRESULT(AudioError.NOT_CLAIMED, None)
 		elif self._freeBytes < dwSize:
@@ -621,7 +621,7 @@ class SynthDriverAudio(COMObject):
 		"""Attaches a bookmark to the most recent data in the audio-destination object's internal buffer.
 		When the bookmark is reached, `IAudioDestNotifySink::BookMark` is called.
 		When Flush is called, untriggered bookmarks should also be triggered."""
-		if self._deviceState == AudioState.INVALID:
+		if self._deviceState == _AudioState.INVALID:
 			raise ReturnHRESULT(AudioError.NEED_WAVE_FORMAT, None)
 		with self._audioCond:
 			self._bookmarkQueue.append(_Bookmark(self._writtenBytes, dwMarkID))
@@ -633,9 +633,9 @@ class SynthDriverAudio(COMObject):
 			with self._audioCond:
 				self._checkBookmarksAndState()
 				if self._deviceState not in (
-					AudioState.STARTED,
-					AudioState.UNCLAIMING,
-					AudioState.RECLAIMING,
+					_AudioState.STARTED,
+					_AudioState.UNCLAIMING,
+					_AudioState.RECLAIMING,
 				):
 					self._audioCond.wait()
 					continue
@@ -662,9 +662,9 @@ class SynthDriverAudio(COMObject):
 
 	def _checkBookmarksAndState(self):
 		if self._deviceState not in (
-			AudioState.STARTED,
-			AudioState.UNCLAIMING,
-			AudioState.RECLAIMING,
+			_AudioState.STARTED,
+			_AudioState.UNCLAIMING,
+			_AudioState.RECLAIMING,
 		):
 			return
 		while self._bookmarkQueue:
@@ -675,19 +675,19 @@ class SynthDriverAudio(COMObject):
 				self._queueNotification(self._notifySink.BookMark, bookmark.id, 0)
 			self._bookmarkQueue.popleft()
 		if self._playedBytes == self._writtenBytes and self._deviceState in (
-			AudioState.UNCLAIMING,
-			AudioState.RECLAIMING,
+			_AudioState.UNCLAIMING,
+			_AudioState.RECLAIMING,
 		):
 			self._finishUnClaim()
 
 	def _finishUnClaim(self):
 		"""Finishes the asynchronous UnClaim call."""
-		if self._deviceState == AudioState.UNCLAIMING:
-			self._deviceState = AudioState.UNCLAIMED
+		if self._deviceState == _AudioState.UNCLAIMING:
+			self._deviceState = _AudioState.UNCLAIMED
 			if isDebugForSynthDriver():
 				log.debug("SAPI4: UnClaim finished")
-		elif self._deviceState == AudioState.RECLAIMING:
-			self._deviceState = AudioState.CLAIMED
+		elif self._deviceState == _AudioState.RECLAIMING:
+			self._deviceState = _AudioState.CLAIMED
 			return
 		else:
 			return
