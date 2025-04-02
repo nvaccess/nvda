@@ -290,6 +290,11 @@ class _ComProxy:
 		self._thread.invoke(_deleter)
 
 
+BUFFER_LENGTH_S = 2
+"""Length of SynthDriverAudio's internal buffer, in seconds.
+SAPI4 requires the buffer to be at least 2 seconds."""
+
+
 class SynthDriverAudio(COMObject):
 	"""
 	Implements IAudio and IAudioDest to receive streamed in audio data.
@@ -398,7 +403,7 @@ class SynthDriverAudio(COMObject):
 					self._queueNotification(self._notifySink.BookMark, bookmark.id, 1)
 			self._audioQueue.clear()
 			self._bookmarkQueue.clear()
-			self._freeBytes = self._waveFormat.nAvgBytesPerSec * 2  # 2 seconds
+			self._freeBytes = self._waveFormat.nAvgBytesPerSec * BUFFER_LENGTH_S
 			# As byte positions can only increase,
 			# set _playedBytes to the current _writtenBytes
 			# to make sure that bookmarks that use byte positions still work.
@@ -582,7 +587,7 @@ class SynthDriverAudio(COMObject):
 		self._waveFormat = wfx
 		self._initPlayer()
 		self._deviceState = _AudioState.UNCLAIMED
-		self._freeBytes = wfx.nAvgBytesPerSec * 2  # 2 seconds, the minimum buffer length allowed by SAPI 4
+		self._freeBytes = wfx.nAvgBytesPerSec * BUFFER_LENGTH_S
 		self._audioThread.start()
 
 	@_logTrace(format="{result[0]} bytes free")
