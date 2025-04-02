@@ -7,6 +7,7 @@ on:
     - beta
     - rc
     - 'try-**'
+    - githubActionsPsh
     tags:
     - 'release-**'
 
@@ -58,7 +59,9 @@ jobs:
         path: .venv
         key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
-      run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      # run: powershell.exe ci/scripts/setBuildVersionVars.ps1
+      run: ci/scripts/setBuildVersionVars.ps1
+      shell: powershell
     - name: Set scons args
       run: powershell.exe ci/scripts/setSconsArgs.ps1
     - name: Prepare source code
