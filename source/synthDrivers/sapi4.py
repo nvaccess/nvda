@@ -318,6 +318,8 @@ class SynthDriverAudio(COMObject):
 		"""Constructor.
 
 		:param comThread: The COM thread that `IAudioDestNotifySink` methods will be called on."""
+		if isDebugForSynthDriver():
+			log.debug("SAPI4: Initializing WASAPI implementation")
 		self._notifySink: LP_IAudioDestNotifySink | None = None
 		self._deviceState = AudioState.INVALID
 		self._waveFormat: nvwave.WAVEFORMATEX | None = None
