@@ -140,8 +140,8 @@ class RemoteClient:
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
 			cues.clipboardPushed()
-		except TypeError:
-			log.exception("Unable to push clipboard")
+		except (TypeError, OSError):
+			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
 			ui.message(_("Unable to push clipboard"))
 
