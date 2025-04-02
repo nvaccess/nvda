@@ -3692,7 +3692,7 @@ Once the session is active, you can switch between controlling the remote comput
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->
-| Action | Key Command | Description |
+| Name |Key |Description|
 |---|---|---|
 | Toggle Control | `NVDA+alt+tab` | Switch between controlling the remote and local computer. |
 | Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnect from it. Otherwise, start a new Remote session. |
