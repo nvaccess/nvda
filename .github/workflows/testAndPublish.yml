@@ -156,6 +156,7 @@ jobs:
       shell: cmd
       run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Upload launcher
+      id: uploadLauncher
       uses: actions/upload-artifact@v4
       with:
         name: NVDA launcher
@@ -163,6 +164,7 @@ jobs:
         overwrite: true
     - name: Upload build artifacts
       uses: actions/upload-artifact@v4
+      id: uploadBuildArtifacts
       with:
         name: NVDA build artifacts
         path: |
@@ -171,6 +173,11 @@ jobs:
           !output/nvda.pot
           !output/potSourceFileList.txt
         overwrite: true
+    - name: Add job summary
+      shell: bash
+      run: |
+        echo "* [Download the NVDA launcher](${{ steps.uploadLauncher.outputs.artifact-url }}) (${{ steps.uploadLauncher.outputs.artifact-digest }})" >> $GITHUB_STEP_SUMMARY
+        echo "* [Download the other build artifacts](${{ steps.uploadBuildArtifacts.outputs.artifact-url }})" >> $GITHUB_STEP_SUMMARY
 
   systemTests:
     name: Run system tests
@@ -193,6 +200,13 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
+        nvdaInstallerLogDir: testOutput/install
+    - name: Upload install log
+      if: ${{ success() || failure() }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: Install log
+        path: testOutput/install
     - name: Run system tests
       run: ci/scripts/tests/systemTests.ps1
       env:
