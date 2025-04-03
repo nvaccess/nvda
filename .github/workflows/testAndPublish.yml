@@ -126,6 +126,10 @@ jobs:
         fail-on-cache-miss: true
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
+    - name: Replace relative paths in unit test results
+      # Junit reports fail on these
+      shell: bash
+      run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
       id: uploadArtifact
       if: ${{ always() }}
@@ -138,6 +142,8 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ always() }}
       with:
+        check_name: Unit tests
+        detailed_summary: true
         annotate_only: true
         report_paths: testOutput/unit/unitTests.xml
 
@@ -206,6 +212,8 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ always() }}
       with:
+        check_name: System tests
+        detailed_summary: true
         annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
