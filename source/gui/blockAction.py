@@ -38,6 +38,14 @@ def _modalDialogOpenCallback():
 		MessageDialog.focusBlockingInstances()
 
 
+def _isRemoteAccessDisabled() -> bool:
+	"""Whether Remote Access functionality is **disabled**."""
+	# Import late to avoid circular import
+	from remoteClient import remoteRunning
+
+	return not remoteRunning()
+
+
 @dataclass
 class _Context:
 	blockActionIf: Callable[[], bool]
@@ -79,6 +87,11 @@ class Context(_Context, Enum):
 		lambda: config.conf["braille"]["mode"] == BrailleMode.SPEECH_OUTPUT.value,
 		# Translators: Reported when trying to toggle an unsupported setting in speech output mode.
 		_("Action unavailable while the braille mode is set to speech output"),
+	)
+	REMOTE_ACCESS_DISABLED = (
+		_isRemoteAccessDisabled,
+		# Translators: Reported when an action cannot be performed because Remote Access functionality is disabled.
+		_("Action unavailable when Remote Access is disabled"),
 	)
 
 
