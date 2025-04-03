@@ -398,7 +398,7 @@ def _createAddonGUICollection() -> AddonGUICollectionT:
 	Therefore addon IDs should be treated as case insensitive.
 	"""
 	return AddonGUICollectionT(
-		{channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL}
+		{channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL},
 	)
 
 
