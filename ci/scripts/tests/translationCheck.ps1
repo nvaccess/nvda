@@ -8,7 +8,7 @@ Get-Content testOutput\translationCheckResults.log
 
 if ($LastExitCode -ne 0) {
 	Write-Output "FAIL: Translation comments check.`n" >> $env:GITHUB_STEP_SUMMARY
-	Write-Output "<details>`n<summary>Error log</summary>`n`n``````log" >> $env:GITHUB_STEP_SUMMARY
+	Write-Output "<details>`n<summary>Error log</summary>`n`n``````" >> $env:GITHUB_STEP_SUMMARY
 	Get-Content testOutput\translationCheckResults.log >> $env:GITHUB_STEP_SUMMARY
 	Write-Output "```````n</details>`n" >> $env:GITHUB_STEP_SUMMARY
 	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append

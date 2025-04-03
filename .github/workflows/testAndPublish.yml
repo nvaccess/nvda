@@ -77,12 +77,13 @@ jobs:
     - name: Check comments for translators
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
-      id: uploadArtifact
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
-        name: Check pot results
-        path: output/nvda.pot
+        name: makePot results
+        path: |
+          output/nvda.pot
+          output/potSourceFileList.txt
         overwrite: true
 
   licenseCheck:
@@ -118,7 +119,6 @@ jobs:
       shell: bash
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
-      id: uploadArtifact
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
@@ -156,11 +156,20 @@ jobs:
       shell: cmd
       run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Upload launcher
-      id: uploadLauncher
       uses: actions/upload-artifact@v4
       with:
         name: NVDA launcher
         path: output/nvda*.exe
+        overwrite: true
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: NVDA build artifacts
+        path: |
+          output/*
+          !output/nvda*.exe
+          !output/nvda.pot
+          !output/potSourceFileList.txt
         overwrite: true
 
   systemTests:
@@ -189,7 +198,6 @@ jobs:
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Upload system tests results
-      id: uploadSystemTestsResults
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
