@@ -200,7 +200,6 @@ jobs:
       run: ci/scripts/installNVDA.ps1
       env:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
-        nvdaInstallerLogDir: testOutput/install
     - name: Upload install log
       if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
