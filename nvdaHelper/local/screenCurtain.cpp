@@ -15,7 +15,7 @@ bool captureScreen() {
 	// The virtual screen is the bounding rectangle of all of the monitors on the system.
 	int screenWidth = GetSystemMetrics(SM_CXVIRTUALSCREEN),
 		screenHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN),
-		// While the primary monitor's top left corner is at the origin,
+		// While the primary monitor'sStatus top left corner is at the origin,
 		// it is not necessarily at the top left of the virtual screen.
 		// Thus, the top left of the virtual screen may be negative.
 		screenOriginX = GetSystemMetrics(SM_XVIRTUALSCREEN),
@@ -23,16 +23,16 @@ bool captureScreen() {
 		// Screen coordinates are 16-bit integers,
 		// and since 2^16 * 2^16 = 2^32,
 		// the area of the screen is guaranteed to fit in an int on all supported platforms.
-		screenSize = screenWidth * screenHeight,
+		screenArea = screenWidth * screenHeight,
 		bytesWritten;
-	UINT hsize;
-	DWORD screenshotSize;
+	UINT histogramSize;
+	DWORD diScreenshotSize;
 	HWND desktopWnd;
-	BITMAP screenshot;
+	BITMAP ddScreenshot;
 	HGDIOBJ oldObj;
-	BITMAPINFOHEADER bmpInfoHeader;
-	bool success ;
-	Gdiplus::Status s;
+	BITMAPINFOHEADER diScreenshotHeader;
+	bool bStatus ;
+	Gdiplus::Status sStatus;
 
 	LOG_INFO(L"Get desktop window");
 	desktopWnd = GetDesktopWindow();
@@ -70,7 +70,7 @@ bool captureScreen() {
 
 	LOG_INFO(L"Bit blitting.");
 	// Replace the contents of captureDc with those of desktopDc
-	success = BitBlt(
+	bStatus = BitBlt(
 		// Destination device context
 		captureDc.get(),
 		// Top left of destination
@@ -86,50 +86,50 @@ bool captureScreen() {
 		SRCCOPY);
 	// Restore captureDC for safety.
 	SelectObject(captureDc.get(), oldObj);
-	if (!success) {
+	if (!bStatus) {
 		LOG_ERROR("Failed to bit blit desktop device context to capture device context. Error #" << GetLastError());
 		return false;
 	}
 
 	LOG_INFO(L"Getting DDB properties.");
 	// Get properties of captureBitmap
-	bytesWritten = GetObject(captureBitmap.get(), sizeof(BITMAP), &screenshot);
+	bytesWritten = GetObject(captureBitmap.get(), sizeof(BITMAP), &ddScreenshot);
 	if (bytesWritten == 0) {
 		LOG_ERROR("Failed to get bitmap metadata.");
 		return false;
 	}
 
 	LOG_INFO(L"Setting DIB props.");
-	bmpInfoHeader.biSize = sizeof(BITMAPINFOHEADER);
-	bmpInfoHeader.biWidth = screenshot.bmWidth;
-	bmpInfoHeader.biHeight = screenshot.bmHeight;
-	bmpInfoHeader.biPlanes = 1;			  // Can only ever be 1
-	bmpInfoHeader.biBitCount = 32;		  // High byte unused
-	bmpInfoHeader.biCompression = BI_RGB; // Uncompressed
-	bmpInfoHeader.biSizeImage = 0;		  // Unneeded as uncompressed
-	bmpInfoHeader.biXPelsPerMeter = 0;
-	bmpInfoHeader.biYPelsPerMeter = 0;
-	bmpInfoHeader.biClrUsed = 0;
-	bmpInfoHeader.biClrImportant = 0; // All colours are needed
+	diScreenshotHeader.biSize = sizeof(BITMAPINFOHEADER);
+	diScreenshotHeader.biWidth = ddScreenshot.bmWidth;
+	diScreenshotHeader.biHeight = ddScreenshot.bmHeight;
+	diScreenshotHeader.biPlanes = 1;			  // Can only ever be 1
+	diScreenshotHeader.biBitCount = 32;		  // High byte unused
+	diScreenshotHeader.biCompression = BI_RGB; // Uncompressed
+	diScreenshotHeader.biSizeImage = 0;		  // Unneeded as uncompressed
+	diScreenshotHeader.biXPelsPerMeter = 0;
+	diScreenshotHeader.biYPelsPerMeter = 0;
+	diScreenshotHeader.biClrUsed = 0;
+	diScreenshotHeader.biClrImportant = 0; // All colours are needed
 
 	LOG_INFO("Calculating DIB size.");
-	screenshotSize = ((screenshot.bmWidth * bmpInfoHeader.biBitCount + 31) / 32) * 4 * screenshot.bmHeight;
+	diScreenshotSize = ((ddScreenshot.bmWidth * diScreenshotHeader.biBitCount + 31) / 32) * 4 * ddScreenshot.bmHeight;
 
 	try {
 		// Convert the device-dependent bitmap to a device-independent bitmap.
 		LOG_INFO("Allocating size for DIB.");
-		auto buff = std::make_shared<char[]>(screenshotSize);
+		auto diScreenshotBits = std::make_shared<char[]>(diScreenshotSize);
 
 		LOG_INFO(L"Getting DIB.");
 		bytesWritten = GetDIBits(
 			// Source device context and device-dependent bitmap
 			captureDc.get(), captureBitmap.get(),
 			// Range of scan lines to copy
-			0, (UINT)screenshot.bmHeight,
+			0, (UINT)ddScreenshot.bmHeight,
 			// Destination buffer
-			buff.get(),
+			diScreenshotBits.get(),
 			// Format of DIB
-			(BITMAPINFO *)&bmpInfoHeader, DIB_RGB_COLORS);
+			(BITMAPINFO *)&diScreenshotHeader, DIB_RGB_COLORS);
 		if (bytesWritten == 0 || bytesWritten == ERROR_INVALID_PARAMETER) {
 			LOG_ERROR(L"Failed to convert device dependent bitmap to device independent bitmap. Return " << bytesWritten);
 			return false;
@@ -137,29 +137,29 @@ bool captureScreen() {
 
 		// Create a GDI+ bitmap from the captured virtual screen, and calculate a histogram of colours.
 		LOG_INFO(L"Create GDIPLUS bmp.");
-		auto image = make_shared<Bitmap>((BITMAPINFO *)&bmpInfoHeader, buff.get());
+		auto diScreenshot = make_shared<Bitmap>((BITMAPINFO *)&diScreenshotHeader, diScreenshotBits.get());
 
 		LOG_INFO("Calculate hist size.");
-		s = image->GetHistogramSize(HistogramFormatARGB, &hsize);
-		if (s != Gdiplus::Ok) {
-			LOG_ERROR(L"Failed to calculate histogram size. Error #" << s << L".");
+		sStatus = diScreenshot->GetHistogramSize(HistogramFormatARGB, &histogramSize);
+		if (sStatus != Gdiplus::Ok) {
+			LOG_ERROR(L"Failed to calculate histogram size. Error #" << sStatus << L".");
 			return false;
 		}
 
 		LOG_INFO("Allocate size for histogram.");
-		auto histR = std::make_shared<UINT[]>(hsize);
-		auto histG = std::make_shared<UINT[]>(hsize);
-		auto histB = std::make_shared<UINT[]>(hsize);
+		auto histR = std::make_shared<UINT[]>(histogramSize);
+		auto histG = std::make_shared<UINT[]>(histogramSize);
+		auto histB = std::make_shared<UINT[]>(histogramSize);
 
 		LOG_INFO(L"Get histogram.");
-		image->GetHistogram(HistogramFormatRGB, hsize, histR.get(), histG.get(), histB.get(), NULL);
+		diScreenshot->GetHistogram(HistogramFormatRGB, histogramSize, histR.get(), histG.get(), histB.get(), NULL);
 
 		// If the entire screen is black, then the only colour in the histogram must be (0, 0, 0).
 		// Since the sum of values in each channel must be the number of pixels in the image,
 		// if the screen is entirely black,
 		// the 0th entry in each of the channels must be the number of pixels in the image.
 		LOG_INFO("Work out if is black.");
-		return histR[0] == screenSize && histG[0] == screenSize && histB[0] == screenSize;
+		return histR[0] == screenArea && histG[0] == screenArea && histB[0] == screenArea;
 	}
 	catch (bad_alloc)
 	{
@@ -167,13 +167,13 @@ bool captureScreen() {
 		return false;
 	}
 }
-
+/*
 bool oldCaptureScreen()
 {
 	// The virtual screen is the bounding rectangle of all of the monitors on the system.
 	int screenWidth = GetSystemMetrics(SM_CXVIRTUALSCREEN),
 		screenHeight = GetSystemMetrics(SM_CYVIRTUALSCREEN),
-		// While the primary monitor's top left corner is at the origin,
+		// While the primary monitor'sStatus top left corner is at the origin,
 		// it is not necessarily at the top left of the virtual screen.
 		// Thus, the top left of the virtual screen may be negative.
 		screenOriginX = GetSystemMetrics(SM_XVIRTUALSCREEN),
@@ -181,13 +181,13 @@ bool oldCaptureScreen()
 		// Screen coordinates are 16-bit integers,
 		// and since 2^16 * 2^16 = 2^32,
 		// the area of the screen is guaranteed to fit in an int on all supported platforms.
-		screenSize = screenWidth * screenHeight;
-	LOG_INFO(L"Screen is " << screenWidth << L"x" << screenHeight << " = " << screenSize << "\n");
+		screenArea = screenWidth * screenHeight;
+	LOG_INFO(L"Screen is " << screenWidth << L"x" << screenHeight << " = " << screenArea << "\n");
 	HWND desktopWnd = GetDesktopWindow();
 	HDC desktopDc = GetDC(desktopWnd),
 		captureDc = CreateCompatibleDC(desktopDc);
 	HBITMAP captureBitmap = CreateCompatibleBitmap(desktopDc, screenWidth, screenHeight);
-	BITMAP screenshot;
+	BITMAP ddScreenshot;
 	DWORD screenshotSize = 0, bytesWritten = 0, dibSize = 0;
 	SelectObject(captureDc, captureBitmap);
 
@@ -207,12 +207,12 @@ bool oldCaptureScreen()
 		// In this case, replace destination with source.
 		SRCCOPY);
 
-	GetObject(captureBitmap, sizeof(BITMAP), &screenshot);
+	GetObject(captureBitmap, sizeof(BITMAP), &ddScreenshot);
 	BITMAPFILEHEADER bmpFileHeader;
 	BITMAPINFOHEADER bmpInfoHeader;
 	bmpInfoHeader.biSize = sizeof(BITMAPINFOHEADER);
-	bmpInfoHeader.biWidth = screenshot.bmWidth;
-	bmpInfoHeader.biHeight = screenshot.bmHeight;
+	bmpInfoHeader.biWidth = ddScreenshot.bmWidth;
+	bmpInfoHeader.biHeight = ddScreenshot.bmHeight;
 	bmpInfoHeader.biPlanes = 1;
 	bmpInfoHeader.biBitCount = 32;
 	bmpInfoHeader.biCompression = BI_RGB;
@@ -222,7 +222,7 @@ bool oldCaptureScreen()
 	bmpInfoHeader.biClrUsed = 0;
 	bmpInfoHeader.biClrImportant = 0;
 
-	screenshotSize = ((screenshot.bmWidth * bmpInfoHeader.biBitCount + 31) / 32) * 4 * screenshot.bmHeight;
+	screenshotSize = ((ddScreenshot.bmWidth * bmpInfoHeader.biBitCount + 31) / 32) * 4 * ddScreenshot.bmHeight;
 	dibSize = screenshotSize + sizeof(BITMAPFILEHEADER) + sizeof(BITMAPINFOHEADER);
 	bmpFileHeader.bfOffBits = (DWORD)sizeof(BITMAPFILEHEADER) + (DWORD)sizeof(BITMAPINFOHEADER);
 	bmpFileHeader.bfSize = dibSize;
@@ -230,11 +230,11 @@ bool oldCaptureScreen()
 
 	LPVOID buff = HeapAlloc(GetProcessHeap(), HEAP_GENERATE_EXCEPTIONS, screenshotSize);
 
-	GetDIBits(captureDc, captureBitmap, 0, (UINT)screenshot.bmHeight, buff, (BITMAPINFO *)&bmpInfoHeader, DIB_RGB_COLORS);
+	GetDIBits(captureDc, captureBitmap, 0, (UINT)ddScreenshot.bmHeight, buff, (BITMAPINFO *)&bmpInfoHeader, DIB_RGB_COLORS);
 
 	IStream *stream = SHCreateMemStream(NULL, dibSize);
 
-	HANDLE hFile = CreateFile(L"screenshot.bmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
+	HANDLE hFile = CreateFile(L"ddScreenshot.bmp", GENERIC_WRITE, 0, NULL, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL);
 
 	WriteFile(hFile, (LPSTR)&bmpFileHeader, sizeof(bmpFileHeader), &bytesWritten, NULL);
 	stream->Write((LPSTR)&bmpFileHeader, sizeof(bmpFileHeader), &bytesWritten);
@@ -246,15 +246,15 @@ bool oldCaptureScreen()
 	CloseHandle(hFile);
 
 	Bitmap image((BITMAPINFO *)&bmpInfoHeader, buff);
-	UINT hsize;
-	Status s = image.GetHistogramSize(HistogramFormatARGB, &hsize);
-	UINT *histR = new UINT[hsize];
-	UINT *histG = new UINT[hsize];
-	UINT *histB = new UINT[hsize];
+	UINT histogramSize;
+	Status sStatus = image.GetHistogramSize(HistogramFormatARGB, &histogramSize);
+	UINT *histR = new UINT[histogramSize];
+	UINT *histG = new UINT[histogramSize];
+	UINT *histB = new UINT[histogramSize];
 
-	image.GetHistogram(HistogramFormatRGB, hsize, histR, histG, histB, NULL);
+	image.GetHistogram(HistogramFormatRGB, histogramSize, histR, histG, histB, NULL);
 	bool isBlack;
-	isBlack = (histR[0] == screenSize || histG[0] == screenSize || histB[0] == screenSize);
+	isBlack = (histR[0] == screenArea || histG[0] == screenArea || histB[0] == screenArea);
 
 	HeapFree(GetProcessHeap(), NULL, buff);
 	ReleaseDC(desktopWnd, desktopDc);
@@ -262,3 +262,4 @@ bool oldCaptureScreen()
 	DeleteObject(captureBitmap);
 	return isBlack;
 }
+*/
