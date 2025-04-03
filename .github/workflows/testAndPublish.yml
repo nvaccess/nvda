@@ -218,7 +218,7 @@ jobs:
     permissions:
       actions: write
     needs: [checkPot, licenseCheck, unitTests, systemTests]
-    if: ${{ always() && (github.event.push || github.event.pull_request.head.repo.owner == 'nvaccess') }}
+    if: ${{ always() && (github.event.push || github.event.pull_request.head.repo.owner == github.repository_owner) }}
     runs-on: ubuntu-latest
     steps:
       - name: Cleanup cache
