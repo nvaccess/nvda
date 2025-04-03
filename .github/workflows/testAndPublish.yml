@@ -138,6 +138,7 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ always() }}
       with:
+        annotate_only: true
         report_paths: testOutput/unit/unitTests.xml
 
   createLauncher:
@@ -205,6 +206,7 @@ jobs:
       uses: mikepenz/action-junit-report@v5
       if: ${{ always() }}
       with:
+        annotate_only: true
         report_paths: testOutput/system/systemTests.xml
 
   cleanupCache:
