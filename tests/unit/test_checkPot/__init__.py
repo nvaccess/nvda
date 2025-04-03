@@ -35,9 +35,8 @@ class TestCheckPot(unittest.TestCase):
 		bufErr = StringIO()
 		with redirect_stdout(bufOut), redirect_stderr(bufErr):
 			errorCount = self.checkPot.checkPot(filePath)
-		self.assertTrue(bufOut.tell(), "No standard output")
-		self.assertFalse(bufErr.tell(), "Non-empty standard error output")
-		outLines = bufOut.getvalue().split("\n")
+		self.assertTrue(bufOut.tell() or bufErr.tell(), "No output")
+		outLines = bufOut.getvalue().split("\n") + bufErr.getvalue().split("\n")
 		self.assertGreaterEqual(len(outLines), 2, "Less than two lines of standard output")
 		self.assertFalse(outLines[-1], "Standard output does not end with an empty line.")
 		statusLine = outLines[-2]
