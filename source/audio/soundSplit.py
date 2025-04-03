@@ -8,7 +8,6 @@ import config
 from enum import IntEnum, unique
 import globalVars
 from logHandler import log
-import nvwave
 from pycaw.api.audiopolicy import IAudioSessionManager2
 from pycaw.callbacks import AudioSessionNotification, AudioSessionEvents
 from pycaw.utils import AudioSession, AudioUtilities
@@ -93,28 +92,22 @@ _activeCallback: AudioSessionNotification | None = None
 
 
 def initialize() -> None:
-	if nvwave.usingWasapiWavePlayer():
-		global _audioSessionManager
-		try:
-			_audioSessionManager = AudioUtilities.GetAudioSessionManager()
-		except COMError:
-			log.exception("Could not initialize audio session manager")
-			return
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		_setSoundSplitState(state, initial=True)
-	else:
-		log.debug("Cannot initialize sound split as WASAPI is disabled")
+	global _audioSessionManager
+	try:
+		_audioSessionManager = AudioUtilities.GetAudioSessionManager()
+	except COMError:
+		log.exception("Could not initialize audio session manager")
+		return
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	_setSoundSplitState(state, initial=True)
 
 
 @atexit.register
 def terminate():
-	if nvwave.usingWasapiWavePlayer():
-		state = SoundSplitState(config.conf["audio"]["soundSplitState"])
-		if state != SoundSplitState.OFF:
-			_setSoundSplitState(SoundSplitState.OFF)
-		_unregisterCallback()
-	else:
-		log.debug("Skipping terminating sound split as WASAPI is disabled.")
+	state = SoundSplitState(config.conf["audio"]["soundSplitState"])
+	if state != SoundSplitState.OFF:
+		_setSoundSplitState(SoundSplitState.OFF)
+	_unregisterCallback()
 
 
 @dataclass(unsafe_hash=True)
