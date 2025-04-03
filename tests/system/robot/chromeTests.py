@@ -221,7 +221,7 @@ def test_mark_aria_details_role():
 			"doc-footnote,",
 			"",  # space between spans
 			"has comment",
-			"comment,",
+			"failure,",
 			"",  # space between spans
 			# the role definition is unsupported as an IA2 role
 			# The role "ROLE_PARAGRAPH" is used instead

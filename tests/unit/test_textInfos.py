@@ -23,6 +23,7 @@ class TestCharacterOffsets(unittest.TestCase):
 	"""
 
 	def test_nonSurrogateForward(self):
+		self.assertTrue(False)
 		obj = BasicTextProvider(text="abc")
 		ti = obj.makeTextInfo(Offsets(0, 0))
 		ti.expand(textInfos.UNIT_CHARACTER)  # Range at a
