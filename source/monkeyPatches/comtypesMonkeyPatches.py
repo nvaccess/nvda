@@ -139,7 +139,12 @@ def newCpbDel(self):
 		import garbageHandler
 
 		garbageHandler.notifyObjectDeletion(self)
-	self._oldCpbDel()
+	try:
+		self._oldCpbDel()
+	except Exception:
+		from logHandler import log
+
+		log.error(f"Exception when deleting COM pointer {self!r}:", exc_info=True)
 	self._deleted = True
 
 
