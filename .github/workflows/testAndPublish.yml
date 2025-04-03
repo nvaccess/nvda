@@ -83,7 +83,7 @@ jobs:
       run: ci/scripts/tests/translationCheck.ps1
     - name: Upload artifact
       id: uploadArtifact
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: Check pot results
@@ -106,7 +106,7 @@ jobs:
       run: ci/scripts/tests/licenseCheck.ps1
     - name: Upload artifact
       id: uploadArtifact
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: License check results
@@ -127,12 +127,13 @@ jobs:
     - name: Run unit tests
       run: ci/scripts/tests/unitTests.ps1
     - name: Replace relative paths in unit test results
+      if: ${{ success() || failure() }}
       # Junit reports fail on these
       shell: bash
       run: sed -i 's|file="..\\|file="|g' testOutput/unit/unitTests.xml
     - name: Upload artifact
       id: uploadArtifact
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: Unit tests results
@@ -140,7 +141,7 @@ jobs:
         overwrite: true
     - name: Publish unit test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       with:
         check_name: Unit tests
         detailed_summary: true
@@ -203,14 +204,14 @@ jobs:
         nvdaLauncherDir: ${{ steps.getLauncher.outputs.download-path }}
     - name: Upload system tests results
       id: uploadSystemTestsResults
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       uses: actions/upload-artifact@v4
       with:
         name: System tests results
         path: testOutput/system
     - name: Publish system test report
       uses: mikepenz/action-junit-report@v5
-      if: ${{ always() }}
+      if: ${{ success() || failure() }}
       with:
         check_name: System tests
         detailed_summary: true
