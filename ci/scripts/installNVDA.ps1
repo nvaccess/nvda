@@ -14,6 +14,7 @@ try {
 # If the installer failed to exit the log file is still in use.
 # We can't/shouldn't upload a file which is locked,
 # as a work around create a copy of the log and upload that instead.
+New-Item -ItemType File -Name $installerLogFileCopyPath
 Copy-Item $installerLogFilePath $installerLogFileCopyPath
 if (Test-Path -Path $installerCrashDumpPath){
 	Write-Output "NVDA installer process crashed.`n" >> $env:GITHUB_STEP_SUMMARY
