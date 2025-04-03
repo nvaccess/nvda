@@ -606,7 +606,7 @@ class UpdatableAddonsDialog(
 				raise NotImplementedError("Unknown automatic update setting")
 
 		# Download add-ons in the background
-		installCallback = threading.Thread(
+		threading.Thread(
 			name="AutomaticAddonUpdateDownload",
 			target=cls._downloadAddons,
 			args=(listItemVMs, installCallback),
