@@ -7,6 +7,8 @@ $installerProcess=Start-Process -FilePath "$nvdaLauncherFile" -ArgumentList "--i
 try {
 	$installerProcess | Wait-Process -Timeout 180 -ErrorAction Stop
 	$errorCode=$installerProcess.ExitCode
+	Write-Output "NVDA installer completed."
+	Get-ChildItem $env:nvdaInstallerLogDir
 } catch {
 	Write-Output "NVDA installer process timed out.`n" >> $env:GITHUB_STEP_SUMMARY
 	$errorCode=1
