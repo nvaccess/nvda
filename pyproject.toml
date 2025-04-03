@@ -91,32 +91,11 @@ logger-objects = ["logHandler.log"]
 using = "requirements:requirements.txt"
 only_licenses = ["BSD", "MIT", "Python", "LGPLV3+", "Apache"]
 ignore_packages = [
-	# Incompatible Apache licenses.
-	# These are current license violations and are bundled with NVDA.
-	"fast-diff-match-patch",  # See also #16633
-	# "requests",
-
-	# Incompatible Apache licenses.
-	# Bundled with a dependency, but not bundled with NVDA.
-	"importlib-metadata",
-	"opencv-python",
-
-	# Incompatible Apache licenses.
-	# For building NVDA, but not included.
-	"nuitka",
-
-	# Incompatible Apache licenses.
-	# System testing frameworks, not bundled with NVDA.
-	"robotframework",
-	"robotframework-screencaplibrary",
-	"robotremoteserver",
-
 	# Compatible licenses:
 	"certifi",  # Mozilla Public License 2.0
 	"markdown-link-attr-modifier",  # GPLV3 license, but not in PyPI correctly
 	"pycaw",  # MIT license, but not in PyPI
 	"wxPython",  # wxWindows Library License
-	"pillow",  # PIL Software License
 ]
 
 
