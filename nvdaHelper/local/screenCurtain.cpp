@@ -1,3 +1,13 @@
+/**
+ * A part of NonVisual Desktop Access (NVDA)
+ * This file is covered by the GNU General Public License.
+ * See the file COPYING for more details.
+ * Copyright (C) 2025 NV Access Limited
+ *
+ * Utilities for Screen Curtain.
+ *
+ * Must be linked with Gdi32.lib and Gdiplus.lib.
+*/
 #define GDIPVER 0x110   // GDIPlus 1.1, required for histograms.
 #include <windows.h>
 #include <common/log.h>
@@ -7,7 +17,6 @@
 
 using namespace Gdiplus;
 using namespace std;
-#pragma comment(lib, "Gdiplus.lib")
 
 /**
  * @brief Captures the entire virtual screen and determines if the screen is entirely black.

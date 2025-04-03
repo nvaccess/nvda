@@ -108,7 +108,8 @@ localLib = env.SharedLibrary(
 		"rpcrt4",
 		"shlwapi",
 		detoursLib,
-		"Gdi32.lib",
+		"Gdi32",
+		"Gdiplus",
 	],
 )
 
