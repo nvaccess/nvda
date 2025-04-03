@@ -16,7 +16,7 @@ $chromeStartArgsArray = $chromeStartArgsString -split " "
 
 cmd /c start /min $chromeStartArgsArray
 
-if ($env:VERBOSE_SYSTEM_TEST_LOGGING) {
+if ($env:RUNNER_DEBUG) {
 	$verboseDebugLogging="True"
 } else {
 	$verboseDebugLogging=""

@@ -1,4 +1,9 @@
-cmd.exe /c "scons checkPot --all-cores"
+if ($env:RUNNER_DEBUG) {
+	cmd.exe /c "scons checkPot"
+} else {
+	cmd.exe /c "scons checkPot --all-cores"
+}
+
 if ($LastExitCode -ne 0) {
 	$message = "FAIL: Translation comments check. Translation comments missing or unexpectedly included. See build log for more information."
 	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append

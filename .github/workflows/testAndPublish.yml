@@ -58,10 +58,10 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Prepare source code
-      run: scons source %sconsArgs% --all-cores
+      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' }}
       shell: cmd
     - name: Prepare source code for launcher
-      run: scons %sconsOutTargets% %sconsArgs% --all-cores
+      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' }}
       shell: cmd
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
@@ -154,7 +154,7 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Build launcher
-      run: scons launcher %sconsArgs% --all-cores
+      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' }}
       shell: cmd
     - name: Upload launcher
       id: uploadLauncher
