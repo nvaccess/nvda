@@ -2498,16 +2498,24 @@ While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of o
 ##### Volume of other applications {#OtherAppVolume}
 
 This slider allows you to adjust the volume of all currently running applications other than NVDA.
+This volume can also be controlled via the following keyboard commands from anywhere:
 
-To increase or decrease the volume of all currently running applications from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
+| Name | Key | Description |
+|---|---|---|
+| Increase volume of other applications | `NVDA+alt+pageUp` | Increases the volume of all applications except NVDA. |
+| Decrease volume of other applications | `NVDA+alt+pageDown` | Decreases the volume of all applications except NVDA. |
 
 ##### Mute other applications {#OtherAppMute}
 
 This check box allows you to mute or unmute all applications except NVDA at once.
 
-To mute or unmute all other applications from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+The following keyboard command can also be used from anywhere:
 
-Please note that this option is not persistent: other apps will always be unmuted when NVDA restarts.
+| Name | Key | Description |
+|---|---|---|
+| Mute or unmute other applications | `NVDA+alt+delete` | Toggles mute/unmute on other applications |
+
+Please note, that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
