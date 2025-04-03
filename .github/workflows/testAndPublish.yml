@@ -198,12 +198,17 @@ jobs:
         path: testOutput/system
 
   cleanupCache:
+    # Cache deletion on pull_request events cannot occur on PRs from forks
+    # as PRs from forks do not get write permissions from pull_request events.
+    # Alternatively, we can change the event trigger to pull_request_target,
+    # however that might introduce security risks as it grants fork PRs greater permissions.
+    # In these cases we can always let GitHub handle cache deletion:
+    # auto deletion after 7 days or limits are hit
     name: Cleanup cache
     permissions:
       actions: write
-      contents: read
     needs: [checkPot, licenseCheck, unitTests, systemTests]
-    if: always()
+    if: ${{ always() && (github.event.push || github.event.pull_request.head.repo.owner == 'nvaccess') }}
     runs-on: ubuntu-latest
     steps:
       - name: Cleanup cache
