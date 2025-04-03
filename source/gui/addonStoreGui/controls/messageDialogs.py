@@ -3,6 +3,8 @@
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
+from collections.abc import Callable
+from os import PathLike
 import threading
 from time import sleep
 from typing import (
@@ -385,10 +387,10 @@ class UpdatableAddonsDialog(
 	helpId = "AutomaticAddonUpdates"
 	onDisplayableError = DisplayableError.OnDisplayableErrorT()
 
-	def __init__(self, parent: wx.Window, addonsPendingUpdate: list[_AddonGUIModel]):
+	def __init__(self, parent: wx.Window, addonsPendingUpdate: list[AddonListItemVM[_AddonStoreModel]]):
 		# Translators: The warning of a dialog
 		super().__init__(parent, title=pgettext("addonStore", "Add-on updates available"))
-		self.addonsPendingUpdate = addonsPendingUpdate
+		self.listItemVMs = addonsPendingUpdate
 		self._setupUI()
 		self.Raise()
 		self.SetFocus()
@@ -469,13 +471,14 @@ class UpdatableAddonsDialog(
 		self.addonsList.AppendColumn(availableVersionLabel, width=200)
 		self.addonsList.AppendColumn(channelLabel, width=150)
 		self.addonsList.AppendColumn(statusLabel, width=300)
-		for addon in self.addonsPendingUpdate:
+		for aVM in self.listItemVMs:
+			assert aVM.model._addonHandlerModel  # add-on is installed
 			self.addonsList.Append(
 				(
-					addon.displayName,
-					addon._addonHandlerModel.version,
-					addon.addonVersionName,
-					addon.channel.displayString,
+					aVM.model.displayName,
+					aVM.model._addonHandlerModel.version,
+					aVM.model.addonVersionName,
+					aVM.model.channel.displayString,
 					AvailableAddonStatus.UPDATE.displayString,
 				),
 			)
@@ -493,17 +496,15 @@ class UpdatableAddonsDialog(
 		self.updateAllButton.Disable()
 		self.openStoreButton.Disable()
 
-		self.listItemVMs: list[AddonListItemVM] = []
-		for addon in self.addonsPendingUpdate:
-			listItemVM = AddonListItemVM(addon, status=getStatus(addon, _StatusFilterKey.UPDATE))
-			listItemVM.updated.register(self._statusUpdate)
-			self.listItemVMs.append(listItemVM)
+		for aVM in self.listItemVMs:
+			aVM.updated.register(self._statusUpdate)
 		AddonStoreVM.getAddons(self.listItemVMs)
 		self.addonsList.Refresh()
 		# Translators: Message shown when updating add-ons in the updatable add-ons dialog
 		ui.message(pgettext("addonStore", "Updating add-ons..."))
 		self.addonsList.SetFocus()
 		self.addonsList.Focus(0)
+		self.Close()
 
 	def _statusUpdate(self, addonListItemVM: AddonListItemVM):
 		log.debug(f"{addonListItemVM.Id} status: {addonListItemVM.status}")
@@ -519,30 +520,9 @@ class UpdatableAddonsDialog(
 
 		evt.Veto()
 
-		numInProgress = len(AddonStoreVM._downloader.progress)
-		if numInProgress:
-			res = gui.messageBox(
-				npgettext(
-					"addonStore",
-					# Translators: Message shown prior to installing add-ons when closing the add-on store dialog
-					# The placeholder {} will be replaced with the number of add-ons to be installed
-					"Download of {} add-on in progress, cancel downloading?",
-					"Download of {} add-ons in progress, cancel downloading?",
-					numInProgress,
-				).format(numInProgress),
-				AddonStoreDialog._installationPromptTitle,
-				style=wx.YES_NO,
-			)
-			if res == wx.YES:
-				log.debug("Cancelling the download.")
-				AddonStoreVM.cancelDownloads()
-				# Continue to installation if any downloads completed
-			else:
-				# Let the user return to the dialog and inspect add-ons being downloaded.
-				return
-
-		if addonDataManager._downloadsPendingInstall:
-			nAddonsPendingInstall = len(addonDataManager._downloadsPendingInstall)
+		nAddonsPending = len(AddonStoreVM._downloader.progress)
+		nAddonsPending += len(addonDataManager._downloadsPendingInstall)
+		if nAddonsPending:
 			installingDialog = gui.IndeterminateProgressDialog(
 				self,
 				AddonStoreDialog._installationPromptTitle,
@@ -552,19 +532,24 @@ class UpdatableAddonsDialog(
 					# The placeholder {} will be replaced with the number of add-ons to be installed
 					"Installing {} add-on, please wait.",
 					"Installing {} add-ons, please wait.",
-					nAddonsPendingInstall,
-				).format(nAddonsPendingInstall),
+					nAddonsPending,
+				).format(nAddonsPending),
 			)
+
+			# Note: add-ons should have already pre-downloaded, so this should be fast.
+			# Ensures all add-ons are fetched properly.
+			self._blockUntilAllDownloaded()
+
 			AddonStoreVM.installPending()
 
-			def postInstall():
+			def postDownload():
 				installingDialog.done()
 				# let the dialog exit.
 				self.DestroyLater()
 				self.SetReturnCode(wx.ID_CLOSE)
 				wx.CallLater(500, promptUserForRestart)
 
-			return wx.CallAfter(postInstall)
+			return wx.CallAfter(postDownload)
 
 		# let the dialog exit.
 		self.DestroyLater()
@@ -584,59 +569,114 @@ class UpdatableAddonsDialog(
 			return
 		log.debug("checking for updatable add-ons")
 
-		UpdatableAddonsDialog.onDisplayableError.register(UpdatableAddonsDialog.handleDisplayableError)
-		addonsPendingUpdate = addonDataManager._addonsPendingUpdate(UpdatableAddonsDialog.onDisplayableError)
-		UpdatableAddonsDialog.onDisplayableError.unregister(UpdatableAddonsDialog.handleDisplayableError)
+		cls.onDisplayableError.register(cls.handleDisplayableError)
+		addonsPendingUpdate = addonDataManager._addonsPendingUpdate(cls.onDisplayableError)
+		cls.onDisplayableError.unregister(cls.handleDisplayableError)
 
 		if not addonsPendingUpdate:
 			log.debug("no updatable add-ons found")
 			return
+
+		listItemVMs = list(
+			AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate
+		)
 
 		log.debug("updatable add-ons found")
 
 		match config.conf["addonStore"]["automaticUpdates"]:
 			case AddonsAutomaticUpdate.NOTIFY:
 
-				def delayCreateDialog():
+				def _delayDisplayDialog():
 					winsound.MessageBeep(winsound.MB_ICONEXCLAMATION)
-					displayDialogAsModal(cls(gui.mainFrame, addonsPendingUpdate))
+					# building the dialog must happen on the main thread
+					displayDialogAsModal(cls(gui.mainFrame, listItemVMs))
 
-				wx.CallAfter(delayCreateDialog)
+				def installCallback():
+					wx.CallAfter(_delayDisplayDialog)
 
 			case AddonsAutomaticUpdate.UPDATE:
-				threading.Thread(
-					name="AutomaticAddonUpdate",
+				installCallback = threading.Thread(
+					name="AutomaticAddonUpdateInstall",
 					target=_updateAddons,
-					args=(addonsPendingUpdate,),
+					args=(listItemVMs,),
 					daemon=True,
-				).start()
+				).start
 
 			case _:
 				raise NotImplementedError("Unknown automatic update setting")
 
+		# Download add-ons in the background
+		installCallback = threading.Thread(
+			name="AutomaticAddonUpdateDownload",
+			target=cls._downloadAddons,
+			args=(listItemVMs, installCallback),
+			daemon=True,
+		).start()
+
+	@classmethod
+	def _logDownloadComplete(
+		cls,
+		listItemVM: AddonListItemVM[_AddonStoreModel],
+		fileDownloaded: PathLike | None,
+	):
+		log.debug(f"Download complete for: {listItemVM.Id}")
+
+	@classmethod
+	def _blockUntilAllDownloaded(cls):
+		from ..viewModels.store import AddonStoreVM
+
+		while AddonStoreVM._downloader.progress:
+			log.debug(f"Waiting for add-ons to be downloaded {AddonStoreVM._downloader.progress}")
+			sleep(0.1)
+
+	@classmethod
+	def _downloadAddons(
+		cls,
+		listItemVMs: list[AddonListItemVM[_AddonStoreModel]],
+		installCallback: Callable[[], None],
+	):
+		"""Download add-ons in the background.
+		Blocks while downloading occurs.
+		Use the install callback to let the caller know when the download is complete, and installation is ready.
+		"""
+		from ..viewModels.store import AddonStoreVM
+
+		cls.onDisplayableError.register(cls.handleDisplayableError)
+
+		for listItemVM in listItemVMs:
+			AddonStoreVM._downloader.download(
+				listItemVM,
+				cls._logDownloadComplete,
+				cls.handleDisplayableError,
+			)
+
+		cls._blockUntilAllDownloaded()
+
+		cls.onDisplayableError.unregister(cls.handleDisplayableError)
+		installCallback()
+
 
 @_countAsMessageBox()
-def _updateAddons(addonsPendingUpdate: list[_AddonGUIModel]):
+def _updateAddons(addonsPendingUpdate: list[AddonListItemVM[_AddonStoreModel]]):
 	"""Update the add-ons in the background.
-	Blocks while downloading occurs.
-	This function is treated as message box to prevent NVDA from exiting while the download/install is in progress.
+	Blocks while installing occurs.
+	This function is treated as a message box to prevent NVDA from exiting while the install is in progress.
 	"""
 	from ..viewModels.store import AddonStoreVM
 
 	# Translators: Message shown when updating add-ons automatically
 	ui.message(pgettext("addonStore", "Updating add-ons..."), SpeechPriority.NEXT)
-	listVMs = {AddonListItemVM(a, status=getStatus(a, _StatusFilterKey.UPDATE)) for a in addonsPendingUpdate}
 	AddonStoreVM.getAddons(
-		listVMs,
+		addonsPendingUpdate,
 		shouldReplace=True,
 		shouldInstallIncompatible=True,
 		shouldRememberReplaceChoice=True,
 		shouldRememberInstallChoice=True,
 	)
 
-	while AddonStoreVM._downloader.progress:
-		log.debug(f"Waiting for add-ons to be downloaded {AddonStoreVM._downloader.progress}")
-		sleep(0.1)
+	# Note: add-ons should have already pre-downloaded, so this should be fast.
+	# Ensures all add-ons are fetched properly.
+	UpdatableAddonsDialog._blockUntilAllDownloaded()
 
 	def mainThreadCallback():
 		# Add-on installations must happen on main thread

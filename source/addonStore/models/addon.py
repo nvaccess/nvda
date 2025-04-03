@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -12,10 +12,10 @@ from typing import (
 	Any,
 	Dict,
 	Generator,
-	List,
+	Generic,
 	Optional,
 	Protocol,
-	Union,
+	TypeVar,
 )
 
 from requests.structures import CaseInsensitiveDict
@@ -36,13 +36,6 @@ if TYPE_CHECKING:
 		AddonBase as AddonHandlerBaseModel,
 		AddonManifest,
 	)
-
-	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]
-	"""
-	Add-ons that have the same ID except differ in casing cause a path collision,
-	as add-on IDs are installed to a case insensitive path.
-	Therefore addon IDs should be treated as case insensitive.
-	"""
 
 
 AddonHandlerModelGeneratorT = Generator["AddonHandlerModel", None, None]
@@ -106,6 +99,20 @@ class _AddonGUIModel(SupportsAddonState, SupportsVersionCheck, Protocol):
 			if isinstance(fieldValue, MajorMinorPatch):
 				jsonData[field] = fieldValue._asdict()
 		return jsonData
+
+
+_AddonModelT = TypeVar("_AddonModelT", bound=_AddonGUIModel)
+"""Generic type for use in collections of add-on models"""
+
+
+class AddonGUICollectionT(Generic[_AddonModelT], dict[Channel, CaseInsensitiveDict[_AddonModelT]]):
+	"""
+	A collection of add-on models, indexed by channel and add-on ID.
+	Each channel contains a CaseInsensitiveDict of add-on models indexed by add-on ID.
+	Add-ons that have the same ID except differ in casing cause a path collision,
+	as add-on IDs are installed to a case insensitive path.
+	Therefore addon IDs should be treated as case insensitive.
+	"""
 
 
 class _AddonStoreModel(_AddonGUIModel):
@@ -317,11 +324,11 @@ class AddonStoreModel(_AddonStoreModel):
 
 @dataclasses.dataclass
 class CachedAddonsModel:
-	cachedAddonData: "AddonGUICollectionT"
-	cacheHash: Optional[str]
+	cachedAddonData: AddonGUICollectionT[AddonStoreModel]
+	cacheHash: str | None
 	cachedLanguage: str
 	# AddonApiVersionT or the string .network._LATEST_API_VER
-	nvdaAPIVersion: Union[addonAPIVersion.AddonApiVersionT, str]
+	nvdaAPIVersion: addonAPIVersion.AddonApiVersionT | str
 
 
 def _createInstalledStoreModelFromData(addon: Dict[str, Any]) -> InstalledAddonStoreModel:
@@ -384,22 +391,24 @@ def _createGUIModelFromManifest(addon: "AddonHandlerBaseModel") -> AddonManifest
 	)
 
 
-def _createAddonGUICollection() -> "AddonGUICollectionT":
+def _createAddonGUICollection() -> AddonGUICollectionT:
 	"""
 	Add-ons that have the same ID except differ in casing cause a path collision,
 	as add-on IDs are installed to a case insensitive path.
 	Therefore addon IDs should be treated as case insensitive.
 	"""
-	return {channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL}
+	return AddonGUICollectionT(
+		{channel: CaseInsensitiveDict() for channel in Channel if channel != Channel.ALL}
+	)
 
 
-def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT":
+def _createStoreCollectionFromJson(jsonData: str) -> "AddonGUICollectionT[AddonStoreModel]":
 	"""Use json string to construct a listing of available addons.
 	See https://github.com/nvaccess/addon-datastore#api-data-generation-details
 	for details of the data.
 	"""
-	data: List[Dict[str, Any]] = json.loads(jsonData)
-	addonCollection = _createAddonGUICollection()
+	data: list[dict[str, Any]] = json.loads(jsonData)
+	addonCollection: AddonGUICollectionT[AddonStoreModel] = _createAddonGUICollection()
 
 	for addon in data:
 		addonCollection[addon["channel"]][addon["addonId"]] = _createStoreModelFromData(addon)

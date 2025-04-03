@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited
+# Copyright (C) 2022-2025 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -246,8 +246,14 @@ class AddonFileDownloader:
 		log.debug(f"starting download: {addonData.addonId}")
 		cacheFilePath = addonData.cachedDownloadPath
 		if os.path.exists(cacheFilePath):
-			log.debug(f"Cache file already exists, deleting {cacheFilePath}")
-			os.remove(cacheFilePath)
+			if self._checkChecksum(cacheFilePath, addonData):
+				return cast(os.PathLike, cacheFilePath)  # The file is already downloaded and valid
+			else:
+				log.debug(
+					f"Cache file {cacheFilePath} already exists and doesn't match checksum. "
+					"Likely a failed download, deleting and re-downloading. ",
+				)
+				os.remove(cacheFilePath)
 
 		inProgressFilePath = addonData.tempDownloadPath
 		with self.DOWNLOAD_LOCK:
