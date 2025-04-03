@@ -60,9 +60,6 @@ jobs:
     - name: Prepare source code
       run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
       shell: cmd
-    - name: Prepare source code for launcher
-      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
-      shell: cmd
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
@@ -137,6 +134,11 @@ jobs:
         name: Unit tests results
         path: testOutput/unit/unitTests.xml
         overwrite: true
+    - name: Publish unit test report
+      uses: mikepenz/action-junit-report@v5
+      if: ${{ always() }}
+      with:
+        report_paths: testOutput/unit/unitTests.xml
 
   createLauncher:
     name: Create launcher
@@ -153,6 +155,9 @@ jobs:
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
+    - name: Prepare source code for launcher
+      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
+      shell: cmd
     - name: Build launcher
       run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
       shell: cmd
@@ -196,6 +201,11 @@ jobs:
       with:
         name: System tests results
         path: testOutput/system
+    - name: Publish system test report
+      uses: mikepenz/action-junit-report@v5
+      if: ${{ always() }}
+      with:
+        report_paths: testOutput/system/systemTests.xml
 
   cleanupCache:
     # Cache deletion on pull_request events cannot occur on PRs from forks
