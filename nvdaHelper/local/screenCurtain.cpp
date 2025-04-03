@@ -1,12 +1,10 @@
-#define GDIPVER 0x110
-#include <shlwapi.h>
+#define GDIPVER 0x110   // GDIPlus 1.1, required for histograms.
 #include <windows.h>
 #include <common/log.h>
-#include <objidl.h>
 #include <gdiplus.h>
 #include <memory>
-#include <functional>
 #include <wil/resource.h>
+
 using namespace Gdiplus;
 using namespace std;
 #pragma comment(lib, "Gdiplus.lib")
@@ -57,7 +55,7 @@ bool isScreenFullyBlack() {
 	HGDIOBJ oldObj;
 	BITMAPINFOHEADER diScreenshotHeader;
 	bool bStatus ;
-	Gdiplus::Status sStatus;
+	Status sStatus;
 
 	// The desktop window covers the entire virtual screen.
 	desktopWnd = GetDesktopWindow();
@@ -135,7 +133,7 @@ bool isScreenFullyBlack() {
 
 	try {
 		// Convert the device-dependent bitmap to a device-independent bitmap.
-		auto diScreenshotBits = std::make_shared<char[]>(diScreenshotSize);
+		auto diScreenshotBits = make_shared<char[]>(diScreenshotSize);
 		bytesWritten = GetDIBits(
 			// Source device context and device-dependent bitmap
 			captureDc.get(), captureBitmap.get(),
@@ -153,12 +151,12 @@ bool isScreenFullyBlack() {
 		// Create a GDI+ bitmap from the captured virtual screen, and calculate a histogram of colours.
 		auto diScreenshot = make_shared<Bitmap>((BITMAPINFO *)&diScreenshotHeader, diScreenshotBits.get());
 		sStatus = diScreenshot->GetHistogramSize(HistogramFormatARGB, &histogramSize);
-		if (sStatus != Gdiplus::Ok) {
+		if (sStatus != Ok) {
 			LOG_ERROR(L"Failed to calculate histogram size. Error #" << sStatus << L".");
 			return false;
 		}
 		// Allocate size for the histogram.
-		auto histR = std::make_shared<UINT[]>(histogramSize);
+		auto histR = make_shared<UINT[]>(histogramSize);
 		auto histG = std::make_shared<UINT[]>(histogramSize);
 		auto histB = std::make_shared<UINT[]>(histogramSize);
 
