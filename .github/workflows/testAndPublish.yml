@@ -58,8 +58,8 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Prepare source code
-      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
       shell: cmd
+      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1' }}
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
     - name: Cache scons build
@@ -156,11 +156,11 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Prepare source code for launcher
+      shell: cmd
       run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
-      shell: cmd
     - name: Build launcher
-      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
       shell: cmd
+      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Upload launcher
       id: uploadLauncher
       uses: actions/upload-artifact@v4
