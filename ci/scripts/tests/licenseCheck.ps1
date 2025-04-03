@@ -7,5 +7,5 @@ if ($LastExitCode -ne 0) {
 } else {
 	Write-Output "PASS: License check.\n" >> $env:GITHUB_STEP_SUMMARY
 }
-Get-Content testOutput\translationCheckResults.log >> $env:GITHUB_STEP_SUMMARY
+Get-Content $licenseOutput >> $env:GITHUB_STEP_SUMMARY
 exit $LastExitCode
