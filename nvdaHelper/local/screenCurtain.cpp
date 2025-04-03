@@ -34,33 +34,28 @@ bool captureScreen() {
 	bool bStatus ;
 	Gdiplus::Status sStatus;
 
-	LOG_INFO(L"Get desktop window");
+	// The desktop window covers the entire virtual screen.
 	desktopWnd = GetDesktopWindow();
 	if (desktopWnd == NULL) {
 		LOG_ERROR(L"Failed to get handle for desktop window.");
 		return false;
 	}
-	LOG_INFO(L"Get desktop device context.");
 	wil::unique_hdc_window desktopDc(GetDC(desktopWnd));
 	if (!desktopDc.is_valid()) {
 		LOG_ERROR(L"Failed to get device context for desktop.");
 		return false;
 	}
-	LOG_INFO(L"Get compatible DC.");
 	wil::unique_hdc captureDc(CreateCompatibleDC(desktopDc.get()));
 	if (!captureDc.is_valid()) {
 		LOG_ERROR("Failed to create compatible device context.");
 		return false;
 	}
-
-	LOG_INFO("Getting compatible bitmap.");
 	wil::unique_hbitmap captureBitmap(CreateCompatibleBitmap(desktopDc.get(), screenWidth, screenHeight));
 	if (captureBitmap == NULL) {
 		LOG_ERROR(L"Failed to create compatible bitmap.");
 		return false;
 	}
 
-	LOG_INFO(L"Setting captureDC to paint to captureBitmap.");
 	// Set captureDc to draw to captureBitmap.
 	oldObj = SelectObject(captureDc.get(), captureBitmap.get());
 	if (oldObj == NULL) {
@@ -68,7 +63,6 @@ bool captureScreen() {
 		return false;
 	}
 
-	LOG_INFO(L"Bit blitting.");
 	// Replace the contents of captureDc with those of desktopDc
 	bStatus = BitBlt(
 		// Destination device context
@@ -91,7 +85,6 @@ bool captureScreen() {
 		return false;
 	}
 
-	LOG_INFO(L"Getting DDB properties.");
 	// Get properties of captureBitmap
 	bytesWritten = GetObject(captureBitmap.get(), sizeof(BITMAP), &ddScreenshot);
 	if (bytesWritten == 0) {
@@ -99,7 +92,7 @@ bool captureScreen() {
 		return false;
 	}
 
-	LOG_INFO(L"Setting DIB props.");
+	// And use them to set the properties of the device independent bitmap.
 	diScreenshotHeader.biSize = sizeof(BITMAPINFOHEADER);
 	diScreenshotHeader.biWidth = ddScreenshot.bmWidth;
 	diScreenshotHeader.biHeight = ddScreenshot.bmHeight;
@@ -112,15 +105,12 @@ bool captureScreen() {
 	diScreenshotHeader.biClrUsed = 0;
 	diScreenshotHeader.biClrImportant = 0; // All colours are needed
 
-	LOG_INFO("Calculating DIB size.");
+	// Calculate the size (in bytes) of the DIB.
 	diScreenshotSize = ((ddScreenshot.bmWidth * diScreenshotHeader.biBitCount + 31) / 32) * 4 * ddScreenshot.bmHeight;
 
 	try {
 		// Convert the device-dependent bitmap to a device-independent bitmap.
-		LOG_INFO("Allocating size for DIB.");
 		auto diScreenshotBits = std::make_shared<char[]>(diScreenshotSize);
-
-		LOG_INFO(L"Getting DIB.");
 		bytesWritten = GetDIBits(
 			// Source device context and device-dependent bitmap
 			captureDc.get(), captureBitmap.get(),
@@ -131,27 +121,22 @@ bool captureScreen() {
 			// Format of DIB
 			(BITMAPINFO *)&diScreenshotHeader, DIB_RGB_COLORS);
 		if (bytesWritten == 0 || bytesWritten == ERROR_INVALID_PARAMETER) {
-			LOG_ERROR(L"Failed to convert device dependent bitmap to device independent bitmap. Return " << bytesWritten);
+			LOG_ERROR(L"Failed to convert device dependent bitmap to device independent bitmap. Got " << bytesWritten << L".");
 			return false;
 		}
 
 		// Create a GDI+ bitmap from the captured virtual screen, and calculate a histogram of colours.
-		LOG_INFO(L"Create GDIPLUS bmp.");
 		auto diScreenshot = make_shared<Bitmap>((BITMAPINFO *)&diScreenshotHeader, diScreenshotBits.get());
-
-		LOG_INFO("Calculate hist size.");
 		sStatus = diScreenshot->GetHistogramSize(HistogramFormatARGB, &histogramSize);
 		if (sStatus != Gdiplus::Ok) {
 			LOG_ERROR(L"Failed to calculate histogram size. Error #" << sStatus << L".");
 			return false;
 		}
-
-		LOG_INFO("Allocate size for histogram.");
+		// Allocate size for the histogram.
 		auto histR = std::make_shared<UINT[]>(histogramSize);
 		auto histG = std::make_shared<UINT[]>(histogramSize);
 		auto histB = std::make_shared<UINT[]>(histogramSize);
 
-		LOG_INFO(L"Get histogram.");
 		diScreenshot->GetHistogram(HistogramFormatRGB, histogramSize, histR.get(), histG.get(), histB.get(), NULL);
 
 		// If the entire screen is black, then the only colour in the histogram must be (0, 0, 0).
