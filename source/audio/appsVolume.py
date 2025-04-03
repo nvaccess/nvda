@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2024 NV Access Limited, Tony Malykh, Bill Dengler
+# Copyright (C) 2024 NV Access Limited
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -104,12 +104,6 @@ def _updateAppsVolumeImpl(
 	_activeCallback.register()
 
 
-_VOLUME_ADJUSTMENT_DISABLED_MESSAGE: str = _(
-	# Translators: error message when applications' volume is disabled
-	"Application volume control disabled",
-)
-
-
 def _adjustAppsVolume(
 	volumeAdjustment: int | None = None,
 ):
@@ -117,7 +111,9 @@ def _adjustAppsVolume(
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	state = config.conf["audio"]["applicationsVolumeMode"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
+		# Translators: error message when applications' volume is disabled
+		msg = _("Please enable applications' volume adjuster in order to adjust applications' volume")
+		ui.message(msg)
 		return
 	volume += volumeAdjustment
 	volume = max(0, min(100, volume))
@@ -127,7 +123,7 @@ def _adjustAppsVolume(
 	# We skip running terminators here to avoid application volume spiking to 100% for a split second.
 	_updateAppsVolumeImpl(volume / 100.0, muted, state)
 	# Translators: Announcing new applications' volume message
-	msg = _("{} percent application volume").format(volume)
+	msg = _("Applications volume {}").format(volume)
 	ui.message(msg)
 
 
@@ -165,7 +161,9 @@ def _toggleAppsVolumeMute():
 	volume: int = config.conf["audio"]["applicationsSoundVolume"]
 	muted: bool = config.conf["audio"]["applicationsSoundMuted"]
 	if state != AppsVolumeAdjusterFlag.ENABLED:
-		ui.message(_VOLUME_ADJUSTMENT_DISABLED_MESSAGE)
+		# Translators: error message when applications' volume is disabled
+		msg = _("Please enable applications' volume adjuster in order to mute other applications")
+		ui.message(msg)
 		return
 	muted = not muted
 	config.conf["audio"]["applicationsSoundMuted"] = muted

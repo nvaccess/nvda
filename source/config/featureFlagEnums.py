@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith, Tony Malykh
+# Copyright (C) 2022 NV Access Limited, Bill Dengler, Rob Meredith
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -70,12 +70,10 @@ class AppsVolumeAdjusterFlag(DisplayStringEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: A choice disabling "application volume adjustment"
-			# in the audio settings panel.
-			self.DISABLED: _("No"),
-			# Translators: A choice enabling "application volume adjustment"
-			# in the audio settings panel.
-			self.ENABLED: _("Yes"),
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.DISABLED: _("Disabled Applications volume adjuster"),
+			# Translators: Label for applications volume adjuster in NVDA settings.
+			self.ENABLED: _("Enabled Applications volume adjuster"),
 		}
 
 	DEFAULT = enum.auto()
