@@ -24,7 +24,7 @@ concurrency:
 
 env:
   START_BUILD_NUMBER: 100000
-  pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number }}
+  pullRequestNumber: ${{ github.event_name == 'pull_request' && github.event.number || 0 }}
   scons_publisher: NV Access
   # Comment out any of the feature_* variables to disable the respective build feature.
   # They are checked for existence of content, not specific value.
@@ -58,10 +58,10 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Prepare source code
-      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' }}
+      run: scons source %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j0' }}
       shell: cmd
     - name: Prepare source code for launcher
-      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' }}
+      run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j0'}}
       shell: cmd
     - name: Prepare for tests
       run: ci/scripts/tests/beforeTests.ps1
@@ -154,7 +154,7 @@ jobs:
     - name: Set scons args
       run: ci/scripts/setSconsArgs.ps1
     - name: Build launcher
-      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' }}
+      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j0'}}
       shell: cmd
     - name: Upload launcher
       id: uploadLauncher
@@ -237,7 +237,7 @@ jobs:
       with:
         prerelease: ${{ contains(github.ref_name, 'rc') }}
         make_latest: ${{ !contains(github.ref_name, 'rc') }}
-        discussion_category_name: ${{ !contains(github.ref_name, 'rc') && 'Releases' }}
+        discussion_category_name: ${{ !contains(github.ref_name, 'rc') && 'Releases' || '' }}
         name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
         files: output/nvda*.exe
         body: Highlights and download links can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
