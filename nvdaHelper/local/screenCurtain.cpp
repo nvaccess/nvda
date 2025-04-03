@@ -5,9 +5,12 @@
 #include <objidl.h>
 #include <gdiplus.h>
 #include <memory>
+#include <functional>
+#include <wil/resource.h>
 using namespace Gdiplus;
 using namespace std;
 #pragma comment (lib,"Gdiplus.lib")
+
 
 bool captureScreen() {
 	// Bitmap *image;
@@ -34,73 +37,73 @@ bool captureScreen() {
 		bytesWritten;
 	DWORD screenshotSize;
 	HWND desktopWnd;
-	HDC desktopDc , captureDc ;
-	HBITMAP captureBitmap;
+	// HBITMAP captureBitmap;
 	BITMAP screenshot;
 	HGDIOBJ oldObj;
 	BITMAPINFOHEADER bmpInfoHeader;
-	LPVOID buff ;
+	// LPVOID buff ;
 
 	LOG_INFO(L"Get desktop window");
 	desktopWnd = GetDesktopWindow();
 	if (desktopWnd == NULL) {
 		LOG_ERROR(L"Failed to get handle for desktop window.");
-		// goto done;
+		return false;
 	}
-
 	LOG_INFO(L"Get desktop device context.");
-	desktopDc = GetDC(desktopWnd);
-	if (desktopDc == NULL) {
+	wil::unique_hdc_window desktopDc(GetDC(desktopWnd));
+	if (!desktopDc.is_valid()) {
 		LOG_ERROR(L"Failed to get device context for desktop.");
-		// goto done;
+		return false;
 	}
 	LOG_INFO(L"Get compatible DC.");
-	captureDc = CreateCompatibleDC(desktopDc);
-	if (captureDc == NULL) {
+	wil::unique_hdc captureDc(CreateCompatibleDC(desktopDc.get()));
+	if (!captureDc .is_valid()) {
 		LOG_ERROR("Failed to create compatible device context.");
-		// goto done;
+		return false;
 	}
 
 	LOG_INFO("Getting compatible bitmap.");
-	captureBitmap = CreateCompatibleBitmap(desktopDc, screenWidth, screenHeight);
+	wil::unique_hbitmap captureBitmap(CreateCompatibleBitmap(desktopDc.get(), screenWidth, screenHeight));
 	if (captureBitmap == NULL) {
 		LOG_ERROR(L"Failed to create compatible bitmap.");
-		// goto done;
+		return false;
 	}
 
 	LOG_INFO(L"Setting captureDC to paint to captureBitmap.");
 	// Set captureDc to draw to captureBitmap.
-	oldObj = SelectObject(captureDc, captureBitmap);
+	oldObj = SelectObject(captureDc.get(), captureBitmap.get());
 	if (oldObj == NULL) {
 		LOG_ERROR("Failed to select capture bitmap into capture device context.");
-		// goto done;
+		return false;
 	}
 
 	LOG_INFO(L"Bit blitting.");
 	// Replace the contents of captureDc with those of desktopDc
 	success = BitBlt(
 		// Destination device context
-		captureDc,
+		captureDc.get(),
 		// Top left of destination
 		0, 0,
 		// Size of source and destination
 		screenWidth, screenHeight,
 		// Source device context
-		desktopDc,
+		desktopDc.get(),
 		// Top left of source
 		screenOriginX, screenOriginY,
 		// Raster operation to perform.
 		// In this case, replace destination with source.
 		SRCCOPY
 	);
+	// Restore captureDC for safety.
+	SelectObject(captureDc.get(), oldObj);
 	if (!success) {
 		LOG_ERROR("Failed to bit blit desktop device context to capture device context. Error #" << GetLastError());
-		// goto done;
+		return false;
 	}
 
 	LOG_INFO(L"Getting DDB properties.");
 	// Get properties of captureBitmap
-	bytesWritten = GetObject(captureBitmap, sizeof(BITMAP), &screenshot);
+	bytesWritten = GetObject(captureBitmap.get(), sizeof(BITMAP), &screenshot);
 	if (bytesWritten == 0) {
 		LOG_ERROR("Failed to get bitmap metadata.");
 		// goto done;
@@ -123,34 +126,36 @@ bool captureScreen() {
 	screenshotSize = ((screenshot.bmWidth * bmpInfoHeader.biBitCount + 31) / 32) * 4 * screenshot.bmHeight;
 
 	// Convert the device-dependent bitmap to a device-independent bitmap.
-	LOG_INFO("Allocating size for DIB.");
-	buff = HeapAlloc(GetProcessHeap(), HEAP_GENERATE_EXCEPTIONS, screenshotSize);
-	if (buff == NULL) {
-		LOG_ERROR("Failed to allocate space on heap for device independent bitmap.");
-		// goto done;
-	}
+	// try {
+		LOG_INFO("Allocating size for DIB.");
+		auto buff = std::make_shared<char[]>(screenshotSize);
+	// } catch (bad_alloc) {
+		// LOG_ERROR("Failed to allocate space on heap for device independent bitmap.");
+		// return false;
+	// }
 	LOG_INFO(L"Getting DIB.");
 	bytesWritten = GetDIBits(
 		// Source device context and device-dependent bitmap
-		captureDc, captureBitmap,
+		captureDc.get(), captureBitmap.get(),
 		// Range of scan lines to copy
 		0, (UINT)screenshot.bmHeight,
 		// Destination buffer
-		buff,
+		buff.get(),
 		// Format of DIB
 		(BITMAPINFO*)&bmpInfoHeader, DIB_RGB_COLORS
 	);
 	if (bytesWritten == 0 || bytesWritten == ERROR_INVALID_PARAMETER) {
 		LOG_ERROR(L"Failed to convert device dependent bitmap to device independent bitmap. Return " << bytesWritten);
-		// goto done;
+		return false;
 	}
 
 	// Create a GDI+ bitmap from the captured virtual screen, and calculate a histogram of colours.
 	LOG_INFO(L"Create GDIPLUS bmp.");
-	Bitmap image((BITMAPINFO*)&bmpInfoHeader, buff);
+	// Bitmap image((BITMAPINFO*)&bmpInfoHeader, buff.get());
+	auto image = make_shared<Bitmap>((BITMAPINFO*)&bmpInfoHeader, buff.get());
 	UINT hsize;
 	LOG_INFO("Calculate hist size.");
-	Status s = image.GetHistogramSize(HistogramFormatARGB, &hsize);
+	Status s = image->GetHistogramSize(HistogramFormatARGB, &hsize);
 
 	LOG_INFO("Allocate size for histogram.");
 	auto histR = std::make_shared<UINT[]>(hsize);
@@ -158,7 +163,7 @@ bool captureScreen() {
 	auto histB = std::make_shared<UINT[]>(hsize);
 
 	LOG_INFO(L"Get histogram.");
-	image.GetHistogram(HistogramFormatRGB, hsize, histR.get(), histG.get(), histB.get(), NULL);
+	image->GetHistogram(HistogramFormatRGB, hsize, histR.get(), histG.get(), histB.get(), NULL);
 
 	// If the entire screen is black, then the only colour in the histogram must be (0, 0, 0).
 	// Since the sum of values in each channel must be the number of pixels in the image,
@@ -169,17 +174,17 @@ bool captureScreen() {
 
 // done:
 	LOG_INFO("Clean up.");
-	HeapFree(GetProcessHeap(), NULL, buff);
-	if (desktopWnd != NULL) {
-		if (desktopDc != NULL)
-			ReleaseDC(desktopWnd, desktopDc);
-		CloseHandle(desktopWnd);
-	}
-	if (captureDc != NULL) {
-		SelectObject(captureDc, oldObj);
-		DeleteDC(captureDc);
-	}
-	if (captureBitmap != NULL) DeleteObject(captureBitmap);
+	// HeapFree(GetProcessHeap(), NULL, buff);
+	// if (desktopWnd != NULL) {
+		// if (desktopDc != NULL)
+			// ReleaseDC(desktopWnd, desktopDc);
+		// CloseHandle(desktopWnd);
+	// }
+	// if (captureDc != NULL) {
+
+	// }
+	// if (captureBitmap != NULL) DeleteObject(captureBitmap.get());
+
 	return returnValue;
 }
 
