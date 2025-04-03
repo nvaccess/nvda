@@ -2,9 +2,10 @@ $licenseOutput = (Resolve-Path .\testOutput\license\)
 $licenseOutput = "$licenseOutput\licenseCheckResults.md"
 cmd.exe /c "runlicensecheck.bat $licenseOutput"
 if ($LastExitCode -ne 0) {
-	$message = "FAIL: License check. See $licenseOutput for more information."
+	Write-Host "FAIL: License check." >> $env:GITHUB_STEP_SUMMARY
+	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 } else {
-	$message = "PASS: License check."
+	Write-Host "PASS: License check." >> $env:GITHUB_STEP_SUMMARY
 }
-$message >> $env:GITHUB_STEP_SUMMARY
+Get-Content testOutput\translationCheckResults.log >> $env:GITHUB_STEP_SUMMARY
 exit $LastExitCode

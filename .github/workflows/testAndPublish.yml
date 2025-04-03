@@ -48,11 +48,6 @@ jobs:
       with:
         python-version: '3.11'
         architecture: x86
-    - name: Cache dependencies
-      uses: actions/cache@v4
-      with:
-        path: .venv
-        key: ${{ runner.os }}-${{ hashFiles('requirements.txt') }}
     - name: Set version variables
       run: ci/scripts/setBuildVersionVars.ps1
     - name: Set scons args
@@ -94,7 +89,6 @@ jobs:
     name: Check license compatibility of dependencies
     runs-on: windows-latest
     needs: buildNVDA
-    if: ${{ contains(github.event.head_commit.modified, 'requirements.txt') || contains(github.event.head_commit.added, 'pyproject.toml') || contains(github.event.head_commit.modified, 'runlicensecheck.bat') }}
     steps:
     - name: Checkout cached build
       uses: actions/cache/restore@v4
@@ -104,14 +98,6 @@ jobs:
         fail-on-cache-miss: true
     - name: License check
       run: ci/scripts/tests/licenseCheck.ps1
-    - name: Upload artifact
-      id: uploadArtifact
-      if: ${{ success() || failure() }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: License check results
-        path: testOutput/license/licenseCheckResults.md
-        overwrite: true
 
   unitTests:
     name: Run unit tests
