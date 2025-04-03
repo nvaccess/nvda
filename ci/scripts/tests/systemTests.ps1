@@ -50,7 +50,7 @@ $nvdaLauncherFile=$(Resolve-Path "$env:nvdaLauncherDir\nvda*.exe")
 --variable verboseDebugLogging:"${verboseDebugLogging}" `
 @includeTags `
 # last line intentionally blank, allowing all lines to have line continuations.
-if($LastExitCode -ne 0) {
+if ($LastExitCode -ne 0) {
 	$MESSAGE = "FAIL: System tests (tags: ${tagsForTest}). See test results for more information."
 	Write-Output "testFailExitCode=$LastExitCode" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 } else {

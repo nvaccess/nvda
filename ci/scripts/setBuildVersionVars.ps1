@@ -1,11 +1,11 @@
 $ErrorActionPreference = "Stop";
 
 $pythonVersion = (py --version)
-echo $pythonVersion
+Write-Output $pythonVersion
 if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release-")) {
 	# Strip "release-" prefix.
 	$version = $env:GITHUB_REF_NAME.Substring(8)
-	echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+	Write-Output "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 	if ($env:GITHUB_REF_TYPE -eq "tag" -and ($env:GITHUB_REF_NAME.Contains("rc") -or $env:GITHUB_REF_NAME.Contains("beta"))) {
 		$versionType = "beta"
 	} else {
@@ -20,8 +20,8 @@ if ($env:GITHUB_REF_TYPE -eq "tag" -and $env:GITHUB_REF_NAME.StartsWith("release
 		$version = "alpha-$BUILD_NUMBER,$commitVersion"
 	} else {
 		$version = "$env:GITHUB_REF_NAME-$BUILD_NUMBER,$commitVersion"
-		if($env:GITHUB_REF_NAME.StartsWith("try-release-")) {
-			echo "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
+		if ($env:GITHUB_REF_NAME.StartsWith("try-release-")) {
+			Write-Output "release=1" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
 		}
 	}
 }
