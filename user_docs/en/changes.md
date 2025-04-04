@@ -18,7 +18,7 @@ Microsoft Office and LibreOffice support has improved, notably with more shortcu
 
 Default input and output braille tables can now be determined based on the NVDA language.
 Native support has been added for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display.
-There have been other minor fixes for braille displays particularly around connectivity.
+There have been other minor fixes for braille displays, particularly around connectivity.
 
 LibLouis braille translator, eSpeak-NG and Unicode CLDR have been updated.
 New Coptic, compact Cuneiform, and Portuguese Computer Braille tables are available.
