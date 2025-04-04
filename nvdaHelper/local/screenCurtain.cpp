@@ -14,6 +14,7 @@
 #include <gdiplus.h>
 #include <memory>
 #include <wil/resource.h>
+#include <string>
 
 using namespace Gdiplus;
 using namespace std;
@@ -177,6 +178,14 @@ bool isScreenFullyBlack() {
 		auto histB = std::make_shared<UINT[]>(histogramSize);
 
 		diScreenshot->GetHistogram(HistogramFormatRGB, histogramSize, histR.get(), histG.get(), histB.get(), NULL);
+		auto ssHist = make_unique<wostringstream>();
+		*ssHist << L"Histogram of virtual screen:";
+		for (UINT i = 0; i < histogramSize; i++) {
+			*ssHist << L" (" << histR[i] << L", " << histG[i] << L", " << histB[i] << L")";
+		}
+		LOG_DEBUG(ssHist->str());
+
+
 
 		// If the entire screen is black, then the only colour in the histogram must be (0, 0, 0).
 		// Since the sum of values in each channel must be the number of pixels in the image,
