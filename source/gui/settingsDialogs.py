@@ -2,10 +2,10 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
-#  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
+# Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -3106,46 +3106,6 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		label = _(
-			# Translators: This is a label for the
-			# "allow NVDA to control the volume of other applications"
-			# combo box in settings.
-			"&Allow NVDA to control the volume of other applications:",
-		)
-		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf,
-		)
-		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
-		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
-
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100,
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		if 0 <= volume <= 100:
-			self.appSoundVolSlider.SetValue(volume)
-		else:
-			log.error("Invalid volume level: {}", volume)
-			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
-			self.appSoundVolSlider.SetValue(defaultVolume)
-
-		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
-			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Mute other apps")),
-		)
-		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
-		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
-
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3205,15 +3165,6 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
-		self.appVolAdjusterCombo.saveCurrentValueToConf()
-		audio.appsVolume._updateAppsVolumeImpl(
-			volume=self.appSoundVolSlider.GetValue() / 100.0,
-			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
-		)
-
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -3228,10 +3179,6 @@ class AudioPanel(SettingsPanel):
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
 		self.soundVolSlider.Enable(not self.soundVolFollowCheckBox.IsChecked())
-
-		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
-		self.muteOtherAppsCheckBox.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems
@@ -3381,7 +3328,11 @@ class RemoteSettingsPanel(SettingsPanel):
 
 	def makeSettings(self, sizer):
 		self.config = configuration.getRemoteConfig()
+
 		sHelper = gui.guiHelper.BoxSizerHelper(self, sizer=sizer)
+		# Translators: Label of a checkbox in Remote's settings
+		self.enableRemote = sHelper.addItem(wx.CheckBox(self, label=_("Enable Remote Access")))
+		self.enableRemote.SetValue(self.config["enabled"])
 		self.autoconnect = wx.CheckBox(
 			parent=self,
 			id=wx.ID_ANY,
@@ -3517,6 +3468,16 @@ class RemoteSettingsPanel(SettingsPanel):
 			cs["port"] = int(self.port.GetValue())
 		cs["key"] = self.key.GetValue()
 		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+		enabled = self.enableRemote.GetValue()
+		oldEnabled = self.config["enabled"]
+		self.config["enabled"] = enabled
+		if enabled != oldEnabled:
+			import remoteClient
+
+			if enabled and not remoteClient.remoteRunning():
+				remoteClient.initialize()
+			elif not enabled and remoteClient.remoteRunning():
+				remoteClient.terminate()
 
 
 class TouchInteractionPanel(SettingsPanel):
@@ -3943,6 +3904,17 @@ class AdvancedPanelControls(
 		self.trimLeadingSilenceCheckBox.SetValue(config.conf["speech"]["trimLeadingSilence"])
 		self.trimLeadingSilenceCheckBox.defaultValue = self._getDefaultValue(["speech", "trimLeadingSilence"])
 
+		# Translators: This is the label for a combo-box control in the
+		#  Advanced settings panel.
+		label = _("Use WASAPI for SAPI 4 audio output:")
+		self.useWASAPIForSAPI4Combo = speechGroup.addLabeledControl(
+			labelText=label,
+			wxCtrlClass=nvdaControls.FeatureFlagCombo,
+			keyPath=["speech", "useWASAPIForSAPI4"],
+			conf=config.conf,
+		)
+		self.bindHelpEvent("UseWASAPIForSAPI4", self.useWASAPIForSAPI4Combo)
+
 		# Translators: This is the label for a group of advanced options in the
 		#  Advanced settings panel
 		label = _("Virtual Buffers")
@@ -4128,6 +4100,7 @@ class AdvancedPanelControls(
 			and self.cancelExpiredFocusSpeechCombo.GetSelection()
 			== self.cancelExpiredFocusSpeechCombo.defaultValue
 			and self.trimLeadingSilenceCheckBox.IsChecked() == self.trimLeadingSilenceCheckBox.defaultValue
+			and self.useWASAPIForSAPI4Combo.isValueConfigSpecDefault()
 			and self.loadChromeVBufWhenBusyCombo.isValueConfigSpecDefault()
 			and self.caretMoveTimeoutSpinControl.GetValue() == self.caretMoveTimeoutSpinControl.defaultValue
 			and self.reportTransparentColorCheckBox.GetValue()
@@ -4157,6 +4130,7 @@ class AdvancedPanelControls(
 		self.wtStrategyCombo.resetToConfigSpecDefault()
 		self.cancelExpiredFocusSpeechCombo.SetSelection(self.cancelExpiredFocusSpeechCombo.defaultValue)
 		self.trimLeadingSilenceCheckBox.SetValue(self.trimLeadingSilenceCheckBox.defaultValue)
+		self.useWASAPIForSAPI4Combo.resetToConfigSpecDefault()
 		self.loadChromeVBufWhenBusyCombo.resetToConfigSpecDefault()
 		self.caretMoveTimeoutSpinControl.SetValue(self.caretMoveTimeoutSpinControl.defaultValue)
 		self.reportTransparentColorCheckBox.SetValue(self.reportTransparentColorCheckBox.defaultValue)
@@ -4168,12 +4142,11 @@ class AdvancedPanelControls(
 	def onSave(self):
 		log.debug("Saving advanced config")
 
-		if config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked():
-			# Reload the synthesizer if "trimLeadingSilence" changes
-			config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
-			currentSynth = getSynth()
-			if not setSynth(currentSynth.name):
-				_synthWarningDialog(currentSynth.name)
+		shouldResetSynth = (
+			config.conf["speech"]["trimLeadingSilence"] != self.trimLeadingSilenceCheckBox.IsChecked()
+			or config.conf["speech"]["useWASAPIForSAPI4"]
+			!= self.useWASAPIForSAPI4Combo._getControlCurrentFlag()
+		)
 
 		config.conf["development"]["enableScratchpadDir"] = self.scratchpadCheckBox.IsChecked()
 		selectiveUIAEventRegistrationChoice = self.selectiveUIAEventRegistrationCombo.GetSelection()
@@ -4187,6 +4160,8 @@ class AdvancedPanelControls(
 		config.conf["featureFlag"]["cancelExpiredFocusSpeech"] = (
 			self.cancelExpiredFocusSpeechCombo.GetSelection()
 		)
+		config.conf["speech"]["trimLeadingSilence"] = self.trimLeadingSilenceCheckBox.IsChecked()
+		self.useWASAPIForSAPI4Combo.saveCurrentValueToConf()
 		config.conf["UIA"]["allowInChromium"] = self.UIAInChromiumCombo.GetSelection()
 		self.enhancedEventProcessingComboBox.saveCurrentValueToConf()
 		config.conf["terminals"]["speakPasswords"] = self.winConsoleSpeakPasswordsCheckBox.IsChecked()
@@ -4207,6 +4182,11 @@ class AdvancedPanelControls(
 			config.conf["debugLog"][key] = self.logCategoriesList.IsChecked(index)
 		config.conf["featureFlag"]["playErrorSound"] = self.playErrorSoundCombo.GetSelection()
 		config.conf["virtualBuffers"]["textParagraphRegex"] = self.textParagraphRegexEdit.GetValue()
+
+		if shouldResetSynth:
+			currentSynth = getSynth()
+			if not setSynth(currentSynth.name):
+				_synthWarningDialog(currentSynth.name)
 
 
 class AdvancedPanel(SettingsPanel):
