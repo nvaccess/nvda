@@ -150,9 +150,6 @@ jobs:
     - name: Prepare source code for launcher
       shell: cmd
       run: scons %sconsOutTargets% %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
-    - name: Build launcher
-      shell: cmd
-      run: scons launcher %sconsArgs% ${{ !runner.debug && '--all-cores' || '-j1'}}
     - name: Export package list
       shell: cmd
       run: .\venvUtils\exportPackageList.bat output\installed_python_packages.txt
