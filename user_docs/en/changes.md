@@ -132,7 +132,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
   * When using the Seika Notetaker, space and space with dots gestures are now displayed correctly in the Input Gestures dialog. (#17047, @school510587)
   * NVDA should no longer play error sounds or spam the log file when using the display speech output braille mode while no braille display is connected. (#17092, @Emil-18)
   * When the Standard HID Braille Display driver is explicitly selected as the braille display driver, and the braille display list is opened, NVDA correctly identifies the HID driver as the selected driver instead of showing no driver selected. (#17537, @LeonarddeR)
-  * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors.  (#17537, @LeonarddeR)
+  * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors. (#17537, @LeonarddeR)
   * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
 * Microsoft Office:
   * The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Microsoft Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)
@@ -155,7 +155,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
   * In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
   In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, #17430, @nvdaes)
 * Configuration profiles:
-  * Braille is no longer dysfunctional when activating 'say all' with an associated configuration profile. (#17163, @LeonarddeR)
+  * Braille is no longer dysfunctional when activating "say all" with an associated configuration profile. (#17163, @LeonarddeR)
   * Fixed an issue where certain settings were explicitly saved to the active configuration profile even when the value of that setting was equal to the value in the base configuration. (#17157, @leonarddeR)
 * When spelling, unicode normalization now works more appropriately:
   * After reporting a normalized character, NVDA no longer incorrectly reports subsequent characters as normalized. (#17286, @LeonarddeR)
@@ -258,7 +258,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * The following symbols have been removed with no replacement: `languageHandler.getLanguageCliArgs`, `__main__.quitGroup` and `__main__.installGroup` . (#17486, @CyrilleB79)
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
-* The  `[addonStore][showWarning]` configuration setting has been removed.
+* The `[addonStore][showWarning]` configuration setting has been removed.
 Instead use `addonStore.dataManager.addonDataManager.storeSettings.showWarning`. (#17191)
 * `ui.browseableMessage` now takes a parameter `sanitizeHtmlFunc`.
 This defaults to `nh3.clean` with default arguments.
