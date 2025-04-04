@@ -147,7 +147,8 @@ bool isScreenFullyBlack() {
 
 	try {
 		// Convert the device-dependent bitmap to a device-independent bitmap.
-		auto diScreenshotBits = make_shared<char[]>(diScreenshotSize);
+		// Initialise each byte to 1 as a canary.
+		auto diScreenshotBits = make_shared<char[]>(diScreenshotSize, 1);
 		bytesWritten = GetDIBits(
 			// Source device context and device-dependent bitmap
 			captureDc.get(), captureBitmap.get(),
