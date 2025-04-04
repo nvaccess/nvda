@@ -282,8 +282,7 @@ jobs:
       uses: crazy-max/ghaction-virustotal@v4
       with:
         vt_api_key: ${{ secrets.VT_API_KEY }}
-        files: |
-            .exe$
+        files: output/nvda*.exe
     - name: Get normalized VT url
       id: getVTUrl
       shell: bash
