@@ -139,6 +139,10 @@ bool isScreenFullyBlack() {
 	diScreenshotHeader.biClrImportant = 0; // All colours are needed
 
 	// Calculate the size (in bytes) of the DIB.
+	// Each scan line must be a multiple of 32bits long, including padding if necessary.
+	// So add 31 to push us to that boundary if padding is needed.
+	// If the scan line doesn't need any padding, adding 31 will make no difference,
+	// since (32n + 31) / 32 = n R 31.
 	diScreenshotSize = ((ddScreenshot.bmWidth * diScreenshotHeader.biBitCount + 31) / 32) * 4 * ddScreenshot.bmHeight;
 
 	try {
