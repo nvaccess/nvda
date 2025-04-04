@@ -185,6 +185,7 @@ Add-ons will need to be re-tested and have their manifest updated.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 * Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
 * Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer.
+* When a script using `gesture.send` is triggered with a gesture that includes `numlock` as a modifier, num lock is no longer turned off. (#10827, @CyrilleB79)
 
 #### API Breaking Changes
 
