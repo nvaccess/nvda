@@ -190,7 +190,7 @@ class DocumentWithTableNavigation(TextContainerObject, ScriptableObject):
 				)
 		return cell
 
-	def _inTable(self, info: textInfos.TextInfo):
+	def _inTable(self, info: textInfos.TextInfo) -> bool:
 		try:
 			self._getTableCellCoords(info)
 			return True
