@@ -4,7 +4,7 @@
 
 This release introduces NVDA Remote, allowing you to control a remote computer running NVDA from another device running NVDA.
 
-There any many improvements to speech particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
+There are many improvements to speech particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
 Rate boost and automatic language switching is now supported in SAPI 5.
 SAPI 4 voices now support audio ducking, leading silence trimming, and keeping the audio device awake.
 
@@ -17,11 +17,11 @@ Native selection is now available in Chrome and Edge.
 Microsoft Office and LibreOffice support has improved, notably with more shortcuts being announced.
 
 Default input and output braille tables can now be determined based on the NVDA language.
-Native support support has been added for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display.
+Native support has been added for the Dot Pad tactile graphics device from Dot Inc as a multiline braille display.
 There have been other minor fixes for braille displays particularly around connectivity.
 
 LibLouis braille translator, eSpeak-NG and Unicode CLDR have been updated.
-Nw Coptic, compact Cuneiform, and Portuguese Computer Braille tables are available.
+New Coptic, compact Cuneiform, and Portuguese Computer Braille tables are available.
 
 ### Important notes
 
@@ -54,7 +54,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
   * Automatic language switching is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices. (#17146, @gexgd0419)
   * Rate boost is now supported when using Microsoft Speech API version 5 (SAPI5) and Microsoft Speech Platform voices, which supports up to 6X speed. (#17606, @gexgd0419)
 * Web browsers:
-  * NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome and other applications based on Chromium 134 or newer. (#17838)
+  * NVDA browse mode's native selection mode (`NVDA+shift+f10`) is now supported in Google Chrome, Edge and other applications based on Chromium 134 or newer. (#17838)
   * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
   * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Microsoft Office:
