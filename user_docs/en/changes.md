@@ -39,14 +39,14 @@ Please responsibly disclose security issues following NVDA's [security policy](h
 ### New Features
 
 * Add-on Store:
-  * Automatic updates:
-    * Automatic update channels for add-ons can now be modified. (#3208)
+  * Automatic updates (#3208):
+    * Automatic update channels for add-ons can now be modified.
       * Automatic update channels can be selected for installed add-ons via an "Update channel" submenu.
       * The default automatic update channel can be set from the Add-on Store panel in NVDA's settings.
     * Automatic updates can now happen in the background.
-      * This can be enabled in the Add-on Store panel in NVDA's settings by changing "Automatic updates" to "Update Automatically". (#3208)
+      * This can be enabled in the Add-on Store panel in NVDA's settings by changing "Automatic updates" to "Update Automatically".
     * Automatic updates can now update incompatible add-ons to another, newer, incompatible version.
-      * This can be enabled in the Add-on Store panel in NVDA's settings. (#3208)
+      * This can be enabled in the Add-on Store panel in NVDA's settings.
   * Added an action to cancel the install of add-ons. (#15578, @hwf1324)
   * Added an action to retry the installation if the download/installation of an add-on fails. (#17090, @hwf1324)
   * The add-ons lists can be sorted by columns, including publication date, in ascending and descending order. (#15277, #16681, @nvdaes)
@@ -70,7 +70,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
   As a consequence, announcement of first line indent is now supported for LibreOffice 25.8 and later. (#13052, @michaelweghorn)
 * OCR:
   * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
-  * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result.
+  * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result. (#16897)
 * Remote access functionality, based on the NVDA Remote add-on, has been integrated into NVDA. (#4390, @ctoth, @tspivey, @daiverd, NVDA Remote Contributors and funders)
 * It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, @christopherpross)
 * Support for math in PDFs has been added. (#9288, @NSoiffer)
@@ -222,7 +222,7 @@ Add-ons will need to be re-tested and have their manifest updated.
     * This way device detection can be constrained further in cases where a VID/PID-combination is shared by multiple devices across multiple drivers, or when a HID device offers multiple endpoints, for example.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 * Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
-* Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer.
+* Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer. (#17648)
 
 #### API Breaking Changes
 
@@ -259,7 +259,7 @@ As the NVDA update check URL is now configurable directly within NVDA, no replac
 * Prefix matching on command line flags, e.g. using `--di` for `--disable-addons` is no longer supported. (#11644, @CyrilleB79)
 * The `useAsFallBack` keyword argument of `bdDetect.DriverRegistrar` has been renamed to `useAsFallback`. (#17521, @LeonarddeR)
 * The `[addonStore][showWarning]` configuration setting has been removed.
-Instead use `addonStore.dataManager.addonDataManager.storeSettings.showWarning`. (#17191)
+Instead use `addonStore.dataManager.addonDataManager.storeSettings.showWarning`. (#17597)
 * `ui.browseableMessage` now takes a parameter `sanitizeHtmlFunc`.
 This defaults to `nh3.clean` with default arguments.
 This means any HTML passed into `ui.browseableMessage` using `isHtml=True` is now sanitized by default.
