@@ -264,7 +264,7 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     needs: [checkPot, licenseCheck, unitTests, systemTests]
-    if: startsWith(github.ref_name, 'release-') && !contains(github.ref_name, 'beta')
+    if: startsWith(github.ref_name, 'release-')
     steps:
     - name: Get normalized tag names
       id: getReleaseNotes
@@ -277,12 +277,23 @@ jobs:
       with:
         name: NVDA launcher
         path: output
-    - name: Publish release
+    - name: Publish pre-release
+      if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
       with:
-        prerelease: ${{ contains(github.ref_name, 'rc') }}
-        make_latest: ${{ !contains(github.ref_name, 'rc') }}
-        discussion_category_name: ${{ !contains(github.ref_name, 'rc') && 'Releases' || '' }}
+        prerelease: true
+        make_latest: false
         name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
         files: output/nvda*.exe
-        body: Highlights and download links can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
+        body: Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
+    - name: Publish stable release
+      if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
+      uses: softprops/action-gh-release@v2
+      with:
+        prerelease: false
+        make_latest: true
+        discussion_category_name: Releases
+        name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
+        files: output/nvda*.exe
+        body: Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
+  
