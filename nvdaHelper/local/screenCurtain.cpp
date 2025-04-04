@@ -63,7 +63,7 @@ bool isScreenFullyBlack() {
 	BITMAP ddScreenshot;
 	HGDIOBJ oldObj;
 	BITMAPINFOHEADER diScreenshotHeader;
-	bool bStatus ;
+	bool bStatus;
 	Status sStatus;
 
 	// The desktop window covers the entire virtual screen.
@@ -109,7 +109,8 @@ bool isScreenFullyBlack() {
 		screenOriginX, screenOriginY,
 		// Raster operation to perform.
 		// In this case, replace destination with source.
-		SRCCOPY);
+		SRCCOPY
+	);
 	// Restore captureDC for safety.
 	SelectObject(captureDc.get(), oldObj);
 	if (!bStatus) {
@@ -128,10 +129,10 @@ bool isScreenFullyBlack() {
 	diScreenshotHeader.biSize = sizeof(BITMAPINFOHEADER);
 	diScreenshotHeader.biWidth = ddScreenshot.bmWidth;
 	diScreenshotHeader.biHeight = ddScreenshot.bmHeight;
-	diScreenshotHeader.biPlanes = 1;			  // Can only ever be 1
-	diScreenshotHeader.biBitCount = 32;		  // High byte unused
-	diScreenshotHeader.biCompression = BI_RGB; // Uncompressed
-	diScreenshotHeader.biSizeImage = 0;		  // Unneeded as uncompressed
+	diScreenshotHeader.biPlanes = 1;  // Can only ever be 1
+	diScreenshotHeader.biBitCount = 32;  // High byte unused
+	diScreenshotHeader.biCompression = BI_RGB;  // Uncompressed
+	diScreenshotHeader.biSizeImage = 0;  // Unneeded as uncompressed
 	diScreenshotHeader.biXPelsPerMeter = 0;
 	diScreenshotHeader.biYPelsPerMeter = 0;
 	diScreenshotHeader.biClrUsed = 0;
@@ -151,14 +152,15 @@ bool isScreenFullyBlack() {
 			// Destination buffer
 			diScreenshotBits.get(),
 			// Format of DIB
-			(BITMAPINFO *)&diScreenshotHeader, DIB_RGB_COLORS);
+			(BITMAPINFO*)&diScreenshotHeader, DIB_RGB_COLORS
+		);
 		if (bytesWritten == 0 || bytesWritten == ERROR_INVALID_PARAMETER) {
 			LOG_ERROR(L"Failed to convert device dependent bitmap to device independent bitmap. Got " << bytesWritten << L".");
 			return false;
 		}
 
 		// Create a GDI+ bitmap from the captured virtual screen, and calculate a histogram of colours.
-		auto diScreenshot = make_shared<Bitmap>((BITMAPINFO *)&diScreenshotHeader, diScreenshotBits.get());
+		auto diScreenshot = make_shared<Bitmap>((BITMAPINFO*)&diScreenshotHeader, diScreenshotBits.get());
 		sStatus = diScreenshot->GetHistogramSize(HistogramFormatARGB, &histogramSize);
 		if (sStatus != Ok) {
 			LOG_ERROR(L"Failed to calculate histogram size. Error #" << sStatus << L".");
@@ -175,7 +177,6 @@ bool isScreenFullyBlack() {
 		// Since the sum of values in each channel must be the number of pixels in the image,
 		// if the screen is entirely black,
 		// the 0th entry in each of the channels must be the number of pixels in the image.
-		LOG_INFO("Work out if is black.");
 		return histR[0] == screenArea && histG[0] == screenArea && histB[0] == screenArea;
 	}
 	catch (bad_alloc)
