@@ -1923,7 +1923,7 @@ This option is disabled by default.
 
 ##### Report language {#ReportLanguage}
 
-This checkbox allows you to toggle whether NVDA should report the detected language of the text been read. The language configured to be used by default won't be reported.
+This checkbox allows you to toggle whether NVDA should report the detected language of the text being read. The language configured to be used by default won't be reported.
 This option is disabled by default.
 
 <!-- KC:setting -->

@@ -3122,19 +3122,19 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 		_speechState.lastReportedLanguage = item.lang
 		if not languageIsSupported(item.lang):
 			# Translators: Reported when the language of the text been read is not supported.
-			filteredSpeechSequence.append("not supported")
+			filteredSpeechSequence.append(_("{lang} not supported").format(lang=langDesc)
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
 
 
-def languageIsSupported(language: str | None) -> bool:
+def languageIsSupported(lang: str | None) -> bool:
 	"""Determines if the specified language is supported.
 	:param language: A language code or None.
 	:return: ``True`` if the language is supported, ``False`` otherwise.
 	"""
 	if language is None:
 		return True
-	for lang in getSynth().availableLanguages:
+	for availableLang in getSynth().availableLanguages:
 		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
 			return True
 	return False
