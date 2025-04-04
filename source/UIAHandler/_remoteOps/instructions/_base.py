@@ -9,6 +9,8 @@ from ..builder import (
 	InstructionBase,
 )
 
+__all__ = ["_TypedInstruction"]
+
 
 class _TypedInstruction(InstructionBase):
 	@property

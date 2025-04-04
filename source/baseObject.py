@@ -60,12 +60,12 @@ class CachingGetter(Getter):
 
 
 class AutoPropertyType(ABCMeta):
-	def __init__(self, name, bases, dict):
-		super(AutoPropertyType, self).__init__(name, bases, dict)
+	def __init__(self, name: str, bases: tuple[type, ...], namespace: dict[str, Any], /, **kwargs: Any):
+		super().__init__(name, bases, namespace, **kwargs)
 
 		cacheByDefault = False
 		try:
-			cacheByDefault = dict["cachePropertiesByDefault"]
+			cacheByDefault = namespace["cachePropertiesByDefault"]
 		except KeyError:
 			cacheByDefault = any(getattr(base, "cachePropertiesByDefault", False) for base in bases)
 
@@ -75,12 +75,12 @@ class AutoPropertyType(ABCMeta):
 		oldAbstractProps = set()
 		# given _get_myVal, _set_myVal, and _del_myVal: "myVal" would be output 3 times
 		# use a set comprehension to ensure unique values, "myVal" only needs to occur once.
-		props = {x[5:] for x in dict.keys() if x[0:5] in ("_get_", "_set_", "_del_")}
+		props = {x[5:] for x in namespace.keys() if x[0:5] in ("_get_", "_set_", "_del_")}
 		for x in props:
-			g = dict.get("_get_%s" % x, None)
-			s = dict.get("_set_%s" % x, None)
-			d = dict.get("_del_%s" % x, None)
-			if x in dict:
+			g = namespace.get("_get_%s" % x, None)
+			s = namespace.get("_set_%s" % x, None)
+			d = namespace.get("_del_%s" % x, None)
+			if x in namespace:
 				methodsString = ",".join(str(i) for i in (g, s, d) if i)
 				raise TypeError(
 					"%s is already a class attribute, cannot create descriptor with methods %s"
@@ -94,7 +94,7 @@ class AutoPropertyType(ABCMeta):
 					if g:
 						break
 
-			cache = dict.get("_cache_%s" % x, None)
+			cache = namespace.get("_cache_%s" % x, None)
 			if cache is None:
 				# The cache setting hasn't been specified in this class, but it could be in one of the bases.
 				for base in bases:
@@ -104,7 +104,7 @@ class AutoPropertyType(ABCMeta):
 				else:
 					cache = cacheByDefault if not isinstance(g, classmethod) else False
 
-			abstract = dict.get("_abstract_%s" % x, False)
+			abstract = namespace.get("_abstract_%s" % x, False)
 			if g and not (s or d):
 				attr = (CachingGetter if cache else Getter)(g, abstract)
 			else:
@@ -183,17 +183,17 @@ class AutoPropertyObject(garbageHandler.TrackedObject, metaclass=AutoPropertyTyp
 class ScriptableType(AutoPropertyType):
 	"""A metaclass used for collecting and caching gestures on a ScriptableObject"""
 
-	def __new__(meta, name, bases, dict):
-		cls = super(ScriptableType, meta).__new__(meta, name, bases, dict)
-		gesturesDictName = "_%s__gestures" % cls.__name__
+	def __new__(cls, name: str, bases: tuple[type, ...], namespace: dict[str, Any], /, **kwargs: Any):
+		newCls = super().__new__(cls, name, bases, namespace, **kwargs)
+		gesturesDictName = "_%s__gestures" % newCls.__name__
 		# #8463: To avoid name mangling conflicts, create a copy of the __gestures dictionary.
 		try:
-			gestures = getattr(cls, gesturesDictName).copy()
+			gestures = getattr(newCls, gesturesDictName).copy()
 		except AttributeError:
 			# This class currently has no gestures dictionary,
 			# because no custom __gestures dictionary has been defined.
 			gestures = {}
-		for name, script in dict.items():
+		for name, script in namespace.items():
 			if not name.startswith("script_"):
 				continue
 			scriptName = name[len("script_") :]
@@ -201,8 +201,8 @@ class ScriptableType(AutoPropertyType):
 				for gesture in script.gestures:
 					gestures[gesture] = scriptName
 		if gestures:
-			setattr(cls, gesturesDictName, gestures)
-		return cls
+			setattr(newCls, gesturesDictName, gestures)
+		return newCls
 
 
 class ScriptableObject(AutoPropertyObject, metaclass=ScriptableType):

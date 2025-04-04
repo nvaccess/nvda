@@ -13,7 +13,7 @@ from . import IAccessible, getNVDAObjectFromEvent
 from NVDAObjects import NVDAObjectTextInfo
 from NVDAObjects.behaviors import EditableText
 from comtypes import GUID, COMError, IServiceProvider
-from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement
+from comtypes.gen.AcrobatAccessLib import IAccID, IGetPDDomNode, IPDDomElement  # type: ignore[reportMissingImports]
 from logHandler import log
 
 SID_AccID = GUID("{449D454B-1F46-497e-B2B6-3357AED9912B}")
@@ -77,10 +77,16 @@ class AcrobatNode(IAccessible):
 
 		# Get the IPDDomNode.
 		try:
+			serv.QueryService(SID_GetPDDomNode, IGetPDDomNode)
+		except COMError:
+			log.debugWarning("FAILED: QueryService(SID_GetPDDomNode, IGetPDDomNode)")
+			self.pdDomNode = None
+		try:
 			self.pdDomNode = serv.QueryService(SID_GetPDDomNode, IGetPDDomNode).get_PDDomNode(
 				self.IAccessibleChildID,
 			)
 		except COMError:
+			log.debugWarning("FAILED: get_PDDomNode")
 			self.pdDomNode = None
 
 		if self.pdDomNode:
@@ -136,16 +142,38 @@ class AcrobatNode(IAccessible):
 					yield sub
 		yield "</%s>" % tag
 
-	def _get_mathMl(self):
-		# There could be other stuff before the math element. Ug.
+	def _get_mathMl(self) -> str:
+		"""Return the MathML associated with a Formula tag"""
+		if self.pdDomNode is None:
+			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
+			raise LookupError
+		mathMl = self.pdDomNode.GetValue()
+		if log.isEnabledFor(log.DEBUG):
+			log.debug(
+				(
+					f"_get_mathMl: math recognized: {mathMl.startswith('<math')}, "
+					f"child count={self.pdDomNode.GetChildCount()},"
+					f"\n  name='{self.pdDomNode.GetName()}', value='{mathMl}'"
+				),
+			)
+		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
+		if mathMl.startswith("<math"):
+			return mathMl.replace('xmlns:mml="http://www.w3.org/1998/Math/MathML"', "")
+		# Alternative for tagging: all the sub expressions are tagged -- gather up the MathML
 		for childNum in range(self.pdDomNode.GetChildCount()):
 			try:
 				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
 			except COMError:
+				log.debugWarning(f"COMError trying to get childNum={childNum}")
 				continue
+			if log.isEnabledFor(log.DEBUG):
+				log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
 				return "".join(self._getNodeMathMl(child))
-		raise LookupError
+		# fall back to return the contents, which is hopefully alt text
+		if log.isEnabledFor(log.DEBUG):
+			log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
+		return f"<math><mtext>{self.pdDomNode.GetValue()}</mtext></math>"
 
 
 class RootNode(AcrobatNode):

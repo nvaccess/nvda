@@ -158,7 +158,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.HID,
+			bdDetect.ProtocolType.HID,
 			{
 				"VID_0798&PID_0640",  # BC640
 				"VID_0798&PID_0680",  # BC680
@@ -216,7 +216,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self._deviceId = None
 
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isHid = portType == bdDetect.DeviceType.HID
+			self.isHid = portType == bdDetect.ProtocolType.HID
 			# Try talking to the display.
 			try:
 				if self.isHid:

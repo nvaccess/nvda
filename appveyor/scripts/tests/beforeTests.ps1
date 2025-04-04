@@ -6,7 +6,7 @@ New-Item -ItemType directory -Path testOutput\license
 
 # The first Chrome system test to run occasionally fails.
 # This has been observed on developer machines after chrome updates, but is difficult to reproduce.
-# When this occur the NVDA logs indicate that a no virtual buffer is created.
+# When this occurs the NVDA logs indicate that no virtual buffer is created.
 # It isn't known if this is a bug in Chrome or NVDA.
 # The problem does not seem to affect users frequently, and when it does
 # recovery is possible by waiting a few seconds before switching to another app

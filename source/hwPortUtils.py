@@ -16,6 +16,7 @@ import config
 import hidpi
 import winKernel
 from logHandler import log
+from winAPI.constants import SystemErrorCodes
 from winKernel import SYSTEMTIME
 
 
@@ -206,6 +207,8 @@ def _getBluetoothPortInfo(regKey: int, hwID: str) -> dict:
 			usbIDStart = h.find("VID_")
 			if usbIDStart != -1:
 				info["usbID"] = hwID[usbIDStart : usbIDStart + 17]  # VID_xxxx&PID_xxxx
+		case _:
+			log.debug(f"Unknown hardware ID {hwID!r}")
 	return info
 
 
@@ -496,7 +499,10 @@ class HIDD_ATTRIBUTES(ctypes.Structure):
 		super().__init__(Size=ctypes.sizeof(HIDD_ATTRIBUTES), **kwargs)
 
 
-def _getHidInfo(hwId, path):
+_getHidInfoCache: dict[str, dict] = {}
+
+
+def _getHidInfo(hwId: str, path: str) -> dict[str, typing.Any]:
 	info = {
 		"hardwareID": hwId,
 		"devicePath": path,
@@ -517,18 +523,28 @@ def _getHidInfo(hwId, path):
 	# Fetch additional info about the HID device.
 	from serial.win32 import FILE_FLAG_OVERLAPPED, INVALID_HANDLE_VALUE, CreateFile
 
-	handle = CreateFile(
-		path,
-		0,
-		winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
-		None,
-		winKernel.OPEN_EXISTING,
-		FILE_FLAG_OVERLAPPED,
-		None,
-	)
-	if handle == INVALID_HANDLE_VALUE:
-		if _isDebug():
-			log.debugWarning(f"Opening device {path} to get additional info failed: {ctypes.WinError()}")
+	if (
+		handle := CreateFile(
+			path,
+			0,
+			winKernel.FILE_SHARE_READ | winKernel.FILE_SHARE_WRITE,
+			None,
+			winKernel.OPEN_EXISTING,
+			FILE_FLAG_OVERLAPPED,
+			None,
+		)
+	) == INVALID_HANDLE_VALUE:
+		if (err := ctypes.GetLastError()) == SystemErrorCodes.SHARING_VIOLATION:
+			if _isDebug():
+				log.debugWarning(
+					f"Opening device {path} to get additional info failed because the device is being used. "
+					"Falling back to cache for device info",
+				)
+			if cachedInfo := _getHidInfoCache.get(path):
+				cachedInfo.update(info)
+				return cachedInfo
+		elif _isDebug():
+			log.debugWarning(f"Opening device {path} to get additional info failed: {ctypes.WinError(err)}")
 		return info
 	try:
 		attribs = HIDD_ATTRIBUTES()
@@ -555,6 +571,7 @@ def _getHidInfo(hwId, path):
 				ctypes.windll.hid.HidD_FreePreparsedData(pd)
 	finally:
 		winKernel.closeHandle(handle)
+	_getHidInfoCache[path] = info
 	return info
 
 

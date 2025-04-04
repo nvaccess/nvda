@@ -96,11 +96,9 @@ COM_INTERFACES = {
 	"tom.py": ("{8CC497C9-A1DF-11CE-8098-00AA0047BE5D}", 1, 0),
 	"SpeechLib.py": ("{C866CA3A-32F7-11D2-9602-00C04F8EE628}", 5, 0),
 	"AcrobatAccessLib.py": "typelibs/AcrobatAccess.tlb",
-	# We don't generate UIAutomationClient (and _944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py)
-	# because we don't know what version is available on Appveyor.
-	# Instead we locally generate the file and include it in the repository.
-	# Ensuring that adjustments performed by 'makeIDEFriendly' are incorporated.
-	# "UIAutomationClient.py": ('{944DE083-8FB8-45CF-BCB7-C477ACB2F897}', 1, 0),
+	# As long as Appveyor is on a Windows version that has an acceptable version of UIAutomationClient,
+	# we generate it at build time.
+	"UIAutomationClient.py": ("{944DE083-8FB8-45CF-BCB7-C477ACB2F897}", 1, 0),
 }
 
 for k, v in COM_INTERFACES.items():
@@ -123,9 +121,8 @@ for k, v in COM_INTERFACES.items():
 
 
 # When cleaning comInterfaces get rid of everything
-# except for things starting with __ (e.g. __init__.py), and files tracked by Git
+# except for the readme.md and __init__.py files tracked by Git
 env.Clean(
 	Dir("comInterfaces"),
-	Glob("comInterfaces/[!_]*", exclude=["comInterfaces/readme.md", "comInterfaces/UIAutomationClient.py"])
-	+ Glob("comInterfaces/_[!_]*", exclude="comInterfaces/_944DE083_8FB8_45CF_BCB7_C477ACB2F897_0_1_0.py"),
+	Glob("comInterfaces/*", exclude=["comInterfaces/readme.md", "comInterfaces/__init__.py"]),
 )

@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2007-2023 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
+# Copyright (C) 2007-2025 NV Access Limited, Babbage B.V., James Teh, Leonard de Ruijter,
 # Thomas Stivers, Accessolutions, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -9,7 +9,6 @@ from typing import (
 	Callable,
 	Generator,
 	Union,
-	cast,
 )
 from collections.abc import Generator  # noqa: F811
 import os
@@ -19,6 +18,7 @@ import winsound
 import time
 import weakref
 import re
+from comtypes import COMError
 
 import wx
 import core
@@ -54,6 +54,7 @@ from NVDAObjects import NVDAObject
 import gui.contextHelp
 from abc import ABCMeta, abstractmethod
 import globalVars
+from utils import urlUtils
 from typing import Optional
 
 
@@ -304,6 +305,15 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 	scriptCategory = inputCore.SCRCAT_BROWSEMODE
 	_disableAutoPassThrough = False
 	APPLICATION_ROLES = (controlTypes.Role.APPLICATION, controlTypes.Role.DIALOG)
+	documentURL: str | None = None
+	"""The URL of the current browse mode document.
+	C{None} when there is no URL or it is unknown.
+	Used to determine the type of a link in the document.
+	"""
+
+	def getLinkTypeInDocument(self, url: str) -> controlTypes.State | None:
+		"""Returns the type of a link in the document, or C{None} if the link type cannot be determined."""
+		return urlUtils.getLinkType(url, self.documentURL)
 
 	def _get_currentNVDAObject(self):
 		raise NotImplementedError
@@ -434,7 +444,7 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		return config.conf["virtualBuffers"]["trapNonCommandGestures"]
 
 	def script_trapNonCommandGesture(self, gesture):
-		winsound.PlaySound("default", 1)
+		winsound.MessageBeep()
 
 	singleLetterNavEnabled = True  #: Whether single letter navigation scripts should be active (true) or if these letters should fall to the application.
 
@@ -684,11 +694,8 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 		else:
 			self._activateNVDAObject(obj)
 
-	def script_activatePosition(self, gesture):
-		if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			self._activatePosition()
-		else:
-			self._focusLastFocusableObject(activatePosition=True)
+	def script_activatePosition(self, gesture: inputCore.InputGesture) -> None:
+		self._focusLastFocusableObject(activatePosition=True)
 
 	# Translators: the description for the activatePosition script on browseMode documents.
 	script_activatePosition.__doc__ = _("Activates the current object in the document")
@@ -715,10 +722,9 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 			# Make sure we activate the object at the caret, which is not necessarily focusable.
 			self._activatePosition()
 
-	def script_passThrough(self, gesture):
-		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			self._focusLastFocusableObject()
-			api.processPendingEvents(processEventQueue=True)
+	def script_passThrough(self, gesture: inputCore.InputGesture) -> None:
+		self._focusLastFocusableObject()
+		api.processPendingEvents(processEventQueue=True)
 		gesture.send()
 
 	def script_disablePassThrough(self, gesture):
@@ -734,13 +740,13 @@ class BrowseModeTreeInterceptor(treeInterceptorHandler.TreeInterceptor):
 
 	script_disablePassThrough.ignoreTreeInterceptorPassThrough = True
 
-	def _set_disableAutoPassThrough(self, state):
+	def _set_disableAutoPassThrough(self, state: bool):
 		# If the user manually switches to focus mode with NVDA+space, that enables
-		# pass-through and disables auto pass-through. If auto focusing of focusable
-		# elements is disabled, NVDA won't have synced the focus to the browse mode
-		# cursor. However, since the user is switching to focus mode, they probably
+		# pass-through and disables auto pass-through.
+		# NVDA doesn't automatically sync the focus to the browse mode
+		# cursor, however, since the user is switching to focus mode, they probably
 		# want to interact with the focus, so sync the focus here.
-		if state and not config.conf["virtualBuffers"]["autoFocusFocusableElements"] and self.passThrough:
+		if state and self.passThrough:
 			self._focusLastFocusableObject()
 		self._disableAutoPassThrough = state
 
@@ -1335,7 +1341,7 @@ class ElementsListDialog(
 		# in the browse mode Elements List dialog.
 		filterText = _("Filter b&y:")
 		labeledCtrl = gui.guiHelper.LabeledControlHelper(self, filterText, wx.TextCtrl)
-		self.filterEdit = cast(wx.TextCtrl, labeledCtrl.control)
+		self.filterEdit = labeledCtrl.control
 		self.filterTimer: Optional[wx.CallLater] = None
 		self.filterEdit.Bind(wx.EVT_TEXT, self.onFilterEditTextChange)
 		contentsSizer.Add(labeledCtrl.sizer)
@@ -1498,7 +1504,6 @@ class ElementsListDialog(
 		elif key == wx.WXK_F2:
 			item = self.tree.GetSelection()
 			if item:
-				selectedItemType = self.tree.GetItemData(item).item  # noqa: F841
 				self.tree.EditLabel(item)
 				evt.Skip()
 
@@ -1785,14 +1790,8 @@ class BrowseModeDocumentTreeInterceptor(
 				and focusObj != api.getFocusObject()
 				and self._shouldSetFocusToObj(focusObj)
 			):
-				followBrowseModeFocus = config.conf["virtualBuffers"]["autoFocusFocusableElements"]
-				if followBrowseModeFocus or self.passThrough:
+				if self.passThrough:
 					focusObj.setFocus()
-					# Track this object as NVDA having just requested setting focus to it
-					# So that when NVDA does receive the focus event for it
-					# It can handle it quietly rather than speaking the new focus.
-					if followBrowseModeFocus:
-						self._objPendingFocusBeforeActivate = obj
 			# Queue the reporting of pass through mode so that it will be spoken after the actual content.
 			queueHandler.queueFunction(queueHandler.eventQueue, reportPassThrough, self)
 
@@ -1854,12 +1853,9 @@ class BrowseModeDocumentTreeInterceptor(
 	currentExpandedControl = None  #: an NVDAObject representing the control that has just been expanded with the collapseOrExpandControl script.
 
 	def script_collapseOrExpandControl(self, gesture: inputCore.InputGesture):
-		if not config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			self._focusLastFocusableObject()
-			# Give the application time to focus the control.
-			core.callLater(100, self._collapseOrExpandControl_scriptHelper, gesture)
-		else:
-			self._collapseOrExpandControl_scriptHelper(gesture)
+		self._focusLastFocusableObject()
+		# Give the application time to focus the control.
+		core.callLater(100, self._collapseOrExpandControl_scriptHelper, gesture)
 
 	def _collapseOrExpandControl_scriptHelper(self, gesture: inputCore.InputGesture):
 		oldFocus = api.getFocusObject()
@@ -1990,6 +1986,12 @@ class BrowseModeDocumentTreeInterceptor(
 			# and this was the last non-root node with focus, so ignore this focus event.
 			# Otherwise, if the user switches away and back to this document, the cursor will jump to this node.
 			# This is not ideal if the user was positioned over a node which cannot receive focus.
+			# #17501: Even though we're ignoring this event, we still need to call
+			# _postGainFocus. This does things such as initialize auto select detection
+			# for editable text controls. Without this, the focus object might not
+			# behave correctly (e.g. text selection changes might not be reported) if the
+			# user switches to focus mode with this object still focused.
+			self._postGainFocus(obj)
 			return
 		if obj == self.rootNVDAObject:
 			if self.passThrough:
@@ -2035,15 +2037,6 @@ class BrowseModeDocumentTreeInterceptor(
 		if not self._hadFirstGainFocus or previousFocusObjIsDefunct:
 			# still initializing  or the old focus is dead.
 			isOverlapping = False
-		elif config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-			# if this focus event was caused by NVDA setting the focus itself
-			# Due to auto focus focusable elements option being enabled,
-			# And we detect that the caret was already positioned within the focus.
-			# Note that this is not the default and may be removed in future.
-			caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
-			# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
-			caretInfo.expand(textInfos.UNIT_CHARACTER)
-			isOverlapping = focusInfo.isOverlapping(caretInfo)
 		else:
 			# if this focus event was caused by NVDA setting the focus itself
 			# due to activation or applications key etc.
@@ -2082,12 +2075,7 @@ class BrowseModeDocumentTreeInterceptor(
 				# This focus change was caused by a virtual caret movement, so don't speak the focused node to avoid double speaking.
 				# However, we still want to update the speech property cache so that property changes will be spoken properly.
 				speech.speakObject(obj, OutputReason.ONLYCACHE)
-				if config.conf["virtualBuffers"]["autoFocusFocusableElements"]:
-					# As we do not call nextHandler which would trigger the vision framework to handle gain focus,
-					# we need to call it manually here.
-					# Note: this is usually called after the caret movement.
-					vision.handler.handleGainFocus(obj)
-				elif (
+				if (
 					objPendingFocusBeforeActivate
 					and obj == objPendingFocusBeforeActivate
 					and obj is not objPendingFocusBeforeActivate
@@ -2119,10 +2107,10 @@ class BrowseModeDocumentTreeInterceptor(
 	) -> bool:
 		"""Handle scrolling the browseMode document to a given object in response to an event.
 		Subclasses should call this from an event which indicates that the document has scrolled.
-		@postcondition: The virtual caret is moved to L{obj} and the buffer content for L{obj} is reported.
-		@param obj: The object to which the document should scroll.
-		@return: C{True} if the document was scrolled, C{False} if not.
-		@note: If C{False} is returned, calling events should probably call their nextHandler.
+		- postcondition: The virtual caret is moved to *obj* and the buffer content for *obj* is reported.
+		:param obj: The object to which the document should scroll.
+		:return: ``True`` if the document was scrolled, ``False`` if not.
+		- note: If ``False`` is returned, calling events should probably call their ``nextHandler``.
 		"""
 		if (
 			self.programmaticScrollMayFireEvent
@@ -2144,13 +2132,14 @@ class BrowseModeDocumentTreeInterceptor(
 		else:
 			raise ValueError(f"{obj} is not a supported type")
 
-		# We only want to update the caret and speak the field if we're not in the same one as before
+		# We only want to update the caret and speak the field if we're not in the first line of the same object as before.
+		# See #17669
+		scrollInfo.collapse()
+		scrollInfo.expand(textInfos.UNIT_LINE)
 		caretInfo = self.makeTextInfo(textInfos.POSITION_CARET)
 		# Expand to one character, as isOverlapping() doesn't treat, for example, (4,4) and (4,5) as overlapping.
 		caretInfo.expand(textInfos.UNIT_CHARACTER)
 		if not scrollInfo.isOverlapping(caretInfo):
-			if scrollInfo.isCollapsed:
-				scrollInfo.expand(textInfos.UNIT_LINE)
 			speech.speakTextInfo(scrollInfo, reason=OutputReason.CARET)
 			scrollInfo.collapse()
 			self.selection = scrollInfo
@@ -2696,8 +2685,11 @@ class BrowseModeDocumentTreeInterceptor(
 		nativeAppSelectionModeOn = not self._nativeAppSelectionMode
 		if nativeAppSelectionModeOn:
 			try:
+				# We need to clear the app selection before updating it when turning it on,
+				# as the app must be able to support clearing / setting empty selections.
+				self.clearAppSelection()
 				self.updateAppSelection()
-			except NotImplementedError:
+			except (NotImplementedError, COMError):
 				log.debugWarning("updateAppSelection failed", exc_info=True)
 				# Translators: the message when native selection mode is not available in this browse mode document.
 				ui.message(_("Native selection mode unsupported in this document"))

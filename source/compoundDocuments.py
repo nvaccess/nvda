@@ -545,8 +545,11 @@ class CompoundDocument(EditableText, DocumentTreeInterceptor):
 		self.detectPossibleSelectionChange()
 		braille.handler.handleCaretMove(self)
 		vision.handler.handleCaretMove(self)
-		caret = self.makeTextInfo(textInfos.POSITION_CARET)
-		review.handleCaretMove(caret)
+		try:
+			caret = self.makeTextInfo(textInfos.POSITION_CARET)
+			review.handleCaretMove(caret)
+		except NotImplementedError:
+			pass
 
 	def event_gainFocus(self, obj, nextHandler):
 		if not isinstance(obj, behaviors.EditableText):

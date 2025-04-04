@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2022 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Babbage B.V.,
+# Copyright (C) 2006-2024 NV Access Limited, Łukasz Golonka, Leonard de Ruijter, Babbage B.V.,
 # Aleksey Sadovoy, Peter Vágner
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
@@ -41,7 +41,7 @@ class DefaultAppArgs(argparse.Namespace):
 	logFileName: Optional[os.PathLike] = ""
 	logLevel: int = 0
 	configPath: Optional[os.PathLike] = None
-	language: str = "en"
+	language: str | None = None
 	minimal: bool = False
 	secure: bool = False
 	"""

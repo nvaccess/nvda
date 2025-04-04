@@ -1,7 +1,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2009-2023 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
+# Copyright (C) 2009-2024 NV Access Limited, Babbage B.V., Accessolutions, Julien Cochuyt, Cyrille Bougot
 
 from comtypes import COMError
 from . import VirtualBuffer, VirtualBufferTextInfo, VBufStorage_findMatch_word, VBufStorage_findMatch_notEmpty
@@ -283,9 +283,13 @@ class MSHTML(VirtualBuffer):
 			return False
 		if not winUser.isWindow(root.windowHandle):
 			return False
-		if root.appModule.appName.startswith("wwahost") and not winUser.isDescendantWindow(
-			winUser.getForegroundWindow(),
-			root.windowHandle,
+		if (
+			root.appModule
+			and root.appModule.appName.startswith("wwahost")
+			and not winUser.isDescendantWindow(
+				winUser.getForegroundWindow(),
+				root.windowHandle,
+			)
 		):
 			# #4572: When a wwahost hosted app is in the background it gets suspended and all COM calls freeze.
 			# Therefore we don't have enough info to say whether its dead or not. We assume it is alive until we can get a better answer.

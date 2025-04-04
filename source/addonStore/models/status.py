@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -23,7 +23,7 @@ from utils.displayString import DisplayStringEnum
 from .version import MajorMinorPatch, SupportsVersionCheck
 
 if TYPE_CHECKING:
-	from .addon import _AddonGUIModel  # noqa: F401
+	from .addon import _AddonGUIModel, AddonHandlerModel, _AddonStoreModel  # noqa: F401
 	from addonHandler import AddonsState  # noqa: F401
 
 
@@ -243,11 +243,52 @@ def _getDownloadableStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonSt
 	return None
 
 
-def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
-	from .addon import AddonStoreModel
+def _canUpdateAddon(
+	availableAddon: "_AddonStoreModel",
+	baseAddon: "_AddonStoreModel | AddonHandlerModel",
+) -> bool | None:
+	"""Check if an add-on can be updated.
+
+	:param model: Add-on to check if it can be updated.
+	:return: True if the add-on can be updated, False if it cannot,
+	None if it is unknown (e.g. cannot parse current version string).
+	"""
+	from .addon import _AddonStoreModel
+	from addonHandler import Addon as AddonHandlerModel
 	from ..dataManager import addonDataManager
 
 	assert addonDataManager is not None
+
+	if isinstance(baseAddon, _AddonStoreModel):
+		return availableAddon.addonVersionNumber > baseAddon.addonVersionNumber
+	elif isinstance(baseAddon, AddonHandlerModel):
+		# Parsing from a side-loaded add-on
+		try:
+			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(
+				baseAddon.version,
+			)
+		except ValueError:
+			# Parsing failed to get a numeric version.
+			# Ideally a numeric version would be compared,
+			# however the manifest only has a version string.
+			# Ensure the user is aware that it may be a downgrade or reinstall.
+			# Encourage users to re-install or upgrade the add-on from the add-on store.
+			return None
+		else:
+			return availableAddon.addonVersionNumber > manifestAddonVersion
+	else:
+		raise TypeError(f"Unexpected type: {type(baseAddon)}")
+
+
+def _getUpdateStatus(model: "_AddonGUIModel") -> AvailableAddonStatus | None:
+	"""Get the update status for an add-on.
+
+	:param model: Add-on to check if it can be updated.
+	:return: Update status of add-on for the context of the current tab.
+	None if the add-on is not installed or cannot be updated.
+	"""
+	from ..dataManager import addonDataManager
+	from ..models.addon import AddonStoreModel
 
 	if not isinstance(model, AddonStoreModel):
 		# If the listed add-on is installed from a side-load
@@ -256,34 +297,37 @@ def _getUpdateStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:
 		return None
 
 	if model._anyPendingInstallForId:
+		# Update/install already pending
 		return None
 
-	addonStoreInstalledData = addonDataManager._getCachedInstalledAddonData(model.addonId)
-	if addonStoreInstalledData is not None:
-		if model.addonVersionNumber > addonStoreInstalledData.addonVersionNumber:
-			if not model.isCompatible:
-				return AvailableAddonStatus.UPDATE_INCOMPATIBLE
-			return AvailableAddonStatus.UPDATE
-	else:
-		# Parsing from a side-loaded add-on
-		try:
-			manifestAddonVersion = MajorMinorPatch._parseVersionFromVersionStr(
-				model._addonHandlerModel.version,
-			)
-		except ValueError:
-			# Parsing failed to get a numeric version.
-			# Ideally a numeric version would be compared,
-			# however the manifest only has a version string.
-			# Ensure the user is aware that it may be a downgrade or reinstall.
-			# Encourage users to re-install or upgrade the add-on from the add-on store.
+	installedAddonData: "_AddonStoreModel | AddonHandlerModel | None" = (
+		addonDataManager._getCachedInstalledAddonData(model.addonId)
+	)
+	if installedAddonData is None:
+		# Use manifest if add-on store data is not available
+		installedAddonData = model._addonHandlerModel
+	if installedAddonData is None:
+		# Add-on is not installed.
+		# No update status.
+		return None
+
+	canUpdateAddon = _canUpdateAddon(model, installedAddonData)
+	match canUpdateAddon:
+		case None:
+			# Cannot determine if add-on can be updated,
+			# e.g. version string cannot be parsed.
 			return AvailableAddonStatus.REPLACE_SIDE_LOAD
-
-		if model.addonVersionNumber > manifestAddonVersion:
-			if not model.isCompatible:
-				return AvailableAddonStatus.UPDATE_INCOMPATIBLE
-			return AvailableAddonStatus.UPDATE
-
-	return None
+		case True:
+			# Add-on is installed and can be updated.
+			if model.isCompatible:
+				return AvailableAddonStatus.UPDATE
+			return AvailableAddonStatus.UPDATE_INCOMPATIBLE
+		case False:
+			# Add-on is not installed or cannot be updated.
+			# No update status.
+			return None
+		case _:
+			raise ValueError(f"Unexpected value: {canUpdateAddon}")
 
 
 def _getInstalledStatus(model: "_AddonGUIModel") -> Optional[AvailableAddonStatus]:

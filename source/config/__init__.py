@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
+# Copyright (C) 2006-2025 NV Access Limited, Aleksey Sadovoy, Peter Vágner, Rui Batista, Zahari Yurukov,
 # Joseph Lee, Babbage B.V., Łukasz Golonka, Julien Cochuyt, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
@@ -40,7 +40,6 @@ from .configFlags import OutputMode
 from .featureFlag import (
 	_transformSpec_AddFeatureFlagDefault,
 	_validateConfig_featureFlag,
-	FeatureFlag,
 )
 from typing import (
 	Any,
@@ -525,9 +524,9 @@ class ConfigManager(object):
 	BASE_ONLY_SECTIONS = {
 		"general",
 		"update",
-		"upgrade",
 		"development",
 		"addonStore",
+		"remote",
 	}
 	"""
 	Sections that only apply to the base configuration;
@@ -751,6 +750,9 @@ class ConfigManager(object):
 			self._dirtyProfiles.clear()
 		except PermissionError as e:
 			log.warning("Error saving configuration; probably read only file system", exc_info=True)
+			raise e
+		except Exception as e:
+			log.warning("Error saving configuration", exc_info=True)
 			raise e
 		post_configSave.notify()
 
@@ -1069,18 +1071,17 @@ class ConfigManager(object):
 
 
 class ConfigValidationData(object):
-	validationFuncName = None  # type: str
+	validationFuncName: str | None = None
 
 	def __init__(self, validationFuncName):
 		self.validationFuncName = validationFuncName
 		super(ConfigValidationData, self).__init__()
 
 	# args passed to the convert function
-	args = []  # type: List[Any]
+	args: list[Any] = []
 
 	# kwargs passed to the convert function.
-	kwargs = {}  # type: Dict[str, Any]
-
+	kwargs: dict[str, Any] = {}
 	# the default value, used when config is missing.
 	default = None  # converted to the appropriate type
 
@@ -1146,7 +1147,7 @@ class AggregatedSection:
 			else:
 				# This is a setting.
 				if not checkValidity:
-					spec = None
+					return val  # Never cache unvalidated values
 				return self._cacheLeaf(key, spec, val)
 		subProfiles.reverse()
 
@@ -1291,13 +1292,13 @@ class AggregatedSection:
 		except KeyError:
 			pass
 		else:
-			if (
-				# Feature flags override __eq__.
+			if self._isSection(val) or self._isSection(curVal):
+				# If value is a section, continue to update
+				pass
+			elif str(val) == str(curVal):
 				# Check str comparison as this is what is written to the config.
 				# If the value is unchanged, do not update
 				# or mark the profile as dirty.
-				(isinstance(val, FeatureFlag) or isinstance(curVal, FeatureFlag)) and str(val) == str(curVal)
-			):
 				return
 
 		# Set this value in the most recently activated profile.

@@ -1,8 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2023 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
-# Burman's Computer and Education Ltd.
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee, Bill Dengler,
+# Burman's Computer and Education Ltd, Cary-rowen
 
 """Mix-in classes which provide common behaviour for particular types of controls across different APIs.
 Behaviors described in this mix-in include providing table navigation commands for certain table rows, terminal input and output support, announcing notifications and suggestion items and so on.
@@ -31,6 +31,7 @@ import nvwave
 import globalVars
 from typing import List, Union
 import diffHandler
+from config.configFlags import TypingEcho
 
 
 class ProgressBar(NVDAObject):
@@ -571,7 +572,10 @@ class EnhancedTermTypedCharSupport(Terminal):
 		else:
 			self._hasTab = False
 		if (
-			(config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"])
+			(
+				config.conf["keyboard"]["speakTypedCharacters"] != TypingEcho.OFF.value
+				or config.conf["keyboard"]["speakTypedWords"] != TypingEcho.OFF.value
+			)
 			and not config.conf["terminals"]["speakPasswords"]
 			and self._supportsTextChange
 		):
@@ -653,7 +657,6 @@ class CandidateItem(NVDAObject):
 		return _("{number} {candidate}").format(number=number, candidate=candidate)
 
 	def getFormattedCandidateDescription(self, candidate):
-		descriptions = []  # noqa: F841
 		numSymbols = len(candidate) if candidate else 0
 		if numSymbols != 1:
 			return ""

@@ -2,6 +2,7 @@
 # Copyright (C) 2016-2024 NV Access Limited, Derek Riemer, Cyrille Bougot, Luke Davis, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
+
 import collections
 import enum
 import typing
@@ -10,6 +11,7 @@ from typing import (
 	OrderedDict,
 	Type,
 )
+import warnings
 
 import wx
 from wx.lib import scrolledpanel
@@ -20,12 +22,29 @@ from config.featureFlag import (
 	FeatureFlag,
 	FlagValueEnum as FeatureFlagEnumT,
 )
+import gui.message
 from .dpiScalingHelper import DpiScalingHelperMixin
-from . import guiHelper
+from . import (
+	guiHelper,
+)
 import winUser
-import winsound
 
 from collections.abc import Callable
+
+
+__all__ = [
+	"AutoWidthColumnListCtrl",
+	"SelectOnFocusSpinCtrl",
+	"ListCtrlAccessible",
+	"CustomCheckListBox",
+	"AutoWidthColumnCheckListCtrl",
+	"DPIScaledDialog",
+	"MessageDialog",
+	"_ContinueCancelDialog",
+	"EnhancedInputSlider",
+	"TabbableScrolledPanel",
+	"FeatureFlagCombo",
+]
 
 
 class AutoWidthColumnListCtrl(wx.ListCtrl, listmix.ListCtrlAutoWidthMixin):
@@ -266,114 +285,112 @@ class DPIScaledDialog(wx.Dialog, DpiScalingHelperMixin):
 		DpiScalingHelperMixin.__init__(self, self.GetHandle())
 
 
-class MessageDialog(DPIScaledDialog):
-	"""Provides a more flexible message dialog. Consider overriding _addButtons, to set your own
-	buttons and behaviour.
+class MessageDialog(gui.message.MessageDialog):
+	"""Provides a more flexible message dialog.
+
+	.. warning:: This class is deprecated.
+		Use :class:`gui.messageDialog.MessageDialog` instead.
+		This class is an adapter around that class, and will be removed in 2026.1.
+
+	Consider overriding _addButtons, to set your own buttons and behaviour.
 	"""
+
+	# We don't want the new message dialog's guard rails, as they may be incompatible with old code
+	_FAIL_ON_NO_BUTTONS = False
+	_FAIL_ON_NONMAIN_THREAD = False
 
 	# Dialog types currently supported
 	DIALOG_TYPE_STANDARD = 1
 	DIALOG_TYPE_WARNING = 2
 	DIALOG_TYPE_ERROR = 3
 
-	_DIALOG_TYPE_ICON_ID_MAP = {
-		# DIALOG_TYPE_STANDARD is not in the map, since we wish to use the default icon provided by wx
-		DIALOG_TYPE_ERROR: wx.ART_ERROR,
-		DIALOG_TYPE_WARNING: wx.ART_WARNING,
-	}
+	@staticmethod
+	def _legacyDialogTypeToDialogType(dialogType: int) -> gui.message.DialogType:
+		match dialogType:
+			case MessageDialog.DIALOG_TYPE_ERROR:
+				return gui.message.DialogType.ERROR
+			case MessageDialog.DIALOG_TYPE_WARNING:
+				return gui.message.DialogType.WARNING
+			case _:
+				return gui.message.DialogType.STANDARD
 
-	_DIALOG_TYPE_SOUND_ID_MAP = {
-		# DIALOG_TYPE_STANDARD is not in the map, since there should be no sound for a standard dialog.
-		DIALOG_TYPE_ERROR: winsound.MB_ICONHAND,
-		DIALOG_TYPE_WARNING: winsound.MB_ICONASTERISK,
-	}
+	def __new__(cls, *args, **kwargs):
+		warnings.warn(
+			"gui.nvdaControls.MessageDialog is deprecated. Use gui.messageDialog.MessageDialog instead.",
+			DeprecationWarning,
+		)
+		return super().__new__(cls, *args, **kwargs)
 
-	def _addButtons(self, buttonHelper):
+	def __init__(
+		self,
+		parent: wx.Window | None,
+		title: str,
+		message: str,
+		dialogType: int = DIALOG_TYPE_STANDARD,
+	):
+		super().__init__(
+			parent,
+			message=message,
+			title=title,
+			dialogType=self._legacyDialogTypeToDialogType(dialogType),
+			buttons=None,
+		)
+
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
 		"""Adds ok / cancel buttons. Can be overridden to provide alternative functionality."""
-		ok = buttonHelper.addButton(
-			self,
-			id=wx.ID_OK,
-			# Translators: An ok button on a message dialog.
-			label=_("OK"),
-		)
-		ok.SetDefault()
-		ok.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.OK))
+		self.addOkButton(returnCode=wx.OK)
+		self.addCancelButton(returnCode=wx.CANCEL)
 
-		cancel = buttonHelper.addButton(
-			self,
-			id=wx.ID_CANCEL,
-			# Translators: A cancel button on a message dialog.
+
+class _ContinueCancelDialog(MessageDialog):
+	"""
+	This implementation of a `gui.nvdaControls.MessageDialog`, provides `Continue` and `Cancel` buttons as its controls.
+	These serve the same functions as `OK` and `Cancel` in other dialogs, but may be more desirable in some situations.
+	It also supports NVDA's context sensitive help.
+	"""
+
+	def __init__(
+		self,
+		parent: wx.Frame,
+		title: str,
+		message: str,
+		dialogType: int = MessageDialog.DIALOG_TYPE_STANDARD,
+		continueButtonFirst: bool = True,
+		helpId: str | None = None,
+	) -> None:
+		"""Creates a ContinueCancelDialog MessageDialog.
+
+		:param parent: The parent window for the dialog, usually `gui.mainFrame`.
+		:param title: The title or caption of the dialog.
+		:param message: The message to be shown in the dialog.
+		:param dialogType: One of the dialog type constants from `MessageDialog`, defaults to standard.
+		:param continueButtonFirst: If True, the Continue button will appear first, and be selected when the dialog
+			opens; if False, the Cancel button will. Defaults to True.
+		:param helpId: a helpId, as used with the `gui.contextHelp` module, enabling the help key (`F1`)
+			to open a browser to a specific heading in the NVDA user guide.
+		"""
+		self.continueButtonFirst: bool = continueButtonFirst
+		if helpId is not None:
+			self.helpId = helpId
+		super().__init__(parent, title, message, dialogType)
+		if helpId is not None:
+			# Help event has already been bound (in supersuperclass), so we need to re-bind it.
+			self.bindHelpEvent(helpId, self)
+
+	def _addButtons(self, buttonHelper: guiHelper.ButtonHelper) -> None:
+		"""Override to add Continue and Cancel buttons."""
+		self.addOkButton(
+			# Translators: The label for the Continue button in an NVDA dialog.
+			label=_("&Continue"),
+			returnCode=wx.OK,
+			defaultFocus=self.continueButtonFirst,
+		)
+		self.addCancelButton(
+			# Translators: The label for the Cancel button in an NVDA dialog.
 			label=_("Cancel"),
+			returnCode=wx.CANCEL,
+			defaultFocus=not self.continueButtonFirst,
 		)
-		cancel.Bind(wx.EVT_BUTTON, lambda evt: self.EndModal(wx.CANCEL))
-
-	def _addContents(self, contentsSizer: guiHelper.BoxSizerHelper):
-		"""Adds additional contents  to the dialog, before the buttons.
-		Subclasses may implement this method.
-		"""
-
-	def _setIcon(self, type):
-		try:
-			iconID = self._DIALOG_TYPE_ICON_ID_MAP[type]
-		except KeyError:
-			# type not found, use default icon.
-			return
-		icon = wx.ArtProvider.GetIcon(iconID, client=wx.ART_MESSAGE_BOX)
-		self.SetIcon(icon)
-
-	def _setSound(self, type):
-		try:
-			self._soundID = self._DIALOG_TYPE_SOUND_ID_MAP[type]
-		except KeyError:
-			# type not found, no sound.
-			self._soundID = None
-			return
-
-	def _playSound(self):
-		if self._soundID is not None:
-			winsound.MessageBeep(self._soundID)
-
-	def __init__(self, parent, title, message, dialogType=DIALOG_TYPE_STANDARD):
-		DPIScaledDialog.__init__(self, parent, title=title)
-
-		self._setIcon(dialogType)
-		self._setSound(dialogType)
-		self.Bind(wx.EVT_SHOW, self._onShowEvt, source=self)
-		self.Bind(wx.EVT_ACTIVATE, self._onDialogActivated, source=self)
-
-		mainSizer = wx.BoxSizer(wx.VERTICAL)
-		contentsSizer = guiHelper.BoxSizerHelper(parent=self, orientation=wx.VERTICAL)
-
-		# Double ampersand in the dialog's label to avoid this character to be interpreted as an accelerator.
-		label = message.replace("&", "&&")
-		text = wx.StaticText(self, label=label)
-		text.Wrap(self.scaleSize(self.GetSize().Width))
-		contentsSizer.addItem(text)
-		self._addContents(contentsSizer)
-
-		buttonHelper = guiHelper.ButtonHelper(wx.HORIZONTAL)
-		self._addButtons(buttonHelper)
-		contentsSizer.addDialogDismissButtons(buttonHelper)
-
-		mainSizer.Add(
-			contentsSizer.sizer,
-			border=guiHelper.BORDER_FOR_DIALOGS,
-			flag=wx.ALL,
-		)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.CentreOnScreen()
-
-	def _onDialogActivated(self, evt):
-		evt.Skip()
-
-	def _onShowEvt(self, evt):
-		"""
-		:type evt: wx.ShowEvent
-		"""
-		if evt.IsShown():
-			self._playSound()
-		evt.Skip()
 
 
 class EnhancedInputSlider(wx.Slider):

@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Joseph Lee
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Joseph Lee
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -192,6 +192,17 @@ freeze(
 				"company_name": f"Bill Dengler, {publisher}",
 			},
 		},
+		{
+			"script": "l10nUtil.py",
+			"version_info": {
+				"version": formatBuildVersionString(),
+				"description": "NVDA Localization Utility",
+				"product_name": name,
+				"product_version": version,
+				"copyright": NVDAcopyright,
+				"company_name": publisher,
+			},
+		},
 	],
 	options={
 		"verbose": 2,
@@ -221,6 +232,8 @@ freeze(
 			# multiprocessing isn't going to work in a frozen environment
 			"multiprocessing",
 			"concurrent.futures.process",
+			# Tomli is part of Python 3.11 as Tomlib, but is imported as tomli by cryptography, which causes an infinite loop in py2exe
+			"tomli",
 		],
 		"packages": [
 			"NVDAObjects",
@@ -236,8 +249,16 @@ freeze(
 			"brailleDisplayDrivers",
 			"brailleDisplayDrivers.albatross",
 			"brailleDisplayDrivers.eurobraille",
+			"brailleDisplayDrivers.dotPad",
 			"synthDrivers",
 			"visionEnhancementProviders",
+			# Required for markdown, markdown implicitly imports this so it isn't picked up
+			"html.parser",
+			"lxml._elementpath",
+			"markdown.extensions",
+			"markdown_link_attr_modifier",
+			"mdx_truly_sane_lists",
+			"mdx_gh_links",
 		],
 		"includes": [
 			"nvdaBuiltin",
@@ -249,7 +270,7 @@ freeze(
 	},
 	data_files=[
 		(".", glob("*.dll") + glob("*.manifest") + ["builtin.dic"]),
-		("documentation", ["../copying.txt", "../contributors.txt"]),
+		("documentation", ["../copying.txt"]),
 		("lib/%s" % version, glob("lib/*.dll") + glob("lib/*.manifest")),
 		("lib64/%s" % version, glob("lib64/*.dll") + glob("lib64/*.exe")),
 		("libArm64/%s" % version, glob("libArm64/*.dll") + glob("libArm64/*.exe")),
@@ -286,6 +307,7 @@ freeze(
 			+ (
 				"__pycache__",
 				"*.md",
+				"*.md.sub",
 				"*.xliff",
 				"*/user_docs/styles.css",
 				"*/user_docs/numberedHeadings.css",

@@ -1,6 +1,12 @@
+# A part of NonVisual Desktop Access (NVDA)
+# Copyright (C) 2012-2025 NV Access Limited, Cary-Rowen
+# This file is covered by the GNU General Public License.
+# See the file COPYING for more details.
+
 import eventHandler
 import queueHandler
 import controlTypes
+from config.configFlags import TypingEcho
 import characterProcessing
 import speech
 import config
@@ -73,7 +79,10 @@ class InputComposition(EditableTextWithAutoSelectDetection, Window):
 		return clsList
 
 	def reportNewText(self, oldString, newString):
-		if config.conf["keyboard"]["speakTypedCharacters"] or config.conf["keyboard"]["speakTypedWords"]:
+		if (
+			config.conf["keyboard"]["speakTypedCharacters"] != TypingEcho.OFF.value
+			or config.conf["keyboard"]["speakTypedWords"] != TypingEcho.OFF.value
+		):
 			newText = calculateInsertedChars(oldString.strip("\u3000"), newString.strip("\u3000"))
 			if newText:
 				queueHandler.queueFunction(

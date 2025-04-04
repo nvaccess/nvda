@@ -1,11 +1,8 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2024 NV Access Limited, Cyrille Bougot, łukasz Golonka
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot, łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
-from typing import (
-	cast,
-)
 
 import wx
 from wx.adv import BannerWindow
@@ -20,7 +17,6 @@ from addonStore.models.status import (
 	_statusFilters,
 	_StatusFilterKey,
 )
-import config
 from core import callLater
 import globalVars
 import gui
@@ -53,7 +49,7 @@ class AddonStoreDialog(SettingsDialog):
 		self._actionsContextMenu = _MonoActionsContextMenu(self._storeVM)
 		self.openToTab = openToTab
 		super().__init__(parent, resizeable=True, buttons={wx.CLOSE})
-		if config.conf["addonStore"]["showWarning"]:
+		if addonDataManager.storeSettings.showWarning:
 			displayDialogAsModal(_SafetyWarningDialog(parent))
 		self.Maximize()
 
@@ -155,25 +151,28 @@ class AddonStoreDialog(SettingsDialog):
 		filterCtrlsLine1.sizer.AddSpacer(FILTER_MARGIN_PADDING)
 		filterCtrlHelper.addItem(filterCtrlsLine1.sizer, flag=wx.EXPAND, proportion=1)
 
-		self.channelFilterCtrl = cast(
-			wx.Choice,
-			filterCtrlsLine0.addLabeledControl(
-				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Cha&nnel:"),
-				wxCtrlClass=wx.Choice,
-				choices=list(c.displayString for c in _channelFilters),
-			),
+		self.columnFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to sort the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Sort by colu&mn:"),
+			wxCtrlClass=wx.Choice,
+			choices=self._storeVM.listVM._columnSortChoices,
+		)
+		self.columnFilterCtrl.Bind(wx.EVT_CHOICE, self.onColumnFilterChange, self.columnFilterCtrl)
+		self.bindHelpEvent("AddonStoreSortByColumn", self.columnFilterCtrl)
+
+		self.channelFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Cha&nnel:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in _channelFilters),
 		)
 		self.channelFilterCtrl.Bind(wx.EVT_CHOICE, self.onChannelFilterChange, self.channelFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterChannel", self.channelFilterCtrl)
 
 		# Translators: The label of a checkbox to filter the list of add-ons in the add-on store dialog.
 		incompatibleAddonsLabel = pgettext("addonStore", "Include &incompatible add-ons")
-		self.includeIncompatibleCtrl = cast(
-			wx.CheckBox,
-			filterCtrlsLine0.addItem(
-				wx.CheckBox(self, label=incompatibleAddonsLabel),
-			),
+		self.includeIncompatibleCtrl = filterCtrlsLine0.addItem(
+			wx.CheckBox(self, label=incompatibleAddonsLabel),
 		)
 		self.includeIncompatibleCtrl.SetValue(0)
 		self.includeIncompatibleCtrl.Bind(
@@ -183,14 +182,11 @@ class AddonStoreDialog(SettingsDialog):
 		)
 		self.bindHelpEvent("AddonStoreFilterIncompatible", self.includeIncompatibleCtrl)
 
-		self.enabledFilterCtrl = cast(
-			wx.Choice,
-			filterCtrlsLine0.addLabeledControl(
-				# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
-				labelText=pgettext("addonStore", "Ena&bled/disabled:"),
-				wxCtrlClass=wx.Choice,
-				choices=list(c.displayString for c in EnabledStatus),
-			),
+		self.enabledFilterCtrl = filterCtrlsLine0.addLabeledControl(
+			# Translators: The label of a selection field to filter the list of add-ons in the add-on store dialog.
+			labelText=pgettext("addonStore", "Ena&bled/disabled:"),
+			wxCtrlClass=wx.Choice,
+			choices=list(c.displayString for c in EnabledStatus),
 		)
 		self.enabledFilterCtrl.Bind(wx.EVT_CHOICE, self.onEnabledFilterChange, self.enabledFilterCtrl)
 		self.bindHelpEvent("AddonStoreFilterEnabled", self.enabledFilterCtrl)
@@ -323,6 +319,9 @@ class AddonStoreDialog(SettingsDialog):
 		self.SetTitle(self._titleText)
 
 	def _toggleFilterControls(self):
+		self.columnFilterCtrl.Clear()
+		for c in self._storeVM.listVM._columnSortChoices:
+			self.columnFilterCtrl.Append(c)
 		self.channelFilterCtrl.Clear()
 		for c in _channelFilters:
 			if c != Channel.EXTERNAL:
@@ -358,6 +357,8 @@ class AddonStoreDialog(SettingsDialog):
 		self._storeVM._filteredStatusKey = self._statusFilterKey
 		self.addonListView._refreshColumns()
 		self._toggleFilterControls()
+		self.columnFilterCtrl.SetSelection(0)
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[0])
 
 		channelFilterIndex = list(_channelFilters.keys()).index(self._storeVM._filterChannelKey)
 		self.channelFilterCtrl.SetSelection(channelFilterIndex)
@@ -369,6 +370,15 @@ class AddonStoreDialog(SettingsDialog):
 		# avoid erratic focus on the contained panel
 		if not self.addonListTabs.HasFocus():
 			self.addonListTabs.SetFocus()
+
+	def onColumnFilterChange(self, evt: wx.EVT_CHOICE):
+		# Each col index will correspond to 2 choices in the combo box (ascending and descending)
+		colIndex = evt.GetSelection() // 2
+		# Descending sort should be applied for odd choices of the combo box
+		reverse = evt.GetSelection() % 2
+		self._storeVM.listVM.setSortField(self._storeVM.listVM.presentedFields[colIndex], reverse)
+		log.debug(f"sortered by: {colIndex}; reversed: {reverse}")
+		self._storeVM.refresh()
 
 	def onChannelFilterChange(self, evt: wx.EVT_CHOICE):
 		self._storeVM._filterChannelKey = self._channelFilterKey

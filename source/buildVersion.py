@@ -63,15 +63,15 @@ def formatVersionForGUI(year, major, minor):
 
 # Version information for NVDA
 name = "NVDA"
-version_year = 2024
-version_major = 4
-version_minor = 2
+version_year = 2025
+version_major = 1
+version_minor = 0
 version_build = 0  # Should not be set manually. Set in 'sconscript' provided by 'appVeyor.yml'
 version = _formatDevVersionString()
 publisher = "unknown"
 updateVersionType = None
 try:
-	from _buildVersion import version, publisher, updateVersionType, version_build  # noqa: F401
+	from _buildVersion import version, publisher, updateVersionType, version_build  # type: ignore[reportMissingModuleSource] # noqa: F401
 except ImportError:
 	_updateVersionFromVCS()
 

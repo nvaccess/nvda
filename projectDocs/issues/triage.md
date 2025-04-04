@@ -143,13 +143,22 @@ An issue is triaged if it is ready to be worked on.
 New features and enhancements should be [well defined](#new-features-1) before applying the `triaged` label.
 Once a bug has clear steps to reproduce and is well documented, the `triaged` label can be applied.
 A `triaged` issue should also have a [priority label](#priority).
-Generally these labels are provided by NV Access only, particularly for issues that are controversial, or priority is unclear.
 
-For controversial changes, a product decision from NV Access may be required before applying the `triaged` label.
-This can be indicated with adding the label `blocked/needs-product-decision`.
+Community members should avoid adding a `triaged` label to feature requests or decisions potentially involving significant or controversial changes to NVDA features or functionality, which may require community input or approval from NV Access.
+The label should also be avoided for other issues that are controversial, or where the priority is unclear, such as bug fixes with an unclear solution.
+For changes where a product decision from NV Access is required before applying the `triaged` label, the label `blocked/needs-product-decision` should be used.
+Community members should apply the `triaged` label where an issue is a well formed bug report following the issue template, and has the following characteristics:
+
+* Can easily be understood
+* Isn't missing any important debug information
+* Can clearly be reproduced
+* Can clearly be prioritised
+* Doesn't require a controversial solution
+* They have not submitted the issue themselves
 
 If an issue has been checked by NV Access, and needs further triage, the `needs-triage` label will be applied.
 Please notify NV Access when you believe the issue is ready for the `triaged` label.
+You can do this by tagging [relevant NV Access employees](../community/expertsList.md#nv-access) or emailing <info@nvaccess.org>.
 
 A `triaged` issue that requires a complex fix may require advice from NV Access, such as a project plan, before implementation is started.
 
@@ -203,7 +212,7 @@ If you come across one of these missing attachments, please upload if you think 
 The NVDA project greatly appreciates the involvement and contributions of its vibrant community, and we strongly encourage community members to actively engage with the project's issues and pull requests.
 
 However, it's important to maintain a clear distinction between community contributions and the internal workflow of NV Access staff.
-To that end, we kindly request that community members refrain from closing or consolidating tickets (issues, pull requests, etc.) that are created by NV Access staff.
+To that end, we kindly request that community members refrain from closing or consolidating tickets (issues, pull requests, etc.) that are created by NV Access staff, or are pending response from NV Access.
 
 Community members are welcome and encouraged to interact with staff tickets in the following ways:
 

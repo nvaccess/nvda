@@ -199,7 +199,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.CUSTOM,
+			bdDetect.ProtocolType.CUSTOM,
 			{
 				"VID_0F4E&PID_0100",  # Focus 1
 				"VID_0F4E&PID_0111",  # PAC Mate
@@ -243,7 +243,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver, ScriptableObject):
 		self.gestureMap.add("br(freedomScientific):rightWizWheelDown", *action[2])
 		super(BrailleDisplayDriver, self).__init__()
 		for portType, portId, port, portInfo in self._getTryPorts(port):
-			self.isUsb = portType == bdDetect.DeviceType.CUSTOM
+			self.isUsb = portType == bdDetect.ProtocolType.CUSTOM
 			# Try talking to the display.
 			try:
 				if self.isUsb:

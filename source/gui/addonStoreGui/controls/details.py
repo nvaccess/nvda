@@ -344,6 +344,20 @@ class AddonDetails(
 							details.reviewURL,
 						)
 
+					if isinstance(details, _AddonManifestModel):
+						# Installed add-ons with a manifest only
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on in the add-on store dialog.
+							pgettext("addonStore", "Install date:"),
+							details.installDate.strftime("%x"),
+						)
+
+					if details.publicationDate is not None:
+						self._appendDetailsLabelValue(
+							# Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
+							pgettext("addonStore", "Publication date:"),
+							details.publicationDate,
+						)
 				self.contentsPanel.Show()
 
 		self.Layout()

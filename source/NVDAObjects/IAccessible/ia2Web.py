@@ -214,6 +214,8 @@ class Ia2Web(IAccessible):
 			if popupState:
 				states.discard(controlTypes.State.HASPOPUP)
 				states.add(popupState)
+		if self.role == controlTypes.Role.LINK and controlTypes.State.LINKED in states and self.linkType:
+			states.add(self.linkType)
 		return states
 
 	def _get_landmark(self):
@@ -328,7 +330,7 @@ class EditorChunk(Ia2Web):
 
 class Math(Ia2Web):
 	def _get_mathMl(self):
-		from comtypes.gen.ISimpleDOM import ISimpleDOMNode
+		from comtypes.gen.ISimpleDOM import ISimpleDOMNode  # type: ignore[reportMissingImports]
 
 		try:
 			node = self.IAccessibleObject.QueryInterface(ISimpleDOMNode)
@@ -349,7 +351,14 @@ class Math(Ia2Web):
 					attr = mathPres.insertLanguageIntoMath(attr, self.language)
 				return attr
 			if self.IA2Attributes.get("tag") != "math":
-				# This isn't MathML.
+				# Could be a <span> (etc) that has role = math -- check the child
+				# If there is a single <math> child, recurse on the assumption that is what was the intended math
+				mathObjs: list["NVDAObjects.NVDAObject"] = [
+					child for child in self.children if child.IA2Attributes.get("tag") == "math"
+				]
+				if len(mathObjs) == 1:
+					return mathObjs[0].mathMl
+				# This isn't MathML
 				raise LookupError
 			if self.language:
 				attrs = ' xml:lang="%s"' % self.language
@@ -363,6 +372,18 @@ class Math(Ia2Web):
 				exc_info=True,
 			)
 			raise LookupError
+
+	def _get_role(self):
+		if self.IA2Attributes.get("tag") == "img":
+			try:
+				mathMl = self.mathMl
+			except LookupError:
+				mathMl = None
+			if mathMl is None:
+				# #16007: Many publishers were setting role=math on plain images with alt text.
+				# We want to just treat these as normal images.
+				return controlTypes.Role.GRAPHIC
+		return super().role
 
 
 class Switch(Ia2Web):

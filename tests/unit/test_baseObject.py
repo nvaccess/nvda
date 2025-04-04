@@ -172,7 +172,7 @@ class TestAbstractAutoPropertyObjects(unittest.TestCase):
 
 class AutoPropertyObjectWithClassProperty(AutoPropertyObject):
 	@classmethod
-	def _get_x(self):
+	def _get_x(cls):
 		return True
 
 

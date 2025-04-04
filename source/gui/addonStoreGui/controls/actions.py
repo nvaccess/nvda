@@ -1,35 +1,49 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2022-2023 NV Access Limited, Cyrille Bougot
+# Copyright (C) 2022-2025 NV Access Limited, Cyrille Bougot
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
 from abc import ABC, abstractmethod
 import functools
 from typing import (
-	Dict,
 	Generic,
 	Iterable,
-	List,
 	TypeVar,
+	cast,
 )
 
 import wx
 
+from addonStore.dataManager import addonDataManager
+from addonStore.models.addon import _AddonGUIModel
 from addonStore.models.status import _StatusFilterKey
 from logHandler import log
 import ui
 
-from ..viewModels.action import AddonActionVM, BatchAddonActionVM
+from ..viewModels.action import (
+	AddonActionVM,
+	AddonUpdateChannelActionVM,
+	BatchAddonActionVM,
+	UpdateChannel,
+)
 from ..viewModels.addonList import AddonListItemVM
 from ..viewModels.store import AddonStoreVM
 
 
-AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM)
+__all__ = [
+	"AddonActionT",
+	"_ActionsContextMenuP",
+	"_MonoActionsContextMenu",
+	"_BatchActionsContextMenu",
+	"AddonListValidator",
+]
+
+AddonActionT = TypeVar("AddonActionT", AddonActionVM, BatchAddonActionVM, AddonUpdateChannelActionVM)
 
 
 class _ActionsContextMenuP(Generic[AddonActionT], ABC):
-	_actions: List[AddonActionT]
-	_actionMenuItemMap: Dict[AddonActionT, wx.MenuItem]
+	_actions: list[AddonActionT]
+	_actionMenuItemMap: dict[AddonActionT, wx.MenuItem]
 	_contextMenu: wx.Menu
 
 	@abstractmethod
@@ -43,11 +57,19 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 		self._populateContextMenu()
 		targetWindow.PopupMenu(self._contextMenu, pos=position)
 
+	def _insertToContextMenu(self, action: AddonActionT, prevActionIndex: int):
+		# Overridable to use checkable items or radio items
+		self._actionMenuItemMap[action] = self._contextMenu.Insert(
+			prevActionIndex,
+			id=wx.ID_ANY,
+			item=action.displayName,
+		)
+
 	def _populateContextMenu(self):
 		prevActionIndex = -1
 		for action in self._actions:
 			menuItem = self._actionMenuItemMap.get(action)
-			menuItems: List[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
+			menuItems: list[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
 			isMenuItemInContextMenu = menuItem is not None and menuItem in menuItems
 
 			if isMenuItemInContextMenu:
@@ -60,11 +82,7 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 				else:
 					# Insert menu item into context menu
 					prevActionIndex += 1
-					self._actionMenuItemMap[action] = self._contextMenu.Insert(
-						prevActionIndex,
-						id=-1,
-						item=action.displayName,
-					)
+					self._insertToContextMenu(action, prevActionIndex)
 
 				# Bind the menu item to the latest action VM
 				self._contextMenu.Bind(
@@ -79,12 +97,47 @@ class _ActionsContextMenuP(Generic[AddonActionT], ABC):
 				self._contextMenu.Remove(menuItem)
 				del self._actionMenuItemMap[action]
 
-		menuItems: List[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
+		menuItems: list[wx.MenuItem] = list(self._contextMenu.GetMenuItems())
 		for menuItem in menuItems:
 			if menuItem not in self._actionMenuItemMap.values():
 				# The menu item is not in the action menu item map.
 				# It should be removed from the context menu.
 				self._contextMenu.Remove(menuItem)
+
+
+class _UpdateChannelSubMenu(_ActionsContextMenuP[AddonUpdateChannelActionVM]):
+	def __init__(self, storeVM: AddonStoreVM):
+		self._storeVM = storeVM
+		self._actionMenuItemMap = {}
+		self._contextMenu = wx.Menu()
+		self._populateContextMenu()
+
+	def popupContextMenuFromPosition(
+		self,
+		targetWindow: wx.Window,
+		position: wx.Position = wx.DefaultPosition,
+	):
+		raise NotImplementedError("This context menu should not be used directly")
+
+	def _menuItemClicked(self, evt: wx.ContextMenuEvent, actionVM: AddonUpdateChannelActionVM):
+		selectedAddon = actionVM.actionTarget
+		actionVM.actionHandler(selectedAddon)
+		log.debug(f"update channel changed for selectedAddon: {selectedAddon} changed to {actionVM.channel}")
+
+	def _insertToContextMenu(self, action: AddonUpdateChannelActionVM, prevActionIndex: int):
+		self._actionMenuItemMap[action] = self._contextMenu.InsertRadioItem(
+			prevActionIndex,
+			id=wx.ID_ANY,
+			item=action.displayName,
+		)
+		addonModel = cast(_AddonGUIModel, action.actionTarget.model)
+		updateChannel = addonDataManager.storeSettings.getAddonSettings(addonModel.addonId).updateChannel
+		self._actionMenuItemMap[action].Check(updateChannel == action.channel)
+
+	@property
+	def _actions(self) -> list[AddonUpdateChannelActionVM]:
+		selectedListItem: AddonListItemVM | None = self._storeVM.listVM.getSelection()
+		return [AddonUpdateChannelActionVM(selectedListItem, channel) for channel in UpdateChannel]
 
 
 class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
@@ -101,8 +154,22 @@ class _MonoActionsContextMenu(_ActionsContextMenuP[AddonActionVM]):
 		actionVM.actionHandler(selectedAddon)
 
 	@property
-	def _actions(self) -> List[AddonActionVM]:
+	def _actions(self) -> list[AddonActionVM]:
 		return self._storeVM.actionVMList
+
+	def _populateContextMenu(self):
+		super()._populateContextMenu()
+		self._appendUpdateChannelSubMenu()
+
+	def _appendUpdateChannelSubMenu(self):
+		if self._storeVM._filteredStatusKey in (_StatusFilterKey.UPDATE, _StatusFilterKey.INSTALLED):
+			_updateChannelSubMenu = _UpdateChannelSubMenu(self._storeVM)
+			self._contextMenu.AppendSubMenu(
+				_updateChannelSubMenu._contextMenu,
+				# Translators: Label for a submenu that allows the user to change the default update
+				# channel of the selected add-on
+				_("Upd&ate channel"),
+			)
 
 
 class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
@@ -135,7 +202,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 		actionVM.actionHandler(self._selectedAddons)
 
 	@property
-	def _actions(self) -> List[BatchAddonActionVM]:
+	def _actions(self) -> list[BatchAddonActionVM]:
 		return [
 			BatchAddonActionVM(
 				# Translators: Label for an action that installs the selected add-ons
@@ -152,6 +219,20 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 				displayName=pgettext("addonStore", "&Update selected add-ons"),
 				actionHandler=self._storeVM.getAddons,
 				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseUpdateAction(),
+				actionTarget=self._selectedAddons,
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that retries the selected add-ons
+				displayName=pgettext("addonStore", "Re&try installing selected add-ons"),
+				actionHandler=self._storeVM.getAddons,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseRetryAction(),
+				actionTarget=self._selectedAddons,
+			),
+			BatchAddonActionVM(
+				# Translators: Label for an action that cancel install of the selected add-ons
+				displayName=pgettext("addonStore", "Ca&ncel install of selected add-ons"),
+				actionHandler=self._storeVM.cancelInstallForAddons,
+				validCheck=lambda aVMs: AddonListValidator(aVMs).canUseCancelInstallAction(),
 				actionTarget=self._selectedAddons,
 			),
 			BatchAddonActionVM(
@@ -188,7 +269,7 @@ class _BatchActionsContextMenu(_ActionsContextMenuP[BatchAddonActionVM]):
 
 
 class AddonListValidator:
-	def __init__(self, addonsList: List[AddonListItemVM]):
+	def __init__(self, addonsList: list[AddonListItemVM]):
 		self.addonsList = addonsList
 
 	def canUseInstallAction(self) -> bool:
@@ -210,6 +291,15 @@ class AddonListValidator:
 			if aVM.canUseInstallAction() or aVM.canUseInstallOverrideIncompatibilityAction():
 				hasInstallable = True
 		return hasUpdatable and not hasInstallable
+
+	def canUseRetryAction(self) -> bool:
+		return any(aVM.canUseRetryAction() for aVM in self.addonsList)
+
+	def canUseCancelInstallAction(self) -> bool:
+		for aVM in self.addonsList:
+			if aVM.canUseCancelInstallAction():
+				return True
+		return False
 
 	def canUseRemoveAction(self) -> bool:
 		for aVM in self.addonsList:

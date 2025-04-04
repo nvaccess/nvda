@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2024 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2016-2025 NV Access Limited, Łukasz Golonka
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -43,15 +43,22 @@ class myDialog(wx.Dialog):
 	...
 """
 
+from collections.abc import Callable
 from contextlib import contextmanager
+from functools import wraps
+import sys
+import threading
 import weakref
 from typing import (
+	Any,
 	Generic,
 	Optional,
+	ParamSpec,
 	Type,
 	TypeVar,
 	Union,
 	cast,
+	overload,
 )
 
 import wx
@@ -124,12 +131,39 @@ class ButtonHelper(object):
 		return wxButton
 
 
-def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx.BoxSizer:
+# vertical controls where the label should go above visually, and the control should go below
+_VerticalCtrlT = TypeVar("_VerticalCtrlT", wx.ListCtrl, wx.ListBox, wx.TreeCtrl)
+# horizontal controls where the label should go first visually, and the control should go after
+_HorizontalCtrlT = TypeVar(
+	"_HorizontalCtrlT",
+	wx.Button,
+	wx.Choice,
+	wx.ComboBox,
+	wx.Slider,
+	wx.SpinCtrl,
+	wx.TextCtrl,
+)
+
+
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _HorizontalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.StaticText, secondElement: _VerticalCtrlT) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.Button, secondElement: wx.CheckBox) -> wx.BoxSizer: ...
+@overload
+def associateElements(firstElement: wx.TextCtrl, secondElement: wx.Button) -> wx.BoxSizer: ...
+
+
+def associateElements(firstElement, secondElement) -> wx.BoxSizer:
 	"""Associates two GUI elements together. Handles choosing a layout and appropriate spacing. Abstracts away common
 	pairings used in the NVDA GUI.
 	Currently handles:
-		wx.StaticText and (wx.Choice, wx.TextCtrl, wx.Slider, wx.Button or wx.SpinCtrl) - Horizontal layout
-		wx.StaticText and (wx.ListCtrl or wx.ListBox or wx.TreeCtrl ) - Vertical layout
+		wx.StaticText and :const:`_HorizontalCtrlT` - Horizontal layout
+		wx.StaticText and wx.CheckBox - Horizontal layout, control first, label second
+		wx.StaticText and :const:`_VerticalCtrlT` - Vertical layout
 		wx.Button and wx.CheckBox - Horizontal layout
 		wx.TextCtrl and wx.Button - Horizontal layout
 	"""
@@ -140,35 +174,25 @@ def associateElements(firstElement: wx.Control, secondElement: wx.Control) -> wx
 
 	# staticText and input control
 	# likely a labelled control from LabeledControlHelper
-	if isinstance(firstElement, wx.StaticText) and isinstance(
-		secondElement,
-		(
-			wx.Button,
-			wx.Choice,
-			wx.Slider,
-			wx.SpinCtrl,
-			wx.TextCtrl,
-		),
-	):
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		sizer.Add(secondElement)
-	elif isinstance(firstElement, wx.StaticText) and isinstance(secondElement, wx.CheckBox):
-		# checkbox should go first, and label should go after
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		sizer.Add(secondElement)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
-		sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
-	# staticText and (ListCtrl, ListBox or TreeCtrl)
-	elif isinstance(firstElement, wx.StaticText) and isinstance(
-		secondElement,
-		(wx.ListCtrl, wx.ListBox, wx.TreeCtrl),
-	):
-		sizer = wx.BoxSizer(wx.VERTICAL)
-		sizer.Add(firstElement)
-		sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
-		sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
+	if isinstance(firstElement, wx.StaticText):
+		# Horizontal layout, label first, control second
+		if isinstance(secondElement, _HorizontalCtrlT.__constraints__):
+			sizer = wx.BoxSizer(wx.HORIZONTAL)
+			sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			sizer.Add(secondElement)
+		# Horizontal layout, control first, label second
+		elif isinstance(secondElement, wx.CheckBox):
+			sizer = wx.BoxSizer(wx.HORIZONTAL)
+			sizer.Add(secondElement)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_HORIZONTAL)
+			sizer.Add(firstElement, flag=wx.ALIGN_CENTER_VERTICAL)
+		# Vertical layout, label above, control below
+		elif isinstance(secondElement, _VerticalCtrlT.__constraints__):
+			sizer = wx.BoxSizer(wx.VERTICAL)
+			sizer.Add(firstElement)
+			sizer.AddSpacer(SPACE_BETWEEN_ASSOCIATED_CONTROL_VERTICAL)
+			sizer.Add(secondElement, flag=wx.EXPAND, proportion=1)
 	# button and checkBox
 	elif isinstance(firstElement, wx.Button) and isinstance(secondElement, wx.CheckBox):
 		sizer = wx.BoxSizer(wx.HORIZONTAL)
@@ -458,3 +482,74 @@ class SIPABCMeta(wx.siplib.wrappertype, ABCMeta):
 	"""Meta class to be used for wx subclasses with abstract methods."""
 
 	pass
+
+
+# TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
+_WxCallOnMain_P = ParamSpec("_WxCallOnMain_P")
+_WxCallOnMain_T = TypeVar("_WxCallOnMain_T")
+
+
+def wxCallOnMain(
+	function: Callable[_WxCallOnMain_P, _WxCallOnMain_T],
+	*args: _WxCallOnMain_P.args,
+	**kwargs: _WxCallOnMain_P.kwargs,
+) -> _WxCallOnMain_T:
+	"""Call a non-thread-safe wx function in a thread-safe way.
+	Blocks current thread.
+
+	Using this function is preferable over calling :fun:`wx.CallAfter` directly when you care about the return time or return value of the function.
+
+	This function blocks the thread on which it is called.
+
+	:param function: Callable to call on the main GUI thread.
+		If this thread is the GUI thread, the function will be called immediately.
+		Otherwise, it will be scheduled to be called on the GUI thread.
+		In either case, the current thread will be blocked until it returns.
+	:raises Exception: If `function` raises an exception, it is transparently re-raised so it can be handled on the calling thread.
+	:return: Return value from calling `function` with the given positional and keyword arguments.
+	"""
+	result: Any = None
+	exception: BaseException | None = None
+	event = threading.Event()
+
+	def functionWrapper():
+		nonlocal result, exception
+		try:
+			result = function(*args, **kwargs)
+		except Exception:
+			exception = sys.exception()
+		event.set()
+
+	if wx.IsMainThread():
+		functionWrapper()
+	else:
+		wx.CallAfter(functionWrapper)
+		event.wait()
+
+	if exception is not None:
+		raise exception
+	else:
+		return result
+
+
+# TODO: Rewrite to use type parameter lists when upgrading to python 3.12 or later.
+_AlwaysCallAfterP = ParamSpec("_AlwaysCallAfterP")
+
+
+def alwaysCallAfter(func: Callable[_AlwaysCallAfterP, Any]) -> Callable[_AlwaysCallAfterP, None]:
+	"""Makes GUI updates thread-safe by running in the main thread.
+
+	Example:
+		@alwaysCallAfter
+		def updateLabel(text):
+			label.SetLabel(text)  # Safe GUI update from any thread
+
+	.. note::
+		The value returned by the decorated function will be discarded.
+	"""
+
+	@wraps(func)
+	def wrapper(*args: _AlwaysCallAfterP.args, **kwargs: _AlwaysCallAfterP.kwargs) -> None:
+		wx.CallAfter(func, *args, **kwargs)
+
+	return wrapper

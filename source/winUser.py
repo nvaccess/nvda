@@ -10,6 +10,7 @@ When working on this file, consider moving to winAPI.
 """
 
 import contextlib
+import ctypes
 from ctypes import *  # noqa: F403
 from ctypes import byref, WinError, Structure, c_int, c_char
 from ctypes.wintypes import *  # noqa: F403
@@ -824,13 +825,13 @@ class PAINTSTRUCT(Structure):
 
 
 @contextlib.contextmanager
-def paint(hwnd, painStruct=None):
+def paint(hwnd: int, paintStruct: PAINTSTRUCT | None = None):
 	"""
 	Context manager that wraps BeginPaint and EndPaint.
-	@param painStruct: The paint structure used in the call to BeginPaint.
-		if C{None} (default), an empty structure is provided.
+	:param painStruct: The paint structure used in the call to BeginPaint.
+		if None (default), an empty structure is provided.
 	"""
-	if painStruct is None:
+	if paintStruct is None:
 		paintStruct = PAINTSTRUCT()
 	elif not isinstance(paintStruct, PAINTSTRUCT):
 		raise TypeError("Provided paintStruct is not of type PAINTSTRUCT")

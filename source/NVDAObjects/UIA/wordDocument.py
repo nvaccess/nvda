@@ -1,7 +1,7 @@
 # This file is covered by the GNU General Public License.
 # A part of NonVisual Desktop Access (NVDA)
 # See the file COPYING for more details.
-# Copyright (C) 2016-2023 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
+# Copyright (C) 2016-2025 NV Access Limited, Joseph Lee, Jakub Lukowicz, Cyrille Bougot
 
 from typing import (
 	Optional,
@@ -51,6 +51,13 @@ class UIACustomAttributeID(enum.IntEnum):
 	COLUMN_NUMBER = 2
 	SECTION_NUMBER = 3
 	BOOKMARK_NAME = 4
+	COLUMNS_IN_SECTION = 5
+	EXPAND_COLLAPSE_STATE = 6
+
+
+class EXPAND_COLLAPSE_STATE(enum.IntEnum):
+	COLLAPSED = 0
+	EXPANDED = 1
 
 
 #: the non-printable unicode character that represents the end of cell or end of row mark in Microsoft Word
@@ -301,6 +308,12 @@ class WordDocumentTextInfo(UIATextInfo):
 		return super(WordDocumentTextInfo, self).move(unit, direction, endPoint)
 
 	def expand(self, unit):
+		if unit == textInfos.UNIT_CELL:
+			cell = self.obj._getTableCellCoordsCached(self, axis=None)
+			info = self.obj._getTableCellAt(cell.tableID, self, cell.row, cell.col)
+			self.start = info.start
+			self.end = info.end
+			return
 		super(WordDocumentTextInfo, self).expand(unit)
 		# #7970: MS Word refuses to expand to line when on the final line and it is blank.
 		# This among other things causes a newly inserted bullet not to be spoken or brailled.
@@ -483,6 +496,15 @@ class WordDocumentTextInfo(UIATextInfo):
 					)
 					if isinstance(textColumnNumber, int):
 						formatField.field["text-column-number"] = textColumnNumber
+			expandCollapseState = UIARemote.msWord_getCustomAttributeValue(
+				docElement,
+				textRange,
+				UIACustomAttributeID.EXPAND_COLLAPSE_STATE,
+			)
+			if expandCollapseState == EXPAND_COLLAPSE_STATE.COLLAPSED:
+				formatField.field["collapsed"] = True
+			elif expandCollapseState == EXPAND_COLLAPSE_STATE.EXPANDED:
+				formatField.field["collapsed"] = False
 		return formatField
 
 	def _getIndentValueDisplayString(self, val: float) -> str:
@@ -607,10 +629,15 @@ class WordDocument(UIADocumentWithTableNavigation, WordDocumentNode, WordDocumen
 		if not eventHandler.isPendingEvents("caret", self):
 			eventHandler.queueEvent("caret", self)
 
+	suppressedActivityIds = [
+		"AccSN1",  # #10950: font attributes
+		"AccSN2",  # #10851: delete activity ID
+	]
+
 	def event_UIA_notification(self, activityId=None, **kwargs):
-		# #10851: in recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
-		# such as "delete back word" when Control+Backspace is pressed.
-		if activityId == "AccSN2":  # Delete activity ID
+		# In recent Word 365 releases, UIA notification will cause NVDA to announce edit functions
+		# such as "delete back word" when Control+Backspace is pressed or font attributes are toggled.
+		if activityId in self.suppressedActivityIds:
 			return
 		super(WordDocument, self).event_UIA_notification(**kwargs)
 

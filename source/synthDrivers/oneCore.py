@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2016-2021 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
+# Copyright (C) 2016-2024 Tyler Spivey, NV Access Limited, James Teh, Leonard de Ruijter
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -265,7 +265,7 @@ class OneCoreSynthDriver(SynthDriver):
 			channels=wav.getnchannels(),
 			samplesPerSec=samplesPerSec,
 			bitsPerSample=bytesPerSample * 8,
-			outputDevice=config.conf["speech"]["outputDevice"],
+			outputDevice=config.conf["audio"]["outputDevice"],
 		)
 
 	def terminate(self):
@@ -320,7 +320,7 @@ class OneCoreSynthDriver(SynthDriver):
 			self._processQueue()
 
 	@classmethod
-	def _percentToParam(self, percent, min, max):
+	def _percentToParam(cls, percent, min, max):
 		"""Overrides SynthDriver._percentToParam to return floating point parameter values."""
 		return float(percent) / 100 * (max - min) + min
 

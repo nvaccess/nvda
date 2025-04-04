@@ -39,7 +39,7 @@ class BrailleDisplayDriver(braille.BrailleDisplayDriver):
 	@classmethod
 	def registerAutomaticDetection(cls, driverRegistrar: bdDetect.DriverRegistrar):
 		driverRegistrar.addUsbDevices(
-			bdDetect.DeviceType.SERIAL,
+			bdDetect.ProtocolType.SERIAL,
 			{
 				"VID_2341&PID_8036",  # Atmel-based USB Serial for Nattiq nBraille
 			},
