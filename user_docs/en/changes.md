@@ -4,7 +4,7 @@
 
 This release introduces NVDA Remote, allowing you to control a remote computer running NVDA from another device running NVDA.
 
-There are many improvements to speech particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
+There are many improvements to speech, particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
 Rate boost and automatic language switching is now supported in SAPI 5.
 SAPI 4 voices now support audio ducking, leading silence trimming, and keeping the audio device awake.
 
