@@ -62,6 +62,10 @@ Please responsibly disclose security issues following NVDA's [security policy](h
   * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
   * In Microsoft Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
   * In Word with UIA, when using the native extended table navigation commands (`alt+home`, `alt+end`, `alt+pageUp`, and `alt+pageDown`), the caret movement will now be reported. (#17867, @CyrilleB79)
+  * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
+  * In Word and Outlook the result of more shortcuts is reported:
+    * font formatting shortcuts (#10271, @CyrilleB79)
+    * collapse or expand heading (#17545, @CyrilleB79)
 * LibreOffice:
   * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
   * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
@@ -78,6 +82,7 @@ Please responsibly disclose security issues following NVDA's [security policy](h
   * Currently this is only supported in Foxit Reader & Foxit Editor.
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
 * NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio. (#17652, @LeonarddeR)
+* Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * Added a general setting to prevent the display turning off during say all or reading with braille.
 This option is enabled by default, but can possibly result in shorter battery life.
 If you suspect this option is negatively impacting your battery life, you're advised to disable it. (#17649, @LeonarddeR)
@@ -104,11 +109,6 @@ If you suspect this option is negatively impacting your battery life, you're adv
     * It now starts with a more user friendly explanation of its purpose, instead of a warning. (#12351)
     * The initial window can now be exited with `escape` or `alt+f4`. (#10799)
     * It will now show a message to the user, including the error, in the rare event of a Windows error while attempting COM re-registrations.
-* Microsoft Office:
-  * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
-  * In Word and Outlook the result of more shortcuts is reported:
-    * font formatting shortcuts (#10271, @CyrilleB79)
-    * collapse or expand heading (#17545, @CyrilleB79)
 * Speech:
   * Microsoft Speech API version 5 and Microsoft Speech Platform voices now use WASAPI for audio output, which may improve the responsiveness of those voices. (#13284, @gexgd0419)
   * The silence at the beginning of speech will now be trimmed when using OneCore voices, SAPI5 voices, and some third-party voice add-ons to improve their responsiveness. (#17614, @gexgd0419)
@@ -119,7 +119,6 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * The keyboard settings for "Speak typed characters" and "Speak typed words" now have three options: Off, Only in edit controls, and Always. (#17505, @Cary-rowen)
   * By default, "Speak typed characters" is now set to "Only in edit controls".
 * Default input and output braille tables can now be determined based on the NVDA language. (#17306, #16390, #290, @nvdaes)
-* Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 
 ### Bug Fixes
 
