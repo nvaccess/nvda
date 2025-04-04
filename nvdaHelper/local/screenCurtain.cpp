@@ -185,8 +185,6 @@ bool isScreenFullyBlack() {
 		}
 		LOG_DEBUG(ssHist->str());
 
-
-
 		// If the entire screen is black, then the only colour in the histogram must be (0, 0, 0).
 		// Since the sum of values in each channel must be the number of pixels in the image,
 		// if the screen is entirely black,
