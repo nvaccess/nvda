@@ -296,4 +296,3 @@ jobs:
         name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
         files: output/nvda*.exe
         body: Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
-  
