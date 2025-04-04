@@ -2,7 +2,7 @@
 
 ## 2025.1
 
-This release introduces NVDA Remote, allowing you to control a remote copy of NVDA from another device running NVDA.
+This release introduces NVDA Remote, allowing you to control a remote computer running NVDA from another device running NVDA.
 
 There any many improvements to speech particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
 Rate boost and automatic language switching is now supported in SAPI 5.
