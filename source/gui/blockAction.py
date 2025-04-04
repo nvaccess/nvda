@@ -56,6 +56,7 @@ class _Context:
 class Context(_Context, Enum):
 	SECURE_MODE = (
 		lambda: globalVars.appArgs.secure,
+		# Translators: Reported when an action cannot be performed because NVDA is in a secure screen
 		_("Action unavailable in secure context"),
 	)
 	WINDOWS_STORE_VERSION = (

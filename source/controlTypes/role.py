@@ -404,7 +404,6 @@ _roleLabels: Dict[Role, str] = {
 	Role.TEXTFRAME: _("text frame"),
 	# Translators: Identifies a toggle button (a button used to toggle something).
 	Role.TOGGLEBUTTON: _("toggle button"),
-	# Translators: unexpected comment
 	Role.BORDER: _("border"),
 	# Translators: Identifies a caret object.
 	Role.CARET: _("caret"),
