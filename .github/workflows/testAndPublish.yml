@@ -277,6 +277,19 @@ jobs:
       with:
         name: NVDA launcher
         path: output
+    - name: VirusTotal Scan
+      id: virusTotal
+      uses: crazy-max/ghaction-virustotal@v4
+      with:
+        vt_api_key: ${{ secrets.VT_API_KEY }}
+        files: |
+            .exe$
+    - name: Get normalized VT url
+      id: getVTUrl
+      shell: bash
+      run: |
+        vtUrl=$(echo ${{ steps.virusTotal.outputs.analysis }} | sed -E 's/([^=]*)=([^,]*).*/\2/')
+        echo VT_URL=$vtUrl >> $GITHUB_OUTPUT
     - name: Publish pre-release
       if: ${{ contains(github.ref_name, 'rc') || contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
@@ -285,7 +298,9 @@ jobs:
         make_latest: false
         name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
         files: output/nvda*.exe
-        body: Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
+        body: |
+          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
+          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
     - name: Publish stable release
       if: ${{ !contains(github.ref_name, 'rc') && !contains(github.ref_name, 'beta') }}
       uses: softprops/action-gh-release@v2
@@ -295,4 +310,6 @@ jobs:
         discussion_category_name: Releases
         name: ${{ steps.getReleaseNotes.outputs.RELEASE_NAME }}
         files: output/nvda*.exe
-        body: Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/)
+        body: |
+          * Highlights can be found in the [release blog post](https://www.nvaccess.org/post/nvda-${{ steps.getReleaseNotes.outputs.NORMALIZED_TAG_NAME }}/).
+          * [VirusTotal scan results](${{ steps.getVTUrl.outputs.VT_URL }}).
