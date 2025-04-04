@@ -1,5 +1,21 @@
 # What's New in NVDA
 
+## 2025.2
+
+### Important notes
+
+### New Features
+
+### Changes
+
+### Bug Fixes
+
+### Changes for Developers
+
+Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
+
+#### Deprecations
+
 ## 2025.1
 
 ### Important notes
