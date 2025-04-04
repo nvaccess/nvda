@@ -29,6 +29,7 @@ import NVDAState
 from NVDAState import WritePaths
 
 from .models.addon import (
+	AddonManifestModel,
 	AddonStoreModel,
 	CachedAddonsModel,
 	InstalledAddonStoreModel,
@@ -180,7 +181,7 @@ class _DataManager:
 		with open(self._cacheLatestFile, "w", encoding="utf-8") as cacheFile:
 			json.dump(cacheData, cacheFile, ensure_ascii=False)
 
-	def _getCachedAddonData(self, cacheFilePath: str) -> Optional[CachedAddonsModel]:
+	def _getCachedAddonData(self, cacheFilePath: str) -> CachedAddonsModel | None:
 		if not os.path.exists(cacheFilePath):
 			return None
 		try:
@@ -226,8 +227,8 @@ class _DataManager:
 
 	def getLatestCompatibleAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
-	) -> "AddonGUICollectionT":
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
+	) -> "AddonGUICollectionT[AddonStoreModel]":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._compatibleAddonCache
@@ -263,8 +264,8 @@ class _DataManager:
 
 	def getLatestAddons(
 		self,
-		onDisplayableError: Optional["DisplayableError.OnDisplayableErrorT"] = None,
-	) -> "AddonGUICollectionT":
+		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
+	) -> "AddonGUICollectionT[AddonStoreModel]":
 		cacheHash = self._getCacheHash()
 		shouldRefreshData = (
 			not self._latestAddonCache
@@ -355,9 +356,9 @@ class _DataManager:
 	def _addonsPendingUpdate(
 		self,
 		onDisplayableError: "DisplayableError.OnDisplayableErrorT | None" = None,
-	) -> list["_AddonGUIModel"]:
+	) -> list["_AddonStoreModel"]:
 		updatableAddonStatuses = {AvailableAddonStatus.UPDATE}
-		addonsPendingUpdate: dict["str", "_AddonGUIModel"] = {}
+		addonsPendingUpdate: dict["str", "_AddonStoreModel"] = {}
 		if config.conf["addonStore"]["allowIncompatibleUpdates"]:
 			updatableAddonStatuses.add(AvailableAddonStatus.UPDATE_INCOMPATIBLE)
 			compatibleAddons = self.getLatestAddons(onDisplayableError)
@@ -393,7 +394,7 @@ class _InstalledAddonsCache(AutoPropertyObject):
 	cachePropertiesByDefault = True
 
 	installedAddons: CaseInsensitiveDict["AddonHandlerModel"]
-	installedAddonGUICollection: "AddonGUICollectionT"
+	installedAddonGUICollection: "AddonGUICollectionT[InstalledAddonStoreModel | AddonManifestModel]"
 
 	def _get_installedAddons(self) -> CaseInsensitiveDict["AddonHandlerModel"]:
 		"""
@@ -405,8 +406,12 @@ class _InstalledAddonsCache(AutoPropertyObject):
 
 		return CaseInsensitiveDict({a.name: a for a in getAvailableAddons()})
 
-	def _get_installedAddonGUICollection(self) -> "AddonGUICollectionT":
-		addons = _createAddonGUICollection()
+	def _get_installedAddonGUICollection(
+		self,
+	) -> "AddonGUICollectionT[InstalledAddonStoreModel | AddonManifestModel]":
+		addons: AddonGUICollectionT[InstalledAddonStoreModel | AddonManifestModel] = (
+			_createAddonGUICollection()
+		)
 		for addonId in self.installedAddons:
 			addonStoreData = self.installedAddons[addonId]._addonStoreData
 			if addonStoreData:
