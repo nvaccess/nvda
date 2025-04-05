@@ -88,6 +88,8 @@ WDAG_WINDOW_CLASS_NAME = "RAIL_WINDOW"
 goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	"RAIL_WINDOW",
+	# #17407, #17771: WinUI 3 top-level pane window class name.
+	"Microsoft.UI.Content.DesktopChildSiteBridge",
 )
 
 badUIAWindowClassNames = (
