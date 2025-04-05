@@ -29,7 +29,6 @@ from .speech import (
 	getObjectSpeech,
 	getPreselectedTextSpeech,
 	getPropertiesSpeech,
-	getSpeechSequenceWithLangs,
 	getSpellingSpeech,
 	getState,
 	getTableInfoSpeech,
@@ -65,6 +64,7 @@ from .speech import (
 	splitTextIndentation,
 )
 from .extensions import speechCanceled, post_speechPaused, pre_speechQueued, filter_speechSequence
+from .languageHandling import getSpeechSequenceWithLangs
 from .priorities import Spri
 
 from .types import (

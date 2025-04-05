@@ -1903,9 +1903,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 		config.conf["speech"]["autoLanguageSwitching"] = self.autoLanguageSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["autoDialectSwitching"] = self.autoDialectSwitchingCheckbox.IsChecked()
 		config.conf["speech"]["reportLanguage"] = self.reportLanguageCheckbox.IsChecked()
-		config.conf["speech"]["reportNotSupportedLanguage"] = [option.value for option in ReportNotSupportedLanguage][
-			self.reportNotSupportedLanguageCombo.GetSelection()
-		]
+		config.conf["speech"]["reportNotSupportedLanguage"] = [
+			option.value for option in ReportNotSupportedLanguage
+		][self.reportNotSupportedLanguageCombo.GetSelection()]
 		config.conf["speech"]["symbolLevel"] = characterProcessing.CONFIGURABLE_SPEECH_SYMBOL_LEVELS[
 			self.symbolLevelList.GetSelection()
 		].value

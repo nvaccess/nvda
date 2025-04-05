@@ -294,3 +294,20 @@ class ParagraphStartMarker(DisplayStringStrEnum):
 			# Ensure this is consistent with other strings with the context "paragraphMarker".
 			self.PILCROW: pgettext("paragraphMarker", "Pilcrow (¶)"),
 		}
+
+
+class ReportNotSupportedLanguage(DisplayStringStrEnum):
+	SPEECH = "speech"
+	BEEP = "beep"
+	OFF = "off"
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.SPEECH: pgettext("languageNotSupported", "Speech (default)"),
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.BEEP: pgettext("languageNotSupported", "Beep"),
+			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
+			self.OFF: pgettext("languageNotSupported", "Off"),
+		}
