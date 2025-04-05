@@ -4877,6 +4877,32 @@ class GlobalCommands(ScriptableObject):
 		audio._toggleSoundSplitState()
 
 	@script(
+		description=_(
+			# Translators: Input help mode message for report language for caret command.
+			"Reports the language for the text under the caret. "
+			"If pressed twice, presents the information in browse mode",
+		),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
+	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
+		info = self._getTIAtCaret()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if languageDescription is None:
+			languageDescription = curLanguage
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(languageDescription)
+		elif repeats == 1:
+			# Translators: Language of the text under caret.
+			message = languageDescription
+			# Translators: title for report caret language dialog.
+			title = _("Language at caret position")
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
+
+	@script(
 		# Translators: Describes a command.
 		description=_("Mute or unmute the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
