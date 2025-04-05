@@ -6,10 +6,11 @@
 # For full terms and any additional permissions, see the NVDA license file: https://github.com/nvaccess/nvda/blob/master/copying.txt
 
 import languageHandler
+import synthDriverHandler
 import config
 from . import speech
 from .types import SpeechSequence
-from .commands import LangChangeCommand
+from .commands import LangChangeCommand, BeepCommand
 from synthDriverHandler import getSynth
 
 
@@ -36,12 +37,15 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			langDesc = item.lang
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
-		curSynth = getSynth()
-		if curSynth.languageIsSupported(item.lang):
+		curSynth = synthDriverHandler.getSynth()
+		if curSynth.languageIsSupported(item.lang) or config.conf["speech"]["reportNotSupportedLanguage"] == "off":
 			filteredSpeechSequence.append(langDesc)
-		else:
+		elif config.conf["speech"]["reportNotSupportedLanguage"] == "speech":
 			# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
-			filteredSpeechSequence.append(_("{lang} not supported").format(lang=langDesc))
+			speechSequence.append(_("{lang} (not supported)").format(lang=langDesc))
+		else:  # Beep if language is not supported
+			speechSequence.append(langDesc)
+			speechSequence.append(BeepCommand(500, 50))
 		speech._speechState.lastReportedLanguage = item.lang
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
