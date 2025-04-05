@@ -4926,7 +4926,7 @@ class GlobalCommands(ScriptableObject):
 		category=SCRCAT_SYSTEMCARET,
 		speakOnDemand=True,
 	)
-	def script_reportCaretLanguage(self, gesture):
+	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
 		info = self._getTIAtCaret()
 		info.expand(textInfos.UNIT_CHARACTER)
 		curLanguage = self._getCurrentLanguageForTextInfo(info)
