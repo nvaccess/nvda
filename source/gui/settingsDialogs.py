@@ -2,10 +2,10 @@
 # Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy,
 # Rui Batista, Joseph Lee, Heiko Folkerts, Zahari Yurukov, Leonard de Ruijter,
 # Derek Riemer, Babbage B.V., Davy Kager, Ethan Holliger, Bill Dengler,
-#  Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
+# Thomas Stivers, Julien Cochuyt, Peter Vágner, Cyrille Bougot, Mesar Hameed,
 # Łukasz Golonka, Aaron Cannon, Adriani90, André-Abush Clause, Dawid Pieper,
 # Takuya Nishimoto, jakubl7545, Tony Malykh, Rob Meredith,
-# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß
+# Burman's Computer and Education Ltd, hwf1324, Cary-rowen, Christopher Proß.
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -3119,46 +3119,6 @@ class AudioPanel(SettingsPanel):
 
 		self._appendSoundSplitModesList(sHelper)
 
-		label = _(
-			# Translators: This is a label for the
-			# "allow NVDA to control the volume of other applications"
-			# combo box in settings.
-			"&Allow NVDA to control the volume of other applications:",
-		)
-		self.appVolAdjusterCombo: nvdaControls.FeatureFlagCombo = sHelper.addLabeledControl(
-			labelText=label,
-			wxCtrlClass=nvdaControls.FeatureFlagCombo,
-			keyPath=["audio", "applicationsVolumeMode"],
-			conf=config.conf,
-		)
-		self.appVolAdjusterCombo.Bind(wx.EVT_CHOICE, self._onSoundVolChange)
-		self.bindHelpEvent("AppsVolumeAdjusterStatus", self.appVolAdjusterCombo)
-
-		# Translators: This is the label for a slider control in the
-		# Audio settings panel.
-		label = _("Volume of other applications")
-		self.appSoundVolSlider: nvdaControls.EnhancedInputSlider = sHelper.addLabeledControl(
-			label,
-			nvdaControls.EnhancedInputSlider,
-			minValue=0,
-			maxValue=100,
-		)
-		self.bindHelpEvent("OtherAppVolume", self.appSoundVolSlider)
-		volume = config.conf["audio"]["applicationsSoundVolume"]
-		if 0 <= volume <= 100:
-			self.appSoundVolSlider.SetValue(volume)
-		else:
-			log.error("Invalid volume level: {}", volume)
-			defaultVolume = config.conf.getConfigValidation(["audio", "applicationsSoundVolume"]).default
-			self.appSoundVolSlider.SetValue(defaultVolume)
-
-		self.muteOtherAppsCheckBox: wx.CheckBox = sHelper.addItem(
-			# Translators: Mute other apps checkbox in settings
-			wx.CheckBox(self, label=_("Mute other apps")),
-		)
-		self.muteOtherAppsCheckBox.SetValue(config.conf["audio"]["applicationsSoundMuted"])
-		self.bindHelpEvent("OtherAppMute", self.muteOtherAppsCheckBox)
-
 		self._onSoundVolChange(None)
 
 		audioAwakeTimeLabelText = _(
@@ -3218,15 +3178,6 @@ class AudioPanel(SettingsPanel):
 			for mIndex in range(len(self._allSoundSplitModes))
 			if mIndex in self.soundSplitModesList.CheckedItems
 		]
-		config.conf["audio"]["applicationsSoundVolume"] = self.appSoundVolSlider.GetValue()
-		config.conf["audio"]["applicationsSoundMuted"] = self.muteOtherAppsCheckBox.GetValue()
-		self.appVolAdjusterCombo.saveCurrentValueToConf()
-		audio.appsVolume._updateAppsVolumeImpl(
-			volume=self.appSoundVolSlider.GetValue() / 100.0,
-			muted=self.muteOtherAppsCheckBox.GetValue(),
-			state=self.appVolAdjusterCombo._getControlCurrentFlag(),
-		)
-
 		if audioDucking.isAudioDuckingSupported():
 			index = self.duckingList.GetSelection()
 			config.conf["audio"]["audioDuckingMode"] = index
@@ -3241,10 +3192,6 @@ class AudioPanel(SettingsPanel):
 	def _onSoundVolChange(self, event: wx.Event) -> None:
 		"""Called when the sound volume follow checkbox is checked or unchecked."""
 		self.soundVolSlider.Enable(not self.soundVolFollowCheckBox.IsChecked())
-
-		avEnabled = config.featureFlagEnums.AppsVolumeAdjusterFlag.ENABLED
-		self.appSoundVolSlider.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
-		self.muteOtherAppsCheckBox.Enable(self.appVolAdjusterCombo._getControlCurrentValue() == avEnabled)
 
 	def isValid(self) -> bool:
 		enabledSoundSplitModes = self.soundSplitModesList.CheckedItems

@@ -2466,8 +2466,6 @@ This mode may differ from "Sound split disabled" mode in case other audio proces
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
-
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
 In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
@@ -2482,37 +2480,6 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
-
-##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (No), No, Yes|
-|Default |No|
-
-This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
-
-Possible values are:
-
-* No: NVDA doesn't interfere with the volume levels of other applications.
-* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
-Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
-
-While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
-
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-
-To increase or decrease the volume of all currently running applications from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
-
-##### Mute other applications {#OtherAppMute}
-
-This check box allows you to mute or unmute all applications except NVDA at once.
-
-To mute or unmute all other applications from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
-Please note that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
