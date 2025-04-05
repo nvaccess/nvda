@@ -3122,7 +3122,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 		_speechState.lastReportedLanguage = item.lang
 		if not languageIsSupported(item.lang):
 			# Translators: Reported when the language of the text been read is not supported.
-			filteredSpeechSequence.append(_("{lang} not supported").format(lang=langDesc)
+			filteredSpeechSequence.append(_("{lang} not supported").format(lang=langDesc))
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
 
