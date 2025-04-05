@@ -8,6 +8,7 @@
 import languageHandler
 import synthDriverHandler
 import config
+from config.configFlags import ReportNotSupportedLanguage
 from . import speech
 from .types import SpeechSequence
 from .commands import LangChangeCommand, BeepCommand
@@ -39,10 +40,10 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 		curSynth = synthDriverHandler.getSynth()
 		if (
 			curSynth.languageIsSupported(item.lang)
-			or config.conf["speech"]["reportNotSupportedLanguage"] == "off"
+			or config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
 		):
 			filteredSpeechSequence.append(langDesc)
-		elif config.conf["speech"]["reportNotSupportedLanguage"] == "speech":
+		elif config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.SPEECH.value:
 			# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 			speechSequence.append(_("{lang} (not supported)").format(lang=langDesc))
 		else:  # Beep if language is not supported
