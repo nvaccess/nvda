@@ -3125,16 +3125,3 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence):
 			filteredSpeechSequence.append(_("{lang} not supported").format(lang=langDesc))
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
-
-
-def languageIsSupported(lang: str | None) -> bool:
-	"""Determines if the specified language is supported.
-	:param language: A language code or None.
-	:return: ``True`` if the language is supported, ``False`` otherwise.
-	"""
-	if language is None:
-		return True
-	for availableLang in getSynth().availableLanguages:
-		if language == lang or language == languageHandler.normalizeLanguage(lang).split("_")[0]:
-			return True
-	return False
