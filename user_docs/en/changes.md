@@ -21,7 +21,7 @@ Native support has been added for the Dot Pad tactile graphics device from Dot I
 There have been other minor fixes for braille displays, particularly around connectivity.
 
 LibLouis braille translator, eSpeak-NG and Unicode CLDR have been updated.
-New Coptic, compact Cuneiform, and Portuguese Computer Braille tables are available.
+New Coptic, compact Cuneiform, and Portuguese 6 dot Computer Braille tables are available.
 
 ### Important notes
 
@@ -91,7 +91,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
 
 * Component updates:
   * Updated LibLouis Braille translator to [3.33.0](https://github.com/liblouis/liblouis/releases/tag/v3.33.0). (#17469, #17768, @LeonarddeR, @codeofdusk)
-    * Added new Coptic, compact Cuneiform, and Portuguese Computer Braille tables.
+    * Added new Coptic, compact Cuneiform, and Portuguese 6 dot Computer Braille tables.
   * Updated CLDR to version 46.0. (#17484, @OzancanKaratas)
   * Updated eSpeak NG to 1.52.0. (#17056)
 * NVDA interface changes:
