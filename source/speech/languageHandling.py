@@ -20,7 +20,10 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 	:param speechSequence: The original speech sequence.
 	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
 	"""
-	if not config.conf["speech"]["reportLanguage"] and config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value:
+	if (
+		not config.conf["speech"]["reportLanguage"]
+		and config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
+	):
 		return speechSequence
 	curSynth = synthDriverHandler.getSynth()
 	filteredSpeechSequence = list()
@@ -30,7 +33,10 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			or item.isDefault
 			or index == len(speechSequence) - 1
 			or item.lang == speech._speechState.lastReportedLanguage
-			or (config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value and not curSynth.languageIsSupported(item.lang))
+			or (
+				config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
+				and not curSynth.languageIsSupported(item.lang)
+			)
 		):
 			filteredSpeechSequence.append(item)
 			continue
