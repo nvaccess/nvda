@@ -33,10 +33,6 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			or item.isDefault
 			or index == len(speechSequence) - 1
 			or item.lang == speech._speechState.lastReportedLanguage
-			or (
-				config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
-				and not curSynth.languageIsSupported(item.lang)
-			)
 		):
 			filteredSpeechSequence.append(item)
 			continue
@@ -56,10 +52,15 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 				):
 					# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 					speechSequence.append(_("{lang} (not supported)").format(lang=langDesc))
-				else:
-					# Should beep.
+				elif (
+					config.conf["speech"]["reportNotSupportedLanguage"]
+					== ReportNotSupportedLanguage.BEEP.value
+				):
 					speechSequence.append(langDesc)
 					speechSequence.append(BeepCommand(500, 50))
+				elif config.conf["speech"]["reportLanguage"]:
+					# Wee need this to use the formatted string when approrpiate, to avoid appending `(not supported)`.
+					filteredSpeechSequence.append(langDesc)
 		speech._speechState.lastReportedLanguage = item.lang
 		filteredSpeechSequence.append(item)
 	return filteredSpeechSequence
