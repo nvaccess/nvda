@@ -20,8 +20,9 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 	:param speechSequence: The original speech sequence.
 	:return: A speech sequence containing descriptions for each non default language, indicating if the language is not supported by the current synthesizer.
 	"""
-	if not config.conf["speech"]["reportLanguage"]:
+	if not config.conf["speech"]["reportLanguage"] and config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value:
 		return speechSequence
+	curSynth = synthDriverHandler.getSynth()
 	filteredSpeechSequence = list()
 	for index, item in enumerate(speechSequence):
 		if (
@@ -29,6 +30,7 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			or item.isDefault
 			or index == len(speechSequence) - 1
 			or item.lang == speech._speechState.lastReportedLanguage
+			or (config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value and not curSynth.languageIsSupported(item.lang))
 		):
 			filteredSpeechSequence.append(item)
 			continue
@@ -37,16 +39,12 @@ def getSpeechSequenceWithLangs(speechSequence: SpeechSequence) -> SpeechSequence
 			langDesc = item.lang
 		# Ensure that the language description is pronnounced in the default language.
 		filteredSpeechSequence.append(LangChangeCommand(None))
-		curSynth = synthDriverHandler.getSynth()
-		if (
-			curSynth.languageIsSupported(item.lang)
-			or config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.OFF.value
-		):
+		if curSynth.languageIsSupported(item.lang):
 			filteredSpeechSequence.append(langDesc)
 		elif config.conf["speech"]["reportNotSupportedLanguage"] == ReportNotSupportedLanguage.SPEECH.value:
 			# Translators: Reported when the language of the text being read is not supported by the current synthesizer.
 			speechSequence.append(_("{lang} (not supported)").format(lang=langDesc))
-		else:  # Beep if language is not supported
+		else:
 			speechSequence.append(langDesc)
 			speechSequence.append(BeepCommand(500, 50))
 		speech._speechState.lastReportedLanguage = item.lang
