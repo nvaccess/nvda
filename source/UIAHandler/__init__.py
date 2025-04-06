@@ -1,5 +1,5 @@
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2008-2023 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
+# Copyright (C) 2008-2025 NV Access Limited, Joseph Lee, Babbage B.V., Leonard de Ruijter, Bill Dengler
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
 
@@ -88,6 +88,8 @@ WDAG_WINDOW_CLASS_NAME = "RAIL_WINDOW"
 goodUIAWindowClassNames = (
 	# A WDAG (Windows Defender Application Guard) Window is always native UIA, even if it doesn't report as such.
 	"RAIL_WINDOW",
+	# #17407, #17771: WinUI 3 top-level pane window class name.
+	"Microsoft.UI.Content.DesktopChildSiteBridge",
 )
 
 badUIAWindowClassNames = (
