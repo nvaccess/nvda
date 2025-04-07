@@ -5,12 +5,9 @@
 
 import ctypes
 from ctypes import *  # noqa: F403
-from ctypes.wintypes import (
-	HANDLE,
-)
-from comtypes import BSTR
 import unicodedata
 import math
+from NVDAHelper import localLib
 import colors
 import XMLFormatting
 import api
@@ -203,32 +200,13 @@ def processFieldsAndRectsRangeReadingdirection(
 		rects[startOffset:endOffset] = newRects
 
 
-_getWindowTextInRect = None
 _requestTextChangeNotificationsForWindow = None
 #: Objects that have registered for text change notifications.
 _textChangeNotificationObjs = []
 
 
 def initialize():
-	global _getWindowTextInRect, _requestTextChangeNotificationsForWindow, _getFocusRect
-	_getWindowTextInRect = CFUNCTYPE(  # noqa: F405
-		c_int,  # noqa: F405
-		HANDLE,  # noqa: F405
-		c_long,  # noqa: F405
-		c_bool,  # noqa: F405
-		c_int,  # noqa: F405
-		c_int,  # noqa: F405
-		c_int,  # noqa: F405
-		c_int,  # noqa: F405
-		c_int,  # noqa: F405
-		c_int,  # noqa: F405
-		c_bool,  # noqa: F405
-		POINTER(BSTR),  # noqa: F405
-		POINTER(BSTR),  # noqa: F405
-	)(
-		("displayModel_getWindowTextInRect", NVDAHelper.localLib.dll),
-		((1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (1,), (2,), (2,)),
-	)  # noqa: F405
+	global _requestTextChangeNotificationsForWindow, _getFocusRect
 	_requestTextChangeNotificationsForWindow = (
 		NVDAHelper.localLib.displayModel_requestTextChangeNotificationsForWindow
 	)
@@ -271,7 +249,7 @@ def getWindowTextInRect(
 	includeDescendantWindows=True,
 ):
 	text, cpBuf = watchdog.cancellableExecute(
-		_getWindowTextInRect,
+		localLib.displayModel_getWindowTextInRect,
 		bindingHandle,
 		windowHandle,
 		includeDescendantWindows,

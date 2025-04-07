@@ -29,8 +29,6 @@ from ctypes.wintypes import (
 	DWORD,
 	HANDLE,
 	HWND,
-	WPARAM,
-	LPARAM,
 	RECT,
 )
 from comtypes import (
@@ -430,11 +428,11 @@ dllImportTableHooks_unhookSingle.argtypes = (
 	c_void_p,  # hook
 )
 
-displayModel_getWindowTextInRect = dll.displayModel_getWindowTextInRect
-displayModel_getWindowTextInRect.restype = c_int  # error_status_t
-displayModel_getWindowTextInRect.argtypes = (
+
+displayModel_getWindowTextInRect = CFUNCTYPE(
+	c_int,  # (return) error_status_t
 	HANDLE,  # bindingHandle
-	c_ulong,  # windowHandle
+	c_long,  # windowHandle
 	c_bool,  # includeDescendantWindows
 	c_int,  # left
 	c_int,  # top
@@ -445,7 +443,24 @@ displayModel_getWindowTextInRect.argtypes = (
 	c_bool,  # stripOuterWhitespace
 	POINTER(BSTR),  # text
 	POINTER(BSTR),  # characterPoints
+)(
+	("displayModel_getWindowTextInRect", dll),
+	(
+		(1,),  # [in]: bindingHandle
+		(1,),  # [in] windowHandle
+		(1,),  # [in] includeDescendantWindows
+		(1,),  # [in] left
+		(1,),  # [in] top
+		(1,),  # [in] right
+		(1,),  # [in] bottom
+		(1,),  # [in] minHorizontalWhitespace
+		(1,),  # [in] minVerticalWhitespace
+		(1,),  # [in] stripOuterWhitespace
+		(2,),  # [out] text
+		(2,),  # [out] characterPoints
+	),
 )
+
 
 displayModel_getCaretRect = dll.displayModel_getCaretRect
 displayModel_getCaretRect.restype = c_int  # error_status_t
@@ -512,6 +527,7 @@ rateLimitedUIAEventHandler_terminate.argtypes = (
 
 HWasapiPlayer = HANDLE
 
+
 class WAVEFORMATEX(Structure):
 	_fields_ = [
 		("wFormatTag", WORD),
@@ -523,6 +539,7 @@ class WAVEFORMATEX(Structure):
 		("cbSize", WORD),
 	]
 
+
 wasPlay_callback = CFUNCTYPE(None, c_void_p, c_uint)
 
 wasPlay_create = dll.wasPlay_create
@@ -530,7 +547,7 @@ wasPlay_create.restype = HWasapiPlayer
 wasPlay_create.argtypes = (
 	c_wchar_p,  # endpointId
 	WAVEFORMATEX,  # format
-	wasPlay_callback ,  # callback
+	wasPlay_callback,  # callback
 )
 
 wasPlay_destroy = dll.wasPlay_destroy
@@ -615,9 +632,7 @@ wasSilence_terminate.argtypes = ()
 
 nvdaController_onSsmlMarkReached = dll.nvdaController_onSsmlMarkReached
 nvdaController_onSsmlMarkReached.restype = c_ulong
-nvdaController_onSsmlMarkReached.argtypes = (
-	c_wchar_p,
-)
+nvdaController_onSsmlMarkReached.argtypes = (c_wchar_p,)
 
 calculateCharacterBoundaries = dll.calculateCharacterBoundaries
 calculateCharacterBoundaries.restype = c_bool
