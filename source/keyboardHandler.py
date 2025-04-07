@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2006-2024 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
+# Copyright (C) 2006-2025 NV Access Limited, Peter Vágner, Aleksey Sadovoy, Babbage B.V., Cyrille Bougot
 
 """Keyboard support"""
 
@@ -654,6 +654,9 @@ class KeyboardInputGesture(inputCore.InputGesture):
 					# Already down.
 					continue
 				vk = winUser.VK_LWIN
+			elif vk == winUser.VK_NUMLOCK:
+				# Numlock is considered a modifier by NVDA but never by the OS.
+				continue
 			elif winUser.getKeyState(vk) & 32768:
 				# Already down.
 				continue

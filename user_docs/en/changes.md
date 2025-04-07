@@ -221,6 +221,7 @@ Add-ons will need to be re-tested and have their manifest updated.
 * Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
 * Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer. (#17648)
 * NVDA supports the `text-indent` IAccessible2 object attribute. (#13052, @michaelweghorn)
+* When a script using `gesture.send` is triggered with a gesture that includes `numLock` as a modifier, Num Lock is no longer turned off. (#10827, @CyrilleB79)
 
 #### API Breaking Changes
 
