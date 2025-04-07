@@ -2,13 +2,13 @@
 
 ## 2025.1
 
-This release introduces NVDA Remote, allowing you to control a remote computer running NVDA from another device running NVDA.
+This release introduces NVDA Remote Access, allowing you to control a remote computer running NVDA from another device running NVDA.
 
 There are many improvements to speech, particularly responsiveness with SAPI 4, SAPI 5 and OneCore voices.
 Rate boost and automatic language switching is now supported in SAPI 5.
 SAPI 4 voices now support audio ducking, leading silence trimming, and keeping the audio device awake.
 
-The Add-on Store automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
+The Add-on Store's automatic update system has been improved, allowing you to select channels for automatic updates, and run automatic updates in the background.
 
 It's now easier to manually refresh OCR and toggle automatic refresh, with new commands.
 
@@ -58,34 +58,32 @@ Please responsibly disclose security issues following NVDA's [security policy](h
   * In Mozilla Firefox, NVDA will report the highlighted text when a URL containing a text fragment is visited. (#16910, @jcsteh)
   * NVDA can now report when a link destination points to the current page. (#141, @LeonarddeR, @nvdaes)
 * Microsoft Office:
-  * When editing in Microsoft PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
+  * When editing in PowerPoint text boxes, you can now move per sentence with `alt+upArrow`/`alt+downArrow`. (#17015, @LeonarddeR)
   * In Word, the selection update is now reported when using Word commands to extend or reduce the selection (`f8` or `shift+f8`). (#3293, @CyrilleB79)
-  * In Microsoft Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
+  * In Word 16.0.18226 and higher or when using Word object model, NVDA will now report if a heading is collapsed in both speech and braille. (#17499)
   * In Word with UIA, when using the native extended table navigation commands (`alt+home`, `alt+end`, `alt+pageUp`, and `alt+pageDown`), the caret movement will now be reported. (#17867, @CyrilleB79)
-  * In Microsoft Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
-  * In Word and Outlook the result of more shortcuts is reported:
+  * In Word, when using the "report focus" command, the document layout will be announced if this information is available and reporting object descriptions is enabled. (#15088, @nvdaes)
+  * The result of more shortcuts is now reported in Word and Outlook:
     * font formatting shortcuts (#10271, @CyrilleB79)
     * collapse or expand heading (#17545, @CyrilleB79)
 * LibreOffice:
-  * When decreasing or increasing the font size in LibreOffice Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
-  * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in LibreOffice Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
-  * When toggling double underline in LibreOffice Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
-  * NVDA supports the "text-indent" IAccessible2 object attribute.
-  As a consequence, announcement of first line indent is now supported for LibreOffice 25.8 and later. (#13052, @michaelweghorn)
+  * When increasing or decreasing the font size in Writer using the corresponding keyboard shortcuts, NVDA announces the new font size. (#6915, @michaelweghorn)
+  * When applying the "Body Text" or a heading paragraph style using the corresponding keyboard shortcut in Writer 25.2 or newer, NVDA announces the new paragraph style. (#6915, @michaelweghorn)
+  * When toggling double underline in Writer using the corresponding keyboard shortcut, NVDA announces the new state ("double underline on"/"double underline off"). (#6915, @michaelweghorn)
+  * NVDA can now report the first line indent in LibreOffice 25.8 and later. (#13052, @michaelweghorn)
 * OCR:
   * In a recognition result, `NVDA+f5` manually refreshes the recognized content. (#17715, @CyrilleB79)
-  * Added an unassigned gesture to toggle periodical refresh of the Windows OCR result. (#16897)
+  * Added an unassigned gesture to toggle periodically refreshing the Windows OCR result. (#16897)
 * Remote access functionality, based on the NVDA Remote add-on, has been integrated into NVDA. (#4390, @ctoth, @tspivey, @daiverd, NVDA Remote Contributors and funders)
 * It is now possible to specify mirror URLs to use for NVDA updates and the Add-on Store. (#14974, #17151, #17310, @christopherpross)
 * Support for math in PDFs has been added. (#9288, @NSoiffer)
   * This works for formulas with associated MathML, such as some files generated by newer versions of TeX/LaTeX.
   * Currently this is only supported in Foxit Reader & Foxit Editor.
 * NVDA can now be configured to speak the current line or paragraph when navigating with braille navigation keys. (#17053, @nvdaes)
-* NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio. (#17652, @LeonarddeR)
+* NVDA is now able to report caret changes when pressing `alt+upArrow` or `alt+downArrow` gestures, for example in Visual Studio Code. (#17652, @LeonarddeR)
 * Added commands to move the review cursor to the first and last character of the selected text, assigned to `NVDA+alt+home` and `NVDA+alt+end`, respectively. (#17299, @nvdaes)
 * Added a general setting to prevent the display turning off during say all or reading with braille.
-This option is enabled by default, but can possibly result in shorter battery life.
-If you suspect this option is negatively impacting your battery life, you're advised to disable it. (#17649, @LeonarddeR)
+This option is enabled by default, but may result in increased battery depletion. (#17649, @LeonarddeR)
 
 ### Changes
 
@@ -134,15 +132,15 @@ If you suspect this option is negatively impacting your battery life, you're adv
   * The Humanware Brailliant driver is now more reliable in selecting the right connection endpoint, resulting in better connection stability and less errors. (#17537, @LeonarddeR)
   * Custom braille tables in the developer scratchpad are now properly ignored when running with add-ons disabled. (#17565, @LeonarddeR)
 * Microsoft Office:
-  * The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Microsoft Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)
+  * The command to "Report the destination URL of a link" now works as expected when using the legacy object model in Word, Outlook, Excel and PowerPoint. (#17292, #17362, #17435, @CyrilleB79)
   * In Excel, the element list dialog (`NVDA+f7`) no longer fails to list comment or formulas on some non-English systems. (#11366, @CyrilleB79)
-  * Improvements in Microsoft PowerPoint:
+  * Improvements in PowerPoint:
     * Caret reporting no longer breaks when text contains wide characters, such as emoji. (#17006 , @LeonarddeR)
     * Character location reporting is now accurate (e.g. when pressing `NVDA+delete`. (#9941, @LeonarddeR)
     * NVDA no longer starts say all when starting a slide show and the browse mode setting "Automatic Say All on page load" is disabled. (#17488, @LeonarddeR)
 * LibreOffice:
-  * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in LibreOffice Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
-  * In LibreOffice, the current checkbox state (checked/unchecked) is now also reported in braille, not just speech. (#17218, @michaelweghorn)
+  * When using the Microsoft Pinyin Input Method for Chinese and enabling the Pinyin compatibility option to use the previous version, typing in Writer (and potentially other applications) while an IME popup is showing no longer triggers an error. (#17198, @michaelweghorn)
+  * The current checkbox state (checked/unchecked) of checkboxes in dialogs is now also reported in braille, not just speech. (#17218, @michaelweghorn)
 * Math:
   * Math reading has been fixed for some web elements.
   Specifically, MathML inside of span and other elements that have the attribute `role="math"`. (#15058)
@@ -150,7 +148,7 @@ If you suspect this option is negatively impacting your battery life, you're adv
 * IDEs:
   * NVDA will no longer crash when selecting all text in certain source files in Android Studio or IntelliJ Idea. (#17418, @thgcode)
   * In Visual Studio Code, NVDA no longer hijacks the `alt+upArrow` and `alt+downArrow` gestures for sentence navigation. (#17082, @LeonarddeR)
-  * Fix issue with certain section elements not being recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
+  * Certain section elements are now correctly recognized as editable controls in Visual Studio Code. (#17573, @Cary-rowen)
   * In Notepad and other UIA documents, and Notepad++ documents on Windows 11, if the last line is empty, the "braille next line command" will move the cursor to the last line.
   In any document, if the cursor is on the last line, it will be moved to the end when using this command. (#17251, #17430, @nvdaes)
 * Configuration profiles:
@@ -222,6 +220,7 @@ Add-ons will need to be re-tested and have their manifest updated.
     * See the method documentation as well as examples in the albatross and brailliantB drivers for more information.
 * Added a new function, `utils.mmdevice.getOutputDevices`, to enumerate audio output devices. (#17678)
 * Added a new extension point `pre_synthSpeak` in `synthDriverHandler`, which will be called before the speech manager calls `speak` of the current synthesizer. (#17648)
+* NVDA supports the `text-indent` IAccessible2 object attribute. (#13052, @michaelweghorn)
 
 #### API Breaking Changes
 
