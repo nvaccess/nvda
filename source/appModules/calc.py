@@ -11,6 +11,7 @@ import NVDAObjects.IAccessible
 import speech
 from config.configFlags import TypingEcho
 
+
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
 		windowClassName = obj.windowClassName
