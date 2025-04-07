@@ -8,7 +8,10 @@ This is also the base app module for Windows 11 Calculator."""
 
 import appModuleHandler
 import api
+import config
 from NVDAObjects.UIA import UIA
+from NVDAObjects import NVDAObject
+from config.configFlags import TypingEcho
 import queueHandler
 import ui
 import scriptHandler
@@ -16,6 +19,7 @@ import braille
 import speech
 import UIAHandler
 from comtypes import COMError
+from typing import Callable
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [
@@ -53,6 +57,17 @@ class AppModule(appModuleHandler.AppModule):
 		# Resolved in version 10.2109 which is exclusive to Windows 11.
 		if not obj.name and obj.parent.UIAAutomationId in ("HistoryListView", "MemoryListView"):
 			obj.name = "".join([item.name for item in obj.children])
+
+	def event_typedCharacter(self, obj: NVDAObject, nextHandler: Callable[[], None], ch: str) -> None:
+		originalMode = config.conf["keyboard"]["speakTypedCharacters"]
+		if originalMode == TypingEcho.EDIT_CONTROLS.value:
+			try:
+				config.conf["keyboard"]["speakTypedCharacters"] = TypingEcho.ALWAYS.value
+				nextHandler()
+			finally:
+				config.conf["keyboard"]["speakTypedCharacters"] = originalMode
+		else:
+			nextHandler()
 
 	def event_nameChange(self, obj, nextHandler):
 		if not isinstance(obj, UIA):
