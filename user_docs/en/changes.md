@@ -98,7 +98,7 @@ This option is enabled by default, but may result in increased battery depletion
   * The exit dialog now allows you to restart NVDA with add-ons disabled and debug logging enabled simultaneously. (#11538, @CyrilleB79)
   * The ability to opt out of using WASAPI for audio output has been removed. (#16080)
   * The Browse Mode setting "Automatically set system focus to focusable elements" has been removed, the behaviour is now disabled. (#17598)
-  * NVDA will now only warn about add-on incompatibility when updating to a version which has an incompatible add-on API to the currently installed copy. (#17071, #17506)
+  * NVDA will now only warn about add-on incompatibility when updating to a new version which has an incompatible add-on API to the current version. (#17071, #17506)
   * The "Contributors" file has been removed from the NVDA menu. (#16922)
   * The NVDA license is now formatted in HTML to improve readability. (#17600)
   * Short versions of the most commonly used command line options have been added: `-d` for `--disable-addons` and `-n` for `--lang`.
