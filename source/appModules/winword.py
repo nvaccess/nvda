@@ -88,7 +88,14 @@ class WinwordWordDocument(WordDocument):
 			ui.message(_("Change tracking off"))
 
 	@script(
-		gestures=["kb:alt+shift+-", "kb:alt+shift+=", "kb:alt+shift+numpadPlus", "kb:alt+shift+numpadMinus"],
+		gestures=[
+			"kb:alt+shift+-",
+			"kb:alt+shift+=",
+			"kb:alt+shift+numpadPlus",
+			"kb:alt+shift+numpadMinus",
+			"kb:numLock+shift+alt+numpadPlus",
+			"kb:numLock+shift+alt+numpadMinus",
+		],
 	)
 	def script_collapseOrExpandHeading(self, gesture: "inputCore.InputGesture") -> None:
 		if not self.WinwordSelectionObject:
