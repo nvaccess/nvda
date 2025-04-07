@@ -6,9 +6,10 @@
 """App module for Windows Calculator (desktop version)"""
 
 import appModuleHandler
+import config
 import NVDAObjects.IAccessible
 import speech
-
+from config.configFlags import TypingEcho
 
 class AppModule(appModuleHandler.AppModule):
 	def chooseNVDAObjectOverlayClasses(self, obj, clsList):
@@ -56,7 +57,15 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 		return name
 
 	def event_typedCharacter(self, ch):
-		super(Display, self).event_typedCharacter(ch)
+		originalMode = config.conf["keyboard"]["speakTypedCharacters"]
+		if originalMode == TypingEcho.EDIT_CONTROLS.value:
+			try:
+				config.conf["keyboard"]["speakTypedCharacters"] = TypingEcho.ALWAYS.value
+				super(Display, self).event_typedCharacter(ch)
+			finally:
+				config.conf["keyboard"]["speakTypedCharacters"] = originalMode
+		else:
+			super(Display, self).event_typedCharacter(ch)
 		if ch in self.calcCommandChars:
 			self._nextNameIsCalculationResult = True
 
