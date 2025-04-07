@@ -10,6 +10,7 @@ import appModuleHandler
 import api
 import config
 from NVDAObjects.UIA import UIA
+from NVDAObjects import NVDAObject
 from config.configFlags import TypingEcho
 import queueHandler
 import ui
@@ -18,6 +19,7 @@ import braille
 import speech
 import UIAHandler
 from comtypes import COMError
+from typing import Callable
 
 # #9428: do not announce current values until calculations are done in order to avoid repetitions.
 noCalculatorEntryAnnouncements = [
@@ -56,7 +58,7 @@ class AppModule(appModuleHandler.AppModule):
 		if not obj.name and obj.parent.UIAAutomationId in ("HistoryListView", "MemoryListView"):
 			obj.name = "".join([item.name for item in obj.children])
 
-	def event_typedCharacter(self, obj, nextHandler, ch: str) -> None:
+	def event_typedCharacter(self, obj: NVDAObject, nextHandler: Callable[[], None], ch: str) -> None:
 		originalMode = config.conf["keyboard"]["speakTypedCharacters"]
 		if originalMode == TypingEcho.EDIT_CONTROLS.value:
 			try:
