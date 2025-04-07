@@ -115,7 +115,7 @@ class SupportsVersionCheck(Protocol):
 				# Translators: The reason an add-on is not compatible.
 				# A more recent version of NVDA is required for the add-on to work.
 				# The placeholder will be replaced with Year.Major.Minor (e.g. 2019.1).
-				"An updated version of NVDA is required. " "NVDA version {nvdaVersion} or later.",
+				"An updated version of NVDA is required. NVDA version {nvdaVersion} or later.",
 			).format(
 				nvdaVersion=addonAPIVersion.formatForGUI(self.minimumNVDAVersion),
 			)
