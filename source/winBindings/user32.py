@@ -57,3 +57,18 @@ SetWindowsHookEx.argtypes = (
 	DWORD,  # dwThreadId
 )
 SetWindowsHookEx.restype = HHOOK
+
+DefWindowProc = _dll.DefWindowProcW
+"""
+Calls the default window procedure to provide default processing for any window messages that an application does not process.
+
+.. seealso::
+	https://learn.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-defwindowprocw
+"""
+DefWindowProc.argtypes = (
+	HWND,
+	UINT,  # msg
+	WPARAM,
+	LPARAM,
+)
+DefWindowProc.restype = LRESULT
