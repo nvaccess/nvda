@@ -83,12 +83,9 @@ class RemoteMenu(wx.Menu):
 		)
 
 	def terminate(self) -> None:
-		self.Remove(self.connectItem.Id)
-		self.connectItem.Destroy()
-		self.connectItem = None
-		self.Remove(self.disconnectItem.Id)
-		self.disconnectItem.Destroy()
-		self.disconnectItem = None
+		self.Remove(self.connectionItem.Id)
+		self.connectionItem.Destroy()
+		self.connectionItem = None
 		self.Remove(self.muteItem.Id)
 		self.muteItem.Destroy()
 		self.muteItem = None

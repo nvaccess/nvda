@@ -65,9 +65,6 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	whiteNoiseVolume = integer(default=0, min=0, max=100)
 	soundSplitState = integer(default=0)
 	includedSoundSplitModes = int_list(default=list(0, 2, 3))
-	applicationsSoundVolume = integer(default=100, min=0, max=100)
-	applicationsSoundMuted = boolean(default=False)
-	applicationsVolumeMode = featureFlag(optionsEnum="AppsVolumeAdjusterFlag", behaviorOfDefault="DISABLED")
 
 # Braille settings
 [braille]
@@ -348,6 +345,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 
 # Remote Settings
 [remote]
+	enabled = boolean(default=False)
 	[[connections]]
 		last_connected = list(default=list())
 	[[controlserver]]
