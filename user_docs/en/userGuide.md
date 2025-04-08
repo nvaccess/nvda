@@ -1,4 +1,3 @@
-force_update
 # NVDA NVDA_VERSION User Guide
 
 [TOC]

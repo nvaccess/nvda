@@ -1,4 +1,3 @@
-force_update
 # What's New in NVDA
 
 ## 2025.1
