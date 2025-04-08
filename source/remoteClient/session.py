@@ -538,6 +538,8 @@ class LeaderSession(RemoteSession):
 	def handleClientConnected(self, client: dict[str, Any] | None = None):
 		hasFollowers = bool(self.followers)
 		super().handleClientConnected(client)
+		if client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			self.followers[client["id"]]["active"] = True
 		self.sendBrailleInfo()
 		if not hasFollowers:
 			self.registerCallbacks()
@@ -547,6 +549,8 @@ class LeaderSession(RemoteSession):
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
+		if client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			del self.followers[client["id"]]
 		if self.callbacksAdded and not self.followers:
 			self.unregisterCallbacks()
 
