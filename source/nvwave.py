@@ -122,9 +122,10 @@ def playWaveFile(
 
 	def play():
 		global fileWavePlayer
+		p = fileWavePlayer
 		try:
-			fileWavePlayer.feed(f.readframes(f.getnframes()))
-			fileWavePlayer.idle()
+			p.feed(f.readframes(f.getnframes()))
+			p.idle()
 		except Exception:
 			log.exception("Error playing wave file")
 		# #11169: Files might not be played that often. Leaving the device open
