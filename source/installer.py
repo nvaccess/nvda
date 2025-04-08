@@ -2,7 +2,7 @@
 # A part of NonVisual Desktop Access (NVDA)
 # This file is covered by the GNU General Public License.
 # See the file COPYING for more details.
-# Copyright (C) 2011-2024 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka
+# Copyright (C) 2011-2025 NV Access Limited, Joseph Lee, Babbage B.V., Łukasz Golonka, Cyrille Bougot
 
 import ctypes
 import pathlib
@@ -140,7 +140,7 @@ def getDocFilePath(fileName, installDir):
 		tryDir = os.path.join(rootPath, tryLang)
 		if not os.path.isdir(tryDir):
 			continue
-		tryPath = os.path.join(tryDir, f"{fileName}.html"
+		tryPath = os.path.join(tryDir, f"{fileName}.html")
 		if os.path.isfile(tryPath):
 			return tryPath
 
