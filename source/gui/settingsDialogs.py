@@ -3339,7 +3339,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		remoteSettingsGroupHelper = guiHelper.BoxSizerHelper(self, sizer=remoteSettingsGroupSizer)
 		sHelper.addItem(remoteSettingsGroupHelper)
 
-		self.playSounds: wx.CheckBox = remoteSettingsGroupHelper.addItem(
+		self.playSounds = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
 				# Translators: A checkbox in Remote settings to set whether sounds play instead of beeps.
@@ -3348,7 +3348,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
 
-		self.autoconnect: wx.CheckBox = remoteSettingsGroupHelper.addItem(
+		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
 				self.remoteSettingsGroupBox,
 				# Translators: A checkbox in Remote settings to set whether NVDA should automatically connect to a control server on startup.
@@ -3358,7 +3358,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
 		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
-		self.autoConnectGroupSizer: wx.StaticBoxSizer = wx.StaticBoxSizer(
+		self.autoConnectGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
 			self.remoteSettingsGroupBox,
 			# Translators: A group of settings configuring how to connect if NVDA is set to automatically establish a Remote connection at startup.
