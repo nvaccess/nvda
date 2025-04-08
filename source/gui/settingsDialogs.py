@@ -3411,7 +3411,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		# so remove it manually.
 		# BoxSizerHelper.addItem inserts a spacer, then the item,
 		# So the space should be the second-last child of the sizer.
-		# In some cases, BoxSizerHelper.addItem  won't insert a spacer.
+		# In some cases, BoxSizerHelper.addItem won't insert a spacer.
 		# While it should here, check that the penultimate child is a spacer,
 		# just to be sure.
 		if (item := self.autoConnectGroupSizer.GetChildren()[-2]).IsSpacer():
@@ -3518,7 +3518,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				message = pgettext(
 					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					"Both port and key must be set in the Remote section in order to automatically connect using a locally hosted Remoate Access server after NVDA starts.",
+					"Both port and key must be set in the Remote section in order to automatically connect using a locally hosted Remote Access server after NVDA starts.",
 				)
 			if message is not None:
 				gui.messageBox(
