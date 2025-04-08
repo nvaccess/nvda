@@ -57,16 +57,16 @@ class Display(NVDAObjects.IAccessible.IAccessible):
 			name = _("Display")
 		return name
 
-	def event_typedCharacter(self, ch):
+	def event_typedCharacter(self, ch: str) -> None:
 		originalMode = config.conf["keyboard"]["speakTypedCharacters"]
 		if originalMode == TypingEcho.EDIT_CONTROLS.value:
 			try:
 				config.conf["keyboard"]["speakTypedCharacters"] = TypingEcho.ALWAYS.value
-				super(Display, self).event_typedCharacter(ch)
+				super().event_typedCharacter(ch)
 			finally:
 				config.conf["keyboard"]["speakTypedCharacters"] = originalMode
 		else:
-			super(Display, self).event_typedCharacter(ch)
+			super().event_typedCharacter(ch)
 		if ch in self.calcCommandChars:
 			self._nextNameIsCalculationResult = True
 
