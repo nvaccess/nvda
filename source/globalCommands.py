@@ -69,7 +69,6 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
-from audio import appsVolume
 from utils.displayString import DisplayStringEnum
 import remoteClient
 
@@ -4876,46 +4875,6 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Increases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Decreases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(-5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Toggles application volume control on and off",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeState()
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Mutes or unmutes other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeMute()
 
 	@script(
 		# Translators: Describes a command.
