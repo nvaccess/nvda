@@ -140,12 +140,9 @@ def getDocFilePath(fileName, installDir):
 		tryDir = os.path.join(rootPath, tryLang)
 		if not os.path.isdir(tryDir):
 			continue
-		# Some out of date translations might include .txt files which are now .html files in newer translations.
-		# Therefore, ignore the extension and try both .html and .txt.
-		for tryExt in ("html", "txt"):
-			tryPath = os.path.join(tryDir, "%s.%s" % (fileName, tryExt))
-			if os.path.isfile(tryPath):
-				return tryPath
+		tryPath = os.path.join(tryDir, f"{fileName}.html"
+		if os.path.isfile(tryPath):
+			return tryPath
 
 
 def copyProgramFiles(destPath):
