@@ -308,6 +308,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			self._clientPanel.host.AppendItems(hostnames)
 			self._clientPanel.host.SetSelection(0)
 		self._serverPanel = ServerPanel(simpleBook)
+		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
 		simpleBook.AddPage(self._clientPanel, "Client")
 		simpleBook.AddPage(self._serverPanel, "Server")
 		self._clientOrServerControl.SetSelection(0)
