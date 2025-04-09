@@ -6,43 +6,54 @@
 import json
 import random
 import threading
-from typing import List, Optional, TypedDict, Union
+from typing import TypedDict
 from urllib import request
 
 import gui
 import wx
+from wx.lib.expando import ExpandoTextCtrl
+from gui.contextHelp import ContextHelpMixin
 from logHandler import log
-from gui.guiHelper import alwaysCallAfter
+from gui.guiHelper import alwaysCallAfter, BoxSizerHelper
+from gui import guiHelper
+from gui.nvdaControls import SelectOnFocusSpinCtrl
+from config.configFlags import RemoteConnectionMode, RemoteServerType
 
 from . import configuration, serializer, server, protocol, transport
 from .connectionInfo import ConnectionInfo, ConnectionMode
 from .protocol import SERVER_PORT, RemoteMessageType
 
 
-class ClientPanel(wx.Panel):
+class ClientPanel(ContextHelpMixin, wx.Panel):
+	helpId = "RemoteAccessConnectExisting"
 	host: wx.ComboBox
 	key: wx.TextCtrl
-	generateKey: wx.Button
-	keyConnector: Optional["transport.RelayTransport"]
+	_generateKeyButton: wx.Button
+	_keyConnector: "transport.RelayTransport | None"
+	_keyGenerationProgressDialog: gui.IndeterminateProgressDialog | None = None
 
-	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
+	def __init__(self, parent: wx.Window | None = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
-		# Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Host:")))
-		self.host = wx.ComboBox(self, wx.ID_ANY)
-		sizer.Add(self.host)
-		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		sizer.Add(self.key)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizerHelper = BoxSizerHelper(self, sizer=sizer)
+		self.host = sizerHelper.addLabeledControl(
+			# Translators: The label of an edit field in connect dialog to enter name or address of the remote computer.
+			_("&Host:"),
+			wx.ComboBox,
+		)
+		self.key = sizerHelper.addLabeledControl(
+			# Translators: Label of the edit field to enter key (password) to secure the remote connection.
+			_("&Key:"),
+			wx.TextCtrl,
+		)
 		# Translators: The button used to generate a random key/password.
-		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
-		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
-		sizer.Add(self.generateKey)
+		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
+		self._generateKeyButton.Bind(wx.EVT_BUTTON, self._onGenerateKey)
+		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
+		keyControlsSizerHelper.addItem(self._generateKeyButton)
 		self.SetSizerAndFit(sizer)
 
-	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
+	def _onGenerateKey(self, evt: wx.CommandEvent) -> None:
 		if not self.host.GetValue():
 			gui.messageBox(
 				# Translators: A message box displayed when the host field is empty and the user tries to generate a key.
@@ -54,29 +65,55 @@ class ClientPanel(wx.Panel):
 			self.host.SetFocus()
 		else:
 			evt.Skip()
-			self.generateKeyCommand()
+			self._generateKeyCommand()
 
-	def generateKeyCommand(self, insecure: bool = False) -> None:
+	def _generateKeyCommand(self, insecure: bool = False) -> None:
+		self._keyGenerationProgressDialog = gui.IndeterminateProgressDialog(
+			self,
+			# Translators: Title of a dialog shown to users when asking a Remote control server to generate a key
+			pgettext("remote", "Generating key"),
+			# Translators: Message on a dialog shown to users when asking a Remote control server to generate a key
+			pgettext("remote", "Generating key..."),
+		)
 		address = protocol.addressToHostPort(self.host.GetValue())
-		self.keyConnector = transport.RelayTransport(
+		self._keyConnector = transport.RelayTransport(
 			address=address,
 			serializer=serializer.JSONSerializer(),
 			insecure=insecure,
 		)
-		self.keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self.handleKeyGenerated)
-		self.keyConnector.transportCertificateAuthenticationFailed.register(self.handleCertificateFailed)
-		t = threading.Thread(target=self.keyConnector.run)
+		self._keyConnector.registerInbound(RemoteMessageType.GENERATE_KEY, self._handleKeyGenerated)
+		self._keyConnector.transportCertificateAuthenticationFailed.register(self._handleCertificateFailed)
+		self._keyConnector.transportConnectionFailed.register(self._handleConnectionFailed)
+		t = threading.Thread(target=self._keyConnector.run)
 		t.start()
 
 	@alwaysCallAfter
-	def handleKeyGenerated(self, key: Optional[str] = None) -> None:
+	def _handleKeyGenerated(self, key: str | None = None) -> None:
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
 		self.key.SetValue(key)
 		self.key.SetFocus()
-		self.keyConnector.close()
-		self.keyConnector = None
+		self._keyConnector.close()
+		self._keyConnector = None
 
 	@alwaysCallAfter
-	def handleCertificateFailed(self) -> None:
+	def _handleConnectionFailed(self) -> None:
+		self._keyGenerationProgressDialog.done()
+		self._keyGenerationProgressDialog = None
+		gui.messageBox(
+			pgettext(
+				"remote",
+				# Translators: Message shown to users when requesting that a Remote control server generate a key fails.
+				# {host} will be replaced with the address of the Remote control server.
+				"Unable to connect to {host}. Check that you have internet access, and that there are no mistakes in the host field.",
+			).format(host=self.host.GetValue()),
+			# Translators: Title of a dialog.
+			pgettext("remote", "Host connection failed"),
+			wx.OK | wx.ICON_ERROR,
+		)
+
+	@alwaysCallAfter
+	def _handleCertificateFailed(self) -> None:
 		"""
 		Handles the event when a certificate validation fails.
 
@@ -93,8 +130,10 @@ class ClientPanel(wx.Panel):
 		5. Close the key connector and reset it.
 		6. Generate a new key from the server.
 		"""
+		self._keyGenerationProgressDialog.Done()
+		self._keyGenerationProgressDialog = None
 		try:
-			certHash = self.keyConnector.lastFailFingerprint
+			certHash = self._keyConnector.lastFailFingerprint
 
 			wnd = CertificateUnauthorizedDialog(None, fingerprint=certHash)
 			a = wnd.ShowModal()
@@ -107,9 +146,9 @@ class ClientPanel(wx.Panel):
 			log.exception("Error handling certificate failure")
 			return
 		finally:
-			self.keyConnector.close()
-			self.keyConnector = None
-		self.generateKeyCommand(True)
+			self._keyConnector.close()
+			self._keyConnector = None
+		self._generateKeyCommand(True)
 
 
 class PortCheckResponse(TypedDict):
@@ -118,34 +157,49 @@ class PortCheckResponse(TypedDict):
 	open: bool
 
 
-class ServerPanel(wx.Panel):
-	getIP: wx.Button
-	externalIP: wx.TextCtrl
+class ServerPanel(ContextHelpMixin, wx.Panel):
+	helpId = "RemoteAccessConnectLocal"
+	_getIPButton: wx.Button
+	_externalIPControl: wx.TextCtrl
 	port: wx.TextCtrl
 	key: wx.TextCtrl
-	generateKey: wx.Button
+	_generateKeyButton: wx.Button
+	_progressDialog: gui.IndeterminateProgressDialog | None = None
 
-	def __init__(self, parent: Optional[wx.Window] = None, id: int = wx.ID_ANY):
+	def __init__(self, parent: wx.Window | None = None, id: int = wx.ID_ANY):
 		super().__init__(parent, id)
-		sizer = wx.BoxSizer(wx.HORIZONTAL)
+		sizer = wx.BoxSizer(wx.VERTICAL)
+		sizerHelper = BoxSizerHelper(self, sizer=sizer)
+		self._externalIPControl = sizerHelper.addLabeledControl(
+			# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
+			_("&External IP:"),
+			ExpandoTextCtrl,
+			style=wx.TE_READONLY,
+		)
 		# Translators: Used in server mode to obtain the external IP address for the server (controlled computer) for direct connection.
-		self.getIP = wx.Button(parent=self, label=_("Get External &IP"))
-		self.getIP.Bind(wx.EVT_BUTTON, self.onGetIP)
-		sizer.Add(self.getIP)
-		# Translators: Label of the field displaying the external IP address if using direct (client to server) connection.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&External IP:")))
-		self.externalIP = wx.TextCtrl(self, wx.ID_ANY, style=wx.TE_READONLY | wx.TE_MULTILINE)
-		sizer.Add(self.externalIP)
+		self._getIPButton = wx.Button(parent=self, label=_("Get External &IP"))
+		self._getIPButton.Bind(wx.EVT_BUTTON, self.onGetIP)
+		externalIPControlsSizerHelper = BoxSizerHelper(
+			self,
+			sizer=self._externalIPControl.GetContainingSizer(),
+		)
+		externalIPControlsSizerHelper.addItem(self._getIPButton)
+
 		# Translators: The label of an edit field in connect dialog to enter the port the server will listen on.
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Port:")))
-		self.port = wx.TextCtrl(self, wx.ID_ANY, value=str(SERVER_PORT))
-		sizer.Add(self.port)
-		sizer.Add(wx.StaticText(self, wx.ID_ANY, label=_("&Key:")))
-		self.key = wx.TextCtrl(self, wx.ID_ANY)
-		sizer.Add(self.key)
-		self.generateKey = wx.Button(parent=self, label=_("&Generate Key"))
-		self.generateKey.Bind(wx.EVT_BUTTON, self.onGenerateKey)
-		sizer.Add(self.generateKey)
+		self.port = sizerHelper.addLabeledControl(
+			_("&Port:"),
+			SelectOnFocusSpinCtrl,
+			min=1,
+			max=65535,
+			initial=SERVER_PORT,
+		)
+		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
+		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
+		# Translators: The button used to generate a random key/password.
+		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
+		self._generateKeyButton.Bind(wx.EVT_BUTTON, self.onGenerateKey)
+		keyControlsSizerHelper = BoxSizerHelper(self, sizer=self.key.GetContainingSizer())
+		keyControlsSizerHelper.addItem(self._generateKeyButton)
 		self.SetSizerAndFit(sizer)
 
 	def onGenerateKey(self, evt: wx.CommandEvent) -> None:
@@ -158,7 +212,13 @@ class ServerPanel(wx.Panel):
 
 	def onGetIP(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
-		self.getIP.Enable(False)
+		self._progressDialog = gui.IndeterminateProgressDialog(
+			self,
+			# Translators: Title of a dialog shown to users while attempting to detect their external IP address
+			pgettext("remote", "Getting external IP"),
+			# Translators: Message on a dialog shown to users while attempting to detect their external IP address
+			pgettext("remote", "Getting external IP..."),
+		)
 		t = threading.Thread(target=self.doPortcheck, args=[int(self.port.GetValue())])
 		t.daemon = True
 		t.start()
@@ -175,7 +235,7 @@ class ServerPanel(wx.Panel):
 			raise
 		finally:
 			tempServer.close()
-			wx.CallAfter(self.getIP.Enable, True)
+			wx.CallAfter(self._progressDialog.done)
 
 	def onGetIPSucceeded(self, data: PortCheckResponse) -> None:
 		ip = data["host"]
@@ -204,9 +264,9 @@ class ServerPanel(wx.Panel):
 				style=wx.ICON_WARNING | wx.OK,
 			)
 
-		self.externalIP.SetValue(ip)
-		self.externalIP.SelectAll()
-		self.externalIP.SetFocus()
+		self._externalIPControl.SetValue(ip)
+		self._externalIPControl.SelectAll()
+		self._externalIPControl.SetFocus()
 
 	def onGetIPFail(self, exc: Exception) -> None:
 		# Translators: Error message when unable to get IP address from portcheck server
@@ -220,122 +280,115 @@ class ServerPanel(wx.Panel):
 		)
 
 
-class DirectConnectDialog(wx.Dialog):
-	clientOrServer: wx.RadioBox
-	connectionType: wx.RadioBox
-	container: wx.Panel
-	panel: Union[ClientPanel, ServerPanel]
-	mainSizer: wx.BoxSizer
+class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
+	helpId = "RemoteAccessConnect"
+	_selectedPanel: ClientPanel | ServerPanel
 
-	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: Optional[List[str]] = None):
+	def __init__(self, parent: wx.Window, id: int, title: str, hostnames: list[str] | None = None):
 		super().__init__(parent, id, title=title)
-		mainSizer = self.mainSizer = wx.BoxSizer(wx.VERTICAL)
-		self.clientOrServer = wx.RadioBox(
-			self,
-			wx.ID_ANY,
-			choices=(
-				# Translators: A choice to connect to another machine.
-				_("Client"),
-				# Translators: A choice to allow another machine to connect to this machine.
-				_("Server"),
-			),
-			style=wx.RA_VERTICAL,
+		mainSizer = wx.BoxSizer(wx.VERTICAL)
+		contentsSizerHelper = BoxSizerHelper(self, wx.VERTICAL)
+		self._connectionModeControl = contentsSizerHelper.addLabeledControl(
+			# Translators: Label of the control allowing users to set whether they are the controlling or controlled computer in the Remote Access connection dialog.
+			pgettext("remote", "&Mode:"),
+			wx.Choice,
+			choices=tuple(mode.displayString for mode in RemoteConnectionMode),
 		)
-		self.clientOrServer.Bind(wx.EVT_RADIOBOX, self.onClientOrServer)
-		self.clientOrServer.SetSelection(0)
-		mainSizer.Add(self.clientOrServer)
-		choices = [
-			# Translators: A choice to control another machine.
-			_("Control another machine"),
-			# Translators: A choice to allow this machine to be controlled.
-			_("Allow this machine to be controlled"),
-		]
-		self.connectionType = wx.RadioBox(self, wx.ID_ANY, choices=choices, style=wx.RA_VERTICAL)
-		self.connectionType.SetSelection(0)
-		mainSizer.Add(self.connectionType)
-		self.container = wx.Panel(parent=self)
-		self.panel = ClientPanel(parent=self.container)
-		mainSizer.Add(self.container)
-		buttons = self.CreateButtonSizer(wx.OK | wx.CANCEL)
-		mainSizer.Add(buttons, flag=wx.BOTTOM)
-		mainSizer.Fit(self)
-		self.SetSizer(mainSizer)
-		self.Center(wx.BOTH | wx.CENTER)
-		ok = wx.FindWindowById(wx.ID_OK, self)
-		ok.Bind(wx.EVT_BUTTON, self.onOk)
-		self.clientOrServer.SetFocus()
+		self._connectionModeControl.SetSelection(0)
+		self._clientOrServerControl = contentsSizerHelper.addLabeledControl(
+			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
+			pgettext("remote", "&Server:"),
+			wx.Choice,
+			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
+		)
+		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		simpleBook = self._simpleBook = wx.Simplebook(self)
+		self._clientPanel = ClientPanel(simpleBook)
 		if hostnames:
-			self.panel.host.AppendItems(hostnames)
-			self.panel.host.SetSelection(0)
+			self._clientPanel.host.AppendItems(hostnames)
+			self._clientPanel.host.SetSelection(0)
+		self._serverPanel = ServerPanel(simpleBook)
+		# Since wx.SimpleBook doesn't create a page switcher for us, the following page labels are not used in the GUI.
+		simpleBook.AddPage(self._clientPanel, "Client")
+		simpleBook.AddPage(self._serverPanel, "Server")
+		self._clientOrServerControl.SetSelection(0)
+		self._selectedPanel = self._clientPanel
+		contentsSizerHelper.addItem(simpleBook)
+		contentsSizerHelper.addDialogDismissButtons(wx.OK | wx.CANCEL, True)
+		self.Bind(wx.EVT_BUTTON, self._onOk, id=wx.ID_OK)
+		mainSizer.Add(contentsSizerHelper.sizer, border=guiHelper.BORDER_FOR_DIALOGS, flag=wx.ALL)
+		self.SetSizer(mainSizer)
+		self.Fit()
+		self.CenterOnScreen()
+		self._connectionModeControl.SetFocus()
 
-	def onClientOrServer(self, evt: wx.CommandEvent) -> None:
+	def _onClientOrServer(self, evt: wx.CommandEvent) -> None:
+		"""Respond to changing between using a control server or hosting it locally"""
+		selectedIndex = self._clientOrServerControl.GetSelection()
+		self._simpleBook.ChangeSelection(selectedIndex)
+		# Hack: setting or changing the selection of a wx.SimpleBook seems to cause focus to jump to the first focusable control in the newly selected page, so force focus back to the control that caused the change.
+		self._clientOrServerControl.SetFocus()
+		self._selectedPanel = self._simpleBook.GetPage(selectedIndex)
 		evt.Skip()
-		self.panel.Destroy()
-		if self.clientOrServer.GetSelection() == 0:
-			self.panel = ClientPanel(parent=self.container)
-		else:
-			self.panel = ServerPanel(parent=self.container)
-		self.mainSizer.Fit(self)
 
-	def onOk(self, evt: wx.CommandEvent) -> None:
-		if self.clientOrServer.GetSelection() == 0 and (
-			not self.panel.host.GetValue() or not self.panel.key.GetValue()
+	def _onOk(self, evt: wx.CommandEvent) -> None:
+		"""Respond to the OK button being pressed."""
+		message: str | None = None
+		focusTarget: wx.Window | None = None
+		if self._selectedPanel is self._clientPanel and (
+			not self._selectedPanel.host.GetValue() or not self._selectedPanel.key.GetValue()
 		):
+			# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
+			message = _("Both host and key must be set.")
+			focusTarget = self._selectedPanel.host
+		elif self._selectedPanel is self._serverPanel and (
+			not self._selectedPanel.port.GetValue() or not self._selectedPanel.key.GetValue()
+		):
+			# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
+			message = _("Both port and key must be set.")
+			focusTarget = self._selectedPanel.port
+		if message is not None:
 			gui.messageBox(
-				# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
-				_("Both host and key must be set."),
-				# Translators: A title of a message box displayed when the host or key field is empty and the user tries to connect.
+				message,
+				# Translators: Title of a dialog
 				_("Error"),
 				wx.OK | wx.ICON_ERROR,
 			)
-			self.panel.host.SetFocus()
-		elif self.clientOrServer.GetSelection() == 1 and (
-			not self.panel.port.GetValue() or not self.panel.key.GetValue()
-		):
-			gui.messageBox(
-				# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
-				_("Both port and key must be set."),
-				# Translators: A title of a message box displayed when the port or key field is empty and the user tries to connect.
-				_("Error"),
-				wx.OK | wx.ICON_ERROR,
-			)
-			self.panel.port.SetFocus()
+			if focusTarget is not None:
+				focusTarget.SetFocus()
 		else:
 			evt.Skip()
 
-	def getKey(self) -> str:
-		return self.panel.key.GetValue()
+	def _getKey(self) -> str:
+		"""Get the connection key."""
+		return self._selectedPanel.key.GetValue()
 
 	def getConnectionInfo(self) -> ConnectionInfo:
-		if self.clientOrServer.GetSelection() == 0:  # client
-			host = self.panel.host.GetValue()
-			serverAddr, port = protocol.addressToHostPort(host)
-			mode = (
-				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
-			)
-			return ConnectionInfo(
-				hostname=serverAddr,
-				mode=mode,
-				key=self.getKey(),
-				port=port,
-				insecure=False,
-			)
-		else:  # server
-			port = int(self.panel.port.GetValue())
-			mode = (
-				ConnectionMode.LEADER if self.connectionType.GetSelection() == 0 else ConnectionMode.FOLLOWER
-			)
-			return ConnectionInfo(
-				hostname="127.0.0.1",
-				mode=mode,
-				key=self.getKey(),
-				port=port,
-				insecure=True,
-			)
+		"""Get a :class:`ConnectionInfo` object based on the responses to the dialog."""
+		mode: ConnectionMode = RemoteConnectionMode(
+			self._connectionModeControl.GetSelection(),
+		).toConnectionMode()
+		serverAddr: str
+		port: int
+		insecure: bool
+		if self._selectedPanel is self._clientPanel:
+			serverAddr, port = protocol.addressToHostPort(self._selectedPanel.host.GetValue())
+			insecure = False
+		elif self._selectedPanel is self._serverPanel:
+			serverAddr = "127.0.0.1"
+			port = int(self._selectedPanel.port.GetValue())
+			insecure = True
+		return ConnectionInfo(
+			hostname=serverAddr,
+			mode=mode,
+			key=self._getKey(),
+			port=port,
+			insecure=insecure,
+		)
 
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
-	def __init__(self, parent: Optional[wx.Window], fingerprint: Optional[str] = None):
+	def __init__(self, parent: wx.Window | None, fingerprint: str | None = None):
 		# Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
 		title = _("NVDA Remote Connection Security Warning")
 		message = _(
