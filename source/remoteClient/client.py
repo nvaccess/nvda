@@ -584,9 +584,9 @@ class RemoteClient:
 		if not self.isConnected():
 			return 0
 		elif self.leaderSession is not None:
-			return len(self.leaderSession.followers)
+			return self.leaderSession.connectedClientsCount
 		elif self.followerSession is not None:
-			return len(self.followerSession.leaders)
+			return self.followerSession.connectedClientsCount
 		log.error(
 			"is connected returned true, but neither leaderSession or followerSession is not None.",
 			stack_info=True,

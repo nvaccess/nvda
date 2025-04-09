@@ -127,7 +127,7 @@ class TestRemoteClient(unittest.TestCase):
 		# With a fake transport, pushClipboard should send the clipboard text.
 		fakeTransport = FakeTransport()
 		fakeSession = FakeSession("")
-		fakeSession.followers = {1: "a", 2: "b"}
+		fakeSession.connectedClientsCount = 1
 		self.client.leaderTransport = fakeTransport
 		self.client.leaderSession = fakeSession
 		FakeAPI.clipData = "TestClipboard"
