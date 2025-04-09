@@ -37,7 +37,7 @@ class Addon(AddonBase):
 		:param path: The base directory for the addon data.
 		"""
 		self.path = path
-		self._extendedPackages = set()
+		self._extendedPackages: set[ModuleType] = set()
 		self._importedAddonModules: list[str] = []
 		self._modulesBeforeInstall: set[str] = set()
 		manifest_path = os.path.join(path, MANIFEST_FILENAME)
@@ -130,7 +130,7 @@ class Addon(AddonBase):
 		state[AddonStateCategory.BLOCKED].discard(self.name)
 		state.save()
 
-	def addToPackagePath(self, package):
+	def addToPackagePath(self, package: ModuleType):
 		"""Adds this Addon extensions to the specific package path if those exist.
 
 		This allows the addon to "run" / be available because the package is able to search its path,
@@ -157,7 +157,7 @@ class Addon(AddonBase):
 		converted_path = self._getPathForInclusionInPackage(package)
 		package.__path__.insert(0, converted_path)
 		self._extendedPackages.add(package)
-		log.debug("Addon %s added to %s package path", self.manifest["name"], package.__name__)
+		log.debug(f"Addon {self.manifest["name"]} added to {package.__name__} package path")
 
 	@property
 	def _canBeEnabled(self) -> bool:
@@ -208,7 +208,7 @@ class Addon(AddonBase):
 		# Record enable/disable flags as a way of preparing for disaster such as sudden NVDA crash.
 		state.save()
 
-	def _getPathForInclusionInPackage(self, package):
+	def _getPathForInclusionInPackage(self, package: ModuleType) -> str:
 		"""Get the path to be included in the package's search path.
 
 		:param package: The package to get the path for.
@@ -275,7 +275,7 @@ class Addon(AddonBase):
 		self._importedAddonModules.append(fullName)
 		return importedMod
 
-	def getTranslationsInstance(self, domain="nvda"):
+	def getTranslationsInstance(self, domain: str = "nvda"):
 		"""Gets the gettext translation instance for this add-on.
 
 		<addon-path>\\locale will be used to find .mo files, if exists.

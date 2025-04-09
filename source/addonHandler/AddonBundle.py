@@ -55,7 +55,7 @@ class AddonBundle(AddonBase):
 				_report_manifest_errors(self.manifest)
 				raise AddonError("Manifest file has errors.")
 
-	def extract(self, addonPath: Optional[str] = None):
+	def extract(self, addonPath: str | None = None):
 		"""Extracts the bundle content to the specified path.
 
 		The addon will be extracted to the specified addonPath.
@@ -83,10 +83,10 @@ class AddonBundle(AddonBase):
 		return self._manifest
 
 	def __repr__(self):
-		return "<AddonBundle at %s>" % self._path
+		return f"<AddonBundle at {self._path}>"
 
 
-def createAddonBundleFromPath(path, destDir=None):
+def createAddonBundleFromPath(path: str, destDir: str | None = None) -> AddonBundle:
 	"""Creates a bundle from a directory that contains an addon manifest file.
 
 	:param path: Path to the directory containing the addon.

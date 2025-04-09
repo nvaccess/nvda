@@ -81,12 +81,10 @@ docFileName = string(default=None)
 		),
 	)
 
-	def __init__(self, input, translatedInput=None):
+	def __init__(self, input: TextIO, translatedInput: TextIO  | None = None):
 		"""Constructs an L{AddonManifest} instance from manifest string data
-		@param input: data to read the manifest information
-		@type input: a fie-like object.
-		@param translatedInput: translated manifest input
-		@type translatedInput: file-like object
+		:param input: data to read the manifest information
+		:param translatedInput: translated manifest input
 		"""
 		super().__init__(input, configspec=self.configspec, encoding="utf-8", default_encoding="utf-8")
 		self._errors = None
@@ -116,22 +114,22 @@ docFileName = string(default=None)
 					self["symbolDictionaries"][fileName]["displayName"] = value
 
 	@property
-	def errors(self):
+	def errors(self) -> str:
 		return self._errors
 
-	def _validateApiVersionRange(self):
+	def _validateApiVersionRange(self) -> bool:
 		lastTested = self.get("lastTestedNVDAVersion")
 		minRequiredVersion = self.get("minimumNVDAVersion")
 		return minRequiredVersion <= lastTested
 
 
-def _report_manifest_errors(manifest):
-	log.warning("Error loading manifest:\n%s", manifest.errors)
+def _report_manifest_errors(manifest: AddonManifest):
+	log.warning(f"Error loading manifest:\n{manifest.errors}")
 
 
-def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
+def validate_apiVersionString(value: str) -> tuple[int, int, int]:
 	"""
-	@raises: configobj.validate.ValidateError on validation error
+	:raises: configobj.validate.ValidateError on validation error
 	"""
 	from configobj.validate import ValidateError
 
@@ -148,7 +146,7 @@ def validate_apiVersionString(value: str) -> Tuple[int, int, int]:
 MANIFEST_FILENAME = "manifest.ini"
 
 
-def _translatedManifestPaths(lang=None, forBundle=False):
+def _translatedManifestPaths(lang : str | None = None, forBundle: bool = False) -> list[str]:
 	if lang is None:
 		lang = languageHandler.getLanguage()  # can't rely on default keyword arguments here.
 	langs = [lang]

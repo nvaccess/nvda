@@ -43,7 +43,7 @@ class AddonStateCategory(str, enum.Enum):
 	"""Add-ons in this state are incompatible but their compatibility would be overridden on the next restart."""
 
 
-AddonStateDictT = Dict[AddonStateCategory, CaseInsensitiveSet[str]]
+AddonStateDictT = dict[AddonStateCategory, CaseInsensitiveSet[str]]
 
 
 class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[str]]):
@@ -89,7 +89,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 
 	def fromPickledDict(
 		self,
-		pickledState: Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
+		pickledState: dict[str, union[set[str], addonAPIVersion.AddonApiVersionT, MajorMinorPatch]],
 	) -> None:
 		"""Load state from a pickled dictionary.
 
@@ -102,7 +102,7 @@ class AddonsState(collections.UserDict[AddonStateCategory, CaseInsensitiveSet[st
 			# Make pickles case insensitive
 			self[AddonStateCategory(category)] = CaseInsensitiveSet(pickledState.get(category, set()))
 
-	def toDict(self) -> Dict[str, Union[Set[str], addonAPIVersion.AddonApiVersionT]]:
+	def toDict(self) -> dict[str, union[set[str], addonAPIVersion.AddonApiVersionT]]:
 		"""Convert state to a picklable dictionary.
 
 		:return: Dictionary representation of the state suitable for pickling.

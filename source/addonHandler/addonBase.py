@@ -45,7 +45,7 @@ class AddonBase(SupportsAddonState, SupportsVersionCheck, ABC):
 	def manifest(self) -> "AddonManifest": ...
 
 	@property
-	def _addonStoreData(self) -> Optional["InstalledAddonStoreModel"]:
+	def _addonStoreData(self) -> "InstalledAddonStoreModel | None":
 		from addonStore.dataManager import addonDataManager
 
 		assert addonDataManager
