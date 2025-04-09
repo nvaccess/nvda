@@ -350,8 +350,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		last_connected = list(default=list())
 	[[controlserver]]
 		autoconnect = boolean(default=False)
-		# 0: existing (remote), 1: local (self-hosted)
-		serverType = integer(default=0, min=0, max=1)
+		selfHosted = boolean(default=False)
 		# 0: follower, 1: leader
 		connection_type = integer(default=0, min=0, max=1)
 		host = string(default="")

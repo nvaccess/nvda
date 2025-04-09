@@ -14,6 +14,7 @@ the default value.
 from typing import TYPE_CHECKING
 from enum import unique, verify, CONTINUOUS
 from utils.displayString import (
+	DisplayStringFlag,
 	DisplayStringIntEnum,
 	DisplayStringStrEnum,
 	DisplayStringIntFlag,
@@ -334,15 +335,15 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 
 
 @verify(CONTINUOUS)
-class RemoteServerType(DisplayStringIntEnum):
+class RemoteServerType(DisplayStringFlag):
 	"""Enumeration containing the possible types of Remote relay server.
 
 	Use RemoteServerType.MEMBER.value to compare with the config;
 	use RemoteServerType.MEMBER.displayString in the UI for a translatable description of this member.
 	"""
 
-	EXISTING = 0
-	LOCAL = 1
+	EXISTING = False
+	LOCAL = True
 
 	@property
 	def _displayStringLabels(self):

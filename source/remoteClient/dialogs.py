@@ -299,7 +299,7 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 			# Translators: Label of the control allowing users to select whether to use a pre-existing Remote Access server, or to run their own.
 			pgettext("remote", "&Server:"),
 			wx.Choice,
-			choices=tuple(serverType.displayString for serverType in RemoteServerType),
+			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
 		)
 		self._clientOrServerControl.Bind(wx.EVT_CHOICE, self._onClientOrServer)
 		simpleBook = self._simpleBook = wx.Simplebook(self)

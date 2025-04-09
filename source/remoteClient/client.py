@@ -8,7 +8,7 @@ from typing import Optional, Set, Tuple
 
 import api
 import braille
-from config.configFlags import RemoteConnectionMode, RemoteServerType
+from config.configFlags import RemoteConnectionMode
 import core
 import gui
 import inputCore
@@ -86,13 +86,13 @@ class RemoteClient:
 			return
 		key = controlServerConfig["key"]
 		insecure = False
-		serverType = controlServerConfig["serverType"]
-		if serverType == RemoteServerType.LOCAL:
+		selfHosted = controlServerConfig["selfHosted"]
+		if selfHosted:
 			port = controlServerConfig["port"]
 			hostname = "localhost"
 			insecure = True
 			self.startControlServer(port, key)
-		elif serverType == RemoteServerType.EXISTING:
+		else:
 			hostname, port = addressToHostPort(controlServerConfig["host"])
 		mode = RemoteConnectionMode(controlServerConfig["connection_type"]).toConnectionMode()
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
