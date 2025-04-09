@@ -3670,7 +3670,7 @@ Once the session is active, you can switch between controlling the remote comput
 | Copy link | None | Copies a link to the remote session to the clipboard. |
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
-| Push clipboard | None | Sends the contents of the clipboard to the remote machine. |
+| Push clipboard | None | Sends the contents of the clipboard to the remote computer. |
 <!-- KC:endInclude -->
 
 You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
