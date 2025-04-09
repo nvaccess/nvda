@@ -246,7 +246,7 @@ class Transport(ABC):
 	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
 		"""Send a message through this transport.
 
-		:param type: Message type, typically a :class:`~remoteClient.protocol.RemoteMessageType` enum value.
+		:param type: Message type, typically a :class:`~_remoteClient.protocol.RemoteMessageType` enum value.
 		:param kwargs: Message payload data to serialize.
 		"""
 		...

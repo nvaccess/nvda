@@ -3545,12 +3545,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		controlServer["key"] = self.key.GetValue()
 
 		if enabled != oldEnabled:
-			import remoteClient
+			import _remoteClient
 
-			if enabled and not remoteClient.remoteRunning():
-				remoteClient.initialize()
-			elif not enabled and remoteClient.remoteRunning():
-				remoteClient.terminate()
+			if enabled and not _remoteClient.remoteRunning():
+				_remoteClient.initialize()
+			elif not enabled and _remoteClient.remoteRunning():
+				_remoteClient.terminate()
 
 
 class TouchInteractionPanel(SettingsPanel):
