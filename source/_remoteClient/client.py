@@ -94,7 +94,7 @@ class RemoteClient:
 			self.startControlServer(port, key)
 		else:
 			hostname, port = addressToHostPort(controlServerConfig["host"])
-		mode = RemoteConnectionMode(controlServerConfig["connection_type"]).toConnectionMode()
+		mode = RemoteConnectionMode(controlServerConfig["connectionMode"]).toConnectionMode()
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -240,7 +240,7 @@ class RemoteClient:
 		"""
 		if evt is not None:
 			evt.Skip()
-		previousConnections = configuration.getRemoteConfig()["connections"]["last_connected"]
+		previousConnections = configuration.getRemoteConfig()["connections"]["lastConnected"]
 		hostnames = list(reversed(previousConnections))
 		dlg = dialogs.DirectConnectDialog(
 			parent=gui.mainFrame,
@@ -357,7 +357,7 @@ class RemoteClient:
 			a = wnd.ShowModal()
 			if a == wx.ID_YES:
 				config = configuration.getRemoteConfig()
-				config["trusted_certs"][hostPortToAddress(self.lastFailAddress)] = certHash
+				config["trustedCertificates"][hostPortToAddress(self.lastFailAddress)] = certHash
 			if a == wx.ID_YES or a == wx.ID_NO:
 				return True
 		except Exception as ex:

@@ -365,8 +365,8 @@ class TCPTransport(Transport):
 		"""
 		config = configuration.getRemoteConfig()
 		return (
-			hostPortToAddress(self.address) in config["trusted_certs"]
-			and config["trusted_certs"][hostPortToAddress(self.address)] == fingerprint
+			hostPortToAddress(self.address) in config["trustedCertificates"]
+			and config["trustedCertificates"][hostPortToAddress(self.address)] == fingerprint
 		)
 
 	def getHostFingerprint(self) -> str:

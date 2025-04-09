@@ -3453,7 +3453,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			True,
 		)
 		self.autoConnectGroupSizer.Layout()
-		self.deleteFingerprints.Enable(len(self.config["trusted_certs"]) > 0)
+		self.deleteFingerprints.Enable(len(self.config["trustedCertificates"]) > 0)
 
 	def _setFromConfig(self) -> None:
 		"""Ensure the state of the GUI matches that of the saved configuration.
@@ -3464,11 +3464,11 @@ class RemoteSettingsPanel(SettingsPanel):
 		controlServer = self.config["controlserver"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
 		self.clientOrServer.SetSelection(int(controlServer["selfHosted"]))
-		self.connectionMode.SetSelection(controlServer["connection_type"])
+		self.connectionMode.SetSelection(controlServer["connectionMode"])
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+		self.playSounds.SetValue(self.config["ui"]["playSounds"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3497,7 +3497,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
 		)
 		if deleteFingerprints == wx.YES:
-			self.config["trusted_certs"].clear()
+			self.config["trustedCertificates"].clear()
 			self._setControls()
 		evt.Skip()
 
@@ -3532,12 +3532,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		enabled = self.enableRemote.GetValue()
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
-		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
+		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
 		controlServer = self.config["controlserver"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
 		controlServer["selfHosted"] = bool(selfHosted)
-		controlServer["connection_type"] = self.connectionMode.GetSelection()
+		controlServer["connectionMode"] = self.connectionMode.GetSelection()
 		if not selfHosted:
 			controlServer["host"] = self.host.GetValue()
 		else:
