@@ -127,7 +127,7 @@ class SecureDesktopHandler:
 		"""Set up necessary components when entering secure desktop."""
 		log.debug("Attempting to enter secure desktop")
 		if self.followerSession is None or self.followerSession.transport is None:
-			log.warning("No follower session connected, not entering secure desktop.", exc_info=True)
+			log.warning("No follower session connected, not entering secure desktop.")
 			return
 		if not self.tempPath.exists():
 			log.debug(f"Creating temp directory: {self.tempPath}")
@@ -224,7 +224,7 @@ class SecureDesktopHandler:
 			)
 
 		except Exception:
-			log.warning("Failed to initialize secure desktop connection.")
+			log.warning("Failed to initialize secure desktop connection.", exc_info=True)
 			return None
 
 	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:
