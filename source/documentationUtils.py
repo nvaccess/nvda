@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 # A part of NonVisual Desktop Access (NVDA)
-# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka
+# Copyright (C) 2006-2025 NV Access Limited, Łukasz Golonka, Cyrille Bougot
 # This file may be used under the terms of the GNU General Public License, version 2 or later.
 # For more details see: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,12 +42,9 @@ def getDocFilePath(fileName: str, localized: bool = True) -> str | None:
 			if not os.path.isdir(tryDir):
 				continue
 
-			# Some out of date translations might include .txt files which are now .html files in newer translations.
-			# Therefore, ignore the extension and try both .html and .txt.
-			for tryExt in ("html", "txt"):
-				tryPath = os.path.join(tryDir, f"{fileName}.{tryExt}")
-				if os.path.isfile(tryPath):
-					return tryPath
+			tryPath = os.path.join(tryDir, f"{fileName}.html")
+			if os.path.isfile(tryPath):
+				return tryPath
 		return None
 	else:
 		# Not localized.
