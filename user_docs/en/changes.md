@@ -12,6 +12,8 @@
 
 * In WinUI 3 apps including Microsoft Copilot and parts of Windows 11 File Explorer, NVDA will no longer fail to announce controls when using mouse and touch interaction. (#17407, #17771, @josephsl)
 
+* In Geekbench 6.4, NVDA can again  read the ribbon and options within. (#17892, @mzanm)
+
 ### Changes for Developers
 
 Please refer to [the developer guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html#API) for information on NVDA's API deprecation and removal process.
