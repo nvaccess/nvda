@@ -342,7 +342,7 @@ class FollowerSession(RemoteSession):
 	def handleChannelJoined(
 		self,
 		channel: str,
-		clients: list[dict[str, Any]],
+		clients: list[dict[str, Any]] | None = None,
 		origin: int | None = None,
 	) -> None:
 		if clients is None:
