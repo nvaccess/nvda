@@ -3128,6 +3128,8 @@ When unchecked, NVDA will beep for Remote events.
 This option allows you to automatically establish a Remote Access session when NVDA starts.
 This could be useful, for example, to control your home computer when away from home.
 
+Use caution when enabling this option, as it may increase the risk of unauthorized access to your computer.
+
 ##### Mode {#RemoteAutoconnectMode}
 
 Select the connection mode for automatic connections.
