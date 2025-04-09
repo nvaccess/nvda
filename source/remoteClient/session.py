@@ -62,6 +62,7 @@ See Also:
 	local_machine.py: NVDA interface
 """
 
+from collections.abc import Collection
 import hashlib
 from collections import defaultdict
 from typing import Any, Final
@@ -112,6 +113,12 @@ class RemoteSession:
 
 	callbacksAdded: bool = False
 	"""Whether callbacks are currently registered"""
+
+	leaders: Collection[str]
+	"""Information about connected leaders."""
+
+	followers: Collection[str]
+	"""Information about connected followers."""
 
 	def __init__(
 		self,
@@ -248,6 +255,18 @@ Please use a different server."""),
 		"""Ensure transport is closed when object is deleted."""
 		self.close()
 
+	@property
+	def connectedLeadersCount(self) -> int:
+		return len(self.leaders)
+
+	@property
+	def connectedFollowersCount(self) -> int:
+		return len(self.followers)
+
+	@property
+	def connectedClientsCount(self) -> int:
+		return self.connectedLeadersCount + self.connectedFollowersCount
+
 
 class FollowerSession(RemoteSession):
 	"""Session that runs on the controlled (follower) NVDA instance.
@@ -266,6 +285,7 @@ class FollowerSession(RemoteSession):
 	# Information about connected leader clients
 	leaders: dict[int, dict[str, Any]]
 	leaderDisplaySizes: list[int]  # Braille display sizes of connected leaders
+	followers: set[str]
 
 	def __init__(
 		self,
@@ -279,6 +299,7 @@ class FollowerSession(RemoteSession):
 		)
 		self.leaders = defaultdict(dict)
 		self.leaderDisplaySizes = []
+		self.followers = set()
 		self.transport.transportClosing.register(self.handleTransportClosing)
 		self.transport.registerInbound(
 			RemoteMessageType.CHANNEL_JOINED,
@@ -336,6 +357,8 @@ class FollowerSession(RemoteSession):
 		super().handleClientConnected(client)
 		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
 			self.leaders[client["id"]]["active"] = True
+		elif client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			self.followers.add(client["id"])
 		if self.leaders:
 			self.registerCallbacks()
 
@@ -373,6 +396,8 @@ class FollowerSession(RemoteSession):
 		if client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
 			log.info("Leader client disconnected: %r", client)
 			del self.leaders[client["id"]]
+		elif client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			self.followers.discard(client["id"])
 		if not self.leaders:
 			self.unregisterCallbacks()
 
@@ -457,6 +482,7 @@ class LeaderSession(RemoteSession):
 
 	mode: Final[connectionInfo.ConnectionMode] = connectionInfo.ConnectionMode.LEADER
 	followers: dict[int, dict[str, Any]]  # Information about connected follower
+	leaders: set[str]
 
 	def __init__(
 		self,
@@ -465,6 +491,7 @@ class LeaderSession(RemoteSession):
 	) -> None:
 		super().__init__(localMachine, transport)
 		self.followers = defaultdict(dict)
+		self.leaders = set()
 		self.transport.registerInbound(
 			RemoteMessageType.SPEAK,
 			self.localMachine.speak,
@@ -538,6 +565,10 @@ class LeaderSession(RemoteSession):
 	def handleClientConnected(self, client: dict[str, Any] | None = None):
 		hasFollowers = bool(self.followers)
 		super().handleClientConnected(client)
+		if client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			self.followers[client["id"]]["active"] = True
+		elif client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
+			self.leaders.add(client["id"])
 		self.sendBrailleInfo()
 		if not hasFollowers:
 			self.registerCallbacks()
@@ -547,6 +578,10 @@ class LeaderSession(RemoteSession):
 		Also calls parent class disconnection handler.
 		"""
 		super().handleClientDisconnected(client)
+		if client["connection_type"] == connectionInfo.ConnectionMode.FOLLOWER.value:
+			del self.followers[client["id"]]
+		elif client["connection_type"] == connectionInfo.ConnectionMode.LEADER.value:
+			self.leaders.discard(client["id"])
 		if self.callbacksAdded and not self.followers:
 			self.unregisterCallbacks()
 

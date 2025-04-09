@@ -8,6 +8,7 @@ from typing import Optional, Set, Tuple
 
 import api
 import braille
+from config.configFlags import RemoteConnectionMode
 import core
 import gui
 import inputCore
@@ -85,16 +86,15 @@ class RemoteClient:
 			return
 		key = controlServerConfig["key"]
 		insecure = False
-		if controlServerConfig["self_hosted"]:
+		selfHosted = controlServerConfig["selfHosted"]
+		if selfHosted:
 			port = controlServerConfig["port"]
 			hostname = "localhost"
 			insecure = True
 			self.startControlServer(port, key)
 		else:
 			hostname, port = addressToHostPort(controlServerConfig["host"])
-		mode = (
-			ConnectionMode.FOLLOWER if controlServerConfig["connection_type"] == 0 else ConnectionMode.LEADER
-		)
+		mode = RemoteConnectionMode(controlServerConfig["connection_type"]).toConnectionMode()
 		conInfo = ConnectionInfo(mode=mode, hostname=hostname, port=port, key=key, insecure=insecure)
 		self.connect(conInfo)
 
@@ -137,11 +137,15 @@ class RemoteClient:
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
 			ui.message(_("Not connected."))
 			return
+		elif self.connectedClientsCount < 1:
+			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
+			ui.message(pgettext("remote", "No one else is connected"))
+			return
 		try:
 			connector.send(RemoteMessageType.SET_CLIPBOARD_TEXT, text=api.getClipData())
 			cues.clipboardPushed()
-		except TypeError:
-			log.exception("Unable to push clipboard")
+		except (TypeError, OSError):
+			log.debug("Unable to push clipboard", exc_info=True)
 			# Translators: Message shown when clipboard content cannot be sent to the remote computer.
 			ui.message(_("Unable to push clipboard"))
 
@@ -238,12 +242,11 @@ class RemoteClient:
 			evt.Skip()
 		previousConnections = configuration.getRemoteConfig()["connections"]["last_connected"]
 		hostnames = list(reversed(previousConnections))
-		# Translators: Title of the connect dialog.
 		dlg = dialogs.DirectConnectDialog(
 			parent=gui.mainFrame,
 			id=wx.ID_ANY,
-			# Translators: Title of the connect dialog.
-			title=_("Connect"),
+			# Translators: Title of the Remote Access connection dialog.
+			title=pgettext("remote", "Connect to Another Computer"),
 			hostnames=hostnames,
 		)
 
@@ -251,7 +254,7 @@ class RemoteClient:
 			if dlgResult != wx.ID_OK:
 				return
 			connectionInfo = dlg.getConnectionInfo()
-			if dlg.clientOrServer.GetSelection() == 1:  # server
+			if dlg._clientOrServerControl.GetSelection() == 1:  # server
 				self.startControlServer(connectionInfo.port, connectionInfo.key)
 			self.connect(connectionInfo=connectionInfo)
 
@@ -574,3 +577,17 @@ class RemoteClient:
 		:param script: Script function to unregister
 		"""
 		self.localScripts.discard(script)
+
+	@property
+	def connectedClientsCount(self) -> int:
+		if not self.isConnected():
+			return 0
+		elif self.leaderSession is not None:
+			return self.leaderSession.connectedClientsCount
+		elif self.followerSession is not None:
+			return self.followerSession.connectedClientsCount
+		log.error(
+			"is connected returned true, but neither leaderSession or followerSession is not None.",
+			stack_info=True,
+		)
+		return 0

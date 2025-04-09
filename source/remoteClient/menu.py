@@ -107,7 +107,7 @@ class RemoteMenu(wx.Menu):
 		except (RuntimeError, AttributeError):
 			pass
 
-	def onDisconnectItem(self, evt: wx.CommandEvent) -> None:
+	def doDisconnect(self, evt: wx.CommandEvent) -> None:
 		evt.Skip()
 		self.client.disconnect()
 
@@ -172,6 +172,6 @@ class RemoteMenu(wx.Menu):
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,
-			self.onDisconnectItem,
+			self.doDisconnect,
 			self.connectionItem,
 		)

@@ -4886,7 +4886,6 @@ class GlobalCommands(ScriptableObject):
 		remoteClient._remoteClient.toggleMute()
 
 	@script(
-		gesture="kb:control+shift+NVDA+c",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 		description=_("Sends the contents of the clipboard to the remote machine"),
@@ -4956,7 +4955,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
 		description=_("Toggles the control between guest and host machine"),
 		category=SCRCAT_REMOTE,
-		gesture="kb:NVDA+f11",
+		gesture="kb:NVDA+alt+tab",
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
