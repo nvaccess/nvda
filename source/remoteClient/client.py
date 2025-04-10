@@ -476,13 +476,13 @@ class RemoteClient:
 		if self.sendingKeys:
 			self.hostPendingModifiers = gesture.modifiers
 			# Translators: Presented when sending keyboard keys from the controlling computer to the controlled computer.
-			ui.message(_("Controlling remote machine."))
+			ui.message(pgettext("remote", "Controlling remote computer"))
 			if self.localMachine.isMuted:
 				self.toggleMute()
 		else:
 			self.releaseKeys()
 			# Translators: Presented when keyboard control is back to the controlling computer.
-			ui.message(_("Controlling local machine."))
+			ui.message(pgettext("remote", "Controlling local computer"))
 
 	def releaseKeys(self):
 		"""Release all pressed keys on the remote machine.
