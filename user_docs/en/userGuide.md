@@ -3792,7 +3792,7 @@ Alternatively, press "Generate key" to have NVDA generate a key for you.
 
 Once the session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
 
-* Press `NVDA+f11` to toggle between controlling and returning to your own computer.
+* Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then Remote, then Push Clipboard.
 * Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then Remote, then Mute Remote.
 
