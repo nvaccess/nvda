@@ -11,6 +11,7 @@
 ### Bug Fixes
 
 * In WinUI 3 apps including Microsoft Copilot and parts of Windows 11 File Explorer, NVDA will no longer fail to announce controls when using mouse and touch interaction. (#17407, #17771, @josephsl)
+* Fixed some rare cases where NVDA playing sounds could result in unexpected errors. (#17918, @LeonarddeR)
 
 ### Changes for Developers
 
