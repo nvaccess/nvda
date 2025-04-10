@@ -206,10 +206,10 @@ Please use a different server."""),
 		)
 		motdBytes = motd.encode("utf-8", errors="surrogatepass")
 		hashed = hashlib.sha1(motdBytes).hexdigest()
-		current = conf["seen_motds"].get(address, "")
+		current = conf["seenMOTDs"].get(address, "")
 		if current == hashed:
 			return False
-		conf["seen_motds"][address] = hashed
+		conf["seenMOTDs"][address] = hashed
 		return True
 
 	def handleClientConnected(self, client: dict[str, Any] | None) -> None:

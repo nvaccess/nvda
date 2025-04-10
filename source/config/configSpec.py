@@ -356,7 +356,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 		host = string(default="")
 		port = integer(default=6837)
 		key = string(default="")
-	[[seen_motds]]
+	[[seenMOTDs]]
 		__many__ = string(default="")
 	[[trustedCertificates]]
 		__many__ = string(default="")
