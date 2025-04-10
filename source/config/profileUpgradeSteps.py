@@ -563,7 +563,8 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 	# Rename sections whose names have changed.
 	for oldSectionKey, newSectionKey in RENAMED_SECTIONS.items():
 		if oldSectionKey in remoteConfig:
-			remoteConfig.rename(oldSectionKey, newSectionKey)
+			remoteConfig[newSectionKey] = remoteConfig[oldSectionKey]
+			del remoteConfig[oldSectionKey]
 			log.debug(f"Renamed config['remote']['{oldSectionKey}'] to config['remote']['{newSectionKey}'].")
 
 	# Rename items (leaves) whose names have changed.
@@ -571,7 +572,8 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 		if (section := remoteConfig.get(sectionKey)) is not None:
 			for oldItemKey, newItemKey in renamedItems.items():
 				if oldItemKey in section:
-					section.rename(oldItemKey, newItemKey)
+					section[newItemKey] = section[oldItemKey]
+					del section[oldItemKey]
 					log.debug(
 						f"Renamed config['remote']['{sectionKey}']['{oldItemKey}'] to config['remote']['{sectionKey}']['{newItemKey}'].",
 					)
