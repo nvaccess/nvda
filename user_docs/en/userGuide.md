@@ -1760,6 +1760,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
 When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+
 * exit
 * restart
 * restart with add-ons disabled and debug logging enabled
