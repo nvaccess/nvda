@@ -458,8 +458,17 @@ class RemoteClient:
 		:param gesture: The keyboard gesture that triggered this
 		:note: Also toggles braille input and mute state
 		"""
-		if not self.leaderTransport:
-			gesture.send()
+		if not self.isConnected():
+			# Translators: A message indicating that the remote client is not connected.
+			ui.message(_("Not connected"))
+			return
+		elif not self.leaderTransport:
+			# Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
+			ui.message(pgettext("remote", "Not the controlling computer"))
+			return
+		elif self.leaderSession.connectedFollowersCount < 1:
+			# Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
+			ui.message(pgettext("remote", "No controlled computers are connected"))
 			return
 		self.sendingKeys = not self.sendingKeys
 		log.info(f"Remote key control {'enabled' if self.sendingKeys else 'disabled'}")
