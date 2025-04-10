@@ -348,7 +348,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 	enabled = boolean(default=False)
 	[[connections]]
 		lastConnected = list(default=list())
-	[[controlserver]]
+	[[controlServer]]
 		autoconnect = boolean(default=False)
 		selfHosted = boolean(default=False)
 		# 0: follower, 1: leader

@@ -80,7 +80,7 @@ class RemoteClient:
 		inputCore.decide_handleRawKey.register(self.processKeyInput)
 
 	def performAutoconnect(self):
-		controlServerConfig = configuration.getRemoteConfig()["controlserver"]
+		controlServerConfig = configuration.getRemoteConfig()["controlServer"]
 		if not controlServerConfig["autoconnect"] or self.leaderSession or self.followerSession:
 			log.debug("Autoconnect disabled or already connected")
 			return

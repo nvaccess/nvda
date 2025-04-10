@@ -3461,7 +3461,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		Also ensures the state of the GUI is internally consistent.
 		"""
 		self.enableRemote.SetValue(self.config["enabled"])
-		controlServer = self.config["controlserver"]
+		controlServer = self.config["controlServer"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
 		self.clientOrServer.SetSelection(int(controlServer["selfHosted"]))
 		self.connectionMode.SetSelection(controlServer["connectionMode"])
@@ -3533,7 +3533,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
 		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
-		controlServer = self.config["controlserver"]
+		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
 		controlServer["selfHosted"] = bool(selfHosted)
