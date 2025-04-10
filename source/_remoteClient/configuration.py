@@ -21,8 +21,8 @@ def writeConnectionToConfig(connectionInfo: ConnectionInfo):
 		:param connectionInfo: The :class:`ConnectionInfo` object containing connection details
 	"""
 	conf = getRemoteConfig()
-	lastConnections = conf["connections"]["last_connected"]
+	lastConnections = conf["connections"]["lastConnected"]
 	address = connectionInfo.getAddress()
 	if address in lastConnections:
-		conf["connections"]["last_connected"].remove(address)
-	conf["connections"]["last_connected"].append(address)
+		conf["connections"]["lastConnected"].remove(address)
+	conf["connections"]["lastConnected"].append(address)

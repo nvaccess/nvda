@@ -21,7 +21,7 @@ from utils.displayString import (
 )
 
 if TYPE_CHECKING:
-	import remoteClient
+	import _remoteClient
 
 
 @unique
@@ -324,8 +324,8 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 			RemoteConnectionMode.LEADER: pgettext("remote", "Control another machine"),
 		}
 
-	def toConnectionMode(self) -> "remoteClient.connectionInfo.ConnectionMode":
-		from remoteClient.connectionInfo import ConnectionMode
+	def toConnectionMode(self) -> "_remoteClient.connectionInfo.ConnectionMode":
+		from _remoteClient.connectionInfo import ConnectionMode
 
 		match self:
 			case RemoteConnectionMode.LEADER:
