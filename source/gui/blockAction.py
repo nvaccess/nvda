@@ -41,7 +41,7 @@ def _modalDialogOpenCallback():
 def _isRemoteAccessDisabled() -> bool:
 	"""Whether Remote Access functionality is **disabled**."""
 	# Import late to avoid circular import
-	from remoteClient import remoteRunning
+	from _remoteClient import remoteRunning
 
 	return not remoteRunning()
 

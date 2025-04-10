@@ -35,6 +35,7 @@ from config.profileUpgradeSteps import (
 	upgradeConfigFrom_13_to_14,
 	upgradeConfigFrom_9_to_10,
 	upgradeConfigFrom_11_to_12,
+	upgradeConfigFrom_16_to_17,
 )
 from config.configFlags import (
 	NVDAKey,
@@ -1043,3 +1044,54 @@ class Config_upgradeProfileSteps_upgradeProfileFrom_13_to_14(unittest.TestCase):
 			profile["speech"]["outputDevice"]
 		with self.assertRaises(KeyError):
 			profile["audio"]["outputDevice"]
+
+
+class Config_upgradeProfileSteps_upgradeProfileFrom_16_to_17(unittest.TestCase):
+	def test_rename(self):
+		v15Config = """
+[remote]
+	[[connections]]
+		last_connected = nvdaremote:6837, 192.168.0.123:456
+	[[controlserver]]
+		autoconnect = True
+		self_hosted = True
+		connection_type = 0
+		host = remote.example.com:1234
+		port = 31415
+		key = superSecurePassw0rd
+	[[seen_motds]]
+		nvdaremote.com:6837=7B502C3A1F48C8609AE212CDFB639DEE39673F5E
+	[[trusted_certs]]
+		sketchyServer.example.com:6837 = 64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C
+	[[ui]]
+		play_sounds = False
+"""
+		expectedV16Config = {
+			"remote": {
+				"connections": {
+					"lastConnected": ["nvdaremote:6837", "192.168.0.123:456"],
+				},
+				"controlServer": {
+					"autoconnect": "True",
+					"selfHosted": "True",
+					"connectionMode": "0",
+					"host": "remote.example.com:1234",
+					"port": "31415",
+					"key": "superSecurePassw0rd",
+				},
+				"seenMOTDs": {
+					"nvdaremote.com:6837": "7B502C3A1F48C8609AE212CDFB639DEE39673F5E",
+				},
+				"trustedCertificates": {
+					"sketchyServer.example.com:6837": "64EC88CA00B268E5BA1A35678A1B5316D212F4F366B2477232534A8AECA37F3C",
+				},
+				"ui": {
+					"playSounds": "False",
+				},
+			},
+		}
+		conf = configobj.ConfigObj(io.StringIO(v15Config))
+		upgradeConfigFrom_16_to_17(conf)
+		actualV16Config = conf.dict()
+		self.maxDiff = None
+		self.assertEqual(expectedV16Config, actualV16Config)

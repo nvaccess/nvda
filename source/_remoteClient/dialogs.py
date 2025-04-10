@@ -139,7 +139,7 @@ class ClientPanel(ContextHelpMixin, wx.Panel):
 			a = wnd.ShowModal()
 			if a == wx.ID_YES:
 				config = configuration.getRemoteConfig()
-				config["trusted_certs"][self.host.GetValue()] = certHash
+				config["trustedCertificates"][self.host.GetValue()] = certHash
 			if a != wx.ID_YES and a != wx.ID_NO:
 				return
 		except Exception:

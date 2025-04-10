@@ -97,4 +97,4 @@ def clipboardReceived():
 
 
 def shouldPlaySounds() -> bool:
-	return configuration.getRemoteConfig()["ui"]["play_sounds"]
+	return configuration.getRemoteConfig()["ui"]["playSounds"]
