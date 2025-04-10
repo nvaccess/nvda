@@ -347,7 +347,7 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [remote]
 	enabled = boolean(default=False)
 	[[connections]]
-		lastConnected = list(default=list())
+		lastConnected = string_list(default=list())
 	[[controlServer]]
 		autoconnect = boolean(default=False)
 		selfHosted = boolean(default=False)
