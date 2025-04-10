@@ -3042,7 +3042,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 
 This category allows you to adjust the behaviour of the Add-on Store.
 
-##### Update Notifications {#AutomaticAddonUpdates}
+##### Automatic updates {#AutomaticAddonUpdates}
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
