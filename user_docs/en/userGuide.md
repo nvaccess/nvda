@@ -3952,7 +3952,7 @@ This links to a GitHub Discussion webpage, where you will be able to read and wr
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
-#### Changing the automatic update channel (#AddonStoreUpdateChannel)
+#### Changing the automatic update channel {#AddonStoreUpdateChannel}
 
 You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
 When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
