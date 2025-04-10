@@ -460,7 +460,7 @@ class RemoteClient:
 		"""
 		if not self.isConnected():
 			# Translators: A message indicating that the remote client is not connected.
-			ui.message(_("Not connected"))
+			ui.message(pgettext("remote", "Not connected"))
 			return
 		elif not self.leaderTransport:
 			# Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
