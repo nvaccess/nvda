@@ -135,7 +135,7 @@ class RemoteClient:
 		connector = self.followerTransport or self.leaderTransport
 		if not getattr(connector, "connected", False):
 			# Translators: Message shown when trying to push the clipboard to the remote computer while not connected.
-			ui.message(_("Not connected."))
+			ui.message(_("Not connected"))
 			return
 		elif self.connectedClientsCount < 1:
 			# Translators: Reported when performing a Remote Access action, but there are no other computers in the channel.
@@ -157,7 +157,7 @@ class RemoteClient:
 		session = self.leaderSession or self.followerSession
 		if session is None:
 			# Translators: Message shown when trying to copy the link to connect to the remote computer while not connected.
-			ui.message(_("Not connected."))
+			ui.message(_("Not connected"))
 			return
 		url = session.getConnectionInfo().getURLToConnect()
 		api.copyToClip(str(url))
