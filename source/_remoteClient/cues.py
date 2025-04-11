@@ -33,7 +33,7 @@ CUES: Dict[str, Cue] = {
 		"wave": "controlled",
 		"beeps": [(720, 100), (None, 50), (720, 100), (None, 50), (720, 100)],
 		# Translators: Presented in direct (client to server) remote connection when the controlled computer is ready.
-		"message": _("Connected to control server"),
+		"message": _("Connected as controlled computer"),
 	},
 	"clientConnected": {"wave": "controlling", "beeps": [(1000, 300)]},
 	"clientDisconnected": {"wave": "disconnected", "beeps": [(108, 300)]},
