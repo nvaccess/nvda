@@ -184,8 +184,8 @@ class RemoteSession:
 		if force_display or self.shouldDisplayMotd(motd):
 			gui.messageBox(
 				parent=gui.mainFrame,
-				# Translators: Caption for message of the day dialog
-				caption=_("Message of the Day"),
+				# Translators: Title of a dialog showing a message sent by a Remote Access server.
+				caption=pgettext("remote", "Message from Remote Access Server"),
 				message=motd,
 			)
 
