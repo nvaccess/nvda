@@ -18,6 +18,8 @@ NVDA este dezvoltat de [NV Access](https://www.nvaccess.org/), cu contribuții d
 
 NVDA permite nevăzătorilor și persoanelor cu deficiență de vedere să interacționeze și să aibă acces la sistemul de operare Windows și multe alte terțe aplicații.
 
+Puteți găsi O demonstrare video despre ["Ce este NVDA?"](https://www.youtube.com/watch?v=tCFyyqy9mqo) pe canalul de Youtube NV Access.
+
 Trăsăturile importante includ:
 
 * Suport pentru aplicații populare incluzând browsere de internet, clienți de poștă electronică, programe de chat pe internet și pachete office
@@ -33,6 +35,7 @@ Trăsăturile importante includ:
 * Raportare de comenzi și text în timpul folosirii gesturilor de atingere pe ecrane tactile
 * Suport pentru interfețe de control cunoscute cum ar fi Microsoft Active Accessibility, Java Access Bridge, IAccessible2 și UI Automation
 * Suport pentru Windows Command Prompt și aplicații de consolă
+* Capacitatea de a marca vizual focalizarea sistemului
 
 ### Internaționalizare {#Internationalizare}
 
