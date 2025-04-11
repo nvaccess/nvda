@@ -550,7 +550,7 @@ class LeaderSession(RemoteSession):
 		speech.cancelSpeech()
 		ui.message(
 			# Translators: Message for when the remote NVDA is not connected
-			_("Remote NVDA not connected"),
+			pgettext("remote", "Remote NVDA not connected"),
 		)
 
 	def handleChannelJoined(

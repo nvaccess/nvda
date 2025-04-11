@@ -77,7 +77,7 @@ class RemoteMenu(wx.Menu):
 		self.remoteItem = toolsMenu.AppendSubMenu(
 			self,
 			# Translators: Label of the Remote Access submenu in the NVDA tools menu.
-			_("R&emote Access"),
+			pgettext("remote", "R&emote Access"),
 			pgettext(
 				"remote",
 				# Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
@@ -154,7 +154,7 @@ class RemoteMenu(wx.Menu):
 		# Translators: Item in the Remote Access submenu to connect to a remote computer.
 		self.connectionItem.SetItemLabel(_("Connect..."))
 		# Translators: Tooltip for the Connect menu item in the NVDA Remote Access submenu.
-		self.connectionItem.SetHelp(_("Remotely connect to another computer running NVDA."))
+		self.connectionItem.SetHelp(pgettext("remote", "Remotely connect to another computer running NVDA."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,
@@ -171,7 +171,7 @@ class RemoteMenu(wx.Menu):
 		# Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA Remote Access.
 		self.connectionItem.SetItemLabel(_("Disconnect"))
 		# Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
-		self.connectionItem.SetHelp(_("Disconnect from the current Remote Access session."))
+		self.connectionItem.SetHelp(pgettext("remote", "Disconnect from the current Remote Access session."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
 			wx.EVT_MENU,

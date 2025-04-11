@@ -3317,7 +3317,7 @@ class AddonStorePanel(SettingsPanel):
 
 class RemoteSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the Remote Access settings category in NVDA's Settings screen.
-	title = _("Remote Access")
+	title = pgettext("remote", "Remote Access")
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
@@ -3385,7 +3385,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
-		self.bindHelpEvent("RemoteAutoconnectServer", self.clientOrServer)
+		self.bindHelpEvent("RemoteAutoerver", self.clientOrServer)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the host field in Remote Access settings.
