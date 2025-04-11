@@ -4887,8 +4887,8 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		category=SCRCAT_REMOTE,
-		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
-		description=_("Sends the contents of the clipboard to the remote machine"),
+		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote computer.
+		description=_("Sends the contents of the clipboard to the remote computer"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
@@ -4952,8 +4952,11 @@ class GlobalCommands(ScriptableObject):
 			self.script_connectToRemote(gesture)
 
 	@script(
-		# Translators: Documentation string for the script that toggles the control between guest and host machine.
-		description=_("Toggles the control between guest and host machine"),
+		description=pgettext(
+			"remote",
+			# Translators: Documentation string for the script that toggles the control between guest and host computers.
+			"Switches whether the keyboard controls the local or remote computer",
+		),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+tab",
 	)

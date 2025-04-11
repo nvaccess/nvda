@@ -40,7 +40,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 			_("&Push clipboard"),
 			# Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
-			_("Push the clipboard to the other machine"),
+			_("Push the clipboard to the remote computer"),
 		)
 		self.pushClipboardItem.Enable(False)
 		sysTrayIcon.Bind(

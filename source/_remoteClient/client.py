@@ -541,11 +541,11 @@ class RemoteClient:
 			# Prepare connection request message based on mode
 			if conInfo.mode == ConnectionMode.LEADER:
 				# Translators: Ask the user if they want to control the remote computer.
-				question = _("Do you wish to control the machine on server {server} with key {key}?")
+				question = _("Do you wish to control the computer on server {server} with key {key}?")
 			else:
 				question = _(
 					# Translators: Ask the user if they want to allow the remote computer to control this computer.
-					"Do you wish to allow this machine to be controlled on server {server} with key {key}?",
+					"Do you wish to allow this computer to be controlled on server {server} with key {key}?",
 				)
 
 			question = question.format(server=serverAddr, key=key)
