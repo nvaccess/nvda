@@ -4878,7 +4878,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes a command.
-		description=_("Mute or unmute the speech coming from the remote computer"),
+		description=_("Mutes or unmutes the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
@@ -4923,7 +4923,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Documentation string for the script that invokes the remote session.
-		description=_("Connect to a remote computer"),
+		description=_("Connects to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(
@@ -4940,7 +4940,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
-		description=pgettext("remote", "Toggle Remote Access connection"),
+		description=pgettext("remote", "Toggles Remote Access connection"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
 	)
