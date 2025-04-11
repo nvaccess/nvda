@@ -162,9 +162,11 @@ class RemoteSession:
 		"""
 		log.error("Protocol version mismatch detected with relay server")
 		ui.message(
-			# Translators: Message for version mismatch
-			_("""The version of the relay server which you have connected to is not compatible with this version of the Remote Client.
-Please use a different server."""),
+			pgettext(
+				"remote",
+				# Translators: Message for version mismatch
+				"The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server.",
+			),
 		)
 		self.transport.close()
 

@@ -194,7 +194,7 @@ class ServerPanel(ContextHelpMixin, wx.Panel):
 			initial=SERVER_PORT,
 		)
 		# Translators: Label of the edit field to enter key (password) to secure the remote connection.
-		self.key = sizerHelper.addLabeledControl(_("&Key"), wx.TextCtrl)
+		self.key = sizerHelper.addLabeledControl(pgettext("remote", "&Key"), wx.TextCtrl)
 		# Translators: The button used to generate a random key/password.
 		self._generateKeyButton = wx.Button(parent=self, label=_("&Generate Key"))
 		self._generateKeyButton.Bind(wx.EVT_BUTTON, self.onGenerateKey)
@@ -390,10 +390,11 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 class CertificateUnauthorizedDialog(wx.MessageDialog):
 	def __init__(self, parent: wx.Window | None, fingerprint: str | None = None):
 		# Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
-		title = _("NVDA Remote Connection Security Warning")
-		message = _(
+		title = pgettext("remote", "Security Warning")
+		message = pgettext(
+			"remote",
 			# Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
-			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the remote session..\n"
+			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n"
 			"\n"
 			"Before continuing, please make sure that the following server certificate fingerprint is correct.\n"
 			"Server SHA256 fingerprint: {fingerprint}\n"

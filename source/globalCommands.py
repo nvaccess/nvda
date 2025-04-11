@@ -122,7 +122,7 @@ SCRCAT_DOCUMENTFORMATTING = _("Document formatting")
 SCRCAT_AUDIO = _("Audio")
 #: Script category for Remote commands.
 # Translators: The name of a category of NVDA commands.
-SCRCAT_REMOTE = _("Remote")
+SCRCAT_REMOTE = _("Remote Access")
 
 # Translators: Reported when there are no settings to configure in synth settings ring
 # (example: when there is no setting for language).
@@ -4896,7 +4896,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
-		description=_("Copies a link to the remote session to the clipboard"),
+		description=pgettext("remote", "Copies a link to the current Remote Access session to the clipboard"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
@@ -4908,7 +4908,7 @@ class GlobalCommands(ScriptableObject):
 	@script(
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that disconnects a remote session.
-		description=_("Disconnect a remote session"),
+		description=pgettext("remote", "Disconnects from the current Remote Access session"),
 	)
 	@gui.blockAction.when(
 		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
@@ -4940,7 +4940,7 @@ class GlobalCommands(ScriptableObject):
 
 	@script(
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
-		description=pgettext("remote", "Toggle Remote connection"),
+		description=pgettext("remote", "Toggle Remote Access connection"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",
 	)

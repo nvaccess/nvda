@@ -522,10 +522,13 @@ class RemoteClient:
 		"""
 		if self.isConnected() or self.connecting:
 			gui.messageBox(
-				# Translators: Message shown when trying to connect while already connected.
-				_("NVDA Remote is already connected. Disconnect before opening a new connection."),
+				pgettext(
+					"remote",
+					# Translators: Message shown when trying to connect while already connected.
+					"Remote Access is already connected. Disconnect before starting a new connection.",
+				),
 				# Translators: Title of the connection error dialog.
-				_("NVDA Remote Already Connected"),
+				_("Already Connected"),
 				wx.OK | wx.ICON_WARNING,
 			)
 			return
@@ -548,7 +551,7 @@ class RemoteClient:
 			question = question.format(server=serverAddr, key=key)
 
 			# Translators: Title of the connection request dialog.
-			dialogTitle = _("NVDA Remote Connection Request")
+			dialogTitle = _("Remote Access Connection Request")
 
 			# Show confirmation dialog
 			if (

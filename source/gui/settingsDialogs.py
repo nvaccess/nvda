@@ -3317,7 +3317,7 @@ class AddonStorePanel(SettingsPanel):
 
 class RemoteSettingsPanel(SettingsPanel):
 	# Translators: This is the label for the remote settings category in NVDA Settings screen.
-	title = _("Remote")
+	title = _("Remote Access")
 	helpId = "RemoteSettings"
 
 	def makeSettings(self, sizer: wx.BoxSizer):
@@ -3488,12 +3488,12 @@ class RemoteSettingsPanel(SettingsPanel):
 			pgettext(
 				"remote",
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
-				"This will cause NVDA to forget all previously trusted Remote servers. "
-				"When connecting to a previously trusted unauthorized Remote server, you will again be asked whether to trust its certificate.\n\n"
+				"This will cause NVDA to forget all previously trusted Remote Access servers. "
+				"When connecting to a previously trusted unrecognised Remote Access server, you will again be asked whether to trust its certificate.\n\n"
 				"Are you sure you want to continue? This action cannot be undone.",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
-			pgettext("remote", "Delete all trusted fingerprints"),
+			pgettext("remote", "Delete All Trusted Fingerprints"),
 			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
 		)
 		if deleteFingerprints == wx.YES:
@@ -3510,13 +3510,13 @@ class RemoteSettingsPanel(SettingsPanel):
 				message = pgettext(
 					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-					"Both host and key must be set in the Remote section in order to automatically connect using an existing Remote Access server after NVDA starts.",
+					"Both host and key must be set in the Remote Access section in order to automatically connect using an existing Remote Access server after NVDA starts.",
 				)
 			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
 				message = pgettext(
 					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					"Both port and key must be set in the Remote section in order to automatically connect using a locally hosted Remote Access server after NVDA starts.",
+					"Both port and key must be set in the Remote Access section in order to automatically connect using a locally hosted Remote Access server after NVDA starts.",
 				)
 			if message is not None:
 				gui.messageBox(
