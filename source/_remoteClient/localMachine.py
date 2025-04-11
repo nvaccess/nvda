@@ -256,6 +256,6 @@ class LocalMachine:
 		if hasUiAccess():
 			ctypes.windll.sas.SendSAS(0)
 		else:
-			# Translators: Message displayed when a remote machine tries to send a SAS but UI Access is disabled.
+			# Translators: Message displayed when a remote computer tries to send alt+ctrl+del but UI Access is disabled.
 			ui.message(_("Unable to trigger Alt Control Delete from remote"))
 			logger.warning("UI Access is disabled on this machine so cannot trigger CTRL+ALT+DEL")
