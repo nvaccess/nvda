@@ -30,7 +30,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Menu item in NvDA Remote submenu to mute speech and sounds from the remote computer.
 			_("Mute remote"),
 			# Translators: Tooltip for the Mute Remote menu item in the NVDA Remote submenu.
-			_("Mute speech and sounds from the remote computer"),
+			pgettext("remote", "Mute speech and sounds from the remote computer."),
 			kind=wx.ITEM_CHECK,
 		)
 		self.muteItem.Enable(False)
@@ -40,7 +40,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Menu item in NVDA Remote submenu to push clipboard content to the remote computer.
 			_("&Push clipboard"),
 			# Translators: Tooltip for the Push Clipboard menu item in the NVDA Remote submenu.
-			_("Push the clipboard to the remote computer"),
+			pgettext("remote", "Push the clipboard to the remote computer."),
 		)
 		self.pushClipboardItem.Enable(False)
 		sysTrayIcon.Bind(
@@ -53,7 +53,7 @@ class RemoteMenu(wx.Menu):
 			# Translators: Menu item in NVDA Remote submenu to copy a link to the current session.
 			_("Copy &link"),
 			# Translators: Tooltip for the Copy Link menu item in the NVDA Remote submenu.
-			_("Copy a link to the remote session"),
+			pgettext("remote", "Copy a link to the current Remote Access session to the clipboard."),
 		)
 		self.copyLinkItem.Enable(False)
 		sysTrayIcon.Bind(
@@ -64,9 +64,9 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem: wx.MenuItem = self.Append(
 			wx.ID_ANY,
 			# Translators: Menu item in NVDA Remote submenu to send Control+Alt+Delete to the remote computer.
-			_("Send Ctrl+Alt+Del"),
+			pgettext("remote", "Send ctrl+alt+del"),
 			# Translators: Tooltip for the Send Ctrl+Alt+Del menu item in the NVDA Remote submenu.
-			_("Send Ctrl+Alt+Del"),
+			pgettext("remote", "Send control+alt+delete to the controlled computer."),
 		)
 		sysTrayIcon.Bind(
 			wx.EVT_MENU,
