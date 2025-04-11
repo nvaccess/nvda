@@ -13,7 +13,7 @@ from . import configDefaults
 #: provide an upgrade step (@see profileUpgradeSteps.py). An upgrade step does not need to be added when
 #: just adding a new element to (or removing from) the schema, only when old versions of the config
 #: (conforming to old schema versions) will not work correctly with the new schema.
-latestSchemaVersion = 16
+latestSchemaVersion = 17
 
 #: The configuration specification string
 #: @type: String
@@ -347,21 +347,21 @@ schemaVersion = integer(min=0, default={latestSchemaVersion})
 [remote]
 	enabled = boolean(default=False)
 	[[connections]]
-		last_connected = list(default=list())
-	[[controlserver]]
+		lastConnected = string_list(default=list())
+	[[controlServer]]
 		autoconnect = boolean(default=False)
 		selfHosted = boolean(default=False)
 		# 0: follower, 1: leader
-		connection_type = integer(default=0, min=0, max=1)
+		connectionMode = integer(default=0, min=0, max=1)
 		host = string(default="")
 		port = integer(default=6837)
 		key = string(default="")
-	[[seen_motds]]
+	[[seenMOTDs]]
 		__many__ = string(default="")
-	[[trusted_certs]]
+	[[trustedCertificates]]
 		__many__ = string(default="")
 	[[ui]]
-		play_sounds = boolean(default=True)
+		playSounds = boolean(default=True)
 """
 
 #: The configuration specification

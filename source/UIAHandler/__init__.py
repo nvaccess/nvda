@@ -1172,7 +1172,7 @@ class UIAHandler(COMObject):
 			# Testing shows that these controls emits proper events but they are ignored by NVDA.
 			try:
 				isOfficeApp = appModule.productName.startswith(("Microsoft Office", "Microsoft Outlook"))
-				isOffice2013OrOlder = int(appModule.productVersion.split(".")[0]) < 16
+				isOffice2013OrOlder = isOfficeApp and int(appModule.productVersion.split(".")[0]) < 16
 			except RuntimeError:
 				# this is not necessarily an office app, or an app with version information, for example geekbench 6.
 				log.debugWarning(

@@ -3453,7 +3453,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			True,
 		)
 		self.autoConnectGroupSizer.Layout()
-		self.deleteFingerprints.Enable(len(self.config["trusted_certs"]) > 0)
+		self.deleteFingerprints.Enable(len(self.config["trustedCertificates"]) > 0)
 
 	def _setFromConfig(self) -> None:
 		"""Ensure the state of the GUI matches that of the saved configuration.
@@ -3461,14 +3461,14 @@ class RemoteSettingsPanel(SettingsPanel):
 		Also ensures the state of the GUI is internally consistent.
 		"""
 		self.enableRemote.SetValue(self.config["enabled"])
-		controlServer = self.config["controlserver"]
+		controlServer = self.config["controlServer"]
 		self.autoconnect.SetValue(controlServer["autoconnect"])
 		self.clientOrServer.SetSelection(int(controlServer["selfHosted"]))
-		self.connectionMode.SetSelection(controlServer["connection_type"])
+		self.connectionMode.SetSelection(controlServer["connectionMode"])
 		self.host.SetValue(controlServer["host"])
 		self.port.SetValue(str(controlServer["port"]))
 		self.key.SetValue(controlServer["key"])
-		self.playSounds.SetValue(self.config["ui"]["play_sounds"])
+		self.playSounds.SetValue(self.config["ui"]["playSounds"])
 		self._setControls()
 
 	def _onEnableRemote(self, evt: wx.CommandEvent):
@@ -3497,7 +3497,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			wx.YES | wx.NO | wx.NO_DEFAULT | wx.ICON_WARNING,
 		)
 		if deleteFingerprints == wx.YES:
-			self.config["trusted_certs"].clear()
+			self.config["trustedCertificates"].clear()
 			self._setControls()
 		evt.Skip()
 
@@ -3532,12 +3532,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		enabled = self.enableRemote.GetValue()
 		oldEnabled = self.config["enabled"]
 		self.config["enabled"] = enabled
-		self.config["ui"]["play_sounds"] = self.playSounds.GetValue()
-		controlServer = self.config["controlserver"]
+		self.config["ui"]["playSounds"] = self.playSounds.GetValue()
+		controlServer = self.config["controlServer"]
 		selfHosted = self.clientOrServer.GetSelection()
 		controlServer["autoconnect"] = self.autoconnect.GetValue()
 		controlServer["selfHosted"] = bool(selfHosted)
-		controlServer["connection_type"] = self.connectionMode.GetSelection()
+		controlServer["connectionMode"] = self.connectionMode.GetSelection()
 		if not selfHosted:
 			controlServer["host"] = self.host.GetValue()
 		else:
@@ -3545,12 +3545,12 @@ class RemoteSettingsPanel(SettingsPanel):
 		controlServer["key"] = self.key.GetValue()
 
 		if enabled != oldEnabled:
-			import remoteClient
+			import _remoteClient
 
-			if enabled and not remoteClient.remoteRunning():
-				remoteClient.initialize()
-			elif not enabled and remoteClient.remoteRunning():
-				remoteClient.terminate()
+			if enabled and not _remoteClient.remoteRunning():
+				_remoteClient.initialize()
+			elif not enabled and _remoteClient.remoteRunning():
+				_remoteClient.terminate()
 
 
 class TouchInteractionPanel(SettingsPanel):
