@@ -164,7 +164,7 @@ class RemoteSession:
 		ui.message(
 			pgettext(
 				"remote",
-				# Translators: Message for version mismatch
+				# Translators: Message presented when attempting to connect to an incompatible Remote Access server.
 				"The Remote Access server you have connected to is not compatible with this version of NVDA. Please use a different server.",
 			),
 		)

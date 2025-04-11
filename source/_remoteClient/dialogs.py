@@ -338,13 +338,13 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 		if self._selectedPanel is self._clientPanel and (
 			not self._selectedPanel.host.GetValue() or not self._selectedPanel.key.GetValue()
 		):
-			# Translators: A message box displayed when the host or key field is empty and the user tries to connect.
+			# Translators: Message displayed when the host or key field is empty and the user tries to connect.
 			message = _("Both host and key must be set.")
 			focusTarget = self._selectedPanel.host
 		elif self._selectedPanel is self._serverPanel and (
 			not self._selectedPanel.port.GetValue() or not self._selectedPanel.key.GetValue()
 		):
-			# Translators: A message box displayed when the port or key field is empty and the user tries to connect.
+			# Translators: Message displayed when the port or key field is empty and the user tries to connect.
 			message = _("Both port and key must be set.")
 			focusTarget = self._selectedPanel.port
 		if message is not None:
@@ -389,11 +389,12 @@ class DirectConnectDialog(ContextHelpMixin, wx.Dialog):
 
 class CertificateUnauthorizedDialog(wx.MessageDialog):
 	def __init__(self, parent: wx.Window | None, fingerprint: str | None = None):
-		# Translators: A title bar of a window presented when an attempt has been made to connect with a server with unauthorized certificate.
+		# Translators: Title of the dialog presented when attempting to connect to a server with an untrusted certificate.
 		title = pgettext("remote", "Security Warning")
 		message = pgettext(
 			"remote",
-			# Translators: {fingerprint} is a SHA256 fingerprint of the server certificate.
+			# Translators: Message presented when attempting to connect to a server with an untrusted certificate.
+			# {fingerprint} will be replaced with the SHA256 fingerprint of the server certificate.
 			"The certificate of this server could not be verified. Using the wrong fingerprint may allow a third party to access the Remote Access session.\n"
 			"\n"
 			"Before continuing, please make sure that the following server certificate fingerprint is correct.\n"

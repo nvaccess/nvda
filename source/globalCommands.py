@@ -4877,7 +4877,7 @@ class GlobalCommands(ScriptableObject):
 		audio._toggleSoundSplitState()
 
 	@script(
-		# Translators: Describes a command.
+		# Translators: Documentation string for the script that toggles whether the output from the remote computer is muted.
 		description=_("Mutes or unmutes the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
@@ -4922,7 +4922,7 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.disconnect()
 
 	@script(
-		# Translators: Documentation string for the script that invokes the remote session.
+		# Translators: Documentation string for the script that starts a new remote session.
 		description=_("Connects to a remote computer"),
 		category=SCRCAT_REMOTE,
 	)
@@ -4939,7 +4939,7 @@ class GlobalCommands(ScriptableObject):
 		_remoteClient._remoteClient.doConnect()
 
 	@script(
-		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
+		# Translators: Describes the script that creates a new remote session, or disconnects it if one already exists.
 		description=pgettext("remote", "Toggles Remote Access connection"),
 		category=SCRCAT_REMOTE,
 		gesture="kb:NVDA+alt+r",

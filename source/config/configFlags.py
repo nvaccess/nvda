@@ -318,9 +318,9 @@ class RemoteConnectionMode(DisplayStringIntEnum):
 	@property
 	def _displayStringLabels(self):
 		return {
-			# Translators: Allow this computer to be controlled by the remote computer.
+			# Translators: Option that allows this computer to be controlled by the remote computer.
 			RemoteConnectionMode.FOLLOWER: pgettext("remote", "Allow this computer to be controlled"),
-			# Translators: Allow this computer to control the remote computer.
+			# Translators: Option that allows this computer to control the remote computer.
 			RemoteConnectionMode.LEADER: pgettext("remote", "Control another computer"),
 		}
 

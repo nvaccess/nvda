@@ -76,11 +76,11 @@ class RemoteMenu(wx.Menu):
 		self.sendCtrlAltDelItem.Enable(False)
 		self.remoteItem = toolsMenu.AppendSubMenu(
 			self,
-			# Translators: Label of menu in NVDA tools menu.
+			# Translators: Label of the Remote Access submenu in the NVDA tools menu.
 			_("R&emote Access"),
 			pgettext(
 				"remote",
-				# Translators: Tooltip for the Remote menu in the NVDA Tools menu.
+				# Translators: Tooltip for the Remote Access submenu in the NVDA Tools menu.
 				"Allow someone to control this computer from elsewhere, or control another computer running NVDA with this one.",
 			),
 		)
@@ -151,9 +151,9 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for creating a new Remote session.
 		"""
-		# Translators: Item in NVDA Remote submenu to connect to a remote computer.
+		# Translators: Item in the Remote Access submenu to connect to a remote computer.
 		self.connectionItem.SetItemLabel(_("Connect..."))
-		# Translators: Tooltip for the Connect menu item in the NVDA Remote submenu.
+		# Translators: Tooltip for the Connect menu item in the NVDA Remote Access submenu.
 		self.connectionItem.SetHelp(_("Remotely connect to another computer running NVDA."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
@@ -168,9 +168,9 @@ class RemoteMenu(wx.Menu):
 		Sets the label, help text and event bindings of the connection item
 		to those appropriate for disconnecting an existing Remote session.
 		"""
-		# Translators: Menu item in NVDA Remote submenu to disconnect from another computer running NVDA Remote Access.
+		# Translators: Menu item in the Remote Access submenu to disconnect from another computer running NVDA Remote Access.
 		self.connectionItem.SetItemLabel(_("Disconnect"))
-		# Translators: Tooltip for the Disconnect menu item in the NVDA Remote submenu.
+		# Translators: Tooltip for the Disconnect menu item in the Remote Access submenu.
 		self.connectionItem.SetHelp(_("Disconnect from the current Remote Access session."))
 		gui.mainFrame.sysTrayIcon.Unbind(wx.EVT_MENU, self.connectionItem)
 		gui.mainFrame.sysTrayIcon.Bind(
