@@ -315,7 +315,7 @@ class ReportNotSupportedLanguage(DisplayStringStrEnum):
 			self.BEEP: pgettext("languageNotSupported", "Beep"),
 			# Translators: A label for an option to report when the language of the text being read is not supported by the current synthesizer.
 			self.OFF: pgettext("languageNotSupported", "Off"),
-	}
+		}
 
 
 @verify(CONTINUOUS)
