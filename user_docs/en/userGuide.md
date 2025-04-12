@@ -1927,6 +1927,15 @@ This option is disabled by default.
 This checkbox allows you to toggle whether NVDA should report the detected language of the text being read. The language configured to be used by default won't be reported.
 This option is disabled by default.
 
+##### Report if language is not supported by synthesizer {#ReportIfLanguageIsNotSupportedBySynthesizer}
+
+This combo box is used to set how NVDA should report if the language of the text being read is not supported by the current synthesizer.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Speech, Beep, Off|
+|Default |Speech|
+
 <!-- KC:setting -->
 
 ##### Punctuation/Symbol Level {#SpeechSettingsSymbolLevel}
