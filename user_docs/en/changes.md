@@ -17,6 +17,9 @@
 ### Bug Fixes
 
 * In WinUI 3 apps including Microsoft Copilot and parts of Windows 11 File Explorer, NVDA will no longer fail to announce controls when using mouse and touch interaction. (#17407, #17771, @josephsl)
+* Fixed some rare cases where NVDA playing sounds could result in unexpected errors. (#17918, @LeonarddeR)
+* In Microsoft Word, when UIA is enabled, NVDA will no longer braille redundant table end markers when the cursor is in a table cell. (#15828, @LeonarddeR)
+* In Geekbench 6.4, NVDA can again read the ribbon and options within. (#17892, @mzanm)
 
 ### Changes for Developers
 
@@ -303,6 +306,7 @@ Instead, a `callback` property has been added, which returns a function that per
   * Added `TypingEcho` enum in `config.configFlags` to represent these modes, 0=Off, 1=Only in edit controls, 2=Always.
   * `gui.settingsDialogs.KeyboardSettingsPanel.wordsCheckBox` and `gui.settingsDialogs.KeyboardSettingsPanel.charsCheckBox` has been removed.
 * The `winUser.paint` has been renamed from `painStruct` to `paintStruct`, fixing a bug where passing in a `PAINTSTRUCT` would raise an exception. (#17744)
+* `documentationUtils.getDocFilePath` and `installer.getDocFilePath` no longer look for `.txt` files in locale documentation folders. (#17911, @CyrilleB79)
 
 #### Deprecations
 

@@ -548,7 +548,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import brailleViewer
 	import globalPluginHandler
 	import watchdog
-	import remoteClient
+	import _remoteClient
 
 	try:
 		import updateCheck
@@ -565,7 +565,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	# the brailleViewer should be destroyed safely before closing the window
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remote causes it to clean up its menus, so do it here while they still exist
-	_terminate(remoteClient)
+	_terminate(_remoteClient)
 
 
 def _initializeObjectCaches():
@@ -901,9 +901,9 @@ def main():
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 
-	import remoteClient
+	import _remoteClient
 
-	remoteClient.initialize()
+	_remoteClient.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

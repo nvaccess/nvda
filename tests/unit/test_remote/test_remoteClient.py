@@ -5,9 +5,9 @@
 
 import unittest
 from unittest.mock import MagicMock, patch
-import remoteClient.client as rcClient
-from remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
-from remoteClient.protocol import RemoteMessageType
+import _remoteClient.client as rcClient
+from _remoteClient.connectionInfo import ConnectionInfo, ConnectionMode
+from _remoteClient.protocol import RemoteMessageType
 
 
 # Fake implementations for testing
@@ -75,7 +75,7 @@ class TestRemoteClient(unittest.TestCase):
 		if not wx.GetApp():
 			self.app = wx.App()
 		# Patch gui.mainFrame to a fake object so RemoteMenu can access sysTrayIcon.toolsMenu.
-		patcherMainFrame = patch("remoteClient.client.gui.mainFrame")
+		patcherMainFrame = patch("_remoteClient.client.gui.mainFrame")
 		self.addCleanup(patcherMainFrame.stop)
 		mockMainFrame = patcherMainFrame.start()
 		mockMainFrame.sysTrayIcon = MagicMock()
@@ -85,15 +85,15 @@ class TestRemoteClient(unittest.TestCase):
 		self.client.localMachine = FakeLocalMachine()
 		self.client.menu = FakeMenu()
 		# Patch ui.message to capture calls.
-		patcher = patch("remoteClient.client.ui.message")
+		patcher = patch("_remoteClient.client.ui.message")
 		self.addCleanup(patcher.stop)
 		self.uiMessage = patcher.start()
 		# Patch the API module to use our fake API.
-		patcherAPI = patch("remoteClient.client.api", new=FakeAPI)
+		patcherAPI = patch("_remoteClient.client.api", new=FakeAPI)
 		self.addCleanup(patcherAPI.stop)
 		patcherAPI.start()
 		FakeAPI.copied = None
-		patcherNvwave = patch("remoteClient.cues.nvwave.playWaveFile", return_value=None)
+		patcherNvwave = patch("_remoteClient.cues.nvwave.playWaveFile", return_value=None)
 
 		self.addCleanup(patcherNvwave.stop)
 		patcherNvwave.start()
@@ -126,7 +126,10 @@ class TestRemoteClient(unittest.TestCase):
 	def test_pushClipboardWithTransport(self):
 		# With a fake transport, pushClipboard should send the clipboard text.
 		fakeTransport = FakeTransport()
+		fakeSession = FakeSession("")
+		fakeSession.connectedClientsCount = 1
 		self.client.leaderTransport = fakeTransport
+		self.client.leaderSession = fakeSession
 		FakeAPI.clipData = "TestClipboard"
 		self.client.pushClipboard()
 		self.assertTrue(len(fakeTransport.sent) > 0)
@@ -153,7 +156,7 @@ class TestRemoteClient(unittest.TestCase):
 	def test_sendSasNoLeaderTransport(self):
 		# Without a leaderTransport, sendSAS should log an error.
 		self.client.leaderTransport = None
-		with patch("remoteClient.client.log.error") as mockLogError:
+		with patch("_remoteClient.client.log.error") as mockLogError:
 			self.client.sendSAS()
 			mockLogError.assert_called_once_with("No leader transport to send SAS")
 
@@ -196,7 +199,7 @@ class TestRemoteClient(unittest.TestCase):
 		# Test disconnect with no active sessions.
 		self.client.leaderSession = None
 		self.client.followerSession = None
-		with patch("remoteClient.client.log.debug") as mockLogDebug:
+		with patch("_remoteClient.client.log.debug") as mockLogDebug:
 			self.client.disconnect()
 			mockLogDebug.assert_called()
 		# Test disconnect with an active localControlServer.
