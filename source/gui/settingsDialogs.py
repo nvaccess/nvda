@@ -1725,7 +1725,9 @@ class VoiceSettingsPanel(AutoSettingsMixin, SettingsPanel):
 			wx.Choice,
 			choices=[option.displayString for option in ReportNotSupportedLanguage],
 		)
-		self.bindHelpEvent("ReportIfLanguageIsNotSupportedBySynthesizer", self.reportNotSupportedLanguageCombo)
+		self.bindHelpEvent(
+			"ReportIfLanguageIsNotSupportedBySynthesizer", self.reportNotSupportedLanguageCombo
+		)
 		reportNotSupportedLanguage = config.conf["speech"]["reportNotSupportedLanguage"]
 		self.reportNotSupportedLanguageCombo.SetSelection(
 			[option.value for option in ReportNotSupportedLanguage].index(reportNotSupportedLanguage),
