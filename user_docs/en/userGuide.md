@@ -58,7 +58,7 @@ Major highlights include:
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 54 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 55 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
