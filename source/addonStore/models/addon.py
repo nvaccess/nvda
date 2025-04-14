@@ -18,10 +18,11 @@ from typing import (
 	Union,
 )
 
-from requests.structures import CaseInsensitiveDict
-
 import addonAPIVersion
+from addonHandler import AddonBase as AddonHandlerBaseModel
+from addonHandler import AddonManifest
 from NVDAState import WritePaths
+from requests.structures import CaseInsensitiveDict
 
 from .channel import Channel
 from .status import SupportsAddonState
@@ -33,8 +34,6 @@ from .version import (
 if TYPE_CHECKING:
 	from addonHandler import (  # noqa: F401
 		Addon as AddonHandlerModel,
-		AddonBase as AddonHandlerBaseModel,
-		AddonManifest,
 	)
 
 	AddonGUICollectionT = Dict[Channel, CaseInsensitiveDict["_AddonGUIModel"]]

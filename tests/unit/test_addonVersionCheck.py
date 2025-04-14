@@ -8,12 +8,13 @@
 import unittest
 
 import addonAPIVersion
+from addonHandler.addonBase import AddonBase
 from addonHandler.addonVersionCheck import (
 	hasAddonGotRequiredSupport,
 	isAddonCompatible,
 	isAddonTested,
 )
-from addonHandler import AddonBase, AddonManifest
+from addonHandler.AddonManifest import AddonManifest
 
 latestVersionTuple = (2018, 2, 0)
 nextVersionTuple = (2018, 3, 0)
