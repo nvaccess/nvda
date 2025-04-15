@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 00:09+0000\n"
-"PO-Revision-Date: 2024-10-08 00:28\n"
+"POT-Creation-Date: 2024-12-19 04:42+0000\n"
+"PO-Revision-Date: 2025-04-14 00:19\n"
 "Last-Translator: \n"
 "Language-Team: German\n"
 "Language: de_DE\n"
@@ -158,19 +158,19 @@ msgstr "Formular"
 #. See the Audio Ducking Mode section of the User Guide for details.
 #: audioDucking.py:44
 msgid "No ducking"
-msgstr "Niemals"
+msgstr "Keine Reduzierung der Lautstärke anderer Audio-Quellen"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 #: audioDucking.py:47
 msgid "Duck when outputting speech and sounds"
-msgstr "Nur beim Vorlesen und bei Sounds"
+msgstr "Nur beim Vorlesen und bei Sounds die Lautstärke anderer Audio-Quellen reduzieren"
 
 #. Translators: An audio ducking mode which specifies how NVDA affects the volume of other applications.
 #. See the Audio Ducking Mode section of the User Guide for details.
 #: audioDucking.py:50
 msgid "Always duck"
-msgstr "Immer"
+msgstr "Immer die Lautstärke anderer Audio-Quellen reduzieren"
 
 #. Translators: Displayed in braille for an object which is a
 #. window.
@@ -1842,7 +1842,7 @@ msgstr "Dravidische Vollschrift (Telegu, Südindien)"
 #. braille settings dialog.
 #: brailleTables.py:629
 msgid "Thai 8 dot computer braille"
-msgstr "Thai 8-Punkt-Computerbraille"
+msgstr "Thailändisches 8-Punkt-Computerbraille"
 
 #. Translators: The name of a braille table displayed in the
 #. braille settings dialog.
@@ -2037,7 +2037,7 @@ msgstr "Kurzschrift (Zulu)"
 #. Translators: The mode to interact with controls in documents
 #: browseMode.py:74
 msgid "Focus mode"
-msgstr "Fokusmodus"
+msgstr "Interaktionsmodus"
 
 #. Translators: The mode that presents text in a flat representation
 #. that can be navigated with the cursor keys like in a text document
@@ -3010,12 +3010,12 @@ msgstr "Nativer Auswahlmodus wird in diesem Dokument nicht unterstützt"
 #. Translators: the message when native selection mode cannot be turned off in this browse mode document.
 #: browseMode.py:2694
 msgid "Native selection mode cannot be turned off in this browse mode document"
-msgstr "Der native Auswahlmodus kann in diesem Lese-Modus-Dokument nicht ausgeschaltet werden"
+msgstr "Der native Auswahlmodus kann im Lesemodus nicht ausgeschaltet werden"
 
 #. Translators: the message when native selection mode is not available in this browse mode document.
 #: browseMode.py:2703
 msgid "Native selection mode unsupported in this document"
-msgstr "Der Native Auswahlmodus wird in diesem Dokument nicht unterstützt"
+msgstr "Der native Auswahlmodus wird in diesem Dokument nicht unterstützt"
 
 #. Translators: reported when native selection mode is toggled on.
 #: browseMode.py:2707
@@ -3424,12 +3424,12 @@ msgstr "Fehler in der Konfigurations-Datei"
 #: core.py:183
 msgid "Your gesture map file contains errors.\n"
 "More details about the errors can be found in the log file."
-msgstr "Ihre Zuweisungsdatei für Tastenbefehle ist fehlerhaft!\n"
+msgstr "Ihre Zuweisungsdatei für Tastenzuordnungen ist fehlerhaft!\n"
 "Weitere Informationen dazu befinden sich in der Protokolldatei."
 
 #: core.py:186
 msgid "gesture map File Error"
-msgstr "Fehler in der Zuweisungsdatei für Tastenbefehle"
+msgstr "Fehler in der Zuweisungsdatei für Tastenzuordnungen"
 
 #. Translators: This is spoken when NVDA is starting.
 #: core.py:769
@@ -3702,12 +3702,12 @@ msgstr "Keine Einstellungen"
 #. Translators: Describes the Cycle audio ducking mode command.
 #: globalCommands.py:133
 msgid "Cycles through audio ducking modes which determine when NVDA lowers the volume of other sounds"
-msgstr "Schaltet zwischen verschiedenen Modi zum Reduzieren der Lautstärke anderer Audioquellen um"
+msgstr "Schaltet zwischen verschiedenen Modi zum Reduzieren der Lautstärke anderer Audio-Quellen um"
 
 #. Translators: a message when audio ducking is not supported on this machine
 #: globalCommands.py:141
 msgid "Audio ducking not supported"
-msgstr "Das Reduzieren der Lautstärke wird nicht unterstützt"
+msgstr "Das Reduzieren der Lautstärke anderer Audio-Quellen wird nicht unterstützt"
 
 #. Translators: Input help mode message for toggle input help command.
 #: globalCommands.py:154
@@ -3931,27 +3931,27 @@ msgstr "Schriftgröße ansagen eingeschaltet"
 #. Translators: Input help mode message for toggle report font attributes command.
 #: globalCommands.py:579
 msgid "Cycles font attribute reporting between speech, braille, speech and braille, and off."
-msgstr "Schaltet die Meldung von Schriftattributen zwischen Über Sprachausgabe, In Braille, Über Sprachausgabe und in Braille und Aus um."
+msgstr "Schaltet die Meldung von Schrift-Attributen zwischen Über Sprachausgabe, In Braille, Über Sprachausgabe und in Braille und Ausgeschaltet um."
 
 #. Translators: A state in which font attributes are not reported.
 #: globalCommands.py:589
 msgid "Do not report font attributes"
-msgstr "Keine Schriftattribute mitteilen"
+msgstr "Keine Schrift-Attribute mitteilen"
 
 #. Translators: A state in which font attributes are only spoken.
 #: globalCommands.py:592
 msgid "Speak font attributes"
-msgstr "Schriftattribute über Sprachausgabe mitteilen"
+msgstr "Schrift-Attribute über Sprachausgabe mitteilen"
 
 #. Translators: A state in which font attributes are only brailled.
 #: globalCommands.py:595
 msgid "Braille font attributes"
-msgstr "Schriftattribute in Braille mitteilen"
+msgstr "Schrift-Attribute in Braille mitteilen"
 
 #. Translators: A state in which font attributes are both spoken and brailled.
 #: globalCommands.py:598
 msgid "Speak and braille font attributes"
-msgstr "Schriftattribute über Sprachausgabe und in Braille mitteilen"
+msgstr "Schrift-Attribute über Sprachausgabe und in Braille mitteilen"
 
 #. Translators: Input help mode message for toggle superscripts and subscripts command.
 #: globalCommands.py:604
@@ -4782,7 +4782,7 @@ msgstr "Zieht den Fokus aus dem aktuellen eingebetteten Objekt in das Dokument, 
 #. in web browsing and other situations.
 #: globalCommands.py:2273 NVDAObjects\window\_msOfficeChart.py:634
 msgid "Toggles between browse mode and focus mode. When in focus mode, keys will pass straight through to the application, allowing you to interact directly with a control. When in browse mode, you can navigate the document with the cursor, quick navigation keys, etc."
-msgstr "Schaltet zwischen dem Lesemodus und dem Fokusmodus um. Im Fokusmodus werden die Tasten direkt an die Anwendung durchgereicht, womit Sie die Anwendung direkt steuern können. Im Lesemodus können Sie mit den Pfeiltasten durch das Dokument navigieren. Dabei können Sie die Schnellnavigationstasten benutzen."
+msgstr "Schaltet zwischen dem Lesemodus und dem Interaktionsmodus um. Im Interaktionsmodus werden die Tasten direkt an die Anwendung durchgereicht, womit Sie die Anwendung direkt steuern können. Im Lesemodus können Sie mit den Pfeiltasten durch das Dokument navigieren. Dabei können Sie die Schnellnavigationstasten benutzen."
 
 #. Translators: Input help mode message for quit NVDA command.
 #: globalCommands.py:2323
@@ -5140,7 +5140,7 @@ msgstr "Zeigt die allgemeinen NVDA-Einstellungen an"
 #. Translators: Input help mode message for go to select synthesizer command.
 #: globalCommands.py:3182
 msgid "Shows the NVDA synthesizer selection dialog"
-msgstr "Zeigt das NVDA-Dialogfeld für die Auswahl einer Sprachausgabe an"
+msgstr "Zeigt das Dialogfeld für die Auswahl einer Sprachausgabe in NVDA an"
 
 #. Translators: Input help mode message for go to speech settings command.
 #: globalCommands.py:3192
@@ -5150,7 +5150,7 @@ msgstr "Zeigt die NVDA-Einstellungen für die Sprachausgabe an"
 #. Translators: Input help mode message for go to select braille display command.
 #: globalCommands.py:3202
 msgid "Shows the NVDA braille display selection dialog"
-msgstr "Zeigt das NVDA-Dialogfeld für die Auswahl einer Braillezeile an"
+msgstr "Zeigt das Dialogfeld für die Auswahl einer Braillezeile in NVDA an"
 
 #. Translators: Input help mode message for go to braille settings command.
 #: globalCommands.py:3212
@@ -5200,17 +5200,17 @@ msgstr "Zeigt die NVDA-Einstellungen für die Dokumentformatierungen an"
 #. Translators: Input help mode message for opening default dictionary dialog.
 #: globalCommands.py:3299
 msgid "Shows the NVDA default dictionary dialog"
-msgstr "Zeigt das NVDA-Dialogfeld für das Standard-Wörterbuch an"
+msgstr "Zeigt das Dialogfeld für das Standard-Wörterbuch in NVDA an"
 
 #. Translators: Input help mode message for opening voice-specific dictionary dialog.
 #: globalCommands.py:3308
 msgid "Shows the NVDA voice-specific dictionary dialog"
-msgstr "Zeigt das NVDA-Dialogfeld für das Aussprache-Wörterbuch an"
+msgstr "Zeigt das Dialogfeld für das Aussprache-Wörterbuch in NVDA an"
 
 #. Translators: Input help mode message for opening temporary dictionary.
 #: globalCommands.py:3317
 msgid "Shows the NVDA temporary dictionary dialog"
-msgstr "Zeigt das NVDA-Dialogfeld für das temporäre Wörterbuch an"
+msgstr "Zeigt das Dialogfeld für das temporäre Wörterbuch in NVDA an"
 
 #. Translators: Input help mode message for go to punctuation/symbol pronunciation dialog.
 #: globalCommands.py:3326
@@ -5220,12 +5220,12 @@ msgstr "Zeigt die NVDA-Einstellungen für die Aussprache der Symbole und Sonderz
 #. Translators: Input help mode message for go to input gestures dialog command.
 #: globalCommands.py:3335
 msgid "Shows the NVDA input gestures dialog"
-msgstr "Zeigt einen Dialog für die Zuweisung der Tastenbefehle bestimmter Funktionen an"
+msgstr "Zeigt das Dialogfeld für die Zuweisung der Tastenzuordnungen bestimmter Funktionen in NVDA an"
 
 #. Translators: Input help mode message for the report current configuration profile command.
 #: globalCommands.py:3344
 msgid "Reports the name of the current NVDA configuration profile"
-msgstr "Gibt den Namen des aktuellen NVDA-Konfigurationsprofils an"
+msgstr "Teilt den Namen des aktuellen NVDA-Konfigurationsprofils mit"
 
 #. Translators: Message announced when the command to report the current configuration profile and
 #. the default configuration profile is active.
@@ -5318,7 +5318,7 @@ msgstr "Braille-Modus {brailleMode}"
 #. braille move system caret when routing review cursor command.
 #: globalCommands.py:3515
 msgid "Cycle through the braille move system caret when routing review cursor states"
-msgstr "Wechseln des System-Cursors auf der Braillezeile beim Weiterleiten der Statusanzeige für den Cursor"
+msgstr "Wechselt den System-Cursor auf der Braillezeile beim Weiterleiten der Statusanzeige für den Cursor"
 
 #. Translators: Reported when action is unavailable because braille tether is to focus.
 #: globalCommands.py:3525
@@ -5369,17 +5369,17 @@ msgstr "Braille-Cursor eingeschaltet"
 #. Translators: Input help mode message for speak on routing command.
 #: globalCommands.py:3598
 msgid "Toggles speaking the character under the cursor when routing cursor in text"
-msgstr ""
+msgstr "Schaltet das Mitteilen beim Navigieren mit dem Cursor im Text von Zeichen unter dem Cursor um"
 
 #. Translators: The message announced when toggling on speaking character when routing.
 #: globalCommands.py:3606
 msgid "Enabled speak character when routing cursor in text"
-msgstr ""
+msgstr "Mitteilen von Zeichen beim Navigieren mit dem Cursor im Text eingeschaltet"
 
 #. Translators: The message announced when toggling off speaking character when routing.
 #: globalCommands.py:3609
 msgid "Disabled speak character when routing cursor in text"
-msgstr ""
+msgstr "Mitteilen von Zeichen beim Navigieren mit dem Cursor im Text ausgeschaltet"
 
 #. Translators: Input help mode message for cycle braille cursor shape command.
 #: globalCommands.py:3614
@@ -5455,7 +5455,7 @@ msgstr "Gibt den Text der Windows-Zwischenablage aus. Zweimaliges Drücken buchs
 #. Translators: Presented when there is no text on the clipboard.
 #: globalCommands.py:3731
 msgid "There is no text on the clipboard"
-msgstr "Zwischenablage ist leer"
+msgstr "Kein Text in der Zwischenablage"
 
 #. Translators: If the number of characters on the clipboard is greater than about 1000, it reports this
 #. message and gives number of characters on the clipboard.
@@ -5464,8 +5464,8 @@ msgstr "Zwischenablage ist leer"
 #, python-format
 msgid "The clipboard contains a large amount of text. It is %s character long"
 msgid_plural "The clipboard contains a large amount of text. It is %s characters long"
-msgstr[0] "Die Zwischenablage enthält eine Menge Text. Dieser ist %s Zeichen lang"
-msgstr[1] "Die Zwischenablage enthält eine Menge Text. Dieser ist %s Zeichen lang"
+msgstr[0] "Die Zwischenablage enthält Text mit %s Zeichen"
+msgstr[1] "Die Zwischenablage enthält Text mit %s Zeichen"
 
 #. Translators: Input help mode message for mark review cursor position for a select or copy command
 #. (that is, marks the current review cursor position as the starting point for text to be selected).
@@ -5534,17 +5534,17 @@ msgstr "Liest Informationen zur Formatierung des Textes unter dem aktuellen Brai
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3919
 msgid "Moves the braille display to the previous line"
-msgstr "Navigiert den Inhalt auf der Braillezeile eine Zeile zurück"
+msgstr "Navigiert den Inhalt auf der Braillezeile zur vorherigen Zeile"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3928
 msgid "Moves the braille display to the next line"
-msgstr "Navigiert den Inhalt auf der Braillezeile eine Zeile weiter"
+msgstr "Navigiert den Inhalt auf der Braillezeile zur nächsten Zeile"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3937
 msgid "Inputs braille dots via the braille keyboard"
-msgstr "Ermöglicht das Eingeben von Braille-Zeichen über eine Braille-Tastatur"
+msgstr "Eingabe von Brailleschrift über die Braille-Tastatur"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3946
@@ -5554,7 +5554,7 @@ msgstr "Navigiert den Ausschnitt auf der Braillezeile zum aktuellen Fokus"
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3968
 msgid "Erases the last entered braille cell or character"
-msgstr "Löscht die letzte Braille-Eingabe"
+msgstr "Löscht die zuletzt getätigte Braille-Eingabe"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:3977
@@ -5589,7 +5589,7 @@ msgstr "Schaltet virtuell die linke Windows-Taste ein oder aus, um eine Tastenko
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4033
 msgid "Virtually toggles the NVDA key to emulate a keyboard shortcut with braille input"
-msgstr "Schaltet virtuell die NVDA-Taste ein oder aus, um eine Tastenkombination mit Braille-Eingabe zu emulieren"
+msgstr "Virtuelles Umschalten der NVDA-Taste zur Emulation eines Tastaturkürzels mit Braille-Eingabe"
 
 #. Translators: Input help mode message for a braille command.
 #: globalCommands.py:4043
@@ -8168,7 +8168,7 @@ msgstr "Die NVDA-Erweiterung konnte nicht von diesem Pfad \"{path}\" installiert
 #: addonStore\dataManager.py:209
 msgctxt "addonStore"
 msgid "Add-on data update failure"
-msgstr "Die Daten-Aktualisierung für die NVDA-Erweiterung ist fehlgeschlagen"
+msgstr "Daten-Aktualisierung fehlgeschlagen"
 
 #. Translators: A message shown when fetching add-on data from the store fails
 #: addonStore\dataManager.py:242
@@ -8883,14 +8883,14 @@ msgstr "Kommentar"
 #: appModules\poedit.py:180
 msgctxt "poedit"
 msgid "Reports the previous source text, if any. If pressed twice, presents the text in browse mode"
-msgstr ""
+msgstr "Zeigt den vorherigen Quelltext an, falls vorhanden. Bei zweimaligem Drücken wird der Text im Lesemodus angezeigt"
 
 #. Translators: The description of the "previous source text" window in poedit.
 #. This text is reported when the given window contains no item to report or could not be found.
 #: appModules\poedit.py:191
 msgctxt "poedit"
 msgid "previous source text"
-msgstr ""
+msgstr "Vorheriger Quelltext"
 
 #. Translators: The description of an NVDA command for Poedit.
 #: appModules\poedit.py:206
@@ -9410,7 +9410,7 @@ msgstr "NVDA beidseits und Anwendungen rechts"
 #. Translators: error message when wasapi is turned off.
 #: audio\soundSplit.py:214
 msgid "Sound split cannot be used. Please enable WASAPI in the Advanced category in NVDA Settings to use it."
-msgstr "Die Sound-Teilung kann nicht verwendet werden. Bitte aktivieren Sie hierzu WASAPI in der Kategorie „Erweitert“ in den NVDA-Einstellungen."
+msgstr "Die Sound-Teilung kann nicht verwendet werden. Bitte aktivieren Sie hierzu WASAPI in der Kategorie \"Erweitert\" in den NVDA-Einstellungen."
 
 #. Translators: warning message when sound split trigger wasn't successful due to one of audio sessions
 #. had number of channels other than 2 .
@@ -9562,7 +9562,7 @@ msgstr "Caiku Albatross 46/80"
 #: brailleDisplayDrivers\albatross\driver.py:485
 #, python-brace-format
 msgid "To use an Albatross with NVDA, change the number of status cells in the Albatross's internal menu to at most {maxCells}, and restart the Albatross and NVDA if needed."
-msgstr ""
+msgstr "Um die Braillezeile Albatross mit NVDA zu verwenden, ändern Sie die Anzahl der Statusmodule im internen Menü der Albatross auf maximal {maxCells} und starten die BRaillezeile Albatross und auch NVDA gegebenenfalls neu."
 
 #. Translators: Names of braille displays.
 #: brailleDisplayDrivers\eurobraille\constants.py:10
@@ -10839,7 +10839,7 @@ msgstr "nicht verfügbar"
 #. Translators: This is presented when a control has focus.
 #: controlTypes\state.py:114
 msgid "focused"
-msgstr "fokussiert"
+msgstr "hervorgehoben"
 
 #. Translators: This is presented when the control is selected.
 #: controlTypes\state.py:116
@@ -11859,7 +11859,7 @@ msgstr[1] "{category} ({nbResults} Ergebnisse)"
 #. Translators: The title of the Input Gestures dialog where the user can remap input gestures for scripts.
 #: gui\inputGestures.py:586
 msgid "Input Gestures"
-msgstr "Tastenbefehle"
+msgstr "Tastenzuordnungen"
 
 #. Translators: The label of a text field to search for gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:596
@@ -11890,19 +11890,19 @@ msgstr "Auf Standard-Einstellungen zu&rücksetzen"
 msgid "Are you sure you want to reset all gestures to their factory defaults?\n\n"
 "\t\t\tAll of your user defined gestures, whether previously set or defined during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
-msgstr "Möchten Sie wirklich alle Tastenbefehle auf die Standard-Einstellungen zurücksetzen?\n\n"
+msgstr "Möchten Sie wirklich alle Tastenzuordnungen auf die Standard-Einstellungen zurücksetzen?\n\n"
 "\t\t\tAlle Ihre benutzerdefinierten Gesten, ob zuvor festgelegt oder während dieser Sitzung definiert, gehen verloren.\n"
 "\t\t\tDies kann nicht rückgängig gemacht werden."
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:794
 msgid "Reset gestures"
-msgstr "Tastenbefehle zurücksetzen"
+msgstr "Tastenzuordnungen zurücksetzen"
 
 #. Translators: An error displayed when saving user defined input gestures fails.
 #: gui\inputGestures.py:807 gui\inputGestures.py:820
 msgid "Error saving user defined gestures - probably read only file system."
-msgstr "Fehler beim Speichern der benutzerdefinierten Tastenbefehle, möglicherweise verwenden Sie ein schreibgeschütztes Dateisystem."
+msgstr "Fehler beim Speichern der benutzerdefinierten Tastenzuordnungen, möglicherweise verwenden Sie ein schreibgeschütztes Dateisystem."
 
 #. Translators: The title of the dialog presented while NVDA is being updated.
 #: gui\installerGui.py:59
@@ -12493,7 +12493,7 @@ msgstr "&Verzögerte Beschreibungen für Zeichen bei Cursor-Bewegung"
 #. Translators: Warning shown when 'talk' speech mode is disabled in settings.
 #: gui\settingsDialogs.py:1830
 msgid "You did not choose Talk as one of your speech mode options. Please note that this may result in no speech output at all. Are you sure you want to continue?"
-msgstr "Sie haben „Sprechen“ nicht als einen Ihrer Sprachmodi ausgewählt. Bitte beachten Sie, dass dies dazu führen kann, dass überhaupt nichts mehr gesprochen wird. Wollen Sie wirklich fortfahren?"
+msgstr "Sie haben nicht Sprechen als eine der Sprachmodi ausgewählt. Bitte beachten Sie, dass dies dazu führen kann, dass überhaupt keine Sprachausgabe erfolgt. Sind Sie sicher, dass Sie fortfahren möchten?"
 
 #. Translators: Message shown when not enough speech modes are enabled.
 #: gui\settingsDialogs.py:1858
@@ -12552,7 +12552,7 @@ msgstr "Sprachausgabe beim Drücken der Ei&ngabetaste unterbrechen"
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:1946
 msgid "Allow skim &reading in Say All"
-msgstr "&Navigation während \"Alles Lesen\" erlauben"
+msgstr "&Navigation während \"Alles vorlesen\" erlauben"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -12836,13 +12836,13 @@ msgstr "&Layouttabellen einbeziehen"
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2472
 msgid "Automatic focus mode for focus changes"
-msgstr "Bei Fokus-Änderungen automatisch den Fokusmodus einschalten"
+msgstr "Bei Fokus-Änderungen automatisch den Interaktionsmodus einschalten"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
 #: gui\settingsDialogs.py:2486
 msgid "Automatic focus mode for caret movement"
-msgstr "Bei Bewegungen des System-Cursors automatisch den Fokusmodus einschalten"
+msgstr "Bei Bewegungen des System-Cursors automatisch den Interaktionsmodus einschalten"
 
 #. Translators: This is the label for a checkbox in the
 #. browse mode settings panel.
@@ -13676,12 +13676,12 @@ msgstr "Braillezeile &koppeln:"
 #. Translators: This is a label for a combo-box in the Braille settings panel.
 #: gui\settingsDialogs.py:4369
 msgid "Move system caret when ro&uting review cursor"
-msgstr "Zieht den System-Cursor bei der Navigation durch den NVDA-Cursor"
+msgstr "System-Cursor bei der Navigation durch den NVDA-C&ursor mitziehen"
 
 #. Translators: The label for a setting in braille settings to read by paragraph (if it is checked, the commands to move the display by lines moves the display by paragraphs instead).
 #: gui\settingsDialogs.py:4385
 msgid "Read by &paragraph"
-msgstr "Absatzweises &Lesen"
+msgstr "Absatzweises Vor&lesen"
 
 #. Translators: This is a label for a combo-box in the Braille settings panel to select paragraph start markers.
 #: gui\settingsDialogs.py:4394
@@ -13706,7 +13706,7 @@ msgstr "Formatierung auf der Braillezeile ausgeben"
 #. Translators: The label for a setting in braille settings to speak the character under the cursor when cursor routing in text.
 #: gui\settingsDialogs.py:4451
 msgid "Spea&k character when routing cursor in text"
-msgstr ""
+msgstr "&Zeichen mitteilen beim Navigieren mit dem Cursor im Text"
 
 #. Translators: The label for a setting in braille settings to enable word wrap
 #. (try to avoid splitting words at the end of the braille display).
@@ -14120,7 +14120,7 @@ msgstr "Ausgewählte NVDA-Erweiterungen &deaktivieren"
 #: gui\addonStoreGui\controls\details.py:38
 msgctxt "addonStore"
 msgid "Loading add-ons..."
-msgstr "NVDA-Erweiterungen werden geladen..."
+msgstr "Daten für NVDA-Erweiterungen werden geladen..."
 
 #. Translators: Header (usually the add-on name) when no add-on is selected. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:41
@@ -14218,7 +14218,7 @@ msgstr "Kanal:"
 #: gui\addonStoreGui\controls\details.py:303
 msgctxt "addonStore"
 msgid "Incompatible Reason:"
-msgstr "Grund der Inkompatibilität:"
+msgstr "Inkompatibilitätsgrund:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:311
@@ -14236,7 +14236,7 @@ msgstr "Lizenz:"
 #: gui\addonStoreGui\controls\details.py:324
 msgctxt "addonStore"
 msgid "License URL:"
-msgstr "Lizenz-URL:"
+msgstr "URL für die Lizenz:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:330
@@ -14254,7 +14254,7 @@ msgstr "URL-Quelle:"
 #: gui\addonStoreGui\controls\details.py:343
 msgctxt "addonStore"
 msgid "Reviews URL:"
-msgstr "Rezensionsseite:"
+msgstr "URL für Rezensionen:"
 
 #. Translators: A button in the addon installation warning / blocked dialog which shows
 #. more information about the addon
@@ -14280,7 +14280,7 @@ msgstr "&Nein"
 #: gui\addonStoreGui\controls\messageDialogs.py:80
 msgctxt "addonStore"
 msgid "Remember this choice for subsequent add-ons"
-msgstr "Auswahl für weitere NVDA-Erweiterungen merken"
+msgstr "Auswahl für weitere NVDA-Erweiterungen beibehalten"
 
 #. Translators: The message displayed when updating an add-on, but the installed version
 #. identifier can not be compared with the version to be installed.
@@ -14747,7 +14747,7 @@ msgstr "Die Interaktion mit mathematischen Inhalten wird nicht unterstützt."
 #: NVDAObjects\__init__.py:662
 #, python-brace-format
 msgid "Object edges positioned {left:.1f} percent from left edge of screen, {top:.1f} percent from top edge of screen, width is {width:.1f} percent of screen, height is {height:.1f} percent of screen"
-msgstr ""
+msgstr "Das Objekt befindet sich relativ bei {left:.1f} Prozent vom linken Bildschirmrand, {top:.1f} Prozent vom oberen Bildschirmrand, Breite ist {width:.1f} Prozent des Bildschirms, Höhe ist {height:.1f} Prozent des Bildschirms"
 
 #. Translators: This is presented to inform the user of a progress bar percentage.
 #. Translators: This is presented to inform the user of the current battery percentage.
@@ -14898,7 +14898,7 @@ msgstr "Die Zeile {rowNumber} und Spalte {columnNumber} konnte in den Zeilenübe
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387
 msgid "Reports the text of the comment where the system caret is located.If pressed twice, presents the information in browse mode."
-msgstr ""
+msgstr "Teilt den Text des Kommentars an der Stelle des System-Cursors mit. Bei zweimaligem Drücken wird die Information im Lesemodus angezeigt."
 
 #. Translators: a message when there is no comment to report in Microsoft Word
 #: NVDAObjects\IAccessible\winword.py:420 NVDAObjects\UIA\wordDocument.py:684
@@ -14946,14 +14946,14 @@ msgstr "Zeigt eine Meldung zum Nachlesen an, die Informationen über das Aussehe
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell width: {0.x:.1f} pt"
-msgstr "Zellenbreite: {0.x:.1f} Punkt"
+msgstr "Zellenbreite: {0.x:.1f} pt"
 
 #. Translators: The height of the cell in points
 #: NVDAObjects\UIA\excel.py:212
 #, python-brace-format
 msgctxt "excel-UIA"
 msgid "Cell height: {0.y:.1f} pt"
-msgstr "Zellenhöhe: {0.y:.1f} Punkt"
+msgstr "Zellenhöhe: {0.y:.1f} pt"
 
 #. Translators: The rotation in degrees of an Excel cell
 #: NVDAObjects\UIA\excel.py:221
@@ -15141,7 +15141,7 @@ msgstr "Navigieren nach Sätzen, die in diesem Dokument nicht unterstützt werde
 #. Translators: a description for a script that reports the comment at the caret.
 #: NVDAObjects\UIA\wordDocument.py:662
 msgid "Reports the text of the comment where the system caret is located. If pressed twice, presents the information in a browsable message"
-msgstr ""
+msgstr "Teilt den Text des Kommentars an der Stelle des System-Cursors mit. Bei zweimaligem Drücken werden die Informationen in einem Fenster zum Nachlesen angezeigt"
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
@@ -16274,7 +16274,7 @@ msgstr "Die Eingabemeldung lautet {message}"
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1850
 msgid "Reports the note on the current cell. If pressed twice, presents the information in browse mode"
-msgstr ""
+msgstr "Zeigt die Notiz in der aktuellen Zelle an. Bei zweimaligem Drücken werden die Informationen im Lesemodus angezeigt"
 
 #. Translators: title for note on the current Excel cell dialog.
 #. Translators: Title for the note editing  dialog
@@ -16651,14 +16651,14 @@ msgstr "1,5 Zeilen"
 #, python-brace-format
 msgctxt "line spacing value"
 msgid "exactly {space:.1f} pt"
-msgstr "Genau {space:.1f} Punkt"
+msgstr "Genau {space:.1f} pt"
 
 #. Translators: line spacing of at least x point
 #: NVDAObjects\window\winword.py:992
 #, python-format
 msgctxt "line spacing value"
 msgid "at least %.1f pt"
-msgstr "Mindestens %.1f Punkt"
+msgstr "Mindestens %.1f pt"
 
 #. Translators: line spacing of x lines
 #: NVDAObjects\window\winword.py:1002
@@ -16802,8 +16802,8 @@ msgstr "{offset:.3g} Punkt"
 #, python-brace-format
 msgid "{offset:.3g} pica"
 msgid_plural "{offset:.3g} picas"
-msgstr[0] "{offset:.3g} Pixel"
-msgstr[1] "{offset:.3g} Pixel"
+msgstr[0] "{offset:.3g} px"
+msgstr[1] "{offset:.3g} px"
 
 #. Translators: a message when switching to single line spacing  in Microsoft word
 #: NVDAObjects\window\winword.py:1796
@@ -16824,7 +16824,7 @@ msgstr "1,5 Zeilenabstand"
 #: NVDAObjects\window\winword.py:1817
 #, python-brace-format
 msgid "{val:g} pt space before paragraph"
-msgstr "{val:g} pt vor dem Absatz"
+msgstr "{val:g} pt Platz vor Absatz"
 
 #. Translators: Name of the speech mode which disables speech output.
 #: speech\speech.py:96

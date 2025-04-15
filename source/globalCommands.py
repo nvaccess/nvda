@@ -69,9 +69,8 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
-from audio import appsVolume
 from utils.displayString import DisplayStringEnum
-import remoteClient
+import _remoteClient
 
 #: Script category for text review commands.
 # Translators: The name of a category of NVDA commands.
@@ -4878,63 +4877,22 @@ class GlobalCommands(ScriptableObject):
 		audio._toggleSoundSplitState()
 
 	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Increases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_increaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Decreases the volume of other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_decreaseApplicationsVolume(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._adjustAppsVolume(-5)
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Toggles application volume control on and off",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsVolumeAdjuster(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeState()
-
-	@script(
-		description=_(
-			# Translators: Describes a command.
-			"Mutes or unmutes other applications",
-		),
-		category=SCRCAT_AUDIO,
-	)
-	def script_toggleApplicationsMute(self, gesture: "inputCore.InputGesture") -> None:
-		appsVolume._toggleAppsVolumeMute()
-
-	@script(
 		# Translators: Describes a command.
 		description=_("Mute or unmute the speech coming from the remote computer"),
 		category=SCRCAT_REMOTE,
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteMute(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleMute()
+		_remoteClient._remoteClient.toggleMute()
 
 	@script(
-		gesture="kb:control+shift+NVDA+c",
 		category=SCRCAT_REMOTE,
 		# Translators: Documentation string for the script that sends the contents of the clipboard to the remote machine.
 		description=_("Sends the contents of the clipboard to the remote machine"),
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_pushClipboard(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.pushClipboard()
+		_remoteClient._remoteClient.pushClipboard()
 
 	@script(
 		# Translators: Documentation string for the script that copies a link to the remote session to the clipboard.
@@ -4943,7 +4901,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_copyRemoteLink(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.copyLink()
+		_remoteClient._remoteClient.copyLink()
 		# Translators: A message indicating that a link has been copied to the clipboard.
 		ui.message(_("Copied link"))
 
@@ -4957,11 +4915,11 @@ class GlobalCommands(ScriptableObject):
 		gui.blockAction.Context.SECURE_MODE,
 	)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
-		if not remoteClient._remoteClient.isConnected:
+		if not _remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
 			ui.message(_("Not connected"))
 			return
-		remoteClient._remoteClient.disconnect()
+		_remoteClient._remoteClient.disconnect()
 
 	@script(
 		# Translators: Documentation string for the script that invokes the remote session.
@@ -4974,11 +4932,11 @@ class GlobalCommands(ScriptableObject):
 		gui.blockAction.Context.SECURE_MODE,
 	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
-		if remoteClient._remoteClient.isConnected() or remoteClient._remoteClient.connecting:
+		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.connecting:
 			# Translators: A message indicating that the remote client is already connected.
 			ui.message(_("Already connected"))
 			return
-		remoteClient._remoteClient.doConnect()
+		_remoteClient._remoteClient.doConnect()
 
 	@script(
 		# Translators: Describes the command that creates a remote session, or disconnects it if one already exists.
@@ -4988,7 +4946,7 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_toggleRemoteConnection(self, gesture: "inputCore.InputGesture") -> None:
-		if remoteClient._remoteClient.isConnected():
+		if _remoteClient._remoteClient.isConnected():
 			self.script_disconnectFromRemote(gesture)
 		else:
 			self.script_connectToRemote(gesture)
@@ -4997,11 +4955,11 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that toggles the control between guest and host machine.
 		description=_("Toggles the control between guest and host machine"),
 		category=SCRCAT_REMOTE,
-		gesture="kb:NVDA+f11",
+		gesture="kb:NVDA+alt+tab",
 	)
 	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_sendKeys(self, gesture: "inputCore.InputGesture"):
-		remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
+		_remoteClient._remoteClient.toggleRemoteKeyControl(gesture)
 
 
 #: The single global commands instance.

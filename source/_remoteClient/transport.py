@@ -246,7 +246,7 @@ class Transport(ABC):
 	def send(self, type: RemoteMessageType, **kwargs: Any) -> None:
 		"""Send a message through this transport.
 
-		:param type: Message type, typically a :class:`~remoteClient.protocol.RemoteMessageType` enum value.
+		:param type: Message type, typically a :class:`~_remoteClient.protocol.RemoteMessageType` enum value.
 		:param kwargs: Message payload data to serialize.
 		"""
 		...
@@ -365,8 +365,8 @@ class TCPTransport(Transport):
 		"""
 		config = configuration.getRemoteConfig()
 		return (
-			hostPortToAddress(self.address) in config["trusted_certs"]
-			and config["trusted_certs"][hostPortToAddress(self.address)] == fingerprint
+			hostPortToAddress(self.address) in config["trustedCertificates"]
+			and config["trustedCertificates"][hostPortToAddress(self.address)] == fingerprint
 		)
 
 	def getHostFingerprint(self) -> str:

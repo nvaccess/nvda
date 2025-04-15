@@ -27,7 +27,7 @@ from unittest import mock
 import wx
 
 # Import classes from the transport module.
-from remoteClient.transport import (
+from _remoteClient.transport import (
 	PROTOCOL_VERSION,
 	ConnectorThread,
 	RelayTransport,
@@ -152,7 +152,7 @@ class TestTransportSendAndQueue(unittest.TestCase):
 
 	def test_sendWhenNotConnectedLogsError(self):
 		self.transport.connected = False
-		with mock.patch("remoteClient.transport.log.error") as mockError:
+		with mock.patch("_remoteClient.transport.log.error") as mockError:
 			self.transport.send("TEST", a=1)
 		mockError.assert_called_once()
 

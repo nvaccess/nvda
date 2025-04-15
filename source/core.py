@@ -337,7 +337,7 @@ def resetConfiguration(factoryDefaults=False):
 	log.debug("terminating tones")
 	tones.terminate()
 	log.debug("terminating sound split")
-	audio.terminate()
+	audio.soundSplit.terminate()
 	log.debug("Terminating background braille display detection")
 	bdDetect.terminate()
 	log.debug("Terminating background i/o")
@@ -369,8 +369,8 @@ def resetConfiguration(factoryDefaults=False):
 	# Tones
 	tones.initialize()
 	# Sound split
-	log.debug("initializing audio")
-	audio.initialize()
+	log.debug("initializing sound split")
+	audio.soundSplit.initialize()
 	# Character processing
 	log.debug("initializing character processing")
 	characterProcessing.initialize()
@@ -548,7 +548,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	import brailleViewer
 	import globalPluginHandler
 	import watchdog
-	import remoteClient
+	import _remoteClient
 
 	try:
 		import updateCheck
@@ -565,7 +565,7 @@ def _handleNVDAModuleCleanupBeforeGUIExit():
 	# the brailleViewer should be destroyed safely before closing the window
 	brailleViewer.destroyBrailleViewer()
 	# Terminating remote causes it to clean up its menus, so do it here while they still exist
-	_terminate(remoteClient)
+	_terminate(_remoteClient)
 
 
 def _initializeObjectCaches():
@@ -768,7 +768,7 @@ def main():
 	log.debug("Initializing sound split")
 	import audio
 
-	audio.initialize()
+	audio.soundSplit.initialize()
 	import speechDictHandler
 
 	log.debug("Speech Dictionary processing")
@@ -901,9 +901,9 @@ def main():
 	log.debug("Initializing global plugin handler")
 	globalPluginHandler.initialize()
 
-	import remoteClient
+	import _remoteClient
 
-	remoteClient.initialize()
+	_remoteClient.initialize()
 
 	if globalVars.appArgs.install or globalVars.appArgs.installSilent:
 		import gui.installerGui

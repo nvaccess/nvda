@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 00:09+0000\n"
-"PO-Revision-Date: 2024-10-08 00:28\n"
+"POT-Creation-Date: 2024-12-19 04:42+0000\n"
+"PO-Revision-Date: 2025-04-14 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -8147,9 +8147,9 @@ msgid "{longName} ({name})\n"
 "If you find NVDA useful and want it to continue to improve, please consider donating to NV Access. You can do this by selecting Donate from the NVDA menu."
 msgstr "{longName} ({name})\n"
 "Versio: {version} ({version_detailed})\n"
-"URL: {url}\n"
+"URL-osoite: {url}\n"
 "{copyright}\n\n"
-"{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita kuten myös kaikkia johdannaisia.\n"
+"{name} on suojattu GNU GPL 2.0 -lisenssillä. Voit vapaasti jakaa tai muuttaa tätä ohjelmistoa, kunhan toimitat lisenssin sen mukana ja pidät lähdekoodin kaikkien saatavilla. Tämä koskee sekä alkuperäisiä että muokattuja ohjelmistokopioita ja kaikkia johdannaisia.\n"
 "Saat lisätietoja tarkastelemalla lisenssiä Ohje-valikosta.\n"
 "Lisenssi on luettavissa myös verkossa osoitteessa: https://www.gnu.org/licenses/old-licenses/gpl-2.0.html\n\n"
 "{name}:ta kehittää NV Access, voittoa tavoittelematon organisaatio, joka on sitoutunut auttamaan ja edistämään vapaan ja avoimen lähdekoodin ratkaisuja sokeille ja heikkonäköisille.\n"
@@ -10685,12 +10685,12 @@ msgstr "fontin koko"
 #. Translators: Reported when text is bolded.
 #: controlTypes\role.py:478 speech\speech.py:2795
 msgid "bold"
-msgstr "lihavoitu"
+msgstr "lihavointi"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:480 speech\speech.py:2806
 msgid "italic"
-msgstr "kursivoitu"
+msgstr "kursiivi"
 
 #. Translators: Describes text formatting.
 #: controlTypes\role.py:482
@@ -11202,7 +11202,7 @@ msgstr "Näppäin&komennot..."
 #. Translators: The label for Preferences submenu in NVDA menu.
 #: gui\__init__.py:564
 msgid "&Preferences"
-msgstr "&Asetukset"
+msgstr "Muk&autukset"
 
 #. Translators: The label for the menu item to open NVDA Log Viewer.
 #: gui\__init__.py:569
@@ -11368,7 +11368,7 @@ msgstr "NV Accessin k&auppa"
 #. Translators: The label for the menu item to view NVDA License document.
 #: gui\__init__.py:763
 msgid "L&icense"
-msgstr "Kä&yttöoikeussopimus"
+msgstr "&Lisenssi"
 
 #. Translators: The label for the menu item to view NVDA Contributors list document.
 #: gui\__init__.py:770
@@ -11629,7 +11629,7 @@ msgstr "Virhe otettaessa käyttöön profiilia."
 #. The placeholder {} is replaced with the name of the configuration profile that will be deleted.
 #: gui\configProfiles.py:200
 msgid "The profile {} will be permanently deleted. This action cannot be undone."
-msgstr "Profiili poistetaan pysyvästi. Poistoa ei voi peruuttaa."
+msgstr "Profiili poistetaan pysyvästi. Poistoa ei voi perua."
 
 #. Translators: The title of the confirmation dialog for deletion of a configuration profile.
 #: gui\configProfiles.py:202
@@ -11891,8 +11891,8 @@ msgid "Are you sure you want to reset all gestures to their factory defaults?\n\
 "\t\t\tAll of your user defined gestures, whether previously set or defined during this session, will be lost.\n"
 "\t\t\tThis cannot be undone."
 msgstr "Haluatko varmasti palauttaa kaikkien näppäinkomentojen oletusarvot?\n\n"
-"\t\t\tKaikki aiemmin tai tämän istunnon aikana itse määrittämäsi näppäinkomennot menetetään.\n"
-"\t\t\tPalautusta ei voi peruuttaa."
+"\t\t\tKaikki aiemmin tai tämän istunnon aikana määrittämäsi näppäinkomennot menetetään.\n"
+"\t\t\tPalautusta ei voi perua."
 
 #. Translators: A prompt for confirmation to reset all gestures in the Input Gestures dialog.
 #: gui\inputGestures.py:794
@@ -12552,13 +12552,13 @@ msgstr "K&eskeytä puhe Enter-näppäintä painettaessa"
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:1946
 msgid "Allow skim &reading in Say All"
-msgstr "Salli pika&luku jatkuvassa luvussa"
+msgstr "Salli p&ikanäppäimet jatkuvassa luvussa"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
 #: gui\settingsDialogs.py:1956
 msgid "&Beep if typing lowercase letters when caps lock is on"
-msgstr "&Anna äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
+msgstr "Anna &äänimerkki kirjoitettaessa pieniä kirjaimia Caps Lockin ollessa käytössä"
 
 #. Translators: This is the label for a checkbox in the
 #. keyboard settings panel.
@@ -13541,13 +13541,13 @@ msgstr "Kyllä"
 #. advanced settings panel.
 #: gui\settingsDialogs.py:3704
 msgid "Regular expression for text paragraph navigation"
-msgstr "Tekstikappalenavigoinnin sääntölauseke"
+msgstr "Tekstikappalenavigoinnin säännöllinen lauseke"
 
 #. Translators: Message shown when invalid text paragraph regex entered
 #: gui\settingsDialogs.py:3726
 #, python-format
 msgid "Failed to compile text paragraph regular expression: %s"
-msgstr "Tekstikappalenavigoinnin sääntölausekkeen kääntäminen epäonnistui: %s"
+msgstr "Tekstikappalenavigoinnin säännöllisen lausekkeen kääntäminen epäonnistui: %s"
 
 #. Translators: This is the label for the Advanced settings panel.
 #: gui\settingsDialogs.py:3841
@@ -13828,7 +13828,7 @@ msgstr "Symboli"
 #. from symbol pronunciation dialog used to identify replacement for a pattern or a symbol
 #: gui\settingsDialogs.py:5124 gui\speechDict.py:191
 msgid "Replacement"
-msgstr "Korvaava"
+msgstr "Korvaava teksti"
 
 #. Translators: The label for a column in symbols list used to identify a symbol's speech level (either none, some, most, all or character).
 #: gui\settingsDialogs.py:5126
@@ -13861,7 +13861,7 @@ msgstr "T&aso"
 #. Translators: The label for the combo box in symbol pronunciation dialog to change when a symbol is sent to the synthesizer.
 #: gui\settingsDialogs.py:5167
 msgid "&Send actual symbol to synthesizer"
-msgstr "Vä&litä merkki syntetisaattorille"
+msgstr "&Lähetä merkki syntetisaattorille"
 
 #. Translators: The label for a button in the Symbol Pronunciation dialog to remove a symbol.
 #: gui\settingsDialogs.py:5182
@@ -13888,7 +13888,7 @@ msgstr "Koko &sana"
 #. Translators: This is a label for an Entry Type radio button in add dictionary entry dialog.
 #: gui\speechDict.py:35
 msgid "Regular &expression"
-msgstr "Sääntö&lauseke"
+msgstr "Säännöllinen &lauseke"
 
 #. Translators: This is the label for the edit dictionary entry dialog.
 #: gui\speechDict.py:44
@@ -13925,13 +13925,13 @@ msgstr "Virhe sanastomäärityksessä"
 #: gui\speechDict.py:116
 #, python-brace-format
 msgid "Regular Expression error in the pattern field: \"{error}\"."
-msgstr "Virhe Korvattava-kentän sääntölausekkeessa: \"{error}\"."
+msgstr "Virhe Korvattava teksti -kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: This is an error message to let the user know that the dictionary entry is not valid.
 #: gui\speechDict.py:134
 #, python-brace-format
 msgid "Regular Expression error in the replacement field: \"{error}\"."
-msgstr "Virhe Korvaava-kentän sääntölausekkeessa: \"{error}\"."
+msgstr "Virhe Korvaava teksti -kentän säännöllisessä lausekkeessa: \"{error}\"."
 
 #. Translators: The label for the list box of dictionary entries in speech dictionary dialog.
 #: gui\speechDict.py:178
@@ -13949,7 +13949,7 @@ msgstr "Kommentti"
 #. (original word or a pattern).
 #: gui\speechDict.py:188
 msgid "Pattern"
-msgstr "Korvattava"
+msgstr "Korvattava teksti"
 
 #. Translators: The label for a column in dictionary entries list used to identify
 #. whether the entry is case sensitive or not.
@@ -14231,13 +14231,13 @@ msgstr "Kotisivu:"
 #: gui\addonStoreGui\controls\details.py:318
 msgctxt "addonStore"
 msgid "License:"
-msgstr "Käyttöoikeussopimus:"
+msgstr "Lisenssi:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:324
 msgctxt "addonStore"
 msgid "License URL:"
-msgstr "Käyttöoikeussopimuksen URL:"
+msgstr "Lisenssin URL-osoite:"
 
 #. Translators: Label for an extra detail field for the selected add-on. In the add-on store dialog.
 #: gui\addonStoreGui\controls\details.py:330
@@ -14306,7 +14306,7 @@ msgstr "Asenna lisäosa"
 #, python-brace-format
 msgctxt "addonStore"
 msgid "Are you sure you wish to remove the {addon} add-on from NVDA? This cannot be undone."
-msgstr "Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi peruuttaa."
+msgstr "Haluatko varmasti poistaa lisäosan {addon} NVDA:sta? Poistoa ei voi perua."
 
 #. Translators: Title for message asking if the user really wishes to remove the selected Add-on.
 #: gui\addonStoreGui\controls\messageDialogs.py:139
@@ -14321,7 +14321,7 @@ msgstr "Poista lisäosa"
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Installation may cause unstable behavior in NVDA.\n"
 "Proceed with installation anyway? "
-msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Sitä on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Asennus saattaa aiheuttaa NVDA:han epävakautta.\n"
+msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Asennus saattaa aiheuttaa NVDA:han epävakautta.\n"
 "Haluatko silti jatkaa asennusta?"
 
 #. Translators: The message displayed when enabling an add-on package that is incompatible
@@ -14331,7 +14331,7 @@ msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko
 msgctxt "addonStore"
 msgid "Warning: add-on is incompatible: {name} {version}. Check for an updated version of this add-on if possible. This add-on was last tested with NVDA {lastTestedNVDAVersion}. NVDA requires this add-on to be tested with NVDA {nvdaVersion} or higher. Enabling may cause unstable behavior in NVDA.\n"
 "Proceed with enabling anyway? "
-msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Sitä on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Käyttöönotto saattaa aiheuttaa NVDA:han epävakautta.\n"
+msgstr "Varoitus: lisäosa ei ole yhteensopiva: {name} {version}. Tarkista, onko siitä saatavilla päivitettyä versiota. Tämä lisäosa on testattu viimeksi NVDA-versiolla {lastTestedNVDAVersion}. NVDA edellyttää, että se on testattu versiolla {nvdaVersion} tai uudemmalla. Käyttöönotto saattaa aiheuttaa NVDA:han epävakautta.\n"
 "Haluatko silti ottaa tämän lisäosan käyttöön?"
 
 #. Translators: The title of a dialog presented when an error occurs.
@@ -14699,7 +14699,7 @@ msgstr "&Kotisivu"
 #: gui\addonStoreGui\viewModels\store.py:215
 msgctxt "addonStore"
 msgid "&License"
-msgstr "K&äyttöoikeussopimus"
+msgstr "L&isenssi"
 
 #. Translators: Label for an action that opens the source code for the selected addon
 #: gui\addonStoreGui\viewModels\store.py:229
@@ -16168,13 +16168,13 @@ msgstr "Lihavointi käytössä"
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\excel.py:1238 NVDAObjects\window\winword.py:1544
 msgid "Italic off"
-msgstr "Kursivointi pois"
+msgstr "Kursiivi pois"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
 #: NVDAObjects\window\excel.py:1240 NVDAObjects\window\winword.py:1541
 msgid "Italic on"
-msgstr "Kursivointi käytössä"
+msgstr "Kursiivi käytössä"
 
 #. Translators: a message when toggling formatting in Microsoft Excel
 #. Translators: a message when toggling formatting in Microsoft word
@@ -17192,7 +17192,7 @@ msgstr "ei lihavointia"
 #. Translators: Reported when text is not italicized.
 #: speech\speech.py:2809
 msgid "no italic"
-msgstr "ei kursivointia"
+msgstr "ei kursiivia"
 
 #. Translators: Reported when text is formatted with double strikethrough.
 #. See http://en.wikipedia.org/wiki/Strikethrough

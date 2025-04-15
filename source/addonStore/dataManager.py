@@ -113,7 +113,8 @@ class _DataManager:
 		self._initialiseAvailableAddonsThread.start()
 
 	def terminate(self):
-		self.storeSettings.save()
+		if NVDAState.shouldWriteToDisk():
+			self.storeSettings.save()
 		if self._initialiseAvailableAddonsThread.is_alive():
 			self._initialiseAvailableAddonsThread.join(timeout=1)
 		if self._initialiseAvailableAddonsThread.is_alive():

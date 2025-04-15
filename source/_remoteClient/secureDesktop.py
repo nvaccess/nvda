@@ -224,7 +224,7 @@ class SecureDesktopHandler:
 			)
 
 		except Exception:
-			log.exception("Failed to initialize secure desktop connection.")
+			log.warning("Failed to initialize secure desktop connection.", exc_info=True)
 			return None
 
 	def _onLeaderDisplayChange(self, **kwargs: Any) -> None:

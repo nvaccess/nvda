@@ -7,11 +7,9 @@ from comtypes import COMError
 import ctypes
 import operator
 import uuid
-import time
 from logHandler import log
 import winUser
 import speech
-import braille
 import controlTypes
 import config
 import tableUtils
@@ -343,45 +341,6 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 				)
 
 	@script(
-		gestures=(
-			"kb:alt+home",
-			"kb:alt+end",
-			"kb:alt+pageUp",
-			"kb:alt+pageDown",
-		),
-	)
-	def script_caret_moveByCell(self, gesture: inputCore.InputGesture) -> None:
-		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
-		inTable = info._rangeObj.tables.count > 0
-		if not inTable:
-			gesture.send()
-			return
-		oldSelection = info.start, info.end
-		gesture.send()
-		start = time.time()
-		retryInterval = 0.01
-		maxTimeout = 0.15
-		elapsed = 0
-		while True:
-			if scriptHandler.isScriptWaiting():
-				# Prevent lag if keys are pressed rapidly
-				return
-			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
-			newSelection = info.start, info.end
-			if newSelection != oldSelection:
-				elapsed = time.time() - start
-				log.debug(f"Detected new selection after {elapsed} sec")
-				break
-			elapsed = time.time() - start
-			if elapsed >= maxTimeout:
-				log.debug(f"Canceled detecting new selection after {elapsed} sec")
-				break
-			time.sleep(retryInterval)
-		info.expand(textInfos.UNIT_CELL)
-		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
-		braille.handler.handleCaretMove(self)
-
-	@script(
 		description=_(
 			# Translators: a description for a script
 			"Reports the text of the comment where the system caret is located."
@@ -482,6 +441,9 @@ class WordDocument(IAccessible, EditableTextWithoutAutoSelectDetection, winWordW
 		newInfo.collapse()
 		newInfo.updateCaret()
 		return True
+
+	def _inTable(self, info: textInfos.TextInfo) -> bool:
+		return info._rangeObj.tables.count > 0
 
 	@script(
 		gesture="kb:control+alt+downArrow",

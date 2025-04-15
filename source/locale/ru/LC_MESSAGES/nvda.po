@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: nvda\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-07 00:09+0000\n"
-"PO-Revision-Date: 2024-10-08 00:28\n"
+"POT-Creation-Date: 2024-12-19 04:42+0000\n"
+"PO-Revision-Date: 2025-04-14 00:19\n"
 "Last-Translator: \n"
 "Language-Team: Russian\n"
 "Language: ru_RU\n"
@@ -525,7 +525,7 @@ msgstr "⠝⠑⠙⠏⠎⠞"
 #. Translators: Displayed in braille when an object supports autocompletion.
 #: braille.py:263
 msgid "..."
-msgstr "..."
+msgstr "⠄⠄⠄"
 
 #. Translators: Displayed in braille when an edit field allows typing multiple lines of text such as comment fields on websites.
 #: braille.py:265
@@ -8417,7 +8417,7 @@ msgstr "Установленные дополнения"
 #: addonStore\models\status.py:178
 msgctxt "addonStore"
 msgid "Updatable add-ons"
-msgstr "Обновлённые дополнения"
+msgstr "Обновления дополнений"
 
 #. Translators: The label of a tab to display available add-ons in the add-on store.
 #. Ensure the translation matches the label for the add-on list which includes an accelerator key.
@@ -8447,7 +8447,7 @@ msgstr "Установленные &дополнения"
 #: addonStore\models\status.py:197
 msgctxt "addonStore"
 msgid "Updatable &add-ons"
-msgstr "Обновлённые &дополнения"
+msgstr "Обновления &дополнений"
 
 #. Translators: The label of the add-ons list in the corresponding panel.
 #. Preferably use the same accelerator key for the four labels.
@@ -14179,7 +14179,7 @@ msgstr "Загрузка дополнений..."
 #: gui\addonStoreGui\controls\details.py:41
 msgctxt "addonStore"
 msgid "No add-on selected."
-msgstr "Нет выбранных дополнений."
+msgstr "Дополнение не выбрано."
 
 #. Translators: Label for the text control containing a description of the selected add-on.
 #. In the add-on store dialog.
@@ -14531,7 +14531,7 @@ msgstr "&Закрыть"
 #: gui\addonStoreGui\controls\messageDialogs.py:432
 msgctxt "addonStore"
 msgid "Updatable Add-ons"
-msgstr "Обновлённые дополнения"
+msgstr "Обновления дополнений"
 
 #. Translators: Label for an extra detail field for an add-on. In the add-on store UX.
 #. Translators: The name of the column that contains names of addons.
@@ -14907,25 +14907,25 @@ msgstr "Устанавливает заголовок столбца. Однок
 #: NVDAObjects\IAccessible\winword.py:262
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "Строка {rowNumber} от столбца {columnNumber} установлена в качестве заголовков столбцов"
+msgstr "Строка {rowNumber} столбец {columnNumber} установлены как заголовок столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:270
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of column headers"
-msgstr "Строка {rowNumber} столбец {columnNumber} уже установлены как заголовки столбцов"
+msgstr "Строка {rowNumber} столбец {columnNumber} уже установлены как заголовок столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:279
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from column headers"
-msgstr "Строка {rowNumber} столбец {columnNumber} удалены из заголовков столбцов"
+msgstr "Строка {rowNumber} столбец {columnNumber} удалены из заголовка столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:287
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in column headers"
-msgstr "Не удаётся найти  строку {rowNumber} столбец {columnNumber}в заголовках столбцов"
+msgstr "Строка {rowNumber} столбец {columnNumber}не установлены как заголовок столбца"
 
 #. Translators: The label of a shortcut of NVDA.
 #: NVDAObjects\IAccessible\winword.py:297
@@ -14936,25 +14936,25 @@ msgstr "Устанавливает заголовок строки. При од�
 #: NVDAObjects\IAccessible\winword.py:314
 #, python-brace-format
 msgid "Set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Столбец {columnNumber} от строки {rowNumber} установлен в качестве заголовков \\строк"
+msgstr "Строка {rowNumber} столбец {columnNumber} установлены как заголовок строки"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:322
 #, python-brace-format
 msgid "Already set row {rowNumber} column {columnNumber} as start of row headers"
-msgstr "Столбец {columnNumber} от строки {rowNumber} уже установлен в качестве заголовков для строк"
+msgstr "Строка {rowNumber} столбец {columnNumber} уже установлены как заголовок строки"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:331
 #, python-brace-format
 msgid "Removed row {rowNumber} column {columnNumber} from row headers"
-msgstr "Строка {rowNumber} столбец {columnNumber} удалены из заголовков строк"
+msgstr "Строка {rowNumber} столбец {columnNumber} удалены из заголовка строки"
 
 #. Translators: a message reported in the SetRowHeader script for Microsoft Word.
 #: NVDAObjects\IAccessible\winword.py:339
 #, python-brace-format
 msgid "Cannot find row {rowNumber} column {columnNumber} in row headers"
-msgstr "Не удаётся найти строку {rowNumber} столбец {columnNumber} в заголовках строк"
+msgstr "Строка {rowNumber} столбец {columnNumber}не установлены как заголовок строки"
 
 #. Translators: a description for a script
 #: NVDAObjects\IAccessible\winword.py:387
@@ -15214,13 +15214,13 @@ msgstr "Отображает текст комментария, в которо�
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:693
 msgid "Command not supported in this type of document. The tables have their first row cells automatically set as column headers."
-msgstr "Команда не поддерживается в этом типе документов. Ячейки первой строки таблиц автоматически устанавливаются в качестве заголовков столбцов."
+msgstr "Команда не поддерживается в этом типе документов. Ячейки первой строки таблиц автоматически устанавливаются в качестве заголовков столбца."
 
 #. Translators: The message reported in Microsoft Word for document types not supporting setting custom
 #. headers.
 #: NVDAObjects\UIA\wordDocument.py:704
 msgid "Command not supported in this type of document. The tables have their first column cells automatically set as row headers."
-msgstr "Команда не поддерживается в этом типе документов. Ячейки первых столбцов таблиц автоматически устанавливаются в качестве заголовков строк."
+msgstr "Команда не поддерживается в этом типе документов. Ячейки первых столбцов таблиц автоматически устанавливаются в качестве заголовков строки."
 
 #: NVDAObjects\window\__init__.py:410
 msgid "Desktop"
@@ -16275,54 +16275,54 @@ msgstr "Устанавливает заголовок столбца. Однок
 #: NVDAObjects\window\excel.py:1623
 #, python-brace-format
 msgid "Set {address} as start of column headers"
-msgstr "Установка координат {address} в качестве заголовков столбца"
+msgstr "Координаты {address} установлены как заголовок столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1627
 #, python-brace-format
 msgid "Already set {address} as start of column headers"
-msgstr "Координаты {address} уже установлены в качестве заголовков столбцов"
+msgstr "Координаты {address} уже установлены как заголовок столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1632
 #, python-brace-format
 msgid "Removed {address} from column headers"
-msgstr "Координаты {address} удалены из заголовков столбцов"
+msgstr "Координаты {address} удалены из заголовка столбца"
 
 #. Translators: a message reported in the SetColumnHeader script for Excel.
 #: NVDAObjects\window\excel.py:1636
 #, python-brace-format
 msgid "Cannot find {address} in column headers"
-msgstr "Не удаётся найти координаты {address} в заголовках столбцов"
+msgstr "Координаты {address} не установлены как заголовок столбца"
 
 #. Translators: the description for a script for Excel
 #: NVDAObjects\window\excel.py:1642
 msgid "Sets the current cell as start of row headers. Pressing once will set this cell as the first row header for any cell lower and to the right of it within this region. Pressing twice will forget the current row header for this cell."
-msgstr "Устанавливает текущую ячейку в качестве заголовка строки. Однократное нажатие установит эту ячейку в качестве первого заголовка строки для любой ячейки ниже и справа от неё в пределах этой области. Двойное нажатие сбросит текущий заголовок столбца для этой ячейки."
+msgstr "Устанавливает заголовок строки. Однократное нажатие установит эту ячейку в качестве первого заголовка строки для любой ячейки ниже и справа от неё в пределах этой области. Двойное нажатие сбросит текущий заголовок столбца для этой ячейки."
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1654
 #, python-brace-format
 msgid "Set {address} as start of row headers"
-msgstr "Установка координат {address} в качестве заголовков строк"
+msgstr "Координаты {address} установлены как заголовок строки"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1658
 #, python-brace-format
 msgid "Already set {address} as start of row headers"
-msgstr "Координаты {address} уже установлены в качестве заголовков строк"
+msgstr "Координаты {address} уже установлены как заголовок строки"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1663
 #, python-brace-format
 msgid "Removed {address}    from row headers"
-msgstr "Координаты {address} удалены из заголовков строки"
+msgstr "Координаты {address} удалены из заголовка строки"
 
 #. Translators: a message reported in the SetRowHeader script for Excel.
 #: NVDAObjects\window\excel.py:1666
 #, python-brace-format
 msgid "Cannot find {address}    in row headers"
-msgstr "Не удается найти координаты {address} в заголовках строк"
+msgstr "Координаты {address} не установлены как заголовок строки"
 
 #. Translators: a message reported in the get location text script for Excel. {0} is replaced with the name of the excel worksheet, and {1} is replaced with the row and column identifier EG "G4"
 #: NVDAObjects\window\excel.py:1753
@@ -16610,7 +16610,7 @@ msgstr "перемещено на"
 #. Translators: a Microsoft Word revision type (inserted table cell)
 #: NVDAObjects\window\winword.py:307
 msgid "cell insertion"
-msgstr "вставка ячейки"
+msgstr "вставка ячеек"
 
 #. Translators: a Microsoft Word revision type (deleted table cell)
 #: NVDAObjects\window\winword.py:309

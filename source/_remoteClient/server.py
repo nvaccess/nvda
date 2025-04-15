@@ -189,10 +189,10 @@ class RemoteCertificateManager:
 
 		# Add to trusted certificates in config
 		config = configuration.getRemoteConfig()
-		if "trusted_certs" not in config:
-			config["trusted_certs"] = {}
-		config["trusted_certs"]["localhost"] = fingerprint
-		config["trusted_certs"]["127.0.0.1"] = fingerprint
+		if "trustedCertificates" not in config:
+			config["trustedCertificates"] = {}
+		config["trustedCertificates"]["localhost"] = fingerprint
+		config["trustedCertificates"]["127.0.0.1"] = fingerprint
 
 		log.info("Generated new self-signed certificate for NVDA Remote. " f"Fingerprint: {fingerprint}")
 

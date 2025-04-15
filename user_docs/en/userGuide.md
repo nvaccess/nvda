@@ -58,7 +58,7 @@ Major highlights include:
 ### Internationalization {#Internationalization}
 
 It is important that people anywhere in the world, no matter what language they speak, get equal access to technology.
-Besides English, NVDA has been translated into 54 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
+Besides English, NVDA has been translated into 55 languages including: Afrikaans, Albanian, Amharic, Arabic, Aragonese, Bosnian, Bulgarian, Burmese, Catalan, Chinese (simplified and traditional), Croatian, Czech, Danish, Dutch, Farsi, Finnish, French, Galician, Georgian, German (Germany and Switzerland), Greek, Hebrew, Hindi, Hungarian, Icelandic, Irish, Italian, Japanese, Kannada, Korean, Kyrgyz, Lithuanian, Macedonian, Mongolian, Nepali, Norwegian, Polish, Portuguese (Brazil and Portugal), Punjabi, Romanian, Russian, Serbian, Slovak, Slovenian, Spanish (Colombia and Spain), Swedish, Tamil, Thai, Turkish, Ukrainian and Vietnamese.
 
 ### Speech Synthesizer Support {#SpeechSynthesizerSupport}
 
@@ -136,7 +136,7 @@ The year and version changes between updates to reflect the current release.
 1. Run the downloaded file.
 You may need to wait a few seconds while a temporary copy of NVDA loads.
 Once loaded, NVDA will speak throughout the rest of the process.
-1. The NVDA Launcher window appears with the license agreement.
+1. The NVDA Launcher window appears with a button to open the license agreement.
 Press the `downArrow` to read the license agreement.
 1. Press `tab` to move to the "I agree" checkbox, then press the `spacebar` to check it.
 1. Press `tab` to move through the options, then press `enter` on the desired option.
@@ -844,8 +844,8 @@ The following commands are available for reviewing text:
 |Move to end of line in review |shift+numpad3 |NVDA+end |none |Moves the review cursor to the end of the current line of text|
 |Move to previous page in review |`NVDA+pageUp` |`NVDA+shift+pageUp` |none |Moves the review cursor to the previous page of text if supported by the application|
 |Move to next page in review |`NVDA+pageDown` |`NVDA+shift+pageDown` |none |Moves the review cursor to the next page of text if supported by the application|
-|Move to start of selection in review |NVDA+alt+home |NVDA+alt+home |none |Moves the review cursor to the first character of the selected text|
-|Move to end of selection in review |NVDA+alt+end |NVDA+alt+end |none |Moves the review cursor to the last character of the selected text|
+|Move to start of selection in review |`NVDA+alt+home` |`NVDA+alt+home` |None |Moves the review cursor to the first character of the selected text|
+|Move to end of selection in review |`NVDA+alt+end` |`NVDA+alt+end` |None |Moves the review cursor to the last character of the selected text|
 |Say all with review |numpadPlus |NVDA+shift+a |3-finger flick down (text mode) |Reads from the current position of the review cursor, moving it as it goes|
 |Select then Copy from review cursor |NVDA+f9 |NVDA+f9 |none |Starts the select then copy process from the current position of the review cursor. The actual action is not performed until you tell NVDA where the end of the text range is|
 |Select then Copy to review cursor |NVDA+f10 |NVDA+f10 |none |On the first press, text is selected from the position previously set as start marker up to and including the review cursor's current position. If the system caret can reach the text, it will be moved to the selected text. After pressing this key stroke a second time, the text will be copied to the Windows clipboard|
@@ -1468,8 +1468,8 @@ After moving to the first cell in the column or row containing the headers, use 
 
 | Name |Key |Description|
 |---|---|---|
-|Set column headers |NVDA+shift+c |Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting.|
-|Set row headers |NVDA+shift+r |Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after this column. Pressing twice will clear the setting.|
+|Set column headers |`NVDA+shift+c` |Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting.|
+|Set row headers |`NVDA+shift+r` |Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after this column. Pressing twice will clear the setting.|
 
 <!-- KC:endInclude -->
 These settings will be stored in the document as bookmarks compatible with other screen readers such as JAWS.
@@ -1509,8 +1509,8 @@ After moving to the first cell in the column or row containing the headers, use 
 
 | Name |Key |Description|
 |---|---|---|
-|Set column headers |NVDA+shift+c |Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting.|
-|Set row headers |NVDA+shift+r |Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after this column. Pressing twice will clear the setting.|
+|Set column headers |`NVDA+shift+c` |Pressing this once tells NVDA this is the first header cell in the row that contains column headers, which should be automatically announced when moving between columns below this row. Pressing twice will clear the setting.|
+|Set row headers |`NVDA+shift+r` |Pressing this once tells NVDA this is the first header cell in the column that contains row headers, which should be automatically announced when moving between rows after this column. Pressing twice will clear the setting.|
 
 <!-- KC:endInclude -->
 These settings will be stored in the workbook as defined name ranges compatible with other screen readers such as JAWS.
@@ -1760,6 +1760,7 @@ This option is a checkbox that, when checked, tells NVDA to automatically save t
 
 This option is a checkbox that allows you to choose whether or not a dialog appears when you exit NVDA that asks what action you want to perform.
 When checked, a dialog will appear when you attempt to exit NVDA, offering the following possibilities:
+
 * exit
 * restart
 * restart with add-ons disabled and debug logging enabled
@@ -1937,10 +1938,6 @@ On by default, this option tells NVDA if the current voice's language can be tru
 If you find that NVDA is reading punctuation in the wrong language for a particular synthesizer or voice, you may wish to turn this off to force NVDA to use its global language setting instead.
 
 ##### Unicode normalization {#SpeechUnicodeNormalization}
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Enabled, Disabled|
-|Default |Enabled|
 
 When this option is enabled, unicode normalization is performed on the text that is spoken by NVDA.
 This is beneficial when speaking characters that can be represented in several forms.
@@ -1961,6 +1958,11 @@ For example, the character "ü" (u with umlaut/diaeresis), a common character in
 1. Stable ordering of modifiers in composite characters, for example in ancient Hebrew.
 
 To toggle Unicode normalization from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Enabled, Disabled|
+|Default |Enabled|
 
 ##### Report "Normalized" when navigating by character {#SpeechReportNormalizedForCharacterNavigation}
 
@@ -2461,8 +2463,6 @@ This mode may differ from "Sound split disabled" mode in case other audio proces
 Please note, that sound split doesn't work as a mixer.
 For example, if an application is playing a stereo sound track while sound split is set to "NVDA on the left and applications on the right", then you will only hear the right channel of the sound track, while the left channel of the sound track will be muted.
 
-If you wish to adjust volume of all applications except for NVDA, consider using [the dedicated commands](#OtherAppVolume).
-
 Please note, that if NVDA crashes, then it won't be able to restore application sounds volume, and those applications might still output sound only in one channel after NVDA crash.
 In order to mitigate this, please restart NVDA and select the mode "NVDA in both channels and applications in both channels".
 
@@ -2477,37 +2477,6 @@ By default only three modes are included.
 * NVDA on the left and applications in both channels.
 
 Note that it is necessary to check at least one mode.
-
-##### Allow NVDA to control the volume of other applications {#AppsVolumeAdjusterStatus}
-
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (No), No, Yes|
-|Default |No|
-
-This combo box determines whether NVDA commands can be used to adjust the volume of other applications running on the system.
-
-Possible values are:
-
-* No: NVDA doesn't interfere with the volume levels of other applications.
-* Yes: The volume of other applications can be adjusted via [other applications volume slider](#OtherAppVolume) and NVDA commands.
-Enabling this option causes NVDA's configuration to override any external changes to running applications' volumes (such as adjustments made by the Windows Volume Mixer) whenever NVDA modifies them.
-
-While [audio ducking](#SelectSynthesizerDuckingMode) does change the volume of other applications when engaged, it operates independently of this option.
-
-##### Volume of other applications {#OtherAppVolume}
-
-This slider allows you to adjust the volume of all currently running applications other than NVDA.
-
-To increase or decrease the volume of all currently running applications from anywhere, please assign custom gestures using the [Input Gestures dialog](#InputGestures).
-
-##### Mute other applications {#OtherAppMute}
-
-This check box allows you to mute or unmute all applications except NVDA at once.
-
-To mute or unmute all other applications from anywhere, please assign a custom gesture using the [Input Gestures dialog](#InputGestures).
-
-Please note that this option is not persistent: other apps will always be unmuted when NVDA restarts.
 
 ##### Time to keep audio device awake after speech {#AudioAwakeTime}
 
@@ -3073,7 +3042,7 @@ You may toggle through the available paragraph styles from anywhere by assigning
 
 This category allows you to adjust the behaviour of the Add-on Store.
 
-##### Update Notifications {#AutomaticAddonUpdates}
+##### Automatic updates {#AutomaticAddonUpdates}
 
 When this option is set to "Notify", the Add-on Store will notify you after NVDA startup if any add-on updates are available.
 This check is performed every 24 hours.
@@ -3133,6 +3102,84 @@ The read-only text box shows the current mirror URL.
 If no mirror is in use (i.e. the NV Access Add-on Store server is being used), "No mirror" is displayed.
 
 If you wish to change the Add-on Store mirror, press the "Change..." button to open the [Set Add-on Store Mirror dialog](#SetURLDialog).
+
+#### Remote Settings {#RemoteSettings}
+
+This category allows you to configure the behaviour of [Remote Access](#RemoteAccess).
+
+##### Enable Remote Access {#RemoteEnable}
+
+Use this checkbox to enable or disable NVDA's Remote Access feature.
+
+When this is unchecked, the Remote Access feature is entirely unavailable.
+
+Please note that in order to continue a Remote Access session on secure screens such as User Account Control prompts, you must enable this setting, save the changes, and then [copy your settings to NVDA's system configuration directory](#GeneralSettingsCopySettings).
+
+The following options are only available if Remote Access is enabled.
+
+##### Play sounds instead of beeps {#RemoteSoundsOrBeeps}
+
+Use this option to select the type of audio cues played by Remote.
+
+When checked, NVDA will produce natural-sounding audio cues for Remote events.
+When unchecked, NVDA will beep for Remote events.
+
+##### Automatically connect after NVDA starts {#RemoteAutoconnect}
+
+This option allows you to automatically establish a Remote Access session when NVDA starts.
+This could be useful, for example, to control your home computer when away from home.
+
+Use caution when enabling this option, as it may increase the risk of unauthorized access to your computer.
+
+##### Mode {#RemoteAutoconnectMode}
+
+Select the connection mode for automatic connections.
+
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
+
+|Option |Behaviour |
+|---|---|
+|Allow this machine to be controlled |Use this computer as the "controlling" computer. This allows you to execute commands on the remote computer. |
+|Control another machine |Use this computer as the "controlled" computer. This allows the operator of the "controlling" computer to use this computer as if they were sitting in front of it. |
+
+##### Server {#RemoteAutoconnectServer}
+
+Select the server type for automatic connections.
+
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
+
+|Option |Behaviour |
+|---|---|
+|Use existing |Use an existing Remote Access server to mediate the connection (recommended). |
+|Host locally |Use this instance of NVDA as the Remote Access server (advanced). This option may require network configuration that is out of scope for this manual. |
+
+##### Host {#RemoteAutoconnectHost}
+
+Use this field to set the URL of the Remote Access server you would like to use for automatic connections.
+If the server uses a port other than 6837, include it after a colon (eg. `example.com:1234`).
+
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Use existing".
+
+##### Port {#RemoteAutoconnectPort}
+
+Use this field to set the TCP port you would like to use for automatic connections.
+
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked, and [Server](#RemoteAutoconnectServer) is set to "Host locally".
+
+##### Key {#RemoteAutoconnectKey}
+
+Use this field to set the key (password) you would like to use for automatic connections.
+
+This option is only available when [Automatically connect after NVDA starts](#RemoteAutoconnect) is checked.
+
+##### Delete all trusted fingerprints {#RemoteDeleteFingerprints}
+
+This button allows you to forget the fingerprints of all previously trusted Remote Access servers.
+This means that you will again be asked whether to connect to all unauthorized Remote Access servers, even ones that you have previously connected to.
+You will be asked to confirm before all trusted fingerprints are deleted.
+This action cannot be undone.
+
+This option is only available if there are trusted fingerprints stored in your configuration.
 
 #### Windows OCR Settings {#Win10OcrSettings}
 
@@ -3372,15 +3419,15 @@ If you find that some necessary silence periods are also missing (e.g. pause bet
 
 ##### Use WASAPI for SAPI 4 audio output {#UseWASAPIForSAPI4}
 
-| . {.hideHeaderRow} |.|
-|---|---|
-|Options |Default (Enabled), Disabled, Enabled|
-|Default |Enabled|
-
 This option enables Microsoft Speech API version 4 (SAPI 4) voices to output audio via the Windows Audio Session API (WASAPI).
 This can allow SAPI 4 voices to work with more features, such as audio ducking, leading silence trimming, and keeping audio device awake.
 However, some SAPI 4 voices might not work with the current WASAPI implementation.
 If you find that the SAPI 4 voice you are using stops working, you may disable this option.
+
+| . {.hideHeaderRow} |.|
+|---|---|
+|Options |Default (Enabled), Disabled, Enabled|
+|Default |Enabled|
 
 ##### Caret move timeout (in MS) {#AdvancedSettingsCaretMoveTimeout}
 
@@ -3534,8 +3581,8 @@ The following NVDA key commands are also useful:
 
 | Name |Desktop key |Laptop key |Description|
 |---|---|---|---|
-|Save configuration |NVDA+control+c |NVDA+control+c |Saves your current configuration so that it is not lost when you exit NVDA|
-|Revert configuration |NVDA+control+r |NVDA+control+r |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults.|
+|Save configuration |`NVDA+control+c` |`NVDA+control+c` |Saves your current configuration so that it is not lost when you exit NVDA|
+|Revert configuration |`NVDA+control+r` |`NVDA+control+r` |Pressing once resets your configuration to when you last saved it. Pressing three times will reset it back to factory defaults.|
 
 <!-- KC:endInclude -->
 
@@ -3644,13 +3691,18 @@ Settings for NVDA when running during sign-in or on UAC screens are stored in th
 Usually, this configuration should not be touched.
 To change NVDA's configuration during sign-in or on UAC screens, configure NVDA as you wish while signed into Windows, save the configuration, and then press the "use currently saved settings during sign-in and on secure screens" button in the General category of the [NVDA Settings](#NVDASettings) dialog.
 
-## Remote Access {#remoteAccess}
+## Remote Access {#RemoteAccess}
 
-With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer. This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
+With NVDA's built-in remote access feature, you can control another computer running NVDA or allow someone to control your computer.
+This makes it easy to provide or receive assistance, collaborate, or access your own computer remotely.
+
+Remote access is disabled by default for your security.
+You can enable Remote Access [in Remote settings](#RemoteSettings).
 
 ### Getting Started {#RemoteAccessGettingStarted}
 
-Before you begin, ensure NVDA is installed and running on both computers. The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
+Before you begin, ensure NVDA is installed and running on both computers.
+The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
 
 ### Setting Up a Remote Session {#RemoteAccessSetup}
 
@@ -3674,29 +3726,88 @@ You’ll need to decide which computer will be controlled (the controlled comput
 
 Once connected, you can control the other computer, including typing and navigating applications, just as if you were sitting in front of it.
 
-### Remote Connection Options {#RemoteAccessConnectionOptions}
+### The Remote Connection Dialog {#RemoteAccessConnect}
+
+The Remote connection dialog allows you to set up a Remote Access session.
+To get to the Remote Connection dialog, open the NVDA menu, and navigate to Tools, then Remote, then Connect....
+
+The first control in this dialog is the Mode control.
+This allows you to select whether your computer will be controlled remotely, or be remotely controlling another.
+You cannot change the connection mode once a connection is established.
+Choose "Allow this computer to be controlled" if you are going to be getting technical assistance.
+
+Next is the Server control, which lets you choose the type of control server you would like to use.
+Most users should select to use an existing Relay server.
 
 You can choose between two connection types depending on your setup:
 
-* Relay Server (easier): Uses a public or private server to mediate the connection. Only the server hostname and key are needed.
-* Direct Connection (advanced): Connects directly without a server. Requires network setup, such as port forwarding.
+* Use existing (basic): Uses a public or private server to mediate the connection.
+  Only the server hostname (URL) and key are needed.
+* Host locally (advanced): Connect directly by running the server inside NVDA.
+  Requires network setup, such as port forwarding.
+
+The next few options configure the network connection, and differ depending on the connection type you have chosen.
+
+#### Existing server options {#RemoteAccessConnectExisting}
+
+These options are shown when the server type is set to "Use existing".
+
+The host field is where you should enter the URL of the Remote Access server you will use to mediate the connection.
+
+Optionally, you may include the port to connect on by appending a colon (":") and the port number to the host.
+For example, `example.com:1234`.
+If no port is provided, Remote Access will use port 6837.
+
+The key field is where you should enter the key for the remote session you are creating or connecting to.
+The key identifies and controls access to a remote session.
+
+If you are creating a Remote Access session, choose a key that is unique and not easily guessable.
+Alternatively, press "Generate key" to have the Remote Access server generate a key for you.
+
+If you are joining an existing session, enter the key exactly as provided.
+Pay careful attention to capitalisation, spaces and punctuation.
+
+#### Local server options {#RemoteAccessConnectLocal}
+
+These options are shown when the Server is set to "Host locally".
+
+Warning: locally hosting the control server in NVDA is an advanced option, and may require network setup that is out of scope for this manual.
+
+The External IP field shows your currently detected external IP address.
+This field is initially blank.
+To detect your external IP address, press "Get external IP".
+This will also check whether the selected port is open.
+Note that this test may not be 100% accurate.
+
+The port field is where you should enter the port you want to use for Remote connections.
+This should be a port that is not used by any other services.
+The port should also be open, and forwarded.
+By default, Remote Access uses port 6837.
+
+The key field is where you should enter the key for this Remote session.
+This is essentially the password for this session.
+Alternatively, press "Generate key" to have NVDA generate a key for you.
 
 ### Using Remote Access {#RemoteAccessUsage}
 
 Once the session is active, you can switch between controlling the remote computer and your own, share your clipboard, and mute the remote session:
 
-* Press `NVDA+f11` to toggle between controlling and returning to your own computer.
+* Press `NVDA+alt+tab` to toggle between controlling and returning to your own computer.
 * Push text from your clipboard to the other computer by opening the NVDA menu, then selecting Tools, then Remote, then Push Clipboard.
 * Mute the remote computer's speech output on your local computer by opening the NVDA menu, then selecting Tools, then Remote, then Mute Remote.
 
 ### Remote Access Key Commands Summary {#RemoteAccessGestures}
 
 <!-- KC:beginInclude -->
-| Action | Key Command | Description |
+| Name |Key |Description|
 |---|---|---|
-| Toggle control | `NVDA+f11` | Switch between controlling the local and remote computer. |
-| Push clipboard | `NVDA+ctrl+shift+c` | Send clipboard text to the other computer. |
-| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnect from it. Otherwise, start a new remote session. |
+| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnects from it. Otherwise, starts a new Remote session. |
+| Toggle Control | `NVDA+alt+tab` | Switches between controlling the remote and local computer. |
+| Connect | None | Starts a new Remote Access session. |
+| Copy link | None | Copies a link to the remote session to the clipboard. |
+| Disconnect | None | Ends an existing Remote Access session. |
+| Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
+| Push clipboard | None | Sends the contents of the clipboard to the remote computer. |
 <!-- KC:endInclude -->
 
 You can assign further commands in the Remote section of the [Input Gestures dialog](#InputGestures).
@@ -3841,7 +3952,7 @@ This links to a GitHub Discussion webpage, where you will be able to read and wr
 Please be aware that this doesn't replace direct communication with add-on developers.
 Instead, the purpose of this feature is to share feedback to help users decide if an add-on may be useful for them.
 
-#### Changing the automatic update channel (#AddonStoreUpdateChannel)
+#### Changing the automatic update channel {#AddonStoreUpdateChannel}
 
 You can manage the automatic update channels for add-ons from the [installed and updatable add-ons tabs](#AddonStoreFilterStatus).
 When [Automatic add-on updates](#AutomaticAddonUpdates) are enabled, add-ons will update to the same [channel](#AddonStoreFilterChannel) they were installed from by [default](#DefaultAddonUpdateChannel).
@@ -5394,10 +5505,10 @@ Following are the command line options for NVDA:
 |`-f LOGFILENAME` |`--log-file=LOGFILENAME` |The file where log messages should be written to. Logging is always disabled if secure mode is enabled.|
 |`-l LOGLEVEL` |`--log-level=LOGLEVEL` |The lowest level of message logged (debug 10, input/output 12, debug warning 15, info 20, disabled 100). Logging is always disabled if secure mode is enabled.|
 |`-c CONFIGPATH` |`--config-path=CONFIGPATH` |The path where all settings for NVDA are stored. The default value is forced if secure mode is enabled.|
-|None |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
+|`-n LANGUAGE` |`--lang=LANGUAGE` |Override the configured NVDA language. Set to "Windows" for current user default, "en" for English, etc.|
 |`-m` |`--minimal` |No sounds, no interface, no start message, etc.|
 |`-s` |`--secure` |Starts NVDA in [Secure Mode](#SecureMode)|
-|None |`--disable-addons` |Add-ons will have no effect|
+|`-d` |`--disable-addons` |Add-ons will have no effect|
 |None |`--debug-logging` |Enable debug level logging just for this run. This setting will override any other log level ( `--loglevel`, `-l`) argument given, including no logging option.|
 |None |`--no-logging` |Disable logging altogether while using NVDA. This setting can be overridden if a log level (`--loglevel`, `-l`) is specified from command line or if debug logging is turned on.|
 |None |`--no-sr-flag` |Don't change the global system screen reader flag|

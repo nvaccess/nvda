@@ -6,7 +6,7 @@
 import json
 import unittest
 from enum import Enum
-from remoteClient.serializer import JSONSerializer, SpeechCommandJSONEncoder, asSequence
+from _remoteClient.serializer import JSONSerializer, SpeechCommandJSONEncoder, asSequence
 
 
 # Create a dummy Enum for test purposes.

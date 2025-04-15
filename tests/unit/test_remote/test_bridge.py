@@ -4,8 +4,8 @@
 # See the file COPYING for more details.
 
 import unittest
-from remoteClient.bridge import BridgeTransport
-from remoteClient.transport import Transport, RemoteMessageType
+from _remoteClient.bridge import BridgeTransport
+from _remoteClient.transport import Transport, RemoteMessageType
 
 
 # A fake transport that implements minimal Transport interface for testing BridgeTransport.

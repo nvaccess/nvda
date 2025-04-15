@@ -2069,6 +2069,45 @@ class WordDocument(Window, EditableTextBase):
 		# Translators: a message when toggling paragraph spacing in Microsoft word
 		ui.message(_("{val:g} pt space before paragraph").format(val=val))
 
+	@script(
+		gestures=(
+			"kb:alt+home",
+			"kb:alt+end",
+			"kb:alt+pageUp",
+			"kb:alt+pageDown",
+		),
+	)
+	def script_caret_moveByCell(self, gesture: "inputCore.InputGesture") -> None:
+		info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+		inTable = self._inTable(info)
+		if not inTable:
+			gesture.send()
+			return
+		oldSelection = info.start, info.end
+		gesture.send()
+		start = time.time()
+		retryInterval = 0.01
+		maxTimeout = 0.15
+		elapsed = 0
+		while True:
+			if scriptHandler.isScriptWaiting():
+				# Prevent lag if keys are pressed rapidly
+				return
+			info = self.makeTextInfo(textInfos.POSITION_SELECTION)
+			newSelection = info.start, info.end
+			if newSelection != oldSelection:
+				elapsed = time.time() - start
+				log.debug(f"Detected new selection after {elapsed} sec")
+				break
+			elapsed = time.time() - start
+			if elapsed >= maxTimeout:
+				log.debug(f"Canceled detecting new selection after {elapsed} sec")
+				break
+			time.sleep(retryInterval)
+		info.expand(textInfos.UNIT_CELL)
+		speech.speakTextInfo(info, reason=controlTypes.OutputReason.FOCUS)
+		braille.handler.handleCaretMove(self)
+
 	def initOverlayClass(self):
 		if isinstance(self, EditableTextWithoutAutoSelectDetection):
 			self.bindGesture("kb:alt+shift+home", "caret_changeSelection")
