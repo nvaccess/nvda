@@ -6,11 +6,11 @@
 
 ### New Features
 
-* NVDA can report the language of the text being read (#17664, @nvdaes):
+* NVDA can report the language of the text being read. (#17664, @nvdaes):
   * When language switching is enabled, new options are available to:
     * report the language of the text being read
     * report if the language switched to is not supported, via speech output or beep
-  * A new unassigned command has been added to report the language of the text at caret position
+  * A new unassigned command has been added to report the language of the text at the caret position
 
 ### Changes
 
