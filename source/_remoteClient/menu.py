@@ -179,5 +179,5 @@ class RemoteMenu(wx.Menu):
 			self.doDisconnect,
 			self.connectionItem,
 		)
-		# The option to disconnect from a RemoteAccess session should always be available.
+		# The option to disconnect from a Remote Access session should always be available.
 		self.connectionItem.Enable()
