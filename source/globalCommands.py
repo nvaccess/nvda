@@ -4928,8 +4928,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(
 		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
-		gui.blockAction.Context.MODAL_DIALOG_OPEN,
 		gui.blockAction.Context.SECURE_MODE,
+		gui.blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
 		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.connecting:
