@@ -525,7 +525,7 @@ class RemoteClient:
 				pgettext(
 					"remote",
 					# Translators: Message shown when trying to connect while already connected.
-					"Remote Access is already connected. Disconnect before starting a new connection.",
+					"A Remote Access session is already in progress. Disconnect before starting a new session.",
 				),
 				# Translators: Title of the connection error dialog.
 				pgettext("remote", "Already Connected"),

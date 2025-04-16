@@ -3510,7 +3510,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				message = pgettext(
 					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the host or key field empty.
-					"Both host and key must be set in the Remote Access section in order to automatically connect using an existing Remote Access server after NVDA starts.",
+					"Both host and key must be set in the Remote Access section in order to automatically connect using an existing server after NVDA starts.",
 				)
 			elif self.clientOrServer.GetSelection() and not self.port.GetValue() or not self.key.GetValue():
 				message = pgettext(
