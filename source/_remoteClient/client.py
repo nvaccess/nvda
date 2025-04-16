@@ -466,7 +466,7 @@ class RemoteClient:
 			# Translators: Presented when attempting to switch to controling a remote computer when connected as the controlled computer.
 			ui.message(pgettext("remote", "Not the controlling computer"))
 			return
-		elif self.leaderSession.connectedFollowersCount < 1:
+		elif self.leaderSession.connectedFollowersCount < 1 and not self.sendingKeys:
 			# Translators: Presented when attempting to switch to controling a remote computer when there are no controllable computers in the channel.
 			ui.message(pgettext("remote", "No controlled computers are connected"))
 			return
