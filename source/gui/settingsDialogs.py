@@ -3385,7 +3385,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
-		self.bindHelpEvent("RemoteAutoerver", self.clientOrServer)
+		self.bindHelpEvent("RemoteAutoconnectServer", self.clientOrServer)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
 			# Translators: Label for the host field in Remote Access settings.
@@ -3489,7 +3489,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				"remote",
 				# Translators: This message is presented when the user tries to delete all stored trusted fingerprints.
 				"This will cause NVDA to forget all previously trusted Remote Access servers. "
-				"When connecting to a previously trusted unrecognised Remote Access server, you will again be asked whether to trust its certificate.\n\n"
+				"When connecting to a previously trusted unrecognised server, you will again be asked whether to trust its certificate.\n\n"
 				"Are you sure you want to continue? This action cannot be undone.",
 			),
 			# Translators: This is the title of the dialog presented when the user tries to delete all stored trusted fingerprints.
@@ -3516,7 +3516,7 @@ class RemoteSettingsPanel(SettingsPanel):
 				message = pgettext(
 					"remote",
 					# Translators: This message is presented when the user tries to save the settings with the port or key field empty.
-					"Both port and key must be set in the Remote Access section in order to automatically connect using a locally hosted Remote Access server after NVDA starts.",
+					"Both port and key must be set in the Remote Access category in order to automatically connect using a locally hosted server after NVDA starts.",
 				)
 			if message is not None:
 				gui.messageBox(
