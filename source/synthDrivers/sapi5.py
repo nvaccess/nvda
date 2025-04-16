@@ -560,6 +560,8 @@ class SynthDriver(SynthDriver):
 		# Therefore  instruct the audio player to stop first, before interupting and purging any remaining speech.
 		self.isSpeaking = False
 		self.player.stop()
+		self.sonicStream.flush()
+		self.sonicStream.readShort()  # discard data left in stream
 		self.tts.Speak(None, SpeechVoiceSpeakFlags.Async | SpeechVoiceSpeakFlags.PurgeBeforeSpeak)
 
 	def pause(self, switch: bool):
