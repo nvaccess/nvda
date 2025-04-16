@@ -4910,10 +4910,7 @@ class GlobalCommands(ScriptableObject):
 		# Translators: Documentation string for the script that disconnects a remote session.
 		description=_("Disconnect a remote session"),
 	)
-	@gui.blockAction.when(
-		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
-		gui.blockAction.Context.SECURE_MODE,
-	)
+	@gui.blockAction.when(gui.blockAction.Context.REMOTE_ACCESS_DISABLED)
 	def script_disconnectFromRemote(self, gesture: "inputCore.InputGesture"):
 		if not _remoteClient._remoteClient.isConnected:
 			# Translators: A message indicating that the remote client is not connected.
@@ -4928,8 +4925,8 @@ class GlobalCommands(ScriptableObject):
 	)
 	@gui.blockAction.when(
 		gui.blockAction.Context.REMOTE_ACCESS_DISABLED,
-		gui.blockAction.Context.MODAL_DIALOG_OPEN,
 		gui.blockAction.Context.SECURE_MODE,
+		gui.blockAction.Context.MODAL_DIALOG_OPEN,
 	)
 	def script_connectToRemote(self, gesture: "inputCore.InputGesture"):
 		if _remoteClient._remoteClient.isConnected() or _remoteClient._remoteClient.connecting:
