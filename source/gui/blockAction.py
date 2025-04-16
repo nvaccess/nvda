@@ -91,7 +91,7 @@ class Context(_Context, Enum):
 	REMOTE_ACCESS_DISABLED = (
 		_isRemoteAccessDisabled,
 		# Translators: Reported when an action cannot be performed because Remote Access functionality is disabled.
-		_("Action unavailable when Remote Access is disabled"),
+		pgettext("remote", "Action unavailable when Remote Access is disabled"),
 	)
 
 
