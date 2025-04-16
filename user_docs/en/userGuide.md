@@ -3708,6 +3708,9 @@ The remote access feature is available from the Tools menu in NVDA—there’s n
 
 You’ll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
+You cannot initiate a new Remote Access session if NVDA is running in [secure mode](#SecureMode).
+However, NVDA will still respect the [Automatically connect after NVDA starts](RemoteAutoconnect) setting in secure mode.
+
 #### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
 1. Open the NVDA menu and select Tools, then Remote, then Connect.
@@ -3801,9 +3804,9 @@ Once the session is active, you can switch between controlling the remote comput
 <!-- KC:beginInclude -->
 | Name |Key |Description|
 |---|---|---|
-| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnects from it. Otherwise, starts a new Remote session. |
+| Connect or disconnect | `NVDA+alt+r` | If a remote session is in progress, disconnects from it. Otherwise, starts a new Remote session. Only works if currently connected in [secure mode](#SecureMode). |
 | Toggle Control | `NVDA+alt+tab` | Switches between controlling the remote and local computer. |
-| Connect | None | Starts a new Remote Access session. |
+| Connect | None | Starts a new Remote Access session. Unavailable in [secure mode](#SecureMode). |
 | Copy link | None | Copies a link to the remote session to the clipboard. |
 | Disconnect | None | Ends an existing Remote Access session. |
 | Mute remote | None | Mutes or unmutes the speech coming from the remote computer. |
