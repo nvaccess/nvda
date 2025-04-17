@@ -69,6 +69,7 @@ from base64 import b16encode
 import vision
 from utils.security import objectBelowLockScreenAndWindowsIsLocked
 import audio
+import synthDriverHandler
 from utils.displayString import DisplayStringEnum
 import _remoteClient
 
@@ -4875,6 +4876,38 @@ class GlobalCommands(ScriptableObject):
 	)
 	def script_cycleSoundSplit(self, gesture: "inputCore.InputGesture") -> None:
 		audio._toggleSoundSplitState()
+
+	@script(
+		description=_(
+			# Translators: Input help mode message for report language for caret command.
+			"Reports the language for the text under the caret, and if the language is not supported by the current synthesizer. "
+			"If pressed twice, presents the information in browse mode",
+		),
+		category=SCRCAT_SYSTEMCARET,
+		speakOnDemand=True,
+	)
+	def script_reportCaretLanguage(self, gesture: "inputCore.InputGesture"):
+		info = self._getTIAtCaret()
+		info.expand(textInfos.UNIT_CHARACTER)
+		curLanguage = self._getCurrentLanguageForTextInfo(info)
+		languageDescription = languageHandler.getLanguageDescription(curLanguage)
+		if languageDescription is None:
+			languageDescription = curLanguage
+		curSynth = synthDriverHandler.getSynth()
+		if curSynth.languageIsSupported(curLanguage):
+			message = languageDescription
+		else:
+			# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
+			message = _("{languageDescription} (not supported)").format(
+				languageDescription=languageDescription
+			)
+		repeats = scriptHandler.getLastScriptRepeatCount()
+		if repeats == 0:
+			ui.message(message)
+		elif repeats == 1:
+			# Translators: title for report caret language dialog.
+			title = _("Language at caret position")
+			ui.browseableMessage(message, title, copyButton=True, closeButton=True)
 
 	@script(
 		# Translators: Describes a command.
