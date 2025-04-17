@@ -3702,11 +3702,11 @@ You can enable Remote Access [in Remote settings](#RemoteSettings).
 ### Getting Started {#RemoteAccessGettingStarted}
 
 Before you begin, ensure NVDA is installed and running on both computers.
-The remote access feature is available from the Tools menu in NVDA—there’s no need for additional downloads or installations.
+The remote access feature is available from the Tools menu in NVDA; there's no need for additional downloads or installations.
 
 ### Setting Up a Remote Session {#RemoteAccessSetup}
 
-You’ll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
+You'll need to decide which computer will be controlled (the controlled computer) and which will be controlling (the controlling computer).
 
 #### Steps for the Controlled Computer {#RemoteAccessSetupControlled}
 
