@@ -125,7 +125,7 @@ class SpeechState:
 	oldRowSpan = None
 	oldColumnNumber = None
 	oldColumnSpan = None
-	lastReportedLanguage = None
+	lastReportedLanguage: str | None = None
 
 
 def getState():
