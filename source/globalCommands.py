@@ -4898,7 +4898,9 @@ class GlobalCommands(ScriptableObject):
 			message = languageDescription
 		else:
 			# Translators: Language of the character at caret position when it's not supported by the current synthesizer.
-			message = _("{languageDescription} (not supported)").format(languageDescription=languageDescription)
+			message = _("{languageDescription} (not supported)").format(
+				languageDescription=languageDescription
+			)
 		repeats = scriptHandler.getLastScriptRepeatCount()
 		if repeats == 0:
 			ui.message(message)
