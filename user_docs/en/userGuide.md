@@ -4053,7 +4053,7 @@ To toggle the braille viewer from anywhere, please assign a custom gesture using
 ### Python Console {#PythonConsole}
 
 The NVDA Python console, found under Tools in the NVDA menu, is a development tool which is useful for debugging, general inspection of NVDA internals or inspection of the accessibility hierarchy of an application.
-For more information, please see the [NVDA Developer Guide](https://www.nvaccess.org/files/nvda/documentation/developerGuide.html).
+For more information, please see the [NVDA Developer Guide](https://download.nvaccess.org/documentation/developerGuide.html).
 
 ### Add-on Store {#AddonStoreMenuItem}
 

@@ -41,7 +41,7 @@ It is possible to run NVDA directly from source without having to build the full
 To launch NVDA from source, using `cmd.exe`, execute `runnvda.bat` in the root of the repository.
 
 To view help on the arguments that NVDA will accept, use the `-h` or `--help` option.
-These arguments are also documented in the [user guide](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#CommandLineOptions).
+These arguments are also documented in the [user guide](https://download.nvaccess.org/documentation/userGuide.html#CommandLineOptions).
 
 ## Making Binary Builds
 

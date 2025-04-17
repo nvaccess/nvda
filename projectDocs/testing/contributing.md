@@ -3,7 +3,7 @@
 ## Builds
 
 Testing alpha / beta / and release candidates (RC) help to ensure the quality of the NVDA project.
-You can find the latest builds [here](https://www.nvaccess.org/files/nvda/snapshots/).
+Download the [latest alpha builds](https://download.nvaccess.org/snapshots/alpha) or [beta/RC builds](https://download.nvaccess.org/snapshots/beta/).
 
 * The alpha builds are bleeding edge.
 It includes code that is being tested for possible inclusion in upcoming releases, but it may not yet be tested much (if at all) and there may be major bugs.

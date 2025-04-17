@@ -22,7 +22,7 @@ Their contribution helps us maintain the security and integrity of our releases.
 
 * [Support and information for NVDA users](https://www.nvaccess.org/get-help/)
 * [Report an issue or feature request](./projectDocs/issues/readme.md)
-* [Getting add-ons](https://www.nvaccess.org/files/nvda/documentation/userGuide.html#AddonsManager)
+* [Getting add-ons](https://download.nvaccess.org/documentation/userGuide.html#AddonsManager)
 * [Contact list](./projectDocs/community/expertsList.md) for NV Access and community experts.
 * [More important links and community information](./projectDocs/community/readme.md)
 
