@@ -120,14 +120,36 @@ class AcrobatNode(IAccessible):
 		return super(AcrobatNode, self)._isEqual(other)
 
 	def _getNodeMathMl(self, node):
-		tag = node.GetTagName()
-		yield "<%s" % tag
-		# Output relevant attributes.
-		if tag == "mfenced":
-			for attr in "open", "close", "separators":
-				val = node.GetAttribute(attr, "XML-1.00")
+		"""Traverse the MathML tree and return an XML string representing the math"""
+
+		def getMathMLAttributes(node, attrList: list) -> str:
+			attrValues = ""
+			# log.info(f"\nstart getMathMLAttributes -- looking for: {attrList}")
+			for attr in attrList:
+				val = node.GetAttribute(attr, "NSO")
 				if val:
-					yield ' %s="%s"' % (attr, val)
+					attrValues += f' {attr}="{val}"'
+			# log.info(f"getMathMLAttributes: found attrValues={attrValues}")
+			return attrValues
+
+		tag = node.GetTagName()
+		# log.info(f"_getNodeMathMl: mathml tag={tag}")
+		yield "<%s" % tag
+		# Output relevant attributes
+		id = node.GetID()
+		if id:
+			yield f' id="{id}"'
+		yield getMathMLAttributes(node, ["intent", "arg"])
+		if tag == "mi" or tag == "mn" or tag == "mo" or tag == "mtext":
+			yield getMathMLAttributes(node, ["mathvariant"])
+		elif tag == "mfenced":
+			yield getMathMLAttributes(node, ["open", "close", "separators"])
+		elif tag == "menclose":
+			yield getMathMLAttributes(node, ["notation"])
+		elif tag == "annotation-xml" or tag == "annotation":
+			yield getMathMLAttributes(node, ["encoding"])
+		elif tag == "ms":
+			yield getMathMLAttributes(node, ["open", "close"])
 		yield ">"
 		val = node.GetValue()
 		if val:
@@ -144,9 +166,28 @@ class AcrobatNode(IAccessible):
 
 	def _get_mathMl(self) -> str:
 		"""Return the MathML associated with a Formula tag"""
+		# There are two ways that MathML can be represented in a PDF:
+		# 1. As a series of nested tags, each with a MathML element as the value.
+		# 2. As a Formula tag with MathML as the value (comes from MathML in an Associated File)
 		if self.pdDomNode is None:
 			log.debugWarning("_get_mathMl: self.pdDomNode is None!")
 			raise LookupError
+
+		# see if it is MathML tagging is used
+		for childNum in range(self.pdDomNode.GetChildCount()):
+			try:
+				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
+			except COMError:
+				log.debugWarning(f"COMError trying to get childNum={childNum}")
+				continue
+			if log.isEnabledFor(log.DEBUG):
+				log.debug(f"\t(PDF) get_mathMl: tag={child.GetTagName()}")
+			if child.GetTagName() == "math":
+				answer = "".join(self._getNodeMathMl(child))
+				if log.isEnabledFor(log.DEBUG):
+					log.debug(f"_get_mathMl: found MathML = {answer}")
+				return answer
+
 		mathMl = self.pdDomNode.GetValue()
 		if log.isEnabledFor(log.DEBUG):
 			log.debug(
@@ -159,21 +200,11 @@ class AcrobatNode(IAccessible):
 		# this test and the replacement doesn't work if someone uses a namespace tag (which they shouldn't, but..)
 		if mathMl.startswith("<math"):
 			return mathMl.replace('xmlns:mml="http://www.w3.org/1998/Math/MathML"', "")
-		# Alternative for tagging: all the sub expressions are tagged -- gather up the MathML
-		for childNum in range(self.pdDomNode.GetChildCount()):
-			try:
-				child = self.pdDomNode.GetChild(childNum).QueryInterface(IPDDomElement)
-			except COMError:
-				log.debugWarning(f"COMError trying to get childNum={childNum}")
-				continue
-			if log.isEnabledFor(log.DEBUG):
-				log.debug(f"\tget_mathMl: tag={child.GetTagName()}")
-			if child.GetTagName() == "math":
-				return "".join(self._getNodeMathMl(child))
-		# fall back to return the contents, which is hopefully alt text
+
+		# not MathML -- fall back to return the contents, which is hopefully alt text, inside an <mtext>
 		if log.isEnabledFor(log.DEBUG):
 			log.debug("_get_mathMl: didn't find MathML -- returning value as mtext")
-		return f"<math><mtext>{self.pdDomNode.GetValue()}</mtext></math>"
+		return f"<math><mtext>{mathMl}</mtext></math>"
 
 
 class RootNode(AcrobatNode):
