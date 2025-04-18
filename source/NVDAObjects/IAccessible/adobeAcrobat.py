@@ -124,18 +124,22 @@ class AcrobatNode(IAccessible):
 
 		def getMathMLAttributes(node, attrList: list) -> str:
 			attrValues = ""
-			log.info(f"\nstart getMathMLAttributes: attrValues={attrValues}")
+			# log.info(f"\nstart getMathMLAttributes -- looking for: {attrList}")
 			for attr in attrList:
-				val = node.GetAttribute(attr, "XML-1.00")
+				val = node.GetAttribute(attr, "NSO")
 				if val:
-					attrValues += ' %s="%s"' % (attr, val)
-			log.info(f"getMathMLAttributes: attrValues={attrValues}")
-			yield attrValues
+					attrValues += f' {attr}="{val}"'
+			# log.info(f"getMathMLAttributes: found attrValues={attrValues}")
+			return attrValues
 
 		tag = node.GetTagName()
+		# log.info(f"_getNodeMathMl: mathml tag={tag}")
 		yield "<%s" % tag
-		# Output relevant attributes.
-		yield getMathMLAttributes(node, ["id", "intent", "arg"])
+		# Output relevant attributes
+		id = node.GetID()
+		if id:
+			yield f' id="{id}"'
+		yield getMathMLAttributes(node, ["intent", "arg"])
 		if tag == "mi" or tag == "mn" or tag == "mo" or tag == "mtext":
 			yield getMathMLAttributes(node, ["mathvariant"])
 		elif tag == "mfenced":
@@ -148,7 +152,6 @@ class AcrobatNode(IAccessible):
 			yield getMathMLAttributes(node, ["open", "close"])
 		yield ">"
 		val = node.GetValue()
-		log.info(f"_getNodeMathMl: mathml tag={tag}")
 		if val:
 			yield val
 		else:
@@ -180,9 +183,11 @@ class AcrobatNode(IAccessible):
 			if log.isEnabledFor(log.DEBUG):
 				log.debug(f"\t(PDF) get_mathMl: tag={child.GetTagName()}")
 			if child.GetTagName() == "math":
-				return "".join(self._getNodeMathMl(child))
+				answer = "".join(self._getNodeMathMl(child))
+				if log.isEnabledFor(log.DEBUG):
+					log.debug(f"_get_mathMl: found MathML = {answer}")
+				return answer
 
-		#
 		mathMl = self.pdDomNode.GetValue()
 		if log.isEnabledFor(log.DEBUG):
 			log.debug(
