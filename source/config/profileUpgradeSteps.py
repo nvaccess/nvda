@@ -24,6 +24,7 @@ from config.configFlags import (
 	OutputMode,
 	ReportCellBorders,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ShowMessages,
 	TetherTo,
@@ -577,3 +578,22 @@ def upgradeConfigFrom_16_to_17(profile: ConfigObj) -> None:
 					log.debug(
 						f"Renamed config['remote']['{sectionKey}']['{oldItemKey}'] to config['remote']['{sectionKey}']['{newItemKey}'].",
 					)
+
+def upgradeConfigFrom_17_to_18(profile: ConfigObj):
+	"""Convert report spelling errors configurations from boolean to integer values."""
+
+	section = "documentFormatting"
+	key = "reportSpellingErrors"
+	try:
+		oldValue: bool = profile[section].as_bool(key)
+	except KeyError:
+		log.debug(f"'{key}' not present in config, no action taken.")
+		return
+	except ValueError:
+		log.error(f"'{key}' is not a boolean, got {profile[section][key]!r}. Deleting.")
+		del profile[section][key]
+		return
+	else:
+		newValue = ReportSpellingErrors.SPEECH.value if oldValue else ReportSpellingErrors.OFF.value
+		profile[section][key] = newValue
+		log.debug(f"Converted '{key}' from {oldValue!r} to {newValue} ({ReportSpellingErrors(newValue).name}).")

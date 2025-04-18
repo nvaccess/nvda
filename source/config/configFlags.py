@@ -181,6 +181,32 @@ class ReportLineIndentation(DisplayStringIntEnum):
 
 
 @unique
+class ReportSpellingErrors(DisplayStringIntEnum):
+	"""Enumeration containing the possible config values to report spelling errors while reading.
+
+	Use ReportSpellingErrors.MEMBER.value to compare with the config;
+	use ReportSpellingErrors.MEMBER.displayString in the UI for a translatable description of this member.
+	"""
+
+	OFF = 0
+	SPEECH = 1
+	SOUND = 2
+
+	@property
+	def _displayStringLabels(self):
+		return {
+			# Translators: A choice in a combo box in the document formatting dialog to not report spelling errors.
+			ReportSpellingErrors.OFF: pgettext("line indentation setting", "Off"),
+			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
+			# with Speech.
+			ReportSpellingErrors.SPEECH: pgettext("line indentation setting", "Speech"),
+			# Translators: A choice in a combo box in the document formatting dialog to report spelling errors
+			# with a sound.
+			ReportSpellingErrors.SOUND: pgettext("line indentation setting", "Sound"),
+		}
+
+
+@unique
 class ReportTableHeaders(DisplayStringIntEnum):
 	"""Enumeration containing the possible config values to report table headers.
 

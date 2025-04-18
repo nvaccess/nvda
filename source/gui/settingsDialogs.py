@@ -39,6 +39,7 @@ from config.configFlags import (
 	TetherTo,
 	ParagraphStartMarker,
 	ReportLineIndentation,
+	ReportSpellingErrors,
 	ReportTableHeaders,
 	ReportCellBorders,
 	OutputMode,
@@ -2748,11 +2749,19 @@ class DocumentFormattingPanel(SettingsPanel):
 		self.revisionsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=revisionsText))
 		self.revisionsCheckBox.SetValue(config.conf["documentFormatting"]["reportRevisions"])
 
-		# Translators: This is the label for a checkbox in the
-		# document formatting settings panel.
-		spellingErrorText = _("Spelling e&rrors")
-		self.spellingErrorsCheckBox = docInfoGroup.addItem(wx.CheckBox(docInfoBox, label=spellingErrorText))
-		self.spellingErrorsCheckBox.SetValue(config.conf["documentFormatting"]["reportSpellingErrors"])
+		self.spellingErrorsCombo = docInfoGroup.addLabeledControl(
+			# Translators: This is the label for a checkbox in the
+			# document formatting settings panel.
+			_("Spelling e&rrors"),
+			wx.Choice,
+			choices=[i.displayString for i in ReportSpellingErrors],
+		)
+		self.bindHelpEvent(
+			"DocumentFormattingSettingsSpellingErrors",
+			self.spellingErrorsCombo,
+		)
+		reportSpellingErrors = config.conf["documentFormatting"]["reportSpellingErrors"]
+		self.spellingErrorsCombo.SetSelection(reportSpellingErrors)
 
 		# Translators: This is the label for a group of document formatting options in the
 		# document formatting settings panel
@@ -2975,7 +2984,7 @@ class DocumentFormattingPanel(SettingsPanel):
 		config.conf["documentFormatting"]["reportHighlight"] = self.highlightCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportAlignment"] = self.alignmentCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportStyle"] = self.styleCheckBox.IsChecked()
-		config.conf["documentFormatting"]["reportSpellingErrors"] = self.spellingErrorsCheckBox.IsChecked()
+		config.conf["documentFormatting"]["reportSpellingErrors"] = self.spellingErrorsCombo.GetSelection()
 		config.conf["documentFormatting"]["reportPage"] = self.pageCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineNumber"] = self.lineNumberCheckBox.IsChecked()
 		config.conf["documentFormatting"]["reportLineIndentation"] = self.lineIndentationCombo.GetSelection()
