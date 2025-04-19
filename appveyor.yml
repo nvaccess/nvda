@@ -47,7 +47,8 @@ install:
     "INSTALL_START, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append
  - ps: appveyor\scripts\setBuildVersionVars.ps1
  - ps: appveyor\scripts\decryptFilesForSigning.ps1
- - py -m pip install --upgrade --no-warn-script-location pip
+ - ps: irm https://astral.sh/uv/install.ps1 | iex
+ - set Path=%userprofile%\.local\bin;%Path%
  - git submodule update --init
  - ps: |
     "INSTALL_END, $(Get-Date -Format 'o')"| Out-File ../timing.csv -Append

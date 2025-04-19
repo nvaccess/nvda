@@ -14,7 +14,6 @@ Methods in test classes should have a C{test_} prefix.
 ### Ugly bootstrapping code.
 
 import os
-import sys
 
 # The path to the unit tests.
 UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -22,11 +21,6 @@ UNIT_DIR = os.path.dirname(os.path.abspath(__file__))
 TOP_DIR = os.path.dirname(os.path.dirname(UNIT_DIR))
 # The path to the NVDA "source" directory.
 SOURCE_DIR = os.path.join(TOP_DIR, "source")
-# Let us import modules from the NVDA source.
-sys.path.insert(1, SOURCE_DIR)
-# Suppress Flake8 warning F401 (module imported but unused)
-# as this module is imported to expand the system path.
-import sourceEnv  # noqa: E402, F401
 
 # Apply several monkey patches to comtypes to make sure that it would search for generated interfaces
 # rather than creating them on the fly. Also stop module being never than typelib error, seen when
