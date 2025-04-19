@@ -3330,6 +3330,7 @@ class RemoteSettingsPanel(SettingsPanel):
 		)
 		self.enableRemote.Bind(wx.EVT_CHECKBOX, self._onEnableRemote)
 		self.bindHelpEvent("RemoteEnable", self.enableRemote)
+		self.enableRemote.Enable(not globalVars.appArgs.secure)
 
 		remoteSettingsGroupSizer = wx.StaticBoxSizer(
 			wx.VERTICAL,
@@ -3347,6 +3348,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			),
 		)
 		self.bindHelpEvent("RemoteSoundsOrBeeps", self.playSounds)
+		self.playSounds.Enable(not globalVars.appArgs.secure)
 
 		self.autoconnect = remoteSettingsGroupHelper.addItem(
 			wx.CheckBox(
@@ -3356,6 +3358,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			),
 		)
 		self.autoconnect.Bind(wx.EVT_CHECKBOX, self._onAutoconnect)
+		self.autoconnect.Enable(not globalVars.appArgs.secure)
 		self.bindHelpEvent("RemoteAutoconnect", self.autoconnect)
 
 		self.autoConnectGroupSizer = wx.StaticBoxSizer(
@@ -3385,6 +3388,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			choices=tuple(serverType.displayString for serverType in RemoteServerType.__members__.values()),
 		)
 		self.clientOrServer.Bind(wx.EVT_CHOICE, self._onClientOrServer)
+		self.clientOrServer.Enable(not globalVars.appArgs.secure)
 		self.bindHelpEvent("RemoteAutoconnectServer", self.clientOrServer)
 
 		self.host = autoConnectionGroupHelper.addLabeledControl(
@@ -3430,6 +3434,7 @@ class RemoteSettingsPanel(SettingsPanel):
 			wx.Button(self, label=_("Delete all trusted fingerprints")),
 		)
 		self.deleteFingerprints.Bind(wx.EVT_BUTTON, self.onDeleteFingerprints)
+		self.deleteFingerprints.Enable(not globalVars.appArgs.secure)
 		self.bindHelpEvent("RemoteDeleteFingerprints", self.deleteFingerprints)
 
 		self._setFromConfig()
@@ -5453,8 +5458,8 @@ class NVDASettingsDialog(MultiCategorySettingsDialog):
 		DocumentNavigationPanel,
 		AddonStorePanel,
 	]
-	if not globalVars.appArgs.secure:
-		categoryClasses.append(RemoteSettingsPanel)
+	# if not globalVars.appArgs.secure:
+	categoryClasses.append(RemoteSettingsPanel)
 	if touchHandler.touchSupported():
 		categoryClasses.append(TouchInteractionPanel)
 	if winVersion.isUwpOcrAvailable():
