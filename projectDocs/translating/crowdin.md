@@ -61,7 +61,7 @@ The NVDA l10n utility is required for safely and efficiently downloading and upl
 * For installed copies of NVDA, its path is: `c:\Program Files (x86)\nvda\l10nUtil.exe`
 * For portable copies, it can be found as `l10nUtil.exe` in the root directory of the portable copy.
 
-#### Downloading with NVDA's l10n Utility
+#### Downloading po / xliff files with NVDA's l10n Utility
 ```
 l10nUtil.exe downloadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
 ```
@@ -75,7 +75,7 @@ Ensure that it has at least the translations scope.
 Then paste this into the user prompt.
 This will be saved in ~/.nvda_crowdin for future use.
 
-#### Translating using PoEdit
+#### Translating po / xliff files using PoEdit
 
 After opening a .po or .xliff file you have previously downloaded with NVDA's l10n utility, you will be placed on a list with all of the strings to translate.
 
@@ -100,7 +100,7 @@ NVDA provides additional shortcuts for PoEdit which are described in [the User G
 If you are unsure of the meaning of the original interface message, consult automatic comments (also called translator comments), by pressing `control+shift+a`.
 Some comments provide an example output message to help you understand what NVDA will say when speaking or brailling such messages.
 
-#### Uploading with NvDA's l10n Utility
+#### Uploading po / xliff files with NvDA's l10n Utility
 After translating the file with Poedit, upload the file back to Crowdin.
 ```
 l10nUtil.exe uploadTranslationFile <language> <crowdinFilePath> [<localFilePath>]
